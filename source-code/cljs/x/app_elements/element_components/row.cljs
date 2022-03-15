@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.row
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-elements.flex-handler.engine :as flex-handler.engine]))
+    (:require [mid-fruits.candy                    :refer [param]]
+              [x.app-components.api                :as components]
+              [x.app-core.api                      :as a]
+              [x.app-elements.engine.api           :as engine]
+              [x.app-elements.flex-handler.helpers :as flex-handler.helpers]))
 
 
 
@@ -52,8 +52,8 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id row-props]
-  [:div.x-row (flex-handler.engine/flexible-attributes row-id row-props)
-              [row-body                                row-id row-props]])
+  [:div.x-row (flex-handler.helpers/flexible-attributes row-id row-props)
+              [row-body                                 row-id row-props]])
 
 (defn element
   ; @param (keyword)(opt) row-id

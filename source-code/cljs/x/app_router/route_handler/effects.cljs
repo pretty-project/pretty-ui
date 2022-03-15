@@ -26,7 +26,9 @@
            {:db (as-> db % ; Store the current route
                            (r route-handler.events/store-current-route! % route-string)
                            ; Make history
-                           (r route-handler.events/reg-to-history!      % route-id))
+                           (r route-handler.events/reg-to-history!      % route-id)
+                           ; Remove temporary-parent
+                           (r route-handler.events/unset-temporary-parent! %))
             :dispatch-n [; Dispatch on-leave-event if ...
                          (if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
                                  (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))

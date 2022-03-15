@@ -19,7 +19,7 @@
   ;
   ; @param (string) text
   [text]
-  (append-temporary-component! [clipboard.views/clipboard text] clipboard.engine/copy-to-clipboard-f)
+  (append-temporary-component! [clipboard.views/clipboard text] clipboard.helpers/copy-to-clipboard-f)
   (remove-temporary-component!))
 
 

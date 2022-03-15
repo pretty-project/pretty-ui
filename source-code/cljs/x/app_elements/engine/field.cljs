@@ -23,7 +23,7 @@
               [x.app-elements.surface-handler.events :as surface-handler.events]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.engine.input           :as input]
-              [x.app-elements.target-handler.engine  :as target-handler.engine]
+              [x.app-elements.target-handler.helpers :as target-handler.helpers]
               [x.app-environment.api                 :as environment]))
 
 
@@ -238,7 +238,7 @@
           ; tulajdonságuk függvénye volt. A {:disabled? true} állapotban levő field elemek
           ; nem voltak azonosíthatók target-id használatával. Az x4.4.9 verzióban ez a feltétel
           ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
-  (cond-> {:id (target-handler.engine/element-id->target-id field-id)}
+  (cond-> {:id (target-handler.helpers/element-id->target-id field-id)}
           ; If field is disabled ...
           (boolean disabled?) (merge {:disabled true
                                       :type     type
@@ -465,7 +465,7 @@
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
-      (if-let [input-enabled? (target-handler.engine/element-id->target-enabled? field-id)]
+      (if-let [input-enabled? (target-handler.helpers/element-id->target-enabled? field-id)]
               ; Az [:elements/empty-field! ...] esemény kizárólag abban az esetben törli a mező
               ; tartalmát, ha az input elem nincs disabled="true" állapotban, így elkerülhető
               ; a következő hiba:

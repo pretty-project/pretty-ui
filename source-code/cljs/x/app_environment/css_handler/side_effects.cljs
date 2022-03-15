@@ -24,9 +24,9 @@
   (let [head-element (dom/get-head-element)
         app-build    (a/app-build)
         filepath     (cache-control-uri (string/starts-with! filepath "/") app-build)
-        link-element (css-handler.engine/create-link-element! filepath)]
-       (if-not (css-handler.engine/source-exists?       head-element filepath)
-               (css-handler.engine/insert-link-element! head-element link-element context-props))))
+        link-element (css-handler.helpers/create-link-element! filepath)]
+       (if-not (css-handler.helpers/source-exists?       head-element filepath)
+               (css-handler.helpers/insert-link-element! head-element link-element context-props))))
 
 (defn add-css!
   ; @param (string) filename
@@ -36,7 +36,7 @@
   ; @usage
   ;  (environment/add-css! "/filename.css")
   [filename context-props]
-  (let [filepath (css-handler.engine/filename->external-css-uri filename)]
+  (let [filepath (css-handler.helpers/filename->external-css-uri filename)]
        (add-external-css! filepath context-props)))
 
 (defn remove-css!

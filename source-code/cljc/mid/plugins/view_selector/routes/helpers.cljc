@@ -59,3 +59,20 @@
   ; @return (string)
   [_ {:keys [route-template]}]
   (uri/valid-path route-template))
+
+(defn parent-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (map) selector-props
+  ;  {:route-template (string)}
+  ;
+  ; @example
+  ;  (routes.helpers/parent-route :my-extension {:route-template "/@app-home/my-extension/:view-id"})
+  ;  =>
+  ;  "/@app-home"
+  ;
+  ; @return (string)
+  [_ {:keys [route-template]}]
+  (-> route-template (string/not-ends-with! "/:view-id")
+                     (uri/uri->parent-uri)))

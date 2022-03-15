@@ -75,8 +75,8 @@
   [elements/button ::settings-button
                    {:indent :left
                     :preset :settings-button
-                    :on-click [:router/go-to! "/@app-home/settings"]}])
-                    ;:disabled? true}])
+                    :on-click [:router/go-to! "/@app-home/settings"]
+                    :disabled? true}])
 
 (defn- more-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

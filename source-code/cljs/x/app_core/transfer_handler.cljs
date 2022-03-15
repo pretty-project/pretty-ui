@@ -32,6 +32,21 @@
   [db [_ transfer-id]]
   (get-in db [:core/transfer-handler :data-items transfer-id]))
 
+;(event-handler/reg-sub :core/get-transfer-data get-transfer-data)
+
+(defn get-transfer-item
+  ; @param (keyword) transfer-id
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (r a/get-transfer-item db :my-transfer :my-item)
+  ;
+  ; @return (*)
+  [db [_ transfer-id item-key]]
+  (get-in db [:core/transfer-handler :data-items transfer-id item-key]))
+
+;(event-handler/reg-sub :core/get-transfer-item get-transfer-item)
+
 
 
 ;; -- DB events ---------------------------------------------------------------

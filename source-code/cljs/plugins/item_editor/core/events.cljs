@@ -58,10 +58,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [inherited-props (r core.subs/get-inherited-props db extension-id item-namespace)]
-       (-> db (dissoc-in [extension-id :item-editor/data-items])
-              (dissoc-in [extension-id :item-editor/meta-items])
-              (assoc-in  [extension-id :item-editor/meta-items] inherited-props))))
+  (-> db (dissoc-in [extension-id :item-editor/data-items])
+         (dissoc-in [extension-id :item-editor/meta-items])))
 
 
 
@@ -83,17 +81,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-body-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace body-props]]
-  (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
-
 (defn header-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -103,6 +90,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace header-props]]
+  ; XXX#4036
+  ; A header-props és body-props térképeket a header és body komponensek React fába csatolásakor
+  ; merge függvény használatával szükséges tárolni, hogy a két térkép egymásba fésülve egy helyről
+  ; legyen elérhető!
   (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
 
 (defn body-did-mount
@@ -114,7 +105,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace body-props]]
-  (r store-body-props! db extension-id item-namespace body-props))
+  ; XXX#4036
+  (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

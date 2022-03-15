@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.routes.subs
-    (:require [plugins.view-selector.core.subs :as core.subs]
-              [x.app-core.api                  :refer [r]]))
+    (:require [plugins.view-selector.transfer.subs :as transfer.subs]
+              [x.app-core.api                      :refer [r]]))
 
 
 
@@ -22,5 +22,5 @@
   ;
   ; @return (string)
   [db [_ extension-id view-id]]
-  (if-let [base-route (r core.subs/get-meta-item db extension-id :base-route)]
+  (if-let [base-route (r transfer.subs/get-transfer-item db extension-id :base-route)]
           (str base-route "/" (name view-id))))

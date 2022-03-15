@@ -85,6 +85,13 @@
   (let [route-match (r get-route-match db route-string)]
        (boolean route-match)))
 
+(defn get-temporary-parent
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (string)
+  [db _]
+  (get-in db [:router :route-handler/meta-items :temporary-parent]))
+
 
 
 ;; -- Route subscriptions -----------------------------------------------------
@@ -258,7 +265,7 @@
   ;
   ; @return (string)
   [db _]
-  (if-let [temporary-parent (get-in db [:router :route-handler/meta-items :temporary-parent])]
+  (if-let [temporary-parent (r get-temporary-parent db)]
           (return temporary-parent)
           (let [current-route-string (r get-current-route-string db)]
                (uri/uri->parent-uri current-route-string))))

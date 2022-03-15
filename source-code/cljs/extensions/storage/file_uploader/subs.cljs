@@ -5,7 +5,7 @@
 (ns extensions.storage.file-uploader.subs
     (:require [app-fruits.dom                           :as dom]
               [extensions.storage.capacity-handler.subs :as capacity-handler.subs]
-              [extensions.storage.file-uploader.engine  :as file-uploader.engine]
+              [extensions.storage.file-uploader.helpers :as file-uploader.helpers]
               [mid-fruits.candy                         :refer [param return]]
               [mid-fruits.map                           :as map]
               [mid-fruits.vector                        :as vector]
@@ -72,7 +72,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (letfn [(f [[uploader-id _]]
-             (let [request-id (file-uploader.engine/request-id uploader-id)]
+             (let [request-id (file-uploader.helpers/request-id uploader-id)]
                   (r sync/request-active? db request-id)))]
          (some f (get-in db [:storage :file-uploader/meta-items]))))
 
@@ -85,7 +85,7 @@
 (defn get-uploader-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (let [request-id (file-uploader.engine/request-id uploader-id)]
+  (let [request-id (file-uploader.helpers/request-id uploader-id)]
        (r sync/get-request-progress db request-id)))
 
 

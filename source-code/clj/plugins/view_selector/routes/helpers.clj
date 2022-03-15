@@ -14,3 +14,4 @@
 (def route-id       routes.helpers/route-id)
 (def base-route     routes.helpers/base-route)
 (def extended-route routes.helpers/extended-route)
+(def parent-route   routes.helpers/parent-route)

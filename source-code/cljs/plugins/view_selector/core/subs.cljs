@@ -3,24 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.core.subs
-    (:require [mid-fruits.candy  :refer [return]]
-              [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [x.app-router.api  :as router]))
+    (:require [mid-fruits.candy                 :refer [return]]
+              [mid-fruits.vector                :as vector]
+              [plugins.view-selector.mount.subs :as mount.subs]
+              [x.app-core.api                   :as a :refer [r]]
+              [x.app-router.api                 :as router]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-selector-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ;
-  ; @return (map)
-  [db [_ extension-id]]
-  (get-in db [extension-id :view-selector/meta-items]))
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -56,8 +48,8 @@
   ; @return (keyword)
   [db [_ extension-id]]
   (let [selected-view-id (r get-meta-item db extension-id :view-id)
-        default-view-id  (r get-meta-item db extension-id :default-view-id)]
-       (if-let [allowed-view-ids (r get-meta-item db extension-id :allowed-view-ids)]
+        default-view-id  (r mount.subs/get-body-prop db extension-id :default-view-id)]
+       (if-let [allowed-view-ids (r mount.subs/get-body-prop db extension-id :allowed-view-ids)]
                ; Ha az {:allowed-view-ids [...]} beállítás használatban van ...
                (or ; ... és a selected-view-id megtalálható az allowed-view-ids vektorban,
                    ;     akkor a visszatérési érték a selected-view-id.

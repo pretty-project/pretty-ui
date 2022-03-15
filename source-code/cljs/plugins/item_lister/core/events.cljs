@@ -80,9 +80,15 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [inherited-props (r core.subs/get-inherited-props db extension-id item-namespace)]
-       (-> db (dissoc-in [extension-id :item-lister/meta-items])
-              (assoc-in  [extension-id :item-lister/meta-items] inherited-props))))
+  ; Az item-lister plugin ...
+  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
+  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési
+  ;     és rendezési beállításokkal, így a felhasználó az egyes elemek megtekintése/szerkesztése/...
+  ;     után visszatérhet a legutóbbi kereséséhez.
+  (as-> db % (dissoc-in % [extension-id :item-lister/meta-items])
+             (assoc-in  % [extension-id :item-lister/meta-items]
+                          (select-keys (get-in db [extension-id :item-lister/meta-items])
+                                       [:order-by :search-term]))))
 
 (defn reset-search!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,17 +143,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-body-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace body-props]]
-  (r db/apply-item! db [extension-id :item-lister/meta-items] merge body-props))
-
 (defn header-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -157,6 +152,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace header-props]]
+  ; XXX#4036
   (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
 
 (defn body-did-mount
@@ -168,7 +164,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace body-props]]
-  (as-> db % (r store-body-props!     % extension-id item-namespace body-props)
+  ; XXX#6051
+  ; XXX#4036
+  (as-> db % (r db/apply-item! % [extension-id :item-lister/meta-items] merge body-props)
              (r set-default-order-by! % extension-id item-namespace)))
 
 (defn body-will-unmount
@@ -179,8 +177,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
-  ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
+  ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő
+  ; betöltéskor a plugin tulajdonságainak eltárolása előtt nem villan fel a legutóbbi állapot!
   (as-> db % (r reset-lister!                    % extension-id item-namespace)
              (r download.events/reset-downloads! % extension-id item-namespace)))
 

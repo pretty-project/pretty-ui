@@ -4,7 +4,8 @@
 
 (ns extensions.storage.file-uploader.helpers
     (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.string  :as string]))
+              [mid-fruits.string  :as string]
+              [x.app-media.api    :as media]))
 
 
 

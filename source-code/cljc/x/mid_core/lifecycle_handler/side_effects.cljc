@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.lifecycle-handler.side-effects
-    (:require [x.mid-core.event-handler            :as event-handler :refer [r]]
-              [x.mid-core.lifecycle-handler.engine :as lifecycle-handler.engine]))
+    (:require [x.mid-core.event-handler             :as event-handler :refer [r]]
+              [x.mid-core.lifecycle-handler.helpers :as lifecycle-handler.helpers]
+              [x.mid-core.lifecycle-handler.state   :as lifecycle-handler.state]))
 
 
 
@@ -17,7 +18,7 @@
   ; - A reg-lifecycles! függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
   ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
   ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
-  (event-handler/dispatch [:db/set-item! [:core :lifecycle-handler/data-items] @lifecycle-handler.engine/LIFES]))
+  (event-handler/dispatch [:db/set-item! [:core :lifecycle-handler/data-items] @lifecycle-handler.state/LIFES]))
 
 
 
@@ -42,7 +43,7 @@
   ;   :namespace/lifecycles
   ;   {...}
   ([lifecycles]
-   (reg-lifecycles! (lifecycle-handler.engine/generate-life-id) lifecycles))
+   (reg-lifecycles! (lifecycle-handler.helpers/generate-life-id) lifecycles))
 
   ([life-id lifecycles]
 
@@ -58,12 +59,12 @@
    ; - A Re-Frame adatbázis atomot NEM szabad reset! függvénnyel írni, mert az esetlegesen
    ;   az írással egy időben megtörténő adatbázis eseményekkel való konkurálás következtében egyes
    ;   változások elveszhetnek!
-   (let [namespace (lifecycle-handler.engine/life-id->namespace life-id)]
+   (let [namespace (lifecycle-handler.helpers/life-id->namespace life-id)]
         (letfn [(f [lifecycles period-id event]
                    (let [event-id (keyword namespace (name period-id))]
                         (event-handler/reg-event-fx event-id event)
                         (assoc lifecycles period-id [event-id])))]
-               (swap! lifecycle-handler.engine/LIFES assoc life-id (reduce-kv f {} lifecycles))))))
+               (swap! lifecycle-handler.state/LIFES assoc life-id (reduce-kv f {} lifecycles))))))
 
 
 

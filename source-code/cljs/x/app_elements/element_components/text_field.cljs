@@ -11,7 +11,7 @@
               [x.app-elements.surface-handler.subs    :as surface-handler.subs]
               [x.app-elements.engine.api              :as engine]
               [x.app-elements.adornment-handler.views :as adornment-handler.views]
-              [x.app-elements.target-handler.engine   :as target-handler.engine]))
+              [x.app-elements.target-handler.helpers  :as target-handler.helpers]))
 
 
 
@@ -130,7 +130,7 @@
   [field-id {:keys [label required?]}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  (if label [:label.x-text-field--label {:for (target-handler.engine/element-id->target-id field-id)}
+  (if label [:label.x-text-field--label {:for (target-handler.helpers/element-id->target-id field-id)}
                                         [components/content label]
                                         (if required? [:span.x-input--label-asterisk "*"])]))
 

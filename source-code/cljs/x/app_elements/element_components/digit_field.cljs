@@ -12,7 +12,7 @@
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.api             :as engine]
               [x.app-elements.passfield-handler.subs :as passfield-handler.subs]
-              [x.app-elements.target-handler.engine  :as target-handler.engine]))
+              [x.app-elements.target-handler.helpers :as target-handler.helpers]))
 
 
 
@@ -89,7 +89,7 @@
   ; @param (map) field-props
   [field-id field-props]
   [:input.x-digit-field--input {:type "text"
-                                :id (target-handler.engine/element-id->target-id field-id)
+                                :id (target-handler.helpers/element-id->target-id field-id)
                                 :on-change #(let [v (dom/event->value %)]
                                                  (a/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
 
@@ -99,7 +99,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.engine/element-id->target-id field-id)))
+  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.helpers/element-id->target-id field-id)))
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
                                                                  (mid-fruits.string/get-nth-character (:value field-props) %2)]))

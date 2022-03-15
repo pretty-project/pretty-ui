@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.routes.subs
-    (:require [plugins.item-editor.core.subs :as core.subs]
-              [x.app-core.api                :as a :refer [r]]))
+    (:require [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -21,7 +21,7 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace item-id]]
-  (if-let [base-route (r core.subs/get-meta-item db extension-id item-namespace :base-route)]
+  (if-let [base-route (r transfer.subs/get-transfer-item db extension-id item-namespace :base-route)]
           (str base-route "/" item-id)))
 
 

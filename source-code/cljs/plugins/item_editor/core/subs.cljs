@@ -28,18 +28,6 @@
   [db [_ extension-id _]]
   (get-in db [extension-id :item-editor/meta-items]))
 
-(defn get-inherited-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  ; Az item-editor plugin megőrzi a plugin szerver-oldalról érkezett beállításait.
-  (let [editor-props (r get-editor-props db extension-id item-namespace)]
-       (select-keys editor-props [:base-route :extended-route :on-load :route-template :route-title])))
-
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

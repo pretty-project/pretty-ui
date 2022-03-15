@@ -5,9 +5,9 @@
 (ns x.server-ui.body.views
     (:require [mid-fruits.candy             :refer [param]]
               [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-              [x.server-ui.body.engine      :as body.engine]
+              [x.server-ui.body.helpers     :as body.helpers]
               [x.server-ui.body.prototypes  :as body.prototypes]
-              [x.server-ui.engine           :refer [include-js]]))
+              [x.server-ui.core.helpers     :refer [include-js]]))
 
 
 
@@ -43,5 +43,5 @@
 
   ([request body-props]
    (let [body-props (body.prototypes/body-props-prototype request body-props)]
-        (-> (body                          request body-props)
-            (body.engine/body<-js-includes request body-props)))))
+        (-> (body                           request body-props)
+            (body.helpers/body<-js-includes request body-props)))))

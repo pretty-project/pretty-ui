@@ -3,10 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.core.effects
-    (:require [plugins.view-selector.core.events :as core.events]
-              [plugins.view-selector.core.subs   :as core.subs]
-              [plugins.view-selector.routes.subs :as routes.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [plugins.view-selector.core.events   :as core.events]
+              [plugins.view-selector.routes.subs   :as routes.subs]
+              [plugins.view-selector.transfer.subs :as transfer.subs]
+              [x.app-core.api                      :as a :refer [r]]
+              [x.app-router.api                    :as router]))
 
 
 
@@ -19,8 +20,8 @@
   ;
   ; @param (keyword) extension-id
   (fn [{:keys [db]} [_ extension-id]]
-      (let [on-load     (r core.subs/get-meta-item db extension-id :on-load)
-            route-title (r core.subs/get-meta-item db extension-id :route-title)]
+      (let [on-load     (r transfer.subs/get-transfer-item db extension-id :on-load)
+            route-title (r transfer.subs/get-transfer-item db extension-id :route-title)]
            {:db (r core.events/load-selector! db extension-id)
             :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))
 

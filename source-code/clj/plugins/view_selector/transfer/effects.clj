@@ -20,5 +20,5 @@
   ; @param (map) selector-props
   (fn [_ [_ extension-id selector-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id)
-                                {:data-f      (fn [_] (return selector-props))
-                                 :target-path [extension-id :view-selector/meta-items]}]}))
+                                {:data-f      (fn [_] (return selector-props))}]}))
+                                 ;:target-path [extension-id :view-selector/meta-items]}]}))

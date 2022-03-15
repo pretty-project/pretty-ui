@@ -4,8 +4,7 @@
 
 (ns extensions.settings.view-selector.effects
     (:require [extensions.settings.view-selector.views :as view-selector.views]
-              [x.app-core.api                          :as a :refer [r]]
-              [x.app-ui.api                            :as ui]))
+              [x.app-core.api                          :as a :refer [r]]))
 
 
 
@@ -22,5 +21,4 @@
   :settings.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (if-not (r ui/element-rendered? db :surface :settings.view-selector/view)
-              [:settings.view-selector/render-selector!])))
+      [:settings.view-selector/render-selector!]))

@@ -16,10 +16,10 @@
               [x.server-core.transfer-handler.lifecycles]
               [x.server-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.server-core.build-handler.subs             :as build-handler.subs]
-              [x.server-core.cache-handler.engine           :as cache-handler.engine]
+              [x.server-core.cache-handler.helpers          :as cache-handler.helpers]
               [x.server-core.config-handler.config          :as config-handler.config]
               [x.server-core.config-handler.subs            :as config-handler.subs]
-              [x.server-core.debug-handler.engine           :as debug-handler.engine]
+              [x.server-core.debug-handler.helpers          :as debug-handler.helpers]
               [x.server-core.engine                         :as engine]
               [x.server-core.event-handler                  :as event-handler]
               [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
@@ -38,9 +38,9 @@
 ; x.server-core.build-handler.subs
 (def get-app-build build-handler.subs/get-app-build)
 
-; x.server-core.cache-handler.engine
-(def request->app-cached? cache-handler.engine/request->app-cached?)
-(def cache-control-uri    cache-handler.engine/cache-control-uri)
+; x.server-core.cache-handler.helpers
+(def request->app-cached? cache-handler.helpers/request->app-cached?)
+(def cache-control-uri    cache-handler.helpers/cache-control-uri)
 
 ; x.server-core.config-handler.config
 (def APP-CONFIG-FILEPATH    config-handler.config/APP-CONFIG-FILEPATH)
@@ -55,8 +55,8 @@
 (def get-site-config        config-handler.subs/get-site-config)
 (def get-site-config-item   config-handler.subs/get-site-config-item)
 
-; x.server-core.debug-handler.engine
-(def request->debug-mode debug-handler.engine/request->debug-mode)
+; x.server-core.debug-handler.helpers
+(def request->debug-mode debug-handler.helpers/request->debug-mode)
 
 ; x.server-core.engine
 (def dom-value     engine/dom-value)

@@ -20,9 +20,11 @@
   ; @return (map)
   ;  {:base-route (string)
   ;   :extended-route (string)
+  ;   :parent-route (string)
   ;   :route-title (metamorphic-content)}
   [extension-id selector-props]
   (merge {:base-route     (routes.helpers/base-route     extension-id selector-props)
           :extended-route (routes.helpers/extended-route extension-id selector-props)
+          :parent-route   (routes.helpers/parent-route   extension-id selector-props)
           :route-title    (param extension-id)}
          (param selector-props)))

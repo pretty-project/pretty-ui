@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.color-picker
-    (:require [mid-fruits.candy                      :refer [param return]]
-              [mid-fruits.vector                     :as vector]
-              [x.app-components.api                  :as components]
-              [x.app-core.api                        :as a :refer [r]]
-              [x.app-elements.collect-handler.engine :as collect-handler.engine]
-              [x.app-elements.collect-handler.subs   :as collect-handler.subs]
-              [x.app-elements.engine.api             :as engine]))
+    (:require [mid-fruits.candy                       :refer [param return]]
+              [mid-fruits.vector                      :as vector]
+              [x.app-components.api                   :as components]
+              [x.app-core.api                         :as a :refer [r]]
+              [x.app-elements.collect-handler.helpers :as collect-handler.helpers]
+              [x.app-elements.collect-handler.subs    :as collect-handler.subs]
+              [x.app-elements.engine.api              :as engine]))
 
 
 
@@ -65,7 +65,7 @@
   ; @param (map) picker-props
   ; @param (string) option
   [picker-id picker-props option]
-  (let [option-attributes (collect-handler.engine/collectable-option-attributes picker-id picker-props option)]
+  (let [option-attributes (collect-handler.helpers/collectable-option-attributes picker-id picker-props option)]
        [:button.x-color-picker--option option-attributes
          [:div.x-color-picker--option--color {:style {:background-color option}}]]))
 

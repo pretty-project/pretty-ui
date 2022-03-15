@@ -8,7 +8,7 @@
               [x.app-core.error-handler.side-effects]
               [x.app-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.app-core.build-handler.subs             :as build-handler.subs]
-              [x.app-core.cache-handler.engine           :as cache-handler.engine]
+              [x.app-core.cache-handler.helpers          :as cache-handler.helpers]
               [x.app-core.config-handler.subs            :as config-handler.subs]
               [x.app-core.connection-handler             :as connection-handler]
               [x.app-core.debug-handler.events           :as debug-handler.events]
@@ -33,8 +33,8 @@
 ; x.app-core.build-handler.subs
 (def get-app-build build-handler.subs/get-app-build)
 
-; x.app-core.cache-handler.engine
-(def cache-control-uri cache-handler.engine/cache-control-uri)
+; x.app-core.cache-handler.helpers
+(def cache-control-uri cache-handler.helpers/cache-control-uri)
 
 ; x.app-core.config-handler.subs
 (def get-app-config      config-handler.subs/get-app-config)
@@ -120,3 +120,4 @@
 
 ; x.app-core.transfer-handler
 (def get-transfer-data transfer-handler/get-transfer-data)
+(def get-transfer-item transfer-handler/get-transfer-item)

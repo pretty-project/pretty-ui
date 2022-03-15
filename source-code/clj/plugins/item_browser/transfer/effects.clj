@@ -21,5 +21,5 @@
   ; @param (map) browser-props
   (fn [_ [_ extension-id item-namespace browser-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return browser-props))
-                                 :target-path [extension-id :item-browser/meta-items]}]}))
+                                {:data-f      (fn [_] (return browser-props))}]}))
+                                 ;:target-path [extension-id :item-browser/meta-items]}]}))

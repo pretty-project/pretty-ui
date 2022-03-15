@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.effects
-    (:require [plugins.item-editor.core.subs   :as core.subs]
-              [plugins.item-editor.core.events :as core.events]
-              [x.app-core.api                  :as a :refer [r]]))
+    (:require [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.core.events   :as core.events]
+              [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -19,7 +20,7 @@
   ; @param (keyword) item-namespace
   :item-editor/load-editor!
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [on-load (r core.subs/get-meta-item db extension-id item-namespace :on-load)]
+      (let [on-load (r transfer.subs/get-transfer-item db extension-id item-namespace :on-load)]
            {:db (r core.events/load-editor! db extension-id item-namespace)
             :dispatch on-load})))
 

@@ -4,8 +4,8 @@
 
 (ns extensions.storage.file-uploader.effects
     (:require [app-fruits.dom                                :as dom]
-              [extensions.storage.file-uploader.engine       :as file-uploader.engine]
               [extensions.storage.file-uploader.events       :as file-uploader.events]
+              [extensions.storage.file-uploader.helpers      :as file-uploader.helpers]
               [extensions.storage.file-uploader.queries      :as file-uploader.queries]
               [extensions.storage.file-uploader.side-effects :as file-uploader.side-effects]
               [extensions.storage.file-uploader.validators   :as file-uploader.validators]
@@ -65,7 +65,7 @@
             form-data    (r file-uploader.subs/get-form-data                      db uploader-id)
             validator-f #(r file-uploader.validators/upload-files-response-valid? db uploader-id %)]
            {:dispatch-n [[:storage.file-uploader/progress-started uploader-id]
-                         [:sync/send-query! (file-uploader.engine/request-id uploader-id)
+                         [:sync/send-query! (file-uploader.helpers/request-id uploader-id)
                                             {:body       (dom/merge-to-form-data! form-data {:query query})
                                              :on-success [:storage.file-uploader/progress-successed uploader-id]
                                              :on-failure [:storage.file-uploader/progress-failured  uploader-id]

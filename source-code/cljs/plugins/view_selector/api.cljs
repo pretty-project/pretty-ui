@@ -4,6 +4,10 @@
 
 (ns plugins.view-selector.api
     (:require [plugins.view-selector.core.effects]
+              [plugins.view-selector.mount.events]
+              [plugins.view-selector.mount.subs]
+              [plugins.view-selector.routes.events]
+              [plugins.view-selector.transfer.subs]
               [plugins.view-selector.core.events :as core.events]
               [plugins.view-selector.core.subs   :as core.subs]
               [plugins.view-selector.core.views  :as core.views]

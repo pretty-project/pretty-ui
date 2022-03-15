@@ -7,7 +7,7 @@
               [x.mid-core.build-handler.subs]
               [x.mid-core.config-handler.events]
               [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
-              [x.mid-core.cache-handler.engine       :as cache-handler.engine]
+              [x.mid-core.cache-handler.helpers      :as cache-handler.helpers]
               [x.mid-core.config-handler.subs        :as config-handler.subs]
               [x.mid-core.engine                     :as engine]
               [x.mid-core.event-handler              :as event-handler]))
@@ -20,8 +20,8 @@
 ; x.mid-core.build-handler.side-effects
 (def app-build build-handler.side-effects/app-build)
 
-; x.mid-core.cache-handler.engine
-(def cache-control-uri cache-handler.engine/cache-control-uri)
+; x.mid-core.cache-handler.helpers
+(def cache-control-uri cache-handler.helpers/cache-control-uri)
 
 ; x.mid-core.config-handler.subs
 (def get-app-config         config-handler.subs/get-app-config)

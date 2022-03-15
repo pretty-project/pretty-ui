@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.chip
-    (:require [mid-fruits.candy                     :refer [param]]
-              [x.app-components.api                 :as components]
-              [x.app-core.api                       :as a :refer [r]]
-              [x.app-elements.delete-handler.engine :as delete-handler.engine]
-              [x.app-elements.engine.api            :as engine]))
+    (:require [mid-fruits.candy                      :refer [param]]
+              [x.app-components.api                  :as components]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.delete-handler.helpers :as delete-handler.helpers]
+              [x.app-elements.engine.api             :as engine]))
 
 
 
@@ -63,7 +63,7 @@
   ;  {:delete-button-icon (keyword)
   ;   :on-delete (metamorphic-event)(opt)}
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
-  (if on-delete (let [body-attributes (delete-handler.engine/deletable-body-attributes chip-id chip-props)]
+  (if on-delete (let [body-attributes (delete-handler.helpers/deletable-body-attributes chip-id chip-props)]
                      [:button.x-chip--delete-button body-attributes
                                                     [:i.x-chip--delete-button-icon delete-button-icon]])))
 
