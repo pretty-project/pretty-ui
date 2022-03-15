@@ -42,8 +42,7 @@
 ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
 (a/reg-event-fx
   :use-my-filter!
-  (fn [_ [_ filter-pattern]]
-      [:item-lister/use-filter! :my-extension :my-type filter-pattern]))
+  [:item-lister/use-filter! :my-extension :my-type {}])
 
 
 
@@ -67,7 +66,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
-; a szerver-oldali kollekció elemeiből csak az előszűrésnek megfelelő elemek jelenjenek meg.
+; csak az előszűrésnek megfelelő elemek jelenjenek meg.
 (defn my-filtered-body
   [surface-id]
   [item-lister/body :my-extension :my-type {:list-element [:div "My item"]
@@ -79,7 +78,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; Az [:item-lister/reload-items! ...] esemény újra letölti az összes elemet az aktuális
-; beállításokkal. Így lehetséges az szerveren tárolt adatokat aktualizálni a kliens-oldalon.
+; beállításokkal. Így lehetséges az adatok kliens-oldalon megjelenített változatát aktualizálni
+; a szerver-oldali változathoz.
 (a/reg-event-fx
   :reload-my-items!
   [:item-lister/reload-items! :my-extension :my-type])
@@ -94,8 +94,8 @@
   [elements/toggle {:content  [:div "My item"]
                     :on-click [:my-list-element-clicked extension-id item-namespace item-dex item]}])
 
-; Ha a listaelemek kijelölhetők és a kattintás pillanatában a SHIFT billenytű lenyomott
-; állapotban volt, akkor a toggle-item-selection? függvény visszatérési értéke TRUE
+; Ha a listaelemek kijelölhetők és a lista-elemre kattintás pillanatában a SHIFT billenytű
+; lenyomott állapotban volt, akkor a toggle-item-selection? függvény visszatérési értéke TRUE
 (a/reg-event-fx
   :my-list-element-clicked
   (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
@@ -137,7 +137,7 @@
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :my-extension :my-type])]
        [layouts/layout-a surface-id {:header [item-lister/header :my-extension :my-type {}]
-                                     :body   [item-lister/body   :my-extension :my-type {:list-element   [:div "My item"]}]
+                                     :body   [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]
                                      :description description}]))
 
 
@@ -148,7 +148,7 @@
 ; - A header komponens számára átadott {:menu-element #'...} tulajdonság beállításával lehetséges
 ;   egyedi menüt használni.
 ; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
-;  tudsz a különbözű módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
+;  tudsz a különbözű menü módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
 (defn my-menu-element
   [extension-id item-namespace]
   [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace]
@@ -163,7 +163,7 @@
 ;; -- Kifejezések hozzáadaása a szótárhoz -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az order-by-options beállításban használtál egyedi értékeket, akkor ne felejtsd el
+; Ha az order-by-options beállításban egyedi értékeket is használtál, akkor ne felejtsd el
 ; hozzáadni a megfelelő szótári szavakat!
 ; Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (a/reg-lifecycles!

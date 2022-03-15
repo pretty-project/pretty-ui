@@ -227,7 +227,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
-       [:div [header "vector"]
+       [:div [header (str "vector, " (count current-item) " items")]
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")

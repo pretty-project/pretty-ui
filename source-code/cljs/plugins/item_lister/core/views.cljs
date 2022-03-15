@@ -135,7 +135,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [item-actions       @(a/subscribe [:item-lister/get-header-prop    extension-id item-namespace :item-actions])
+  (let [item-actions       @(a/subscribe [:item-lister/get-body-prop      extension-id item-namespace :item-actions])
         lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? extension-id item-namespace])]
        (if (vector/contains-item? item-actions :delete)
@@ -150,7 +150,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [item-actions       @(a/subscribe [:item-lister/get-header-prop    extension-id item-namespace :item-actions])
+  (let [item-actions       @(a/subscribe [:item-lister/get-body-prop      extension-id item-namespace :item-actions])
         lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? extension-id item-namespace])]
        (if (vector/contains-item? item-actions :duplicate)

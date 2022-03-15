@@ -21,5 +21,8 @@
 (defn map-item-hidden?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [n]
-  (or (-> n namespace some?)
-      (vector/contains-item? HIDDEN-ITEMS n)))
+  (or (vector/contains-item? HIDDEN-ITEMS n)
+
+      ; TEMP
+      ; Ha már egyik modul sem használ névteres kulcsszót, mint ...
+      (and (keyword? n) (-> n namespace some?))))

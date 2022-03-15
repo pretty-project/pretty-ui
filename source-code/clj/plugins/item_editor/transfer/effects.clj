@@ -21,5 +21,5 @@
   ; @param (map) editor-props
   (fn [_ [_ extension-id item-namespace editor-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return editor-props))}]}))
-                                 ;:target-path [extension-id :item-editor/meta-items]}]}))
+                                {:data-f      (fn [_] (return editor-props))
+                                 :target-path [extension-id :item-editor/transfer-items]}]}))

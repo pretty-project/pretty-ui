@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.update.subs
-    (:require [plugins.item-lister.core.subs :as core.subs]
-              [mid-fruits.keyword            :as keyword]
-              [mid-fruits.vector             :as vector]
-              [x.app-core.api                :refer [r]]))
+    (:require [plugins.item-lister.mount.subs :as mount.subs]
+              [mid-fruits.keyword             :as keyword]
+              [mid-fruits.vector              :as vector]
+              [x.app-core.api                 :refer [r]]))
 
 
 
@@ -27,7 +27,7 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace action-key]]
-  (let [handler-key (r core.subs/get-meta-item db extension-id item-namespace :handler-key)]
+  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
        (str (name handler-key) "/"
             (name action-key)  "-items!")))
 

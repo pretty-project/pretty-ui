@@ -6,7 +6,7 @@
     (:require [mid-fruits.map                 :as map]
               [plugins.item-lister.core.subs  :as core.subs]
               [plugins.item-lister.items.subs :as items.subs]
-              [x.app-core.api                 :refer [r]]))
+              [x.app-core.api                 :as a :refer [r]]))
 
 
 
@@ -38,3 +38,11 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-ids]]
   (update-in db [extension-id :item-lister/backup-items] map/remove-items item-ids))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)

@@ -2,9 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.transfer.subs
-    (:require [plugins.item-lister.transfer.helpers :as transfer.helpers]
-              [x.app-core.api                       :as a :refer [r]]))
+(ns plugins.item-lister.transfer.subs)
 
 
 
@@ -19,6 +17,5 @@
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ extension-id item-namespace item-key]]
-  (let [transfer-id (transfer.helpers/transfer-id extension-id item-namespace)]
-       (r a/get-transfer-item db transfer-id item-key)))
+  [db [_ extension-id _ item-key]]
+  (get-in db [extension-id :item-lister/transfer-items item-key]))
