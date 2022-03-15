@@ -14,9 +14,20 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :clients.client-lister/render-lister!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/set-surface! :clients.client-lister/view
+                    {:view #'client-lister.views/view}])
+
+(a/reg-event-fx
   :clients.client-lister/load-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:clients.client-lister/render-lister!])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -26,9 +37,3 @@
           {:db (r item-lister/toggle-item-selection! db :clients :client item-dex)}
           (let [item-route (r item-editor/get-item-route db :clients :client id)]
                [:router/go-to! item-route]))))
-
-(a/reg-event-fx
-  :clients.client-lister/render-lister!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :clients.client-lister/view
-                    {:view #'client-lister.views/view}])

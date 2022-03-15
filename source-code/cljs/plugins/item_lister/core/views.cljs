@@ -384,8 +384,8 @@
   ;  [item-lister/header :my-extension :my-type {:menu #'my-menu-element}}]
   [extension-id item-namespace header-props]
   (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :header)
-                      {:reagent-render      (fn []             [header-structure          extension-id item-namespace])
-                       :component-did-mount (fn [] (a/dispatch [:item-lister/init-header! extension-id item-namespace header-props]))}))
+                      {:reagent-render      (fn []             [header-structure              extension-id item-namespace])
+                       :component-did-mount (fn [] (a/dispatch [:item-lister/header-did-mount extension-id item-namespace header-props]))}))
 
 
 
@@ -585,6 +585,6 @@
   [extension-id item-namespace body-props]
   (let [body-props (core.prototypes/body-props-prototype extension-id item-namespace body-props)]
        (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :body)
-                           {:reagent-render         (fn []             [body-structure              extension-id item-namespace])
-                            :component-did-mount    (fn [] (a/dispatch [:item-lister/init-body!     extension-id item-namespace body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-lister/destruct-body! extension-id item-namespace]))})))
+                           {:reagent-render         (fn []             [body-structure                 extension-id item-namespace])
+                            :component-did-mount    (fn [] (a/dispatch [:item-lister/body-did-mount    extension-id item-namespace body-props]))
+                            :component-will-unmount (fn [] (a/dispatch [:item-lister/body-will-unmount extension-id item-namespace]))})))
