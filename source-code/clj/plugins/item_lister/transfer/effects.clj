@@ -22,4 +22,4 @@
   (fn [_ [_ extension-id item-namespace lister-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
                                 {:data-f      (fn [_] (return lister-props))
-                                 :target-path [extension-id :item-lister/transfer-items]}]}))
+                                 :target-path [:plugins :item-lister/transfer-items extension-id]}]}))

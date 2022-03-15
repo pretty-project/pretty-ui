@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (update-in db [extension-id :item-lister/meta-items :search-mode?] not))
+  (update-in db [:plugins :item-lister/meta-items extension-id :search-mode?] not))
 
 (defn toggle-select-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,8 +36,8 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (as-> db % (update-in % [extension-id :item-lister/meta-items :select-mode?] not)
-             (dissoc-in % [extension-id :item-lister/meta-items :selected-items])))
+  (as-> db % (update-in % [:plugins :item-lister/meta-items extension-id :select-mode?] not)
+             (dissoc-in % [:plugins :item-lister/meta-items extension-id :selected-items])))
 
 (defn toggle-reorder-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +47,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (update-in db [extension-id :item-lister/meta-items :reorder-mode?] not))
+  (update-in db [:plugins :item-lister/meta-items extension-id :reorder-mode?] not))
 
 (defn toggle-reload-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,7 +57,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (update-in db [extension-id :item-lister/meta-items :reload-mode?] not))
+  (update-in db [:plugins :item-lister/meta-items extension-id :reload-mode?] not))
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,7 +67,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (assoc-in db [extension-id :item-lister/meta-items :error-mode?] true))
+  (assoc-in db [:plugins :item-lister/meta-items extension-id :error-mode?] true))
 
 
 
@@ -87,9 +87,9 @@
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési
   ;     és rendezési beállításokkal, így a felhasználó az egyes elemek megtekintése/szerkesztése/...
   ;     után visszatérhet a lista legutóbbi állapotához.
-  (as-> db % (dissoc-in % [extension-id :item-lister/meta-items])
-             (assoc-in  % [extension-id :item-lister/meta-items]
-                          (select-keys (get-in db [extension-id :item-lister/meta-items])
+  (as-> db % (dissoc-in % [:plugins :item-lister/meta-items extension-id])
+             (assoc-in  % [:plugins :item-lister/meta-items extension-id]
+                          (select-keys (get-in db [:plugins :item-lister/meta-items extension-id])
                                        [:order-by :search-term]))))
 
 
@@ -113,7 +113,7 @@
   (if-let [order-by (r core.subs/get-meta-item db extension-id item-namespace :order-by)]
           (return db)
           (let [order-by-options (r mount.subs/get-body-prop db extension-id item-namespace :order-by-options)]
-               (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options)))))
+               (assoc-in db [:plugins :item-lister/meta-items extension-id :order-by] (first order-by-options)))))
 
 (defn use-header-title!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,7 +158,7 @@
   [db [_ extension-id item-namespace filter-pattern]]
   (as-> db % (r download.events/reset-downloads! % extension-id item-namespace)
              (r items.events/reset-selections!   % extension-id item-namespace)
-             (assoc-in % [extension-id :item-lister/meta-items :active-filter] filter-pattern)))
+             (assoc-in % [:plugins :item-lister/meta-items extension-id :active-filter] filter-pattern)))
 
 
 

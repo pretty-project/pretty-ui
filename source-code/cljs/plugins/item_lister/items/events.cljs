@@ -22,7 +22,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (dissoc-in db [extension-id :item-lister/meta-items :selected-items]))
+  (dissoc-in db [:plugins :item-lister/meta-items extension-id :selected-items]))
 
 
 
@@ -39,7 +39,7 @@
   [db [_ extension-id item-namespace]]
   (let [downloaded-items (r core.subs/get-downloaded-items db extension-id item-namespace)
         item-selections  (vector/dex-range downloaded-items)]
-       (assoc-in db [extension-id :item-lister/meta-items :selected-items] item-selections)))
+       (assoc-in db [:plugins :item-lister/meta-items extension-id :selected-items] item-selections)))
 
 (defn toggle-item-selection!
   ; @param (keyword) extension-id
@@ -52,10 +52,10 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-dex]]
   (if (r items.subs/item-selected? db extension-id item-namespace item-dex)
-      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-             (update-in [extension-id :item-lister/meta-items :selected-items] vector/remove-item item-dex))
-      (-> db (assoc-in  [extension-id :item-lister/meta-items :select-mode?] true)
-             (update-in [extension-id :item-lister/meta-items :selected-items] vector/conj-item   item-dex))))
+      (-> db (assoc-in  [:plugins :item-lister/meta-items extension-id :select-mode?] true)
+             (update-in [:plugins :item-lister/meta-items extension-id :selected-items] vector/remove-item item-dex))
+      (-> db (assoc-in  [:plugins :item-lister/meta-items extension-id :select-mode?] true)
+             (update-in [:plugins :item-lister/meta-items extension-id :selected-items] vector/conj-item   item-dex))))
 
 
 
@@ -74,7 +74,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _ item-dexes]]
-  (update-in db [extension-id :item-lister/meta-items :disabled-items] vector/concat-items item-dexes))
+  (update-in db [:plugins :item-lister/meta-items extension-id :disabled-items] vector/concat-items item-dexes))
 
 (defn enable-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,7 +88,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _ item-dexes]]
-  (update-in db [extension-id :item-lister/meta-items :disabled-items] vector/remove-items item-dexes))
+  (update-in db [:plugins :item-lister/meta-items extension-id :disabled-items] vector/remove-items item-dexes))
 
 (defn enable-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,7 +98,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  (dissoc-in db [extension-id :item-lister/meta-items :disabled-items]))
+  (dissoc-in db [:plugins :item-lister/meta-items extension-id :disabled-items]))
 
 (defn disable-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!

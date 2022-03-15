@@ -20,6 +20,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn order-by-label-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (namespaced keyword) order-by
   ;
   ; @example
@@ -31,3 +33,13 @@
   [order-by]
   (keyword (str "by-" (namespace order-by)
                 "-"   (name      order-by))))
+
+(defn default-items-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (vector)
+  [extension-id _]
+  [:plugins :item-lister/data-items extension-id])

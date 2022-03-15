@@ -22,7 +22,7 @@
   ;
   ; @return (*)
   [db [_ extension-id item-key]]
-  (get-in db [extension-id :view-selector/meta-items item-key]))
+  (get-in db [:plugins :view-selector/meta-items extension-id item-key]))
 
 
 

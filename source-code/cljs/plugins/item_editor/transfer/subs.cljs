@@ -18,4 +18,4 @@
   ;
   ; @return (*)
   [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/transfer-items item-key]))
+  (get-in db [:plugins :item-editor/transfer-items extension-id item-key]))

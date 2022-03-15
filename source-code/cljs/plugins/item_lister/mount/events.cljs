@@ -22,7 +22,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace header-props]]
-  (assoc-in db [extension-id :item-lister/header-props] header-props))
+  (assoc-in db [:plugins :item-lister/header-props extension-id] header-props))
 
 (defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -33,7 +33,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace body-props]]
-  (as-> db % (assoc-in % [extension-id :item-lister/body-props] body-props)
+  (as-> db % (assoc-in % [:plugins :item-lister/body-props extension-id] body-props)
              (r core.events/set-default-order-by! % extension-id item-namespace)))
 
 (defn header-will-unmount
@@ -44,7 +44,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (dissoc-in db [extension-id :item-lister/header-props]))
+  (dissoc-in db [:plugins :item-lister/header-props extension-id]))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,4 +58,4 @@
   ; betöltéskor nem villan fel a legutóbbi állapot!
   (as-> db % (r core.events/reset-meta-items!    % extension-id item-namespace)
              (r download.events/reset-downloads! % extension-id item-namespace)
-             (dissoc-in % [extension-id :item-lister/body-props])))
+             (dissoc-in % [:plugins :item-lister/body-props extension-id])))

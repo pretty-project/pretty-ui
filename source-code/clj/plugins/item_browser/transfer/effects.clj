@@ -22,4 +22,4 @@
   (fn [_ [_ extension-id item-namespace browser-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
                                 {:data-f      (fn [_] (return browser-props))
-                                 :target-path [extension-id :item-browser/transfer-items]}]}))
+                                 :target-path [:plugins :item-browser/transfer-items extension-id]}]}))

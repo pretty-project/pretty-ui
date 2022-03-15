@@ -24,7 +24,7 @@
   ;
   ; @return (map)
   [db [_ extension-id view-id]]
-  (assoc-in db [extension-id :view-selector/meta-items :view-id] view-id))
+  (assoc-in db [:plugins :view-selector/meta-items extension-id :view-id] view-id))
 
 
 
@@ -39,7 +39,7 @@
   ; @return (map)
   [db [_ extension-id]]
   (let [derived-view-id (r core.subs/get-derived-view-id db extension-id)]
-       (assoc-in db [extension-id :view-selector/meta-items :view-id] derived-view-id)))
+       (assoc-in db [:plugins :view-selector/meta-items extension-id :view-id] derived-view-id)))
 
 (defn use-header-title!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -20,5 +20,5 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ extension-id item-namespace item-ids]]
-  (vector/->items item-ids #(let [backup-item (get-in db [extension-id :item-lister/backup-items %])]
+  (vector/->items item-ids #(let [backup-item (get-in db [:plugins :item-lister/backup-items extension-id %])]
                                  (db/document->namespaced-document backup-item item-namespace))))

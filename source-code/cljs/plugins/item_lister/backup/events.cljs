@@ -4,8 +4,10 @@
 
 (ns plugins.item-lister.backup.events
     (:require [mid-fruits.map                 :as map]
+              [mid-fruits.vector              :as vector]
               [plugins.item-lister.core.subs  :as core.subs]
               [plugins.item-lister.items.subs :as items.subs]
+              [plugins.item-lister.mount.subs :as mount.subs]
               [x.app-core.api                 :as a :refer [r]]))
 
 
@@ -21,11 +23,12 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  (let [items-path     (r mount.subs/get-body-prop db extension-id item-namespace :items-path)
+        selected-items (r core.subs/get-meta-item  db extension-id item-namespace :selected-items)]
        (letfn [(f [db item-dex]
-                  (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])
-                        item    (get-in db [extension-id :item-lister/data-items item-dex])]
-                       (assoc-in db [extension-id :item-lister/backup-items item-id] item)))]
+                  (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))
+                        item    (get-in db (vector/conj-item    items-path item-dex))]
+                       (assoc-in db [:plugins :item-lister/backup-items extension-id item-id] item)))]
               (reduce f db selected-items))))
 
 (defn clean-backup-items!
@@ -37,7 +40,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-ids]]
-  (update-in db [extension-id :item-lister/backup-items] map/remove-items item-ids))
+  (update-in db [:plugins :item-lister/backup-items extension-id] map/remove-items item-ids))
 
 
 

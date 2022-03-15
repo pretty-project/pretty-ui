@@ -24,7 +24,7 @@
   ;
   ; @return (*)
   [db [_ extension-id item-namespace item-key]]
-  (get-in db [extension-id :item-lister/meta-items item-key]))
+  (get-in db [:plugins :item-lister/meta-items extension-id item-key]))
 
 
 
@@ -73,8 +73,9 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (maps in vector)
-  [db [_ extension-id _]]
-  (get-in db [extension-id :item-lister/data-items]))
+  [db [_ extension-id item-namespace]]
+  (let [items-path (r mount.subs/get-body-prop db extension-id item-namespace :items-path)]
+       (get-in db items-path)))
 
 (defn items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!

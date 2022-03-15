@@ -3,11 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.subs
-    (:require [mid-fruits.candy              :refer [return]]
-              [mid-fruits.vector             :as vector]
-              [plugins.item-lister.core.subs :as core.subs]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-environment.api         :as environment]))
+    (:require [mid-fruits.candy               :refer [return]]
+              [mid-fruits.vector              :as vector]
+              [plugins.item-lister.core.subs  :as core.subs]
+              [plugins.item-lister.mount.subs :as mount.subs]
+              [x.app-core.api                 :as a :refer [r]]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -42,9 +43,10 @@
   ;
   ; @return (strings in vector)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  (let [items-path     (r mount.subs/get-body-prop db extension-id item-namespace :items-path)
+        selected-items (r core.subs/get-meta-item  db extension-id item-namespace :selected-items)]
        (letfn [(f [result item-dex]
-                  (let [item-id (get-in db [extension-id :item-lister/data-items item-dex :id])]
+                  (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))]
                        (conj result item-id)))]
               (reduce f [] selected-items))))
 

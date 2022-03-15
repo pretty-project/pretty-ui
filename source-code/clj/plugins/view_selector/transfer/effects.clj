@@ -21,4 +21,4 @@
   (fn [_ [_ extension-id selector-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id)
                                 {:data-f      (fn [_] (return selector-props))
-                                 :target-path [extension-id :view-selector/transfer-items]}]}))
+                                 :target-path [:plugins :view-selector/transfer-items extension-id]}]}))

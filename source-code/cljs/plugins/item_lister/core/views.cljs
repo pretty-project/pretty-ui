@@ -42,7 +42,7 @@
                                :disabled?     (or error-mode? lister-disabled?)
                                :on-empty      [:item-lister/search-items! extension-id item-namespace]
                                :on-type-ended [:item-lister/search-items! extension-id item-namespace]
-                               :value-path    [extension-id :item-lister/meta-items :search-term]}]))
+                               :value-path    [:plugins :item-lister/meta-items extension-id :search-term]}]))
 
 (defn toggle-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -259,9 +259,10 @@
                         {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
                          :disabled?    (or error-mode? lister-disabled? no-items-to-show?)
                          :on-select    [:item-lister/order-items! extension-id item-namespace]
-                         :options-path [extension-id :item-lister/meta-items :order-by-options]
-                         :get-label-f  core.helpers/order-by-label-f
-                         :value-path   [extension-id :item-lister/meta-items :order-by]}]))
+                         :options-path [:plugins :item-lister/meta-items extension-id :order-by-options]
+                         :value-path   [:plugins :item-lister/meta-items extension-id :order-by]
+                         :get-label-f  core.helpers/order-by-label-f}]))
+
 
 
 
@@ -361,13 +362,14 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  [:div#item-lister--header--structure
-    (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :menu-element])]
-            [menu-element     extension-id item-namespace]
-            [menu-mode-header extension-id item-namespace])
-    [reorder-mode-header extension-id item-namespace]
-    [select-mode-header  extension-id item-namespace]
-    [search-mode-header  extension-id item-namespace]])
+  (if @(a/subscribe [:item-lister/header-did-mount? extension-id item-namespace])
+       [:div#item-lister--header--structure
+         (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :menu-element])]
+                 [menu-element     extension-id item-namespace]
+                 [menu-mode-header extension-id item-namespace])
+         [reorder-mode-header extension-id item-namespace]
+         [select-mode-header  extension-id item-namespace]
+         [search-mode-header  extension-id item-namespace]]))
 
 (defn header
   ; @param (keyword) extension-id
@@ -554,10 +556,11 @@
   [extension-id item-namespace]
   (if-let [error-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :error-mode?])]
           [error-body extension-id item-namespace]
-          [:div.item-lister--body--structure
-            [item-list             extension-id item-namespace]
-            [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
-            [indicators            extension-id item-namespace]]))
+          (if @(a/subscribe [:item-lister/body-did-mount? extension-id item-namespace])
+               [:div.item-lister--body--structure
+                 [item-list             extension-id item-namespace]
+                 [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
+                 [indicators            extension-id item-namespace]])))
 
 (defn body
   ; @param (keyword) extension-id
@@ -568,6 +571,8 @@
   ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
+  ;   :items-path (vector)(opt)
+  ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: core.config/DEFAULT-ORDER-BY-OPTIONS

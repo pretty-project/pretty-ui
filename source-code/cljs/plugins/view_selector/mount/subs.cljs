@@ -18,16 +18,16 @@
   ;
   ; @return (*)
   [db [_ extension-id prop-key]]
-  (get-in db [extension-id :view-selector/body-props prop-key]))
+  (get-in db [:plugins :view-selector/body-props extension-id prop-key]))
 
-(defn body-mounted?
+(defn body-did-mount?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (some? (get-in db [extension-id :view-selector/body-props])))
+  (some? (get-in db [:plugins :view-selector/body-props extension-id])))
 
 
 
@@ -38,4 +38,4 @@
 (a/reg-sub :view-selector/get-body-prop get-body-prop)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :view-selector/body-mounted? body-mounted?)
+(a/reg-sub :view-selector/body-did-mount? body-did-mount?)

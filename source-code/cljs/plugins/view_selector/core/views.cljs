@@ -18,10 +18,6 @@
   ;
   ; @param (keyword) extension-id
   [extension-id]
-  ; Ha a {:content ...} tulajdonságként átadott tartalom akkor jelenik meg, amikor elérhetővé
-  ; vált a Re-Frame adatbázisban, akkor a rajta megjelenített tartalom nem iratkozik fel
-  ; a view-selector plugin függvényeire, mielőtt a body komponens :component-did-mount életciklusa
-  ; eltárolná a body-props paraméterként kapott tulajdonságait.
   (if-let [content @(a/subscribe [:view-selector/get-body-prop extension-id :content])]
           [content extension-id]))
 
