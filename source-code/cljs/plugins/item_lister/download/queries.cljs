@@ -5,6 +5,7 @@
 (ns plugins.item-lister.download.queries
     (:require [plugins.item-lister.core.subs     :as core.subs]
               [plugins.item-lister.download.subs :as download.subs]
+              [plugins.item-lister.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -27,13 +28,13 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
-  {:download-limit        (r core.subs/get-meta-item             db extension-id item-namespace :download-limit)
+  {:download-limit        (r mount.subs/get-body-prop            db extension-id item-namespace :download-limit)
    :order-by              (r core.subs/get-meta-item             db extension-id item-namespace :order-by)
    :reload-items?         (r core.subs/get-meta-item             db extension-id item-namespace :reload-mode?)
-   :search-keys           (r core.subs/get-meta-item             db extension-id item-namespace :search-keys)
+   :search-keys           (r mount.subs/get-body-prop            db extension-id item-namespace :search-keys)
+   :search-term           (r core.subs/get-meta-item             db extension-id item-namespace :search-term)
    :downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)
    :filter-pattern        (r core.subs/get-filter-pattern        db extension-id item-namespace)
-   :search-term           (r core.subs/get-search-term           db extension-id item-namespace)
 
    ; TEMP
    ; Az {:item-id ...} értéke az item-browser plugin számára szükséges!

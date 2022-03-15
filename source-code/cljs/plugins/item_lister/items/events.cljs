@@ -108,8 +108,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [selected-item-dexes (r items.subs/get-selected-item-dexes db extension-id item-namespace)]
-       (r disable-items! db extension-id item-namespace selected-item-dexes)))
+  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+       (r disable-items! db extension-id item-namespace selected-items)))
 
 
 

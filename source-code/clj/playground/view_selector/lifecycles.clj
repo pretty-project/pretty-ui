@@ -12,4 +12,5 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:view-selector/init-selector! :playground {:default-view-id :anchors}]})
+  {:on-server-boot [:view-selector/init-selector! :playground {:default-view-id :anchors
+                                                               :route-template "/@app-home/playground/:view-id"}]})

@@ -14,38 +14,42 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ extension-id prop-key]]
+  [db [_ extension-id _ prop-key]]
   (get-in db [extension-id :item-lister/header-props prop-key]))
 
 (defn get-body-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ extension-id prop-key]]
+  [db [_ extension-id _ prop-key]]
   (get-in db [extension-id :item-lister/body-props prop-key]))
 
 (defn header-mounted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (some? (get-in db [extension-id :item-lister/header-props])))
 
 (defn body-mounted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id]]
+  [db [_ extension-id _]]
   (some? (get-in db [extension-id :item-lister/body-props])))
 
 

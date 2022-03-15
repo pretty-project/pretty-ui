@@ -35,7 +35,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
+  (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    extension-id item-namespace :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
        [elements/search-field :item-lister/search-items-field
                               {:auto-focus? true :layout :row :min-width :xs :placeholder :search
@@ -50,7 +50,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [error-mode?      @(a/subscribe [:item-lister/error-mode?      extension-id item-namespace])
+  (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    extension-id item-namespace :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])]
        [elements/icon-button :item-lister/toggle-search-mode-button
                              {:preset :search :tooltip :search
@@ -135,7 +135,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [item-actions       @(a/subscribe [:item-lister/get-item-actions   extension-id item-namespace])
+  (let [item-actions       @(a/subscribe [:item-lister/get-header-prop    extension-id item-namespace :item-actions])
         lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? extension-id item-namespace])]
        (if (vector/contains-item? item-actions :delete)
@@ -150,7 +150,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [item-actions       @(a/subscribe [:item-lister/get-item-actions   extension-id item-namespace])
+  (let [item-actions       @(a/subscribe [:item-lister/get-header-prop    extension-id item-namespace :item-actions])
         lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? extension-id item-namespace])]
        (if (vector/contains-item? item-actions :duplicate)
@@ -199,10 +199,10 @@
   ; @usage
   ;  [item-lister/new-item-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [error-mode?      @(a/subscribe [:item-lister/error-mode?        extension-id item-namespace])
-        lister-disabled? @(a/subscribe [:item-lister/lister-disabled?   extension-id item-namespace])
-        new-item-event   @(a/subscribe [:item-lister/get-new-item-event extension-id item-namespace])]
-       (if-let [new-item-options @(a/subscribe [:item-lister/get-new-item-options extension-id item-namespace])]
+  (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    extension-id item-namespace :error-mode?])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])
+        new-item-event   @(a/subscribe [:item-lister/get-header-prop  extension-id item-namespace :new-item-event])]
+       (if-let [new-item-options @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :new-item-options])]
                [elements/select :item-lister/new-item-select
                                 {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
                                  :initial-options new-item-options
@@ -220,7 +220,7 @@
   ; @usage
   ;  [item-lister/toggle-select-mode-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     extension-id item-namespace :error-mode?])
         items-selectable? @(a/subscribe [:item-lister/items-selectable? extension-id item-namespace])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
@@ -236,8 +236,8 @@
   ; @usage
   ;  [item-lister/toggle-reorder-mode-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
-        items-sortable?   @(a/subscribe [:item-lister/items-sortable?   extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     extension-id item-namespace :error-mode?])
+        items-sortable?   @(a/subscribe [:item-lister/get-body-prop     extension-id item-namespace :sortable?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        (if items-sortable? [elements/icon-button :item-lister/toggle-reorder-mode-button
@@ -252,7 +252,7 @@
   ; @usage
   ;  [item-lister/sort-items-button :my-extension :my-type]
   [extension-id item-namespace]
-  (let [error-mode?       @(a/subscribe [:item-lister/error-mode?       extension-id item-namespace])
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     extension-id item-namespace :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  extension-id item-namespace])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? extension-id item-namespace])]
        [elements/select :item-lister/sort-items-button
@@ -283,7 +283,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [search-mode? @(a/subscribe [:item-lister/search-mode? extension-id item-namespace])]
+  (let [search-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :search-mode?])]
        [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
                                          [search-mode-header-structure extension-id item-namespace]]))
 
@@ -306,7 +306,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [select-mode? @(a/subscribe [:item-lister/select-mode? extension-id item-namespace])]
+  (let [select-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :select-mode?])]
        [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
                                          [select-mode-header-structure extension-id item-namespace]]))
 
@@ -329,8 +329,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [menu-mode? @(a/subscribe [:item-lister/menu-mode? extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
+  (let [reorder-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :reorder-mode?])
+        search-mode?  @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :search-mode?])]
+       [react-transition/mount-animation {:animation-timeout 500 :mounted? (nor reorder-mode? search-mode?)}
                                          [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn reorder-mode-header-structure
@@ -350,7 +351,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [reorder-mode? @(a/subscribe [:item-lister/reorder-mode? extension-id item-namespace])]
+  (let [reorder-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :reorder-mode?])]
        [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
                                          [reorder-mode-header-structure extension-id item-namespace]]))
 
@@ -361,7 +362,7 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   [:div#item-lister--header--structure
-    (if-let [menu-element @(a/subscribe [:item-lister/get-menu-element extension-id item-namespace])]
+    (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :menu-element])]
             [menu-element     extension-id item-namespace]
             [menu-mode-header extension-id item-namespace])
     [reorder-mode-header extension-id item-namespace]
@@ -384,8 +385,9 @@
   ;  [item-lister/header :my-extension :my-type {:menu #'my-menu-element}}]
   [extension-id item-namespace header-props]
   (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :header)
-                      {:reagent-render      (fn []             [header-structure              extension-id item-namespace])
-                       :component-did-mount (fn [] (a/dispatch [:item-lister/header-did-mount extension-id item-namespace header-props]))}))
+                      {:reagent-render         (fn []             [header-structure                 extension-id item-namespace])
+                       :component-did-mount    (fn [] (a/dispatch [:item-lister/header-did-mount    extension-id item-namespace header-props]))
+                       :component-will-unmount (fn [] (a/dispatch [:item-lister/header-will-unmount extension-id item-namespace]))}))
 
 
 
@@ -471,7 +473,7 @@
   [extension-id item-namespace item-dex]
   (let [item-selected?   @(a/subscribe [:item-lister/item-selected?   extension-id item-namespace item-dex])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? extension-id item-namespace])
-        select-mode?     @(a/subscribe [:item-lister/select-mode?     extension-id item-namespace])]
+        select-mode?     @(a/subscribe [:item-lister/get-meta-item    extension-id item-namespace :select-mode?])]
        (if select-mode? [elements/button {:disabled? lister-disabled?
                                           :on-click  [:item-lister/toggle-item-selection! extension-id item-namespace item-dex]
                                           :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}])))
@@ -484,8 +486,8 @@
   ; @param (integer) item-dex
   ; @param (map) item
   [extension-id item-namespace item-dex item]
-  (let [item-disabled? @(a/subscribe [:item-lister/item-disabled?   extension-id item-namespace item-dex])
-        list-element   @(a/subscribe [:item-lister/get-list-element extension-id item-namespace])]
+  (let [item-disabled? @(a/subscribe [:item-lister/item-disabled? extension-id item-namespace item-dex])
+        list-element   @(a/subscribe [:item-lister/get-body-prop  extension-id item-namespace :list-element])]
        [:div.item-lister--list-item--structure
          ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
          ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
@@ -550,7 +552,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [error-mode? @(a/subscribe [:item-lister/error-mode? extension-id item-namespace])]
+  (if-let [error-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :error-mode?])]
           [error-body extension-id item-namespace]
           [:div.item-lister--body--structure
             [item-list             extension-id item-namespace]

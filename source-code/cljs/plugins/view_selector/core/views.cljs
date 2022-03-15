@@ -42,5 +42,6 @@
   [extension-id body-props]
   (let [body-props (core.prototypes/body-props-prototype body-props)]
        (reagent/lifecycles (core.helpers/component-id extension-id :body)
-                           {:reagent-render      (fn []             [body-structure                extension-id])
-                            :component-did-mount (fn [] (a/dispatch [:view-selector/body-did-mount extension-id body-props]))})))
+                           {:reagent-render         (fn []             [body-structure                   extension-id])
+                            :component-did-mount    (fn [] (a/dispatch [:view-selector/body-did-mount    extension-id body-props]))
+                            :component-will-unmount (fn [] (a/dispatch [:view-selector/body-will-unmount extension-id]))})))

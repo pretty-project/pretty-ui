@@ -8,8 +8,10 @@
               [plugins.item-lister.core.subs       :as core.subs]
               [plugins.item-lister.download.events :as download.events]
               [plugins.item-lister.items.events    :as items.events]
+              [plugins.item-lister.mount.subs      :as mount.subs]
+              [plugins.item-lister.transfer.subs   :as transfer.subs]
               [x.app-core.api                      :as a :refer [r]]
-              [x.app-db.api                        :as db]))
+              [x.app-ui.api                        :as ui]))
 
 
 
@@ -72,7 +74,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reset-lister!
+(defn reset-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -84,21 +86,11 @@
   ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
   ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési
   ;     és rendezési beállításokkal, így a felhasználó az egyes elemek megtekintése/szerkesztése/...
-  ;     után visszatérhet a legutóbbi kereséséhez.
+  ;     után visszatérhet a lista legutóbbi állapotához.
   (as-> db % (dissoc-in % [extension-id :item-lister/meta-items])
              (assoc-in  % [extension-id :item-lister/meta-items]
                           (select-keys (get-in db [extension-id :item-lister/meta-items])
                                        [:order-by :search-term]))))
-
-(defn reset-search!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (dissoc-in db [extension-id :item-lister/meta-items :search-term]))
 
 
 
@@ -120,8 +112,20 @@
   ; ... az elemek letöltésekor a szerver nem kapná meg az order-by értékét!
   (if-let [order-by (r core.subs/get-meta-item db extension-id item-namespace :order-by)]
           (return db)
-          (let [order-by-options (r core.subs/get-meta-item db extension-id item-namespace :order-by-options)]
+          (let [order-by-options (r mount.subs/get-body-prop db extension-id item-namespace :order-by-options)]
                (assoc-in db [extension-id :item-lister/meta-items :order-by] (first order-by-options)))))
+
+(defn use-header-title!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (if-let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+          (r ui/set-header-title! db route-title)
+          (return db)))
 
 
 
@@ -136,51 +140,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  db)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn header-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace header-props]]
-  ; XXX#4036
-  (r db/apply-item! db [extension-id :item-lister/meta-items] merge header-props))
-
-(defn body-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace body-props]]
-  ; XXX#6051
-  ; XXX#4036
-  (as-> db % (r db/apply-item! % [extension-id :item-lister/meta-items] merge body-props)
-             (r set-default-order-by! % extension-id item-namespace)))
-
-(defn body-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő
-  ; betöltéskor a plugin tulajdonságainak eltárolása előtt nem villan fel a legutóbbi állapot!
-  (as-> db % (r reset-lister!                    % extension-id item-namespace)
-             (r download.events/reset-downloads! % extension-id item-namespace)))
+  (r use-header-title! db extension-id item-namespace))
 
 
 

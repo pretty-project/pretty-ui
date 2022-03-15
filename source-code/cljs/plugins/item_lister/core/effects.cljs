@@ -20,9 +20,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [on-load (r transfer.subs/get-transfer-item db extension-id item-namespace :on-load)]
+      (let [on-load     (r transfer.subs/get-transfer-item db extension-id item-namespace :on-load)
+            route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
            {:db (r core.events/load-lister! db extension-id item-namespace)
-            :dispatch on-load})))
+            :dispatch-n [on-load (if route-title [:ui/set-window-title! route-title])]})))
 
 
 

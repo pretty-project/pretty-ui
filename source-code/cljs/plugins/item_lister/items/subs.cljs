@@ -14,16 +14,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-disabled-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (r core.subs/get-meta-item db extension-id item-namespace :disabled-items))
-
 (defn item-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -36,23 +26,13 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace item-dex]]
-  (let [disabled-items (r get-disabled-items db extension-id item-namespace)]
+  (let [disabled-items (r core.subs/get-meta-item db extension-id item-namespace :disabled-items)]
        (vector/contains-item? disabled-items item-dex)))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-selected-item-dexes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (integers in vector)
-  [db [_ extension-id item-namespace]]
-  (r core.subs/get-meta-item db extension-id item-namespace :selected-items))
 
 (defn get-selected-item-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,7 +56,7 @@
   ;
   ; @return (integer)
   [db [_ extension-id item-namespace]]
-  (let [selected-items (r get-selected-item-dexes db extension-id item-namespace)]
+  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
        (count selected-items)))
 
 (defn item-selected?
@@ -91,8 +71,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace item-dex]]
-  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
-       (vector/contains-item? selected-item-dexes item-dex)))
+  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+       (vector/contains-item? selected-items item-dex)))
 
 (defn all-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,8 +95,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
-       (vector/nonempty? selected-item-dexes)))
+  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+       (vector/nonempty? selected-items)))
 
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,8 +106,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [selected-item-dexes (r get-selected-item-dexes db extension-id item-namespace)]
-       (-> selected-item-dexes vector/nonempty? not)))
+  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+       (-> selected-items vector/nonempty? not)))
 
 (defn toggle-item-selection?
   ; @param (keyword) extension-id

@@ -35,6 +35,15 @@
       {:db (r mount.events/header-did-mount db extension-id item-namespace header-props)}))
 
 (a/reg-event-fx
+  :item-lister/header-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r mount.events/header-will-unmount db extension-id item-namespace)}))
+
+(a/reg-event-fx
   :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -11,6 +11,8 @@
               [x.app-core.load-handler.events]
               [x.app-core.load-handler.lifecycles]
               [x.app-core.load-handler.subs]
+              [x.app-core.transfer-handler.effects]
+              [x.app-core.transfer-handler.events]
               [x.app-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.app-core.build-handler.subs             :as build-handler.subs]
               [x.app-core.cache-handler.helpers          :as cache-handler.helpers]
@@ -24,7 +26,7 @@
               [x.app-core.login-handler                  :as login-handler]
               [x.app-core.print-handler                  :as print-handler]
               [x.app-core.process-handler                :as process-handler]
-              [x.app-core.transfer-handler               :as transfer-handler]))
+              [x.app-core.transfer-handler.subs          :as transfer-handler.subs]))
 
 
 
@@ -122,6 +124,6 @@
 (def set-process-activity! process-handler/set-process-activity!)
 (def clear-process!        process-handler/clear-process!)
 
-; x.app-core.transfer-handler
-(def get-transfer-data transfer-handler/get-transfer-data)
-(def get-transfer-item transfer-handler/get-transfer-item)
+; x.app-core.transfer-handler.subs
+(def get-transfer-data transfer-handler.subs/get-transfer-data)
+(def get-transfer-item transfer-handler.subs/get-transfer-item)

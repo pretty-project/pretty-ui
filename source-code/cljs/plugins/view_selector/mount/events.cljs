@@ -28,7 +28,8 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (dissoc-in db [extension-id :view-selector/body-props]))
+  (-> db (dissoc-in [extension-id :view-selector/body-props])
+         (dissoc-in [extension-id :view-selector/meta-items])))
 
 
 

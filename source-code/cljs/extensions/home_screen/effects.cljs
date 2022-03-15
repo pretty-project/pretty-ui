@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.home-screen.effects
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [extensions.home-screen.views :as views]
+              [x.app-core.api               :as a :refer [r]]))
 
 
 
