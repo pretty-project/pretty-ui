@@ -11,6 +11,7 @@
               [x.app-core.load-handler.events]
               [x.app-core.load-handler.lifecycles]
               [x.app-core.load-handler.subs]
+              [x.app-core.login-handler.effects]
               [x.app-core.transfer-handler.effects]
               [x.app-core.transfer-handler.events]
               [x.app-core.build-handler.side-effects     :as build-handler.side-effects]
@@ -23,9 +24,9 @@
               [x.app-core.event-handler                  :as event-handler]
               [x.app-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.app-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
-              [x.app-core.login-handler                  :as login-handler]
-              [x.app-core.print-handler                  :as print-handler]
-              [x.app-core.process-handler                :as process-handler]
+              [x.app-core.print-handler.side-effects     :as print-handler.side-effects]
+              [x.app-core.process-handler.events         :as process-handler.events]
+              [x.app-core.process-handler.subs           :as process-handler.subs]
               [x.app-core.transfer-handler.subs          :as transfer-handler.subs]))
 
 
@@ -100,29 +101,30 @@
 ; x.app-core.lifecycle-handler.subs
 (def get-period-events lifecycle-handler.subs/get-period-events)
 
-; x.app-core.print-handler
-(def console print-handler/console)
+; x.app-core.print-handler.side-effects
+(def console print-handler.side-effects/console)
 
-; x.app-core.process-handler
-(def get-process-status    process-handler/get-process-status)
-(def process-ready?        process-handler/process-ready?)
-(def process-preparing?    process-handler/process-preparing?)
-(def process-in-progress?  process-handler/process-in-progress?)
-(def process-success?      process-handler/process-success?)
-(def process-failured?     process-handler/process-failured?)
-(def process-blocked?      process-handler/process-blocked?)
-(def get-process-activity  process-handler/get-process-activity)
-(def process-inactive?     process-handler/process-inactive?)
-(def process-active?       process-handler/process-active?)
-(def process-idle?         process-handler/process-idle?)
-(def process-stalled?      process-handler/process-stalled?)
-(def start-process?        process-handler/start-process?)
-(def get-process-progress  process-handler/get-process-progress)
-(def process-done?         process-handler/process-done?)
-(def set-process-progress! process-handler/set-process-progress!)
-(def set-process-status!   process-handler/set-process-status!)
-(def set-process-activity! process-handler/set-process-activity!)
-(def clear-process!        process-handler/clear-process!)
+; x.app-core.process-handler.events
+(def set-process-progress! process-handler.events/set-process-progress!)
+(def set-process-status!   process-handler.events/set-process-status!)
+(def set-process-activity! process-handler.events/set-process-activity!)
+
+; x.app-core.process-handler.subs
+(def get-process-status    process-handler.subs/get-process-status)
+(def process-ready?        process-handler.subs/process-ready?)
+(def process-preparing?    process-handler.subs/process-preparing?)
+(def process-in-progress?  process-handler.subs/process-in-progress?)
+(def process-success?      process-handler.subs/process-success?)
+(def process-failured?     process-handler.subs/process-failured?)
+(def process-blocked?      process-handler.subs/process-blocked?)
+(def get-process-activity  process-handler.subs/get-process-activity)
+(def process-inactive?     process-handler.subs/process-inactive?)
+(def process-active?       process-handler.subs/process-active?)
+(def process-idle?         process-handler.subs/process-idle?)
+(def process-stalled?      process-handler.subs/process-stalled?)
+(def start-process?        process-handler.subs/start-process?)
+(def get-process-progress  process-handler.subs/get-process-progress)
+(def process-done?         process-handler.subs/process-done?)
 
 ; x.app-core.transfer-handler.subs
 (def get-transfer-data transfer-handler.subs/get-transfer-data)

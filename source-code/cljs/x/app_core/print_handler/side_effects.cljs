@@ -1,43 +1,12 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2022.01.07
-; Description:
-; Version: v0.3.2
-; Compatibility: x4.5.2
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.print-handler
-    (:require [mid-fruits.string :as string]
-              [mid-fruits.time   :as time]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (ms)
-(def APP-STARTED-AT (time/elapsed))
-
-; @constant (ms)
-(def SEPARATOR-DELAY 2000)
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (ms)
-(def separated-at (atom APP-STARTED-AT))
-
-; @atom (integer)
-(def separator-no (atom 0))
+(ns x.app-core.print-handler.side-effects
+    (:require [mid-fruits.string               :as string]
+              [mid-fruits.time                 :as time]
+              [x.app-core.print-handler.config :as print-handler.config]
+              [x.app-core.print-handler.state  :as print-handler.state]))
 
 
 
@@ -53,8 +22,8 @@
   ; @return (boolean)
   []
   (-> (time/elapsed)
-      (- @separated-at)
-      (> SEPARATOR-DELAY)))
+      (- @print-handler.state/SEPARATED-AT)
+      (> print-handler.config/SEPARATOR-DELAY)))
 
 (defn- separate!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -63,10 +32,10 @@
   []
   (let [elapsed-time (time/elapsed)]
        ; *
-       (reset! separated-at elapsed-time)
-       (swap!  separator-no inc)
+       (reset! print-handler.state/SEPARATED-AT elapsed-time)
+       (swap!  print-handler.state/SEPARATOR-NO inc)
        ; *
-       (.log js/console (str "%c* Thin red line #" @separator-no " *") "color: red")))
+       (.log js/console (str "%c* Thin red line #" @print-handler.state/SEPARATOR-NO " *") "color: red")))
 
 
 
@@ -79,7 +48,7 @@
   ; @return (integer)
   []
   (-> (time/elapsed)
-      (- APP-STARTED-AT)))
+      (- print-handler.config/APP-STARTED-AT)))
 
 (defn timestamp
   ; WARNING! NON-PUBLIC! DO NOT USE!

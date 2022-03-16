@@ -14,15 +14,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.event-handler
-    (:require [mid-fruits.candy         :refer [param return]]
-              [mid-fruits.keyword       :as keyword]
-              [mid-fruits.string        :as string]
-              [mid-fruits.time          :as time]
-              [mid-fruits.vector        :as vector]
-              [re-frame.core            :as re-frame]
-              [re-frame.registrar       :as registrar]
-              [x.app-core.print-handler :as print-handler]
-              [x.mid-core.event-handler :as event-handler]))
+    (:require [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.keyword                    :as keyword]
+              [mid-fruits.string                     :as string]
+              [mid-fruits.time                       :as time]
+              [mid-fruits.vector                     :as vector]
+              [re-frame.core                         :as re-frame]
+              [re-frame.registrar                    :as registrar]
+              [x.app-core.print-handler.side-effects :as print-handler.side-effects]
+              [x.mid-core.event-handler              :as event-handler]))
 
 
 
@@ -89,7 +89,7 @@
 ; @constant (?)
 (def LOG-EVENT! (->interceptor :id :core/log-event!
                                :before #(do (when (-> %1 context->db-before-effect log-events?)
-                                                  (-> %1 context->event-vector     print-handler/console))
+                                                  (-> %1 context->event-vector     print-handler.side-effects/console))
                                             (-> %1 return))))
 
 (defn- interceptors<-system-interceptors

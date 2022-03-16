@@ -3,7 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.api
-    (:require [x.app-environment.cookie-handler.effects]
+    (:require [x.app-environment.connection-handler.effects]
+              [x.app-environment.connection-handler.lifecycles]
+              [x.app-environment.connection-handler.side-effects]
+              [x.app-environment.cookie-handler.effects]
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.element-handler.effects]
@@ -11,6 +14,8 @@
               [x.app-environment.scroll-prohibitor.events]
               [x.app-environment.scroll-prohibitor.side-effects]
               [x.app-environment.scroll-prohibitor.subs]
+              [x.app-environment.window-handler.lifecycles]
+              [x.app-environment.connection-handler.subs      :as connection-handler.subs]
               [x.app-environment.cookie-handler.subs          :as cookie-handler.subs]
               [x.app-environment.css-handler.side-effects     :as css-handler.side-effects]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
@@ -20,12 +25,16 @@
               [x.app-environment.scroll-handler               :as scroll-handler]
               [x.app-environment.touch-handler                :as touch-handler]
               [x.app-environment.viewport-handler             :as viewport-handler]
-              [x.app-environment.window-handler               :as window-handler]))
+              [x.app-environment.window-handler.side-effects  :as window-handler.side-effects]))
 
-
+ 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.app-environment.connection-handler.subs
+(def browser-online?  connection-handler.subs/browser-online?)
+(def browser-offline? connection-handler.subs/browser-offline?)
 
 ; x.app-environment.cookie-handler.subs
 (def get-stored-cookies               cookie-handler.subs/get-stored-cookies)
@@ -96,17 +105,13 @@
 (def viewport-large?          viewport-handler/viewport-large?)
 (def get-viewport-orientation viewport-handler/get-viewport-orientation)
 
-; x.app-environment.window-handler
-(def interval-exists?      window-handler/interval-exists?)
-(def timeout-exists?       window-handler/timeout-exists?)
-(def browser-online?       window-handler/browser-online?)
-(def browser-offline?      window-handler/browser-offline?)
-(def open-new-browser-tab! window-handler/open-new-browser-tab!)
-(def set-window-title!     window-handler/set-window-title!)
-(def reload-window!        window-handler/reload-window!)
-(def go-to-root!           window-handler/go-to-root!)
-(def go-to!                window-handler/go-to!)
-(def set-interval!         window-handler/set-interval!)
-(def clear-interval!       window-handler/clear-interval!)
-(def set-timeout!          window-handler/set-timeout!)
-(def clear-timeout!        window-handler/clear-timeout!)
+; x.app-environment.window-handler.side-effects
+(def open-new-browser-tab! window-handler.side-effects/open-new-browser-tab!)
+(def set-window-title!     window-handler.side-effects/set-window-title!)
+(def reload-window!        window-handler.side-effects/reload-window!)
+(def go-to-root!           window-handler.side-effects/go-to-root!)
+(def go-to!                window-handler.side-effects/go-to!)
+(def set-interval!         window-handler.side-effects/set-interval!)
+(def clear-interval!       window-handler.side-effects/clear-interval!)
+(def set-timeout!          window-handler.side-effects/set-timeout!)
+(def clear-timeout!        window-handler.side-effects/clear-timeout!)

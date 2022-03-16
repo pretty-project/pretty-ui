@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.02.14
-; Description:
-; Version: v0.2.8
-; Compatibility: x4.4.1
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.login-handler
+(ns x.app-core.login-handler.effects
     (:require [x.app-core.event-handler          :as event-handler :refer [r]]
               [x.app-core.lifecycle-handler.subs :as lifecycle-handler.subs]))
 

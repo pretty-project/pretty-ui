@@ -26,17 +26,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A szerver-oldali :my-transfer azonosítóval regisztrált függvény visszatérési értékének
-; kiolvasása a kliens-oldali Re-Frame adatbázisból az a/get-transfer-data függvénnyel.
-(defn get-my-transfer-data
-  [db _]
-  (r a/get-transfer-data db :my-transfer))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn my-switch-enabled?
   [db _]
   (get-in db [:my-switch]))
