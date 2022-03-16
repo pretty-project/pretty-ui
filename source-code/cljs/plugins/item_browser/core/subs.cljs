@@ -52,9 +52,8 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  ; XXX#3055
-  (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
-          (keyword (name handler-key) "synchronize-browser!")))
+  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+       (keyword (name handler-key) "synchronize-browser!")))
 
 
 

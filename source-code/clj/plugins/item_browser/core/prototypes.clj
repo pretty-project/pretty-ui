@@ -19,9 +19,9 @@
   ; @return (map)
   ;  {:base-route (string)
   ;   :extended-route (string)
-  ;   :route-title (keyword)}
+  ;   :route-title (metamorphic-content)}
   [extension-id item-namespace browser-props]
   (merge {:base-route     (routes.helpers/base-route     extension-id item-namespace browser-props)
           :extended-route (routes.helpers/extended-route extension-id item-namespace browser-props)
-          :route-title    (param :auto)}
+          :route-title    (param extension-id)}
          (param browser-props)))

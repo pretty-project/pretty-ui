@@ -35,7 +35,7 @@
   ; @param (keyword) extension-id
   ;
   ; @return (keyword)
-  [db [_ extension-id]]
+  [db [_ _]]
   (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
           (keyword derived-view-id)))
 

@@ -79,5 +79,5 @@
   ; szükséges a szerver számára elküldeni az elem kliens-oldali – esetleges változtatásokat
   ; tartalmazó – aktuális változatát.
   (let [mutation-name (r update.subs/get-mutation-name db extension-id item-namespace :duplicate)
-        exported-item (r core.subs/export-copy-item    db extension-id item-namespace)]
+        exported-item (r core.subs/export-current-item db extension-id item-namespace)]
        [:debug `(~(symbol mutation-name) ~{:item exported-item})]))

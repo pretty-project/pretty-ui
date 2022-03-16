@@ -6,10 +6,8 @@
     (:require [plugins.item-editor.backup.events       :as backup.events]
               [plugins.item-editor.core.subs           :as core.subs]
               [plugins.item-editor.download.queries    :as download.queries]
-              [plugins.item-editor.download.subs       :as download.subs]
               [plugins.item-editor.download.validators :as download.validators]
-              [x.app-core.api                          :as a :refer [r]]
-              [x.app-ui.api                            :as ui]))
+              [x.app-core.api                          :as a :refer [r]]))
 
 
 

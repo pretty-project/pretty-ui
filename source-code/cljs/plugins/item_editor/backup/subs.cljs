@@ -21,7 +21,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (get-in db [extension-id :item-editor/backup-items item-id]))
+  (get-in db [:plugins :item-editor/backup-items extension-id item-id]))
 
 (defn export-backup-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
-       (get-in db [extension-id :item-editor/local-changes current-item-id])))
+       (get-in db [:plugins :item-editor/local-changes extension-id current-item-id])))
 
 (defn get-recovered-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

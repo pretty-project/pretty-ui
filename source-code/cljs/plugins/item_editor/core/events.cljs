@@ -3,10 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.events
-    (:require [mid-fruits.map                :refer [dissoc-in]]
-              [plugins.item-editor.core.subs :as core.subs]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-db.api                  :as db]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.map                    :refer [dissoc-in]]
+              [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-ui.api                      :as ui]))
 
 
 
@@ -50,7 +52,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reset-editor!
+(defn reset-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -58,8 +60,35 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (-> db (dissoc-in [extension-id :item-editor/data-items])
-         (dissoc-in [extension-id :item-editor/meta-items])))
+  (dissoc-in db [:plugins :item-editor/meta-items extension-id]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn store-derived-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [derived-item-id (r core.subs/get-derived-item-id db extension-id item-namespace)]
+       (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] derived-item-id)))
+
+(defn use-header-title!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (if-let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+          (r ui/set-header-title! db route-title)
+          (return db)))
 
 
 
@@ -74,58 +103,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  db)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn header-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace header-props]]
-  ; XXX#4036
-  ; A header-props és body-props térképeket a header és body komponensek React fába csatolásakor
-  ; merge függvény használatával szükséges tárolni, hogy a két térkép egymásba fésülve egy helyről
-  ; legyen elérhető!
-  (r db/apply-item! db [extension-id :item-editor/meta-items] merge header-props))
-
-(defn body-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) body-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace body-props]]
-  ; XXX#4036
-  (r db/apply-item! db [extension-id :item-editor/meta-items] merge body-props))
-
-(defn body-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  ; Az item-editor plugin elhagyásakor visszaállítja a plugin állapotát, így a következő betöltéskor
-  ; az init-body! függvény lefutása előtt nem villan fel a legutóbbi állapot!
-
-
-
-  ; EZT NEM OLDJA MEG A FELTÉTELES MEGJELNEÍTÉS? MÁRMINT KELL RESETELNI CSAK A LEÍRÁS NEM LESZ ÉRVÉNYES
-
-
-
-  (r reset-editor! db extension-id item-namespace))
+  (as-> db % (r store-derived-view-id! % extension-id)
+             (r use-header-title!      % extension-id item-namespace)))
 
 
 

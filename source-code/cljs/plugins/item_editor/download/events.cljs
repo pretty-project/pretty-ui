@@ -6,6 +6,7 @@
     (:require [plugins.item-editor.backup.events :as backup.events]
               [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
+              [plugins.item-editor.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
 
@@ -23,8 +24,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
-  (let [suggestions (get server-response :item-editor/get-item-suggestions)]
-       (assoc-in db [extension-id :item-editor/meta-items :suggestions] suggestions)))
+  (let [suggestions-path (r mount.subs/get-body-prop db extension-id item-namespace :suggestions-path)
+        suggestions      (get server-response :item-editor/get-item-suggestions)]
+       (assoc-in db suggestions-path suggestions)))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,12 +38,13 @@
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
   (let [resolver-id (r download.subs/get-resolver-id db extension-id item-namespace :get)
+        item-path   (r mount.subs/get-body-prop      db extension-id item-namespace :item-path)
         document    (get server-response resolver-id)]
        ; XXX#3907
        ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
        ; a letöltött dokumentumot
        (let [document (db/document->non-namespaced-document document)]
-            (as-> db % (assoc-in % [extension-id :item-editor/data-items] document)
+            (as-> db % (assoc-in % item-path document)
                        (r backup.events/backup-current-item! % extension-id item-namespace)))))
 
 (defn data-received
@@ -52,7 +55,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (assoc-in db [extension-id :item-editor/meta-items :data-received?] true))
+  (assoc-in db [:plugins :item-editor/meta-items extension-id :data-received?] true))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

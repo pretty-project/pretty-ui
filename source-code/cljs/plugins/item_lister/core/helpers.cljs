@@ -40,6 +40,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
+  ; @example 
+  ;  (core.helpers/default-items-path :my-extension :my-type)
+  ;  =>
+  ;  [:my-extension :my-type-lister/data-items]
+  ;
   ; @return (vector)
   [extension-id item-namespace]
   [extension-id (keyword (str (name item-namespace) "-lister/data-items"))])

@@ -198,7 +198,7 @@
        [layouts/layout-a surface-id {:description description
                                      :header [item-editor/header :clients :client {:item-actions [:delete :duplicate :save]}]
                                      :body   [item-editor/body   :clients :client {:form-element #'client-form
-                                                                                   :form-id :clients.client-editor/form
+                                                                                   :form-id     :clients.client-editor/form
                                                                                    :handler-key :clients.client-editor
                                                                                    :suggestion-keys [:city]
                                                                                    :new-item-id "new-client"}]}]))

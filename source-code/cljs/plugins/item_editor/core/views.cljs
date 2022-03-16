@@ -22,7 +22,7 @@
   ;  [item-editor/delete-item-button :my-extension :my-type]
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
-        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
+        error-mode?      @(a/subscribe [:item-editor/get-meta-item    extension-id item-namespace :error-mode?])]
        [elements/button ::delete-item-button
                         {:tooltip :delete! :preset :delete-icon-button
                          :disabled? (or editor-disabled? error-mode?)
@@ -36,7 +36,7 @@
   ;  [item-editor/copy-item-button :my-extension :my-type]
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
-        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])]
+        error-mode?      @(a/subscribe [:item-editor/get-meta-item    extension-id item-namespace :error-mode?])]
        [elements/button ::copy-item-button
                         {:tooltip :duplicate! :preset :duplicate-icon-button
                          :disabled? (or editor-disabled? error-mode?)
@@ -50,7 +50,7 @@
   ;  [item-editor/save-item-button :my-extension :my-type]
   [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
-        error-mode?      @(a/subscribe [:item-editor/error-mode?      extension-id item-namespace])
+        error-mode?      @(a/subscribe [:item-editor/get-meta-item    extension-id item-namespace :error-mode?])
         form-completed?  @(a/subscribe [:item-editor/form-completed?  extension-id item-namespace])]
        [elements/button ::save-item-button
                         {:tooltip :save! :preset :save-icon-button
@@ -68,9 +68,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-       [:<>                   [save-item-button extension-id item-namespace]
-            (if-not new-item? [copy-item-button extension-id item-namespace])]))
+  (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
+          [:<> [save-item-button extension-id item-namespace]
+               [copy-item-button extension-id item-namespace]]
+          [:<> [save-item-button extension-id item-namespace]]))
 
 (defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,8 +79,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-       (if-not new-item? [delete-item-button extension-id item-namespace])))
+  (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
+          [:<>]
+          [:<> [delete-item-button extension-id item-namespace]]))
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,9 +98,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [menu-element @(a/subscribe [:item-editor/get-menu-element extension-id item-namespace])]
-          [menu-element     extension-id item-namespace]
-          [menu-mode-header extension-id item-namespace]))
+  (if @(a/subscribe [:item-editor/header-did-mount? extension-id item-namespace])
+       (if-let [menu-element @(a/subscribe [:item-editor/get-header-prop extension-id item-namespace :menu-element])]
+               [menu-element     extension-id item-namespace]
+               [menu-mode-header extension-id item-namespace])))
 
 (defn header
   ; @param (keyword) extension-id
@@ -116,8 +119,9 @@
   ;  [item-editor/header :my-extension :my-type {:menu #'my-menu-element}]
   [extension-id item-namespace header-props]
   (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :header)
-                      {:reagent-render      (fn []             [header-structure              extension-id item-namespace])
-                       :component-did-mount (fn [] (a/dispatch [:item-editor/header-did-mount extension-id item-namespace header-props]))}))
+                      {:reagent-render         (fn []             [header-structure                 extension-id item-namespace])
+                       :component-did-mount    (fn [] (a/dispatch [:item-editor/header-did-mount    extension-id item-namespace header-props]))
+                       :component-will-unmount (fn [] (a/dispatch [:item-editor/header-will-unmount extension-id item-namespace]))}))
 
 
 
@@ -130,8 +134,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  [elements/label {:font-size :xs :color :highlight :font-weight :bold
-                   :content :downloading...}])
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold :content :downloading...}])
 
 (defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -157,29 +160,43 @@
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 
+(defn form-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id item-namespace]
+  (let [form-element @(a/subscribe [:item-editor/get-body-prop extension-id item-namespace :form-element])]
+       [form-element extension-id item-namespace]))
+
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [error-mode? @(a/subscribe [:item-editor/error-mode? extension-id item-namespace])]
+  (if-let [error-mode? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :error-mode?])]
           [error-body extension-id item-namespace]
-          (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :data-received?])]
-                  (if-let [form-element @(a/subscribe [:item-editor/get-form-element extension-id item-namespace])]
-                          [form-element extension-id item-namespace])
-                  [downloading-item extension-id item-namespace])))
+          (if @(a/subscribe [:item-editor/body-did-mount? extension-id item-namespace])
+               (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :data-received?])]
+                       [form-element     extension-id item-namespace]
+                       [downloading-item extension-id item-namespace]))))
 
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:form-element (metamorphic-content)
-  ;   :handler-key (keyword)
-  ;   :item-id (string)
-  ;   :new-item-id (string)(opt)
+  ;  {:auto-title? (boolean)(opt)
   ;    Default: false
-  ;   :suggestion-keys (keywords in vector)(opt)}
+  ;   :form-element (metamorphic-content)
+  ;   :handler-key (keyword)
+  ;   :item-id (string)(opt)
+  ;   :item-path (vector)(opt)
+  ;    Default: core.helpers/default-item-path
+  ;   :new-item-id (string)(opt)
+  ;   :suggestion-keys (keywords in vector)(opt)
+  ;   :suggestions-path (vector)(opt)
+  ;    Default: core.helpers/default-suggestions-path}
   ;
   ; @usage
   ;  [item-editor/body :my-extension :my-type {...}]
@@ -191,9 +208,5 @@
   (let [body-props (core.prototypes/body-props-prototype extension-id item-namespace body-props)]
        (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :body)
                            {:reagent-render         (fn []             [body-structure                 extension-id item-namespace])
-                            :component-will-unmount (fn [] (a/dispatch [:item-editor/body-will-unmount extension-id item-namespace]))
                             :component-did-mount    (fn [] (a/dispatch [:item-editor/body-did-mount    extension-id item-namespace body-props]))
-                            :component-did-update   (fn [this _] (let [] (println (str (reagent/arguments this)))))})))
-
-                            ; Az updater alkalmazásával az elem törlése utáni átirányításkor a megváltozott route-ra
-                            ; feliratkozott item-lister/body komponens megpróbál újratölteni kilépés közben!
+                            :component-will-unmount (fn [] (a/dispatch [:item-editor/body-will-unmount extension-id item-namespace]))})))

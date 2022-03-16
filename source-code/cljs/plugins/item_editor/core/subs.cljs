@@ -3,30 +3,23 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.subs
-    (:require [mid-fruits.candy                 :refer [return]]
-              [mid-fruits.vector                :as vector]
-              [plugins.item-editor.core.helpers :as core.helpers]
-              [x.app-activities.api             :as activities]
-              [x.app-components.api             :as components]
-              [x.app-core.api                   :as a :refer [r]]
-              [x.app-db.api                     :as db]
-              [x.app-elements.api               :as elements]
-              [x.app-sync.api                   :as sync]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.vector                 :as vector]
+              [plugins.item-editor.core.helpers  :as core.helpers]
+              [plugins.item-editor.mount.subs    :as mount.subs]
+              [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-activities.api              :as activities]
+              [x.app-components.api              :as components]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-db.api                      :as db]
+              [x.app-elements.api                :as elements]
+              [x.app-router.api                  :as router]
+              [x.app-sync.api                    :as sync]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-editor-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (get-in db [extension-id :item-editor/meta-items]))
 
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -37,31 +30,7 @@
   ;
   ; @return (*)
   [db [_ extension-id item-namespace item-key]]
-  (get-in db [extension-id :item-editor/meta-items item-key]))
-
-(defn get-data-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (get-in db [extension-id :item-editor/data-items]))
-
-(defn get-data-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @usage
-  ;  (r core.subs/get-data-value :my-extension :my-type :modified-at)
-  ;
-  ; @return (map)
-  [db [_ extension-id _ item-key]]
-  (get-in db [extension-id :item-editor/data-items item-key]))
+  (get-in db [:plugins :item-editor/meta-items extension-id item-key]))
 
 
 
@@ -81,9 +50,8 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  ; XXX#3055
-  (if-let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
-          (keyword (name handler-key) "synchronize-editor!")))
+  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
+       (keyword (name handler-key) "synchronize-editor!")))
 
 (defn editor-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,14 +61,23 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  ; XXX#3055
-  (if-let [request-id (r get-request-id db extension-id item-namespace)]
-          (r sync/listening-to-request? db request-id)))
+  (let [request-id (r get-request-id db extension-id item-namespace)]
+       (r sync/listening-to-request? db request-id)))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (keyword)
+  [db [_ _ _]]
+  (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
   ; @param (keyword) extension-id
@@ -120,8 +97,9 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id _]]
-  (get-in db [extension-id :item-editor/data-items]))
+  [db [_ extension-id item-namespace]]
+  (let [item-path (r mount.subs/get-body-prop db extension-id item-namespace :item-path)]
+       (get-in db item-path)))
 
 (defn export-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,31 +112,10 @@
   (let [current-item (r get-current-item db extension-id item-namespace)]
        (db/document->namespaced-document current-item item-namespace)))
 
-(defn export-copy-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (namespaced map)
-  [db [_ extension-id item-namespace]]
-  (let [current-item (r get-current-item db extension-id item-namespace)]
-       (db/document->namespaced-document current-item item-namespace)))
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn error-mode?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :error-mode?))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,42 +125,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (= (r get-current-item-id db extension-id item-namespace)
-     (r get-meta-item       db extension-id item-namespace :new-item-id)))
-
-(defn set-auto-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :auto-title?))
-
-(defn get-auto-title_
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]]
-  (if-let [new-item? (r get-meta-item db extension-id item-namespace :new-item?)]
-          (core.helpers/add-item-label  extension-id item-namespace)
-          (core.helpers/edit-item-label extension-id item-namespace)))
-
-(defn get-route-title
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]]
-  ; A {:route-title :auto} beállítás használatakor a get-route-title függvény visszatérési értéke nil ...
-  (let [route-title (r get-meta-item db extension-id item-namespace :route-title)]
-       (case route-title :auto nil route-title)))
+  (= (r get-current-item-id      db extension-id item-namespace)
+     (r mount.subs/get-body-prop db extension-id item-namespace :new-item-id)))
 
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -212,7 +135,10 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]])
+  [db [_ extension-id item-namespace]]
+  (if-let [new-item? (r new-item? db extension-id item-namespace)]
+          (core.helpers/add-item-label  extension-id item-namespace)
+          (core.helpers/edit-item-label extension-id item-namespace)))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -222,42 +148,10 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace]]
-  (if-not (r new-item? db extension-id item-namespace)
-          (let [modified-at        (r get-data-value db extension-id item-namespace :modified-at)
-                actual-modified-at (r activities/get-actual-timestamp db modified-at)]
-               (components/content {:content :last-modified-at-n :replacements [actual-modified-at]}))))
-
-(defn get-form-element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :form-element))
-
-(defn get-menu-element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (metamorphic-content)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :menu-element))
-
-(defn form-completed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (if-let [form-id (r get-meta-item db extension-id item-namespace :form-id)]
-          (r elements/form-completed? db form-id)
-          (return true)))
+  (let [current-item (r get-current-item db extension-id item-namespace)]
+       (if-let [modified-at (:modified-at current-item)]
+               (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
+                    (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
 
 
 
@@ -272,7 +166,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [suggestion-keys (r get-meta-item db extension-id item-namespace :suggestion-keys)]
+  (let [suggestion-keys (r mount.subs/get-body-prop db extension-id item-namespace :suggestion-keys)]
        (vector/nonempty? suggestion-keys)))
 
 (defn download-item?
@@ -311,13 +205,12 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; XXX#3219
+  ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy a szerkesztő
+  ; {:disabled? true} állapotban legyen, amíg NEM kezdődött még el az adatok letöltése!
   (boolean (if-let [download-data? (r download-data? db extension-id item-namespace)]
                    (let [data-received?        (r get-meta-item         db extension-id item-namespace :data-received?)
                          editor-synchronizing? (r editor-synchronizing? db extension-id item-namespace)]
-                        ; XXX#3219
-                        ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
-                        ; a szerkesztő {:disabled? true} állapotban legyen, amíg NEM kezdődött még el
-                        ; az adatok letöltése!
                         (or editor-synchronizing? (not data-received?))))))
 
 
@@ -337,55 +230,6 @@
 ; @param (keyword) item-namespace
 ;
 ; @usage
-;  [:item-editor/get-data-item :my-extension :my-type]
-(a/reg-sub :item-editor/get-data-item get-data-item)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/get-data-value :my-extension :my-type]
-(a/reg-sub :item-editor/get-data-value get-data-value)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/editor-disabled? :my-extension :my-type]
-(a/reg-sub :item-editor/editor-disabled? editor-disabled?)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/error-mode? :my-extension :my-type]
-(a/reg-sub :item-editor/error-mode? error-mode?)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/get-form-element :my-extension :my-type]
-(a/reg-sub :item-editor/get-form-element get-form-element)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/get-menu-element :my-extension :my-type]
-(a/reg-sub :item-editor/get-menu-element get-menu-element)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
-;  [:item-editor/form-completed? :my-extension :my-type]
-(a/reg-sub :item-editor/form-completed? form-completed?)
-
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
-;
-; @usage
 ;  [:item-editor/get-description :my-extension :my-type]
 (a/reg-sub :item-editor/get-description get-description)
 
@@ -395,3 +239,10 @@
 ; @usage
 ;  [:item-editor/new-item? :my-extension :my-type]
 (a/reg-sub :item-editor/new-item? new-item?)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/editor-disabled? :my-extension :my-type]
+(a/reg-sub :item-editor/editor-disabled? editor-disabled?)

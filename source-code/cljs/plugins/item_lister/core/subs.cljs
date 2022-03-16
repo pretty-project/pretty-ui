@@ -44,11 +44,8 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
-  ; XXX#3055
-  ; A komponensek [:item-lister/lister-synchronizing? ...] feliratkozása már azelőtt megpróbálja
-  ; kiolvasni a Re-Frame adatbázisból a handler-key értékét, mielőtt az eltárolásra kerülne ...
-  (if-let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
-          (keyword (name handler-key) "synchronize-lister!")))
+  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
+       (keyword (name handler-key) "synchronize-lister!")))
 
 (defn lister-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

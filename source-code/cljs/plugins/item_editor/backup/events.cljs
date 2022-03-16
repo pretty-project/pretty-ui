@@ -7,6 +7,7 @@
               [mid-fruits.map                  :as map :refer [dissoc-in]]
               [plugins.item-editor.backup.subs :as backup.subs]
               [plugins.item-editor.core.subs   :as core.subs]
+              [plugins.item-editor.mount.subs  :as mount.subs]
               [x.app-core.api                  :as a :refer [r]]))
 
 
@@ -31,7 +32,7 @@
   ;   átfedésbe kerülhet egymással, ...
   (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
         current-item    (r core.subs/get-current-item    db extension-id item-namespace)]
-       (assoc-in db [extension-id :item-editor/backup-items current-item-id] current-item)))
+       (assoc-in db [:plugins :item-editor/backup-items extension-id current-item-id] current-item)))
 
 (defn store-local-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -45,7 +46,7 @@
         current-item    (r core.subs/get-current-item    db extension-id item-namespace)
         backup-item     (r backup.subs/get-backup-item   db extension-id item-namespace current-item-id)
         local-changes   (map/difference current-item backup-item)]
-       (assoc-in db [extension-id :item-editor/local-changes current-item-id] local-changes)))
+       (assoc-in db [:plugins :item-editor/local-changes extension-id current-item-id] local-changes)))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -66,11 +67,12 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r core.subs/get-current-item-id  db extension-id item-namespace)
+  (let [item-path       (r mount.subs/get-body-prop       db extension-id item-namespace :item-path)
+        current-item-id (r core.subs/get-current-item-id  db extension-id item-namespace)
         recovered-item  (r backup.subs/get-recovered-item db extension-id item-namespace)]
-       (-> db (assoc-in  [extension-id :item-editor/data-items] recovered-item)
-              (assoc-in  [extension-id :item-editor/meta-items :item-recovered?] true)
-              (dissoc-in [extension-id :item-editor/local-changes current-item-id]))))
+       (-> db (assoc-in  item-path recovered-item)
+              (assoc-in  [:plugins :item-editor/meta-items    extension-id :item-recovered?] true)
+              (dissoc-in [:plugins :item-editor/local-changes extension-id current-item-id]))))
 
 
 

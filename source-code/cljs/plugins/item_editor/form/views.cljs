@@ -57,9 +57,9 @@
   ;  [item-editor/item-label :my-extension :my-type {...}]
   [extension-id item-namespace {:keys [name] :as element-props}]
   (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-       (cond (string/nonempty? name)      [named-item-label   extension-id item-namespace element-props]
-             (boolean          new-item?) [new-item-label     extension-id item-namespace]
-             :unnamed-item                [unnamed-item-label extension-id item-namespace])))
+       (cond (string/nonempty? name) [named-item-label   extension-id item-namespace element-props]
+             (boolean new-item?)     [new-item-label     extension-id item-namespace]
+             :unnamed-item           [unnamed-item-label extension-id item-namespace])))
 
 
 

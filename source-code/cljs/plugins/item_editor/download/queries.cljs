@@ -5,6 +5,7 @@
 (ns plugins.item-editor.download.queries
     (:require [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
+              [plugins.item-editor.mount.subs    :as mount.subs]
               [x.app-core.api                    :refer [r]]))
 
 
@@ -27,7 +28,7 @@
                   `(~resolver-id ~{:item-id current-item-id})))
           (if (r core.subs/download-suggestions? db extension-id item-namespace)
               ; If download suggestions ...
-              (let [suggestion-keys (r core.subs/get-meta-item db extension-id item-namespace :suggestion-keys)]
+              (let [suggestion-keys (r mount.subs/get-body-prop db extension-id item-namespace :suggestion-keys)]
                   `(:item-editor/get-item-suggestions {:suggestion-keys ~suggestion-keys
                                                        :extension-id    ~extension-id
                                                        :item-namespace  ~item-namespace})))])
