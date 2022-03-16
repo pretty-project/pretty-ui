@@ -40,7 +40,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-ids]]
-  (update-in db [:plugins :item-lister/backup-items extension-id] map/remove-items item-ids))
+  (update-in db [:plugins :item-lister/backup-items extension-id] map/remove-keys item-ids))
 
 
 

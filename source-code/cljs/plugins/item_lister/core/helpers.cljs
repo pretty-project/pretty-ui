@@ -41,5 +41,5 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (vector)
-  [extension-id _]
-  [:plugins :item-lister/data-items extension-id])
+  [extension-id item-namespace]
+  [extension-id (keyword (str (name item-namespace) "-lister/data-items"))])

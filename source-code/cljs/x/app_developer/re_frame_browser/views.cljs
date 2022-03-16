@@ -3,14 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.re-frame-browser.views
-    (:require [mid-fruits.candy                         :refer [param return]]
-              [mid-fruits.map                           :as map]
-              [mid-fruits.pretty                        :as pretty]
-              [mid-fruits.string                        :as string]
-              [mid-fruits.vector                        :as vector]
-              [x.app-core.api                           :as a]
-              [x.app-elements.api                       :as elements]
-              [x.app-developer.re-frame-browser.helpers :as re-frame-browser.helpers]))
+    (:require [mid-fruits.candy                        :refer [param return]]
+              [mid-fruits.map                          :as map]
+              [mid-fruits.pretty                       :as pretty]
+              [mid-fruits.string                       :as string]
+              [mid-fruits.vector                       :as vector]
+              [x.app-core.api                          :as a]
+              [x.app-elements.api                      :as elements]
+              [x.app-developer.re-frame-browser.config :as re-frame-browser.config]))
 
 
 
@@ -74,7 +74,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-       [:div {:style {:font-weight "500" :font-size "12px" :opacity ".5"}}
+       [:div {:style {:font-weight "500" :font-size "12px" :opacity ".5" :min-height "24px"}}
              (string/join current-path " / ")]))
 
 (defn header
@@ -168,16 +168,6 @@
           [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:re-frame-browser/toggle-subscription!]}]
           [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:re-frame-browser/toggle-subscription!]}]))
 
-(defn toggle-visibility-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [root-level?  @(a/subscribe [:re-frame-browser/root-level?])
-        show-hidden? @(a/subscribe [:re-frame-browser/get-meta-item :show-hidden?])]
-       (cond (and root-level? show-hidden?)
-             [icon-button {:icon "visibility_off" :label "Hide hidden" :on-click [:re-frame-browser/toggle-visibility!]}]
-             (and root-level? (not show-hidden?))
-             [icon-button {:icon "visibility"     :label "Show hidden" :on-click [:re-frame-browser/toggle-visibility!]}])))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -196,7 +186,7 @@
 
 (defn map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [map-key]
+  [map-key system-key?]
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
        [:div.x-clickable {:on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])}
                          (if (string? map-key)
@@ -208,17 +198,17 @@
   []
   (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])
         root-level?  @(a/subscribe [:re-frame-browser/root-level?])
-        show-hidden? @(a/subscribe [:re-frame-browser/get-meta-item :show-hidden?])
-        map-keys      (-> current-item map/get-keys vector/abc-items)]
+        map-keys      (-> current-item map/get-keys vector/abc-items)
+        system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
+        app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
        [:div [header "map"]
-             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button toggle-visibility-button]
+             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
-             (letfn [(f [%1 %2] (if (or show-hidden? (-> %2 re-frame-browser.helpers/map-item-hidden? not)
-                                                     (not root-level?))
-                                    (conj   %1 [map-key %2])
-                                    (return %1)))]
-                    (reduce f [:div] map-keys))
+             (letfn [(f [%1 %2] (conj %1 [map-key %2]))]
+                    (if root-level? [:<> (reduce f [:div {:style {}}]                app-keys)
+                                         (reduce f [:div {:style {:opacity 0.5}}] system-keys)]
+                                    [:<> (reduce f [:div {:style {}}]                map-keys)]))
              (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
                      [:pre {:style {:margin-top "24px" :font-size "12px"}}
                            (pretty/mixed->string current-item)])]))

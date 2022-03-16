@@ -31,7 +31,7 @@
   ; @return (string)
   [{:keys [from interval limit symbol use-mainnet?]}]
   (let [query-from (or from (klines.helpers/query-from interval limit))
-        address    (if use-mainnet? uri/PUBLIC-API-ADDRESS uri/PUBLIC-TEST-API-ADDRESS)]
+        address    (if use-mainnet? uri.config/PUBLIC-API-ADDRESS uri.config/PUBLIC-TEST-API-ADDRESS)]
        (str address "/kline/list"
                     "?symbol="   symbol
                     "&interval=" interval

@@ -33,13 +33,6 @@
           (assoc-in db [:developer :re-frame-browser/meta-items :subscribe?] false)
           (assoc-in db [:developer :re-frame-browser/meta-items :subscribe?] true)))
 
-(defn toggle-visibility!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (if-let [show-hidden? (get-in db [:developer :re-frame-browser/meta-items :show-hidden?])]
-          (assoc-in db [:developer :re-frame-browser/meta-items :show-hidden?] false)
-          (assoc-in db [:developer :re-frame-browser/meta-items :show-hidden?] true)))
-
 (defn toggle-data-view!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
@@ -60,9 +53,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :re-frame-browser/toggle-subscription! toggle-subscription!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/toggle-visibility! toggle-visibility!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :re-frame-browser/toggle-data-view! toggle-data-view!)

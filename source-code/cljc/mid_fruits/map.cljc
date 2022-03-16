@@ -144,12 +144,12 @@
   [& xyz]
   (apply merge (reverse xyz)))
 
-(defn remove-items
+(defn remove-keys
   ; @param (map) n
   ; @param (vector) keys
   ;
   ; @example
-  ;  (map/remove-items {:a "A" :b "B" :c "C"} [:a :c])
+  ;  (map/remove-keys {:a "A" :b "B" :c "C"} [:a :c])
   ;  =>
   ;  {:b "B"}
   ;
