@@ -30,41 +30,41 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:colors (strings in vector)}
-  [extension-id item-namespace {:keys [colors]}]
+  [extension-id item-namespace]
   (letfn [(f [selected-colors color] (conj selected-colors [:div.item-editor--selected-color {:style {:background-color color}}]))]
-         (reduce f [:div.item-editor--selected-colors] colors)))
+         (let [current-item @(a/subscribe [:item-editor/get-current-item extension-id item-namespace])]
+              (reduce f [:div.item-editor--selected-colors] (:colors current-item)))))
 
 (defn selected-colors-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  [extension-id item-namespace element-props]
+  [extension-id item-namespace]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
        [elements/toggle ::selected-colors-button
                         {:disabled? editor-disabled?
                          :on-click  [:item-editor/render-color-picker-dialog! extension-id item-namespace]
-                         :content   [selected-colors                          extension-id item-namespace element-props]}]))
+                         :content   [selected-colors                          extension-id item-namespace]}]))
 
 (defn color-selector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) element-props
-  ;  {:colors (strings in vector)}
   ;
   ; @usage
-  ;  [item-editor/color-selector :my-extension :my-type {...}]
-  [extension-id item-namespace {:keys [colors] :as element-props}]
-  [elements/row ::color-selector
-                {:horizontal-align :center
-                 :content (if (vector/nonempty? colors)
-                              [selected-colors-button extension-id item-namespace element-props]
-                              [add-colors-button      extension-id item-namespace])}])
+  ;  [item-editor/color-selector :my-extension :my-type]
+  [extension-id item-namespace]
+  (let [current-item @(a/subscribe [:item-editor/get-current-item extension-id item-namespace])]
+       [elements/row ::color-selector
+                     {:horizontal-align :center
+                      :content (if (-> current-item :colors vector/nonempty?)
+                                   [selected-colors-button extension-id item-namespace]
+                                   [add-colors-button      extension-id item-namespace])}]))
+
+
+
+;; -- Color-stamp components --------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn color-stamp
   ; @param (keyword) extension-id
@@ -90,7 +90,8 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [extension-id _]
-  [elements/color-picker ::color-picker
-                         {:initial-options colors.config/COLORS
-                          :value-path [extension-id :item-editor/data-items :colors]}])
+  [extension-id item-namespace]
+  (let [item-path @(a/subscribe [:item-editor/get-body-prop extension-id item-namespace :item-path])
+        value-path (conj item-path :colors)]
+       [elements/color-picker ::color-picker
+                              {:initial-options colors.config/COLORS :value-path value-path}]))

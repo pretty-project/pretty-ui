@@ -2,4 +2,4 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.item.subs)
+(ns x.app-environment.localstorage-handler.helpers)

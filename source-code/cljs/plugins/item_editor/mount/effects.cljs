@@ -21,19 +21,16 @@
   ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)}
   (fn [{:keys [db]} [_ extension-id item-namespace {:keys [auto-title?] :as body-props}]]
-      ; - Az events/init-body! függvény által meghívott events/reset-editor! függvény lépteti ki az item-editor
-      ;   plugint a {:recovery-mode? true} állapotból, ami miatt szükséges az events/init-body! függvényt
-      ;   a subs/download-data? függvény lefutása előtt meghívni!
-      ; - Az events/body-did-mount függvény eltárolja a body komponens számára esetlegesen átadott
-      ;   {:item-id "..."} paramétert, ami miatt szükséges az events/body-did-mount függvényt
-      ;   a core.subs/get-auto-title függvény lefutása előtt meghívni!
+      ; A mount.events/body-did-mount függvény eltárolja ...
+      ; ... a body komponens paramétereit, ezért a core.subs/download-data? függvény
+      ;     lefutása előtt szükséges meghívni!
+      ; ... a body komponens számára esetlegesen átadott {:item-id "..."} paramétert,
+      ;     ezért a core.subs/get-auto-title függvény lefutása előtt szükséges meghívni!
       (let [db (r mount.events/body-did-mount db extension-id item-namespace body-props)]
-           {:db db :dispatch-n [(if auto-title? [:ui/set-title (r core.subs/get-auto-title db extension-id item-namespace)])]})))
-
-
-                                ;(if (r core.subs/download-data? db extension-id item-namespace)
-                                ;    [:item-editor/request-item! extension-id item-namespace]
-                                ;    [:item-editor/load-item!    extension-id item-namespace]]})))
+           {:db db :dispatch-n [(if auto-title? [:ui/set-window-title! (r core.subs/get-auto-title db extension-id item-namespace)])
+                                (if (r core.subs/download-data? db extension-id item-namespace)
+                                    [:item-editor/request-item! extension-id item-namespace]
+                                    [:item-editor/load-item!    extension-id item-namespace])]})))
 
 (a/reg-event-fx
   :item-editor/header-did-mount
@@ -83,3 +80,12 @@
       ;(if (r subs/item-changed? db extension-id item-namespace)
       ;    {:db (r events/store-local-changes! db extension-id item-namespace)
       ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
+
+(a/reg-event-fx
+  :item-editor/header-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      {:db (r mount.events/header-will-unmount db extension-id item-namespace)}))

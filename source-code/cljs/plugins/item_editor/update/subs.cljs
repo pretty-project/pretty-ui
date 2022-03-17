@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.update.subs
-    (:require [mid-fruits.keyword            :as keyword]
-              [plugins.item-editor.core.subs :as core.subs]
-              [x.app-core.api                :refer [r]]))
+    (:require [mid-fruits.keyword             :as keyword]
+              [plugins.item-editor.mount.subs :as mount.subs]
+              [x.app-core.api                 :refer [r]]))
 
 
 
@@ -20,13 +20,13 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r upda.subs/get-mutation-name db :my-extension :my-type :delete)
+  ;  (r update.subs/get-mutation-name db :my-extension :my-type :delete)
   ;  =>
   ;  "my-handler/delete-item!"
   ;
   ; @return (string)
   [db [_ extension-id item-namespace action-key]]
-  (let [handler-key (r core.subs/get-meta-item db extension-id item-namespace :handler-key)]
+  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
        (str (name handler-key) "/"
             (name action-key)  "-item!")))
 
@@ -43,7 +43,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-copy-id :my-extension :my-type {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  (r update.subs/get-copy-id :my-extension :my-type {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;

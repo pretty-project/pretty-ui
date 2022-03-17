@@ -136,6 +136,13 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
+  ; - Az {:auto-title? true} beállítással használt item-editor plugin a body komponens
+  ;   React-fába történő csatolásakor beállítja az applikáció feliratait, függetlenül
+  ;   a plugin szerver-oldali beállításaitól.
+  ; - Az item-editor plugintól függetlenül hozzáadott útvonalon megjelenített szerkesztőt
+  ;   is lehetséges {:auto-title? true} beállítással használni, ezért a body komponens tulajdonsága
+  ;   az :auto-title? és ezért lehetséges a szerver-oldali {:route-title ...} tulajdonságtól
+  ;   függetlenül használni.
   (if-let [new-item? (r new-item? db extension-id item-namespace)]
           (core.helpers/add-item-label  extension-id item-namespace)
           (core.helpers/edit-item-label extension-id item-namespace)))
@@ -225,6 +232,13 @@
 ; @usage
 ;  [:item-editor/get-meta-item :my-extension :my-type :my-item]
 (a/reg-sub :item-editor/get-meta-item get-meta-item)
+
+; @param (keyword) extension-id
+; @param (keyword) item-namespace
+;
+; @usage
+;  [:item-editor/get-current-item :my-extension :my-type]
+(a/reg-sub :item-editor/get-current-item get-current-item)
 
 ; @param (keyword) extension-id
 ; @param (keyword) item-namespace

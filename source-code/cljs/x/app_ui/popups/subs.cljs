@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.subs
-    (:require [x.app-core.api        :as a :refer [r]]
+    (:require [mid-fruits.logical    :refer [or=]]
+              [x.app-core.api        :as a :refer [r]]
               [x.app-environment.api :as environment]
               [x.app-ui.renderer     :as renderer]))
 
@@ -32,9 +33,9 @@
   ; @return (boolean)
   [db [_ popup-id]]
   (let [layout (r renderer/get-element-prop db :popups popup-id :layout)]
-       (and (= layout :boxed)
-            (r environment/viewport-small?            db)
-            (r environment/touch-events-api-detected? db))))
+       (and (or= layout :boxed :flip)
+            (r environment/viewport-small? db)
+            (r environment/touch-detected? db))))
 
 (defn get-popup-header-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

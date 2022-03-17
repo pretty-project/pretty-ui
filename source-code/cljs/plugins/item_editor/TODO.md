@@ -11,8 +11,3 @@
 
 # XXX#3907
 - ...
-
-
-
-# x4.5.7
-- Az {:item-actions ...} tulajdonság nincs befejezve

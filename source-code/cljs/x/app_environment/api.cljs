@@ -10,10 +10,16 @@
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.element-handler.effects]
+              [x.app-environment.scroll-handler.lifecycles]
               [x.app-environment.scroll-prohibitor.effects]
               [x.app-environment.scroll-prohibitor.events]
               [x.app-environment.scroll-prohibitor.side-effects]
               [x.app-environment.scroll-prohibitor.subs]
+              [x.app-environment.touch-handler.lifecycles]
+              [x.app-environment.touch-handler.side-effects]
+              [x.app-environment.viewport-handler.effects]
+              [x.app-environment.viewport-handler.lifecycles]
+              [x.app-environment.viewport-handler.side-effects]
               [x.app-environment.window-handler.lifecycles]
               [x.app-environment.connection-handler.subs      :as connection-handler.subs]
               [x.app-environment.cookie-handler.subs          :as cookie-handler.subs]
@@ -21,13 +27,14 @@
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.event-handler.side-effects   :as event-handler.side-effects]
               [x.app-environment.keypress-handler             :as keypress-handler]
-              [x.app-environment.mouse-handler                :as mouse-handler]
-              [x.app-environment.scroll-handler               :as scroll-handler]
-              [x.app-environment.touch-handler                :as touch-handler]
-              [x.app-environment.viewport-handler             :as viewport-handler]
+              [x.app-environment.mouse-handler.side-effects   :as mouse-handler.side-effects]
+              [x.app-environment.scroll-handler.side-effects  :as scroll-handler.side-effects]
+              [x.app-environment.scroll-handler.subs          :as scroll-handler.subs]
+              [x.app-environment.touch-handler.subs           :as touch-handler.subs]
+              [x.app-environment.viewport-handler.subs        :as viewport-handler.subs]
               [x.app-environment.window-handler.side-effects  :as window-handler.side-effects]))
 
- 
+
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -81,29 +88,31 @@
 (def enable-non-required-keypress-events!  keypress-handler/enable-non-required-keypress-events!)
 (def disable-non-required-keypress-events! keypress-handler/disable-non-required-keypress-events!)
 
-; x.app-environment.mouse-handler
-(def prevent-selecting! mouse-handler/prevent-selecting!)
-(def enable-selecting!  mouse-handler/enable-selecting!)
+; x.app-environment.mouse-handler.side-effects
+(def prevent-selecting! mouse-handler.side-effects/prevent-selecting!)
+(def enable-selecting!  mouse-handler.side-effects/enable-selecting!)
 
-; x.app-environment.scroll-handler
-(def scrolled-to-top?       scroll-handler/scrolled-to-top?)
-(def set-scroll-y!          scroll-handler/set-scroll-y!)
-(def scroll-to-top!         scroll-handler/scroll-to-top!)
-(def scroll-to-element-top! scroll-handler/scroll-to-element-top!)
+; x.app-environment.scroll-handler.side-effects
+(def set-scroll-y!          scroll-handler.side-effects/set-scroll-y!)
+(def scroll-to-top!         scroll-handler.side-effects/scroll-to-top!)
+(def scroll-to-element-top! scroll-handler.side-effects/scroll-to-element-top!)
 
-; x.app-environment.touch-handler
-(def touch-events-api-detected? touch-handler/touch-events-api-detected?)
+; x.app-environment.scroll-handler.subs
+(def scrolled-to-top? scroll-handler.subs/scrolled-to-top?)
 
-; x.app-environment.viewport-handler
-(def get-viewport-height      viewport-handler/get-viewport-height)
-(def get-viewport-width       viewport-handler/get-viewport-width)
-(def get-viewport-profile     viewport-handler/get-viewport-profile)
-(def viewport-profile-match?  viewport-handler/viewport-profile-match?)
-(def viewport-profiles-match? viewport-handler/viewport-profiles-match?)
-(def viewport-small?          viewport-handler/viewport-small?)
-(def viewport-medium?         viewport-handler/viewport-medium?)
-(def viewport-large?          viewport-handler/viewport-large?)
-(def get-viewport-orientation viewport-handler/get-viewport-orientation)
+; x.app-environment.touch-handler.subs
+(def touch-detected? touch-handler.subs/touch-detected?)
+
+; x.app-environment.viewport-handler.subs
+(def get-viewport-height      viewport-handler.subs/get-viewport-height)
+(def get-viewport-width       viewport-handler.subs/get-viewport-width)
+(def get-viewport-profile     viewport-handler.subs/get-viewport-profile)
+(def viewport-profile-match?  viewport-handler.subs/viewport-profile-match?)
+(def viewport-profiles-match? viewport-handler.subs/viewport-profiles-match?)
+(def viewport-small?          viewport-handler.subs/viewport-small?)
+(def viewport-medium?         viewport-handler.subs/viewport-medium?)
+(def viewport-large?          viewport-handler.subs/viewport-large?)
+(def get-viewport-orientation viewport-handler.subs/get-viewport-orientation)
 
 ; x.app-environment.window-handler.side-effects
 (def open-new-browser-tab! window-handler.side-effects/open-new-browser-tab!)

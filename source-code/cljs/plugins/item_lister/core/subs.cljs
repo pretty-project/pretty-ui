@@ -249,6 +249,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; Az items-selectable? függvényre a header komponens nélkül használt item-lister plugin esetén
+  ; is szükség van, ezért az {:item-actions [...]} tulajdonság a body komponens paramtére.
   (let [item-actions (r mount.subs/get-body-prop db extension-id item-namespace :item-actions)]
        (vector/nonempty? item-actions)))
 

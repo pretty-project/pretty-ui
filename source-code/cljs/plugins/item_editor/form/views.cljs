@@ -83,7 +83,8 @@
   ; @usage
   ;  [item-editor/description-field :my-extension :my-type]
   [extension-id item-namespace]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
+        item-path        @(a/subscribe [:item-editor/get-body-prop    extension-id item-namespace :item-path])
+        value-path        (conj item-path :description)]
        [elements/multiline-field ::description-field
-                                 {:value-path [extension-id :item-editor/data-items :description]
-                                  :disabled?  editor-disabled?}]))
+                                 {:value-path value-path :disabled? editor-disabled?}]))

@@ -3,12 +3,31 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [plugins.item-editor.backup.events :as backup.events]
+    (:require [mid-fruits.map                    :refer [dissoc-in]]
+              [plugins.item-editor.backup.events :as backup.events]
               [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
               [plugins.item-editor.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reset-downloads!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [item-path        (r mount.subs/get-body-prop db extension-id item-namespace :item-path)
+        suggestions-path (r mount.subs/get-body-prop db extension-id item-namespace :suggestions-path)]
+       (-> db (dissoc-in item-path)
+              (dissoc-in suggestions-path))))
 
 
 
@@ -24,8 +43,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
+  ; XXX#3907
   (let [suggestions-path (r mount.subs/get-body-prop db extension-id item-namespace :suggestions-path)
-        suggestions      (get server-response :item-editor/get-item-suggestions)]
+        suggestions      (-> server-response :item-editor/get-item-suggestions db/document->non-namespaced-document)]
        (assoc-in db suggestions-path suggestions)))
 
 (defn store-downloaded-item!
@@ -37,15 +57,14 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace server-response]]
+  ; XXX#3907
+  ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
+  ; a letöltött dokumentumot
   (let [resolver-id (r download.subs/get-resolver-id db extension-id item-namespace :get)
         item-path   (r mount.subs/get-body-prop      db extension-id item-namespace :item-path)
-        document    (get server-response resolver-id)]
-       ; XXX#3907
-       ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja
-       ; a letöltött dokumentumot
-       (let [document (db/document->non-namespaced-document document)]
-            (as-> db % (assoc-in % item-path document)
-                       (r backup.events/backup-current-item! % extension-id item-namespace)))))
+        document    (-> server-response resolver-id db/document->non-namespaced-document)]
+       (as-> db % (assoc-in % item-path document)
+                  (r backup.events/backup-current-item! % extension-id item-namespace))))
 
 (defn data-received
   ; WARNING! NON-PUBLIC! DO NOT USE!

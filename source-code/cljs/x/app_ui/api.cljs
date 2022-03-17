@@ -14,7 +14,6 @@
               [x.app-ui.popups.effects]
               [x.app-ui.popups.events]
               [x.app-ui.popups.subs]
-              [x.app-ui.presets]
               [x.app-ui.progress-bar.effects]
               [x.app-ui.progress-bar.subs]
               [x.app-ui.shield]

@@ -4,6 +4,7 @@
 
 (ns plugins.item-editor.core.views
     (:require [app-fruits.reagent                  :as reagent]
+              [mid-fruits.vector                   :as vector]
               [plugins.item-editor.core.helpers    :as core.helpers]
               [plugins.item-editor.core.prototypes :as core.prototypes]
               [x.app-core.api                      :as a]
@@ -68,10 +69,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-          [:<> [save-item-button extension-id item-namespace]
-               [copy-item-button extension-id item-namespace]]
-          [:<> [save-item-button extension-id item-namespace]]))
+  (let [item-actions @(a/subscribe [:item-editor/get-body-prop extension-id item-namespace :item-actions])]
+       (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
+               [:<> (if (vector/contains-item? item-actions :save)      [save-item-button extension-id item-namespace])]
+               [:<> (if (vector/contains-item? item-actions :save)      [save-item-button extension-id item-namespace])
+                    (if (vector/contains-item? item-actions :duplicate) [copy-item-button extension-id item-namespace])])))
 
 (defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,9 +81,10 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-          [:<>]
-          [:<> [delete-item-button extension-id item-namespace]]))
+  (let [item-actions @(a/subscribe [:item-editor/get-body-prop extension-id item-namespace :item-actions])]
+       (if-let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
+               [:<>]
+               [:<> (if (vector/contains-item? item-actions :delete) [delete-item-button extension-id item-namespace])])))
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,9 +110,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate, :save]
-  ;   :menu-element (metamorphic-content)(opt)}
+  ;  {:menu-element (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [item-editor/header :my-extension :my-type {...}]
@@ -190,6 +191,8 @@
   ;    Default: false
   ;   :form-element (metamorphic-content)
   ;   :handler-key (keyword)
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate, :save]
   ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path

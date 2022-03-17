@@ -54,8 +54,6 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; Az item-lister plugin elhagyásakor visszaállítja a plugin állapotát, így a következő
-  ; betöltéskor nem villan fel a legutóbbi állapot!
   (as-> db % (r core.events/reset-meta-items!    % extension-id item-namespace)
              (r download.events/reset-downloads! % extension-id item-namespace)
              (dissoc-in % [:plugins :item-lister/body-props extension-id])))

@@ -28,4 +28,4 @@
        (and (or (map? suggestions)
                 (not (r core.subs/download-suggestions? db extension-id item-namespace)))
             (or (db/document->document-namespaced? document)
-                (not (r core.subs/download-item?        db extension-id item-namespace))))))
+                (not (r core.subs/download-item? db extension-id item-namespace))))))

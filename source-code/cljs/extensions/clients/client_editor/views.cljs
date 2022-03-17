@@ -24,7 +24,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::vat-no-field
                             {:label :vat-no :min-width :s
-                             :value-path [:clients :item-editor/data-items :vat-no]
+                             :value-path [:clients :client-editor/data-items :vat-no]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-country-select
@@ -36,7 +36,7 @@
                         {:label :country ;:user-cancel? false
                          :initial-value   (locales/country-native-name selected-language)
                          :initial-options (param locales/EU-COUNTRY-NAMES)
-                         :value-path      [:clients :item-editor/data-items :country]
+                         :value-path      [:clients :client-editor/data-items :country]
                          :disabled?       editor-disabled?}]))
 
 (defn- client-zip-code-field
@@ -45,7 +45,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::zip-code-field
                             {:label :zip-code
-                             :value-path [:clients :item-editor/data-items :zip-code]
+                             :value-path [:clients :client-editor/data-items :zip-code]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-city-field
@@ -54,8 +54,8 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/combo-box ::city-field
                            {:label :city :emptiable? false :min-width :s
-                            :options-path [:clients :item-editor/meta-items :suggestions :client/city]
-                            :value-path   [:clients :item-editor/data-items :city]
+                            :options-path [:clients :client-editor/suggestions :city]
+                            :value-path   [:clients :client-editor/data-items  :city]
                             :disabled?    editor-disabled?}]))
 
 (defn- client-address-field
@@ -64,7 +64,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::address-field
                             {:label :address
-                             :value-path [:clients :item-editor/data-items :address]
+                             :value-path [:clients :client-editor/data-items :address]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-secondary-contacts
@@ -89,7 +89,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::phone-number-field
                             {:label :phone-number :required? true :min-width :s
-                             :value-path [:clients :item-editor/data-items :phone-number]
+                             :value-path [:clients :client-editor/data-items :phone-number]
                              :validator {:f form/phone-number? :invalid-message :invalid-phone-number}
                              ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
                              ;:modifier form/phone-number
@@ -103,7 +103,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::email-address-field
                             {:label :email-address :required? true :min-width :s
-                             :value-path [:clients :item-editor/data-items :email-address]
+                             :value-path [:clients :client-editor/data-items :email-address]
                              :validator {:f form/email-address? :invalid-message :invalid-email-address}
                              :form-id   :clients.client-editor/form
                              :disabled? editor-disabled?}]))
@@ -123,7 +123,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::last-name-field
                             {:label :last-name :required? true :min-width :s
-                             :value-path [:clients :item-editor/data-items :last-name]
+                             :value-path [:clients :client-editor/data-items :last-name]
                              :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
@@ -133,7 +133,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::first-name-field
                             {:label :first-name :required? true :min-width :s
-                             :value-path [:clients :item-editor/data-items :first-name]
+                             :value-path [:clients :client-editor/data-items :first-name]
                              :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
@@ -164,8 +164,7 @@
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [client-colors @(a/subscribe [:item-editor/get-data-value :clients :client :colors])]
-       [item-editor/color-selector :clients :client {:colors client-colors}]))
+  [item-editor/color-selector :clients :client])
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -196,9 +195,11 @@
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :clients :client])]
        [layouts/layout-a surface-id {:description description
-                                     :header [item-editor/header :clients :client {:item-actions [:delete :duplicate :save]}]
-                                     :body   [item-editor/body   :clients :client {:form-element #'client-form
+                                     :header [item-editor/header :clients :client {}]
+                                     :body   [item-editor/body   :clients :client {:auto-title? true
+                                                                                   :form-element #'client-form
                                                                                    :form-id     :clients.client-editor/form
                                                                                    :handler-key :clients.client-editor
+                                                                                   :item-actions    [:delete :duplicate :save]
                                                                                    :suggestion-keys [:city]
                                                                                    :new-item-id "new-client"}]}]))

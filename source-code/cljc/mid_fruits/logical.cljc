@@ -131,10 +131,9 @@
   ; @return (boolean)
   [& abc]
   ; WARNING! Az összes paraméter kiértelése minden esetben megtörténik!
-  ; Pl.: (nor (is-my-value-true?   ...)
-  ;           (is-your-value-true? ...))
-  ; Az is-your-value-true? függvény abban az esetben is lefut, ha az is-my-value-true? függvény
-  ; kimenete igaz!
+  ; Pl.: (nor (my-f   ...)
+  ;           (your-f ...))
+  ; Az (your-f ...) függvény abban az esetben is lefut, ha az (my-f ...) függvény kimenete igaz!
   (not-any? boolean abc))
 
 (defn or=

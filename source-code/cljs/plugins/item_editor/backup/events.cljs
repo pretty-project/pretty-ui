@@ -71,7 +71,7 @@
         current-item-id (r core.subs/get-current-item-id  db extension-id item-namespace)
         recovered-item  (r backup.subs/get-recovered-item db extension-id item-namespace)]
        (-> db (assoc-in  item-path recovered-item)
-              (assoc-in  [:plugins :item-editor/meta-items    extension-id :item-recovered?] true)
+              ;(assoc-in  [:plugins :item-editor/meta-items    extension-id :item-recovered?] true)
               (dissoc-in [:plugins :item-editor/local-changes extension-id current-item-id]))))
 
 

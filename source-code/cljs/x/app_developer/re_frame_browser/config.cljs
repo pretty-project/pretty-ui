@@ -15,4 +15,5 @@
 
                   ; TEMP
                   :components/primary :core/build-handler :elements/primary :environment/keypress-events
-                  :environment/viewport-data :ui/bubbles :ui/popups :ui/surface :gestures/view-handlers])
+                  :environment/viewport-data :ui/bubbles :ui/popups :ui/surface :gestures/view-handlers
+                  :elements/options])

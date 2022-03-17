@@ -44,7 +44,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r subs/server-response->deleted-item-ids :my-extension :my-type {my-handler/delete-items! ["my-item"]})
+  ;  (r update.subs/server-response->deleted-item-ids :my-extension :my-type {my-handler/delete-items! ["my-item"]})
   ;  =>
   ;  ["my-item"]
   ;
@@ -61,7 +61,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r subs//server-response->duplicated-item-ids :my-extension :my-type {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
+  ;  (r update.subs/server-response->duplicated-item-ids :my-extension :my-type {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
   ;  =>
   ;  ["my-item"]
   ;

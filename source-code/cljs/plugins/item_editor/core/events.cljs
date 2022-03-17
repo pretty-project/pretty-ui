@@ -23,9 +23,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  ; Az item-editor plugin betöltésekor gondoskodni kell, arról hogy az előző betöltéskor
-  ; esetlegesen beállított {:error-mode? true} beállítás törlődjön!
-  (assoc-in db [extension-id :item-editor/meta-items :error-mode?] true))
+  (assoc-in db [:plugins :item-editor/meta-items extension-id :error-mode?] true))
 
 (defn set-recovery-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -35,17 +33,9 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-
-  ; - A {:recovery-mode? true} beállítással elindítitott item-editor plugin visszaállítja az elem
-  ;   eltárolt változtatásait
-  ; - A {:recovery-mode? true} állapot beállításakor szükséges az item-editor utolsó használatakor
-  ;   esetlegesen beállított {:item-recovered? true} beállítást törölni, hogy a reset-editor! függvény
-  ;   ne léptesse ki a plugint a {:recovery-mode? true} állapotból, ha az utolsó betöltés is
-  ;   {:recovery-mode? true} állapotban történt ...
-
-  (-> db (assoc-in  [extension-id :item-editor/meta-items :recovery-mode?] true)))
-
-         ;(dissoc-in [extension-id :item-editor/meta-items :item-recovered?])))
+  ; A {:recovery-mode? true} beállítással elindítitott item-editor plugin visszaállítja az elem
+  ; eltárolt változtatásait
+  (assoc-in db [:plugins :item-editor/meta-items extension-id :recovery-mode?] true))
 
 
 
@@ -78,7 +68,7 @@
   (let [derived-item-id (r core.subs/get-derived-item-id db extension-id item-namespace)]
        (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] derived-item-id)))
 
-(defn use-header-title!
+(defn set-route-title!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -86,9 +76,19 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (if-let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-          (r ui/set-header-title! db route-title)
-          (return db)))
+  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+       (r ui/set-header-title! db route-title)))
+
+(defn set-auto-title!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace]]
+  (let [auto-title (r core.subs/get-auto-title db extension-id item-namespace)]
+       (r ui/set-header-title! db auto-title)))
 
 
 
@@ -103,8 +103,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (as-> db % (r store-derived-view-id! % extension-id)
-             (r use-header-title!      % extension-id item-namespace)))
+  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+       (cond-> db :store-derived-view-id! (as-> % (r store-derived-view-id! % extension-id item-namespace))
+                  route-title             (as-> % (r set-route-title!       % extension-id item-namespace)))))
 
 
 
