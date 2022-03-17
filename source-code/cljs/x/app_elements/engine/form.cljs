@@ -52,3 +52,19 @@
   [db [_ form-id]]
   (or (r inputs-passed?         db form-id)
       (r a/debug-mode-detected? db)))
+
+
+
+
+
+(defn reg-form-input!
+  [db [_ input-id]]
+  (if-let [form-id (get-in db [:elements/primary :data-items input-id :form-id])]
+          (update-in db [:elemets/primary :data-items form-id :input-ids] vector/conj-item input-id)
+          (return    db)))
+
+(defn remove-form-input!
+  [db [_ input-id]]
+  (if-let [form-id (get-in db [:elements/primary :data-items input-id :form-id])]
+          (update-in db [:elemets/primary :data-items form-id :input-ids] vector/remove-item input-id)
+          (return    db)))

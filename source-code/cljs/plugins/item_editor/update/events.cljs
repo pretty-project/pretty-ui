@@ -36,6 +36,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; Az elem sikeres törlése után az elem utolsó állapotáról másolat készül, ami alapján lehetséges
-  ; visszaállítani az elemet annak törlésének visszavonása esemény esetleges megtörténtekor.
+  ; - Az elem sikeres törlése után szükséges az elem kliens-oldali változtatásait eltárolni (local-changes)!
+  ; - A kitörölt elem esetleges visszaállításakor a szerver számára az elem eredeti változatát szükséges elküldeni!
+  ; - A kitörölt elem sikeres visszaállítása után a szerkesztő megnyitásakor az elem kliens-oldali változtatásait
+  ;   szükséges alkalmazni az eredeti dokumentumon!
   (r backup.events/store-local-changes! db extension-id item-namespace))

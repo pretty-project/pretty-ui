@@ -339,6 +339,25 @@
                        (get-in db value-path))
           (return db)))
 
+
+
+; new version
+(defn use-initial-value!
+  [db [_ input-id]]
+  ; - Ha a value-path útvonalon található érték, akkor NEM kerül felülírásra!
+  ; - Az initial-value értéke lehet false, ezért szükséges a (some? ...) függvénnyel vizsgálni!
+  (let [value-path     (get-in db [:elements/primary :data-items input-id :value-path])
+        initial-value  (get-in db [:elements/primary :data-items input-id :initial-value])
+        original-value (get-in db value-path)]
+       (if (and (nil?  original-value)
+                (some? initial-value))
+           (assoc-in db value-path initial-value)
+           (return   db))))
+
+
+
+
+
 (defn use-input-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -346,9 +365,10 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-; (if-let [initial-value (r element/get-element-prop db input-id :initial-value)]
-; Az if-let függvény hamis ágra tér, ha az initial-value értéke false, ezért
-; szükséges let függvényt alkalmazni!
+  ; WARNING
+  ; (if-let [initial-value (r element/get-element-prop db input-id :initial-value)]
+  ; Az if-let függvény hamis ágra tér, ha az initial-value értéke false, ezért
+  ; szükséges let függvényt alkalmazni!
   (let [initial-value (r element/get-element-prop db input-id :initial-value)]
        (if (some? initial-value)
            ; If initial-value is NOT nil ...

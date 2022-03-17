@@ -51,7 +51,6 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r mount.events/body-will-unmount db extension-id item-namespace)}))
 
-      ; BUG#4055
       ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
       ;   tartalmaz, akkor új elem létrehozása után a szerkesztő elhagyásakor abban az esetben is
       ;   megjelenítenne a changes-discarded értesítés, ha nem történt szerkesztés, mivel
@@ -70,7 +69,7 @@
       ;   párbeszédablakot.
       ; - Ezt szükséges visszatenni az item-deleted eseménybe:
       ;   (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true)
-      ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-delete? true} beállítást
+      ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-deleted? true} beállítást
 
       ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
       ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
@@ -78,7 +77,7 @@
       ; esemény visszavonásának esetleges megtörténtekor.
       ;(if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
       ;(if (r subs/item-changed? db extension-id item-namespace)
-      ;    {:db (r events/store-local-changes! db extension-id item-namespace)
+      ;    {:db (r backup.events/store-local-changes! db extension-id item-namespace)
       ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
 
 (a/reg-event-fx

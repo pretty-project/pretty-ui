@@ -54,11 +54,10 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [item-ids     (r items.subs/get-selected-item-ids               db extension-id item-namespace)
-            request-id   (r core.subs/get-request-id                       db extension-id item-namespace)
             query        (r update.queries/get-delete-items-query          db extension-id item-namespace item-ids)
             validator-f #(r update.validators/delete-items-response-valid? db extension-id item-namespace %)]
            {:db (r update.events/delete-selected-items! db extension-id item-namespace)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-lister/items-deleted       extension-id item-namespace]
                                           :on-failure [:item-lister/delete-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -100,11 +99,10 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) item-ids
   (fn [{:keys [db]} [_ extension-id item-namespace item-ids]]
-      (let [request-id   (r core.subs/get-request-id                            db extension-id item-namespace)
-            query        (r update.queries/get-undo-delete-items-query          db extension-id item-namespace item-ids)
+      (let [query        (r update.queries/get-undo-delete-items-query          db extension-id item-namespace item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-lister/reload-items!            extension-id item-namespace]
                                           :on-failure [:item-lister/undo-delete-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -136,11 +134,10 @@
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [item-ids     (r items.subs/get-selected-item-ids                  db extension-id item-namespace)
-            request-id   (r core.subs/get-request-id                          db extension-id item-namespace)
             query        (r update.queries/get-duplicate-items-query          db extension-id item-namespace item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-lister/items-duplicated       extension-id item-namespace]
                                           :on-failure [:item-lister/duplicate-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -179,11 +176,10 @@
   ; @param (keyword) item-namespace
   ; @param (strings in vector) copy-ids
   (fn [{:keys [db]} [_ extension-id item-namespace copy-ids]]
-      (let [request-id   (r core.subs/get-request-id                               db extension-id item-namespace)
-            query        (r update.queries/get-undo-duplicate-items-query          db extension-id item-namespace copy-ids)
+      (let [query        (r update.queries/get-undo-duplicate-items-query          db extension-id item-namespace copy-ids)
             validator-f #(r update.validators/undo-duplicate-items-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-lister/reload-items!               extension-id item-namespace]
                                           :on-failure [:item-lister/undo-duplicate-items-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))

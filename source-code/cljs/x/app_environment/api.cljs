@@ -10,6 +10,9 @@
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.element-handler.effects]
+              [x.app-environment.keypress-handler.effects]
+              [x.app-environment.keypress-handler.lifecycles]
+              [x.app-environment.keypress-handler.side-effects]
               [x.app-environment.scroll-handler.lifecycles]
               [x.app-environment.scroll-prohibitor.effects]
               [x.app-environment.scroll-prohibitor.events]
@@ -26,7 +29,8 @@
               [x.app-environment.css-handler.side-effects     :as css-handler.side-effects]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.event-handler.side-effects   :as event-handler.side-effects]
-              [x.app-environment.keypress-handler             :as keypress-handler]
+              [x.app-environment.keypress-handler.events      :as keypress-handler.events]
+              [x.app-environment.keypress-handler.subs        :as keypress-handler.subs]
               [x.app-environment.mouse-handler.side-effects   :as mouse-handler.side-effects]
               [x.app-environment.scroll-handler.side-effects  :as scroll-handler.side-effects]
               [x.app-environment.scroll-handler.subs          :as scroll-handler.subs]
@@ -82,11 +86,13 @@
 (def remove-event-listener! event-handler.side-effects/remove-event-listener!)
 (def add-event!             event-handler.side-effects/add-event!)
 
-; x.app-environment.keypress-handler
-(def get-pressed-keys                      keypress-handler/get-pressed-keys)
-(def key-pressed?                          keypress-handler/key-pressed?)
-(def enable-non-required-keypress-events!  keypress-handler/enable-non-required-keypress-events!)
-(def disable-non-required-keypress-events! keypress-handler/disable-non-required-keypress-events!)
+; x.app-environment.keypress-handler.events
+(def set-type-mode!  keypress-handler.events/set-type-mode!)
+(def quit-type-mode! keypress-handler.events/quit-type-mode!)
+
+; x.app-environment.keypress-handler.subs
+(def get-pressed-keys keypress-handler.subs/get-pressed-keys)
+(def key-pressed?     keypress-handler.subs/key-pressed?)
 
 ; x.app-environment.mouse-handler.side-effects
 (def prevent-selecting! mouse-handler.side-effects/prevent-selecting!)

@@ -56,6 +56,9 @@
   ; @usage
   ;  [item-editor/item-label :my-extension :my-type {...}]
   [extension-id item-namespace {:keys [name] :as element-props}]
+  ; Az [item-label ...] komponens használatához szükséges a szótárhoz adni ...
+  ; ... a  {:new-my-type     {...}} kifejezést!
+  ; ... az {:unnamed-my-type {...}} kifejezést!
   (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
        (cond (string/nonempty? name) [named-item-label   extension-id item-namespace element-props]
              (boolean new-item?)     [new-item-label     extension-id item-namespace]

@@ -1,4 +1,11 @@
 
+# x4.6.7
+
+- Az item-editor plugin {:initial-item {...}} tulajdonságával ezentúl beállítható a szerkesztett
+  dokumentum kezdeti állapota (Típus hozzáadásakor a :model-id beállítása!)
+
+
+
 # x4.6.5
 
 - Az összes plugin nevéből kikerült az app- és server- prefixum

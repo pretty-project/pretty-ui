@@ -279,6 +279,18 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+
+
+(defn store-element-props!
+  [db [_ element-id element-props]]
+  (assoc-in db [:elements/primary :data-items element-id] element-props))
+
+(defn remove-element-props!
+  [db [_ element-id]]
+  (dissoc-in db [:elements/primary :data-items element-id]))
+
+
+
 (defn set-element-prop!
   ; @param (keyword) element-id
   ; @param (keyword) prop-key

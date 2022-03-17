@@ -191,6 +191,7 @@
   ;    Default: false
   ;   :form-element (metamorphic-content)
   ;   :handler-key (keyword)
+  ;   :initial-item (map)(opt)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate, :save]
   ;   :item-id (string)(opt)

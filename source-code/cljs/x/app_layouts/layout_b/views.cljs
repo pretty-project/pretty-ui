@@ -1,44 +1,16 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.16
-; Description:
-; Version: v0.5.2
-; Compatibility: x4.5.5
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-layouts.layout-b
-    (:require [mid-fruits.candy     :refer [param return]]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]
-              [x.app-layouts.engine :as engine]))
+(ns x.app-layouts.layout-b.views
+    (:require [x.app-core.api                    :as a]
+              [x.app-elements.api                :as elements]
+              [x.app-layouts.layout-b.helpers    :as layout-b.helpers]
+              [x.app-layouts.layout-b.prototypes :as layout-b.prototypes]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- layout-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) layout-props
-  ;
-  ; @return (map)
-  ;  {:horizontal-align (keyword)}
-  [layout-props]
-  (merge {:horizontal-align :center}
-         (param layout-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- card-label
@@ -74,10 +46,8 @@
   ; @param (map) layout-props
   ;  {:cards (maps in vector)}
   [layout-id {:keys [cards] :as layout-props}]
-  (reduce (fn [card-list card-props]
-              (conj card-list [card layout-id layout-props card-props]))
-          [:div.x-layout-b--card-group]
-          (param cards)))
+  (letfn [(f [card-list card-props] (conj card-list [card layout-id layout-props card-props]))]
+         (reduce f [:div.x-layout-b--card-group] cards)))
 
 (defn- layout-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,7 +55,7 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   [layout-id layout-props]
-  [:div.x-body-b (engine/layout-body-attributes layout-id layout-props)
+  [:div.x-body-b (layout-b.helpers/layout-body-attributes layout-id layout-props)
                  [card-list layout-id layout-props]])
 
 (defn- layout-b
@@ -125,5 +95,5 @@
    [layout (a/id) layout-props])
 
   ([layout-id layout-props]
-   (let [layout-props (layout-props-prototype layout-props)]
+   (let [layout-props (layout-b.prototypes/layout-props-prototype layout-props)]
         [layout-b layout-id layout-props])))

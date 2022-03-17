@@ -21,10 +21,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [request-id   (r core.subs/get-request-id                         db extension-id item-namespace)
-            query        (r download.queries/get-request-item-query          db extension-id item-namespace)
+      (let [query        (r download.queries/get-request-item-query          db extension-id item-namespace)
             validator-f #(r download.validators/request-item-response-valid? db extension-id item-namespace %)]
-           [:sync/send-query! request-id
+           [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                               {:display-progress? true
                                ; XXX#4057
                                ; Az on-stalled időzítéssel a UI változásai egyszerre történnek

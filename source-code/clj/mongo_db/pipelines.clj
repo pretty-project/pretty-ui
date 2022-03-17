@@ -146,17 +146,20 @@
 
 (defn count-pipeline
   ; @param (map) pipeline-props
-  ;  {:filter-pattern (map)
-  ;   :search-pattern (map)}
+  ;  {:field-pattern (map)(opt)
+  ;   :filter-pattern (map)(opt)
+  ;   :search-pattern (map)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/count-pipeline {:filter-pattern {:namespace/my-keyword :my-value
+  ;  (mongo-db/count-pipeline {:field-pattern  {:namespace/name {:$concat [:$namespace/first-name " " :$namespace/last-name]}
+  ;                            :filter-pattern {:namespace/my-keyword :my-value
   ;                                             :$or [{:namespace/my-boolean   false}
   ;                                                   {:namespace/my-boolean   nil}]}
   ;                            :search-pattern {:$or [{:namespace/my-string   "My value"}]
   ;                                                   {:namespace/your-string "Your value"}]}})
   ;
   ; @return (maps in vector)
-  [{:keys [filter-pattern search-pattern]}]
-  [{"$match" {"$and" [(filter-query filter-pattern)
-                      (search-query search-pattern)]}}])
+  [{:keys [field-pattern filter-pattern search-pattern]}]
+  (cond-> [] field-pattern (conj {"$addFields"      (add-fields-query field-pattern)})
+             :match        (conj {"$match" {"$and" [(filter-query filter-pattern)
+                                                    (search-query search-pattern)]}})))

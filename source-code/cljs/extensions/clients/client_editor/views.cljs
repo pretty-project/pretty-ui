@@ -30,11 +30,9 @@
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients :client])
-        selected-language @(a/subscribe [:locales/get-selected-language])]
+  (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/select ::country-select
                         {:label :country ;:user-cancel? false
-                         :initial-value   (locales/country-native-name selected-language)
                          :initial-options (param locales/EU-COUNTRY-NAMES)
                          :value-path      [:clients :client-editor/data-items :country]
                          :disabled?       editor-disabled?}]))
@@ -193,7 +191,8 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-editor/get-description :clients :client])]
+  (let [description       @(a/subscribe [:item-editor/get-description :clients :client])
+        selected-language @(a/subscribe [:locales/get-selected-language])]
        [layouts/layout-a surface-id {:description description
                                      :header [item-editor/header :clients :client {}]
                                      :body   [item-editor/body   :clients :client {:auto-title? true
@@ -202,4 +201,5 @@
                                                                                    :handler-key :clients.client-editor
                                                                                    :item-actions    [:delete :duplicate :save]
                                                                                    :suggestion-keys [:city]
-                                                                                   :new-item-id "new-client"}]}]))
+                                                                                   :new-item-id "new-client"
+                                                                                   :initial-item {:country (locales/country-native-name selected-language)}}]}]))

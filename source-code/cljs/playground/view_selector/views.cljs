@@ -20,6 +20,7 @@
               [mid-fruits.vector     :as vector]
               [playground.config     :as config]
               [playground.view-selector.helpers :as view-selector.helpers]
+              [plugins.view-selector.api        :as view-selector]
               [x.app-components.api  :as components]
               [x.app-core.api        :as a :refer [r]]
               [x.app-db.api          :as db]
@@ -323,7 +324,7 @@
   (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground])]
        [elements/menu-bar {:menu-items (view-selector.helpers/menu-items view-id)}]))
 
-(defn- body
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground])]
@@ -338,6 +339,13 @@
                      :selectors  [selectors]
                      :tables     [tables]
                      :text       [text])))
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  [view-selector/body :playground
+                      {:default-view-id :anchors
+                       :content #'body-structure}])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

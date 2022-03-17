@@ -24,7 +24,9 @@
               [x.app-elements.engine.element         :as element]
               [x.app-elements.engine.input           :as input]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]
-              [x.app-environment.api                 :as environment]))
+              [x.app-environment.api                 :as environment]
+
+              [x.app-db.api :as db]))
 
 
 
@@ -122,6 +124,44 @@
                            (a/dispatch on-change)))
         ; Reveal surface if ...
         (if surface (a/dispatch [:elements/show-surface! field-id]))))
+
+
+
+
+(defn store-field-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (string) value
+  ;
+  ; @return (map)
+  [db [_ field-id value]]
+  (let [value-path (r element/get-element-prop db field-id :value-path)]
+       (if (input/value-path->vector-item? value-path)
+           (r db/set-vector-item! value-path value)
+           (r db/set-item!        value-path value))))
+
+(defn update-field-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (string) value
+  ;
+  ; @return (map)
+  [db [_ field-id value]]
+  (if-let [modifier (r element/get-element-prop db field-id :modifier)]
+          (r store-field-value! db field-id (modifier value))
+          (r store-field-value! db field-id (param    value))))
+
+(a/reg-event-db :elements/update-field-value! update-field-value!)
+
+
+
+
+
+(a/reg-event-fx
+  :elements/field-changed
+  (fn [{:keys []}]))
 
 (defn field-props->field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -402,10 +442,10 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (as-> db % (r environment/enable-non-required-keypress-events! %)
-             (r mark-field-as-blurred!                           % field-id)
-             (r input/mark-input-as-visited!                     % field-id)
-             (r surface-handler.events/hide-surface!             % field-id)))
+  (as-> db % (r environment/quit-type-mode!          %)
+             (r mark-field-as-blurred!               % field-id)
+             (r input/mark-input-as-visited!         % field-id)
+             (r surface-handler.events/hide-surface! % field-id)))
 
 (defn field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -414,8 +454,8 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (as-> db % (r environment/disable-non-required-keypress-events! %)
-             (r mark-field-as-focused!                            % field-id)))
+  (as-> db % (r environment/set-type-mode! %)
+             (r mark-field-as-focused!     % field-id)))
 
 
 

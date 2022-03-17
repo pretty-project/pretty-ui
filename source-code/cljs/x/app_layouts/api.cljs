@@ -1,44 +1,29 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.22
-; Description:
-; Version: v0.3.6
-; Compatibility: x4.4.9
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.api
-    (:require [x.app-layouts.body-a   :as body-a]
-              [x.app-layouts.form-a   :as form-a]
-              [x.app-layouts.header-a :as header-a]
-              [x.app-layouts.layout-a :as layout-a]
-              [x.app-layouts.layout-b :as layout-b]))
+    (:require [x.app-layouts.form-a.helpers :as form-a.helpers]
+              [x.app-layouts.form-a.views   :as form-a.views]
+              [x.app-layouts.layout-a.views :as layout-a.views]
+              [x.app-layouts.layout-b.views :as layout-b.views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-layouts.body-a
-(def body-a body-a/body)
+; x.app-layouts.form-a.helpers
+(def input-block-attributes  form-a.helpers/input-block-attributes)
+(def input-row-attributes    form-a.helpers/input-row-attributes)
+(def input-column-attributes form-a.helpers/input-column-attributes)
 
-; x.app-layouts.form-a
-(def input-block-attributes  form-a/input-block-attributes)
-(def input-row-attributes    form-a/input-row-attributes)
-(def input-column-attributes form-a/input-column-attributes)
-(def input-group-header      form-a/input-group-header)
+; x.app-layouts.form-a.views
+(def input-group-label  form-a.views/input-group-label)
+(def input-group-header form-a.views/input-group-header)
 
-; x.app-layouts.header-a
-(def header-a header-a/header)
+; x.app-layouts.layout-a.views
+(def layout-a layout-a.views/layout)
 
-; x.app-layouts.layout-a
-(def layout-a layout-a/layout)
-
-; x.app-layouts.layout-b
-(def layout-b layout-b/layout)
+; x.app-layouts.layout-b.views
+(def layout-b layout-b.views/layout)

@@ -91,3 +91,16 @@
   ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:add-my-type  {:en "Add my type"  :hu "Típusom hozzáadása"}
                                          :edit-my-type {:en "Edit my type" :hu "Típusom szerkesztése"}}]})
+
+
+
+;; -- Az {:initial-item {...}} tulajdonság használata -------------------------
+;; ----------------------------------------------------------------------------
+
+; - Az item-editor plugin számára átadott form-element komponensben ne használj olyan input mezőt,
+;   ami {:initial-value ...} tulajdonsággal rendelkezik, mert ...
+;   Pl.: Új elem létrehozásakor az input mezők {:initial-value ...} értékei megváltoztatják a dokumentumot,
+;        és ha a felhasználó a dokumentum változtatása nélkül elhagyja a plugint, akkor az tévesen
+;        úgy érzékeli, hogy a dokumentumot a felhasználó változtatta meg és az elhagyás után felajánlja
+;        a "Nem mentett változtatások visszaállítása" lehetőségét!
+; - ...

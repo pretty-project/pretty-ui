@@ -3,7 +3,6 @@
 
 /***** User select *****/
 
-.x-header-a,
 .x-description-a {
   -ms-user-select: none;
   -moz-user-select: none;
@@ -232,33 +231,6 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
   padding: 0 12px }
 
 /***** Form A *****/
-
-
-
-/***** Header A *****/
-
-.x-header-a {
-  align-items: center;
-  color: var( --color-muted );
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 48px }
-
-.x-header-a--label {
-  font-size: var( --font-size-m );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-m );
-  line-height: var( --line-height-m ) }
-
-.x-header-a--description {
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: var( --line-height-xxs ) }
-
-/*** Header ***/
-/***** Header A *****/
 
 
 

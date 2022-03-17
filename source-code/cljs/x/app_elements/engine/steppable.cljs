@@ -62,5 +62,5 @@
   ; @param (keyword) steppable-id
   ;
   ; @return (map)
-  [db [_ steppable-id]]
-  (r gestures/get-step-handler-state db steppable-id))
+  [db [_ steppable-id]])
+  ;(r gestures/get-step-handler-state db steppable-id))

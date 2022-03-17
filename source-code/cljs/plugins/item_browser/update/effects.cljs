@@ -108,11 +108,10 @@
   ; @usage
   ;  [:item-browser/delete-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r core.subs/get-request-id                      db extension-id item-namespace)
-            query        (r update.queries/get-delete-item-query          db extension-id item-namespace item-id)
+      (let [query        (r update.queries/get-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r update.events/delete-item! db extension-id item-namespace item-id)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-browser/item-deleted       extension-id item-namespace item-id]
                                           :on-failure [:item-browser/delete-item-failed extension-id item-namespace item-id]
                                           :query query :validator-f validator-f}]})))
@@ -154,11 +153,10 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r core.subs/get-request-id                           db extension-id item-namespace)
-            query        (r update.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+      (let [query        (r update.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-browser/delete-item-undid       extension-id item-namespace]
                                           :on-failure [:item-browser/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -201,11 +199,10 @@
   ; @usage
   ;  [:item-browser/duplicate-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r core.subs/get-request-id                         db extension-id item-namespace)
-            query        (r update.queries/get-duplicate-item-query          db extension-id item-namespace item-id)
+      (let [query        (r update.queries/get-duplicate-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-browser/item-duplicated       extension-id item-namespace]
                                           :on-failure [:item-browser/duplicate-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -243,11 +240,10 @@
   ; @param (keyword) item-namespace
   ; @param (strings) copy-id
   (fn [{:keys [db]} [_ extension-id item-namespace copy-id]]
-      (let [request-id   (r core.subs/get-request-id                              db extension-id item-namespace)
-            query        (r update.queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-id)
+      (let [query        (r update.queries/get-undo-duplicate-item-query          db extension-id item-namespace copy-id)
             validator-f #(r update.validators/undo-duplicate-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-browser/reload-items!              extension-id item-namespace]
                                           :on-failure [:item-browser/undo-duplicate-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))

@@ -6,6 +6,7 @@
     (:require [plugins.item-editor.core.events       :as core.events]
               [plugins.item-editor.core.subs         :as core.subs]
               [plugins.item-editor.routes.subs       :as routes.subs]
+              [plugins.item-editor.transfer.subs     :as transfer.subs]
               [plugins.item-editor.update.events     :as update.events]
               [plugins.item-editor.update.queries    :as update.queries]
               [plugins.item-editor.update.subs       :as update.subs]
@@ -70,19 +71,18 @@
       ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
       ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
       ;   az aktuális szerkesztés közbeni további mentések, már nem számítának elem-hozzáadásnak,
-      ;   miközben az item-editor plugin továbbra is "új elem hozzáadása" módban fut, ezért
-      ;   nem tudná megkülönbözetni a további mentéseket a hozzáadástól (első mentés)!
+      ;   miközben az item-editor plugin továbbra is "Új elem hozzáadása" módban fut, ezért
+      ;   nem tudná megkülönbözetni a további mentéseket a hozzáadástól (első mentéstől)!
       ; - Az elem esetleges törlése utáni – kliens-oldali adatból történő – visszaállításhoz
       ;   szükséges az elem feltételezett szerver-oldali állapotáról másolatot tárolni!
       ; - Az elem szerverre küldésének idejében az elemről másolat készítése feltételezi,
       ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
       ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
       ;   pontatlan visszaálltást okozhat!
-      (let [request-id   (r core.subs/get-request-id                    db extension-id item-namespace)
-            query        (r update.queries/get-save-item-query          db extension-id item-namespace)
+      (let [query        (r update.queries/get-save-item-query          db extension-id item-namespace)
             validator-f #(r update.validators/save-item-response-valid? db extension-id item-namespace %)]
            {:db (r update.events/save-item! db extension-id item-namespace)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-editor/item-saved       extension-id item-namespace]
                                           :on-failure [:item-editor/save-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -95,7 +95,7 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace _]]
-      (if-let [base-route (r core.subs/get-meta-item db extension-id item-namespace :base-route)]
+      (if-let [base-route (r transfer.subs/get-transfer-item db extension-id item-namespace :base-route)]
               [:router/go-to! base-route]
               [:ui/end-fake-process!])))
 
@@ -126,11 +126,10 @@
   ; @usage
   ;  [:item-editor/delete-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [request-id   (r core.subs/get-request-id                      db extension-id item-namespace)
-            query        (r update.queries/get-delete-item-query          db extension-id item-namespace)
+      (let [query        (r update.queries/get-delete-item-query          db extension-id item-namespace)
             validator-f #(r update.validators/delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-editor/item-deleted       extension-id item-namespace]
                                           :on-failure [:item-editor/delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -144,7 +143,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       {:db (r update.events/item-deleted db extension-id item-namespace)
        :dispatch-n [[:item-editor/render-item-deleted-dialog! extension-id item-namespace]
-                    (if-let [base-route (r core.subs/get-meta-item db extension-id item-namespace :base-route)]
+                    (if-let [base-route (r transfer.subs/get-transfer-item db extension-id item-namespace :base-route)]
                             [:router/go-to! base-route]
                             [:ui/end-fake-process!])]}))
 
@@ -170,11 +169,10 @@
   ; @param (keyword) item-namespace
   ; @param (string) item-id
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (let [request-id   (r core.subs/get-request-id                           db extension-id item-namespace)
-            query        (r update.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
+      (let [query        (r update.queries/get-undo-delete-item-query          db extension-id item-namespace item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db extension-id item-namespace %)]
            {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! request-id
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                          {:on-success [:item-editor/delete-item-undid       extension-id item-namespace item-id]
                                           :on-failure [:item-editor/undo-delete-item-failed extension-id item-namespace]
                                           :query query :validator-f validator-f}]})))
@@ -220,10 +218,9 @@
   ; @usage
   ;  [:item-editor/duplicate-item! :my-extension :my-type]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [request-id   (r core.subs/get-request-id                         db extension-id item-namespace)
-            query        (r update.queries/get-duplicate-item-query          db extension-id item-namespace)
+      (let [query        (r update.queries/get-duplicate-item-query          db extension-id item-namespace)
             validator-f #(r update.validators/duplicate-item-response-valid? db extension-id item-namespace %)]
-           [:sync/send-query! request-id
+           [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                               {:display-progress? true
                                :on-success [:item-editor/item-duplicated       extension-id item-namespace]
                                :on-failure [:item-editor/duplicate-item-failed extension-id item-namespace]

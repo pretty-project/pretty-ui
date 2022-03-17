@@ -10,10 +10,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def SYSTEM-KEYS [:core :developer :dictionary :elements :environment :locales :plugins
+(def SYSTEM-KEYS [:core :developer :dictionary :elements :environment :gestures :locales :plugins
                   :router :sync :tools :user :ui
 
                   ; TEMP
                   :components/primary :core/build-handler :elements/primary :environment/keypress-events
-                  :environment/viewport-data :ui/bubbles :ui/popups :ui/surface :gestures/view-handlers
-                  :elements/options])
+                  :environment/viewport-data :ui/bubbles :ui/popups :ui/surface :elements/options :elements/values])

@@ -33,8 +33,7 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
-  ; A {:recovery-mode? true} beállítással elindítitott item-editor plugin visszaállítja az elem
-  ; eltárolt változtatásait
+  ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja az elem eltárolt változtatásait
   (assoc-in db [:plugins :item-editor/meta-items extension-id :recovery-mode?] true))
 
 

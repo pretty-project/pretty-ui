@@ -32,10 +32,9 @@
       (let [; A {:reload-mode? true} beállítás a query elkészítéséhez szükséges, utána nincs szükség
             ; rá, hogy érvényben maradjon, ezért nincs eltárolva!
             db           (r core.events/toggle-reload-mode!                   db extension-id item-namespace)
-            request-id   (r core.subs/get-request-id                          db extension-id item-namespace)
             query        (r download.queries/get-request-items-query          db extension-id item-namespace)
             validator-f #(r download.validators/request-items-response-valid? db extension-id item-namespace %)]
-           [:sync/send-query! request-id
+           [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                               {:display-progress? true
                                ; XXX#4057
                                :on-stalled [:item-lister/receive-reloaded-items! extension-id item-namespace]
@@ -57,10 +56,9 @@
       (if ; Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
           ; az esetben próbáljon újabb elemeket letölteni, ha még nincs az összes letöltve.
           (r core.subs/request-items? db extension-id item-namespace)
-          (let [request-id   (r core.subs/get-request-id                          db extension-id item-namespace)
-                query        (r download.queries/get-request-items-query          db extension-id item-namespace)
+          (let [query        (r download.queries/get-request-items-query          db extension-id item-namespace)
                 validator-f #(r download.validators/request-items-response-valid? db extension-id item-namespace %)]
-               [:sync/send-query! request-id
+               [:sync/send-query! (r core.subs/get-request-id db extension-id item-namespace)
                                   {:display-progress? true
                                    ; XXX#4057
                                    ; A letöltött dokumentumok on-success helyett on-stalled időpontban

@@ -43,7 +43,7 @@
 (def CONSTANT-PROPS-KEYS
      [:autoclear? :auto-focus? :default-value :disallow-empty-input-group? :emptiable?
       :form-id :keypress :get-label-f :get-value-f :group-id :initial-options
-      :initial-value :input-ids :max-input-count :min-input-count :listen-to-change?
+      :initial-value :input-ids :max-input-count :min-input-count :modifier :listen-to-change?
       :on-blur :on-change :on-check :on-click :on-delete :on-empty :on-enter
       :on-focus :on-reset :on-select :on-type-ended :on-uncheck :options-path
       :required? :validator :value-path])

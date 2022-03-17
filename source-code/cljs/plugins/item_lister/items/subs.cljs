@@ -119,8 +119,7 @@
   ; @usage
   ;  (r item-lister/toggle-item-selection? db :my-extension :my-type 42)
   [db [_ extension-id item-namespace item-dex]]
-  (and ; XXX#5660
-       ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
+  (and ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
             (r core.subs/items-selectable? db extension-id item-namespace)
             (r environment/key-pressed?    db 16)
        (not (r core.subs/lister-disabled?  db extension-id item-namespace))))

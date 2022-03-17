@@ -3,10 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.switch
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [app-fruits.reagent        :as reagent]
+              [mid-fruits.candy          :refer [param]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.engine.api :as engine]
+
+              [x.app-elements.engine.element]
+              [x.app-elements.engine.input]
+              [x.app-elements.engine.form]))
 
 
 
@@ -127,6 +132,26 @@
                  [engine/element-helper       switch-id switch-props]
                  [engine/element-info-tooltip switch-id switch-props]])
 
+
+
+(defn switch-did-mount
+  [db [_ switch-id switch-props]]
+  (let [switch-props (select-keys switch-props [:form-id :initial-value :value-path])]
+       (as-> db % (r x.app-elements.engine.element/store-element-props! % switch-id switch-props)
+                  (r x.app-elements.engine.input/use-initial-value!     % switch-id)
+                  (r x.app-elements.engine.form/reg-form-input!         % switch-id))))
+
+(a/reg-event-db :elements/switch-did-mount switch-did-mount)
+
+(defn switch-will-unmount
+  [db [_ switch-id]]
+  (as-> db % (r x.app-elements.engine.form/remove-form-input!       % switch-id)
+             (r x.app-elements.engine.element/remove-element-props! % switch-id)))
+
+(a/reg-event-db :elements/switch-will-unmount switch-will-unmount)
+
+
+
 (defn element
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
@@ -166,8 +191,14 @@
   ([switch-props]
    [element (a/id) switch-props])
 
-  ([switch-id switch-props]
+  ([switch-id {:keys [form-id initial-value] :as switch-props}]
    (let [switch-props (switch-props-prototype switch-id switch-props)]
+        (reagent/lifecycles {:reagent-render         (fn [] [switch switch-id switch-props])
+                             :component-did-mount    (fn [] (if (or form-id initial-value)
+                                                                (a/dispatch [:elements/switch-did-mount switch-id switch-props])))
+                             :component-will-unmount (fn [] (if (or form-id initial-value)
+                                                                (a/dispatch [:elements/switch-will-unmount switch-id])))})
+
         [engine/stated-element switch-id
                                {:render-f      #'switch
                                 :element-props switch-props
