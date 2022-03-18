@@ -1,22 +1,22 @@
 
 (ns extensions.trader.monitor
-    (:require [app-fruits.react-transition :as react-transition]
-              [extensions.trader.engine    :as engine]
-              [extensions.trader.styles    :as styles]
-              [extensions.trader.sync      :as sync]
-              [mid-fruits.candy            :refer [param return]]
-              [mid-fruits.css              :as css]
-              [mid-fruits.format           :as format]
-              [mid-fruits.keyword          :as keyword]
-              [mid-fruits.loop             :refer [reduce-indexed]]
-              [mid-fruits.map              :as map :refer [dissoc-in]]
-              [mid-fruits.math             :as math]
-              [mid-fruits.random           :as random]
-              [mid-fruits.time             :as time]
-              [mid-fruits.vector           :as vector]
-              [x.app-components.api        :as components]
-              [x.app-core.api              :as a :refer [r]]
-              [x.app-elements.api          :as elements]))
+    (:require [extensions.trader.engine :as engine]
+              [extensions.trader.styles :as styles]
+              [extensions.trader.sync   :as sync]
+              [mid-fruits.candy         :refer [param return]]
+              [mid-fruits.css           :as css]
+              [mid-fruits.format        :as format]
+              [mid-fruits.keyword       :as keyword]
+              [mid-fruits.loop          :refer [reduce-indexed]]
+              [mid-fruits.map           :as map :refer [dissoc-in]]
+              [mid-fruits.math          :as math]
+              [mid-fruits.random        :as random]
+              [mid-fruits.time          :as time]
+              [mid-fruits.vector        :as vector]
+              [react.api                :as react]
+              [x.app-components.api     :as components]
+              [x.app-core.api           :as a :refer [r]]
+              [x.app-elements.api       :as elements]))
 
 
 
@@ -402,10 +402,10 @@
   [:div {:style (styles/box-structure-style) :data-subscribed (boolean subscribed?)}
         [:style {:type "text/css"} (styles/monitor-style-rules)]
         [:div {:style (styles/box-body-style)}
-              [react-transition/mount-animation {:animation-timeout 150 :mounted? (not settings-mode?)}
-                                                [monitor-chart module-id module-props]]
-              [react-transition/mount-animation {:animation-timeout 150 :mounted? settings-mode?}
-                                                [monitor-settings module-id module-props]]
+              [react/mount-animation {:animation-timeout 150 :mounted? (not settings-mode?)}
+                                     [monitor-chart module-id module-props]]
+              [react/mount-animation {:animation-timeout 150 :mounted? settings-mode?}
+                                     [monitor-settings module-id module-props]]
               [monitor-controls module-id module-props]]
         [monitor-chart-y-labels module-id module-props]
         [elements/horizontal-separator {:size :xxl}]])

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.temporary-component.side-effects
-    (:require [app-fruits.reagent                      :as reagent]
-              [dom.api                                 :as dom]
+    (:require [dom.api                                 :as dom]
+              [reagent.api                             :as reagent]
               [x.app-tools.temporary-component.helpers :as temporary-component.helpers]))
 
 

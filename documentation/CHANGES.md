@@ -1,6 +1,8 @@
 
 # x4.6.7
-- Az app-fruits.dom névtér ezentúl dom.api néven elérhető!
+- Az app-fruits.dom     névtér ezentúl dom.api     néven elérhető!
+- Az app-fruits.react   névtér ezentúl react.api   néven elérhető!
+- Az app-fruits.reagent névtér ezentúl reagent.api néven elérhető!
 
 - Az item-editor plugin {:initial-item {...}} tulajdonságával ezentúl beállítható a szerkesztett
   dokumentum kezdeti állapota (Típus hozzáadásakor a :model-id beállítása!)

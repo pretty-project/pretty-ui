@@ -2,13 +2,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-tools.image-loader.state
-    (:require [reagent.api :refer [ratom]]))
+(ns reagent.references
+    (:require [reagent.core :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (map)
-(defonce LOADERS (ratom {}))
+(defn arguments
+  ; @param (?) this
+  ;
+  ; @usage
+  ;  (reagent/arguments ?)
+  ;
+  ; @return (?)
+  [this]
+  (-> this core/argv rest))

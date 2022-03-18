@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.image-preloader.views
-    (:require [app-fruits.reagent :as reagent]
-              [mid-fruits.candy   :refer [param]]
-              [x.app-core.api     :as a]))
+    (:require [mid-fruits.candy :refer [param]]
+              [reagent.api      :as reagent]
+              [x.app-core.api   :as a]))
 
 
 

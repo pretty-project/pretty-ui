@@ -2,13 +2,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-tools.image-loader.state
-    (:require [reagent.api :refer [ratom]]))
+(ns reagent.helpers)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (map)
-(defonce LOADERS (ratom {}))
+(defn component?
+  ; @param (*)
+  ;
+  ; @example
+  ;  (reagent/component? [:div "..."])
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (reagent/component? [my-component "..."])
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (and (-> n vector?)
+       (-> n first fn?)))

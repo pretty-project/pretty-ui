@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.views
-    (:require [app-fruits.react-transition         :as react-transition]
-              [app-fruits.reagent                  :as reagent]
-              [mid-fruits.logical                  :refer [nor]]
+    (:require [mid-fruits.logical                  :refer [nor]]
               [mid-fruits.vector                   :as vector]
               [plugins.item-lister.core.helpers    :as core.helpers]
               [plugins.item-lister.core.prototypes :as core.prototypes]
+              [react.api                           :as react]
+              [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
               [x.app-tools.api                     :as tools]))
@@ -285,8 +285,8 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [search-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :search-mode?])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? search-mode?}
-                                         [search-mode-header-structure extension-id item-namespace]]))
+       [react/mount-animation {:animation-timeout 500 :mounted? search-mode?}
+                              [search-mode-header-structure extension-id item-namespace]]))
 
 (defn select-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -308,8 +308,8 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [select-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :select-mode?])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                                         [select-mode-header-structure extension-id item-namespace]]))
+       [react/mount-animation {:animation-timeout 500 :mounted? select-mode?}
+                              [select-mode-header-structure extension-id item-namespace]]))
 
 (defn menu-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -332,8 +332,8 @@
   [extension-id item-namespace]
   (let [reorder-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :reorder-mode?])
         search-mode?  @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :search-mode?])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? (nor reorder-mode? search-mode?)}
-                                         [menu-mode-header-structure extension-id item-namespace]]))
+       [react/mount-animation {:animation-timeout 500 :mounted? (nor reorder-mode? search-mode?)}
+                              [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn reorder-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -353,8 +353,8 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [reorder-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :reorder-mode?])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
-                                         [reorder-mode-header-structure extension-id item-namespace]]))
+       [react/mount-animation {:animation-timeout 500 :mounted? reorder-mode?}
+                              [reorder-mode-header-structure extension-id item-namespace]]))
 
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

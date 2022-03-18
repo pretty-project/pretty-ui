@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.image
-    (:require [app-fruits.react          :as react]
-              [dom.api                   :as dom]
+    (:require [dom.api                   :as dom]
               [mid-fruits.candy          :refer [param]]
+              [react.api                 :as react]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.views
-    (:require [app-fruits.react-transition          :as react-transition]
-              [plugins.item-browser.core.prototypes :as core.prototypes]
+    (:require [plugins.item-browser.core.prototypes :as core.prototypes]
               [plugins.item-lister.api              :as item-lister]
+              [react.api                            :as react]
               [x.app-core.api                       :as a]
               [x.app-elements.api                   :as elements]))
 
@@ -73,8 +73,8 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [menu-mode? @(a/subscribe [:item-lister/menu-mode? extension-id item-namespace])]
-       [react-transition/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
-                                         [menu-mode-header-structure extension-id item-namespace]]))
+       [react/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
+                              [menu-mode-header-structure extension-id item-namespace]]))
 
 (defn header
   ; @param (keyword) extension-id

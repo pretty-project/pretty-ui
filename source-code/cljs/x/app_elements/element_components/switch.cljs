@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.switch
-    (:require [app-fruits.reagent        :as reagent]
-              [mid-fruits.candy          :refer [param]]
+    (:require [mid-fruits.candy          :refer [param]]
+              [reagent.api               :as reagent]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]

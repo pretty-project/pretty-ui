@@ -2,8 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-tools.image-loader.state
-    (:require [reagent.api :refer [ratom]]))
+(ns reagent.state)
 
 
 
@@ -11,4 +10,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce LOADERS (ratom {}))
+(defonce MOUNTED-COMPONENTS (atom {}))

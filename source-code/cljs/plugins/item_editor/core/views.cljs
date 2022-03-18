@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.views
-    (:require [app-fruits.reagent                  :as reagent]
-              [mid-fruits.vector                   :as vector]
+    (:require [mid-fruits.vector                   :as vector]
               [plugins.item-editor.core.helpers    :as core.helpers]
               [plugins.item-editor.core.prototypes :as core.prototypes]
+              [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]))
 

@@ -17,7 +17,6 @@
     (:require ["@dnd-kit/core"      :as core]
               ["@dnd-kit/sortable"  :as sortable]
               ["@dnd-kit/utilities" :as utilities]
-              [app-fruits.reagent   :as reagent]
               [mid-fruits.candy     :as candy :refer [param return]]
               [mid-fruits.json      :as json]
               [mid-fruits.loop      :refer [reduce-indexed]]
@@ -25,6 +24,7 @@
               [mid-fruits.mixed     :as mixed]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
+              [reagent.api          :as reagent]
               [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]))

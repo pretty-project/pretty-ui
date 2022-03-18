@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.renderer
-    (:require [app-fruits.reagent :as reagent]
-              [mid-fruits.candy   :refer [param return]]
+    (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
+              [reagent.api        :as reagent]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-ui.engine    :as engine]))

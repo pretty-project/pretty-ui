@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.core.views
-    (:require [app-fruits.reagent                    :as reagent]
-              [plugins.view-selector.core.helpers    :as core.helpers]
+    (:require [plugins.view-selector.core.helpers    :as core.helpers]
               [plugins.view-selector.core.prototypes :as core.prototypes]
+              [reagent.api                           :as reagent]
               [x.app-core.api                        :as a]))
 
 

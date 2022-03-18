@@ -2,8 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-fruits.react-transition
-    (:require [react-transition-group :as react-transition-group]))
+(ns react.transitions
+    (:require [react.config           :as config]
+              [react-transition-group :as react-transition-group]))
 
 
 
@@ -13,14 +14,6 @@
 ; react-transition-group
 (def transition     react-transition-group/Transition)
 (def css-transition react-transition-group/CSSTransition)
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (ms)
-(def DEFAULT-ANIMATION-TIMEOUT 500)
 
 
 
@@ -47,6 +40,6 @@
                                       :exit   :r-unmount :exitActive   :r-unmounting :exitDone   :r-unmounted
                                       :appear :r-appear  :appearActive :r-appearing  :appearDone :r-appeared}
                       :appear        true
-                      :timeout       (or animation-timeout DEFAULT-ANIMATION-TIMEOUT)
+                      :timeout       (or animation-timeout config/DEFAULT-ANIMATION-TIMEOUT)
                       :unmountOnExit true}
                      component])
