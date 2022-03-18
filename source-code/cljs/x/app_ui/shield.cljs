@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.shield
-    (:require [app-fruits.dom    :as dom]
+    (:require [dom.api           :as dom]
               [x.app-core.api    :as a]
               [x.app-ui.renderer :as renderer]))
 

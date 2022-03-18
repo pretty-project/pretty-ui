@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.field
-    (:require [app-fruits.dom                        :as dom]
+    (:require [dom.api                               :as dom]
               [mid-fruits.candy                      :refer [param return]]
               [mid-fruits.css                        :as css]
               [mid-fruits.string                     :as string]

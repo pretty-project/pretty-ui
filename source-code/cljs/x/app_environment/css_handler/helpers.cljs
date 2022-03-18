@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.css-handler.helpers
-    (:require [app-fruits.dom                       :as dom]
+    (:require [dom.api                              :as dom]
               [mid-fruits.candy                     :refer [param return]]
               [mid-fruits.string                    :as string]
               [mid-fruits.vector                    :as vector]

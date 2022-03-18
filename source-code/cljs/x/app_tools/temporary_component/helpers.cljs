@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.temporary-component.helpers
-    (:require [app-fruits.dom                         :as dom]
+    (:require [dom.api                                :as dom]
               [x.app-tools.temporary-component.config :as temporary-component.config]))
 
 

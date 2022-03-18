@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.file-uploader.effects
-    (:require [app-fruits.dom                                :as dom]
+    (:require [dom.api                                       :as dom]
               [extensions.storage.file-uploader.events       :as file-uploader.events]
               [extensions.storage.file-uploader.helpers      :as file-uploader.helpers]
               [extensions.storage.file-uploader.queries      :as file-uploader.queries]

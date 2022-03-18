@@ -5,7 +5,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.digit-field
-    (:require [app-fruits.dom                        :as dom]
+    (:require [dom.api                               :as dom]
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.css                        :as css]
               [mid-fruits.vector                     :as vector]

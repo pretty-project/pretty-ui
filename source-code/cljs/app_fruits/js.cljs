@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns app-fruits.js
-    (:require [app-fruits.dom :as dom]))
+    (:require [dom.api :as dom]))
 
 
 

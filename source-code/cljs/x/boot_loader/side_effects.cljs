@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.side-effects
-    (:require [app-fruits.dom     :as dom]
-              [app-fruits.reagent :as reagent]
+    (:require [app-fruits.reagent :as reagent]
+              [dom.api            :as dom]
               [x.app-core.api     :as a]
               [x.app-ui.api       :as ui]))
 

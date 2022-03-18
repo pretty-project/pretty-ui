@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.event-handler.helpers
-    (:require [app-fruits.dom   :as dom]
+    (:require [dom.api          :as dom]
               [mid-fruits.candy :refer [return]]))
 
 

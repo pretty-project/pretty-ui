@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.file-uploader.events
-    (:require [app-fruits.dom :as dom]
+    (:require [dom.api        :as dom]
               [mid-fruits.map :refer [dissoc-in]]
               [x.app-core.api :as a :refer [r]]))
 

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.image
-    (:require [app-fruits.dom            :as dom]
-              [app-fruits.react          :as react]
+    (:require [app-fruits.react          :as react]
+              [dom.api                   :as dom]
               [mid-fruits.candy          :refer [param]]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))

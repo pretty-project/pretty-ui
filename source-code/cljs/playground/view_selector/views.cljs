@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns playground.view-selector.views
-    (:require [app-fruits.dom        :as dom]
-              [app-fruits.reagent    :as reagent :refer [ratom]]
+    (:require [app-fruits.reagent    :as reagent :refer [ratom]]
+              [dom.api               :as dom]
               [mid-fruits.candy      :refer [param return]]
               [mid-fruits.form       :as form]
               [mid-fruits.gestures   :as gestures]

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler.subs
-    (:require [app-fruits.dom    :as dom]
+    (:require [dom.api           :as dom]
               [mid-fruits.vector :as vector]
               [x.app-core.api    :as a :refer [r]]))
 

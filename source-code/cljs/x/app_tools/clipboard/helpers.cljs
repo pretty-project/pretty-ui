@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.clipboard.helpers
-    (:require [app-fruits.dom :as dom]))
+    (:require [dom.api :as dom]))
 
 
 

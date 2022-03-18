@@ -294,6 +294,5 @@
   ;
   ; @return (string)
   [n]
-  (letfn [(parse-f [o k v]
-                   (str o (name k) ": " (if (keyword? v) (name v) v) "; "))]
-         (string/trim (reduce-kv parse-f "" n))))
+  (letfn [(f [style k v] (str style (name k) ": " (if (keyword? v) (name v) v) "; "))]
+         (string/trim (reduce-kv f "" n))))

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.sounds.side-effects
-    (:require [app-fruits.dom          :as dom]
+    (:require [dom.api                 :as dom]
               [x.app-core.api          :as a]
               [x.app-ui.sounds.helpers :as sounds.helpers]))
 

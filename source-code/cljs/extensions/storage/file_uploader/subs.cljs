@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.file-uploader.subs
-    (:require [app-fruits.dom                           :as dom]
+    (:require [dom.api                                  :as dom]
               [extensions.storage.capacity-handler.subs :as capacity-handler.subs]
               [extensions.storage.file-uploader.helpers :as file-uploader.helpers]
               [mid-fruits.candy                         :refer [param return]]

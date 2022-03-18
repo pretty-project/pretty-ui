@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-prohibitor.side-effects
-    (:require [app-fruits.dom    :as dom]
+    (:require [dom.api           :as dom]
               [mid-fruits.candy  :refer [param]]
               [mid-fruits.css    :as css]
               [mid-fruits.math   :as math]

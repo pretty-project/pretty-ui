@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.css-handler.side-effects
-    (:require [app-fruits.dom                        :as dom]
+    (:require [dom.api                               :as dom]
               [mid-fruits.string                     :as string]
               [x.app-core.api                        :as a :refer [cache-control-uri]]
               [x.app-environment.css-handler.helpers :as css-handler.helpers]))

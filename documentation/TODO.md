@@ -13,6 +13,10 @@
 
 
 # x4.6.0
+
+- dom/form-data van egy kérdéses sor ...
+  dom/file-selector detto
+
 - Beállítható temporary-parent, ami a kövi [:router/go-xxx! ...] eseménnyel törlődik
   - Így megadhato, hogy a "/models/:model-id/types/:type-id" útvonal vissza gombja
     a "/models/:model-id" útvonalra dobjon

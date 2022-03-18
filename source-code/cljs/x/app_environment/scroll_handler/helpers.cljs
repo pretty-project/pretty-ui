@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-handler.helpers
-    (:require [app-fruits.dom                                 :as dom]
+    (:require [dom.api                                        :as dom]
               [x.app-core.api                                 :as a]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.scroll-handler.config        :as scroll-handler.config]

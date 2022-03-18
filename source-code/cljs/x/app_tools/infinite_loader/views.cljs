@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.infinite-loader.views
-    (:require [app-fruits.dom                      :as dom]
-              [app-fruits.reagent                  :as reagent]
+    (:require [app-fruits.reagent                  :as reagent]
+              [dom.api                             :as dom]
               [x.app-core.api                      :as a]
               [x.app-tools.infinite-loader.helpers :as infinite-loader.helpers]))
 

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.event-handler.side-effects
-    (:require [app-fruits.dom                          :as dom]
+    (:require [dom.api                                 :as dom]
               [x.app-core.api                          :as a]
               [x.app-environment.event-handler.helpers :as event-handler.helpers]))
 

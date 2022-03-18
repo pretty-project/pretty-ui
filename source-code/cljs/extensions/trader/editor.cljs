@@ -1,6 +1,6 @@
 
 (ns extensions.trader.editor
-    (:require [app-fruits.dom             :as dom]
+    (:require [dom.api                    :as dom]
               [extensions.trader.listener :as listener]
               [extensions.trader.styles   :as styles]
               [extensions.trader.sync     :as sync]
