@@ -9,7 +9,6 @@
               [x.app-environment.cookie-handler.effects]
               [x.app-environment.cookie-handler.events]
               [x.app-environment.cookie-handler.side-effects]
-              [x.app-environment.element-handler.effects]
               [x.app-environment.keypress-handler.effects]
               [x.app-environment.keypress-handler.lifecycles]
               [x.app-environment.keypress-handler.side-effects]
@@ -74,10 +73,14 @@
 (def remove-element-style-value!           element-handler.side-effects/remove-element-style-value!)
 (def set-element-attribute!                element-handler.side-effects/set-element-attribute!)
 (def remove-element-attribute!             element-handler.side-effects/remove-element-attribute!)
+(def set-element-content!                  element-handler.side-effects/set-element-content!)
 (def empty-element!                        element-handler.side-effects/empty-element!)
 (def remove-element!                       element-handler.side-effects/remove-element!)
 (def reveal-element!                       element-handler.side-effects/reveal-element!)
 (def hide-element!                         element-handler.side-effects/hide-element!)
+(def remove-element-animated!              element-handler.side-effects/remove-element-animated!)
+(def hide-element-animated!                element-handler.side-effects/hide-element-animated!)
+(def reveal-element-animated!              element-handler.side-effects/reveal-element-animated!)
 (def mark-element-masspoint-orientation!   element-handler.side-effects/mark-element-masspoint-orientation!)
 (def unmark-element-masspoint-orientation! element-handler.side-effects/unmark-element-masspoint-orientation!)
 

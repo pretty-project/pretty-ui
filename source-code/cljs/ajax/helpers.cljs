@@ -13,7 +13,10 @@
 (defn progress-event->request-progress
   ; @param (object) progress-event
   ;
-  ; @return (integer)
+  ; @usage
+  ;  (ajax/progress-event->request-progress %)
+  ;
+  ; @return (percent)
   [progress-event]
   (let [loaded (.-loaded progress-event)
         total  (.-total  progress-event)]
@@ -27,6 +30,9 @@
 (defn request->local-request?
   ; @param (map) request
   ;  {:uri (string)}
+  ;
+  ; @usage
+  ;  (ajax/request->local-request {:uri "..."})
   ;
   ; @return (boolean)
   [{:keys [uri]}]

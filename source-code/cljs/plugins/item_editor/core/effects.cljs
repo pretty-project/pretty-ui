@@ -19,6 +19,7 @@
   ; @param (keyword) item-namespace
   :item-editor/load-editor!
   (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; XXX#4579
       (let [on-load     (r transfer.subs/get-transfer-item db extension-id item-namespace :on-load)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
            {:db (r core.events/load-editor! db extension-id item-namespace)

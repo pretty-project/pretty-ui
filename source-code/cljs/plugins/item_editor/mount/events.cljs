@@ -68,6 +68,12 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
+  ; A body komponens React-fából történő lecsatolásakor a {:handler-key ...} paraméter értékét
+  ; nem törli a Re-Frame adatbázisból, mert az esetlegesen kitörölt elem visszaállításához
+  ; szükséges a {:handler-key ...} tulajdonság ismerete a komponens lecsatolása után is!
   (as-> db % (r core.events/reset-meta-items!    % extension-id item-namespace)
              (r download.events/reset-downloads! % extension-id item-namespace)
-             (dissoc-in % [:plugins :item-editor/body-props extension-id])))
+             (dissoc-in % [:plugins :item-editor/body-props extension-id])
+             (assoc-in  % [:plugins :item-editor/body-props extension-id]
+                          (select-keys (get-in db [:plugins :item-editor/body-props extension-id])
+                                       [:handler-key]))))

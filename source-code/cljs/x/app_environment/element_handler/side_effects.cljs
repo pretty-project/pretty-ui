@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.element-handler.side-effects
-    (:require [dom.api        :as dom]
-              [x.app-core.api :as a]))
+    (:require [dom.api         :as dom]
+              [mid-fruits.time :as time]
+              [x.app-core.api  :as a]))
 
 
 
@@ -99,7 +100,7 @@
 
 
 
-;; -- Attribute side-effect events --------------------------------------------
+;; -- Element style side-effect events ----------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn set-element-style!
@@ -158,6 +159,11 @@
 ;  [:environment/remove-element-style-value! "my-element" "opacity"]
 (a/reg-fx :environment/remove-element-style-value! remove-element-style-value!)
 
+
+
+;; -- Element attribute side-effect events ------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn set-element-attribute!
   ; @param (string) element-id
   ; @param (string) attribute-name
@@ -189,8 +195,22 @@
 
 
 
-;; -- Node side-effect events -------------------------------------------------
+;; -- Element content side-effect events --------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn set-element-content!
+  ; @param (string) element-id
+  ; @param (string) content
+  ;
+  ; @usage
+  ;  (environment/set-element-content! "my-element" "My content")
+  [element-id content]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/set-element-content! element content)))
+
+; @usage
+;  [:environment/set-element-content! "my-element" "My content"]
+(a/reg-fx :environment/set-element-content! set-element-content!)
 
 (defn empty-element!
   ; @param (string) element-id
@@ -204,6 +224,11 @@
 ; @usage
 ;  [:environment/empty-element! "my-element"]
 (a/reg-fx :environment/empty-element! empty-element!)
+
+
+
+;; -- Node side-effect events -------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn remove-element!
   ; @param (string) element-id
@@ -220,7 +245,7 @@
 
 
 
-;; -- Visibility side-effect events -------------------------------------------
+;; -- Element visibility side-effect events -----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn reveal-element!
@@ -249,7 +274,54 @@
 
 
 
-;; -- Masspoint side-effect events --------------------------------------------
+;; -- Element visibility animations side-effect events ------------------------
+;; ----------------------------------------------------------------------------
+
+(defn remove-element-animated!
+  ; @param (integer) timeout
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/remove-element-animated! 500 "my-element")
+  [timeout element-id]
+  (set-element-attribute! element-id "data-animation" "hide")
+  (time/set-timeout! timeout (fn [] (remove-element! element-id))))
+
+; @usage
+;  [:environment/remove-element-animated! 500 "my-element"]
+(a/reg-fx :environment/remove-element-animated! remove-element-animated!)
+
+(defn hide-element-animated!
+  ; @param (integer) timeout
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/hide-element-animated! 500 "my-element")
+  [timeout element-id]
+  (set-element-attribute! element-id "data-animation" "hide")
+  (time/set-timeout! timeout (fn [] (set-element-style-value!  element-id "display" "none")
+                                    (remove-element-attribute! element-id "data-animation"))))
+
+; @usage
+;  [:environment/hide-element-animated! 500 "my-element"]
+(a/reg-fx :environment/hide-element-animated! hide-element-animated!)
+
+(defn reveal-element-animated!
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/reveal-element-animated! "my-element")
+  [element-id]
+  (set-element-style-value! element-id "display"        "block")
+  (set-element-attribute!   element-id "data-animation" "reveal"))
+
+; @usage
+;  [:environment/reveal-element-animated! "my-element"]
+(a/reg-fx :environment/reveal-element-animated! reveal-element-animated!)
+
+
+
+;; -- Element masspoint side-effect events ------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn mark-element-masspoint-orientation!

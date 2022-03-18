@@ -20,5 +20,7 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ extension-id item-namespace item-ids]]
+  ; Az export-backup-items függvény az item-ids vektorban átadott azonosítójú elemek névtérrel ellátott
+  ; változatával tér vissza.
   (vector/->items item-ids #(let [backup-item (get-in db [:plugins :item-lister/backup-items extension-id %])]
                                  (db/document->namespaced-document backup-item item-namespace))))

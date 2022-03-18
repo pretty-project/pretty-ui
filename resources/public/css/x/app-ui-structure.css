@@ -277,13 +277,10 @@
   display: flex }
 
 /* XXX#8607 */
-[data-viewport-profile="xxs"] #x-app-header,
-[data-viewport-profile="xs"]  #x-app-header,
-[data-viewport-profile="s"]   #x-app-header {
-  border-radius: 0;
-  left: 0;
-  top: 0;
-  width: 100% }
+[data-viewport-profile="xxs"] #x-app-header--body,
+[data-viewport-profile="xs"]  #x-app-header--body,
+[data-viewport-profile="s"]   #x-app-header--body {
+  border-radius: 0 }
 
 /*** Header ***/
 /***** App header *****/

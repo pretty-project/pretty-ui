@@ -20,6 +20,11 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; XXX#4579
+      ; Az [:item-lister/load-lister! ...] esemény az item-lister plugin szerver-oldali kezelője
+      ; által regisztrált útvonal kliens-oldali eseménye, ami ...
+      ; ... beállítja az {:route-title ...} tulajdonságként átadott címkét
+      ; ... meghívja az  {:on-load [...]}   tulajdonságként átadott eseményt.
       (let [on-load     (r transfer.subs/get-transfer-item db extension-id item-namespace :on-load)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
            {:db (r core.events/load-lister! db extension-id item-namespace)

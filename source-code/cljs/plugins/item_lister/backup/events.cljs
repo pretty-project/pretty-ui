@@ -6,7 +6,6 @@
     (:require [mid-fruits.map                 :as map]
               [mid-fruits.vector              :as vector]
               [plugins.item-lister.core.subs  :as core.subs]
-              [plugins.item-lister.items.subs :as items.subs]
               [plugins.item-lister.mount.subs :as mount.subs]
               [x.app-core.api                 :as a :refer [r]]))
 
@@ -23,6 +22,9 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
+  ; - A kijelölt elemek törlésekor szükséges azokról biztonsági másolatot készíteni, amiből esetlegesen
+  ;   visszaállíthatók az elemek, ha a felhasználó a kitörölt elemek helyreállítása lehetőséget választja.
+  ; - Az elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
   (let [items-path     (r mount.subs/get-body-prop db extension-id item-namespace :items-path)
         selected-items (r core.subs/get-meta-item  db extension-id item-namespace :selected-items)]
        (letfn [(f [db item-dex]
@@ -40,6 +42,8 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-ids]]
+  ; Ha lejárt az elemek törlésének visszavonására rendelkezésre álló idő, vagy megtörtént az elemek
+  ; helyreállítása, akkor már nincs szükség az elemekről készült biztonsági másolatokra ...
   (update-in db [:plugins :item-lister/backup-items extension-id] map/remove-keys item-ids))
 
 

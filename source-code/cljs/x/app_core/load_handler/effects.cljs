@@ -58,15 +58,15 @@
   :core/app-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (r load-handler.events/set-load-status! db :loaded)
-       :dispatch [:ui/hide-shield!]}))
+      {:db (r load-handler.events/set-load-status! db :loaded)
+       :fx [:ui/remove-shield!]}))
 
 (event-handler/reg-event-fx
   :core/load-timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db       (r load-handler.events/set-load-status! db :load-timeout-reached)
-       :dispatch [:ui/set-shield! {:content load-handler.config/LOAD-TIMEOUT-ERROR}]}))
+      {:db (r load-handler.events/set-load-status! db :load-timeout-reached)
+       :fx [:ui/set-shield! load-handler.config/LOAD-TIMEOUT-ERROR]}))
 
 
 

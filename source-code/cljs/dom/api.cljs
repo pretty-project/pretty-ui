@@ -19,6 +19,7 @@
               [dom.listeners             :as listeners]
               [dom.mouse                 :as mouse]
               [dom.node                  :as node]
+              [dom.script                :as script]
               [dom.scroll                :as scroll]
               [dom.selection             :as selection]
               [dom.style                 :as style]
@@ -143,12 +144,15 @@
 (def empty-element!                     node/empty-element!)
 (def set-element-content!               node/set-element-content!)
 
+; dom.script
+(def append-script! script/append-script!)
+  
 ; dom.scroll
 (def get-scroll-x           scroll/get-scroll-x)
 (def get-scroll-y           scroll/get-scroll-y)
 (def scroll-direction-ttb?  scroll/scroll-direction-ttb?)
 (def scroll-direction-btt?  scroll/scroll-direction-btt?)
-(def get-scroll-direction   scroll/get-scroll-direction  )
+(def get-scroll-direction   scroll/get-scroll-direction)
 (def get-scroll-progress    scroll/get-scroll-progress)
 (def set-scroll-x!          scroll/set-scroll-x!)
 (def set-scroll-y!          scroll/set-scroll-y!)
@@ -189,4 +193,4 @@
 (def get-viewport-orientation viewport/get-viewport-orientation)
 (def square-viewport?         viewport/square-viewport?)
 (def landscape-viewport?      viewport/landscape-viewport?)
-(def portrait-viewport?       viewport/portrait-viewport?   )
+(def portrait-viewport?       viewport/portrait-viewport?)

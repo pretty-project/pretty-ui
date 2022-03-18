@@ -19,6 +19,8 @@
   ; @param (map) request
   ;
   ; @return (map)
+  ;  {:headers (map)
+  ;    {"x-csrf-token" (string)}}
   [request]
   (if (helpers/request->local-request? request)
       (update request :headers merge {"x-csrf-token" config/CSRF-TOKEN})
@@ -27,7 +29,8 @@
 (defn load-interceptors!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (swap! core/default-interceptors conj (core/to-interceptor {:name "default headers" :request default-headers})))
+  (let [interceptor (core/to-interceptor {:name "default headers" :request default-headers})]
+       (swap! core/default-interceptors conj interceptor)))
 
 
 

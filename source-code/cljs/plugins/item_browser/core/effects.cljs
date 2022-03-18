@@ -31,6 +31,7 @@
   ; @usage
   ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
+      ; XXX#4579
       {:db (r core.events/load-browser! db extension-id item-namespace browser-props)
        :dispatch-n [; XXX#5660
                     [:environment/reg-keypress-listener! :item-browser/keypress-listener]

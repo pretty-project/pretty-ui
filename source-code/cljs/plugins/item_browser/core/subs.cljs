@@ -52,6 +52,7 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
+  ; XXX#8519
   (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-browser!")))
 

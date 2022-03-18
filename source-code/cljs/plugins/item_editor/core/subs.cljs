@@ -4,6 +4,7 @@
 
 (ns plugins.item-editor.core.subs
     (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.logical                :refer [nor]]
               [mid-fruits.vector                 :as vector]
               [plugins.item-editor.core.helpers  :as core.helpers]
               [plugins.item-editor.mount.subs    :as mount.subs]
@@ -50,6 +51,11 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
+  ; XXX#8519
+  ; - Az item-editor plugin a különböző lekérések elküldéséhez ugyanazt az azonosítót használja,
+  ;   mert egy közös azonosítóval egyszerűbb megállapítani, hogy valamelyik lekérés folyamatban
+  ;   van-e (az editor-synchronizing? függvénynek elegendő egy request-id azonosítót figyelnie).
+  ; - Ha szükséges, akkor a különböző lekéréseket el lehet látni egyedi azonosítóval.
   (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-editor!")))
 
@@ -61,6 +67,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; XXX#8519
   (let [request-id (r get-request-id db extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
@@ -186,7 +193,7 @@
   [db [_ extension-id item-namespace]]
   (let [new-item?      (r new-item?     db extension-id item-namespace)
         recovery-mode? (r get-meta-item db extension-id item-namespace :recovery-mode?)]
-       (not (or new-item? recovery-mode?))))
+       (nor new-item? recovery-mode?)))
 
 (defn download-data?
   ; WARNING! NON-PUBLIC! DO NOT USE!

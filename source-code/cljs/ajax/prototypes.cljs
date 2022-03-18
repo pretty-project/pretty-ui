@@ -78,9 +78,9 @@
   ;  {:uri (string)}
   ;
   ; @return (map)
-  ;  {:error-handler-f (function)
-  ;   :handler-f (function)
-  ;   :progress-handler-f (function)
+  ;  {:error-handler (function)
+  ;   :handler (function)
+  ;   :progress-handler (function)
   ;   :uri (string)}
   [request-id request-props]
   (merge (request-handlers request-id request-props)
@@ -97,10 +97,10 @@
   ;
   ; @return (map)
   ;  {:body (*)
-  ;   :error-handler-f (function)
-  ;   :handler-f (function)
+  ;   :error-handler (function)
+  ;   :handler (function)
   ;   :params (map)
-  ;   :progress-handler-f (function)
+  ;   :progress-handler (function)
   ;   :uri (string)}
   [request-id request-props]
   (merge (request-handlers request-id request-props)

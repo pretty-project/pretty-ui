@@ -16,7 +16,6 @@
               [x.app-ui.popups.subs]
               [x.app-ui.progress-bar.effects]
               [x.app-ui.progress-bar.subs]
-              [x.app-ui.shield]
               [x.app-ui.sounds.subs]
               [x.app-ui.surface.effects]
               [x.app-ui.themes.effects]
@@ -30,6 +29,8 @@
               [x.app-ui.interface.subs      :as interface.subs]
               [x.app-ui.progress-bar.events :as progress-bar.events]
               [x.app-ui.renderer            :as renderer]
+              [x.app-ui.shield.helpers      :as shield.helpers]
+              [x.app-ui.shield.side-effects :as shield.side-effects]
               [x.app-ui.sounds.side-effects :as sounds.side-effects]
               [x.app-ui.structure.views     :as structure.views]
               [x.app-ui.themes.subs         :as themes.subs]
@@ -86,6 +87,14 @@
 (def any-element-visible?   renderer/any-element-visible?)
 (def no-visible-elements?   renderer/no-visible-elements?)
 (def set-element-prop!      renderer/set-element-prop!)
+
+; x.app-ui.shield.helpers
+(def shield-hidden?  shield.helpers/shield-hidden?)
+(def shield-visible? shield.helpers/shield-visible?)
+
+; x.app-ui.shield.side-effects
+(def set-shield!    shield.side-effects/set-shield!)
+(def remove-shield! shield.side-effects/remove-shield!)
 
 ; x.app-ui.sounds.side-effects
 (def play-sound! sounds.side-effects/play-sound!)

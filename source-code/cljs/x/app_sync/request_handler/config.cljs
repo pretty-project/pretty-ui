@@ -17,4 +17,4 @@
 (def DEFAULT-IDLE-TIMEOUT 250)
 
 ; @constant (string)
-(def INVALID-REQUEST-RESPONSE-ERROR "Invalid request response!")
+(def INVALID-REQUEST-RESPONSE-ERROR "Request response validation error!")

@@ -20,6 +20,7 @@
   ;
   ; @param (keyword) extension-id
   (fn [{:keys [db]} [_ extension-id]]
+      ; XXX#4579
       (let [on-load     (r transfer.subs/get-transfer-item db extension-id :on-load)
             route-title (r transfer.subs/get-transfer-item db extension-id :route-title)]
            {:db (r core.events/load-selector! db extension-id)

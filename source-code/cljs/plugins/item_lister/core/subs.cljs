@@ -44,6 +44,7 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
+  ; XXX#8519
   (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-lister!")))
 
@@ -55,6 +56,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; XXX#8519
   (let [request-id (r get-request-id db extension-id item-namespace)]
        (r sync/listening-to-request? db request-id)))
 
