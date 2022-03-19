@@ -42,10 +42,7 @@
   ; @param (keyword) item-namespace
   ; @param (string) copy-id
   [extension-id item-namespace copy-id]
-  (if-let [item-route @(a/subscribe [:item-editor/get-item-route extension-id item-namespace copy-id])]
-          (let [edit-event [:router/go-to! item-route]]
-               [ui/state-changed-bubble-body :plugins.item-editor/item-duplicated-dialog
-                                             {:label :item-duplicated
-                                              :primary-button {:on-click edit-event :label :edit-copy!}}])
-          [ui/state-changed-bubble-body :plugins.item-editor/item-duplicated-dialog
-                                        {:label :item-duplicated}]))
+  (let [edit-event [:item-editor/edit-item! extension-id item-namespace copy-id]]
+       [ui/state-changed-bubble-body :plugins.item-editor/item-duplicated-dialog
+                                     {:label :item-duplicated
+                                      :primary-button {:on-click edit-event :label :edit-copy!}}]))

@@ -19,8 +19,7 @@
   ;  {:on-load (metamorphic-event)
   ;   :route-template (string)
   ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
-  ;   :route-title (metamorphic-content)(opt)
-  ;    Default: extension-id}
+  ;   :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [:item-browser/init-browser! :my-extension :my-type {...}]

@@ -67,6 +67,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
+  ; Az item-changed? függvény összehasonlítja az elem (megnyitáskor eltárolt!) biztonsági másolatát
+  ; az elem jelenlegi állapotával.
   (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
         current-item    (r core.subs/get-current-item    db extension-id item-namespace)
         backup-item     (r get-backup-item               db extension-id item-namespace current-item-id)]

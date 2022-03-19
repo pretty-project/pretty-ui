@@ -3,9 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.mount.effects
-    (:require [plugins.item-editor.core.subs    :as core.subs]
-              [plugins.item-editor.mount.events :as mount.events]
-              [x.app-core.api                   :as a :refer [r]]))
+    (:require [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.backup.events :as backup.events]
+              [plugins.item-editor.backup.subs   :as backup.subs]
+              [plugins.item-editor.mount.events  :as mount.events]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -49,36 +51,18 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r mount.events/body-will-unmount db extension-id item-namespace)}))
-
-      ; - Ha az item-editor plugin {:initial-value ...} tulajdonsággal rendelkező input elemet
-      ;   tartalmaz, akkor új elem létrehozása után a szerkesztő elhagyásakor abban az esetben is
-      ;   megjelenítenne a changes-discarded értesítés, ha nem történt szerkesztés, mivel
-      ;   az {:initial-value ...} tulajdonság módosítja az üres adatot (az új elemet).
-      ; - Ha az item-editor plugin olyan felületen jelenik meg, ahol tabok (fülek) vannak,
-      ;   akkor egy másik tabra (fülre) kattintva az {:component-did-unmount ...} esemény
-      ;   által meghívott [:item-editor/destruct-body! ...] esemény megtörténése miatt megjelenne
-      ;   a changes-discarded értesítés, abban az esetben is ha a szerkesztő nem lett elhagyva.
-      ; - A backup-current-item! DB függvény is foglalkozik a törlés visszavonhatóságával!
-      ;
-      ; HA A CHANGES-DISCARDED VISSZAÁLLÍTÁSRA KERÜL:
-      ; - El nem mentett változtatásokkal törölt elem törlése utáni kilépéskor NEM szükséges
-      ;   kirenderelni changes-discarded-dialog párbeszédablakot.
-      ; - A {:item-deleted? true} beállítás használatával az [:item-editor/editor-leaved ...]
-      ;   esemény képes megállapítani, hogy szükséges-e kirenderelni a changes-discarded-dialog
-      ;   párbeszédablakot.
-      ; - Ezt szükséges visszatenni az item-deleted eseménybe:
-      ;   (assoc-in db [extension-id :item-editor/meta-items :item-deleted?] true)
-      ; - A reset-editor! függvényben szükséges dissoc-olni az {:item-deleted? true} beállítást
-
       ; Az item-editor plugin – az elem törlése nélküli – elhagyásakor, ha az elem
       ; el nem mentett változtatásokat tartalmaz, akkor annak az utolsó állapotáról
       ; másolat készül, ami alapján lehetséges azt visszaállítani a változtatások-elvetése
       ; esemény visszavonásának esetleges megtörténtekor.
-      ;(if-let [item-deleted? (r subs/get-meta-item db extension-id item-namespace :item-deleted?)]
-      ;(if (r subs/item-changed? db extension-id item-namespace)
-      ;    {:db (r backup.events/store-local-changes! db extension-id item-namespace)
-      ;     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace]})))
+      (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+            item-changed?   (r backup.subs/item-changed?     db extension-id item-namespace)
+            item-deleted?   (r core.subs/get-meta-item       db extension-id item-namespace :item-deleted?)]
+           (if-not (and item-changed? (not item-deleted?))
+                   {:db (as-> db % (r mount.events/body-will-unmount     % extension-id item-namespace))}
+                   {:db (as-> db % (r mount.events/body-will-unmount     % extension-id item-namespace)
+                                   (r backup.events/store-local-changes! % extension-id item-namespace))
+                    :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace current-item-id]}))))
 
 (a/reg-event-fx
   :item-editor/header-will-unmount

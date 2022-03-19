@@ -135,6 +135,21 @@
   (= (r get-current-item-id      db extension-id item-namespace)
      (r mount.subs/get-body-prop db extension-id item-namespace :new-item-id)))
 
+(defn set-route-title?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (boolean)
+  [db [_ extension-id item-namespace]]
+  ; Az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
+  ; ... az útvonal megváltozik és az [:item-editor/load-editor! ...] esemény megtörténik,
+  ; ... az [:item-editor/body-did-mount ...] esemény nem történik meg újra,
+  ; ebben az esetben nem szükséges beállítani a route-title címkét!
+  (and      (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)
+       (not (r mount.subs/body-did-mount?      db extension-id item-namespace))))
+
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

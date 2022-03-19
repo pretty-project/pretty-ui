@@ -40,4 +40,5 @@
   ; - A kitörölt elem esetleges visszaállításakor a szerver számára az elem eredeti változatát szükséges elküldeni!
   ; - A kitörölt elem sikeres visszaállítása után a szerkesztő megnyitásakor az elem kliens-oldali változtatásait
   ;   szükséges alkalmazni az eredeti dokumentumon!
-  (r backup.events/store-local-changes! db extension-id item-namespace))
+  (as-> db % (r backup.events/store-local-changes! % extension-id item-namespace)
+             (assoc-in % [:plugins :item-editor/meta-items extension-id :item-deleted?] true)))

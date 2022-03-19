@@ -14,12 +14,14 @@
 (defn lister-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
   ; @param (map) lister-props
+  ;  {:route-template (string)(opt)}
   ;
   ; @return (map)
-  ;  {:base-route (string)
-  ;   :route-title (metamorphic-content)}
-  [extension-id item-namespace lister-props]
-  (merge {:base-route  (routes.helpers/base-route extension-id item-namespace lister-props)
-          :route-title (param extension-id)}
+  ;  {:base-route (string)}
+  [extension-id item-namespace {:keys [route-template] :as lister-props}]
+  (merge {}
+         (if route-template {:base-route (routes.helpers/base-route extension-id item-namespace lister-props)})
          (param lister-props)))

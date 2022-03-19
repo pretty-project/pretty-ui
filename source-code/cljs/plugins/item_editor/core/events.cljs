@@ -102,9 +102,27 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+  (let [set-route-title? (r core.subs/set-route-title? db extension-id item-namespace)]
        (cond-> db :store-derived-view-id! (as-> % (r store-derived-view-id! % extension-id item-namespace))
-                  route-title             (as-> % (r set-route-title!       % extension-id item-namespace)))))
+                  set-route-title?        (as-> % (r set-route-title!       % extension-id item-namespace)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn edit-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id _ item-id]]
+  ; Az [:item-editor/edit-item! ...] esemény meghívásakor eltárolja a paraméterként kapott
+  ; item-id azonosítót, mielőtt az [:item-editor/request-item! ...] esemény megtörténne!
+  (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] item-id))
 
 
 

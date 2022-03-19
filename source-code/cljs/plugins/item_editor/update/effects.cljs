@@ -38,11 +38,14 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
-           [:ui/blow-bubble! :plugins.item-editor/changes-discarded-dialog
-                             {:body       [update.views/changes-discarded-dialog-body extension-id item-namespace current-item-id]
-                              :destructor [:item-editor/clean-recovery-data!          extension-id item-namespace current-item-id]}])))
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+      ; Az [:item-editor/render-changes-discarded-dialog! ...] esemény paraméterként kapja az item-editor
+      ; plugin elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
+      ; már nem elérhető a Re-Frame adatbázisban.
+      [:ui/blow-bubble! :plugins.item-editor/changes-discarded-dialog
+                        {:body       [update.views/changes-discarded-dialog-body extension-id item-namespace item-id]
+                         :destructor [:item-editor/clean-recovery-data!          extension-id item-namespace item-id]}]))
 
 (a/reg-event-fx
   :item-editor/render-item-duplicated-dialog!
