@@ -14,10 +14,10 @@
   ; @param (list of *) abc
   ;
   ; @usage
-  ;  (error/try! #(do-something! "Apple"))
+  ;  (error/try! #(my-function "Apple"))
   ;
   ; @usage
-  ;  (error/try! do-something! "Apple")
+  ;  (error/try! my-function "Apple")
   ;
   ; @return (*)
   [f & abc]

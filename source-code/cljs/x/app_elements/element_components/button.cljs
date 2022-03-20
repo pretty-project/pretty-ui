@@ -172,7 +172,7 @@
   ;  [elements/button :my-button {...}]
   ;
   ; @usage
-  ;  [elements/button {:keypress {:key-code 13} :on-click [:do-something!]}]
+  ;  [elements/button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
    [element (a/id) button-props])
 

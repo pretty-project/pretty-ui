@@ -22,7 +22,13 @@
               [mid-fruits.vector  :as vector]
               [re-frame.core      :as re-frame.core]
               [re-frame.loggers   :refer [console]]
-              [re-frame.registrar :as re-frame.registrar]))
+              [re-frame.registrar :as re-frame.registrar]
+
+              ; TEMP
+              [mid.re-frame.effects-map :as mid.re-frame.effects-map]
+              [mid.re-frame.metamorphic :as mid.re-frame.metamorphic]
+              [mid.re-frame.params      :as mid.re-frame.params]
+              [mid.re-frame.types       :as mid.re-frame.types]))
 
 
 
@@ -44,89 +50,6 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @name metamorphic-event
-;  A metamorphic-event olyan formula amely lehetőve teszi, hogy egy eseményt
-;  vagy esemény-csoportot event-vector vagy effects-map formában is meghatározhass.
-;  (a/dispatch [...])
-;  (a/dispatch {:dispatch [...]})
-;
-; @name event-vector
-;  [:do-something!]
-;
-; @name effects-map
-;  {:dispatch-later [{:ms 500 :dispatch [:do-something-later!]}]}
-;
-; @name metamorphic-handler
-;  A metamorphic-handler olyan formula amely lehetőve teszi, hogy egy handler-f függvény
-;  helyett regisztrálhass event-vector vektort vagy effects-map térképet, illetve
-;  a handler-f függvény visszatérési értéke lehet event-vector vagy effects-map egyaránt.
-;  (a/reg-event-fx :my-effects            [...])
-;  (a/reg-event-fx :my-effects {:dispatch [...]})
-;  (a/reg-event-fx :my-effects (fn [_ _]            [...]))
-;  (a/reg-event-fx :my-effects (fn [_ _] {:dispatch [...]}))
-;
-; @name param-vector
-;  [:foo :bar :baz]
-;
-; @name event-vector
-;  [:my-event :my-param :your-param ...]
-;
-; @name do-something?!
-;  A "?!" végződésű esemény nevek az adott esemény feltételes hatására utalnak.
-;  Pl.:
-;  (a/reg-event-fx
-;    :do-something?!
-;    (fn [_ _] (if (do-something?) {:dispatch [:do-something!]})))
-;  A fenti példában a (do-something?) függvény kimenetelétől függően történik
-;  meg a [:do-something!] esemény.
-;
-;  Ez nem vonatkozik azokra az eseményekre, amelyek a hatásuk megtörténtét
-;  vizsgálják az ismételt megtörténés elkerülése érdekében.
-;  Pl.:
-;  (a/reg-event-fx
-;    :hide-something!
-;    (fn [_ _] (if-not (something-hidden?) {:dispatch [:lets-hide-something!]})))
-;
-; Továbbá nem vonatkozik azokra az eseményekre, amelyek egy esetleges hiba
-; elkerülése érdekében történnek feltételesen.
-; Pl.:
-; (a/reg-event-fx
-;   :do-something-with-element!
-;   (fn [_ _] (if (element-exists?) {:dispatch [:do-something!]})])))
-;
-; @name dispatch-sync
-;  TODO ...
-;
-; @name dispatch
-;  TODO ...
-;
-; @name dispatch-n
-;  TODO ...
-;
-; @name dispatch-last
-;  TODO ...
-;
-; @name dispatch-once
-;  TODO ...
-;
-; @name dispatch-tick
-;  TODO ...
-;
-; @name dispatch-later
-;  {:dispatch-later [{:ms 100 :dispatch [...]}
-;                    {:ms 200 :dispatch-n [[...] [...]]}]}
-;
-; @name dispatch-if
-;  TODO ...
-;
-; @name dispatch-cond
-;  TODO ...
-
-
-
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -142,83 +65,8 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn event-vector?
-  ; Strict-mode:
-  ;  Az esemény azonsítójának szintaxisa alapján képes megkülönböztetni az esemény-vektort
-  ;  más vektoroktól (pl.: hiccup, subscription vektor, ...)
-  ;
-  ; @param (*) n
-  ; @param (options)(opt)
-  ;  {:strict-mode? (boolean)(opt)
-  ;    Default: false}
-  ;
-  ; @example
-  ;  (a/event-vector? [:my-namespace/do-something! ...])
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (a/event-vector? [:my-namespace/->something-happened ...])
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (a/event-vector? [:div ...] {:strict-mode? true})
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (a/event-vector? [:div ...] {:strict-mode? false})
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [n {:keys [strict-mode?]}]
-  (and (vector? n)
-       (let [event-id (first n)]
-            (if strict-mode? ; If strict-mode is enabled ...
-                             (and (keyword? event-id)
-                                  (-> event-id name (string/ends-with?   "!")))
-                             ; If strict-mode is NOT enabled ...
-                             (keyword? event-id)))))
-
-(defn subscription-vector?
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (a/subscription-vector? [:my-namespace/get-something ...])
-  ;  =>
-  ; true
-  ;
-  ; @example
-  ;  (a/subscription-vector? [:my-namespace/something-happened? ...])
-  ;  =>
-  ; true
-  ;
-  ; @example
-  ;  (a/subscription-vector? [:div ...])
-  ;  =>
-  ; false
-  ;
-  ; @return (boolean)
-  [n]
-  (and (vector? n)
-       (let [event-id (first n)]
-            (and (keyword? event-id)
-                 (or (-> event-id name (string/starts-with? "get-"))
-                     (-> event-id name (string/ends-with?   "?")))))))
-
-(defn event-vector->param-vector
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->param-vector [:my-event ...])
-  ;  =>
-  ;  [...]
-  ;
-  ; @return (vector)
-  [event-vector]
-  (subvec event-vector 1))
+(def event-vector?        mid.re-frame.types/event-vector?)
+(def subscription-vector? mid.re-frame.types/subscription-vector?)
 
 (defn event-vector->event-id
   ; @param (vector) event-vector
@@ -298,156 +146,27 @@
 ;; -- Event param functions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn event-vector<-params
-  ; @param (event-vector) n
-  ; @param (list of *) xyz
-  ;
-  ; @return (event-vector)
-  [n & xyz]
-  (vector/concat-items n xyz))
-
-(defn metamorphic-event<-params
-  ; @param (metamorphic-event) n
-  ; @param (list of *) xyz
-  ;
-  ; @example
-  ;  (a/metamorphic-event<-params [:my-event] :my-param-1 "my-param-2")
-  ;  =>
-  ;  [:my-event :my-param-1 "my-param-2"]
-  ;
-  ; @usage
-  ;  (a/metamorphic-event<-params {:dispatch [:my-event]} :my-param-1 "my-param-2")
-  ;  =>
-  ;  {:dispatch [:my-event :my-param-1 "my-param-2"]}
-  ;
-  ; @return (metamorphic-event)
-  [n & xyz]
-  ; Szükséges megkülönböztetni az esemény vektort a dispatch-later és dispatch-tick esemény csoport vektortól!
-  ; [:do-something! ...]
-  ; [{:ms 500 :dispatch [:do-something! ...]}]
-  (cond (event-vector? n {:strict-mode? false}) (vector/concat-items n xyz)
-        (map?          n) (map/->values n #(apply metamorphic-event<-params % xyz))
-        :else             (return n)))
+(def event-vector<-params      mid.re-frame.params/event-vector<-params)
+(def metamorphic-event<-params mid.re-frame.params/metamorphic-event<-params)
 
 
 
 ;; -- Metamorphic handler functions -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn event-vector->effects-map
-  ; @param (vector) event-vector
-  ;
-  ; @usage
-  ;  (a/event-vector->effects-map [...])
-  ;  =>
-  ;  {:dispatch [...]}
-  ;
-  ; @return (map)
-  [event-vector]
-  {:dispatch event-vector})
-
-(defn event-vector->handler-f
-  ; @param (vector) event-vector
-  ;
-  ; @usage
-  ;  (a/event-vector->handler-f [...])
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @return (function)
-  [event-vector]
-  (fn [_ _] {:dispatch event-vector}))
-
-(defn effects-map->handler-f
-  ; @param (map) effects-map
-  ;
-  ; @usage
-  ;  (a/effects-map->handler-f {:dispatch [...]})
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @return (function)
-  [effects-map]
-  (fn [_ _] effects-map))
-
-(defn metamorphic-handler->handler-f
-  ; @param (metamorphic-event) n
-  ;
-  ; @usage
-  ;  (a/metamorphic-handler->handler-f [...])
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @usage
-  ;  (a/metamorphic-handler->handler-f {:dispatch [...]})
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @usage
-  ;  (a/metamorphic-handler->handler-f (fn [_ _] ...))
-  ;  =>
-  ;  (fn [_ _] ...})
-  ;
-  ; @return (function)
-  [n]
-  (cond (map?    n) (effects-map->handler-f  n)
-        (vector? n) (event-vector->handler-f n)
-        :else       (return n)))
-
-(defn metamorphic-event->effects-map
-  ; @param (metamorphic-effects) n
-  ;
-  ; @example
-  ;  (a/metamorphic-event->effects-map [:do-something!])
-  ;  =>
-  ;  {:dispatch [:do-something!]}
-  ;
-  ; @example
-  ;  (a/metamorphic-event->effects-map {:dispatch [:do-something!])
-  ;  =>
-  ;  {:dispatch [:do-something!]}
-  ;
-  ; @return (map)
-  [n]
-  (cond (vector? n) (event-vector->effects-map n)
-        (map?    n) (return                    n)))
+(def event-vector->effects-map      mid.re-frame.metamorphic/event-vector->effects-map)
+(def event-vector->handler-f        mid.re-frame.metamorphic/event-vector->handler-f)
+(def effects-map->handler-f         mid.re-frame.metamorphic/effects-map->handler-f)
+(def metamorphic-handler->handler-f mid.re-frame.metamorphic/metamorphic-handler->handler-f)
+(def metamorphic-event->effects-map mid.re-frame.metamorphic/metamorphic-event->effects-map)
 
 
 
 ;; -- Effects-map (fx-maps) functions -----------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn effects-map<-event
-  ; @param (map) effects-map
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/effects-map<-event {:dispatch [:foo]}
-  ;                        [:bar])
-  ;  =>
-  ;  {:dispatch [:foo] :dispatch-n [[:bar]]}
-  ;
-  ; @return (map)
-  [effects-map event-vector]
-  (update effects-map :dispatch-n vector/conj-item event-vector))
-
-(defn merge-effects-maps
-  ; @param (map) a
-  ; @param (map) b
-  ;
-  ; @example
-  ;  (a/merge-effects-maps {:dispatch [:a1]
-  ;                         :dispatch-n [[:a2] [:a3]}]}
-  ;                        {:dispatch [:b1]
-  ;                         :dispatch-n [[:b2]]})
-  ;  =>
-  ;  {:dispatch [:a1] :dispatch-n [[:a2] [:a3] [:b1] [:b2]]}
-  ;
-  ; @return (map)
-  [a b]
-  (-> a (update-some :dispatch-n     vector/conj-item    (:dispatch       b))
-        (update-some :dispatch-n     vector/concat-items (:dispatch-n     b))
-        (update-some :dispatch-later vector/concat-items (:dispatch-later b))))
+(def effects-map<-event mid.re-frame.effects-map/effects-map<-event)
+(def merge-effects-maps mid.re-frame.effects-map/merge-effects-maps)
 
 
 
@@ -574,16 +293,16 @@
   ; @param (metamorphic-event) event-handler
   ;
   ; @usage
-  ;  (a/reg-event-fx :my-event [:do-something!])
+  ;  (a/reg-event-fx :my-event [:your-event])
   ;
   ; @usage
-  ;  (a/reg-event-fx :my-event {:dispatch [:do-something!]})
+  ;  (a/reg-event-fx :my-event {:dispatch [:your-event]})
   ;
   ; @usage
-  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] [:do-something!]})
+  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] [:your-event]})
   ;
   ; @usage
-  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] {:dispatch [:do-something!]})
+  ;  (a/reg-event-fx :my-event (fn [cofx event-vector] {:dispatch [:your-event]})
   ([event-id event-handler]
    (reg-event-fx event-id nil event-handler))
 

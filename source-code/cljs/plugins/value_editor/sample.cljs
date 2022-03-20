@@ -29,4 +29,4 @@
 (a/reg-event-fx
   :my-extension/my-value-edited
   (fn [_ [_ my-value]]
-      [:do-something-with! my-value]))
+      [:my-event my-value]))

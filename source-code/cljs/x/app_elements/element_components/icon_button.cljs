@@ -140,7 +140,7 @@
   ;  [elements/icon-button :my-button {...}]
   ;
   ; @usage
-  ;  [elements/icon-button {:auto-focus? true :keypress {:key-code 13} :on-click [:do-something!]}]
+  ;  [elements/icon-button {:auto-focus? true :keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
    [element (a/id) button-props])
 

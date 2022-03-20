@@ -31,10 +31,10 @@
   ;  [:environment/reg-keypress-event {...}]
   ;
   ; @usage
-  ;  [:environment/reg-keypress-event :my-event {...}]
+  ;  [:environment/reg-keypress-event :my-keypress-event {...}]
   ;
   ; @usage
-  ;  [:environment/reg-keypress-event {:key-code 65 :on-keydown [:do-something!]}
+  ;  [:environment/reg-keypress-event {:key-code 65 :on-keydown [:my-event]}
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ event-id {:keys [key-code prevent-default?] :as event-props}]]
       (if prevent-default? {:fx [:environment/prevent-keypress-default! key-code]

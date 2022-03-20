@@ -13,7 +13,7 @@
 
 (defn my-component
   []
-  [tools/infinite-loader :my-loader {:on-viewport [:do-something!]}])
+  [tools/infinite-loader :my-loader {:on-viewport [:my-event]}])
 
 
 

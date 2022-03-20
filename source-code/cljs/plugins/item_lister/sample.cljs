@@ -31,8 +31,8 @@
 (a/reg-event-fx
   :add-my-new-item!
   (fn [_ [_ selected-option]]
-      (case selected-option :add-my-type!   [:do-something!]
-                            :add-your-type! [:do-something-else!])))
+      (case selected-option :add-my-type!   [:my-event]
+                            :add-your-type! [:your-event])))
 
 
 
@@ -101,7 +101,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
       (if (r item-lister/toggle-item-selection? db extension-id item-namespace item-dex)
           {:db (r item-lister/toggle-item-selection! db extension-id item-namespace item-dex)}
-          [:do-something!])))
+          [:my-event])))
 
 
 
@@ -111,7 +111,7 @@
 (defn my-contextual-list-element
   [extension-id item-namespace item-dex item]
   [elements/toggle {:content        [:div "My item"]
-                    :on-click       [:do-something!]
+                    :on-click       [:my-event]
                     :on-right-click [:render-my-context-menu!]}])
 
 (a/reg-event-fx

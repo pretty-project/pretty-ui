@@ -39,8 +39,8 @@
 ;  {:get            #(my-handler %)
 ;   :post           {...}
 ;   :core-js        "app.js"
-;   :client-event   [:do-something-on-client!]
-;   :server-event   [:do-something-on-server!]
+;   :client-event   [:my-client-event]
+;   :server-event   [:my-server-event]
 ;   :restricted?    true
 ;   :route-template "/my-route"}
 ;

@@ -76,8 +76,8 @@
   []
   [components/stated :your-component
                      {:base-props {}
-                      :destructor  [:do-anything!]
-                      :initializer [:do-something!]
+                      :destructor  [:my-event]
+                      :initializer [:your-event]
                       :render-f    #'your-component
                       :subscriber  [:get-your-component-props]}])
 

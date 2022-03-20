@@ -56,7 +56,7 @@
   ;   :interval (ms)}
   ;
   ; @usage
-  ;  (environment/set-interval! :my-interval {:event [:do-something!]
+  ;  (environment/set-interval! :my-interval {:event [:my-event]
   ;                                           :interval 420})
   [interval-id {:keys [interval event] :as interval-props}]
   (fn [[interval-id {:keys [interval event] :as interval-props}]]
@@ -80,7 +80,7 @@
   ;   :timeout (ms)}
   ;
   ; @usage
-  ;  (environment/set-timeout! :my-timeout {:event [:do-something!]
+  ;  (environment/set-timeout! :my-timeout {:event [:my-event]
   ;                                         :timeout 420})
   [timeout-id {:keys [timeout event] :as timeout-props}]
   (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
@@ -134,7 +134,7 @@
 (a/reg-fx :environment/go-to! go-to!)
 
 ; @usage
-;  [:environment/set-interval! :my-interval {:event [:do-something!] :interval 420}]
+;  [:environment/set-interval! :my-interval {:event [:my-event] :interval 420}]
 (a/reg-fx :environment/set-interval! set-interval!)
 
 ; @usage
@@ -142,7 +142,7 @@
 (a/reg-fx :environment/clear-interval! clear-interval!)
 
 ; @usage
-;  [:environment/set-timeout! :my-timeout {:event [:do-something!] :timeout 420}]
+;  [:environment/set-timeout! :my-timeout {:event [:my-event] :timeout 420}]
 (a/reg-fx :environment/set-timeout! set-timeout!)
 
 ; @usage

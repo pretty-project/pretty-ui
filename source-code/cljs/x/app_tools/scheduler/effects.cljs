@@ -50,10 +50,10 @@
   ;   :event (metamorphic-event)}
   ;
   ; @usage
-  ;  [:tools/reg-schedule! {:minute 10 :event [:do-something!]}]
+  ;  [:tools/reg-schedule! {:minute 10 :event [:my-event]}]
 
   ; @usage
-  ;  [:tools/reg-schedule! {:hour 3 :minute 10 :event [:do-something!]}]
+  ;  [:tools/reg-schedule! {:hour 3 :minute 10 :event [:my-event]}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ schedule-id schedule-props]]
       {:db (r scheduler.events/store-schedule-props! db schedule-id schedule-props)

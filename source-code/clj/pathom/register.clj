@@ -51,8 +51,8 @@
   ; @param (handler function) handler-f
   ;
   ; @usage
-  ;  (pco/defmutation do-something! [env] ...)
-  ;  (pathom/reg-handler! ::handler do-something!)
+  ;  (pco/defmutation my-mutation [env] ...)
+  ;  (pathom/reg-handler! ::handler my-mutation)
   [handler-id handler-f]
   (swap! HANDLERS assoc handler-id handler-f)
   ; Minden handler-függvény regisztrálás után újraépíti a Pathom környezetet,
@@ -66,9 +66,9 @@
   ; @param (handler functions in vector) handler-fs
   ;
   ; @usage
-  ;  (pco/defmutation do-something! [env] ...)
-  ;  (pco/defmutation do-anything!  [env] ...)
-  ;  (def HANDLERS [do-something! do-anything!])
+  ;  (pco/defmutation my-mutation   [env] ...)
+  ;  (pco/defmutation your-mutation [env] ...)
+  ;  (def HANDLERS [my-mutation your-mutation])
   ;  (pathom/reg-handlers! ::handlers HANDLERS)
   [handlers-id handler-fs]
   (swap! HANDLERS assoc handlers-id handler-fs)

@@ -332,17 +332,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
-       (cond (map? current-item)                                 [map-item]
-             (a/event-vector? current-item {:strict-mode? true}) [event-vector-item]
-             (a/subscription-vector? current-item)               [subscription-vector-item]
-             (vector?                current-item)               [vector-item]
-             (boolean?               current-item)               [boolean-item]
-             (integer?               current-item)               [integer-item]
-             (string?                current-item)               [string-item]
-             (keyword?               current-item)               [keyword-item]
-             (var?                   current-item)               [component-item]
-             (nil?                   current-item)               [nil-item]
-             :else                                               [unknown-item])))
+       (cond (map? current-item)                   [map-item]
+             (a/event-vector?        current-item) [event-vector-item]
+             (a/subscription-vector? current-item) [subscription-vector-item]
+             (vector?                current-item) [vector-item]
+             (boolean?               current-item) [boolean-item]
+             (integer?               current-item) [integer-item]
+             (string?                current-item) [string-item]
+             (keyword?               current-item) [keyword-item]
+             (var?                   current-item) [component-item]
+             (nil?                   current-item) [nil-item]
+             :else                                 [unknown-item])))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

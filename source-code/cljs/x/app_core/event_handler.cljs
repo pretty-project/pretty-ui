@@ -32,7 +32,6 @@
 ; x.mid-core.event-handler
 (def event-vector?              event-handler/event-vector?)
 (def subscription-vector?       event-handler/subscription-vector?)
-(def event-vector->param-vector event-handler/event-vector->param-vector)
 (def event-vector->event-id     event-handler/event-vector->event-id)
 (def cofx->event-vector         event-handler/cofx->event-vector)
 (def cofx->event-id             event-handler/cofx->event-id)

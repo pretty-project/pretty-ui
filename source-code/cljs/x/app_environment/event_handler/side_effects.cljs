@@ -19,8 +19,8 @@
   ;  Default: js/window
   ;
   ; @usage
-  ;  (defn handler-f [e] (do-something!))
-  ;  (environment/add-event-listener! "mousemove" handler-f)
+  ;  (defn my-handler-f [e] ...)
+  ;  (environment/add-event-listener! "mousemove" my-handler-f)
   [type listener & [element-id]]
   (let [target (event-handler.helpers/element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
@@ -32,8 +32,8 @@
   ;  Default: js/window
   ;
   ; @usage
-  ;  (defn handler-f [e] (do-something!))
-  ;  (environment/remove-event-listener! "mousemove" handler-f)
+  ;  (defn my-handler-f [e] ...)
+  ;  (environment/remove-event-listener! "mousemove" my-handler-f)
   [type listener & [element-id]]
   (let [target (event-handler.helpers/element-id->target element-id)]
        (dom/remove-event-listener! type listener target)))
@@ -45,7 +45,7 @@
   ;  Default: js/window
   ;
   ; @usage
-  ;  (environment/add-event! "mousemove" [:do-something!])
+  ;  (environment/add-event! "mousemove" [:my-event])
   [type event & [element-id]]
   (let [listener #(a/dispatch event)
         target    (event-handler.helpers/element-id->target element-id)]
@@ -57,15 +57,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  (defn handler-f [e] (do-something!))
-;  [:environment/add-event-listener! "mousemove" handler-f]
+;  (defn my-handler-f [e] ...)
+;  [:environment/add-event-listener! "mousemove" my-handler-f]
 (a/reg-fx :environment/add-event-listener! add-event-listener!)
 
 ; @usage
-;  (defn handler-f [e] (do-something!))
-;  [:environment/remove-event-listener! "mousemove" handler-f]
+;  (defn my-handler-f [e] ...
+;  [:environment/remove-event-listener! "mousemove" my-handler-f]
 (a/reg-fx :environment/remove-event-listener! remove-event-listener!)
 
 ; @usage
-;  [:environment/add-event! "mousemove" [:do-something!]]
+;  [:environment/add-event! "mousemove" [:my-event]]
 (a/reg-fx :environment/add-event! add-event!)
