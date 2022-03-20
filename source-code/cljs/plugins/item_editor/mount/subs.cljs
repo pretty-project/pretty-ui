@@ -50,6 +50,14 @@
   ;
   ; @return (map)
   [db [_ extension-id _]]
+  ; A {:handler-key ...} tulajdonság azért a szerver-oldali [:item-editor/init-editor! ...]
+  ; esemény paraméterei között van, és nem a kliens-oldali body komponens paraméterei között, ...
+  ; ... mert a body komponens React-fából történő lecsatolása után is szükséges a plugin számára,
+  ;     hogy az egyes elemek törlésekor az item-editor plugin elhagyása után a "Törölt elem
+  ;     visszaállítása" funkció hozzáférjen a {:handler-key ...} tulajdonság értékéhez,
+  ;     ami nem maradhat a [:plugins :item-editor/body-props extension-id :handler-key] útvonalon,
+  ;     mert a body-did-mount? feliratkozás tévesen azt érzékelné, hogy a body komponens a React-fába
+  ;     van csatolva, ha adatok lennének ezen az útvonalon.
   (some? (get-in db [:plugins :item-editor/body-props extension-id])))
 
 
