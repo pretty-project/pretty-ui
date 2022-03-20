@@ -46,19 +46,6 @@
   (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
        (get-in db [:plugins :item-editor/local-changes extension-id current-item-id])))
 
-(defn get-recovered-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
-        backup-item     (r get-backup-item               db extension-id item-namespace current-item-id)
-        local-changes   (r get-local-changes             db extension-id item-namespace)]
-       (merge backup-item local-changes)))
-
 (defn item-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

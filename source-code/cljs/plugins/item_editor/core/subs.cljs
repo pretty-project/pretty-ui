@@ -4,7 +4,6 @@
 
 (ns plugins.item-editor.core.subs
     (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.logical                :refer [nor]]
               [mid-fruits.vector                 :as vector]
               [plugins.item-editor.core.helpers  :as core.helpers]
               [plugins.item-editor.mount.subs    :as mount.subs]
@@ -56,7 +55,7 @@
   ;   mert egy közös azonosítóval egyszerűbb megállapítani, hogy valamelyik lekérés folyamatban
   ;   van-e (az editor-synchronizing? függvénynek elegendő egy request-id azonosítót figyelnie).
   ; - Ha szükséges, akkor a különböző lekéréseket el lehet látni egyedi azonosítóval.
-  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
+  (let [handler-key (r transfer.subs/get-transfer-item db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-editor!")))
 
 (defn editor-synchronizing?
@@ -206,9 +205,8 @@
   ;
   ; @return (boolean)
   [db [_ extension-id item-namespace]]
-  (let [new-item?      (r new-item?     db extension-id item-namespace)
-        recovery-mode? (r get-meta-item db extension-id item-namespace :recovery-mode?)]
-       (nor new-item? recovery-mode?)))
+  (let [new-item? (r new-item? db extension-id item-namespace)]
+       (not new-item?)))
 
 (defn download-data?
   ; WARNING! NON-PUBLIC! DO NOT USE!

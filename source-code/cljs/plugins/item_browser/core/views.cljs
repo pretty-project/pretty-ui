@@ -102,7 +102,6 @@
   ;    Default: false
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
-  ;   :handler-key (keyword)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :items-key (keyword)(opt)

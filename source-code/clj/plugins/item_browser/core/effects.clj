@@ -16,7 +16,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) browser-props
-  ;  {:on-load (metamorphic-event)
+  ;  {:handler-key (keyword)
+  ;   :on-route (metamorphic-event)
   ;   :route-template (string)
   ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (metamorphic-content)(opt)}

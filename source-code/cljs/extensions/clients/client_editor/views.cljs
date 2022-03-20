@@ -198,7 +198,6 @@
                                      :body   [item-editor/body   :clients :client {:auto-title? true
                                                                                    :form-element #'client-form
                                                                                    :form-id     :clients.client-editor/form
-                                                                                   :handler-key :clients.client-editor
                                                                                    :item-actions    [:delete :duplicate :save]
                                                                                    :suggestion-keys [:city]
                                                                                    :new-item-id "new-client"

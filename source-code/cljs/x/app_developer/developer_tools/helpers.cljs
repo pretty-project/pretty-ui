@@ -22,4 +22,7 @@
          :active?  (= view-id :request-inspector)}
         {:label    "Routes"
          :on-click [:gestures/change-view! :developer.developer-tools/handler :route-browser]
-         :active?  (= view-id :route-browser)}]))
+         :active?  (= view-id :route-browser)}
+        {:label    "Events"
+         :on-click [:gestures/change-view! :developer.developer-tools/handler :event-browser]
+         :active?  (= view-id :event-browser)}]))

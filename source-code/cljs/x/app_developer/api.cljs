@@ -5,6 +5,7 @@
 (ns x.app-developer.api
     (:require [x.app-developer.developer-tools.effects]
               [x.app-developer.developer-tools.subs]
+              [x.app-developer.event-browser.effects]
               [x.app-developer.re-frame-browser.events]
               [x.app-developer.re-frame-browser.subs]
               [x.app-developer.request-inspector.events]

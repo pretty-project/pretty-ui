@@ -16,7 +16,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) lister-props
-  ;  {:on-route (metamorphic-event)(opt)
+  ;  {:handler-key (keyword)
+  ;   :on-route (metamorphic-event)(opt)
   ;   :route-template (string)(opt)
   ;   :route-title (metamorphic-content)(opt)}
   ;

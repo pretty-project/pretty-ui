@@ -3,12 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.subs
-    (:require [mid-fruits.candy               :refer [return]]
-              [mid-fruits.vector              :as vector]
-              [plugins.item-lister.mount.subs :as mount.subs]
-              [x.app-components.api           :as components]
-              [x.app-core.api                 :as a :refer [r]]
-              [x.app-sync.api                 :as sync]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.mount.subs    :as mount.subs]
+              [plugins.item-lister.transfer.subs :as transfer.subs]
+              [x.app-components.api              :as components]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-sync.api                    :as sync]))
 
 
 
@@ -45,7 +46,7 @@
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
   ; XXX#8519
-  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
+  (let [handler-key (r transfer.subs/get-transfer-item db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-lister!")))
 
 (defn lister-synchronizing?

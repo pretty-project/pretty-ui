@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.update.subs
-    (:require [mid-fruits.keyword             :as keyword]
-              [plugins.item-editor.mount.subs :as mount.subs]
-              [x.app-core.api                 :refer [r]]))
+    (:require [mid-fruits.keyword                :as keyword]
+              [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :refer [r]]))
 
 
 
@@ -26,7 +26,7 @@
   ;
   ; @return (string)
   [db [_ extension-id item-namespace action-key]]
-  (let [handler-key (r mount.subs/get-body-prop db extension-id item-namespace :handler-key)]
+  (let [handler-key (r transfer.subs/get-transfer-item db extension-id item-namespace :handler-key)]
        (str (name handler-key) "/"
             (name action-key)  "-item!")))
 

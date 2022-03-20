@@ -5,6 +5,7 @@
 (ns plugins.item-editor.core.effects
     (:require [plugins.item-editor.core.events   :as core.events]
               [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.mount.subs    :as mount.subs]
               [plugins.item-editor.routes.subs   :as routes.subs]
               [plugins.item-editor.transfer.subs :as transfer.subs]
               [x.app-core.api                    :as a :refer [r]]))
@@ -23,12 +24,22 @@
   ; @usage
   ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      (if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
-              {:db (r core.events/edit-item! db extension-id item-namespace item-id)
-               :dispatch-n [[:router/go-to! item-route]
-                            [:item-editor/request-item! extension-id item-namespace]]}
-              {:db (r core.events/edit-item! db extension-id item-namespace item-id)
-               :dispatch [:item-editor/request-item! extension-id item-namespace]})))
+      ; 1. Eltárolja a paraméterként kapott item-id azonosítót, mielőtt az [:item-editor/request-item! ...]
+      ;    esemény megtörténne.
+      ; 2. Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal,
+      ;    (mert a plugin szerver-oldali kezelője hozzáadta az útvonalat az útvonal-kezelőhöz),
+      ;    akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ; 3. Ha a body komponens már a React-fába van csatolva, akkor meghívja az [:item-editor/request-item ...]
+      ;    eseményt.
+      ;    Pl.: Egy elem szerkesztése közben az elem duplikálása után a "Másolat szerkesztése" gombra kattintva
+      ;         megtörténik az [:item-editor/edit-item! ...] esemény, de a body komponens már a React-fába van
+      ;         csatolva, ezért a :component-did-mount esemény már nem fog megtörténni, ami elindítaná az elem
+      ;         letöltését, ezért szüksgéges a letöltést elindítani!
+      {:db (r core.events/edit-item! db extension-id item-namespace item-id)
+       :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
+                            [:router/go-to! item-route])
+                    (if (r mount.subs/body-did-mount? db extension-id item-namespace)
+                        [:item-editor/request-item! extension-id item-namespace])]}))
 
 
 

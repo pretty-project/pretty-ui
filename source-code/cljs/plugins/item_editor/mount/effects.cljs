@@ -60,8 +60,8 @@
             item-deleted?   (r core.subs/get-meta-item       db extension-id item-namespace :item-deleted?)]
            (if-not (and item-changed? (not item-deleted?))
                    {:db (as-> db % (r mount.events/body-will-unmount     % extension-id item-namespace))}
-                   {:db (as-> db % (r mount.events/body-will-unmount     % extension-id item-namespace)
-                                   (r backup.events/store-local-changes! % extension-id item-namespace))
+                   {:db (as-> db % (r backup.events/store-local-changes! % extension-id item-namespace)
+                                   (r mount.events/body-will-unmount     % extension-id item-namespace))
                     :dispatch [:item-editor/render-changes-discarded-dialog! extension-id item-namespace current-item-id]}))))
 
 (a/reg-event-fx

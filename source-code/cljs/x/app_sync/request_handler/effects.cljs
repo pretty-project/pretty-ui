@@ -153,7 +153,7 @@
   (fn [{:keys [db]} [_ request-id request-props server-response]]
       ; - A [:sync/request-stalled ...] esemény paraméterként kapja meg a request-props térképet
       ;   mert előfordulhat, hogy az {:on-stalled [...]} esemény megtörténése előtt a request újra
-      ;   el lett küldve eltérő tulajdonságokkal!
+      ;   el lett küldve eltérő beállításokkal!
       ; - A request-props térkép esetlegesen tartalmazza a {:request-successed? ...} tulajdonságot,
       ;   ami alapján megállapítható, hogy szükséges-e az {:on-stalled [...]} esemény meghívása.
       ; - A request-props térkép tartalmazza az {:sent-time "..."} tulajdonságot, ami alapján

@@ -62,7 +62,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (return db))
+  (if-let [recovery-mode? (r core.subs/get-meta-item db extension-id item-namespace :recovery-mode?)]
+          (return db)
+          (->     db (dissoc-in [:plugins :item-editor/backup-items  extension-id item-id])
+                     (dissoc-in [:plugins :item-editor/local-changes extension-id item-id]))))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,16 +75,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  ; - Az elem törlése utáni visszaállításkor az elem szerkesztőbe betöltött kliens-oldali változata
-  ;   a törléskor eltárolt biztonsági mentéséből és az elem el nem mentett változtatásainak
-  ;   összefésüléséből készül.
-  ; - Ha szükséges, akkor ez a logika módosítható úgy, hogy a törlés visszaállítása lekérésre
-  ;   érkezett szerver-válaszból kiolvasott dokumentum (az elem elmentett szerver-oldali változata)
-  ;   és a törléskor eltárolt el nem mentett változtatások legyenek összefésülve.
-  (let [item-path       (r mount.subs/get-body-prop       db extension-id item-namespace :item-path)
-        current-item-id (r core.subs/get-current-item-id  db extension-id item-namespace)
-        recovered-item  (r backup.subs/get-recovered-item db extension-id item-namespace)]
-       (-> db (assoc-in  item-path recovered-item)
+  (let [item-path       (r mount.subs/get-body-prop      db extension-id item-namespace :item-path)
+        current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)
+        local-changes   (r backup.subs/get-local-changes db extension-id item-namespace)]
+       (-> db (update-in item-path merge local-changes)
               (dissoc-in [:plugins :item-editor/local-changes extension-id current-item-id]))))
 
 

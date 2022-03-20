@@ -16,7 +16,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) editor-props
-  ;  {:on-route (metamorphic-event)(opt)
+  ;  {:handler-key (keyword)
+  ;   :on-route (metamorphic-event)(opt)
   ;   :route-template (string)(opt)
   ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (metamorphic-content)(opt)}
