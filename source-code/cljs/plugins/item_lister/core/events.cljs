@@ -115,17 +115,6 @@
           (let [order-by-options (r mount.subs/get-body-prop db extension-id item-namespace :order-by-options)]
                (assoc-in db [:plugins :item-lister/meta-items extension-id :order-by] (first order-by-options)))))
 
-(defn set-route-title!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-       (r ui/set-header-title! db route-title)))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -140,7 +129,7 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-       (cond-> db route-title (as-> % (r set-route-title! % extension-id item-namespace)))))
+       (cond-> db route-title (as-> % (r ui/set-header-title! % route-title)))))
 
 
 

@@ -1,5 +1,8 @@
 
-# x4.6.3
+# x4.6.7
+
+- Ezentúl szerver-oldalon is leheséges az [:environment/add-css! ...] eseménnyel,
+  css fájlokat hozzáadni a rendszerhez!
 
 
 

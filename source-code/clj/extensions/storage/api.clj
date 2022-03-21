@@ -11,4 +11,5 @@
               [extensions.storage.media-browser.lifecycles]
               [extensions.storage.media-browser.mutations]
               [extensions.storage.media-browser.resolvers]
+              [extensions.storage.media-viewer.lifecycles]
               [extensions.storage.media-viewer.resolvers]))

@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.effects
-    (:require [plugins.item-browser.core.events :as core.events]
-              [plugins.item-browser.core.subs   :as core.subs]
-              [x.app-core.api                   :as a :refer [r]]))
+    (:require [plugins.item-browser.core.events   :as core.events]
+              [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.transfer.subs :as transfer.subs]
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
@@ -14,35 +15,23 @@
 
 (a/reg-event-fx
   :item-browser/load-browser!
-
-; NEM PUBLIC!
-
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) browser-props
-  ;  {:item-id (string)(opt)}
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type]
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type {...}]
-  ;
-  ; @usage
-  ;  [:item-browser/load-browser! :my-extension :my-type {:item-id "my-item"}]
-  (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
       ; XXX#4579
-      {:db (r core.events/load-browser! db extension-id item-namespace browser-props)
-       :dispatch-n [; XXX#5660
-                    [:environment/reg-keypress-listener! :item-browser/keypress-listener]
-                    [:item-browser/request-item! extension-id item-namespace]
-                    ;(engine/load-extension-event extension-id item-namespace)
+      (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
+            route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+           {:db (r core.events/load-browser! db extension-id item-namespace)
+            :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))
+
                     ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
                     ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
                     ; komponens a viewport területén volt, akkor szükséges az infinite-loader
                     ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
                     ; az adatokat.
-                    [:tools/reload-infinite-loader! extension-id]]}))
+            ;        [:tools/reload-infinite-loader! extension-id]})))
 
 
 

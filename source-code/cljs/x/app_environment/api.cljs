@@ -56,9 +56,8 @@
 (def user-experience-cookies-enabled? cookie-handler.subs/user-experience-cookies-enabled?)
 
 ; x.app-environment.css-handler.side-effects
-(def add-external-css! css-handler.side-effects/add-external-css!)
-(def add-css!          css-handler.side-effects/add-css!)
-(def remove-css!       css-handler.side-effects/remove-css!)
+(def add-css!    css-handler.side-effects/add-css!)
+(def remove-css! css-handler.side-effects/remove-css!)
 
 ; x.app-environment.element-handler.side-effects
 (def element-disabled?                     element-handler.side-effects/element-disabled?)

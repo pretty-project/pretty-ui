@@ -4,7 +4,6 @@
 
 (ns extensions.storage.media-viewer.resolvers
     (:require [com.wsscode.pathom3.connect.operation :refer [defresolver]]
-              [mid-fruits.candy                      :refer [param return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]))
 

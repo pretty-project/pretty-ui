@@ -3,11 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.css-handler.helpers
-    (:require [dom.api                              :as dom]
-              [mid-fruits.candy                     :refer [param return]]
-              [mid-fruits.string                    :as string]
-              [mid-fruits.vector                    :as vector]
-              [x.app-environment.css-handler.config :as css-handler.config]))
+    (:require [dom.api           :as dom]
+              [mid-fruits.candy  :refer [return]]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -21,65 +20,39 @@
   ;
   ; @return (vector)
   [head-element]
-  (vec (array-seq (.querySelectorAll head-element "[type=\"text/css\"]"))))
+  (-> (.querySelectorAll head-element "[type=\"text/css\"]") array-seq vec))
 
 (defn source-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
-  ; @param (string) filepath
+  ; @param (string) uri
   ;
   ; @return (boolean)
-  [head-element filepath]
+  [head-element uri]
 
   ; WARNING! NOT TESTED!
   (vector/any-item-match? (get-style-elements head-element)
-                         #(let [href (.-href %1)]
-                               (string/ends-with? href filepath))))
+                         #(let [href (.-href %1)] (string/ends-with? href uri))))
 
 (defn create-link-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) filepath
-  [filepath]
+  ; @param (string) uri
+  [uri]
   (let [link-element (dom/create-element! "LINK")]
-       (as->   link-element % (set! (.-href %) filepath)
+       (as->   link-element % (set! (.-href %) uri)
                               (set! (.-type %) "text/css")
                               (set! (.-rel  %) "stylesheet"))
        (return link-element)))
-
-(defn insert-link-element-as-first!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (DOM-element) head-element
-  ; @param (DOM-element) link-element
-  [head-element link-element]
-  (dom/insert-as-first-of-query-selected! head-element link-element "[type=\"text/css\"]"))
-
-(defn insert-link-element-as-last!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (DOM-element) head-element
-  ; @param (DOM-element) link-element
-  [head-element link-element]
-  (dom/insert-as-last-of-query-selected! head-element link-element "[type=\"text/css\"]"))
 
 (defn insert-link-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-element) head-element
   ; @param (DOM-element) link-element
-  ; @param (map) context-props
+  ; @param (map) options
   ;  {:as-first? (boolean)}
   [head-element link-element {:keys [as-first?]}]
-  (if as-first? (insert-link-element-as-first! head-element link-element)
-                (insert-link-element-as-last!  head-element link-element)))
-
-(defn filename->external-css-uri
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) filename
-  ;
-  ; @return (string)
-  [filename]
-  (str css-handler.config/EXTERNAL-CSS-URI-BASE filename))
+  (if as-first? (dom/insert-as-first-of-query-selected! head-element link-element "[type=\"text/css\"]")
+                (dom/insert-as-last-of-query-selected!  head-element link-element "[type=\"text/css\"]")))

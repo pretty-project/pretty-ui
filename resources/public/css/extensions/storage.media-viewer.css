@@ -1,0 +1,28 @@
+
+/***** Storage *****/
+
+.storage--media-viewer--image-item {
+  height: 100%;
+  width: 100% }
+
+.storage--media-viewer--icon {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+.storage--media-viewer--image {
+  border-radius: var( --border-radius-m );
+  max-height: calc(100vh - 96px);
+  max-width:  calc(100vw - 96px) }
+
+.storage--media-viewer--pdf {
+  border-radius: var( --border-radius-m );
+  height: calc(100vh - 96px);
+  width:  calc(100vw - 96px) }
+
+/***** Storage *****/

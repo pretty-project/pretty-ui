@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.transfer.effects
-    (:require [mid-fruits.candy                      :refer [param return]]
+    (:require [mid-fruits.candy                      :refer [return]]
               [plugins.item-browser.transfer.helpers :as transfer.helpers]
               [x.server-core.api                     :as a]))
 
@@ -22,4 +22,4 @@
   (fn [_ [_ extension-id item-namespace browser-props]]
       {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
                                 {:data-f      (fn [_] (return browser-props))
-                                 :target-path [:plugins :item-browser/transfer-items extension-id]}]}))
+                                 :target-path [:plugins :item-lister/transfer-items extension-id]}]}))

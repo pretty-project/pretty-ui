@@ -3,9 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.views
-    (:require [plugins.item-browser.core.prototypes :as core.prototypes]
+    (:require [plugins.item-browser.core.helpers    :as core.helpers]
+              [plugins.item-browser.core.prototypes :as core.prototypes]
               [plugins.item-lister.api              :as item-lister]
               [react.api                            :as react]
+              [reagent.api                          :as reagent]
               [x.app-core.api                       :as a]
               [x.app-elements.api                   :as elements]))
 
@@ -85,19 +87,27 @@
   ;
   ; @usage
   ;  [item-browser/header :my-extension :my-type {...}]
-  [extension-id item-namespace header-props]
-  (let [header-props (assoc header-props :menu-element #'menu-mode-header)]
-       [item-lister/header extension-id item-namespace header-props]))
-
+  [extension-id item-namespace header-props])
+  ;(let [header-props (assoc header-props :menu-element #'menu-mode-header)]
+  ;     [item-lister/header extension-id item-namespace header-props]])
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) body-props
+  [extension-id item-namespace body-props]
+  [item-lister/body extension-id item-namespace body-props])
+
 (defn body
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map)(opt) body-props
+  ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;   :download-limit (integer)(opt)
@@ -116,6 +126,7 @@
   ;   :path-key (keyword)(opt)
   ;    Default: config/DEFAULT-PATH-KEY
   ;   :prefilter (map)(opt)
+  ;   :root-item-id (string)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
   ;
@@ -128,4 +139,5 @@
   ;                                             :prefilter    {:my-type/color "red"}}]
   [extension-id item-namespace body-props]
   (let [body-props (core.prototypes/body-props-prototype extension-id item-namespace body-props)]
-       [item-lister/body extension-id item-namespace body-props]))
+       (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :body)
+                           {:reagent-render (fn [] [body-structure extension-id item-namespace body-props])})))

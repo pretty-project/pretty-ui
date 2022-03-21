@@ -38,7 +38,7 @@
 
    ; TEMP
    ; Az {:item-id ...} értéke az item-browser plugin számára szükséges!
-   :item-id (get-in db [extension-id :item-browser/meta-items :item-id])})
+   :item-id (get-in db [extension-id :item-lister/meta-items :item-id])})
 
 (defn get-request-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

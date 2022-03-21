@@ -2,14 +2,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.lifecycles
-    (:require [x.app-core.api :as a]))
+(ns mid.extensions.storage.core.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-boot {:fx [:environment/add-css! "/css/playground.css"]}})
+; @constant (string)
+(def ROOT-DIRECTORY-ID "61de13a1ffc7a6839cde858c")
+
+; @constant (string)
+(def SAMPLE-FILE-ID "61de15aaffc7a6839cde85d9")
+
+; @constant (string)
+(def SAMPLE-FILE-FILENAME "sample.png")

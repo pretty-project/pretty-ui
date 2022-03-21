@@ -7,10 +7,9 @@
               [mid-fruits.string        :as string]
               [mid-fruits.vector        :as vector]
               [server-fruits.http       :as http]
-              [x.app-details             :as details]
+              [x.app-details            :as details]
               [x.server-core.api        :as a :refer [cache-control-uri]]
-              [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]
-              [x.server-ui.head.config  :as head.config]))
+              [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]))
 
 
 
@@ -134,8 +133,7 @@
                   (if (include-css? css-props)
                       (conj   head (include-css css-props))
                       (return head))))]
-         (let [css-paths (vector/concat-items css-paths head.config/SYSTEM-CSS-PATHS)]
-              (reduce f head css-paths))))
+         (reduce f head css-paths)))
 
 (defn head<-favicon-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!

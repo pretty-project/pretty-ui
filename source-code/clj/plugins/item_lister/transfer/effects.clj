@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.transfer.effects
-    (:require [mid-fruits.candy                     :refer [param return]]
+    (:require [mid-fruits.candy                     :refer [return]]
               [plugins.item-lister.transfer.helpers :as transfer.helpers]
               [x.server-core.api                    :as a]))
 

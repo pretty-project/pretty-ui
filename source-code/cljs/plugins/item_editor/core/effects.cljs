@@ -34,7 +34,7 @@
       ;    Pl.: Egy elem szerkesztése közben az elem duplikálása után a "Másolat szerkesztése" gombra kattintva
       ;         megtörténik az [:item-editor/edit-item! ...] esemény, de a body komponens már a React-fába van
       ;         csatolva, ezért a :component-did-mount esemény már nem fog megtörténni, ami elindítaná az elem
-      ;         letöltését, ezért szüksgéges a letöltést elindítani!
+      ;         letöltését, ezért szükséges a letöltést ebben az eseményben elindítani!
       {:db (r core.events/edit-item! db extension-id item-namespace item-id)
        :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
                             [:router/go-to! item-route])

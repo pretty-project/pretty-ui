@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.file-uploader.prototypes
-    (:require [extensions.storage.engine :as engine]
-              [mongo-db.api              :as mongo-db]
-              [server-fruits.io          :as io]))
+    (:require [extensions.storage.core.helpers :as core.helpers]
+              [mongo-db.api                    :as mongo-db]
+              [server-fruits.io                :as io]))
 
 
 
@@ -19,8 +19,8 @@
   ; - A fájlok {:media/mime-type "..."} tulajdonsága is eltárolásra kerül, hogy a mappákhoz hasonlóan
   ;   a fájlok is rendelkezzenek {:media/mime-type "..."} tulajdonsággal
   (let [file-id            (mongo-db/generate-id)
-        generated-filename (engine/file-id->filename file-id filename)
-        mime-type          (io/filename->mime-type   filename)]
+        generated-filename (core.helpers/file-id->filename file-id filename)
+        mime-type          (io/filename->mime-type filename)]
        {:media/alias     filename
         :media/filename  generated-filename
         :media/filesize  size

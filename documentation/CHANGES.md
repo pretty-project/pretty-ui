@@ -1,5 +1,10 @@
 
 # x4.6.7
+- [:environment/add-css! ...] esemény ezentúl szerver-oldalon is!
+
+- A kliens-oldali [:environment/add-external-css! ...] esemény megszűnt és az [:environment/add-css! ...]
+  esemény paraméterezése megváltozott!
+
 - Az app-fruits.dom     névtér ezentúl dom.api     néven elérhető!
 - Az app-fruits.react   névtér ezentúl react.api   néven elérhető!
 - Az app-fruits.reagent névtér ezentúl reagent.api néven elérhető!

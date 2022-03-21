@@ -2,12 +2,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns extensions.storage.side-effects
-    (:require [extensions.storage.config :as config]
-              [mid-fruits.candy          :refer [param return]]
-              [mid-fruits.vector         :as vector]
-              [mongo-db.api              :as mongo-db]
-              [x.server-media.api        :as media]))
+(ns extensions.storage.core.side-effects
+    (:require [extensions.storage.core.config :as core.config]
+              [mid-fruits.candy               :refer [return]]
+              [mid-fruits.vector              :as vector]
+              [mongo-db.api                   :as mongo-db]
+              [x.server-media.api             :as media]))
 
 
 
@@ -94,7 +94,7 @@
 (defn delete-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [filename]
-  (if-not (= filename config/SAMPLE-FILE-FILENAME)
+  (if-not (= filename core.config/SAMPLE-FILE-FILENAME)
           (media/delete-storage-file! filename))
   (media/delete-storage-thumbnail! filename))
 

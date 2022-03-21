@@ -7,8 +7,8 @@
               [extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
               [extensions.storage.file-uploader.helpers         :as file-uploader.helpers]
               [extensions.storage.file-uploader.prototypes      :as file-uploader.prototypes]
-              [extensions.storage.side-effects                  :as side-effects]
-              [mid-fruits.candy                                 :refer [param return]]
+              [extensions.storage.core.side-effects             :as core.side-effects]
+              [mid-fruits.candy                                 :refer [return]]
               [mongo-db.api                                     :as mongo-db]
               [pathom.api                                       :as pathom]
               [server-fruits.io                                 :as io]
@@ -32,8 +32,8 @@
   (let [file-item (file-uploader.prototypes/file-item-prototype file-data)
         filename  (get file-item :media/filename)
         filepath  (media/filename->media-storage-filepath filename)]
-       (if (side-effects/attach-item! env destination-id file-item)
-           (when-let [file-item (side-effects/insert-item! env file-item)]
+       (if (core.side-effects/attach-item! env destination-id file-item)
+           (when-let [file-item (core.side-effects/insert-item! env file-item)]
                      ; Copy the temporary file to storage, and delete the temporary file
                      (io/copy-file!   tempfile filepath)
                      (io/delete-file! tempfile)
@@ -52,7 +52,7 @@
                            item-path        (conj destination-path {:media/id destination-id})]
                           ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást,
                           ; így az egyszerre történő feltöltések nem léphetik át a megengedett tárhely-kapacitást ...
-                          (side-effects/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
+                          (core.side-effects/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
                           (letfn [(f [result _ file-data]
                                      (let [file-data (assoc file-data :file-path item-path)]
                                           (conj result (upload-file-f env mutation-props file-data))))]

@@ -2,8 +2,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns extensions.storage.engine
-    (:require [mid-fruits.candy :refer [param return]]
+(ns extensions.storage.core.helpers
+    (:require [mid-fruits.candy :refer [return]]
               [server-fruits.io :as io]))
 
 
@@ -18,7 +18,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (engine/file-id->filename "my-item" "my-image.png")
+  ;  (core.helpers/file-id->filename "my-item" "my-image.png")
   ;  =>
   ;  "my-item.png"
   ;

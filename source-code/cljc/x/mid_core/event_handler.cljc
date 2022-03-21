@@ -243,7 +243,6 @@
   ([]                       (deref re-frame.registrar/kind->id->handler))
   ([event-kind] (event-kind (deref re-frame.registrar/kind->id->handler))))
 
-
 (defn get-event-handler
   ; @param (keyword) event-kind
   ;  :cofx, :event, :fx, :sub

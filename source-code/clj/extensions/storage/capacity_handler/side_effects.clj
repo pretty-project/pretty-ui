@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.capacity-handler.side-effects
-    (:require [extensions.storage.config :as config]
-              [mongo-db.api              :as mongo-db]
-              [x.server-core.api         :as a]))
+    (:require [extensions.storage.core.config :as core.config]
+              [mongo-db.api                   :as mongo-db]
+              [x.server-core.api              :as a]))
 
 
 
@@ -25,7 +25,7 @@
 (defn get-used-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [root-directory-document (mongo-db/get-document-by-id "storage" config/ROOT-DIRECTORY-ID)]
+  (if-let [root-directory-document (mongo-db/get-document-by-id "storage" core.config/ROOT-DIRECTORY-ID)]
           (get root-directory-document :media/content-size)))
 
 (defn get-free-capacity

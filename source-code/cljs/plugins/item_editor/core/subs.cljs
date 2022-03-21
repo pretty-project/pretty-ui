@@ -144,8 +144,12 @@
   [db [_ extension-id item-namespace]]
   ; Az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
   ; ... az útvonal megváltozik és az [:item-editor/load-editor! ...] esemény megtörténik,
+  ;     ami a {:route-title ...} paraméterként átadott címkét beállítaná az applikáció címkéjeként.
   ; ... az [:item-editor/body-did-mount ...] esemény nem történik meg újra,
-  ; ebben az esetben nem szükséges beállítani a route-title címkét!
+  ;     ami az esetlegesen beállított {:auto-title? true} beállítás szerint, lecserélné
+  ;     a {:route-title ...} paraméterként átadott címkét az automatikus címkére.
+  ; Ezért, ha az [:item-editor/load-editor! ...] esemény megtörténésekor a body komponens,
+  ; már a React-fába van csatolva, nem szükséges beállítani a route-title címkét!
   (and      (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)
        (not (r mount.subs/body-did-mount?      db extension-id item-namespace))))
 

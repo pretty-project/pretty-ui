@@ -14,6 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.subs
+(def get-meta-item        plugins.item-lister.core.subs/get-meta-item)
 (def get-description      plugins.item-lister.core.subs/get-description)
 (def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
@@ -23,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-meta-item
+(defn get-meta-item__
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -61,6 +62,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ;
+  ; @return (string)
+  [db [_ extension-id item-namespace]]
+  (r router/get-current-route-path-param db :item-id))
+
 (defn get-current-item-id
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -71,16 +82,6 @@
   ; @return (string)
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :item-id))
-
-(defn get-derived-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (r router/get-current-route-path-param db :item-id))
 
 (defn get-root-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

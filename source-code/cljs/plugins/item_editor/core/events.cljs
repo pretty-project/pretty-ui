@@ -56,7 +56,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-derived-view-id!
+(defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -67,16 +67,10 @@
   (let [derived-item-id (r core.subs/get-derived-item-id db extension-id item-namespace)]
        (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] derived-item-id)))
 
-(defn set-route-title!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-       (r ui/set-header-title! db route-title)))
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn set-auto-title!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -102,9 +96,10 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [set-route-title? (r core.subs/set-route-title? db extension-id item-namespace)]
-       (cond-> db :store-derived-view-id! (as-> % (r store-derived-view-id! % extension-id item-namespace))
-                  set-route-title?        (as-> % (r set-route-title!       % extension-id item-namespace)))))
+  (let [set-route-title? (r core.subs/set-route-title?      db extension-id item-namespace)
+        route-title      (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+       (cond-> db :store-derived-item-id! (as-> % (r store-derived-item-id! % extension-id item-namespace))
+                  set-route-title?        (as-> % (r ui/set-header-title!   % route-title)))))
 
 
 

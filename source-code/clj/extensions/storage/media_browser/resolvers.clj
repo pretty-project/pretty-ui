@@ -5,7 +5,6 @@
 (ns extensions.storage.media-browser.resolvers
     (:require [com.wsscode.pathom3.connect.operation            :refer [defresolver]]
               [extensions.storage.capacity-handler.side-effects :as capacity-handler.side-effects]
-              [mid-fruits.candy                                 :refer [param return]]
               [mongo-db.api                                     :as mongo-db]
               [pathom.api                                       :as pathom]
               [plugins.item-browser.api                         :as item-browser]))
@@ -39,7 +38,7 @@
 (defresolver get-items
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env resolver-props]
-             {:storage.media-lister/get-items (get-items-f env resolver-props)})
+             {:storage.media-browser/get-items (get-items-f env resolver-props)})
 
 
 

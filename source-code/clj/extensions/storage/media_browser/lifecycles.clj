@@ -4,8 +4,7 @@
 
 (ns extensions.storage.media-browser.lifecycles
     (:require [plugins.item-browser.api]
-              [extensions.storage.engine :as engine]
-              [x.server-core.api         :as a]))
+              [x.server-core.api :as a]))
 
 
 
@@ -14,7 +13,9 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:item-browser/init-browser! :storage :media
-                                                {:handler-key :storage.media-browser
-                                                 :on-load [:storage.media-browser/load-browser!]
-                                                 :route-template "/@app-home/storage/:item-id"}]})
+  {:on-server-boot {:dispatch-n [[:environment/add-css! {:uri "/css/extensions/storage.media-browser.css"}]
+                                 [:item-browser/init-browser! :storage :media
+                                                              {:handler-key :storage.media-browser
+                                                               :on-route [:storage.media-browser/load-browser!]
+                                                               :route-template "/@app-home/storage/:item-id"
+                                                               :route-title :storage}]]}})

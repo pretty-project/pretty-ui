@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.transfer.effects
-    (:require [mid-fruits.candy                       :refer [param return]]
+    (:require [mid-fruits.candy                       :refer [return]]
               [plugins.view-selector.transfer.helpers :as transfer.helpers]
               [x.server-core.api                      :as a]))
 
