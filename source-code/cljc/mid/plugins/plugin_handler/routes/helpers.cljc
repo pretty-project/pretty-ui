@@ -42,7 +42,7 @@
   ;
   ; @return (string)
   [_ {:keys [route-template]}]
-  (-> route-template (string/before-last-occurence! "/:")
+  (-> route-template (string/before-last-occurence "/:")
                      (uri/valid-path)))
 
 (defn extended-route

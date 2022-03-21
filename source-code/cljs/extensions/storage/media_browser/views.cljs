@@ -176,10 +176,9 @@
 (defn file-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias filesize] :as media-item} item-props]
-  [:div.storage--media-item--details
-    [media-item-alias-label       media-item item-props]
-    [media-item-modified-at-label media-item item-props]
-    [file-item-filesize-label     media-item item-props]])
+  [:div.storage--media-item--details [media-item-alias-label       media-item item-props]
+                                     [media-item-modified-at-label media-item item-props]
+                                     [file-item-filesize-label     media-item item-props]])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -211,8 +210,10 @@
   [surface-id]
   (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
        [layouts/layout-a surface-id {:description description
-                                     :header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
-                                     :body   [item-browser/body   :storage :media {:item-actions     [:delete :duplicate]
+                                     :header [item-browser/header :storage :media {:new-item-event   [:xxx]
+                                                                                   :new-item-options [:create-directory! :upload-files!]}]
+                                     :body   [item-browser/body   :storage :media {:auto-title?      true
+                                                                                   :item-actions     [:delete :duplicate]
                                                                                    :item-path        [:storage :media-browser/browsed-item]
                                                                                    :items-path       [:storage :media-browser/downloaded-items]
                                                                                    :label-key :alias :search-keys [:alias]

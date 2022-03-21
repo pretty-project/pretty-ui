@@ -3,10 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.subs
-    (:require [plugins.item-browser.core.subs :as core.subs]
-              [x.app-core.api                 :refer [r]]))
+    (:require [plugins.item-browser.transfer.subs :as transfer.subs]
+              [x.app-core.api                     :refer [r]]))
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,6 +25,6 @@
   ;
   ; @return (keyword)
   [db [_ extension-id item-namespace action-key]]
-  (let [handler-key (r core.subs/get-meta-item db extension-id item-namespace :handler-key)]
+  (let [handler-key (r transfer.subs/get-transfer-item db extension-id item-namespace :handler-key)]
        (keyword      (name handler-key)
                 (str (name action-key) "-item"))))

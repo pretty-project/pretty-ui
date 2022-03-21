@@ -21,4 +21,4 @@
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
   (let [backup-item (r items.subs/get-item db extension-id item-namespace item-id)]
-       (assoc-in db [extension-id :item-browser/backup-items item-id] backup-item)))
+       (assoc-in db [:plugins :item-browser/backup-items extension-id item-id] backup-item)))

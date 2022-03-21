@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.route-browser.views
-    (:require [mid-fruits.vector :as vector]
+    (:require [mid-fruits.pretty :as pretty]
+              [mid-fruits.vector :as vector]
               [x.app-core.api    :as a]))
 
 
@@ -17,8 +18,8 @@
   [:div {:style {:padding "12px 12px" :width "100%"}}
         [:div {:style {:font-size "14px" :font-weight "500"}}
               (str route-id)]
-        [:div {:style {:font-size "14px"}}
-              (str route-props)]])
+        [:pre {:style {:font-size "12px"}}
+              (pretty/mixed->string route-props)]])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

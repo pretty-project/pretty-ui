@@ -6,7 +6,6 @@
     (:require [plugins.item-browser.core.helpers    :as core.helpers]
               [plugins.item-browser.core.prototypes :as core.prototypes]
               [plugins.item-lister.api              :as item-lister]
-              [react.api                            :as react]
               [reagent.api                          :as reagent]
               [x.app-core.api                       :as a]
               [x.app-elements.api                   :as elements]))
@@ -24,10 +23,10 @@
   ;  [item-browser/go-home-button :my-extension :my-type]
   [extension-id item-namespace]
   (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? extension-id item-namespace])
-        error-mode?       @(a/subscribe [:item-lister/error-mode?        extension-id item-namespace])
+        error-mode?       @(a/subscribe [:item-browser/get-meta-item     extension-id item-namespace :error-mode?])
         at-home?          @(a/subscribe [:item-browser/at-home?          extension-id item-namespace])]
        [elements/button ::go-home-button
-                        ; A go-home-button gomb az item-lister plugin {:error-mode? true} állapotában is használható!
+                        ; A go-home-button gomb a plugin {:error-mode? true} állapotában is használható!
                         {:disabled? (or browser-disabled? (and at-home? (not error-mode?)))
                          :on-click  [:item-browser/go-home! extension-id item-namespace]
                          :preset    :home-icon-button}]))
@@ -51,7 +50,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn menu-mode-header-structure
+(defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -68,16 +67,6 @@
     [:div.item-lister--header--menu-item-group
       [item-lister/search-block extension-id item-namespace]]])
 
-(defn menu-mode-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id item-namespace]
-  (let [menu-mode? @(a/subscribe [:item-lister/menu-mode? extension-id item-namespace])]
-       [react/mount-animation {:animation-timeout 500 :mounted? menu-mode?}
-                              [menu-mode-header-structure extension-id item-namespace]]))
-
 (defn header
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
@@ -87,9 +76,10 @@
   ;
   ; @usage
   ;  [item-browser/header :my-extension :my-type {...}]
-  [extension-id item-namespace header-props])
-  ;(let [header-props (assoc header-props :menu-element #'menu-mode-header)]
-  ;     [item-lister/header extension-id item-namespace header-props]])
+  [extension-id item-namespace header-props]
+  (let [header-props (assoc header-props :menu-element #'menu-mode-header)]
+       [item-lister/header extension-id item-namespace header-props]))
+
 
 
 ;; -- Body components ---------------------------------------------------------

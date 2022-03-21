@@ -19,7 +19,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   (fn [{:keys [db]} [_ extension-id item-namespace body-props]]
-      {:db (r mount.events/body-did-mount db extension-id item-namespace body-props)}))
+      {:db (r mount.events/body-did-mount db extension-id item-namespace body-props)
+       :dispatch [:item-browser/request-item! extension-id item-namespace]}))
 
 (a/reg-event-fx
   :item-browser/header-did-mount

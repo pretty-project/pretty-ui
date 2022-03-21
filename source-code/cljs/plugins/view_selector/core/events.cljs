@@ -53,8 +53,5 @@
   ;
   ; @return (map)
   [db [_ extension-id]]
-  (let [route-title  (r transfer.subs/get-transfer-item db extension-id :route-title)
-        parent-route (r transfer.subs/get-transfer-item db extension-id :parent-route)]
-       (cond-> db :store-derived-view-id! (as-> % (r store-derived-view-id!          % extension-id))
-                  route-title             (as-> % (r ui/set-header-title!            % route-title))
-                  parent-route            (as-> % (r routes.events/set-parent-route! % extension-id)))))
+  (as-> db % (r store-derived-view-id!          % extension-id)
+             (r routes.events/set-parent-route! % extension-id)))

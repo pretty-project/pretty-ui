@@ -9,9 +9,7 @@
               [plugins.item-lister.download.events :as download.events]
               [plugins.item-lister.items.events    :as items.events]
               [plugins.item-lister.mount.subs      :as mount.subs]
-              [plugins.item-lister.transfer.subs   :as transfer.subs]
-              [x.app-core.api                      :as a :refer [r]]
-              [x.app-ui.api                        :as ui]))
+              [x.app-core.api                      :as a :refer [r]]))
 
 
 
@@ -127,9 +125,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-       (cond-> db route-title (as-> % (r ui/set-header-title! % route-title)))))
+  [db [_ extension-id item-namespace]])
 
 
 

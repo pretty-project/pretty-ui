@@ -24,7 +24,7 @@
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id :route-title)]
            {:db (r core.events/load-selector! db extension-id)
-            :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))
+            :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 
 

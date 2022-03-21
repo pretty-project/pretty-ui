@@ -20,7 +20,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace item-id]]
-  (get-in db [extension-id :item-browser/backup-items item-id]))
+  (get-in db [:plugins :item-browser/backup-items extension-id item-id]))
 
 (defn export-backup-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -116,14 +116,6 @@
           [icon-button {:icon "code_off" :label "Hide data" :on-click [:re-frame-browser/toggle-data-view!]}]
           [icon-button {:icon "code"     :label "Show data" :on-click [:re-frame-browser/toggle-data-view!]}]))
 
-(defn edit-string-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [toggle-event [:db/toggle-item! [:developer :re-frame-browser/meta-items :edit-string?]]]
-       (if-let [edit-string? @(a/subscribe [:re-frame-browser/get-meta-item :edit-string?])]
-               [icon-button {:icon "edit_off" :label "Done" :on-click toggle-event}]
-               [icon-button {:icon "edit"     :label "Edit" :on-click toggle-event}])))
-
 (defn go-home-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -146,6 +138,15 @@
           (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])
                 remove-event [:db/move-item! current-path [:developer :re-frame-browser/meta-items :bin]]]
                [icon-button {:icon "delete" :label "Remove" :on-click remove-event}])))
+
+(defn edit-item-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [root-level? @(a/subscribe [:re-frame-browser/root-level?])]
+          [icon-button {:icon "edit" :label "Edit" :disabled? true}]
+          (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
+                  [icon-button {:icon "edit_off" :label "Save" :on-click [:re-frame-browser/toggle-edit-item-mode!]}]
+                  [icon-button {:icon "edit"     :label "Edit" :on-click [:re-frame-browser/toggle-edit-item-mode!]}])))
 
 (defn recycle-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -184,6 +185,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn show-data
+  []
+  (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
+          (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+               [:<> [elements/horizontal-separator {:size :xxl}]
+                    [:pre {:style {:margin-top "24px" :font-size "12px"}}
+                          (pretty/mixed->string current-item)]])))
+(defn edit-item
+  []
+  (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
+          [:<> [elements/horizontal-separator {:size :xxl}]
+               [elements/multiline-field {:value-path [:developer :re-frame-browser/meta-items :edited-item]}]]))
+
 (defn map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [map-key system-key?]
@@ -202,32 +216,30 @@
         system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
         app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
        [:div [header "map"]
-             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button]
+             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [map-key %2]))]
                     (if root-level? [:<> (reduce f [:div {:style {}}]                app-keys)
                                          (reduce f [:div {:style {:opacity 0.5}}] system-keys)]
                                     [:<> (reduce f [:div {:style {}}]                map-keys)]))
-             (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
-                     [:pre {:style {:margin-top "24px" :font-size "12px"}}
-                           (pretty/mixed->string current-item)])]))
+             [show-data]
+             [edit-item]]))
 
 (defn vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
        [:div [header (str "vector, " (count current-item) " items")]
-             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button]
+             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [:div (cond (nil?    %2) (str "nil")
                                                      (string? %2) (string/quotes %2)
                                                      :else        (str           %2))]))]
                     (reduce f [:div] current-item))
-             (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
-                     [:pre {:style {:margin-top "24px" :font-size "12px"}}
-                           (pretty/mixed->string current-item)])]))
+             [show-data]
+             [edit-item]]))
 
 (defn boolean-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -251,22 +263,21 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "string"]
-        [toolbar go-home-button go-up-button remove-item-button edit-string-button]
+        [toolbar go-home-button go-up-button remove-item-button edit-item-button]
         [horizontal-line]
-        (if-let [edit-string? @(a/subscribe [:re-frame-browser/get-meta-item :edit-string?])]
-                (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-                     [elements/text-field {:value-path current-path}])
-                (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
-                     [:div (string/quotes current-item)]))])
+        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+             [:div (string/quotes current-item)])
+        [edit-item]])
 
 (defn keyword-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "keyword"]
-        [toolbar go-home-button go-up-button remove-item-button]
+        [toolbar go-home-button go-up-button remove-item-button edit-item-button]
         [horizontal-line]
         (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
-             [:div (str current-item)])])
+             [:div (str current-item)])
+        [edit-item]])
 
 (defn component-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -333,8 +344,8 @@
   []
   (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
        (cond (map? current-item)                   [map-item]
-             (a/event-vector?        current-item) [event-vector-item]
-             (a/subscription-vector? current-item) [subscription-vector-item]
+             ;(a/event-vector?        current-item) [event-vector-item]
+             ;(a/subscription-vector? current-item) [subscription-vector-item]
              (vector?                current-item) [vector-item]
              (boolean?               current-item) [boolean-item]
              (integer?               current-item) [integer-item]

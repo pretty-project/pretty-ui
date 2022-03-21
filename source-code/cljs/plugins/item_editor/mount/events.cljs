@@ -30,13 +30,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;   :initial-item (map)(opt)
+  ;  {:initial-item (map)(opt)
   ;   :item-id (string)(opt)
   ;   :item-path (vector)}
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace {:keys [auto-title? initial-item item-id item-path] :as body-props}]]
+  [db [_ extension-id item-namespace {:keys [initial-item item-id item-path] :as body-props}]]
   ; Az item-editor plugin body komponensének ...
   ; ... {:item-id "..."} tulajdonsága is lehet a szerkesztett elem azonosítójának forrása,
   ;     így lehetséges a szerkesztett dokumentum azonosítóját a body komponens paramétereként is átadni.
@@ -47,8 +46,7 @@
   ;     ... így beállíthatók a dokumentum felhasználó által nem szerkeszthető tulajdonságai.
   (cond-> db :store-body-props! (assoc-in [:plugins :item-editor/body-props extension-id] body-props)
              item-id            (assoc-in [:plugins :item-editor/meta-items extension-id :item-id] item-id)
-             initial-item       (assoc-in item-path initial-item)
-             auto-title?        (as-> % (r core.events/set-auto-title! % extension-id item-namespace))))
+             initial-item       (assoc-in item-path initial-item)))
 
 (defn header-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

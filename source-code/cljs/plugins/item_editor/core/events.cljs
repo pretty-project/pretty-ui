@@ -7,8 +7,7 @@
               [mid-fruits.map                    :refer [dissoc-in]]
               [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-ui.api                      :as ui]))
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -72,22 +71,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-auto-title!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [auto-title (r core.subs/get-auto-title db extension-id item-namespace)]
-       (r ui/set-header-title! db auto-title)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -96,10 +79,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (let [set-route-title? (r core.subs/set-route-title?      db extension-id item-namespace)
-        route-title      (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-       (cond-> db :store-derived-item-id! (as-> % (r store-derived-item-id! % extension-id item-namespace))
-                  set-route-title?        (as-> % (r ui/set-header-title!   % route-title)))))
+  (r store-derived-item-id! db extension-id item-namespace))
 
 
 

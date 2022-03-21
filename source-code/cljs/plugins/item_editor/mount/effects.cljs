@@ -29,7 +29,7 @@
       ; ... a body komponens számára esetlegesen átadott {:item-id "..."} paramétert,
       ;     ezért a core.subs/get-auto-title függvény lefutása előtt szükséges meghívni!
       (let [db (r mount.events/body-did-mount db extension-id item-namespace body-props)]
-           {:db db :dispatch-n [(if auto-title? [:ui/set-window-title! (r core.subs/get-auto-title db extension-id item-namespace)])
+           {:db db :dispatch-n [(if auto-title? [:ui/set-title! (r core.subs/get-auto-title db extension-id item-namespace)])
                                 (if (r core.subs/download-data? db extension-id item-namespace)
                                     [:item-editor/request-item! extension-id item-namespace]
                                     [:item-editor/load-item!    extension-id item-namespace])]})))

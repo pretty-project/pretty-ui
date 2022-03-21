@@ -58,4 +58,4 @@
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
            {:db (r core.events/load-editor! db extension-id item-namespace)
             :dispatch-n [on-route (if (r core.subs/set-route-title? db extension-id item-namespace)
-                                      [:ui/set-window-title! route-title])]})))
+                                      [:ui/set-title! route-title])]})))

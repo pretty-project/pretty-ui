@@ -27,8 +27,8 @@
       ; ... meghívja az {:on-route [...]}  tulajdonságként átadott eseményt.
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-           {:db (r core.events/load-lister! db extension-id item-namespace)
-            :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))
+           {;:db (r core.events/load-lister! db extension-id item-namespace)
+            :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 
 

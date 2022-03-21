@@ -4,6 +4,8 @@
 
 (ns plugins.item-browser.download.effects
     (:require [plugins.item-browser.core.subs           :as core.subs]
+              [plugins.item-browser.mount.subs          :as mount.subs]
+              [plugins.item-browser.download.events     :as download.events]
               [plugins.item-browser.download.queries    :as download.queries]
               [plugins.item-browser.download.validators :as download.validators]
               [x.app-core.api                           :as a :refer [r]]))
@@ -50,9 +52,9 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]))
-;      (let [db (r events/receive-item! db extension-id item-namespace server-response)]
-;           (if-let [current-item-label (r subs/get-current-item-label db extension-id item-namespace)]
-;                   {:db db :dispatch-if [(r subs/set-title? db extension-id item-namespace)
-;                                         [:ui/set-title! current-item-label]]
-;                   {:db db}]))
+  (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      (let [db (r download.events/receive-item! db extension-id item-namespace server-response)]
+           (if-let [auto-title? (r mount.subs/get-body-prop db extension-id item-namespace :auto-title?)]
+                   {:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db extension-id item-namespace)]
+                                                [:ui/set-title! item-label])]}
+                   {:db db}))))

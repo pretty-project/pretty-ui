@@ -3,10 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.subs
-    (:require [mid-fruits.keyword            :as keyword]
-              [plugins.item-lister.core.subs :as plugins.item-lister.core.subs]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-router.api              :as router]))
+    (:require [mid-fruits.keyword                 :as keyword]
+              [plugins.item-browser.mount.subs    :as mount.subs]
+              [plugins.item-browser.transfer.subs :as transfer.subs]
+              [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-router.api                   :as router]))
 
 
 
@@ -54,7 +56,7 @@
   ; @return (keyword)
   [db [_ extension-id item-namespace]]
   ; XXX#8519
-  (let [handler-key (r get-meta-item db extension-id item-namespace :handler-key)]
+  (let [handler-key (r transfer.subs/get-transfer-item db extension-id item-namespace :handler-key)]
        (keyword (name handler-key) "synchronize-browser!")))
 
 
@@ -96,9 +98,9 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
-        label-key       (r get-meta-item       db extension-id item-namespace :label-key)]
-       (get-in db [extension-id :item-browser/data-items current-item-id label-key])))
+  (let [item-path (r mount.subs/get-body-prop db extension-id item-namespace :item-path)
+        label-key (r mount.subs/get-body-prop db extension-id item-namespace :label-key)]
+       (label-key (get-in db item-path))))
 
 (defn get-current-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

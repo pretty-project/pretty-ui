@@ -333,8 +333,9 @@
   (let [reorder-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :reorder-mode?])
         search-mode?  @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :search-mode?])]
        [react/mount-animation {:animation-timeout 500 :mounted? (nor reorder-mode? search-mode?)}
-                              [menu-mode-header-structure extension-id item-namespace]]))
-
+                              (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :menu-element])]
+                                      [menu-element               extension-id item-namespace]
+                                      [menu-mode-header-structure extension-id item-namespace])]))
 (defn reorder-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -363,13 +364,10 @@
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (if @(a/subscribe [:item-lister/header-did-mount? extension-id item-namespace])
-       [:div#item-lister--header--structure
-         (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop extension-id item-namespace :menu-element])]
-                 [menu-element     extension-id item-namespace]
-                 [menu-mode-header extension-id item-namespace])
-         [reorder-mode-header extension-id item-namespace]
-         [select-mode-header  extension-id item-namespace]
-         [search-mode-header  extension-id item-namespace]]))
+       [:div#item-lister--header--structure [menu-mode-header    extension-id item-namespace]
+                                            [reorder-mode-header extension-id item-namespace]
+                                            [select-mode-header  extension-id item-namespace]
+                                            [search-mode-header  extension-id item-namespace]]))
 
 (defn header
   ; @param (keyword) extension-id
@@ -395,6 +393,15 @@
 
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn browser-offline
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [extension-id item-namespace]
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold
+                   :content "sss"}])
 
 (defn downloading-items-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -430,14 +437,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [_ _]
-  [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}])
-
-(defn no-items-to-show
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
   [extension-id item-namespace]
   (let [downloading-items? @(a/subscribe [:item-lister/downloading-items? extension-id item-namespace])
         items-received?    @(a/subscribe [:item-lister/items-received?    extension-id item-namespace])
@@ -448,8 +447,7 @@
                 ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
                 ;   ne jelenjen meg a no-items-to-show-label felirat!
                 (not downloading-items?))
-           [elements/row {:content [no-items-to-show-label extension-id item-namespace]
-                          :horizontal-align :center}])))
+           [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}])))
 
 (defn indicators
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -457,9 +455,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [browser-online? @(a/subscribe [:environment/browser-online?])]
-          [:<> [no-items-to-show  extension-id item-namespace]
-               [downloading-items extension-id item-namespace]]))
+  [:<> [no-items-to-show-label  extension-id item-namespace]
+       [downloading-items-label extension-id item-namespace]])
 
 
 
@@ -554,13 +551,13 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [error-mode? @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :error-mode?])]
-          [error-body extension-id item-namespace]
-          (if @(a/subscribe [:item-lister/body-did-mount? extension-id item-namespace])
-               [:div.item-lister--body--structure
-                 [item-list             extension-id item-namespace]
-                 [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
-                 [indicators            extension-id item-namespace]])))
+  (cond @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :error-mode?])
+         [error-body extension-id item-namespace]
+        @(a/subscribe [:item-lister/body-did-mount? extension-id item-namespace])
+         [:div.item-lister--body--structure
+           [item-list             extension-id item-namespace]
+           [tools/infinite-loader extension-id {:on-viewport [:item-lister/request-items! extension-id item-namespace]}]
+           [indicators            extension-id item-namespace]]))
 
 (defn body
   ; @param (keyword) extension-id
