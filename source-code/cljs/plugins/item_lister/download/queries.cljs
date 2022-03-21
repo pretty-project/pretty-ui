@@ -37,8 +37,9 @@
    :filter-pattern        (r core.subs/get-filter-pattern        db extension-id item-namespace)
 
    ; TEMP
-   ; Az {:item-id ...} értéke az item-browser plugin számára szükséges!
-   :item-id (get-in db [extension-id :item-lister/meta-items :item-id])})
+   ; Az {:item-id ...} értéke az item-browser plugin számára szükséges, hogy elküldje a resolver függvénynek,
+   ; de a lista-elemek letöltését és a query tartalmának összeállítását az item-lister plugin végzi ...
+   :item-id (r core.subs/get-meta-item db extension-id item-namespace :item-id)})
 
 (defn get-request-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

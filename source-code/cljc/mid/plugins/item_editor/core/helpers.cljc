@@ -115,12 +115,12 @@
   ; @return (keyword)
   [extension-id item-namespace component-key]
   ; XXX#5467
-  ; A [components/stated ...] komponens {:initializer [...]} és {:destructor [...]} eseményei
-  ; egyedi azonosító hiányában a komponens újrarenderelésekor ismételten megtörténnének!
+  ; A reagent/lifecycles függvény {:component-did-mount ...} és {:component-will-unmount ...}
+  ; életciklusai egyedi azonosító hiányában a komponens újrarenderelésekor ismételten megtörténnének!
   (keyword (str (name extension-id)   "."
                 (name item-namespace) "-editor")
            (name component-key)))
 
-  ;(keyword (namespace editor-id)
-  ;         (str (name editor-id) "-"
-  ;              (name component-key))))
+  ;(if-let [namespace (namespace editor-id)]
+  ;        (keyword (str namespace "-" (name editor-id) "-" (name component-key)))
+  ;        (keyword (str               (name editor-id) "-" (name component-key)))))

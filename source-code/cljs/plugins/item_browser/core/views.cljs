@@ -114,8 +114,12 @@
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
+  ;   :item-path (vector)(opt)
+  ;    Default: core.helpers/default-item-path
   ;   :items-key (keyword)(opt)
   ;    Default: config/DEFAULT-ITEMS-KEY
+  ;   :items-path (vector)(opt)
+  ;    Default: core.helpers/default-items-path
   ;   :label-key (keyword)(opt)
   ;    Default: config/DEFAULT-LABEL-KEY
   ;   :list-element (metamorphic-content)
@@ -126,7 +130,7 @@
   ;   :path-key (keyword)(opt)
   ;    Default: config/DEFAULT-PATH-KEY
   ;   :prefilter (map)(opt)
-  ;   :root-item-id (string)
+  ;   :root-item-id (string)(opt)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
   ;
@@ -140,4 +144,5 @@
   [extension-id item-namespace body-props]
   (let [body-props (core.prototypes/body-props-prototype extension-id item-namespace body-props)]
        (reagent/lifecycles (core.helpers/component-id extension-id item-namespace :body)
-                           {:reagent-render (fn [] [body-structure extension-id item-namespace body-props])})))
+                           {:reagent-render      (fn []             [body-structure               extension-id item-namespace body-props])
+                            :component-did-mount (fn [] (a/dispatch [:item-browser/body-did-mount extension-id item-namespace body-props]))})))

@@ -25,10 +25,12 @@
               [re-frame.registrar :as re-frame.registrar]
 
               ; TEMP
-              [mid.re-frame.effects-map :as mid.re-frame.effects-map]
-              [mid.re-frame.metamorphic :as mid.re-frame.metamorphic]
-              [mid.re-frame.params      :as mid.re-frame.params]
-              [mid.re-frame.types       :as mid.re-frame.types]))
+              [mid.re-frame.api          :as mid.re-frame.api]
+              [mid.re-frame.effects-map  :as mid.re-frame.effects-map]
+              [mid.re-frame.event-vector :as mid.re-frame.event-vector]
+              [mid.re-frame.metamorphic  :as mid.re-frame.metamorphic]
+              [mid.re-frame.params       :as mid.re-frame.params]
+              [mid.re-frame.types        :as mid.re-frame.types]))
 
 
 
@@ -54,11 +56,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; re-frame.core
-(def ->interceptor re-frame.core/->interceptor)
-(def reg-cofx      re-frame.core/reg-cofx)
-(def reg-sub       re-frame.core/reg-sub)
-(def subscribe     re-frame.core/subscribe)
-(def inject-cofx   re-frame.core/inject-cofx)
+(def ->interceptor mid.re-frame.api/->interceptor)
+(def reg-cofx      mid.re-frame.api/reg-cofx)
+(def reg-sub       mid.re-frame.api/reg-sub)
+(def subscribe     mid.re-frame.api/subscribe)
+(def inject-cofx   mid.re-frame.api/inject-cofx)
 
 
 
@@ -68,60 +70,11 @@
 (def event-vector?        mid.re-frame.types/event-vector?)
 (def subscription-vector? mid.re-frame.types/subscription-vector?)
 
-(defn event-vector->event-id
-  ; @param (vector) event-vector
-  ;
-  ; @example
-  ;  (a/event-vector->event-id [:my-event ...])
-  ;  =>
-  ;  :my-event
-  ;
-  ; @return (vector)
-  [event-vector]
-  (first event-vector))
-
-(defn cofx->event-vector
-  ; @param (map) cofx
-  ;  {:event (vector)}
-  ;
-  ; @example
-  ;  (a/cofx->event-vector {:event [...]})
-  ;  =>
-  ;  [...]
-  ;
-  ; @return (vector)
-  [cofx]
-  (get cofx :event))
-
-(defn cofx->event-id
-  ; @param (map) cofx
-  ;  {:event (vector)
-  ;    [(keyword) event-id]}
-  ;
-  ; @example
-  ;  (a/cofx->event-vector {:event [:my-event ...]})
-  ;  =>
-  ;  :my-event
-  ;
-  ; @return (keyword)
-  [cofx]
-  (get-in cofx [:event 0]))
-
-(defn context->event-vector
-  ; @param (map) context
-  ;  {:coeffects (map)
-  ;   {:event (vector)}}
-  ;
-  ; @return (vector)
-  [context]
-  (get-in context [:coeffects :event]))
-
-(defn context->event-id
-  ; @param (map) context
-  ;
-  ; @return (keyword)
-  [context]
-  (-> context context->event-vector event-vector->event-id))
+(def event-vector->event-id mid.re-frame.event-vector/event-vector->event-id)
+(def cofx->event-vector     mid.re-frame.event-vector/cofx->event-vector)
+(def cofx->event-id         mid.re-frame.event-vector/cofx->event-id)
+(def context->event-vector  mid.re-frame.event-vector/context->event-vector)
+(def context->event-id      mid.re-frame.event-vector/context->event-id )
 
 (defn context->db-before-effect
   ; @param (map) context

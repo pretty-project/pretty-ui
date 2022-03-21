@@ -83,16 +83,6 @@
   [db [_ extension-id item-namespace]]
   (r get-meta-item db extension-id item-namespace :item-id))
 
-(defn get-root-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (string)
-  [db [_ extension-id item-namespace]]
-  (r get-meta-item db extension-id item-namespace :root-item-id))
-
 
 
 ;; ----------------------------------------------------------------------------

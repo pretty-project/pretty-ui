@@ -24,7 +24,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::vat-no-field
                             {:label :vat-no :min-width :s
-                             :value-path [:clients :client-editor/data-items :vat-no]
+                             :value-path [:clients :client-editor/edited-item :vat-no]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-country-select
@@ -34,7 +34,7 @@
        [elements/select ::country-select
                         {:label :country ;:user-cancel? false
                          :initial-options (param locales/EU-COUNTRY-NAMES)
-                         :value-path      [:clients :client-editor/data-items :country]
+                         :value-path      [:clients :client-editor/edited-item :country]
                          :disabled?       editor-disabled?}]))
 
 (defn- client-zip-code-field
@@ -43,7 +43,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::zip-code-field
                             {:label :zip-code
-                             :value-path [:clients :client-editor/data-items :zip-code]
+                             :value-path [:clients :client-editor/edited-item :zip-code]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-city-field
@@ -53,7 +53,7 @@
        [elements/combo-box ::city-field
                            {:label :city :emptiable? false :min-width :s
                             :options-path [:clients :client-editor/suggestions :city]
-                            :value-path   [:clients :client-editor/data-items  :city]
+                            :value-path   [:clients :client-editor/edited-item :city]
                             :disabled?    editor-disabled?}]))
 
 (defn- client-address-field
@@ -62,7 +62,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::address-field
                             {:label :address
-                             :value-path [:clients :client-editor/data-items :address]
+                             :value-path [:clients :client-editor/edited-item :address]
                              :disabled?  editor-disabled?}]))
 
 (defn- client-secondary-contacts
@@ -87,7 +87,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::phone-number-field
                             {:label :phone-number :required? true :min-width :s
-                             :value-path [:clients :client-editor/data-items :phone-number]
+                             :value-path [:clients :client-editor/edited-item :phone-number]
                              :validator {:f form/phone-number? :invalid-message :invalid-phone-number}
                              ; Ha egyszerűen le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a használata!
                              ;:modifier form/phone-number
@@ -101,7 +101,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::email-address-field
                             {:label :email-address :required? true :min-width :s
-                             :value-path [:clients :client-editor/data-items :email-address]
+                             :value-path [:clients :client-editor/edited-item :email-address]
                              :validator {:f form/email-address? :invalid-message :invalid-email-address}
                              :form-id   :clients.client-editor/form
                              :disabled? editor-disabled?}]))
@@ -121,7 +121,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::last-name-field
                             {:label :last-name :required? true :min-width :s
-                             :value-path [:clients :client-editor/data-items :last-name]
+                             :value-path [:clients :client-editor/edited-item :last-name]
                              :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
@@ -131,7 +131,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
        [elements/text-field ::first-name-field
                             {:label :first-name :required? true :min-width :s
-                             :value-path [:clients :client-editor/data-items :first-name]
+                             :value-path [:clients :client-editor/edited-item :first-name]
                              :form-id    :clients.client-editor/form
                              :disabled?  editor-disabled?}]))
 
@@ -198,7 +198,9 @@
                                      :body   [item-editor/body   :clients :client {:auto-title? true
                                                                                    :form-element #'client-form
                                                                                    :form-id     :clients.client-editor/form
-                                                                                   :item-actions    [:delete :duplicate :save]
-                                                                                   :suggestion-keys [:city]
+                                                                                   :item-actions     [:delete :duplicate :save]
+                                                                                   :item-path        [:clients :client-editor/edited-item]
+                                                                                   :suggestion-keys  [:city]
+                                                                                   :suggestions-path [:clients :client-editor/suggestions]
                                                                                    :new-item-id "new-client"
                                                                                    :initial-item {:country (locales/country-native-name selected-language)}}]}]))

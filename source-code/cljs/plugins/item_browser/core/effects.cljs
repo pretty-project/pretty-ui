@@ -69,9 +69,9 @@
   ;
   ; @usage
   ;  [:item-browser/go-home! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [root-item-id (r core.subs/get-root-item-id db extension-id item-namespace)]
-           [:item-browser/browse-item! extension-id item-namespace root-item-id])))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]))
+;      (let [root-item-id (r core.subs/get-root-item-id db extension-id item-namespace)]
+;           [:item-browser/browse-item! extension-id item-namespace root-item-id]]))
 
 (a/reg-event-fx
   :item-browser/go-up!

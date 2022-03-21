@@ -33,11 +33,11 @@
   ; @example
   ;  (core.helpers/default-item-path :my-extension :my-type)
   ;  =>
-  ;  [:my-extension :my-type-editor/data-items]
+  ;  [:plugins :item-editor/edited-items :my-extension]
   ;
   ; @return (vector)
-  [extension-id item-namespace]
-  [extension-id (keyword (str (name item-namespace) "-editor/data-items"))])
+  [extension-id _]
+  [:plugins :item-editor/edited-items extension-id])
 
 (defn default-suggestions-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,8 +48,9 @@
   ; @example
   ;  (core.helpers/default-suggestions-path :my-extension :my-type)
   ;  =>
-  ;  [:my-extension :my-type-editor/suggestions]
+  ;  [:plugins :item-editor/suggestions :my-extension]
+  ;
   ;
   ; @return (vector)
-  [extension-id item-namespace]
-  [extension-id (keyword (str (name item-namespace) "-editor/suggestions"))])
+  [extension-id _]
+  [:plugins :item-editor/suggestions extension-id])

@@ -39,7 +39,7 @@
   [db [_ extension-id item-namespace {:keys [auto-title? initial-item item-id item-path] :as body-props}]]
   ; Az item-editor plugin body komponensének ...
   ; ... {:item-id "..."} tulajdonsága is lehet a szerkesztett elem azonosítójának forrása,
-  ;     így lehetséges a szerkesztett dokumentum azonosítóját paraméterként átadni a plugin számára.
+  ;     így lehetséges a szerkesztett dokumentum azonosítóját a body komponens paramétereként is átadni.
   ; ... {:initial-item {...}} tulajdonságával megadható a szerkesztett dokumentum kezdeti állapota ...
   ;     ... így elkerülhető az input mezők {:initial-value ...} tulajdonságának használata, ami miatt
   ;         a plugin felhasználói változtatás nélküli elhagyásakor az tévesen felajánlaná

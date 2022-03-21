@@ -213,6 +213,8 @@
        [layouts/layout-a surface-id {:description description
                                      :header [item-browser/header :storage :media {:new-item-options [:create-directory! :upload-files!]}]
                                      :body   [item-browser/body   :storage :media {:item-actions     [:delete :duplicate]
+                                                                                   :item-path        [:storage :media-browser/browsed-item]
+                                                                                   :items-path       [:storage :media-browser/downloaded-items]
                                                                                    :label-key :alias :search-keys [:alias]
                                                                                    :list-element     #'media-item
                                                                                    :root-item-id core.config/ROOT-DIRECTORY-ID}]}]))

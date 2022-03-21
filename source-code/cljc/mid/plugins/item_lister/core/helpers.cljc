@@ -43,6 +43,6 @@
                 (name item-namespace) "-lister")
            (name component-key)))
 
-  ;(keyword (namespace lister-id)
-  ;         (str (name lister-id) "-"
-  ;              (name component-key))))
+  ;(if-let [namespace (namespace lister-id)]
+  ;        (keyword (str namespace "-" (name lister-id) "-" (name component-key)))
+  ;        (keyword (str               (name lister-id) "-" (name component-key)))))

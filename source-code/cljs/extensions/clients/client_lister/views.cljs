@@ -61,5 +61,6 @@
                                       :header [item-lister/header :clients :client {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
                                       :body   [item-lister/body   :clients :client {:list-element #'client-item
                                                                                     :item-actions [:delete :duplicate]
+                                                                                    :items-path   [:clients :client-lister/downloaded-items]
                                                                                     :search-keys  [:name :email-address]
                                                                                     :sortable? true}]}]))

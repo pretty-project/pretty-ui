@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.events
-    (:require [mid-fruits.map                     :refer [dissoc-in]]
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
               [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
               [x.app-core.api                     :as a :refer [r]]
@@ -39,18 +41,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn derive-current-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (assoc-in db [extension-id :item-browser/meta-items :item-id]
-               (or (r core.subs/get-derived-item-id db extension-id item-namespace)
-                   (r core.subs/get-root-item-id    db extension-id item-namespace))))
-
 (defn use-root-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -59,19 +49,14 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace]]
-  (assoc-in db [extension-id :item-browser/meta-items :item-id]
-               (r core.subs/get-root-item-id db extension-id item-namespace)))
-
-(defn set-current-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (assoc-in db [extension-id :item-browser/meta-items :item-id] item-id))
+  ; A {:root-item-id "..."} tulajdonság értékét eltárolja az aktuálisan böngészett elem azonosítójaként ...
+  ; ... ha a body komponens paraméterként megkapja a {:root-item-id "..."} tulajdonságot
+  ; ... az [:item-browser/load-browser! ...] esemény nem tárolta el az útvonalból származtatott
+  ;     :item-id értékét, mert nem az ".../:item-id" útvonal az aktuális.
+  (if-let [item-id (get-in db [:plugins :item-lister/meta-items extension-id :item-id])]
+          (return   db)
+          (assoc-in db [:plugins :item-lister/meta-items extension-id :item-id]
+                       (r mount.subs/get-body-prop db extension-id item-namespace :root-item-id))))
 
 (defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,12 +68,6 @@
   [db [_ extension-id item-namespace]]
   (let [derived-item-id (r core.subs/get-derived-item-id db extension-id item-namespace)]
        (assoc-in db [:plugins :item-lister/meta-items extension-id :item-id] derived-item-id)))
-
-;  (if (r subs/route-handled?     db extension-id item-namespace)
-;      (r derive-current-item-id! db extension-id item-namespace)
-;      (if-let [item-id (get browser-props :item-id)]
-;              (r set-current-item-id! db extension-id item-namespace item-id)
-;              (r use-root-item-id!    db extension-id item-namespace)]])
 
 
 

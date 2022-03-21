@@ -43,6 +43,6 @@
                 (name item-namespace) "-browser")
            (name component-key)))
 
-  ;(keyword (namespace browser-id)
-  ;         (str (name browser-id) "-"
-  ;              (name component-key))))
+  ;(if-let [namespace (namespace browser-id)]
+  ;        (keyword (str namespace "-" (name browser-id) "-" (name component-key)))
+  ;        (keyword (str               (name browser-id) "-" (name component-key)))))
