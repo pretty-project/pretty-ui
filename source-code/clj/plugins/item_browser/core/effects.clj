@@ -27,5 +27,5 @@
   (fn [{:keys [db]} [_ extension-id item-namespace browser-props]]
       (let [browser-props (core.prototypes/browser-props-prototype extension-id item-namespace browser-props)]
            {:dispatch-n [[:item-browser/reg-transfer-browser-props! extension-id item-namespace browser-props]
-                         [:item-browser/add-route!                  extension-id item-namespace browser-props]
+                         [:item-browser/add-base-route!             extension-id item-namespace browser-props]
                          [:item-browser/add-extended-route!         extension-id item-namespace browser-props]]})))

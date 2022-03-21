@@ -25,5 +25,5 @@
   (fn [_ [_ extension-id {:keys [route-template] :as selector-props}]]
       (let [selector-props (core.prototypes/selector-props-prototype extension-id selector-props)]
            {:dispatch-n [[:view-selector/reg-transfer-selector-props! extension-id selector-props]
-                         (if route-template [:view-selector/add-route!          extension-id selector-props])
+                         (if route-template [:view-selector/add-base-route!     extension-id selector-props])
                          (if route-template [:view-selector/add-extended-route! extension-id selector-props])]})))

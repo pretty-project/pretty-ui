@@ -74,7 +74,9 @@
 (def cofx->event-vector     mid.re-frame.event-vector/cofx->event-vector)
 (def cofx->event-id         mid.re-frame.event-vector/cofx->event-id)
 (def context->event-vector  mid.re-frame.event-vector/context->event-vector)
-(def context->event-id      mid.re-frame.event-vector/context->event-id )
+(def context->event-id      mid.re-frame.event-vector/context->event-id)
+
+
 
 (defn context->db-before-effect
   ; @param (map) context

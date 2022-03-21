@@ -11,7 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.item-editor.core.helpers
-(def collection-name    core.helpers/collection-name)
 (def value-path         core.helpers/value-path)
 (def add-item-label     core.helpers/add-item-label)
 (def edit-item-label    core.helpers/edit-item-label)

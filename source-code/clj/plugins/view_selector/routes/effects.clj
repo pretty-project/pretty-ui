@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :view-selector/add-route!
+  :view-selector/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

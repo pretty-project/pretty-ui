@@ -20,7 +20,7 @@
   ; @param (map) editor-props
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
-                          {:client-event   [:item-editor/load-editor! extension-id item-namespace]
-                           :route-template route-template
-                           :restricted?    true}]))
+      [:router/add-extended-route! (routes.helpers/route-id extension-id item-namespace)
+                                   {:client-event   [:item-editor/load-editor! extension-id item-namespace]
+                                    :route-template route-template
+                                    :restricted?    true}]))

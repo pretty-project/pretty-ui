@@ -20,10 +20,10 @@
   ; @param (map) browser-props
   ;  {:base-route (string)}
   (fn [_ [_ extension-id item-namespace {:keys [base-route]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id item-namespace :base)
-                          {:client-event   [:item-browser/load-browser! extension-id item-namespace]
-                           :route-template base-route
-                           :restricted?    true}]))
+      [:router/add-base-route! (routes.helpers/route-id extension-id item-namespace :base)
+                               {:client-event   [:item-browser/load-browser! extension-id item-namespace]
+                                :route-template base-route
+                                :restricted?    true}]))
 
 (a/reg-event-fx
   :item-browser/add-extended-route!

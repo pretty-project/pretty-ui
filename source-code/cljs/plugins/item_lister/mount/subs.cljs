@@ -38,7 +38,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id _]]
   (some? (get-in db [:plugins :item-lister/header-props extension-id])))
 
@@ -48,7 +48,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id _]]
   (some? (get-in db [:plugins :item-lister/body-props extension-id])))
 

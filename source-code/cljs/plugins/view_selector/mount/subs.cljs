@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) extension-id
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id]]
   (some? (get-in db [:plugins :view-selector/body-props extension-id])))
 

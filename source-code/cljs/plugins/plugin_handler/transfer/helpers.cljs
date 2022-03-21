@@ -2,13 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.core.helpers
-    (:require [mid.plugins.item-lister.core.helpers :as core.helpers]))
+(ns plugins.plugin-handler.transfer.helpers
+    (:require [mid.plugins.plugin-handler.transfer.helpers :as transfer.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.item-lister.core.helpers
-(def component-id core.helpers/component-id)
+; mid.plugins.plugin-handler.transfer.helpers
+(def transfer-id transfer.helpers/transfer-id)

@@ -20,7 +20,7 @@
   ; @param (map) lister-props
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
-                          {:client-event   [:item-lister/load-lister! extension-id item-namespace]
-                           :route-template route-template
-                           :restricted?    true}]))
+      [:router/add-base-route! (routes.helpers/route-id extension-id item-namespace)
+                               {:client-event   [:item-lister/load-lister! extension-id item-namespace]
+                                :route-template route-template
+                                :restricted?    true}]))

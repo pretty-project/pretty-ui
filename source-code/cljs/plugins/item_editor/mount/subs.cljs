@@ -38,7 +38,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id _]]
   (some? (get-in db [:plugins :item-editor/header-props extension-id])))
 
@@ -48,7 +48,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ;
-  ; @return (map)
+  ; @return (boolean)
   [db [_ extension-id _]]
   ; A {:handler-key ...} tulajdonság azért a szerver-oldali [:item-editor/init-editor! ...]
   ; esemény paraméterei között van, és nem a kliens-oldali body komponens paraméterei között, ...
