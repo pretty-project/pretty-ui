@@ -21,15 +21,17 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)}
-  (fn [{:keys [db]} [_ extension-id item-namespace {:keys [auto-title?] :as body-props}]]
+  (fn [{:keys [db]} [_ extension-id item-namespace body-props]]
       ; A mount.events/body-did-mount függvény eltárolja ...
       ; ... a body komponens paramétereit, ezért a core.subs/download-data? függvény
+      ;     lefutása előtt szükséges meghívni!
+      ;; ... a body komponens paramétereit, ezért a core.subs/get-editor-title függvény
       ;     lefutása előtt szükséges meghívni!
       ; ... a body komponens számára esetlegesen átadott {:item-id "..."} paramétert,
       ;     ezért a core.subs/get-auto-title függvény lefutása előtt szükséges meghívni!
       (let [db (r mount.events/body-did-mount db extension-id item-namespace body-props)]
-           {:db db :dispatch-n [(if auto-title? [:ui/set-title! (r core.subs/get-auto-title db extension-id item-namespace)])
+           {:db db :dispatch-n [(if-let [editor-title (r core.subs/get-editor-title db extension-id item-namespace)]
+                                        [:ui/set-title! editor-title])
                                 (if (r core.subs/download-data? db extension-id item-namespace)
                                     [:item-editor/request-item! extension-id item-namespace]
                                     [:item-editor/load-item!    extension-id item-namespace])]})))

@@ -20,7 +20,6 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; XXX#4579
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
            {:db (r core.events/load-browser! db extension-id item-namespace)

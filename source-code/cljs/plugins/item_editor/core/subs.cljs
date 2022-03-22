@@ -134,26 +134,7 @@
   (= (r get-current-item-id      db extension-id item-namespace)
      (r mount.subs/get-body-prop db extension-id item-namespace :new-item-id)))
 
-(defn set-route-title?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  ; Az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
-  ; ... az útvonal megváltozik és az [:item-editor/load-editor! ...] esemény megtörténik,
-  ;     ami a {:route-title ...} paraméterként átadott címkét beállítaná az applikáció címkéjeként.
-  ; ... az [:item-editor/body-did-mount ...] esemény nem történik meg újra,
-  ;     ami az esetlegesen beállított {:auto-title? true} beállítás szerint, lecserélné
-  ;     a {:route-title ...} paraméterként átadott címkét az automatikus címkére.
-  ; Ezért, ha az [:item-editor/load-editor! ...] esemény megtörténésekor a body komponens,
-  ; már a React-fába van csatolva, nem szükséges beállítani a route-title címkét!
-  (and      (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)
-       (not (r mount.subs/body-did-mount?      db extension-id item-namespace))))
-
-(defn get-auto-title
+(defn get-editor-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -161,16 +142,27 @@
   ;
   ; @return (metamorphic-content)
   [db [_ extension-id item-namespace]]
-  ; - Az {:auto-title? true} beállítással használt item-editor plugin a body komponens
-  ;   React-fába történő csatolásakor beállítja az applikáció feliratait, függetlenül
-  ;   a plugin szerver-oldali beállításaitól.
-  ; - Az item-editor plugintól függetlenül hozzáadott útvonalon megjelenített szerkesztőt
-  ;   is lehetséges {:auto-title? true} beállítással használni, ezért a body komponens tulajdonsága
-  ;   az :auto-title? és ezért lehetséges a szerver-oldali {:route-title ...} tulajdonságtól
-  ;   függetlenül használni.
-  (if-let [new-item? (r new-item? db extension-id item-namespace)]
-          (core.helpers/add-item-label  extension-id item-namespace)
-          (core.helpers/edit-item-label extension-id item-namespace)))
+  ; - Az {:auto-title? ...} tulajdonság a body komponens paramétere, ezért annak React-fába történő
+  ;   csatolása után lehetséges eldönteni, hogy szükséges-e az automatikus felirat beállítása.
+  ; - A {:route-title ...} tulajdonság a szerver-oldali [:item-editor/init-editor! ...] esemény
+  ;   paramétere, és a {:route-title ...} tulajdonságként átadott címke, akkor kerül beállításra,
+  ;   ha a szerkesztő NEM {:auto-title? true} beállítással lett elindítva.
+  ; - Ha a {:route-title ...} címke beállítása az [:item-editor/load-editor! ...] eseményben történne,
+  ;   akkor szükséges lenne vizsgálni a body komponens React-fába történő csatolásának állapotát,
+  ;   mert az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
+  ;   ... az útvonal megváltozik és az [:item-editor/load-editor! ...] esemény megtörténik,
+  ;       ami a {:route-title ...} paraméterként átadott címkét beállítaná az applikáció címkéjeként.
+  ;   ... az [:item-editor/body-did-mount ...] esemény nem történne meg újra,
+  ;       ami az esetlegesen beállított {:auto-title? true} beállítás szerint, lecserélné
+  ;       a {:route-title ...} paraméterként átadott címkét az automatikus címkére.
+  ;   Ezért, ha az [:item-editor/load-editor! ...] esemény megtörténésekor a body komponens,
+  ;   már a React-fába lenne csatolva, nem volna szükséges beállítani a route-title címkét!
+  (if-let [auto-title? (r mount.subs/get-body-prop db extension-id item-namespace :auto-title?)]
+          (if-let [new-item? (r new-item? db extension-id item-namespace)]
+                  (core.helpers/add-item-label  extension-id item-namespace)
+                  (core.helpers/edit-item-label extension-id item-namespace))
+          (if-let [route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+                  (return route-title))))
 
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!

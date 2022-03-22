@@ -53,9 +53,6 @@
   ; @param (keyword) item-namespace
   :item-editor/load-editor!
   (fn [{:keys [db]} [_ extension-id item-namespace]]
-      ; XXX#4579
-      (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
-            route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
+      (let [on-route (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)]
            {:db (r core.events/load-editor! db extension-id item-namespace)
-            :dispatch-n [on-route (if (r core.subs/set-route-title? db extension-id item-namespace)
-                                      [:ui/set-title! route-title])]})))
+            :dispatch on-route})))

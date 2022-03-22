@@ -394,15 +394,6 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn browser-offline
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id item-namespace]
-  [elements/label {:font-size :xs :color :highlight :font-weight :bold
-                   :content "sss"}])
-
 (defn downloading-items-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -414,23 +405,13 @@
   ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága
-  (let [downloading-items? @(a/subscribe [:item-lister/downloading-items? extension-id item-namespace])
-        items-received?    @(a/subscribe [:item-lister/items-received?    extension-id item-namespace])]
-       [elements/label {:font-size :xs :color :highlight :font-weight :bold
-                        :content (if (or downloading-items? (nor downloading-items? items-received?))
-                                     :downloading-items...)}]))
-
-(defn downloading-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id item-namespace]
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? extension-id item-namespace])
+        downloading-items?    @(a/subscribe [:item-lister/downloading-items? extension-id item-namespace])
         items-received?       @(a/subscribe [:item-lister/items-received?       extension-id item-namespace])]
        (if-not (and all-items-downloaded? items-received?) ; XXX#0499
-               [elements/row {:content [downloading-items-label extension-id item-namespace]
-                              :horizontal-align :center}])))
+               [elements/label {:font-size :xs :color :highlight :font-weight :bold
+                                :content (if (or downloading-items? (nor downloading-items? items-received?))
+                                             :downloading-items...)}])))
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -455,8 +436,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  [:<> [no-items-to-show-label  extension-id item-namespace]
-       [downloading-items-label extension-id item-namespace]])
+  [elements/column {:content [:<> [no-items-to-show-label  extension-id item-namespace]
+                                  [downloading-items-label extension-id item-namespace]]}])
 
 
 
@@ -507,9 +488,15 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [_ _]
-  [:<> ;[elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+  [:<> [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-content-you-opened-may-be-broken :color :muted}]])
+
+(defn offline-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  [_ _])
 
 (defn selectable-item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -553,6 +540,8 @@
   [extension-id item-namespace]
   (cond @(a/subscribe [:item-lister/get-meta-item extension-id item-namespace :error-mode?])
          [error-body extension-id item-namespace]
+        ;@(a/subscribe [:environment/browser-offline?])
+        ; [offline-body extension-id item-namespace]
         @(a/subscribe [:item-lister/body-did-mount? extension-id item-namespace])
          [:div.item-lister--body--structure
            [item-list             extension-id item-namespace]

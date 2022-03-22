@@ -190,7 +190,7 @@
   (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
           (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
                [:<> [elements/horizontal-separator {:size :xxl}]
-                    [:pre {:style {:margin-top "24px" :font-size "12px"}}
+                    [:pre {:style {:font-size "12px"}}
                           (pretty/mixed->string current-item)]])))
 (defn edit-item
   []
@@ -215,7 +215,7 @@
         map-keys      (-> current-item map/get-keys vector/abc-items)
         system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
         app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
-       [:div [header "map"]
+       [:div [header (str "map, "(count map-keys)" items")]
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
@@ -262,12 +262,12 @@
 (defn string-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div [header "string"]
-        [toolbar go-home-button go-up-button remove-item-button edit-item-button]
-        [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
-             [:div (string/quotes current-item)])
-        [edit-item]])
+  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+       [:div [header (str "string, "(count current-item) " char.")]
+             [toolbar go-home-button go-up-button remove-item-button edit-item-button]
+             [horizontal-line]
+             [:div (string/quotes current-item)]
+             [edit-item]]))
 
 (defn keyword-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

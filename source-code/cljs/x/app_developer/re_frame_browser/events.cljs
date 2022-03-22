@@ -50,9 +50,11 @@
                (let [edited-item (r re-frame-browser.subs/get-meta-item db :edited-item)]
                     (-> db (assoc-in current-path (reader/string->mixed edited-item))
                            (update-in [:developer :re-frame-browser/meta-items :edit-item?] not)))
-               (let [original-item (get-in db current-path)]
-                    (-> db (assoc-in  [:developer :re-frame-browser/meta-items :edited-item] (pretty/mixed->string original-item))
-                           (update-in [:developer :re-frame-browser/meta-items :edit-item?] not))))))
+               (let [original-item (get-in db current-path)
+                     ; A string típusú értékeket a pretty/mixed->string függvény időzéjelek közé tenné ...
+                     unparsed-item (if (string? original-item) original-item (pretty/mixed->string original-item))]
+                    (-> db (assoc-in  [:developer :re-frame-browser/meta-items :edited-item] unparsed-item)
+                           (update-in [:developer :re-frame-browser/meta-items :edit-item?]  not))))))
 
 
 

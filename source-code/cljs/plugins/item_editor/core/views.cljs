@@ -176,12 +176,12 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   [extension-id item-namespace]
-  (if-let [error-mode? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :error-mode?])]
-          [error-body extension-id item-namespace]
-          (if @(a/subscribe [:item-editor/body-did-mount? extension-id item-namespace])
-               (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :data-received?])]
-                       [form-element     extension-id item-namespace]
-                       [downloading-item extension-id item-namespace]))))
+  (cond @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :error-mode?])
+         [error-body extension-id item-namespace]
+        @(a/subscribe [:item-editor/body-did-mount? extension-id item-namespace])
+         (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item extension-id item-namespace :data-received?])]
+                 [form-element     extension-id item-namespace]
+                 [downloading-item extension-id item-namespace])))
 
 (defn body
   ; @param (keyword) extension-id

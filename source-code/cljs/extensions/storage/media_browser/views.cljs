@@ -210,7 +210,7 @@
   [surface-id]
   (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
        [layouts/layout-a surface-id {:description description
-                                     :header [item-browser/header :storage :media {:new-item-event   [:xxx]
+                                     :header [item-browser/header :storage :media {:new-item-event   [:storage.media-browser/add-new-item!]
                                                                                    :new-item-options [:create-directory! :upload-files!]}]
                                      :body   [item-browser/body   :storage :media {:auto-title?      true
                                                                                    :item-actions     [:delete :duplicate]
