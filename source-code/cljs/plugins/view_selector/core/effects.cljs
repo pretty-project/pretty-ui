@@ -15,14 +15,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :view-selector/load-selector!
+  :view-selector/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
   (fn [{:keys [db]} [_ extension-id]]
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id :route-title)]
-           {:db (r core.events/load-selector! db extension-id)
+           {:db (r core.events/handle-route! db extension-id)
             :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 

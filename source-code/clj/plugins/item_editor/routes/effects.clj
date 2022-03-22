@@ -21,6 +21,6 @@
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
       [:router/add-extended-route! (routes.helpers/route-id extension-id item-namespace)
-                                   {:client-event   [:item-editor/load-editor! extension-id item-namespace]
+                                   {:client-event   [:item-editor/handle-route! extension-id item-namespace]
                                     :route-template route-template
                                     :restricted?    true}]))

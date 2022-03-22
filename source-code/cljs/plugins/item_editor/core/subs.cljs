@@ -147,15 +147,15 @@
   ; - A {:route-title ...} tulajdonság a szerver-oldali [:item-editor/init-editor! ...] esemény
   ;   paramétere, és a {:route-title ...} tulajdonságként átadott címke, akkor kerül beállításra,
   ;   ha a szerkesztő NEM {:auto-title? true} beállítással lett elindítva.
-  ; - Ha a {:route-title ...} címke beállítása az [:item-editor/load-editor! ...] eseményben történne,
+  ; - Ha a {:route-title ...} címke beállítása az [:item-editor/handle-route! ...] eseményben történne,
   ;   akkor szükséges lenne vizsgálni a body komponens React-fába történő csatolásának állapotát,
   ;   mert az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
-  ;   ... az útvonal megváltozik és az [:item-editor/load-editor! ...] esemény megtörténik,
+  ;   ... az útvonal megváltozik és az [:item-editor/handle-route! ...] esemény megtörténik,
   ;       ami a {:route-title ...} paraméterként átadott címkét beállítaná az applikáció címkéjeként.
   ;   ... az [:item-editor/body-did-mount ...] esemény nem történne meg újra,
   ;       ami az esetlegesen beállított {:auto-title? true} beállítás szerint, lecserélné
   ;       a {:route-title ...} paraméterként átadott címkét az automatikus címkére.
-  ;   Ezért, ha az [:item-editor/load-editor! ...] esemény megtörténésekor a body komponens,
+  ;   Ezért, ha az [:item-editor/handle-route! ...] esemény megtörténésekor a body komponens,
   ;   már a React-fába lenne csatolva, nem volna szükséges beállítani a route-title címkét!
   (if-let [auto-title? (r mount.subs/get-body-prop db extension-id item-namespace :auto-title?)]
           (if-let [new-item? (r new-item? db extension-id item-namespace)]

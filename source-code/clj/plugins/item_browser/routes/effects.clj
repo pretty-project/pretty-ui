@@ -21,7 +21,7 @@
   ;  {:base-route (string)}
   (fn [_ [_ extension-id item-namespace {:keys [base-route]}]]
       [:router/add-base-route! (routes.helpers/route-id extension-id item-namespace :base)
-                               {:client-event   [:item-browser/load-browser! extension-id item-namespace]
+                               {:client-event   [:item-browser/handle-route! extension-id item-namespace]
                                 :route-template base-route
                                 :restricted?    true}]))
 
@@ -35,6 +35,6 @@
   ;  {:extended-route (string)}
   (fn [_ [_ extension-id item-namespace {:keys [extended-route]}]]
       [:router/add-route! (routes.helpers/route-id extension-id item-namespace :extended)
-                          {:client-event   [:item-browser/load-browser! extension-id item-namespace]
+                          {:client-event   [:item-browser/handle-route! extension-id item-namespace]
                            :route-template extended-route
                            :restricted?    true}]))

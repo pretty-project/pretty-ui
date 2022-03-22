@@ -19,7 +19,8 @@
               [plugins.item-browser.core.subs    :as core.subs]
               [plugins.item-browser.core.views   :as core.views]
               [plugins.item-browser.items.events :as items.events]
-              [plugins.item-browser.items.subs   :as items.subs]))
+              [plugins.item-browser.items.subs   :as items.subs]
+              [plugins.item-browser.routes.subs  :as routes.subs]))
 
 
 
@@ -27,10 +28,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @description
-;  Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét
-;  plugin módosításait úgy kell elvégezni, hogy azok működése egymással összehangolt
-;  maradjon! Az item-browser plugin dokumentációjából hiányzó részeket az item-lister
-;  plugin dokumentációjában keresd!
+; - Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét
+;   plugin módosításait úgy kell elvégezni, hogy azok működése egymással összehangolt
+;   maradjon!
+; - Az item-browser plugin dokumentációjából hiányzó részeket az item-lister
+;   plugin dokumentációjában keresd!
 
 
 
@@ -51,3 +53,6 @@
 
 ; plugins.item-browser.items.subs
 (def toggle-item-selection? items.subs/toggle-item-selection?)
+
+; plugins.item-browser.routes.subs
+(def get-item-route routes.subs/get-item-route)

@@ -51,7 +51,7 @@
   [db [_ extension-id item-namespace]]
   ; A {:root-item-id "..."} tulajdonság értékét eltárolja az aktuálisan böngészett elem azonosítójaként ...
   ; ... ha a body komponens paraméterként megkapja a {:root-item-id "..."} tulajdonságot
-  ; ... az [:item-browser/load-browser! ...] esemény nem tárolta el az útvonalból származtatott
+  ; ... az [:item-browser/handle-route! ...] esemény nem tárolta el az útvonalból származtatott
   ;     :item-id értékét, mert nem az ".../:item-id" útvonal az aktuális.
   (if-let [item-id (get-in db [:plugins :item-lister/meta-items extension-id :item-id])]
           (return   db)
@@ -74,7 +74,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn load-browser!
+(defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id

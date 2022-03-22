@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/load-lister!
+  :item-lister/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -22,7 +22,7 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-           {;:db (r core.events/load-lister! db extension-id item-namespace)
+           {;:db (r core.events/handle-route! db extension-id item-namespace)
             :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 

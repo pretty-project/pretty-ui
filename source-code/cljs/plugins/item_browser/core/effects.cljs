@@ -5,6 +5,7 @@
 (ns plugins.item-browser.core.effects
     (:require [plugins.item-browser.core.events   :as core.events]
               [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.routes.subs   :as routes.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [x.app-core.api                     :as a :refer [r]]))
 
@@ -14,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-browser/load-browser!
+  :item-browser/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -22,10 +23,10 @@
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-           {:db (r core.events/load-browser! db extension-id item-namespace)
+           {:db (r core.events/handle-route! db extension-id item-namespace)
             :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))
 
-                    ; Ha az [:item-browser/load-browser! ...] esemény megtörténése előtt is
+                    ; Ha az [:item-browser/handle-route! ...] esemény megtörténése előtt is
                     ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
                     ; komponens a viewport területén volt, akkor szükséges az infinite-loader
                     ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
@@ -45,7 +46,14 @@
   ;
   ; @usage
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
-  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]))
+  (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
+
+      (if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
+              ; A)
+              {:dispatch [:router/go-to! item-route]})))
+
+
+
       ; - Az [:item-browser/browse-item! ...] esemény nem vizsglja, hogy az item-browser plugin
       ;   útvonala létezik-e.
       ; - Ha az aktuális útvonal az item-browser plugin útvonala, akkor átirányít a böngészendő
@@ -59,7 +67,7 @@
           ;(let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
           ;     [:router/go-to! browser-uri])
           ; If NOT handled by route ...
-;          [:item-browser/load-browser! extension-id item-namespace {:item-id item-id}]]))
+;          [:item-browser/handle-route! extension-id item-namespace {:item-id item-id}]]))
 
 (a/reg-event-fx
   :item-browser/go-home!

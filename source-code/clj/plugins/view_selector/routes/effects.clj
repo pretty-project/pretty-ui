@@ -20,7 +20,7 @@
   ;  {:base-route (string)}
   (fn [_ [_ extension-id {:keys [base-route]}]]
       [:router/add-route! (routes.helpers/route-id extension-id :base)
-                          {:client-event   [:view-selector/load-selector! extension-id]
+                          {:client-event   [:view-selector/handle-route! extension-id]
                            :route-template base-route
                            :restricted?    true}]))
 
@@ -33,6 +33,6 @@
   ;  {:extended-route (string)}
   (fn [_ [_ extension-id {:keys [extended-route]}]]
       [:router/add-route! (routes.helpers/route-id extension-id :extended)
-                          {:client-event   [:view-selector/load-selector! extension-id]
+                          {:client-event   [:view-selector/handle-route! extension-id]
                            :route-template extended-route
                            :restricted?    true}]))

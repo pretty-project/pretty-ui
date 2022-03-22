@@ -24,22 +24,30 @@
   ; @usage
   ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-      ; 1. Eltárolja a paraméterként kapott item-id azonosítót, mielőtt az [:item-editor/request-item! ...]
-      ;    esemény megtörténne.
-      ; 2. Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal,
-      ;    (mert a plugin szerver-oldali kezelője hozzáadta az útvonalat az útvonal-kezelőhöz),
-      ;    akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
-      ; 3. Ha a body komponens már a React-fába van csatolva, akkor meghívja az [:item-editor/request-item ...]
-      ;    eseményt.
-      ;    Pl.: Egy elem szerkesztése közben az elem duplikálása után a "Másolat szerkesztése" gombra kattintva
-      ;         megtörténik az [:item-editor/edit-item! ...] esemény, de a body komponens már a React-fába van
-      ;         csatolva, ezért a :component-did-mount esemény már nem fog megtörténni, ami elindítaná az elem
-      ;         letöltését, ezért szükséges a letöltést ebben az eseményben elindítani!
-      {:db (r core.events/edit-item! db extension-id item-namespace item-id)
-       :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
-                            [:router/go-to! item-route])
-                    (if (r mount.subs/body-did-mount? db extension-id item-namespace)
-                        [:item-editor/request-item! extension-id item-namespace])]}))
+      ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;    (mert a plugin szerver-oldali kezelője hozzáadta az útvonalat az útvonal-kezelőhöz)
+      ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;
+      ; B) Ha az item-editor plugin NEM rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;    ... eltárolja a paraméterként kapott item-id azonosítót, mert az útvonal használatának hiányában
+      ;        az [:item-editor/handle-route! ...] esemény nem történik meg és nem tárolja el az útvonalból
+      ;        származtatott item-id azonosítót.
+      ;
+      ; A+B) Mindkét esetben ha a body komponens már a React-fába van csatolva, akkor meghívja
+      ;      az [:item-editor/request-item ...] eseményt.
+      ;      Pl.: Egy elem szerkesztése közben az elem duplikálása után a "Másolat szerkesztése" gombra kattintva
+      ;           megtörténik az [:item-editor/edit-item! ...] esemény, de a body komponens már a React-fába van
+      ;           csatolva, ezért a :component-did-mount esemény már nem fog megtörténni, ami elindítaná az elem
+      ;           letöltését, ezért szükséges a letöltést ebben az eseményben elindítani!
+      (if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
+              ; A)
+              {:dispatch    [:router/go-to! item-route]
+               :dispatch-if [(r mount.subs/body-did-mount? db extension-id item-namespace)
+                             [:item-editor/request-item! extension-id item-namespace]]}
+              ; B)
+              {:db (r core.events/store-item-id! db extension-id item-namespace item-id)
+               :dispatch-if [(r mount.subs/body-did-mount? db extension-id item-namespace)
+                             [:item-editor/request-item! extension-id item-namespace]]})))
 
 
 
@@ -51,8 +59,8 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  :item-editor/load-editor!
+  :item-editor/handle-route!
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [on-route (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)]
-           {:db (r core.events/load-editor! db extension-id item-namespace)
+           {:db (r core.events/handle-route! db extension-id item-namespace)
             :dispatch on-route})))

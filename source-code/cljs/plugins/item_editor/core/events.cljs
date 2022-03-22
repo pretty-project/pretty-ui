@@ -55,6 +55,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn store-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id _ item-id]]
+  (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] item-id))
+
 (defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -71,7 +82,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn load-editor!
+(defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -80,24 +91,6 @@
   ; @return (map)
   [db [_ extension-id item-namespace]]
   (r store-derived-item-id! db extension-id item-namespace))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn edit-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ extension-id _ item-id]]
-  ; Az [:item-editor/edit-item! ...] esemény meghívásakor eltárolja a paraméterként kapott
-  ; item-id azonosítót, mielőtt az [:item-editor/request-item! ...] esemény megtörténne!
-  (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] item-id))
 
 
 
