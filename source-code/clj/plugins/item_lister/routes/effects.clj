@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/add-route!
+  :item-lister/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -20,7 +20,7 @@
   ; @param (map) lister-props
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-base-route! (routes.helpers/route-id extension-id item-namespace)
-                               {:client-event   [:item-lister/handle-route! extension-id item-namespace]
-                                :route-template route-template
-                                :restricted?    true}]))
+      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
+                          {:client-event   [:item-lister/handle-route! extension-id item-namespace]
+                           :route-template route-template
+                           :restricted?    true}]))

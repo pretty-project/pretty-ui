@@ -11,6 +11,15 @@
 
 
 
+
+;; -- Szerver-oldali beállítás ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A plugin használatához mindenképpen szükséges a szerver-oldali [:item-lister/init-lister! ...]
+; eseményt alkalmazni!
+
+
+
 ;; -- "Új elem létrehozása" esemény használata  -------------------------------
 ;; ----------------------------------------------------------------------------
 

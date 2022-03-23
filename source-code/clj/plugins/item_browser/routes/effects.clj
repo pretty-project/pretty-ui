@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-browser/add-route!
+  :item-browser/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -20,10 +20,10 @@
   ; @param (map) browser-props
   ;  {:base-route (string)}
   (fn [_ [_ extension-id item-namespace {:keys [base-route]}]]
-      [:router/add-base-route! (routes.helpers/route-id extension-id item-namespace :base)
-                               {:client-event   [:item-browser/handle-route! extension-id item-namespace]
-                                :route-template base-route
-                                :restricted?    true}]))
+      [:router/add-route! (routes.helpers/route-id extension-id item-namespace :base)
+                          {:client-event   [:item-browser/handle-route! extension-id item-namespace]
+                           :route-template base-route
+                           :restricted?    true}]))
 
 (a/reg-event-fx
   :item-browser/add-extended-route!

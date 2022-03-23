@@ -13,12 +13,16 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-item-suggestions-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (map) env
   ; @param (map) resolver-props
   ;
   ; @return (map)
   [env _]
-  (download.helpers/env->item-suggestions env))
+  (let [extension-id   (pathom/env->param env :extension-id)
+        item-namespace (pathom/env->param env :item-namespace)]
+       (download.helpers/env->item-suggestions env extension-id item-namespace)))
 
 (defresolver get-item-suggestions
              ; WARNING! NON-PUBLIC! DO NOT USE!

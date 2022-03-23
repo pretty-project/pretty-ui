@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.query-handler.effects
-    (:require [mid-fruits.vector                   :as vector]
-              [x.app-core.api                      :as a]
+    (:require [mid-fruits.candy                    :refer [return]]
+              [mid-fruits.vector                   :as vector]
+              [x.app-core.api                      :as a :refer [r]]
               [x.app-sync.query-handler.prototypes :as query-handler.prototypes]))
 
 
@@ -52,15 +53,15 @@
   ;  [:sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ query-id query-props]]
-      (let [query-props (query-handler.prototypes/query-props-prototype query-props)
+      (let [debug-mode? (r a/debug-mode-detected? db)
+            query-props (query-handler.prototypes/query-props-prototype query-props)
 
-            ; BUG#5011
-            ; A query vektorba feltételesen – if, when, ... függvény használatával –
-            ; írt query-question elemek helyett a feltétel nem teljesülésekor nil
-            ; érték kerül, ami a szerver-oldali Pathom rendszerben hibához vezetne.
-            ; Emiatt szükséges eltávolítani a query vektorból a nil értékeket,
-            ; miután a {:query [...]} és a {:body {:query [...]}} tulajdonságok
-            ; összevonása megtörtént.
-            query-props (update-in query-props [:params :query] vector/remove-item nil)]
+            ; A {:query [...]} és a {:body {:query [...]}} tulajdonságok összevonása után ...
+            ; ... eltávolítja a query vektorból a nil értékeket mert a query vektorba feltételesen
+            ;     – if, when, ... függvény használatával – írt query-question elemek helyett a feltétel
+            ;     nem teljesülésekor nil érték kerülhet, ami a szerver-oldali Pathom rendszerben hibához vezetne.
+            ; ... {:debug-mode? true} beállítás esetén hozzáadja a :debug resolver-id azonosítót a query vektorhoz.
+            query-props (cond-> query-props :remove-nil (update-in [:params :query] vector/remove-item nil)
+                                            debug-mode? (update-in [:params :query] vector/cons-item :debug))]
 
            [:sync/send-request! query-id query-props])))

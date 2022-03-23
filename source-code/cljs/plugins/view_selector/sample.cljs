@@ -8,6 +8,14 @@
 
 
 
+;; -- Szerver-oldali beállítás ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A plugin használatához mindenképpen szükséges a szerver-oldali [:view-selector/init-selector! ...]
+; eseményt alkalmazni!
+
+
+
 ;; -- A kiválasztott nézet megváltoztatása (A) --------------------------------
 ;; ----------------------------------------------------------------------------
 

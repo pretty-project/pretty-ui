@@ -78,14 +78,14 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-id]}]
              {::pathom.co/op-name 'storage.media-browser/delete-item!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+             (let [parent-id (item-browser/item-id->parent-id env :storage :media item-id)]
                   (delete-item-temporary-f env {:item-id item-id :parent-id parent-id})))
 
 (defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-ids]}]
              {::pathom.co/op-name 'storage.media-browser/delete-items!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+             (let [parent-id (item-browser/item-id->parent-id env :storage :media (first item-ids))]
                   (delete-items-temporary-f env {:item-ids item-ids :parent-id parent-id})))
 
 
@@ -112,14 +112,14 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item]}]
              {::pathom.co/op-name 'storage.media-browser/undo-delete-item!}
-             (let [parent-id (item-browser/item->parent-id :storage :media item)]
+             (let [parent-id (item-browser/item->parent-id env :storage :media item)]
                   (undo-delete-item-f env {:item item :parent-id parent-id})))
 
 (defmutation undo-delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [items]}]
              {::pathom.co/op-name 'storage.media-browser/undo-delete-items!}
-             (let [parent-id (item-browser/item->parent-id :storage :media (first items))]
+             (let [parent-id (item-browser/item->parent-id env :storage :media (first items))]
                   (undo-delete-items-f env {:items items :parent-id parent-id})))
 
 
@@ -195,14 +195,14 @@
              [env {:keys [item]}]
              {::pathom.co/op-name 'storage.media-browser/duplicate-item!}
              (let [item-id   (get item :media/id)
-                   parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+                   parent-id (item-browser/item-id->parent-id env :storage :media item-id)]
                   (duplicate-item-f env {:item-id item-id :parent-id parent-id})))
 
 (defmutation duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-ids]}]
              {::pathom.co/op-name 'storage.media-browser/duplicate-items!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+             (let [parent-id (item-browser/item-id->parent-id env :storage :media (first item-ids))]
                   (duplicate-items-f env {:item-ids item-ids :parent-id parent-id})))
 
 
@@ -214,14 +214,14 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-id]}]
              {::pathom.co/op-name 'storage.media-browser/undo-duplicate-item!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media item-id)]
+             (let [parent-id (item-browser/item-id->parent-id env :storage :media item-id)]
                   (delete-item-temporary-f env {:item-id item-id :parent-id parent-id})))
 
 (defmutation undo-duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [env {:keys [item-ids]}]
              {::pathom.co/op-name 'storage.media-browser/undo-duplicate-items!}
-             (let [parent-id (item-browser/item-id->parent-id :storage :media (first item-ids))]
+             (let [parent-id (item-browser/item-id->parent-id env :storage :media (first item-ids))]
                   (delete-items-temporary-f env {:item-ids item-ids :parent-id parent-id})))
 
 

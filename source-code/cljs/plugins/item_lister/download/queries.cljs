@@ -28,18 +28,14 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
-  {:download-limit        (r mount.subs/get-body-prop            db extension-id item-namespace :download-limit)
-   :order-by              (r core.subs/get-meta-item             db extension-id item-namespace :order-by)
-   :reload-items?         (r core.subs/get-meta-item             db extension-id item-namespace :reload-mode?)
-   :search-keys           (r mount.subs/get-body-prop            db extension-id item-namespace :search-keys)
-   :search-term           (r core.subs/get-meta-item             db extension-id item-namespace :search-term)
-   :downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)
-   :filter-pattern        (r core.subs/get-filter-pattern        db extension-id item-namespace)
-
-   ; TEMP
-   ; Az {:item-id ...} értéke az item-browser plugin számára szükséges, hogy elküldje a resolver függvénynek,
-   ; de a lista-elemek letöltését és a query tartalmának összeállítását az item-lister plugin végzi ...
-   :item-id (r core.subs/get-meta-item db extension-id item-namespace :item-id)})
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-resolver-params)
+         {:download-limit        (r mount.subs/get-body-prop            db extension-id item-namespace :download-limit)
+          :order-by              (r core.subs/get-meta-item             db extension-id item-namespace :order-by)
+          :reload-items?         (r core.subs/get-meta-item             db extension-id item-namespace :reload-mode?)
+          :search-keys           (r mount.subs/get-body-prop            db extension-id item-namespace :search-keys)
+          :search-term           (r core.subs/get-meta-item             db extension-id item-namespace :search-term)
+          :downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)
+          :filter-pattern        (r core.subs/get-filter-pattern        db extension-id item-namespace)}))
 
 (defn get-request-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,4 +47,4 @@
   [db [_ extension-id item-namespace]]
   (let [resolver-id    (r download.subs/get-resolver-id    db extension-id item-namespace :get)
         resolver-props (r get-request-items-resolver-props db extension-id item-namespace)]
-       [:debug `(~resolver-id ~resolver-props)]))
+       [`(~resolver-id ~resolver-props)]))

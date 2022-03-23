@@ -12,7 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-editor/add-route!
+  :item-editor/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) extension-id
@@ -20,7 +20,7 @@
   ; @param (map) editor-props
   ;  {:route-template (string)}
   (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-extended-route! (routes.helpers/route-id extension-id item-namespace)
-                                   {:client-event   [:item-editor/handle-route! extension-id item-namespace]
-                                    :route-template route-template
-                                    :restricted?    true}]))
+      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
+                          {:client-event   [:item-editor/handle-route! extension-id item-namespace]
+                           :route-template route-template
+                           :restricted?    true}]))

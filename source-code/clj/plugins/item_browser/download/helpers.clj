@@ -3,12 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.helpers
-    (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.keyword                :as keyword]
-              [mongo-db.api                      :as mongo-db]
-              [pathom.api                        :as pathom]
-              [plugins.item-browser.core.helpers :as core.helpers]
-              [plugins.item-lister.api           :as item-lister]))
+    (:require [mid-fruits.candy        :refer [return]]
+              [mid-fruits.keyword      :as keyword]
+              [mongo-db.api            :as mongo-db]
+              [pathom.api              :as pathom]
+              [plugins.item-lister.api :as item-lister]
+              [x.server-core.api       :as a]))
 
 
 
@@ -25,15 +25,15 @@
   ;
   ; @return (maps in vector)
   [env extension-id item-namespace]
-  (let [collection-name (core.helpers/collection-name extension-id item-namespace)
-        items-key       (keyword/add-namespace item-namespace :items)
-        item-id         (pathom/env->param     env            :item-id)]
+  (let [collection-name @(a/subscribe [:item-browser/get-browser-prop extension-id item-namespace :collection-name])
+        items-key        (pathom/env->param env :items-key)
+        item-id          (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
                (get document items-key)
                ; WARNING!
-               ; - Az env->item-links függvény visszatérési értéke egy vektor kell legyen!
-               ; - Ha az item-links értéke nil, akkor az adatbázis a kollekció összes dokumentumát
-               ;   kiszolgálná eredményként!
+               ; Az env->item-links függvény visszatérési értéke ...
+               ; ... minden esetben vektor típus kell legyen!
+               ; ... nem lehet nil, különben az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
                (return []))))
 
 (defn env->sort-pattern
