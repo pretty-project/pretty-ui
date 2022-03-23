@@ -41,6 +41,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-current-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ extension-id item-namespace item-id]]
+  (-> db (assoc-in [:plugins :item-lister/meta-items extension-id                       :item-id] item-id)
+         (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :item-id] item-id)))
+
 (defn use-root-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,9 +66,9 @@
   ; ... az [:item-browser/handle-route! ...] esemény nem tárolta el az útvonalból származtatott
   ;     :item-id értékét, mert nem az ".../:item-id" útvonal az aktuális.
   (if-let [item-id (get-in db [:plugins :item-lister/meta-items extension-id :item-id])]
-          (return   db)
-          (assoc-in db [:plugins :item-lister/meta-items extension-id :item-id]
-                       (r mount.subs/get-body-prop db extension-id item-namespace :root-item-id))))
+          (return db)
+          (let [root-item-id (r mount.subs/get-body-prop db extension-id item-namespace :root-item-id)]
+               (r set-current-item-id! db extension-id item-namespace root-item-id))))
 
 (defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!

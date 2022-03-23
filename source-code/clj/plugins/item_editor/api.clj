@@ -4,7 +4,9 @@
 
 (ns plugins.item-editor.api
     (:require [plugins.item-editor.core.effects]
+              [plugins.item-editor.core.events]
               [plugins.item-editor.core.lifecycles]
+              [plugins.item-editor.core.subs]
               [plugins.item-editor.download.resolvers]
               [plugins.item-editor.routes.effects]
               [plugins.item-editor.transfer.effects]

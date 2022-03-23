@@ -22,7 +22,7 @@
   ;  {:item-id (string)}
   [db [_ extension-id item-namespace]]
   (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-resolver-params)
+       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
               {:item-id current-item-id})))
 
 (defn get-request-item-query

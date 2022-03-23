@@ -4,7 +4,9 @@
 
 (ns plugins.item-lister.api
     (:require [plugins.item-lister.core.effects]
+              [plugins.item-lister.core.events]
               [plugins.item-lister.core.lifecycles]
+              [plugins.item-lister.core.subs]
               [plugins.item-lister.routes.effects]
               [plugins.item-lister.transfer.effects]
               [plugins.item-lister.download.helpers :as download.helpers]))

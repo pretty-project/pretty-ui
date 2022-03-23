@@ -4,6 +4,8 @@
 
 (ns plugins.item-browser.api
     (:require [plugins.item-browser.core.effects]
+              [plugins.item-browser.core.events]
+              [plugins.item-browser.core.subs]
               [plugins.item-browser.routes.effects]
               [plugins.item-browser.transfer.effects]
               [plugins.item-browser.download.helpers :as download.helpers]

@@ -23,7 +23,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ extension-id item-namespace item-ids]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:item-ids item-ids}))
 
 (defn get-delete-items-query
@@ -55,7 +55,7 @@
   ;  {:items (namespaced maps in vector)}
   [db [_ extension-id item-namespace item-ids]]
   (let [exported-items (r backup.subs/export-backup-items db extension-id item-namespace item-ids)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
               {:items exported-items})))
 
 (defn get-undo-delete-items-query
@@ -86,7 +86,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ extension-id item-namespace item-ids]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:item-ids item-ids}))
 
 (defn get-duplicate-items-query
@@ -117,7 +117,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ extension-id item-namespace copy-ids]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:item-ids copy-ids}))
 
 (defn get-undo-duplicate-items-query

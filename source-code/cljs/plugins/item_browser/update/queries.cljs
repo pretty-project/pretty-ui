@@ -24,7 +24,7 @@
   ; @return (map)
   ;  {:item-id (string)}
   [db [_ extension-id item-namespace item-id]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:item-id item-id}))
 
 (defn get-delete-item-query
@@ -56,7 +56,7 @@
   ;  {:item (namespaced map)}
   [db [_ extension-id item-namespace item-id]]
   (let [backup-item (r backup.subs/export-backup-item db extension-id item-namespace item-id)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
               {:item backup-item})))
 
 (defn get-undo-delete-item-query
@@ -92,7 +92,7 @@
   ; paraméterezéssel működjenek.
   ; (az item-browser plugin működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
   (let [exported-item (r items.subs/export-item db extension-id item-namespace item-id)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
               {:item exported-item})))
 
 (defn get-duplicate-item-query
@@ -123,7 +123,7 @@
   ; @return (map)
   ;  {:item-id (string)}
   [db [_ extension-id item-namespace copy-id]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:item-id copy-id}))
 
 (defn get-undo-duplicate-item-query
@@ -155,7 +155,7 @@
   ;  {:item (namespaced map)}
   [db [_ extension-id item-namespace item-id]]
   (let [exported-item (r items.subs/export-item db extension-id item-namespace item-id)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-mutation-params)
+       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
               {:item exported-item})))
 
 (defn get-update-item-query

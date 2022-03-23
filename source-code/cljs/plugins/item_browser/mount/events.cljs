@@ -27,11 +27,17 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) body-props
-  ;  {:root-item-id (string)(opt)}
+  ;  {:items-key (keyword)
+  ;   :path-key (keyword)
+  ;   :root-item-id (string)(opt)}
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace {:keys [root-item-id]}]]
-  (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % extension-id item-namespace))))
+  [db [_ extension-id item-namespace {:keys [items-key path-key root-item-id]}]]
+  ; Az item-browser plugin minden Pathom query küldésekor elküldi a szerver számára a body komponens
+  ; {:items-key ...} és {:path-key ...} tulajdonságát.
+  (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % extension-id item-namespace))
+             :items-key   (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :items-key] items-key)
+             :path-key    (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :path-key]  path-key)))
 
 (defn header-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

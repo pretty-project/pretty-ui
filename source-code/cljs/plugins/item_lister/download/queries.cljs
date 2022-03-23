@@ -28,7 +28,7 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ extension-id item-namespace]]
-  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-resolver-params)
+  (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
          {:download-limit        (r mount.subs/get-body-prop            db extension-id item-namespace :download-limit)
           :order-by              (r core.subs/get-meta-item             db extension-id item-namespace :order-by)
           :reload-items?         (r core.subs/get-meta-item             db extension-id item-namespace :reload-mode?)
