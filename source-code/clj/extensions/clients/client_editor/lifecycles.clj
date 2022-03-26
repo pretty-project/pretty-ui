@@ -14,7 +14,7 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-editor/init-editor! :clients :client
-                                              {:collection-name :clients
+                                              {:collection-name "clients"
                                                :handler-key     :clients.client-editor
                                                :route-title     :clients
                                                :on-route [:clients.client-editor/load-editor!]

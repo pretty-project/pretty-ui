@@ -17,8 +17,7 @@
 
 (a/reg-event-fx
   :value-editor/load-editor!
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
+  ; @param (keyword)(opt) editor-id
   ; @param (map) editor-props
   ;  {:edit-original? (boolean)(opt)
   ;    Default: false
@@ -40,11 +39,15 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [:value-editor/load-editor! :my-extension :my-editor {...}]
-  (fn [{:keys [db]} [_ extension-id editor-id editor-props]]
-    (let [editor-props (core.prototypes/editor-props-prototype extension-id editor-id editor-props)]
-         {:db (r core.events/load-editor! db extension-id editor-id editor-props)
-          :dispatch [:value-editor/render-editor! extension-id editor-id]})))
+  ;  [:value-editor/load-editor! {...}]
+  ;
+  ; @usage
+  ;  [:value-editor/load-editor! :my-editor {...}]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ editor-id editor-props]]
+      (let [editor-props (core.prototypes/editor-props-prototype editor-id editor-props)]
+           {:db (r core.events/load-editor! db editor-id editor-props)
+            :dispatch [:value-editor/render-editor! editor-id]})))
 
 
 
@@ -55,21 +58,19 @@
   :value-editor/cancel-editing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  (fn [{:keys [db]} [_ extension-id editor-id]]
-      [:ui/close-popup! (core.helpers/view-id extension-id editor-id)]))
+  (fn [{:keys [db]} [_ editor-id]]
+      [:ui/close-popup! (core.helpers/component-id editor-id :view)]))
 
 (a/reg-event-fx
   :value-editor/save-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  (fn [{:keys [db]} [_ extension-id editor-id]]
-      {:db (r core.events/save-value! db extension-id editor-id)
-       :dispatch-n [(r core.subs/get-on-save-event db extension-id editor-id)
-                    [:ui/close-popup! (core.helpers/view-id extension-id editor-id)]]}))
+  (fn [{:keys [db]} [_ editor-id]]
+      {:db (r core.events/save-value! db editor-id)
+       :dispatch-n [(r core.subs/get-on-save-event db editor-id)
+                    [:ui/close-popup! (core.helpers/component-id editor-id :view)]]}))
 
 
 
@@ -79,9 +80,8 @@
 (a/reg-event-fx :value-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
   ; @param (keyword) editor-id
-  (fn [_ [_ extension-id editor-id]]
-      [:ui/add-popup! (core.helpers/view-id extension-id editor-id)
-                      {:body   [core.views/body   extension-id editor-id];
-                       :header [core.views/header extension-id editor-id]}]))
+  (fn [_ [_ editor-id]]
+      [:ui/add-popup! (core.helpers/component-id editor-id :view)
+                      {:body   [core.views/body   editor-id]
+                       :header [core.views/header editor-id]}]))

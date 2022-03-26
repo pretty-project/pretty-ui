@@ -6,7 +6,7 @@
     (:require [mid-fruits.map                      :refer [dissoc-in]]
               [plugins.item-lister.core.events     :as core.events]
               [plugins.item-lister.download.events :as download.events]
-              [x.app-core.api                      :as a :refer [r]]))
+              [x.app-core.api                      :refer [r]]))
 
 
 
@@ -57,20 +57,3 @@
   (as-> db % (r core.events/reset-meta-items!    % extension-id item-namespace)
              (r download.events/reset-downloads! % extension-id item-namespace)
              (dissoc-in % [:plugins :item-lister/body-props extension-id])))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/header-did-mount header-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/body-did-mount body-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/header-will-unmount header-will-unmount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/body-will-unmount body-will-unmount)

@@ -26,22 +26,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-meta-item__
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ extension-id item-namespace item-key]]
-  (get-in db [extension-id :item-browser/meta-items item-key]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -71,7 +55,7 @@
   ; @param (keyword) item-namespace
   ;
   ; @return (string)
-  [db [_ extension-id item-namespace]]
+  [db [_ _ _]]
   (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
@@ -110,10 +94,9 @@
   ;
   ; @return (maps in vector)
   [db [_ extension-id item-namespace]]
-  (let [current-item-id (r get-current-item-id db extension-id item-namespace)
-        path-key        (r get-meta-item       db extension-id item-namespace :path-key)
-        item-path       (get-in db [extension-id :item-browser/data-items current-item-id path-key])]
-       (vec item-path)))
+  (let [item-path (r mount.subs/get-body-prop db extension-id item-namespace :item-path)
+        path-key  (r mount.subs/get-body-prop db extension-id item-namespace :path-key)]
+       (vec (path-key (get-in db item-path)))))
 
 
 

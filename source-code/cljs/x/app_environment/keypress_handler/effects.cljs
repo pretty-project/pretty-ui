@@ -60,13 +60,50 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :environment/listen-to-pressed-key!
+  ; @param (keyword)(opt) event-id
+  ; @param (map) event-props
+  ;  {:key-code (integer)}
+  ;
+  ; @usage
+  ;  [:environment/listen-to-pressed-key! {...}]
+  ;
+  ; @usage
+  ;  [:environment/listen-to-pressed-key! :my-event {...}]
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ event-id {:keys [key-code]}]]
+      ; Az [:environment/listen-to-pressed-key! ...] esemény által regisztrált billentyűk kódjait
+      ; a keypress-handler {:type-mode? true} állapotba léptetve is eltárolja! 
+      (let [on-keydown [:db/set-item!    [:environment :keypress-handler/meta-items :pressed-keys key-code] true]
+            on-keyup   [:db/remove-item! [:environment :keypress-handler/meta-items :pressed-keys key-code]]]
+           {:db (r keypress-handler.events/reg-keypress-event! db event-id {:key-code   key-code
+                                                                            :on-keydown on-keydown
+                                                                            :on-keyup   on-keyup
+                                                                            :required?  true})})))
+
+(a/reg-event-fx
+  :environment/stop-listening-to-pressed-key!
+  ; @param (keyword) event-id
+  ;
+  ; @usage
+  ;  [:environment/stop-listening-to-pressed-key! :my-event]
+  (fn [{:keys [db]} [_ event-id]]
+      {:db (r keypress-handler.events/remove-keypress-event! db event-id)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :environment/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
   (fn [{:keys [db]} [_ key-code]]
       ; A {:type-mode? true} állapotba léptetett keypress-handler NEM tárolja el az aktuálisan
-      ; leütött billentyűk kódjait, így csökkentve a keypress-handler erőforrásigényét írás közben.
+      ; leütött billentyűk kódjait, így csökkentve a Re-Frame adatbázis írásainak számát és ezáltal
+      ; a keypress-handler erőforrásigényét írás közben.
       (if-not (r keypress-handler.subs/type-mode-enabled? db)
               {:db (assoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code] true)
                :dispatch-n (r keypress-handler.subs/get-on-keydown-events db key-code)}

@@ -11,6 +11,7 @@
               [plugins.item-lister.download.effects]
               [plugins.item-lister.download.events]
               [plugins.item-lister.download.subs]
+              [plugins.item-lister.mount.effects]
               [plugins.item-lister.mount.events]
               [plugins.item-lister.mount.subs]
               [plugins.item-lister.transfer.subs]

@@ -11,21 +11,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-max-upload-size
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (B)
+  [db _]
+  (get-in db [:storage :media-browser/browsed-item :max-upload-size]))
+
 (defn get-used-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
   [db _]
-  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
-       (get-in db [:storage :item-browser/data-items current-item-id :used-capacity])))
+  (get-in db [:storage :media-browser/browsed-item :used-capacity]))
 
 (defn get-total-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
   [db _]
-  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
-       (get-in db [:storage :item-browser/data-items current-item-id :total-capacity])))
+  (get-in db [:storage :media-browser/browsed-item :total-capacity]))
 
 (defn get-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,21 +41,13 @@
         total-capacity (r get-total-capacity db)]
        (- total-capacity used-capacity)))
 
-(defn get-max-upload-size
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (B)
-  [db _]
-  (let [current-item-id (r item-browser/get-current-item-id db :storage)]
-       (get-in db [:storage :item-browser/data-items current-item-id :max-upload-size])))
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :storage.capacity-handler/get-free-capacity get-free-capacity)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.capacity-handler/get-max-upload-size get-max-upload-size)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.capacity-handler/get-free-capacity get-free-capacity)

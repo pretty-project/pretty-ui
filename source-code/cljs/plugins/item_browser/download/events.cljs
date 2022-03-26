@@ -3,10 +3,19 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.events
-    (:require [plugins.item-browser.download.subs :as download.subs]
-              [plugins.item-browser.mount.subs    :as mount.subs]
-              [x.app-core.api                     :refer [r]]
-              [x.app-db.api                       :as db]))
+    (:require [plugins.item-browser.download.subs  :as download.subs]
+              [plugins.item-browser.mount.subs     :as mount.subs]
+              [plugins.item-lister.download.events :as plugins.item-lister.download.events]
+              [x.app-core.api                      :refer [r]]
+              [x.app-db.api                        :as db]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.item-lister.download.events
+(def reset-downloads! plugins.item-lister.download.events/reset-downloads!)
 
 
 

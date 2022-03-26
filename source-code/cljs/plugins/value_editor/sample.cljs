@@ -17,9 +17,9 @@
 ;   és használatával egyedi mentési eljárás is megvalósítható.
 (a/reg-event-fx
   :load-my-value-editor!
-  [:value-editor/load-editor! :my-extension :my-editor {:edit-original? true
-                                                        :on-save    [:my-extension/my-value-edited]
-                                                        :value-path [:my-item]}])
+  [:value-editor/load-editor! :my-editor {:edit-original? true
+                                          :on-save    [:my-event]
+                                          :value-path [:my-item]}])
 
 
 
@@ -27,6 +27,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension/my-value-edited
+  :my-event
   (fn [_ [_ my-value]]
-      [:my-event my-value]))
+      (println my-value)))

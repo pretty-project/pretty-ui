@@ -34,7 +34,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
+  ; @param (map) browser-props
   ;  {:route-template (string)}
   ;
   ; @example
@@ -52,7 +52,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  ; @param (map) editor-props
+  ; @param (map) browser-props
   ;  {:route-template (string)}
   ;
   ; @example
@@ -63,3 +63,21 @@
   ; @return (keyword)
   [_ _ {:keys [route-template]}]
   (uri/valid-path route-template))
+
+(defn parent-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) extension-id
+  ; @param (keyword) item-namespace
+  ; @param (map) browser-props
+  ;  {:route-template (string)}
+  ;
+  ; @example
+  ;  (routes.helpers/parent-route :my-extension :my-type {:route-template "/@app-home/my-extension/:item-id"})
+  ;  =>
+  ;  "/@app-home"
+  ;
+  ; @return (string)
+  [_ _ {:keys [route-template]}]
+  (-> route-template (string/not-ends-with! "/:item-id")
+                     (uri/uri->parent-uri)))

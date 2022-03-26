@@ -25,7 +25,7 @@
   ;  [:item-editor/edit-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
       ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    (mert a plugin szerver-oldali kezelője hozzáadta az útvonalat az útvonal-kezelőhöz)
+      ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:route-template "..."} tulajdonságot)
       ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
       ;
       ; B) Ha az item-editor plugin NEM rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...

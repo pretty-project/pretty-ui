@@ -25,7 +25,7 @@
       ; A mount.events/body-did-mount függvény eltárolja ...
       ; ... a body komponens paramétereit, ezért a core.subs/download-data? függvény
       ;     lefutása előtt szükséges meghívni!
-      ;; ... a body komponens paramétereit, ezért a core.subs/get-editor-title függvény
+      ; ... a body komponens paramétereit, ezért a core.subs/get-editor-title függvény
       ;     lefutása előtt szükséges meghívni!
       ; ... a body komponens számára esetlegesen átadott {:item-id "..."} paramétert,
       ;     ezért a core.subs/get-auto-title függvény lefutása előtt szükséges meghívni!

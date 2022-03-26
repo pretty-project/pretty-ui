@@ -65,16 +65,6 @@
        (as-> db % (assoc-in % item-path document)
                   (r backup.events/backup-current-item! % extension-id item-namespace))))
 
-(defn data-received
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (assoc-in db [:plugins :item-editor/meta-items extension-id :data-received?] true))
-
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -84,7 +74,8 @@
   ;
   ; @return (map)
   [db [event-id extension-id item-namespace server-response]]
-  (cond-> (r data-received db extension-id item-namespace)
+  (cond-> ; Set {:data-received? true} state ...
+          (assoc-in db [:plugins :item-editor/meta-items extension-id :data-received?] true)
           ; If editor downloading item ...
           (r core.subs/download-item? db extension-id item-namespace)
           (as-> % (r store-downloaded-item! % extension-id item-namespace server-response))

@@ -21,12 +21,12 @@
 (defn get-file-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id file-dex prop-key]]
-  (get-in db [:storage :file-uploader/data-items uploader-id file-dex prop-key]))
+  (get-in db [:storage :file-uploader/selected-files uploader-id file-dex prop-key]))
 
 (defn get-file-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (r db/get-item-count db [:storage :file-uploader/data-items uploader-id]))
+  (r db/get-item-count db [:storage :file-uploader/selected-files uploader-id]))
 
 (defn get-files-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -37,7 +37,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
   (letfn [(f [{:keys [cancelled?]}] (not cancelled?))]
-         (not (some f (get-in db [:storage :file-uploader/data-items uploader-id])))))
+         (not (some f (get-in db [:storage :file-uploader/selected-files uploader-id])))))
 
 (defn get-non-cancelled-files
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -45,7 +45,7 @@
   (letfn [(f [o file-dex {:keys [cancelled?]}]
              (if-not cancelled? (conj   o file-dex)
                                 (return o)))]
-         (reduce-kv f [] (get-in db [:storage :file-uploader/data-items uploader-id]))))
+         (reduce-kv f [] (get-in db [:storage :file-uploader/selected-files uploader-id]))))
 
 (defn get-form-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

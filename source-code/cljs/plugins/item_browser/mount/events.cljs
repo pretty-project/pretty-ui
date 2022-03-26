@@ -33,7 +33,7 @@
   ;
   ; @return (map)
   [db [_ extension-id item-namespace {:keys [items-key path-key root-item-id]}]]
-  ; Az item-browser plugin minden Pathom query küldésekor elküldi a szerver számára a body komponens
+  ; Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
   ; {:items-key ...} és {:path-key ...} tulajdonságát.
   (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % extension-id item-namespace))
              :items-key   (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :items-key] items-key)

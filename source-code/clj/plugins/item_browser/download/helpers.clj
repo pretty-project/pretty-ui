@@ -29,7 +29,7 @@
         items-key        (pathom/env->param env :items-key)
         item-id          (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
-               (get document items-key)
+               (get document (keyword/add-namespace item-namespace items-key))
                ; WARNING!
                ; Az env->item-links függvény visszatérési értéke ...
                ; ... minden esetben vektor típus kell legyen!

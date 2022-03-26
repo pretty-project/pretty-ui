@@ -39,6 +39,8 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
+      ; helyettesíti, amikor nem szükséges adatokat letölteni.
       (if (r core.subs/get-meta-item db extension-id item-namespace :recovery-mode?)
           {:db (r backup.events/recover-item! db extension-id item-namespace)
            :dispatch [:ui/simulate-process!]}

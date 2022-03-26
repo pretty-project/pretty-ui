@@ -3,7 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.value-editor.core.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [mid.plugins.value-editor.core.helpers :as core.helpers]
+              [x.app-core.api :as a]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid.plugins.value-editor.core-helpers
+(def component-id core.helpers/component-id)
 
 
 
@@ -13,28 +22,14 @@
 (defn default-edit-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
   ; @param (keyword) editor-id
+  ;
+  ; @usage
+  ;  (core.helpers/default-edit-path ...)
   ;
   ; @return (vector)
-  [extension-id editor-id]
-  [extension-id :value-editor/data-items editor-id])
-
-(defn view-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) editor-id
-  ;
-  ; (core.helpers/view-id :my-extension :my-editor)
-  ; =>
-  ; :my-extension.my-editor/view
-  ;
-  ; @return (keyword)
-  [extension-id editor-id]
-  (keyword (str (name extension-id) "."
-                (name editor-id))
-           "view"))
+  [editor-id]
+  [:plugins :value-editor/edited-item editor-id])
 
 
 
@@ -44,15 +39,14 @@
 (defn editor-props->field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
   ; @param (keyword) editor-id
   ;
   ; @param (map)
   ;  {:auto-focus? (boolean)
   ;   :min-width (keyword)
   ;   :value-path (vector)}
-  [extension-id editor-id]
-  (let [editor-props @(a/subscribe [:value-editor/get-editor-props extension-id editor-id])]
+  [editor-id]
+  (let [editor-props @(a/subscribe [:value-editor/get-editor-props editor-id])]
        (merge (select-keys editor-props [:initial-value :label :modifier :validator])
               {:auto-focus? true
                :min-width   :l

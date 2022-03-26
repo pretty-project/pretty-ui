@@ -120,7 +120,7 @@
   ;   :path-key (keyword)(opt)
   ;    Default: config/DEFAULT-PATH-KEY
   ;   :prefilter (map)(opt)
-  ;   :root-item-id (string)(opt)
+  ;   :root-item-id (string)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
   ;

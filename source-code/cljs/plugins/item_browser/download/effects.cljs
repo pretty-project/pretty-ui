@@ -37,6 +37,7 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
+  [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r download.queries/get-request-item-query          db extension-id item-namespace)
             validator-f #(r download.validators/request-item-response-valid? db extension-id item-namespace %)]
@@ -53,6 +54,8 @@
   ; @param (keyword) item-namespace
   ; @param (map) server-response
   (fn [{:keys [db]} [_ extension-id item-namespace server-response]]
+      ; A download.events/receive-item! függvény eltárolja az aktuálisan letöltött elem adatait, ezért ...
+      ; ... a core.subs/get-current-item-label függvény lefutása előtt szükséges meghívni.
       (let [db (r download.events/receive-item! db extension-id item-namespace server-response)]
            (if-let [auto-title? (r mount.subs/get-body-prop db extension-id item-namespace :auto-title?)]
                    {:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db extension-id item-namespace)]

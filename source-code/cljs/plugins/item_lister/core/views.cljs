@@ -259,10 +259,9 @@
                         {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
                          :disabled?    (or error-mode? lister-disabled? no-items-to-show?)
                          :on-select    [:item-lister/order-items! extension-id item-namespace]
-                         :options-path [:plugins :item-lister/meta-items extension-id :order-by-options]
+                         :options-path [:plugins :item-lister/body-props extension-id :order-by-options]
                          :value-path   [:plugins :item-lister/meta-items extension-id :order-by]
                          :get-label-f  core.helpers/order-by-label-f}]))
-
 
 
 

@@ -5,6 +5,7 @@
 (ns plugins.item-browser.core.effects
     (:require [plugins.item-browser.core.events   :as core.events]
               [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-browser.routes.subs   :as routes.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [x.app-core.api                     :as a :refer [r]]))
@@ -21,17 +22,21 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ extension-id item-namespace]]
+      ; Ha az [:item-browser/handle-route! ...] esemény megtörténésekor a body komponens ...
+      ; A) ... a React-fába van csatolva, akkor szükséges az infinite-loader komponenst újratölteni,
+      ;        és az aktuálisan böngészett elem adatait letölteni.
+      ;
+      ; B) ... NINCS a React-fába csatolva, akkor
       (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
             route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-           {:db (r core.events/handle-route! db extension-id item-namespace)
-            :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))
-
-                    ; Ha az [:item-browser/handle-route! ...] esemény megtörténése előtt is
-                    ; meg volt jelenítve az item-browser/body komponens és az infinite-loader
-                    ; komponens a viewport területén volt, akkor szükséges az infinite-loader
-                    ; komponenst újratölteni, hogy a megváltozott beállításokkal újratöltse
-                    ; az adatokat.
-            ;        [:tools/reload-infinite-loader! extension-id]})))
+           (if (r mount.subs/body-did-mount? db extension-id item-namespace)
+               ; A)
+               {:db (r core.events/handle-route! db extension-id item-namespace)
+                :dispatch-n [on-route [:tools/reload-infinite-loader! extension-id]
+                                      [:item-browser/request-item! extension-id item-namespace]]}
+               ; B)
+               {:db (r core.events/handle-route! db extension-id item-namespace)
+                :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]}))))
 
 
 
@@ -47,27 +52,10 @@
   ; @usage
   ;  [:item-browser/browse-item! :my-extension :my-type "my-item"]
   (fn [{:keys [db]} [_ extension-id item-namespace item-id]]
-
+      ;
       (if-let [item-route (r routes.subs/get-item-route db extension-id item-namespace item-id)]
               ; A)
-              {:dispatch [:router/go-to! item-route]})))
-
-
-
-      ; - Az [:item-browser/browse-item! ...] esemény nem vizsglja, hogy az item-browser plugin
-      ;   útvonala létezik-e.
-      ; - Ha az aktuális útvonal az item-browser plugin útvonala, akkor átirányít a böngészendő
-      ;   elem útvonalára.
-      ; - Ha az aktuális útvonal NEM az item-browser plugin útvonala, akkor útvonal használata
-      ;   nélkül indítja el az item-browser plugint, ezért lehetséges a plugint útvonalak
-      ;   használata nélkül is elindítani, akkor is ha az item-browser plugin útvonalai léteznek.
-      ;   Pl.: A plugin popup elemen való megjelenítése, útvonalak használata nélkül ...
-;      (if (r subs/route-handled? db extension-id item-namespace)
-          ; If handled by route ...
-          ;(let [browser-uri (engine/browser-uri extension-id item-namespace item-id)]
-          ;     [:router/go-to! browser-uri])
-          ; If NOT handled by route ...
-;          [:item-browser/handle-route! extension-id item-namespace {:item-id item-id}]]))
+              [:router/go-to! item-route])))
 
 (a/reg-event-fx
   :item-browser/go-home!
@@ -76,9 +64,9 @@
   ;
   ; @usage
   ;  [:item-browser/go-home! :my-extension :my-type]
-  (fn [{:keys [db]} [_ extension-id item-namespace]]))
-;      (let [root-item-id (r core.subs/get-root-item-id db extension-id item-namespace)]
-;           [:item-browser/browse-item! extension-id item-namespace root-item-id]]))
+  (fn [{:keys [db]} [_ extension-id item-namespace]]
+      (let [root-item-id (r mount.subs/get-body-prop db extension-id item-namespace :root-item-id)]
+           [:item-browser/browse-item! extension-id item-namespace root-item-id])))
 
 (a/reg-event-fx
   :item-browser/go-up!

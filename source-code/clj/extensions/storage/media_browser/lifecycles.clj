@@ -15,7 +15,7 @@
   ::lifecycles
   {:on-server-boot {:dispatch-n [[:environment/add-css! {:uri "/css/extensions/storage.media-browser.css"}]
                                  [:item-browser/init-browser! :storage :media
-                                                              {:collection-name :storage
+                                                              {:collection-name "storage"
                                                                :handler-key     :storage.media-browser
                                                                :route-title     :storage
                                                                :on-route [:storage.media-browser/load-browser!]

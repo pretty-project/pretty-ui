@@ -42,7 +42,7 @@
   ;
   ; @return (namespaced map)
   [env extension-id item-namespace item]
-  (if-let [path (item->path extension-id item-namespace item)]
+  (if-let [path (item->path env extension-id item-namespace item)]
           (last path)))
 
 (defn item->parent-id
@@ -58,7 +58,7 @@
   ;
   ; @return (string)
   [env extension-id item-namespace item]
-  (if-let [parent-link (item->parent-link extension-id item-namespace item)]
+  (if-let [parent-link (item->parent-link env extension-id item-namespace item)]
           (get parent-link (keyword/add-namespace item-namespace :id))))
 
 
@@ -97,7 +97,7 @@
   ;
   ; @return (namespaced map)
   [env extension-id item-namespace item-id]
-  (if-let [path (item-id->path extension-id item-namespace item-id)]
+  (if-let [path (item-id->path env extension-id item-namespace item-id)]
           (last path)))
 
 (defn item-id->parent-id
@@ -113,5 +113,8 @@
   ;
   ; @return (string)
   [env extension-id item-namespace item-id]
-  (if-let [parent-link (item-id->parent-link extension-id item-namespace item-id)]
+  (println ;(pathom/env->param env :path-key)
+           (get-in env [:com.wsscode.pathom3.connect.planner/node :com.wsscode.pathom3.connect.planner/params]))
+
+  (if-let [parent-link (item-id->parent-link env extension-id item-namespace item-id)]
           (get parent-link (keyword/add-namespace item-namespace :id))))

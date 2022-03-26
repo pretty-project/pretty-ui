@@ -23,24 +23,24 @@
   (let [file-selector (dom/get-element-by-id "storage--file-selector")
         files-meta    (dom/file-selector->files-meta file-selector)
         files-data    (dom/file-selector->files-data file-selector)]
-       (-> db (assoc-in  [:storage :file-uploader/data-items uploader-id] files-data)
-              (update-in [:storage :file-uploader/meta-items uploader-id] merge files-meta))))
+       (-> db (assoc-in  [:storage :file-uploader/selected-files uploader-id] files-data)
+              (update-in [:storage :file-uploader/meta-items     uploader-id] merge files-meta))))
 
 (defn clean-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
-  (-> db (dissoc-in [:storage :file-uploader/data-items uploader-id])
-         (dissoc-in [:storage :file-uploader/meta-items uploader-id])))
+  (-> db (dissoc-in [:storage :file-uploader/selected-files uploader-id])
+         (dissoc-in [:storage :file-uploader/meta-items     uploader-id])))
 
 (defn cancel-file-upload!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id file-dex]]
   ; A feltöltendő fájlok adatai közül nem kerülnek törlésre a visszavont fájlok adatai,
   ; mert a változó elemszám miatt a feltöltendő fájlok listája újra renderelődne!
-  (let [filesize (get-in db [:storage :file-uploader/data-items uploader-id file-dex :filesize])]
-       (-> db (assoc-in  [:storage :file-uploader/data-items uploader-id file-dex :cancelled?] true)
-              (update-in [:storage :file-uploader/meta-items uploader-id :files-size] - filesize)
-              (update-in [:storage :file-uploader/meta-items uploader-id :file-count]   dec))))
+  (let [filesize (get-in db [:storage :file-uploader/selected-files uploader-id file-dex :filesize])]
+       (-> db (assoc-in  [:storage :file-uploader/selected-files uploader-id file-dex :cancelled?] true)
+              (update-in [:storage :file-uploader/meta-items     uploader-id :files-size] - filesize)
+              (update-in [:storage :file-uploader/meta-items     uploader-id :file-count]   dec))))
 
 
 
