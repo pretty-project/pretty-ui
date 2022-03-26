@@ -17,12 +17,12 @@
 (defn get-meta-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ extension-id item-key]]
-  (get-in db [:plugins :view-selector/meta-items extension-id item-key]))
+  [db [_ selector-id item-key]]
+  (get-in db [:plugins :view-selector/meta-items selector-id item-key]))
 
 
 
@@ -32,7 +32,7 @@
 (defn get-derived-view-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ;
   ; @return (keyword)
   [db [_ _]]
@@ -40,16 +40,16 @@
           (keyword derived-view-id)))
 
 (defn get-selected-view-id
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ;
   ; @usage
-  ;  (r view-selector/get-selected-view-id db :my-extension)
+  ;  (r view-selector/get-selected-view-id db :my-selector)
   ;
   ; @return (keyword)
-  [db [_ extension-id]]
-  (let [selected-view-id (r get-meta-item db extension-id :view-id)
-        default-view-id  (r mount.subs/get-body-prop db extension-id :default-view-id)]
-       (if-let [allowed-view-ids (r mount.subs/get-body-prop db extension-id :allowed-view-ids)]
+  [db [_ selector-id]]
+  (let [selected-view-id (r get-meta-item db selector-id :view-id)
+        default-view-id  (r mount.subs/get-body-prop db selector-id :default-view-id)]
+       (if-let [allowed-view-ids (r mount.subs/get-body-prop db selector-id :allowed-view-ids)]
                ; Ha az {:allowed-view-ids [...]} beállítás használatban van ...
                (or ; ... és a selected-view-id megtalálható az allowed-view-ids vektorban,
                    ;     akkor a visszatérési érték a selected-view-id.
@@ -70,13 +70,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) extension-id
+; @param (keyword) selector-id
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:view-selector/get-meta-item :my-extension :my-item]
+;  [:view-selector/get-meta-item :my-selector :my-item]
 (a/reg-sub :view-selector/get-meta-item get-meta-item)
 
+; @param (keyword) selector-id
+;
 ; @usage
-;  [:view-selector/get-selected-view-id :my-extension]
+;  [:view-selector/get-selected-view-id :my-selector]
 (a/reg-sub :view-selector/get-selected-view-id get-selected-view-id)

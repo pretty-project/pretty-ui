@@ -13,7 +13,7 @@
 
 (a/reg-event-fx
   :view-selector/init-selector!
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (map) selector-props
   ;  {:on-route (metamorphic-event)(opt)
   ;   :route-template (string)(opt)
@@ -21,9 +21,9 @@
   ;   :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [:view-selector/init-selector! :my-extension {...}]
-  (fn [_ [_ extension-id {:keys [route-template] :as selector-props}]]
-      (let [selector-props (core.prototypes/selector-props-prototype extension-id selector-props)]
-           {:dispatch-n [[:view-selector/reg-transfer-selector-props! extension-id selector-props]
-                         (if route-template [:view-selector/add-base-route!     extension-id selector-props])
-                         (if route-template [:view-selector/add-extended-route! extension-id selector-props])]})))
+  ;  [:view-selector/init-selector! :my-selector {...}]
+  (fn [_ [_ selector-id {:keys [route-template] :as selector-props}]]
+      (let [selector-props (core.prototypes/selector-props-prototype selector-id selector-props)]
+           {:dispatch-n [[:view-selector/reg-transfer-selector-props! selector-id selector-props]
+                         (if route-template [:view-selector/add-base-route!     selector-id selector-props])
+                         (if route-template [:view-selector/add-extended-route! selector-id selector-props])]})))

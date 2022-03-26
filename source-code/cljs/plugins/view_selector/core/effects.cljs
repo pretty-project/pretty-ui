@@ -18,11 +18,11 @@
   :view-selector/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  (fn [{:keys [db]} [_ extension-id]]
-      (let [on-route    (r transfer.subs/get-transfer-item db extension-id :on-route)
-            route-title (r transfer.subs/get-transfer-item db extension-id :route-title)]
-           {:db (r core.events/handle-route! db extension-id)
+  ; @param (keyword) selector-id
+  (fn [{:keys [db]} [_ selector-id]]
+      (let [on-route    (r transfer.subs/get-transfer-item db selector-id :on-route)
+            route-title (r transfer.subs/get-transfer-item db selector-id :route-title)]
+           {:db (r core.events/handle-route! db selector-id)
             :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 
@@ -32,12 +32,12 @@
 
 (a/reg-event-fx
   :view-selector/change-view!
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (keyword) view-id
   ;
   ; @usage
-  ;  [:view-selector/change-view! :my-extension :my-view]
-  (fn [{:keys [db]} [_ extension-id view-id]]
-      (if-let [view-route (r routes.subs/get-view-route db extension-id view-id)]
+  ;  [:view-selector/change-view! :my-selector :my-view]
+  (fn [{:keys [db]} [_ selector-id view-id]]
+      (if-let [view-route (r routes.subs/get-view-route db selector-id view-id)]
               {:dispatch [:router/go-to! view-route]}
-              {:db (r core.events/change-view! db extension-id view-id)})))
+              {:db (r core.events/change-view! db selector-id view-id)})))

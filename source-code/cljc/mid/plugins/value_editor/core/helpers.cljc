@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.plugins.value-editor.core.helpers
-    (:require [mid.plugins.plugin-handler.core.helpers :as mid.plugins.plugin-handler.core.helpers]))
+    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
 
 
 
@@ -11,4 +11,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.plugin-handler.core.helpers
-(def component-id mid.plugins.plugin-handler.core.helpers/component-id)
+(def component-id core.helpers/component-id)

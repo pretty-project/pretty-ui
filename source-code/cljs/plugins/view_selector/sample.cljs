@@ -21,9 +21,9 @@
 
 (defn change-my-view!
   [db _]
-  (r view-selector/change-view! db :my-extension :my-view))
+  (r view-selector/change-view! db :my-selector :my-view))
 
-(a/reg-event-db :my-extension.view-selector/change-my-view! change-my-view!)
+(a/reg-event-db :my-selector/change-my-view! change-my-view!)
 
 
 
@@ -31,8 +31,8 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :my-extension.view-selector/change-your-view!
-  [:view-selector/change-view! :your-extension :your-view])
+  :your-selector/change-your-view!
+  [:view-selector/change-view! :your-selector :your-view])
 
 
 
@@ -40,14 +40,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-content
-  [extension-id]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id extension-id])]
+  [selector-id]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id selector-id])]
        (case view-id :my-view   [:div "My view"]
                      :your-view [:div "Your view"]
                                 [:div "Default view"])))
 
 (defn my-view
   [surface-id]
-  [view-selector/view :my-extension {:allowed-view-ids [:my-view :your-view]
-                                     :default-view-id :my-view
-                                     :content #'my-content}])
+  [view-selector/view :my-selector {:allowed-view-ids [:my-view :your-view]
+                                    :default-view-id :my-view
+                                    :content #'my-content}])

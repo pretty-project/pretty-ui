@@ -13,7 +13,7 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:view-selector/init-selector! :settings
+  {:on-server-boot [:view-selector/init-selector! :settings.view-selector
                                                   {:on-route       [:settings.view-selector/load-selector!]
                                                    :route-title    :settings
                                                    :route-template "/@app-home/settings/:view-id"}]})

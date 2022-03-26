@@ -21,7 +21,7 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings])]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings.view-selector])]
        (case view-id :personal      [personal-settings     :settings.view-selector/view]
                      :privacy       [privacy-settings      :settings.view-selector/view]
                      :notifications [notification-settings :settings.view-selector/view]
@@ -54,6 +54,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a surface-id {:header #'header
-                                :body   [view-selector/body :settings {:content #'body
-                                                                       :allowed-view-ids [:personal :privacy :appearance :notifications]
-                                                                       :default-view-id :personal}]}])
+                                :body   [view-selector/body :settings.view-selector 
+                                                            {:content #'body
+                                                             :allowed-view-ids [:personal :privacy :appearance :notifications]
+                                                             :default-view-id :personal}]}])

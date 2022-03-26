@@ -14,7 +14,7 @@
 (defn route-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) plugin-id
   ; @param (keyword) route-key
   ;
   ; @example
@@ -60,3 +60,20 @@
   ; @return (string)
   [_ {:keys [route-template]}]
   (uri/valid-path route-template))
+
+(defn parent-route
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) plugin-props
+  ;  {:route-template (string)}
+  ;
+  ; @example
+  ;  (routes.helpers/parent-route :my-namespace/my-plugin {:route-template "/@app-home/my-extension/:item-id"})
+  ;  =>
+  ;  "/@app-home"
+  ;
+  ; @return (string)
+  [_ {:keys [route-template]}]
+  (-> route-template (string/before-last-occurence "/:")
+                     (uri/uri->parent-uri)))

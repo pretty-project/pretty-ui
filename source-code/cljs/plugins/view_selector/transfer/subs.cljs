@@ -12,9 +12,9 @@
 (defn get-transfer-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ extension-id item-key]]
-  (get-in db [:plugins :view-selector/transfer-items extension-id item-key]))
+  [db [_ selector-id item-key]]
+  (get-in db [:plugins :view-selector/transfer-items selector-id item-key]))

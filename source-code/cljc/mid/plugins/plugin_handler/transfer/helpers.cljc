@@ -17,7 +17,7 @@
   ; @example
   ;  (transfer.helpers/transfer-id :my-namespace/my-plugin)
   ;  =>
-  ;  :my-namespace.my-plugin/transfer-selector-props
+  ;  :my-namespace.my-plugin/transfer-plugin-props
   ;
   ; @return (keyword)
   [plugin-id]

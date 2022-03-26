@@ -16,15 +16,15 @@
 ;; ----------------------------------------------------------------------------
 
 (defn change-view!
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (keyword) view-id
   ;
   ; @usage
-  ;  (r view-selector/change-view! :my-extension :my-view)
+  ;  (r view-selector/change-view! :my-selector :my-view)
   ;
   ; @return (map)
-  [db [_ extension-id view-id]]
-  (assoc-in db [:plugins :view-selector/meta-items extension-id :view-id] view-id))
+  [db [_ selector-id view-id]]
+  (assoc-in db [:plugins :view-selector/meta-items selector-id :view-id] view-id))
 
 
 
@@ -34,12 +34,12 @@
 (defn store-derived-view-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ;
   ; @return (map)
-  [db [_ extension-id]]
-  (let [derived-view-id (r core.subs/get-derived-view-id db extension-id)]
-       (assoc-in db [:plugins :view-selector/meta-items extension-id :view-id] derived-view-id)))
+  [db [_ selector-id]]
+  (let [derived-view-id (r core.subs/get-derived-view-id db selector-id)]
+       (assoc-in db [:plugins :view-selector/meta-items selector-id :view-id] derived-view-id)))
 
 
 
@@ -49,9 +49,9 @@
 (defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ;
   ; @return (map)
-  [db [_ extension-id]]
-  (as-> db % (r store-derived-view-id!          % extension-id)
-             (r routes.events/set-parent-route! % extension-id)))
+  [db [_ selector-id]]
+  (as-> db % (r store-derived-view-id!          % selector-id)
+             (r routes.events/set-parent-route! % selector-id)))

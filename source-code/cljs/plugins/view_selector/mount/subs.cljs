@@ -13,21 +13,21 @@
 (defn get-body-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ; @param (keyword) prop-key
   ;
   ; @return (*)
-  [db [_ extension-id prop-key]]
-  (get-in db [:plugins :view-selector/body-props extension-id prop-key]))
+  [db [_ selector-id prop-key]]
+  (get-in db [:plugins :view-selector/body-props selector-id prop-key]))
 
 (defn body-did-mount?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) selector-id
   ;
   ; @return (boolean)
-  [db [_ extension-id]]
-  (some? (get-in db [:plugins :view-selector/body-props extension-id])))
+  [db [_ selector-id]]
+  (some? (get-in db [:plugins :view-selector/body-props selector-id])))
 
 
 

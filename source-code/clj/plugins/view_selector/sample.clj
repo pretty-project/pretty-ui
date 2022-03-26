@@ -14,5 +14,5 @@
 ; ...
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-boot [:view-selector/init-selector! :my-extension
-                                                  {:route-template "/@app-home/my-extension/:view-id"}]})
+  {:on-server-boot [:view-selector/init-selector! :my-selector
+                                                  {:route-template "/@app-home/my-selector/:view-id"}]})
