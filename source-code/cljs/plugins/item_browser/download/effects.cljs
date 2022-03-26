@@ -37,7 +37,6 @@
   ;
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
-  [a/debug!]
   (fn [{:keys [db]} [_ extension-id item-namespace]]
       (let [query        (r download.queries/get-request-item-query          db extension-id item-namespace)
             validator-f #(r download.validators/request-item-response-valid? db extension-id item-namespace %)]

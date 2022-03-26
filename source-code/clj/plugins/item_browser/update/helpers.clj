@@ -113,8 +113,5 @@
   ;
   ; @return (string)
   [env extension-id item-namespace item-id]
-  (println ;(pathom/env->param env :path-key)
-           (get-in env [:com.wsscode.pathom3.connect.planner/node :com.wsscode.pathom3.connect.planner/params]))
-
   (if-let [parent-link (item-id->parent-link env extension-id item-namespace item-id)]
           (get parent-link (keyword/add-namespace item-namespace :id))))

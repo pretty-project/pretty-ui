@@ -152,7 +152,7 @@
   :storage.media-browser/render-rename-item-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [alias] :as media-item}]]
-      [:value-editor/load-editor! :storage :item-alias
+      [:value-editor/load-editor! :storage.item-alias-editor
                                   {:label :name :save-button-label :rename! :initial-value alias
                                    :on-save   [:storage.media-browser/update-item-alias! media-item]
                                    :validator {:f io/filename-valid?

@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-picker.views
-    (:require [extensions.storage.media-browser.views :as media-browser.views]
+    (:require [extensions.storage.core.config         :as core.config]
+              [extensions.storage.media-browser.views :as media-browser.views]
               [plugins.item-browser.api               :as item-browser]
               [plugins.item-browser.core.views        :as plugins.item-browser.core.views]
               [plugins.item-lister.core.views         :as plugins.item-lister.core.views]
@@ -23,7 +24,7 @@
 (def file-item      media-browser.views/file-item)
 
 ; plugins.item-browser.core.views
-(def menu-mode-header   plugins.item-browser.core.views/menu-mode-header)
+(def menu-mode-header plugins.item-browser.core.views/menu-mode-header)
 
 ; plugins.item-lister.core.views
 (def search-mode-header plugins.item-lister.core.views/search-mode-header)
@@ -43,7 +44,7 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [header-label @(a/subscribe [:item-browser/get-item-label :storage :media])]
+  (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage :media])]
        [elements/label ::header-label
                        {:content header-label}]))
 
@@ -115,7 +116,11 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [item-browser/body :storage :media {:list-element #'media-item}])
+  [item-browser/body :storage :media {:item-path        [:storage :media-picker/browsed-item]
+                                      :items-path       [:storage :media-picker/downloaded-items]
+                                      :label-key :alias :search-keys [:alias]
+                                      :list-element     #'media-item
+                                      :root-item-id core.config/ROOT-DIRECTORY-ID}])
 
 
 

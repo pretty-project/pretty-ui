@@ -34,7 +34,7 @@
   ;   rendereli ki.
   (fn [{:keys [db]} [_ picker-id picker-props]]
       {:db (r media-picker.events/load-picker! db picker-id picker-props)
-       :dispatch [:item-browser/load-browser! :storage :media]}))
+       :dispatch [:storage.media-picker/render-picker!]}))
 
 
 
@@ -67,5 +67,5 @@
   (fn [_ [_ picker-id]]
       [:ui/add-popup! :storage.media-picker/view
                       {:body   [media-picker.views/body   picker-id]
-                       :header [media-picker.views/header picker-id]
+                       ;:header [media-picker.views/header picker-id]
                        :stretch-orientation :vertical}]))

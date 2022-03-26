@@ -20,6 +20,11 @@
   ; @param (keyword) item-namespace
   ; @param (map) body-props
   (fn [{:keys [db]} [_ extension-id item-namespace body-props]]
+      ; Az item-lister plugin header komponensében megjelenített search-field input mező
+      ; fókuszált állapotban a keypress-handler kezelőt {:type-mode? true} állapotba lépteti,
+      ; amiért szükséges az [:environment/listen-to-pressed-key! ...] esemény használatával
+      ; beállítani a SHIFT billentyű figyelését, hogy az items.subs/toggle-item-selection? függvény
+      ; hozzáférjen a SHIFT billentyű állapotához (fókuszált search-field input mező esetén is).
       {:db (r mount.events/body-did-mount db extension-id item-namespace body-props)
        :dispatch [:environment/listen-to-pressed-key! :item-lister/SHIFT {:key-code 16}]}))
 

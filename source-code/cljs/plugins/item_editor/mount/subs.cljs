@@ -50,6 +50,7 @@
   ;
   ; @return (boolean)
   [db [_ extension-id _]]
+  ; XXX#2045
   ; A {:handler-key ...} tulajdonság azért a szerver-oldali [:item-editor/init-editor! ...]
   ; esemény paraméterei között van, és nem a kliens-oldali body komponens paraméterei között, ...
   ; ... mert a body komponens React-fából történő lecsatolása után is szükséges a plugin számára,

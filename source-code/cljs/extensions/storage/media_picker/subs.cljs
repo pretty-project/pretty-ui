@@ -18,24 +18,24 @@
 (defn get-saved-selection
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [value-path (get-in db [:storage :media-picker/meta-items :value-path])]
+  (let [value-path (get-in db [:storage :media-picker/picker-props :value-path])]
        (get-in db value-path)))
 
 (defn get-selected-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (get-in db [:storage :media-picker/data-items]))
+  (get-in db [:storage :media-picker/selected-items]))
 
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [selected-items (get-in db [:storage :media-picker/data-items])]
+  (let [selected-items (get-in db [:storage :media-picker/selected-items])]
        (-> selected-items vector/nonempty? not)))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [selected-items (get-in db [:storage :media-picker/data-items])]
+  (let [selected-items (get-in db [:storage :media-picker/selected-items])]
        (count selected-items)))
 
 (defn file-selected?
@@ -48,7 +48,7 @@
 (defn file-selectable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ {:keys [mime-type]}]]
-  (if-let [extensions (get-in db [:storage :media-picker/meta-items :extensions])]
+  (if-let [extensions (get-in db [:storage :media-picker/picker-props :extensions])]
           (let [extension (io/mime-type->extension mime-type)]
                (vector/contains-item? extensions extension))
           (return true)))
@@ -56,7 +56,7 @@
 (defn save-selected-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ file-item]]
-  (let [multiple? (get-in db [:storage :media-picker/meta-items :multiple?])]
+  (let [multiple? (get-in db [:storage :media-picker/picker-props :multiple?])]
        (and (not multiple?)
             (r file-selected? db file-item))))
 
