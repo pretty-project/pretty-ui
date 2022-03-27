@@ -42,8 +42,10 @@
   ;
   ; @return (string)
   [_ {:keys [route-template]}]
-  (-> route-template (string/before-last-occurence "/:")
-                     (uri/valid-path)))
+  (let [base-route (string/before-last-occurence route-template "/:")]
+       (if (string/nonempty? base-route)
+           (uri/valid-path   base-route)
+           (uri/valid-path   route-template))))
 
 (defn extended-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,5 +77,7 @@
   ;
   ; @return (string)
   [_ {:keys [route-template]}]
-  (-> route-template (string/before-last-occurence "/:")
-                     (uri/uri->parent-uri)))
+  (let [base-route (string/before-last-occurence route-template "/:")]
+       (if (string/nonempty?    base-route)
+           (uri/uri->parent-uri base-route)
+           (uri/uri->parent-uri route-template))))

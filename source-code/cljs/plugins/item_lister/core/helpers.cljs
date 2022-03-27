@@ -11,7 +11,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.item-lister.core.helpers
-(def component-id core.helpers/component-id)
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)
 
 
 
@@ -41,8 +42,8 @@
   ; @example
   ;  (core.helpers/default-items-path :my-lister)
   ;  =>
-  ;  [:plugins :item-lister/downloaded-items :my-lister]
+  ;  [:plugins :plugin-handler/downloaded-items :my-lister]
   ;
   ; @return (vector)
   [lister-id]
-  [:plugins :item-lister/downloaded-items lister-id])
+  (default-data-path lister-id :downloaded-items))

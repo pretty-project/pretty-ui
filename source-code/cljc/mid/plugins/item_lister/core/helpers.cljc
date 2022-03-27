@@ -11,4 +11,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.plugin-handler.core.helpers
-(def component-id core.helpers/component-id)
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)

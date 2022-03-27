@@ -26,3 +26,18 @@
   (if-let [namespace (namespace plugin-id)]
           (keyword (str namespace "." (name plugin-id)) (name component-key))
           (keyword (str               (name plugin-id)) (name component-key))))
+
+(defn default-data-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) data-key
+  ;
+  ; @example
+  ;  (core.helpers/default-data-path :my-plugin :suggestions)
+  ;  =>
+  ;  [:plugins :plugin-handler/suggestions :my-plugin]
+  ;
+  ; @return (vector)
+  [plugin-id data-key]
+  [:plugins (keyword "plugin-handler" (name data-key)) plugin-id])

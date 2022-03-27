@@ -17,8 +17,8 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) lister-props
-  ;  {:route-template (string)}
-  (fn [_ [_ lister-id {:keys [route-template]}]]
+  ;  {:base-route (string)}
+  (fn [_ [_ lister-id {:keys [base-route]}]]
       [:plugin-handler/add-base-route! lister-id
-                                       {:client-event   [:item-lister/handle-route! lister-id]
-                                        :route-template route-template}]))
+                                       {:base-route   base-route
+                                        :client-event [:item-lister/handle-route! lister-id]}]))

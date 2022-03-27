@@ -38,12 +38,12 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [client-item]
-  [:div.clients--client-item [item-editor/color-stamp :clients.client-lister client-item]
+  [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
                              [client-item-details client-item]])
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ item-dex client-item]
+  [_ item-dex client-item]
   [elements/toggle {:on-click [:clients.client-lister/item-clicked item-dex client-item]
                     :content  [client-item-structure client-item]
                     :hover-color :highlight}])

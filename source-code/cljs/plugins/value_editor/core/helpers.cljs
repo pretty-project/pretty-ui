@@ -12,7 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.value-editor.core-helpers
-(def component-id core.helpers/component-id)
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)
 
 
 
@@ -24,12 +25,14 @@
   ;
   ; @param (keyword) editor-id
   ;
-  ; @usage
-  ;  (core.helpers/default-edit-path ...)
+  ; @example
+  ;  (core.helpers/default-edit-path :my-editor)
+  ;  =>
+  ;  [:plugins :plugin-handler/edited-item :my-editor]
   ;
   ; @return (vector)
   [editor-id]
-  [:plugins :value-editor/edited-item editor-id])
+  (default-data-path editor-id :edited-item))
 
 
 
