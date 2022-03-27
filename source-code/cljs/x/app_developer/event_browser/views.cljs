@@ -54,7 +54,7 @@
                        (conj event-list [event-list-item event-id event-props])))]
               (reduce f [:div {:style {:width "100%" :padding "0 0px"}}
                               [:div {:style {:display "flex"}}
-                                    [elements/icon-button {:preset :muted :icon :home :disabled? true}]
+                                    [elements/icon-button {:variant :placeholder}]
                                     [elements/label {:content "Registrated events" :font-size :m :color :muted :font-weight :extra-bold}]]]
                         (-> event-handlers keys vector/abc-items)))))
 

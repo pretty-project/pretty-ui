@@ -15,12 +15,11 @@
 (defn request-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (r download.subs/get-resolver-id db extension-id item-namespace :get)
+  [db [_ browser-id server-response]]
+  (let [resolver-id (r download.subs/get-resolver-id db browser-id :get-item)
         document    (get server-response resolver-id)]
        (db/document->document-namespaced? document)))

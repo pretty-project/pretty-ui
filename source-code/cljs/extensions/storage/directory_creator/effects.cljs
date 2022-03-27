@@ -47,7 +47,7 @@
   (fn [{:keys [db]} [_ creator-id directory-name]]
       [:sync/send-query! :storage.directory-creator/create-directory!
                          {:query (r directory-creator.queries/get-create-directory-query db creator-id directory-name)
-                          :on-success [:item-lister/reload-items! :storage :media]}]))
+                          :on-success [:item-lister/reload-items! :storage.media-browser]}]))
 
 
 

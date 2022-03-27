@@ -25,23 +25,21 @@
 (defn disable-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (let [item-dex (r items.subs/get-item-dex db extension-id item-namespace item-id)]
-       (r disable-items! db extension-id item-namespace [item-dex])))
+  [db [_ browser-id item-id]]
+  (let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
+       (r disable-items! db browser-id [item-dex])))
 
 (defn enable-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-id]]
-  (let [item-dex (r items.subs/get-item-dex db extension-id item-namespace item-id)]
-       (r enable-items! db extension-id item-namespace [item-dex])))
+  [db [_ browser-id item-id]]
+  (let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
+       (r enable-items! db browser-id [item-dex])))

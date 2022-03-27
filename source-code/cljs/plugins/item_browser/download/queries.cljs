@@ -15,24 +15,22 @@
 (defn get-request-item-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @return (map)
   ;  {:item-id (string)}
-  [db [_ extension-id item-namespace]]
-  (let [current-item-id (r core.subs/get-current-item-id db extension-id item-namespace)]
-       (merge (r core.subs/get-meta-item db extension-id item-namespace :default-query-params)
+  [db [_ browser-id]]
+  (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
+       (merge (r core.subs/get-meta-item db browser-id :default-query-params)
               {:item-id current-item-id})))
 
 (defn get-request-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @return (vector)
-  [db [_ extension-id item-namespace]]
-  (let [resolver-id    (r download.subs/get-resolver-id   db extension-id item-namespace :get)
-        resolver-props (r get-request-item-resolver-props db extension-id item-namespace)]
+  [db [_ browser-id]]
+  (let [resolver-id    (r download.subs/get-resolver-id   db browser-id :get-item)
+        resolver-props (r get-request-item-resolver-props db browser-id)]
        [`(~resolver-id ~resolver-props)]))

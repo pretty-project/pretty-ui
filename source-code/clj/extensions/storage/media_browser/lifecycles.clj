@@ -14,9 +14,10 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot {:dispatch-n [[:environment/add-css! {:uri "/css/extensions/storage.media-browser.css"}]
-                                 [:item-browser/init-browser! :storage :media
+                                 [:item-browser/init-browser! :storage.media-browser
                                                               {:collection-name "storage"
                                                                :handler-key     :storage.media-browser
-                                                               :route-title     :storage
-                                                               :on-route [:storage.media-browser/load-browser!]
-                                                               :route-template "/@app-home/storage/:item-id"}]]}})
+                                                               :item-namespace  :media
+                                                               :on-route        [:storage.media-browser/load-browser!]
+                                                               :route-template  "/@app-home/storage/:item-id"
+                                                               :route-title     :storage}]]}})

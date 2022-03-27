@@ -3,8 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.routes.subs
-    (:require [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [plugins.item-editor.transfer.subs  :as transfer.subs]
+              [plugins.plugin-handler.routes.subs :as routes.subs]
+              [x.app-core.api                     :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.routes.subs
+(def get-extended-route routes.subs/get-extended-route)
 
 
 
@@ -15,13 +24,14 @@
   ; @param (keyword) editor-id
   ; @param (string) item-id
   ;
-  ; @usage
+  ; @example
   ;  (r item-editor/get-item-route db :my-editor "my-item")
+  ;  =>
+  ;  "/@app-home/my-editor/my-item"
   ;
   ; @return (string)
   [db [_ editor-id item-id]]
-  (if-let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-          (str base-route "/" item-id)))
+  (r get-extended-route db editor-id item-id))
 
 
 

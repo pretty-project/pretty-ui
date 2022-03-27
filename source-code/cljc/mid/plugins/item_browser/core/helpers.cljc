@@ -2,32 +2,47 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-browser.core.helpers)
+(ns mid.plugins.item-browser.core.helpers
+    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid.plugins.plugin-handler.core.helpers
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component-id
+(defn default-items-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) component-key
+  ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (core.helpers/component-id :my-extension :my-type :view)
+  ;  (core.helpers/default-items-path :my-browser)
   ;  =>
-  ;  :my-extension.my-type-browser/view
+  ;  [:plugins :plugin-handler/downloaded-items :my-browser]
   ;
-  ; @return (keyword)
-  [extension-id item-namespace component-key]
-  ; XXX#5467
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-browser")
-           (name component-key)))
+  ; @return (vector)
+  [browser-id]
+  (default-data-path browser-id :downloaded-items))
 
-  ;(if-let [namespace (namespace browser-id)]
-  ;        (keyword (str namespace "-" (name browser-id) "-" (name component-key)))
-  ;        (keyword (str               (name browser-id) "-" (name component-key)))))
+(defn default-item-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ;
+  ; @example
+  ;  (core.helpers/default-item-path :my-browser)
+  ;  =>
+  ;  [:plugins :plugin-handler/browsed-item :my-browser]
+  ;
+  ; @return (vector)
+  [browser-id]
+  (default-data-path browser-id :browsed-item))

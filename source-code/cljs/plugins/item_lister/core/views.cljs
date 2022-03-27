@@ -504,10 +504,9 @@
         ;@(a/subscribe [:environment/browser-offline?])
         ; [offline-body lister-id]
         @(a/subscribe [:item-lister/body-did-mount? lister-id])
-         [:div.item-lister--body--structure
-           [item-list             lister-id]
-           [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-           [indicators            lister-id]]))
+         [:div.item-lister--body--structure [item-list             lister-id]
+                                            [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
+                                            [indicators            lister-id]]))
 
 (defn body
   ; @param (keyword) lister-id

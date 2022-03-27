@@ -3,7 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.subs
-    (:require [x.server-core.api :as a]))
+    (:require [plugins.plugin-handler.core.subs :as core.subs]
+              [x.server-core.api                :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.subs
+(def get-plugin-prop core.subs/get-plugin-prop)
 
 
 
@@ -13,13 +22,12 @@
 (defn get-browser-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (keyword) item-key
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-key]]
-  (get-in db [:plugins :item-browser/browser-props extension-id item-key]))
+  [db [_ browser-id item-key]]
+  (r get-plugin-prop db browser-id item-key))
 
 
 

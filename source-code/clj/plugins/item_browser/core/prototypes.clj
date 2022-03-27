@@ -14,8 +14,7 @@
 (defn browser-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (map) browser-props
   ;  {:route-template (string)(opt)}
   ;
@@ -23,9 +22,9 @@
   ;  {:base-route (string)
   ;   :extended-route (string)
   ;   :parent-route (string)}
-  [extension-id item-namespace {:keys [route-template] :as browser-props}]
+  [browser-id {:keys [route-template] :as browser-props}]
   (merge {}
-         (if route-template {:base-route     (routes.helpers/base-route     extension-id item-namespace browser-props)
-                             :extended-route (routes.helpers/extended-route extension-id item-namespace browser-props)
-                             :parent-route   (routes.helpers/parent-route   extension-id item-namespace browser-props)})
+         (if route-template {:base-route     (routes.helpers/base-route     browser-id browser-props)
+                             :extended-route (routes.helpers/extended-route browser-id browser-props)
+                             :parent-route   (routes.helpers/parent-route   browser-id browser-props)})
          (param browser-props)))

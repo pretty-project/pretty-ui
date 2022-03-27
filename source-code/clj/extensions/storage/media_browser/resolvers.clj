@@ -30,8 +30,8 @@
 (defn get-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
-  (let [get-pipeline   (item-browser/env->get-pipeline   env :storage :media)
-        count-pipeline (item-browser/env->count-pipeline env :storage :media)]
+  (let [get-pipeline   (item-browser/env->get-pipeline   env :storage.media-browser)
+        count-pipeline (item-browser/env->count-pipeline env :storage.media-browser)]
        {:documents      (mongo-db/get-documents-by-pipeline   "storage"   get-pipeline)
         :document-count (mongo-db/count-documents-by-pipeline "storage" count-pipeline)}))
 

@@ -190,7 +190,7 @@
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ item-dex {:keys [id mime-type] :as media-item}]
+  [_ item-dex {:keys [id mime-type] :as media-item}]
   (case mime-type "storage/directory" [elements/toggle {:content        [directory-item media-item {:icon :navigate_next}]
                                                         :on-click       [:storage.media-browser/item-clicked item-dex media-item]
                                                         :on-right-click [:storage.media-browser/render-directory-menu! media-item]
@@ -205,17 +205,29 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-browser/header :storage.media-browser
+                       {:new-item-event   [:storage.media-browser/add-new-item!]
+                        :new-item-options [:create-directory! :upload-files!]}])
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-browser/body :storage.media-browser
+                     {:auto-title?      true
+                      :item-actions     [:delete :duplicate]
+                      :item-path        [:storage :media-browser/browsed-item]
+                      :items-path       [:storage :media-browser/downloaded-items]
+                      :label-key :alias :search-keys [:alias]
+                      :list-element     #'media-item
+                      :root-item-id     core.config/ROOT-DIRECTORY-ID}])
+
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-browser/get-description :storage :media])]
+  (let [description @(a/subscribe [:item-browser/get-description :storage.media-browser])]
        [layouts/layout-a surface-id {:description description
-                                     :header [item-browser/header :storage :media {:new-item-event   [:storage.media-browser/add-new-item!]
-                                                                                   :new-item-options [:create-directory! :upload-files!]}]
-                                     :body   [item-browser/body   :storage :media {:auto-title?      true
-                                                                                   :item-actions     [:delete :duplicate]
-                                                                                   :item-path        [:storage :media-browser/browsed-item]
-                                                                                   :items-path       [:storage :media-browser/downloaded-items]
-                                                                                   :label-key :alias :search-keys [:alias]
-                                                                                   :list-element     #'media-item
-                                                                                   :root-item-id core.config/ROOT-DIRECTORY-ID}]}]))
+                                     :header      #'header
+                                     :body        #'body}]))

@@ -344,15 +344,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [view-selector/body :playground
-                      {:default-view-id :anchors
-                       :content #'body-structure}])
+                      {:content         #'body-structure
+                       :default-view-id :anchors}])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [:<> [layouts/layout-a {:body   #'body
-                          :header #'header
-                          :description "Follow the white rabbit!"
+  [:<> [layouts/layout-a {:body             #'body
+                          :header           #'header
+                          :description      "Follow the white rabbit!"
                           :horizontal-align :left}]
        [elements/horizontal-separator {:size :xxl}]
        [infinite-loader]

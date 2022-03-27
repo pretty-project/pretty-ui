@@ -22,7 +22,7 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [header-label @(a/subscribe [:item-browser/get-item-label :storage :media])]
+  (let [header-label @(a/subscribe [:item-browser/get-item-label :storage.media-browser])]
        [elements/label ::header-label
                        {:content header-label}]))
 

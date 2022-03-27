@@ -18,8 +18,7 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:collection-name (string)
-  ;   :item-path (vector)
+  ;  {:item-path (vector)
   ;   :suggestions-path (vector)}
   [editor-id body-props]
   (merge {:item-path        (core.helpers/default-item-path        editor-id)

@@ -17,15 +17,15 @@
 
 (defn env->item-links
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->item-links {...} :my-extension :my-type)
+  ;  (item-browser/env->item-links {...} :my-browser)
   ;
   ; @return (maps in vector)
-  [env extension-id item-namespace]
-  (let [collection-name @(a/subscribe [:item-browser/get-browser-prop extension-id item-namespace :collection-name])
+  [env browser-id]
+  (let [collection-name @(a/subscribe [:item-browser/get-browser-prop browser-id :collection-name])
+        item-namespace  @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
         items-key        (pathom/env->param env :items-key)
         item-id          (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]
@@ -38,36 +38,33 @@
 
 (defn env->sort-pattern
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->sort-pattern {...} :my-extension :my-type)
+  ;  (item-browser/env->sort-pattern {...} :my-browser)
   ;
   ; @return (map)
-  [env extension-id item-namespace]
-  (item-lister/env->sort-pattern env extension-id item-namespace))
+  [env browser-id]
+  (item-lister/env->sort-pattern env browser-id))
 
 (defn env->search-pattern
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->search-pattern {...} :my-extension :my-type)
+  ;  (item-browser/env->search-pattern {...} :my-browser)
   ;
   ; @return (map)
   ;  {:$or (maps in vector)}
-  [env extension-id item-namespace]
-  (item-lister/env->search-pattern env extension-id item-namespace))
+  [env browser-id]
+  (item-lister/env->search-pattern env browser-id))
 
 (defn env->pipeline-props
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (item-browser/env->pipeline-props {...} :my-extension :my-type)
+  ;  (item-browser/env->pipeline-props {...} :my-browser)
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
@@ -76,39 +73,37 @@
   ;   :sort-pattern   {:my-type/name 1}}
   ;
   ; @return (map)
-  [env extension-id item-namespace]
+  [env browser-id]
   ; Az item-lister plugin env->pipeline-props függvényét kiegészíti a kollekció elemeinek
   ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
   ; az aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
-  (let [item-links     (env->item-links env extension-id item-namespace)
+  (let [item-links     (env->item-links env browser-id)
         filter-pattern (if-let [filter-pattern (pathom/env->param env :filter-pattern)]
                                {:$and [filter-pattern {:$or item-links}]}
                                {:$or item-links})
         env            (pathom/env<-param env :filter-pattern filter-pattern)]
-       (item-lister/env->pipeline-props env extension-id item-namespace)))
+       (item-lister/env->pipeline-props env browser-id)))
 
 (defn env->get-pipeline
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->get-pipeline {...} :my-extension :my-type)
+  ;  (item-browser/env->get-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
-  [env extension-id item-namespace]
-  (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
+  [env browser-id]
+  (let [pipeline-props (env->pipeline-props env browser-id)]
        (mongo-db/get-pipeline pipeline-props)))
 
 (defn env->count-pipeline
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->count-pipeline {...} :my-extension :my-type)
+  ;  (item-browser/env->count-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
-  [env extension-id item-namespace]
-  (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
+  [env browser-id]
+  (let [pipeline-props (env->pipeline-props env browser-id)]
        (mongo-db/count-pipeline pipeline-props)))

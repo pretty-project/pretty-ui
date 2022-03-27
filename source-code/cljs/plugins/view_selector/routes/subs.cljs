@@ -3,8 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.routes.subs
-    (:require [plugins.view-selector.transfer.subs :as transfer.subs]
+    (:require [plugins.plugin-handler.routes.subs  :as routes.subs]
+              [plugins.view-selector.transfer.subs :as transfer.subs]
               [x.app-core.api                      :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.routes.subs
+(def get-extended-route routes.subs/get-extended-route)
 
 
 
@@ -22,5 +31,4 @@
   ;
   ; @return (string)
   [db [_ selector-id view-id]]
-  (if-let [base-route (r transfer.subs/get-transfer-item db selector-id :base-route)]
-          (str base-route "/" (name view-id))))
+  (r get-extended-route db selector-id (name view-id)))

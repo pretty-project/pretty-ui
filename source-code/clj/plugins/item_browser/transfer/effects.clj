@@ -3,9 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.transfer.effects
-    (:require [mid-fruits.candy                      :refer [return]]
-              [plugins.item-browser.transfer.helpers :as transfer.helpers]
-              [x.server-core.api                     :as a]))
+    (:require [plugins.plugin-handler.transfer.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -16,10 +15,7 @@
   :item-browser/reg-transfer-browser-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (map) browser-props
-  (fn [_ [_ extension-id item-namespace browser-props]]
-      {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return browser-props))
-                                 :target-path [:plugins :item-lister/transfer-items extension-id]}]}))
+  (fn [_ [_ browser-id browser-props]]
+      [:plugin-handler/reg-transfer-plugin-props! browser-id browser-props]))

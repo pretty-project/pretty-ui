@@ -23,13 +23,21 @@
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
-(def get-request-id        core.subs/get-request-id)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-request-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (boolean)
+  [db [_ lister-id]]
+  (r core.subs/get-request-id db lister-id :editor))
 
 (defn editor-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +46,7 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  (r plugin-synchronizing? db editor-id))
+  (r plugin-synchronizing? db editor-id :editor))
 
 
 

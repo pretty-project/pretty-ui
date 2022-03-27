@@ -6,7 +6,7 @@
     (:require [reagent.core  :as core]
               [reagent.state :as state]))
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,9 +41,9 @@
   ([component-id {:keys [component-did-mount component-did-update reagent-render] :as lifecycles}]
    (let [mount-id (random-uuid)]
         (reagent.core/create-class {:reagent-render reagent-render
-                                    :component-will-unmount (fn [] (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))
                                     :component-did-mount    (fn [] (if-let [mounted-as (get @state/MOUNTED-COMPONENTS component-id)]
-                                                                           "component-already-mounted"
+                                                                           :component-already-mounted
                                                                            (if component-did-mount (component-did-mount)))
                                                                    (swap! state/MOUNTED-COMPONENTS assoc component-id mount-id))
-                                    :component-did-update component-did-update}))))
+                                    :component-did-update   (fn [] (component-did-update))
+                                    :component-will-unmount (fn [] (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))}))))

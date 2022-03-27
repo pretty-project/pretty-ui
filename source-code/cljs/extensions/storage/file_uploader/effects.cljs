@@ -95,7 +95,7 @@
        ; Az egyes feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt,
        ; így a felhasználónak van ideje észlelni a visszajelzést.
        :dispatch-later [{:ms 8000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
-       :dispatch [:item-browser/reload-items! :storage :media]}))
+       :dispatch [:item-browser/reload-items! :storage.media-browser]}))
 
 (a/reg-event-fx
   :storage.file-uploader/progress-failured

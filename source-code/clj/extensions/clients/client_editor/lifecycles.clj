@@ -17,6 +17,6 @@
                                               {:collection-name "clients"
                                                :handler-key     :clients.client-editor
                                                :item-namespace  :client
-                                               :route-title     :clients
-                                               :on-route [:clients.client-editor/load-editor!]
-                                               :route-template "/@app-home/clients/:item-id"}]})
+                                               :on-route        [:clients.client-editor/load-editor!]
+                                               :route-template  "/@app-home/clients/:item-id"
+                                               :route-title     :clients}]})

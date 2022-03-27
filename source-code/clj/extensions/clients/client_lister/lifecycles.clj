@@ -18,6 +18,6 @@
                                                             {:collection-name "clients"
                                                              :handler-key     :clients.client-lister
                                                              :item-namespace  :client
-                                                             :route-title     :clients
-                                                             :on-route [:clients.client-lister/load-lister!]
-                                                             :route-template "/@app-home/clients"}]]}})
+                                                             :on-route        [:clients.client-lister/load-lister!]
+                                                             :route-template  "/@app-home/clients"
+                                                             :route-title     :clients}]]}})

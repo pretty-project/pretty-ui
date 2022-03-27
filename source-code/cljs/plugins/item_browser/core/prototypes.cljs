@@ -15,22 +15,19 @@
 (defn body-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) browser-id
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:collection-name (string)
-  ;   :item-path (vector)
+  ;  {:item-path (vector)
   ;   :items-key (keyword)
   ;   :items-path (vector)
   ;   :label-key (keyword)
   ;   :path-key (keyword)}
-  [extension-id item-namespace body-props]
-  (merge {:collection-name (name extension-id)
-          :item-path  (core.helpers/default-item-path  extension-id item-namespace)
-          :items-path (core.helpers/default-items-path extension-id item-namespace)
-          :items-key core.config/DEFAULT-ITEMS-KEY
-          :label-key core.config/DEFAULT-LABEL-KEY
-          :path-key  core.config/DEFAULT-PATH-KEY}
+  [browser-id body-props]
+  (merge {:item-path  (core.helpers/default-item-path  browser-id)
+          :items-path (core.helpers/default-items-path browser-id)
+          :items-key  core.config/DEFAULT-ITEMS-KEY
+          :label-key  core.config/DEFAULT-LABEL-KEY
+          :path-key   core.config/DEFAULT-PATH-KEY}
          (param body-props)))

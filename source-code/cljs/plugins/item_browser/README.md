@@ -10,3 +10,9 @@
 - A {:default-query-params {...}} térkép bevezetése megoldotta, hogy az item-browser plugin az aktuálisan
   böngészett elem azonosítóját az item-lister plugin által küldött :my-handler/get-items resolver függvény
   paraméterei közé írhatja.
+
+
+
+# ...
+- Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét plugin módosításait 
+  úgy kell elvégezni, hogy azok működése egymással összehangolt maradjon!

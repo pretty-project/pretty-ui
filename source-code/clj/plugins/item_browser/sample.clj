@@ -12,6 +12,21 @@
 
 
 
+;; -- A plugin beállítása -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A plugin használatához szükséges megadni ...
+; ...
+;
+; A plugin használatához OPCIONÁLISAN megadható ...
+; ...
+(a/reg-event-fx
+  :init-my-browser!
+  [:item-browser/init-browser! :my-browser
+                               {}])
+
+
+
 ;; -- Példa dokumentum --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -173,5 +188,7 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [])
+               ;get-item get-items delete-items! undo-delete-items! duplicate-items! undo-duplicate-items!
+               ;delete-item! undo-delete-item! duplicate-item! undo-duplicate-item! update-item!
 
 (pathom/reg-handlers! ::handlers HANDLERS)
