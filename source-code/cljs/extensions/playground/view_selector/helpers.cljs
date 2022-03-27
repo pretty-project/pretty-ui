@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.view-selector.helpers)
+(ns extensions.playground.view-selector.helpers)
 
 
 

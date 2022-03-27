@@ -18,16 +18,15 @@
 (defn item-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r items.subs/item-disabled? db :my-extension :my-type 0)
+  ;  (r items.subs/item-disabled? db :my-lister 0)
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace item-dex]]
-  (let [disabled-items (r core.subs/get-meta-item db extension-id item-namespace :disabled-items)]
+  [db [_ lister-id item-dex]]
+  (let [disabled-items (r core.subs/get-meta-item db lister-id :disabled-items)]
        (vector/contains-item? disabled-items item-dex)))
 
 
@@ -38,13 +37,12 @@
 (defn get-selected-item-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (strings in vector)
-  [db [_ extension-id item-namespace]]
-  (let [items-path     (r mount.subs/get-body-prop db extension-id item-namespace :items-path)
-        selected-items (r core.subs/get-meta-item  db extension-id item-namespace :selected-items)]
+  [db [_ lister-id]]
+  (let [items-path     (r mount.subs/get-body-prop db lister-id :items-path)
+        selected-items (r core.subs/get-meta-item  db lister-id :selected-items)]
        (letfn [(f [result item-dex]
                   (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))]
                        (conj result item-id)))]
@@ -53,76 +51,70 @@
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (integer)
-  [db [_ extension-id item-namespace]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  [db [_ lister-id]]
+  (let [selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (count selected-items)))
 
 (defn item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r engine/item-selected? db :my-extension :my-type 0)
+  ;  (r engine/item-selected? db :my-lister 0)
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace item-dex]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  [db [_ lister-id item-dex]]
+  (let [selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (vector/contains-item? selected-items item-dex)))
 
 (defn all-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [selected-items-count  (r get-selected-item-count             db extension-id item-namespace)
-        downloaded-item-count (r core.subs/get-downloaded-item-count db extension-id item-namespace)]
+  [db [_ lister-id]]
+  (let [selected-items-count  (r get-selected-item-count             db lister-id)
+        downloaded-item-count (r core.subs/get-downloaded-item-count db lister-id)]
        (and (not= downloaded-item-count 0)
             (= selected-items-count downloaded-item-count))))
 
 (defn any-item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  [db [_ lister-id]]
+  (let [selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (vector/nonempty? selected-items)))
 
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (let [selected-items (r core.subs/get-meta-item db extension-id item-namespace :selected-items)]
+  [db [_ lister-id]]
+  (let [selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (-> selected-items vector/nonempty? not)))
 
 (defn toggle-item-selection?
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r item-lister/toggle-item-selection? db :my-extension :my-type 42)
-  [db [_ extension-id item-namespace item-dex]]
+  ;  (r item-lister/toggle-item-selection? db :my-lister 42)
+  [db [_ lister-id item-dex]]
   (and ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-            (r core.subs/items-selectable? db extension-id item-namespace)
+            (r core.subs/items-selectable? db lister-id)
             (r environment/key-pressed?    db 16)
-       (not (r core.subs/lister-disabled?  db extension-id item-namespace))))
+       (not (r core.subs/lister-disabled?  db lister-id))))
 
 
 
@@ -132,11 +124,10 @@
 (defn order-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
+  [db [_ lister-id]]
   (return false))
 
 
@@ -144,39 +135,34 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/all-items-selected? :my-extension :my-type]
+;  [:item-lister/all-items-selected? :my-lister]
 (a/reg-sub :item-lister/all-items-selected? all-items-selected?)
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/any-item-selected? :my-extension :my-type]
+;  [:item-lister/any-item-selected? :my-lister]
 (a/reg-sub :item-lister/any-item-selected? any-item-selected?)
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/no-items-selected? :my-extension :my-type]
+;  [:item-lister/no-items-selected? :my-lister]
 (a/reg-sub :item-lister/no-items-selected? no-items-selected?)
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) lister-id
 ; @param (integer) item-dex
 ;
 ; @usage
-;  [:item-lister/item-disabled? :my-extension :my-type 0]
+;  [:item-lister/item-disabled? :my-lister 0]
 (a/reg-sub :item-lister/item-disabled? item-disabled?)
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) lister-id
 ; @param (integer) item-dex
 ;
 ; @usage
-;  [:item-lister/item-selected? :my-extension :my-type 0]
+;  [:item-lister/item-selected? :my-lister 0]
 (a/reg-sub :item-lister/item-selected? item-selected?)

@@ -40,8 +40,8 @@
 (a/reg-event-fx
   :add-my-new-item!
   (fn [_ [_ selected-option]]
-      (case selected-option :add-my-type!   [:my-event]
-                            :add-your-type! [:your-event])))
+      (case selected-option :add-my-item!   [:my-event]
+                            :add-your-item! [:your-event])))
 
 
 
@@ -51,7 +51,7 @@
 ; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
 (a/reg-event-fx
   :use-my-filter!
-  [:item-lister/use-filter! :my-extension :my-type {}])
+  [:item-lister/use-filter! :my-lister {}])
 
 
 
@@ -60,14 +60,14 @@
 
 (defn my-filters
   []
-  (let [my-filter-event [:my-extension.my-type-lister/use-filter! :my-extension :my-type {}]]
+  (let [my-filter-event [:item-lister/use-filter! :my-lister {}]]
        [elements/menu-bar {:menu-items [{:label "My filter" :on-click my-filter-event}]}]))
 
 (defn my-view-with-filters
   [surface-id]
   [:<> [my-filters]
-       [item-lister/header :my-extension :my-type {}]
-       [item-lister/body   :my-extension :my-type {}]])
+       [item-lister/header :my-lister {}]
+       [item-lister/body   :my-lister {}]])
 
 
 
@@ -78,8 +78,8 @@
 ; csak az előszűrésnek megfelelő elemek jelenjenek meg.
 (defn my-filtered-body
   [surface-id]
-  [item-lister/body :my-extension :my-type {:list-element [:div "My item"]
-                                            :prefilter    {:my-type/color "red"}}])
+  [item-lister/body :my-lister {:list-element [:div "My item"]
+                                :prefilter    {:namespace/color "red"}}])
 
 
 
@@ -91,7 +91,7 @@
 ; a szerver-oldali változathoz.
 (a/reg-event-fx
   :reload-my-items!
-  [:item-lister/reload-items! :my-extension :my-type])
+  [:item-lister/reload-items! :my-lister])
 
 
 
@@ -99,17 +99,17 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-selectable-list-element
-  [extension-id item-namespace item-dex item]
+  [lister-id item-dex item]
   [elements/toggle {:content  [:div "My item"]
-                    :on-click [:my-list-element-clicked extension-id item-namespace item-dex item]}])
+                    :on-click [:my-list-element-clicked lister-id item-dex item]}])
 
 ; Ha a listaelemek kijelölhetők és a lista-elemre kattintás pillanatában a SHIFT billenytű
 ; lenyomott állapotban volt, akkor a toggle-item-selection? függvény visszatérési értéke TRUE
 (a/reg-event-fx
   :my-list-element-clicked
-  (fn [{:keys [db]} [_ extension-id item-namespace item-dex item]]
-      (if (r item-lister/toggle-item-selection? db extension-id item-namespace item-dex)
-          {:db (r item-lister/toggle-item-selection! db extension-id item-namespace item-dex)}
+  (fn [{:keys [db]} [_ lister-id item-dex item]]
+      (if (r item-lister/toggle-item-selection? db lister-id item-dex)
+          {:db (r item-lister/toggle-item-selection! db lister-id item-dex)}
           [:my-event])))
 
 
@@ -118,7 +118,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-contextual-list-element
-  [extension-id item-namespace item-dex item]
+  [lister-id item-dex item]
   [elements/toggle {:content        [:div "My item"]
                     :on-click       [:my-event]
                     :on-right-click [:render-my-context-menu!]}])
@@ -134,8 +134,8 @@
 
 (defn my-view
   [surface-id]
-  [:<> [item-lister/header :my-extension :my-type {}]
-       [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]])
+  [:<> [item-lister/header :my-lister {}]
+       [item-lister/body   :my-lister {:list-element [:div "My item"]}]])
 
 
 
@@ -144,9 +144,9 @@
 
 (defn your-view
   [surface-id]
-  (let [description @(a/subscribe [:item-lister/get-description :my-extension :my-type])]
-       [layouts/layout-a surface-id {:header [item-lister/header :my-extension :my-type {}]
-                                     :body   [item-lister/body   :my-extension :my-type {:list-element [:div "My item"]}]
+  (let [description @(a/subscribe [:item-lister/get-description :my-lister])]
+       [layouts/layout-a surface-id {:header [item-lister/header :my-lister {}]
+                                     :body   [item-lister/body   :my-lister {:list-element [:div "My item"]}]
                                      :description description}]))
 
 
@@ -159,13 +159,13 @@
 ; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
 ;  tudsz a különbözű menü módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
 (defn my-menu-element
-  [extension-id item-namespace]
-  [elements/row {:content [item-lister/add-new-item-button  extension-id item-namespace]
-                          [item-lister/toggle-select-button extension-id item-namespace]}])
+  [lister-id]
+  [elements/row {:content [item-lister/add-new-item-button  lister-id]
+                          [item-lister/toggle-select-button lister-id]}])
 
 (defn my-header-with-my-menu
   [surface-id]
-  [item-lister/header :my-extension :my-type {:menu-element #'my-menu-element}])
+  [item-lister/header :my-lister {:menu-element #'my-menu-element}])
 
 
 

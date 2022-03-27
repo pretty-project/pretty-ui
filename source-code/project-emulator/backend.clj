@@ -10,8 +10,8 @@
               [x.boot-loader.api]
               [shadow.cljs.devtools.server :as server]
               [shadow.cljs.devtools.api    :as shadow]
-              ; DEBUG
-              [playground.api])
+              ; TEMP
+              [extensions.playground.api])
     (:gen-class))
 
 

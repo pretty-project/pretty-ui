@@ -38,7 +38,7 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [client-item]
-  [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
+  [:div.clients--client-item [item-editor/color-stamp :clients.client-lister client-item]
                              [client-item-details client-item]])
 
 (defn client-item
@@ -56,11 +56,11 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-lister/get-description :clients :client])]
+  (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
        [layouts/layout-a :surface-id {:description description
-                                      :header [item-lister/header :clients :client {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
-                                      :body   [item-lister/body   :clients :client {:list-element #'client-item
-                                                                                    :item-actions [:delete :duplicate]
-                                                                                    :items-path   [:clients :client-lister/downloaded-items]
-                                                                                    :search-keys  [:name :email-address]
-                                                                                    :sortable? true}]}]))
+                                      :header [item-lister/header :clients.client-lister {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
+                                      :body   [item-lister/body   :clients.client-lister {:list-element #'client-item
+                                                                                          :item-actions [:delete :duplicate]
+                                                                                          :items-path   [:clients :client-lister/downloaded-items]
+                                                                                          :search-keys  [:name :email-address]
+                                                                                          :sortable? true}]}]))

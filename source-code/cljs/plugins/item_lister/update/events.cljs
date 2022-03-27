@@ -16,22 +16,20 @@
 (defn delete-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (as-> db % (r backup.events/backup-selected-items! % extension-id item-namespace)
-             (r items.events/disable-selected-items! % extension-id item-namespace)
+  [db [_ lister-id]]
+  (as-> db % (r backup.events/backup-selected-items! % lister-id)
+             (r items.events/disable-selected-items! % lister-id)
              (r ui/fake-process!                     % 15)))
 
 (defn delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (as-> db % (r items.events/reset-selections! % extension-id item-namespace)
-             (r items.events/enable-all-items! % extension-id item-namespace)))
+  [db [_ lister-id]]
+  (as-> db % (r items.events/reset-selections! % lister-id)
+             (r items.events/enable-all-items! % lister-id)))

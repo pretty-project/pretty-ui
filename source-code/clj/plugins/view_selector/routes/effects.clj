@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.routes.effects
-    (:require [plugins.view-selector.routes.helpers :as routes.helpers]
-              [x.server-core.api                    :as a]))
+    (:require [plugins.plugin-handler.routes.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -19,10 +19,9 @@
   ; @param (map) selector-props
   ;  {:base-route (string)}
   (fn [_ [_ selector-id {:keys [base-route]}]]
-      [:router/add-route! (routes.helpers/route-id selector-id :base)
-                          {:client-event   [:view-selector/handle-route! selector-id]
-                           :route-template base-route
-                           :restricted?    true}]))
+      [:plugin-handler/add-base-route! selector-id
+                                       {:base-route   base-route
+                                        :client-event [:view-selector/handle-route! selector-id]}]))
 
 (a/reg-event-fx
   :view-selector/add-extended-route!
@@ -32,7 +31,6 @@
   ; @param (map) selector-props
   ;  {:extended-route (string)}
   (fn [_ [_ selector-id {:keys [extended-route]}]]
-      [:router/add-route! (routes.helpers/route-id selector-id :extended)
-                          {:client-event   [:view-selector/handle-route! selector-id]
-                           :route-template extended-route
-                           :restricted?    true}]))
+      [:plugin-handler/add-extended-route! selector-id
+                                           {:client-event   [:view-selector/handle-route! selector-id]
+                                            :extended-route extended-route}]))

@@ -2,7 +2,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.core.events)
+(ns plugins.item-lister.core.events
+    (:require [plugins.plugin-handler.core.events :as core.events]
+              [x.server-core.api                  :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.events
+(def store-plugin-props! core.events/store-plugin-props!)
 
 
 
@@ -12,10 +22,9 @@
 (defn init-lister!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) lister-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace lister-props]]
-  (assoc-in db [:plugins :item-lister/lister-props extension-id] lister-props))
+  [db [_ lister-id lister-props]]
+  (r store-plugin-props! db lister-id lister-props))

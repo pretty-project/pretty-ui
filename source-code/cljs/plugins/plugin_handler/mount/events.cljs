@@ -42,7 +42,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  (dissoc-in [:plugins :plugin-handler/body-props plugin-id]))
+  (dissoc-in db [:plugins :plugin-handler/body-props plugin-id]))
 
 (defn remove-header-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,4 +51,4 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  (dissoc-in [:plugins :plugin-handler/header-props plugin-id]))
+  (dissoc-in db [:plugins :plugin-handler/header-props plugin-id]))

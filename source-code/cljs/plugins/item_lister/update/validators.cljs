@@ -15,51 +15,47 @@
 (defn delete-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (r update.subs/get-mutation-name db extension-id item-namespace :delete)
+  [db [_ lister-id server-response]]
+  (let [mutation-name    (r update.subs/get-mutation-name db lister-id :delete-items)
         deleted-item-ids (get server-response (symbol mutation-name))]
        (vector/nonempty? deleted-item-ids)))
 
 (defn undo-delete-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name   (r update.subs/get-mutation-name db extension-id item-namespace :undo-delete)
+  [db [_ lister-id server-response]]
+  (let [mutation-name   (r update.subs/get-mutation-name db lister-id :undo-delete-items)
         recovered-items (get server-response (symbol mutation-name))]
        (vector/nonempty? recovered-items)))
 
 (defn duplicate-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (r update.subs/get-mutation-name db extension-id item-namespace :duplicate)
+  [db [_ lister-id server-response]]
+  (let [mutation-name    (r update.subs/get-mutation-name db lister-id :duplicate-items)
         duplicated-items (get server-response (symbol mutation-name))]
        (vector/nonempty? duplicated-items)))
 
 (defn undo-duplicate-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [mutation-name    (r update.subs/get-mutation-name db extension-id item-namespace :undo-duplicate)
+  [db [_ lister-id server-response]]
+  (let [mutation-name    (r update.subs/get-mutation-name db lister-id :undo-duplicate-items)
         deleted-item-ids (get server-response (symbol mutation-name))]
        (vector/nonempty? deleted-item-ids)))

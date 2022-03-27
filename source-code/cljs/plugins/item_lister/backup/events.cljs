@@ -17,34 +17,32 @@
 (defn backup-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
+  [db [_ lister-id]]
   ; - A kijelölt elemek törlésekor szükséges azokról biztonsági másolatot készíteni, amiből esetlegesen
   ;   visszaállíthatók az elemek, ha a felhasználó a kitörölt elemek helyreállítása lehetőséget választja.
   ; - Az elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
-  (let [items-path     (r mount.subs/get-body-prop db extension-id item-namespace :items-path)
-        selected-items (r core.subs/get-meta-item  db extension-id item-namespace :selected-items)]
+  (let [items-path     (r mount.subs/get-body-prop db lister-id :items-path)
+        selected-items (r core.subs/get-meta-item  db lister-id :selected-items)]
        (letfn [(f [db item-dex]
                   (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))
                         item    (get-in db (vector/conj-item    items-path item-dex))]
-                       (assoc-in db [:plugins :item-lister/backup-items extension-id item-id] item)))]
+                       (assoc-in db [:plugins :item-lister/backup-items lister-id item-id] item)))]
               (reduce f db selected-items))))
 
 (defn clean-backup-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) item-ids
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-ids]]
+  [db [_ lister-id item-ids]]
   ; Ha lejárt az elemek törlésének visszavonására rendelkezésre álló idő, vagy megtörtént az elemek
   ; helyreállítása, akkor már nincs szükség az elemekről készült biztonsági másolatokra ...
-  (update-in db [:plugins :item-lister/backup-items extension-id] map/remove-keys item-ids))
+  (update-in db [:plugins :item-lister/backup-items lister-id] map/remove-keys item-ids))
 
 
 

@@ -3,7 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.subs
-    (:require [x.server-core.api :as a]))
+    (:require [plugins.plugin-handler.core.subs :as core.subs]
+              [x.server-core.api                :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.subs
+(def get-plugin-prop core.subs/get-plugin-prop)
 
 
 
@@ -13,13 +22,12 @@
 (defn get-lister-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (keyword) item-key
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace item-key]]
-  (get-in db [:plugins :item-lister/lister-props extension-id item-key]))
+  [db [_ lister-id item-key]]
+  (r get-plugin-prop db lister-id item-key))
 
 
 
@@ -27,4 +35,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-editor/get-lister-prop get-lister-prop)
+(a/reg-sub :item-lister/get-lister-prop get-lister-prop)

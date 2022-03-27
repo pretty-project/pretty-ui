@@ -7,8 +7,8 @@
               [extensions.trader.api]
              ;[sente.api]
               [x.boot-loader.api]
-              ; DEBUG
-              [playground.api]))
+              ; TEMP
+              [extensions.playground.api]))
 
 
 

@@ -33,7 +33,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :clients.client-lister/item-clicked
   (fn [{:keys [db]} [_ item-dex {:keys [id]}]]
-      (if (r item-lister/toggle-item-selection? db :clients :client item-dex)
-          {:db (r item-lister/toggle-item-selection! db :clients :client item-dex)}
-          (let [item-route (r item-editor/get-item-route db :clients :client id)]
+      (if (r item-lister/toggle-item-selection? db :clients.client-lister item-dex)
+          {:db (r item-lister/toggle-item-selection! db :clients.client-lister item-dex)}
+          (let [item-route (r item-editor/get-item-route db :clients.client-lister id)]
                [:router/go-to! item-route]))))

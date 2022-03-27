@@ -9,7 +9,8 @@
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
-              [pathom.api         :as pathom]))
+              [pathom.api         :as pathom]
+              [x.server-core.api  :as a]))
 
 
 
@@ -19,19 +20,19 @@
 (defn- sort-pattern
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (namespaced keyword) order-by
   ;
   ; @example
-  ;  (sort-pattern :my-extension :my-type :name/ascending)
+  ;  (download.helpers/sort-pattern :my-lister :name/ascending)
   ;  =>
-  ;  {:my-type/name 1}
+  ;  {:namespace/name 1}
   ;
   ; @return (map)
-  [_ item-namespace order-by]
-  (let [order-key (namespace order-by)
-        direction (name      order-by)]
+  [lister-id order-by]
+  (let [item-namespace @(a/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
+        order-key       (namespace order-by)
+        direction       (name      order-by)]
        {(keyword/add-namespace item-namespace order-key)
         (case direction "ascending" 1 "descending" -1)}))
 
@@ -46,16 +47,16 @@
   ; @param (map) env
   ;
   ; @example
-  ;  (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                   :download-limit        20
-  ;                                   :reload-items?         false}})
+  ;  (download.helpers/env->max-count {... .../params {:downloaded-item-count 24
+  ;                                                    :download-limit        20
+  ;                                                    :reload-items?         false}})
   ;  =>
   ;  20
   ;
   ; @example
-  ;  (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                   :download-limit        20
-  ;                                   :reload-items?         true}})
+  ;  (download.helpers/env->max-count {... .../params {:downloaded-item-count 24
+  ;                                                    :download-limit        20
+  ;                                                    :reload-items?         true}})
   ;  =>
   ;  40
   ;
@@ -94,51 +95,49 @@
 
 (defn env->sort-pattern
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->sort-pattern {...} :my-extension :my-type)
+  ;  (item-lister/env->sort-pattern {...} :my-lister)
   ;  =>
-  ;  {:my-type/name 1}
+  ;  {:namespace/name 1}
   ;
   ; @return (map)
-  [env extension-id item-namespace]
+  [env lister-id]
   (let [order-by (pathom/env->param env :order-by)]
-       (sort-pattern extension-id item-namespace order-by)))
+       (sort-pattern lister-id order-by)))
 
 (defn env->search-pattern
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->search-pattern {...} :my-extension :my-type)
+  ;  (item-lister/env->search-pattern {...} :my-lister)
   ;  =>
-  ;  {:$or [{:my-type/name "..."} {...}]}
+  ;  {:$or [{:namespace/name "..."} {...}]}
   ;
   ; @return (map)
   ;  {:$or (maps in vector)}
-  [env _ item-namespace]
-  (let [search-keys (pathom/env->param env :search-keys)
-        search-term (pathom/env->param env :search-term)]
+  [env lister-id]
+  (let [item-namespace @(a/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
+        search-keys     (pathom/env->param env :search-keys)
+        search-term     (pathom/env->param env :search-term)]
        (if (string/nonempty? search-term)
            {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))})))
 
 (defn env->pipeline-props
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->pipeline-props {...} :my-extension :my-type)
+  ;  (item-lister/env->pipeline-props {...} :my-lister)
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
-  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
-  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
-  ;   :sort-pattern   {:my-type/name 1}
-  ;   :unset-pattern  [:my-type/my-key]}
+  ;   :filter-pattern {:$or [{:namespace/my-key "..."} {...}]}
+  ;   :search-pattern {:$or [{:namespace/name   "..."} {...}]}
+  ;   :sort-pattern   {:namespace/name 1}
+  ;   :unset-pattern  [:namespace/my-key]}
   ;
   ; @return (map)
   ;  {:field-pattern (map)
@@ -148,37 +147,35 @@
   ;   :skip (integer)
   ;   :sort-pattern (map)
   ;   :unset-pattern (namespaced keywords in vector)}
-  [env extension-id item-namespace]
+  [env lister-id]
   {:max-count      (env->max-count      env)
    :skip           (env->skip           env)
    :field-pattern  (pathom/env->param   env :field-pattern)
    :filter-pattern (pathom/env->param   env :filter-pattern)
    :unset-pattern  (pathom/env->param   env :unset-pattern)
-   :search-pattern (env->search-pattern env extension-id item-namespace)
-   :sort-pattern   (env->sort-pattern   env extension-id item-namespace)})
+   :search-pattern (env->search-pattern env lister-id)
+   :sort-pattern   (env->sort-pattern   env lister-id)})
 
 (defn env->get-pipeline
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (env->get-pipeline {...} :my-extension :my-type)
+  ;  (item-lister/env->get-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
-  [env extension-id item-namespace]
-  (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
+  [env lister-id]
+  (let [pipeline-props (env->pipeline-props env lister-id)]
        (mongo-db/get-pipeline pipeline-props)))
 
 (defn env->count-pipeline
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (env->count-pipeline {...} :my-extension :my-type)
+  ;  (item-lister/env->count-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
-  [env extension-id item-namespace]
-  (let [pipeline-props (env->pipeline-props env extension-id item-namespace)]
+  [env lister-id]
+  (let [pipeline-props (env->pipeline-props env lister-id)]
        (mongo-db/count-pipeline pipeline-props)))

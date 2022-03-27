@@ -3,9 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.transfer.effects
-    (:require [mid-fruits.candy                     :refer [return]]
-              [plugins.item-lister.transfer.helpers :as transfer.helpers]
-              [x.server-core.api                    :as a]))
+    (:require [plugins.plugin-handler.transfer.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -16,10 +15,7 @@
   :item-lister/reg-transfer-lister-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) lister-props
-  (fn [_ [_ extension-id item-namespace lister-props]]
-      {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return lister-props))
-                                 :target-path [:plugins :item-lister/transfer-items extension-id]}]}))
+  (fn [_ [_ lister-id lister-props]]
+      [:plugin-handler/reg-transfer-plugin-props! lister-id lister-props]))

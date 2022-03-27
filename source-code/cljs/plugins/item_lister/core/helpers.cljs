@@ -36,14 +36,13 @@
 (defn default-items-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (core.helpers/default-items-path :my-extension :my-type)
+  ;  (core.helpers/default-items-path :my-lister)
   ;  =>
-  ;  [:plugins :item-lister/downloaded-items :my-extension]
+  ;  [:plugins :item-lister/downloaded-items :my-lister]
   ;
   ; @return (vector)
-  [extension-id _]
-  [:plugins :item-lister/downloaded-items extension-id])
+  [lister-id]
+  [:plugins :item-lister/downloaded-items lister-id])

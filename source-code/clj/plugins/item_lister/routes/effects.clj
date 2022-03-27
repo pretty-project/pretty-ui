@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.routes.effects
-    (:require [plugins.item-lister.routes.helpers :as routes.helpers]
-              [x.server-core.api                  :as a]))
+    (:require [plugins.plugin-handler.routes.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -15,12 +15,10 @@
   :item-lister/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) lister-id
   ; @param (map) lister-props
   ;  {:route-template (string)}
-  (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
-                          {:client-event   [:item-lister/handle-route! extension-id item-namespace]
-                           :route-template route-template
-                           :restricted?    true}]))
+  (fn [_ [_ lister-id {:keys [route-template]}]]
+      [:plugin-handler/add-base-route! lister-id
+                                       {:client-event   [:item-lister/handle-route! lister-id]
+                                        :route-template route-template}]))

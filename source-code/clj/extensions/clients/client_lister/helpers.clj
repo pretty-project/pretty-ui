@@ -32,11 +32,11 @@
         ;   dokumentumok is tartalmaznák azt!
         env (-> env (pathom/env<-param :field-pattern name-field-pattern)
                     (pathom/env<-param :unset-pattern [:client/name]))]
-       (item-lister/env->get-pipeline env :clients :client)))
+       (item-lister/env->get-pipeline env :clients.client-lister)))
 
 (defn env->count-pipeline
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [name-field-pattern (env->name-field-pattern env)
         env (pathom/env<-param env :field-pattern name-field-pattern)]
-       (item-lister/env->count-pipeline env :clients :client)))
+       (item-lister/env->count-pipeline env :clients.client-lister)))

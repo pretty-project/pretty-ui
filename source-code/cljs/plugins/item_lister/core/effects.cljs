@@ -17,12 +17,11 @@
   :item-lister/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      (let [on-route    (r transfer.subs/get-transfer-item db extension-id item-namespace :on-route)
-            route-title (r transfer.subs/get-transfer-item db extension-id item-namespace :route-title)]
-           {;:db (r core.events/handle-route! db extension-id item-namespace)
+  ; @param (keyword) lister-id
+  (fn [{:keys [db]} [_ lister-id]]
+      (let [on-route    (r transfer.subs/get-transfer-item db lister-id :on-route)
+            route-title (r transfer.subs/get-transfer-item db lister-id :route-title)]
+           {;:db (r core.events/handle-route! db lister-id)
             :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
 
 
@@ -32,15 +31,15 @@
 
 (a/reg-event-fx
   :item-lister/use-filter!
-  ; @param (keyword) extension-id
+  ; @param (keyword) lister-id
   ; @param (keyword) item-namespace
   ; @param (map) filter-pattern
   ;
   ; @usage
-  ;  [:item-lister/use-filter! :my-extension :my-type {...}]
-  (fn [{:keys [db]} [_ extension-id item-namespace filter-pattern]]
-      {:db (r core.events/use-filter! db extension-id item-namespace filter-pattern)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+  ;  [:item-lister/use-filter! :my-lister {...}]
+  (fn [{:keys [db]} [_ lister-id filter-pattern]]
+      {:db (r core.events/use-filter! db lister-id filter-pattern)
+       :dispatch [:tools/reload-infinite-loader! lister-id]}))
 
 
 
@@ -51,11 +50,11 @@
   :item-lister/search-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) lister-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r download.events/reset-downloads! db extension-id item-namespace)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+  (fn [{:keys [db]} [_ lister-id]]
+      {:db (r download.events/reset-downloads! db lister-id)
+       :dispatch [:tools/reload-infinite-loader! lister-id]}))
 
 
 
@@ -66,8 +65,8 @@
   :item-lister/order-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) lister-id
   ; @param (keyword) item-namespace
-  (fn [{:keys [db]} [_ extension-id item-namespace]]
-      {:db (r download.events/reset-downloads! db extension-id item-namespace)
-       :dispatch [:tools/reload-infinite-loader! extension-id]}))
+  (fn [{:keys [db]} [_ lister-id]]
+      {:db (r download.events/reset-downloads! db lister-id)
+       :dispatch [:tools/reload-infinite-loader! lister-id]}))

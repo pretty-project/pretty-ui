@@ -2,9 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.view-selector.effects
-    (:require [playground.view-selector.views :as view-selector.views]
-              [x.app-core.api                 :as a]))
+(ns extensions.playground.view-selector.effects
+    (:require [extensions.playground.view-selector.views :as view-selector.views]
+              [x.app-core.api                            :as a]))
 
 
 

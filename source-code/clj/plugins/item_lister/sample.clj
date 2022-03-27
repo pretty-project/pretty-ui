@@ -27,8 +27,8 @@
   ;  {:document-count (integer)
   ;   :documents (namespaced maps in vector)}}
   [env _]
-  (let [get-pipeline   (item-lister/env->get-pipeline   env :my-extension :my-type)
-        count-pipeline (item-lister/env->count-pipeline env :my-extension :my-type)]
+  (let [get-pipeline   (item-lister/env->get-pipeline   env :my-lister)
+        count-pipeline (item-lister/env->count-pipeline env :my-lister)]
        {:documents      (mongo-db/get-documents-by-pipeline   "my-collection" get-pipeline)
         :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)}))
 

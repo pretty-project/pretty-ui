@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.macro
+(ns extensions.playground.macro
     (:require [re-frame.core :as re-frame.core]))
 
 
