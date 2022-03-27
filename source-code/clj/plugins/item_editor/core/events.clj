@@ -2,7 +2,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.core.events)
+(ns plugins.item-editor.core.events
+    (:require [plugins.plugin-handler.core.events :as core.events]
+              [x.server-core.api                  :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.events
+(def store-plugin-props! core.events/store-plugin-props!)
 
 
 
@@ -12,10 +22,9 @@
 (defn init-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace editor-props]]
-  (assoc-in db [:plugins :item-editor/editor-props extension-id] editor-props))
+  [db [_ editor-id editor-props]]
+  (r store-plugin-props! db editor-id editor-props))

@@ -16,16 +16,15 @@
 (defn request-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace server-response]]
-  (let [resolver-id (r download.subs/get-resolver-id db extension-id item-namespace :get)
+  [db [_ editor-id server-response]]
+  (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
         document    (get server-response resolver-id)
         suggestions (get server-response :item-editor/get-item-suggestions)]
        (and (or (map? suggestions)
-                (not (r core.subs/download-suggestions? db extension-id item-namespace)))
+                (not (r core.subs/download-suggestions? db editor-id)))
             (or (db/document->document-namespaced? document)
-                (not (r core.subs/download-item? db extension-id item-namespace))))))
+                (not (r core.subs/download-item? db editor-id))))))

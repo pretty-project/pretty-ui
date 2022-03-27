@@ -3,8 +3,19 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.mount.events
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a]))
+    (:require [mid-fruits.map                      :refer [dissoc-in]]
+              [plugins.plugin-handler.mount.events :as mount.events]
+              [plugins.view-selector.core.events   :as core.events]
+              [x.app-core.api                      :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.mount.events
+(def store-body-props!  mount.events/store-body-props!)
+(def remove-body-props! mount.events/remove-body-props!)
 
 
 
@@ -19,7 +30,7 @@
   ;
   ; @return (map)
   [db [_ selector-id body-props]]
-  (assoc-in db [:plugins :view-selector/body-props selector-id] body-props))
+  (r store-body-props! db selector-id body-props))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,8 +39,8 @@
   ;
   ; @return (map)
   [db [_ selector-id]]
-  (-> db (dissoc-in [:plugins :view-selector/body-props selector-id])
-         (dissoc-in [:plugins :view-selector/meta-items selector-id])))
+  (as-> db % (r remove-body-props!             % selector-id)
+             (r core.events/remove-meta-items! % selector-id)))
 
 
 

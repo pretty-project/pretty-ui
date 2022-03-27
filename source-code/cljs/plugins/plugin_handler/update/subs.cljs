@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.plugin-handler.upload.subs
+(ns plugins.plugin-handler.update.subs
     (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
               [x.app-core.api                       :refer [r]]))
 
@@ -18,7 +18,7 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r download.subs/get-mutation-name db :my-plugin :delete-items)
+  ;  (r update.subs/get-mutation-name db :my-plugin :delete-items)
   ;  =>
   ;  "my-handler/delete-items!"
   ;

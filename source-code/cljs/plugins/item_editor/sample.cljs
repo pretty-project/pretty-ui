@@ -6,31 +6,16 @@
     (:require [plugins.item-editor.api :as item-editor]
               [x.app-components.api    :as components]
               [x.app-core.api          :as a]
-              [x.app-elements.api      :as elements]))
+              [x.app-elements.api      :as elements]
+              [x.app-layouts.api       :as layouts]))
 
 
 
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin használatához mindenképpen szükséges a szerver-oldali [:item-editor/init-editor! ...]
-; eseményt alkalmazni!
-
-
-
-;; -- A plugin elindítása -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az item-editor plugin elindítható ...
-(a/reg-event-fx
-  :load-my-item-editor!
-  (fn [_ _]
-      ; ... az [:item-editor/edit-item! ...] esemény meghívásával.
-      [:item-editor/edit-item! :my-extension :my-type "my-item"]
-      ; ... az [:item-editor/load-editor! ...] esemény meghívásával.
-      [:item-editor/load-editor! :my-extension :my-type {:item-id "my-item"}]
-      ; ... az "/@app-home/my-extension/my-item" útvonal használatával.
-      [:router/go-to! "/@app-home/my-extension/my-item"]))
+; A plugin beállításához mindenképpen szükséges a szerver-oldali [:item-editor/init-editor! ...]
+; eseményt használni!
 
 
 
@@ -38,20 +23,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-view
-  [surface-id]
-  [:<> [item-editor/header :my-extension :my-type {}]
-       [item-editor/body   :my-extension :my-type {:form-element [:div "My form"]}]])
-
-(a/reg-event-fx
-  :my-extension.my-type-editor/render-editor!
-  [:ui/set-surface! :my-extension.my-type-editor/view
-                    {:view #'my-view}])
-
-; Az [:item-editor/load-editor! ...] esemény a [:my-extension.my-type-editor/load-editor!]
-; esemény meghívásával fejezi be a plugin elindítását ...
-(a/reg-event-fx
-  :my-extension.my-type-editor/load-editor!
-  [:my-extension.my-type-editor/render-editor!])
+  []
+  [:<> [item-editor/header :my-editor {}]
+       [item-editor/body   :my-editor {:form-element [:div "My form"]}]])
 
 
 
@@ -60,9 +34,9 @@
 
 (defn your-view
   [surface-id]
-  (let [description @(a/subscribe [:item-editor/get-description :your-extension :your-type])]
-       [layouts/layout-a surface-id {:header [item-editor/header :your-extension :your-type {}]
-                                     :body   [item-editor/body   :your-extension :your-type {:form-element [:div "Your form"]}]
+  (let [description @(a/subscribe [:item-editor/get-description :your-editor])]
+       [layouts/layout-a surface-id {:header [item-editor/header :your-editor {}]
+                                     :body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
                                      :description description}]))
 
 
@@ -77,16 +51,16 @@
 ;     tulajdonságával.
 ; (Fejlesztői módban elindítitott applikáció esetén a funkció inaktív!)
 (defn our-type-form
-  [extension-id item-namespace]
+  [editor-id]
   [elements/text-field ::our-sample-field
                        {:form-id    :my-form
                         :required?  true
-                        :value-path [:our-extension :item-editor/data-items :our-key]}])
+                        :value-path [:our-editor :our-field]}])
 
 (defn our-view
-  [surface-id]
-  [item-editor/view :our-extension :our-type {:form-element #'our-type-form
-                                              :form-id :my-form}])
+  []
+  [item-editor/view :our-editor {:form-element #'our-type-form
+                                 :form-id :my-form}])
 
 
 
@@ -108,7 +82,17 @@
 ; - Az item-editor plugin számára átadott form-element komponensben ne használj olyan input mezőt,
 ;   ami {:initial-value ...} tulajdonsággal rendelkezik, mert ...
 ;   Pl.: Új elem létrehozásakor az input mezők {:initial-value ...} értékei megváltoztatják a dokumentumot,
-;        és ha a felhasználó a dokumentum változtatása nélkül elhagyja a plugint, akkor az tévesen
-;        úgy érzékeli, hogy a dokumentumot a felhasználó változtatta meg és az elhagyás után felajánlja
+;        és ha a felhasználó a dokumentum változtatása nélkül elhagyja a szerkesztőt, akkor az tévesen
+;        úgy érzékelné, hogy a dokumentumot a felhasználó változtatta meg és az elhagyás után felajánlaná
 ;        a "Nem mentett változtatások visszaállítása" lehetőségét!
 ; - ...
+
+
+
+;; -- Az [:item-editor/edit-item! "..."] esemény hanszálata -------------------
+;; ----------------------------------------------------------------------------
+
+; ...
+(a/reg-event-fx
+  :edit-my-item!
+  [:item-editor/edit-item! :my-editor "my-item"])

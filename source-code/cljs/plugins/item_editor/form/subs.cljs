@@ -14,15 +14,14 @@
 ;; ----------------------------------------------------------------------------
 
 (defn form-completed?
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  (r item-editor/form-completed? db extension-id item-namespace)
+  ;  (r item-editor/form-completed? db :my-editor)
   ;
   ; @return (boolean)
-  [db [_ extension-id item-namespace]]
-  (if-let [form-id (r mount.subs/get-body-prop db extension-id item-namespace :form-id)]
+  [db [_ editor-id]]
+  (if-let [form-id (r mount.subs/get-body-prop db editor-id :form-id)]
           (r elements/form-completed? db form-id)
           (return true)))
 
@@ -31,9 +30,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) extension-id
-; @param (keyword) item-namespace
+; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/form-completed? :my-extension :my-type]
+;  [:item-editor/form-completed? :my-editor]
 (a/reg-sub :item-editor/form-completed? form-completed?)

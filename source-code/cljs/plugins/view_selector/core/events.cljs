@@ -4,11 +4,21 @@
 
 (ns plugins.view-selector.core.events
     (:require [mid-fruits.candy                    :refer [return]]
+              [plugins.plugin-handler.core.events  :as core.events]
               [plugins.view-selector.core.subs     :as core.subs]
               [plugins.view-selector.routes.events :as routes.events]
               [plugins.view-selector.transfer.subs :as transfer.subs]
               [x.app-core.api                      :refer [r]]
               [x.app-ui.api                        :as ui]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.events
+(def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-items! core.events/remove-meta-items!)
 
 
 

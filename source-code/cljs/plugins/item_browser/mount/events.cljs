@@ -11,16 +11,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (map) header-props
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace header-props]])
-
 (defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -38,21 +28,3 @@
   (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % extension-id item-namespace))
              :items-key   (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :items-key] items-key)
              :path-key    (assoc-in [:plugins :item-lister/meta-items extension-id :default-query-params :path-key]  path-key)))
-
-(defn header-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]])
-
-(defn body-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]])

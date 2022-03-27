@@ -33,7 +33,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items]))
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id]))
 
 (defn reset-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!

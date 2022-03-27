@@ -12,8 +12,8 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin használatához mindenképpen szükséges a szerver-oldali [:item-browser/init-browser! ...]
-; eseményt alkalmazni!
+; A plugin beállításához mindenképpen szükséges a szerver-oldali [:item-browser/init-browser! ...]
+; eseményt beállításához!
 
 
 

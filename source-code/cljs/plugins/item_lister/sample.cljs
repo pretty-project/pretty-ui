@@ -15,8 +15,8 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin használatához mindenképpen szükséges a szerver-oldali [:item-lister/init-lister! ...]
-; eseményt alkalmazni!
+; A plugin beállításához mindenképpen szükséges a szerver-oldali [:item-lister/init-lister! ...]
+; eseményt használni!
 
 
 
@@ -64,7 +64,7 @@
        [elements/menu-bar {:menu-items [{:label "My filter" :on-click my-filter-event}]}]))
 
 (defn my-view-with-filters
-  [surface-id]
+  []
   [:<> [my-filters]
        [item-lister/header :my-lister {}]
        [item-lister/body   :my-lister {}]])
@@ -77,9 +77,9 @@
 ; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
 ; csak az előszűrésnek megfelelő elemek jelenjenek meg.
 (defn my-filtered-body
-  [surface-id]
+  []
   [item-lister/body :my-lister {:list-element [:div "My item"]
-                                :prefilter    {:namespace/color "red"}}])
+                                :prefilter    {:my-type/color "red"}}])
 
 
 
@@ -133,7 +133,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn my-view
-  [surface-id]
+  []
   [:<> [item-lister/header :my-lister {}]
        [item-lister/body   :my-lister {:list-element [:div "My item"]}]])
 
@@ -164,7 +164,7 @@
                           [item-lister/toggle-select-button lister-id]}])
 
 (defn my-header-with-my-menu
-  [surface-id]
+  []
   [item-lister/header :my-lister {:menu-element #'my-menu-element}])
 
 

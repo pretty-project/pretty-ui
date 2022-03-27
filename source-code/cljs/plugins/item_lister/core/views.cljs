@@ -533,7 +533,7 @@
   ; @usage
   ;  (defn my-list-element [lister-id item-dex item] [:div ...])
   ;  [item-lister/body :my-lister {:list-element #'my-list-element
-  ;                                :prefilter    {:namespace/color "red"}}]
+  ;                                :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
   (let [body-props (core.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)

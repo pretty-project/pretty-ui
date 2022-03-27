@@ -12,6 +12,34 @@
 
 
 
+;; -- A plugin beállítása -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A plugin használatához szükséges megadni ...
+; ... a {:collection-name "..."} tulajdonságot.
+; ... a {:handler-key ...} tulajdonságot, amit a plugin a mutation és resolver függvények neveiben
+;     névtérként használ.
+; ... az {:item-namespace ...} tulajdonságot.
+;
+; A plugin használatához OPCIONÁLISAN megadható ...
+; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált "/@app-home/my-lister"
+;     útvonal használatakor történik meg.
+; ... a {:route-template "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti
+;     "/@app-home/my-lister" útvonalat.
+; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált "/@app-home/my-lister"
+;     útvonal használatakor beállítódik az applikáció címkéjének.
+(a/reg-event-fx
+  :init-my-lister!
+  [:item-lister/init-lister! :my-lister
+                             {:collection-name "my-collection"
+                              :handler-key     :my-handler
+                              :item-namespace  :my-type
+                              :on-route        [:my-event]
+                              :route-template  "/@app-home/my-lister"
+                              :route-title     "My lister"}])
+
+
+
 ;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 

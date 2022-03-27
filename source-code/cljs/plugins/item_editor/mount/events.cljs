@@ -6,7 +6,19 @@
     (:require [mid-fruits.map                      :refer [dissoc-in]]
               [plugins.item-editor.core.events     :as core.events]
               [plugins.item-editor.download.events :as download.events]
+              [plugins.plugin-handler.mount.events :as mount.events]
               [x.app-core.api                      :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.mount.events
+(def store-body-props!    mount.events/store-body-props!)
+(def store-header-props!  mount.events/store-header-props!)
+(def remove-body-props!   mount.events/remove-body-props!)
+(def remove-header-props! mount.events/remove-header-props!)
 
 
 
@@ -16,26 +28,24 @@
 (defn header-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) header-props
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace header-props]]
-  (assoc-in db [:plugins :item-editor/header-props extension-id] header-props))
+  [db [_ editor-id header-props]]
+  (r store-header-props! db editor-id header-props))
 
 (defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) body-props
   ;  {:initial-item (map)(opt)
   ;   :item-id (string)(opt)
   ;   :item-path (vector)}
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace {:keys [initial-item item-id item-path] :as body-props}]]
+  [db [_ editor-id {:keys [initial-item item-id item-path] :as body-props}]]
   ; Az item-editor plugin body komponensének ...
   ; ... {:item-id "..."} tulajdonsága is lehet a szerkesztett elem azonosítójának forrása,
   ;     így lehetséges a szerkesztett dokumentum azonosítóját a body komponens paramétereként is átadni.
@@ -44,28 +54,26 @@
   ;         a plugin felhasználói változtatás nélküli elhagyásakor az tévesen felajánlaná
   ;         a "Nem mentett változtatások visszaállítása" lehetőséget.
   ;     ... így beállíthatók a dokumentum felhasználó által nem szerkeszthető tulajdonságai.
-  (cond-> db :store-body-props! (assoc-in [:plugins :item-editor/body-props extension-id] body-props)
-             item-id            (assoc-in [:plugins :item-editor/meta-items extension-id :item-id] item-id)
+  (cond-> db :store-body-props! (as-> % (r store-body-props! % editor-id body-props))
+             item-id            (assoc-in [:plugins :plugin-handler/meta-items editor-id :item-id] item-id)
              initial-item       (assoc-in item-path initial-item)))
 
 (defn header-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (dissoc-in db [:plugins :item-editor/header-props extension-id]))
+  [db [_ editor-id]]
+  (r remove-header-props! db editor-id))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (as-> db % (r core.events/reset-meta-items!    % extension-id item-namespace)
-             (r download.events/reset-downloads! % extension-id item-namespace)
-             (dissoc-in % [:plugins :item-editor/body-props extension-id])))
+  [db [_ editor-id]]
+  (as-> db % (r core.events/remove-meta-items!   % editor-id)
+             (r download.events/reset-downloads! % editor-id)
+             (r remove-body-props!               % editor-id)))

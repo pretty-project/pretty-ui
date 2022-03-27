@@ -36,7 +36,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (routes.helpers/base-route :my-namespace/my-plugin {:route-template "/@app-home/my-plugin/:item-id"})
+  ;  (routes.helpers/base-route :my-plugin {:route-template "/@app-home/my-plugin/:item-id"})
   ;  =>
   ;  "/@app-home/my-plugin"
   ;
@@ -55,7 +55,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (routes.helpers/extended-route :my-namespace/my-plugin {:route-template "/@app-home/my-plugin/:item-id"})
+  ;  (routes.helpers/extended-route :my-plugin {:route-template "/@app-home/my-plugin/:item-id"})
   ;  =>
   ;  "/@app-home/my-plugin/:item-id"
   ;
@@ -71,12 +71,21 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (routes.helpers/parent-route :my-namespace/my-plugin {:route-template "/@app-home/my-extension/:item-id"})
+  ;  (routes.helpers/parent-route :my-plugin {:route-template "/@app-home/my-plugin"})
+  ;  =>
+  ;  "/@app-home"
+  ;
+  ; @example
+  ;  (routes.helpers/parent-route :my-plugin {:route-template "/@app-home/my-plugin/:item-id"})
   ;  =>
   ;  "/@app-home"
   ;
   ; @return (string)
   [_ {:keys [route-template]}]
+  ; Abban az esetben szükséges alkalmazni a parent-route függvény által visszaadott útvonalat szülő-
+  ; -útvonalként, ha a "/@app-home/my-plugin/:item-id" útvonal szülő-útvonala NEM az "/@app-home/my-plugin"
+  ; útvonal, hanem a "/@app-home" útvonal.
+  ; Pl.
   (let [base-route (string/before-last-occurence route-template "/:")]
        (if (string/nonempty?    base-route)
            (uri/uri->parent-uri base-route)

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.routes.effects
-    (:require [plugins.item-editor.routes.helpers :as routes.helpers]
-              [x.server-core.api                  :as a]))
+    (:require [plugins.plugin-handler.routes.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -15,12 +15,10 @@
   :item-editor/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:route-template (string)}
-  (fn [_ [_ extension-id item-namespace {:keys [route-template]}]]
-      [:router/add-route! (routes.helpers/route-id extension-id item-namespace)
-                          {:client-event   [:item-editor/handle-route! extension-id item-namespace]
-                           :route-template route-template
-                           :restricted?    true}]))
+  ;  {:extended-route (string)}
+  (fn [_ [_ editor-id {:keys [extended-route]}]]
+      [:plugin-handler/add-extended-route! editor-id
+                                           {:client-event [:item-editor/handle-route! editor-id]
+                                            :extended-route extended-route}]))

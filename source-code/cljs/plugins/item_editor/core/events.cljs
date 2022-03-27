@@ -3,11 +3,21 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.events
-    (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.map                    :refer [dissoc-in]]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-editor.core.subs      :as core.subs]
+              [plugins.item-editor.transfer.subs  :as transfer.subs]
+              [plugins.plugin-handler.core.events :as core.events]
+              [x.app-core.api                     :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.events
+(def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-items! core.events/remove-meta-items!)
 
 
 
@@ -17,38 +27,21 @@
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id _]]
-  (assoc-in db [:plugins :item-editor/meta-items extension-id :error-mode?] true))
+  [db [_ editor-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :error-mode?] true))
 
 (defn set-recovery-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id _]]
+  [db [_ editor-id]]
   ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja az elem eltárolt változtatásait
-  (assoc-in db [:plugins :item-editor/meta-items extension-id :recovery-mode?] true))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reset-meta-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (dissoc-in db [:plugins :item-editor/meta-items extension-id]))
+  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :recovery-mode?] true))
 
 
 
@@ -58,24 +51,22 @@
 (defn store-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ extension-id _ item-id]]
-  (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] item-id))
+  [db [_ editor-id item-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :item-id] item-id))
 
 (defn store-derived-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [derived-item-id (r core.subs/get-derived-item-id db extension-id item-namespace)]
-       (assoc-in db [:plugins :item-editor/meta-items extension-id :item-id] derived-item-id)))
+  [db [_ editor-id]]
+  (let [derived-item-id (r core.subs/get-derived-item-id db editor-id)]
+       (assoc-in db [:plugins :plugin-handler/meta-items editor-id :item-id] derived-item-id)))
 
 
 
@@ -85,12 +76,11 @@
 (defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (r store-derived-item-id! db extension-id item-namespace))
+  [db [_ editor-id]]
+  (r store-derived-item-id! db editor-id))
 
 
 

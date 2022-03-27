@@ -33,7 +33,7 @@
   ;
   ; @return (vector)
   [db [_ lister-id item-ids]]
-  (let [mutation-name  (r update.subs/get-mutation-name   db lister-id :delete-items)
+  (let [mutation-name  (r update.subs/get-mutation-name   db lister-id :delete-items!)
         mutation-props (r get-delete-items-mutation-props db lister-id item-ids)]
        [`(~(symbol mutation-name) ~mutation-props)]))
 
@@ -63,7 +63,7 @@
   ;
   ; @return (vector)
   [db [_ lister-id item-ids]]
-  (let [mutation-name  (r update.subs/get-mutation-name        db lister-id :undo-delete-items)
+  (let [mutation-name  (r update.subs/get-mutation-name        db lister-id :undo-delete-items!)
         mutation-props (r get-undo-delete-items-mutation-props db lister-id item-ids)]
        [`(~(symbol mutation-name) ~mutation-props)]))
 
@@ -92,7 +92,7 @@
   ;
   ; @return (vector)
   [db [_ lister-id item-ids]]
-  (let [mutation-name  (r update.subs/get-mutation-name      db lister-id :duplicate-items)
+  (let [mutation-name  (r update.subs/get-mutation-name      db lister-id :duplicate-items!)
         mutation-props (r get-duplicate-items-mutation-props db lister-id item-ids)]
        [`(~(symbol mutation-name) ~mutation-props)]))
 
@@ -121,6 +121,6 @@
   ;
   ; @return (vector)
   [db [_ lister-id copy-ids]]
-  (let [mutation-name  (r update.subs/get-mutation-name           db lister-id :undo-duplicate-items)
+  (let [mutation-name  (r update.subs/get-mutation-name           db lister-id :undo-duplicate-items!)
         mutation-props (r get-undo-duplicate-items-mutation-props db lister-id copy-ids)]
        [`(~(symbol mutation-name) ~mutation-props)]))

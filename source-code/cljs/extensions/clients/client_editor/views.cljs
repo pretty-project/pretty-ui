@@ -21,7 +21,7 @@
 (defn- client-vat-no-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::vat-no-field
                             {:label :vat-no :min-width :s
                              :value-path [:clients :client-editor/edited-item :vat-no]
@@ -30,7 +30,7 @@
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/select ::country-select
                         {:label :country ;:user-cancel? false
                          :initial-options (param locales/EU-COUNTRY-NAMES)
@@ -40,7 +40,7 @@
 (defn- client-zip-code-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::zip-code-field
                             {:label :zip-code
                              :value-path [:clients :client-editor/edited-item :zip-code]
@@ -49,7 +49,7 @@
 (defn- client-city-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/combo-box ::city-field
                            {:label :city :emptiable? false :min-width :s
                             :options-path [:clients :client-editor/suggestions :city]
@@ -59,7 +59,7 @@
 (defn- client-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::address-field
                             {:label :address
                              :value-path [:clients :client-editor/edited-item :address]
@@ -84,7 +84,7 @@
 (defn- client-phone-number-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::phone-number-field
                             {:label :phone-number :required? true :min-width :s
                              :value-path [:clients :client-editor/edited-item :phone-number]
@@ -98,7 +98,7 @@
 (defn- client-email-address-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::email-address-field
                             {:label :email-address :required? true :min-width :s
                              :value-path [:clients :client-editor/edited-item :email-address]
@@ -118,7 +118,7 @@
 (defn- client-last-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::last-name-field
                             {:label :last-name :required? true :min-width :s
                              :value-path [:clients :client-editor/edited-item :last-name]
@@ -128,7 +128,7 @@
 (defn- client-first-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients :client])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::first-name-field
                             {:label :first-name :required? true :min-width :s
                              :value-path [:clients :client-editor/edited-item :first-name]
@@ -149,20 +149,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [:div (layouts/input-column-attributes)
-        [item-editor/input-group-header :clients :client {:label :description}]
+        [item-editor/input-group-header :clients.client-editor {:label :description}]
         [:div (layouts/input-block-attributes {:ratio 100})
-              [item-editor/description-field :clients :client]]])
+              [item-editor/description-field :clients.client-editor]]])
 
 (defn- client-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
-       [item-editor/item-label :clients :client {:name client-name}]))
+       [item-editor/item-label :clients.client-editor {:name client-name}]))
 
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-editor/color-selector :clients :client])
+  [item-editor/color-selector :clients.client-editor])
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -172,12 +172,12 @@
        [client-colors]
        [elements/horizontal-separator {:size :xxl}]
        ; Basic info
-       [item-editor/input-group-header :clients :client {:label :basic-info}]
+       [item-editor/input-group-header :clients.client-editor {:label :basic-info}]
        [client-name]
        [client-primary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; More info
-       [item-editor/input-group-header :clients :client {:label :more-info}]
+       [item-editor/input-group-header :clients.client-editor {:label :more-info}]
        [client-secondary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; Description
@@ -188,19 +188,31 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-editor/header :clients.client-editor
+                      {}])
+
+(defn body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [selected-language @(a/subscribe [:locales/get-selected-language])]
+       [item-editor/body :clients.client-editor
+                         {:auto-title?      true
+                          :form-element     #'client-form
+                          :form-id          :clients.client-editor/form
+                          :initial-item     {:country (locales/country-native-name selected-language)}
+                          :item-actions     [:delete :duplicate :save]
+                          :item-path        [:clients :client-editor/edited-item]
+                          :new-item-id      "new-client"
+                          :suggestion-keys  [:city]
+                          :suggestions-path [:clients :client-editor/suggestions]}]))
+
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description       @(a/subscribe [:item-editor/get-description :clients :client])
-        selected-language @(a/subscribe [:locales/get-selected-language])]
+  (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]
        [layouts/layout-a surface-id {:description description
-                                     :header [item-editor/header :clients :client {}]
-                                     :body   [item-editor/body   :clients :client {:auto-title? true
-                                                                                   :form-element #'client-form
-                                                                                   :form-id     :clients.client-editor/form
-                                                                                   :item-actions     [:delete :duplicate :save]
-                                                                                   :item-path        [:clients :client-editor/edited-item]
-                                                                                   :suggestion-keys  [:city]
-                                                                                   :suggestions-path [:clients :client-editor/suggestions]
-                                                                                   :new-item-id "new-client"
-                                                                                   :initial-item {:country (locales/country-native-name selected-language)}}]}]))
+                                     :header      #'header
+                                     :body        #'body}]))

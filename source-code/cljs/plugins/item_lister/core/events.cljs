@@ -9,7 +9,17 @@
               [plugins.item-lister.download.events :as download.events]
               [plugins.item-lister.items.events    :as items.events]
               [plugins.item-lister.mount.subs      :as mount.subs]
+              [plugins.plugin-handler.core.events  :as core.events]
               [x.app-core.api                      :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.core.events
+(def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-items! core.events/remove-meta-items!)
 
 
 

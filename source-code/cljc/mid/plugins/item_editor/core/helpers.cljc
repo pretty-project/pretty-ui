@@ -2,67 +2,61 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-editor.core.helpers)
+(ns mid.plugins.item-editor.core.helpers
+    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; mid.plugins.plugin-handler.core.helpers
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn value-path
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) item-key
-  ;
-  ; @example
-  ;  (core.helpers/item-editor/value-path :my-extension :my-type :my-item)
-  ;  =>
-  ;  [:my-extension :item-editor/data-items :my-item]
-  ;
-  ; @return (vector)
-  [extension-id _ item-key]
-  [extension-id :item-editor/data-items item-key])
 
 (defn add-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
   ;
   ; @example
-  ;  (core.helpers/add-item-label :my-extension :my-type)
+  ;  (core.helpers/add-item-label :my-editor :my-type)
   ;  =>
   ;  :add-my-type
   ;
   ; @return (metamorphic-content)
-  [extension-id item-namespace item-id]
+  [_ item-namespace]
   (keyword (str "add-" (name item-namespace))))
 
 (defn edit-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
   ; @param (keyword) item-namespace
-  ; @param (string) item-id
   ;
   ; @example
-  ;  (core.helpers/edit-item-label :my-extension :my-type)
+  ;  (core.helpers/edit-item-label :my-editor :my-type)
   ;  =>
   ;  :edit-my-type
   ;
   ; @return (metamorphic-content)
-  [extension-id item-namespace item-id]
+  [_ item-namespace]
   (keyword (str "edit-" (name item-namespace))))
 
 (defn new-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (core.helpers/new-item-label :my-extension :my-type)
+  ;  (core.helpers/new-item-label :my-editor :my-type)
   ;  =>
   ;  :new-my-type
   ;
@@ -73,11 +67,11 @@
 (defn unnamed-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
+  ; @param (keyword) editor-id
   ; @param (keyword) item-namespace
   ;
   ; @example
-  ;  (core.helpers/new-item-label :my-extension :my-type)
+  ;  (core.helpers/new-item-label :my-editor :my-type)
   ;  =>
   ;  :unnamed-my-type
   ;
@@ -85,27 +79,30 @@
   [_ item-namespace]
   (keyword (str "unnamed-" (name item-namespace))))
 
-(defn component-id
+(defn default-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ; @param (keyword) component-key
+  ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (core.helpers/component-id :my-extension :my-type :view)
+  ;  (core.helpers/default-item-path :my-editor)
   ;  =>
-  ;  :my-extension.my-type-editor/view
+  ;  [:plugins :plugin-handler/edited-items :my-editor]
   ;
-  ; @return (keyword)
-  [extension-id item-namespace component-key]
-  ; XXX#5467
-  ; A reagent/lifecycles függvény {:component-did-mount ...} és {:component-will-unmount ...}
-  ; életciklusai egyedi azonosító hiányában a komponens újrarenderelésekor ismételten megtörténnének!
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-editor")
-           (name component-key)))
+  ; @return (vector)
+  [editor-id]
+  (default-data-path editor-id :edited-items))
 
-  ;(if-let [namespace (namespace editor-id)]
-  ;        (keyword (str namespace "-" (name editor-id) "-" (name component-key)))
-  ;        (keyword (str               (name editor-id) "-" (name component-key)))))
+(defn default-suggestions-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @example
+  ;  (core.helpers/default-suggestions-path :my-editor)
+  ;  =>
+  ;  [:plugins :plugin-handler/suggestions :my-editor]
+  ;
+  ; @return (vector)
+  [editor-id]
+  (default-data-path editor-id :suggestions))

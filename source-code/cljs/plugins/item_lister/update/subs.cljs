@@ -4,7 +4,7 @@
 
 (ns plugins.item-lister.update.subs
     (:require [plugins.item-lister.transfer.subs  :as transfer.subs]
-              [plugins.plugin-handler.upload.subs :as upload.subs]
+              [plugins.plugin-handler.update.subs :as update.subs]
               [mid-fruits.keyword                 :as keyword]
               [mid-fruits.vector                  :as vector]
               [x.app-core.api                     :refer [r]]))
@@ -14,8 +14,8 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.upload.subs
-(def get-mutation-name upload.subs/get-mutation-name)
+; plugins.plugin-handler.update.subs
+(def get-mutation-name update.subs/get-mutation-name)
 
 
 
@@ -35,7 +35,7 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
-  (let [mutation-name (r get-mutation-name db lister-id :delete-items)]
+  (let [mutation-name (r get-mutation-name db lister-id :delete-items!)]
        (get server-response (symbol mutation-name))))
 
 (defn get-duplicated-item-ids
@@ -45,13 +45,13 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/server-response->duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:namespace/id "my-item"}]})
+  ;  (r update.subs/server-response->duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
   ;  =>
   ;  ["my-item"]
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
-  (let [mutation-name  (r get-mutation-name               db lister-id :duplicate-items)
+  (let [mutation-name  (r get-mutation-name               db lister-id :duplicate-items!)
         item-namespace (r transfer.subs/get-transfer-item db lister-id :item-namespace)
         item-id-key    (keyword/add-namespace item-namespace :id)
         copy-items     (get server-response (symbol mutation-name))]

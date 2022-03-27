@@ -2,19 +2,22 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.transfer.subs)
+(ns plugins.view-selector.transfer.subs
+    (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
+              [x.app-core.api                       :as a]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.transfer.subs
+(def get-transfer-item transfer.subs/get-transfer-item)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-transfer-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ selector-id item-key]]
-  (get-in db [:plugins :view-selector/transfer-items selector-id item-key]))
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :view-selector/get-transfer-item get-transfer-item)

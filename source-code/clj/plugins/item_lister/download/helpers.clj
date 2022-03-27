@@ -26,7 +26,7 @@
   ; @example
   ;  (download.helpers/sort-pattern :my-lister :name/ascending)
   ;  =>
-  ;  {:namespace/name 1}
+  ;  {:my-type/name 1}
   ;
   ; @return (map)
   [lister-id order-by]
@@ -100,7 +100,7 @@
   ; @example
   ;  (item-lister/env->sort-pattern {...} :my-lister)
   ;  =>
-  ;  {:namespace/name 1}
+  ;  {:my-type/name 1}
   ;
   ; @return (map)
   [env lister-id]
@@ -114,7 +114,7 @@
   ; @example
   ;  (item-lister/env->search-pattern {...} :my-lister)
   ;  =>
-  ;  {:$or [{:namespace/name "..."} {...}]}
+  ;  {:$or [{:my-type/name "..."} {...}]}
   ;
   ; @return (map)
   ;  {:$or (maps in vector)}
@@ -134,10 +134,10 @@
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
-  ;   :filter-pattern {:$or [{:namespace/my-key "..."} {...}]}
-  ;   :search-pattern {:$or [{:namespace/name   "..."} {...}]}
-  ;   :sort-pattern   {:namespace/name 1}
-  ;   :unset-pattern  [:namespace/my-key]}
+  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
+  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
+  ;   :sort-pattern   {:my-type/name 1}
+  ;   :unset-pattern  [:my-type/my-key]}
   ;
   ; @return (map)
   ;  {:field-pattern (map)

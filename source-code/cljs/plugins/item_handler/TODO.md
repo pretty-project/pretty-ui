@@ -1,12 +1,5 @@
 
 # xxx
-- A mutation/resolver névadási problémát az is megoldaná, ha egyszerűen a pluginok
-  simán my-type-handler néven kérnék a resolvereket és mutation-öket
-
-- Nem is olyan egyformák az item-browser és item-editor eseményei  
-
-
-
 # Az item-handler plugin adhatja az alapját a többi pluginnak
 - Adat(ok) letöltése (letöltés, újratöltés, backup, local-changes ...)
 - Adat(ok) kezelése  (törlés, duplikálás, műveletek visszavonása ...)
@@ -18,10 +11,6 @@
   az item-editor hasonló műveleteivel, felesleges, hogy duplán létezzenek
 - Az item-lister get-items lekérése-e tartalmazza az :item-id kulcsot, amire az item-browsernek lenne szüksége,
   mégis az item-listerbe kellett tenni
-- Az item-browser, item-lister, item-editor plugin-ok dialogs.cljs fájljait meg lehetne szüntetni,
-  mert a dialogs.cljs már sehol sincs használatban
-- Az item-lister és item-browser esetén nem volt egyértelmű melyik plugin lépjen error-modba
-  igy viszont az item-handler lép  
 
 
 

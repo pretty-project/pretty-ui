@@ -19,13 +19,12 @@
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace]]
-  (let [item-path        (r mount.subs/get-body-prop db extension-id item-namespace :item-path)
-        suggestions-path (r mount.subs/get-body-prop db extension-id item-namespace :suggestions-path)]
+  [db [_ editor-id]]
+  (let [item-path        (r mount.subs/get-body-prop db editor-id :item-path)
+        suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)]
        (-> db (dissoc-in item-path)
               (dissoc-in suggestions-path))))
 
@@ -37,54 +36,51 @@
 (defn store-downloaded-suggestions!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace server-response]]
+  [db [_ editor-id server-response]]
   ; XXX#3907
-  (let [suggestions-path (r mount.subs/get-body-prop db extension-id item-namespace :suggestions-path)
+  (let [suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)
         suggestions      (-> server-response :item-editor/get-item-suggestions db/document->non-namespaced-document)]
        (assoc-in db suggestions-path suggestions)))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [_ extension-id item-namespace server-response]]
+  [db [_ editor-id server-response]]
   ; XXX#3907
   ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot
-  (let [resolver-id (r download.subs/get-resolver-id db extension-id item-namespace :get)
-        item-path   (r mount.subs/get-body-prop      db extension-id item-namespace :item-path)
+  (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
+        item-path   (r mount.subs/get-body-prop      db editor-id :item-path)
         document    (-> server-response resolver-id db/document->non-namespaced-document)]
        (as-> db % (assoc-in % item-path document)
-                  (r backup.events/backup-current-item! % extension-id item-namespace))))
+                  (r backup.events/backup-current-item! % editor-id))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [event-id extension-id item-namespace server-response]]
+  [db [event-id editor-id server-response]]
   (cond-> ; Set {:data-received? true} state ...
-          (assoc-in db [:plugins :item-editor/meta-items extension-id :data-received?] true)
+          (assoc-in db [:plugins :plugin-handler/meta-items editor-id :data-received?] true)
           ; If editor downloading item ...
-          (r core.subs/download-item? db extension-id item-namespace)
-          (as-> % (r store-downloaded-item! % extension-id item-namespace server-response))
+          (r core.subs/download-item? db editor-id)
+          (as-> % (r store-downloaded-item! % editor-id server-response))
           ; If editor downloading suggestions ...
-          (r core.subs/download-suggestions? db extension-id item-namespace)
-          (as-> % (r store-downloaded-suggestions! % extension-id item-namespace server-response))
+          (r core.subs/download-suggestions? db editor-id)
+          (as-> % (r store-downloaded-suggestions! % editor-id server-response))
           ; If editor in recovery-mode ...
-          (r core.subs/get-meta-item db extension-id item-namespace :recovery-mode?)
-          (as-> % (r backup.events/recover-item! % extension-id item-namespace))))
+          (r core.subs/get-meta-item db editor-id :recovery-mode?)
+          (as-> % (r backup.events/recover-item! % editor-id))))
 
 
 

@@ -3,9 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.transfer.effects
-    (:require [mid-fruits.candy                     :refer [return]]
-              [plugins.item-editor.transfer.helpers :as transfer.helpers]
-              [x.server-core.api                    :as a]))
+    (:require [plugins.plugin-handler.transfer.effects]
+              [x.server-core.api :as a]))
 
 
 
@@ -16,10 +15,7 @@
   :item-editor/reg-transfer-editor-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) editor-props
-  (fn [_ [_ extension-id item-namespace editor-props]]
-      {:fx [:core/reg-transfer! (transfer.helpers/transfer-id extension-id item-namespace)
-                                {:data-f      (fn [_] (return editor-props))
-                                 :target-path [:plugins :item-editor/transfer-items extension-id]}]}))
+  (fn [_ [_ editor-id editor-props]]
+      [:plugin-handler/reg-transfer-plugin-props! editor-id editor-props]))

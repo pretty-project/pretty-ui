@@ -4,7 +4,6 @@
 
 (ns extensions.clients.client-editor.resolvers
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [mid-fruits.candy                      :refer [param return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]))
 

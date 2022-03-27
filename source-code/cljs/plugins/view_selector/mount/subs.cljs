@@ -3,31 +3,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.mount.subs
-    (:require [x.app-core.api :as a]))
+    (:require [plugins.plugin-handler.mount.subs :as mount.subs]
+              [x.app-core.api                    :as a]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn get-body-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (keyword) prop-key
-  ;
-  ; @return (*)
-  [db [_ selector-id prop-key]]
-  (get-in db [:plugins :view-selector/body-props selector-id prop-key]))
-
-(defn body-did-mount?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ;
-  ; @return (boolean)
-  [db [_ selector-id]]
-  (some? (get-in db [:plugins :view-selector/body-props selector-id])))
+; plugins.plugin-handler.mount.subs
+(def get-body-prop   mount.subs/get-body-prop)
+(def body-did-mount? mount.subs/body-did-mount?)
 
 
 

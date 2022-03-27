@@ -9,7 +9,7 @@
 
 
 
-;; -- Resolvers ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-item-suggestions-f
@@ -20,17 +20,15 @@
   ;
   ; @return (map)
   [env _]
-  (let [extension-id   (pathom/env->param env :extension-id)
-        item-namespace (pathom/env->param env :item-namespace)]
-       (download.helpers/env->item-suggestions env extension-id item-namespace)))
+  (let [editor-id (pathom/env->param env :editor-id)]
+       (download.helpers/env->item-suggestions env editor-id)))
 
 (defresolver get-item-suggestions
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
              ;  {:params (map)
-             ;    {:extension-id (keyword)
-             ;     :item-namespace (keyword)
+             ;    {:editor-id (keyword)
              ;     :suggestion-keys (keywords in vector)}}
              ; @param (map) resolver-props
              ;
@@ -41,7 +39,7 @@
 
 
 
-;; -- Handlers ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)

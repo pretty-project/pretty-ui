@@ -11,5 +11,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.item-lister.core.helpers
-(def component-id      core.helpers/component-id)
-(def default-data-path core.helpers/default-data-path)
+(def component-id       core.helpers/component-id)
+(def default-items-path core.helpers/default-items-path)

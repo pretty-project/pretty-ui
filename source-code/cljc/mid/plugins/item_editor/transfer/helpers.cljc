@@ -2,26 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-editor.transfer.helpers)
+(ns mid.plugins.item-editor.transfer.helpers
+    (:require [mid.plugins.plugin-handler.transfer.helpers :as transfer.helpers]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn transfer-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (transfer.helpers/transfer-id :my-extension :my-type)
-  ;  =>
-  ;  :my-extension.my-type-editor/transfer-editor-props
-  ;
-  ; @return (keyword)
-  [extension-id item-namespace]
-  (keyword (str (name extension-id)   "."
-                (name item-namespace) "-editor")
-           "transfer-editor-props"))
+; mid.plugins.plugin-handler.transfer.helpers
+(def transfer-id transfer.helpers/transfer-id)

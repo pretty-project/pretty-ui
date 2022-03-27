@@ -17,22 +17,21 @@
 (defn new-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id item-namespace]
-  (let [new-item-label (core.helpers/new-item-label extension-id item-namespace)]
+  ; @param (keyword) editor-id
+  [editor-id]
+  (let [item-namespace @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
+        new-item-label  (core.helpers/new-item-label editor-id item-namespace)]
        [elements/label ::new-item-label
                        {:content new-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
 (defn named-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) element-props
   ;  {:name (metamorphic-content)}
-  [extension-id item-namespace {:keys [name]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+  [editor-id {:keys [name]}]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
        [elements/label ::named-item-label
                        {:content name :font-weight :extra-bold :font-size :l
                         :color (if editor-disabled? :highlight :default)}]))
@@ -40,29 +39,28 @@
 (defn unnamed-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  [extension-id item-namespace]
-  (let [unnamed-item-label (core.helpers/unnamed-item-label extension-id item-namespace)]
+  ; @param (keyword) editor-id
+  [editor-id]
+  (let [item-namespace    @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
+        unnamed-item-label (core.helpers/unnamed-item-label editor-id item-namespace)]
        [elements/label ::unnamed-item-label
                        {:content unnamed-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
 
 (defn item-label
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (map) element-props
   ;  {:name (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [item-editor/item-label :my-extension :my-type {...}]
-  [extension-id item-namespace {:keys [name] :as element-props}]
+  ;  [item-editor/item-label :my-editor {...}]
+  [editor-id {:keys [name] :as element-props}]
   ; Az [item-label ...] komponens használatához szükséges a szótárhoz adni ...
   ; ... a  {:new-my-type     {...}} kifejezést!
   ; ... az {:unnamed-my-type {...}} kifejezést!
-  (let [new-item? @(a/subscribe [:item-editor/new-item? extension-id item-namespace])]
-       (cond (string/nonempty? name) [named-item-label   extension-id item-namespace element-props]
-             (boolean new-item?)     [new-item-label     extension-id item-namespace]
-             :unnamed-item           [unnamed-item-label extension-id item-namespace])))
+  (let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
+       (cond (string/nonempty? name) [named-item-label   editor-id element-props]
+             (boolean new-item?)     [new-item-label     editor-id]
+             :unnamed-item           [unnamed-item-label editor-id])))
 
 
 
@@ -70,24 +68,22 @@
 ;; ----------------------------------------------------------------------------
 
 (defn input-group-header
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  [item-editor/input-group-header :my-extension :my-type {...}]
-  [extension-id item-namespace {:keys [label]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])]
+  ;  [item-editor/input-group-header :my-editor {...}]
+  [editor-id {:keys [label]}]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
        [layouts/input-group-header {:label label :color (if editor-disabled? :highlight :default)}]))
 
 (defn description-field
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  [item-editor/description-field :my-extension :my-type]
-  [extension-id item-namespace]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? extension-id item-namespace])
-        item-path        @(a/subscribe [:item-editor/get-body-prop    extension-id item-namespace :item-path])
+  ;  [item-editor/description-field :my-editor]
+  [editor-id]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
+        item-path        @(a/subscribe [:item-editor/get-body-prop    editor-id :item-path])
         value-path        (conj item-path :description)]
        [elements/multiline-field ::description-field
                                  {:value-path value-path :disabled? editor-disabled?}]))

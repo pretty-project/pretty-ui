@@ -13,6 +13,34 @@
 
 
 
+;; -- A plugin beállítása -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A plugin használatához szükséges megadni ...
+; ... a {:collection-name "..."} tulajdonságot.
+; ... a {:handler-key ...} tulajdonságot, amit a plugin a mutation és resolver függvények neveiben
+;     névtérként használ.
+; ... az {:item-namespace ...} tulajdonságot.
+;
+; A plugin használatához OPCIONÁLISAN megadható ...
+; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált "/@app-home/my-editor/:item-id"
+;     útvonal használatakor történik meg.
+; ... a {:route-template "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti
+;     "/@app-home/my-editor/:item-id" útvonalat.
+; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált "/@app-home/my-editor/:item-id"
+;     útvonal használatakor beállítódik az applikáció címkéjének.
+(a/reg-event-fx
+  :init-my-editor!
+  [:item-editor/init-editor! :my-editor
+                             {:collection-name "my-collection"
+                              :handler-key     :my-handler
+                              :item-namespace  :my-type
+                              :on-route        [:my-event]
+                              :route-template  "/@app-home/my-editor/:item-id"
+                              :route-title     "My editor"}])
+
+
+
 ;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 

@@ -16,18 +16,18 @@
 
 (defn env->item-suggestions
   ; @param (map) env
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (item-editor/get-item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-extension :my-type)
+  ;  (item-editor/get-item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-editor)
   ;  =>
   ;  {:item-editor/get-item-suggestions {:my-type/my-key   ["..."]
   ;                                      :my-type/your-key ["..." "..."]}}
   ;
   ; @return (map)
-  [env extension-id item-namespace]
-  (let [suggestion-keys  (pathom/env->param env :suggestion-keys)
-        suggestion-keys  (keyword/add-items-namespace item-namespace suggestion-keys)
-        collection-name @(a/subscribe [:item-editor/get-editor-prop extension-id item-namespace :collection-name])]
+  [env editor-id]
+  (let [collection-name @(a/subscribe [:item-editor/get-editor-prop editor-id :collection-name])
+        item-namespace  @(a/subscribe [:item-editor/get-editor-prop editor-id :item-namespace])
+        suggestion-keys  (pathom/env->param env :suggestion-keys)
+        suggestion-keys  (keyword/add-items-namespace item-namespace suggestion-keys)]
        (mongo-db/get-specified-values collection-name suggestion-keys string/nonempty?)))

@@ -12,16 +12,15 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-item-route
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
+  ; @param (keyword) editor-id
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-editor/get-item-route db :my-extension :item-namespace "my-item")
+  ;  (r item-editor/get-item-route db :my-editor "my-item")
   ;
   ; @return (string)
-  [db [_ extension-id item-namespace item-id]]
-  (if-let [base-route (r transfer.subs/get-transfer-item db extension-id item-namespace :base-route)]
+  [db [_ editor-id item-id]]
+  (if-let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
           (str base-route "/" item-id)))
 
 
@@ -30,5 +29,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:item-editor/get-item-route :my-extension :my-type "my-item"]
+;  [:item-editor/get-item-route :my-editor "my-item"]
 (a/reg-sub :item-editor/get-item-route get-item-route)

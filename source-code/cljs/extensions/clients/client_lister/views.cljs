@@ -38,7 +38,7 @@
 (defn- client-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [client-item]
-  [:div.clients--client-item [item-editor/color-stamp :clients :client client-item]
+  [:div.clients--client-item [item-editor/color-stamp :clients.client-editor client-item]
                              [client-item-details client-item]])
 
 (defn client-item
@@ -53,14 +53,26 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-lister/header :clients.client-lister
+                      {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
+
+(defn body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-lister/body :clients.client-lister
+                    {:list-element #'client-item
+                     :item-actions [:delete :duplicate]
+                     :items-path   [:clients :client-lister/downloaded-items]
+                     :search-keys  [:name :email-address]
+                     :sortable?    true}])
+
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
-       [layouts/layout-a :surface-id {:description description
-                                      :header [item-lister/header :clients.client-lister {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}]
-                                      :body   [item-lister/body   :clients.client-lister {:list-element #'client-item
-                                                                                          :item-actions [:delete :duplicate]
-                                                                                          :items-path   [:clients :client-lister/downloaded-items]
-                                                                                          :search-keys  [:name :email-address]
-                                                                                          :sortable? true}]}]))
+       [layouts/layout-a surface-id {:description description
+                                     :header      #'header
+                                     :body        #'body}]))

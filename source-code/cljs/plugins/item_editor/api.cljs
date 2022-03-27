@@ -8,6 +8,7 @@
               [plugins.item-editor.colors.effects]
               [plugins.item-editor.core.effects]
               [plugins.item-editor.core.events]
+              [plugins.item-editor.core.helpers]
               [plugins.item-editor.download.effects]
               [plugins.item-editor.download.events]
               [plugins.item-editor.download.subs]
@@ -18,7 +19,6 @@
               [plugins.item-editor.update.events]
               [plugins.item-editor.update.subs]
               [plugins.item-editor.colors.views :as colors.views]
-              [plugins.item-editor.core.helpers :as core.helpers]
               [plugins.item-editor.core.subs    :as core.subs]
               [plugins.item-editor.core.views   :as core.views]
               [plugins.item-editor.form.subs    :as form.subs]
@@ -29,9 +29,6 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; plugins.item-editor.core.helpers
-(def value-path core.helpers/value-path)
 
 ; plugins.item-editor.core.subs
 (def get-current-item-id core.subs/get-current-item-id)

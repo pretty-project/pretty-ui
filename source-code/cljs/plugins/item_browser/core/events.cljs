@@ -11,6 +11,7 @@
               [plugins.item-browser.routes.events   :as routes.events]
               [plugins.item-browser.transfer.subs   :as transfer.subs]
               [plugins.item-lister.core.events      :as plugins.item-lister.core.events]
+              [plugins.plugin-handler.core.events   :as core.events]
               [x.app-core.api                       :as a :refer [r]]))
 
 
@@ -22,20 +23,9 @@
 (def set-error-mode! plugins.item-lister.core.events/set-error-mode!)
 (def use-filter!     plugins.item-lister.core.events/use-filter!)
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reset-meta-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) extension-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @return (map)
-  [db [_ extension-id _]]
-  (dissoc-in db [extension-id :item-browser/meta-items]))
+; plugins.plugin-handler.core.events
+(def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-items! core.events/remove-meta-items!)
 
 
 

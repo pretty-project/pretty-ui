@@ -5,24 +5,18 @@
 (ns plugins.view-selector.core.subs
     (:require [mid-fruits.candy                 :refer [return]]
               [mid-fruits.vector                :as vector]
+              [plugins.plugin-handler.core.subs :as core.subs]
               [plugins.view-selector.mount.subs :as mount.subs]
               [x.app-core.api                   :as a :refer [r]]
               [x.app-router.api                 :as router]))
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-meta-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (keyword) item-key
-  ;
-  ; @return (*)
-  [db [_ selector-id item-key]]
-  (get-in db [:plugins :view-selector/meta-items selector-id item-key]))
+; plugins.plugin-handler.core.subs
+(def get-meta-item core.subs/get-meta-item)
 
 
 

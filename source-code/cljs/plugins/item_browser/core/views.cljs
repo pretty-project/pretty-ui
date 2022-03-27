@@ -71,7 +71,7 @@
   ; @param (keyword) extension-id
   ; @param (keyword) item-namespace
   ; @param (map) header-props
-  ;  {:new-item-route (string)(opt)
+  ;  {:new-item-event (metamorphic-event)(opt)
   ;   :new-item-options (vector)(opt)}
   ;
   ; @usage
