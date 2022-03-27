@@ -120,5 +120,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn browse-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ browser-id item-id]]
+  (as-> db % (r set-current-item-id!             % browser-id item-id)
+             (r download.events/reset-downloads! % browser-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-browser/set-error-mode! set-error-mode!)

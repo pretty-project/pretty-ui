@@ -67,12 +67,12 @@
 ;  Abban az esetben, ha a renderer {:required? true} tulajdonsággal rendelkezik,
 ;  akkor a renderer React-fából való esetleges lecsatolása rendszerhibának minősül.
 ;
-; @name alternate-id
+; @name alternate-renderer
 ;  Abban az esetben ha a renderer {:required? true} tulajdonsággal rendelkezik
-;  és a renderer {:alternate-id ...} tulajdonságaként megadott azonosítóval
+;  és a renderer {:alternate-renderer ...} tulajdonságaként megadott azonosítóval
 ;  rendelkező helyettesítő renderer, elemeket jelenít meg, akkor a renderer
 ;  React-fából való esetleges lecsatolása nem minősül rendszerhibának.
-;  Pl.: {:alternate-id :alternate-partition/elements}
+;  Pl.: {:alternate-renderer :alternate-partition/elements}
 ;
 ; @name element-rendered?
 ;  Az elem a React-fába csatolva.
@@ -335,7 +335,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (boolean (r db/get-meta-item db partition-id :required?))))
 
-(defn- get-alternate-id
+(defn- get-alternate-renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -343,7 +343,7 @@
   ; @return (keyword)
   [db [_ renderer-id]]
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :alternate-id)))
+       (r db/get-meta-item db partition-id :alternate-renderer)))
 
 (defn- renderer-require-error?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -352,9 +352,9 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (if-let [alternate-id (r get-alternate-id db renderer-id)]
+  (if-let [alternate-renderer (r get-alternate-renderer db renderer-id)]
           (and (r renderer-required?   db renderer-id)
-               (r no-visible-elements? db alternate-id))
+               (r no-visible-elements? db alternate-renderer))
           (r renderer-required? db renderer-id)))
 
 (defn- renderer-reserved?
@@ -1169,7 +1169,7 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
-  ;  {:alternate-id (keyword)(opt)
+  ;  {:alternate-renderer (keyword)(opt)
   ;    Only w/ {:required? true}
   ;   :element (component)
   ;   :max-elements-rendered (integer)(opt)

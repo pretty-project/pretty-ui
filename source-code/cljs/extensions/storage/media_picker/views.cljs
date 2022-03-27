@@ -23,12 +23,6 @@
 (def directory-item media-browser.views/directory-item)
 (def file-item      media-browser.views/file-item)
 
-; plugins.item-browser.core.views
-(def menu-mode-header plugins.item-browser.core.views/menu-mode-header)
-
-; plugins.item-lister.core.views
-(def search-mode-header plugins.item-lister.core.views/search-mode-header)
-
 
 
 ;; -- Header components -------------------------------------------------------
@@ -44,7 +38,7 @@
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
+  (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage.media-picker])]
        [elements/label ::header-label
                        {:content header-label}]))
 
@@ -65,63 +59,79 @@
                                  :middle-content [header-label         picker-id]
                                  :end-content    [header-select-button picker-id]}])
 
-(defn header-selection-bar-structure
+(defn header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [picker-id]
+  [:<> [header-label-bar picker-id]
+       [item-browser/header :storage.media-picker
+                            {:new-item-event   [:storage.media-browser/add-new-item!]
+                             :new-item-options [:create-directory! :upload-files!]}]])
+
+
+
+;; -- Footer components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn footer-selection-bar-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [no-items-selected?  @(a/subscribe [:storage.media-picker/no-items-selected?])
         selected-item-count @(a/subscribe [:storage.media-picker/get-selected-item-count])]
        [:<> [elements/label {:content {:content :n-items-selected :replacements [selected-item-count]}
-                             :color :muted :min-height :s :font-size :xs}]
-            [elements/icon-button {:color :default :preset :close :height :s :disabled? no-items-selected?
+                             :color :muted :min-height :l :font-size :xs}]
+            [elements/icon-button {:color :default :height :l :preset :close :disabled? no-items-selected?
                                    :on-click [:storage.media-picker/discard-selection!]}]]))
 
-(defn header-selection-bar
+(defn footer-selection-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [elements/row {:content [header-selection-bar-structure picker-id]
+  [elements/row {:content [footer-selection-bar-structure picker-id]
                  :horizontal-align :right}])
 
-(defn header-menu
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  [:div#item-lister--header--structure [menu-mode-header   :storage.media-browser]
-                                       [search-mode-header :storage.media-browser]])
-
-(defn- header
+(defn footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [:<> [header-label-bar     picker-id]
-       [header-menu          picker-id]
-       [header-selection-bar picker-id]])
+  [footer-selection-bar picker-id])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn directory-item-toggle
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [{:keys [id] :as media-item}]
+  [elements/toggle {:content  [directory-item media-item {:icon :navigate_next}]
+                    :on-click [:item-browser/browse-item! :storage.media-picker id]
+                    :hover-color :highlight}])
+
+(defn file-item-toggle
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [media-item]
+  (if-let [file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
+          (let [file-selected? @(a/subscribe [:storage.media-picker/file-selected? media-item])]
+               [elements/toggle {:content  [file-item media-item {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}]
+                                 :on-click [:storage.media-picker/file-clicked media-item]
+                                 :hover-color :highlight}])
+          [file-item media-item {:disabled? true}]))
+
+
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ _ {:keys [id mime-type] :as media-item}]
-  (let [file-selected?   @(a/subscribe [:storage.media-picker/file-selected?   media-item])
-        file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
-       (case mime-type "storage/directory" [elements/toggle {:content  [directory-item media-item {:icon :navigate_next}]
-                                                             :on-click [:item-browser/browse-item! :storage.media-browser id]
-                                                             :hover-color :highlight}]
-                                           (if file-selectable? [elements/toggle {:content  [file-item media-item {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}]
-                                                                                  :on-click [:storage.media-picker/file-clicked media-item]
-                                                                                  :hover-color :highlight}]
-                                                                [file-item media-item {:disabled? true}]))))
+  [_ _ {:keys [mime-type] :as media-item}]
+  (case mime-type "storage/directory" [directory-item-toggle media-item]
+                                      [file-item-toggle      media-item]))
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [picker-id]
-  [item-browser/body :storage.media-browser
-                     {:item-path        [:storage :media-picker/browsed-item]
-                      :items-path       [:storage :media-picker/downloaded-items]
-                      :label-key        :alias
-                      :list-element     #'media-item
-                      :root-item-id     core.config/ROOT-DIRECTORY-ID
-                      :search-keys      [:alias]}])
+  [item-browser/body :storage.media-picker
+                     {:item-path     [:storage :media-picker/browsed-item]
+                      :items-path    [:storage :media-picker/downloaded-items]
+                      :label-key     :alias
+                      :list-element  #'media-item
+                      :root-item-id  core.config/ROOT-DIRECTORY-ID
+                      :search-keys   [:alias]}])
 
 
 

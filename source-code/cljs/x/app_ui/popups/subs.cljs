@@ -13,17 +13,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn flip-layout-anyway?
+(defn get-popup-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:layout (keyword)(opt)}
+  ; @param (keyword) prop-key
   ;
   ; @return (boolean)
-  [db [_ _ {:keys [layout]}]]
-  (and (r environment/viewport-small? db)
-       (not= layout :unboxed)))
+  [db [_ popup-id prop-key]]
+  (r renderer/get-element-prop db :popups popup-id prop-key))
 
 (defn render-touch-anchor?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -37,21 +35,13 @@
             (r environment/viewport-small? db)
             (r environment/touch-detected? db))))
 
-(defn get-popup-header-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ;
-  ; @return (map)
-  ;  {:render-touch-anchor? (boolean)}
-  [db [_ popup-id]]
-  {:render-touch-anchor? false})
-  ;:render-touch-anchor? (r geometry/render-touch-anchor? db popup-id)
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/get-popup-header-props get-popup-header-props)
+(a/reg-sub :ui/get-popup-prop get-popup-prop)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :ui/render-touch-anchor? render-touch-anchor?)

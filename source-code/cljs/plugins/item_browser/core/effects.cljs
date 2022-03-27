@@ -11,7 +11,7 @@
               [x.app-core.api                     :as a :refer [r]]))
 
 
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -50,10 +50,16 @@
   ; @usage
   ;  [:item-browser/browse-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
+      ; A) ...
       ;
+      ; B) ...
       (if-let [item-route (r routes.subs/get-item-route db browser-id item-id)]
               ; A)
-              [:router/go-to! item-route])))
+              [:router/go-to! item-route]
+              ; B)
+              {:db (r core.events/browse-item! db browser-id item-id)
+               :dispatch-n [[:tools/reload-infinite-loader! browser-id]
+                            [:item-browser/request-item!    browser-id]]})))
 
 (a/reg-event-fx
   :item-browser/go-home!

@@ -17,11 +17,10 @@
 
 (defn popup-accept-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-accept-icon-button :my-popup {...}]
-  [popup-id _]
+  ;  [ui/popup-accept-icon-button :my-popup]
+  [popup-id]
   [elements/button {:keypress {:key-code 13}
                     :on-click [:ui/close-popup! popup-id]
                     :preset   :accept-button
@@ -29,11 +28,10 @@
 
 (defn popup-cancel-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-cancel-icon-button :my-popup {...}]
-  [popup-id _]
+  ;  [ui/popup-cancel-icon-button :my-popup]
+  [popup-id]
   [elements/button {:keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
                     :preset   :cancel-button
@@ -41,42 +39,38 @@
 
 (defn popup-go-up-icon-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-go-up-icon-button :my-popup {...}]
-  [_ _]
+  ;  [ui/popup-go-up-icon-button :my-popup]
+  [_]
   [elements/button {:on-click [:router/go-up!]
                     :preset   :back-icon-button}])
 
 (defn popup-go-back-icon-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-go-back-icon-button :my-popup {...}]
-  [_ _]
+  ;  [ui/popup-go-back-icon-button :my-popup]
+  [_]
   [elements/button {:on-click [:router/go-back!]
                     :preset   :back-icon-button}])
 
 (defn popup-close-icon-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-close-icon-button :my-popup {...}]
-  [popup-id _]
+  ;  [ui/popup-close-icon-button :my-popup]
+  [popup-id]
   [elements/button {:keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
                     :preset   :close-icon-button}])
 
 (defn popup-placeholder-icon-button
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
   ;
   ; @usage
-  ;  [ui/popup-placeholder-icon-button :my-popup {...}]
-  [_ _]
+  ;  [ui/popup-placeholder-icon-button :my-popup]
+  [_]
   [elements/icon-button {:layout :icon-button :variant :placeholder}])
 
 (defn popup-label
@@ -149,52 +143,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:minimizable? (boolean)(opt)}
-  [popup-id {:keys [minimizable?]}]
-  (if minimizable? [elements/button {:class    :x-app-popups--element--minimize-button
-                                     :color    :invert
-                                     :icon     :close_fullscreen
-                                     :layout   :icon-button
-                                     :on-click [:ui/minimize-popup! popup-id]
-                                     :variant  :transparent}]))
+  [popup-id]
+  (if-let [minimizable? @(a/subscribe [:ui/get-popup-prop popup-id :minimizable?])]
+          [elements/icon-button {:class    :x-app-popups--element--minimize-button
+                                 :color    :invert
+                                 :icon     :close_fullscreen
+                                 :on-click [:ui/minimize-popup! popup-id]
+                                 :variant  :transparent}]))
 
 (defn- popup-maximize-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:minimized? (boolean)(opt)}
-  [popup-id {:keys [minimized?]}]
-  (if minimized? [elements/button {:class    :x-app-popups--element--maximize-button
-                                   :color    :muted
-                                   :icon     :fullscreen
-                                   :layout   :icon-button
-                                   :on-click [:ui/maximize-popup! popup-id]
-                                   :variant  :filled}]))
+  [popup-id]
+  (if-let [minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
+          [elements/icon-button {:class    :x-app-popups--element--maximize-button
+                                 :color    :muted
+                                 :icon     :fullscreen
+                                 :on-click [:ui/maximize-popup! popup-id]
+                                 :variant  :filled}]))
 
-(defn- popup-header-structure
+(defn- popup-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:header (map)(opt)
-  ;   :render-touch-anchor? (boolean)}
-  [popup-id {:keys [header render-touch-anchor?] :as popup-props}]
-  [:<> (if render-touch-anchor? [:div.x-app-popups--element--touch-anchor])
-       (if header               [:div.x-app-popups--element--header [components/content popup-id header]]
-                                [:div.x-app-popups--element--header-placeholder])])
-
-(defn popup-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
-  [components/subscriber popup-id
-                         {:render-f   #'popup-header-structure
-                          :base-props popup-props
-                          :subscriber [:ui/get-popup-header-props popup-id]}])
+  [popup-id]
+  [:<> (if-let [render-touch-anchor? @(a/subscribe [:ui/render-touch-anchor? popup-id])]
+               [:div.x-app-popups--element--touch-anchor])
+       (if-let [header @(a/subscribe [:ui/get-popup-prop popup-id :header])]
+               [:div.x-app-popups--element--header [components/content popup-id header]]
+               [:div.x-app-popups--element--header-placeholder])])
 
 
 
@@ -205,11 +183,23 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:body (map)}
-  [popup-id {:keys [body] :as popup-props}]
-  [:div.x-app-popups--element--body (popups.helpers/popup-body-attributes popup-id popup-props)
-                                    [components/content                  popup-id body]])
+  [popup-id]
+  (let [body @(a/subscribe [:ui/get-popup-prop popup-id :body])]
+       [:div.x-app-popups--element--body (popups.helpers/popup-body-attributes popup-id)
+                                         [components/content                   popup-id body]]))
+
+
+
+;; -- Popup footer components -------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- popup-footer
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  [popup-id]
+  (if-let [footer @(a/subscribe [:ui/get-popup-prop popup-id :footer])]
+          [:div.x-app-popups--element--footer [components/content popup-id footer]]))
 
 
 
@@ -220,56 +210,51 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:user-close? (boolean)}
-  [popup-id {:keys [user-close?]}]
-  (if user-close? [:div.x-app-popups--element--cover {:on-click #(a/dispatch [:ui/close-popup! popup-id])}]
-                  [:div.x-app-popups--element--cover]))
+  [popup-id]
+  (if-let [user-close? @(a/subscribe [:ui/get-popup-prop popup-id :user-close?])]
+          [:div.x-app-popups--element--cover {:on-click #(a/dispatch [:ui/close-popup! popup-id])}]
+          [:div.x-app-popups--element--cover]))
 
 (defn- unboxed-popup-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
-  [:div.x-app-popups--element--structure
-    [popup-body   popup-id popup-props]
-    [popup-header popup-id popup-props]])
+  [popup-id]
+  [:div.x-app-popups--element--structure [popup-body   popup-id]
+                                         [popup-header popup-id]
+                                         [popup-footer popup-id]])
 
 (defn- boxed-popup-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
-  [:div.x-app-popups--element--structure
-    [:div.x-app-popups--element--background]
-    [popup-header          popup-id popup-props]
-    [popup-body            popup-id popup-props]
-    [popup-minimize-button popup-id popup-props]])
+  [popup-id]
+  [:div.x-app-popups--element--structure [:div.x-app-popups--element--background]
+                                         [popup-header          popup-id]
+                                         [popup-body            popup-id]
+                                         [popup-footer          popup-id]
+                                         [popup-minimize-button popup-id]])
 
 (defn- popup-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:layout (keyword)}
-  [popup-id {:keys [layout] :as popup-props}]
-  (case layout :boxed   [boxed-popup-structure   popup-id popup-props]
-               :flip    [boxed-popup-structure   popup-id popup-props]
-               :unboxed [unboxed-popup-structure popup-id popup-props]))
+  [popup-id]
+  (let [layout @(a/subscribe [:ui/get-popup-prop popup-id :layout])]
+       (case layout :boxed   [boxed-popup-structure   popup-id]
+                    :flip    [boxed-popup-structure   popup-id]
+                    :unboxed [unboxed-popup-structure popup-id])))
 
 (defn- popup-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ;  {:minimized? (boolean)(opt)}
-  [popup-id {:keys [minimized?] :as popup-props}]
-  [:<> [popup-maximize-button popup-id popup-props]
+  [popup-id popup-props]
+  [:<> [popup-maximize-button popup-id]
        [:div (popups.helpers/popup-attributes popup-id popup-props)
-             [popup-cover                     popup-id popup-props]
-             [popup-layout                    popup-id popup-props]]])
+             [popup-cover                     popup-id]
+             [popup-layout                    popup-id]]])
 
 
 
@@ -279,7 +264,7 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [renderer :popups {:alternate-renderer-id :surface
+  [renderer :popups {:alternate-renderer    :surface
                      :element               #'popup-element
                      :max-elements-rendered 5
                      :required?             true

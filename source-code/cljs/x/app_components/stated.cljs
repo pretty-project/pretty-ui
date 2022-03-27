@@ -42,7 +42,7 @@
 ;
 ; @name initializer
 ;  Az {:initializer ...} tulajdonságként átadott Re-Frame esemény a komponens
-;  React-fába történő csatolása után történik meg. A komponens újracsatolásakor
+;  React-fába csatolása után történik meg. A komponens újracsatolásakor
 ;  (remounting) nem ismétlődik meg az initializer esemény megtörténése.
 ;
 ; @name updater
@@ -78,7 +78,7 @@
 ;  paramétereit a Re-Frame adatbázisban felülírni!
 ;
 ; @description
-;  Az egyes stated komponensek React-fába történő újracsatolódása (remounting)
+;  Az egyes stated komponensek React-fába újracsatolódása (remounting)
 ;  esetlegesen hibát okozhat, ha a destructor esemény megtörténése vagy a komponens
 ;  tulajdonságainak Re-Frame adatbázisból való eltávolítása nem a megfelelő időben
 ;  történik meg.

@@ -14,5 +14,5 @@
 
 
 # ...
-- Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét plugin módosításait 
+- Az item-browser plugin az item-lister plugin alapjaira épül, ezért mindkét plugin módosításait
   úgy kell elvégezni, hogy azok működése egymással összehangolt maradjon!

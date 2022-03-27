@@ -81,7 +81,7 @@
                       :render-f    #'your-component
                       :subscriber  [:get-your-component-props]}])
 
-; Az initial-props térkép tartalma a komponens React-fába történő csatolása után elérhető lesz
+; Az initial-props térkép tartalma a komponens React-fába csatolása után elérhető lesz
 ; a Re-Frame adatbázisban a [:your-path] útvonalon.
 (defn your-stated-d
   []

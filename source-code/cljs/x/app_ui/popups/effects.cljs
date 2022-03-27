@@ -22,6 +22,7 @@
   ;    Only w/ {:layout :boxed}
   ;   :body (metamorphic-content)
   ;   :destructor (metamorphic-event)(opt)
+  ;   :footer (metamorphic-content)(opt)
   ;   :header (metamorphic-content)(opt)
   ;   :hide-animated? (boolean)(opt)
   ;    Default: true

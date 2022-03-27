@@ -63,6 +63,17 @@
   [db [_ browser-id]]
   (r get-meta-item db browser-id :item-id))
 
+(defn get-current-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ;
+  ; @return (map)
+  [db [_ browser-id]]
+  ; XXX#6487
+  (if-let [item-path (r mount.subs/get-body-prop db browser-id :item-path)]
+          (get-in db item-path)))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -75,9 +86,14 @@
   ;
   ; @return (metamorphic-content)
   [db [_ browser-id]]
-  (let [item-path (r mount.subs/get-body-prop db browser-id :item-path)
-        label-key (r mount.subs/get-body-prop db browser-id :label-key)]
-       (label-key (get-in db item-path))))
+  ; XXX#6487
+  ; Az [:item-browser/get-current-item-label ...] Re-Frame feliratkozás meghívható az item-browser
+  ; plugin body komponensének React-fába csatolása előtt, amikor még NEM elérhetők az {:item-path ...}
+  ; és {:label-key ...} paraméterek a Re-Frame adatbázisban, ezért szükséges ezen paraméterek meglétének
+  ; vizsgálata!
+  (let [label-key (r mount.subs/get-body-prop db browser-id :label-key)]
+       (if-let [current-item (r get-current-item db browser-id)]
+               (label-key current-item))))
 
 (defn get-current-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,9 +102,10 @@
   ;
   ; @return (maps in vector)
   [db [_ browser-id]]
-  (let [item-path (r mount.subs/get-body-prop db browser-id :item-path)
-        path-key  (r mount.subs/get-body-prop db browser-id :path-key)]
-       (vec (path-key (get-in db item-path)))))
+  ; XXX#6487
+  (let [path-key (r mount.subs/get-body-prop db browser-id :path-key)]
+       (if-let [current-item (r get-current-item db browser-id)]
+               (-> current-item path-key vec))))
 
 
 

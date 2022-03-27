@@ -115,13 +115,13 @@
   ;
   ; @return (metamorphic-content)
   [db [_ editor-id]]
-  ; - Az {:auto-title? ...} tulajdonság a body komponens paramétere, ezért annak React-fába történő
+  ; - Az {:auto-title? ...} tulajdonság a body komponens paramétere, ezért annak React-fába
   ;   csatolása után lehetséges eldönteni, hogy szükséges-e az automatikus felirat beállítása.
   ; - A {:route-title ...} tulajdonság a szerver-oldali [:item-editor/init-editor! ...] esemény
   ;   paramétere, és a {:route-title ...} tulajdonságként átadott címke, akkor kerül beállításra,
   ;   ha a szerkesztő NEM {:auto-title? true} beállítással lett elindítva.
   ; - Ha a {:route-title ...} címke beállítása az [:item-editor/handle-route! ...] eseményben történne,
-  ;   akkor szükséges lenne vizsgálni a body komponens React-fába történő csatolásának állapotát,
+  ;   akkor szükséges lenne vizsgálni a body komponens React-fába csatolásának állapotát,
   ;   mert az elem duplikálása után a "Másolat szerkesztése" lehetőséget választva ...
   ;   ... az útvonal megváltozik és az [:item-editor/handle-route! ...] esemény megtörténik,
   ;       ami a {:route-title ...} paraméterként átadott címkét beállítaná az applikáció címkéjeként.

@@ -53,7 +53,6 @@
   (let [saved-selection (get-in db value-path)]
        (-> db (assoc-in [:storage :media-picker/selected-items] saved-selection)
               (assoc-in [:storage :media-picker/picker-props]   picker-props))))
-              ;(assoc-in [:storage :item-lister/meta-items :new-item-options] [:create-directory! :upload-files!]))))
 
 
 

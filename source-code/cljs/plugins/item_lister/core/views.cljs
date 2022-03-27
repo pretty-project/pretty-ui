@@ -185,19 +185,20 @@
   ; @usage
   ;  [item-lister/new-item-button :my-lister]
   [lister-id]
-  (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
-        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])
-        new-item-event   @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-event])]
-       (if-let [new-item-options @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-options])]
-               [elements/select :item-lister/new-item-select
-                                {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
-                                 :initial-options new-item-options
-                                 :on-select       new-item-event
-                                 :disabled?       (or error-mode? lister-disabled?)}]
-               [elements/icon-button :item-lister/new-item-button
-                                     {:icon :add_circle :preset :primary :tooltip :add-new!
-                                      :on-click  new-item-event
-                                      :disabled? (or error-mode? lister-disabled?)}])))
+  (if-let [new-item-event @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-event])]
+          (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
+                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+               (if-let [new-item-options @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-options])]
+                       [elements/select :item-lister/new-item-select
+                                        {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
+                                         :initial-options new-item-options
+                                         :on-select       new-item-event
+                                         :disabled?       (or error-mode? lister-disabled?)}]
+                       [elements/icon-button :item-lister/new-item-button
+                                             {:icon :add_circle :preset :primary :tooltip :add-new!
+                                              :on-click  new-item-event
+                                              :disabled? (or error-mode? lister-disabled?)}]))))
+
 
 (defn toggle-select-mode-button
   ; @param (keyword) lister-id
@@ -242,7 +243,7 @@
                         {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
                          :disabled?    (or error-mode? lister-disabled? no-items-to-show?)
                          :on-select    [:item-lister/order-items!           lister-id]
-                         :options-path [:plugins :item-lister/body-props    lister-id :order-by-options]
+                         :options-path [:plugins :plugin-handler/body-props lister-id :order-by-options]
                          :value-path   [:plugins :plugin-handler/meta-items lister-id :order-by]
                          :get-label-f  core.helpers/order-by-label-f}]))
 
@@ -405,8 +406,12 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
+  ; A column komponens {:stretch-orientation :vertical} alapbeállítással használva popup elemen
+  ; megejelenített item-lister esetén a {height: 100%} css tulajdonság miatt örökölte a szülő
+  ; elem teljes magasságát.
   [elements/column {:content [:<> [no-items-to-show-label  lister-id]
-                                  [downloading-items-label lister-id]]}])
+                                  [downloading-items-label lister-id]]
+                    :stretch-orientation :none}])
 
 
 

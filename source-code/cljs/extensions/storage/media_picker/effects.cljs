@@ -66,6 +66,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ picker-id]]
       [:ui/add-popup! :storage.media-picker/view
-                      {:body   [media-picker.views/body   picker-id]
-                       ;:header [media-picker.views/header picker-id]
+                      {:header [media-picker.views/header picker-id]
+                       :body   [media-picker.views/body   picker-id]
+                       :footer [media-picker.views/footer picker-id]
                        :stretch-orientation :vertical}]))

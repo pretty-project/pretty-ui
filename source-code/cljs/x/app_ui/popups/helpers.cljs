@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.helpers
-    (:require [x.app-ui.element :as element]))
+    (:require [x.app-core.api   :as a]
+              [x.app-ui.element :as element]))
 
 
 
@@ -15,25 +16,24 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) popup-props
-  ;  {:minimized? (boolean)(opt)
-  ;   :stretch-orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:data-minimized (boolean)
-  ;   :data-stretched (boolean)}
-  [popup-id {:keys [minimized? stretch-orientation] :as popup-props}]
-  (cond-> (element/element-attributes :popups popup-id popup-props {:data-nosnippet true})
-          stretch-orientation (assoc :data-stretch-orientation stretch-orientation)
-          minimized?          (assoc :data-minimized           minimized?)))
+  ;   :data-stretch-orientation (boolean)}
+  [popup-id popup-props]
+  (merge (element/element-attributes :popups popup-id popup-props {:data-nosnippet true})
+         (if-let [stretch-orientation @(a/subscribe [:ui/get-popup-prop popup-id :stretch-orientation])]
+                 {:data-stretch-orientation stretch-orientation})
+         (if-let [minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
+                 {:data-minimized minimized?})))
 
 (defn popup-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  ;  {:autopadding? (boolean)(opt)}
   ;
   ; @return (map)
   ;  {:data-autopadding (boolean)}
-  [_ {:keys [autopadding?]}]
-  (merge {} (if autopadding? {:data-autopadding true})))
+  [popup-id]
+  (let [autopadding? @(a/subscribe [:ui/get-popup-prop popup-id :autopadding?])]
+       (merge {} (if autopadding? {:data-autopadding true}))))

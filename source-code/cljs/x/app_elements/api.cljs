@@ -91,7 +91,7 @@
 ;  adatbázis útvonlra.
 ;
 ; @name initial-value
-;  Az egyes input elemek React-fába történő csatolásakor az {:initial-value ...}
+;  Az egyes input elemek React-fába csatolásakor az {:initial-value ...}
 ;  tulajdonságának értéke az {:value-path ...} Re-Frame adatbázis útvonalra íródik.
 ;
 ; @name initial-options
