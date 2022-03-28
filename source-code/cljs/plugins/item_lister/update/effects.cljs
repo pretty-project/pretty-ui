@@ -78,10 +78,10 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek törlése sikertelen volt ...
-      ; ... megszűnteti a kijelöléseket
-      ; ... engedélyezi az ideiglenesen letiltott elemeket
+      ; ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ; ... engedélyezi az ideiglenesen letiltott elemeket.
       ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... megjelenít egy értesítést.
       {:db (r update.events/delete-items-failed db lister-id)
        :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
@@ -109,8 +109,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek törlésének visszavonása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
@@ -153,9 +153,11 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek duplikálása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
-      {:dispatch-n [[:ui/end-fake-process!]
+      ; ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... megjelenít egy értesítést.
+      {:db (r update.events/duplicate-items-failed db lister-id)
+       :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-duplicate}]]}))
 
 (a/reg-event-fx
@@ -181,7 +183,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))

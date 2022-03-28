@@ -4,6 +4,7 @@
 
 (ns x.app-ui.surface.views
     (:require [x.app-components.api     :as components]
+              [x.app-core.api           :as a]
               [x.app-ui.renderer        :rename {component renderer}]
               [x.app-ui.surface.helpers :as surface.helpers]))
 
@@ -16,19 +17,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
-  ; @param (map) surface-props
-  ;  {:view (map)}
-  [surface-id {:keys [view]}]
-  [:div.x-app-surface--element--view [components/content surface-id view]])
+  [surface-id]
+  (let [view @(a/subscribe [:ui/get-surface-prop surface-id :view])]
+       [:div.x-app-surface--element--view [components/content surface-id view]]))
 
 (defn surface-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
-  ; @param (map) surface-props
   [surface-id surface-props]
   [:div (surface.helpers/surface-attributes surface-id surface-props)
-        [surface-view                       surface-id surface-props]])
+        [surface-view                       surface-id]])
 
 
 

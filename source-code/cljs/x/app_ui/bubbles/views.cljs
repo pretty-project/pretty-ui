@@ -5,6 +5,7 @@
 (ns x.app-ui.bubbles.views
     (:require [mid-fruits.candy            :refer [param]]
               [x.app-components.api        :as components]
+              [x.app-core.api              :as a]
               [x.app-elements.api          :as elements]
               [x.app-ui.renderer           :rename {component renderer}]
               [x.app-ui.bubbles.config     :as bubbles.config]
@@ -32,37 +33,39 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn bubble-close-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;  {:user-close? (boolean)(opt)}
-  [bubble-id {:keys [user-close?]}]
-  (if user-close? [elements/button {:on-click [:ui/pop-bubble! bubble-id]
-                                    :preset   :close-icon-button}]))
+  [bubble-id]
+  (if-let [user-close? @(a/subscribe [:ui/get-bubble-prop bubble-id :user-close?])]
+          [elements/icon-button {:on-click [:ui/pop-bubble! bubble-id]
+                                 :preset   :close}]))
 
 (defn bubble-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
-  ;  {:body (map)}
-  [bubble-id {:keys [body]}]
-  [:div.x-app-bubbles--element--body [components/content bubble-id body]])
+  [bubble-id]
+  (let [body @(a/subscribe [:ui/get-bubble-prop bubble-id :body])]
+       [:div.x-app-bubbles--element--body [components/content bubble-id body]]))
 
 (defn bubble-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
-  ; @param (map) bubble-props
   [bubble-id bubble-props]
   [:div (bubbles.helpers/bubble-attributes bubble-id bubble-props)
-        [bubble-body                       bubble-id bubble-props]
-        [bubble-close-button               bubble-id bubble-props]])
+        [bubble-body                       bubble-id]
+        [bubble-close-button               bubble-id]])
+
+
+
+;; -- Renderer components -----------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

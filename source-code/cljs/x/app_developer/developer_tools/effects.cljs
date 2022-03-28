@@ -27,7 +27,8 @@
   :developer/render-developer-tools!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r gestures/init-view-handler! db :developer.developer-tools/handler {:default-view-id :re-frame-browser})
+      {:db (r gestures/init-view-handler! db :developer.developer-tools/handler
+                                             {:default-view-id :re-frame-browser :reinit? false})
        :dispatch [:ui/add-popup! :developer.developer-tools/view
                                  {:body   #'developer-tools.views/body
                                   :header #'developer-tools.views/header

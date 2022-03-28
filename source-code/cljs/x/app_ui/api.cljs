@@ -18,6 +18,7 @@
               [x.app-ui.progress-bar.subs]
               [x.app-ui.sounds.subs]
               [x.app-ui.surface.effects]
+              [x.app-ui.surface.subs]
               [x.app-ui.themes.effects]
               [x.app-ui.themes.events]
               [x.app-ui.themes.lifecycles]

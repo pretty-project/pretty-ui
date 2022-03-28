@@ -39,6 +39,14 @@
                                :on-stalled [:item-lister/receive-reloaded-items! lister-id]
                                :on-failure [:item-lister/set-error-mode!         lister-id]
                                :query query :validator-f validator-f}])))
+(a/reg-event-fx
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  :item-lister/receive-reloaded-items!
+  (fn [{:keys [db]} [_ lister-id server-response]]
+      {:db (r download.events/receive-reloaded-items! db lister-id server-response)}))
 
 
 
@@ -67,11 +75,6 @@
                                    :on-stalled [:item-lister/receive-items!  lister-id]
                                    :on-failure [:item-lister/set-error-mode! lister-id]
                                    :query query :validator-f validator-f}]))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-lister/receive-items!

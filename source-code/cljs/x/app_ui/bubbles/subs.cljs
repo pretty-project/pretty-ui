@@ -14,6 +14,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-bubble-prop
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bubble-id
+  ; @param (keyword) prop-key
+  ;
+  ; @return (boolean)
+  [db [_ bubble-id prop-key]]
+  (r renderer/get-element-prop db :bubbles bubble-id prop-key))
+
 (defn bubbles-enabled-by-user?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -51,3 +61,11 @@
   ; @return (boolean)
   [db [_ bubble-id]]
   (boolean (r renderer/get-element-prop db :bubbles bubble-id :autopop?)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :ui/get-bubble-prop get-bubble-prop)

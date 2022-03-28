@@ -24,9 +24,11 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  [elements/icon-button :item-lister/quit-search-mode-button
-                        {:keypress {:key-code 27} :preset :close
-                         :on-click [:item-lister/toggle-search-mode! lister-id]}])
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/icon-button :item-lister/quit-search-mode-button
+                             {:keypress  {:key-code 27} :preset :close
+                              :disabled? lister-disabled?
+                              :on-click  [:item-lister/toggle-search-mode! lister-id]}]))
 
 (defn search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -40,7 +42,8 @@
                                :disabled?     (or error-mode? lister-disabled?)
                                :on-empty      [:item-lister/search-items!          lister-id]
                                :on-type-ended [:item-lister/search-items!          lister-id]
-                               :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]))
+                               :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]
+       [:div (str lister-disabled?)]))
 
 (defn toggle-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,9 +77,11 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  [elements/icon-button :item-lister/quit-select-mode-button
-                        {:keypress {:key-code 27} :preset :close
-                         :on-click [:item-lister/toggle-select-mode! lister-id]}])
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/icon-button :item-lister/quit-select-mode-button
+                             {:keypress  {:key-code 27} :preset :close
+                              :disabled? lister-disabled?
+                              :on-click  [:item-lister/toggle-select-mode! lister-id]}]))
 
 
 (defn unselect-all-items-button
@@ -153,6 +158,16 @@
 ;; -- Reorder-mode header components ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn quit-reorder-mode-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/icon-button :item-lister/quit-reorder-mode-button
+                             {:keypress  {:key-code 27} :preset :close
+                              :disabled? lister-disabled?
+                              :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
 (defn save-order-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -164,15 +179,6 @@
                         {:label :save-order! :preset :primary-button
                          :disabled? (or lister-disabled? (not order-changed?))
                          :on-click  [:item-lister/save-order! lister-id]}]))
-
-(defn quit-reorder-mode-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [lister-id]
-  [elements/icon-button :item-lister/quit-reorder-mode-button
-                        {:keypress {:key-code 27} :preset :close
-                         :on-click [:item-lister/toggle-reorder-mode! lister-id]}])
 
 
 

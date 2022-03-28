@@ -20,8 +20,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.events
-(def set-error-mode! plugins.item-lister.core.events/set-error-mode!)
-(def use-filter!     plugins.item-lister.core.events/use-filter!)
+(def set-error-mode!  plugins.item-lister.core.events/set-error-mode!)
+(def reset-downloads! plugins.item-lister.core.events/reset-downloads!)
+(def use-filter!      plugins.item-lister.core.events/use-filter!)
 
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
@@ -111,9 +112,9 @@
   ;
   ; @return (map)
   [db [_ browser-id browser-props]]
-  (as-> db % (r store-derived-item-id!           % browser-id)
-             (r download.events/reset-downloads! % browser-id)
-             (r routes.events/set-parent-route!  % browser-id)))
+  (as-> db % (r store-derived-item-id!          % browser-id)
+             (r reset-downloads!                % browser-id)
+             (r routes.events/set-parent-route! % browser-id)))
 
 
 
@@ -128,8 +129,8 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
-  (as-> db % (r set-current-item-id!             % browser-id item-id)
-             (r download.events/reset-downloads! % browser-id)))
+  (as-> db % (r set-current-item-id! % browser-id item-id)
+             (r reset-downloads!     % browser-id)))
 
 
 

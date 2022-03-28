@@ -4,6 +4,7 @@
 
 (ns plugins.item-lister.update.events
     (:require [plugins.item-lister.backup.events :as backup.events]
+              [plugins.item-lister.core.events   :as core.events]
               [plugins.item-lister.items.events  :as items.events]
               [x.app-core.api                    :refer [r]]
               [x.app-ui.api                      :as ui]))
@@ -31,5 +32,19 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (as-> db % (r items.events/reset-selections! % lister-id)
+  (as-> db % (r core.events/quit-select-mode!  % lister-id)
              (r items.events/enable-all-items! % lister-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn duplicate-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (r core.events/quit-select-mode! db lister-id))

@@ -6,6 +6,7 @@
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
               [plugins.item-editor.core.subs      :as core.subs]
+              [plugins.item-editor.mount.subs     :as mount.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.core.events :as core.events]
               [x.app-core.api                     :as a :refer [r]]))
@@ -42,6 +43,23 @@
   [db [_ editor-id]]
   ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja az elem eltárolt változtatásait
   (assoc-in db [:plugins :plugin-handler/meta-items editor-id :recovery-mode?] true))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reset-downloads!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ editor-id]]
+  (let [item-path        (r mount.subs/get-body-prop db editor-id :item-path)
+        suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)]
+       (-> db (dissoc-in item-path)
+              (dissoc-in suggestions-path))))
 
 
 

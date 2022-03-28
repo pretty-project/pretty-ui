@@ -13,14 +13,19 @@
 (defn init-view-handler!
   ; @param (keyword) handler-id
   ; @param (map) handler-props
-  ;  {:default-view-id (keyword)}
+  ;  {:default-view-id (keyword)
+  ;   :reinit? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @usage
   ;  (r gestures/init-view-handler! db :my-view-handler {:default-view-id :my-view})
   ;
   ; @return (map)
-  [db [_ handler-id {:keys [default-view-id]}]]
-  (assoc-in db [:gestures :view-handler/data-items handler-id :view-id] default-view-id))
+  [db [_ handler-id {:keys [default-view-id reinit?]}]]
+  (if reinit? (assoc-in db [:gestures :view-handler/data-items handler-id :view-id] default-view-id)
+              (assoc-in db [:gestures :view-handler/data-items handler-id :view-id]
+                           (or (get-in db [:gestures :view-handler/data-items handler-id :view-id])
+                               default-view-id))))
 
 (defn change-view!
   ; @param (keyword) handler-id

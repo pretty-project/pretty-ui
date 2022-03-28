@@ -5,7 +5,6 @@
 (ns plugins.item-lister.mount.events
     (:require [mid-fruits.map                      :refer [dissoc-in]]
               [plugins.item-lister.core.events     :as core.events]
-              [plugins.item-lister.download.events :as download.events]
               [plugins.plugin-handler.mount.events :as mount.events]
               [x.app-core.api                      :refer [r]]))
 
@@ -62,6 +61,6 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (as-> db % (r core.events/reset-meta-items!    % lister-id)
-             (r download.events/reset-downloads! % lister-id)
-             (r remove-body-props!               % lister-id)))
+  (as-> db % (r core.events/reset-meta-items! % lister-id)
+             (r core.events/reset-downloads!  % lister-id)
+             (r remove-body-props!            % lister-id)))

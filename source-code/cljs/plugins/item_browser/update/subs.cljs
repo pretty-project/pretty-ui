@@ -29,7 +29,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r subs/get-copy-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  (r update.subs/get-copy-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;

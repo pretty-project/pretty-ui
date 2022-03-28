@@ -3,31 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.events
-    (:require [mid-fruits.map                    :refer [dissoc-in]]
-              [mid-fruits.vector                 :as vector]
+    (:require [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.core.events   :as core.events]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.item-lister.items.events  :as items.events]
               [plugins.item-lister.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reset-downloads!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (let [items-path (r mount.subs/get-body-prop db lister-id :items-path)]
-       (-> db (dissoc-in items-path)
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :document-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :items-received?]))))
 
 
 
@@ -122,20 +104,30 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
+  ; - A listaelemeken végzett műveletek közben esetlegesen egyes listaelemek
+  ;   {:disabled? true} állapotba lépnek (pl. törlés), amíg a művelet befejeződik.
+  ;   A művelet akkor tekinthető befejezettnek, amikor a lista állapota frissült
+  ;   a kliens-oldalon, ezért a receive-reloaded-items! függvényben alkalmazott
+  ;   items.events/enable-all-items! függvény szünteti meg a listaelemek {:disabled? true} állapotát!
+  ;
+  ; - A kijelölt elemeken végzett műveletek sikeres befejezése után a listaelemek újratöltődnek.
+  ;   A listaelemek sikeres újratöltése után szükséges kiléptetni a plugint a {:select-mode? true}
+  ;   állapotból, mert a listaelemek újratöltése ESETLEGESEN egy a kijelölt listaelemeken végzett
+  ;   művelet befejezése.
+  ;
+  ; - Az újra letöltött elemek fogadásakor is szükséges {:items-received? true} állapotba léptetni
+  ;   a plugint az items-received függvény alkalmazásával!
+  ;   Pl.: Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
+  ;        és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
+  ;        plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
+  ;        indított elemek újratöltése még folyamatban.
+  ;        A plugon nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
+  ;        előfordulhat, hogy a megnyitás után a plugin nem a request-items! lekéréssel tölti le
+  ;        az első elemeket.
+  ;        XXX#5476 HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
+  ;                 SZÜKSÉGES FELÜLVIZSGÁLNI!
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
-             ; A listaelemeken végzett műveletek közben esetlegesen egyes listaelemek
-             ; {:disabled? true} állapotba lépnek (pl. törlés), amíg a művelet befejeződik.
-             ; A művelet akkor tekinthető befejezettnek, amikor a lista állapota frissült
-             ; a kliens-oldalon, ezért a receive-reloaded-items! függvény szünteti meg a listaelemek
-             ; {:disabled? true} állapotát!
              (r items.events/enable-all-items! % lister-id)
-             (r items.events/reset-selections! % lister-id)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/receive-reloaded-items! receive-reloaded-items!)
+             (r core.events/quit-select-mode!  % lister-id)
+             (r items-received                 % lister-id)))

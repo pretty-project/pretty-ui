@@ -3,14 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.events
-    (:require [mid-fruits.candy                    :refer [return]]
-              [mid-fruits.map                      :refer [dissoc-in]]
-              [plugins.item-lister.core.subs       :as core.subs]
-              [plugins.item-lister.download.events :as download.events]
-              [plugins.item-lister.items.events    :as items.events]
-              [plugins.item-lister.mount.subs      :as mount.subs]
-              [plugins.plugin-handler.core.events  :as core.events]
-              [x.app-core.api                      :as a :refer [r]]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-lister.core.subs      :as core.subs]
+              [plugins.item-lister.mount.subs     :as mount.subs]
+              [plugins.plugin-handler.core.events :as core.events]
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
@@ -43,6 +41,16 @@
   ; @return (map)
   [db [_ lister-id]]
   (as-> db % (update-in % [:plugins :plugin-handler/meta-items lister-id :select-mode?] not)
+             (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :selected-items])))
+
+(defn quit-select-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :select-mode?])
              (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :selected-items])))
 
 (defn toggle-reorder-mode!
@@ -93,6 +101,27 @@
              (assoc-in  % [:plugins :plugin-handler/meta-items lister-id]
                           (select-keys (get-in db [:plugins :plugin-handler/meta-items lister-id])
                                        [:order-by :search-term]))))
+(defn reset-selections!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :selected-items]))
+
+(defn reset-downloads!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (let [items-path (r mount.subs/get-body-prop db lister-id :items-path)]
+       (-> db (dissoc-in items-path)
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :document-count])
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-count])
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :items-received?]))))
 
 
 
@@ -142,8 +171,8 @@
   ;
   ; @return (map)
   [db [_ lister-id filter-pattern]]
-  (as-> db % (r download.events/reset-downloads! % lister-id)
-             (r items.events/reset-selections!   % lister-id)
+  (as-> db % (r reset-downloads!  % lister-id)
+             (r reset-selections! % lister-id)
              (assoc-in % [:plugins :plugin-handler/meta-items lister-id :active-filter] filter-pattern)))
 
 

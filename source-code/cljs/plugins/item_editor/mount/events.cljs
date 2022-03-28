@@ -5,7 +5,6 @@
 (ns plugins.item-editor.mount.events
     (:require [mid-fruits.map                      :refer [dissoc-in]]
               [plugins.item-editor.core.events     :as core.events]
-              [plugins.item-editor.download.events :as download.events]
               [plugins.plugin-handler.mount.events :as mount.events]
               [x.app-core.api                      :refer [r]]))
 
@@ -74,6 +73,6 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (as-> db % (r core.events/remove-meta-items!   % editor-id)
-             (r download.events/reset-downloads! % editor-id)
-             (r remove-body-props!               % editor-id)))
+  (as-> db % (r core.events/remove-meta-items! % editor-id)
+             (r core.events/reset-downloads!   % editor-id)
+             (r remove-body-props!             % editor-id)))

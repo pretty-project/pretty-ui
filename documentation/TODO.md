@@ -14,6 +14,8 @@
 
 # x4.6.0
 
+- request-inspector időrendben a legfirssebb request legyne mindig felül
+
 - dom/form-data van egy kérdéses sor ...
   dom/file-selector detto
 

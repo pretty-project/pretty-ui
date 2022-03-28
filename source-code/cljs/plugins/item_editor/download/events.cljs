@@ -3,30 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [mid-fruits.map                    :refer [dissoc-in]]
-              [plugins.item-editor.backup.events :as backup.events]
+    (:require [plugins.item-editor.backup.events :as backup.events]
               [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
               [plugins.item-editor.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reset-downloads!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (let [item-path        (r mount.subs/get-body-prop db editor-id :item-path)
-        suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)]
-       (-> db (dissoc-in item-path)
-              (dissoc-in suggestions-path))))
 
 
 

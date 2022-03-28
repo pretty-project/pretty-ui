@@ -3,10 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.effects
-    (:require [plugins.item-lister.core.events     :as core.events]
-              [plugins.item-lister.download.events :as download.events]
-              [plugins.item-lister.transfer.subs   :as transfer.subs]
-              [x.app-core.api                      :as a :refer [r]]))
+    (:require [plugins.item-lister.core.events   :as core.events]
+              [plugins.item-lister.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -53,7 +52,7 @@
   ; @param (keyword) lister-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r download.events/reset-downloads! db lister-id)
+      {:db (r core.events/reset-downloads! db lister-id)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))
 
 
@@ -68,5 +67,5 @@
   ; @param (keyword) lister-id
   ; @param (keyword) item-namespace
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r download.events/reset-downloads! db lister-id)
+      {:db (r core.events/reset-downloads! db lister-id)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))

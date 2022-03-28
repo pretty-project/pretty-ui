@@ -40,6 +40,7 @@
   ;
   ; @return (keyword)
   [db [_ plugin-id plugin-key]]
+  ; XXX#5476
   ; - A pluginok a különböző lekéréseik elküldéséhez ugyanazt az azonosítót használják,
   ;   mert egy közös azonosítóval egyszerűbb megállapítani, hogy valamelyik lekérésük folyamatban
   ;   van-e (a plugin-synchronizing? függvénynek elegendő egy request-id azonosítót figyelnie).
@@ -65,5 +66,6 @@
   ;
   ; @return (boolean)
   [db [_ plugin-id plugin-key]]
+  ; XXX#5476
   (let [request-id (r get-request-id db plugin-id plugin-key)]
        (r sync/listening-to-request? db request-id)))

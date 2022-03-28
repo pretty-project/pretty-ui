@@ -14,20 +14,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reset-selections!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :selected-items]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn select-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -66,7 +52,7 @@
   ; @param (integers in vector) item-dexes
   ;
   ; @usage
-  ;  (r events/disable-items! db :my-lister [0 1 4])
+  ;  (r items.events/disable-items! db :my-lister [0 1 4])
   ;
   ; @return (map)
   [db [_ lister-id item-dexes]]
@@ -79,7 +65,7 @@
   ; @param (integers in vector) item-dexes
   ;
   ; @usage
-  ;  (r events/enable-items! db :my-lister [0 1 4])
+  ;  (r items.events/enable-items! db :my-lister [0 1 4])
   ;
   ; @return (map)
   [db [_ lister-id item-dexes]]
