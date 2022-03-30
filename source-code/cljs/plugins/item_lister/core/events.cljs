@@ -137,6 +137,7 @@
   [db [_ lister-id]]
   ; - Az item-lister plugin betöltésekor ha az {:order-by ...} beállítás nem elérhető, akkor beállítja
   ;   az order-by-options vektor első elemét order-by beállításként.
+  ;
   ; - Ha még nem volt a felhasználó által kiválasztva order-by érték, akkor ...
   ; ... a sort-items-select kirenderelésekor nem lenne a select-options felsorolásban aktív listaelem!
   ; ... az elemek letöltésekor a szerver nem kapná meg az order-by értékét!

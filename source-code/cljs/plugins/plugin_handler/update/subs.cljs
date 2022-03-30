@@ -20,9 +20,9 @@
   ; @example
   ;  (r update.subs/get-mutation-name db :my-plugin :delete-items)
   ;  =>
-  ;  "my-handler/delete-items!"
+  ;  :my-handler/delete-items!
   ;
-  ; @return (string)
+  ; @return (keyword)
   [db [_ plugin-id action-key]]
   (let [handler-key (r transfer.subs/get-transfer-item db plugin-id :handler-key)]
        (keyword      (name handler-key)

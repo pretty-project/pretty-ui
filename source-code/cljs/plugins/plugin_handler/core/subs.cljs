@@ -46,7 +46,9 @@
   ; - A pluginok a különböző lekéréseik elküldéséhez ugyanazt az azonosítót használják,
   ;   mert egy közös azonosítóval egyszerűbb megállapítani, hogy valamelyik lekérésük folyamatban
   ;   van-e (a plugin-synchronizing? függvénynek elegendő egy request-id azonosítót figyelnie).
+  ;
   ; - Ha szükséges, akkor a különböző lekéréseket el lehet látni egyedi azonosítókkal.
+  ;
   ; - A plugin-key kifejezés használata megkülönbözteti az egyes pluginok lekéréseit egymástól.
   ;   Pl.: Az item-browser plugin request-item! lekérése és az item-browser plugin által indított
   ;        de az item-lister plugin request-items! lekérése előfordul, hogy egyszerre történik.

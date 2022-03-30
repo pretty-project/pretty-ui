@@ -54,8 +54,10 @@
       ; - Az [:item-browser/browse-item! ...] esemény A) kimenetele átirányít az elemhez készített
       ;   útvonalra, majd az [:item-browser/handle-route! ...] esemény újratölti az infinite-loader
       ;   komponenst és letölti az aktuálisan böngészett elem adatait.
+      ;
       ; - Az [:item-browser/browse-item! ...] esemény B) kimenetele újratölti az infinite-loader
       ;   komponenst és letölti az aktuálisan böngészett elem adatait.
+      ;
       ; - Az [:item-browser/handle-route! ...] esemény az [:item-browser/browse-item! ...] eseménytől
       ;   függetlenül megtörténik és ...
       ;   Pl.: a felhasználó a böngésző "Vissza" gombjára kattint az item-browser plugin hanszálata

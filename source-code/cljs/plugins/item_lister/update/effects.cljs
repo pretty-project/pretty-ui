@@ -5,6 +5,7 @@
 (ns plugins.item-lister.update.effects
     (:require [plugins.item-lister.core.subs         :as core.subs]
               [plugins.item-lister.items.subs        :as items.subs]
+              [plugins.item-lister.mount.subs        :as mount.subs]
               [plugins.item-lister.update.events     :as update.events]
               [plugins.item-lister.update.queries    :as update.queries]
               [plugins.item-lister.update.subs       :as update.subs]
@@ -66,9 +67,22 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id server-response]]
+      ; A) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... újratölti a listaelemeket, majd megjelenít egy értesítést..
+      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ;
+      ; B) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [item-ids (r update.subs/get-deleted-item-ids db lister-id server-response)]
-           {:dispatch-n [[:item-lister/render-items-deleted-dialog! lister-id item-ids]
-                         [:item-lister/reload-items!                lister-id]]})))
+           (if (r mount.subs/body-did-mount? db lister-id)
+               ; A)
+               (let [on-reload [:item-lister/render-items-deleted-dialog! lister-id item-ids]]
+                    [:item-lister/reload-items! lister-id {:on-reload on-reload}])
+               ; B)
+               [:item-lister/render-items-deleted-dialog! lister-id item-ids]))))
 
 (a/reg-event-fx
   :item-lister/delete-items-failed
@@ -77,14 +91,31 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
-      ; Ha a kijelölt elemek törlése sikertelen volt ...
-      ; ... kilépteti a plugint a {:select-mode? true} állapotból.
-      ; ... engedélyezi az ideiglenesen letiltott elemeket.
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:db (r update.events/delete-items-failed db lister-id)
-       :dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
+      ; XXX#0439
+      ;
+      ; A) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ;    ... engedélyezi az ideiglenesen letiltott elemeket.
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          {:db (r update.events/delete-items-failed db lister-id)
+           :dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-delete}])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-lister/undo-delete-items!
@@ -97,9 +128,28 @@
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                                         {:on-success [:item-lister/reload-items!            lister-id]
+                                         {:on-success [:item-lister/delete-items-undid       lister-id]
                                           :on-failure [:item-lister/undo-delete-items-failed lister-id]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-lister/delete-items-undid
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ lister-id _]]
+      ; A) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... újratölti a listaelemeket.
+      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ;
+      ; B) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
+      ;    NINCS a React-fába van csatolva, ...
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          [:item-lister/reload-items! lister-id])))
 
 (a/reg-event-fx
   :item-lister/undo-delete-items-failed
@@ -108,11 +158,23 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
-      ; Ha a kijelölt elemek törlésének visszavonása sikertelen volt ...
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
+      ; XXX#0439
+      ;
+      ; A) Ha a "Törölt elemek visszaállítása" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha a "Törölt elemek visszaállítása" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          {:dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-delete}])))
 
 
 
@@ -141,9 +203,23 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id server-response]]
+      ; A) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... újratölti a listaelemeket.
+      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ;
+      ; B) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [copy-ids (r update.subs/get-duplicated-item-ids db lister-id server-response)]
-           {:dispatch-n [[:item-lister/render-items-duplicated-dialog! lister-id copy-ids]
-                         [:item-lister/reload-items!                   lister-id]]})))
+           (if (r mount.subs/body-did-mount? db lister-id)
+               ; A)
+               (let [on-reload [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]]
+                    [:item-lister/reload-items! lister-id {:on-reload on-reload}])
+               ; B)
+               [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]))))
 
 (a/reg-event-fx
   :item-lister/duplicate-items-failed
@@ -152,13 +228,30 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
-      ; Ha a kijelölt elemek duplikálása sikertelen volt ...
-      ; ... kilépteti a plugint a {:select-mode? true} állapotból.
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:db (r update.events/duplicate-items-failed db lister-id)
-       :dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-duplicate}]]}))
+      ; XXX#0439
+      ;
+      ; A) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          {:db (r update.events/duplicate-items-failed db lister-id)
+           :dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-duplicate}])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-lister/undo-duplicate-items!
@@ -171,9 +264,28 @@
             validator-f #(r update.validators/undo-duplicate-items-response-valid? db lister-id %)]
            {:db (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                                         {:on-success [:item-lister/reload-items!               lister-id]
+                                         {:on-success [:item-lister/duplicate-items-undid       lister-id]
                                           :on-failure [:item-lister/undo-duplicate-items-failed lister-id]
                                           :query query :validator-f validator-f}]})))
+
+(a/reg-event-fx
+  :item-lister/duplicate-items-undid
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ lister-id _]]
+      ; A) Ha a "Duplikált elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... újratölti a listaelemeket.
+      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ;
+      ; B) Ha a "Duplikált elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;    NINCS a React-fába van csatolva, ...
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          [:item-lister/reload-items! lister-id])))
 
 (a/reg-event-fx
   :item-lister/undo-duplicate-items-failed
@@ -182,8 +294,20 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
-      ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))
+      ; XXX#0439
+      ;
+      ; A) Ha a "Duplikált elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha a "Duplikált elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db lister-id)
+          ; A)
+          {:dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-undo-duplicate}])))

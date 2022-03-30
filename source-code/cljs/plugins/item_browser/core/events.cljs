@@ -115,6 +115,7 @@
   ; @return (map)
   [db [_ browser-id browser-props]]
   ; XXX#1329
+  ; BUG#1329
   (as-> db % (r store-derived-item-id!          % browser-id)
              (r reset-downloads!                % browser-id)
              (r quit-select-mode!               % browser-id)
@@ -136,15 +137,16 @@
   [db [_ browser-id item-id]]
   ; - XXX#1329
   ;   Ha az aktuálisan böngészett elem megváltozásakor az item-browser plugin {:disabled? true} állapotban
-  ;   tart egyes elemeket (pl. folyamatban lévő törlés miatt), akkor a browse-item! függvény feloldja
-  ;   az összes elem {:disabled? true} állapotát, mert az elemek az indexük és nem pedig az azonosítójuk
+  ;   tart egyes listaelemeket (pl. folyamatban lévő törlés miatt), akkor a browse-item! függvény feloldja
+  ;   az összes listaelem {:disabled? true} állapotát, mert a listaelemek az indexük és nem pedig az azonosítójuk
   ;   alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,
-  ;   akkor a letöltött elemek lecserélődése után az egyes indexekhez más elemek fognak tartozni.
+  ;   akkor a letöltött listaelemek lecserélődése után az egyes indexekhez más listaelemek fognak tartozni.
+  ;
   ; - BUG#1329
-  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, majd visszatér
-  ;   mielőtt a folyamat befejeződne, akkor a {:disabled? true} állapot nem kerül vissza az elhagyás
-  ;   előtt {:disabled? true} állapotban lévő elemekre. Ez a hiba addig nem javítható, amíg
-  ;   a {:disabled? true} állapot az elemek indexe alapján van tárolva.
+  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor valószínűleg
+  ;   nem jellemző, hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,
+  ;   hogy az ismételten böngészett elemben a {:disabled? true} állapot nem kerül vissza az elhagyás előtt
+  ;   {:disabled? true} állapotban lévő listaelemekre.
   (as-> db % (r set-current-item-id!           % browser-id item-id)
              (r reset-downloads!               % browser-id)
              (r quit-select-mode!              % browser-id)

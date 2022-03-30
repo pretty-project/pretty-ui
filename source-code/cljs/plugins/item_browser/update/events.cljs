@@ -21,13 +21,13 @@
   ;
   ; @param (keyword) browser-id
   ; @param (string) item-id
-  ; @param (map) changes
+  ; @param (map) item-changes
   ;
   ; @return (map)
-  [db [_ browser-id item-id changes]]
+  [db [_ browser-id item-id item-changes]]
   (let [items-path (r mount.subs/get-body-prop db browser-id :items-path)
         item-dex   (r items.subs/get-item-dex  db browser-id item-id)]
-       (update-in db (conj items-path item-dex) merge changes)))
+       (update-in db (conj items-path item-dex) merge item-changes)))
 
 (defn revert-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,13 +79,13 @@
   ;
   ; @param (keyword) browser-id
   ; @param (string) item-id
-  ; @param (map) changes
+  ; @param (map) item-changes
   ;
   ; @return (map)
-  [db [_ browser-id item-id changes]]
+  [db [_ browser-id item-id item-changes]]
   (as-> db % (r backup.events/backup-item! % browser-id item-id)
              (r items.events/disable-item! % browser-id item-id)
-             (r apply-changes!             % browser-id item-id changes)))
+             (r apply-changes!             % browser-id item-id item-changes)))
 
 (defn item-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!

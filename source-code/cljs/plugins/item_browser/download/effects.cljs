@@ -18,11 +18,16 @@
 (a/reg-event-fx
   :item-browser/reload-items!
   ; @param (keyword) browser-id
+  ; @param (map)(opt) reload-props
+  ;  {:on-reload (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [:item-browser/reload-items! :my-browser]
-  (fn [{:keys [db]} [_ browser-id]]
-      {:dispatch-n [[:item-lister/reload-items!  browser-id]
+  ;
+  ; @usage
+  ;  [:item-browser/reload-items! :my-browser {...}]
+  (fn [{:keys [db]} [_ browser-id reload-props]]
+      {:dispatch-n [[:item-lister/reload-items!  browser-id reload-props]
                     [:item-browser/request-item! browser-id]]}))
 
 

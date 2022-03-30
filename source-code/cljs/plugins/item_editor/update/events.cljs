@@ -35,7 +35,9 @@
   ; @return (map)
   [db [_ editor-id]]
   ; - Az elem sikeres törlése után szükséges az elem kliens-oldali változtatásait eltárolni (local-changes)!
+  ;
   ; - A kitörölt elem esetleges visszaállításakor a szerver számára az elem eredeti változatát szükséges elküldeni!
+  ;
   ; - A kitörölt elem sikeres visszaállítása után a szerkesztő megnyitásakor az elem kliens-oldali változtatásait
   ;   szükséges alkalmazni az eredeti dokumentumon!
   (as-> db % (r backup.events/store-local-changes! % editor-id)

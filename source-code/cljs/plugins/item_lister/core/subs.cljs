@@ -109,11 +109,14 @@
   ; @return (integer)
   [db [_ lister-id]]
   ; - Ha a tárolt érték nil, akkor a visszatérési érték 0
+  ;
   ; - Ha a szerver hibásan nil értéket küld le, akkor a 0 visszatérési érték miatt
   ;   az all-items-downloaded? függvény visszatérési értéke true lesz ezért megáll
   ;   az újabb elemek letöltése.
+  ;
   ; - Hibás szerver-működés esetén szükséges, hogy az infinite-loader komponens
   ;   ne próbálja újra és újra letölteni a további feltételezett elemeket.
+  ;
   ; - XXX#0499
   ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
   ;   függvény visszatérési értéke nem tekinthető mérvadónak!
@@ -130,16 +133,17 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
+  ; XXX#0791
+  ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
+  ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
+  ;   akkor ne próbáljon további feltételezett elemeket letölteni.
+  ;
+  ; - XXX#0499
+  ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
+  ;   függvény visszatérési értéke nem tekinthető mérvadónak!
+  ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
   (let [       all-item-count (r        get-all-item-count db lister-id)
         downloaded-item-count (r get-downloaded-item-count db lister-id)]
-       ; XXX#0791
-       ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
-       ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
-       ;   akkor ne próbáljon további feltételezett elemeket letölteni.
-       ; - XXX#0499
-       ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
-       ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-       ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
        (>= downloaded-item-count all-item-count)))
 
 (defn no-items-received?

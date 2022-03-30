@@ -181,6 +181,18 @@
              {::pathom.co/op-name 'my-handler/update-item!}
              (return {}))
 
+; Sikeres áthelyezés esetén a dokumentummal szükséges visszatérni!
+(defmutation move-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item-id (string)
+             ;   :? (?)}
+             ;
+             ; @return (namespaced map)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-handler/move-item!}
+             (return {}))
+
 
 
 ;; ----------------------------------------------------------------------------

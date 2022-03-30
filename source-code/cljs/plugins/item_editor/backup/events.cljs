@@ -24,10 +24,12 @@
   [db [_ editor-id]]
   ; - Az egyes elemek aktuális változatáról készített másolatok az elem azonosítójával vannak
   ;   tárolva. Így egy időben több elemről is lehetséges másolatot tárolni.
+  ;
   ; - A gyors egymás utánban kitörölt elemek törlésének visszavonhatósága időbeni átfedésbe
   ;   kerülhet egymással – egyszerre több értesítés jelenhet meg, különböző elemek törlésének
   ;   visszavonásának lehetőségével – amiért szükséges az egyes elemekről készült másolatokat
   ;   azonosítóval megkülönböztetve kezelni és tárolni.
+  ;
   ; - A gyors egymás utánban elvetett szerkesztett elemek elvetésének visszavonhatósága időbeni
   ;   átfedésbe kerülhet egymással ...
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
@@ -43,6 +45,7 @@
   [db [_ editor-id]]
   ; - A szerkesztő elhagyásakor az elem el nem mentett változtatásainak helyreállításához szükséges
   ;   eltárolni az elem ... változtatásait.
+  ;
   ; - Az elem törlésének visszaállítása után újra megnyíló szerkesztő a visszaállított elemen
   ;   alkalmazza annak (törléskori) el nem mentett változtatásait.
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)

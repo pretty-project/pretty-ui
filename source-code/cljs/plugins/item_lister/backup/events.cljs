@@ -32,6 +32,7 @@
   ; - A kijelölt elemeken végzett műveletek előtt (pl. törlés) szükséges lehet azokról biztonsági
   ;   másolatot készíteni, amiből esetlegesen visszaállíthatók az elemek, ha a felhasználó
   ;   a művelet visszavonása lehetőséget választja.
+  ;
   ; - A (kijelölt) elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
   (let [items-path     (r mount.subs/get-body-prop db plugin-id :items-path)
         selected-items (r core.subs/get-meta-item  db plugin-id :selected-items)]

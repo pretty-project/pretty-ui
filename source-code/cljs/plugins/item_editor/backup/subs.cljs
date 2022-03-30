@@ -42,9 +42,11 @@
   [db [_ editor-id]]
   ; - Az item-changed? függvény összehasonlítja az elem (megnyitáskor eltárolt!) biztonsági másolatát
   ;   az elem jelenlegi állapotával.
+  ;
   ; - Az initial-item értékét szükséges kivonni az elemből a vizsgálat előtt, mert befolyásolja
   ;   az elem változásának vizsgálatát, az hogy a szerkesztő indításakor automatikusan az elem állapotához
   ;   adódik az initial-item térkép értéke!
+  ;
   ; - Az initial-item értékének kivonásakor figyelembe kell venni, azt hogy lehetséges, hogy
   ;   az elem megnyitáskori állapotában már tartalmazta az initial-item térkép adatait,
   ;   ezért az összehasonlításkor a backup-item és a current-item térképekből egyaránt szükséges

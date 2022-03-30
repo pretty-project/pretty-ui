@@ -5,6 +5,7 @@
 (ns plugins.item-editor.update.effects
     (:require [plugins.item-editor.core.events       :as core.events]
               [plugins.item-editor.core.subs         :as core.subs]
+              [plugins.item-editor.mount.subs        :as mount.subs]
               [plugins.item-editor.routes.subs       :as routes.subs]
               [plugins.item-editor.transfer.subs     :as transfer.subs]
               [plugins.item-editor.update.events     :as update.events]
@@ -69,11 +70,13 @@
   (fn [{:keys [db]} [_ editor-id]]
       ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
       ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
-      ;   az aktuális szerkesztés közbeni további mentések, már nem számítának elem-hozzáadásnak,
+      ;   az aktuális szerkesztés közbeni további mentések, már nem számítanának elem-hozzáadásnak,
       ;   miközben az item-editor plugin továbbra is "Új elem hozzáadása" módban fut, ezért
-      ;   nem tudná megkülönbözetni a további mentéseket a hozzáadástól (első mentéstől)!
+      ;   nem tudná megkülönböztetni a további mentéseket a hozzáadástól (első mentéstől)!
+      ;
       ; - Az elem esetleges törlése utáni – kliens-oldali adatból történő – visszaállításhoz
       ;   szükséges az elem feltételezett szerver-oldali állapotáról másolatot tárolni!
+      ;
       ; - Az elem szerverre küldésének idejében az elemről másolat készítése feltételezi,
       ;   a mentés sikerességét. Sikertelen mentés esetén a kliens-oldali másolat eltérhet
       ;   a szerver-oldalon tárolt változattól, ami az elem törlése utáni visszaállítás esetén
@@ -93,15 +96,16 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
-      ; A) Ha az "Elem mentése" folyamat befejeződésekor a felhasználó még nem hagyta el a plugint,
-      ;    még a mentett elem van megnyitva szerkesztésre és a plugin szerver-oldali kezelője
-      ;    rendelkezik a {:base-route "..."} tulajdonsággal ...
-      ;    ... akkor átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő
-      ;        számára elküldött útvonalra.
+      ; A) Ha az "Elem mentése" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, a mentett elem van megnyitva szerkesztésre
+      ;    és a plugin rendelkezik a {:base-route "..."} tulajdonsággal ...
+      ;    ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
+      ;        elküldött útvonalra.
       ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;        15 százalékig szimulált folyamat.
+      ;        15%-ig szimulált folyamat.
+      ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id    (r update.subs/get-saved-item-id   db editor-id server-response)
             base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
            (if (and base-route (r core.subs/editing-item? db editor-id item-id))
@@ -117,11 +121,21 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      ; Ha az elem mentése sikertelen volt ...
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-save}]]}))
+      ; A) Ha az "Elem mentése" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha az "Elem mentése" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db editor-id)
+          ; A)
+          {:dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-save}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-save}])))
 
 
 
@@ -150,15 +164,16 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
-      ; A) Ha az "Elem törlése" folyamat befejeződésekor a felhasználó még nem hagyta el a plugint,
-      ;    még a törölt elem van megnyitva szerkesztésre és a plugin szerver-oldali kezelője
-      ;    rendelkezik a {:base-route "..."} tulajdonsággal ...
-      ;    ... akkor átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő
-      ;        számára elküldött útvonalra.
+      ; A) Ha az "Elem törlése" művelet sikeres befejeződésekor a body komponens
+      ;    a React-fába van csatolva, a törölt elem van megnyitva szerkesztésre
+      ;    és a plugin rendelkezik a {:base-route "..."} tulajdonsággal ...
+      ;    ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
+      ;        elküldött útvonalra.
       ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;        15 százalékig szimulált folyamat.
+      ;        15%-ig szimulált folyamat.
+      ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:db (r update.events/item-deleted db editor-id)
        :dispatch-n [[:item-editor/render-item-deleted-dialog! editor-id]
                     (let [item-id    (r update.subs/get-deleted-item-id   db editor-id server-response)
@@ -176,11 +191,26 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      ; Ha az elem törlése sikertelen volt ...
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-delete}]]}))
+      ; A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha az "Elem törlése" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db editor-id)
+          ; A)
+          {:dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-delete}])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-editor/undo-delete-item!
@@ -205,12 +235,14 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id item-id _]]
-      ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:route-template "..."} tulajdonságot)
-      ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
-      ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15 százalékig szimulált folyamat.
-      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin rendelkezik
+      ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;    ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+
+      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin NEM rendelkezik
+      ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:db (r core.events/set-recovery-mode! db editor-id)
        :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db editor-id item-id)]
                             ; A)
@@ -225,11 +257,21 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      ; Ha az elem törlésének visszaállítása sikertelen volt ...
-      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ; ... megjelenít egy értesítést.
-      {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}))
+      ; A) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
+      ;    a React-fába van csatolva, ...
+      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... megjelenít egy értesítést.
+      ;
+      ; B) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
+      ;    NINCS a React-fába csatolva, ...
+      ;    ... megjelenít egy értesítést.
+      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      (if (r mount.subs/body-did-mount? db editor-id)
+          ; A)
+          {:dispatch-n [[:ui/end-fake-process!]
+                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
+          ; B)
+          [:ui/blow-bubble! {:body :failed-to-undo-delete}])))
 
 
 
@@ -258,6 +300,8 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
+      ; Ha az "Elem duplikálása" művelet sikeres volt, ...
+      ; ... megjelenít egy értesítést.
       (let [copy-id (r update.subs/get-duplicated-item-id db editor-id server-response)]
            [:item-editor/render-item-duplicated-dialog! editor-id copy-id])))
 
@@ -267,9 +311,9 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ editor-id _]]
-      ; Ha az elem duplikálása sikertelen volt ...
-      ; ... megjelenít egy értesítést
+  (fn [_ [_ editor-id _]]
+      ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
+      ; ... megjelenít egy értesítést.
       [:ui/blow-bubble! {:body :failed-to-duplicate}]))
 
 
