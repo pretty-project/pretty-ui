@@ -53,6 +53,6 @@
   [db [_ lister-id server-response]]
   (let [mutation-name  (r get-mutation-name               db lister-id :duplicate-items!)
         item-namespace (r transfer.subs/get-transfer-item db lister-id :item-namespace)
-        item-id-key    (keyword/add-namespace item-namespace :id)
-        copy-items     (get server-response (symbol mutation-name))]
-       (vector/->items copy-items item-id-key)))
+        copy-items     (get server-response (symbol mutation-name))
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (vector/->items copy-items id-key)))

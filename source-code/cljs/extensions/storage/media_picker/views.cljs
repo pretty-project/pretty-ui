@@ -64,7 +64,7 @@
   [picker-id]
   [:<> [header-label-bar picker-id]
        [item-browser/header :storage.media-picker
-                            {:new-item-event   [:storage.media-browser/add-new-item!]
+                            {:new-item-event   [:storage.media-picker/add-new-item!]
                              :new-item-options [:create-directory! :upload-files!]}]])
 
 

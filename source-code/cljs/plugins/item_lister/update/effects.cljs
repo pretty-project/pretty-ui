@@ -80,7 +80,7 @@
       ; Ha a kijelölt elemek törlése sikertelen volt ...
       ; ... kilépteti a plugint a {:select-mode? true} állapotból.
       ; ... engedélyezi az ideiglenesen letiltott elemeket.
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ; ... megjelenít egy értesítést.
       {:db (r update.events/delete-items-failed db lister-id)
        :dispatch-n [[:ui/end-fake-process!]
@@ -109,7 +109,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek törlésének visszavonása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
@@ -154,7 +154,7 @@
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek duplikálása sikertelen volt ...
       ; ... kilépteti a plugint a {:select-mode? true} állapotból.
-      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ; ... megjelenít egy értesítést.
       {:db (r update.events/duplicate-items-failed db lister-id)
        :dispatch-n [[:ui/end-fake-process!]
@@ -183,7 +183,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
       ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot.
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))

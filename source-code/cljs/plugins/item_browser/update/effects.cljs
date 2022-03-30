@@ -76,6 +76,7 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id item-id _]]
+
       {:db (r update.events/item-updated db browser-id item-id)}))
 
 (a/reg-event-fx
@@ -117,7 +118,7 @@
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ; @param (map) server-response
-  (fn [{:keys []} [_ browser-id item-id _]]
+  (fn [_ [_ browser-id item-id _]]
       {:dispatch-n [[:item-browser/render-item-deleted-dialog! browser-id item-id]
                     [:item-browser/reload-items!               browser-id]]}))
 
@@ -130,9 +131,9 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id item-id _]]
       ; Ha az elem törlése sikertelen volt ...
-      ; ... engedélyezi az ideiglenesen letiltott elemet
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... engedélyezi az ideiglenesen letiltott elemet.
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:db (r update.events/delete-item-failed db browser-id item-id)
        :dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
@@ -169,8 +170,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id _]]
       ; Ha az elem törlésének visszaállítása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}))
 
@@ -213,8 +214,8 @@
   ; @param (keyword) browser-id
   (fn [{:keys [db]} [_ browser-id]]
       ; Ha az elem duplikálása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-duplicate}]]}))
 
@@ -241,8 +242,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id _]]
       ; Ha a kijelölt elemek duplikálásának visszavonása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}))
 

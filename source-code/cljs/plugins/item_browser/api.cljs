@@ -30,6 +30,7 @@
 
 ; plugins.item-browser.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
+(def browsing-item?      core.subs/browsing-item?)
 
 ; plugins.item-browser.core.views
 (def go-home-button core.views/go-home-button)

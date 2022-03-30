@@ -6,6 +6,7 @@
     (:require [extensions.storage.media-picker.events :as media-picker.events]
               [extensions.storage.media-picker.subs   :as media-picker.subs]
               [extensions.storage.media-picker.views  :as media-picker.views]
+              [plugins.item-browser.api               :as item-browser]
               [x.app-core.api                         :as a :refer [r]]))
 
 
@@ -35,6 +36,20 @@
   (fn [{:keys [db]} [_ picker-id picker-props]]
       {:db (r media-picker.events/load-picker! db picker-id picker-props)
        :dispatch [:storage.media-picker/render-picker!]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :storage.media-picker/add-new-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-picker)
+            load-props     {:browser-id :storage.media-picker :destination-id destination-id}]
+           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    load-props]
+                                 :create-directory! [:storage.directory-creator/load-creator! load-props]))))
 
 
 

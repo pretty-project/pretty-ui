@@ -32,7 +32,7 @@
   ;   átfedésbe kerülhet egymással ...
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
         current-item    (r core.subs/get-current-item    db editor-id)]
-       (assoc-in db [:plugins :item-editor/backup-items editor-id current-item-id] current-item)))
+       (assoc-in db [:plugins :plugin-handler/backup-items editor-id current-item-id] current-item)))
 
 (defn store-local-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,7 +49,7 @@
         current-item    (r core.subs/get-current-item    db editor-id)
         backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)
         local-changes   (map/difference current-item backup-item)]
-       (assoc-in db [:plugins :item-editor/local-changes editor-id current-item-id] local-changes)))
+       (assoc-in db [:plugins :plugin-handler/local-changes editor-id current-item-id] local-changes)))
 
 (defn clean-recovery-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,8 +61,8 @@
   [db [_ editor-id item-id]]
   (if-let [recovery-mode? (r core.subs/get-meta-item db editor-id :recovery-mode?)]
           (return db)
-          (->     db (dissoc-in [:plugins :item-editor/backup-items  editor-id item-id])
-                     (dissoc-in [:plugins :item-editor/local-changes editor-id item-id]))))
+          (->     db (dissoc-in [:plugins :plugin-handler/backup-items  editor-id item-id])
+                     (dissoc-in [:plugins :plugin-handler/local-changes editor-id item-id]))))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,7 +75,7 @@
         current-item-id (r core.subs/get-current-item-id db editor-id)
         local-changes   (r backup.subs/get-local-changes db editor-id)]
        (-> db (update-in item-path merge local-changes)
-              (dissoc-in [:plugins :item-editor/local-changes editor-id current-item-id]))))
+              (dissoc-in [:plugins :plugin-handler/local-changes editor-id current-item-id]))))
 
 
 

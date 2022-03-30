@@ -5,6 +5,8 @@
 (ns plugins.item-browser.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
               [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.backup.subs   :as backup.subs]
+              [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.plugin-handler.update.subs :as update.subs]
               [x.app-core.api                     :refer [r]]))
@@ -37,5 +39,5 @@
   [db [_ browser-id server-response]]
   (let [mutation-name  (r get-mutation-name               db browser-id :duplicate-item!)
         item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)
-        item-id-key    (keyword/add-namespace item-namespace :id)]
-       (get-in server-response [(symbol mutation-name) item-id-key])))
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (get-in server-response [(symbol mutation-name) id-key])))

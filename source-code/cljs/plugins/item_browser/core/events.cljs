@@ -7,6 +7,7 @@
               [mid-fruits.map                       :refer [dissoc-in]]
               [plugins.item-browser.core.subs       :as core.subs]
               [plugins.item-browser.download.events :as download.events]
+              [plugins.item-browser.items.events    :as items.events]
               [plugins.item-browser.mount.subs      :as mount.subs]
               [plugins.item-browser.routes.events   :as routes.events]
               [plugins.item-browser.transfer.subs   :as transfer.subs]
@@ -20,9 +21,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.events
-(def set-error-mode!  plugins.item-lister.core.events/set-error-mode!)
-(def reset-downloads! plugins.item-lister.core.events/reset-downloads!)
-(def use-filter!      plugins.item-lister.core.events/use-filter!)
+(def set-error-mode!   plugins.item-lister.core.events/set-error-mode!)
+(def quit-select-mode! plugins.item-lister.core.events/quit-select-mode!)
+(def reset-downloads!  plugins.item-lister.core.events/reset-downloads!)
+(def use-filter!       plugins.item-lister.core.events/use-filter!)
 
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
@@ -112,8 +114,11 @@
   ;
   ; @return (map)
   [db [_ browser-id browser-props]]
+  ; XXX#1329
   (as-> db % (r store-derived-item-id!          % browser-id)
              (r reset-downloads!                % browser-id)
+             (r quit-select-mode!               % browser-id)
+             (r items.events/enable-all-items!  % browser-id)
              (r routes.events/set-parent-route! % browser-id)))
 
 
@@ -129,8 +134,21 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
-  (as-> db % (r set-current-item-id! % browser-id item-id)
-             (r reset-downloads!     % browser-id)))
+  ; - XXX#1329
+  ;   Ha az aktuálisan böngészett elem megváltozásakor az item-browser plugin {:disabled? true} állapotban
+  ;   tart egyes elemeket (pl. folyamatban lévő törlés miatt), akkor a browse-item! függvény feloldja
+  ;   az összes elem {:disabled? true} állapotát, mert az elemek az indexük és nem pedig az azonosítójuk
+  ;   alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,
+  ;   akkor a letöltött elemek lecserélődése után az egyes indexekhez más elemek fognak tartozni.
+  ; - BUG#1329
+  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, majd visszatér
+  ;   mielőtt a folyamat befejeződne, akkor a {:disabled? true} állapot nem kerül vissza az elhagyás
+  ;   előtt {:disabled? true} állapotban lévő elemekre. Ez a hiba addig nem javítható, amíg
+  ;   a {:disabled? true} állapot az elemek indexe alapján van tárolva.
+  (as-> db % (r set-current-item-id!           % browser-id item-id)
+             (r reset-downloads!               % browser-id)
+             (r quit-select-mode!              % browser-id)
+             (r items.events/enable-all-items! % browser-id)))
 
 
 

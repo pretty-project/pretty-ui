@@ -13,4 +13,5 @@
 
 (a/reg-event-fx
   :load-my-file-uploader!
-  [:storage.file-uploader/load-uploader! :my-uploader {:destination-id "my-directory"}])
+  [:storage.file-uploader/load-uploader! :my-uploader
+                                         {:destination-id "my-directory"}])

@@ -66,8 +66,7 @@
                     {:list-element #'client-item
                      :item-actions [:delete :duplicate]
                      :items-path   [:clients :client-lister/downloaded-items]
-                     :search-keys  [:name :email-address]
-                     :sortable?    true}])
+                     :search-keys  [:name :email-address]}])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

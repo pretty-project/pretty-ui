@@ -24,6 +24,7 @@
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def get-current-item      core.subs/get-current-item)
 
 
 
@@ -61,23 +62,26 @@
   ;
   ; @return (string)
   [db [_ browser-id]]
-  (r get-meta-item db browser-id :item-id))
+  (r core.subs/get-current-item-id db browser-id))
 
-(defn get-current-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn browsing-item?
   ; @param (keyword) browser-id
+  ; @param (string) item-id
   ;
-  ; @return (map)
-  [db [_ browser-id]]
-  ; XXX#6487
-  (if-let [item-path (r mount.subs/get-body-prop db browser-id :item-path)]
-          (get-in db item-path)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  ; @usage
+  ;  (r item-browser/browsing-item? db :my-browser "my-item")
+  ;
+  ; @return (boolean)
+  [db [_ browser-id item-id]]
+  ; A browsing-item? függvény visszatérési értéke akkor TRUE, ...
+  ; ... ha az item-browser plugin body komponense a React-fába van csatolva.
+  ; ... ha az item-id paraméterként átadott azonosító az aktuálisan böngészett elem azonosítója.
+  (= item-id (r get-meta-item db browser-id :item-id)))
 
 (defn get-current-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

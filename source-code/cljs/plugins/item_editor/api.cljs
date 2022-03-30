@@ -32,6 +32,7 @@
 
 ; plugins.item-editor.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
+(def editing-item?       core.subs/editing-item?)
 
 ; plugins.item-editor.colors.views
 (def color-selector colors.views/color-selector)

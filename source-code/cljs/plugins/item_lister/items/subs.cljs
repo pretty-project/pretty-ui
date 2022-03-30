@@ -3,17 +3,77 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.subs
-    (:require [mid-fruits.candy               :refer [return]]
-              [mid-fruits.vector              :as vector]
-              [plugins.item-lister.core.subs  :as core.subs]
-              [plugins.item-lister.mount.subs :as mount.subs]
-              [x.app-core.api                 :as a :refer [r]]
-              [x.app-environment.api          :as environment]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.loop                   :refer [some-indexed]]
+              [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.core.subs     :as core.subs]
+              [plugins.item-lister.mount.subs    :as mount.subs]
+              [plugins.item-lister.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-db.api                      :as db]
+              [x.app-environment.api             :as environment]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ lister-id item-id]]
+  (letfn [(f [{:keys [id] :as item}] (if (= id item-id) item))]
+         (let [downloaded-items (r core.subs/get-downloaded-items db lister-id)]
+              (some f downloaded-items))))
+
+(defn get-item-dex
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (string) item-id
+  ;
+  ; @return (integer)
+  [db [_ lister-id item-id]]
+  (letfn [(f [item-dex {:keys [id]}] (if (= id item-id) item-dex))]
+         (let [downloaded-items (r core.subs/get-downloaded-items db lister-id)]
+              (some-indexed f downloaded-items))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn export-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (string) item-id
+  ;
+  ; @return (namespaced map)
+  [db [_ lister-id item-id]]
+  (let [item-namespace (r transfer.subs/get-transfer-item db lister-id :item-namespace)
+        item           (r get-item                        db lister-id item-id)]
+       (db/document->namespaced-document item item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn item-downloaded?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (string) item-id
+  ;
+  ; @return (boolean)
+  [db [_ lister-id item-id]]
+  (let [item (r get-item db lister-id item-id)]
+       (boolean item)))
 
 (defn item-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -166,3 +226,9 @@
 ; @usage
 ;  [:item-lister/item-selected? :my-lister 0]
 (a/reg-sub :item-lister/item-selected? item-selected?)
+
+; @param (keyword) lister-id
+;
+; @usage
+;  [:item-lister/order-changed? :my-lister]
+(a/reg-sub :item-lister/order-changed? order-changed?)

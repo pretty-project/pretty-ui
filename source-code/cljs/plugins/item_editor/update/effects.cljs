@@ -92,10 +92,23 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ editor-id _]]
-      (if-let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-              [:router/go-to! base-route]
-              [:ui/end-fake-process!])))
+  (fn [{:keys [db]} [_ editor-id server-response]]
+      ; A) Ha az "Elem mentése" folyamat befejeződésekor a felhasználó még nem hagyta el a plugint,
+      ;    még a mentett elem van megnyitva szerkesztésre és a plugin szerver-oldali kezelője
+      ;    rendelkezik a {:base-route "..."} tulajdonsággal ...
+      ;    ... akkor átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő
+      ;        számára elküldött útvonalra.
+      ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;        15 százalékig szimulált folyamat.
+      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
+      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      (let [item-id    (r update.subs/get-saved-item-id   db editor-id server-response)
+            base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
+           (if (and base-route (r core.subs/editing-item? db editor-id item-id))
+               ; A)
+               [:router/go-to! base-route]
+               ; B)
+               [:ui/end-fake-process!]))))
 
 (a/reg-event-fx
   :item-editor/save-item-failed
@@ -105,8 +118,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
       ; Ha az elem mentése sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-save}]]}))
 
@@ -135,12 +148,26 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  (fn [{:keys [db]} [_ editor-id]]
+  ; @param (map) server-response
+  (fn [{:keys [db]} [_ editor-id server-response]]
+      ; A) Ha az "Elem törlése" folyamat befejeződésekor a felhasználó még nem hagyta el a plugint,
+      ;    még a törölt elem van megnyitva szerkesztésre és a plugin szerver-oldali kezelője
+      ;    rendelkezik a {:base-route "..."} tulajdonsággal ...
+      ;    ... akkor átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő
+      ;        számára elküldött útvonalra.
+      ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;        15 százalékig szimulált folyamat.
+      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
+      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:db (r update.events/item-deleted db editor-id)
        :dispatch-n [[:item-editor/render-item-deleted-dialog! editor-id]
-                    (if-let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-                            [:router/go-to! base-route]
-                            [:ui/end-fake-process!])]}))
+                    (let [item-id    (r update.subs/get-deleted-item-id   db editor-id server-response)
+                          base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
+                         (if (and base-route (r core.subs/editing-item? db editor-id item-id))
+                             ; A)
+                             [:router/go-to! base-route]
+                             ; B)
+                             [:ui/end-fake-process!]))]}))
 
 (a/reg-event-fx
   :item-editor/delete-item-failed
@@ -150,8 +177,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
       ; Ha az elem törlése sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-delete}]]}))
 
@@ -178,9 +205,17 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id item-id _]]
+      ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:route-template "..."} tulajdonságot)
+      ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15 százalékig szimulált folyamat.
+      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
+      ;    ... akkor befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:db (r core.events/set-recovery-mode! db editor-id)
        :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db editor-id item-id)]
+                            ; A)
                             [:router/go-to! item-route]
+                            ; B)
                             [:ui/end-fake-process!])]}))
 
 (a/reg-event-fx
@@ -191,8 +226,8 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
       ; Ha az elem törlésének visszaállítása sikertelen volt ...
-      ; ... befejezi progress-bar elemen kijelzett folyamatot
-      ; ... megjelenít egy értesítést
+      ; ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; ... megjelenít egy értesítést.
       {:dispatch-n [[:ui/end-fake-process!]
                     [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}))
 
@@ -223,7 +258,7 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
-      (let [copy-id (r update.subs/get-copy-id db editor-id server-response)]
+      (let [copy-id (r update.subs/get-duplicated-item-id db editor-id server-response)]
            [:item-editor/render-item-duplicated-dialog! editor-id copy-id])))
 
 (a/reg-event-fx

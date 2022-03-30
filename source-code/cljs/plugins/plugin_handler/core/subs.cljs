@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.subs
-    (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
+    (:require [plugins.plugin-handler.mount.subs    :as mount.subs]
+              [plugins.plugin-handler.transfer.subs :as transfer.subs]
               [x.app-core.api                       :refer [r]]
+              [x.app-db.api                         :as db]
               [x.app-sync.api                       :as sync]))
 
 
@@ -69,3 +71,39 @@
   ; XXX#5476
   (let [request-id (r get-request-id db plugin-id plugin-key)]
        (r sync/listening-to-request? db request-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-current-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (string)
+  [db [_ plugin-id]]
+  (r get-meta-item db plugin-id :item-id))
+
+(defn get-current-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  ; XXX#6487
+  (if-let [item-path (r mount.subs/get-body-prop db plugin-id :item-path)]
+          (get-in db item-path)))
+
+(defn export-current-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (namespaced map)
+  [db [_ plugin-id]]
+  (let [item-namespace (r transfer.subs/get-transfer-item db plugin-id :item-namespace)
+        current-item   (r get-current-item                db plugin-id)]
+       (db/document->namespaced-document current-item item-namespace)))

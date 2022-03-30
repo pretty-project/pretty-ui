@@ -21,14 +21,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-copy-id
+(defn get-duplicated-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-copy-id :my-editor {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  (r update.subs/get-duplicated-item-id :my-editor {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;
@@ -36,5 +36,39 @@
   [db [_ editor-id server-response]]
   (let [mutation-name  (r get-mutation-name               db editor-id :duplicate-item!)
         item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)
-        item-id-key    (keyword/add-namespace item-namespace :id)]
-       (get-in server-response [(symbol mutation-name) item-id-key])))
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (get-in server-response [(symbol mutation-name) id-key])))
+
+(defn get-saved-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r update.subs/get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ editor-id server-response]]
+  (let [mutation-name  (r get-mutation-name               db editor-id :save-item!)
+        item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (get-in server-response [(symbol mutation-name) id-key])))
+
+(defn get-deleted-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r update.subs/get-deleted-item-id :my-editor {my-handler/delete-item! "my-item"})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ editor-id server-response]]
+  (let [mutation-name (r get-mutation-name db editor-id :delete-item!)]
+       (get server-response (symbol mutation-name))))

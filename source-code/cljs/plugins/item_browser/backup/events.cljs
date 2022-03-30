@@ -20,4 +20,4 @@
   ; @return (map)
   [db [_ browser-id item-id]]
   (let [backup-item (r items.subs/get-item db browser-id item-id)]
-       (assoc-in db [:plugins :item-browser/backup-items browser-id item-id] backup-item)))
+       (assoc-in db [:plugins :plugin-handler/backup-items browser-id item-id] backup-item)))

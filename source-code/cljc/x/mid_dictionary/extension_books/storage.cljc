@@ -27,6 +27,9 @@
            :edit-file
            {:en "Edit file"
             :hu "Fájl szerkesztése"}
+           :failed-to-create-directory
+           {:en "Failed to create directory"
+            :hu "Sikertelen mappa létrehozás"}
            :file-preview
            {:en "Preview"
             :hu "Megtekintés"}

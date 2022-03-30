@@ -19,5 +19,10 @@
   ;
   ; @return (string)
   [db [_ plugin-id item-id]]
+  ; Ha a plugin a szerver-oldali inicializáláskor megkapta a {:route-template "..."} tulajdonságot,
+  ; ami alapján hozzáadta az útvonalkezelőhöz a pluginhoz tartozó útvonal(ak)at ...
+  ; ... akkor a {:route-template "..."} tulajdonságból elkészítette a {:base-route "..."} tulajdonságot.
+  ; ... a plugin kliens-oldali kezelője megkapja a {:base-route "..."} tulajdonságot.
+  ; ... a {:base-route "..."} tulajdonságból előállítható az extended-route útvonal.
   (if-let [base-route (r transfer.subs/get-transfer-item db plugin-id :base-route)]
           (str base-route "/" item-id)))

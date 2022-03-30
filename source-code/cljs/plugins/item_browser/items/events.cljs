@@ -15,6 +15,7 @@
 ; plugins.item-lister.items.events
 (def disable-items!         plugins.item-lister.items.events/disable-items!)
 (def enable-items!          plugins.item-lister.items.events/enable-items!)
+(def enable-all-items!      plugins.item-lister.items.events/enable-all-items!)
 (def toggle-item-selection! plugins.item-lister.items.events/toggle-item-selection!)
 
 

@@ -42,8 +42,7 @@
                                :disabled?     (or error-mode? lister-disabled?)
                                :on-empty      [:item-lister/search-items!          lister-id]
                                :on-type-ended [:item-lister/search-items!          lister-id]
-                               :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]
-       [:div (str lister-disabled?)]))
+                               :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]))
 
 (defn toggle-search-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

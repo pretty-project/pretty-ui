@@ -33,7 +33,7 @@
   ;
   ; @return (boolean)
   [db [_ editor-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db editor-id :delete-item)
+  (let [mutation-name (r update.subs/get-mutation-name db editor-id :delete-item!)
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
 

@@ -3,39 +3,25 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.backup.subs
-    (:require [mid-fruits.map                    :as map]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.mount.subs    :as mount.subs]
-              [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :refer [r]]
-              [x.app-db.api                      :as db]))
+    (:require [mid-fruits.map                     :as map]
+              [plugins.item-editor.core.subs      :as core.subs]
+              [plugins.item-editor.mount.subs     :as mount.subs]
+              [plugins.plugin-handler.backup.subs :as backup.subs]
+              [x.app-core.api                     :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ editor-id item-id]]
-  (get-in db [:plugins :item-editor/backup-items editor-id item-id]))
+; plugins.plugin-handler.backup.subs
+(def get-backup-item    backup.subs/get-backup-item)
+(def export-backup-item backup.subs/export-backup-item)
 
-(defn export-backup-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [db [_ editor-id item-id]]
-  (let [item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)
-        backup-item    (r get-backup-item                 db editor-id item-id)]
-       (db/document->namespaced-document backup-item item-namespace)))
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-local-changes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -45,7 +31,7 @@
   ; @return (map)
   [db [_ editor-id]]
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)]
-       (get-in db [:plugins :item-editor/local-changes editor-id current-item-id])))
+       (r backup.subs/get-local-changes db editor-id current-item-id)))
 
 (defn item-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!

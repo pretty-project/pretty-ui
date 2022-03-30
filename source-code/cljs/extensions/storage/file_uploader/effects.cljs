@@ -11,6 +11,7 @@
               [extensions.storage.file-uploader.validators   :as file-uploader.validators]
               [extensions.storage.file-uploader.subs         :as file-uploader.subs]
               [extensions.storage.file-uploader.views        :as file-uploader.views]
+              [plugins.item-browser.api                      :as item-browser]
               [x.app-core.api                                :as a :refer [r]]))
 
 
@@ -23,6 +24,7 @@
   ; @param (keyword) uploader-id
   ; @param (map) uploader-props
   ;  {:allowed-extensions (strings in vector)(opt)
+  ;   :browser-id (keyword)
   ;   :destination-id (string)}
   ;
   ; @usage
@@ -90,12 +92,17 @@
 (a/reg-event-fx
   :storage.file-uploader/progress-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ uploader-id]]
-      {; XXX#5087
-       ; Az egyes feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott feltöltőt,
-       ; így a felhasználónak van ideje észlelni a visszajelzést.
-       :dispatch-later [{:ms 8000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
-       :dispatch [:item-browser/reload-items! :storage.media-browser]}))
+  (fn [{:keys [db]} [_ uploader-id]]
+      ; - XXX#5087
+      ;   Az egyes feltöltési folyamatok befejezése/megszakadása után késleltetve zárja le az adott
+      ;   feltöltőt, így a felhasználónak van ideje észlelni a visszajelzést.
+      ; - Ha a sikeres fájlfeltöltés után még a célmappa az aktuálisan böngészett elem,
+      ;   akkor újratölti a listaelemeket.
+      (let [browser-id     (get-in db [:storage :file-uploader/meta-items uploader-id :browser-id])
+            destination-id (get-in db [:storage :file-uploader/meta-items uploader-id :destination-id])]
+           {:dispatch-later [{:ms 8000 :dispatch [:storage.file-uploader/end-uploader! uploader-id]}]
+            :dispatch-if    [(r item-browser/browsing-item? db browser-id destination-id)
+                             [:item-browser/reload-items! browser-id]]})))
 
 (a/reg-event-fx
   :storage.file-uploader/progress-failured
@@ -108,14 +115,13 @@
   :storage.file-uploader/end-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      {:dispatch-later [; A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
-                        ; látszódó folyamatjelző számára elérhetők maradjanak az adatok.
-                        {:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]
+      ; - A feltöltő lezárása után késleltetve törli ki annak adatait, hogy a még
+      ;   látszódó folyamatjelző számára elérhetők maradjanak az adatok.
+      ; - Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja a folyamatjelzőt.
+      ;   (Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
+      ;    közötti időben is indítható új feltöltési folyamat!)
+      {:dispatch-later [{:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]
        :dispatch-if [(not (r file-uploader.subs/file-upload-in-progress? db))
-                     ; Ha a felöltő lezárásakor nincs aktív feltöltési folyamat, akkor bezárja
-                     ; a folyamatjelzőt.
-                     ; Az utolsó feltöltési folyamat befejeződése és az utolsó feltöltő lezárása
-                     ; közötti időben is indítható új feltöltési folyamat!
                      [:ui/pop-bubble! :storage.file-uploader/progress-notification]]}))
 
 (a/reg-event-fx

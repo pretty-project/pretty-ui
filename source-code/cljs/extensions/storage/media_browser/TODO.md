@@ -1,2 +1,2 @@
 
-# MONGO-DB / group stage (mappák után fájlok)
+# MONGO-DB / group stage (a mappák után jelenjenek meg a fájlok)

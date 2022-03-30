@@ -5,6 +5,7 @@
 (ns extensions.storage.directory-creator.mutations
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
               [extensions.storage.core.side-effects  :as core.side-effects]
+              [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]))
 
@@ -15,6 +16,13 @@
 
 (defn create-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) env
+  ; @param (map) mutation-props
+  ;  {:alias (string)
+  ;   :destination-id (string)}
+  ;
+  ; @return (namespaced map)
   [env {:keys [alias destination-id]}]
   (if-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
           (let [destination-path (get  destination-item :media/path)
@@ -24,10 +32,16 @@
                                 :media/mime-type "storage/directory"}]
                (when-let [directory-item (core.side-effects/insert-item! env directory-item)]
                          (core.side-effects/attach-item!             env destination-id directory-item)
-                         (core.side-effects/update-path-directories! env directory-item +)))))
+                         (core.side-effects/update-path-directories! env directory-item +)
+                         (return directory-item)))))
 
 (defmutation create-directory!
              ; WARNING! NON-PUBLIC! DO NOT USE!
+             ;
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;
+             ; @return (namespaced map)
              [env mutation-props]
              {::pathom.co/op-name 'storage.directory-creator/create-directory!}
              (create-directory-f env mutation-props))

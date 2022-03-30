@@ -4,11 +4,14 @@
 
 (ns extensions.storage.directory-creator.effects
     (:require [plugins.value-editor.api]
-              [extensions.storage.directory-creator.events  :as directory-creator.events]
-              [extensions.storage.directory-creator.queries :as directory-creator.queries]
-              [mid-fruits.io                                :as io]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-dictionary.api                         :as dictionary]))
+              [extensions.storage.directory-creator.events     :as directory-creator.events]
+              [extensions.storage.directory-creator.queries    :as directory-creator.queries]
+              [extensions.storage.directory-creator.validators :as directory-creator.validators]
+              [mid-fruits.io                                   :as io]
+              [plugins.item-browser.api                        :as item-browser]
+              [x.app-core.api                                  :as a :refer [r]]
+              [x.app-dictionary.api                            :as dictionary]
+              [x.app-ui.api                                    :as ui]))
 
 
 
@@ -45,9 +48,31 @@
   :storage.directory-creator/create-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ creator-id directory-name]]
-      [:sync/send-query! :storage.directory-creator/create-directory!
-                         {:query (r directory-creator.queries/get-create-directory-query db creator-id directory-name)
-                          :on-success [:item-lister/reload-items! :storage.media-browser]}]))
+      (let [query        (r directory-creator.queries/get-create-directory-query          db creator-id directory-name)
+            validator-f #(r directory-creator.validators/create-directory-response-valid? db creator-id %)]
+           {:db (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! :storage.directory-creator/create-directory!
+                                         {:query query :validator-f validator-f
+                                          :on-success [:storage.directory-creator/directory-created         creator-id]
+                                          :on-failure [:storage.directory-creator/directory-creation-failed creator-id]}]})))
+
+(a/reg-event-fx
+  :storage.directory-creator/directory-created
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} [_ creator-id server-response]]
+      ; Ha a sikeres mappalétrehozás után még a célmappa az aktuálisan böngészett elem,
+      ; akkor újratölti a listaelemeket.
+      (let [browser-id     (get-in db [:storage :directory-creator/meta-items :browser-id])
+            destination-id (get-in db [:storage :directory-creator/meta-items :destination-id])]
+           (if (r item-browser/browsing-item? db browser-id destination-id)
+               [:item-browser/reload-items! browser-id]))))
+
+(a/reg-event-fx
+  :storage.directory-creator/directory-creation-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [_ [_ creator-id server-response]]
+      {:dispatch-n [[:ui/end-fake-process!]
+                    [:ui/blow-bubble! {:body :failed-to-create-directory}]]}))
 
 
 

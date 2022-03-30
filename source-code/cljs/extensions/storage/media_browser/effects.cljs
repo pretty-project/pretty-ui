@@ -40,9 +40,10 @@
   :storage.media-browser/add-new-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ selected-option]]
-      (let [destination-id (r item-browser/get-current-item-id db :storage.media-browser)]
-           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    {:destination-id destination-id}]
-                                 :create-directory! [:storage.directory-creator/load-creator! {:destination-id destination-id}]))))
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-browser)
+            load-props     {:browser-id :storage.media-browser :destination-id destination-id}]
+           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    load-props]
+                                 :create-directory! [:storage.directory-creator/load-creator! load-props]))))
 
 (a/reg-event-fx
   :storage.media-browser/delete-item!

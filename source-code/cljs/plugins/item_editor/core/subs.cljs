@@ -24,6 +24,8 @@
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def get-current-item      core.subs/get-current-item)
+(def export-current-item   core.subs/export-current-item)
 
 
 
@@ -70,33 +72,26 @@
   ;
   ; @return (string)
   [db [_ editor-id]]
-  (r get-meta-item db editor-id :item-id))
-
-(defn get-current-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (let [item-path (r mount.subs/get-body-prop db editor-id :item-path)]
-       (get-in db item-path)))
-
-(defn export-current-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (namespaced map)
-  [db [_ editor-id]]
-  (let [item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)
-        current-item   (r get-current-item                db editor-id)]
-       (db/document->namespaced-document current-item item-namespace)))
+  (r core.subs/get-current-item-id db editor-id))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn editing-item?
+  ; @param (keyword) editor-id
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-editor/editing-item? db :my-editor "my-item")
+  ;
+  ; @return (boolean)
+  [db [_ editor-id item-id]]
+  ; Az editing-item? függvény visszatérési értéke akkor TRUE, ...
+  ; ... ha az item-editor plugin body komponense a React-fába van csatolva.
+  ; ... ha az item-id paraméterként átadott azonosítójú elem van megnyitva szerkesztésre.
+  (= item-id (r get-meta-item db editor-id :item-id)))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
