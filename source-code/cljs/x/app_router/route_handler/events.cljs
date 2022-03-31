@@ -31,16 +31,18 @@
         route-fragment     (uri/uri->fragment     route-string)
         route-path         (uri/uri->path         route-string)
         route-path-params  (uri/uri->path-params  route-string route-template)
-        route-query-params (uri/uri->query-params route-string)
-        route-parent (get-in db [:router :route-handler/client-routes route-id :route-parent]
-                                (uri/uri->parent-uri route-string))]
+        route-query-params (uri/uri->query-params route-string)]
        (-> db (assoc-in [:router :route-handler/meta-items :route-id]           route-id)
               (assoc-in [:router :route-handler/meta-items :route-fragment]     route-fragment)
-              (assoc-in [:router :route-handler/meta-items :route-parent]       route-parent)
               (assoc-in [:router :route-handler/meta-items :route-path]         route-path)
               (assoc-in [:router :route-handler/meta-items :route-path-params]  route-path-params)
               (assoc-in [:router :route-handler/meta-items :route-query-params] route-query-params)
-              (assoc-in [:router :route-handler/meta-items :route-string]       route-string))))
+              (assoc-in [:router :route-handler/meta-items :route-string]       route-string)
+              ; Az aktuális :route-parent értéke az útvonal tulajdonságaként hozzáadott {:route-parent "..."}
+              ; érték. Annak hiányában a route-string értékéből származtatott szülő-útvonal.
+              (assoc-in [:router :route-handler/meta-items :route-parent]
+                        (get-in db [:router :route-handler/client-routes route-id :route-parent]
+                                   (uri/uri->parent-uri route-string))))))
 
 (defn set-default-routes!
   ; WARNING! NON-PUBLIC! DO NOT USE!

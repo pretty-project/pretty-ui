@@ -22,10 +22,10 @@
   ;   parent-route (string)(opt)}
   (fn [_ [_ plugin-id {:keys [base-route client-event parent-route]}]]
       [:router/add-route! (routes.helpers/route-id plugin-id :base)
-                          {:client-event   client-event
-                           :route-parent   parent-route
-                           :route-template base-route
-                           :restricted?    true}]))
+                          (merge {:client-event   client-event
+                                  :route-template base-route
+                                  :restricted?    true}
+                                 (if parent-route {:route-parent parent-route}))]))
 
 (a/reg-event-fx
   :plugin-handler/add-extended-route!
@@ -38,7 +38,7 @@
   ;   :parent-route (string)(opt)}
   (fn [_ [_ plugin-id {:keys [client-event extended-route parent-route]}]]
       [:router/add-route! (routes.helpers/route-id plugin-id :extended)
-                          {:client-event   client-event
-                           :route-parent   parent-route
-                           :route-template extended-route
-                           :restricted?    true}]))
+                          (merge {:client-event   client-event
+                                  :route-template extended-route
+                                  :restricted?    true}
+                                 (if parent-route {:route-parent parent-route}))]))
