@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.website)
+(ns x.mid-dictionary.books.company)
 
 
 
@@ -10,15 +10,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:home-page
-           {:en "Home"
-            :hu "Kezdőlap"}
-           :logo
-           {:en "Logo"
-            :hu "Logó"}
-           :website
-           {:en "Website"
-            :hu "Webhely"}
-           :website-menu
-           {:en "Website menu"
-            :hu "Webhely"}})
+(def BOOK {:slogan
+           {:en "Slogan"
+            :hu "Szlogen"}})

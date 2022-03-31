@@ -202,10 +202,10 @@
                          {:auto-title?      true
                           :form-element     #'client-form
                           :form-id          :clients.client-editor/form
+                          :new-item-id      "new-client"
                           :initial-item     {:country (locales/country-native-name selected-language)}
                           :item-actions     [:delete :duplicate :save]
                           :item-path        [:clients :client-editor/edited-item]
-                          :new-item-id      "new-client"
                           :suggestion-keys  [:city]
                           :suggestions-path [:clients :client-editor/suggestions]}]))
 

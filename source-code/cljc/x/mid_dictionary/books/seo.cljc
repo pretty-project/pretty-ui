@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.website)
+(ns x.mid-dictionary.books.seo)
 
 
 
@@ -10,15 +10,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:home-page
-           {:en "Home"
-            :hu "Kezdőlap"}
-           :logo
-           {:en "Logo"
-            :hu "Logó"}
-           :website
-           {:en "Website"
-            :hu "Webhely"}
-           :website-menu
-           {:en "Website menu"
-            :hu "Webhely"}})
+(def BOOK {:meta-description
+           {:en "Meta description"
+            :hu "Meta leírás"}
+           :meta-keywords 
+           {:en "Meta keywords"
+            :hu "Meta kulcsszavak"}
+           :seo
+           {:en "Search Engine Optimization"
+            :hu "Keresőoptimalizálás"}})

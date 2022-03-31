@@ -8,6 +8,7 @@
               [x.mid-dictionary.books.archive       :as books.archive]
               [x.mid-dictionary.books.changes       :as books.changes]
               [x.mid-dictionary.books.colors        :as books.colors]
+              [x.mid-dictionary.books.company       :as books.company]
               [x.mid-dictionary.books.contacts      :as books.contacts]
               [x.mid-dictionary.books.cookies       :as books.cookies]
               [x.mid-dictionary.books.database      :as books.database]
@@ -23,12 +24,14 @@
               [x.mid-dictionary.books.item          :as books.item]
               [x.mid-dictionary.books.languages     :as books.languages]
               [x.mid-dictionary.books.law           :as books.law]
+              [x.mid-dictionary.books.layout        :as books.layout]
               [x.mid-dictionary.books.media         :as books.media]
               [x.mid-dictionary.books.network       :as books.network]
               [x.mid-dictionary.books.notifications :as books.notifications]
               [x.mid-dictionary.books.order-by      :as books.order-by]
               [x.mid-dictionary.books.search        :as books.search]
               [x.mid-dictionary.books.selection     :as books.selection]
+              [x.mid-dictionary.books.seo           :as books.seo]
               [x.mid-dictionary.books.social-media  :as books.social-media]
               [x.mid-dictionary.books.sync          :as books.sync]
               [x.mid-dictionary.books.themes        :as books.themes]
@@ -63,8 +66,9 @@
 (def BOOKS (merge books.actions/BOOK
                   books.application/BOOK
                   books.archive/BOOK
-                  books.colors/BOOK
                   books.changes/BOOK
+                  books.colors/BOOK
+                  books.company/BOOK
                   books.contacts/BOOK
                   books.cookies/BOOK
                   books.database/BOOK
@@ -80,12 +84,14 @@
                   books.item/BOOK
                   books.languages/BOOK
                   books.law/BOOK
+                  books.layout/BOOK
                   books.media/BOOK
                   books.network/BOOK
                   books.notifications/BOOK
                   books.order-by/BOOK
                   books.search/BOOK
                   books.selection/BOOK
+                  books.seo/BOOK
                   books.social-media/BOOK
                   books.sync/BOOK
                   books.temporary/BOOK

@@ -18,6 +18,10 @@
            {:en "Last modified at: %"
             :hu "Utoljára módosítva: %"}
 
+           :content
+           {:en "Content"
+            :hu "Tartalom"}
+
            :size-n
            {:en "Size: %"
             :hu "Méret: %"}

@@ -43,10 +43,11 @@
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ item-dex client-item]
-  [elements/toggle {:on-click [:clients.client-lister/item-clicked item-dex client-item]
-                    :content  [client-item-structure client-item]
-                    :hover-color :highlight}])
+  [_ item-dex {:keys [id] :as client-item}]
+  (let [on-click [:router/go-to! (str "/@app-home/clients/" id)]]
+       [elements/toggle {:on-click [:item-lister/item-clicked :clients.client-lister item-dex {:on-click on-click}]
+                         :content  [client-item-structure client-item]
+                         :hover-color :highlight}]))
 
 
 
