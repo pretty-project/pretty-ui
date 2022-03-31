@@ -25,12 +25,6 @@
              {::pathom.co/op-name 'clients.client-lister/delete-items!}
              (mongo-db/remove-documents! "clients" item-ids))
 
-(defmutation undo-duplicate-items!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             [_ {:keys [item-ids]}]
-             {::pathom.co/op-name 'clients.client-lister/undo-duplicate-items!}
-             (mongo-db/remove-documents! "clients" item-ids))
-
 (defmutation duplicate-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [{:keys [request]} {:keys [item-ids]}]
@@ -44,6 +38,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-items! undo-delete-items! duplicate-items! undo-duplicate-items!])
+(def HANDLERS [delete-items! undo-delete-items! duplicate-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -145,7 +145,7 @@
       ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
       ; B) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
-      ;    NINCS a React-fába van csatolva, ...
+      ;    NINCS a React-fába csatolva, ...
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (if (r mount.subs/body-did-mount? db lister-id)
           ; A)
@@ -247,67 +247,3 @@
                         [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
           ; B)
           [:ui/blow-bubble! {:body :failed-to-duplicate}])))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-lister/undo-duplicate-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (strings in vector) copy-ids
-  (fn [{:keys [db]} [_ lister-id copy-ids]]
-      (let [query        (r update.queries/get-undo-duplicate-items-query          db lister-id copy-ids)
-            validator-f #(r update.validators/undo-duplicate-items-response-valid? db lister-id %)]
-           {:db (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                                         {:on-success [:item-lister/duplicate-items-undid       lister-id]
-                                          :on-failure [:item-lister/undo-duplicate-items-failed lister-id]
-                                          :query query :validator-f validator-f}]})))
-
-(a/reg-event-fx
-  :item-lister/duplicate-items-undid
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (map) server-response
-  (fn [{:keys [db]} [_ lister-id _]]
-      ; A) Ha a "Duplikált elemek törlése" művelet sikeres befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... újratölti a listaelemeket.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
-      ;
-      ; B) Ha a "Duplikált elemek törlése" művelet sikeres befejeződésekor a body komponens
-      ;    NINCS a React-fába van csatolva, ...
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
-          ; A)
-          [:item-lister/reload-items! lister-id])))
-
-(a/reg-event-fx
-  :item-lister/undo-duplicate-items-failed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (map) server-response
-  (fn [{:keys [db]} [_ lister-id _]]
-      ; XXX#0439
-      ;
-      ; A) Ha a "Duplikált elemek törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;    ... megjelenít egy értesítést.
-      ;
-      ; B) Ha a "Duplikált elemek törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-undo-duplicate}]]}
-          ; B)
-          [:ui/blow-bubble! {:body :failed-to-undo-duplicate}])))

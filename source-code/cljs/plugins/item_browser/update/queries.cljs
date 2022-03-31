@@ -107,35 +107,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-undo-duplicate-item-mutation-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) copy-id
-  ;
-  ; @return (map)
-  ;  {:item-id (string)}
-  [db [_ browser-id copy-id]]
-  (merge (r core.subs/get-meta-item db browser-id :default-query-params)
-         {:item-id copy-id}))
-
-(defn get-undo-duplicate-item-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) copy-id
-  ;
-  ; @return (vector)
-  [db [_ browser-id copy-id]]
-  (let [mutation-name  (r update.subs/get-mutation-name          db browser-id :undo-duplicate-item!)
-        mutation-props (r get-undo-duplicate-item-mutation-props db browser-id copy-id)]
-       [`(~(symbol mutation-name) ~mutation-props)]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-update-item-mutation-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

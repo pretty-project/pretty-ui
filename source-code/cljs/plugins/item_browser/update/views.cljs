@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) browser-id
   ; @param (string) copy-id
-  [browser-id copy-id]
-  (let [undo-event [:item-browser/undo-duplicate-item! browser-id copy-id]]
-       [ui/state-changed-bubble-body :plugins.item-browser/item-duplicated-dialog
-                                     {:label :item-duplicated :primary-button {:on-click undo-event :label :undo!}}]))
+  [browser-id _]
+  ; XXX#7002
+  [ui/state-changed-bubble-body :plugins.item-browser/item-duplicated-dialog
+                                {:label :item-duplicated}])

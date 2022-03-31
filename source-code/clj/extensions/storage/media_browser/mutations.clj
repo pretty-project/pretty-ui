@@ -148,7 +148,6 @@
 (defn duplicate-file-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (println "duplicate-file-f")
   (let [prototype-f #(media-browser.prototypes/duplicated-file-prototype env mutation-props %)]
        (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f prototype-f})]
                  (if (= destination-id parent-id)
@@ -163,26 +162,41 @@
 (defn duplicate-directory-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id item-id parent-id] :as mutation-props}]
-  (println "duplicate-directory-f")
+  ; - A {:destination-id "..."} tulajdonságként átadott azonosító, annak a mappának az azonosítója,
+  ;   ahol a teljes duplikálási folyamat történik (kiindulási pont).
+  ;
+  ; - Az {:item-id "..."} tulajdonságként átadott azonosító, annak a mappának az azonosítója,
+  ;   ami éppen duplikálódik.
+  ;
+  ; - A {:parent-id "..."} tulajdonságként átadott azonosító, annak a mappának az azonosítója,
+  ;   ahol az éppen duplikálódó mappa található.
+  ;
+  ; A) Ha az éppen duplikálódó mappa tartalmaz gyermek-elemeket, ...
+  ;    ... a copy-item térképpel az utolsó gyermek-elem sikeres duplikálása után tér vissza.
+  ;
+  ; B) Ha az éppen duplikálódó mappa NEM tartalmaz további elemeket, ...
+  ;    ... visszatér a copy-item térképpel.
   (let [prototype-f #(media-browser.prototypes/duplicated-directory-prototype env mutation-props %)]
        (when-let [copy-item (mongo-db/duplicate-document! "storage" item-id {:prototype-f prototype-f})]
-                 (println (str "copy-item OK" copy-item))
                  (when (= destination-id parent-id)
                        (core.side-effects/attach-item!             env destination-id copy-item)
                        (core.side-effects/update-path-directories! env                copy-item))
                  (let [items (get copy-item :media/items)]
-                      (doseq [{:media/keys [id]} items]
-                             (if-let [{:media/keys [mime-type]} (core.side-effects/get-item env id)]
-                                     (let [destination-id (:id copy-item)
-                                           mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
-                                          (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
-                                                                              (duplicate-file-f      env mutation-props))
-                                          (return copy-item))))))))
+                      (if (vector/nonempty? items)
+                          ; A)
+                          (doseq [{:media/keys [id]} items]
+                                 (if-let [{:media/keys [mime-type]} (core.side-effects/get-item env id)]
+                                         (let [destination-id (:id copy-item)
+                                               mutation-props {:destination-id destination-id :item-id id :parent-id item-id}]
+                                              (case mime-type "storage/directory" (duplicate-directory-f env mutation-props)
+                                                                                  (duplicate-file-f      env mutation-props))
+                                              (return copy-item))))
+                          ; B)
+                          (return copy-item))))))
 
 (defn duplicate-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-id parent-id]}]
-  (println "duplicate-item-f")
   (if-let [{:media/keys [mime-type]} (core.side-effects/get-item env item-id)]
           (case mime-type "storage/directory" (duplicate-directory-f env {:item-id item-id :parent-id parent-id :destination-id parent-id})
                                               (duplicate-file-f      env {:item-id item-id :parent-id parent-id :destination-id parent-id}))))
@@ -190,6 +204,9 @@
 (defn duplicate-items-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env {:keys [item-ids parent-id]}]
+  ; A duplicate-items-f függvény végigiterál az item-ids vektor elemeiként átadott azonosítókon
+  ; és alkalmazza rajtuk a duplicate-item-f függvényt, majd az egyes visszatérési értékeket
+  ; a visszatérési érték vektorban felsorolja.
   (letfn [(f [result item-id]
              (conj result (duplicate-item-f env {:item-id item-id :parent-id parent-id})))]
          (reduce f [] item-ids)))
@@ -208,25 +225,6 @@
              {::pathom.co/op-name 'storage.media-browser/duplicate-items!}
              (let [parent-id (item-browser/item-id->parent-id env :storage.media-browser (first item-ids))]
                   (duplicate-items-f env {:item-ids item-ids :parent-id parent-id})))
-
-
-
-;; -- Undo duplicate item(s) mutations ----------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defmutation undo-duplicate-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env {:keys [item-id]}]
-             {::pathom.co/op-name 'storage.media-browser/undo-duplicate-item!}
-             (let [parent-id (item-browser/item-id->parent-id env :storage.media-browser item-id)]
-                  (delete-item-temporary-f env {:item-id item-id :parent-id parent-id})))
-
-(defmutation undo-duplicate-items!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
-             [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'storage.media-browser/undo-duplicate-items!}
-             (let [parent-id (item-browser/item-id->parent-id env :storage.media-browser (first item-ids))]
-                  (delete-items-temporary-f env {:item-ids item-ids :parent-id parent-id})))
 
 
 
@@ -251,6 +249,6 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [delete-item! delete-items! duplicate-item! duplicate-items! undo-delete-item!
-               undo-delete-items! undo-duplicate-item! undo-duplicate-items! update-item!])
+               undo-delete-items! update-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

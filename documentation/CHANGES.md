@@ -1,4 +1,10 @@
 
+# x.4.6.8
+- Az item-lister plugin undo-duplicate-items! és az item-browser plugin undo-duplicate-item!
+  mutation függvényeit ezentúl nem szükséges létrehozni!
+
+
+
 # x4.6.7
 - [:environment/add-css! ...] esemény ezentúl szerver-oldalon is!
 

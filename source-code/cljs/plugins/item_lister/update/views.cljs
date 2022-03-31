@@ -27,7 +27,6 @@
   ; @param (keyword) lister-id
   ; @param (strings in vector) copy-ids
   [lister-id copy-ids]
-  (let [undo-event [:item-lister/undo-duplicate-items! lister-id copy-ids]]
-       [ui/state-changed-bubble-body :plugins.item-lister/items-duplicated-dialog
-                                     {:label {:content :n-items-duplicated :replacements [(count copy-ids)]}
-                                      :primary-button {:on-click undo-event :label :undo!}}]))
+  ; XXX#7002
+  [ui/state-changed-bubble-body :plugins.item-lister/items-duplicated-dialog
+                                {:label {:content :n-items-duplicated :replacements [(count copy-ids)]}}])

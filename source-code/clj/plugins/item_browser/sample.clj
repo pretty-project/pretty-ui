@@ -115,17 +115,6 @@
              {::pathom.co/op-name 'my-handler/duplicate-items!}
              (return []))
 
-; Sikeres visszavonás esetén a kitörölt elemek azonosítóival szükséges visszatérni!
-(defmutation undo-duplicate-items!
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
-             ;
-             ; @return (strings in vector)
-             [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-handler/undo-duplicate-items!}
-             (return []))
-
 ; Sikeres törlés esetén a kitörölt elem azonosítójával szükséges visszatérni!
 (defmutation delete-item!
              ; @param (map) env
@@ -159,17 +148,6 @@
              {::pathom.co/op-name 'my-handler/duplicate-item!}
              (return {}))
 
-; Sikeres visszavonás esetén a kitörölt elem azonosítójával szükséges visszatérni!
-(defmutation undo-duplicate-item!
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:item-id (string)}
-             ;
-             ; @return (string)
-             [env {:keys [item-id]}]
-             {::pathom.co/op-name 'my-handler/undo-duplicate-item!}
-             (return ""))
-
 ; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
 (defmutation update-item!
              ; @param (map) env
@@ -200,7 +178,7 @@
 
 ; @constant (functions in vector)
 (def HANDLERS [])
-               ;get-item get-items delete-items! undo-delete-items! duplicate-items! undo-duplicate-items!
-               ;delete-item! undo-delete-item! duplicate-item! undo-duplicate-item! update-item!
+              ; get-item get-items delete-items! undo-delete-items! duplicate-items!
+              ; delete-item! undo-delete-item! duplicate-item! update-item!
 
 (pathom/reg-handlers! ::handlers HANDLERS)

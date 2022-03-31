@@ -49,18 +49,6 @@
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 
-(defn undo-duplicate-item-response-valid?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (map) server-response
-  ;
-  ; @return (boolean)
-  [db [_ browser-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db browser-id :undo-duplicate-item!)
-        document-id   (get server-response (symbol mutation-name))]
-       (string/nonempty? document-id)))
-
 (defn update-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

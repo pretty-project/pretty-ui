@@ -109,23 +109,12 @@
              {::pathom.co/op-name 'my-handler/duplicate-items!}
              (return []))
 
-; Sikeres visszavonás esetén a kitörölt elemek azonosítóival szükséges visszatérni!
-(defmutation undo-duplicate-items!
-             ; @param (map) env
-             ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
-             ;
-             ; @return (strings in vector)
-             [env {:keys [item-ids]}]
-             {::pathom.co/op-name 'my-handler/undo-duplicate-items!}
-             (return []))
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-items! duplicate-items! get-items undo-delete-items! undo-duplicate-items!])
+(def HANDLERS [delete-items! duplicate-items! get-items undo-delete-items!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

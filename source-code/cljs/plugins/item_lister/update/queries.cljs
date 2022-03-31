@@ -95,32 +95,3 @@
   (let [mutation-name  (r update.subs/get-mutation-name      db lister-id :duplicate-items!)
         mutation-props (r get-duplicate-items-mutation-props db lister-id item-ids)]
        [`(~(symbol mutation-name) ~mutation-props)]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-undo-duplicate-items-mutation-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (strings in vector) copy-ids
-  ;
-  ; @return (map)
-  ;  {:item-ids (strings in vector)}
-  [db [_ lister-id copy-ids]]
-  (merge (r core.subs/get-meta-item db lister-id :default-query-params)
-         {:item-ids copy-ids}))
-
-(defn get-undo-duplicate-items-query
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (strings in vector) copy-ids
-  ;
-  ; @return (vector)
-  [db [_ lister-id copy-ids]]
-  (let [mutation-name  (r update.subs/get-mutation-name           db lister-id :undo-duplicate-items!)
-        mutation-props (r get-undo-duplicate-items-mutation-props db lister-id copy-ids)]
-       [`(~(symbol mutation-name) ~mutation-props)]))
