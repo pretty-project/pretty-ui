@@ -354,6 +354,15 @@
           ; A)
           [:item-browser/reload-items! browser-id])))
 
+
+
+; NEM működik a storage.media-browser/duplicate-item! mutation, amikor mappát duplikál!
+; A header/go-home! gomb bevillan a browse-item! eseménytől
+; Mi legyen, amikor benne vagy egy duplikált mappában és az értesítésen visszavonod a duplikálást
+; szóval törlöd a mappát amit brózolsz?
+
+
+
 (a/reg-event-fx
   :item-browser/undo-duplicate-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

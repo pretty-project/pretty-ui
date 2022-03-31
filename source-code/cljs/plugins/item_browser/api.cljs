@@ -13,7 +13,6 @@
               [plugins.item-browser.mount.effects]
               [plugins.item-browser.mount.events]
               [plugins.item-browser.mount.subs]
-              [plugins.item-browser.routes.events]
               [plugins.item-browser.update.effects]
               [plugins.item-browser.update.events]
               [plugins.item-browser.update.subs]

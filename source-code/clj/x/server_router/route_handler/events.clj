@@ -81,6 +81,7 @@
   ;    Default: route-handler.config/DEFAULT-CORE-JS
   ;   :restricted? (boolean)(opt)
   ;    Default: false
+  ;   :route-parent (string)(opt)
   ;   :route-template (string)
   ;   :client-event (metamorphic-event)(opt)
   ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény
@@ -101,7 +102,7 @@
   ;
   ; @return (map)
   [db [_ route-id route-props]]
-  (let [route-props (route-handler.prototypes/route-props-prototype route-props)]
+  (let [route-props (r route-handler.prototypes/route-props-prototype db route-id route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
                (if (route-handler.helpers/variable-route-string? route-template)

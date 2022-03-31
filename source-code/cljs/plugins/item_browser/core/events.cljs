@@ -9,7 +9,6 @@
               [plugins.item-browser.download.events :as download.events]
               [plugins.item-browser.items.events    :as items.events]
               [plugins.item-browser.mount.subs      :as mount.subs]
-              [plugins.item-browser.routes.events   :as routes.events]
               [plugins.item-browser.transfer.subs   :as transfer.subs]
               [plugins.item-lister.core.events      :as plugins.item-lister.core.events]
               [plugins.plugin-handler.core.events   :as core.events]
@@ -116,11 +115,10 @@
   [db [_ browser-id browser-props]]
   ; XXX#1329
   ; BUG#1329
-  (as-> db % (r store-derived-item-id!          % browser-id)
-             (r reset-downloads!                % browser-id)
-             (r quit-select-mode!               % browser-id)
-             (r items.events/enable-all-items!  % browser-id)
-             (r routes.events/set-parent-route! % browser-id)))
+  (as-> db % (r store-derived-item-id!         % browser-id)
+             (r reset-downloads!               % browser-id)
+             (r quit-select-mode!              % browser-id)
+             (r items.events/enable-all-items! % browser-id)))
 
 
 

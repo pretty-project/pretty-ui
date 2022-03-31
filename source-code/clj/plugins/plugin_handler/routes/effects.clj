@@ -18,10 +18,12 @@
   ; @param (keyword) plugin-id
   ; @param (map) plugin-props
   ;  {:base-route (string)
-  ;   :client-event (metamorphic-event)}
-  (fn [_ [_ plugin-id {:keys [base-route client-event]}]]
+  ;   :client-event (metamorphic-event)
+  ;   parent-route (string)(opt)}
+  (fn [_ [_ plugin-id {:keys [base-route client-event parent-route]}]]
       [:router/add-route! (routes.helpers/route-id plugin-id :base)
                           {:client-event   client-event
+                           :route-parent   parent-route
                            :route-template base-route
                            :restricted?    true}]))
 
@@ -32,9 +34,11 @@
   ; @param (keyword) plugin-id
   ; @param (map) plugin-props
   ;  {:client-event (metamorphic-event)
-  ;   :extended-route (string)}
-  (fn [_ [_ plugin-id {:keys [client-event extended-route]}]]
+  ;   :extended-route (string)
+  ;   :parent-route (string)(opt)}
+  (fn [_ [_ plugin-id {:keys [client-event extended-route parent-route]}]]
       [:router/add-route! (routes.helpers/route-id plugin-id :extended)
                           {:client-event   client-event
+                           :route-parent   parent-route
                            :route-template extended-route
                            :restricted?    true}]))

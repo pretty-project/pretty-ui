@@ -26,9 +26,7 @@
            {:db (as-> db % ; Store the current route
                            (r route-handler.events/store-current-route! % route-string)
                            ; Make history
-                           (r route-handler.events/reg-to-history!      % route-id)
-                           ; Remove temporary-parent
-                           (r route-handler.events/unset-temporary-parent! %))
+                           (r route-handler.events/reg-to-history!      % route-id))
             :dispatch-n [; Dispatch on-leave-event if ...
                          (if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
                                  (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
@@ -98,10 +96,8 @@
 (a/reg-event-fx
   :router/init-router!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]; Set default routes
-      {:db (as-> db % (r route-handler.events/set-default-routes! % route-handler.config/DEFAULT-ROUTES)
-                      ; Store debug subscriber
-                      (r db/set-item! % [:router :route-handler/meta-items :debug]
-                                        [:router/get-router-data]))
+  (fn [{:keys [db]} _]
+      {; Set default routes
+       :db (r route-handler.events/set-default-routes! db route-handler.config/DEFAULT-ROUTES)
        ; Configure navigation
        :fx [:router/configure-navigation!]}))

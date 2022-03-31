@@ -17,10 +17,12 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:base-route (string)}
-  (fn [_ [_ selector-id {:keys [base-route]}]]
+  ;  {:base-route (string)
+  ;   :parent-route (string)}
+  (fn [_ [_ selector-id {:keys [base-route parent-route]}]]
       [:plugin-handler/add-base-route! selector-id
                                        {:base-route   base-route
+                                        :parent-route parent-route
                                         :client-event [:view-selector/handle-route! selector-id]}]))
 
 (a/reg-event-fx
@@ -29,8 +31,10 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:extended-route (string)}
-  (fn [_ [_ selector-id {:keys [extended-route]}]]
+  ;  {:extended-route (string)
+  ;   :parent-route (string)}
+  (fn [_ [_ selector-id {:keys [extended-route parent-route]}]]
       [:plugin-handler/add-extended-route! selector-id
                                            {:client-event   [:view-selector/handle-route! selector-id]
-                                            :extended-route extended-route}]))
+                                            :extended-route extended-route
+                                            :parent-route   parent-route}]))

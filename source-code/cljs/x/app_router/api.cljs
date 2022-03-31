@@ -4,9 +4,9 @@
 
 (ns x.app-router.api
     (:require [x.app-router.route-handler.effects]
+              [x.app-router.route-handler.events]
               [x.app-router.route-handler.lifecycles]
               [x.app-router.route-handler.side-effects]
-              [x.app-router.route-handler.events :as route-handler.events]
               [x.app-router.route-handler.subs   :as route-handler.subs]))
 
 
@@ -14,14 +14,9 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-router.route-handler.events
-(def set-temporary-parent!   route-handler.events/set-temporary-parent!)
-(def unset-temporary-parent! route-handler.events/unset-temporary-parent!)
-
 ; x.app-router.route-handler.subs
 (def get-app-home                   route-handler.subs/get-app-home)
 (def get-resolved-uri               route-handler.subs/get-resolved-uri)
-(def route-exists?                  route-handler.subs/route-exists?)
 (def get-client-routes              route-handler.subs/get-client-routes)
 (def get-current-route-string       route-handler.subs/get-current-route-string)
 (def get-current-route-id           route-handler.subs/get-current-route-id)

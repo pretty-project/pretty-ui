@@ -85,28 +85,10 @@
   (let [route-match (r get-route-match db route-string)]
        (boolean route-match)))
 
-(defn get-temporary-parent
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (string)
-  [db _]
-  (get-in db [:router :route-handler/meta-items :temporary-parent]))
-
 
 
 ;; -- Route subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn route-exists?
-  ; @param (keyword) route-id
-  ;
-  ; @usage
-  ;  (r router/route-exists? db :my-route)
-  ;
-  ; @return boolean)
-  [db [_ route-id]]
-  (let [route-props (get-in db [:router :route-handler/client-routes route-id])]
-       (some? route-props)))
 
 (defn route-restricted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -164,8 +146,7 @@
   ;
   ; @return (keyword)
   [db _]
-  (let [current-route-string (r get-current-route-string db)]
-       (r match-route-id db current-route-string)))
+  (get-in db [:router :route-handler/meta-items :route-id]))
 
 (defn get-current-route-path
   ; @usage
@@ -173,8 +154,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [current-route-string (r get-current-route-string db)]
-       (uri/uri->path current-route-string)))
+  (get-in db [:router :route-handler/meta-items :route-path]))
 
 (defn get-current-route-template
   ; @usage
@@ -191,9 +171,7 @@
   ;
   ; @return (map)
   [db _]
-  (let [current-route-string   (r get-current-route-string   db)
-        current-route-template (r get-current-route-template db)]
-       (uri/uri->path-params current-route-string current-route-template)))
+  (get-in db [:router :route-handler/meta-items :route-path-params]))
 
 (defn get-current-route-path-param
   ; @param (keyword) param-key
@@ -203,8 +181,7 @@
   ;
   ; @return (string)
   [db [_ param-key]]
-  (let [current-route-path-params (r get-current-route-path-params db)]
-       (get current-route-path-params param-key)))
+  (get-in db [:router :route-handler/meta-items :route-path-params param-key]))
 
 (defn current-route-path-param?
   ; @param (keyword) param-key
@@ -224,8 +201,7 @@
   ;
   ; @return (map)
   [db _]
-  (let [current-route-string (r get-current-route-string db)]
-       (uri/uri->query-params current-route-string)))
+  (get-in db [:router :route-handler/meta-items :route-query-params]))
 
 (defn get-current-route-query-param
   ; @param (keyword) param-key
@@ -235,8 +211,7 @@
   ;
   ; @return (string)
   [db [_ param-key]]
-  (let [current-route-query-params (r get-current-route-query-params db)]
-       (get current-route-query-params param-key)))
+  (get-in db [:router :route-handler/meta-items :route-query-params param-key]))
 
 (defn current-route-query-param?
   ; @param (keyword) param-key
@@ -256,8 +231,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [current-route-string (r get-current-route-string db)]
-       (uri/uri->fragment current-route-string)))
+  (get-in db [:router :route-handler/meta-items :route-fragment]))
 
 (defn get-current-route-parent
   ; @usage
@@ -265,10 +239,7 @@
   ;
   ; @return (string)
   [db _]
-  (if-let [temporary-parent (r get-temporary-parent db)]
-          (return temporary-parent)
-          (let [current-route-string (r get-current-route-string db)]
-               (uri/uri->parent-uri current-route-string))))
+  (get-in db [:router :route-handler/meta-items :route-parent]))
 
 
 
@@ -319,20 +290,6 @@
   [db _]
   (let [history (r get-history db)]
        (vector/last-item history)))
-
-(defn get-router-data
-  ; @usage
-  ;  (r router/get-router-data db)
-  ;
-  ; @return (map)
-  [db _]
-  {:route-string       (r get-current-route-string       db)
-   :route-id           (r get-current-route-id           db)
-   :route-path         (r get-current-route-path         db)
-   :route-template     (r get-current-route-template     db)
-   :route-path-params  (r get-current-route-path-params  db)
-   :route-query-params (r get-current-route-query-params db)
-   :route-fragment     (r get-current-route-fragment     db)})
 
 
 
@@ -396,7 +353,3 @@
 ; @usage
 ;  [:router/at-home?]
 (a/reg-sub :router/at-home? at-home?)
-
-; @usage
-;  [:router/get-router-data]
-(a/reg-sub :router/get-router-data get-router-data)

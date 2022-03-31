@@ -17,10 +17,12 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:base-route (string)}
-  (fn [_ [_ browser-id {:keys [base-route]}]]
+  ;  {:base-route (string)
+  ;   :parent-route (string)}
+  (fn [_ [_ browser-id {:keys [base-route parent-route]}]]
       [:plugin-handler/add-base-route! browser-id
                                        {:base-route   base-route
+                                        :parent-route parent-route
                                         :client-event [:item-browser/handle-route! browser-id]}]))
 
 (a/reg-event-fx
@@ -29,8 +31,10 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:extended-route (string)}
-  (fn [_ [_ browser-id {:keys [extended-route]}]]
+  ;  {:extended-route (string)
+  ;   :parent-route (string)}
+  (fn [_ [_ browser-id {:keys [extended-route parent-route]}]]
       [:plugin-handler/add-extended-route! browser-id
                                           {:client-event   [:item-browser/handle-route! browser-id]
-                                           :extended-route extended-route}]))
+                                           :extended-route extended-route
+                                           :parent-route   parent-route}]))
