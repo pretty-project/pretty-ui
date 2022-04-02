@@ -37,7 +37,7 @@
 - Az `app-fruits.reagent` névtér ezentúl `reagent.api` néven elérhető!
 
 - Az item-editor plugin `{:initial-item {...}}` tulajdonságával ezentúl beállítható a szerkesztett
-  dokumentum kezdeti állapota (Típus hozzáadásakor a :model-id beállítása!)
+  dokumentum kezdeti állapota
 
 
 

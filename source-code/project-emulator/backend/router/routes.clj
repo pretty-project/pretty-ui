@@ -1,7 +1,6 @@
 
 (ns backend.router.routes
     (:require [backend.ui.api     :as ui]
-              [pathom.api         :as pathom]
               [sente.api          :as sente]
               [server-fruits.http :as http]
               [x.server-core.api  :as a]))
@@ -21,10 +20,6 @@
 ;             :get #(http/html-wrap {:body (ui/main %)})
 ;             :core-js "site.js"}
 
-             :db/query
-             {:route-template "/query"
-              :post #(http/map-wrap {:body (pathom/process-request! %)})}
-
              ; WebSocket
              :wss/channel
              {:route-template "/chsk"
@@ -33,7 +28,7 @@
 
 
 
-;; -- Lifecycle events --------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-lifecycles!

@@ -7,6 +7,7 @@
               [x.server-dictionary.api]
               [x.server-environment.api]
               [x.server-router.api]
+              [x.server-sync.api]
               [x.server-views.api]
               [x.boot-loader.effects]
               [x.boot-loader.side-effects :as side-effects]))

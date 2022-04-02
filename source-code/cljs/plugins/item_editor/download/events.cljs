@@ -12,6 +12,21 @@
 
 
 
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn data-received
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ editor-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :data-received?] true))
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -51,9 +66,9 @@
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [event-id editor-id server-response]]
+  [db [_ editor-id server-response]]
   (cond-> ; Set {:data-received? true} state ...
-          (assoc-in db [:plugins :plugin-handler/meta-items editor-id :data-received?] true)
+          (r data-received db editor-id)
           ; If editor downloading item ...
           (r core.subs/download-item? db editor-id)
           (as-> % (r store-downloaded-item! % editor-id server-response))
@@ -63,6 +78,27 @@
           ; If editor in recovery-mode ...
           (r core.subs/get-meta-item db editor-id :recovery-mode?)
           (as-> % (r backup.events/recover-item! % editor-id))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn load-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ editor-id]]
+  ; Az item-editor plugin indulásakor ha az [:item-editor/load-item! ...] esemény történik
+  ; meg az [:item-editor/request-item! ...] esemény helyett, akkor is szükséges átléptetni
+  ; a plugint a {:data-received? true} állapotba ezért a load-item! függvény is alkalmazza
+  ; a data-received függvényt.
+  (if (r core.subs/get-meta-item db editor-id :recovery-mode?)
+      (as-> db % (r backup.events/recover-item! % editor-id)
+                 (r data-received               % editor-id))
+      (as-> db % (r data-received               % editor-id))))
 
 
 

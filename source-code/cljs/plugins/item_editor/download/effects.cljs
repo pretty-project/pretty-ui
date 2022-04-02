@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.effects
-    (:require [plugins.item-editor.backup.events       :as backup.events]
-              [plugins.item-editor.core.subs           :as core.subs]
+    (:require [plugins.item-editor.core.subs           :as core.subs]
+              [plugins.item-editor.download.events     :as download.events]
               [plugins.item-editor.download.queries    :as download.queries]
               [plugins.item-editor.download.validators :as download.validators]
               [x.app-core.api                          :as a :refer [r]]))
@@ -39,7 +39,5 @@
   (fn [{:keys [db]} [_ editor-id]]
       ; Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
       ; helyettesíti, amikor nem szükséges adatokat letölteni.
-      (if (r core.subs/get-meta-item db editor-id :recovery-mode?)
-          {:db (r backup.events/recover-item! db editor-id)
-           :dispatch [:ui/simulate-process!]}
-          {:dispatch [:ui/simulate-process!]})))
+      {:db (r download.events/load-item! db editor-id)
+       :dispatch [:ui/simulate-process!]}))
