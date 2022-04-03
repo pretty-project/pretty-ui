@@ -3,18 +3,27 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-browser.views
-    (:require [extensions.storage.core.config :as core.config]
-              [mid-fruits.css                 :as css]
-              [mid-fruits.format              :as format]
-              [mid-fruits.io                  :as io]
-              [mid-fruits.vector              :as vector]
-              [plugins.item-browser.api       :as item-browser]
-              [x.app-components.api           :as components]
-              [x.app-core.api                 :as a :refer [r]]
-              [x.app-elements.api             :as elements]
-              [x.app-layouts.api              :as layouts]
-              [x.app-media.api                :as media]
-              [x.app-ui.api                   :as ui]))
+    (:require [extensions.storage.core.config           :as core.config]
+              [extensions.storage.media-browser.helpers :as media-browser.helpers]
+              [mid-fruits.io                            :as io]
+              [plugins.item-browser.api                 :as item-browser]
+              [x.app-components.api                     :as components]
+              [x.app-core.api                           :as a :refer [r]]
+              [x.app-elements.api                       :as elements]
+              [x.app-layouts.api                        :as layouts]
+              [x.app-ui.api                             :as ui]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn on-click-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [item-dex {:keys [id mime-type] :as media-item}]
+  (let [on-click (case mime-type "storage/directory" [:item-browser/browse-item! :storage.media-browser id]
+                                                     [:storage.media-browser/render-file-menu! media-item])]
+       [:item-browser/item-clicked :storage.media-browser item-dex {:on-click on-click}]))
 
 
 
@@ -101,114 +110,33 @@
 ;; -- Media-item components ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-item-alias-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias]} _]
-  [elements/label {:min-height :xs :content alias}])
-
-(defn media-item-modified-at-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [modified-at]} _]
-  [elements/label {:content @(a/subscribe [:activities/get-actual-timestamp modified-at])
-                   :font-size :xs :min-height :xs :selectable? false :color :muted}])
-
-(defn directory-item-content-size-labels
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [content-size items]} _]
-  [:div {:style {:display :flex}}
-        [elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
-                         :font-size :xs :min-height :xs :selectable? false :color :muted}]
-        [elements/label {:font-size :xs :min-height :xs :selectable? false :color :muted :indent :both :content "|"}]
-        [elements/label {:content {:content :n-items :replacements [(count items)] :prefix "" :suffix ""}
-                         :font-size :xs :min-height :xs :selectable? false :color :muted}]])
-
-(defn file-item-filesize-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [filesize]} _]
-  [elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
-                   :min-height :xs :selectable? false :color :muted :font-size :xs}])
-
-(defn directory-item-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [icon]}]
-  (if icon [:div.storage--media-item--icon [elements/icon {:icon icon}]]))
-
-(defn directory-item-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [items]} _]
-  (let [icon-family (if (vector/nonempty? items) :material-icons-filled :material-icons-outlined)]
-       [:div.storage--media-item--header [elements/icon {:icon-family icon-family :icon :folder :size :xxl}]]))
-
-(defn directory-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias content-size items] :as media-item} item-props]
-  [:div.storage--media-item--details
-    [media-item-alias-label             media-item item-props]
-    [media-item-modified-at-label       media-item item-props]
-    [directory-item-content-size-labels media-item item-props]])
-
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item {:keys [disabled?] :as item-props}]
-  [:div.storage--media-item {:data-disabled (boolean disabled?)}
-                            [directory-item-header  media-item item-props]
-                            [directory-item-details media-item item-props]
-                            [directory-item-icon    media-item item-props]])
-
-(defn file-item-preview
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [filename]} _]
-  (let [preview-uri (media/filename->media-thumbnail-uri filename)]
-       [:div.storage--media-item--preview {:style {:background-image (css/url preview-uri)}}]))
-
-(defn file-item-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [icon]}]
-  (if icon [:div.storage--media-item--icon [elements/icon {:icon icon}]]))
-
-(defn file-item-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias] :as media-item} item-props]
-  [:div.storage--media-item--header [elements/icon {:icon :insert_drive_file}]
-                                    (if (io/filename->image? alias)
-                                        [file-item-preview media-item item-props])])
-
-(defn file-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias filesize] :as media-item} item-props]
-  [:div.storage--media-item--details [media-item-alias-label       media-item item-props]
-                                     [media-item-modified-at-label media-item item-props]
-                                     [file-item-filesize-label     media-item item-props]])
+  [item-dex {:keys [alias content-size items modified-at] :as media-item}]
+  [layouts/list-item-b item-dex {:icon           :navigate_next
+                                 :label          alias
+                                 :timestamp      (media-browser.helpers/media-item->timestamp     media-item)
+                                 :size           (media-browser.helpers/directory-item->size      media-item)
+                                 :thumbnail      (media-browser.helpers/directory-item->thumbnail media-item)
+                                 :on-click       (on-click-event item-dex media-item)
+                                 :on-right-click [:storage.media-browser/render-directory-menu! media-item]}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item {:keys [disabled?] :as item-props}]
-  [:div.storage--media-item {:data-disabled (boolean disabled?)}
-                            [file-item-header  media-item item-props]
-                            [file-item-details media-item item-props]
-                            [file-item-icon    media-item item-props]])
+  [item-dex {:keys [alias filename] :as media-item}]
+  [layouts/list-item-b item-dex {:icon           :more_vert
+                                 :label          alias
+                                 :timestamp      (media-browser.helpers/media-item->timestamp media-item)
+                                 :size           (media-browser.helpers/file-item->size       media-item)
+                                 :thumbnail      (media-browser.helpers/file-item->thumbnail  media-item)
+                                 :on-click       (on-click-event item-dex media-item)
+                                 :on-right-click [:storage.media-browser/render-file-menu! media-item]}])
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [browser-id item-dex {:keys [id mime-type] :as media-item}]
-  (case mime-type "storage/directory" [elements/toggle {:content        [directory-item media-item {:icon :navigate_next}]
-                                                        :on-click       [:storage.media-browser/item-clicked item-dex media-item]
-                                                        :on-right-click [:storage.media-browser/render-directory-menu! media-item]
-                                                        :hover-color :highlight}]
-                                    [:<>
-                                      [elements/toggle {:content        [file-item media-item {:icon :more_vert}]
-                                                        :on-click       [:storage.media-browser/item-clicked item-dex media-item]
-                                                        :on-right-click [:storage.media-browser/render-file-menu! media-item]
-                                                        :hover-color :highlight}]
-
-                                      [layouts/list-item-b item-dex {:icon :more_vert
-                                                                     :label (:alias media-item)
-                                                                     :timestamp @(a/subscribe [:activities/get-actual-timestamp (:modified-at media-item)])
-                                                                     :size (-> media-item :filesize io/B->MB format/decimals (str " MB"))
-                                                                     :on-click []
-                                                                     :thumbnail {:icon :insert_drive_file
-                                                                                 :uri (if (io/filename->image? (:alias media-item))
-                                                                                          (media/filename->media-thumbnail-uri (:filename media-item)))}}]]))
+  [browser-id item-dex {:keys [mime-type] :as media-item}]
+  (case mime-type "storage/directory" [directory-item item-dex media-item]
+                                      [file-item      item-dex media-item]))
 
 
 

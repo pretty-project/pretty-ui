@@ -4,6 +4,7 @@
 
 (ns extensions.storage.file-uploader.views
     (:require [extensions.storage.file-uploader.helpers :as file-uploader.helpers]
+              [extensions.storage.media-browser.helpers :as media-browser.helpers]
               [mid-fruits.css                           :as css]
               [mid-fruits.io                            :as io]
               [mid-fruits.format                        :as format]
@@ -11,6 +12,7 @@
               [mid-fruits.string                        :as string]
               [x.app-core.api                           :as a]
               [x.app-elements.api                       :as elements]
+              [x.app-layouts.api                        :as layouts]
               [x.app-media.api                          :as media]))
 
 
@@ -61,7 +63,7 @@
         files-uploaded?   @(a/subscribe [:sync/request-successed? request-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
-        file-count        @(a/subscribe [:storage.file-uploader/get-file-count uploader-id])
+        file-count        @(a/subscribe [:storage.file-uploader/get-uploading-file-count uploader-id])
         progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
         label (cond files-uploaded? :files-uploaded request-aborted? :aborted request-failured? :file-upload-failure :default progress-label)]
        [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left :min-height :l}]))
@@ -163,65 +165,25 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- no-files-to-upload-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id]
-  (if-let [all-files-cancelled? @(a/subscribe [:storage.file-uploader/all-files-cancelled? uploader-id])]
-          [elements/label ::no-files-to-upload-label
-                          {:content :no-files-selected :color :muted}]))
-
-(defn- file-item-preview
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id file-dex]
-  (let [object-url @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [:div.storage--media-item--preview {:style {:background-image (css/url object-url)}}]))
-
-(defn- file-item-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id file-dex]
-  (let [filename @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])]
-       [:div.storage--media-item--header [elements/icon {:icon :insert_drive_file}]
-                                         (if (io/filename->image? filename)
-                                             [file-item-preview uploader-id file-dex])]))
-
-(defn- file-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id file-dex]
-  (let [filename @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
-        filesize @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])]
-       [:div.storage--media-item--details
-         [elements/label {:min-height :s :selectable? true  :color :default :content filename}]
-         [elements/label {:min-height :s :selectable? false :color :muted
-                          :content (-> filesize io/B->MB format/decimals (str " MB"))}]]))
-
-(defn- file-item-actions
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id file-dex]
-  [elements/button {:preset :default-icon-button :icon :highlight_off
-                    :on-click [:storage.file-uploader/cancel-file-upload! uploader-id file-dex]}])
-
 (defn- file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id file-dex]
-  (let [file-cancelled? @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :cancelled?])]
-       (if-not file-cancelled? [elements/row {:content [:<> [file-item-actions uploader-id file-dex]
-                                                            [file-item-header  uploader-id file-dex]
-                                                            [file-item-details uploader-id file-dex]]}])))
+  (let [file-cancelled? @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :cancelled?])
+        filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
+        filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
+        object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
+       [layouts/list-item-b file-dex {:label     filename
+                                      :size      (media-browser.helpers/file-item->size      {:filesize filesize})
+                                      :thumbnail (file-uploader.helpers/file-item->thumbnail {:alias    filename :filename object-url})
+                                      :on-click  [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
+                                      :icon      (if file-cancelled? :radio_button_unchecked :highlight_off)
+                                      :style     (if file-cancelled? {:opacity 0.5})}]))
 
-(defn- file-list
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  ; A file-list komponens a feltöltésre kijelölt fájlok számának kezdő értékére iratkozik fel,
-  ; így ha egy fájl feltöltése visszavonsára kerül, akkor sem változik meg a file-list komponens
-  ; body-props paramétere, ami miatt újra renderelődne a lista.
-  (let [file-count @(a/subscribe [:storage.file-uploader/get-file-count uploader-id])]
+  (let [file-count @(a/subscribe [:storage.file-uploader/get-selected-file-count uploader-id])]
        (letfn [(f [file-list file-dex]
                   (conj file-list ^{:key (str uploader-id file-dex)}
                                    [file-item uploader-id file-dex]))]
-              (reduce f [:<>] (range file-count)))))
-
-(defn- body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [uploader-id]
-  [:<> [file-list                uploader-id]
-       [no-files-to-upload-label uploader-id]])
+              (reduce f [:div {:style {:width "100%"}}] (range file-count)))))

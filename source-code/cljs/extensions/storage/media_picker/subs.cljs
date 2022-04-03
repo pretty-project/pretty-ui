@@ -15,30 +15,50 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-saved-selection
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [value-path (get-in db [:storage :media-picker/picker-props :value-path])]
-       (get-in db value-path)))
-
 (defn get-selected-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (get-in db [:storage :media-picker/selected-items]))
 
+(defn get-picked-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [value-path (get-in db [:storage :media-picker/picker-props :value-path])]
+       (get-in db value-path)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [value-path     (get-in db [:storage :media-picker/picker-props :value-path])
-        selected-items (get-in db value-path)]
+  (let [selected-items (r get-selected-items db)]
        (-> selected-items vector/nonempty? not)))
+
+(defn no-items-picked?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [picked-items (r get-picked-items db)]
+       (-> picked-items vector/nonempty? not)))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [value-path     (get-in db [:storage :media-picker/picker-props :value-path])
-        selected-items (get-in db value-path)]
+  (let [selected-items (r get-selected-items db)]
        (count selected-items)))
+
+(defn get-picked-item-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db _]
+  (let [picked-items (r get-picked-items db)]
+       (count picked-items)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn file-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -71,7 +91,13 @@
 (a/reg-sub :storage.media-picker/no-items-selected? no-items-selected?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.media-picker/no-items-picked? no-items-picked?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.media-picker/get-selected-item-count get-selected-item-count)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.media-picker/get-picked-item-count get-picked-item-count)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.media-picker/file-selected? file-selected?)

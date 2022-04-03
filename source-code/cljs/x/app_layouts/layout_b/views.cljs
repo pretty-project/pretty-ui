@@ -82,9 +82,11 @@
   ;       Default: :m
   ;      :on-click (metamorphic-event)(opt)}
   ;     {...}]
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
-  ;    Default: :center}
+  ;    Default: :center
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [layouts/layout-b {...}]

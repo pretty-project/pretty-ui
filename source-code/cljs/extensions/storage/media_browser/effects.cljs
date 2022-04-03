@@ -88,12 +88,12 @@
 (a/reg-event-fx
   :storage.media-browser/copy-directory-link!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ {:keys [id]}]]))
-;      (let [directory-uri (item-browser/browser-uri :storage.media-browser id)
-;            directory-uri (r router/get-resolved-uri db directory-uri)
-;            uri-base      (window/get-uri-base)
-;           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-;                         [:tools/copy-to-clipboard! (str uri-base directory-uri)]}]]))
+  (fn [{:keys [db]} [_ {:keys [id]}]]
+      (let [directory-uri (r item-browser/get-item-route db :storage.media-browser id)
+            directory-uri (r router/get-resolved-uri     db directory-uri)
+            uri-base      (window/get-uri-base)]
+           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+                         [:tools/copy-to-clipboard! (str uri-base directory-uri)]]})))
 
 
 
@@ -123,20 +123,6 @@
             uri-base (window/get-uri-base)]
            {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                          [:tools/copy-to-clipboard! (str uri-base file-uri)]]})))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :storage.media-browser/item-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ item-dex {:keys [id mime-type] :as media-item}]]
-      (if (r item-browser/toggle-item-selection? db :storage.media-browser item-dex)
-          {:db (r item-browser/toggle-item-selection! db :storage.media-browser item-dex)}
-          (case mime-type "storage/directory" [:item-browser/browse-item! :storage.media-browser id]
-                                              [:storage.media-browser/render-file-menu! media-item]))))
 
 
 

@@ -424,7 +424,8 @@ button.x-card:focus,
 /***** Color profiles *****/
 /*** Muted ***/
 
-.x-toggle[data-hover-color="muted"]:hover {
+.x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
+  /* XXX#4005 */
   background-color: var( --background-color-muted ) }
 
 .x-circle-diagram--section[data-color="muted"] {
@@ -479,7 +480,8 @@ button.x-card:focus,
 
 /*** Highlight ***/
 
-.x-toggle[data-hover-color="highlight"]:hover {
+.x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
+  /* XXX#4005 */
   background-color: var( --background-color-highlight ) }
 
 .x-circle-diagram--section[data-color="highlight"] {

@@ -3,130 +3,38 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.list-item-b.views
-    (:require [mid-fruits.css       :as css]
-              [x.app-components.api :as components]
-              [x.app-core.api       :as a]
-              [x.app-elements.api   :as elements]))
+    (:require [mid-fruits.css                    :as css]
+              [x.app-components.api              :as components]
+              [x.app-core.api                    :as a]
+              [x.app-elements.api                :as elements]
+              [x.app-layouts.list-item-b.helpers :as list-item-b.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-item-alias-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias]} _]
-  [elements/label {:min-height :xs :content alias}])
-
-(defn media-item-modified-at-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [modified-at]} _]
-  [elements/label {:content @(a/subscribe [:activities/get-actual-timestamp modified-at])
-                   :font-size :xs :min-height :xs :selectable? false :color :muted}])
-
-(defn directory-item-content-size-labels
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [content-size items]} _]
-  [:div {:style {:display :flex}}
-        ;[elements/label {:content (-> content-size io/B->MB format/decimals (str " MB"))
-        ;                 :font-size :xs :min-height :xs :selectable? false :color :muted}}
-        [elements/label {:font-size :xs :min-height :xs :selectable? false :color :muted :indent :both :content "|"}]
-        [elements/label {:content {:content :n-items :replacements [(count items)] :prefix "" :suffix ""}
-                         :font-size :xs :min-height :xs :selectable? false :color :muted}]])
-
-(defn file-item-filesize-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [filesize]} _])
-  ;[elements/label {:content (-> filesize io/B->MB format/decimals (str " MB"))
-  ;                 :min-height :xs :selectable? false :color :muted :font-size :xs])
-
-(defn directory-item-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [icon]}]
-  (if icon [:div.storage--media-item--icon [elements/icon {:icon icon}]]))
-
-(defn directory-item-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [items]} _])
-  ;(let [icon-family (if (vector/nonempty? items) :material-icons-filled :material-icons-outlined)]
-  ;     [:div.storage--media-item--header [elements/icon {:icon-family icon-family :icon :folder :size :xxl}]]])
-
-(defn directory-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias content-size items] :as media-item} item-props]
-  [:div.storage--media-item--details
-    [media-item-alias-label             media-item item-props]
-    [media-item-modified-at-label       media-item item-props]
-    [directory-item-content-size-labels media-item item-props]])
-
-(defn directory-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item {:keys [disabled?] :as item-props}]
-  [:div.storage--media-item {:data-disabled (boolean disabled?)}
-                            [directory-item-header  media-item item-props]
-                            [directory-item-details media-item item-props]
-                            [directory-item-icon    media-item item-props]])
-
-(defn file-item-preview
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [filename]} _])
-  ;(let [preview-uri (media/filename->media-thumbnail-uri filename)]
-  ;     [:div.storage--media-item--preview {:style {:background-image (css/url preview-uri)}}]])
-
-(defn file-item-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ {:keys [icon]}]
-  (if icon [:div.storage--media-item--icon [elements/icon {:icon icon}]]))
-
-(defn file-item-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias] :as media-item} item-props]
-  [:div.storage--media-item--header [elements/icon {:icon :insert_drive_file}]])
-                                    ;(if (io/filename->image? alias)
-                                    ;    [file-item-preview media-item item-props]]])
-
-(defn file-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias filesize] :as media-item} item-props]
-  [:div.storage--media-item--details [media-item-alias-label       media-item item-props]
-                                     [media-item-modified-at-label media-item item-props]
-                                     [file-item-filesize-label     media-item item-props]])
-
-(defn file-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item {:keys [disabled?] :as item-props}]
-  [:div.storage--media-item {:data-disabled (boolean disabled?)}
-                            [file-item-header  media-item item-props]
-                            [file-item-details media-item item-props]
-                            [file-item-icon    media-item item-props]])
-
-
-
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- list-item-secondary-details
+(defn- list-item-header-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) item-dex
   ; @param (map) item-props
-  ;  {:timestamp (string)(opt)}
-  [_ {:keys [timestamp]}]
-  [:div.x-list-item-a--secondary-details [:div.x-list-item-a--timestamp (components/content timestamp)]])
+  ;  {:thumbnail (map)
+  ;    {:icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)}}
+  [_ {:keys [thumbnail]}]
+  (let [icon-props (select-keys thumbnail [:icon :icon-family])]
+       [elements/icon icon-props]))
 
-(defn- list-item-primary-details
+(defn- list-item-header-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) item-dex
   ; @param (map) item-props
-  ;  {:description (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)}
-  [_ {:keys [description label] :as item-props}]
-  [:div.x-list-item-a--primary-details [:div.x-list-item-a--label       (components/content label)]
-                                       [:div.x-list-item-a--description (components/content description)]])
+  ;  {:thumbnail (map)
+  ;    {:uri (string)(opt)}}
+  [_ {:keys [thumbnail]}]
+  [:div.x-list-item-b--thumbnail {:style {:background-image (-> thumbnail :uri css/url)}}])
 
 (defn- list-item-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,29 +45,31 @@
   ;    {:icon (keyword)(opt)
   ;     :uri (string)(opt)}}
   [item-dex {:keys [thumbnail] :as item-props}]
-  [:div.x-list-item-b--header (if-let [icon (:icon thumbnail)]
-                                      [elements/icon {:icon (:icon thumbnail)}])
-                              (if-let [uri (:uri thumbnail)]
-                                      [:div.x-list-item-b--thumbnail {:style {:background-image (css/url uri)}}])])
+  [:div.x-list-item-b--header (if (:icon thumbnail) [list-item-header-icon      item-dex item-props])
+                              (if (:uri  thumbnail) [list-item-header-thumbnail item-dex item-props])])
 
 (defn- list-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) item-dex
   ; @param (map) item-props
-  [item-dex item-props]
-  [:div.x-list-item-b--details ; [list-item-primary-details   item-dex item-props]
-                               ;[list-item-secondary-details item-dex item-props]])
-                      (str item-props)])
+  ;  {:label (metamorphic-content)
+  ;   :size (string)(opt)
+  ;   :timestamp (string)(opt)}
+  [_ {:keys [label size timestamp]}]
+  [:div.x-list-item-b--details [:div.x-list-item-b--label     (components/content label)]
+                               [:div.x-list-item-b--timestamp (str timestamp)]
+                               [:div.x-list-item-b--size      (str size)]])
 
 (defn- list-item-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) item-dex
   ; @param (map) item-props
-  [item-dex item-props]
-  [:div.x-list-item-b--icon]) ;[list-item-primary-details   item-dex item-props
-                            ;   [list-item-secondary-details item-dex item-props]])
+  ;  {:icon (keyword)(opt)}
+  [_ item-props]
+  (let [icon-props (select-keys item-props [:icon :icon-family])]
+       [:div.x-list-item-b--icon [elements/icon icon-props]]))
 
 (defn- list-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,9 +77,10 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   [item-dex item-props]
-  [:div.x-list-item-b [list-item-header  item-dex item-props]
-                      [list-item-details item-dex item-props]
-                      [list-item-icon    item-dex item-props]])
+  [:div.x-list-item-b (list-item-b.helpers/list-item-structure-attributes item-dex item-props)
+                      [list-item-header                                   item-dex item-props]
+                      [list-item-details                                  item-dex item-props]
+                      [list-item-icon                                     item-dex item-props]])
 
 (defn toggle-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -177,12 +88,14 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   ;  {:disabled? (boolean)(opt)
-  ;   :on-click (metamorphic-event)}
-  [item-dex {:keys [disabled? on-click] :as item-props}]
-  [elements/toggle {:content   [list-item-structure item-dex item-props]
-                    :disabled? disabled?
-                    :on-click  on-click
-                    :hover-color :highlight}])
+  ;   :on-click (metamorphic-event)
+  ;   :on-right-click (metamorphic-event)(opt)}
+  [item-dex {:keys [disabled? on-click on-right-click] :as item-props}]
+  [elements/toggle {:content        [list-item-structure item-dex item-props]
+                    :disabled?      disabled?
+                    :on-click       on-click
+                    :on-right-click on-right-click
+                    :hover-color    :highlight}])
 
 (defn static-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,14 +108,25 @@
 (defn list-item
   ; @param (integer)(opt) item-dex
   ; @param (map) item-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
+  ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;    Only w/ {:icon ...}
   ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)(opt)
+  ;   :on-right-click (metamorphic-event)(opt)
   ;   :size (string)(opt)
+  ;   :style (map)(opt)
   ;   :thumbnail (map)
   ;    {:icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)
+  ;      :material-icons-filled, :material-icons-outlined
+  ;      Default: :material-icons-filled
+  ;      Only w/ {:thumbnail {:icon ...}}
   ;     :uri (string)(opt)}
   ;   :timestamp (string)(opt)}
   ;

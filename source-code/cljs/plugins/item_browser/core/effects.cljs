@@ -5,6 +5,8 @@
 (ns plugins.item-browser.core.effects
     (:require [plugins.item-browser.core.events   :as core.events]
               [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.item-browser.items.events  :as items.events]
+              [plugins.item-browser.items.subs    :as items.subs]
               [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-browser.routes.subs   :as routes.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
@@ -109,3 +111,27 @@
   (fn [{:keys [db]} [_ browser-id filter-pattern]]
       {:db (r core.events/use-filter! db browser-id filter-pattern)
        :dispatch [:tools/reload-infinite-loader! browser-id]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-browser/item-clicked
+  ; @param (keyword) lister-id
+  ; @param (integer) item-dex
+  ; @param (map) options
+  ;  {:on-click (metamorphic-event)}
+  ;
+  ; @usage
+  ;  [:item-browser/item-clicked :my-browser 0 {...}]
+  (fn [{:keys [db]} [_ browser-id item-dex {:keys [on-click]}]]
+      ; A) ...
+      ;
+      ; B) ...
+      (if (r items.subs/toggle-item-selection? db browser-id item-dex)
+          ; A)
+          {:db (r items.events/toggle-item-selection! db browser-id item-dex)}
+          ; B)
+          {:dispatch on-click})))

@@ -53,6 +53,7 @@
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
   ;  {:body (metamorphic-content)
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
@@ -62,7 +63,8 @@
   ;    Default: :center
   ;   :min-width (keyword)(opt)
   ;    :m, :l, :xl, :xxl
-  ;    Default: :l}
+  ;    Default: :l
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [layouts/layout-a {...}]

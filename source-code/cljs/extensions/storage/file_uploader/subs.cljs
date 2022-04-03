@@ -23,10 +23,16 @@
   [db [_ uploader-id file-dex prop-key]]
   (get-in db [:storage :file-uploader/selected-files uploader-id file-dex prop-key]))
 
-(defn get-file-count
+(defn get-selected-file-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id]]
   (r db/get-item-count db [:storage :file-uploader/selected-files uploader-id]))
+
+(defn get-uploading-file-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [db [_ uploader-id]]
+  (let [selected-files (get-in db [:storage :file-uploader/selected-files uploader-id])]
+       (vector/filtered-count selected-files #(-> % :cancelled? not))))
 
 (defn get-files-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,7 +103,10 @@
 (a/reg-sub :storage.file-uploader/get-file-prop get-file-prop)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :storage.file-uploader/get-file-count get-file-count)
+(a/reg-sub :storage.file-uploader/get-selected-file-count get-selected-file-count)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :storage.file-uploader/get-uploading-file-count get-uploading-file-count)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :storage.file-uploader/get-files-size get-files-size)

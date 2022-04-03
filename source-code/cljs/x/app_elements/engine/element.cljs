@@ -210,11 +210,15 @@
   ;   :data-disabled (boolean)
   ;   :data-selectable (boolean)
   ;   :src (string)}
-  [_ {:keys [alt disabled? selectable? src]}]
+  [_ {:keys [alt disabled? hover-color selectable? src]}]
   (cond-> {} alt (assoc :alt alt)
              src (assoc :src src)
              (some? disabled?)   (assoc :data-disabled   disabled?)
-             (some? selectable?) (assoc :data-selectable selectable?)))
+             (some? selectable?) (assoc :data-selectable selectable?)
+             ; XXX#4005
+             ; A {:hover-color ...} tulajdonságként átadott szín használatához, minden esetben
+             ; szükséges a {:data-disabled ...} attribútumot alkalmazni!
+             hover-color (assoc :data-disabled (boolean disabled?))))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

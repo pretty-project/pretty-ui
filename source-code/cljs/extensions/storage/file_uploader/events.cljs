@@ -32,15 +32,17 @@
   (-> db (dissoc-in [:storage :file-uploader/selected-files uploader-id])
          (dissoc-in [:storage :file-uploader/meta-items     uploader-id])))
 
-(defn cancel-file-upload!
+(defn toggle-file-upload!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ uploader-id file-dex]]
-  ; A feltöltendő fájlok adatai közül nem kerülnek törlésre a visszavont fájlok adatai,
-  ; mert a változó elemszám miatt a feltöltendő fájlok listája újra renderelődne!
   (let [filesize (get-in db [:storage :file-uploader/selected-files uploader-id file-dex :filesize])]
-       (-> db (assoc-in  [:storage :file-uploader/selected-files uploader-id file-dex :cancelled?] true)
-              (update-in [:storage :file-uploader/meta-items     uploader-id :files-size] - filesize)
-              (update-in [:storage :file-uploader/meta-items     uploader-id :file-count]   dec))))
+       (if-let [file-cancelled? (get-in db [:storage :file-uploader/selected-files uploader-id file-dex :cancelled?])]
+               (-> db (update-in [:storage :file-uploader/selected-files uploader-id file-dex :cancelled?] not)
+                      (update-in [:storage :file-uploader/meta-items     uploader-id :files-size] + filesize)
+                      (update-in [:storage :file-uploader/meta-items     uploader-id :file-count]   inc))
+               (-> db (update-in [:storage :file-uploader/selected-files uploader-id file-dex :cancelled?] not)
+                      (update-in [:storage :file-uploader/meta-items     uploader-id :files-size] - filesize)
+                      (update-in [:storage :file-uploader/meta-items     uploader-id :file-count]   dec)))))
 
 
 
@@ -48,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :storage.file-uploader/cancel-file-upload! cancel-file-upload!)
+(a/reg-event-db :storage.file-uploader/toggle-file-upload! toggle-file-upload!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :storage.file-uploader/clean-uploader! clean-uploader!)

@@ -3,25 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-picker.views
-    (:require [extensions.storage.core.config         :as core.config]
-              [extensions.storage.media-browser.views :as media-browser.views]
-              [plugins.item-browser.api               :as item-browser]
-              [plugins.item-browser.core.views        :as plugins.item-browser.core.views]
-              [plugins.item-lister.core.views         :as plugins.item-lister.core.views]
-              [mid-fruits.css                         :as css]
-              [mid-fruits.keyword                     :as keyword]
-              [x.app-core.api                         :as a]
-              [x.app-elements.api                     :as elements]
-              [x.app-media.api                        :as media]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; extensions.storage.media-browser.views
-(def directory-item media-browser.views/directory-item)
-(def file-item      media-browser.views/file-item)
+    (:require [extensions.storage.core.config           :as core.config]
+              [extensions.storage.media-browser.helpers :as media-browser.helpers]
+              [extensions.storage.media-picker.helpers  :as media-picker.helpers]
+              [plugins.item-browser.api                 :as item-browser]
+              [plugins.item-browser.core.views          :as plugins.item-browser.core.views]
+              [plugins.item-lister.core.views           :as plugins.item-lister.core.views]
+              [x.app-core.api                           :as a]
+              [x.app-elements.api                       :as elements]
+              [x.app-layouts.api                        :as layouts]))
 
 
 
@@ -98,29 +88,33 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn directory-item-toggle
+(defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [id] :as media-item}]
-  [elements/toggle {:content  [directory-item media-item {:icon :navigate_next}]
-                    :on-click [:item-browser/browse-item! :storage.media-picker id]
-                    :hover-color :highlight}])
+  [item-dex {:keys [alias id] :as media-item}]
+  [layouts/list-item-b item-dex {:label alias
+                                 :icon :navigate_next
+                                 :size      (media-browser.helpers/directory-item->size      media-item)
+                                 :thumbnail (media-browser.helpers/directory-item->thumbnail media-item)
+                                 :timestamp (media-browser.helpers/media-item->timestamp     media-item)
+                                 :on-click  [:item-browser/browse-item! :storage.media-picker id]}])
 
-(defn file-item-toggle
+(defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [media-item]
-  (if-let [file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
-          (let [file-selected? @(a/subscribe [:storage.media-picker/file-selected? media-item])]
-               [elements/toggle {:content  [file-item media-item {:icon (if file-selected? :check_circle_outline :radio_button_unchecked)}]
-                                 :on-click [:storage.media-picker/file-clicked media-item]
-                                 :hover-color :highlight}])
-          [file-item media-item {:disabled? true}]))
-
+  [item-dex {:keys [alias] :as media-item}]
+  (let [file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
+       [layouts/list-item-b item-dex {:label     alias
+                                      :disabled? (not file-selectable?)
+                                      :icon      (media-picker.helpers/file-item->selection-icon media-item)
+                                      :size      (media-browser.helpers/file-item->size          media-item)
+                                      :thumbnail (media-browser.helpers/file-item->thumbnail     media-item)
+                                      :timestamp (media-browser.helpers/media-item->timestamp    media-item)
+                                      :on-click  [:storage.media-picker/file-clicked media-item]}]))
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ _ {:keys [mime-type] :as media-item}]
-  (case mime-type "storage/directory" [directory-item-toggle media-item]
-                                      [file-item-toggle      media-item]))
+  [browser-id item-dex {:keys [mime-type] :as media-item}]
+  (case mime-type "storage/directory" [directory-item item-dex media-item]
+                                      [file-item      item-dex media-item]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -141,12 +135,12 @@
 (defn- n-items-selected-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [multiple?]}]
-  (let [no-items-selected?  @(a/subscribe [:storage.media-picker/no-items-selected?])
-        selected-item-count @(a/subscribe [:storage.media-picker/get-selected-item-count])]
+  (let [no-items-picked?  @(a/subscribe [:storage.media-picker/no-items-picked?])
+        picked-item-count @(a/subscribe [:storage.media-picker/get-picked-item-count])]
        [elements/label {:color :muted :min-height :s
-                        :content (cond (and multiple? no-items-selected?) :no-items-selected
-                                       no-items-selected?                 :no-item-selected
-                                       :default {:content :n-items-selected :replacements [selected-item-count]})}]))
+                        :content (cond (and multiple? no-items-picked?) :no-items-selected
+                                       no-items-picked?                 :no-item-selected
+                                       :default {:content :n-items-selected :replacements [picked-item-count]})}]))
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
