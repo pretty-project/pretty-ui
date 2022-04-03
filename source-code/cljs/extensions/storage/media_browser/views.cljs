@@ -190,15 +190,25 @@
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ item-dex {:keys [id mime-type] :as media-item}]
+  [browser-id item-dex {:keys [id mime-type] :as media-item}]
   (case mime-type "storage/directory" [elements/toggle {:content        [directory-item media-item {:icon :navigate_next}]
                                                         :on-click       [:storage.media-browser/item-clicked item-dex media-item]
                                                         :on-right-click [:storage.media-browser/render-directory-menu! media-item]
                                                         :hover-color :highlight}]
+                                    [:<>
                                       [elements/toggle {:content        [file-item media-item {:icon :more_vert}]
                                                         :on-click       [:storage.media-browser/item-clicked item-dex media-item]
                                                         :on-right-click [:storage.media-browser/render-file-menu! media-item]
-                                                        :hover-color :highlight}]))
+                                                        :hover-color :highlight}]
+
+                                      [layouts/list-item-b item-dex {:icon :more_vert
+                                                                     :label (:alias media-item)
+                                                                     :timestamp @(a/subscribe [:activities/get-actual-timestamp (:modified-at media-item)])
+                                                                     :size (-> media-item :filesize io/B->MB format/decimals (str " MB"))
+                                                                     :on-click []
+                                                                     :thumbnail {:icon :insert_drive_file
+                                                                                 :uri (if (io/filename->image? (:alias media-item))
+                                                                                          (media/filename->media-thumbnail-uri (:filename media-item)))}}]]))
 
 
 

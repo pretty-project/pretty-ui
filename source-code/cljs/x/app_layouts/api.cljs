@@ -3,10 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-layouts.api
-    (:require [x.app-layouts.form-a.helpers :as form-a.helpers]
-              [x.app-layouts.form-a.views   :as form-a.views]
-              [x.app-layouts.layout-a.views :as layout-a.views]
-              [x.app-layouts.layout-b.views :as layout-b.views]))
+    (:require [x.app-layouts.form-a.helpers    :as form-a.helpers]
+              [x.app-layouts.form-a.views      :as form-a.views]
+              [x.app-layouts.layout-a.views    :as layout-a.views]
+              [x.app-layouts.layout-b.views    :as layout-b.views]
+              [x.app-layouts.list-item-a.views :as list-item-a.views]
+              [x.app-layouts.list-item-b.views :as list-item-b.views]))
 
 
 
@@ -27,3 +29,9 @@
 
 ; x.app-layouts.layout-b.views
 (def layout-b layout-b.views/layout)
+
+; x.app-layouts.list-item-a.views
+(def list-item-a list-item-a.views/list-item)
+
+; x.app-layouts.list-item-b.views
+(def list-item-b list-item-b.views/list-item)

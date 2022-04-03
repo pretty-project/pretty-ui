@@ -43,7 +43,7 @@
   [card-id {:keys [content]}]
   [:div.x-card--body [components/content card-id content]])
 
-(defn- button-card
+(defn- toggle-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
@@ -74,7 +74,7 @@
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
   [card-id {:keys [on-click] :as card-props}]
-  (cond (some? on-click) [button-card card-id card-props]
+  (cond (some? on-click) [toggle-card card-id card-props]
         (nil?  on-click) [static-card card-id card-props]))
 
 (defn element

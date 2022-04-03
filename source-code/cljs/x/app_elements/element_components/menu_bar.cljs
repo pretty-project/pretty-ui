@@ -103,7 +103,7 @@
   [_ _ {:keys [label]}]
   (if label [:div.x-menu-bar--menu-item--label [components/content label]]))
 
-(defn- button-item
+(defn- toggle-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bar-id
@@ -136,7 +136,7 @@
   ;   :on-click (metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href on-click] :as item-props}]
   (cond (some? href)     [anchor-item bar-id bar-props item-props]
-        (some? on-click) [button-item bar-id bar-props item-props]))
+        (some? on-click) [toggle-item bar-id bar-props item-props]))
 
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!

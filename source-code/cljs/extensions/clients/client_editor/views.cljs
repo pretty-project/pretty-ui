@@ -110,9 +110,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/input-row-attributes)
-        [:div (layouts/input-block-attributes)
+        [:div (layouts/input-block-attributes {:ratio 50})
               [client-email-address-field]]
-        [:div (layouts/input-block-attributes)
+        [:div (layouts/input-block-attributes {:ratio 50})
               [client-phone-number-field]]])
 
 (defn- client-last-name-field
@@ -139,17 +139,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/input-row-attributes)
-        [locales/name-order [:div (layouts/input-block-attributes)
+        [locales/name-order [:div (layouts/input-block-attributes {:ratio 50})
                                   [client-first-name-field]]
-                            [:div (layouts/input-block-attributes)
+                            [:div (layouts/input-block-attributes {:ratio 50})
                                   [client-last-name-field]]
                            @(a/subscribe [:locales/get-name-order])]])
 
 (defn- client-additional-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [:div (layouts/input-column-attributes)
-        [item-editor/input-group-header :clients.client-editor {:label :description}]
+  [:div (layouts/input-row-attributes)
         [:div (layouts/input-block-attributes {:ratio 100})
               [item-editor/description-field :clients.client-editor]]])
 
@@ -181,6 +180,7 @@
        [client-secondary-contacts]
        [elements/horizontal-separator {:size :xxl}]
        ; Description
+       [item-editor/input-group-header :clients.client-editor {:label :description}]
        [client-additional-information]])
 
 

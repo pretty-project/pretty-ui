@@ -29,13 +29,15 @@
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [selected-items (get-in db [:storage :media-picker/selected-items])]
+  (let [value-path     (get-in db [:storage :media-picker/picker-props :value-path])
+        selected-items (get-in db value-path)]
        (-> selected-items vector/nonempty? not)))
 
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [selected-items (get-in db [:storage :media-picker/selected-items])]
+  (let [value-path     (get-in db [:storage :media-picker/picker-props :value-path])
+        selected-items (get-in db value-path)]
        (count selected-items)))
 
 (defn file-selected?

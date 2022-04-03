@@ -7,4 +7,5 @@
               [extensions.clients.client-editor.subs]
               [extensions.clients.client-editor.views]
               [extensions.clients.client-lister.effects]
+              [extensions.clients.client-lister.subs]
               [extensions.clients.client-lister.views]))

@@ -36,7 +36,6 @@
 
 ; plugins.item-editor.colors.views
 (def color-selector colors.views/color-selector)
-(def color-stamp    colors.views/color-stamp)
 
 ; plugins.item-editor.core.views
 (def delete-item-button core.views/delete-item-button)

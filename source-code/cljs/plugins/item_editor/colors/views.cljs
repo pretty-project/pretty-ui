@@ -38,11 +38,13 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
-       [elements/toggle ::selected-colors-button
-                        {:disabled? editor-disabled?
-                         :on-click  [:item-editor/render-color-picker-dialog! editor-id]
-                         :content   [selected-colors                          editor-id]}]))
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
+        current-item     @(a/subscribe [:item-editor/get-current-item editor-id])]
+       [elements/color-stamp ::selected-colors-stamp
+                             {:colors    (:colors current-item)
+                              :disabled? editor-disabled?
+                              :on-click  [:item-editor/render-color-picker-dialog! editor-id]
+                              :size      :xxl}]))
 
 (defn color-selector
   ; @param (keyword) editor-id
@@ -56,24 +58,6 @@
                       :content (if (-> current-item :colors vector/nonempty?)
                                    [selected-colors-button editor-id]
                                    [add-colors-button      editor-id])}]))
-
-
-
-;; -- Color-stamp components --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn color-stamp
-  ; @param (keyword) editor-id
-  ; @param (map) element-props
-  ;  {:colors (strings in vector)(opt)}
-  ;
-  ; @usage
-  ;  [item-editor/color-stamp :my-editor {...}]
-  [_ {:keys [colors]}]
-  (if (vector/nonempty? colors)
-      (letfn [(f [color-stamp color] (conj color-stamp [:div.item-editor--color-stamp--color {:style {:background-color color}}]))]
-             (reduce f [:div.item-editor--color-stamp] colors))
-      [:div.item-editor--color-stamp-placeholder]))
 
 
 

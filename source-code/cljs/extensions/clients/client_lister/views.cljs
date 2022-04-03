@@ -11,48 +11,31 @@
               [x.app-locales.api       :as locales]))
 
 
-
-;; -- List-item components ----------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-item-secondary-details
+(defn on-click-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [modified-at]}]
-  (let [modified-at @(a/subscribe [:activities/get-actual-timestamp modified-at])]
-       [:div.clients--client-item--secondary-details [:div.clients--client-item--modified-at modified-at]]))
+  [item-dex {:keys [id]}]
+  (let [on-click [:router/go-to! (str "/@app-home/clients/" id)]]
+       [:item-lister/item-clicked :clients.client-lister item-dex {:on-click on-click}]))
 
-(defn- client-item-primary-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [email-address first-name last-name] :as client-item}]
-  (let [selected-language @(a/subscribe [:locales/get-selected-language])
-        client-name        (locales/name->ordered-name first-name last-name selected-language)]
-       [:div.clients--client-item--primary-details [:div.clients--client-item--full-name     client-name]
-                                                   [:div.clients--client-item--email-address email-address]]))
 
-(defn- client-item-details
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [client-item]
-  [:div.clients--client-item--details [client-item-primary-details   client-item]
-                                      [client-item-secondary-details client-item]])
 
-(defn- client-item-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [client-item]
-  [:div.clients--client-item [item-editor/color-stamp :clients.client-editor client-item]
-                             [client-item-details client-item]])
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_ item-dex {:keys [id] :as client-item}]
-  (let [on-click [:router/go-to! (str "/@app-home/clients/" id)]]
-       [elements/toggle {:on-click [:item-lister/item-clicked :clients.client-lister item-dex {:on-click on-click}]
-                         :content  [client-item-structure client-item]
-                         :hover-color :highlight}]))
-
-
-
-;; -- View components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  [lister-id item-dex {:keys [colors email-address id] :as client-item}]
+  (let [on-click     (on-click-event item-dex client-item)
+        client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])
+        modified-at @(a/subscribe [:activities/get-actual-timestamp (:modified-at client-item)])]
+       [layouts/list-item-a item-dex {:colors      colors
+                                      :label       client-name
+                                      :description email-address
+                                      :timestamp   modified-at
+                                      :on-click    on-click}]))
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

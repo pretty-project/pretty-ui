@@ -106,9 +106,8 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   [picker-id picker-props]
-  [:div.x-color-picker--header
-    [color-picker-reset-button picker-id picker-props]
-    [color-picker-label        picker-id picker-props]])
+  [:div.x-color-picker--header [color-picker-reset-button picker-id picker-props]
+                               [color-picker-label        picker-id picker-props]])
 
 (defn- color-picker
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -88,6 +88,8 @@ button.x-card:focus,
 .x-clickable:focus,
 .x-color-picker--option:active,
 .x-color-picker--option:focus,
+.x-color-stamp:active,
+.x-color-stamp:focus,
 .x-counter--decrease-button:active,
 .x-counter--decrease-button:focus,
 .x-counter--increase-button:active,
@@ -1097,6 +1099,11 @@ button.x-card:focus,
 /***** Size profiles *****/
 /*** XXS ***/
 
+.x-color-stamp[data-size="xxs"] {
+  grid-gap: 1px;
+  height: 12px;
+  width: 12px }
+
 .x-card[data-min-width="xxs"],
 .x-select[data-min-width="xxs"],
 .x-text-field[data-min-width="xxs"] {
@@ -1119,6 +1126,11 @@ button.x-card:focus,
 /*** XXS ***/
 
 /*** XS ***/
+
+.x-color-stamp[data-size="xs"] {
+  grid-gap: 1px;
+  height: 18px;
+  width: 18px }
 
 .x-card[data-min-width="xs"],
 .x-select[data-min-width="xs"],
@@ -1143,6 +1155,11 @@ button.x-card:focus,
 
 /*** S ***/
 
+.x-color-stamp[data-size="s"] {
+  grid-gap: 1px;
+  height: 24px;
+  width: 24px }
+
 .x-card[data-min-width="s"],
 .x-select[data-min-width="s"],
 .x-text-field[data-min-width="s"] {
@@ -1165,6 +1182,11 @@ button.x-card:focus,
 /*** S ***/
 
 /*** M ***/
+
+.x-color-stamp[data-size="m"] {
+  grid-gap: 1px;
+  height: 30px;
+  width: 30px }
 
 .x-card[data-min-width="m"],
 .x-select[data-min-width="m"],
@@ -1189,6 +1211,11 @@ button.x-card:focus,
 
 /*** L ***/
 
+.x-color-stamp[data-size="l"] {
+  grid-gap: 2px;
+  height: 36px;
+  width: 36px }
+
 .x-card[data-min-width="l"],
 .x-select[data-min-width="l"],
 .x-text-field[data-min-width="l"] {
@@ -1212,6 +1239,11 @@ button.x-card:focus,
 
 /*** XL ***/
 
+.x-color-stamp[data-size="xl"] {
+  grid-gap: 2px;
+  height: 42px;
+  width: 42px }
+
 .x-card[data-min-width="xl"],
 .x-select[data-min-width="xl"],
 .x-text-field[data-min-width="xl"] {
@@ -1234,6 +1266,11 @@ button.x-card:focus,
 /*** XL ***/
 
 /*** XXL ***/
+
+.x-color-stamp[data-size="xxl"] {
+  grid-gap: 2px;
+  height: 48px;
+  width: 48px }
 
 .x-card[data-min-width="xxl"],
 .x-select[data-min-width="xxl"],
@@ -2030,6 +2067,31 @@ body[data-viewport-profile="s"]
 
 /*** Color-picker option ***/
 /***** Color-picker *****/
+
+
+
+/***** Color-stamp *****/
+
+.x-color-stamp {
+  background-color: var( --fill-color );
+  border-radius: var( --border-radius-s );
+  display: flex;
+  /* flex-shrink: ? */
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  width: 100% }
+
+.x-color-stamp--color {
+  flex-grow: 1;
+  height: 100% }
+
+.x-color-stamp--placeholder {
+  background-color: var( --background-color-highlight );
+  height: 100%;
+  width: 100% }
+
+/***** Color-stamp *****/
 
 
 
@@ -3270,7 +3332,7 @@ body[data-viewport-profile="s"]
   width: 100% }
 
 .x-date-field--input {
-  cursor: text }  
+  cursor: text }
 
 .x-date-field--input,
 .x-text-field--input,

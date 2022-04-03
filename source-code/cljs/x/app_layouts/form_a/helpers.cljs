@@ -13,7 +13,7 @@
 (defn input-block-attributes
   ; @param (map)(opt) options
   ;  {:ratio (%)(opt)
-  ;    Default: 50}
+  ;    Default: 100}
   ;
   ; @usage
   ;  (layouts/input-block-attributes)
@@ -24,7 +24,7 @@
   ; @return (map)
   ;  {:class (keyword)
   ;   :style (map)}
-  ([]                (input-block-attributes {:ratio 50}))
+  ([]                (input-block-attributes {:ratio 100}))
   ([{:keys [ratio]}] {:style {:min-width (css/percent ratio)} :class :x-form-a--input-block}))
 
 (defn input-row-attributes
