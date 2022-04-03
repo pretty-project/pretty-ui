@@ -18,15 +18,18 @@
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {:body (map)
+  ;  {:body (metamorphic-content)
   ;   :disabled? (boolean)(opt)
-  ;   :header (map)(opt)
+  ;   :footer (metamorphic-content)(opt)
+  ;   :header (metamorphic-content)(opt)
   ;   :min-width (keyword)}
-  [layout-id {:keys [body header] :as layout-props}]
+  [layout-id {:keys [body footer header] :as layout-props}]
   [:div.x-body-a (layout-a.helpers/layout-body-attributes layout-id layout-props)
                  [:div.x-body-a--content-structure
-                              [:div.x-body-a--content-body   [components/content layout-id body]]
+                   (if footer [:div.x-body-a--content-footer [components/content layout-id footer]]
+                              [:div.x-body-a--content-body   [components/content layout-id body]])
                    (if header [:div.x-body-a--content-header [components/content layout-id header]])]
+
                  ; XXX#0093
                  ; - A layout-body sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
                  ;   a {position: sticky} content-header alsó sarkai kilógnának, amikor a content-header
@@ -57,6 +60,7 @@
   ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :footer (metamorphic-content)(opt)
   ;   :header (metamorphic-content)(opt)
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
