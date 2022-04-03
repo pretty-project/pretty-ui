@@ -172,12 +172,12 @@
         filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
         object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [layouts/list-item-b file-dex {:label     filename
-                                      :size      (media-browser.helpers/file-item->size      {:filesize filesize})
-                                      :thumbnail (file-uploader.helpers/file-item->thumbnail {:alias    filename :filename object-url})
-                                      :on-click  [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
-                                      :icon      (if file-cancelled? :radio_button_unchecked :highlight_off)
-                                      :style     (if file-cancelled? {:opacity 0.5})}]))
+       [layouts/list-item-a file-dex {:label       (str filename)
+                                      :description (media-browser.helpers/file-item->size   {:filesize filesize})
+                                      :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
+                                      :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
+                                      :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
+                                      :style       (if file-cancelled? {:opacity 0.5})}]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

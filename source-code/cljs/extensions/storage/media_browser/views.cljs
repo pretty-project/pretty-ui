@@ -113,22 +113,22 @@
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias content-size items modified-at] :as media-item}]
-  [layouts/list-item-b item-dex {:icon           :navigate_next
-                                 :label          alias
-                                 :timestamp      (media-browser.helpers/media-item->timestamp     media-item)
-                                 :size           (media-browser.helpers/directory-item->size      media-item)
-                                 :thumbnail      (media-browser.helpers/directory-item->thumbnail media-item)
+  [layouts/list-item-a item-dex {:icon           :navigate_next
+                                 :label          (str alias)
+                                 :description    (media-browser.helpers/directory-item->size   media-item)
+                                 :header         (media-browser.helpers/directory-item->header media-item)
+                                 :timestamp      (media-browser.helpers/media-item->timestamp  media-item)
                                  :on-click       (on-click-event item-dex media-item)
                                  :on-right-click [:storage.media-browser/render-directory-menu! media-item]}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias filename] :as media-item}]
-  [layouts/list-item-b item-dex {:icon           :more_vert
-                                 :label          alias
+  [layouts/list-item-a item-dex {:icon           :more_vert
+                                 :label          (str alias)
+                                 :description    (media-browser.helpers/file-item->size       media-item)
+                                 :header         (media-browser.helpers/file-item->header     media-item)
                                  :timestamp      (media-browser.helpers/media-item->timestamp media-item)
-                                 :size           (media-browser.helpers/file-item->size       media-item)
-                                 :thumbnail      (media-browser.helpers/file-item->thumbnail  media-item)
                                  :on-click       (on-click-event item-dex media-item)
                                  :on-right-click [:storage.media-browser/render-file-menu! media-item]}])
 

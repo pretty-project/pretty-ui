@@ -51,15 +51,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn directory-item->thumbnail
+(defn directory-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [directory-item]
   (let [icon-family (directory-item->icon-family directory-item)]
        {:icon :folder :icon-family icon-family}))
 
-(defn file-item->thumbnail
+(defn file-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias filename]}]
   {:icon :insert_drive_file
-   :uri (if (io/filename->image? alias)
-            (media/filename->media-thumbnail-uri filename))})
+   :thumbnail (if (io/filename->image? alias)
+                  (media/filename->media-thumbnail-uri filename))})

@@ -91,24 +91,24 @@
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias id] :as media-item}]
-  [layouts/list-item-b item-dex {:label alias
-                                 :icon :navigate_next
-                                 :size      (media-browser.helpers/directory-item->size      media-item)
-                                 :thumbnail (media-browser.helpers/directory-item->thumbnail media-item)
-                                 :timestamp (media-browser.helpers/media-item->timestamp     media-item)
-                                 :on-click  [:item-browser/browse-item! :storage.media-picker id]}])
+  [layouts/list-item-a item-dex {:icon :navigate_next
+                                 :label       (str alias)
+                                 :description (media-browser.helpers/directory-item->size   media-item)
+                                 :header      (media-browser.helpers/directory-item->header media-item)
+                                 :timestamp   (media-browser.helpers/media-item->timestamp  media-item)
+                                 :on-click    [:item-browser/browse-item! :storage.media-picker id]}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias] :as media-item}]
   (let [file-selectable? @(a/subscribe [:storage.media-picker/file-selectable? media-item])]
-       [layouts/list-item-b item-dex {:label     alias
-                                      :disabled? (not file-selectable?)
-                                      :icon      (media-picker.helpers/file-item->selection-icon media-item)
-                                      :size      (media-browser.helpers/file-item->size          media-item)
-                                      :thumbnail (media-browser.helpers/file-item->thumbnail     media-item)
-                                      :timestamp (media-browser.helpers/media-item->timestamp    media-item)
-                                      :on-click  [:storage.media-picker/file-clicked media-item]}]))
+       [layouts/list-item-a item-dex {:label       (str alias)
+                                      :disabled?   (not file-selectable?)
+                                      :description (media-browser.helpers/file-item->size          media-item)
+                                      :header      (media-browser.helpers/file-item->header        media-item)
+                                      :icon        (media-picker.helpers/file-item->selection-icon media-item)
+                                      :timestamp   (media-browser.helpers/media-item->timestamp    media-item)
+                                      :on-click    [:storage.media-picker/file-clicked media-item]}]))
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -36,8 +36,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn file-item->thumbnail
+(defn file-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias filename]}]
   {:icon :insert_drive_file
-   :uri (if (io/filename->image? alias) filename)})
+   :thumbnail (if (io/filename->image? alias) filename)})

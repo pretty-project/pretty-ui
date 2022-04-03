@@ -277,38 +277,54 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 .x-list-item-a {
   display: flex }
 
-.x-list-item-a--details {
+.x-list-item-a--header {
+  align-items: center;
+  background-color: var( --fill-color );
+  border-radius: 12px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 64px;
+  justify-content: center;
+  margin: 6px 12px;
+  overflow: hidden;
+  width: 64px }
+
+.x-list-item-a--thumbnail {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 100% }
 
-.x-list-item-a--primary-details {
-  padding: 6px 0 0 12px;
-  text-align: left }
-
-.x-list-item-a--secondary-details {
-  padding: 6px 12px 0 0 }
+.x-list-item-a--details {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center }
 
 .x-list-item-a--label {
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 18px }
+  line-height: var( --line-height-s ) }
 
-.x-list-item-a--description {
+.x-list-item-a--description,
+.x-list-item-a--timestamp {
   color: var( --color-muted );
   font-size: var( --font-size-xs );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 18px }
+  line-height: var( --line-height-xs ) }
 
-.x-list-item-a--timestamp {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: 18px }
+.x-list-item-a--icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 12px }
 
 .x-list-item-a--label,
 .x-list-item-a--description {
@@ -326,63 +342,3 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 
 /*** List-item ***/
 /***** List-item A *****/
-
-
-
-/***** List-item B *****/
-/*** List-item ***/
-
-.x-list-item-b {
-  display: flex }
-
-.x-list-item-b--header {
-  align-items: center;
-  background-color: var( --fill-color );
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  height: 64px;
-  justify-content: center;
-  margin: 6px 12px;
-  overflow: hidden;
-  width: 64px }
-
-.x-list-item-b--thumbnail {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100% }
-
-.x-list-item-b--details {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center }
-
-.x-list-item-b--label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s ) }
-
-.x-list-item-b--size,
-.x-list-item-b--timestamp {
-  color: var( --color-muted );
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs ) }
-
-.x-list-item-b--icon {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-right: 12px }
-
-/*** List-item ***/
-/***** List-item B *****/

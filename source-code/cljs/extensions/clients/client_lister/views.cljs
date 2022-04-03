@@ -27,15 +27,16 @@
 
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [lister-id item-dex {:keys [colors email-address id] :as client-item}]
+  [lister-id item-dex {:keys [colors email-address id modified-at] :as client-item}]
   (let [on-click     (on-click-event item-dex client-item)
         client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])
-        modified-at @(a/subscribe [:activities/get-actual-timestamp (:modified-at client-item)])]
-       [layouts/list-item-a item-dex {:colors      colors
+        modified-at @(a/subscribe [:activities/get-actual-timestamp       modified-at])]
+       [layouts/list-item-a item-dex {:icon        :navigate_next
                                       :label       client-name
                                       :description email-address
                                       :timestamp   modified-at
-                                      :on-click    on-click}]))
+                                      :on-click    on-click
+                                      :header {:colors (or colors :placeholder)}}]))
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
