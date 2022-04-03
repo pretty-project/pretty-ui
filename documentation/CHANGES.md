@@ -1,4 +1,8 @@
 
+# x4.6.9
+
+
+
 # x.4.6.8
 
 - Az `item-lister`, `item-editor`, `item-browser` és `view-selector` pluginok beállításához,

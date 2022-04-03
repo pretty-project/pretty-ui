@@ -38,6 +38,7 @@
 (def color-selector colors.views/color-selector)
 
 ; plugins.item-editor.core.views
+(def revert-item-button core.views/revert-item-button)
 (def delete-item-button core.views/delete-item-button)
 (def copy-item-button   core.views/copy-item-button)
 (def save-item-button   core.views/save-item-button)

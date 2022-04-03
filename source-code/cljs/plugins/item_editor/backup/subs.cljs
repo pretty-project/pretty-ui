@@ -7,7 +7,7 @@
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.mount.subs     :as mount.subs]
               [plugins.plugin-handler.backup.subs :as backup.subs]
-              [x.app-core.api                     :refer [r]]))
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
@@ -57,3 +57,14 @@
         initial-item    (r mount.subs/get-body-prop      db editor-id :initial-item)]
        (not= (map/difference backup-item  initial-item)
              (map/difference current-item initial-item))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/item-changed? :my-editor]
+(a/reg-sub :item-editor/item-changed? item-changed?)

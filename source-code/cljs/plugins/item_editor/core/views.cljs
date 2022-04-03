@@ -15,6 +15,20 @@
 ;; -- Action components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn revert-item-button
+  ; @param (keyword) editor-id
+  ;
+  ; @usage
+  ;  [item-editor/revert-item-button :my-editor]
+  [editor-id]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
+        item-changed?    @(a/subscribe [:item-editor/item-changed?    editor-id])
+        error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
+       [elements/button ::revert-item-button
+                        {:label :restore! :preset :default-button
+                         :disabled? (or editor-disabled? error-mode? (not item-changed?))
+                         :on-click  [:item-editor/revert-item! editor-id]}]))
+
 (defn delete-item-button
   ; @param (keyword) editor-id
   ;
@@ -65,11 +79,12 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
-       (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
-               [:<> (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])]
-               [:<> (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])
-                    (if (vector/contains-item? item-actions :duplicate) [copy-item-button editor-id])])))
+  [revert-item-button editor-id])
+  ;(let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
+  ;     (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
+  ;             [:<> (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])]
+  ;             [:<> (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])
+  ;                  (if (vector/contains-item? item-actions :duplicate) [copy-item-button editor-id])])
 
 (defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,8 +93,10 @@
   [editor-id]
   (let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
        (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
-               [:<>]
-               [:<> (if (vector/contains-item? item-actions :delete) [delete-item-button editor-id])])))
+               [:<> (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])]
+               [:<> (if (vector/contains-item? item-actions :delete) [delete-item-button editor-id])
+                    (if (vector/contains-item? item-actions :duplicate) [copy-item-button editor-id])
+                    (if (vector/contains-item? item-actions :save)      [save-item-button editor-id])])))
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

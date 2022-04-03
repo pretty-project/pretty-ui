@@ -8,8 +8,6 @@ body[data-theme="dark"] {
   --app-overlay-color:          var( --black-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --black-x-light );
-  /* Scroll shadow */
-  --scroll-shadow:              rgba(150, 150, 150, .1);
   /* Background color */
   --background-color:           var( --black-dark );
   --background-color-muted:     var( --grey-x-dark );
@@ -45,8 +43,6 @@ body[data-theme="light"] {
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --white-xx-light );
-  /* Scroll shadow */
-  --scroll-shadow:              rgba(0, 0, 0, .1);
   /* Background color */
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );

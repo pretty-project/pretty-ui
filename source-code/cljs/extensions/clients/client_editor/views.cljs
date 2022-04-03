@@ -214,5 +214,6 @@
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]
        [layouts/layout-a surface-id {:description description
-                                     :header      #'header
-                                     :body        #'body}]))
+                                     ;:header      #'header
+                                     :body        #'body
+                                     :footer      #'header}]))

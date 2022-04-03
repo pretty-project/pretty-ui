@@ -80,6 +80,18 @@
        (-> db (update-in item-path merge local-changes)
               (dissoc-in [:plugins :plugin-handler/local-changes editor-id current-item-id]))))
 
+(defn revert-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ editor-id]]
+  (let [item-path       (r mount.subs/get-body-prop      db editor-id :item-path)
+        current-item-id (r core.subs/get-current-item-id db editor-id)
+        backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
+       (assoc-in db item-path backup-item)))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -87,3 +99,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-editor/revert-item! revert-item!)
