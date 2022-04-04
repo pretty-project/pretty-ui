@@ -126,6 +126,8 @@ button.x-card:focus,
 .x-switch--secondary-label,
 .x-switch--secondary-body:focus
 .x-switch--secondary-label,
+.x-thumbnail:active,
+.x-thumbnail:focus,
 .x-toggle--body:active,
 .x-toggle--body:focus {
   opacity: .5 }

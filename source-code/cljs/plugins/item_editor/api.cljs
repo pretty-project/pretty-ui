@@ -58,7 +58,6 @@
 (def input-group-header form.views/input-group-header)
 (def description-field  form.views/description-field)
 (def color-selector     form.views/color-selector)
-(def thumbnail-selector form.views/thumbnail-selector)
 
 ; plugins.item-editor.routes.subs
 (def get-item-route routes.subs/get-item-route)

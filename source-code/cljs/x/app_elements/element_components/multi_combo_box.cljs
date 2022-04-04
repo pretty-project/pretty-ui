@@ -227,6 +227,9 @@
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;    Only w/o {:placeholder ...}
+  ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
@@ -234,9 +237,6 @@
   ;    Default: :no-options
   ;   :no-options-selected-label (metamorphic-content)(opt)
   ;    Default: :no-options-selected
-  ;   :label (metamorphic-content)(opt)
-  ;    Only w/o {:placeholder ...}
-  ;   :max-length (integer)(opt)
   ;   :on-empty (metamorphic-event)(constant)(opt)
   ;    Only w/ {:emptiable? true}
   ;   :on-reset (metamorphic-event)(constant)(opt)
