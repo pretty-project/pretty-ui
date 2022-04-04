@@ -60,6 +60,7 @@
               [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.element-components.text                 :as element-components.text]
               [x.app-elements.element-components.text-field           :as element-components.text-field]
+              [x.app-elements.element-components.thumbnail            :as element-components.thumbnail]
               [x.app-elements.element-components.toggle               :as element-components.toggle]
               [x.app-elements.element-components.vertical-line        :as element-components.vertical-line]
               [x.app-elements.element-components.vertical-polarity    :as element-components.vertical-polarity]
@@ -187,6 +188,7 @@
 (def table                element-components.table/element)
 (def text                 element-components.text/element)
 (def text-field           element-components.text-field/element)
+(def thumbnail            element-components.thumbnail/element)
 (def toggle               element-components.toggle/element)
 (def vertical-line        element-components.vertical-line/element)
 (def vertical-polarity    element-components.vertical-polarity/element)

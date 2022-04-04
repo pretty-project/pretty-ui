@@ -65,8 +65,8 @@
            {:en "Image gallery"
             :hu "Képgaléria"}
            :invalid-name
-            {:en "Invalid name!"
-             :hu "Nem megfelelő név!"}
+           {:en "Invalid name!"
+            :hu "Nem megfelelő név!"}
            :new-directory
            {:en "New directory"
             :hu "Új mappa"}
@@ -79,6 +79,9 @@
            :select-the-files-you-would-like-to-attach
            {:en "Select the files you would like to attach!"
             :hu "Válaszd ki a csatolni kívánt fájlokat!"}
+           :set-thumbnail!
+           {:en "Set thumbnail"
+            :hu "Bélyegkép beállítása"}
            :there-is-not-enough-space
            {:en "There is not enough space available to complete this operation"
             :hu "Nincs elegendő hely a művelet befejezéséhez"}

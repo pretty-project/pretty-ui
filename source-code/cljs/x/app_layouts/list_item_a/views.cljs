@@ -22,7 +22,7 @@
   ;  {:header (map)
   ;    {:colors (strings in vector)(opt)}
   [_ {:keys [header]}]
-  [elements/color-stamp {:colors (:colors header) :size :l}])
+  [:div.x-list-item-a--header-colors [elements/color-stamp {:colors (:colors header) :size :l}]])
 
 (defn- list-item-header-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -34,7 +34,7 @@
   ;     :icon-family (keyword)(opt)}}
   [_ {:keys [header]}]
   (let [icon-props (select-keys header [:icon :icon-family])]
-       [elements/icon icon-props]))
+       [:div.x-list-item-a--header-icon [elements/icon icon-props]]))
 
 (defn- list-item-header-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   ;  {:header (map)
   ;    {:thumbnail (string)(opt)}}
   [_ {:keys [header]}]
-  [:div.x-list-item-a--thumbnail {:style {:background-image (-> header :thumbnail css/url)}}])
+  [:div.x-list-item-a--header-thumbnail [elements/thumbnail {:size :s :uri (:thumbnail header)}]])
 
 (defn- list-item-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

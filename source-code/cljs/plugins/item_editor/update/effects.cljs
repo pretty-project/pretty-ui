@@ -98,7 +98,8 @@
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; A) Ha az "Elem mentése" művelet sikeres befejeződésekor a body komponens
       ;    a React-fába van csatolva, a mentett elem van megnyitva szerkesztésre
-      ;    és a plugin rendelkezik a {:base-route "..."} tulajdonsággal ...
+      ;    vagy új elem hozzáadása történik és a plugin rendelkezik a {:base-route "..."}
+      ;    tulajdonsággal ...
       ;    ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
       ;        elküldött útvonalra.
       ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
@@ -108,7 +109,8 @@
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id    (r update.subs/get-saved-item-id   db editor-id server-response)
             base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-           (if (and base-route (r core.subs/editing-item? db editor-id item-id))
+           (if (and base-route (or (r core.subs/editing-item? db editor-id item-id)
+                                   (r core.subs/new-item?     db editor-id)))
                ; A)
                [:router/go-to! base-route]
                ; B)

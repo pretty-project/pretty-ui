@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.view-handler.events
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.logical :refer [nonfalse?]]
+              [x.app-core.api     :as a]))
 
 
 
@@ -15,17 +16,21 @@
   ; @param (map) handler-props
   ;  {:default-view-id (keyword)
   ;   :reinit? (boolean)(opt)
-  ;    Default: false}
+  ;    Default: true}
   ;
   ; @usage
   ;  (r gestures/init-view-handler! db :my-view-handler {:default-view-id :my-view})
   ;
   ; @return (map)
   [db [_ handler-id {:keys [default-view-id reinit?]}]]
-  (if reinit? (assoc-in db [:gestures :view-handler/data-items handler-id :view-id] default-view-id)
-              (assoc-in db [:gestures :view-handler/data-items handler-id :view-id]
-                           (or (get-in db [:gestures :view-handler/data-items handler-id :view-id])
-                               default-view-id))))
+  ; A {:reinit? false} beállítás használatával, az init-view-handler! függvény megtartja,
+  ; esetlegesen beállított view-id értékét és nem írja felül a {:default-view-id ...}
+  ; tulajdonság értékével.
+  (if (nonfalse? reinit?)
+      (assoc-in db [:gestures :view-handler/data-items handler-id :view-id] default-view-id)
+      (assoc-in db [:gestures :view-handler/data-items handler-id :view-id]
+                   (or (get-in db [:gestures :view-handler/data-items handler-id :view-id])
+                       default-view-id))))
 
 (defn change-view!
   ; @param (keyword) handler-id

@@ -1106,6 +1106,11 @@ button.x-card:focus,
   height: 12px;
   width: 12px }
 
+.x-thumbnail[data-size="xxs"] {
+  border-radius: var( --border-radius-s );
+  height: 36px;
+  width: 36px }
+
 .x-card[data-min-width="xxs"],
 .x-select[data-min-width="xxs"],
 .x-text-field[data-min-width="xxs"] {
@@ -1133,6 +1138,11 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 18px;
   width: 18px }
+
+.x-thumbnail[data-size="xs"] {
+  border-radius: var( --border-radius-s );
+  height: 48px;
+  width: 48px }
 
 .x-card[data-min-width="xs"],
 .x-select[data-min-width="xs"],
@@ -1162,6 +1172,11 @@ button.x-card:focus,
   height: 24px;
   width: 24px }
 
+.x-thumbnail[data-size="s"] {
+  border-radius: var( --border-radius-m );
+  height: 60px;
+  width: 60px }
+
 .x-card[data-min-width="s"],
 .x-select[data-min-width="s"],
 .x-text-field[data-min-width="s"] {
@@ -1189,6 +1204,11 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 30px;
   width: 30px }
+
+.x-thumbnail[data-size="m"] {
+  border-radius: var( --border-radius-m );
+  height: 72px;
+  width: 72px }
 
 .x-card[data-min-width="m"],
 .x-select[data-min-width="m"],
@@ -1218,6 +1238,11 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
+.x-thumbnail[data-size="l"] {
+  border-radius: var( --border-radius-m );
+  height: 84px;
+  width: 84px }
+
 .x-card[data-min-width="l"],
 .x-select[data-min-width="l"],
 .x-text-field[data-min-width="l"] {
@@ -1246,6 +1271,11 @@ button.x-card:focus,
   height: 42px;
   width: 42px }
 
+.x-thumbnail[data-size="xl"] {
+  border-radius: var( --border-radius-m );
+  height: 96px;
+  width: 96px }
+
 .x-card[data-min-width="xl"],
 .x-select[data-min-width="xl"],
 .x-text-field[data-min-width="xl"] {
@@ -1273,6 +1303,11 @@ button.x-card:focus,
   grid-gap: 2px;
   height: 48px;
   width: 48px }
+
+.x-thumbnail[data-size="xxl"] {
+  border-radius: var( --border-radius-m );
+  height: 108px;
+  width: 108px }
 
 .x-card[data-min-width="xxl"],
 .x-select[data-min-width="xxl"],
@@ -3417,11 +3452,22 @@ body[data-viewport-profile="s"]
 
 
 
+/***** Thumbnail *****/
+
+.x-thumbnail {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover }
+
+/***** Thumbnail *****/
+
+
+
 /***** Toggle *****/
 /*** Toggle wrapper ***/
 
 .x-toggle {
-  border-radius: var( --border-radius-s ) }
+  border-radius: var( --border-radius-m ) }
 
 /*** Toggle wrapper ***/
 

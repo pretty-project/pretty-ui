@@ -126,6 +126,10 @@
                             :icon    :delete_outline
                             :layout  :icon-button
                             :variant :transparent}
+      :duplicate-button {:color   :default
+                         :label   :duplicate!
+                         :layout  :row
+                         :variant :transparent}
       :duplicate-icon-button {:color   :default
                               :icon    :content_copy
                               :layout  :icon-button
@@ -195,7 +199,12 @@
                                  :icon    :reorder
                                  :layout  :icon-button
                                  :variant :transparent}
-      :save-button         {:label   :save!
+      :restore-button      {:color   :default
+                            :label   :restore!
+                            :layout  :row
+                            :variant :transparent}
+      :save-button         {:color   :primary
+                            :label   :save!
                             :layout  :row
                             :variant :transparent}
       :save-icon-button    {:color   :primary

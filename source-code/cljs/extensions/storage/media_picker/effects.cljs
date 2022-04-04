@@ -18,7 +18,10 @@
   :storage.media-picker/load-picker!
   ; @param (keyword)(opt) picker-id
   ; @param (map) picker-props
-  ;  {:value-path (vector)}
+  ;  {:extensions (strings in vector)(opt)
+  ;   :multiple? (boolean)(opt)
+  ;    Default: false
+  ;   :value-path (vector)}
   ;
   ; @usage
   ;  [:storage.media-picker/load-picker! {...}]
@@ -26,13 +29,8 @@
   ; @usage
   ;  [:storage.media-picker/load-picker! :my-picker {...}]
   [a/event-vector<-id]
-  ; - A picker-id azonosító nincs felhasználva sehol, kizárólag az *-id & *-props formula
-  ;   egységes használata miatt adható meg.
-  ; - XXX#7157
-  ;   A media-picker egy popup elemen megjelenített átalakított media-browser, aminek az indítása
-  ;   az [:item-browser/load-browser! ...] eseménnyel történik, ami elindítja a media-browser eszközt,
-  ;   ami felismeri, hogy nem egy útvonal alapján lett elindítva és ezért a media-picker eszközt
-  ;   rendereli ki.
+  ; A picker-id azonosító nincs felhasználva sehol, kizárólag az *-id & *-props formula
+  ; egységes használata miatt adható meg.
   (fn [{:keys [db]} [_ picker-id picker-props]]
       {:db (r media-picker.events/load-picker! db picker-id picker-props)
        :dispatch [:storage.media-picker/render-picker!]}))

@@ -38,9 +38,12 @@
 (defn save-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [selected-items (get-in db [:storage :media-picker/selected-items])
-        value-path     (get-in db [:storage :media-picker/picker-props :value-path])]
-       (assoc-in db value-path selected-items)))
+  (let [value-path (get-in db [:storage :media-picker/picker-props :value-path])]
+       (if-let [multiple? (get-in db [:storage :media-picker/picker-props :multiple?])]
+               (let [selected-items (get-in db [:storage :media-picker/selected-items])]
+                    (assoc-in db value-path selected-items))
+               (let [selected-item (get-in db [:storage :media-picker/selected-items 0])]
+                    (assoc-in db value-path selected-item)))))
 
 (defn discard-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,8 +54,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ _ {:keys [value-path] :as picker-props}]]
   (let [saved-selection (get-in db value-path)]
-       (-> db (assoc-in [:storage :media-picker/selected-items] saved-selection)
-              (assoc-in [:storage :media-picker/picker-props]   picker-props))))
+       (cond-> db (vector? saved-selection) (assoc-in [:storage :media-picker/selected-items] saved-selection)
+                  (some?   saved-selection) (assoc-in [:storage :media-picker/selected-items] [saved-selection])
+                  :store-picker-props!      (assoc-in [:storage :media-picker/picker-props]   picker-props))))
 
 
 

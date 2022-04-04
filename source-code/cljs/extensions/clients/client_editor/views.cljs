@@ -204,7 +204,7 @@
                           :form-id          :clients.client-editor/form
                           :new-item-id      "new-client"
                           :initial-item     {:country (locales/country-native-name selected-language)}
-                          :item-actions     [:delete :duplicate :save]
+                          :item-actions     [:delete :duplicate :revert :save]
                           :item-path        [:clients :client-editor/edited-item]
                           :suggestion-keys  [:city]
                           :suggestions-path [:clients :client-editor/suggestions]}]))

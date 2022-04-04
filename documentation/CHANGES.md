@@ -1,6 +1,10 @@
 
 # x4.6.9
 
+- Az item-lister-ekben használt listaelemek összevonásra kerültek és ezentúl
+  az x.app-layouts.api/list-item-a komponensként használhatók.
+  Az eddig használt listaelemekhez tartozó css osztályok sem léteznek már!
+
 
 
 # x.4.6.8

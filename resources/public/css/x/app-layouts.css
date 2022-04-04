@@ -292,28 +292,24 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  height: 64px;
+  height: 60px;
   justify-content: center;
   margin: 6px 12px;
   overflow: hidden;
-  width: 64px }
+  width: 60px }
 
-.x-list-item-a--thumbnail {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
+.x-list-item-a--header-thumbnail {
   left: 0;
   position: absolute;
-  top: 0;
-  width: 100% }
+  top: 0 }
 
 .x-list-item-a--details {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: center }
+  justify-content: center;
+  padding-left: 12px }
 
 .x-list-item-a--label {
   font-size: var( --font-size-s );
