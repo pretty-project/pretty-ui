@@ -15,11 +15,14 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   ;  {:class (keyword or keywords in vector)(opt)
+  ;   :selected? (boolean)(opt)
   ;   :style (map)(opt)}
   ;
   ; @return (map)
   ;  {:class (keyword or keywords in vector)
+  ;   :data-selected (boolean)
   ;   :style (map)}
-  [_ {:keys [class style]}]
-  (cond-> {} class (assoc :class class)
-             style (assoc :style style)))
+  [_ {:keys [class style selected?]}]
+  (cond-> {} class             (assoc :class         class)
+             style             (assoc :style         style)
+             (some? selected?) (assoc :data-selected selected?)))

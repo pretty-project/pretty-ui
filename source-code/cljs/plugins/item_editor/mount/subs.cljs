@@ -12,9 +12,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.mount.subs
-(def get-header-prop   mount.subs/get-header-prop)
+(def get-footer-prop   mount.subs/get-footer-prop)
 (def get-body-prop     mount.subs/get-body-prop)
-(def header-did-mount? mount.subs/header-did-mount?)
+(def footer-did-mount? mount.subs/footer-did-mount?)
 (def body-did-mount?   mount.subs/body-did-mount?)
 
 
@@ -23,13 +23,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-editor/get-header-prop get-header-prop)
+(a/reg-sub :item-editor/get-footer-prop get-footer-prop)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :item-editor/get-body-prop get-body-prop)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-editor/header-did-mount? header-did-mount?)
+(a/reg-sub :item-editor/footer-did-mount? footer-did-mount?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :item-editor/body-did-mount? body-did-mount?)

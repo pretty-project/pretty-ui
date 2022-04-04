@@ -346,4 +346,12 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
   white-space: nowrap }
 
 /*** List-item ***/
+
+/*** Selected list-item ***/
+
+.x-list-item-a[data-selected="true"] {
+  background-color: var( --soft-blue-xx-light );
+  border-radius: var( --border-radius-m ) }
+
+/*** Selected list-item ***/
 /***** List-item A *****/

@@ -3,15 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.form.views
-    (:require [plugins.item-editor.core.helpers :as core.helpers]
-              [plugins.item-editor.form.config  :as form.config]
-              [mid-fruits.string                :as string]
-              [mid-fruits.vector                :as vector]
-              [x.app-core.api                   :as a]
-              [x.app-elements.api               :as elements]
-              [x.app-layouts.api                :as layouts]))
+    (:require [plugins.item-editor.core.helpers    :as core.helpers]
+              [plugins.item-editor.core.prototypes :as core.prototypes]
+              [mid-fruits.string                   :as string]
+              [reagent.api                         :as reagent]
+              [x.app-core.api                      :as a]
+              [x.app-elements.api                  :as elements]
+              [x.app-layouts.api                   :as layouts]))
 
-
+                        
 
 ;; -- Form components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -91,58 +91,84 @@
                                  {:value-path value-path :disabled? editor-disabled?}]))
 
 
-
-;; -- Color-selector components -----------------------------------------------
+;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn add-colors-button
+(defn downloading-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
-       [elements/button ::add-colors-button
-                        {:label :add-color! :preset :muted-button :layout :row :font-size :xs
-                         :disabled? editor-disabled?
-                         :on-click  [:item-editor/render-color-picker-dialog! editor-id]}]))
+  [elements/label {:font-size :xs :color :highlight :font-weight :bold :content :downloading...}])
 
-(defn selected-colors-button
+(defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        current-item     @(a/subscribe [:item-editor/get-current-item editor-id])]
-       [elements/color-stamp ::selected-colors-button
-                             {:colors    (:colors current-item)
-                              :disabled? editor-disabled?
-                              :on-click  [:item-editor/render-color-picker-dialog! editor-id]
-                              :size      :xxl}]))
+  [elements/row {:content [downloading-item-label editor-id]
+                 :horizontal-align :center}])
 
-(defn color-selector
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
+  [_]
+  [:<> ;[elements/horizontal-separator {:size :xxl}]
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
+
+(defn form-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [editor-id]
+  (let [form-element @(a/subscribe [:item-editor/get-body-prop editor-id :form-element])]
+       [form-element editor-id]))
+
+(defn body-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [editor-id]
+  (cond @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
+         [error-body editor-id]
+        @(a/subscribe [:item-editor/body-did-mount? editor-id])
+         (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item editor-id :data-received?])]
+                 [form-element     editor-id]
+                 [downloading-item editor-id])))
+
+(defn body
+  ; @param (keyword) editor-id
+  ; @param (map) body-props
+  ;  {:auto-title? (boolean)(opt)
+  ;    Default: false
+  ;   :form-element (metamorphic-content)
+  ;   :initial-item (map)(opt)
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate, :revert, :save]
+  ;   :item-id (string)(opt)
+  ;   :item-path (vector)(opt)
+  ;    Default: core.helpers/default-item-path
+  ;   :new-item-id (string)(opt)
+  ;   :suggestion-keys (keywords in vector)(opt)
+  ;   :suggestions-path (vector)(opt)
+  ;    Default: core.helpers/default-suggestions-path}
   ;
   ; @usage
-  ;  [item-editor/color-selector :my-editor]
-  [editor-id]
-  (let [current-item @(a/subscribe [:item-editor/get-current-item editor-id])]
-       [elements/row ::color-selector
-                     {:horizontal-align :center
-                      :content (if (-> current-item :colors vector/nonempty?)
-                                   [selected-colors-button editor-id]
-                                   [add-colors-button      editor-id])}]))
-
-
-
-;; -- Color-picker components -------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn color-picker-dialog-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;  [item-editor/body :my-editor {...}]
   ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  (let [item-path @(a/subscribe [:item-editor/get-body-prop editor-id :item-path])
-        value-path (conj item-path :colors)]
-       [elements/color-picker ::color-picker
-                              {:initial-options form.config/COLORS :value-path value-path}]))
+  ; @usage
+  ;  (defn my-form-element [editor-id] [:div ...])
+  ;  [item-editor/body :my-editor {:form-element #'my-form-element}]
+  [editor-id body-props]
+  (let [body-props (core.prototypes/body-props-prototype editor-id body-props)]
+       (reagent/lifecycles (core.helpers/component-id editor-id :body)
+                           {:reagent-render         (fn []             [body-structure                 editor-id])
+                            :component-did-mount    (fn [] (a/dispatch [:item-editor/body-did-mount    editor-id body-props]))
+                            :component-will-unmount (fn [] (a/dispatch [:item-editor/body-will-unmount editor-id]))})))

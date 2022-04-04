@@ -3,12 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.clients.client-lister.views
-    (:require [plugins.item-editor.api :as item-editor]
-              [plugins.item-lister.api :as item-lister]
+    (:require [plugins.item-lister.api :as item-lister]
               [x.app-core.api          :as a]
-              [x.app-elements.api      :as elements]
-              [x.app-layouts.api       :as layouts]
-              [x.app-locales.api       :as locales]))
+              [x.app-layouts.api       :as layouts]))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -28,15 +26,12 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [lister-id item-dex {:keys [colors email-address id modified-at] :as client-item}]
-  (let [on-click     (on-click-event item-dex client-item)
-        client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])
-        modified-at @(a/subscribe [:activities/get-actual-timestamp       modified-at])]
-       [layouts/list-item-a item-dex {:icon        :navigate_next
-                                      :label       client-name
-                                      :description email-address
-                                      :timestamp   modified-at
-                                      :on-click    on-click
-                                      :header {:colors (or colors :placeholder)}}]))
+  [layouts/list-item-a item-dex {:icon        :navigate_next
+                                 :description email-address
+                                 :timestamp   modified-at
+                                 :header      {:colors (or colors :placeholder)}
+                                 :label      @(a/subscribe [:clients.client-lister/get-client-name item-dex])
+                                 :on-click    (on-click-event item-dex client-item)}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

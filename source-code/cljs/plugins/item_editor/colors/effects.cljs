@@ -2,9 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.form.effects
-    (:require [plugins.item-editor.form.views :as form.views]
-              [x.app-core.api                 :as a]))
+(ns plugins.item-editor.colors.effects
+    (:require [plugins.item-editor.colors.views :as colors.views]
+              [x.app-core.api                   :as a]))
 
 
 
@@ -18,6 +18,6 @@
   ; @param (keyword) editor-id
   (fn [_ [_ editor-id]]
       [:ui/add-popup! :plugins.item-editor/color-picker-dialog
-                      {:body [form.views/color-picker-dialog-body editor-id]
+                      {:body [colors.views/color-picker-dialog-body editor-id]
                       ;:header #'ui/close-popup-header
                        :min-width :none}]))

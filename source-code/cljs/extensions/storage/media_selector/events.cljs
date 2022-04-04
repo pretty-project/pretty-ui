@@ -65,6 +65,7 @@
   (let [saved-selection (get-in db value-path)]
        (cond-> db (vector? saved-selection) (assoc-in [:storage :media-selector/selected-items] saved-selection)
                   (some?   saved-selection) (assoc-in [:storage :media-selector/selected-items] [saved-selection])
+                  (nil?    saved-selection) (assoc-in [:storage :media-selector/selected-items] [])
                   :store-selector-props!    (assoc-in [:storage :media-selector/selector-props] selector-props))))
 
 

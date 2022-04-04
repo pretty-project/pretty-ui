@@ -3457,6 +3457,7 @@ body[data-viewport-profile="s"]
 /***** Thumbnail *****/
 
 .x-thumbnail {
+  background-color: var( --background-color-highlight );
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover }

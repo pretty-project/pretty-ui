@@ -14,25 +14,25 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.mount.events
+(def store-footer-props!  mount.events/store-footer-props!)
 (def store-body-props!    mount.events/store-body-props!)
-(def store-header-props!  mount.events/store-header-props!)
+(def remove-footer-props! mount.events/remove-footer-props!)
 (def remove-body-props!   mount.events/remove-body-props!)
-(def remove-header-props! mount.events/remove-header-props!)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-did-mount
+(defn footer-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  ; @param (map) header-props
+  ; @param (map) footer-props
   ;
   ; @return (map)
-  [db [_ editor-id header-props]]
-  (r store-header-props! db editor-id header-props))
+  [db [_ editor-id footer-props]]
+  (r store-footer-props! db editor-id footer-props))
 
 (defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,14 +57,19 @@
              item-id            (assoc-in [:plugins :plugin-handler/meta-items editor-id :item-id] item-id)
              initial-item       (assoc-in item-path initial-item)))
 
-(defn header-will-unmount
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn footer-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (r remove-header-props! db editor-id))
+  (r remove-footer-props! db editor-id))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -67,10 +67,10 @@
   ; @param (map) item-props
   ;  {:description (metamorphic-content)(opt)
   ;   :label (metamorphic-content)
-  ;   :timestamp (metamorphic-content)(opt)}
+  ;   :timestamp (string)(opt)}
   [_ {:keys [label description timestamp]}]
   [:div.x-list-item-a--details                 [:div.x-list-item-a--label       (components/content label)]
-                               (if timestamp   [:div.x-list-item-a--timestamp   (components/content timestamp)])
+                               (if timestamp   [:div.x-list-item-a--timestamp  @(a/subscribe [:activities/get-actual-timestamp timestamp])])
                                (if description [:div.x-list-item-a--description (components/content description)])])
 
 (defn- list-item-icon
@@ -141,7 +141,9 @@
   ;      Default: :material-icons-filled
   ;      Only w/ {:thumbnail {:icon ...}}
   ;     :thumbnail (string)(opt)}
-  ;   :timestamp (metamorphic-content)(opt)}
+  ;   :selected? (boolean)(opt)
+  ;    Default: false
+  ;   :timestamp (string)(opt)}
   ;
   ; @usage
   ;  [layouts/list-item-a {...}]

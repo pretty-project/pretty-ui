@@ -10,6 +10,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn store-footer-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) footer-props
+  ;
+  ; @return (map)
+  [db [_ plugin-id footer-props]]
+  (assoc-in db [:plugins :plugin-handler/footer-props plugin-id] footer-props))
+
 (defn store-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -34,6 +44,15 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn remove-footer-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  (dissoc-in db [:plugins :plugin-handler/footer-props plugin-id]))
 
 (defn remove-body-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -36,6 +36,11 @@
   (fn [{:keys [db]} [_ lister-id header-props]]
       {:db (r mount.events/header-did-mount db lister-id header-props)}))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-event-fx
   :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
