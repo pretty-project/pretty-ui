@@ -76,7 +76,7 @@
   [db [_ editor-id]]
   (let [item-path       (r mount.subs/get-body-prop      db editor-id :item-path)
         current-item-id (r core.subs/get-current-item-id db editor-id)
-        local-changes   (r backup.subs/get-local-changes db editor-id)]
+        local-changes   (r backup.subs/get-local-changes db editor-id current-item-id)]
        (-> db (update-in item-path merge local-changes)
               (dissoc-in [:plugins :plugin-handler/local-changes editor-id current-item-id]))))
 

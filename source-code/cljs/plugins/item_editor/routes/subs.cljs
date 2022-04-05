@@ -38,6 +38,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @param (keyword) editor-id
+; @param (string) item-id
+;
 ; @usage
 ;  [:item-editor/get-item-route :my-editor "my-item"]
 (a/reg-sub :item-editor/get-item-route get-item-route)

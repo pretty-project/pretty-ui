@@ -22,7 +22,7 @@
   ; @param (map) footer-props
   (fn [{:keys [db]} [_ editor-id footer-props]]
       {:db (r mount.events/footer-did-mount db editor-id footer-props)}))
-      
+
 (a/reg-event-fx
   :item-editor/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,6 +43,15 @@
                                 (if (r core.subs/download-data? db editor-id)
                                     [:item-editor/request-item! editor-id]
                                     [:item-editor/load-item!    editor-id])]})))
+
+(a/reg-event-fx
+  :item-editor/header-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) header-props
+  (fn [{:keys [db]} [_ editor-id header-props]]
+      {:db (r mount.events/header-did-mount db editor-id header-props)}))
 
 
 
@@ -75,3 +84,11 @@
                    {:db (as-> db % (r backup.events/store-local-changes! % editor-id)
                                    (r mount.events/body-will-unmount     % editor-id))
                     :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]}))))
+                    
+(a/reg-event-fx
+  :item-editor/header-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  (fn [{:keys [db]} [_ editor-id]]
+      {:db (r mount.events/header-will-unmount db editor-id)}))

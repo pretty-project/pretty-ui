@@ -14,6 +14,10 @@
 
 # x4.6.0
 
+- A field input mezők teljesítményét nagymértékben javítaná, ha a mező aktuális értéke,
+  nem írás közben íróda a Re-Frame adatbázisba, hanem az :on-blur esemény megtörténésekor
+  (az :on-type-ended eseménynek is kell írnia!)
+
 - request-inspector időrendben a legfirssebb request legyne mindig felül
 
 - dom/form-data van egy kérdéses sor ...

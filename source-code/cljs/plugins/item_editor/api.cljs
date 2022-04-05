@@ -12,6 +12,8 @@
               [plugins.item-editor.download.effects]
               [plugins.item-editor.download.events]
               [plugins.item-editor.download.subs]
+              [plugins.item-editor.menu-bar.events]
+              [plugins.item-editor.menu-bar.subs]
               [plugins.item-editor.mount.effects]
               [plugins.item-editor.mount.events]
               [plugins.item-editor.mount.subs]
@@ -55,6 +57,7 @@
 
 ; plugins.item-editor.form.subs
 (def form-completed? form.subs/form-completed?)
+(def form-changed?   form.subs/form-changed?)
 
 ; plugins.item-editor.form.views
 (def item-label         form.views/item-label)
