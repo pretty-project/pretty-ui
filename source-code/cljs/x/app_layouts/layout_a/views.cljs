@@ -27,7 +27,7 @@
 
 (defn reg-observer!
   []
-  (if-let [element (.querySelector js/document ".x-layout-a--content-footer")]
+  (if-let [element (.querySelector js/document "#x-layout-a--content-footer")]
           (let [observer (js/IntersectionObserver.
                            ;(fn [%] (if (-> % (aget 0) .-isIntersecting)
                             ;           (println "x")
@@ -53,10 +53,8 @@
   ; @param (map) layout-props
   ;  {:header (metamorphic-content)(opt)}
   [layout-id {:keys [header]}]
-  [:div.x-layout-a--content-header [components/content layout-id header]
-                                   [:div {:style {:position :absolute :top "-48px" :left 0 :width "100%"
-                                                  :height "1px" :background :red :z-index 9999}
-                                          :id "test-id"}]])
+  [:<> [:div#x-layout-a--content-header--sensor]
+       [:div#x-layout-a--content-header [components/content layout-id header]]])
 
 (defn- layout-content-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -64,9 +62,9 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   [layout-id layout-props]
-  (reagent/lifecycles :layout-a/header
-                      {:component-did-mount    (fn [] (x.app-environment.api/setup-intersection-observer! "test-id" #(println "it")))
-                       :component-will-unmount (fn [])
+  (reagent/lifecycles :layout-a/content-header
+                      {:component-did-mount    (fn [] (layout-a.helpers/content-header-did-mount-f    layout-id))
+                       :component-will-unmount (fn [] (layout-a.helpers/content-header-will-unmount-f layout-id))
                        :reagent-render         (fn [] [layout-content-header-structure layout-id layout-props])}))
 
 
@@ -81,7 +79,7 @@
   ; @param (map) layout-props
   ;  {:body (metamorphic-content)}
   [layout-id {:keys [body]}]
-  [:div.x-layout-a--content-body [components/content layout-id body]])
+  [:div#x-layout-a--content-body [components/content layout-id body]])
 
 
 
@@ -95,7 +93,8 @@
   ; @param (map) layout-props
   ;  {:footer (metamorphic-content)(opt)}
   [layout-id {:keys [footer]}]
-  [:div.x-layout-a--content-footer [components/content layout-id footer]])
+  [:<> [:div#x-layout-a--content-footer--sensor]
+       [:div#x-layout-a--content-footer [components/content layout-id footer]]])
 
 (defn- layout-content-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,9 +110,9 @@
   ;   pozícionálású content-header ne tudjon a layout-body aljáig lecsúszni.
   ; - {overflow: hidden} tulajdonsággal nem lehet eltűntetni a content-header kilógó sarkait,
   ;   mert {overflow: hidden} elemben nem működne a {position: sticky} beállítás.
-  (reagent/lifecycles :layout-a/footer
-                      {:component-did-mount    (fn [])
-                       :component-will-unmount (fn [])
+  (reagent/lifecycles :layout-a/content-footer
+                      {:component-did-mount    (fn [] (layout-a.helpers/content-footer-did-mount-f    layout-id))
+                       :component-will-unmount (fn [] (layout-a.helpers/content-footer-will-unmount-f layout-id))
                        :reagent-render         (fn [] [layout-content-footer-structure layout-id layout-props])}))
 
 
@@ -129,11 +128,11 @@
   ;  {:footer (metamorphic-content)(opt)
   ;   :header (metamorphic-content)(opt)}
   [layout-id {:keys [footer header] :as layout-props}]
-  [:div.x-layout-a (layout-a.helpers/layout-body-attributes layout-id layout-props)
-                   [:div.x-layout-a--content-structure [layout-content-body   layout-id layout-props]
+  [:div#x-layout-a (layout-a.helpers/layout-body-attributes layout-id layout-props)
+                   [:div#x-layout-a--content-structure [layout-content-body   layout-id layout-props]
                                             (if header [layout-content-header layout-id layout-props])]
                    (if footer [layout-content-footer layout-id layout-props]
-                              [:div.x-layout-a--content-tail])])
+                              [:div#x-layout-a--content-tail])])
 
 (defn- layout-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,10 +141,10 @@
   ; @param (map) layout-props
   ;  {:description (metamorphic-content)(opt)}
   [layout-id {:keys [description] :as layout-props}]
-  [:<> (if description [:div.x-layout-a--description (components/content {:content description})]
-                       [:div.x-layout-a--description {:data-placeholder true}])
+  [:<> (if description [:div#x-layout-a--description (components/content {:content description})]
+                       [:div#x-layout-a--description {:data-placeholder true}])
        [layout-content layout-id layout-props]
-       [:div.x-layout-a--footer]])
+       [:div#x-layout-a--footer]])
 
 (defn layout
   ; @param (keyword)(opt) layout-id

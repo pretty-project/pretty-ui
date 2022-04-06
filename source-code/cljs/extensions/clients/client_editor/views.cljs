@@ -188,10 +188,10 @@
 ;; -- View components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header
+(defn footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-editor/header :clients.client-editor
+  [item-editor/footer :clients.client-editor
                       {}])
 
 (defn body
@@ -214,6 +214,6 @@
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]
        [layouts/layout-a surface-id {:description description
-                                     ;:header      #'header
+                                    ;:header      #'header
                                      :body        #'body
-                                     :footer      #'header}]))
+                                     :footer      #'footer}]))

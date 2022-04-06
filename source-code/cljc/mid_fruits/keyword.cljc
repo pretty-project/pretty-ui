@@ -91,9 +91,9 @@
   ;
   ; @return (keyword)
   [& abc]
-  (letfn [(join-f [o x] (if (keyword? x) (str o (name x))
-                                         (str o x)))]
-         (keyword (reduce join-f abc))))
+  (letfn [(f [result x] (if (keyword? x) (str result (name x))
+                                         (str result x)))]
+         (keyword (reduce f abc))))
 
 (defn append
   ; @param (keyword) n
@@ -154,9 +154,9 @@
   ;
   ; @return (namespaced keywords in vector)
   [namespace abc]
-  (letfn [(add-items-namespace-f [o x] (conj o (keyword (name namespace)
-                                                        (name x))))]
-         (reduce add-items-namespace-f [] abc)))
+  (letfn [(f [result x] (conj result (keyword (name namespace)
+                                              (name x))))]
+         (reduce f [] abc)))
 
 (defn get-namespace
   ; @param (keyword) n

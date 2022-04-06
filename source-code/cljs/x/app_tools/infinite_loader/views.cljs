@@ -41,9 +41,9 @@
    [component (a/id) loader-props])
 
   ([loader-id {:keys [on-viewport] :as loader-props}]
-   (let [observer-id  (infinite-loader.helpers/loader-id->observer-id loader-id)
-         element-id   (a/dom-value observer-id)
-         callback-f  #(a/dispatch  on-viewport)]
+   (let [observer-id (infinite-loader.helpers/loader-id->observer-id loader-id)
+         element-id  (a/dom-value observer-id)
+         callback-f #(if % (a/dispatch on-viewport))]
         (reagent/lifecycles {:component-did-mount    (fn [] (environment/setup-intersection-observer!  element-id callback-f))
                              :component-will-unmount (fn [] (environment/remove-intersection-observer! element-id))
                              :reagent-render         (fn [] [infinite-loader loader-id])}))))

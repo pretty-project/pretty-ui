@@ -12,5 +12,6 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-app-boot {:fx-n [[:environment/listen-to-scroll!]
-                        [:environment/initialize-scroll-handler!]]}})
+  {})
+  ;:on-app-boot {:fx-n [[:environment/listen-to-scroll!]
+  ;                    [:environment/initialize-scroll-handler!]}

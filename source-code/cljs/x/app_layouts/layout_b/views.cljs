@@ -47,7 +47,7 @@
   ;  {:cards (maps in vector)}
   [layout-id {:keys [cards] :as layout-props}]
   (letfn [(f [card-list card-props] (conj card-list [card layout-id layout-props card-props]))]
-         (reduce f [:div.x-layout-b--card-group] cards)))
+         (reduce f [:div#x-layout-b--card-group] cards)))
 
 (defn- layout-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +55,7 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   [layout-id layout-props]
-  [:div.x-layout-b (layout-b.helpers/layout-body-attributes layout-id layout-props)
+  [:div#x-layout-b (layout-b.helpers/layout-body-attributes layout-id layout-props)
                    [card-list layout-id layout-props]])
 
 (defn- layout-b

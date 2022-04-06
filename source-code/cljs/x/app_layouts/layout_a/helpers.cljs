@@ -2,7 +2,48 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-layouts.layout-a.helpers)
+(ns x.app-layouts.layout-a.helpers
+    (:require [x.app-environment.api :as environment]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn content-header-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) layout-id
+  [_]
+  (letfn [(f [intersecting?] (environment/set-element-attribute! "x-layout-a--content-header" "data-sticky" (not intersecting?)))]
+         (environment/setup-intersection-observer! "x-layout-a--content-header--sensor" f)))
+
+(defn content-footer-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) layout-id
+  [_]
+  (letfn [(f [intersecting?] (environment/set-element-attribute! "x-layout-a--content-footer" "data-sticky" (not intersecting?)))]
+         (environment/setup-intersection-observer! "x-layout-a--content-footer--sensor" f)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn content-header-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) layout-id
+  [_]
+  (environment/remove-intersection-observer! "x-layout-a--content-header--sensor"))
+
+(defn content-footer-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) layout-id
+  [_]
+  (environment/remove-intersection-observer! "x-layout-a--content-footer--sensor"))
 
 
 

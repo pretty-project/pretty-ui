@@ -16,11 +16,10 @@
   ; @param (function) callback-f
   ;
   ; @usage
-  ;  (environment/setup-intersection-observer! "my-element" (fn [] ...))
+  ;  (environment/setup-intersection-observer! "my-element" (fn [intersecting?] ...))
   [element-id callback-f]
   (if-let [element (dom/get-element-by-id element-id)]
           (let [observer (dom/setup-intersection-observer! element callback-f)]
-               (println (str element-id))
                (swap! observe-handler.state/INTERSECTION-OBSERVERS assoc element-id observer))))
 
 (defn remove-intersection-observer!
