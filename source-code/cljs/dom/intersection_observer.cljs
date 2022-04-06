@@ -2,7 +2,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns dom.intersection-observer)
+(ns dom.intersection-observer
+    (:require [mid-fruits.candy :refer [return]]))
 
 
 
@@ -10,25 +11,37 @@
 ;; ----------------------------------------------------------------------------
 
 (defn intersection-observer
-  ; @param (string) element-id
   ; @param (function) callback-f
   ;
   ; @usage
-  ;  (dom/intersection-observer "my-element" (fn [] ...))
+  ;  (dom/intersection-observer (fn [] ...))
   ;
-  ; @return (object)
-  [_ callback-f]
+  ; @return (?)
+  [callback-f]
   (letfn [(f [%] (if (-> % (aget 0) .-isIntersecting)
                      (callback-f)))]
          (js/IntersectionObserver. f {})))
 
 (defn setup-intersection-observer!
-  ; @param (string) element-id
+  ; @param (DOM element) element
   ; @param (function) callback-f
   ;
   ; @usage
-  ;  (dom/setup-intersection-observer! "my-element" (fn [] ...))
-  [element-id callback-f]
-  (let [observer         (intersection-observer element-id callback-f)
-        observer-element (.getElementById js/document element-id)]
-       (.observe observer observer-element)))
+  ;  (dom/setup-intersection-observer! my-element (fn [] ...))
+  ;
+  ; @return (?)
+  [element callback-f]
+  (let [observer (intersection-observer callback-f)]
+       (.observe observer element)
+       (return   observer)))
+
+(defn remove-intersection-observer!
+  ; @param (?) observer
+  ; @param (DOM element) element
+  ;
+  ; @usage
+  ;  (dom/remove-intersection-observer! my-observer my-element)
+  ;
+  ; @return (undefined)
+  [observer element]
+  (.unobserve observer element))

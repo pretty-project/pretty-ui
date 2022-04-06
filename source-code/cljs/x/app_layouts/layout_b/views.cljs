@@ -55,8 +55,8 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   [layout-id layout-props]
-  [:div.x-body-b (layout-b.helpers/layout-body-attributes layout-id layout-props)
-                 [card-list layout-id layout-props]])
+  [:div.x-layout-b (layout-b.helpers/layout-body-attributes layout-id layout-props)
+                   [card-list layout-id layout-props]])
 
 (defn- layout-b
   ; WARNING! NON-PUBLIC! DO NOT USE!

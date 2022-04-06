@@ -6,6 +6,7 @@
     (:require [dom.api                             :as dom]
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
+              [x.app-environment.api               :as environment]
               [x.app-tools.infinite-loader.helpers :as infinite-loader.helpers]))
 
 
@@ -43,5 +44,6 @@
    (let [observer-id  (infinite-loader.helpers/loader-id->observer-id loader-id)
          element-id   (a/dom-value observer-id)
          callback-f  #(a/dispatch  on-viewport)]
-        (reagent/lifecycles {:component-did-mount (fn [] (dom/setup-intersection-observer! element-id callback-f))
-                             :reagent-render      (fn [] [infinite-loader loader-id])}))))
+        (reagent/lifecycles {:component-did-mount    (fn [] (environment/setup-intersection-observer!  element-id callback-f))
+                             :component-will-unmount (fn [] (environment/remove-intersection-observer! element-id))
+                             :reagent-render         (fn [] [infinite-loader loader-id])}))))

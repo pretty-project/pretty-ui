@@ -45,5 +45,5 @@
                                                                            :component-already-mounted
                                                                            (if component-did-mount (component-did-mount)))
                                                                    (swap! state/MOUNTED-COMPONENTS assoc component-id mount-id))
-                                    :component-did-update   (fn [] (component-did-update))
+                                    :component-did-update   (fn [] (if component-did-update (component-did-update)))
                                     :component-will-unmount (fn [] (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))}))))

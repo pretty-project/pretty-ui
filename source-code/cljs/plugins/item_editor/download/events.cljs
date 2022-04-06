@@ -51,12 +51,15 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  ; XXX#3907
-  ; Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot
+  ; - XXX#3907
+  ;   Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot
+  ;
+  ; - A letöltött dokumentum a merge függvény használatával kerül eltárolásra, így az esetlegesen
+  ;   a body komponens számára {:initial-item {...}} tulajdonságként átadott értékek nem íródnak felül.
   (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
         item-path   (r mount.subs/get-body-prop      db editor-id :item-path)
         document    (-> server-response resolver-id db/document->non-namespaced-document)]
-       (as-> db % (assoc-in % item-path document)
+       (as-> db % (update-in % item-path merge document)
                   (r backup.events/backup-current-item! % editor-id))))
 
 (defn receive-item!

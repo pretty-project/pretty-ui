@@ -36,11 +36,12 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-        current-item    (r core.subs/get-current-item    db editor-id)
-        backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
-       (not= (select-keys backup-item  change-keys)
-             (select-keys current-item change-keys))))
+  (boolean (if (r core.subs/get-meta-item db editor-id :data-received?)
+               (let [current-item-id (r core.subs/get-current-item-id db editor-id)
+                     current-item    (r core.subs/get-current-item    db editor-id)
+                     backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
+                    (not= (select-keys backup-item  change-keys)
+                          (select-keys current-item change-keys))))))
 
 
 

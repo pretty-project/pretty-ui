@@ -3,7 +3,7 @@
 
 /***** User select *****/
 
-.x-description-a {
+.x-layout-a--description {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -34,22 +34,22 @@
 /***** Align profiles *****/
 /*** Horizontal align ***/
 
-.x-body-a[data-horizontal-align="left"] .x-body-a--content-body {
+.x-layout-a[data-horizontal-align="left"] .x-layout-a--content-body {
   align-items: flex-start }
 
-.x-body-b[data-horizontal-align="left"] .x-layout-b--card-group {
+.x-layout-b[data-horizontal-align="left"] .x-layout-b--card-group {
   justify-content: flex-start }
 
-.x-body-a[data-horizontal-align="center"] .x-body-a--content-body {
+.x-layout-a[data-horizontal-align="center"] .x-layout-a--content-body {
   align-items: center }
 
-.x-body-b[data-horizontal-align="center"] .x-layout-b--card-group {
+.x-layout-b[data-horizontal-align="center"] .x-layout-b--card-group {
   justify-content: center }
 
-.x-body-a[data-horizontal-align="right"] .x-body-a--content-body {
+.x-layout-a[data-horizontal-align="right"] .x-layout-a--content-body {
   align-items: flex-end }
 
-.x-body-b[data-horizontal-align="right"] .x-layout-b--card-group {
+.x-layout-b[data-horizontal-align="right"] .x-layout-b--card-group {
   justify-content: flex-end }
 
 /*** Horizontal align ***/
@@ -69,146 +69,44 @@
 
 /*** M ***/
 
-.x-body-a[data-min-width="m"] .x-form-a--input-row {
+.x-layout-a[data-min-width="m"] .x-form-a--input-row {
   -max-width: 660px }
 
-.x-body-a[data-min-width="m"] {
+.x-layout-a[data-min-width="m"] {
   min-width: var( --content-width-m ) }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-body-a[data-min-width="l"] .x-form-a--input-row {
+.x-layout-a[data-min-width="l"] .x-form-a--input-row {
   -max-width: 920px }
 
-.x-body-a[data-min-width="l"] {
+.x-layout-a[data-min-width="l"] {
   min-width: var( --content-width-l ) }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-body-a[data-min-width="xl"] .x-form-a--input-row {
+.x-layout-a[data-min-width="xl"] .x-form-a--input-row {
   -max-width: 920px }
 
-.x-body-a[data-min-width="xl"] {
+.x-layout-a[data-min-width="xl"] {
   min-width: var( --content-width-xl ) }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-body-a[data-min-width="xxl"] .x-form-a--input-row {
+.x-layout-a[data-min-width="xxl"] .x-form-a--input-row {
   -max-width: calc(var( --content-width-xxl ) - 72px) }
 
-.x-body-a[data-min-width="xxl"] {
+.x-layout-a[data-min-width="xxl"] {
   min-width: var( --content-width-xxl ) }
 
 /*** XXL ***/
 /***** Size profiles *****/
-
-
-
-/***** Body A *****/
-
-.x-body-a {
-  background-color: var( --background-color );
-  border-radius: var( --border-radius-m );
-  display: flex;
-  flex-direction: column;
-  margin: 0 var( --app-edge );
-  /* Ha a content-header szélesebb, mint a rendelkezésre álló hely, akkor az .x-body-a elem
-   * max-width tulajdonsága nélkül nem kapcsolna be rajta a vízszintes görgetés */
-  max-width: var( --app-width ) }
-
-/* - A szerverről letöltött adatok betöltésekor a kirenderelt tartalom méretének megváltozása
- *   miatt a body elem magassága a betöltési folyamat alatt többször is megváltozhat.
- * - Hogy ne történjen meg a rövid időn belüli ismételt magasság változás, a body elem
- *   min-height tulajdonsággal rendelkezik. */
-[data-interface="application-ui"] .x-body-a {
-  min-height: calc(100vh - 144px) }
-
-[data-interface="website-ui"] .x-body-a {
-  min-height: calc(100vh - 96px) }
-
-.x-body-a--content-structure {
-  display: flex;
-  flex-direction: column-reverse;
-  flex-grow: 1 }
-
-.x-body-a--content-body {
-  /* XXX#0093
-   * A content-body alsó padding távolságát a content-tail helyettesíti.
-   * A content-body felső padding mérete megegyezik a content-tail magasságával.
-   * Az x4.5.4 verzió óta ki van kapcsolva a felső padding, az egyes tartalmak
-   * maguknak állítják be, ha szükséges.
-   * padding-bottom: 0;
-   * padding-top: var( --border-radius-m ) */
-
-  /* A content-body elem kitölti a rendelkezésére álló magasságot, így középre igazított tartalmat
-   * is lehetséges benne megejeleníteni */
-  flex-grow: 1;
-
-  display: flex;
-  flex-direction: column;
-  padding-left:  var( --content-edge );
-  padding-right: var( --content-edge ) }
-
-.x-body-a--content-tail {
-  /* XXX#0093
-   * A {position: sticky} tulajdonságú content-header görgetéskor az content-tail elemhez
-   * érve folytatja a tartalommal együtt való gördülést és így content-header nem takarja el
-   * a content-body lekerekített alsó sarkait. */
-  height: var( --border-radius-m ) }
-
-.x-body-a--content-header {
-  align-items: center;
-  background-color: var( --background-color );
-  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
-  display: flex;
-  flex-direction: row;
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  justify-content: flex-start;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  min-height: 48px;
-  overflow-x: auto;
-  /* XXX#2981 */
-  padding: 0 var( --content-edge );
-  position: sticky;
-  top: 48px }
-
-[data-scrolled-to-top="false"] .x-body-a--content-header {
-  border-bottom: 2px solid var( --border-color-highlight ) }
-
-.x-body-a--content-footer {
-  background-color: var( --background-color );
-  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
-  bottom: -1px;
-  border-top: 2px solid var( --border-color-highlight );
-  /* XXX#2981 */
-  padding: 0 var( --content-edge );
-  position: sticky }
-
-/* XXX#8607
- * XXS, XS és S méretű viewport-on az app-edge értéke 0, ezért az .x-body-a elem szélei közvetlenül
- * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot */
-body[data-viewport-profile="xxs"] .x-body-a,
-body[data-viewport-profile="xs"]  .x-body-a,
-body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
-
-/***** Body A *****/
-
-
-
-/***** Footer A *****/
-
-.x-footer-a {
-  padding-top: 48px }
-
-/***** Footer A *****/
 
 
 
@@ -243,9 +141,34 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
 
 
 
-/***** Description A *****/
+/***** Layout A *****/
+/*** Layout wrapper ***/
 
-.x-description-a {
+.x-layout-a {
+  background-color: var( --background-color );
+  border-radius: var( --border-radius-m );
+  display: flex;
+  flex-direction: column;
+  margin: 0 var( --app-edge );
+  /* Ha a content-header szélesebb, mint a rendelkezésre álló hely, akkor az .x-layout-a elem
+   * max-width tulajdonsága nélkül nem kapcsolna be rajta a vízszintes görgetés */
+  max-width: var( --app-width ) }
+
+/* - A szerverről letöltött adatok betöltésekor a kirenderelt tartalom méretének megváltozása
+ *   miatt a body elem magassága a betöltési folyamat alatt többször is megváltozhat.
+ * - Hogy ne történjen meg a rövid időn belüli ismételt magasság változás, a body elem
+ *   min-height tulajdonsággal rendelkezik. */
+[data-interface="application-ui"] .x-layout-a {
+  min-height: calc(100vh - 144px) }
+
+[data-interface="website-ui"] .x-layout-a {
+  min-height: calc(100vh - 96px) }
+
+/*** Layout wrapper ***/
+
+/*** Layout description ***/
+
+.x-layout-a--description {
   color: var( --color-muted );
   font-size: var( --font-size-xxs );
   font-weight: 500;
@@ -254,14 +177,96 @@ body[data-viewport-profile="s"]   .x-body-a { border-radius: 0 }
   margin: 12px 0;
   min-height: 24px }
 
-.x-description-a--placeholder {
+.x-layout-a--description[data-placeholder="true"] {
   height: 48px }
 
-/***** Description A *****/
+/*** Layout description ***/
+
+/*** Layout content ***/
+
+.x-layout-a--content-structure {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1 }
+
+.x-layout-a--content-body {
+  /* XXX#0093
+   * A content-body alsó padding távolságát a content-tail helyettesíti.
+   * A content-body felső padding mérete megegyezik a content-tail magasságával.
+   * Az x4.5.4 verzió óta ki van kapcsolva a felső padding, az egyes tartalmak
+   * maguknak állítják be, ha szükséges.
+   * padding-bottom: 0;
+   * padding-top: var( --border-radius-m ) */
+
+  /* A content-body elem kitölti a rendelkezésére álló magasságot, így középre igazított tartalmat
+   * is lehetséges benne megejeleníteni */
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  padding-left:  var( --content-edge );
+  padding-right: var( --content-edge ) }
+
+.x-layout-a--content-tail {
+  /* XXX#0093
+   * A {position: sticky} tulajdonságú content-header görgetéskor az content-tail elemhez
+   * érve folytatja a tartalommal együtt való gördülést és így content-header nem takarja el
+   * a content-body lekerekített alsó sarkait. */
+  height: var( --border-radius-m ) }
+
+.x-layout-a--content-header {
+  align-items: center;
+  background-color: var( --background-color );
+  border-bottom: 2px solid transparent;
+  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
+  display: flex;
+  flex-direction: row;
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  justify-content: flex-start;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  min-height: 48px;
+  overflow-x: auto;
+  /* XXX#2981 */
+  padding: 0 var( --content-edge );
+  position: sticky;
+  top: 48px }
+
+[data-scrolled-to-top="false"] .x-layout-a--content-header {
+  -border-bottom: 2px solid var( --border-color-highlight ) }
+
+.x-layout-a--content-header[data-sticky="true"] {
+  border-bottom-color: var( --border-color-highlight ) }
+
+.x-layout-a--content-footer {
+  background-color: var( --background-color );
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  border-top: 2px solid transparent;
+  bottom: -1px;
+  /* XXX#2981 */
+  padding: 0 var( --content-edge );
+  position: sticky }
 
 
+.x-layout-a--content-footer[data-sticky="true"] {
+  border-top-color: var( --border-color-highlight ) }
 
-/***** Layout A *****/
+/* XXX#8607
+ * XXS, XS és S méretű viewport-on az app-edge értéke 0, ezért az .x-layout-a elem szélei közvetlenül
+ * a képernyő széléig érnek, emiatt indokolt eltávolítani a border-radius tulajdonságot */
+body[data-viewport-profile="xxs"] .x-layout-a,
+body[data-viewport-profile="xs"]  .x-layout-a,
+body[data-viewport-profile="s"]   .x-layout-a { border-radius: 0 }
+
+/*** Layout content ***/
+
+/*** Layout footer ***/
+
+.x-layout-a--footer {
+  padding-top: 48px }
+
+/*** Layout footer ***/
 /***** Layout A *****/
 
 

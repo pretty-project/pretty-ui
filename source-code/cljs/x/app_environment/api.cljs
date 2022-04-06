@@ -31,6 +31,7 @@
               [x.app-environment.keypress-handler.events      :as keypress-handler.events]
               [x.app-environment.keypress-handler.subs        :as keypress-handler.subs]
               [x.app-environment.mouse-handler.side-effects   :as mouse-handler.side-effects]
+              [x.app-environment.observe-handler.side-effects :as observe-handler.side-effects]
               [x.app-environment.scroll-handler.side-effects  :as scroll-handler.side-effects]
               [x.app-environment.scroll-handler.subs          :as scroll-handler.subs]
               [x.app-environment.touch-handler.subs           :as touch-handler.subs]
@@ -99,6 +100,10 @@
 ; x.app-environment.mouse-handler.side-effects
 (def prevent-selecting! mouse-handler.side-effects/prevent-selecting!)
 (def enable-selecting!  mouse-handler.side-effects/enable-selecting!)
+
+; x.app-environment.observe-handler.side-effects
+(def setup-intersection-observer!  observe-handler.side-effects/setup-intersection-observer!)
+(def remove-intersection-observer! observe-handler.side-effects/remove-intersection-observer!)
 
 ; x.app-environment.scroll-handler.side-effects
 (def set-scroll-y!          scroll-handler.side-effects/set-scroll-y!)

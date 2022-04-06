@@ -2225,7 +2225,7 @@ body[data-viewport-profile="s"]
 
 .x-multi-combo-box[data-layout="row"] {
   /* XXX#0376 */
-  padding: 8px 0 }
+  padding: 6px 0 }
 
 /*** Multi combo-box wrapper ***/
 
@@ -3342,7 +3342,7 @@ body[data-viewport-profile="s"]
 
 .x-text-field[data-layout="row"] {
   /* XXX#0376 */
-  padding: 8px 0 }
+  padding: 6px 0 }
 
 /*** Text field wrapper ***/
 

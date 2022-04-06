@@ -116,8 +116,9 @@
 (def get-head-element head/get-head-element)
 
 ; dom.intersection-observer
-(def intersection-observer        intersection-observer/intersection-observer)
-(def setup-intersection-observer! intersection-observer/setup-intersection-observer!)
+(def intersection-observer         intersection-observer/intersection-observer)
+(def setup-intersection-observer!  intersection-observer/setup-intersection-observer!)
+(def remove-intersection-observer! intersection-observer/remove-intersection-observer!)
 
 ; dom.listeners
 (def add-event-listener!    listeners/add-event-listener!)
@@ -146,7 +147,7 @@
 
 ; dom.script
 (def append-script! script/append-script!)
-  
+
 ; dom.scroll
 (def get-scroll-x           scroll/get-scroll-x)
 (def get-scroll-y           scroll/get-scroll-y)

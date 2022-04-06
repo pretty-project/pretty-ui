@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-selector.effects
-    (:require [extensions.storage.media-selector.events :as media-selector.events]
+    (:require [extensions.storage.media-selector.config :as media-selector.config]
+              [extensions.storage.media-selector.events :as media-selector.events]
               [extensions.storage.media-selector.subs   :as media-selector.subs]
               [extensions.storage.media-selector.views  :as media-selector.views]
               [plugins.item-browser.api                 :as item-browser]
@@ -66,8 +67,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
       (let [db (r media-selector.events/toggle-file-selection! db file-item)]
-           {:db db :dispatch-if [(r media-selector.subs/save-selected-items? db file-item)
-                                 [:storage.media-selector/save-selected-items!]]})))
+           (if-not (r media-selector.subs/save-selected-items? db file-item)
+                   {:db db}
+                   {:db db :dispatch-later [{:ms       media-selector.config/AUTOCLOSE-DELAY
+                                             :dispatch [:storage.media-selector/save-selected-items!]}]}))))
 
 
 
