@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.menu-bar.helpers
+(ns plugins.item-editor.header.helpers
     (:require [x.app-core.api :as a]))
 
 

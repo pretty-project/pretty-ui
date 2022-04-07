@@ -26,12 +26,12 @@
 (defn client-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [lister-id item-dex {:keys [colors email-address id modified-at] :as client-item}]
-  [layouts/list-item-a item-dex {:icon        :navigate_next
-                                 :description email-address
-                                 :timestamp   modified-at
-                                 :header      {:colors (or colors :placeholder)}
-                                 :label      @(a/subscribe [:clients.client-lister/get-client-name item-dex])
-                                 :on-click    (on-click-event item-dex client-item)}])
+  [item-lister/list-item item-dex {:icon        :navigate_next
+                                   :description email-address
+                                   :timestamp   modified-at
+                                   :header      {:colors (or colors :placeholder)}
+                                   :label      @(a/subscribe [:clients.client-lister/get-client-name item-dex])
+                                   :on-click    (on-click-event item-dex client-item)}])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

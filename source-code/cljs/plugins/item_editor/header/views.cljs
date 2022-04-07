@@ -2,16 +2,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.menu-bar.views
-    (:require [plugins.item-editor.core.helpers     :as core.helpers]
-              [plugins.item-editor.menu-bar.helpers :as menu-bar.helpers]
-              [reagent.api                          :as reagent]
-              [x.app-core.api                       :as a]
-              [x.app-elements.api                   :as elements]))
+(ns plugins.item-editor.header.views
+    (:require [plugins.item-editor.core.helpers   :as core.helpers]
+              [plugins.item-editor.header.helpers :as header.helpers]
+              [reagent.api                        :as reagent]
+              [x.app-core.api                     :as a]
+              [x.app-elements.api                 :as elements]))
 
 
 
-;; -- Header components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn header-menu-items
@@ -19,8 +19,8 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/menu-bar ::menu-bar
-                     {:menu-items (menu-bar.helpers/header-menu-items editor-id)}])
+  [elements/menu-bar ::header-menu-items
+                     {:menu-items (header.helpers/header-menu-items editor-id)}])
 
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

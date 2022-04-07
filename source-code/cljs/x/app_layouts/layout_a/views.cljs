@@ -14,38 +14,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn e->class-list [e]
-  (-> e .-target .-classList))
-
-(defn add-class! [class-list & args]
-  (println "add-class " args)
-  (apply #(.add class-list %) args))
-
-(defn remove-class! [class-list & args]
-  (println "remove-class " args)
-  (apply #(.remove class-list %) args))
-
-(defn reg-observer!
-  []
-  (if-let [element (.querySelector js/document "#x-layout-a--content-footer")]
-          (let [observer (js/IntersectionObserver.
-                           ;(fn [%] (if (-> % (aget 0) .-isIntersecting)
-                            ;           (println "x")
-                            ;           (println "y"))]
-                           (fn [entries]
-                               (doseq [e entries]
-                                      (println (str (.-intersectionRatio e)))
-                                      (if (< (.-intersectionRatio e) 1)
-                                          (dom.api/set-element-attribute! element    "data-sticky" true)
-                                          (dom.api/remove-element-attribute! element "data-sticky"))))
-                           (clj->js {:threshold [1]}))]
-               (.observe observer element))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- layout-content-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,8 +30,7 @@
   ; @param (keyword) layout-id
   ; @param (map) layout-props
   [layout-id layout-props]
-  (reagent/lifecycles :layout-a/content-header
-                      {:component-did-mount    (fn [] (layout-a.helpers/content-header-did-mount-f    layout-id))
+  (reagent/lifecycles {:component-did-mount    (fn [] (layout-a.helpers/content-header-did-mount-f    layout-id))
                        :component-will-unmount (fn [] (layout-a.helpers/content-header-will-unmount-f layout-id))
                        :reagent-render         (fn [] [layout-content-header-structure layout-id layout-props])}))
 
@@ -106,12 +73,13 @@
   ; - A layout-body sarkai border-radius tulajdonsággal vannak lekerekítve, amiből
   ;   a {position: sticky} pozícionálású content-header alsó sarkai kilógnának,
   ;   amikor a content-header lecsúszik a layout-body aljáig.
+  ;
   ; - Azért szükséges a content-tail elemet alkalmazni, hogy a {position: sticky}
   ;   pozícionálású content-header ne tudjon a layout-body aljáig lecsúszni.
+  ;
   ; - {overflow: hidden} tulajdonsággal nem lehet eltűntetni a content-header kilógó sarkait,
   ;   mert {overflow: hidden} elemben nem működne a {position: sticky} beállítás.
-  (reagent/lifecycles :layout-a/content-footer
-                      {:component-did-mount    (fn [] (layout-a.helpers/content-footer-did-mount-f    layout-id))
+  (reagent/lifecycles {:component-did-mount    (fn [] (layout-a.helpers/content-footer-did-mount-f    layout-id))
                        :component-will-unmount (fn [] (layout-a.helpers/content-footer-will-unmount-f layout-id))
                        :reagent-render         (fn [] [layout-content-footer-structure layout-id layout-props])}))
 

@@ -2,16 +2,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.form.views
-    (:require [plugins.item-editor.core.helpers    :as core.helpers]
-              [plugins.item-editor.core.prototypes :as core.prototypes]
+(ns plugins.item-editor.body.views
+    (:require [plugins.item-editor.body.prototypes :as body.prototypes]
+              [plugins.item-editor.core.helpers    :as core.helpers]
               [mid-fruits.string                   :as string]
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
               [x.app-layouts.api                   :as layouts]))
 
-                        
+
 
 ;; -- Form components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -167,7 +167,7 @@
   ;  (defn my-form-element [editor-id] [:div ...])
   ;  [item-editor/body :my-editor {:form-element #'my-form-element}]
   [editor-id body-props]
-  (let [body-props (core.prototypes/body-props-prototype editor-id body-props)]
+  (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)
                            {:reagent-render         (fn []             [body-structure                 editor-id])
                             :component-did-mount    (fn [] (a/dispatch [:item-editor/body-did-mount    editor-id body-props]))

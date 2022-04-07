@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.form.subs
+(ns plugins.item-editor.body.subs
     (:require [mid-fruits.candy                :refer [return]]
               [plugins.item-editor.backup.subs :as backup.subs]
               [plugins.item-editor.core.subs   :as core.subs]

@@ -2,12 +2,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-layouts.list-item-a.views
+(ns plugins.item-lister.items.views
     (:require [mid-fruits.css                    :as css]
+              [plugins.item-lister.items.helpers :as items.helpers]
               [x.app-components.api              :as components]
               [x.app-core.api                    :as a]
-              [x.app-elements.api                :as elements]
-              [x.app-layouts.list-item-a.helpers :as list-item-a.helpers]))
+              [x.app-elements.api                :as elements]))
 
 
 
@@ -89,10 +89,10 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   [item-dex item-props]
-  [:div.x-list-item-a (list-item-a.helpers/list-item-structure-attributes item-dex item-props)
-                      [list-item-header                                   item-dex item-props]
-                      [list-item-details                                  item-dex item-props]
-                      [list-item-icon                                     item-dex item-props]])
+  [:div.x-list-item-a (items.helpers/list-item-structure-attributes item-dex item-props)
+                      [list-item-header                             item-dex item-props]
+                      [list-item-details                            item-dex item-props]
+                      [list-item-icon                               item-dex item-props]])
 
 (defn toggle-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -146,13 +146,24 @@
   ;   :timestamp (string)(opt)}
   ;
   ; @usage
-  ;  [layouts/list-item-a {...}]
+  ;  [item-lister/list-item-a {...}]
   ;
   ; @usage
-  ;  [layouts/list-item-a 0 {...}]
+  ;  [item-lister/list-item-a 0 {...}]
   ([item-props]
    [list-item 0 item-props])
 
   ([item-dex {:keys [on-click] :as item-props}]
    (if on-click [toggle-list-item item-dex item-props]
                 [static-list-item item-dex item-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn card-item
+  [])
+
+(defn thumbnail-item
+  [])

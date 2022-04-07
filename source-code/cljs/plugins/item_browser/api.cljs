@@ -16,10 +16,12 @@
               [plugins.item-browser.update.effects]
               [plugins.item-browser.update.events]
               [plugins.item-browser.update.subs]
+              [plugins.item-browser.body.views   :as body.views]
               [plugins.item-browser.core.subs    :as core.subs]
-              [plugins.item-browser.core.views   :as core.views]
+              [plugins.item-browser.header.views :as header.views]
               [plugins.item-browser.items.events :as items.events]
               [plugins.item-browser.items.subs   :as items.subs]
+              [plugins.item-browser.items.views  :as items.views]
               [plugins.item-browser.routes.subs  :as routes.subs]))
 
 
@@ -27,21 +29,28 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; plugins.item-browser.body.views
+(def body body.views/body)
+
 ; plugins.item-browser.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
 (def browsing-item?      core.subs/browsing-item?)
 
-; plugins.item-browser.core.views
-(def go-home-button core.views/go-home-button)
-(def go-up-button   core.views/go-up-button)
-(def header         core.views/header)
-(def body           core.views/body)
+; plugins.item-browser.header.views
+(def go-home-button header.views/go-home-button)
+(def go-up-button   header.views/go-up-button)
+(def header         header.views/header)
 
 ; plugins.item-browser.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)
 
 ; plugins.item-browser.items.subs
 (def toggle-item-selection? items.subs/toggle-item-selection?)
+
+; plugins.item-lister.items.views
+(def list-item      items.views/list-item)
+(def card-item      items.views/card-item)
+(def thumbnail-item items.views/thumbnail-item)
 
 ; plugins.item-browser.routes.subs
 (def get-item-route routes.subs/get-item-route)

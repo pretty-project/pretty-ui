@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.control-bar.views
+(ns plugins.item-editor.footer.views
     (:require [mid-fruits.vector                :as vector]
               [plugins.item-editor.core.helpers :as core.helpers]
               [reagent.api                      :as reagent]
@@ -179,7 +179,7 @@
 
 
 
-;; -- Footer components -------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn menu-start-buttons

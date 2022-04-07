@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.value-editor.core.subs
-    (:require [x.app-core.api     :as a :refer [r]]
-              [x.app-elements.api :as elements]))
+    (:require [x.app-core.api :as a :refer [r]]))
 
 
 
@@ -77,21 +76,6 @@
           (let [editor-value (r get-editor-value db editor-id)]
                (a/metamorphic-event<-params on-save-event editor-value))))
 
-(defn disable-save-button?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (boolean)
-  [db [_ editor-id]]
-  (let [field-value (r elements/get-input-value db :value-editor/editor-field)
-        validator   (r get-editor-prop          db editor-id :validator)]
-       (boolean (or ; If validator is in use & field-value is NOT valid ...
-                    (and validator (not ((:f validator) field-value)))
-                    ; If field is required & field is empty ...
-                    (and (r get-editor-prop       db editor-id :required?)
-                         (r elements/field-empty? db :value-editor/editor-field))))))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -102,9 +86,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :value-editor/get-editor-prop get-editor-prop)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :value-editor/disable-save-button? disable-save-button?)
 
 
 

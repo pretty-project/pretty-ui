@@ -2,9 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.core.views
-    (:require [plugins.view-selector.core.helpers    :as core.helpers]
-              [plugins.view-selector.core.prototypes :as core.prototypes]
+(ns plugins.view-selector.body.views
+    (:require [plugins.view-selector.body.prototypes :as body.prototypes]
+              [plugins.view-selector.core.helpers    :as core.helpers]
               [reagent.api                           :as reagent]
               [x.app-core.api                        :as a]))
 
@@ -36,7 +36,7 @@
   ;  (defn my-content [selector-id] [:div ...])
   ;  [view-selector/body :my-selector {:content #'my-content}]
   [selector-id body-props]
-  (let [body-props (core.prototypes/body-props-prototype body-props)]
+  (let [body-props (body.prototypes/body-props-prototype body-props)]
        (reagent/lifecycles (core.helpers/component-id selector-id :body)
                            {:reagent-render         (fn []             [body-structure                   selector-id])
                             :component-did-mount    (fn [] (a/dispatch [:view-selector/body-did-mount    selector-id body-props]))

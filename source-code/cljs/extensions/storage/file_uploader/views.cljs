@@ -10,9 +10,9 @@
               [mid-fruits.format                        :as format]
               [mid-fruits.math                          :as math]
               [mid-fruits.string                        :as string]
+              [plugins.item-browser.api                 :as item-browser]
               [x.app-core.api                           :as a]
               [x.app-elements.api                       :as elements]
-              [x.app-layouts.api                        :as layouts]
               [x.app-media.api                          :as media]))
 
 
@@ -172,12 +172,12 @@
         filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
         object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [layouts/list-item-a file-dex {:label       (str filename)
-                                      :description (media-browser.helpers/file-item->size   {:filesize filesize})
-                                      :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
-                                      :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
-                                      :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
-                                      :style       (if file-cancelled? {:opacity 0.5})}]))
+       [item-browser/list-item file-dex {:label       (str filename)
+                                         :description (media-browser.helpers/file-item->size   {:filesize filesize})
+                                         :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
+                                         :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
+                                         :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
+                                         :style       (if file-cancelled? {:opacity 0.5})}]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

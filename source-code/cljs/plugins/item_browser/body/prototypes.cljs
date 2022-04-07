@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.core.prototypes
+(ns plugins.item-browser.body.prototypes
     (:require [mid-fruits.candy                  :refer [param]]
               [plugins.item-browser.core.config  :as core.config]
               [plugins.item-browser.core.helpers :as core.helpers]))

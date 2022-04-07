@@ -18,8 +18,10 @@
               [plugins.item-lister.update.effects]
               [plugins.item-lister.update.events]
               [plugins.item-lister.update.subs]
-              [plugins.item-lister.core.views   :as core.views]
+              [plugins.item-lister.body.views   :as body.views]
+              [plugins.item-lister.header.views :as header.views]
               [plugins.item-lister.items.events :as items.events]
+              [plugins.item-lister.items.views  :as items.views]
               [plugins.item-lister.items.subs   :as items.subs]))
 
 
@@ -27,17 +29,24 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; plugins.item-lister.body.views
+(def body body.views/body)
+
+; plugins.item-lister.header.views
+(def search-block               header.views/search-block)
+(def new-item-button            header.views/new-item-button)
+(def toggle-select-mode-button  header.views/toggle-select-mode-button)
+(def toggle-reorder-mode-button header.views/toggle-reorder-mode-button)
+(def sort-items-button          header.views/sort-items-button)
+(def header                     header.views/header)
+
 ; plugins.item-lister.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)
 
+; plugins.item-lister.items.views
+(def list-item      items.views/list-item)
+(def card-item      items.views/card-item)
+(def thumbnail-item items.views/thumbnail-item)
+
 ; plugins.item-lister.items.subs
 (def toggle-item-selection? items.subs/toggle-item-selection?)
-
-; plugins.item-lister.core.views
-(def search-block               core.views/search-block)
-(def new-item-button            core.views/new-item-button)
-(def toggle-select-mode-button  core.views/toggle-select-mode-button)
-(def toggle-reorder-mode-button core.views/toggle-reorder-mode-button)
-(def sort-items-button          core.views/sort-items-button)
-(def header                     core.views/header)
-(def body                       core.views/body)

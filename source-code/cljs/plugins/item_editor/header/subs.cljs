@@ -2,12 +2,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.menu-bar.subs
-    (:require [mid-fruits.candy                    :refer [return]]
-              [plugins.item-editor.core.subs       :as core.subs]
-              [plugins.item-editor.menu-bar.config :as menu-bar.config]
-              [plugins.item-editor.mount.subs      :as mount.subs]
-              [x.app-core.api                      :as a :refer [r]]))
+(ns plugins.item-editor.header.subs
+    (:require [mid-fruits.candy                  :refer [return]]
+              [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.header.config :as header.config]
+              [plugins.item-editor.mount.subs    :as mount.subs]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -37,7 +37,7 @@
   (or (r core.subs/get-meta-item db editor-id :view-id)
       (get-in (r mount.subs/get-header-prop db editor-id :menu-items)
               [0 :view-id])
-      (return menu-bar.config/DEFAULT-VIEW-ID)))
+      (return header.config/DEFAULT-VIEW-ID)))
 
 
 

@@ -15,7 +15,8 @@
   ;
   ; @param (keyword) layout-id
   [_]
-  (letfn [(f [intersecting?] (environment/set-element-attribute! "x-layout-a--content-header" "data-sticky" (not intersecting?)))]
+  (letfn [(f [intersecting?] (environment/set-element-attribute! "x-layout-a--content-header" "data-sticky" (not intersecting?))
+                             (println (str "x-layout-a--content-header--sensor " intersecting?)))]
          (environment/setup-intersection-observer! "x-layout-a--content-header--sensor" f)))
 
 (defn content-footer-did-mount-f

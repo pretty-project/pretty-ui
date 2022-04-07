@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.core.prototypes
+(ns plugins.view-selector.body.prototypes
     (:require [mid-fruits.candy                  :refer [param]]
               [plugins.view-selector.core.config :as core.config]))
 

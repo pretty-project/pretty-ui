@@ -5,6 +5,7 @@
 (ns plugins.value-editor.api
     (:require [plugins.value-editor.core.effects]
               [plugins.value-editor.core.events]
+              [plugins.value-editor.header.subs]
               [plugins.value-editor.core.subs :as core.subs]))
 
 

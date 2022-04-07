@@ -3,11 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.value-editor.core.effects
-    (:require [plugins.value-editor.core.events     :as core.events]
+    (:require [plugins.value-editor.body.views      :as body.views]
+              [plugins.value-editor.core.events     :as core.events]
               [plugins.value-editor.core.helpers    :as core.helpers]
               [plugins.value-editor.core.prototypes :as core.prototypes]
               [plugins.value-editor.core.subs       :as core.subs]
-              [plugins.value-editor.core.views      :as core.views]
+              [plugins.value-editor.header.views    :as header.views]
               [x.app-core.api                       :as a :refer [r]]))
 
 
@@ -83,5 +84,5 @@
   ; @param (keyword) editor-id
   (fn [_ [_ editor-id]]
       [:ui/add-popup! (core.helpers/component-id editor-id :view)
-                      {:body   [core.views/body   editor-id]
-                       :header [core.views/header editor-id]}]))
+                      {:body   [body.views/body     editor-id]
+                       :header [header.views/header editor-id]}]))
