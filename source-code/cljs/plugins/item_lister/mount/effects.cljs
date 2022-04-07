@@ -34,7 +34,21 @@
   ; @param (keyword) lister-id
   ; @param (map) header-props
   (fn [{:keys [db]} [_ lister-id header-props]]
-      {:db (r mount.events/header-did-mount db lister-id header-props)}))
+      ; Az item-lister plugin header komponensében megjelenített search-field input mező
+      ; tartalmát az ESC billentyű lenyomása akkor is kiüríti, ha a mező nincs fókuszált állapotban.
+      ; Ehhez szükséges regisztrálni egy eseményt az ESC billentyű lenyomására, ami meghívja
+      ; az [:elements/empty-field! ...] eseményt!
+      ; A regisztált esemény a search-field input mező működéséhez hasonlóan az {:on-keyup ...}
+      ; trigger helyett {:on-keydown ...} triggert használ.
+      ; Pl.: Ha a felhasználó egy olyan listában keres, ahol elemeket lehet kijelölni, akkor
+      ;      az egyes keresések után ha befejezte a listaelemek kijelölését, akkor az ESC billentyű
+      ;      lenyomásával alaphelyzetbe állíthatja a keresést.
+      ;      A keresés alaphelyzetbe állítása után az {:auto-focus? true} beállítás miatt a search-field
+      ;      input mező újra fókuszált állapotba kerül, így a felhasználó beírhatja a következő kifejezést.
+      {:db (r mount.events/header-did-mount db lister-id header-props)
+       :dispatch [:environment/reg-keypress-event! :item-lister/ESC
+                                                   {:key-code 27
+                                                    :on-keydown [:elements/empty-field! :item-lister/search-items-field]}]}))
 
 
 
@@ -56,4 +70,5 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r mount.events/header-will-unmount db lister-id)}))
+      {:db (r mount.events/header-will-unmount db lister-id)
+       :dispatch [:environment/remove-keypress-event! :item-lister/ESC]}))

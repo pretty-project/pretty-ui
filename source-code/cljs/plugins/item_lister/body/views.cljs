@@ -80,6 +80,7 @@
        (if select-mode? [elements/button {:disabled? lister-disabled?
                                           :on-click  [:item-lister/toggle-item-selection! lister-id item-dex]
                                           :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}])))
+                                         ;:color     (if item-selected? :primary :default)
 
 (defn list-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,7 +110,8 @@
   ;
   ; @param (keyword) lister-id
   [_]
-  [:<> [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+  [:<> [elements/horizontal-separator {:size :xxl}]
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-content-you-opened-may-be-broken :color :muted}]])
 
 (defn offline-body

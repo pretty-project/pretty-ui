@@ -119,7 +119,7 @@
   ;
   ; @param (keyword) editor-id
   [_]
-  [:<> ;[elements/horizontal-separator {:size :xxl}]
+  [:<> [elements/horizontal-separator {:size :xxl}]
        [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
        [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
 

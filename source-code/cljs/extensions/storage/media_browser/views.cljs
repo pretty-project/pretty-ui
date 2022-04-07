@@ -15,18 +15,6 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn on-click-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [id mime-type] :as media-item}]
-  (let [on-click (case mime-type "storage/directory" [:item-browser/browse-item! :storage.media-browser id]
-                                                     [:storage.media-browser/render-file-menu! media-item])]
-       [:item-browser/item-clicked :storage.media-browser item-dex {:on-click on-click}]))
-
-
-
 ;; -- Item-menu components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -112,25 +100,27 @@
 
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias content-size items modified-at] :as media-item}]
-  [item-browser/list-item item-dex {:icon           :navigate_next
-                                    :label          (str alias)
-                                    :description    (media-browser.helpers/directory-item->size   media-item)
-                                    :header         (media-browser.helpers/directory-item->header media-item)
-                                    :timestamp      (media-browser.helpers/media-item->timestamp  media-item)
-                                    :on-click       (on-click-event item-dex media-item)
-                                    :on-right-click [:storage.media-browser/render-directory-menu! media-item]}])
+  [item-dex {:keys [alias content-size id items modified-at] :as media-item}]
+  [item-browser/list-item :storage.media-browser item-dex
+                          {:icon           :navigate_next
+                           :label          (str alias)
+                           :description    (media-browser.helpers/directory-item->size   media-item)
+                           :header         (media-browser.helpers/directory-item->header media-item)
+                           :timestamp      (media-browser.helpers/media-item->timestamp  media-item)
+                           :on-click       [:item-browser/browse-item! :storage.media-browser id]
+                           :on-right-click [:storage.media-browser/render-directory-menu! media-item]}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias filename] :as media-item}]
-  [item-browser/list-item item-dex {:icon           :more_vert
-                                    :label          (str alias)
-                                    :description    (media-browser.helpers/file-item->size       media-item)
-                                    :header         (media-browser.helpers/file-item->header     media-item)
-                                    :timestamp      (media-browser.helpers/media-item->timestamp media-item)
-                                    :on-click       (on-click-event item-dex media-item)
-                                    :on-right-click [:storage.media-browser/render-file-menu! media-item]}])
+  [item-browser/list-item :storage.media-browser item-dex
+                          {:icon           :more_vert
+                           :label          (str alias)
+                           :description    (media-browser.helpers/file-item->size       media-item)
+                           :header         (media-browser.helpers/file-item->header     media-item)
+                           :timestamp      (media-browser.helpers/media-item->timestamp media-item)
+                           :on-click       [:storage.media-browser/render-file-menu! media-item]
+                           :on-right-click [:storage.media-browser/render-file-menu! media-item]}])
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

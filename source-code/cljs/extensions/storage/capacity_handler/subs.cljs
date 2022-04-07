@@ -16,24 +16,24 @@
   ;
   ; @return (B)
   [db _]
-  (or (get-in db [:storage :media-picker/browsed-item  :max-upload-size])
-      (get-in db [:storage :media-browser/browsed-item :max-upload-size])))
+  (or (get-in db [:storage :media-selector/browsed-item :max-upload-size])
+      (get-in db [:storage :media-browser/browsed-item  :max-upload-size])))
 
 (defn get-used-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
   [db _]
-  (or (get-in db [:storage :media-picker/browsed-item  :used-capacity])
-      (get-in db [:storage :media-browser/browsed-item :used-capacity])))
+  (or (get-in db [:storage :media-selector/browsed-item :used-capacity])
+      (get-in db [:storage :media-browser/browsed-item  :used-capacity])))
 
 (defn get-total-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (B)
   [db _]
-  (or (get-in db [:storage :media-picker/browsed-item  :total-capacity])
-      (get-in db [:storage :media-browser/browsed-item :total-capacity])))
+  (or (get-in db [:storage :media-selector/browsed-item :total-capacity])
+      (get-in db [:storage :media-browser/browsed-item  :total-capacity])))
 
 (defn get-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!

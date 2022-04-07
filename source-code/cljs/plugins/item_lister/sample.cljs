@@ -15,8 +15,8 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali [:item-lister/init-lister! ...]
-; eseményt használni!
+; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; [:item-lister/init-lister! ...] eseményt használni!
 
 
 
@@ -92,51 +92,6 @@
 (a/reg-event-fx
   :reload-my-items!
   [:item-lister/reload-items! :my-lister])
-
-
-
-;; -- Több listaelem kijelölése a SHIFT billentyű használatával (A) -----------
-;; ----------------------------------------------------------------------------
-
-(defn my-selectable-list-element
-  [lister-id item-dex item]
-  [elements/toggle {:content  [:div "My item"]
-                    :on-click [:my-list-element-clicked lister-id item-dex item]}])
-
-; Ha a listaelemek kijelölhetők és a lista-elemre kattintás pillanatában a SHIFT billenytű
-; lenyomott állapotban volt, akkor a toggle-item-selection? függvény visszatérési értéke TRUE.
-(a/reg-event-fx
-  :my-list-element-clicked
-  (fn [{:keys [db]} [_ lister-id item-dex item]]
-      (if (r item-lister/toggle-item-selection? db lister-id item-dex)
-          {:db (r item-lister/toggle-item-selection! db lister-id item-dex)}
-          [:my-event])))
-
-
-
-;; -- Több listaelem kijelölése a SHIFT billentyű használatával (B) -----------
-;; ----------------------------------------------------------------------------
-
-(defn your-selectable-list-element
-  [lister-id item-dex {:keys [id] :as item}]
-  (let [on-click [:router/go-to! (str "/@app-home/my-editor/" id)]]
-       [elements/toggle {:content  [:div "My item"]
-                         :on-click [:item-lister/item-clicked lister-id item-dex {:on-click on-click}]}]))
-
-
-
-;; -- Kontextus-menü használata a listaelemeken -------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn my-contextual-list-element
-  [lister-id item-dex item]
-  [elements/toggle {:content        [:div "My item"]
-                    :on-click       [:my-event]
-                    :on-right-click [:render-my-context-menu!]}])
-
-(a/reg-event-fx
-  :render-my-context-menu!
-  [:ui/add-popup! :my-context-menu {:body [:div "My context menu"]}])
 
 
 

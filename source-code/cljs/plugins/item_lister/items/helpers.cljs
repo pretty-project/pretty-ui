@@ -12,6 +12,7 @@
 (defn list-item-structure-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ; @param (map) item-props
   ;  {:class (keyword or keywords in vector)(opt)
@@ -22,7 +23,7 @@
   ;  {:class (keyword or keywords in vector)
   ;   :data-selected (boolean)
   ;   :style (map)}
-  [_ {:keys [class style selected?]}]
+  [_ _ {:keys [class style selected?]}]
   (cond-> {} class             (assoc :class         class)
              style             (assoc :style         style)
              (some? selected?) (assoc :data-selected selected?)))

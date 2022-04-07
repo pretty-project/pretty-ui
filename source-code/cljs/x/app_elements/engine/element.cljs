@@ -94,9 +94,25 @@
   ;   :id (string)
   ;   :key (string)}
   [element-id {:keys [class]}]
+  ; BUG#4044
+  ; Ha egy listában a listaelemek toggle elemet tartalmaznak és ...
+  ; ... a toggle elem nem kap egyedi azonosítót, mert ugyanaz az azonosító ismétlődne
+  ;     az összes listaelem toggle elemében,
+  ; ... a toggle elem {:hover-color ...} tulajdonsággal rendelkezik,
+  ; ... az element-default-attributes függvény React kulcsként alkalmazza az elemek
+  ;     azonosítóját,
+  ; ... az egyes listaelemekre kattintva olyan változás történik (pl. kijelölés),
+  ;     ami miatt az adott listaelem paraméterezése megváltozik,
+  ; akkor az egyes listaelemekre kattintva ...
+  ; ... a megváltozó paraméterek miatt a listaelem újrarenderelődik,
+  ; ... a listaelem toggle eleme is újrarenderelődik, ami miatt új azonosítót kap,
+  ; ... a toggle elem az új azonosítója miatt úja React kulcsot kap,
+  ; ... a toggle elem az új React kulcs beállításának pillanatában másik React-elemmé
+  ;     változik és a váltás közben Ca. 15ms ideig nem látszódik a {:hover-color ...}
+  ;     tulajdonság színe (rövid villanásnak tűnik)
   {:class (css/join-class :x-element class)
-   :id    (a/dom-value element-id)
-   :key   (a/dom-value element-id)})
+   :id    (a/dom-value element-id)})
+  ;:key   (a/dom-value element-id)
 
 (defn element-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

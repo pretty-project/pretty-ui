@@ -167,6 +167,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> ; Color and name
+       [elements/horizontal-separator {:size :xxl}]
        [client-label]
        [client-colors]
        [elements/horizontal-separator {:size :xxl}]

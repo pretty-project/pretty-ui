@@ -19,8 +19,10 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/menu-bar ::header-menu-items
-                     {:menu-items (header.helpers/header-menu-items editor-id)}])
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
+       [elements/menu-bar ::header-menu-items
+                          {:disabled?  editor-disabled?
+                           :menu-items (header.helpers/header-menu-items editor-id)}]))
 
 (defn header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

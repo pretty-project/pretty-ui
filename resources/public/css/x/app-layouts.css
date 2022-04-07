@@ -326,15 +326,24 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 
 .x-list-item-a--header {
   align-items: center;
-  background-color: var( --fill-color );
-  border-radius: 12px;
+  -background-color: var( --fill-color );
+  border-radius: var( --border-radius-s );
   display: flex;
   flex-direction: column;
   height: 60px;
   justify-content: center;
-  margin: 6px 12px;
+  margin: 6px;
   overflow: hidden;
   width: 60px }
+
+.x-list-item-a--header-icon {
+  align-items: center;
+  background-color: var( --fill-color );
+  border-radius: 50%;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100% }
 
 .x-list-item-a--header-thumbnail {
   left: 0;
@@ -386,10 +395,5 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 /*** List-item ***/
 
 /*** Selected list-item ***/
-
-.x-list-item-a[data-selected="true"] {
-  background-color: var( --soft-blue-xx-light );
-  border-radius: var( --border-radius-m ) }
-
 /*** Selected list-item ***/
 /***** List-item A *****/

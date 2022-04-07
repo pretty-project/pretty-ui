@@ -14,8 +14,8 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali [:item-editor/init-editor! ...]
-; eseményt használni!
+; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; [:item-editor/init-editor! ...] eseményt használni!
 
 
 
@@ -24,8 +24,8 @@
 
 (defn my-view
   []
-  [:<> [item-editor/header :my-editor {}]
-       [item-editor/body   :my-editor {:form-element [:div "My form"]}]])
+  [:<> [item-editor/body   :my-editor {:form-element [:div "My form"]}]
+       [item-editor/footer :my-editor {}]])
 
 
 
@@ -35,8 +35,8 @@
 (defn your-view
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :your-editor])]
-       [layouts/layout-a surface-id {:header [item-editor/header :your-editor {}]
-                                     :body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
+       [layouts/layout-a surface-id {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
+                                     :footer [item-editor/footer :your-editor {}]
                                      :description description}]))
 
 

@@ -192,3 +192,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/reset-selections! reset-selections!)

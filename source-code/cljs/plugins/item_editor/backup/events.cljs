@@ -62,7 +62,15 @@
   ;
   ; @return (map)
   [db [_ editor-id item-id]]
-  (if-let [recovery-mode? (r core.subs/get-meta-item db editor-id :recovery-mode?)]
+  ; Ha a clean-recovery-data! függvény alkalmazásakor ismételten ugyanaz az elem van megnyitva
+  ; szerkesztésre, akkor a függvény nem végez műveletet.
+  ; Pl.: A felhasználó a :plugins.item-editor/changes-discarded-dialog értesítésen
+  ;      a "Visszaállítás" lehetőséget választja és a szerkesztő {:recovery-mode? true}
+  ;      beállítással megnyitja ugyanazt az elemet szerkesztésre, mielőtt
+  ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
+  ; Pl.: A felhasználó újra megnyitja ugyanazt az elemet szerkesztésre, mielőtt
+  ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
+  (if-let [editing-item? (r core.subs/editing-item? db editor-id item-id)]
           (return db)
           (->     db (dissoc-in [:plugins :plugin-handler/backup-items  editor-id item-id])
                      (dissoc-in [:plugins :plugin-handler/local-changes editor-id item-id]))))

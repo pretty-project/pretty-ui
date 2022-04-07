@@ -505,20 +505,23 @@
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
+      ; - Az [:elements/empty-field! ...] esemény kizárólag abban az esetben törli a mező
+      ;   tartalmát, ha az input elem nincs disabled="true" állapotban, így elkerülhető
+      ;   a következő hiba:
+      ;   Pl.: A mező on-type-ended eseménye által indított request disabled="true" állapotba
+      ;        állítja a mezőt, és a szerver válaszának megérkezéséig disabled="true" állapotban
+      ;        levő (de fókuszált) mezőt lehetséges lenne kiüríteni az ESC billentyő megnyomásával,
+      ;        ami ismételten elindítaná a request-et (az on-empty esemény által)!
+      ;
+      ; - Ha a mező üres, akkor az [:elements/empty-field! ...] hatás nélkül történik meg.
+      ;
+      ; - Az {:on-empty [...]} tulajdonságként átadott esemény az {:on-type-ended [...]} tulajdonságként
+      ;   átadott eseményhez hasonlóan utolsó paraméterként megkapja a mező aktuális tartalmát ("").
       (if-let [input-enabled? (target-handler.helpers/element-id->target-enabled? field-id)]
-              ; Az [:elements/empty-field! ...] esemény kizárólag abban az esetben törli a mező
-              ; tartalmát, ha az input elem nincs disabled="true" állapotban, így elkerülhető
-              ; a következő hiba:
-              ; Pl.: A mező on-type-ended eseménye által indított request disabled="true" állapotba
-              ;      állítja a mezőt, és a szerver válaszának megérkezéséig disabled="true" állapotban
-              ;      levő (de fókuszált) mezőt lehetséges kiüríteni az ESC billentyő megnyomásával,
-              ;      ami ismételten elindítaná a request-et (az on-empty esemény által)!
               (if-let [field-filled? (r field-filled? db field-id)]
-                      ; Ha a mező üres, akkor az [:elements/empty-field! ...] hatás nélkül történik meg
-                      (let [on-empty    (r element/get-element-prop db field-id :on-empty)
-                            field-value (r get-field-value          db field-id)]
-                           {:db         (r empty-field-value!       db field-id)
-                            :dispatch   (a/metamorphic-event<-params on-empty field-value)})))))
+                      (let [on-empty (r element/get-element-prop db field-id :on-empty)]
+                           {:db       (r empty-field-value! db field-id)
+                            :dispatch (a/metamorphic-event<-params on-empty "")})))))
 
 (a/reg-event-fx
   :elements/field-blurred

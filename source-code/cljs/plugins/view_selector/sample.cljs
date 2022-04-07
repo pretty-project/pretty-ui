@@ -11,8 +11,8 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali [:view-selector/init-selector! ...]
-; eseményt használni!
+; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; [:view-selector/init-selector! ...] eseményt használni!
 
 
 

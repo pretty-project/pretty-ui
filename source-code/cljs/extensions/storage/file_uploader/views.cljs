@@ -122,7 +122,7 @@
   [uploader-id]
   (let [capacity-limit-exceeded? @(a/subscribe [:storage.file-uploader/capacity-limit-exceeded? uploader-id])
         free-capacity            @(a/subscribe [:storage.capacity-handler/get-free-capacity])
-        free-capacity             (-> free-capacity io/B->MB math/round)]
+        free-capacity             (-> free-capacity io/B->MB format/decimals)]
        [elements/text {:content {:content :available-capacity-in-storage-is :replacements [free-capacity]}
                        :font-size :xs :font-weight :bold :layout :fit
                        :color (if capacity-limit-exceeded? :warning :muted)}]))
@@ -133,8 +133,8 @@
   (let [files-size               @(a/subscribe [:storage.file-uploader/get-files-size           uploader-id])
         max-upload-size-reached? @(a/subscribe [:storage.file-uploader/max-upload-size-reached? uploader-id])
         max-upload-size          @(a/subscribe [:storage.capacity-handler/get-max-upload-size])
-        files-size      (-> files-size io/B->MB      format/decimals)
-        max-upload-size (-> max-upload-size io/B->MB math/round)]
+        files-size      (-> files-size      io/B->MB format/decimals)
+        max-upload-size (-> max-upload-size io/B->MB format/decimals)]
        [elements/text {:content {:content :uploading-size-is :replacements [files-size max-upload-size]}
                        :font-size :xs :font-weight :bold :layout :fit
                        :color (if max-upload-size-reached? :warning :muted)}]))
@@ -172,12 +172,13 @@
         filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
         object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [item-browser/list-item file-dex {:label       (str filename)
-                                         :description (media-browser.helpers/file-item->size   {:filesize filesize})
-                                         :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
-                                         :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
-                                         :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
-                                         :style       (if file-cancelled? {:opacity 0.5})}]))
+       [item-browser/list-item :storage.file-uploader file-dex
+                               {:label       (str filename)
+                                :description (media-browser.helpers/file-item->size   {:filesize filesize})
+                                :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
+                                :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
+                                :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
+                                :style       (if file-cancelled? {:opacity 0.5})}]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

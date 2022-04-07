@@ -4,13 +4,13 @@
 
 (ns extensions.playground.view-selector.views
     (:require [dom.api                                     :as dom]
-              [extensions.playground.core.config           :as core.config]
               [extensions.playground.view-selector.helpers :as view-selector.helpers]
               [mid-fruits.candy                            :refer [param return]]
               [mid-fruits.form                             :as form]
               [mid-fruits.gestures                         :as gestures]
               [mid-fruits.keyword                          :as keyword]
               [mid-fruits.loop                             :as loop :refer [reduce-indexed]]
+              [mid-fruits.lorem-ipsum                      :as lorem-ipsum]
               [mid-fruits.map                              :as map]
               [mid-fruits.math                             :refer [calc]]
               [mid-fruits.mixed                            :as mixed]
@@ -233,16 +233,16 @@
        [section-header {:label "Switch"}]
        [elements/switch ::switch-1
                         {:label "Switch #1"
-                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+                         :info-tooltip lorem-ipsum/SHORT}]
        [elements/switch ::switch-2
                         {:label "Switch #2"
-                         :info-tooltip "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                         :info-tooltip lorem-ipsum/SHORT
                          :default-value true}]
        [section-footer]
        [section-header {:label "Checkbox"}]
        [elements/checkbox ::checkbox-1
                           {:label "Checkbox #1"
-                           :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                           :helper lorem-ipsum/SHORT
                            :required? true}]
        [elements/checkbox ::checkbox-2
                           {:label "Checkbox #2"
@@ -269,7 +269,7 @@
        [section-header {:label "Counter"}]
        [elements/counter ::counter-1
                          {:label "Counter #1" :resetable? true :initial-value 420
-                          :helper "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}]
+                          :helper lorem-ipsum/SHORT}]
        [elements/counter ::counter-2
                          {:label "Counter #2" :resetable? true :initial-value 420}]])
 
@@ -297,19 +297,19 @@
        [elements/label {:content "Follow the white rabbit!" :font-size :xxl}]
        [section-footer]
        [section-header {:label "Text"}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :xxs :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :xxs :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :xs  :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :xs  :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :s   :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :s   :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :m   :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :m   :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :l   :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :l   :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :xl  :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :xl  :style {:max-width "720px"}}]
        [elements/horizontal-separator {:size :l}]
-       [elements/text {:content core.config/LOREM-IPSUM :font-size :xxl :style {:max-width "720px"}}]
+       [elements/text {:content lorem-ipsum/LONG :font-size :xxl :style {:max-width "720px"}}]
        [section-footer]])
 
 (defn debug-keypress-handler
