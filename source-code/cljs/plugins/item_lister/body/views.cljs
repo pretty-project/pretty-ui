@@ -113,7 +113,7 @@
   ; @param (keyword) lister-id
   [_]
   [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m}]
+       [elements/label {:min-height :m :content :an-error-occured :font-size :m       :color :warning}]
        [elements/label {:min-height :m :content :the-content-you-opened-may-be-broken :color :muted}]])
 
 (defn offline-body

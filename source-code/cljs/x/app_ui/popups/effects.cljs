@@ -17,10 +17,7 @@
   :ui/add-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ;  {:autopadding? (boolean)(opt)
-  ;    Default: true
-  ;    Only w/ {:layout :boxed}
-  ;   :body (metamorphic-content)
+  ;  {:body (metamorphic-content)
   ;   :destructor (metamorphic-event)(opt)
   ;   :footer (metamorphic-content)(opt)
   ;   :header (metamorphic-content)(opt)

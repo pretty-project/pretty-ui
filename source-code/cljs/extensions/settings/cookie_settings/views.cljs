@@ -21,15 +21,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::save-button
-                   {:preset  :save-button
-                    :variant :transparent
+                   {:preset   :save-button
+                    :variant  :transparent
                     :on-click {:dispatch-n [[:ui/close-popup! :settings.cookie-settings/view]
                                             [:environment/cookie-settings-changed]]}}])
 
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [elements/label {:content :privacy-settings :indent :both}])
+  [])
+  ;[elements/label {:content :privacy-settings :indent _}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -80,14 +80,12 @@
        [elements/switch ;::necessary-cookies-switch
                         {:disabled?     true
                          :initial-value true
-                         :indent        :none
                          :label         :necessary-cookies
                          :value-path [:environment :cookie-handler/meta-items :necessary-cookies-enabled?]}]
 
        ; BUG#1294
        [elements/switch ;::user-experience-cookies-switch
                         {:initial-value true
-                         :indent        :none
                          :label         :user-experience-cookies
                          :value-path [:environment :cookie-handler/meta-items :user-experience-cookies-enabled?]
                          :on-check   [:environment/cookie-settings-changed]
@@ -95,7 +93,6 @@
        ; BUG#1294
        [elements/switch ;::analytics-cookies-switch
                         {:initial-value true
-                         :indent        :none
                          :label         :analytics-cookies
                          :value-path [:environment :cookie-handler/meta-items :analytics-cookies-enabled?]
                          :on-check   [:environment/cookie-settings-changed]

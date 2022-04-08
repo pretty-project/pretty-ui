@@ -35,23 +35,19 @@
   ;  {:disabled? (boolean)(opt)
   ;   :href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)
-  ;   :on-right-click (metamorphic-event)(opt)
-  ;   :tooltip (metamorphic-content)(opt)}
+  ;   :on-right-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:data-tooltip (string)
-  ;   :disabled (boolean)
+  ;  {:disabled (boolean)
   ;   :href (string)
   ;   :id (string)
   ;   :on-click (function)
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
-  [element-id {:keys [disabled? href on-click on-right-click tooltip]}]
+  [element-id {:keys [disabled? href on-click on-right-click]}]
   (cond-> {:id (target-handler.helpers/element-id->target-id element-id)}
-          (boolean disabled?) (merge {:disabled     true
-                                      :data-tooltip (components/content {:content tooltip})})
-          (not     disabled?) (merge {:data-tooltip (components/content {:content tooltip})
-                                      :href         (param href)
+          (boolean disabled?) (merge {:disabled true})
+          (not     disabled?) (merge {:href         (param href)
                                       ; A stated & clickable elemek on-click eseménye elérhető a Re-Frame
                                       ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
                                       ; a keypress-handler által is vezérelhetővé tenni a clickable

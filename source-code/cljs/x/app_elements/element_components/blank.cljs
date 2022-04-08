@@ -49,6 +49,9 @@
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
   ;      :icon (keyword)
+  ;      :icon-color (keyword)(opt)
+  ;       :default, :primary, :secondary
+  ;       Default: :default
   ;      :icon-family (keyword)(opt)
   ;       :material-icons-filled, :material-icons-outlined
   ;       Default: :material-icons-filled

@@ -37,29 +37,28 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:disable-autofill? (boolean)(opt)}
+  ;  {:autofill? (boolean)(opt)}
   ;
   ; @return (map)
   ;  {:end-adornments (maps in vector)
-  ;   :disable-autofill? (boolean)
-  ;   :layout (keyword)
   ;   :name (keyword)
   ;   :type (keyword)}
-  [field-id {:keys [disable-autofill?] :as field-props}]
-  (merge {:layout     :row
-          :type       :text
-          :value-path (engine/default-value-path field-id)
-          :disable-autofill? true}
+  [field-id {:keys [autofill?] :as field-props}]
+  (merge {:type       :text
+          :value-path (engine/default-value-path field-id)}
           ; BUG#6782 https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
-          ; - A Chrome böngésző - ignorálja az {:autocomplete "off"} beállítást
-          ;                     - ignorálja az {:autocomplete "new-*"} beállítást
-          ;                     - figyelembe veszi a {:name ...} értékét
+          ; - A Chrome böngésző ...
+          ;   ... ignorálja az {:autocomplete "off"} beállítást,
+          ;   ... ignorálja az {:autocomplete "new-*"} beállítást,
+          ;   ... figyelembe veszi a {:name ...} értékét.
+          ;
           ; - Véletlenszerű {:name ...} érték használatával az autofill nem képes megállapítani,
           ;   mi alapján ajánljon értékeket a mezőhöz.
+          ;
           ; - A mező {:name ...} tulajdonságát lehetséges paraméterként is beállítani, mert a
           ;   a több helyen felhasznált mezők nem kaphatnak egyedi azonosítót, és generált
           ;   azonosítóval nem műkdödik az autofill!
-         {:name (if (= disable-autofill? false) field-id (a/id))}
+         {:name (if autofill? field-id (a/id))}
          (param field-props)
          {:end-adornments (end-adornments-prototype field-id field-props)}))
 
@@ -209,14 +208,14 @@
 (defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:auto-focus? (boolean)(constant)(opt)
+  ;  {:autofill? (boolean)(opt)
+  ;    Default: false
+  ;   :auto-focus? (boolean)(constant)(opt)
   ;   :border-color (keyword)(opt)
   ;    :default, :primary, :secondary
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :default-value (string)(constant)(opt)
-  ;   :disable-autofill? (boolean)(opt)
-  ;    Default: true
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :end-adornments (maps in vector)(opt)
@@ -236,17 +235,19 @@
   ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both, :none
-  ;    Default: :none
+  ;   :indent (map)(opt)
+  ;    {:bottom (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :left (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :right (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :top (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :info-tooltip (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
-  ;    Default: false
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none

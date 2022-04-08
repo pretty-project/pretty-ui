@@ -4,10 +4,14 @@
 body[data-theme="dark"] {
   /* App background */
   --app-background-color:       var( --black );
+  --app-background-pattern-color: var( --black-dark );
   /* App overlay */
   --app-overlay-color:          var( --black-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --black-x-light );
+  /* Scroll-shadow */
+  --scroll-shadow-bottom:       0  6px 6px -6px #5c5c5c;
+  --scroll-shadow-top:          0 -6px 6px -6px #5c5c5c;
   /* Background color */
   --background-color:           var( --black-dark );
   --background-color-muted:     var( --grey-x-dark );
@@ -39,10 +43,14 @@ body[data-theme="light"] {
   --app-background-color:       #d7dde8;
   --app-background-color:       #e7edf8;
   --app-background-color:       #ebf2fc;
+  --app-background-pattern-color: #e5e9f6;
   /* App overlay */
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --white-xx-light );
+  /* Scroll-shadow */
+  --scroll-shadow-bottom:       0  6px 6px -6px #bcbcbc;
+  --scroll-shadow-top:          0 -6px 6px -6px #bcbcbc;
   /* Background color */
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );

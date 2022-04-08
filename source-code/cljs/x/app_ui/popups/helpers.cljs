@@ -33,7 +33,5 @@
   ; @param (keyword) popup-id
   ;
   ; @return (map)
-  ;  {:data-autopadding (boolean)}
   [popup-id]
-  (let [autopadding? @(a/subscribe [:ui/get-popup-prop popup-id :autopadding?])]
-       (merge {} (if autopadding? {:data-autopadding true}))))
+  {})

@@ -14,6 +14,10 @@
 
 # x4.6.0
 
+- Fájlfeltöltéskor a line-diagram fél másodpercenként új id-t kap.
+  Egyáltalán kell az elemeknek, hogy dom id-ként megkapják az id-t?
+  Soha sehol nem volt még megtargetelve!
+
 - A field input mezők teljesítményét nagymértékben javítaná, ha a mező aktuális értéke,
   nem írás közben íróda a Re-Frame adatbázisba, hanem az :on-blur esemény megtörténésekor
   (az :on-type-ended eseménynek is kell írnia!)

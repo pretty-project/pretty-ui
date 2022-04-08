@@ -23,7 +23,7 @@
   []
   (let [synchronizing? @(a/subscribe [:sync/listening-to-request? :user/authenticate!])]
        [elements/text-field ::email-address-field
-                            {:disable-autofill? false
+                            {:autofill?  true
                              :min-width  :s
                              :label      :email-address
                              :value-path [:views :login-box/data-items :email-address]
@@ -34,7 +34,7 @@
   []
   (let [synchronizing? @(a/subscribe [:sync/listening-to-request? :user/authenticate!])]
        [elements/password-field ::password-field
-                                {:disable-autofill? false
+                                {:autofill?  true
                                  :min-width  :s
                                  :value-path [:views :login-box/data-items :password]
                                  :disabled?  synchronizing?}]))

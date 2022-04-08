@@ -16,7 +16,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [elements/button :header-cancel-button
-                   {:preset :cancel-button :indent :both :keypress {:key-code 27}
+                   {;:preset :cancel-button :indent _ :keypress {:key-code 27}
                     :on-click [:ui/close-popup! :storage.media-picker/view]}])
 
 (defn header-label
@@ -32,7 +32,7 @@
   (let [no-items-selected? @(a/subscribe [:storage.media-picker/no-items-selected?])]
        [elements/button :header-select-button
                         {:disabled? no-items-selected?
-                         :preset :select-button :indent :both :keypress {:key-code 13}
+                         ;:preset :select-button :indent _ :keypress {:key-code 13}
                          :on-click [:storage.media-picker/save-selected-items!]}]))
 
 (defn header-label-bar

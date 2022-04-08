@@ -53,8 +53,10 @@
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
         line-color (cond request-aborted? :muted request-failured? :warning :default :primary)]
-       [elements/line-diagram {:indent :both :sections [{:color line-color :value        uploader-progress}
-                                                        {:color :highlight :value (- 100 uploader-progress)}]}]))
+       [elements/line-diagram {:indent   {:vertical :xs :bottom :xxs}
+                               :sections [{:color line-color :value        uploader-progress}
+                                          {:color :highlight :value (- 100 uploader-progress)}]}]))
+
 
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -66,20 +68,19 @@
         file-count        @(a/subscribe [:storage.file-uploader/get-uploading-file-count uploader-id])
         progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
         label (cond files-uploaded? :files-uploaded request-aborted? :aborted request-failured? :file-upload-failure :default progress-label)]
-       [elements/label {:content label :font-size :xs :color :default :layout :fit :indent :left :min-height :l}]))
+       [elements/label {:content label :font-size :xs :color :default :indent {:left :xs :horizontal :xxs}}]))
 
 (defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (let [request-id     (file-uploader.helpers/request-id uploader-id)
         request-sent? @(a/subscribe [:sync/request-sent? request-id])]
-       (if request-sent? [:<> [elements/horizontal-separator {:size :m}]
-                              [elements/row {:content [:<> [progress-label        uploader-id]
+       (if request-sent? [:<> [elements/row {:content [:<> [progress-label        uploader-id]
                                                            [abort-progress-button uploader-id]]
-                                             :horizontal-align :space-between}]
+                                             :horizontal-align :space-between
+                                             :indent {:top :xs}}]
                               [:div {:style {:width "100%"}}
-                                    [progress-diagram uploader-id]]
-                              [elements/horizontal-separator {:size :xs}]])))
+                                    [progress-diagram uploader-id]]])))
 
 (defn- progress-list
   ; WARNING!
@@ -104,7 +105,7 @@
   [uploader-id]
   [elements/button ::cancel-upload-button
                    {:on-click [:storage.file-uploader/cancel-uploader! uploader-id]
-                    :preset :cancel-button :indent :both :keypress {:key-code 27}}])
+                    :preset :cancel-button :indent {:left :xs} :keypress {:key-code 27}}])
 
 (defn- upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,7 +116,7 @@
        [elements/button ::upload-files-button
                         {:disabled? (or all-files-cancelled? max-upload-size-reached? capacity-limit-exceeded?)
                          :on-click [:storage.file-uploader/start-progress! uploader-id]
-                         :preset :upload-button :indent :both :keypress {:key-code 13}}]))
+                         :preset :upload-button :indent {:right :xs} :keypress {:key-code 13}}]))
 
 (defn- available-capacity-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,7 +125,7 @@
         free-capacity            @(a/subscribe [:storage.capacity-handler/get-free-capacity])
         free-capacity             (-> free-capacity io/B->MB format/decimals)]
        [elements/text {:content {:content :available-capacity-in-storage-is :replacements [free-capacity]}
-                       :font-size :xs :font-weight :bold :layout :fit
+                       :font-size :xs :font-weight :bold
                        :color (if capacity-limit-exceeded? :warning :muted)}]))
 
 (defn- uploading-size-label
@@ -136,7 +137,7 @@
         files-size      (-> files-size      io/B->MB format/decimals)
         max-upload-size (-> max-upload-size io/B->MB format/decimals)]
        [elements/text {:content {:content :uploading-size-is :replacements [files-size max-upload-size]}
-                       :font-size :xs :font-weight :bold :layout :fit
+                       :font-size :xs :font-weight :bold
                        :color (if max-upload-size-reached? :warning :muted)}]))
 
 (defn- file-upload-summary
@@ -187,4 +188,5 @@
        (letfn [(f [file-list file-dex]
                   (conj file-list ^{:key (str uploader-id file-dex)}
                                    [file-item uploader-id file-dex]))]
-              (reduce f [:div {:style {:width "100%"}}] (range file-count)))))
+              [:<> (reduce f [:<>] (range file-count))
+                   [elements/horizontal-separator {:size :s}]])))

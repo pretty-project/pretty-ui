@@ -8,16 +8,6 @@
  *  app-width = 100vw - app-edge
  *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-width értéke 100vw.
  *
- * @name content-edge
- *  - A fejlécekben (egyes esetekben) a megjelenített gombok és más elemek esztétikati távolságot
- *    igényelnek a fejléc szélétől (pl.: feliratos gombok, feliratos ikon-gombok, stb.)
- *  - A tartalmat megjelenítő elemekben (egyes esetekben) a tartalom esztétikai távolságot igényel
- *    az elem szélétől.
- *  - Ezt a távolságot a content-edge értéke adja, amelyet mindkét esetben alkalmazva a fejlécek
- *    elemei és az alattuk lévő tartalom azonos méretű behúzással jelenik meg.
- *    A fejléc és a tartalom elemeinek azonos méretű behúzása esztétikai és gyakorlati szempontból
- *    is szükséges!
- *
  * @name content-width
  *  ...
  */
@@ -245,13 +235,6 @@ body[data-viewport-profile="xxs"] {
 
 /*** App ***/
 
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 6px;
-
-/*** Content edge ***/
-
 /*** Content width ***/
 
   --content-width-xxs: var( --app-width );
@@ -280,13 +263,6 @@ body[data-viewport-profile="xs"] {
 --app-width: 100vw;
 
 /*** App ***/
-
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 6px;
-
-/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -317,13 +293,6 @@ body[data-viewport-profile="s"] {
 
 /*** App ***/
 
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 6px;
-
-/*** Content edge ***/
-
 /*** Content width ***/
 
 --content-width-xxs: 305px;
@@ -351,13 +320,6 @@ body[data-viewport-profile="m"] {
 --app-width: calc(100vw - 24px);
 
 /*** App ***/
-
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 12px;
-
-/*** Content edge ***/
 
 /*** Content width ***/
 
@@ -387,13 +349,6 @@ body[data-viewport-profile="l"] {
 
 /*** App ***/
 
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 12px;
-
-/*** Content edge ***/
-
 /*** Content width ***/
 
 --content-width-xxs: 305px;
@@ -422,13 +377,6 @@ body[data-viewport-profile="xl"] {
 
 /*** App ***/
 
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 12px;
-
-/*** Content edge ***/
-
 /*** Content width ***/
 
 --content-width-xxs:  305px;
@@ -456,13 +404,6 @@ body[data-viewport-profile="xxl"] {
 --app-width: calc(100vw - 24px);
 
 /*** App ***/
-
-/*** Content edge ***/
-
-/* XXX#2981 */
---content-edge: 12px;
-
-/*** Content edge ***/
 
 /*** Content width ***/
 

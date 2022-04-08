@@ -31,8 +31,7 @@
   ; @param (map) popup-props
   ;
   ; @return (map)
-  ;  {:autopadding? (boolean)
-  ;   :hide-animated? (boolean)
+  ;  {:hide-animated? (boolean)
   ;   :horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :min-width (keyword)
@@ -40,8 +39,7 @@
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
   [db [_ popup-id popup-props]]
-  (merge {:autopadding?     true
-          :hide-animated?   true
+  (merge {:hide-animated?   true
           :horizontal-align :center
           :layout           :boxed
           :min-width        :m

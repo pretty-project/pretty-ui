@@ -36,8 +36,9 @@
   (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
        [elements/search-field :item-lister/search-items-field
-                              {:auto-focus? true :layout :row :min-width :xs :placeholder :search
+                              {:auto-focus? true :min-width :xs :placeholder :search
                                :disabled?     (or error-mode? lister-disabled?)
+                               :indent        {:top :xxs :right :xxs}
                                :on-empty      [:item-lister/search-items!          lister-id]
                                :on-type-ended [:item-lister/search-items!          lister-id]
                                :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]))

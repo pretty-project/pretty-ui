@@ -21,13 +21,11 @@
   ; @return (map)
   ;  {:font-size (keyword)
   ;   :horizontal-align (keyword)
-  ;   :layout (keyword)
   ;   :selectable? (boolean)}
   [text-props]
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
-          :layout           :row
           :selectable?      true}
          (param text-props)))
 
@@ -67,12 +65,15 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :left
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both, :none
-  ;    Default: :none
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
+  ;   :indent (map)(opt)
+  ;    {:bottom (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :left (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :right (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :top (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :selectable? (boolean)(opt)
   ;    Default: true
   ;   :style (map)(opt)}

@@ -80,7 +80,7 @@
   [_ _]
   [elements/text-field ::api-key-field
                        {:label "API key"
-                        :min-width :s :indent :both :disable-autofill? false :name :favorite-color
+                        :min-width :s :indent :both :autofill? true :name :favorite-color
                         :value-path [:trader :account :api-key]}])
 
 (defn- api-secret-field

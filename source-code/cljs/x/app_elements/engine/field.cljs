@@ -250,7 +250,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(opt)
-  ;   :disable-autofill? (boolean)(opt)
   ;   :disabled? (boolean)(opt)
   ;   :max-length (integer)(opt)
   ;   :name (keyword)
@@ -270,7 +269,7 @@
   ;   :on-change (function)
   ;   :style (map)
   ;   :value (string)}
-  [field-id {:keys [auto-focus? disable-autofill? disabled? max-length name surface type value] :as field-props}]
+  [field-id {:keys [auto-focus? disabled? max-length name surface type value] :as field-props}]
           ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
           ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
           ; minden esetben elérhető.

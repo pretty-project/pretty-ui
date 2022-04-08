@@ -21,7 +21,7 @@
 (defn media-menu-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias] :as media-item}]
-  [elements/label {:color :muted :indent :left :content alias :font-size :xs}])
+  [elements/label {:color :muted :indent {:left :xs} :content alias :font-size :xs}])
 
 (defn media-menu-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

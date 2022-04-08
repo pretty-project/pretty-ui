@@ -211,9 +211,7 @@
   justify-content: center;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
-  overflow: hidden;
-  /* XXX#2981 */
-  padding: 0 var( --content-edge ) }
+  overflow: hidden }
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
@@ -245,7 +243,6 @@
   display: flex;
   justify-content: space-between;
   max-width: var( --content-width-l );
-  padding: 0 var( --content-edge );
   width: 100% }
 
 #x-app-header--title {
@@ -382,14 +379,14 @@
 /*** Popup body ***/
 
 .x-app-popups--element--body {
-  display: flex;
-  flex-direction: column;
+
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  -display: flex;
+  -flex-direction: column;
+  /* WARNING! DEPRECATED! DO NOT USE! */
+
   flex-grow: 1;
   overflow-y: auto }
-
-[data-layout="boxed"] [data-autopadding="true"],
-[data-layout="flip"]  [data-autopadding="true"] {
-  padding: 0 var( --content-edge ) 12px var( --content-edge ) }
 
 /*** Popup body ***/
 
@@ -407,8 +404,6 @@
 
 .x-app-popups--element--header {
   overflow-x: auto;
-  /* XXX#2981 */
-  padding: 0 var( --content-edge );
 
   /* WARNING! DEPRECATED!
    * A select elem abban az esetben is használja a popup {:header ...} tulajdonságát,

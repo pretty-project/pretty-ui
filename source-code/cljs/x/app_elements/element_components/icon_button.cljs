@@ -75,8 +75,9 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
-  [:div.x-icon-button (engine/element-attributes   button-id button-props)
+  [button-id {:keys [tooltip] :as button-props}]
+  [:div.x-icon-button (engine/element-attributes   button-id button-props
+                        (if tooltip {:data-tooltip (components/content {:content tooltip})}))
                       [icon-button-body            button-id button-props]
                       [engine/element-info-tooltip button-id button-props]])
 
@@ -113,9 +114,15 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both, :none
-  ;    Default: :none
+  ;   :indent (map)(opt)
+  ;    {:bottom (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :left (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :right (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :top (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :keypress (map)(constant)(opt)
   ;    {:key-code (integer)
   ;     :required? (boolean)(opt)

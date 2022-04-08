@@ -773,8 +773,8 @@ button.x-card:focus,
    * esetleges ugrását okozná (a szöveg tényleges megjelenésekor) */
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
-  line-height: var( --line-height-xxs );
-  min-height: var( --line-height-xxs ) }
+  line-height: 24px;
+  min-height: 24px }
 
 .x-label[data-font-size="xs"] .x-label--icon {
   font-size: var( --icon-size-xxs ) }
@@ -809,8 +809,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs );
-  min-height: var( --line-height-xs ) }
+  line-height: 24px;
+  min-height: 24px }
 
 .x-label[data-font-size="xs"] .x-label--icon {
   font-size: var( --icon-size-xxs ) }
@@ -828,7 +828,6 @@ button.x-card:focus,
 
 .x-anchor[data-font-size="s"],
 .x-button[data-font-size="s"],
-.x-label[data-font-size="s"],
 .x-table[data-font-size="s"],
 .x-text[data-font-size="s"] {
   font-size: var( --font-size-s );
@@ -846,8 +845,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  min-height: var( --line-height-s ) }
+  line-height: 24px;
+  min-height: 24px }
 
 .x-label[data-font-size="s"] .x-label--icon {
   font-size: var( --icon-size-xs ) }
@@ -877,8 +876,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
-  line-height: var( --line-height-m );
-  min-height: var( --line-height-m ) }
+  line-height: 24px;
+  min-height: 24px }
 
 .x-label[data-font-size="m"] .x-label--icon {
   font-size: var( --icon-size-s ) }
@@ -907,8 +906,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
-  line-height: var( --line-height-l );
-  min-height: var( --line-height-l ) }
+  line-height: 48px;
+  min-height: 48px }
 
 .x-label[data-font-size="l"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -937,8 +936,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
-  line-height: var( --line-height-xl );
-  min-height: var( --line-height-xl ) }
+  line-height: 48px;
+  min-height: 48px }
 
 .x-label[data-font-size="xl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -967,8 +966,8 @@ button.x-card:focus,
   /* XXX#9811 */
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
-  line-height: var( --line-height-xxl );
-  min-height: var( --line-height-xxl ) }
+  line-height: 48px;
+  min-height: 48px }
 
 .x-label[data-font-size="xxl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -1044,6 +1043,7 @@ button.x-card:focus,
 
 /*** Vertical orientation ***/
 /***** Orientation profiles *****/
+
 
 
 
@@ -1364,61 +1364,6 @@ button.x-card:focus,
 
 
 /***** Element info *****/
-/*** Tooltip ***/
-
-[data-tooltip]::after {
-  align-items: center;
-  background-color: transparent;
-  content: attr(data-tooltip);
-  display: flex;
-  flex-direction: column;
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  height: 100%;
-  justify-content: center;
-  line-height: 16px; /* 48px / 3sor = 16px / 1sor */
-  letter-spacing: var( --letter-spacing-xxs );
-  min-width: 100%;
-  position: absolute;
-  transform: scaleX(0);
-  /* Az x4.4.9 verzióig a tooltip feliratok .35s késleltetéssel jelentek meg és tűntek el.
-   * A késleltetés miatt akadozva történt meg a felirat lecserélése az ikon-gombokon, amikor
-   * azok egyik állapotukból egy másik állapotukba léptek és az újrarendereléssel járó felirat
-   * és ikon csere történt. */
-  transition: .1s transform, .1s background-color }
-
-.x-button [data-tooltip]::after,
-.x-icon-button [data-tooltip]::after {
-  /* - Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
-   *   sarkú menükön elhelyezett ikon-gombokon a tooltip pszeudo-elem sarka ne lógjon túl
-   *   a menü lekerekített sarkán.
-   * - 36px elég, hogy eltakaraja a gomb ikonját, és 2 sor szöveg elfér benne.
-   * - Abban az esetben, ha a tooltip tartalma 3 sorban jelenik meg, akkor a tooltip pszeudo-elem
-   *   magassága 48px értékre növekszik. */
-  -min-height: 36px }
-
-[data-touch-detected="false"] [data-tooltip]:active:hover::after {
-  /* BUG#4140
-   * Ha a gombra kattintáskor megváltozik annak állapota, ami a gomb újrarenderelését
-   * okozza, akkor a tooltip felirat eltűnik, majd újra megjelenik (villog) */
-  transform: scaleX(0) }
-
-[data-touch-detected="false"] [data-tooltip]:hover::after {
-  /* BUG#8094
-   * Az ikon-gombokon megjelenített az ikon-gombnál szélesebb tartalmú tooltip kilógna az ikon-gomb
-   * területéről és emiatt amikor az ikon-gomb [data-disabled="true"] állapotban van, akkor a tooltip
-   * kilógó részén működne a gomb érzékelése!
-   * Ezért az eredetileg {opacity: 0} tulajdonsággal eltűntetett tooltip pszeudo-elemet
-   * {transform: scaleX(0)} tulajdonsággal szükséges eltűntetni.
-   * A {background-color: transparent} és a {transform: scaleX(0)} tulajdonság egyidejű
-   * használatával esztétikusa a tooltip pszeudo-elem eltűntetése.
-   * A tooltip pszeudo-elemet {display: none} tulajdonsággal csak animáció és késleltetés nélkül
-   * lenne lehetséges eltűntetni ... */
-  background-color: var( --background-color );
-  transform: scaleX(1);}
-
-/*** Tooltip ***/
-
 /*** Helper ***/
 
 .x-element--helper {
@@ -1546,13 +1491,34 @@ body[data-viewport-profile="s"]
 
 /***** Element indent *****/
 
-.x-element[data-indent="left"],
-.x-element[data-indent="both"] {
-  margin-left: 12px }
-
-.x-element[data-indent="right"],
-.x-element[data-indent="both"] {
-  margin-right: 12px }
+.x-element[data-indent-bottom="xxs"] { margin-bottom:  6px }
+.x-element[data-indent-bottom="xs"]  { margin-bottom: 12px }
+.x-element[data-indent-bottom="s"]   { margin-bottom: 18px }
+.x-element[data-indent-bottom="m"]   { margin-bottom: 24px }
+.x-element[data-indent-bottom="l"]   { margin-bottom: 36px }
+.x-element[data-indent-bottom="xl"]  { margin-bottom: 42px }
+.x-element[data-indent-bottom="xxl"] { margin-bottom: 48px }
+.x-element[data-indent-left="xxs"]   { margin-left:    6px }
+.x-element[data-indent-left="xs"]    { margin-left:   12px }
+.x-element[data-indent-left="s"]     { margin-left:   18px }
+.x-element[data-indent-left="m"]     { margin-left:   24px }
+.x-element[data-indent-left="l"]     { margin-left:   36px }
+.x-element[data-indent-left="xl"]    { margin-left:   42px }
+.x-element[data-indent-left="xxl"]   { margin-left:   48px }
+.x-element[data-indent-right="xxs"]  { margin-right:   6px }
+.x-element[data-indent-right="xs"]   { margin-right:  12px }
+.x-element[data-indent-right="s"]    { margin-right:  18px }
+.x-element[data-indent-right="m"]    { margin-right:  24px }
+.x-element[data-indent-right="l"]    { margin-right:  36px }
+.x-element[data-indent-right="xl"]   { margin-right:  42px }
+.x-element[data-indent-right="xxl"]  { margin-right:  48px }
+.x-element[data-indent-top="xxs"]    { margin-top:     6px }
+.x-element[data-indent-top="xs"]     { margin-top:    12px }
+.x-element[data-indent-top="s"]      { margin-top:    18px }
+.x-element[data-indent-top="m"]      { margin-top:    24px }
+.x-element[data-indent-top="l"]      { margin-top:    36px }
+.x-element[data-indent-top="xl"]     { margin-top:    42px }
+.x-element[data-indent-top="xxl"]    { margin-top:    48px }
 
 /***** Element indent *****/
 
@@ -1615,6 +1581,61 @@ body[data-viewport-profile="s"]
 
 
 /***** Button *****/
+/*** Tooltip ***/
+
+.x-icon-button[data-tooltip]::after {
+  align-items: center;
+  background-color: transparent;
+  content: attr(data-tooltip);
+  display: flex;
+  flex-direction: column;
+  font-size: var( --font-size-xxs );
+  font-weight: 500;
+  height: 100%;
+  justify-content: center;
+  line-height: 16px; /* 48px / 3sor = 16px / 1sor */
+  letter-spacing: var( --letter-spacing-xxs );
+  min-width: 100%;
+  position: absolute;
+  -transform: scaleX(0);
+  /* Az x4.4.9 verzióig a tooltip feliratok .35s késleltetéssel jelentek meg és tűntek el.
+   * A késleltetés miatt akadozva történt meg a felirat lecserélése az ikon-gombokon, amikor
+   * azok egyik állapotukból egy másik állapotukba léptek és az újrarendereléssel járó felirat
+   * és ikon csere történt. */
+  -transition: .1s transform, .1s background-color }
+
+.x-button [data-tooltip]::after,
+.x-icon-button [data-tooltip]::after {
+  /* - Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
+   *   sarkú menükön elhelyezett ikon-gombokon a tooltip pszeudo-elem sarka ne lógjon túl
+   *   a menü lekerekített sarkán.
+   * - 36px elég, hogy eltakaraja a gomb ikonját, és 2 sor szöveg elfér benne.
+   * - Abban az esetben, ha a tooltip tartalma 3 sorban jelenik meg, akkor a tooltip pszeudo-elem
+   *   magassága 48px értékre növekszik. */
+  -min-height: 36px }
+
+[data-touch-detected="false"] [data-tooltip]:active:hover::after {
+  /* BUG#4140
+   * Ha a gombra kattintáskor megváltozik annak állapota, ami a gomb újrarenderelését
+   * okozza, akkor a tooltip felirat eltűnik, majd újra megjelenik (villog) */
+  transform: scaleX(0) }
+
+[data-touch-detected="false"] [data-tooltip]:hover::after {
+  /* BUG#8094
+   * Az ikon-gombokon megjelenített az ikon-gombnál szélesebb tartalmú tooltip kilógna az ikon-gomb
+   * területéről és emiatt amikor az ikon-gomb [data-disabled="true"] állapotban van, akkor a tooltip
+   * kilógó részén működne a gomb érzékelése!
+   * Ezért az eredetileg {opacity: 0} tulajdonsággal eltűntetett tooltip pszeudo-elemet
+   * {transform: scaleX(0)} tulajdonsággal szükséges eltűntetni.
+   * A {background-color: transparent} és a {transform: scaleX(0)} tulajdonság egyidejű
+   * használatával esztétikusa a tooltip pszeudo-elem eltűntetése.
+   * A tooltip pszeudo-elemet {display: none} tulajdonsággal csak animáció és késleltetés nélkül
+   * lenne lehetséges eltűntetni ... */
+  background-color: var( --background-color );
+  transform: scaleX(1);}
+
+/*** Tooltip ***/
+
 /*** Button wrapper ***/
 
 .x-button[data-layout="fit"][data-variant="filled"],
@@ -2140,7 +2161,11 @@ body[data-viewport-profile="s"]
 .x-column--body {
   display: flex;
   flex-direction: column;
-  height: 100% }
+  /* BUG
+   * Az .x-column--body nem lehet {height: 100%} magas, mert akkor mindig akkor, mint a szülő elem
+   * ha azt akarod, hogy kitöltse a rendelkezésre álló helyet, akkor flex-grow tulajdonságot kell
+   * beállítani. A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!! */
+  -height: 100% }
 
 .x-column[data-wrap-items="true"] .x-column--body {
   flex-wrap: wrap }
@@ -3356,6 +3381,9 @@ body[data-viewport-profile="s"]
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
+  /* A {padding: 1px} beállítás használatával a text-field elem más elemekhez hasonlóan 36px
+   * magasságú lesz */
+  padding: 1px;
   display: flex;
   justify-content: space-between }
 
