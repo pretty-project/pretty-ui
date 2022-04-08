@@ -9,8 +9,10 @@
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
-              [x.app-tools.api                     :as tools]))
-             ;[plugins.item-sorter.api             :refer []]
+              [x.app-tools.api                     :as tools]
+
+              ; TEMP
+              [plugins.sortable.core              :refer []]))
 
 
 

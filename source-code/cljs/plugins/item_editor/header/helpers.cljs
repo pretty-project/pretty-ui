@@ -3,20 +3,37 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.header.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.candy :refer [return]]
+              [x.app-core.api   :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn header-menu-item-badge-color
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) menu-item
+  ;  {:change-keys (keywords in vector)(opt)}
+  ;
+  ; @return (keyword)
+  [editor-id {:keys [change-keys]}]
+  ; - XXX#0455
+  ;   Mivel "Új elem hozzáadása" módban nem jelenik meg a footer komponensen a "Visszaállítás"
+  ;   gomb, ezért ilyenkor a header komponensen megjelenő fülek cimkéin sem jelenik meg az
+  ;   egyes nézetek változását jelző pont (badge).
+  (if-not @(a/subscribe [:item-editor/new-item? editor-id])
+           (if @(a/subscribe [:item-editor/form-changed? editor-id change-keys])
+                (return :primary))))
 
 (defn header-menu-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   ; @param (map) menu-item
-  ;  {:change-keys (keywords in vector)(opt)
-  ;   :label (metamorphic-content)
+  ;  {:label (metamorphic-content)
   ;   :view-id (keyword)}
   ;
   ; @return (map)
@@ -24,12 +41,12 @@
   ;   :badge-color (keyword)
   ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)}
-  [editor-id {:keys [change-keys label view-id]}]
-  (let [form-changed?    @(a/subscribe [:item-editor/form-changed? editor-id change-keys])
+  [editor-id {:keys [label view-id] :as menu-item}]
+  (let [badge-color       (header-menu-item-badge-color editor-id menu-item)
         selected-view-id @(a/subscribe [:item-editor/get-selected-view-id editor-id])]
-       {:label       label
-        :active?     (= view-id selected-view-id)
-        :badge-color (if form-changed? :primary)
+       {:active?     (= view-id selected-view-id)
+        :badge-color badge-color
+        :label       label
         :on-click    [:item-editor/change-view! editor-id view-id]}))
 
 (defn header-menu-items

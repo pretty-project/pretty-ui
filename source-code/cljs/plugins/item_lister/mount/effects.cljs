@@ -41,7 +41,7 @@
       ; A regisztált esemény a search-field input mező működéséhez hasonlóan az {:on-keyup ...}
       ; trigger helyett {:on-keydown ...} triggert használ.
       ; Pl.: Ha a felhasználó egy olyan listában keres, ahol elemeket lehet kijelölni, akkor
-      ;      az egyes keresések után ha befejezte a listaelemek kijelölését, akkor az ESC billentyű
+      ;      az egyes keresésekkor miután befejezte a listaelemek kijelölését, akkor az ESC billentyű
       ;      lenyomásával alaphelyzetbe állíthatja a keresést.
       ;      A keresés alaphelyzetbe állítása után az {:auto-focus? true} beállítás miatt a search-field
       ;      input mező újra fókuszált állapotba kerül, így a felhasználó beírhatja a következő kifejezést.

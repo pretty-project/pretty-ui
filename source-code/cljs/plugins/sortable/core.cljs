@@ -1,19 +1,8 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.11.21
-; Description:
-; Version: v2.2.4
-; Compatibility: x4.4.6
-
-
-
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-plugins.sortable.core
+(ns plugins.sortable.core
     (:require ["@dnd-kit/core"      :as core]
               ["@dnd-kit/sortable"  :as sortable]
               ["@dnd-kit/utilities" :as utilities]

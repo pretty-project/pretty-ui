@@ -198,9 +198,14 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
+  ; XXX#0455
+  ; "Új elem hozzáadása" módban a "Visszaállítás" gomb nem jelenik meg, mivel nem számít
+  ; releváns információnak a dokumentum megnyitáskori (üres) állapota.
   (let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
-       [:<> (if (vector/contains-item? item-actions :revert) [revert-item-block editor-id])
-            (if (vector/contains-item? item-actions :save)   [save-item-block   editor-id])]))
+       (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
+               [:<> (if (vector/contains-item? item-actions :save)   [save-item-block   editor-id])]
+               [:<> (if (vector/contains-item? item-actions :revert) [revert-item-block editor-id])
+                    (if (vector/contains-item? item-actions :save)   [save-item-block   editor-id])])))
 
 (defn menu-mode-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
