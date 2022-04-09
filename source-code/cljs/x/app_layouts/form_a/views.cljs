@@ -27,8 +27,11 @@
 
   ([label-id {:keys [content color]}]
    [elements/label label-id
-                   {:font-size :m :font-weight :extra-bold :indent :both :layout :fit
-                    :color color :content content}]))
+                   {:color       color
+                    :content     content
+                    :font-size   :m 
+                    :font-weight :extra-bold
+                    :indent      {:vertical :xs}}]))
 
 (defn input-group-header
   ; @param (keyword)(opt) header-id
@@ -46,4 +49,5 @@
 
   ([header-id {:keys [color label]}]
    [elements/row header-id
-                 {:horizontal-align :left :content [input-group-label {:color color :content label}]}]))
+                 {:content [input-group-label {:color color :content label}]
+                  :horizontal-align :left}]))

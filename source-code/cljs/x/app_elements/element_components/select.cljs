@@ -3,14 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.select
-    (:require [mid-fruits.candy                           :refer [param return]]
-              [mid-fruits.vector                          :as vector]
-              [x.app-components.api                       :as components]
-              [x.app-core.api                             :as a :refer [r]]
-              [x.app-elements.preset-handler.button       :as preset-handler.button]
-              [x.app-elements.preset-handler.engine       :as preset-handler.engine]
-              [x.app-elements.engine.api                  :as engine]
-              [x.app-elements.element-components.button   :as button :rename {element button}]
+    (:require [mid-fruits.candy                              :refer [param return]]
+              [mid-fruits.vector                             :as vector]
+              [x.app-components.api                          :as components]
+              [x.app-core.api                                :as a :refer [r]]
+              [x.app-elements.engine.api                     :as engine]
+              [x.app-elements.element-components.button      :as button :rename {element button}]
+              [x.app-elements.element-components.icon-button :as icon-button]
               [x.app-elements.element-components.label               :rename {element label}]
               [x.app-elements.element-components.horizontal-polarity :rename {element horizontal-polarity}]))
 
@@ -110,28 +109,25 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:as-button? (boolean)(opt)
-  ;   :value-path (vector)}
+  ;  {:value-path (vector)}
   ;
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :value-path (vector)}
-  [select-id {:keys [as-button?] :as select-props}]
+  [select-id select-props]
   (let ; BUG#1507
        ; Ha a select-button elem {:disabled? true} állapotban csatolódik a React-fába,
        ; akkor a {:disabled? true} tulajdonságát az options-props térképben továbbörökítené
        ; az {:on-click [:elements/render-select-options! ...]} konstans tulajdonságon keresztül
        ; select-options elemnek.
        [options-props (dissoc select-props :disabled?)]
-       (merge {:get-label-f return
-               :get-value-f return
+       (merge {:get-label-f  return
+               :get-value-f  return
+               :layout       :select
                :options-path (engine/default-options-path select-id)
                :value-path   (engine/default-value-path   select-id)}
-              ; A button elemre is ható tulajdonságok csak akkor részei a select elem
-              ; tulajdonságai prototípusának, ha a select elem nem button elemként jelenik meg.
-              (if-not as-button? {:layout :row})
               (param select-props)
               {:on-click [:elements/render-select-options! select-id options-props]})))
 
@@ -198,7 +194,8 @@
   ; @param (keyword) popup-id
   ; @param (map) options-props
   [_ {:keys [options-label]}]
-  [label {:content options-label}])
+  [label {:content options-label
+          :indent  {:horizontal :xs}}])
 
 (defn- select-options-label-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -349,24 +346,19 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:as-button? (boolean)(opt)}
-  [select-id {:keys [as-button?] :as select-props}]
-  (if as-button? ; If {:as-button? true} ...
-                 (let [button-props (as-> select-props % (preset-handler.engine/apply-preset preset-handler.button/BUTTON-PROPS-PRESETS %)
-                                                         (button/button-props-prototype %))]
-                      [button/button select-id button-props])
-                 ; If {:as-button? false} ...
-                 [select-layout select-id select-props]))
+  ;  {:layout (keyword)}
+  [select-id {:keys [layout] :as select-props}]
+  (case layout :button      [button/element      select-id select-props]
+               :icon-button [icon-button/element select-id select-props]
+               :select      [select-layout       select-id select-props]))
 
 (defn element
-  ; A select elem gombja helyett lehetséges button elemet megjeleníteni az {:as-button? true}
-  ; tulajdonság használatával.
+  ; A select elem gombja helyett lehetséges button elemet megjeleníteni az {:layout :button}
+  ; vagy {:layout :icon-button} beállítás használatával.
   ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
-  ;  {:as-button? (boolean)(opt)
-  ;    Default: false
-  ;   :autoclear? (boolean)(opt)
+  ;  {:autoclear? (boolean)(opt)
   ;    Default: false
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
@@ -390,8 +382,8 @@
   ;   :initial-value (*)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
+  ;    :button, :icon-button, :select
+  ;    Default: :select
   ;   :no-options-label (metamorphic-content)(opt)
   ;     Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)
@@ -413,10 +405,8 @@
   ;  [elements/select :my-select {...}]
   ;
   ; @usage
-  ;  [elements/select {:as-button? true
-  ;                    :icon       :sort
-  ;                    :label      :order-by
-  ;                    :layout     :icon-button
+  ;  [elements/select {:icon         :sort
+  ;                    :layout       :icon-button
   ;                    :options-path [:my-options]
   ;                    :value-path   [:my-selected-option]}]
   ([select-props]

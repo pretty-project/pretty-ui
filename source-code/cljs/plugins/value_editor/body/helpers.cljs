@@ -17,11 +17,11 @@
   ;
   ; @param (map)
   ;  {:auto-focus? (boolean)
-  ;   :min-width (keyword)
+  ;   :indent (map)
   ;   :value-path (vector)}
   [editor-id]
   (let [editor-props @(a/subscribe [:value-editor/get-editor-props editor-id])]
        (merge (select-keys editor-props [:initial-value :label :modifier :validator])
               {:auto-focus? true
-               :min-width   :l
+               :indent      {:all :m}
                :value-path  (:edit-path editor-props)})))

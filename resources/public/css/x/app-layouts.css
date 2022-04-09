@@ -114,6 +114,12 @@
 
 /* - A .x-form-a--input-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
  *   gap távolságok használata nélkül lehetséges.
+ *
+ *   Update x4.6.9 #17
+ *   SE VÍZSZINTES SE FÜGGŐLEGES GAP NEM ALKALMAZHATÓ?
+ *   VAGY EZ CSAK A FÜGGŐLEGESRE VONATKOZIK?
+ *   A {grid-row-gap: ...} beállítás hozzáadva ...
+ *
  * - Az .x-form-a--input-row sorokban felsorolt .x-form-a--input-block elemekben
  *   kell megoldalni az esztétikai távolságok beállítását! */
 
@@ -135,7 +141,7 @@
 
 .x-form-a--input-block {
   flex-grow: 1;
-  padding: 0 12px }
+  padding: 12px }
 
 /***** Form A *****/
 
@@ -319,7 +325,7 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
   display: flex }
 
 .x-list-item-a:hover {
-  background-color: var( --background-color-highlight ) }  
+  background-color: var( --background-color-highlight ) }
 
 .x-list-item-a--header {
   align-items: center;
@@ -329,7 +335,7 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
   flex-direction: column;
   height: 60px;
   justify-content: center;
-  margin: 6px;
+  margin: 12px 0 12px 12px;
   overflow: hidden;
   width: 60px }
 

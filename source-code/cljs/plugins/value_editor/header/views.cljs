@@ -19,8 +19,11 @@
   (let [disable-save-button? @(a/subscribe [:value-editor/disable-save-button? editor-id])
         save-button-label    @(a/subscribe [:value-editor/get-editor-prop      editor-id :save-button-label])]
        [elements/button ::save-button
-                        {:disabled? disable-save-button? :label save-button-label
-                         :keypress  {:key-code 13 :required? true} :preset :close-button
+                        {:color     :primary
+                         :disabled? disable-save-button?
+                         :keypress  {:key-code 13 :required? true}
+                         :label     save-button-label
+                         :indent    {:horizontal :xxs :right :xs}
                          :on-click  [:value-editor/save-value! editor-id]}]))
 
 (defn cancel-button
@@ -29,8 +32,10 @@
   ; @param (keyword) editor-id
   [editor-id]
   [elements/button ::cancel-button
-                   {:keypress {:key-code 27 :required? true} :preset :cancel-button
-                    :on-click [:value-editor/cancel-editing! editor-id]}])
+                   {:keypress {:key-code 27 :required? true}
+                    :indent   {:horizontal :xxs :left :xs}
+                    :on-click [:value-editor/cancel-editing! editor-id]
+                    :preset   :cancel}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!

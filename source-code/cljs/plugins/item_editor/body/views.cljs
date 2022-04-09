@@ -24,7 +24,10 @@
   (let [item-namespace @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
         new-item-label  (core.helpers/new-item-label editor-id item-namespace)]
        [elements/label ::new-item-label
-                       {:content new-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
+                       {:color       :highlight
+                        :content     new-item-label
+                        :font-size   :l
+                        :font-weight :extra-bold}]))
 
 (defn named-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -33,10 +36,13 @@
   ; @param (map) element-props
   ;  {:name (metamorphic-content)}
   [editor-id {:keys [name]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
+        color             (if editor-disabled? :highlight :default)]
        [elements/label ::named-item-label
-                       {:content name :font-weight :extra-bold :font-size :l
-                        :color (if editor-disabled? :highlight :default)}]))
+                       {:color       color
+                        :content     name
+                        :font-size   :l
+                        :font-weight :extra-bold}]))
 
 (defn unnamed-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +52,10 @@
   (let [item-namespace    @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
         unnamed-item-label (core.helpers/unnamed-item-label editor-id item-namespace)]
        [elements/label ::unnamed-item-label
-                       {:content unnamed-item-label :color :highlight :font-weight :extra-bold :font-size :l}]))
+                       {:color       :highlight
+                        :content     unnamed-item-label
+                        :font-size   :l
+                        :font-weight :extra-bold}]))
 
 (defn item-label
   ; @param (keyword) editor-id
@@ -75,8 +84,10 @@
   ; @usage
   ;  [item-editor/input-group-header :my-editor {...}]
   [editor-id {:keys [label]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])]
-       [layouts/input-group-header {:label label :color (if editor-disabled? :highlight :default)}]))
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
+        color             (if editor-disabled? :highlight :default)]
+       [layouts/input-group-header {:color color
+                                    :label label}]))
 
 (defn description-field
   ; @param (keyword) editor-id
@@ -88,7 +99,9 @@
         item-path        @(a/subscribe [:item-editor/get-body-prop    editor-id :item-path])
         value-path        (conj item-path :description)]
        [elements/multiline-field ::description-field
-                                 {:value-path value-path :disabled? editor-disabled?}]))
+                                 {:disabled?  editor-disabled?
+                                  :value-path value-path}]))
+
 
 
 ;; -- Indicator components ----------------------------------------------------
@@ -99,14 +112,20 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/label {:font-size :xs :color :highlight :font-weight :bold :content :downloading...}])
+  [elements/label ::downloading-item-label
+                  {:color       :highlight
+                   :content     :downloading...
+                   :font-size   :xs
+                   :font-weight :bold
+                   :indent      {:top :xxl}}])
 
 (defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/row {:content [downloading-item-label editor-id]
+  [elements/row ::downloading-item
+                {:content          [downloading-item-label editor-id]
                  :horizontal-align :center}])
 
 
@@ -114,14 +133,33 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn error-body
+(defn error-occured-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [_]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m    :color :warning}]
-       [elements/label {:min-height :m :content :the-item-you-opened-may-be-broken :color :muted}]])
+  [elements/label ::error-occured-label
+                  {:color     :warning
+                   :content   :an-error-occured
+                   :font-size :m
+                   :indent    {:top :xxl}}])
+
+(defn may-be-broken-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [_]
+  [elements/label ::may-be-broken-label
+                  {:color   :muted
+                   :content :the-item-you-opened-may-be-broken}])
+
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [editor-id]
+  [:<> [error-occured-label editor-id]
+       [may-be-broken-label editor-id]])
 
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!

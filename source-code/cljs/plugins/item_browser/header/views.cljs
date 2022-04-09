@@ -12,33 +12,33 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn go-home-button
+(defn go-home-icon-button
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  [item-browser/go-home-button :my-browser]
+  ;  [item-browser/go-home-icon-button :my-browser]
   [browser-id]
   (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? browser-id])
         at-home?          @(a/subscribe [:item-browser/at-home?          browser-id])
         error-mode?       @(a/subscribe [:item-browser/get-meta-item     browser-id :error-mode?])]
-       [elements/button ::go-home-button
-                        ; A go-home-button gomb a plugin {:error-mode? true} állapotában is használható!
-                        {:disabled? (or browser-disabled? (and at-home? (not error-mode?)))
-                         :on-click  [:item-browser/go-home! browser-id]
-                         :preset    :home-icon-button}]))
+       [elements/icon-button ::go-home-icon-button
+                             ; A go-home-icon-button gomb a plugin {:error-mode? true} állapotában is használható!
+                             {:disabled? (or browser-disabled? (and at-home? (not error-mode?)))
+                              :on-click  [:item-browser/go-home! browser-id]
+                              :preset    :home}]))
 
-(defn go-up-button
+(defn go-up-icon-button
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  [item-browser/go-up-button :my-browser]
+  ;  [item-browser/go-up-icon-button :my-browser]
   [browser-id]
   (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? browser-id])
         at-home?          @(a/subscribe [:item-browser/at-home?          browser-id])]
-       [elements/button ::go-up-button
-                        {:disabled? (or browser-disabled? at-home?)
-                         :on-click  [:item-browser/go-up! browser-id]
-                         :preset    :back-icon-button}]))
+       [elements/icon-button ::go-up-icon-button
+                             {:disabled? (or browser-disabled? at-home?)
+                              :on-click  [:item-browser/go-up! browser-id]
+                              :preset    :back}]))
 
 
 
@@ -51,12 +51,12 @@
   ; @param (keyword) browser-id
   [browser-id]
   [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group [go-up-button                           browser-id]
-                                               [go-home-button                         browser-id]
-                                               [item-lister/new-item-button            browser-id]
-                                               [item-lister/sort-items-button          browser-id]
-                                               [item-lister/toggle-select-mode-button  browser-id]
-                                               [item-lister/toggle-reorder-mode-button browser-id]]
+    [:div.item-lister--header--menu-item-group [go-up-icon-button                     browser-id]
+                                               [go-home-icon-button                   browser-id]
+                                               [item-lister/new-item-block            browser-id]
+                                               [item-lister/sort-items-block          browser-id]
+                                               [item-lister/toggle-select-mode-block  browser-id]
+                                               [item-lister/toggle-reorder-mode-block browser-id]]
     [:div.item-lister--header--menu-item-group [item-lister/search-block browser-id]]])
 
 (defn header

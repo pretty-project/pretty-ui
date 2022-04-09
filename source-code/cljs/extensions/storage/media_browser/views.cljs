@@ -21,12 +21,17 @@
 (defn media-menu-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias] :as media-item}]
-  [elements/label {:color :muted :indent {:left :xs} :content alias :font-size :xs}])
+  [elements/label ::media-menu-label
+                  {:color     :muted
+                   :content   alias
+                   :font-size :xs
+                   :indent    {:horizontal :xxs :left :s}}])
 
 (defn media-menu-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [media-item]
-  [elements/horizontal-polarity {:start-content [media-menu-label media-item]
+  [elements/horizontal-polarity ::media-menu-header
+                                {:start-content [media-menu-label media-item]
                                  :end-content   [ui/popup-close-icon-button :storage.media-browser/media-menu {}]}])
 
 
@@ -38,26 +43,50 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [directory-item]
   [:<> [elements/button ::open-directory-button
-                        {:preset :default-button :icon :folder :indent :left :label :open!
+                        {:hover-color :highlight
+                         :icon        :folder
                          :icon-family :material-icons-outlined
-                         :on-click [:storage.media-browser/open-directory! directory-item]}]
+                         :indent      {:vertical :xs}
+                         :label       :open!
+                         :on-click    [:storage.media-browser/open-directory! directory-item]
+                         :preset      :default}]
        [elements/button ::copy-directory-link-button
-                        {:preset :default-button :icon :content_paste :indent :left :label :copy-link!
-                         :on-click [:storage.media-browser/copy-directory-link! directory-item]}]
+                        {:hover-color :highlight
+                         :icon        :content_paste
+                         :indent      {:vertical :xs}
+                         :label       :copy-link!
+                         :on-click    [:storage.media-browser/copy-directory-link! directory-item]
+                         :preset      :default}]
        [elements/button ::move-directory-button
-                        {:preset :default-button :icon :drive_file_move :indent :left :label :move!
+                        {:disabled?   true
+                         :hover-color :highlight
+                         :icon        :drive_file_move
                          :icon-family :material-icons-outlined
-                         :on-click [:storage.media-browser/move-item! directory-item]
-                         :disabled? true}]
+                         :indent      {:vertical :xs}
+                         :label       :move!
+                         :on-click    [:storage.media-browser/move-item! directory-item]
+                         :preset      :default}]
        [elements/button ::duplicate-directory-button
-                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
-                         :on-click [:storage.media-browser/duplicate-item! directory-item]}]
+                        {:hover-color :highlight
+                         :icon        :content_copy
+                         :indent      {:vertical :xs}
+                         :label       :duplicate!
+                         :on-click    [:storage.media-browser/duplicate-item! directory-item]
+                         :preset      :default}]
        [elements/button ::rename-directory-button
-                        {:preset :default-button :icon :edit :indent :left :label :rename!
-                         :on-click [:storage.media-browser/rename-item! directory-item]}]
+                        {:hover-color :highlight
+                         :icon        :edit
+                         :indent      {:vertical :xs}
+                         :label       :rename!
+                         :on-click    [:storage.media-browser/rename-item! directory-item]
+                         :preset      :default}]
        [elements/button ::delete-directory-button
-                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!
-                         :on-click [:storage.media-browser/delete-item! directory-item]}]])
+                        {:hover-color :highlight
+                         :icon        :delete_outline
+                         :indent      {:vertical :xs}
+                         :label       :delete!
+                         :on-click    [:storage.media-browser/delete-item! directory-item]
+                         :preset      :warning}]])
 
 
 
@@ -144,18 +173,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-browser/body :storage.media-browser
-                     {:auto-title?      true
-                      :item-actions     [:delete :duplicate]
-                      :item-path        [:storage :media-browser/browsed-item]
-                      :items-path       [:storage :media-browser/downloaded-items]
-                      :label-key :alias :search-keys [:alias]
-                      :list-element     #'media-item
-                      :root-item-id     core.config/ROOT-DIRECTORY-ID}])
+                     {:auto-title?  true
+                      :item-actions [:delete :duplicate]
+                      :item-path    [:storage :media-browser/browsed-item]
+                      :items-path   [:storage :media-browser/downloaded-items]
+                      :label-key    :alias
+                      :list-element #'media-item
+                      :root-item-id core.config/ROOT-DIRECTORY-ID
+                      :search-keys  [:alias]}])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   (let [description @(a/subscribe [:item-browser/get-description :storage.media-browser])]
-       [layouts/layout-a surface-id {:description description
-                                     :header      #'header
-                                     :body        #'body}]))
+       [layouts/layout-a surface-id {:body        #'body
+                                     :description description
+                                     :header      #'header}]))

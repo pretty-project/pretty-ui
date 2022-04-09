@@ -142,31 +142,27 @@
   ;   :data-position (keyword)
   ;   :data-stretch-orientation (keyword)
   ;   :data-vertical-align (keyword)}
-  [_ {:keys [horizontal-align indent layout orientation position stretch-orientation vertical-align]}]
+  [_ {:keys [border-radius horizontal-align indent layout orientation position stretch-orientation vertical-align]}]
 
-  ; TEMP
-  (let [indent (if-not (keyword? indent) indent {:bottom indent :left indent :right indent :top indent})]
+  (cond-> {} horizontal-align    (assoc :data-horizontal-align    horizontal-align)
 
-  ; TEMP
+             ; TEMP
+             (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
+             (:left       indent) (assoc :data-indent-left       (:left       indent))
+             (:right      indent) (assoc :data-indent-right      (:right      indent))
+             (:top        indent) (assoc :data-indent-top        (:top        indent))
+             (:horizontal indent) (assoc :data-indent-horizontal (:horizontal indent))
+             (:vertical   indent) (assoc :data-indent-vertical   (:vertical   indent))
+             (:all        indent) (assoc :data-indent-all        (:all        indent))
 
-       (cond-> {} horizontal-align    (assoc :data-horizontal-align    horizontal-align)
+             border-radius (assoc :data-border-radius border-radius)
+             ; TEMP
 
-                  ; TEMP
-                  (:bottom indent)    (assoc :data-indent-bottom (:bottom indent))
-                  (:left   indent)    (assoc :data-indent-left   (:left   indent))
-                  (:right  indent)    (assoc :data-indent-right  (:right  indent))
-                  (:top    indent)    (assoc :data-indent-top    (:top    indent))
-                  (:horizontal indent)  (merge {:data-indent-bottom (:horizontal indent)
-                                                :data-indent-top    (:horizontal indent)})
-                  (:vertical indent)    (merge {:data-indent-left   (:vertical indent)
-                                                :data-indent-right  (:vertical indent)})
-                  ; TEMP
-
-                  layout              (assoc :data-layout              layout)
-                  orientation         (assoc :data-orientation         orientation)
-                  position            (assoc :data-position            position)
-                  stretch-orientation (assoc :data-stretch-orientation stretch-orientation)
-                  vertical-align      (assoc :data-vertical-align      vertical-align))))
+             layout              (assoc :data-layout              layout)
+             orientation         (assoc :data-orientation         orientation)
+             position            (assoc :data-position            position)
+             stretch-orientation (assoc :data-stretch-orientation stretch-orientation)
+             vertical-align      (assoc :data-vertical-align      vertical-align)))
 
 (defn element-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

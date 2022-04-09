@@ -17,12 +17,12 @@
   [lister-id item-dex {:keys [colors email-address id modified-at] :as client-item}]
   (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])]
        [item-lister/list-item :clients.client-lister item-dex
-                              {:icon        :navigate_next
-                               :description email-address
-                               :label       client-name
-                               :timestamp   modified-at
+                              {:description email-address
                                :header      {:colors (or colors :placeholder)}
-                               :on-click    [:router/go-to! (str "/@app-home/clients/" id)]}]))
+                               :icon        :navigate_next
+                               :label       client-name
+                               :on-click    [:router/go-to! (str "/@app-home/clients/" id)]
+                               :timestamp   modified-at}]))
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -34,15 +34,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-lister/body :clients.client-lister
-                    {:list-element #'client-item
-                     :item-actions [:delete :duplicate]
+                    {:item-actions [:delete :duplicate]
                      :items-path   [:clients :client-lister/downloaded-items]
+                     :list-element #'client-item
                      :search-keys  [:name :email-address]}])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
-       [layouts/layout-a surface-id {:description description
-                                     :header      #'header
-                                     :body        #'body}]))
+       [layouts/layout-a surface-id
+                         {:body        #'body
+                          :description description
+                          :header      #'header}]))

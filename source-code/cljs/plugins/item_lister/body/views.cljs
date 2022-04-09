@@ -26,14 +26,25 @@
   [lister-id]
   ; - Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
   ;   a downloading-items-label feliratot
-  ; - Ha még nincs letöltve az összes elem és várható a downloading-items-label felirat megjelenése,
-  ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
-  ;   és eltűnésekor ne változzon a lista magassága
+  ;
+  ; - Ha még nincs letöltve az összes elem, akkor görgetéskor a lista aljához érve várható
+  ;   a downloading-items-label felirat megjelenése, ami a lista magasságának változásával járna.
+  ;   Ezért, amíg nincs letöltve az összes elem addig a downloading-items-label felirat tartalom
+  ;   nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
+  ;   és eltűnésekor ne változzon a lista magassága.
+  ;
+  ; - Amíg az items-received? értéke false (= az első elemek letöltésekor), addig
+  ;   a downloading-items-label felirat {:indent {:top :xxl}} beállítással jelenik meg,
+  ;   így más feliratokhoz hasonlóan távolságot tart header elemtől / a lista felső szélétől.
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
         downloading-items?    @(a/subscribe [:item-lister/downloading-items?    lister-id])
         items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
        (if-not (and all-items-downloaded? items-received?) ; XXX#0499
-               [elements/label {:font-size :xs :color :highlight :font-weight :bold
+               [elements/label ::downloading-items-label
+                               {:color       :highlight
+                                :font-size   :xs
+                                :font-weight :bold
+                                :indent  (if-not items-received? {:top :xxl})
                                 :content (if (or downloading-items? (nor downloading-items? items-received?))
                                              :downloading-items...)}])))
 
@@ -48,10 +59,16 @@
        (if (and no-items-to-show? items-received?
                 ; - Szükséges a items-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
                 ;   előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
+                ;
                 ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
                 ;   ne jelenjen meg a no-items-to-show-label felirat!
                 (not downloading-items?))
-           [elements/label {:content :no-items-to-show :font-size :xs :color :highlight :font-weight :bold}])))
+           [elements/label ::no-items-to-show-label
+                           {:color       :highlight
+                            :content     :no-items-to-show
+                            :font-size   :xs
+                            :font-weight :bold
+                            :indent      {:top :xxl}}])))
 
 (defn indicators
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,7 +78,8 @@
   ; A column komponens {:stretch-orientation :vertical} alapbeállítással használva popup elemen
   ; megejelenített item-lister esetén a {height: 100%} css tulajdonság miatt örökölte a szülő
   ; elem teljes magasságát.
-  [elements/column {:content [:<> [no-items-to-show-label  lister-id]
+  [elements/column ::indicators
+                   {:content [:<> [no-items-to-show-label  lister-id]
                                   [downloading-items-label lister-id]]
                     :stretch-orientation :none}])
 
@@ -76,13 +94,13 @@
   ; @param (keyword) lister-id
   ; @param (integer) item-dex
   [lister-id item-dex]
-  (let [item-selected?   @(a/subscribe [:item-lister/item-selected?   lister-id item-dex])
-        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])
-        select-mode?     @(a/subscribe [:item-lister/get-meta-item    lister-id :select-mode?])]
-       (if select-mode? [elements/button {:disabled? lister-disabled?
-                                          :on-click  [:item-lister/toggle-item-selection! lister-id item-dex]
-                                          :preset    (if item-selected? :checked-icon-button :unchecked-icon-button)}])))
-                                         ;:color     (if item-selected? :primary :default)
+  (if-let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
+          (let [item-selected?   @(a/subscribe [:item-lister/item-selected?   lister-id item-dex])
+                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+               [elements/icon-button {:disabled? lister-disabled?
+                                      :on-click  [:item-lister/toggle-item-selection! lister-id item-dex]
+                                      :preset    (if item-selected? :checked :unchecked)}])))
+                                     ;:color     (if item-selected? :primary :default)
 
 (defn list-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,6 +114,7 @@
        [:div.item-lister--list-item--structure
          ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
          ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
+         ;
          ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
          ;   elem a lista-elem előtt jelenik meg.
          [:div.item-lister--list-item {:data-disabled item-disabled?}
@@ -107,14 +126,33 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn error-body
+(defn error-occured-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [_]
-  [:<> [elements/horizontal-separator {:size :xxl}]
-       [elements/label {:min-height :m :content :an-error-occured :font-size :m       :color :warning}]
-       [elements/label {:min-height :m :content :the-content-you-opened-may-be-broken :color :muted}]])
+  [elements/label ::error-occured-label
+                  {:color     :warning
+                   :content   :an-error-occured
+                   :font-size :m
+                   :indent    {:top :xxl}}])
+
+(defn may-be-broken-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [_]
+  [elements/label ::may-be-broken-label
+                  {:color   :muted
+                   :content :the-content-you-opened-may-be-broken}])
+
+(defn error-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  [:<> [error-occured-label lister-id]
+       [may-be-broken-label lister-id]])
 
 (defn offline-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

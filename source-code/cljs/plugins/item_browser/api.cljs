@@ -37,9 +37,9 @@
 (def browsing-item?      core.subs/browsing-item?)
 
 ; plugins.item-browser.header.views
-(def go-home-button header.views/go-home-button)
-(def go-up-button   header.views/go-up-button)
-(def header         header.views/header)
+(def go-home-icon-button header.views/go-home-icon-button)
+(def go-up-icon-button   header.views/go-up-icon-button)
+(def header              header.views/header)
 
 ; plugins.item-browser.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)

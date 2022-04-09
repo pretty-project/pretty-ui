@@ -14,46 +14,56 @@
 
 
 
-;; -- Search-mode header components -------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn quit-search-mode-button
+(defn quit-search-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/quit-search-mode-button
-                             {:keypress  {:key-code 27} :preset :close
-                              :disabled? lister-disabled?
-                              :on-click  [:item-lister/toggle-search-mode! lister-id]}]))
+       [elements/icon-button ::quit-search-mode-icon-button
+                             {:disabled? lister-disabled?
+                              :keypress  {:key-code 27}
+                              :on-click  [:item-lister/toggle-search-mode! lister-id]
+                              :preset    :close}]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn search-items-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
+  ; A search-items-field mező bal oldalán is szükséges távolságot beállítani,
+  ; mert kis méretű képernyőkön a bal oldalon jelenik meg.
   (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/search-field :item-lister/search-items-field
-                              {:auto-focus? true :min-width :xs :placeholder :search
+       [elements/search-field ::search-items-field
+                              {:auto-focus?   true
                                :disabled?     (or error-mode? lister-disabled?)
-                               :indent        {:top :xxs :right :xxs}
+                               :min-width     :xs
+                               :placeholder   :search
+                               :indent        {:all :xxs}
                                :on-empty      [:item-lister/search-items!          lister-id]
                                :on-type-ended [:item-lister/search-items!          lister-id]
                                :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]))
 
-(defn toggle-search-mode-button
+(defn toggle-search-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/toggle-search-mode-button
-                             {:preset :search :tooltip :search
-                              :disabled? (or error-mode? lister-disabled?)
-                              :on-click  [:item-lister/toggle-search-mode! lister-id]}]))
+       [elements/icon-button ::toggle-search-mode-icon-button
+                             {:disabled? (or error-mode? lister-disabled?)
+                              :on-click  [:item-lister/toggle-search-mode! lister-id]
+                              :preset    :search}]))
 
 (defn search-block
   ; @param (keyword) lister-id
@@ -62,110 +72,185 @@
   ;  [item-lister/search-block :my-lister]
   [lister-id]
   (let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-       (if viewport-small? [toggle-search-mode-button lister-id]
-                           [search-items-field        lister-id])))
+       (if viewport-small? [toggle-search-mode-icon-button lister-id]
+                           [search-items-field             lister-id])))
 
 
 
-;; -- Select-mode header components -------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn quit-select-mode-button
+(defn quit-select-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/quit-select-mode-button
-                             {:keypress  {:key-code 27} :preset :close
-                              :disabled? lister-disabled?
-                              :on-click  [:item-lister/toggle-select-mode! lister-id]}]))
+       [elements/icon-button ::quit-select-mode-icon-button
+                             {:disabled? lister-disabled?
+                              :keypress  {:key-code 27}
+                              :on-click  [:item-lister/toggle-select-mode! lister-id]
+                              :preset    :close}]))
 
 
-(defn unselect-all-items-button
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn unselect-all-items-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/unselect-all-items-button
-                             {:icon :check_box :preset :default :disabled? lister-disabled?
-                              :on-click [:item-lister/reset-selections! lister-id]}]))
+       [elements/icon-button ::unselect-all-items-icon-button
+                             {:disabled? lister-disabled?
+                              :icon      :check_box
+                              :on-click  [:item-lister/reset-selections! lister-id]
+                              :preset    :default}]))
 
-(defn unselect-some-items-button
+(defn unselect-some-items-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/unselect-some-items-button
-                             {:icon :indeterminate_check_box :preset :default :disabled? lister-disabled?
-                              :on-click [:item-lister/reset-selections! lister-id]}]))
+       [elements/icon-button ::unselect-some-items-icon-button
+                             {:disabled? lister-disabled?
+                              :icon      :indeterminate_check_box
+                              :on-click  [:item-lister/reset-selections! lister-id]
+                              :preset    :default}]))
 
-(defn select-all-items-button
+(defn select-all-items-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/select-all-items-button
-                             {:icon :check_box_outline_blank :preset :default :disabled? lister-disabled?
-                              :on-click [:item-lister/select-all-items! lister-id]}]))
+       [elements/icon-button ::select-all-items-icon-button
+                             {:disabled? lister-disabled?
+                              :icon      :check_box_outline_blank
+                              :on-click  [:item-lister/select-all-items! lister-id]
+                              :preset    :default}]))
 
-(defn toggle-all-items-selection-button
+(defn toggle-all-items-selection-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [all-items-selected? @(a/subscribe [:item-lister/all-items-selected? lister-id])
         any-item-selected?  @(a/subscribe [:item-lister/any-item-selected?  lister-id])]
-       (cond all-items-selected? [unselect-all-items-button  lister-id]
-             any-item-selected?  [unselect-some-items-button lister-id]
-             :no-items-selected  [select-all-items-button    lister-id])))
+       (cond all-items-selected? [unselect-all-items-icon-button  lister-id]
+             any-item-selected?  [unselect-some-items-icon-button lister-id]
+             :no-items-selected  [select-all-items-icon-button    lister-id])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn delete-selected-items-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
+        no-items-selected? @(a/subscribe [:item-lister/no-items-selected? lister-id])]
+       [elements/icon-button ::delete-selected-items-icon-button
+                             {:disabled? (or lister-disabled? no-items-selected?)
+                              :on-click  [:item-lister/delete-selected-items! lister-id]
+                              :preset    :delete}]))
 
 (defn delete-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions       @(a/subscribe [:item-lister/get-body-prop      lister-id :item-actions])
-        lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
+  (let [lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? lister-id])]
+       [elements/button ::delete-selected-items-button
+                        {:disabled?   (or lister-disabled? no-items-selected?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :on-click    [:item-lister/delete-selected-items! lister-id]
+                         :preset      :delete}]))
+
+(defn delete-selected-items-block
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :delete)
-           [elements/icon-button :item-lister/delete-selected-items-button
-                                 {:preset :delete :tooltip :delete!
-                                  :disabled? (or lister-disabled? no-items-selected?)
-                                  :on-click  [:item-lister/delete-selected-items! lister-id]}])))
+           (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
+                   [delete-selected-items-icon-button lister-id]
+                   [delete-selected-items-button      lister-id]))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn duplicate-selected-items-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
+        no-items-selected? @(a/subscribe [:item-lister/no-items-selected? lister-id])]
+       [elements/icon-button ::duplicate-selected-items-icon-button
+                             {:disabled? (or lister-disabled? no-items-selected?)
+                              :on-click  [:item-lister/duplicate-selected-items! lister-id]
+                              :preset    :duplicate}]))
 
 (defn duplicate-selected-items-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions       @(a/subscribe [:item-lister/get-body-prop      lister-id :item-actions])
-        lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
+  (let [lister-disabled?   @(a/subscribe [:item-lister/lister-disabled?   lister-id])
         no-items-selected? @(a/subscribe [:item-lister/no-items-selected? lister-id])]
+       [elements/button ::duplicate-selected-items-button
+                        {:disabled?   (or lister-disabled? no-items-selected?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :on-click    [:item-lister/duplicate-selected-items! lister-id]
+                         :preset      :duplicate}]))
+
+(defn duplicate-selected-items-block
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :duplicate)
-           [elements/icon-button :item-lister/duplicate-selected-items-button
-                                 {:preset :duplicate :tooltip :duplicate!
-                                  :disabled? (or lister-disabled? no-items-selected?)
-                                  :on-click  [:item-lister/duplicate-selected-items! lister-id]}])))
+           (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
+                   [duplicate-selected-items-icon-button lister-id]
+                   [duplicate-selected-items-button      lister-id]))))
 
 
 
-;; -- Reorder-mode header components ------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn quit-reorder-mode-button
+(defn quit-reorder-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button :item-lister/quit-reorder-mode-button
-                             {:keypress  {:key-code 27} :preset :close
-                              :disabled? lister-disabled?
+       [elements/icon-button ::quit-reorder-mode-icon-button
+                             {:disabled? lister-disabled?
+                              :keypress  {:key-code 27} :preset :close
                               :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn save-order-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -173,83 +258,240 @@
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])
         order-changed?   @(a/subscribe [:item-lister/order-changed?   lister-id])]
-       [elements/button :item-lister/save-order-button
-                        {:label :save-order! :preset :primary-button
-                         :disabled? (or lister-disabled? (not order-changed?))
-                         :on-click  [:item-lister/save-order! lister-id]}]))
+       [elements/button ::save-order-button
+                        {:disabled? (or lister-disabled? (not order-changed?))
+                         :label     :save-order!
+                         :on-click  [:item-lister/save-order! lister-id]
+                         :preset    :primary}]))
 
 
 
-;; -- Menu-mode header components ---------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn new-item-icon-select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [new-item-event   @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-event])
+        new-item-options @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-options])
+        error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/select ::new-item-icon-select
+                        {:autoclear?      true
+                         :disabled?       (or error-mode? lister-disabled?)
+                         :icon            :add_circle
+                         :layout          :icon-button
+                         :preset          :primary
+                         :initial-options new-item-options
+                         :on-select       new-item-event}]))
+
+(defn new-item-select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [new-item-event   @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-event])
+        new-item-options @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-options])
+        error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/select ::new-item-select
+                        {:autoclear?      true
+                         :disabled?       (or error-mode? lister-disabled?)
+                         :font-size       :xs
+                         :hover-color     :highlight
+                         :indent          {:horizontal :xxs :left :xxs}
+                         :label           :add-new!
+                         :layout          :button
+                         :preset          :primary
+                         :initial-options new-item-options
+                         :on-select       new-item-event}]))
+
+(defn new-item-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [new-item-event   @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-event])
+        error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/icon-button ::new-item-icon-button
+                             {:disabled? (or error-mode? lister-disabled?)
+                              :on-click  new-item-event
+                              :preset    :add}]))
+
 (defn new-item-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [new-item-event   @(a/subscribe [:item-lister/get-header-prop  lister-id :new-item-event])
+        error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
+        lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
+       [elements/button ::new-item-button
+                        {:disabled?   (or error-mode? lister-disabled?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :label       :add-new!
+                         :on-click    new-item-event
+                         :preset      :primary}]))
+
+(defn new-item-block
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [item-lister/new-item-button :my-lister]
+  ;  [item-lister/new-item-block :my-lister]
   [lister-id]
   (if-let [new-item-event @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-event])]
-          (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
-                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-               (if-let [new-item-options @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-options])]
-                       [elements/select :item-lister/new-item-select
-                                        {:as-button? true :autoclear? true :icon :add_circle :preset :primary-icon-button :tooltip :add-new!
-                                         :initial-options new-item-options
-                                         :on-select       new-item-event
-                                         :disabled?       (or error-mode? lister-disabled?)}]
-                       [elements/icon-button :item-lister/new-item-button
-                                             {:icon :add_circle :preset :primary :tooltip :add-new!
-                                              :on-click  new-item-event
-                                              :disabled? (or error-mode? lister-disabled?)}]))))
+          (let [new-item-options @(a/subscribe [:item-lister/get-header-prop lister-id :new-item-options])
+                viewport-small?  @(a/subscribe [:environment/viewport-small?])]
+               (cond (and new-item-options viewport-small?) [new-item-icon-select lister-id]
+                          new-item-options                  [new-item-select      lister-id]
+                                           viewport-small?  [new-item-icon-button lister-id]
+                                           :else            [new-item-button      lister-id]))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn toggle-select-mode-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
+        lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
+        no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
+      [elements/icon-button ::toggle-select-mode-icon-button
+                            {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
+                             :on-click  [:item-lister/toggle-select-mode! lister-id]
+                             :preset    :select-mode}]))
 
 (defn toggle-select-mode-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
+        lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
+        no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
+      [elements/button ::toggle-select-mode-button
+                       {:disabled?   (or error-mode? lister-disabled? no-items-to-show?)
+                        :font-size   :xs
+                        :hover-color :highlight
+                        :indent      {:horizontal :xxs :left :xxs}
+                        :on-click    [:item-lister/toggle-select-mode! lister-id]
+                        :preset      :select-mode}]))
+
+(defn toggle-select-mode-block
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [item-lister/toggle-select-mode-button :my-lister]
+  ;  [item-lister/toggle-select-mode-block :my-lister]
+  [lister-id]
+  (if-let [items-selectable? @(a/subscribe [:item-lister/items-selectable? lister-id])]
+          (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
+                  [toggle-select-mode-icon-button lister-id]
+                  [toggle-select-mode-button      lister-id])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn toggle-reorder-mode-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
   [lister-id]
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
-        items-selectable? @(a/subscribe [:item-lister/items-selectable? lister-id])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-       (if items-selectable? [elements/icon-button :item-lister/toggle-select-mode-button
-                                                   {:preset :select-mode :tooltip :select
-                                                    :disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                                                    :on-click  [:item-lister/toggle-select-mode! lister-id]}])))
+       [elements/icon-button ::toggle-reorder-mode-icon-button
+                             {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
+                              :preset    :reorder-mode
+                              :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
 
 (defn toggle-reorder-mode-button
-  ; @param (keyword) lister-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-lister/toggle-reorder-mode-button :my-lister]
+  ; @param (keyword) lister-id
   [lister-id]
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
-        items-sortable?   @(a/subscribe [:item-lister/get-body-prop     lister-id :sortable?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-       (if items-sortable? [elements/icon-button :item-lister/toggle-reorder-mode-button
-                                                 {:preset :reorder-mode :tooltip :reorder
-                                                  :disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                                                  :on-click  [:item-lister/toggle-reorder-mode! lister-id]}])))
+       [elements/button ::toggle-reorder-mode-button
+                        {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
+                         :preset    :reorder-mode
+                         :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
 
-(defn sort-items-button
+(defn toggle-reorder-mode-block
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [item-lister/sort-items-button :my-lister]
+  ;  [item-lister/toggle-reorder-mode-block :my-lister]
+  [lister-id]
+  (if-let [items-sortable? @(a/subscribe [:item-lister/get-body-prop lister-id :sortable?])]
+          (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
+                  [toggle-reorder-mode-icon-button lister-id]
+                  [toggle-reorder-mode-button      lister-id])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn sort-items-icon-select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
   [lister-id]
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-       [elements/select :item-lister/sort-items-button
-                        {:as-button? true :options-label :order-by :preset :order-by-icon-button :tooltip :order-by
-                         :disabled?    (or error-mode? lister-disabled? no-items-to-show?)
-                         :on-select    [:item-lister/order-items!           lister-id]
-                         :options-path [:plugins :plugin-handler/body-props lister-id :order-by-options]
-                         :value-path   [:plugins :plugin-handler/meta-items lister-id :order-by]
-                         :get-label-f  header.helpers/order-by-label-f}]))
+       [elements/select ::sort-items-icon-select
+                        {:disabled?     (or error-mode? lister-disabled? no-items-to-show?)
+                         :get-label-f   header.helpers/order-by-label-f
+                         :layout        :icon-button
+                         :on-select     [:item-lister/order-items! lister-id]
+                         :options-label :order-by
+                         :options-path  [:plugins :plugin-handler/body-props lister-id :order-by-options]
+                         :preset        :order-by
+                         :value-path    [:plugins :plugin-handler/meta-items lister-id :order-by]}]))
+
+(defn sort-items-select
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
+        lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
+        no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
+       [elements/select ::sort-items-select
+                        {:disabled?     (or error-mode? lister-disabled? no-items-to-show?)
+                         :font-size     :xs
+                         :get-label-f   header.helpers/order-by-label-f
+                         :hover-color   :highlight
+                         :indent        {:horizontal :xxs :left :xxs}
+                         :layout        :button
+                         :on-select     [:item-lister/order-items! lister-id]
+                         :options-label :order-by
+                         :options-path  [:plugins :plugin-handler/body-props lister-id :order-by-options]
+                         :preset        :order-by
+                         :value-path    [:plugins :plugin-handler/meta-items lister-id :order-by]}]))
+
+(defn sort-items-block
+  ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  [item-lister/sort-items-block :my-lister]
+  [lister-id]
+  (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
+          [sort-items-icon-select lister-id]
+          [sort-items-select      lister-id]))
 
 
 
@@ -261,8 +503,8 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  [:div.item-lister--header--menu-bar [search-items-field      lister-id]
-                                      [quit-search-mode-button lister-id]])
+  [:div.item-lister--header--menu-bar [search-items-field           lister-id]
+                                      [quit-search-mode-icon-button lister-id]])
 
 (defn search-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -279,11 +521,10 @@
   ; @param (keyword) lister-id
   [lister-id]
   [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group
-      [toggle-all-items-selection-button lister-id]
-      [delete-selected-items-button      lister-id]
-      [duplicate-selected-items-button   lister-id]]
-    [quit-select-mode-button lister-id]])
+    [:div.item-lister--header--menu-item-group [toggle-all-items-selection-icon-button lister-id]
+                                               [delete-selected-items-block            lister-id]
+                                               [duplicate-selected-items-block         lister-id]]
+    [quit-select-mode-icon-button lister-id]])
 
 (defn select-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -300,11 +541,11 @@
   ; @param (keyword) lister-id
   [lister-id]
   [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group [new-item-button            lister-id]
-                                               [sort-items-button          lister-id]
-                                               [toggle-select-mode-button  lister-id]
-                                               [toggle-reorder-mode-button lister-id]]
-    [:div.item-lister--header--menu-item-group [search-block lister-id]]])
+    [:div.item-lister--header--menu-item-group [new-item-block            lister-id]
+                                               [sort-items-block          lister-id]
+                                               [toggle-select-mode-block  lister-id]
+                                               [toggle-reorder-mode-block lister-id]]
+    [:div.item-lister--header--menu-item-group [search-block              lister-id]]])
 
 (defn menu-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -317,15 +558,16 @@
                               (if-let [menu-element @(a/subscribe [:item-lister/get-header-prop lister-id :menu-element])]
                                       [menu-element               lister-id]
                                       [menu-mode-header-structure lister-id])]))
+
 (defn reorder-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   [:div.item-lister--header--menu-bar
-    [:div.item-lister--header--menu-item-group [elements/button {:layout :icon-button :variant :placeholder}]]
+    [:div.item-lister--header--menu-item-group [elements/icon-button {:variant :placeholder}]]
     [:div.item-lister--header--menu-item-group [save-order-button lister-id]]
-    [quit-reorder-mode-button lister-id]])
+    [quit-reorder-mode-icon-button lister-id]])
 
 (defn reorder-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

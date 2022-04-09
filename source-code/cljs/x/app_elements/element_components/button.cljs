@@ -3,10 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.button
-    (:require [mid-fruits.candy                     :refer [param return]]
-              [mid-fruits.map                       :as map]
+    (:require [mid-fruits.candy                     :refer [param]]
               [x.app-components.api                 :as components]
-              [x.app-core.api                       :as a :refer [r]]
+              [x.app-core.api                       :as a]
               [x.app-elements.badge-handler.views   :as badge-handler.views]
               [x.app-elements.engine.api            :as engine]
               [x.app-elements.preset-handler.button :as preset-handler.button]
@@ -21,35 +20,26 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ;  {:icon (keyword)(opt)
-  ;   :keypress (map)(opt)
-  ;   :layout (keyword)(opt)
-  ;   :variant (keyword)(opt)}
+  ;  {:background-color (keyword)(opt)
+  ;   :hover-color (keyword)(opt)
+  ;   :icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:border-radius (keyword)
+  ;   :color (keyword)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
-  ;   :icon-family (keyword)
-  ;   :layout (keyword)
-  ;   :variant (keyword)}
-  [{:keys [icon label layout variant] :as button-props}]
-  (merge {:layout :row}
-         (if (not= layout :icon-button) {:font-size        :s
-                                         :font-weight      :bold
-                                         :horizontal-align :center})
-         (if icon                   {:icon-family :material-icons-filled})
-         (case variant :filled      {:background-color :primary}
-                       :transparent {:color            :primary}
-                                    {:background-color :primary
-                                     :variant          :filled})
-         (param button-props)
-         ; XXX#0523
-         ; A button elemet {:layout :icon-button} beállítással használva,
-         ; a {:content ...} tulajdonság neve nehezen értelmezhető,
-         ; ezért {:label ...} tulajdonságként kell használni
-         (map/rekey-item button-props :label :content)))
+  ;   :icon-family (keyword)}
+  [{:keys [background-color hover-color icon] :as button-props}]
+  (merge {:color            :default
+          :font-size        :s
+          :font-weight      :bold
+          :horizontal-align :center}
+         (if background-color {:border-radius :s})
+         (if hover-color      {:border-radius :s})
+         (if icon             {:icon-family   :material-icons-filled})
+         (param button-props)))
 
 
 
@@ -61,10 +51,9 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:content (metamorphic-content)(opt)}
-  [_ {:keys [content]}]
-  ; XXX#0523
-  (if content [:div.x-button--label [components/content content]]))
+  ;  {:label (metamorphic-content)(opt)}
+  [_ {:keys [label]}]
+  (if label [:div.x-button--label [components/content label]]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -118,27 +107,29 @@
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
   ;   :background-color (keyword)(opt)
-  ;    :highlight, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;    Only w/ {:variant :filled}
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
+  ;   :border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l
+  ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;    Only w/ {:variant :transparent}
+  ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
-  ;    Only w/ {:layout :fit} or {:layout :row}
   ;   :font-weight (keyword)(opt)
   ;    :bold, :extra-bold
   ;    Default: :bold
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;    Only w/ {:layout :fit} or {:layout :row}
+  ;   :hover-color (keyword)(opt)
+  ;    :highlight, :muted, :none
+  ;    Default: :none
   ;   :icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
@@ -159,17 +150,9 @@
   ;     :required? (boolean)(opt)
   ;      Default: false}
   ;   :label (metamorphic-content)(opt)
-  ;   :layout (keyword)(opt)
-  ;    :fit, :icon-button, :row
-  ;    Default: :row
   ;   :on-click (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
-  ;    XXX#8671
-  ;   :style (map)(opt)
-  ;   :tooltip (metamorphic-content)(opt)
-  ;   :variant (keyword)(opt)
-  ;    :filled, :placeholder, :transparent
-  ;    Default: :filled}
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/button {...}]

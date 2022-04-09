@@ -44,21 +44,16 @@
 /***** Element profiles *****/
 
 body {
+  /*  320px (legkisebb támogatott képernyő-szélesség)
+   * - 96px (kettő ikon-gomb szélessége) */
+  --element-min-width-xxs: 224px;
 
-  /* XXX#2981
-  *   320px (legkisebb támogatott képernyő-szélesség)
-  * - 96px (kettő ikon-gomb szélessége)
-  * - 24px (content-edge x2) */
-  --element-min-width-xxs: 200px;
+  /*  320px (legkisebb támogatott képernyő-szélesség)
+   * - 48px (egy ikon-gomb szélessége) */
+  --element-min-width-xs:  272px;
 
-  /* XXX#2981
-   *   320px (legkisebb támogatott képernyő-szélesség)
-   * - 48px (egy ikon-gomb szélessége)
-   * - 24px (content-edge x2) */
-  --element-min-width-xs:  248px;
-
-  /* XXX#5491 Element info-tooltip padding */
-  /* ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
+  /* Element info-tooltip padding
+   * ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
   --element-min-width-s:   calc(var( --content-width-xxs ) - 36px);
   --element-min-width-m:   calc(var( --content-width-xs )  - 36px);
   --element-min-width-l:   calc(var( --content-width-s )   - 36px);
@@ -426,18 +421,18 @@ button.x-card:focus,
 /***** Color profiles *****/
 /*** Muted ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="muted"][data-disabled="false"] .x-button--body:hover,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
-  /* XXX#4005 */
+  background-color: var( --background-color-muted ) }
+
+.x-button[data-background-color="muted"] .x-button--body,
+.x-chip[data-background-color="muted"] .x-chip--body,
+.x-icon-button[data-background-color="muted"] .x-icon-button--body {
   background-color: var( --background-color-muted ) }
 
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
-
-.x-button[data-variant="filled"][data-background-color="muted"] .x-button--body,
-.x-chip[data-background-color="muted"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="muted"] .x-icon-button--body {
-  background-color: var( --background-color-muted );
-  color: var( --black ) }
 
 .x-checkbox[data-border-color="muted"]
 .x-checkbox--button::before,
@@ -471,9 +466,10 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-muted ), transparent) }
 
 .x-anchor[data-color="muted"],
-.x-button[data-variant="transparent"][data-color="muted"] .x-button--body,
+.x-button[data-color="muted"] .x-button--body,
+.x-chip[data-color="muted"] .x-chip--body,
 .x-icon[data-color="muted"],
-.x-icon-button[data-variant="transparent"][data-color="muted"] .x-icon-button--body,
+.x-icon-button[data-color="muted"] .x-icon-button--body,
 .x-label[data-color="muted"],
 .x-text[data-color="muted"] {
   color: var( --color-muted ) }
@@ -482,18 +478,18 @@ button.x-card:focus,
 
 /*** Highlight ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="highlight"][data-disabled="false"] .x-button--body:hover,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
-  /* XXX#4005 */
+  background-color: var( --background-color-highlight ) }
+
+.x-button[data-background-color="highlight"] .x-button--body,
+.x-chip[data-background-color="highlight"] .x-chip--body,
+.x-icon-button[data-background-color="highlight"] .x-icon-button--body {
   background-color: var( --background-color-highlight ) }
 
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
-
-.x-button[data-variant="filled"][data-background-color="highlight"] .x-button--body,
-.x-chip[data-background-color="highlight"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="highlight"] .x-icon-button--body {
-  background-color: var( --background-color-highlight );
-  color: var( --black ) }
 
 .x-horizontal-line[data-color="highlight"]
 .x-horizontal-line--body,
@@ -514,9 +510,10 @@ button.x-card:focus,
 .x-horizontal-line--body[data-fade="in-out"] {
   background: linear-gradient(90deg, transparent, var( --border-color-highlight ), transparent) }
 
-.x-button[data-variant="transparent"][data-color="highlight"] .x-button--body,
+.x-button[data-color="highlight"] .x-button--body,
+.x-chip[data-color="highlight"] .x-chip--body,
 .x-icon[data-color="highlight"],
-.x-icon-button[data-variant="transparent"][data-color="highlight"] .x-icon-button--body,
+.x-icon-button[data-color="highlight"] .x-icon-button--body,
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
@@ -525,9 +522,9 @@ button.x-card:focus,
 
 /*** Invert ***/
 
-.x-button[data-variant="transparent"][data-color="invert"] .x-button--body,
+.x-button[data-color="invert"] .x-button--body,
 .x-icon[data-color="invert"],
-.x-icon-button[data-variant="transparent"][data-color="invert"] .x-icon-button--body {
+.x-icon-button[data-color="invert"] .x-icon-button--body {
   color: var( --color-invert ) }
 
 /*** Invert ***/
@@ -537,11 +534,10 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
-.x-button[data-variant="filled"][data-background-color="primary"] .x-button--body,
+.x-button[data-background-color="primary"] .x-button--body,
 .x-chip[data-background-color="primary"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="primary"] .x-icon-button--body {
-  background-color: var( --soft-blue );
-  color: var( --black ) }
+.x-icon-button[data-background-color="primary"] .x-icon-button--body {
+  background-color: var( --soft-blue ) }
 
 .x-checkbox[data-border-color="primary"]
 .x-checkbox--button::before,
@@ -580,9 +576,10 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-primary ), transparent) }
 
 .x-anchor[data-color="primary"],
-.x-button[data-variant="transparent"][data-color="primary"] .x-button--body,
+.x-button[data-color="primary"] .x-button--body,
+.x-chip[data-color="primary"] .x-chip--body,
 .x-icon[data-color="primary"],
-.x-icon-button[data-variant="transparent"][data-color="primary"] .x-icon-button--body,
+.x-icon-button[data-color="primary"] .x-icon-button--body,
 .x-label[data-color="primary"],
 .x-text[data-color="primary"] {
   color: var( --color-primary ) }
@@ -594,11 +591,10 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="secondary"] {
   stroke: var( --border-color-secondary ) }
 
-.x-button[data-variant="filled"][data-background-color="secondary"] .x-button--body,
+.x-button[data-background-color="secondary"] .x-button--body,
 .x-chip[data-background-color="secondary"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="secondary"] .x-icon-button--body {
-  background-color: var( --soft-purple );
-  color: var( --black ) }
+.x-icon-button[data-background-color="secondary"] .x-icon-button--body {
+  background-color: var( --soft-purple ) }
 
 .x-checkbox[data-border-color="secondary"]
 .x-checkbox--button::before,
@@ -637,9 +633,10 @@ button.x-card:focus,
   background: linear-gradient(90deg, transparent, var( --border-color-secondary ), transparent) }
 
 .x-anchor[data-color="secondary"],
-.x-button[data-variant="transparent"][data-color="secondary"] .x-button--body,
+.x-button[data-color="secondary"] .x-button--body,
+.x-chip[data-color="secondary"] .x-chip--body,
 .x-icon[data-color="secondary"],
-.x-icon-button[data-variant="transparent"][data-color="secondary"] .x-icon-button--body,
+.x-icon-button[data-color="secondary"] .x-icon-button--body,
 .x-label[data-color="secondary"],
 .x-text[data-color="secondary"] {
   color: var( --color-secondary ) }
@@ -651,11 +648,10 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="success"] {
   stroke: var( --border-color-success ) }
 
-.x-button[data-variant="filled"][data-background-color="success"] .x-button--body,
+.x-button[data-background-color="success"] .x-button--body,
 .x-chip[data-background-color="success"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="success"] .x-icon-button--body {
-  background-color: var( --soft-green );
-  color: var( --black ) }
+.x-icon-button[data-background-color="success"] .x-icon-button--body {
+  background-color: var( --soft-green ) }
 
 .x-checkbox[data-border-color="success"]
 .x-checkbox--button::before,
@@ -680,9 +676,10 @@ button.x-card:focus,
   background-color: var( --border-color-success ) }
 
 .x-anchor[data-color="success"],
-.x-button[data-variant="transparent"][data-color="success"] .x-button--body,
+.x-button[data-color="success"] .x-button--body,
+.x-chip[data-color="success"] .x-chip--body,
 .x-icon[data-color="success"],
-.x-icon-button[data-variant="transparent"][data-color="success"] .x-icon-button--body,
+.x-icon-button[data-color="success"] .x-icon-button--body,
 .x-label[data-color="success"],
 .x-text[data-color="success"] {
   color: var( --color-success ) }
@@ -694,11 +691,10 @@ button.x-card:focus,
 .x-circle-diagram--section[data-color="warning"] {
   stroke: var( --border-color-warning ) }
 
-.x-button[data-variant="filled"][data-background-color="warning"] .x-button--body,
+.x-button[data-background-color="warning"] .x-button--body,
 .x-chip[data-background-color="warning"] .x-chip--body,
-.x-icon-button[data-variant="filled"][data-background-color="warning"] .x-icon-button--body {
-  background-color: var( --soft-red );
-  color: var( --black ) }
+.x-icon-button[data-background-color="warning"] .x-icon-button--body {
+  background-color: var( --soft-red ) }
 
 .x-checkbox[data-border-color="warning"]
 .x-checkbox--button::before,
@@ -723,9 +719,10 @@ button.x-card:focus,
   background-color: var( --border-color-warning ) }
 
 .x-anchor[data-color="warning"],
-.x-button[data-variant="transparent"][data-color="warning"] .x-button--body,
+.x-button[data-color="warning"] .x-button--body,
+.x-chip[data-color="warning"] .x-chip--body,
 .x-icon[data-color="warning"],
-.x-icon-button[data-variant="transparent"][data-color="warning"] .x-icon-button--body,
+.x-icon-button[data-color="warning"] .x-icon-button--body,
 .x-label[data-color="warning"],
 .x-text[data-color="warning"] {
   color: var( --color-warning ) }
@@ -757,12 +754,16 @@ button.x-card:focus,
   width: var( --icon-size-xxs ) }
 
 .x-anchor[data-font-size="xxs"],
-.x-button[data-font-size="xxs"],
 .x-table[data-font-size="xxs"],
 .x-text[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   line-height: var( --line-height-xxs ) }
+
+.x-button[data-font-size="xxs"] .x-button--label {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 36px }
 
 .x-label[data-font-size="xxs"] {
   /* XXX#9811
@@ -791,7 +792,6 @@ button.x-card:focus,
   width: var( --icon-size-xs ) }
 
 .x-anchor[data-font-size="xs"],
-.x-button[data-font-size="xs"],
 .x-table[data-font-size="xs"],
 .x-text[data-font-size="xs"] {
   font-size: var( --font-size-xs );
@@ -804,6 +804,11 @@ button.x-card:focus,
 .x-switch[data-font-size="xs"]   .x-switch--secondary-label {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
+
+.x-button[data-font-size="xs"] .x-button--label {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 36px }
 
 .x-label[data-font-size="xs"] {
   /* XXX#9811 */
@@ -827,7 +832,6 @@ button.x-card:focus,
   width: var( --icon-size-s ) }
 
 .x-anchor[data-font-size="s"],
-.x-button[data-font-size="s"],
 .x-table[data-font-size="s"],
 .x-text[data-font-size="s"] {
   font-size: var( --font-size-s );
@@ -840,6 +844,11 @@ button.x-card:focus,
 .x-switch[data-font-size="s"]   .x-switch--secondary-label {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
+
+.x-button[data-font-size="s"] .x-button--label {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 36px }
 
 .x-label[data-font-size="s"] {
   /* XXX#9811 */
@@ -864,13 +873,16 @@ button.x-card:focus,
   width: var( --icon-size-m ) }
 
 .x-anchor[data-font-size="m"],
-.x-button[data-font-size="m"],
-.x-label[data-font-size="m"],
 .x-table[data-font-size="m"],
 .x-text[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: var( --line-height-m ) }
+
+.x-button[data-font-size="m"] .x-button--label {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m );
+  line-height: 36px }
 
 .x-label[data-font-size="m"] {
   /* XXX#9811 */
@@ -894,13 +906,16 @@ button.x-card:focus,
   width: var( --icon-size-l ) }
 
 .x-anchor[data-font-size="l"],
-.x-button[data-font-size="l"],
-.x-label[data-font-size="l"],
 .x-table[data-font-size="l"],
 .x-text[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: var( --line-height-l ) }
+
+.x-button[data-font-size="l"] .x-button--label {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l );
+  line-height: 36px }
 
 .x-label[data-font-size="l"] {
   /* XXX#9811 */
@@ -924,13 +939,16 @@ button.x-card:focus,
   width: var( --icon-size-xl ) }
 
 .x-anchor[data-font-size="xl"],
-.x-button[data-font-size="xl"],
-.x-label[data-font-size="xl"],
 .x-table[data-font-size="xl"],
 .x-text[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: var( --line-height-xl ) }
+
+.x-button[data-font-size="xl"] .x-button--label {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl );
+  line-height: 36px }
 
 .x-label[data-font-size="xl"] {
   /* XXX#9811 */
@@ -954,13 +972,16 @@ button.x-card:focus,
   width: var( --icon-size-xxl ) }
 
 .x-anchor[data-font-size="xxl"],
-.x-button[data-font-size="xxl"],
-.x-label[data-font-size="xxl"],
 .x-table[data-font-size="xxl"],
 .x-text[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: var( --line-height-xxl ) }
+
+.x-button[data-font-size="xxl"] .x-button--label {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl );
+  line-height: 36px }
 
 .x-label[data-font-size="xxl"] {
   /* XXX#9811 */
@@ -988,24 +1009,18 @@ button.x-card:focus,
 
 /*** Bold ***/
 
-.x-label[data-font-weight="bold"] .x-label--body,
-.x-text[data-font-weight="bold"] .x-text--body {
-  font-weight: 500 }
-
-.x-button[data-layout="fit"][data-font-weight="bold"] .x-button--label,
-.x-button[data-layout="row"][data-font-weight="bold"] .x-button--label {
+.x-button[data-font-weight="bold"] .x-button--label,
+.x-label[data-font-weight="bold"]  .x-label--body,
+.x-text[data-font-weight="bold"]   .x-text--body {
   font-weight: 500 }
 
 /*** Bold ***/
 
 /*** Extra bold ***/
 
-.x-label[data-font-weight="extra-bold"] .x-label--body,
-.x-text[data-font-weight="extra-bold"] .x-text--body {
-  font-weight: 600 }
-
-.x-button[data-layout="fit"][data-font-weight="extra-bold"] .x-button--label,
-.x-button[data-layout="row"][data-font-weight="extra-bold"] .x-button--label {
+.x-button[data-font-weight="extra-bold"] .x-button--label,
+.x-label[data-font-weight="extra-bold"]  .x-label--body,
+.x-text[data-font-weight="extra-bold"]   .x-text--body {
   font-weight: 600 }
 
 /*** Extra bold ***/
@@ -1335,6 +1350,63 @@ button.x-card:focus,
 
 
 
+/***** Border-radius profiles *****/
+/*** XXS ***/
+
+.x-button[data-border-radius="xxs"] .x-button--body {
+  border-radius: var( --border-radius-xxs );
+  padding: 0 var( --border-radius-xxs ) }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.x-button[data-border-radius="xs"] .x-button--body {
+  border-radius: var( --border-radius-xs );
+  padding: 0 var( --border-radius-xs ) }
+
+/*** XS ***/
+
+/*** S ***/
+
+.x-button[data-border-radius="s"] .x-button--body {
+  border-radius: var( --border-radius-s );
+  padding: 0 var( --border-radius-s ) }
+
+/*** S ***/
+
+/*** M ***/
+
+.x-button[data-border-radius="m"] .x-button--body {
+  border-radius: var( --border-radius-m );
+  padding: 0 var( --border-radius-m ) }
+
+/*** M ***/
+
+/*** L ***/
+
+.x-button[data-border-radius="l"] .x-button--body {
+  border-radius: var( --border-radius-l );
+  padding: 0 var( --border-radius-l ) }
+
+/*** L ***/
+
+/*** XL ***/
+
+.x-button[data-border-radius="xl"] .x-button--body {
+/* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.x-button[data-border-radius="xxl"] .x-button--body {
+/* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
+
+/*** XXL ***/
+/***** Border-radius profiles *****/
+
+
 /***** Stretch profiles *****/
 
 .x-element[data-stretch-orientation="both"],
@@ -1491,34 +1563,72 @@ body[data-viewport-profile="s"]
 
 /***** Element indent *****/
 
-.x-element[data-indent-bottom="xxs"] { margin-bottom:  6px }
-.x-element[data-indent-bottom="xs"]  { margin-bottom: 12px }
-.x-element[data-indent-bottom="s"]   { margin-bottom: 18px }
-.x-element[data-indent-bottom="m"]   { margin-bottom: 24px }
-.x-element[data-indent-bottom="l"]   { margin-bottom: 36px }
-.x-element[data-indent-bottom="xl"]  { margin-bottom: 42px }
-.x-element[data-indent-bottom="xxl"] { margin-bottom: 48px }
-.x-element[data-indent-left="xxs"]   { margin-left:    6px }
-.x-element[data-indent-left="xs"]    { margin-left:   12px }
-.x-element[data-indent-left="s"]     { margin-left:   18px }
-.x-element[data-indent-left="m"]     { margin-left:   24px }
-.x-element[data-indent-left="l"]     { margin-left:   36px }
-.x-element[data-indent-left="xl"]    { margin-left:   42px }
-.x-element[data-indent-left="xxl"]   { margin-left:   48px }
-.x-element[data-indent-right="xxs"]  { margin-right:   6px }
-.x-element[data-indent-right="xs"]   { margin-right:  12px }
-.x-element[data-indent-right="s"]    { margin-right:  18px }
-.x-element[data-indent-right="m"]    { margin-right:  24px }
-.x-element[data-indent-right="l"]    { margin-right:  36px }
-.x-element[data-indent-right="xl"]   { margin-right:  42px }
-.x-element[data-indent-right="xxl"]  { margin-right:  48px }
-.x-element[data-indent-top="xxs"]    { margin-top:     6px }
-.x-element[data-indent-top="xs"]     { margin-top:    12px }
-.x-element[data-indent-top="s"]      { margin-top:    18px }
-.x-element[data-indent-top="m"]      { margin-top:    24px }
-.x-element[data-indent-top="l"]      { margin-top:    36px }
-.x-element[data-indent-top="xl"]     { margin-top:    42px }
-.x-element[data-indent-top="xxl"]    { margin-top:    48px }
+/* Az elemek {:indent ...} tulajdonságát margin helyett padding tulajdonsággal
+ * szükséges megvalósítani, mert a böngésző a margin tulajdonságok értékét
+ * bizonyos esetekben összevonja */
+.x-element[data-indent-all="xxs"]        { padding:         6px }
+.x-element[data-indent-all="xs"]         { padding:        12px }
+.x-element[data-indent-all="s"]          { padding:        18px }
+.x-element[data-indent-all="m"]          { padding:        24px }
+.x-element[data-indent-all="l"]          { padding:        36px }
+.x-element[data-indent-all="xl"]         { padding:        42px }
+.x-element[data-indent-all="xxl"]        { padding:        48px }
+.x-element[data-indent-horizontal="xxs"] { padding-bottom:  6px;
+                                           padding-top:     6px }
+.x-element[data-indent-horizontal="xs"]  { padding-bottom: 12px;
+                                           padding-top:    12px }
+.x-element[data-indent-horizontal="s"]   { padding-bottom: 18px;
+                                           padding-top:    18px }
+.x-element[data-indent-horizontal="m"]   { padding-bottom: 24px;
+                                           padding-top:    24px }
+.x-element[data-indent-horizontal="l"]   { padding-bottom: 36px;
+                                           padding-top:    36px }
+.x-element[data-indent-horizontal="xl"]  { padding-bottom: 42px;
+                                           padding-top:    42px }
+.x-element[data-indent-horizontal="xxl"] { padding-bottom: 48px;
+                                           padding-top:    48px }
+.x-element[data-indent-vertical="xxs"]   { padding-left:    6px;
+                                           padding-right:   6px }
+.x-element[data-indent-vertical="xs"]    { padding-left:   12px;
+                                           padding-right:  12px }
+.x-element[data-indent-vertical="s"]     { padding-left:   18px;
+                                           padding-right:  18px }
+.x-element[data-indent-vertical="m"]     { padding-left:   24px;
+                                           padding-right:  24px }
+.x-element[data-indent-vertical="l"]     { padding-left:   36px;
+                                           padding-right:  36px }
+.x-element[data-indent-vertical="xl"]    { padding-left:   42px;
+                                           padding-right:  42px }
+.x-element[data-indent-vertical="xxl"]   { padding-left:   48px;
+                                           padding-right:  48px }
+.x-element[data-indent-bottom="xxs"]     { padding-bottom:  6px }
+.x-element[data-indent-bottom="xs"]      { padding-bottom: 12px }
+.x-element[data-indent-bottom="s"]       { padding-bottom: 18px }
+.x-element[data-indent-bottom="m"]       { padding-bottom: 24px }
+.x-element[data-indent-bottom="l"]       { padding-bottom: 36px }
+.x-element[data-indent-bottom="xl"]      { padding-bottom: 42px }
+.x-element[data-indent-bottom="xxl"]     { padding-bottom: 48px }
+.x-element[data-indent-left="xxs"]       { padding-left:    6px }
+.x-element[data-indent-left="xs"]        { padding-left:   12px }
+.x-element[data-indent-left="s"]         { padding-left:   18px }
+.x-element[data-indent-left="m"]         { padding-left:   24px }
+.x-element[data-indent-left="l"]         { padding-left:   36px }
+.x-element[data-indent-left="xl"]        { padding-left:   42px }
+.x-element[data-indent-left="xxl"]       { padding-left:   48px }
+.x-element[data-indent-right="xxs"]      { padding-right:   6px }
+.x-element[data-indent-right="xs"]       { padding-right:  12px }
+.x-element[data-indent-right="s"]        { padding-right:  18px }
+.x-element[data-indent-right="m"]        { padding-right:  24px }
+.x-element[data-indent-right="l"]        { padding-right:  36px }
+.x-element[data-indent-right="xl"]       { padding-right:  42px }
+.x-element[data-indent-right="xxl"]      { padding-right:  48px }
+.x-element[data-indent-top="xxs"]        { padding-top:     6px }
+.x-element[data-indent-top="xs"]         { padding-top:    12px }
+.x-element[data-indent-top="s"]          { padding-top:    18px }
+.x-element[data-indent-top="m"]          { padding-top:    24px }
+.x-element[data-indent-top="l"]          { padding-top:    36px }
+.x-element[data-indent-top="xl"]         { padding-top:    42px }
+.x-element[data-indent-top="xxl"]        { padding-top:    48px }
 
 /***** Element indent *****/
 
@@ -1581,78 +1691,15 @@ body[data-viewport-profile="s"]
 
 
 /***** Button *****/
-/*** Tooltip ***/
-
-.x-icon-button[data-tooltip]::after {
-  align-items: center;
-  background-color: transparent;
-  content: attr(data-tooltip);
-  display: flex;
-  flex-direction: column;
-  font-size: var( --font-size-xxs );
-  font-weight: 500;
-  height: 100%;
-  justify-content: center;
-  line-height: 16px; /* 48px / 3sor = 16px / 1sor */
-  letter-spacing: var( --letter-spacing-xxs );
-  min-width: 100%;
-  position: absolute;
-  -transform: scaleX(0);
-  /* Az x4.4.9 verzióig a tooltip feliratok .35s késleltetéssel jelentek meg és tűntek el.
-   * A késleltetés miatt akadozva történt meg a felirat lecserélése az ikon-gombokon, amikor
-   * azok egyik állapotukból egy másik állapotukba léptek és az újrarendereléssel járó felirat
-   * és ikon csere történt. */
-  -transition: .1s transform, .1s background-color }
-
-.x-button [data-tooltip]::after,
-.x-icon-button [data-tooltip]::after {
-  /* - Az ikon-gombokon a tooltip pszeudo-elem magassága azért nem 100%, hogy a lekerekített
-   *   sarkú menükön elhelyezett ikon-gombokon a tooltip pszeudo-elem sarka ne lógjon túl
-   *   a menü lekerekített sarkán.
-   * - 36px elég, hogy eltakaraja a gomb ikonját, és 2 sor szöveg elfér benne.
-   * - Abban az esetben, ha a tooltip tartalma 3 sorban jelenik meg, akkor a tooltip pszeudo-elem
-   *   magassága 48px értékre növekszik. */
-  -min-height: 36px }
-
-[data-touch-detected="false"] [data-tooltip]:active:hover::after {
-  /* BUG#4140
-   * Ha a gombra kattintáskor megváltozik annak állapota, ami a gomb újrarenderelését
-   * okozza, akkor a tooltip felirat eltűnik, majd újra megjelenik (villog) */
-  transform: scaleX(0) }
-
-[data-touch-detected="false"] [data-tooltip]:hover::after {
-  /* BUG#8094
-   * Az ikon-gombokon megjelenített az ikon-gombnál szélesebb tartalmú tooltip kilógna az ikon-gomb
-   * területéről és emiatt amikor az ikon-gomb [data-disabled="true"] állapotban van, akkor a tooltip
-   * kilógó részén működne a gomb érzékelése!
-   * Ezért az eredetileg {opacity: 0} tulajdonsággal eltűntetett tooltip pszeudo-elemet
-   * {transform: scaleX(0)} tulajdonsággal szükséges eltűntetni.
-   * A {background-color: transparent} és a {transform: scaleX(0)} tulajdonság egyidejű
-   * használatával esztétikusa a tooltip pszeudo-elem eltűntetése.
-   * A tooltip pszeudo-elemet {display: none} tulajdonsággal csak animáció és késleltetés nélkül
-   * lenne lehetséges eltűntetni ... */
-  background-color: var( --background-color );
-  transform: scaleX(1);}
-
-/*** Tooltip ***/
-
 /*** Button wrapper ***/
 
-.x-button[data-layout="fit"][data-variant="filled"],
-.x-button[data-layout="row"][data-variant="filled"] {
-  -min-width: var( --element-min-width-xs ) }
-
-.x-button[data-layout="row"] {
-  min-height: 48px }
+.x-button {
+  -border-radius: 8px;
+}
 
 /*** Button wrapper ***/
 
 /*** Button badge ***/
-
-.x-button[data-layout="icon-button"] .x-element-badge {
-  right: 12px;
-  top: 12px }
-
 /*** Button badge ***/
 
 /*** Button body ***/
@@ -1660,58 +1707,13 @@ body[data-viewport-profile="s"]
 .x-button--body {
   align-items: center;
   cursor: pointer;
-  display: flex }
-
-.x-button[data-layout="fit"] .x-button--body,
-.x-button[data-layout="row"] .x-button--body {
-  border-radius: 18px;
-  flex-direction: row;
-  height: 36px;
-  width: 100% }
-
-.x-button[data-variant="transparent"][data-layout="row"] {
   display: flex;
-  flex-direction: column;
-  justify-content: center }
 
-.x-button[data-variant="transparent"] .x-button--body {
-  /* A transparent gombok magassága a beállított betűmérettől függ */
-  height: auto }
-
-.x-button[data-layout="fit"][data-variant="filled"] .x-button--body,
-.x-button[data-layout="row"][data-variant="filled"] .x-button--body {
-  padding: 0 36px }
+  /* */
+  width: 100%;
+ }
 
 /*** Button body ***/
-
-/*** Icon button body ***/
-
-.x-button[data-layout="icon-button"] .x-button--body {
-  flex-direction: column;
-  justify-content: center;
-
-  /* A height és width tulajdonságokat nem szükséges meghatározni, a min-height
-   * és min-width tulajdonság használatakor */
-  -height: 48px;
-  -width: 48px }
-
-.x-button[data-layout="icon-button"] .x-button--body {
-  /* XXX#0340
-   * A min-height és min-width tulajdonságok azért szükségesek, hogy
-   * az icon-button elemet a környező tartalom ne kényszerítse méretcsökkenésre */
-  min-height: 48px }
-
-.x-button[data-layout="icon-button"] .x-button--body {
-  /* XXX#0340 */
-  min-width: 48px }
-
-.x-button[data-layout="icon-button"][data-variant="filled"] .x-button--body {
-  border-radius: var( --border-radius-xs ) }
-
-.x-button[data-variant="placeholder"] .x-button--body {
-  cursor: default }
-
-/*** Icon button body ***/
 
 /*** Button icon ***/
 
@@ -1719,19 +1721,14 @@ body[data-viewport-profile="s"]
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center }
-
-.x-button[data-layout="fit"] .x-button--icon,
-.x-button[data-layout="row"] .x-button--icon {
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
-
+  justify-content: center;
   /* XXX#4509 */
   margin-right: 12px;
   width: var( --icon-size-default ) }
 
-.x-button[data-layout="fit"] .x-button--icon-placeholder,
-.x-button[data-layout="row"] .x-button--icon-placeholder {
+.x-button--icon-placeholder {
   /* XXX#4509
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása.
@@ -1741,58 +1738,13 @@ body[data-viewport-profile="s"]
    * placeholder-width = icon-width + icon-margin-right */
   -width: 36px }
 
-.x-button[data-layout="icon-button"] .x-button--icon {
-  /* XXX#6914
-   * Az icon-button gombon az ikon akkor is függőlegesen középre igazítva jelent meg,
-   * amikor a gomb rendelkezett label felirattal. Így viszont a felirat és az ikon együtt
-   * már nem számított középre igazítottnak, ami más elemek mellett zavaróan nézett ki */
-  -align-items: center;
-  -display: flex;
-  -flex-direction: column;
-  -height: 100%;
-  -left: 0;
-  -position: absolute;
-  -top: 0;
-  -width: 100%;
-  /* XXX#6914 */
-
-  font-size: var( --icon-size-s );
-
-  /* BUG#0983
-   * height, overflow, width:
-   * A material-icon font-készlet letöltődése előtt felvillanó FOIT/FOUT okozta méretváltozás megelőzése */
-  height: var( --icon-size-default );
-  overflow: hidden;
-  width: var( --icon-size-default ) }
-
 /*** Button icon ***/
 
 /*** Button label ***/
 
-.x-button[data-layout="fit"] .x-button--label,
-.x-button[data-layout="row"] .x-button--label {
-
+.x-button--label {
   white-space: nowrap;
   word-wrap: normal }
-
-.x-button[data-layout="icon-button"] .x-button--label {
-  /* XXX#6914 */
-  -bottom: 0;
-  -left: 0;
-  -position: absolute;
-  /* XXX#6914 */
-
-  font-size: 9px;
-  font-weight: 600;
-  height: 15px;
-  letter-spacing: var( --letter-spacing-xxs );
-  line-height: 15px;
-  opacity: .75;
-  overflow: hidden;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100% }
 
 /*** Button label ***/
 /***** Button *****/
@@ -2398,7 +2350,7 @@ body[data-viewport-profile="s"]
 .x-digit-field--cover--digit {
   align-items: center;
   border-color: var( --color-highlight );
-  border-radius: 8px;
+  border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
   cursor: text;
@@ -2968,12 +2920,12 @@ body[data-viewport-profile="s"]
 .x-select--button-body {
   background: var( --fill-color );
   border-color: var( --border-color-highlight );
-  border-radius: 8px;
+  border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
   display: flex;
   flex-direction: row;
-  height: 32px;
+  height: 36px;
   justify-content: space-between;
   padding: 0 12px;
   width: 100% }
@@ -2986,7 +2938,7 @@ body[data-viewport-profile="s"]
   height: 100%;
   justify-content: center;
   letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s ) }
+  line-height: 100% }
 
 .x-select--button-icon {
   display: flex;
@@ -3002,8 +2954,7 @@ body[data-viewport-profile="s"]
 .x-select--options {
   display: flex;
   flex-direction: column;
-  min-width: var( --element-min-width-s );
-  padding: 12px 0 }
+  min-width: var( --element-min-width-s ) }
 
 .x-select--no-options-label {
   color: var( --color-highlight );
@@ -3043,7 +2994,7 @@ body[data-viewport-profile="s"]
   border-radius: 50%;
   content: '';
   height: 4px;
-  left: 4px;
+  left: 7px;
   position: absolute;
   top: 16px;
   width: 4px }
@@ -3378,7 +3329,7 @@ body[data-viewport-profile="s"]
 .x-text-field--input-container {
   background-color: var( --fill-color );
   border-color: var( --border-color-highlight );
-  border-radius: 8px;
+  border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
   /* A {padding: 1px} beállítás használatával a text-field elem más elemekhez hasonlóan 36px
@@ -3435,6 +3386,7 @@ body[data-viewport-profile="s"]
 /*** Field label ***/
 
 .x-text-field--label {
+  display: block;
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
@@ -3459,7 +3411,7 @@ body[data-viewport-profile="s"]
 
 .x-text-field--surface {
   background-color: var( --background-color );
-  border-radius: 8px;
+  border-radius: var( --border-radius-s );
   box-shadow: var( --box-shadow-black-xx-light );
   left: 0;
   overflow: hidden;

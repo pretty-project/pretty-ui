@@ -24,9 +24,9 @@
         item-changed?    @(a/subscribe [:item-editor/item-changed?    editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
        [elements/icon-button ::revert-item-icon-button
-                        {:disabled? (or editor-disabled? error-mode? (not item-changed?))
-                         :on-click  [:item-editor/revert-item! editor-id]
-                         :preset    :restore}]))
+                             {:disabled? (or editor-disabled? error-mode? (not item-changed?))
+                              :on-click  [:item-editor/revert-item! editor-id]
+                              :preset    :restore}]))
 
 (defn revert-item-button
   ; @param (keyword) editor-id
@@ -38,9 +38,12 @@
         item-changed?    @(a/subscribe [:item-editor/item-changed?    editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
        [elements/button ::revert-item-button
-                        {:preset :restore-button :indent :both
-                         :disabled? (or editor-disabled? error-mode? (not item-changed?))
-                         :on-click  [:item-editor/revert-item! editor-id]}]))
+                        {:disabled?   (or editor-disabled? error-mode? (not item-changed?))
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :right :xxs}
+                         :preset      :restore
+                         :on-click    [:item-editor/revert-item! editor-id]}]))
 
 (defn revert-item-block
   ; @param (keyword) editor-id
@@ -66,9 +69,9 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
        [elements/icon-button ::delete-item-icon-button
-                        {:disabled? (or editor-disabled? error-mode?)
-                         :on-click  [:item-editor/delete-item! editor-id]
-                         :preset    :delete}]))
+                             {:disabled? (or editor-disabled? error-mode?)
+                              :on-click  [:item-editor/delete-item! editor-id]
+                              :preset    :delete}]))
 
 (defn delete-item-button
   ; @param (keyword) editor-id
@@ -79,9 +82,12 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
        [elements/button ::delete-item-button
-                        {:preset :delete-button :indent :both
-                         :disabled? (or editor-disabled? error-mode?)
-                         :on-click  [:item-editor/delete-item! editor-id]}]))
+                        {:disabled?   (or editor-disabled? error-mode?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :on-click    [:item-editor/delete-item! editor-id]
+                         :preset      :delete}]))
 
 (defn delete-item-block
   ; @param (keyword) editor-id
@@ -120,9 +126,12 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
        [elements/button ::copy-item-button
-                        {:preset :duplicate-button :indent :both
-                         :disabled? (or editor-disabled? error-mode?)
-                         :on-click  [:item-editor/duplicate-item! editor-id]}]))
+                        {:disabled?   (or editor-disabled? error-mode?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :on-click    [:item-editor/duplicate-item! editor-id]
+                         :preset      :duplicate}]))
 
 (defn copy-item-block
   ; @param (keyword) editor-id
@@ -163,9 +172,12 @@
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])
         form-completed?  @(a/subscribe [:item-editor/form-completed?  editor-id])]
        [elements/button ::save-item-button
-                        {:preset :save-button :indent :both
-                         :disabled? (or editor-disabled? error-mode? (not form-completed?))
-                         :on-click  [:item-editor/save-item! editor-id]}]))
+                        {:disabled?   (or editor-disabled? error-mode? (not form-completed?))
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :right :xxs}
+                         :on-click    [:item-editor/save-item! editor-id]
+                         :preset      :save}]))
 
 (defn save-item-block
   ; @param (keyword) editor-id
@@ -212,7 +224,8 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/horizontal-polarity {:start-content [menu-start-buttons editor-id]
+  [elements/horizontal-polarity ::menu-mode-footer
+                                {:start-content [menu-start-buttons editor-id]
                                  :end-content   [menu-end-buttons   editor-id]}])
 
 (defn- footer-structure

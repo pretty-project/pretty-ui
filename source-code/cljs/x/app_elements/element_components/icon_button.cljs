@@ -20,20 +20,21 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ;  {:variant (keyword)(opt)}
+  ;  {:background-color (keyword)(opt)
+  ;   :hover-color (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:background-color (keyword)
+  ;   :border-radius (keyword)
+  ;   :color (keyword)
   ;   :icon-family (keyword)
-  ;   :height (keyword)
-  ;   :variant (keyword)}
-  [{:keys [variant] :as button-props}]
-  (merge {:icon-family :material-icons-filled
-          :height  :xxl}
-         (case variant :filled      {:background-color :primary}
-                       :transparent {:color            :primary}
-                                    {:background-color :primary
-                                     :variant          :filled})
+  ;   :height (keyword)}
+  [{:keys [background-color hover-color] :as button-props}]
+  (merge {:color            :default
+          :icon-family      :material-icons-filled
+          :height           :xxl}
+         (if background-color {:border-radius :s})
+         (if hover-color      {:border-radius :s})
          (param button-props)))
 
 
@@ -100,16 +101,20 @@
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
   ;   :background-color (keyword)(opt)
-  ;    :highlight, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;    Only w/ {:variant :filled}
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
+  ;   :border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl
+  ;    Default: :xs
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;    Only w/ {:variant :transparent}
+  ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :hover-color (keyword)(opt)
+  ;    :highlight, :muted, :none
+  ;    Default: :none
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
@@ -133,12 +138,9 @@
   ;   :label (metamorphic-content)(opt)
   ;   :on-click (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
-  ;    XXX#8672
   ;   :style (map)(opt)
-  ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
-  ;    :filled, :placeholder, :transparent
-  ;    Default: :filled}
+  ;    :placeholder}
   ;
   ; @usage
   ;  [elements/icon-button {...}]

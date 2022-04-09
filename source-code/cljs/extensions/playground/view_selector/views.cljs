@@ -66,25 +66,28 @@
 (defn- anchors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [elements/anchor {:content "Anchor link"   :href "/link"}]
-       [elements/anchor {:content "Anchor button" :on-click [:router/go-to! "/link"]}]
-       [elements/anchor {:content "Disabled anchor"  :on-click [] :disabled? true}]])
+  [:<> [elements/anchor {:content "Anchor link"     :href "/link"}]
+       [elements/anchor {:content "Anchor button"   :on-click [:router/go-to! "/link"]}]
+       [elements/anchor {:content "Disabled anchor" :on-click [] :disabled? true}]])
 
 (defn- buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
        [section-header {:label "Icon-button"}]
-       [elements/button ::pres-esc-button
-                        {:label "Press ESC" :keypress {:key-code 27} :layout :icon-button
-                         :variant :transparent :color :none :icon :people :on-click [:developer/test!]}]
+       [elements/icon-button ::pres-esc-icon-button
+                             {:label "Press ESC" :keypress {:key-code 27}
+                              :variant :transparent :color :none :icon :people :on-click [:developer/test!]}]
        [:div {:style {:display :flex}}
-             [elements/button ::add-icon-button
-                              {:tooltip :add! :preset :add-icon-button :on-click [:developer/test!]}]
-             [elements/button ::save-icon-button
-                              {:tooltip :save! :preset :save-icon-button :on-click [:developer/test!]}]
-             [elements/button ::delete-icon-button
-                              {:tooltip :delete! :preset :delete-icon-button :on-click [:developer/test!]}]]
+             [elements/icon-button ::add-icon-button
+                                   {:on-click [:developer/test!]
+                                    :preset :add}]
+             [elements/icon-button ::save-icon-button
+                                   {:on-click [:developer/test!]
+                                    :preset :save}]
+             [elements/icon-button ::delete-icon-button
+                                   {:on-click [:developer/test!]
+                                    :preset :delete}]]
        [section-footer]
        [section-header {:label "Filled button"}]
        [elements/button ::primary-filled-button
@@ -321,13 +324,13 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground])]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground.view-selector])]
        [elements/menu-bar {:menu-items (view-selector.helpers/menu-items view-id)}]))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground])]
+  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground.view-selector])]
        (case view-id :anchors    [anchors]
                      :buttons    [buttons]
                      :chips      [chips]
@@ -343,7 +346,7 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [view-selector/body :playground
+  [view-selector/body :playground.view-selector
                       {:content         #'body-structure
                        :default-view-id :anchors}])
 

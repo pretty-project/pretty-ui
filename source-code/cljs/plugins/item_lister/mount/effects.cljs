@@ -48,7 +48,7 @@
       {:db (r mount.events/header-did-mount db lister-id header-props)
        :dispatch [:environment/reg-keypress-event! :item-lister/ESC
                                                    {:key-code 27
-                                                    :on-keydown [:elements/empty-field! :item-lister/search-items-field]}]}))
+                                                    :on-keydown [:elements/empty-field! :item-lister.header.views/search-items-field]}]}))
 
 
 

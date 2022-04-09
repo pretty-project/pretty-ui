@@ -399,9 +399,6 @@
   top: 0;
   width: 100% }
 
-.x-app-popups--element--header-placeholder {
-  height: 12px }
-
 .x-app-popups--element--header {
   overflow-x: auto;
 
@@ -419,6 +416,17 @@
   flex-shrink: 0;
 
   width: 100% }
+
+.x-app-popups--element--header-placeholder {
+  /* XXX#0677
+   * - Az .x-app-popups--element--header-placeholder elem biztosítja,
+   *   hogy az .x-app-popups--element--body elemen megjelenített tartalom görgetéskor
+   *   ne lógjon túl a popup elem lekerekített sarkain.
+   *
+   * - A {flex-shrink: 0} beállítás biztosítja, hogy az .x-app-popups--element--body
+   *   elem ne kényszerítse méretcsökkenésre az .x-app-popups--element--header-placeholder elemet. */
+  flex-shrink: 0;
+  height: var( --border-radius-m ) }
 
 /*** Popup header ***/
 
@@ -439,6 +447,15 @@
   width: 50px }
 
 /*** Popup touch anchor ***/
+
+/*** Popup footer ***/
+
+.x-app-popups--element--footer-placeholder {
+  /* XXX#0677 */
+  flex-shrink: 0;
+  height: var( --border-radius-m ) }
+
+/*** Popup footer ***/
 
 /*** Popup minimize/maximize button ***/
 

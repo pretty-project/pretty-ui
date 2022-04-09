@@ -17,11 +17,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) toggle-props
+  ;  {:background-color (keyword)(opt)
+  ;   :hover-color (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:layout (keyword)}
-  [toggle-props]
+  ;  {:border-radius (keyword)
+  ;   :layout (keyword)}
+  [{:keys [background-color hover-color] :as toggle-props}]
   (merge {:layout :fit}
+         ; TEMP
+         ; A border-radius tulajdonság nem műküdik még! (css)
+         (if background-color {:border-radius :s})
+         (if hover-color      {:border-radius :s})
          (param toggle-props)))
 
 
@@ -51,12 +58,17 @@
 (defn element
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ;  {:class (keyword or keywords in vector)(opt)
+  ;  {:border-radius (keyword)(opt)
+  ;   :border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :hover-color (keyword)(opt)
-  ;    :highlight, :muted
+  ;    :highlight, :muted, :none
+  ;    Default: :none
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

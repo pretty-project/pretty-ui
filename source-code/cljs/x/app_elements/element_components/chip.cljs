@@ -22,11 +22,13 @@
   ;
   ; @return (map)
   ;  {:background-color (keyword)
+  ;   :color (keyword)
   ;   :delete-button-icon (keyword)
   ;   :icon-family (keyword)
   ;   :layout (keyword)}
   [{:keys [icon] :as chip-props}]
   (merge {:background-color   :primary
+          :color              :default
           :layout             :row
           :delete-button-icon :close}
          (if icon {:icon-family :material-icons-filled})
@@ -93,6 +95,9 @@
   ;  {:background-color (keyword)(opt)
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
+  ;   :color (keyword)(opt)
+  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :delete-button-icon (keyword)(opt)
   ;    Default: :close

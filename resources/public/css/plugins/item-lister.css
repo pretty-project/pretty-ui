@@ -35,7 +35,7 @@
 /*** Item-lister body ***/
 
 .item-lister--body--structure {
-  padding-top: 12px;
+  -padding-top: 12px;
   width: 100% }
 
 /*** Item-lister body ***/

@@ -54,7 +54,7 @@ body[data-theme="light"] {
   /* Background color */
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );
-  --background-color-highlight: var( --white-dark );
+  --background-color-highlight: var( --white-light );
   --background-color-primary:   var( --hard-blue-xx-dark );
   --background-color-secondary: var( --hard-purple-xx-dark );
   --background-color-success:   var( --hard-green-xx-dark );

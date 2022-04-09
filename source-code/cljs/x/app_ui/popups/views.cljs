@@ -19,23 +19,23 @@
   ; @param (keyword) popup-id
   ;
   ; @usage
-  ;  [ui/popup-accept-icon-button :my-popup]
+  ;  [ui/popup-accept-button :my-popup]
   [popup-id]
-  [elements/button {:keypress {:key-code 13}
+  [elements/button {:indent   {:right :xs}
+                    :keypress {:key-code 13}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :accept-button
-                    :indent   :right}])
+                    :preset   :accept}])
 
 (defn popup-cancel-button
   ; @param (keyword) popup-id
   ;
   ; @usage
-  ;  [ui/popup-cancel-icon-button :my-popup]
+  ;  [ui/popup-cancel-button :my-popup]
   [popup-id]
-  [elements/button {:keypress {:key-code 27}
+  [elements/button {:indent   {:left :xs}
+                    :keypress {:key-code 27}
                     :on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel-button
-                    :indent   :left}])
+                    :preset   :cancel}])
 
 (defn popup-go-up-icon-button
   ; @param (keyword) popup-id
@@ -43,8 +43,8 @@
   ; @usage
   ;  [ui/popup-go-up-icon-button :my-popup]
   [_]
-  [elements/button {:on-click [:router/go-up!]
-                    :preset   :back-icon-button}])
+  [elements/icon-button {:on-click [:router/go-up!]
+                         :preset   :back}])
 
 (defn popup-go-back-icon-button
   ; @param (keyword) popup-id
@@ -52,8 +52,8 @@
   ; @usage
   ;  [ui/popup-go-back-icon-button :my-popup]
   [_]
-  [elements/button {:on-click [:router/go-back!]
-                    :preset   :back-icon-button}])
+  [elements/icon-button {:on-click [:router/go-back!]
+                         :preset   :back}])
 
 (defn popup-close-icon-button
   ; @param (keyword) popup-id
@@ -61,9 +61,9 @@
   ; @usage
   ;  [ui/popup-close-icon-button :my-popup]
   [popup-id]
-  [elements/button {:keypress {:key-code 27}
-                    :on-click [:ui/close-popup! popup-id]
-                    :preset   :close-icon-button}])
+  [elements/icon-button {:keypress {:key-code 27}
+                         :on-click [:ui/close-popup! popup-id]
+                         :preset   :close}])
 
 (defn popup-placeholder-icon-button
   ; @param (keyword) popup-id
@@ -71,7 +71,7 @@
   ; @usage
   ;  [ui/popup-placeholder-icon-button :my-popup]
   [_]
-  [elements/icon-button {:layout :icon-button :variant :placeholder}])
+  [elements/icon-button {:variant :placeholder}])
 
 (defn popup-label
   ; @param (keyword) popup-id
@@ -81,7 +81,8 @@
   ; @usage
   ;  [ui/popup-label :my-popup {...}]
   [_ {:keys [label]}]
-  (if label [elements/label {:content label}]))
+  (if label [elements/label {:content label
+                             :indent  {:horizontal :xs}}]))
 
 (defn accept-popup-header
   ; @param (keyword) popup-id
@@ -148,8 +149,7 @@
           [elements/icon-button {:class    :x-app-popups--element--minimize-button
                                  :color    :invert
                                  :icon     :close_fullscreen
-                                 :on-click [:ui/minimize-popup! popup-id]
-                                 :variant  :transparent}]))
+                                 :on-click [:ui/minimize-popup! popup-id]}]))
 
 (defn- popup-maximize-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,8 +160,7 @@
           [elements/icon-button {:class    :x-app-popups--element--maximize-button
                                  :color    :muted
                                  :icon     :fullscreen
-                                 :on-click [:ui/maximize-popup! popup-id]
-                                 :variant  :filled}]))
+                                 :on-click [:ui/maximize-popup! popup-id]}]))
 
 (defn- popup-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -199,7 +198,8 @@
   ; @param (keyword) popup-id
   [popup-id]
   (if-let [footer @(a/subscribe [:ui/get-popup-prop popup-id :footer])]
-          [:div.x-app-popups--element--footer [components/content popup-id footer]]))
+          [:div.x-app-popups--element--footer [components/content popup-id footer]]
+          [:div.x-app-popups--element--footer-placeholder]))
 
 
 

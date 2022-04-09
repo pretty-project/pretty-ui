@@ -17,10 +17,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::back-button
-                   {:label  :back!
-                    :indent :left
-                    :preset :back-button
-                    :on-click [:gestures/change-view! :views.app-menu/handler :main]}])
+                   {:hover-color :highlight
+                    :indent      {:vertical :xs}
+                    :on-click    [:gestures/change-view! :views.app-menu/handler :main]
+                    :preset      :back}])
 
 
 
@@ -34,9 +34,12 @@
   [language-key]
   (let [selected-language @(a/subscribe [:locales/get-selected-language])
         language-selected? (= language-key selected-language)]
-       [elements/button {:icon :placeholder :label language-key :indent :left
-                         :on-click [:user/upload-user-settings-item! :selected-language language-key]
-                         :preset   (if language-selected? :primary-button :default-button)}]))
+       [elements/button {:hover-color :highlight
+                         :icon        :placeholder
+                         :label       language-key
+                         :indent      {:vertical :xs}
+                         :on-click    [:user/upload-user-settings-item! :selected-language language-key]
+                         :preset      (if language-selected? :primary :default)}]))
 
 (defn- language-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,7 +52,7 @@
 (defn- language-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [elements/horizontal-separator {:size :xxl}]
+  [:<> [elements/horizontal-separator {:size :xl}]
        [language-list]
        [back-button]])
 
@@ -58,10 +61,12 @@
   []
   (let [app-multilingual? @(a/subscribe [:locales/app-multilingual?])]
        [elements/button ::language-selector-button
-                        {:indent :left
-                         :preset :language-button
-                         :on-click  [:gestures/change-view! :views.app-menu/handler :language-selector]
-                         ;:disabled? (not app-multilingual?)}]))
+                        {:hover-color :highlight
+                         :indent      {:vertical :xs}
+                         :on-click    [:gestures/change-view! :views.app-menu/handler :language-selector]
+                         :preset      :language
+                        ;:disabled?   (not app-multilingual?)
+                         ; TEMP
                          :disabled? true}]))
 
 
@@ -73,36 +78,30 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::settings-button
-                   {:indent :left
-                    :preset :settings-button
-                    :on-click [:router/go-to! "/@app-home/settings"]
+                   {:hover-color :highlight
+                    :indent      {:vertical :xs}
+                    :on-click    [:router/go-to! "/@app-home/settings"]
+                    :preset      :settings
+                    ; TEMP
                     :disabled? true}])
 
 (defn- more-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::more-options-button
-                   {:indent :left
-                    :preset :more-options-button
-                    :on-click [:gestures/change-view! :views.app-menu/handler :more-options]}])
-
-(defn- about-app-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [elements/button ::about-app-button
-                   {:icon   :copyright
-                    :indent :left
-                    :label  :about-app
-                    :preset :default-button
-                    :on-click [:gestures/change-view! :views.app-menu/handler :about-app]}])
+                   {:hover-color :highlight
+                    :indent      {:vertical :xs}
+                    :on-click    [:gestures/change-view! :views.app-menu/handler :more-options]
+                    :preset      :more-options}])
 
 (defn- logout-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::logout-button
-                   {:indent :left
-                    :preset :logout-button
-                    :on-click [:user/logout!]}])
+                   {:hover-color :highlight
+                    :indent      {:vertical :xs}
+                    :on-click    [:user/logout!]
+                    :preset      :logout}])
 
 (defn- main
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -120,29 +119,32 @@
 (defn- app-description-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/label {:content (str details/app-codename " | " details/app-description)
+  [elements/label ::app-description-label
+                  {:content          (str details/app-codename " | " details/app-description)
                    :color            :muted
                    :horizontal-align :left
                    :icon             :grade
-                   :indent           :left}])
+                   :indent           {:horizontal :xxs :vertical :s}}])
 
 (defn- app-version-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/label {:content details/app-version
+  [elements/label ::app-version-label
+                  {:content          details/app-version
                    :color            :muted
                    :horizontal-align :left
                    :icon             :extension
-                   :indent           :left}])
+                   :indent           {:horizontal :xxs :vertical :s}}])
 
 (defn- copyright-information-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/label {:content details/copyright-information
+  [elements/label ::copyright-information-label
+                  {:content          details/copyright-information
                    :color            :muted
                    :horizontal-align :left
                    :icon             :copyright
-                   :indent           :left}])
+                   :indent           {:horizontal :xxs :vertical :s}}])
 
 (defn- about-app
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -161,23 +163,36 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::terms-of-service-button
-                   {:icon   :subject
-                    :indent :left
-                    :label  :terms-of-service
-                    :preset :default-button
-                    :on-click [:router/go-to! "/@app-home/terms-of-service"]
+                   {:hover-color :highlight
+                    :icon        :subject
+                    :indent      {:vertical :xs}
+                    :label       :terms-of-service
+                    :on-click    [:router/go-to! "/@app-home/terms-of-service"]
+                    :preset      :default
                     :disabled? true}])
 
 (defn- privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::privacy-policy-button
-                   {:icon   :subject
-                    :indent :left
-                    :label  :privacy-policy
-                    :preset :default-button
-                    :on-click [:router/go-to! "/@app-home/privacy-policy"]
+                   {:hover-color :highlight
+                    :icon        :subject
+                    :indent      {:vertical :xs}
+                    :label       :privacy-policy
+                    :on-click    [:router/go-to! "/@app-home/privacy-policy"]
+                    :preset      :default
                     :disabled? true}])
+
+(defn- about-app-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::about-app-button
+                   {:hover-color :highlight
+                    :icon        :copyright
+                    :indent      {:vertical :xs}
+                    :label       :about-app
+                    :on-click    [:gestures/change-view! :views.app-menu/handler :about-app]
+                    :preset      :default}])
 
 (defn- more-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -211,21 +226,29 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [user-name @(a/subscribe [:user/get-user-name])]
-       [elements/label {:content user-name :min-height :s :font-size :s :font-weight :extra-bold}]))
+       [elements/label ::user-name-label
+                       {:content     user-name
+                        :font-size   :s
+                        :font-weight :extra-bold}]))
 
 (defn- user-email-address-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [user-email-address @(a/subscribe [:user/get-user-email-address])]
-       [elements/label {:content user-email-address :min-height :xs :font-size :xs :color :highlight}]))
+       [elements/label ::user-email-address-label
+                       {:color     :muted
+                        :content   user-email-address
+                        :font-size :xs}]))
 
 (defn- user-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/column {:content [:<> [user-profile-picture]
+  [elements/column ::user-card
+                   {:content [:<> [user-profile-picture]
                                   [elements/horizontal-separator {:size :s}]
                                   [user-name-label]
                                   [user-email-address-label]]
+                    :indent {:bottom :m}
                     :stretch-orientation :horizontal}])
 
 (defn body
@@ -234,5 +257,4 @@
   ; @param (keyword) popup-id
   [_]
   [:<> [user-card]
-       [elements/horizontal-separator {:size :l}]
        [app-menu]])

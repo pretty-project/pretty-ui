@@ -40,8 +40,9 @@
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])]
        (if-not (or files-uploaded? request-aborted? request-failured?)
-               [elements/icon-button {:tooltip :abort! :preset :close :height :l
-                                      :on-click [:sync/abort-request! request-id]}])))
+               [elements/icon-button {:height   :l
+                                      :on-click [:sync/abort-request! request-id]
+                                      :preset   :close}])))
 
 (defn- progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,11 +53,10 @@
         uploader-progress @(a/subscribe [:storage.file-uploader/get-uploader-progress uploader-id])
         request-aborted?  @(a/subscribe [:sync/request-aborted?   request-id])
         request-failured? @(a/subscribe [:sync/request-failured?  request-id])
-        line-color (cond request-aborted? :muted request-failured? :warning :default :primary)]
+        line-color (cond request-aborted? :warning request-failured? :warning :default :primary)]
        [elements/line-diagram {:indent   {:vertical :xs :bottom :xxs}
                                :sections [{:color line-color :value        uploader-progress}
                                           {:color :highlight :value (- 100 uploader-progress)}]}]))
-
 
 (defn- progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -68,7 +68,10 @@
         file-count        @(a/subscribe [:storage.file-uploader/get-uploading-file-count uploader-id])
         progress-label {:content :uploading-n-files-in-progress... :replacements [file-count]}
         label (cond files-uploaded? :files-uploaded request-aborted? :aborted request-failured? :file-upload-failure :default progress-label)]
-       [elements/label {:content label :font-size :xs :color :default :indent {:left :xs :horizontal :xxs}}]))
+       [elements/label {:color     :default
+                        :content   label
+                        :font-size :xs
+                        :indent    {:left :xs :horizontal :xxs}}]))
 
 (defn- progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,8 +107,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/button ::cancel-upload-button
-                   {:on-click [:storage.file-uploader/cancel-uploader! uploader-id]
-                    :preset :cancel-button :indent {:left :xs} :keypress {:key-code 27}}])
+                   {:indent   {:horizontal :xxs :left :xs}
+                    :keypress {:key-code 27}
+                    :on-click [:storage.file-uploader/cancel-uploader! uploader-id]
+                    :preset   :cancel}])
 
 (defn- upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,30 +120,50 @@
         capacity-limit-exceeded? @(a/subscribe [:storage.file-uploader/capacity-limit-exceeded? uploader-id])]
        [elements/button ::upload-files-button
                         {:disabled? (or all-files-cancelled? max-upload-size-reached? capacity-limit-exceeded?)
-                         :on-click [:storage.file-uploader/start-progress! uploader-id]
-                         :preset :upload-button :indent {:right :xs} :keypress {:key-code 13}}]))
+                         :keypress  {:key-code 13}
+                         :indent    {:horizontal :xxs :right :xs}
+                         :on-click  [:storage.file-uploader/start-progress! uploader-id]
+                         :preset    :upload}]))
 
 (defn- available-capacity-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
+  ; XXX#0506
+  ; - Az available-capacity-label felirat elements/text elem használatával van megjelenítve,
+  ;   így kis méretű képernyőkön a szöveg képes megtörni (az elements/label elemben nem törik meg a szöveg).
+  ;
+  ; - A {:horizontal-align :center} beállítás használatával kis méretű képernyőkön a szöveg a középre
+  ;   igazítva törik meg.
+  ;
+  ; - Az {:indent {:vertical :xs}} beállítás használatával kis méretű képernyőkön a szöveg nem
+  ;   ér hozzá a képernyő széléhez.
   (let [capacity-limit-exceeded? @(a/subscribe [:storage.file-uploader/capacity-limit-exceeded? uploader-id])
         free-capacity            @(a/subscribe [:storage.capacity-handler/get-free-capacity])
         free-capacity             (-> free-capacity io/B->MB format/decimals)]
-       [elements/text {:content {:content :available-capacity-in-storage-is :replacements [free-capacity]}
-                       :font-size :xs :font-weight :bold
-                       :color (if capacity-limit-exceeded? :warning :muted)}]))
+       [elements/text ::available-capacity-label
+                      {:color            (if capacity-limit-exceeded? :warning :muted)
+                       :content          {:content :available-capacity-in-storage-is :replacements [free-capacity]}
+                       :font-size        :xs
+                       :font-weight      :bold
+                       :horizontal-align :center
+                       :indent           {:vertical :xs}}]))
 
 (defn- uploading-size-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
+  ; XXX#0506
   (let [files-size               @(a/subscribe [:storage.file-uploader/get-files-size           uploader-id])
         max-upload-size-reached? @(a/subscribe [:storage.file-uploader/max-upload-size-reached? uploader-id])
         max-upload-size          @(a/subscribe [:storage.capacity-handler/get-max-upload-size])
         files-size      (-> files-size      io/B->MB format/decimals)
         max-upload-size (-> max-upload-size io/B->MB format/decimals)]
-       [elements/text {:content {:content :uploading-size-is :replacements [files-size max-upload-size]}
-                       :font-size :xs :font-weight :bold
-                       :color (if max-upload-size-reached? :warning :muted)}]))
+       [elements/text ::uploading-size-label
+                      {:color            (if max-upload-size-reached? :warning :muted)
+                       :content          {:content :uploading-size-is :replacements [files-size max-upload-size]}
+                       :font-size        :xs
+                       :font-weight      :bold
+                       :horizontal-align :center
+                       :indent           {:vertical :xs}}]))
 
 (defn- file-upload-summary
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,11 +199,11 @@
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
         object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
        [item-browser/list-item :storage.file-uploader file-dex
-                               {:label       (str filename)
-                                :description (media-browser.helpers/file-item->size   {:filesize filesize})
+                               {:description (media-browser.helpers/file-item->size   {:filesize filesize})
                                 :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
-                                :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
                                 :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
+                                :label       (str filename)
+                                :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
                                 :style       (if file-cancelled? {:opacity 0.5})}]))
 
 (defn body
@@ -188,5 +213,4 @@
        (letfn [(f [file-list file-dex]
                   (conj file-list ^{:key (str uploader-id file-dex)}
                                    [file-item uploader-id file-dex]))]
-              [:<> (reduce f [:<>] (range file-count))
-                   [elements/horizontal-separator {:size :s}]])))
+              (reduce f [:<>] (range file-count)))))

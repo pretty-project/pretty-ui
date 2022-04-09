@@ -18,8 +18,9 @@
   ; @param (keyword) editor-id
   [editor-id]
   (if-let [helper @(a/subscribe [:value-editor/get-editor-prop editor-id :helper])]
-          [:<> [elements/horizontal-separator {:size :l}]
-               [elements/text                 {:content helper}]]))
+          [elements/text ::editor-helper
+                         {:content helper
+                          :indent  {:vertical :m}}]))
 
 (defn editor-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -34,7 +35,5 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [:<> [elements/horizontal-separator {:size :l}]
-       [editor-field  editor-id]
-       [editor-helper editor-id]
-       [elements/horizontal-separator {:size :l}]])
+  [:<> [editor-field  editor-id]
+       [editor-helper editor-id]])

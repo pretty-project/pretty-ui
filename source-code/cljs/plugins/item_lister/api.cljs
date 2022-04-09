@@ -33,12 +33,12 @@
 (def body body.views/body)
 
 ; plugins.item-lister.header.views
-(def search-block               header.views/search-block)
-(def new-item-button            header.views/new-item-button)
-(def toggle-select-mode-button  header.views/toggle-select-mode-button)
-(def toggle-reorder-mode-button header.views/toggle-reorder-mode-button)
-(def sort-items-button          header.views/sort-items-button)
-(def header                     header.views/header)
+(def search-block              header.views/search-block)
+(def new-item-block            header.views/new-item-block)
+(def toggle-select-mode-block  header.views/toggle-select-mode-block)
+(def toggle-reorder-mode-block header.views/toggle-reorder-mode-block)
+(def sort-items-block          header.views/sort-items-block)
+(def header                    header.views/header)
 
 ; plugins.item-lister.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)
