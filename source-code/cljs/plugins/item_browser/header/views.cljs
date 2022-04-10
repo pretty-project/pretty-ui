@@ -57,7 +57,7 @@
                                                [item-lister/sort-items-block          browser-id]
                                                [item-lister/toggle-select-mode-block  browser-id]
                                                [item-lister/toggle-reorder-mode-block browser-id]]
-    [:div.item-lister--header--menu-item-group [item-lister/search-block browser-id]]])
+    [:div.item-lister--header--menu-item-group [item-lister/search-block              browser-id]]])
 
 (defn header
   ; @param (keyword) browser-id

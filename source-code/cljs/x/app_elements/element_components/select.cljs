@@ -43,9 +43,6 @@
 ; @constant (ms)
 (def ON-POPUP-CLOSED-DELAY 350)
 
-; @constant (keyword)
-(def SELECT-BUTTON-ICON :unfold_more)
-
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -290,7 +287,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [_ _]
-  [:i.x-select--button-icon SELECT-BUTTON-ICON])
+  [:i.x-select--button-icon :unfold_more])
 
 (defn- select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

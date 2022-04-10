@@ -8,8 +8,7 @@
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
               [plugins.plugin-handler.core.subs   :as core.subs]
-              [x.app-core.api                     :as a :refer [r]]
-              [x.app-router.api                   :as router]))
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
@@ -44,15 +43,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-derived-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (string)
-  [db [_ _]]
-  (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
   ; @param (keyword) browser-id

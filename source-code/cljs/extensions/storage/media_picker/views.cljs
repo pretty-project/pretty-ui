@@ -32,8 +32,10 @@
   ; @param (map) picker-props
   ;  {:toggle-label (metamorphic-content)(opt)}
   [picker-id {:keys [toggle-label] :as picker-props}]
-  [elements/label {:color :muted :min-height :s :font-size :xs
-                   :content (or toggle-label (media-picker-toggle-auto-label picker-id picker-props))}])
+  (let [toggle-label (or toggle-label (media-picker-toggle-auto-label picker-id picker-props))]
+       [elements/label {:color     :muted
+                        :content   toggle-label
+                        :font-size :xs}]))
 
 (defn media-picker-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -41,23 +43,21 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ;  {:disabled? (boolean)(opt)
-  ;   :indent (keyword)(opt)
   ;   :label (metamorphic-content)(opt)}
-  [_ {:keys [disabled? indent label]}]
-  (if label [elements/label {:content label :min-height :s :disabled? disabled? :indent indent}]))
+  [_ {:keys [disabled? label]}]
+  (if label [elements/label {:content   label
+                             :disabled? disabled?}]))
 
 (defn media-picker-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :indent (keyword)(opt)}
-  [picker-id {:keys [disabled? indent] :as picker-props}]
-  [elements/toggle {:content   [media-picker-toggle-label picker-id picker-props]
+  ;  {:disabled? (boolean)(opt)}
+  [picker-id {:keys [disabled?] :as picker-props}]
+  [elements/toggle {:content   [media-picker-toggle-label              picker-id picker-props]
                     :on-click  [:storage.media-selector/load-selector! picker-id picker-props]
-                    :disabled? disabled?
-                    :indent    indent}])
+                    :disabled? disabled?}])
 
 (defn- media-picker-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,9 +116,6 @@
   ;  {:disabled? (boolean)(opt)
   ;    Default: false
   ;   :extensions (strings in vector)(opt)
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both, :none
-  ;    Default: :none
   ;   :label (metamorphic-content)(opt)
   ;   :multiple? (boolean)(opt)
   ;    Default: false

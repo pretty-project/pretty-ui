@@ -69,7 +69,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}

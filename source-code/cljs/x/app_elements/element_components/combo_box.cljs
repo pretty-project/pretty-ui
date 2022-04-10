@@ -255,7 +255,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
   ;   :min-width (keyword)(opt)

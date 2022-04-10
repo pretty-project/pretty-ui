@@ -23,8 +23,7 @@
   ;  {:validate? (boolean)}
   ;
   ; @return (map)
-  ;  {:info-tooltip (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
+  ;  {:label (metamorphic-content)(opt)
   ;   :type (keyword)(opt)
   ;   :validator (map)
   ;    {:f (function)

@@ -33,6 +33,15 @@
   [db [_ lister-id]]
   (update-in db [:plugins :plugin-handler/meta-items lister-id :search-mode?] not))
 
+(defn quit-search-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :search-mode?]))
+
 (defn toggle-select-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -145,19 +154,6 @@
           (return db)
           (let [order-by-options (r mount.subs/get-body-prop db lister-id :order-by-options)]
                (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] (first order-by-options)))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]])
 
 
 

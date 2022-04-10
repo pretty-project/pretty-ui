@@ -25,7 +25,9 @@
                             {:disabled?  editor-disabled?
                              :label      :vat-no
                              :min-width  :s
-                             :value-path [:clients :client-editor/edited-item :vat-no]}]))
+                             :value-path [:clients :client-editor/edited-item :vat-no]
+                             ; TEMP
+                             :info-text "Lorem ipsum dolor ..."}]))
 
 (defn- client-country-select
   ; WARNING! NON-PUBLIC! DO NOT USE!

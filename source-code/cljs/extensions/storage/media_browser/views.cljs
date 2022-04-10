@@ -99,28 +99,57 @@
   [:<> (if (or (io/mime-type->image? mime-type)
                (= mime-type "application/pdf"))
            [elements/button ::preview-file-button
-                            {:preset :default-button :icon :preview :indent :left :label :file-preview
-                             :on-click [:storage.media-browser/preview-file! file-item]}])
+                            {:hover-color :highlight
+                             :icon :preview
+                             :indent {:vertical :xs}
+                             :label :file-preview
+                             :on-click [:storage.media-browser/preview-file! file-item]
+                             :preset :default}])
        [elements/button ::download-file-button
-                        {:preset :default-button :icon :cloud_download :indent :left :label :download!
-                         :on-click [:storage.media-browser/download-file! file-item]}]
+                        {:hover-color :highlight
+                         :icon        :cloud_download
+                         :indent      {:vertical :xs}
+                         :label       :download!
+                         :on-click    [:storage.media-browser/download-file! file-item]
+                         :preset      :default}]
        [elements/button ::copy-file-link-button
-                        {:preset :default-button :icon :content_paste :indent :left :label :copy-link!
-                         :on-click [:storage.media-browser/copy-file-link! file-item]}]
+                        {:hover-color :highlight
+                         :icon        :content_paste
+                         :indent      {:vertical :xs}
+                         :label       :copy-link!
+                         :on-click    [:storage.media-browser/copy-file-link! file-item]
+                         :preset      :default}]
        [elements/button ::move-file-button
-                        {:preset :default-button :icon :drive_file_move :indent :left :label :move!
+                        {:hover-color :highlight
+                         :icon        :drive_file_move
+                         :indent      {:vertical :xs}
+                         :label       :move!
                          :icon-family :material-icons-outlined
-                         :on-click [:storage.media-browser/move-item! file-item]
+                         :on-click    [:storage.media-browser/move-item! file-item]
+                         :preset      :default
+                         ; TEMP
                          :disabled? true}]
        [elements/button ::duplicate-file-button
-                        {:preset :default-button :icon :content_copy :indent :left :label :duplicate!
-                         :on-click [:storage.media-browser/duplicate-item! file-item]}]
+                        {:hover-color :highlight
+                         :icon        :content_copy
+                         :indent      {:vertical :xs}
+                         :label       :duplicate!
+                         :on-click    [:storage.media-browser/duplicate-item! file-item]
+                         :preset      :default}]
        [elements/button ::rename-file-button
-                        {:preset :default-button :icon :edit :indent :left :label :rename!
-                         :on-click [:storage.media-browser/rename-item! file-item]}]
+                        {:hover-color :highlight
+                         :icon        :edit
+                         :indent      {:vertical :xs}
+                         :label       :rename!
+                         :on-click    [:storage.media-browser/rename-item! file-item]
+                         :preset      :default}]
        [elements/button ::delete-file-button
-                        {:preset :warning-button :icon :delete_outline :indent :left :label :delete!
-                         :on-click [:storage.media-browser/delete-item! file-item]}]])
+                        {:hover-color :highlight
+                         :icon        :delete_outline
+                         :indent      {:vertical :xs}
+                         :label       :delete!
+                         :on-click    [:storage.media-browser/delete-item! file-item]
+                         :preset      :warning}]])
 
 
 
@@ -135,21 +164,21 @@
                            :label          (str alias)
                            :description    (media-browser.helpers/directory-item->size   media-item)
                            :header         (media-browser.helpers/directory-item->header media-item)
-                           :timestamp      (media-browser.helpers/media-item->timestamp  media-item)
                            :on-click       [:item-browser/browse-item! :storage.media-browser id]
-                           :on-right-click [:storage.media-browser/render-directory-menu! media-item]}])
+                           :on-right-click [:storage.media-browser/render-directory-menu! media-item]
+                           :timestamp      modified-at}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias filename] :as media-item}]
+  [item-dex {:keys [alias filename modified-at] :as media-item}]
   [item-browser/list-item :storage.media-browser item-dex
                           {:icon           :more_vert
                            :label          (str alias)
-                           :description    (media-browser.helpers/file-item->size       media-item)
-                           :header         (media-browser.helpers/file-item->header     media-item)
-                           :timestamp      (media-browser.helpers/media-item->timestamp media-item)
+                           :description    (media-browser.helpers/file-item->size    media-item)
+                           :header         (media-browser.helpers/file-item->header  media-item)
                            :on-click       [:storage.media-browser/render-file-menu! media-item]
-                           :on-right-click [:storage.media-browser/render-file-menu! media-item]}])
+                           :on-right-click [:storage.media-browser/render-file-menu! media-item]
+                           :timestamp      modified-at}])
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

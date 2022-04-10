@@ -59,10 +59,9 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   [area-id area-props]
-  [:div.x-file-drop-area (engine/element-attributes   area-id area-props)
-                         [file-drop-area-body         area-id area-props]
-                         [engine/element-helper       area-id area-props]
-                         [engine/element-info-tooltip area-id area-props]])
+  [:div.x-file-drop-area (engine/element-attributes area-id area-props)
+                         [file-drop-area-body       area-id area-props]
+                         [engine/element-helper     area-id area-props]])
 
 (defn element
   ; @param (keyword)(opt) area-id
@@ -80,7 +79,6 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Default: :drop-files-here-to-upload
   ;   :on-click (metamorphic-event)(constant)(opt)

@@ -37,25 +37,25 @@
 (defn- go-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/button {:preset   :back-icon-button
-                    :on-click [:request-inspector/show-requests!]}])
+  [elements/icon-button {:on-click [:request-inspector/show-requests!]
+                         :preset   :back}])
 
 (defn- go-bwd-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [history-dex request-history selected-view]}]
   (let [request-history-dex @(a/subscribe [:developer/get-request-history-dex])]
-       [elements/button {:disabled? (= request-history-dex 0)
-                         :on-click  [:request-inspector/inspect-prev-request!]
-                         :preset    :back-icon-button}]))
+       [elements/icon-button {:disabled? (= request-history-dex 0)
+                              :on-click  [:request-inspector/inspect-prev-request!]
+                              :preset    :back}]))
 
 (defn- go-fwd-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [request-history-count @(a/subscribe [:developer/get-request-history-count])
         request-history-dex   @(a/subscribe [:developer/get-request-history-dex])]
-       [elements/button {:disabled? (= request-history-count (inc request-history-dex))
-                         :on-click  [:request-inspector/inspect-next-request!]
-                         :preset    :forward-icon-button}]))
+       [elements/icon-button {:disabled? (= request-history-count (inc request-history-dex))
+                              :on-click  [:request-inspector/inspect-next-request!]
+                              :preset    :forward}]))
 
 (defn- request-data-control-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,7 +79,7 @@
 (defn- request-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div {:style {:width "100%"}}
+  [:div {:style {:padding "12px" :width "100%"}}
         [request-data-label-bar]
         [request-data-control-bar]
         [:div {:style {:height "24px"}}]
@@ -114,7 +114,8 @@
   []
   (let [request-ids @(a/subscribe [:developer/get-request-ids])]
        (reduce #(conj %1 [request-list-item %2])
-                [:<>] request-ids)))
+                [:div {:style {:padding "12px"}}]
+                request-ids)))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

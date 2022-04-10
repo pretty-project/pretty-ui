@@ -3,12 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.effects
-    (:require [plugins.item-editor.core.events   :as core.events]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.mount.subs    :as mount.subs]
-              [plugins.item-editor.routes.subs   :as routes.subs]
-              [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [plugins.item-editor.core.events :as core.events]
+              [plugins.item-editor.core.subs   :as core.subs]
+              [plugins.item-editor.mount.subs  :as mount.subs]
+              [plugins.item-editor.routes.subs :as routes.subs]
+              [x.app-core.api                  :as a :refer [r]]))
 
 
 
@@ -47,18 +46,3 @@
               {:db (r core.events/store-item-id! db editor-id item-id)
                :dispatch-if [(r mount.subs/body-did-mount? db editor-id)
                              [:item-editor/request-item! editor-id]]})))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  :item-editor/handle-route!
-  (fn [{:keys [db]} [_ editor-id]]
-      (let [on-route (r transfer.subs/get-transfer-item db editor-id :on-route)]
-           {:db (r core.events/handle-route! db editor-id)
-            :dispatch on-route})))

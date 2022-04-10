@@ -41,10 +41,10 @@
 /***** Loading animation *****/
 
 .x-loading-animation {
-  animation-duration: 20s; /* 1s = 5% */
-  animation-iteration-count: infinite;
+  animation-duration: .2s;
+  animation-iteration-count: 1;
   animation-delay: 3s;
-  animation-name: x-glow;
-  opacity: 0; }
+  animation-name: x-opacity-0-1;
+  opacity: 0 }
 
 /***** Loading animation *****/

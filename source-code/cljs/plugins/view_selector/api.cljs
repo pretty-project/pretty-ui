@@ -6,6 +6,8 @@
     (:require [plugins.view-selector.core.effects]
               [plugins.view-selector.mount.events]
               [plugins.view-selector.mount.subs]
+              [plugins.view-selector.routes.effects]
+              [plugins.view-selector.routes.events]
               [plugins.view-selector.transfer.subs]
               [plugins.view-selector.body.views  :as body.views]
               [plugins.view-selector.core.events :as core.events]

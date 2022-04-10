@@ -129,10 +129,7 @@
                                            [switch-secondary-body switch-id switch-props]
                                            [switch-primary-body   switch-id switch-props]]
                                      [switch-body switch-id switch-props])
-                 [engine/element-helper       switch-id switch-props]
-                 [engine/element-info-tooltip switch-id switch-props]])
-
-
+                 [engine/element-helper switch-id switch-props]])
 
 (defn switch-did-mount
   [db [_ switch-id switch-props]]

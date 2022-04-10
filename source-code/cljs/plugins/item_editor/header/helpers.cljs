@@ -20,10 +20,10 @@
   ;
   ; @return (keyword)
   [editor-id {:keys [change-keys]}]
-  ; - XXX#0455
-  ;   Mivel "Új elem hozzáadása" módban nem jelenik meg a footer komponensen a "Visszaállítás"
-  ;   gomb, ezért ilyenkor a header komponensen megjelenő fülek cimkéin sem jelenik meg az
-  ;   egyes nézetek változását jelző pont (badge).
+  ; XXX#0455
+  ; Mivel "Új elem hozzáadása" módban nem jelenik meg a footer komponensen a "Visszaállítás"
+  ; gomb, ezért ilyenkor a header komponensen megjelenő fülek cimkéin sem jelenik meg az
+  ; egyes nézetek változását jelző pont (badge).
   (if-not @(a/subscribe [:item-editor/new-item? editor-id])
            (if @(a/subscribe [:item-editor/form-changed? editor-id change-keys])
                 (return :primary))))

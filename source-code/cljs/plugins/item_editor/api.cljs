@@ -17,6 +17,8 @@
               [plugins.item-editor.mount.effects]
               [plugins.item-editor.mount.events]
               [plugins.item-editor.mount.subs]
+              [plugins.item-editor.routes.effects]
+              [plugins.item-editor.routes.events]
               [plugins.item-editor.update.effects]
               [plugins.item-editor.update.events]
               [plugins.item-editor.update.subs]

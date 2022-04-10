@@ -197,8 +197,7 @@
   [:div.x-multi-combo-box (engine/element-attributes   group-id group-props)
                           [multi-combo-box-chip-group  group-id group-props]
                           [multi-combo-box-field       group-id group-props]
-                          [engine/element-helper       group-id group-props]
-                          [engine/element-info-tooltip group-id group-props]])
+                          [engine/element-helper       group-id group-props]])
 
 (defn element
   ; @param (keyword)(opt) group-id
@@ -232,7 +231,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :initial-options (vector)(constant)(opt)
   ;   :initial-value (*)(constant)(opt)
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
   ;   :max-length (integer)(opt)

@@ -76,30 +76,6 @@
   [db [_ editor-id item-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items editor-id :item-id] item-id))
 
-(defn store-derived-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (let [derived-item-id (r core.subs/get-derived-item-id db editor-id)]
-       (assoc-in db [:plugins :plugin-handler/meta-items editor-id :item-id] derived-item-id)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (r store-derived-item-id! db editor-id))
-
 
 
 ;; ----------------------------------------------------------------------------

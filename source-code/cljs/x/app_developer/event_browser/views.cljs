@@ -20,22 +20,28 @@
        [:div {:style {:width "100%"}}
             [:div {:style {:display :flex}}
                   [elements/icon-button ::back-button
-                                        {:preset :back :variant :transparent :color :default
-                                         :on-click [:db/remove-item! [:developer :event-browser/meta-items]]}]
+                                        {:on-click [:db/remove-item! [:developer :event-browser/meta-items]]
+                                         :preset   :back}]
                   [elements/label ::event-id
-                                  {:content (str event-id) :font-size :m :font-weight :extra-bold :color :muted}]
+                                  {:color       :muted
+                                   :content     (str event-id)
+                                   :font-size   :m
+                                   :font-weight :extra-bold}]
                   [elements/icon-button {:variant :placeholder}]]
             [:div {:style {:padding "0 48px"}}
                   [elements/label ::event-vector
-                                  {:content (str "["event-id (if parameters (str " " parameters)) "]")
-                                   :color :muted}]
+                                  {:color   :muted
+                                   :content (str "["event-id (if parameters (str " " parameters)) "]")}]
                   [elements/text-field ::event-vector
-                                       {:label "Parameters"
+                                       {:indent     {:bottom :xxl}
+                                        :label      "Parameters"
                                         :value-path [:developer :event-browser/meta-items :parameters]}]
-                  [elements/horizontal-separator {:size :xxl}]
                   [elements/button ::dispatch-button
-                                   {:label "Dispatch" :on-click [:developer/dispatch-current-event!]
-                                    :style {:width "240px"}}]]]))
+                                   {:background-color :primary
+                                    :border-radius    :l
+                                    :label            "Dispatch"
+                                    :on-click         [:developer/dispatch-current-event!]
+                                    :style            {:width "240px"}}]]]))
 
 (defn event-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +61,10 @@
               (reduce f [:div {:style {:width "100%" :padding "0 0px"}}
                               [:div {:style {:display "flex"}}
                                     [elements/icon-button {:variant :placeholder}]
-                                    [elements/label {:content "Registrated events" :font-size :m :color :muted :font-weight :extra-bold}]]]
+                                    [elements/label {:color       :muted
+                                                     :content     "Registrated events"
+                                                     :font-size   :m
+                                                     :font-weight :extra-bold}]]]
                         (-> event-handlers keys vector/abc-items)))))
 
 (defn body

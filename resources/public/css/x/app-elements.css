@@ -12,7 +12,6 @@
 /***** Stretch profiles *****/
 /***** Element badge *****/
 /***** Element info *****/
-/***** Element stickers *****/
 /***** Element indent *****/
 /***** Field adornments *****/
 /***** Elements ... *****/
@@ -21,11 +20,15 @@
 
 /***** Element debug *****/
 
+/* Az .x-element::after pszeudóelem használatával az egyes elemeken egy animáció jelzi
+ * azok újrarenderelődését */
+
+/*
 @keyframes x-debug {
   from { transform: scale(1) }
   to   { transform: scale(0) }}
 
-.x-element_::after {
+.x-element::after {
   animation-duration: .3s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
@@ -36,6 +39,7 @@
   position: absolute;
   top: 0;
   width: 100% }
+*/
 
 /***** Element debug *****/
 
@@ -52,13 +56,12 @@ body {
    * - 48px (egy ikon-gomb szélessége) */
   --element-min-width-xs:  272px;
 
-  /* Element info-tooltip padding
-   * ( --content-width-* ) - ( "element-info-tooltip-padding" = 36 ) */
-  --element-min-width-s:   calc(var( --content-width-xxs ) - 36px);
-  --element-min-width-m:   calc(var( --content-width-xs )  - 36px);
-  --element-min-width-l:   calc(var( --content-width-s )   - 36px);
-  --element-min-width-xl:  calc(var( --content-width-m )   - 36px);
-  --element-min-width-xxl: calc(var( --content-width-l )   - 36px);
+  /* */
+  --element-min-width-s:   var( --content-width-xxs );
+  --element-min-width-m:   var( --content-width-xs );
+  --element-min-width-l:   var( --content-width-s );
+  --element-min-width-xl:  var( --content-width-m );
+  --element-min-width-xxl: var( --content-width-l );
 }
 
 /***** Element profiles *****/
@@ -93,6 +96,8 @@ button.x-card:focus,
 .x-directory--body:focus,
 .x-field-adornments--button-adornment:active,
 .x-field-adornments--button-adornment:focus,
+.x-element--info-text--button:active,
+.x-element--info-text--button:focus,
 .x-expandable--header:active,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
@@ -177,8 +182,6 @@ button.x-card:focus,
 
 .x-field-adornments--button-adornment,
 .x-field-adornments--static-adornment,
-.x-element--sticker-button,
-.x-element--sticker-icon,
 .x-anchor,
 .x-button--icon,
 .x-button--label,
@@ -197,8 +200,7 @@ button.x-card:focus,
 .x-directory--content-size,
 .x-directory--timestamp,
 .x-element--helper,
-.x-element--info-tooltip--icon,
-.x-element--info-tooltip--content,
+.x-element--info-text--button
 .x-expandable--icon,
 .x-expandable--label,
 .x-expandable--expand-icon,
@@ -212,7 +214,7 @@ button.x-card:focus,
 .x-icon,
 .x-icon-button--icon,
 .x-icon-button--label,
-.x-label[data-selectable="false"] .x-label--icon,
+.x-label--icon,
 .x-label[data-selectable="false"] .x-label--body,
 .x-line-diagram--label,
 .x-menu-bar--menu-item,
@@ -249,7 +251,7 @@ button.x-card:focus,
 .x-color-picker--option::after,
 .x-expandable--expand-icon,
 .x-file-drop-area--icon,
-.x-element--info-tooltip--icon,
+.x-element--info-text--button,
 .x-menu-bar--menu-item--icon,
 .x-select--button-icon,
 .x-slideshow--controls--go-bwd,
@@ -264,9 +266,7 @@ button.x-card:focus,
 .x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
 .x-field-adornments--button-adornment[data-icon-family="material-icons-filled"],
-.x-field-adornments--static-adornment[data-icon-family="material-icons-filled"],
-.x-element--sticker-button[data-icon-family="material-icons-filled"],
-.x-element--sticker-icon[data-icon-family="material-icons-filled"] {
+.x-field-adornments--static-adornment[data-icon-family="material-icons-filled"] {
   font-style: normal;
   font-family: 'Material Icons';
   font-weight: normal;
@@ -286,9 +286,7 @@ button.x-card:focus,
 .x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
 .x-field-adornments--button-adornment[data-icon-family="material-icons-outlined"],
-.x-field-adornments--static-adornment[data-icon-family="material-icons-outlined"],
-.x-element--sticker-button[data-icon-family="material-icons-outlined"],
-.x-element--sticker-icon[data-icon-family="material-icons-outlined"] {
+.x-field-adornments--static-adornment[data-icon-family="material-icons-outlined"] {
   font-style: normal;
   font-family: 'Material Icons Outlined';
   font-weight: normal;
@@ -423,8 +421,9 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="muted"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
-  background-color: var( --background-color-muted ) }
+  background-color: var( --hover-color-muted ) }
 
 .x-button[data-background-color="muted"] .x-button--body,
 .x-chip[data-background-color="muted"] .x-chip--body,
@@ -480,8 +479,9 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="highlight"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
-  background-color: var( --background-color-highlight ) }
+  background-color: var( --hover-color-highlight ) }
 
 .x-button[data-background-color="highlight"] .x-button--body,
 .x-chip[data-background-color="highlight"] .x-chip--body,
@@ -531,13 +531,19 @@ button.x-card:focus,
 
 /*** Primary ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="primary"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover,
+.x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-primary ) }
+
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
 .x-button[data-background-color="primary"] .x-button--body,
 .x-chip[data-background-color="primary"] .x-chip--body,
 .x-icon-button[data-background-color="primary"] .x-icon-button--body {
-  background-color: var( --soft-blue ) }
+  background-color: var( --background-color-primary ) }
 
 .x-checkbox[data-border-color="primary"]
 .x-checkbox--button::before,
@@ -588,13 +594,19 @@ button.x-card:focus,
 
 /*** Secondary ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="secondary"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover,
+.x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-secondary ) }
+
 .x-circle-diagram--section[data-color="secondary"] {
   stroke: var( --border-color-secondary ) }
 
 .x-button[data-background-color="secondary"] .x-button--body,
 .x-chip[data-background-color="secondary"] .x-chip--body,
 .x-icon-button[data-background-color="secondary"] .x-icon-button--body {
-  background-color: var( --soft-purple ) }
+  background-color: var( --background-color-secondary ) }
 
 .x-checkbox[data-border-color="secondary"]
 .x-checkbox--button::before,
@@ -645,13 +657,19 @@ button.x-card:focus,
 
 /*** Success ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="success"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover,
+.x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-success ) }
+
 .x-circle-diagram--section[data-color="success"] {
   stroke: var( --border-color-success ) }
 
 .x-button[data-background-color="success"] .x-button--body,
 .x-chip[data-background-color="success"] .x-chip--body,
 .x-icon-button[data-background-color="success"] .x-icon-button--body {
-  background-color: var( --soft-green ) }
+  background-color: var( --background-color-success ) }
 
 .x-checkbox[data-border-color="success"]
 .x-checkbox--button::before,
@@ -688,13 +706,19 @@ button.x-card:focus,
 
 /*** Warning ***/
 
+/* XXX#4005 */
+.x-button[data-hover-color="warning"][data-disabled="false"] .x-button--body:hover,
+.x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover,
+.x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-warning ) }
+
 .x-circle-diagram--section[data-color="warning"] {
   stroke: var( --border-color-warning ) }
 
 .x-button[data-background-color="warning"] .x-button--body,
 .x-chip[data-background-color="warning"] .x-chip--body,
 .x-icon-button[data-background-color="warning"] .x-icon-button--body {
-  background-color: var( --soft-red ) }
+  background-color: var( --background-color-warning ) }
 
 .x-checkbox[data-border-color="warning"]
 .x-checkbox--button::before,
@@ -1439,125 +1463,31 @@ button.x-card:focus,
 /*** Helper ***/
 
 .x-element--helper {
-  color: var( --color-highlight );
-  font-size: var( --font-size-xs );
-  font-weight: 500;
+  color:          var( --color-highlight );
+  font-size:      var( --font-size-xs );
+  font-weight:    500;
   letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs );
-  padding-bottom: 12px;
-  padding-top: 6px }
+  line-height:    var( --line-height-xs );
+  padding-top:    6px }
 
 /*** Helper ***/
 
-/*** Info tooltip ***/
+/*** Info-text ***/
 
-.x-element--info-tooltip {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  right: -36px;
-  top: 0;
+.x-element--info-text--button {
+  font-size: var( --icon-size-xxs );
+  line-height: 24px;
+  height: 24px;
   width: 24px }
 
-.x-element--info-tooltip--icon {
-  font-size: var( --icon-size-s );
-  height: var( --icon-size-s );
-  line-height: var( --icon-size-s );
-  width: var( --icon-size-s ) }
-
-.x-element--info-tooltip--body {
-  display: none;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  right: 24px;
-  top: 0 }
-
-.x-element--info-tooltip--content {
-  background-color: var( --fill-color );
-  border-color: var( --border-color-highlight );
-  border-style: solid;
-  border-width: 1px;
-  border-radius: var( --border-radius-m );
-  color: var( --color );
+.x-element--info-text--content {
+  color: var( --color-muted );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 18px;
-  padding: 12px;
-  width: 256px;
-  z-index: 9999 }
+  line-height: 24px }
 
-.x-element--info-tooltip:hover
-.x-element--info-tooltip--body {
-  display: flex }
-
-/*** Info tooltip ***/
+/*** Info-text ***/
 /***** Element info *****/
-
-
-
-/***** Element stickers *****/
-
-.x-element--stickers {
-  display: flex;
-  flex-direction: row;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  transform: scale( .5 );
-  transition: opacity .1s, transform .1s;
-  top: 0 }
-
-/* data-viewport-profile="xxs", data-viewport-profile="xs"
- * és data-viewport-profile="s" viewport-on az elemen megjelenő sticker-ek
- * onmouseover esemény nélkül is láthatóak */
-body[data-viewport-profile="xxs"]
-.x-element--stickers,
-body[data-viewport-profile="xs"]
-.x-element--stickers,
-body[data-viewport-profile="s"]
-.x-element--stickers,
-
-.x-element:hover > .x-element--stickers {
-  /* XXX#0134 */
-  opacity: 1;
-  transform: scale( 1 ) }
-
-.x-element--sticker-icon,
-.x-element--sticker-button {
-  align-items: center;
-  background-color: var( --fill-color );
-  border-color: var( --border-color-muted );
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 1px;
-  color: var( --color );
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  height: 24px;
-  justify-content: flex-start;
-  line-height: 22px;
-  margin-right: 3px;
-  margin-top: 3px;
-  text-align: center;
-  width: 24px }
-
-.x-element--sticker-button:focus,
-.x-element--sticker-button:hover {
-  border-color: var( --border-color-primary ) }
-
-.x-element--sticker-button:active {
-  border-color: var( --border-color-muted ) }
-
-.x-element--sticker-icon[data-disabled="true"] {
-  color: var( --color-highlight ) }
-
-/***** Element stickers *****/
 
 
 
@@ -2615,7 +2545,9 @@ body[data-viewport-profile="s"]
 
   /* BUG#0983
    * height, overflow, width:
-   * A material-icon font-készlet letöltődése előtt felvillanó FOIT/FOUT okozta méretváltozás megelőzése */
+   * A material-icon font-készlet letöltődése előtt felvillan az ikon neve (FOIT/FOUT).
+   * A height, overflow, és width tulajdonságok beállítása nélkül az ikon méretének pillanatnyi
+   * megváltozását okozná. */
   height: var( --icon-size-default );
   overflow: hidden;
   width: var( --icon-size-default ) }
@@ -2639,6 +2571,18 @@ body[data-viewport-profile="s"]
 
 /*** Icon-button label ***/
 /***** Icon-button *****/
+
+
+
+/***** Info-text *****/
+/*** Info-text wrapper ***/
+
+.x-info-text {
+  display: flex;
+  grid-row-gap: 6px }
+
+/*** Info-text wrapper ***/
+/***** Info-text *****/
 
 
 
@@ -2821,7 +2765,7 @@ body[data-viewport-profile="s"]
 
 .x-radio-button--option[data-selected="true"]
 .x-radio-button--option-button::before {
-  animation-name: x-reveal;
+  animation-name: x-opacity-0-1;
   animation-duration: .15s;
   background-color: var( --color );
   border-radius: 50%;
@@ -3092,7 +3036,7 @@ body[data-viewport-profile="s"]
 
 .x-slideshow--controls {
   animation-fill-mode: both;
-  animation-name: x-hide;
+  animation-name: x-opacity-1-0;
   animation-duration: .3s;
   height: 100%;
   left: 0;
@@ -3386,7 +3330,7 @@ body[data-viewport-profile="s"]
 /*** Field label ***/
 
 .x-text-field--label {
-  display: block;
+  display: flex;
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );

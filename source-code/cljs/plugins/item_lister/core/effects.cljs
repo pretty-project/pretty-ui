@@ -3,27 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.effects
-    (:require [plugins.item-lister.core.events   :as core.events]
-              [plugins.item-lister.items.events  :as items.events]
-              [plugins.item-lister.items.subs    :as items.subs]
-              [plugins.item-lister.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-lister/handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  (fn [{:keys [db]} [_ lister-id]]
-      (let [on-route    (r transfer.subs/get-transfer-item db lister-id :on-route)
-            route-title (r transfer.subs/get-transfer-item db lister-id :route-title)]
-           {;:db (r core.events/handle-route! db lister-id)
-            :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
+    (:require [plugins.item-lister.core.events  :as core.events]
+              [plugins.item-lister.items.events :as items.events]
+              [plugins.item-lister.items.subs   :as items.subs]
+              [x.app-core.api                   :as a :refer [r]]))
 
 
 

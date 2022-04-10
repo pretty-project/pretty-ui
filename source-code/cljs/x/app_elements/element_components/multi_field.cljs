@@ -231,9 +231,7 @@
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
-  ;    TODO ...
-  ;   :info-tooltip (metamorphic-content)(opt)
-  ;    TODO ...
+  ;   :info-text (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

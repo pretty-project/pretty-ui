@@ -68,8 +68,9 @@
 (def remove-element-prop!                  element/remove-element-prop!)
 
 ; x.app-elements.engine.element-info
-(def element-helper       element-info/element-helper)
-(def element-info-tooltip element-info/element-info-tooltip)
+(def element-helper    element-info/element-helper)
+(def info-text-content element-info/info-text-content)
+(def info-text-button  element-info/info-text-button)
 
 ; x.app-elements.engine.field
 (def empty-field-adornment-preset           field/empty-field-adornment-preset)

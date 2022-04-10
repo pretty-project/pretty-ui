@@ -64,7 +64,6 @@
 
 
 
-
 ;; -- Modifiers ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -124,14 +123,16 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:label (metamorphic-content)
+  ;  {:info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)
   ;   :required? (boolean)(opt)}
-  [field-id {:keys [label required?]}]
+  [field-id {:keys [info-text label required?] :as field-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   (if label [:label.x-text-field--label {:for (target-handler.helpers/element-id->target-id field-id)}
                                         [components/content label]
-                                        (if required? [:span.x-input--label-asterisk "*"])]))
+                                        (if required? [:span.x-input--label-asterisk "*"])
+                                        (if info-text [engine/info-text-button field-id field-props])]))
 
 (defn- text-field-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -198,12 +199,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field (engine/element-attributes   field-id field-props)
-                     [text-field-label            field-id field-props]
-                     [text-field-input-container  field-id field-props]
-                     [text-field-invalid-message  field-id field-props]
-                     [engine/element-helper       field-id field-props]
-                     [engine/element-info-tooltip field-id field-props]])
+  [:div.x-text-field (engine/element-attributes  field-id field-props)
+                     [text-field-label           field-id field-props]
+                     [engine/info-text-content   field-id field-props]
+                     [text-field-input-container field-id field-props]
+                     [text-field-invalid-message field-id field-props]
+                     [engine/element-helper      field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -244,7 +245,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}

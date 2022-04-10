@@ -12,7 +12,7 @@
               [x.app-tools.api                     :as tools]
 
               ; TEMP
-              [plugins.sortable.core              :refer []]))
+              [plugins.sortable.core               :refer []]))
 
 
 
@@ -25,17 +25,20 @@
   ; @param (keyword) lister-id
   [lister-id]
   ; - Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
-  ;   a downloading-items-label feliratot
+  ;   a downloading-items-label feliratot, hogy ne a body komponens megjelenése után
+  ;   villanjon fel!
   ;
   ; - Ha még nincs letöltve az összes elem, akkor görgetéskor a lista aljához érve várható
   ;   a downloading-items-label felirat megjelenése, ami a lista magasságának változásával járna.
-  ;   Ezért, amíg nincs letöltve az összes elem addig a downloading-items-label felirat tartalom
-  ;   nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
+  ;   Ezért, amíg nincs letöltve az összes elem addig a downloading-items-label felirat magassága
+  ;   állandó kell legyen!
+  ;   Amíg nincs letöltve az összes elem de a downloading-items-label felirat éppen nincs megjelenítve,
+  ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
   ;
   ; - Amíg az items-received? értéke false (= az első elemek letöltésekor), addig
   ;   a downloading-items-label felirat {:indent {:top :xxl}} beállítással jelenik meg,
-  ;   így más feliratokhoz hasonlóan távolságot tart header elemtől / a lista felső szélétől.
+  ;   így más feliratokhoz hasonlóan extra távolságot tart header elemtől / a lista felső szélétől.
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
         downloading-items?    @(a/subscribe [:item-lister/downloading-items?    lister-id])
         items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
@@ -44,7 +47,7 @@
                                {:color       :highlight
                                 :font-size   :xs
                                 :font-weight :bold
-                                :indent  (if-not items-received? {:top :xxl})
+                                :indent  {:top (if items-received? :xs :xxl)}
                                 :content (if (or downloading-items? (nor downloading-items? items-received?))
                                              :downloading-items...)}])))
 

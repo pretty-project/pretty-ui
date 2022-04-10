@@ -3,7 +3,7 @@
 
 body[data-theme="dark"] {
   /* App background */
-  --app-background-color:       var( --black );
+  --app-background-color:         var( --black );
   --app-background-pattern-color: var( --black-dark );
   /* App overlay */
   --app-overlay-color:          var( --black-semi-transparent );
@@ -13,13 +13,13 @@ body[data-theme="dark"] {
   --scroll-shadow-bottom:       0  6px 6px -6px #5c5c5c;
   --scroll-shadow-top:          0 -6px 6px -6px #5c5c5c;
   /* Background color */
-  --background-color:           var( --black-dark );
+  --background-color:           var( --black-light );
   --background-color-muted:     var( --grey-x-dark );
   --background-color-highlight: var( --black-light );
-  --background-color-primary:   var( --hard-blue-xx-dark );
-  --background-color-secondary: var( --hard-purple-xx-dark );
-  --background-color-success:   var( --hard-green-xx-dark );
-  --background-color-warning:   var( --hard-red-xx-dark );
+  --background-color-primary:   var( --soft-blue-xx-dark );
+  --background-color-secondary: var( --soft-purple-xx-dark );
+  --background-color-success:   var( --soft-green-xx-dark );
+  --background-color-warning:   var( --soft-red-xx-dark );
   /* Border color */
   --border-color:               var( --black-x-light );
   --border-color-muted:         var( --black-xx-light );
@@ -36,13 +36,22 @@ body[data-theme="dark"] {
   --color-primary:              var( --hard-blue-xx-dark );
   --color-secondary:            var( --hard-purple-xx-dark );
   --color-success:              var( --hard-green-xx-dark );
-  --color-warning:              var( --hard-red-xx-dark ) }
+  --color-warning:              var( --hard-red-xx-dark );
+  /* Hover color */
+  --hover-color:                var( --black-xx-light );
+  --hover-color-muted:          var( --grey );
+  --hover-color-highlight:      var( --grey-x-light );
+  --hover-color-invert:         var( --white-xx-dark );
+  --hover-color-primary:        var( --soft-blue-x-dark );
+  --hover-color-secondary:      var( --soft-purple-x-dark );
+  --hover-color-success:        var( --soft-green-x-dark );
+  --hover-color-warning:        var( --soft-red-x-dark ) }
 
 body[data-theme="light"] {
   /* App background */
-  --app-background-color:       #d7dde8;
-  --app-background-color:       #e7edf8;
-  --app-background-color:       #ebf2fc;
+  --app-background-color:         #d7dde8;
+  --app-background-color:         #e7edf8;
+  --app-background-color:         #ebf2fc;
   --app-background-pattern-color: #e5e9f6;
   /* App overlay */
   --app-overlay-color:          var( --white-semi-transparent );
@@ -54,19 +63,19 @@ body[data-theme="light"] {
   /* Background color */
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );
-  --background-color-highlight: var( --white-light );
-  --background-color-primary:   var( --hard-blue-xx-dark );
-  --background-color-secondary: var( --hard-purple-xx-dark );
-  --background-color-success:   var( --hard-green-xx-dark );
-  --background-color-warning:   var( --hard-red-xx-dark );
+  --background-color-highlight: var( --white-dark );
+  --background-color-primary:   var( --soft-blue );
+  --background-color-secondary: var( --soft-purple );
+  --background-color-success:   var( --soft-green );
+  --background-color-warning:   var( --soft-red );
   /* Border color */
   --border-color:               var( --grey-x-light );
   --border-color-muted:         var( --grey-xx-light );
   --border-color-highlight:     var( --white-xx-dark );
   --border-color-primary:       var( --hard-blue );
   --border-color-secondary:     var( --hard-purple );
-  --border-color-success:       var( --hard-green );
-  --border-color-warning:       var( --hard-red );
+  --border-color-success:       var( --soft-green );
+  --border-color-warning:       var( --soft-red );
   /* Color */
   --color:                      var( --black-xx-light );
   --color-muted:                var( --grey );
@@ -75,7 +84,15 @@ body[data-theme="light"] {
   --color-primary:              var( --hard-blue-xx-dark );
   --color-secondary:            var( --hard-purple-xx-dark );
   --color-success:              var( --hard-green-xx-dark );
-  --color-warning:              var( --hard-red-xx-dark ) }
+  --color-warning:              var( --hard-red-xx-dark );
+  /* Hover color */
+  --hover-color:                var( --white-xx-light );
+  --hover-color-muted:          var( --grey-xx-light );
+  --hover-color-highlight:      var( --white );
+  --hover-color-primary:        var( --soft-blue-light );
+  --hover-color-secondary:      var( --soft-purple-light );
+  --hover-color-success:        var( --soft-green-light );
+  --hover-color-warning:        var( --soft-red-light ) }
 
 body[data-theme="high-contrast"] {}
 

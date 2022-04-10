@@ -3,27 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.core.effects
-    (:require [plugins.view-selector.core.events   :as core.events]
-              [plugins.view-selector.routes.subs   :as routes.subs]
-              [plugins.view-selector.transfer.subs :as transfer.subs]
-              [x.app-core.api                      :as a :refer [r]]
-              [x.app-router.api                    :as router]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :view-selector/handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  (fn [{:keys [db]} [_ selector-id]]
-      (let [on-route    (r transfer.subs/get-transfer-item db selector-id :on-route)
-            route-title (r transfer.subs/get-transfer-item db selector-id :route-title)]
-           {:db (r core.events/handle-route! db selector-id)
-            :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
+    (:require [plugins.view-selector.core.events :as core.events]
+              [plugins.view-selector.routes.subs :as routes.subs]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 

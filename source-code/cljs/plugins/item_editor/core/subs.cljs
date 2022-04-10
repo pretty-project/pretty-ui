@@ -13,8 +13,7 @@
               [x.app-components.api              :as components]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]
-              [x.app-elements.api                :as elements]
-              [x.app-router.api                  :as router]))
+              [x.app-elements.api                :as elements]))
 
 
 
@@ -54,15 +53,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-derived-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (keyword)
-  [db [_ _]]
-  (r router/get-current-route-path-param db :item-id))
 
 (defn get-current-item-id
   ; @param (keyword) editor-id

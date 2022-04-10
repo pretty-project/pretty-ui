@@ -31,14 +31,12 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:layout (keyword)
-  ;   :max-height (integer)
+  ;  {:max-height (integer)
   ;   :min-height (integer)
   ;   :multiline? (boolean)
   ;   :status-animation? (boolean)}
   [field-id field-props]
-  (merge {:layout     :row
-          :max-height 32
+  (merge {:max-height 32
           :min-height 1
           :value-path (engine/default-value-path field-id)}
          (param field-props)
@@ -96,8 +94,7 @@
                      [text-field-label                   field-id field-props]
                      [multiline-field-textarea-container field-id field-props]
                      [text-field-invalid-message         field-id field-props]
-                     [engine/element-helper              field-id field-props]
-                     [engine/element-info-tooltip        field-id field-props]])
+                     [engine/element-helper              field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -121,13 +118,10 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-value (string)(constant)(opt)
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
   ;   :max-height (integer)(opt)
   ;    TODO ...
   ;    Max lines count

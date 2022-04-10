@@ -83,9 +83,8 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:div.x-button (engine/element-attributes   button-id button-props)
-                 [button-body                 button-id button-props]
-                 [engine/element-info-tooltip button-id button-props]])
+  [:div.x-button (engine/element-attributes button-id button-props)
+                 [button-body               button-id button-props]])
 
 (defn- stated-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,7 +127,7 @@
   ;    :left, :center, :right
   ;    Default: :center
   ;   :hover-color (keyword)(opt)
-  ;    :highlight, :muted, :none
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
@@ -144,7 +143,6 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-tooltip (metamorphic-content)(opt)
   ;   :keypress (map)(constant)(opt)
   ;    {:key-code (integer)
   ;     :required? (boolean)(opt)

@@ -18,9 +18,11 @@
 (defn header-cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [elements/button :header-cancel-button
-                   {:preset :cancel-button :indent :both :keypress {:key-code 27}
-                    :on-click [:ui/close-popup! :storage.media-selector/view]}])
+  [elements/button ::header-cancel-button
+                   {:indent   {:horizontal :xxs :vertical :xs}
+                    :keypress {:key-code 27}
+                    :on-click [:ui/close-popup! :storage.media-selector/view]
+                    :preset   :cancel}])
 
 (defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -32,9 +34,11 @@
 (defn header-save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  [elements/button :header-save-button
-                   {:preset :save-button :indent :both :keypress {:key-code 13}
-                    :on-click [:storage.media-selector/save-selected-items!]}])
+  [elements/button ::header-save-button
+                   {:indent   {:horizontal :xxs :vertical :xs}
+                    :keypress {:key-code 13}
+                    :on-click [:storage.media-selector/save-selected-items!]
+                    :preset   :save}])
 
 (defn header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,10 +66,13 @@
   [_]
   (let [no-items-selected?  @(a/subscribe [:storage.media-selector/no-items-selected?])
         selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
-       [:<> [elements/label {:content {:content :n-items-selected :replacements [selected-item-count]}
-                             :color :muted :min-height :l :font-size :xs}]
-            [elements/icon-button {:color :default :height :l :preset :close :disabled? no-items-selected?
-                                   :on-click [:storage.media-selector/discard-selection!]}]]))
+       [:<> [elements/label {:color     :muted
+                             :content   {:content :n-items-selected :replacements [selected-item-count]}
+                             :font-size :xs}]
+            [elements/icon-button {:height    :l
+                                   :disabled? no-items-selected?
+                                   :on-click  [:storage.media-selector/discard-selection!]
+                                   :preset    :close}]]))
 
 (defn footer-selection-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,18 +92,18 @@
 
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias id] :as media-item}]
+  [item-dex {:keys [alias id modified-at] :as media-item}]
   [item-browser/list-item :storage.media-selector item-dex
-                          {:icon :navigate_next
+                          {:icon        :navigate_next
                            :label       (str alias)
                            :description (media-browser.helpers/directory-item->size   media-item)
                            :header      (media-browser.helpers/directory-item->header media-item)
-                           :timestamp   (media-browser.helpers/media-item->timestamp  media-item)
-                           :on-click    [:item-browser/browse-item! :storage.media-selector id]}])
+                           :on-click    [:item-browser/browse-item! :storage.media-selector id]
+                           :timestamp   modified-at}])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias] :as media-item}]
+  [item-dex {:keys [alias modified-at] :as media-item}]
   (let [file-selectable? @(a/subscribe [:storage.media-selector/file-selectable? media-item])]
        [item-browser/list-item :storage.media-selector item-dex
                                {:label       (str alias)
@@ -104,8 +111,8 @@
                                 :description (media-browser.helpers/file-item->size            media-item)
                                 :header      (media-browser.helpers/file-item->header          media-item)
                                 :icon        (media-selector.helpers/file-item->selection-icon media-item)
-                                :timestamp   (media-browser.helpers/media-item->timestamp      media-item)
-                                :on-click    [:storage.media-selector/file-clicked             media-item]}]))
+                                :on-click    [:storage.media-selector/file-clicked             media-item]
+                                :timestamp   modified-at}]))
 
 (defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

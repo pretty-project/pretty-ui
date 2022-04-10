@@ -16,7 +16,6 @@
               [x.app-elements.passfield-handler.events]
               [x.app-elements.passfield-handler.subs]
               [x.app-elements.element-components.anchor               :as element-components.anchor]
-              [x.app-elements.element-components.blank                :as element-components.blank]
               [x.app-elements.element-components.button               :as element-components.button]
               [x.app-elements.element-components.card                 :as element-components.card]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
@@ -41,6 +40,7 @@
               [x.app-elements.element-components.icon                 :as element-components.icon]
               [x.app-elements.element-components.icon-button          :as element-components.icon-button]
               [x.app-elements.element-components.image                :as element-components.image]
+              [x.app-elements.element-components.info-text            :as element-components.info-text]
               [x.app-elements.element-components.label                :as element-components.label]
               [x.app-elements.element-components.line-diagram         :as element-components.line-diagram]
               [x.app-elements.element-components.menu-bar             :as element-components.menu-bar]
@@ -144,7 +144,6 @@
 
 ; x.app-elements.element-components.*
 (def anchor               element-components.anchor/element)
-(def blank                element-components.blank/element)
 (def button               element-components.button/element)
 (def card                 element-components.card/element)
 (def card-group           element-components.card-group/element)
@@ -169,6 +168,7 @@
 (def icon                 element-components.icon/element)
 (def icon-button          element-components.icon-button/element)
 (def image                element-components.image/element)
+(def info-text            element-components.info-text/element)
 (def label                element-components.label/element)
 (def line-diagram         element-components.line-diagram/element)
 (def menu-bar             element-components.menu-bar/element)

@@ -14,6 +14,7 @@
               [plugins.item-lister.mount.effects]
               [plugins.item-lister.mount.events]
               [plugins.item-lister.mount.subs]
+              [plugins.item-lister.routes.effects]
               [plugins.item-lister.transfer.subs]
               [plugins.item-lister.update.effects]
               [plugins.item-lister.update.events]

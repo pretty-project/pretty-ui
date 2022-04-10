@@ -23,7 +23,7 @@
                          :disabled? disable-save-button?
                          :keypress  {:key-code 13 :required? true}
                          :label     save-button-label
-                         :indent    {:horizontal :xxs :right :xs}
+                         :indent    {:horizontal :xxs :vertical :xs}
                          :on-click  [:value-editor/save-value! editor-id]}]))
 
 (defn cancel-button
@@ -33,7 +33,7 @@
   [editor-id]
   [elements/button ::cancel-button
                    {:keypress {:key-code 27 :required? true}
-                    :indent   {:horizontal :xxs :left :xs}
+                    :indent   {:horizontal :xxs :vertical :xs}
                     :on-click [:value-editor/cancel-editing! editor-id]
                     :preset   :cancel}])
 

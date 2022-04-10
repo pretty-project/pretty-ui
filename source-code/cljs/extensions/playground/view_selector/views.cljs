@@ -90,18 +90,34 @@
                                     :preset :delete}]]
        [section-footer]
        [section-header {:label "Filled button"}]
-       [elements/button ::primary-filled-button
-                        {:label "Filled button" :variant :filled :background-color :primary :icon :people
-                         :on-click [:developer/test!]}]
-       [elements/button ::secondary-filled-button
-                        {:label "Filled button" :variant :filled :background-color :secondary :icon :dashboard
-                         :on-click [:developer/test!]}]
-       [elements/button ::success-filled-button
-                        {:label "Filled button" :variant :filled :background-color :success :icon :people
-                         :on-click [:developer/test!]}]
-       [elements/button ::warning-filled-button
-                        {:label "Filled button" :variant :filled :background-color :warning :icon :people
-                         :on-click [:developer/test!]}]
+       [elements/button ::primary-button
+                        {:background-color :primary
+                         :hover-color      :primary
+                         :icon             :people
+                         :indent           {:horizontal :xxs}
+                         :label            "Primary button"
+                         :on-click         [:developer/test!]}]
+       [elements/button ::secondary-button
+                        {:background-color :secondary
+                         :hover-color      :secondary
+                         :icon             :dashboard
+                         :indent           {:horizontal :xxs}
+                         :label            "Secondary button"
+                         :on-click         [:developer/test!]}]
+       [elements/button ::success-button
+                        {:background-color :success
+                         :hover-color      :success
+                         :icon             :people
+                         :indent           {:horizontal :xxs}
+                         :label            "Success button"
+                         :on-click         [:developer/test!]}]
+       [elements/button ::warning-button
+                        {:background-color :warning
+                         :hover-color      :warning
+                         :icon             :people
+                         :indent           {:horizontal :xxs}
+                         :label            "Warning button"
+                         :on-click         [:developer/test!]}]
        [section-footer]
        [section-header {:label "Transparent button"}]
        [elements/button ::transparent-button-1

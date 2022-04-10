@@ -67,7 +67,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :hover-color (keyword)(opt)
-  ;    :highlight, :muted, :none
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

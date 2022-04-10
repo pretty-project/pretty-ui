@@ -7,8 +7,7 @@
               [mid-fruits.vector                :as vector]
               [plugins.plugin-handler.core.subs :as core.subs]
               [plugins.view-selector.mount.subs :as mount.subs]
-              [x.app-core.api                   :as a :refer [r]]
-              [x.app-router.api                 :as router]))
+              [x.app-core.api                   :as a :refer [r]]))
 
 
 
@@ -22,16 +21,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-derived-view-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ;
-  ; @return (keyword)
-  [db [_ _]]
-  (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
-          (keyword derived-view-id)))
 
 (defn get-selected-view-id
   ; @param (keyword) selector-id

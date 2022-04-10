@@ -41,21 +41,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-item->timestamp
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [modified-at]}]
-  @(a/subscribe [:activities/get-actual-timestamp modified-at]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn directory-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [directory-item]
   (let [icon-family (directory-item->icon-family directory-item)]
-       {:icon :folder :icon-family icon-family}))
+       {:icon {:icon :folder :icon-family icon-family}}))
 
 (defn file-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!

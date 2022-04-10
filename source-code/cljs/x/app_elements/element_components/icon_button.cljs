@@ -79,8 +79,7 @@
   [button-id {:keys [tooltip] :as button-props}]
   [:div.x-icon-button (engine/element-attributes   button-id button-props
                         (if tooltip {:data-tooltip (components/content {:content tooltip})}))
-                      [icon-button-body            button-id button-props]
-                      [engine/element-info-tooltip button-id button-props]])
+                      [icon-button-body            button-id button-props]])
 
 (defn- stated-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,7 +112,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :hover-color (keyword)(opt)
-  ;    :highlight, :muted, :none
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)

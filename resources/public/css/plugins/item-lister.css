@@ -24,8 +24,8 @@
   position: absolute;
   width: 100% }
 
-.item-lister--header--menu-bar.r-unmounting { animation-name: x-slide-out-ttb }
-.item-lister--header--menu-bar.r-mounting   { animation-name: x-slide-in-ttb  }
+.item-lister--header--menu-bar.r-unmounting { animation-name: x-translate-y-0-110p }
+.item-lister--header--menu-bar.r-mounting   { animation-name: x-translate-y--110p-0 }
 
 .item-lister--header--menu-item-group {
   display: flex }

@@ -36,7 +36,7 @@
 ;; -- Bubble components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn bubble-close-button
+(defn bubble-close-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -50,8 +50,22 @@
   ;
   ; @param (keyword) bubble-id
   [bubble-id]
+  ; - Az egyes bubble elemeken megjelenített egyszerű szöveges tartalom (keyword vagy string típus)
+  ;   {:indent {:vertical :xs}} beállítással jelenik meg.
+  ;
+  ; - Az egyes bubble elemeken megjelenített ...
+  ;   ... komponensek közvetlenül a bubble elem szélétől jelennek meg (esztétikai távolság nélkül).
+  ;   ... szöveges tartalmak esztétikai távolság alkalmazásával jelennek meg.
+  ;
+  ; - Az egyes bubble elemeken megjelenített komponenseket azért szükséges közvetlenül a bubble elem
+  ;   szélétől megjeleníteni, hogy a komponensben megjelenített (és a komponens jobb szélére igazított)
+  ;   ikon-gombok a bubble elem saját bubble-close-icon-button komponensével megegyezően a bubble elem
+  ;   széléhez igazítva jelenjenek meg.
   (let [body @(a/subscribe [:ui/get-bubble-prop bubble-id :body])]
-       [:div.x-app-bubbles--element--body [components/content bubble-id body]]))
+       [:div.x-app-bubbles--element--body
+         (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
+               (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
+               :default        [components/content bubble-id body])]))
 
 (defn bubble-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,7 +74,7 @@
   [bubble-id bubble-props]
   [:div (bubbles.helpers/bubble-attributes bubble-id bubble-props)
         [bubble-body                       bubble-id]
-        [bubble-close-button               bubble-id]])
+        [bubble-close-icon-button          bubble-id]])
 
 
 

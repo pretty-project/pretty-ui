@@ -5,7 +5,8 @@
 (ns plugins.item-editor.routes.subs
     (:require [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-router.api                   :as router]))
 
 
 
@@ -14,6 +15,20 @@
 
 ; plugins.plugin-handler.routes.subs
 (def get-extended-route routes.subs/get-extended-route)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (keyword)
+  [db [_ _]]
+  (r router/get-current-route-path-param db :item-id))
 
 
 

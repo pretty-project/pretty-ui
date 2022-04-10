@@ -3,16 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.events
-    (:require [mid-fruits.candy                     :refer [return]]
-              [mid-fruits.map                       :refer [dissoc-in]]
-              [plugins.item-browser.core.subs       :as core.subs]
-              [plugins.item-browser.download.events :as download.events]
-              [plugins.item-browser.items.events    :as items.events]
-              [plugins.item-browser.mount.subs      :as mount.subs]
-              [plugins.item-browser.transfer.subs   :as transfer.subs]
-              [plugins.item-lister.core.events      :as plugins.item-lister.core.events]
-              [plugins.plugin-handler.core.events   :as core.events]
-              [x.app-core.api                       :as a :refer [r]]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-browser.items.events  :as items.events]
+              [plugins.item-browser.mount.subs    :as mount.subs]
+              [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
+              [plugins.plugin-handler.core.events :as core.events]
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
@@ -21,6 +18,7 @@
 
 ; plugins.item-lister.core.events
 (def set-error-mode!   plugins.item-lister.core.events/set-error-mode!)
+(def quit-search-mode! plugins.item-lister.core.events/quit-search-mode!)
 (def quit-select-mode! plugins.item-lister.core.events/quit-select-mode!)
 (def reset-downloads!  plugins.item-lister.core.events/reset-downloads!)
 (def use-filter!       plugins.item-lister.core.events/use-filter!)
@@ -56,6 +54,8 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
+  ; XXX#5006
+  ;
   ; Ha az [:item-browser/body-did-mount ...] esemény megtörténtekor az aktuálisan böngészett
   ; elem azonosítója ...
   ;
@@ -71,54 +71,6 @@
                   ; B)
                   (r set-current-item-id! db browser-id root-item-id)
                   (return db))))
-
-(defn store-derived-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (map)
-  [db [_ browser-id]]
-  ; A) Az aktuális útvonalból származtatott :item-id útvonal-paraméter értékét eltárolja az aktuálisan
-  ;    böngészett elem azonosítójaként, ...
-  ;    ... ha az aktuális útvonal tartalmazza az :item-id paramétert (az útvonal nem a base-route).
-  ;
-  ; B) A body komponens {:root-item-id "..."} paraméterének értékét eltárolja az aktuálisan böngészett
-  ;    elem azonosítójaként, ...
-  ;    ... ha az aktuális útvonal NEM tartalmazza az :item-id útvonal-paramétért.
-  ;    ... a body komponens a React-fába van csatolva és megkapta a {:root-item-id "..."} paramétert.
-  ;    Pl.: Ha az item-browser böngésző használata közben a felhasználó visszatér a base-route útvonalra,
-  ;         ami NEM tartalmazza az :item-id útvonal-paramétert (pl. a böngésző "Vissza" gombjának használatával).
-  ;         Ilyenkor az útvonalból nem származtatható az :item-id útvonal-paraméter és a React-fába
-  ;         csatolt body komponens :component-did-mount életciklusa sem fog megtörténni, ami felhasználná
-  ;         a {:root-item-id "..."} paramétert.
-  (if-let [derived-item-id (r core.subs/get-derived-item-id db browser-id)]
-          ; A)
-          (r set-current-item-id! db browser-id derived-item-id)
-          (if-let [root-item-id (r mount.subs/get-body-prop db browser-id :root-item-id)]
-                  ; B)
-                  (r set-current-item-id! db browser-id root-item-id)
-                  (return db))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (map) browser-props
-  ;
-  ; @return (map)
-  [db [_ browser-id browser-props]]
-  ; XXX#1329
-  ; BUG#1329
-  (as-> db % (r store-derived-item-id!         % browser-id)
-             (r reset-downloads!               % browser-id)
-             (r quit-select-mode!              % browser-id)
-             (r items.events/enable-all-items! % browser-id)))
 
 
 
@@ -141,12 +93,19 @@
   ;   akkor a letöltött listaelemek lecserélődése után az egyes indexekhez más listaelemek fognak tartozni.
   ;
   ; - BUG#1329
-  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor valószínűleg
-  ;   nem jellemző, hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,
+  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor nem valószínű,
+  ;   hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,
   ;   hogy az ismételten böngészett elemben a {:disabled? true} állapot nem kerül vissza az elhagyás előtt
   ;   {:disabled? true} állapotban lévő listaelemekre.
+  ;
+  ; - XXX#0701
+  ;   A handle-route! függvény a browse-item! függvény működését valósítja meg, amikor az item-browser
+  ;   plugint egy útvonal megnyitása indítja el és az aktuálisan böngészett elem azonosítóját
+  ;   az aktuális útvonalból kell származtatni a browse-item! függvénnyel ellentétben, ami paraméterként
+  ;   kapja meg az aktuálisan böngészett elem azonosítóját.
   (as-> db % (r set-current-item-id!           % browser-id item-id)
              (r reset-downloads!               % browser-id)
+             (r quit-search-mode!              % browser-id)
              (r quit-select-mode!              % browser-id)
              (r items.events/enable-all-items! % browser-id)))
 

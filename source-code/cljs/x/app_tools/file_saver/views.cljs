@@ -34,9 +34,10 @@
   ; @param (map) saver-props
   [popup-id _]
   [elements/button ::cancel-button
-                   {:on-click [:ui/close-popup! popup-id]
-                    :keypress {:key-code 27}
-                    :preset   :cancel-button}])
+                   {:keypress {:key-code 27}
+                    :indent   {:horizontal :xxs :vertical :xs}
+                    :on-click [:ui/close-popup! popup-id]
+                    :preset   :cancel}])
 
 (defn- save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -45,10 +46,11 @@
   ; @param (map) saver-props
   [popup-id saver-props]
   [elements/button ::save-button
-                   {:on-click {:fx       [:tools/save-file-accepted popup-id saver-props]
+                   {:keypress {:key-code 13}
+                    :indent   {:horizontal :xxs :vertical :xs}
+                    :on-click {:fx       [:tools/save-file-accepted popup-id saver-props]
                                :dispatch [:ui/close-popup!          popup-id]}
-                    :keypress {:key-code 13}
-                    :preset   :save-button}])
+                    :preset   :save}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,21 +59,47 @@
   ; @param (map) saver-props
   [popup-id saver-props]
   [elements/horizontal-polarity ::header
-                                {:start-content [cancel-button popup-id saver-props]
-                                 :end-content   [save-button   popup-id saver-props]}])
+                                {:end-content   [save-button   popup-id saver-props]
+                                 :start-content [cancel-button popup-id saver-props]}])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body
+(defn- save-file-text
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) saver-props
+  [_ _]
+  [elements/text ::save-file-text
+                 {:content     :save-file?
+                  :font-weight :bold
+                  :indent      {:vertical :xs}}])
+
+(defn- filename-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   ; @param (map) saver-props
   ;  {:filename (string)}
   [_ {:keys [filename]}]
-  [:<> [elements/text  {:content :save-file? :font-weight :bold}]
-       [elements/label {:content filename    :font-weight :bold :color :muted :icon :insert_drive_file
-                        :selectable? true}]])
+  [elements/label ::filename-label
+                  {:color       :muted
+                   :content     filename
+                   :font-weight :bold
+                   :icon        :insert_drive_file
+                   :indent      {:all :xs}
+                   :selectable? true}])
+
+(defn body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; @param (map) saver-props
+  [popup-id saver-props]
+  [elements/column ::body
+                   {:content [:<> [save-file-text popup-id saver-props]
+                                  [filename-label popup-id saver-props]]
+                    :horizontal-align :center}])

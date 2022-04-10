@@ -22,14 +22,18 @@
   []
   (let [print-events? @(a/subscribe [:developer-tools/print-events?])]
        [elements/button ::toggle-event-print-button
-                        {:preset (if print-events? :primary-icon-button :muted-icon-button)
-                         :icon :terminal :tooltip "Print events"
-                         :on-click [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]}]))
+                        {:hover-color :highlight
+                         :label       "Print events"
+                         :font-size   :xs
+                         :indent      {:horizontal :xxs}
+                         :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
+                         :preset      (if print-events? :primary :muted)}]))
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/horizontal-polarity {:start-content [elements/menu-bar {:menu-items (developer-tools.helpers/menu-items)}]
+  [elements/horizontal-polarity ::header
+                                {:start-content [elements/menu-bar {:menu-items (developer-tools.helpers/menu-items)}]
                                  :end-content   [:<> [toggle-print-events-button]
                                                      [ui/popup-close-icon-button :developer.developer-tools/view]]}])
 

@@ -22,8 +22,11 @@
   ;
   ; @return (map)
   [db [_ browser-id {:keys [items-key path-key root-item-id]}]]
-  ; Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
-  ; {:items-key ...} és {:path-key ...} tulajdonságát.
+  ; - XXX#5006
+  ;   A body-did-mount függvény alkalmazza a use-root-item-id! függvényt.
+  ;
+  ; - Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
+  ;   {:items-key ...} és {:path-key ...} tulajdonságát.
   (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % browser-id))
              :items-key   (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :items-key] items-key)
              :path-key    (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :path-key]  path-key)))

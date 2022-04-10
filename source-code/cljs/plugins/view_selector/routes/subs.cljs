@@ -5,7 +5,8 @@
 (ns plugins.view-selector.routes.subs
     (:require [plugins.plugin-handler.routes.subs  :as routes.subs]
               [plugins.view-selector.transfer.subs :as transfer.subs]
-              [x.app-core.api                      :refer [r]]))
+              [x.app-core.api                      :refer [r]]
+              [x.app-router.api                    :as router]))
 
 
 
@@ -14,6 +15,21 @@
 
 ; plugins.plugin-handler.routes.subs
 (def get-extended-route routes.subs/get-extended-route)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-derived-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ;
+  ; @return (keyword)
+  [db [_ _]]
+  (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
+          (keyword derived-view-id)))
 
 
 

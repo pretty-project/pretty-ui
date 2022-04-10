@@ -22,8 +22,11 @@
   ;  {:icon (keyword)(opt)
   ;   :label (metamorphic-content)}
   [_ _ {:keys [icon label]}]
-  ; Ha a label értéke hosszú, és a kártya jobb széléig ér, akkor szükséges az {:indent :right} beállítás
-  [elements/label {:content label :icon icon :indent :right}])
+  ; Ha a label értéke hosszú, és a kártya jobb oldali széléig ér, akkor az {:indent {:right :xs}}
+  ; beállítás használatával ...
+  [elements/label {:content label
+                   :icon    icon
+                   :indent  {:right :xs}}])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -35,9 +38,11 @@
   ;   :min-width (keyword)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   [layout-id layout-props {:keys [badge-color min-width on-click] :as card-props}]
-  [elements/card {:content [card-label layout-id layout-props card-props]
-                  :horizontal-align :left :on-click on-click :badge-color badge-color
-                  :min-width (or min-width :m)}])
+  [elements/card {:badge-color      badge-color
+                  :content          [card-label layout-id layout-props card-props]
+                  :horizontal-align :left
+                  :min-width        (or min-width :m)
+                  :on-click         on-click}])
 
 (defn- card-list
   ; WARNING! NON-PUBLIC! DO NOT USE!

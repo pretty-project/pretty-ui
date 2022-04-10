@@ -11,15 +11,15 @@
 
 .x-app-bubbles--element[data-animation="reveal"] {
   animation-duration: .3s;
-  animation-name: x-slide-in-rtl }
+  animation-name: x-translate-x-110p-0 }
 
 .x-app-bubbles--element[data-animation="hide"] {
   animation-duration: .3s;
-  animation-name: x-slide-out-ltr }
+  animation-name: x-translate-x-0-110p }
 
 .x-app-bubbles--element[data-animation="update"] {
   animation-duration: .15s;
-  animation-name: x-bump }
+  animation-name: x-scale-1-085-1 }
 
 /***** App bubbles *****/
 
@@ -51,13 +51,13 @@
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure {
-  animation-name: x-slide-in-btt }
+  animation-name: x-translate-y-110p-0 }
 
 /* Hide flip popup structure on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure {
-  animation-name: x-slide-out-ttb }
+  animation-name: x-translate-y-0-110p }
 
 /* Flip popup cover on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"] .x-app-popups--element--cover,
@@ -76,13 +76,13 @@
 [data-viewport-profile="xxs"] [data-animation="reveal"] .x-app-popups--element--cover,
 [data-viewport-profile="xs"]  [data-animation="reveal"] .x-app-popups--element--cover,
 [data-viewport-profile="s"]   [data-animation="reveal"] .x-app-popups--element--cover {
-  animation-name: x-reveal }
+  animation-name: x-opacity-0-1 }
 
 /* Hide flip popup cover on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover {
-  animation-name: x-hide }
+  animation-name: x-opacity-1-0 }
 
 /*** Sliding flip popup structure on XXS, XS, S viewport ***/
 
@@ -102,14 +102,14 @@
 [data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
 [data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
 [data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="reveal"] {
-  animation-name: x-reveal }
+  animation-name: x-opacity-0-1 }
 
 /* Hide boxed popup M, L, XL, XXL viewport */
 [data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="hide"] {
-  animation-name: x-hide }
+  animation-name: x-opacity-1-0 }
 
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/
 
@@ -122,11 +122,11 @@
 
 /* Revealing unboxed popup on all viewport size */
 .x-app-popups--element[data-layout="unboxed"][data-animation="reveal"] {
-  animation-name: x-reveal }
+  animation-name: x-opacity-0-1 }
 
 /* Hide unboxed popup on all viewport size */
 .x-app-popups--element[data-layout="unboxed"][data-animation="hide"] {
-  animation-name: x-hide }
+  animation-name: x-opacity-1-0 }
 
 /*** Revealing unboxed popup on all viewport size ***/
 /***** App popups *****/
@@ -141,10 +141,10 @@
   animation-timing-function: ease-in-out }
 
 #x-app-shield[data-animation="reveal"] {
-  animation-name: x-reveal }
+  animation-name: x-opacity-0-1 }
 
 #x-app-shield[data-animation="hide"] {
-  animation-name: x-hide }
+  animation-name: x-opacity-1-0 }
 
 /***** App shield *****/
 
@@ -158,9 +158,9 @@
   animation-timing-function: ease-in-out }
 
 .x-app-surface--element[data-animation="reveal"] {
-  animation-name: x-reveal }
+  animation-name: x-opacity-0-1 }
 
 .x-app-surface--element[data-animation="hide"] {
-  animation-name: x-hide }
+  animation-name: x-opacity-1-0 }
 
 /***** App surface *****/

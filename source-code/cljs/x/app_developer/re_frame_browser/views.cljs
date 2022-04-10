@@ -195,8 +195,8 @@
 (defn edit-item
   []
   (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
-          [:<> [elements/horizontal-separator {:size :xxl}]
-               [elements/multiline-field {:value-path [:developer :re-frame-browser/meta-items :edited-item]}]]))
+          [:<> [elements/multiline-field {:indent     {:top :xxl}
+                                          :value-path [:developer :re-frame-browser/meta-items :edited-item]}]]))
 
 (defn map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -358,5 +358,5 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div {:style {:color "var( --color-muted )" :overflow-x "auto" :padding "12px 6px" :width "100%"}}
+  [:div {:style {:color "var( --color-muted )" :overflow-x "auto" :padding "12px" :width "100%"}}
         [database-item]])

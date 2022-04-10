@@ -3,13 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.card
-    (:require [mid-fruits.candy                     :refer [param]]
-              [x.app-components.api                 :as components]
-              [x.app-core.api                       :as a]
-              [x.app-elements.badge-handler.views   :as badge-handler.views]
-              [x.app-elements.engine.api            :as engine]
-              [x.app-elements.sticker-handler.views :as sticker-handler.views]
-              [x.app-environment.api                :as environment]))
+    (:require [mid-fruits.candy                   :refer [param]]
+              [x.app-components.api               :as components]
+              [x.app-core.api                     :as a]
+              [x.app-elements.badge-handler.views :as badge-handler.views]
+              [x.app-elements.engine.api          :as engine]
+              [x.app-environment.api              :as environment]))
 
 
 
@@ -62,10 +61,9 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   [card-id card-props]
-  [:div.x-card (engine/element-attributes              card-id card-props)
-               [card-content                           card-id card-props]
-               [badge-handler.views/element-badge      card-id card-props]
-               [sticker-handler.views/element-stickers card-id card-props]])
+  [:div.x-card (engine/element-attributes         card-id card-props)
+               [card-content                      card-id card-props]
+               [badge-handler.views/element-badge card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,15 +102,6 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :xxs
   ;   :on-click (metamorphic-event)(opt)
-  ;   :stickers (maps in vector)(opt)
-  ;    [{:disabled? (boolean)(opt)
-  ;       Default: false
-  ;      :icon (keyword)
-  ;      :icon-family (keyword)(opt)
-  ;       :material-icons-filled, :material-icons-outlined
-  ;       Default: :material-icons-filled
-  ;      :on-click (metamorphic-event)(opt)
-  ;      :tooltip (metamorphic-content)(opt)}]
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :vertical
