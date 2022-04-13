@@ -8,6 +8,23 @@
 
 
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- app-title-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [app-title @(a/subscribe [:core/get-app-config-item :app-title])]
+       [elements/label ::app-title-label
+                       {:content          app-title
+                        :color            :muted
+                        :font-size        :m
+                        :font-weight      :extra-bold
+                        :horizontal-align :center
+                        :indent           {:horizontal :xs}}]))
+
+
+
 ;; -- Login form components ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -70,7 +87,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [login-attempted? @(a/subscribe [:user/login-attempted?])]
-       [:<> (if login-attempted? [login-error-message])
+       [:<> [app-title-label]
+            (if login-attempted? [login-error-message])
             [email-address-field]
             [password-field]
             [login-button]]))
