@@ -108,6 +108,9 @@
   ;   :background-color (keyword)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
+  ;   :border-color (keyword)(opt)
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
   ;   :border-radius (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l
   ;    Default: :s

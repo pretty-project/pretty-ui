@@ -126,7 +126,8 @@
 (defn- logged-in-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [user-name-label]
+  [:<>
+       [user-name-label]
        [user-email-address-label]
        [continue-as-button]
        [logout-button]])
