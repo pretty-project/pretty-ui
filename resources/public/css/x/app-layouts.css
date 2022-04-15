@@ -15,7 +15,7 @@
 
 /***** Hide scrollbar *****/
 
-#x-layout-a--content-header {
+#x-layout-a--content-header--scroll-container {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar for Firefox */
@@ -23,7 +23,7 @@
 
   overflow-x: auto }
 
-#x-layout-a--content-header::-webkit-scrollbar {
+#x-layout-a--content-header--scroll-container::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
 
@@ -198,9 +198,6 @@
 
 #x-layout-a--content-header {
   align-items: center;
-  background-color: var( --background-color );
-  border-bottom: 2px solid transparent;
-  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
   display: flex;
   flex-direction: row;
   font-size: var( --font-size-s );
@@ -209,13 +206,31 @@
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
   min-height: 48px;
-  overflow-x: auto;
   position: sticky;
   /* XXX#0034 */
   top: 48px }
 
+#x-layout-a--content-header--scroll-container {
+  background-color: var( --background-color );
+  border-radius: var( --border-radius-m ) var( --border-radius-m ) 0 0;
+  overflow-x: auto;
+  width: 100% }
+
 #x-layout-a--content-header[data-sticky="true"] {
   box-shadow: var( --scroll-shadow-bottom ) }
+
+/* BUG#4009
+ * Az #x-layout-a--content-header[data-sticky="true"]::before elem biztosítja,
+ * a layout-a/body komponens területén megjelenített tartalom görgetésekor a tartalom
+ * ne látszódjon az #x-layout-a--content-header lekerekített sarkai alól. */
+#x-layout-a--content-header[data-sticky="true"]::before {
+  background-color: var( --background-color );
+  content: '';
+  height: 24px;
+  left: 0;
+  position: absolute;
+  top: -12px;
+  width: 100% }
 
 #x-layout-a--content-header--sensor {
   /* XXX#0034
@@ -325,7 +340,13 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
   display: flex }
 
 .x-list-item-a:hover {
-  background-color: var( --background-color-highlight ) }
+  background-color: var( --hover-color-highlight ) }
+
+.x-list-item-a--selection-icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 48px }
 
 .x-list-item-a--header {
   align-items: center;

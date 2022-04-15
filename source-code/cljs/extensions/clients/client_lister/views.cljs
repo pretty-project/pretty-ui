@@ -28,14 +28,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-lister/header :clients.client-lister
-                      {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
+                      {:item-actions [:delete :duplicate]
+                       :new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-lister/body :clients.client-lister
-                    {:item-actions [:delete :duplicate]
-                     :items-path   [:clients :client-lister/downloaded-items]
+                    {:items-path   [:clients :client-lister/downloaded-items]
                      :list-element #'client-item
                      :search-keys  [:name :email-address]}])
 

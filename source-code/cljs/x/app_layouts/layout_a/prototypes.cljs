@@ -16,8 +16,7 @@
   ; @param (map) layout-props
   ;
   ; @return (map)
-  ;  {:header (map)(opt)
-  ;   :horizontal-align (keyword)
+  ;  {:horizontal-align (keyword)
   ;   :min-width (keyword)}
   [layout-props]
   (merge {:horizontal-align :center

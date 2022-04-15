@@ -21,8 +21,15 @@
   ; @param (map) layout-props
   ;  {:header (metamorphic-content)(opt)}
   [layout-id {:keys [header]}]
+  ; BUG#4009
+  ; A header komponensben megjelenített tartalom x-tengelyen való görgethetőségét biztosító
+  ; {overflow-x: auto} beállítást az #x-layout-a--content-header--scroll-container
+  ; elem valósítja meg, így az #x-layout-a--content-header[data-sticky="true"]::before
+  ; pszeudoelem az #x-layout-a--content-header elem területén kívül is megjeleníthető.
+  ; Ha az #x-layout-a--content-header elem {overflow-x: auto} beállítással jelenne meg,
+  ; akkor az ... pszeudoelem nem "lóghatna ki" az #x-layout-a--content-header elem területéről.
   [:<> [:div#x-layout-a--content-header--sensor]
-       [:div#x-layout-a--content-header [components/content layout-id header]]])
+       [:div#x-layout-a--content-header [:div#x-layout-a--content-header--scroll-container [components/content layout-id header]]]])
 
 (defn- layout-content-header
   ; WARNING! NON-PUBLIC! DO NOT USE!

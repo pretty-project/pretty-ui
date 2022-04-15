@@ -2930,7 +2930,7 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: 36px }
 
-.x-select--option[data-selected="true"] .x-select--option-label {
+.x-select--option[data-selected="true"] {
   font-weight: 600 }
 
 .x-select--option[data-selected="true"]::before {
@@ -3317,13 +3317,11 @@ button.x-card:focus,
 /*** Field invalid-message ***/
 
 .x-text-field--invalid-message {
-  bottom: -12px;
   color: var( --color-warning );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px;
-  position: absolute;
-  right: 0 }
+  text-align: right }
 
 /*** Field invalid-message ***/
 

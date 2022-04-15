@@ -34,6 +34,7 @@
   ; @param (keyword) lister-id
   ; @param (map) header-props
   (fn [{:keys [db]} [_ lister-id header-props]]
+      ; XXX#6779
       ; Az item-lister plugin header komponensében megjelenített search-field input mező
       ; tartalmát az ESC billentyű lenyomása akkor is kiüríti, ha a mező nincs fókuszált állapotban.
       ; Ehhez szükséges regisztrálni egy eseményt az ESC billentyű lenyomására, ami meghívja
@@ -46,9 +47,10 @@
       ;      A keresés alaphelyzetbe állítása után az {:auto-focus? true} beállítás miatt a search-field
       ;      input mező újra fókuszált állapotba kerül, így a felhasználó beírhatja a következő kifejezést.
       {:db (r mount.events/header-did-mount db lister-id header-props)
-       :dispatch [:environment/reg-keypress-event! :item-lister/ESC
-                                                   {:key-code 27
-                                                    :on-keydown [:elements/empty-field! :item-lister.header.views/search-items-field]}]}))
+       :dispatch (let [on-keydown [:elements/empty-field! :plugins.item-lister.header.views/search-items-field]]
+                      [:environment/reg-keypress-event! :item-lister/ESC
+                                                        {:key-code   27
+                                                         :on-keydown on-keydown}])}))
 
 
 

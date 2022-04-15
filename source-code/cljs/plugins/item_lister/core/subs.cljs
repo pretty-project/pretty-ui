@@ -217,18 +217,6 @@
        ; XXX#3219
        (or lister-synchronizing? (not items-received?))))
 
-(defn items-selectable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  ; Az items-selectable? függvényre a header komponens nélkül használt item-lister plugin esetén
-  ; is szükség van, ezért az {:item-actions [...]} tulajdonság a body komponens paramtére.
-  (let [item-actions (r mount.subs/get-body-prop db lister-id :item-actions)]
-       (vector/nonempty? item-actions)))
-
 (defn get-description
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -313,9 +301,3 @@
 ; @usage
 ;  [:item-lister/lister-disabled? :my-lister]
 (a/reg-sub :item-lister/lister-disabled? lister-disabled?)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/items-selectable? :my-lister]
-(a/reg-sub :item-lister/items-selectable? items-selectable?)

@@ -33,11 +33,10 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   ;  {:header (map)
-  ;    {:icon (keyword or map)(opt)}}
+  ;    {:icon (keyword)(opt)}}
   [_ _ {:keys [header]}]
   (if-let [icon (:icon header)]
-          (cond (map?     icon) [:div.x-list-item-a--header-icon [elements/icon        icon]]
-                (keyword? icon) [:div.x-list-item-a--header-icon [elements/icon {:icon icon}]])))
+          [:div.x-list-item-a--header-icon [elements/icon {:icon icon}]]))
 
 (defn- list-item-header-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,14 +61,6 @@
                               [list-item-header-icon      lister-id item-dex item-props]
                               [list-item-header-thumbnail lister-id item-dex item-props]])
 
-
-
-
-(defn list-item-label
-  [_ _ {:keys [label]}]
-  (cond (map? label) [elements/label label]
-        :else        [elements/label {:content label :min-height :s}]))
-
 (defn- list-item-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -80,9 +71,7 @@
   ;   :label (metamorphic-content)
   ;   :timestamp (string)(opt)}
   [lister-id item-dex {:keys [label description timestamp] :as item-props}]
-  [:div.x-list-item-a--details                 ;[:div.x-list-item-a--label       (components/content label)]
-                               [list-item-label lister-id item-dex item-props]
-
+  [:div.x-list-item-a--details                 [:div.x-list-item-a--label       (components/content label)]
                                (if timestamp   [:div.x-list-item-a--timestamp  @(a/subscribe [:activities/get-actual-timestamp timestamp])])
                                (if description [:div.x-list-item-a--description (components/content description)])])
 
@@ -92,10 +81,23 @@
   ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ; @param (map) item-props
-  ;  {:icon (keyword or map)(opt)}
-  [_ _ {:keys [icon]}]
-  (cond (map?     icon) [:div.x-list-item-a--icon [elements/icon        icon]]
-        (keyword? icon) [:div.x-list-item-a--icon [elements/icon {:icon icon}]]))
+  ;  {:icon (keyword)(opt)}
+  [lister-id _ {:keys [icon]}]
+  (if icon (if-let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
+                   [:div.x-list-item-a--icon [elements/icon {:icon icon :color :highlight}]]
+                   [:div.x-list-item-a--icon [elements/icon {:icon icon}]])))
+
+(defn- list-item-selection-icon
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (integer) item-dex
+  ; @param (map) item-props
+  [lister-id item-dex item-props]
+  (if-let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
+          (if-let [item-selected? @(a/subscribe [:item-lister/item-selected? lister-id item-dex])]
+                  [:div.x-list-item-a--selection-icon [elements/icon {:icon :check_circle :color :primary}]]
+                  [:div.x-list-item-a--selection-icon [elements/icon {:icon :radio_button_unchecked}]])))
 
 (defn- list-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,34 +107,26 @@
   ; @param (map) item-props
   [lister-id item-dex item-props]
   [:div.x-list-item-a (items.helpers/list-item-structure-attributes lister-id item-dex item-props)
+                      [list-item-selection-icon                     lister-id item-dex item-props]
                       [list-item-header                             lister-id item-dex item-props]
                       [list-item-details                            lister-id item-dex item-props]
                       [list-item-icon                               lister-id item-dex item-props]])
 
-(defn toggle-list-item
+(defn- list-item-toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ; @param (map) item-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :on-click (metamorphic-event)
-  ;   :on-right-click (metamorphic-event)(opt)}
-  [lister-id item-dex {:keys [disabled? on-click on-right-click] :as item-props}]
-  (let [on-click [:item-lister/item-clicked lister-id item-dex {:on-click on-click}]]
+  ;  {}
+  [lister-id item-dex {:keys [on-right-click] :as item-props}]
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])
+        item-disabled?   @(a/subscribe [:item-lister/item-disabled?   lister-id item-dex])
+        on-click          [:item-lister/item-clicked lister-id item-dex item-props]]
        [elements/toggle {:content        [list-item-structure lister-id item-dex item-props]
-                         :disabled?      disabled?
+                         :disabled?      (or item-disabled?) ; lister-disabled?
                          :on-click       on-click
                          :on-right-click on-right-click}]))
-
-(defn static-list-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  ; @param (map) item-props
-  [lister-id item-dex item-props]
-  [list-item-structure lister-id item-dex item-props])
 
 (defn list-item
   ; @param (keyword) lister-id
@@ -140,40 +134,28 @@
   ; @param (map) item-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :description (metamorphic-content)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :icon (keyword or map)(opt)
-  ;    {:color (keyword)(opt)
-  ;      :default, :primary, :secondary
-  ;      Default: :default
-  ;     :icon (keyword)
-  ;     :icon-family (keyword)(opt)
-  ;      :material-icons-filled, :material-icons-outlined
-  ;      Default: :material-icons-filled}
-  ;   :label (metamorphic-content or map)
+  ;   :icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)
+  ;    :material-icons-filled, :material-icons-outlined
+  ;    Default: :material-icons-filled
+  ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)(opt)
   ;   :on-right-click (metamorphic-event)(opt)
+  ;   :on-select (metamorphic-event)(opt)
   ;   :style (map)(opt)
   ;   :header (map)
   ;    {:colors (strings in vector)
-  ;     :icon (keyword or map)(opt)
-  ;      {:color (keyword)(opt)
-  ;        :default, :primary, :secondary
-  ;         Default: :default
-  ;       :icon (keyword)
-  ;       :icon-family (keyword)(opt)
-  ;        :material-icons-filled, :material-icons-outlined
-  ;        Default: :material-icons-filled}
+  ;     :icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)
+  ;      :material-icons-filled, :material-icons-outlined
+  ;      Default: :material-icons-filled
   ;     :thumbnail (string)(opt)}
-  ;   :selected? (boolean)(opt)
-  ;    Default: false
   ;   :timestamp (string)(opt)}
   ;
   ; @usage
   ;  [item-lister/list-item :my-lister 0 {...}]
-  [lister-id item-dex {:keys [on-click] :as item-props}]
-  (if on-click [toggle-list-item lister-id item-dex item-props]
-               [static-list-item lister-id item-dex item-props]))
+  [lister-id item-dex item-props]
+  [list-item-toggle lister-id item-dex item-props])
 
 
 

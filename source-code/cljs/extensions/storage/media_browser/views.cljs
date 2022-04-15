@@ -195,7 +195,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-browser/header :storage.media-browser
-                       {:new-item-event   [:storage.media-browser/add-new-item!]
+                       {:item-actions     [:delete :duplicate]
+                        :new-item-event   [:storage.media-browser/add-new-item!]
                         :new-item-options [:create-directory! :upload-files!]}])
 
 (defn- body
@@ -203,7 +204,6 @@
   []
   [item-browser/body :storage.media-browser
                      {:auto-title?  true
-                      :item-actions [:delete :duplicate]
                       :item-path    [:storage :media-browser/browsed-item]
                       :items-path   [:storage :media-browser/downloaded-items]
                       :label-key    :alias

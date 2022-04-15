@@ -62,8 +62,6 @@
       :select       {:color            :primary
                      :horizontal-align :left
                      :label            :select}
-      :select-mode  {:horizontal-align :left
-                     :label            :select}
       :settings     {:horizontal-align :left
                      :icon             :settings
                      :label            :settings}

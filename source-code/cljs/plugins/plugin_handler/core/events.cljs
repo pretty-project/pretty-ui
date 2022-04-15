@@ -19,7 +19,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id item-key item-value]]
-  (assoc-in db [:plugins :plugin-handler/meta-items item-key] item-value))
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id item-key] item-value))
 
 
 

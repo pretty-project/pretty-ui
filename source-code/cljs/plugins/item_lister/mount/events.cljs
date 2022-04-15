@@ -39,11 +39,15 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) body-props
+  ;  {:select-mode? (boolean)(opt)}
   ;
   ; @return (map)
-  [db [_ lister-id body-props]]
-  (as-> db % (r store-body-props!                 % lister-id body-props)
-             (r core.events/set-default-order-by! % lister-id)))
+  [db [_ lister-id {:keys [select-mode?] :as body-props}]]
+  ; Az item-lister plugin {:select-mode? ...} állapotának kezdeti értéke a body komponens
+  ; paramétereként is átadható.
+  (cond-> db :store-body-props!     (as-> % (r store-body-props!                 % lister-id body-props))
+             :set-default-order-by! (as-> % (r core.events/set-default-order-by! % lister-id))
+             (some? select-mode?)   (as-> % (r core.events/set-meta-item!        % lister-id :select-mode? select-mode?))))
 
 
 

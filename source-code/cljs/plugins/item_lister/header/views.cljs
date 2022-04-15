@@ -39,8 +39,10 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; A search-items-field mező bal oldalán is szükséges távolságot beállítani,
-  ; mert kis méretű képernyőkön a bal oldalon jelenik meg.
+  ; - XXX#6779
+  ;
+  ; - A search-items-field mező bal oldalán is szükséges {:indent ...} távolságot beállítani,
+  ;   mert kis méretű képernyőkön a mező a képernyő bal oldalán jelenik meg.
   (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
        [elements/search-field ::search-items-field
@@ -80,16 +82,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn quit-select-mode-icon-button
+(defn quit-actions-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button ::quit-select-mode-icon-button
+       [elements/icon-button ::quit-actions-mode-icon-button
                              {:disabled? lister-disabled?
                               :keypress  {:key-code 27}
-                              :on-click  [:item-lister/toggle-select-mode! lister-id]
+                              :on-click  [:item-lister/toggle-actions-mode! lister-id]
                               :preset    :close}]))
 
 
@@ -181,7 +183,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
+  (let [item-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :delete)
            (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
                    [delete-selected-items-icon-button lister-id]
@@ -224,7 +226,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
+  (let [item-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :duplicate)
            (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
                    [duplicate-selected-items-icon-button lister-id]
@@ -357,7 +359,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-select-mode-icon-button
+(defn toggle-actions-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -365,12 +367,13 @@
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-      [elements/icon-button ::toggle-select-mode-icon-button
-                            {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                             :on-click  [:item-lister/toggle-select-mode! lister-id]
-                             :preset    :select-mode}]))
+      [elements/icon-button ::toggle-actions-mode-icon-button
+                            {:color     :default
+                             :disabled? (or error-mode? lister-disabled? no-items-to-show?)
+                             :on-click  [:item-lister/toggle-actions-mode! lister-id]
+                             :preset    :select}]))
 
-(defn toggle-select-mode-button
+(defn toggle-actions-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -378,24 +381,25 @@
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-      [elements/button ::toggle-select-mode-button
-                       {:disabled?   (or error-mode? lister-disabled? no-items-to-show?)
+      [elements/button ::toggle-actions-mode-button
+                       {:color       :default
+                        :disabled?   (or error-mode? lister-disabled? no-items-to-show?)
                         :font-size   :xs
                         :hover-color :highlight
                         :indent      {:horizontal :xxs :left :xxs}
-                        :on-click    [:item-lister/toggle-select-mode! lister-id]
-                        :preset      :select-mode}]))
+                        :on-click    [:item-lister/toggle-actions-mode! lister-id]
+                        :preset      :select}]))
 
-(defn toggle-select-mode-block
+(defn toggle-actions-mode-block
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [item-lister/toggle-select-mode-block :my-lister]
+  ;  [item-lister/toggle-actions-mode-block :my-lister]
   [lister-id]
-  (if-let [items-selectable? @(a/subscribe [:item-lister/items-selectable? lister-id])]
+  (if-let [items-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
           (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-                  [toggle-select-mode-icon-button lister-id]
-                  [toggle-select-mode-button      lister-id])))
+                  [toggle-actions-mode-icon-button lister-id]
+                  [toggle-actions-mode-button      lister-id])))
 
 
 
@@ -515,7 +519,7 @@
        [react/mount-animation {:animation-timeout 500 :mounted? search-mode?}
                               [search-mode-header-structure lister-id]]))
 
-(defn select-mode-header-structure
+(defn actions-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -524,16 +528,16 @@
     [:div.item-lister--header--menu-item-group [toggle-all-items-selection-icon-button lister-id]
                                                [delete-selected-items-block            lister-id]
                                                [duplicate-selected-items-block         lister-id]]
-    [quit-select-mode-icon-button lister-id]])
+    [quit-actions-mode-icon-button lister-id]])
 
-(defn select-mode-header
+(defn actions-mode-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
-       [react/mount-animation {:animation-timeout 500 :mounted? select-mode?}
-                              [select-mode-header-structure lister-id]]))
+  (let [actions-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :actions-mode?])]
+       [react/mount-animation {:animation-timeout 500 :mounted? actions-mode?}
+                              [actions-mode-header-structure lister-id]]))
 
 (defn menu-mode-header-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -543,7 +547,7 @@
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group [new-item-block            lister-id]
                                                [sort-items-block          lister-id]
-                                               [toggle-select-mode-block  lister-id]
+                                               [toggle-actions-mode-block lister-id]
                                                [toggle-reorder-mode-block lister-id]]
     [:div.item-lister--header--menu-item-group [search-block              lister-id]]])
 
@@ -583,16 +587,25 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
+  ; BUG#0041
+  ; Az #item-lister--header-placeholder elem biztosítja a header magasságát,
+  ; a header komponens component-did-mount életciklusának megtörténésig.
+  ; Az #item-lister--header-placeholder elem használata nélkül a header komponens alatt
+  ; elhelyezett elemek (pl. vízszintes elválasztó vonal) egy rövid ideig a header komponens
+  ; helyén (és nem alatta) jelennének meg.
   (if @(a/subscribe [:item-lister/header-did-mount? lister-id])
-       [:div#item-lister--header--structure [menu-mode-header    lister-id]
-                                            [reorder-mode-header lister-id]
-                                            [select-mode-header  lister-id]
-                                            [search-mode-header  lister-id]]))
+       [:div#item-lister--header-structure [menu-mode-header    lister-id]
+                                           [reorder-mode-header lister-id]
+                                           [actions-mode-header lister-id]
+                                           [search-mode-header  lister-id]]
+       [:div#item-lister--header-placeholder]))
 
 (defn header
   ; @param (keyword) lister-id
   ; @param (map) header-props
-  ;  {:menu-element (metamorphic-content)(opt)
+  ;  {:item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
+  ;   :menu-element (metamorphic-content)(opt)
   ;   :new-item-event (metamorphic-event)(opt)
   ;   :new-item-options (vector)(opt)}
   ;

@@ -52,6 +52,6 @@
       :save               {:color       :primary
                            :icon        :save}
       :search             {:icon        :search}
-      :select-mode        {:icon        :check_box_outline_blank}
+      :select             {:icon        :check_box_outline_blank}
       :order-by           {:icon        :sort}
       :user-menu          {:icon        :account_circle}})

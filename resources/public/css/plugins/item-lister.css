@@ -2,9 +2,12 @@
 /***** Item-lister *****/
 /*** Item-lister header ***/
 
-#item-lister--header--structure {
+#item-lister--header-structure {
    height: 48px;
    width: 100% }
+
+#item-lister--header-placeholder {
+  height: 48px }
 
  /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként
   * vannak azonosítva, mert a különböző menük közötti átváltáskor előfordul, hogy egyszerre
@@ -35,7 +38,6 @@
 /*** Item-lister body ***/
 
 .item-lister--body--structure {
-  -padding-top: 12px;
   width: 100% }
 
 /*** Item-lister body ***/
@@ -44,28 +46,6 @@
 /*** Item-lister item-list ***/
 
 /*** Item-lister list-item ***/
-
-.item-lister--list-item--structure {
-  /* A 48px értéknél magasabb lista-elemekben az {align-items: center} tulajdonság
-   * állítja be a list-item-checkbox komponens függőleges igazítását */
-  align-items: center;
-
-  display: flex;
-  flex-direction: row-reverse }
-
-.item-lister--list-item {
-  width: 100% }
-
-.item-lister--list-item[data-disabled="true"] {
-  opacity: .5 }
-
-.item-lister--list-item[data-disabled="true"]::after {
-  content: '';
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100% }
 
 /*** Item-lister list-item ***/
 /***** Item-lister *****/

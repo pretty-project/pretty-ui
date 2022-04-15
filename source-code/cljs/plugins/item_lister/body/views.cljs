@@ -88,44 +88,6 @@
 
 
 
-;; -- List-item components ----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn list-item-checkbox
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  [lister-id item-dex]
-  (if-let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
-          (let [item-selected?   @(a/subscribe [:item-lister/item-selected?   lister-id item-dex])
-                lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-               [elements/icon-button {:disabled? lister-disabled?
-                                      :on-click  [:item-lister/toggle-item-selection! lister-id item-dex]
-                                      :preset    (if item-selected? :checked :unchecked)}])))
-                                     ;:color     (if item-selected? :primary :default)
-
-(defn list-item-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  ; @param (map) item
-  [lister-id item-dex item]
-  (let [item-disabled? @(a/subscribe [:item-lister/item-disabled? lister-id item-dex])
-        list-element   @(a/subscribe [:item-lister/get-body-prop  lister-id :list-element])]
-       [:div.item-lister--list-item--structure
-         ; - A lista-elem után (és nem előtt) kirenderelt checkbox elem React-fába
-         ;   történő csatolása vagy lecsatolása nem okozza a lista-elem újrarenderelését!
-         ;
-         ; - A {:display :flex :flex-direction :row-reverse} tulajdonságok beállításával a checkbox
-         ;   elem a lista-elem előtt jelenik meg.
-         [:div.item-lister--list-item {:data-disabled item-disabled?}
-                                      [list-element lister-id item-dex item]]
-         [list-item-checkbox lister-id item-dex]]))
-
-
-
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -168,14 +130,13 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [downloaded-items @(a/subscribe [:item-lister/get-downloaded-items lister-id])]
+  ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét, hogy a lista-elemek
+  ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
+  (let [downloaded-items @(a/subscribe [:item-lister/get-downloaded-items lister-id])
+        list-element     @(a/subscribe [:item-lister/get-body-prop        lister-id :list-element])]
        (letfn [(f [item-list item-dex {:keys [id] :as item}]
-                  (conj item-list
-                        ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét,
-                        ; hogy a lista-elemek törlésekor a megmaradó elemek alkalmazkodjanak
-                        ; az új indexükhöz!
-                       ^{:key (str id item-dex)}
-                        [list-item-structure lister-id item-dex item]))]
+                  (conj item-list ^{:key (str id item-dex)}
+                                   [list-element lister-id item-dex item]))]
               (reduce-kv f [:div.item-lister--item-list] downloaded-items))))
 
 (defn sortable-item-list
@@ -213,8 +174,6 @@
   ; @param (map) body-props
   ;  {:download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
@@ -223,6 +182,8 @@
   ;   :prefilter (map)(opt)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: core.config/DEFAULT-SEARCH-KEYS
+  ;   :select-mode? (boolean)(opt)
+  ;    Default: false
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;

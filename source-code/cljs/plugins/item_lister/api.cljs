@@ -11,6 +11,7 @@
               [plugins.item-lister.download.effects]
               [plugins.item-lister.download.events]
               [plugins.item-lister.download.subs]
+              [plugins.item-lister.items.effects]
               [plugins.item-lister.mount.effects]
               [plugins.item-lister.mount.events]
               [plugins.item-lister.mount.subs]
@@ -36,7 +37,7 @@
 ; plugins.item-lister.header.views
 (def search-block              header.views/search-block)
 (def new-item-block            header.views/new-item-block)
-(def toggle-select-mode-block  header.views/toggle-select-mode-block)
+(def toggle-actions-mode-block header.views/toggle-actions-mode-block)
 (def toggle-reorder-mode-block header.views/toggle-reorder-mode-block)
 (def sort-items-block          header.views/sort-items-block)
 (def header                    header.views/header)

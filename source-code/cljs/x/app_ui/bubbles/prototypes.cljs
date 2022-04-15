@@ -45,9 +45,11 @@
   ;  {:on-click (metamorphic-event)}
   ;
   ; @return (map)
-  ;  {:on-click (metamorphic-event)
+  ;  {:indent (map)
+  ;   :on-click (metamorphic-event)
   ;   :preset (keyword)}
   [bubble-id {:keys [on-click] :as button-props}]
-  (merge {:preset :primary-button}
+  (merge {:indent {:bottom :xxs :vertical :xs}
+          :preset :primary}
          (param button-props)
          {:on-click {:dispatch-n [on-click [:ui/pop-bubble! bubble-id]]}}))

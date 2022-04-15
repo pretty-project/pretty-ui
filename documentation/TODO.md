@@ -12,7 +12,10 @@
 
 
 
-# x4.6.0
+# x4.7.0
+
+- Az item editor fülei ne csak a változást jelezzék, ha az egyik mező required-warning állapotban van,
+  akkor legyen warning badge a fülön
 
 - Fájlfeltöltéskor a line-diagram fél másodpercenként új id-t kap.
   Egyáltalán kell az elemeknek, hogy dom id-ként megkapják az id-t?

@@ -52,6 +52,19 @@
   (as-> db % (update-in % [:plugins :plugin-handler/meta-items lister-id :select-mode?] not)
              (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :selected-items])))
 
+(defn toggle-actions-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  ; Az {:actions-mode? true} állapot beállításakor az item-lister plugin {:select-mode? true}
+  ; állapotba is lép, mert a listaelemeken végezhető műveletek használatához szükséges
+  ; a listaelemeket kijelölni.
+  (as-> db % (update-in % [:plugins :plugin-handler/meta-items lister-id :actions-mode?] not)
+             (r toggle-select-mode! % lister-id)))
+
 (defn quit-select-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -89,6 +102,18 @@
   [db [_ lister-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items lister-id :error-mode?] true))
 
+(defn set-memory-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  ; Ha az item-lister plugin elhagyása előtt a set-memory-mode! függvény alkalmazásával
+  ; a {:memory-mode? true} állapot beállításra kerül, akkor az item-lister plugin legközelebbi
+  ; megnyitásakor a listaelemek a legutóbbi keresési és rendezési beállítások szerint töltődnek majd le.
+  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :memory-mode?] true))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -101,15 +126,20 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; Az item-lister plugin ...
-  ; ... az első betöltődésekor letölti az elemeket az alapbeállításokkal.
-  ; ... a további betöltődésekkor letölti az elemeket a legutóbb használt keresési
-  ;     és rendezési beállításokkal, így a felhasználó az egyes elemek megtekintése/szerkesztése/...
-  ;     után visszatérhet a lista legutóbbi állapotához.
-  (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id])
-             (assoc-in  % [:plugins :plugin-handler/meta-items lister-id]
-                          (select-keys (get-in db [:plugins :plugin-handler/meta-items lister-id])
-                                       [:order-by :search-term]))))
+  ; Ha az item-lister plugin elhagyása előtt, a {:memory-mode? true} állapot ...
+  ; ... beállításra került, akkor megjegyzi a legutóbb használt keresési és rendezési beállításokat,
+  ;     így a plugin újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
+  ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet
+  ;     a lista legutóbbi állapotához.
+  ; ... NEM került beállításra, akkor a plugin újbóli megnyitásakor a listaelemek az alapértelmezett
+  ;     beállítások szerint töltődnek majd le.
+  (if-let [memory-mode? (r core.subs/get-meta-item db lister-id :memory-mode?)]
+          (let [meta-items (get-in db [:plugins :plugin-handler/meta-items lister-id])]
+               (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id])
+                          (assoc-in  % [:plugins :plugin-handler/meta-items lister-id]
+                                       (select-keys meta-items [:order-by :search-term]))))
+          (dissoc-in db [:plugins :plugin-handler/meta-items lister-id])))
+
 (defn reset-selections!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -144,12 +174,13 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; - Az item-lister plugin betöltésekor ha az {:order-by ...} beállítás nem elérhető, akkor beállítja
-  ;   az order-by-options vektor első elemét order-by beállításként.
+  ; - Ha az item-lister plugin betöltésekor az {:order-by ...} beállítás nem elérhető,
+  ;   akkor a body-did-mount függvény által alkalmazott set-default-order-by! függvény beállítja
+  ;   az order-by-options vektor első elemét aktuális order-by beállításként.
   ;
-  ; - Ha még nem volt a felhasználó által kiválasztva order-by érték, akkor ...
+  ; - Ha az item-lister plugin betöltésekor nem lenne beállítva az {:order-by ...} tulajdonság, akkor ...
   ; ... a sort-items-select kirenderelésekor nem lenne a select-options felsorolásban aktív listaelem!
-  ; ... az elemek letöltésekor a szerver nem kapná meg az order-by értékét!
+  ; ... a listaelemek letöltésekor a szerver nem kapná meg az {:order-by ...} tulajdonság értékét!
   (if-let [order-by (r core.subs/get-meta-item db lister-id :order-by)]
           (return db)
           (let [order-by-options (r mount.subs/get-body-prop db lister-id :order-by-options)]
@@ -187,7 +218,13 @@
 (a/reg-event-db :item-lister/toggle-select-mode! toggle-select-mode!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/toggle-actions-mode! toggle-actions-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-lister/reset-selections! reset-selections!)

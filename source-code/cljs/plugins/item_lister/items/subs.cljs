@@ -171,10 +171,13 @@
   ; @usage
   ;  (r item-lister/toggle-item-selection? db :my-lister 42)
   [db [_ lister-id item-dex]]
-  (and ; A SHIFT billentyű lenyomása közben az elemre kattintva az elem, hozzáadódik a kijelölt elemek listájához.
-            (r core.subs/items-selectable? db lister-id)
-            (r environment/key-pressed?    db 16)
-       (not (r core.subs/lister-disabled?  db lister-id))))
+  ; Az elemre kattintva az elem hozzáadódik a kijelölt elemek listájához, ha ...
+  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva.
+  ; ... és/vagy az item-lister plugin {:select-mode? true} állapotban van.
+  ; ...
+  (and (or (r environment/key-pressed? db 16)
+           (r core.subs/get-meta-item  db lister-id :select-mode?))
+       (not (r core.subs/lister-disabled? db lister-id))))
 
 
 
