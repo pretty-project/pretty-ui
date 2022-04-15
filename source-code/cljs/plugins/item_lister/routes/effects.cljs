@@ -20,4 +20,4 @@
       (let [on-route    (r transfer.subs/get-transfer-item db lister-id :on-route)
             route-title (r transfer.subs/get-transfer-item db lister-id :route-title)]
            {;:db (r routes.events/handle-route! db lister-id)
-            :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]})))
+            :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))

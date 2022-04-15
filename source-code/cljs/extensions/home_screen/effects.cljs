@@ -37,6 +37,5 @@
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-config-item db :app-title)]
            {:dispatch-n [[:ui/simulate-process!]
-                         [:ui/restore-default-window-title!]
-                         [:ui/set-header-title! app-title]
+                         [:ui/restore-default-title!]
                          [:home-screen/render!]]})))

@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.header.views
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
-              [x.app-elements.api   :as elements]))
+    (:require [x.app-components.api  :as components]
+              [x.app-core.api        :as a :refer [r]]
+              [x.app-elements.api    :as elements]
+              [x.app-ui.header.state :as header.state]))
 
 
 
@@ -63,16 +64,14 @@
 (defn- header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [header-title @(a/subscribe [:ui/get-header-title])]
-       [:div#x-app-header--title (components/content {:content header-title})]))
+  (if @header.state/HEADER-TITLE [:div#x-app-header--title (components/content @header.state/HEADER-TITLE)]))
 
 (defn- header-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [debug-mode?  @(a/subscribe [:core/debug-mode-detected?])
-        header-title @(a/subscribe [:ui/get-header-title])]
+  (let [debug-mode? @(a/subscribe [:core/debug-mode-detected?])]
        [:<> [:div.x-app-header--block [header-navigation-icon-button]]
-            [:div.x-app-header--block (if header-title     [header-label])]
+            [:div.x-app-header--block [header-label]]
             [:div.x-app-header--block (if debug-mode? [:<> [header-dev-tools-icon-button]
                                                            [header-menu-icon-button]]
                                                       [:<> [header-menu-icon-button]])]]))

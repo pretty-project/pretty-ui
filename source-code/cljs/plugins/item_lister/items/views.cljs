@@ -33,10 +33,11 @@
   ; @param (integer) item-dex
   ; @param (map) item-props
   ;  {:header (map)
-  ;    {:icon (keyword)(opt)}}
+  ;    {:icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)}}
   [_ _ {:keys [header]}]
-  (if-let [icon (:icon header)]
-          [:div.x-list-item-a--header-icon [elements/icon {:icon icon}]]))
+  (if (:icon header)
+      [:div.x-list-item-a--header-icon [elements/icon header]]))
 
 (defn- list-item-header-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!

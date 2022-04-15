@@ -7,6 +7,7 @@
               [x.app-ui.bubbles.subs]
               [x.app-ui.element]
               [x.app-ui.engine]
+              [x.app-ui.header.side-effects]
               [x.app-ui.header.subs]
               [x.app-ui.interface.effects]
               [x.app-ui.interface.events]
@@ -26,7 +27,6 @@
               [x.app-ui.title.effects]
               [x.app-ui.bubbles.views       :as bubbles.views]
               [x.app-ui.graphics.views      :as graphics.views]
-              [x.app-ui.header.events       :as header.events]
               [x.app-ui.interface.subs      :as interface.subs]
               [x.app-ui.progress-bar.events :as progress-bar.events]
               [x.app-ui.renderer            :as renderer]
@@ -50,10 +50,6 @@
 (def app-title         graphics.views/app-title)
 (def loading-animation graphics.views/loading-animation)
 
-; x.app-ui.header.events
-(def set-header-title!    header.events/set-header-title!)
-(def remove-header-title! header.events/remove-header-title!)
-
 ; x.app-ui.interface.subs
 (def get-interface          interface.subs/get-interface)
 (def application-interface? interface.subs/application-interface?)
@@ -61,6 +57,7 @@
 
 ; x.app-ui.popups.views
 (def popup-accept-button           popups.views/popup-accept-button)
+(def popup-save-button             popups.views/popup-save-button)
 (def popup-cancel-button           popups.views/popup-cancel-button)
 (def popup-go-up-icon-button       popups.views/popup-go-up-icon-button)
 (def popup-go-back-icon-button     popups.views/popup-go-back-icon-button)
@@ -68,6 +65,7 @@
 (def popup-placeholder-icon-button popups.views/popup-label)
 (def popup-label                   popups.views/popup-label)
 (def accept-popup-header           popups.views/accept-popup-header)
+(def save-popup-header             popups.views/save-popup-header)
 (def cancel-popup-header           popups.views/cancel-popup-header)
 (def close-popup-header            popups.views/close-popup-header)
 (def go-up-popup-header            popups.views/go-up-popup-header)

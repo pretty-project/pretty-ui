@@ -243,8 +243,8 @@
   ; @return (map)
   ;  {:$and (maps in vector)}
   [db [_ lister-id]]
-  (let [active-filter (r get-meta-item db lister-id :active-filter)
-            prefilter (r get-meta-item db lister-id     :prefilter)]
+  (let [active-filter (r get-meta-item            db lister-id :active-filter)
+            prefilter (r mount.subs/get-body-prop db lister-id     :prefilter)]
        (cond-> {} active-filter (update :$and vector/conj-item active-filter)
                       prefilter (update :$and vector/conj-item     prefilter))))
 

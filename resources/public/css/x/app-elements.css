@@ -1478,6 +1478,8 @@ button.x-card:focus,
   font-size: var( --icon-size-xxs );
   line-height: 24px;
   height: 24px;
+  right: 0;
+  position: absolute;
   width: 24px }
 
 .x-element--info-text--content {

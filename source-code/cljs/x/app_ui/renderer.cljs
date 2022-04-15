@@ -230,6 +230,9 @@
   ;
   ; @return (vector)
   [db [_ renderer-id]]
+  ; WARNING!
+  ; A visible-element order vektor külön kell majd tárolni!
+  ; Ne a feliratkozások számítsák ki az értékét!
   (let [rendered-element-order (r get-rendered-element-order db renderer-id)
         invisible-element-ids  (r get-invisible-element-ids  db renderer-id)]
        (vector/remove-items rendered-element-order invisible-element-ids)))

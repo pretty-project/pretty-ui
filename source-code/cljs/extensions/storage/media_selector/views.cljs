@@ -8,53 +8,23 @@
               [extensions.storage.media-selector.helpers :as media-selector.helpers]
               [plugins.item-browser.api                  :as item-browser]
               [x.app-core.api                            :as a]
-              [x.app-elements.api                        :as elements]))
+              [x.app-elements.api                        :as elements]
+              [x.app-ui.api                              :as ui]))
 
 
 
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header-cancel-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  [elements/button ::header-cancel-button
-                   {:indent   {:horizontal :xxs :vertical :xs}
-                    :keypress {:key-code 27}
-                    :on-click [:ui/close-popup! :storage.media-selector/view]
-                    :preset   :cancel}])
-
-(defn header-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage.media-selector])]
-       [elements/label ::header-label
-                       {:content header-label}]))
-
-(defn header-save-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  [elements/button ::header-save-button
-                   {:indent   {:horizontal :xxs :vertical :xs}
-                    :keypress {:key-code 13}
-                    :on-click [:storage.media-selector/save-selected-items!]
-                    :preset   :save}])
-
-(defn header-label-bar
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [selector-id]
-  [elements/horizontal-polarity ::header-label-bar
-                                {:start-content  [header-cancel-button selector-id]
-                                 :middle-content [header-label         selector-id]
-                                 :end-content    [header-save-button   selector-id]}])
-
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selector-id]
-  [:<> [header-label-bar selector-id]
-       [item-browser/header :storage.media-selector
-                            {:new-item-event   [:storage.media-selector/add-new-item!]
-                             :new-item-options [:create-directory! :upload-files!]}]])
+  (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage.media-selector])
+        on-save       [:storage.media-selector/save-selected-items!]]
+       [:<> [ui/save-popup-header :storage.media-selector/view {:label header-label :on-save on-save}]
+            [item-browser/header  :storage.media-selector
+                                  {:new-item-event   [:storage.media-selector/add-new-item!]
+                                   :new-item-options [:create-directory! :upload-files!]}]]))
 
 
 

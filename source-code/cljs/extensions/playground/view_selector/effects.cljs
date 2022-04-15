@@ -20,7 +20,6 @@
 (a/reg-event-fx
   :playground.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-header-title! :playground]
-                [:ui/set-window-title! :playground]
+  {:dispatch-n [[:ui/set-title! :playground]
                 [:playground/initialize!]
                 [:playground.view-selector/render-selector!]]})

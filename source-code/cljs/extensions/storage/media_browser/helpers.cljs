@@ -45,7 +45,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [directory-item]
   (let [icon-family (directory-item->icon-family directory-item)]
-       {:icon {:icon :folder :icon-family icon-family}}))
+       {:icon :folder :icon-family icon-family}))
 
 (defn file-item->header
   ; WARNING! NON-PUBLIC! DO NOT USE!

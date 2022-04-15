@@ -26,7 +26,7 @@
 (defn receive-directory-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ viewer-id server-response]]
-  (let [directory-item (get server-response :storage.media-viewer/get-directory-item)]
+  (let [directory-item (get server-response :storage.media-browser/get-item)]
        (r store-directory-item! db viewer-id directory-item)))
 
 (defn load-viewer!

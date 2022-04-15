@@ -202,19 +202,20 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-browser/body :storage.media-browser
-                     {:auto-title?  true
-                      :item-path    [:storage :media-browser/browsed-item]
-                      :items-path   [:storage :media-browser/downloaded-items]
-                      :label-key    :alias
-                      :list-element #'media-item
-                      :root-item-id core.config/ROOT-DIRECTORY-ID
-                      :search-keys  [:alias]}])
+  (let [description @(a/subscribe [:item-browser/get-description        :storage.media-browser])
+        label       @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
+       [:<> [layouts/header-a {:description description :label label :offset -48}]
+            [item-browser/body :storage.media-browser
+                               {:auto-title?  true
+                                :item-path    [:storage :media-browser/browsed-item]
+                                :items-path   [:storage :media-browser/downloaded-items]
+                                :label-key    :alias
+                                :list-element #'media-item
+                                :root-item-id core.config/ROOT-DIRECTORY-ID
+                                :search-keys  [:alias]}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-browser/get-description :storage.media-browser])]
-       [layouts/layout-a surface-id {:body        #'body
-                                     :description description
-                                     :header      #'header}]))
+  [layouts/layout-a surface-id {:body   #'body
+                                :header #'header}])

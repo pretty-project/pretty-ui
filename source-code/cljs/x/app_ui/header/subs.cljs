@@ -11,13 +11,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-header-title
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (metamorphic-content)
-  [db _]
-  (get-in db [:ui :header/meta-items :header-title]))
-
 (defn render-header?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -29,9 +22,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/get-header-title get-header-title)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :ui/render-header? render-header?)

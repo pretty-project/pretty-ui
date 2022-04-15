@@ -3,6 +3,8 @@
 
 /***** User select *****/
 
+#x-header-a--label,
+#x-header-a--description,
 #x-layout-a--description {
   -ms-user-select: none;
   -moz-user-select: none;
@@ -144,6 +146,34 @@
   padding: 12px }
 
 /***** Form A *****/
+
+
+
+/***** Header A *****/
+
+#x-header-a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 48px }
+
+#x-header-a--label {
+  font-size: var( --font-size-xl );
+  font-weight: 600;
+  line-height: 48px;
+  /* A header komponens {:label ...} paraméterét kötelező megadni, ezért az #x-header-a--label
+   * elem magasságának beállítható, hogy minden esetben 48px legyen.
+   * Pl.: Ha a label paraméter értéke a szerver válaszának megérkezéséig NIL, akkor a {min-height: 48px}
+   *      beállítás használatával az #x-header-a--label placeholder elemként funkciónál. */
+  min-height: 48px }
+
+#x-header-a--description {
+  color: var( --color-muted );
+  font-size: var( --font-size-xxs );
+  font-weight: 500;
+  line-height: 24px }
+
+/***** Header A *****/
 
 
 
@@ -334,6 +364,10 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 
 
 /***** List-item A *****/
+
+/* WARNING#0001
+ * A list-item-a komponens az item-lister plugin része lett (nem feltétlenül véglegesen)!  */
+
 /*** List-item ***/
 
 .x-list-item-a {
@@ -417,7 +451,4 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
   white-space: nowrap }
 
 /*** List-item ***/
-
-/*** Selected list-item ***/
-/*** Selected list-item ***/
 /***** List-item A *****/

@@ -181,8 +181,7 @@
   :trader/load-editor!
   {:dispatch-n [[:db/remove-item! [:trader :editor]]
                 [:ui/set-surface! ::view {:view {:content #'view}}]
-                [:ui/set-header-title! "Source code editor"]
-                [:ui/set-window-title! "Source code editor"]]})
+                [:ui/set-title! "Source code editor"]]})
 
 (a/reg-event-fx
   :trader/upload-source-code!

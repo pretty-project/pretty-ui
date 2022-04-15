@@ -34,16 +34,16 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-lister/body :clients.client-lister
-                    {:items-path   [:clients :client-lister/downloaded-items]
-                     :list-element #'client-item
-                     :search-keys  [:name :email-address]}])
+  (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
+       [:<> [layouts/header-a {:description description :label :clients :offset -48}]
+            [item-lister/body :clients.client-lister
+                              {:items-path   [:clients :client-lister/downloaded-items]
+                               :list-element #'client-item
+                               :search-keys  [:name :email-address]}]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
-       [layouts/layout-a surface-id
-                         {:body        #'body
-                          :description description
-                          :header      #'header}]))
+  [layouts/layout-a surface-id
+                    {:body   #'body
+                     :header #'header}])

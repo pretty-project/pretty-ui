@@ -497,6 +497,21 @@
 
 
 
+;; -- Dereferenced subscriptions ----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn subscribed
+  ; @param (subscription-vector) subscriber
+  ;
+  ; @usage
+  ;  (a/subscribed [:my-subscription])
+  ;
+  ; @return (*)
+  [subscriber]
+  (-> subscriber re-frame.core/subscribe deref))
+
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -534,21 +549,6 @@
 ; @usage
 ;  {:fx-n [[...] [...]]}
 (re-frame.core/reg-fx :fx-n fx-n)
-
-
-
-;; -- Dereferenced subscriptions ----------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn subscribed
-  ; @param (subscription-vector) subscriber
-  ;
-  ; @usage
-  ;  (a/subscribed [:my-subscription])
-  ;
-  ; @return (*)
-  [subscriber]
-  (-> subscriber re-frame.core/subscribe deref))
 
 
 

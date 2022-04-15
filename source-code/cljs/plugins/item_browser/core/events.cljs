@@ -77,6 +77,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn reset-downloaded-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ;
+  ; @return (map)
+  [db [_ browser-id]]
+  (let [item-path (r mount.subs/get-body-prop db browser-id :item-path)]
+       (dissoc-in db item-path)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn browse-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -105,6 +120,7 @@
   ;   kapja meg az aktuálisan böngészett elem azonosítóját.
   (as-> db % (r set-current-item-id!           % browser-id item-id)
              (r reset-downloads!               % browser-id)
+             (r reset-downloaded-item!         % browser-id)
              (r quit-search-mode!              % browser-id)
              (r quit-select-mode!              % browser-id)
              (r items.events/enable-all-items! % browser-id)))

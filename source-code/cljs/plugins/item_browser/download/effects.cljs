@@ -60,5 +60,5 @@
       (let [db (r download.events/receive-item! db browser-id server-response)]
            (if-let [auto-title? (r mount.subs/get-body-prop db browser-id :auto-title?)]
                    {:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db browser-id)]
-                                                [:ui/set-title! item-label])]}
+                                                [:ui/set-window-title! item-label])]}
                    {:db db}))))

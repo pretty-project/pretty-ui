@@ -39,7 +39,7 @@
       ;     ezért a core.subs/get-auto-title függvény lefutása előtt szükséges meghívni!
       (let [db (r mount.events/body-did-mount db editor-id body-props)]
            {:db db :dispatch-n [(if-let [editor-title (r core.subs/get-editor-title db editor-id)]
-                                        [:ui/set-title! editor-title])
+                                        [:ui/set-window-title! editor-title])
                                 (if (r core.subs/download-data? db editor-id)
                                     [:item-editor/request-item! editor-id]
                                     [:item-editor/load-item!    editor-id])]})))
@@ -84,7 +84,7 @@
                    {:db (as-> db % (r backup.events/store-local-changes! % editor-id)
                                    (r mount.events/body-will-unmount     % editor-id))
                     :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]}))))
-                    
+
 (a/reg-event-fx
   :item-editor/header-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -36,6 +36,5 @@
 (a/reg-event-fx
   :trader/load-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  {:dispatch-n [[:ui/set-header-title! "Trader"]
-                [:ui/set-window-title! "Trader"]
+  {:dispatch-n [[:ui/set-title! "Trader"]
                 [:trader/render-main!]]})

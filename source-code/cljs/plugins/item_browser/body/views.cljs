@@ -60,8 +60,10 @@
   ;                                  :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]
   ; Az item-browser body komponensének Reagent azonosítója nem egyezhet meg az item-lister
-  ; body komponensének Reagent azonosítójával!
+  ; body komponensének Reagent azonosítójával, mert a két komponens egy időben van a React-fába
+  ; csatolva!
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
        (reagent/lifecycles (core.helpers/component-id browser-id :body-wrapper)
-                           {:reagent-render      (fn []             [body-structure               browser-id body-props])
-                            :component-did-mount (fn [] (a/dispatch [:item-browser/body-did-mount browser-id body-props]))})))
+                           {:reagent-render         (fn []             [body-structure                  browser-id body-props])
+                            :component-did-mount    (fn [] (a/dispatch [:item-browser/body-did-mount    browser-id body-props]))
+                            :component-will-unmount (fn [] (a/dispatch [:item-browser/body-will-unmount browser-id]))})))

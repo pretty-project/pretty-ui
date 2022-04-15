@@ -45,6 +45,7 @@
 
 ; - :documents
 ;   A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
+;
 ; - :document-count
 ;   A keresési feltételeknek megfelelő dokumentumok száma
 (defn- get-items-f

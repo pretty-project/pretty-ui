@@ -6,6 +6,7 @@
     (:require [mid-fruits.map                 :refer [dissoc-in]]
               [mid-fruits.vector              :as vector]
               [plugins.item-lister.core.subs  :as core.subs]
+              [plugins.item-lister.mount.subs :as mount.subs]
               [plugins.item-lister.items.subs :as items.subs]
               [x.app-core.api                 :as a :refer [r]]))
 
@@ -34,11 +35,18 @@
   ;
   ; @return (map)
   [db [_ lister-id item-dex]]
-  (if (r items.subs/item-selected? db lister-id item-dex)
-      (-> db (assoc-in  [:plugins :plugin-handler/meta-items lister-id :select-mode?] true)
-             (update-in [:plugins :plugin-handler/meta-items lister-id :selected-items] vector/remove-item item-dex))
-      (-> db (assoc-in  [:plugins :plugin-handler/meta-items lister-id :select-mode?] true)
-             (update-in [:plugins :plugin-handler/meta-items lister-id :selected-items] vector/conj-item   item-dex))))
+  ; A toggle-item-selection! függvény az egyes listaelemek kiválasztásakor ...
+  ; ... ha a header komponens megkapja az :item-actions paramétert, akkor {:actions-mode? true}
+  ;     állapotba lépteti a plugint, így a kiválasztott listaelemeken végrehajtható műveleteket
+  ;     tartalmazó menü jelenik meg header komponensen.
+  ;
+  ; ... minden esetben {:select-mode? true} állapotba lépteti a plugint, mert a listaelemek
+  ;     kiválasztása {:select-mode? true} állapotban történik.
+  (let [item-actions (r mount.subs/get-header-prop db lister-id :item-actions)]
+       (cond-> db item-actions            (assoc-in  [:plugins :plugin-handler/meta-items lister-id :actions-mode?] true)
+                  :set-select-mode!       (assoc-in  [:plugins :plugin-handler/meta-items lister-id :select-mode?]  true)
+                  :toggle-item-selection! (update-in [:plugins :plugin-handler/meta-items lister-id :selected-items]
+                                                     vector/toggle-item item-dex))))
 
 
 

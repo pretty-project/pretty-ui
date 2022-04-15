@@ -104,6 +104,10 @@
   from { transform: scaleY( 0 ) }
   to   { transform: scaleY( 1 ) }}
 
+@keyframes x-scale-0-1 {
+  from { transform: scale( 0 ) }
+  to   { transform: scale( 1 ) }}
+
 @keyframes x-scale-09-1 {
   from { transform: scale( .9 ) }
   to   { transform: scale( 1 ) }}

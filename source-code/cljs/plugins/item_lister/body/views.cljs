@@ -35,21 +35,26 @@
   ;   Amíg nincs letöltve az összes elem de a downloading-items-label felirat éppen nincs megjelenítve,
   ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
   ;   és eltűnésekor ne változzon a lista magassága.
-  ;
-  ; - Amíg az items-received? értéke false (= az első elemek letöltésekor), addig
-  ;   a downloading-items-label felirat {:indent {:top :xxl}} beállítással jelenik meg,
-  ;   így más feliratokhoz hasonlóan extra távolságot tart header elemtől / a lista felső szélétől.
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
         downloading-items?    @(a/subscribe [:item-lister/downloading-items?    lister-id])
         items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
        (if-not (and all-items-downloaded? items-received?) ; XXX#0499
-               [elements/label ::downloading-items-label
-                               {:color       :highlight
-                                :font-size   :xs
-                                :font-weight :bold
-                                :indent  {:top (if items-received? :xs :xxl)}
-                                :content (if (or downloading-items? (nor downloading-items? items-received?))
-                                             :downloading-items...)}])))
+
+               ; TEMP
+               [:div {:style {:width "100%"}}
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]]
+
+               (comment [elements/label ::downloading-items-label
+                                        {:color       :highlight
+                                         :font-size   :xs
+                                         :font-weight :bold
+                                         :content (if (or downloading-items? (nor downloading-items? items-received?))
+                                                      :downloading-items...)}]))))
+               ; TEMP
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -70,8 +75,7 @@
                            {:color       :highlight
                             :content     :no-items-to-show
                             :font-size   :xs
-                            :font-weight :bold
-                            :indent      {:top :xxl}}])))
+                            :font-weight :bold}])))
 
 (defn indicators
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -232,15 +232,7 @@
   left: var( --app-edge );
   position: fixed;
   top: 0;
-  width: var( --app-width );
-
-  /* Floating header, while scrolled-to-top? = true */
-  -border-radius: var( --border-radius-m );
-  -top: 12px;
-
-  /* Content-sized header */
-  -left: calc((100% - var( --content-width-l )) / 2);
-  -width: var( --content-width-l ) }
+  width: var( --app-width ) }
 
 #x-app-header--body {
   background-color: var( --background-color );
@@ -252,6 +244,8 @@
 
 #x-app-header--title {
   align-items: center;
+  animation-duration: .1s;
+  animation-name: x-translate-y--110p-0;
   display: flex;
   flex-direction: column;
   font-weight: 600;

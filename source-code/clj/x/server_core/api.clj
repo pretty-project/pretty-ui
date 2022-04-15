@@ -94,6 +94,8 @@
 (def dispatch-tick              event-handler/dispatch-tick)
 (def subscribe                  event-handler/subscribe)
 (def subscribed                 event-handler/subscribed)
+(def fx                         event-handler/fx)
+(def fx-n                       event-handler/fx-n)
 (def r                          event-handler/r)
 
 ; x.server-core.lifecycle-handler.side-effects

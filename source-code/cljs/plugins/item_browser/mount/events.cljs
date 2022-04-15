@@ -30,3 +30,17 @@
   (cond-> db root-item-id (as-> % (r core.events/use-root-item-id! % browser-id))
              :items-key   (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :items-key] items-key)
              :path-key    (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :path-key]  path-key)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ;
+  ; @return (map)
+  [db [_ browser-id]]
+  (r core.events/reset-downloaded-item! db browser-id))

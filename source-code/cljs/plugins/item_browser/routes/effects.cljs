@@ -33,4 +33,4 @@
                                       [:item-browser/request-item!    browser-id]]}
                ; B)
                {:db (r routes.events/handle-route! db browser-id)
-                :dispatch-n [on-route (if route-title [:ui/set-title! route-title])]}))))
+                :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]}))))

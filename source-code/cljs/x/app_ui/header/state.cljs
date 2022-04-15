@@ -2,20 +2,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.references
-    (:require [reagent.core :as core]))
+(ns x.app-ui.header.state
+    (:require [reagent.api :refer [ratom]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn arguments
-  ; @param (?) this
-  ;
-  ; @usage
-  ;  (reagent/lifecycles {:component-did-update (fn [this] (reagent/arguments this))})
-  ;
-  ; @return (*)
-  [this]
-  (-> this core/argv rest))
+; @atom (metamorphic-content)
+;
+; A HEADER-TITLE értéke a Re-Frame adatbázis helyett atom típusban van tárolva,
+; így az értékének változtatása kevesebb erőforrást igényel.
+(defonce HEADER-TITLE (ratom nil))
