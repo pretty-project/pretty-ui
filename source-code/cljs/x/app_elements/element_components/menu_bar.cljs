@@ -168,7 +168,7 @@
   ; @param (map) bar-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :left
   ;    (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   ;    Only w/ {:orientation :horizontal}

@@ -120,7 +120,9 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:horizontal-align (keyword)(opt)
-  ;    :left, :center, :right, :space-between
+  ;    :center, :left, :right, :space-between
+  ;   :horizontal-align (keyword)(opt)
+  ;    :center, :left, :none, :right
 
   ; TEMP
   ;   :indent (keyword)(opt)
@@ -131,20 +133,26 @@
   ;   :orientation (keyword)(opt)
   ;   :position (keyword)(opt)
   ;   :stretch-orientation (keyword)(opt)
-  ;    :horizontal, :vertical, :both, :none
+  ;    :both, :horizontal, :none, :vertical
   ;   :vertical-align (keyword)(opt)
-  ;    :top, :center, :bottom, :space-between}
+  ;    :bottom, :center, :space-between, :top
+  ;   :vertical-align (keyword)(opt)
+  ;    :center, :left, :none, :right}
   ;
   ; @return (map)
   ;  {:data-horizontal-align (keyword)
+  ;   :data-horizontal-position (keyword)
   ;   :data-layout (keyword)
   ;   :data-orientation (keyword)
   ;   :data-position (keyword)
   ;   :data-stretch-orientation (keyword)
-  ;   :data-vertical-align (keyword)}
-  [_ {:keys [border-radius horizontal-align indent layout orientation position stretch-orientation vertical-align]}]
+  ;   :data-vertical-align (keyword)
+  ;   :data-vertical-position (keyword)}
+  [_ {:keys [border-radius horizontal-align horizontal-position indent layout orientation position
+             stretch-orientation vertical-align vertical-position]}]
 
   (cond-> {} horizontal-align    (assoc :data-horizontal-align    horizontal-align)
+             horizontal-position (assoc :data-horizontal-position horizontal-position)
 
              ; TEMP
              (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
@@ -162,7 +170,8 @@
              orientation         (assoc :data-orientation         orientation)
              position            (assoc :data-position            position)
              stretch-orientation (assoc :data-stretch-orientation stretch-orientation)
-             vertical-align      (assoc :data-vertical-align      vertical-align)))
+             vertical-align      (assoc :data-vertical-align      vertical-align)
+             vertical-position   (assoc :data-vertical-position   vertical-position)))
 
 (defn element-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -248,6 +257,7 @@
              src (assoc :src src)
              (some? disabled?)   (assoc :data-disabled   disabled?)
              (some? selectable?) (assoc :data-selectable selectable?)
+             (nil?  selectable?) (assoc :data-selectable false)
              ; XXX#4005
              ; A {:hover-color ...} tulajdonságként átadott szín használatához, minden esetben
              ; szükséges a {:data-disabled ...} attribútumot alkalmazni!

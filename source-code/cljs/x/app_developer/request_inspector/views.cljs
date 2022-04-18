@@ -97,8 +97,8 @@
   (let [request-failured?  @(a/subscribe [:sync/request-failured?     request-id])
         request-successed? @(a/subscribe [:sync/request-successed?    request-id])
         request-sent-time  @(a/subscribe [:sync/get-request-sent-time request-id])]
-       [:div.x-clickable
-             {:style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
+       [:div {:data-clickable true
+              :style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                       :margin "4px 0"}
               :on-click #(a/dispatch [:request-inspector/inspect-request! request-id])}
              [:div {:style {:font-weight "500" :font-size "14px" :display "flex"}}

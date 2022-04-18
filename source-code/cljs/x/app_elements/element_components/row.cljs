@@ -61,7 +61,7 @@
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)(opt)
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right, :space-around, :space-between, :space-evenly
+  ;    :center, :left, :right, :space-around, :space-between, :space-evenly
   ;    Default: :left
   ;   :style (map)(opt)
   ;   :stretch-orientation (keyword)(opt)

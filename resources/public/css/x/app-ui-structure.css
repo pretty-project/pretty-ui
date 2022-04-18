@@ -496,6 +496,20 @@
 
 
 
+/***** Progress-screen *****/
+
+#x-app-progress-screen {
+  background-color: var( --black-semi-transparent );
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/***** Progress-screen *****/
+
+
+
 /***** App shield *****/
 /*** App shield wrapper ***/
 

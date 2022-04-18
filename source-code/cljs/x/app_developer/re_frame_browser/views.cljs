@@ -37,11 +37,12 @@
                       [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
                                  (param icon)]
                       [icon-button-label label true]]
-                [:div.x-clickable {:on-click #(a/dispatch on-click)
-                                   :style {:padding "0 12px" :min-width "60px"}}
-                                  [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
-                                             (param icon)]
-                                  [icon-button-label label]]))
+                [:div {:data-clickable true
+                       :on-click #(a/dispatch on-click)
+                       :style {:padding "0 12px" :min-width "60px"}}
+                      [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
+                                 (param icon)]
+                      [icon-button-label label]]))
 
 
 
@@ -202,10 +203,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [map-key system-key?]
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-       [:div.x-clickable {:on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])}
-                         (if (string? map-key)
-                             (string/quotes map-key)
-                             (str           map-key))]))
+       [:div {:data-clickable true
+              :on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])}
+             (if (string? map-key)
+                 (string/quotes map-key)
+                 (str           map-key))]))
 
 (defn map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -6,6 +6,8 @@
     (:require [x.app-elements.collect-handler.effects]
               [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]
+              [x.app-elements.color-selector.effects]
+              [x.app-elements.color-selector.events]
               [x.app-elements.content-handler.events]
               [x.app-elements.content-handler.subs]
               [x.app-elements.expand-handler.events]
@@ -24,8 +26,8 @@
               [x.app-elements.element-components.chip-group           :as element-components.chip-group]
               [x.app-elements.element-components.chip                 :as element-components.chip]
               [x.app-elements.element-components.circle-diagram       :as element-components.circle-diagram]
-              [x.app-elements.element-components.color-picker         :as element-components.color-picker]
-              [x.app-elements.element-components.color-stamp          :as element-components.color-stamp]
+              [x.app-elements.color-selector.views                    :as color-selector.views]
+              [x.app-elements.color-stamp.views                       :as color-stamp.views]
               [x.app-elements.element-components.column               :as element-components.column]
               [x.app-elements.element-components.combo-box            :as element-components.combo-box]
               [x.app-elements.element-components.counter              :as element-components.counter]
@@ -152,8 +154,8 @@
 (def chip-group           element-components.chip-group/element)
 (def chip                 element-components.chip/element)
 (def circle-diagram       element-components.circle-diagram/element)
-(def color-picker         element-components.color-picker/element)
-(def color-stamp          element-components.color-stamp/element)
+(def color-selector       color-selector.views/element)
+(def color-stamp          color-stamp.views/element)
 (def column               element-components.column/element)
 (def combo-box            element-components.combo-box/element)
 (def counter              element-components.counter/element)

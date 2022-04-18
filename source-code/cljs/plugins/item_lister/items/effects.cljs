@@ -24,7 +24,6 @@
   ; @usage
   ;  [:item-lister/item-clicked :my-lister 0 {...}]
   (fn [{:keys [db]} [_ lister-id item-dex {:keys [on-click on-select]}]]
-      (println (str (r items.subs/toggle-item-selection? db lister-id item-dex)))
       ; A) ...
       ;
       ; B) ...

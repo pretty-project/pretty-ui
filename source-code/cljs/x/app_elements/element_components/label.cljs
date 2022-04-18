@@ -23,14 +23,12 @@
   ;  {:color (keyword)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :selectable? (boolean)}
+  ;   :horizontal-align (keyword)}
   [{:keys [icon] :as label-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
-          :horizontal-align :left
-          :selectable?      false}
+          :horizontal-align :left}
          (if icon {:icon-family :material-icons-filled})
          (param label-props)))
 
@@ -83,6 +81,8 @@
   ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)
+  ;   :disabled? (boolean)(opt)
+  ;    Default: false
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
@@ -90,8 +90,11 @@
   ;    :normal, :bold, extra-bold
   ;    Default :bold
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :left
+  ;   :horizontal-position (keyword)(opt)
+  ;    :center, :left, :none, :right
+  ;    Default: :none
   ;   :icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
@@ -108,7 +111,10 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :selectable? (boolean)(opt)
   ;    Default: false
-  ;   :style (map)(opt)}
+  ;   :style (map)(opt)
+  ;   :vertical-position (keyword)(opt)
+  ;    :bottom, :center, :none, :top
+  ;    Default: :none}
   ;
   ; @usage
   ;  [elements/label {...}]

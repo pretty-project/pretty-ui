@@ -63,7 +63,7 @@
   ;    :bold, :extra-bold, :normal
   ;    Default: :normal
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :left
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

@@ -75,35 +75,6 @@
 
 
 
-;; -- Input components --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn input-group-header
-  ; @param (keyword) editor-id
-  ;
-  ; @usage
-  ;  [item-editor/input-group-header :my-editor {...}]
-  [editor-id {:keys [label]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        color             (if editor-disabled? :highlight :default)]
-       [layouts/input-group-header {:color color
-                                    :label label}]))
-
-(defn description-field
-  ; @param (keyword) editor-id
-  ;
-  ; @usage
-  ;  [item-editor/description-field :my-editor]
-  [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        item-path        @(a/subscribe [:item-editor/get-body-prop    editor-id :item-path])
-        value-path        (conj item-path :description)]
-       [elements/multiline-field ::description-field
-                                 {:disabled?  editor-disabled?
-                                  :value-path value-path}]))
-
-
-
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

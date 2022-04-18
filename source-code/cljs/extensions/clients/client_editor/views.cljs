@@ -14,8 +14,20 @@
 
 
 
-;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- more-info-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/label ::more-info-label
+                       {:content             :more-info
+                        :disabled?           editor-disabled?
+                        :font-size           :m
+                        :font-weight         :extra-bold
+                        :horizontal-position :left
+                        :indent              {:left :xs :top :xxl}}]))
 
 (defn- client-vat-no-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,6 +98,11 @@
              [:div (layouts/input-block-attributes {:ratio 40})
                    [client-vat-no-field]]]])
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- client-phone-number-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -124,6 +141,23 @@
         [:div (layouts/input-block-attributes {:ratio 50})
               [client-phone-number-field]]])
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- basic-info-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/label ::basic-info-label
+                       {:content             :basic-info
+                        :disabled?           editor-disabled?
+                        :font-size           :m
+                        :font-weight         :extra-bold
+                        :horizontal-position :left
+                        :indent              {:left :xs :top :xxl}}]))
+
 (defn- client-last-name-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -158,12 +192,42 @@
                                   [client-last-name-field]]
                            @(a/subscribe [:locales/get-name-order])]])
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- description-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/label ::description-label
+                       {:content             :description
+                        :disabled?           editor-disabled?
+                        :font-size           :m
+                        :font-weight         :extra-bold
+                        :horizontal-position :left
+                        :indent              {:left :xs :top :xxl}}]))
+
+(defn- client-description-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/multiline-field ::client-description-field
+                                 {:disabled?  editor-disabled?
+                                  :value-path [:clients :client-editor/edited-item :description]}]))
+
 (defn- client-additional-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
+  []
   [:div (layouts/input-row-attributes)
         [:div (layouts/input-block-attributes {:ratio 100})
-              [item-editor/description-field :clients.client-editor]]])
+              [client-description-field]]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- client-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,32 +238,36 @@
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-editor/color-selector :clients.client-editor])
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/color-selector {:disabled?  editor-disabled?
+                                 :value-path [:clients :client-editor/edited-item :colors]}]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn- client-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> ; Color and name
        [elements/horizontal-separator {:size :xxl}]
-       [client-label]
        [client-colors]
-       [elements/horizontal-separator {:size :xxl}]
+       [client-label]
        ; Basic info
-       [item-editor/input-group-header :clients.client-editor {:label :basic-info}]
+       [basic-info-label]
        [client-name]
        [client-primary-contacts]
-       [elements/horizontal-separator {:size :xxl}]
        ; More info
-       [item-editor/input-group-header :clients.client-editor {:label :more-info}]
+       [more-info-label]
        [client-secondary-contacts]
-       [elements/horizontal-separator {:size :xxl}]
        ; Description
-       [item-editor/input-group-header :clients.client-editor {:label :description}]
+       [description-label]
        [client-additional-information]])
 
 
 
-;; -- View components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn footer
@@ -207,6 +275,22 @@
   []
   [item-editor/footer :clients.client-editor
                       {}])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [])
+  ;(let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
+  ;     [item-editor/item-label :clients.client-editor {:name client-name}]])
+
+(defn body-description
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -223,12 +307,15 @@
                           :suggestion-keys  [:city]
                           :suggestions-path [:clients :client-editor/suggestions]}]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]
-       [layouts/layout-a surface-id
-                         {:body        #'body
-                          :description description
-                          :footer      #'footer}]))
-                         ;:header      #'header
+  [layouts/layout-a surface-id
+                    {:body   #'body
+                     :footer #'footer}])
+                    ;:header #'header

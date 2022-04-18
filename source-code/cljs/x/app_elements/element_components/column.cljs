@@ -58,7 +58,7 @@
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :center
   ;   :style (map)(opt)
   ;   :stretch-orientation (keyword)(opt)

@@ -656,6 +656,35 @@
   [n x]
   (vec (remove #(= % x) n)))
 
+(defn remove-item-once
+  ; @param (vector) n
+  ; @param (*) dex
+  ;
+  ; @example
+  ;  (vector/remove-item-once [:a :b] :b)
+  ;  =>
+  ;  [:a]
+  ;
+  ; @example
+  ;  (vector/remove-item-once [:b :a] :a)
+  ;  =>
+  ;  [:b]
+  ;
+  ; @return (vector)
+  [n x]
+  (let [count (count n)]
+       (letfn [(f [o dex]
+                  (cond (= x (nth n dex))
+                        (if (dex-last? n dex)
+                            (subvec n 0 dex)
+                            (concat (subvec n 0 dex)
+                                    (subvec n (dec dex) count)))
+                        (dex-last? n dex) (return n)
+                        :else (f o (inc dex))))]
+              (if (nonempty? n)
+                  (f [] 0)
+                  (return n)))))
+
 (defn remove-nth-item
   ; @param (vector) n
   ; @param (integer) dex

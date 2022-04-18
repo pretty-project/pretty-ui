@@ -69,8 +69,9 @@
   ;
   ; @return (boolean)
   [{:keys [collected-value get-value-f]} option]
-  (let [value (get-value-f option)]
-       (vector/contains-item? collected-value value)))
+  (if get-value-f (let [value (get-value-f option)]
+                       (vector/contains-item? collected-value value))
+                  (vector/contains-item? collected-value option)))
 
 (defn collectable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

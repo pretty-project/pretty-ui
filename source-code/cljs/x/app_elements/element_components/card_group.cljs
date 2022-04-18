@@ -54,7 +54,7 @@
   ;    [{...} {...}]
   ;   :class (keyword or keywords in vector)(opt)
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :center
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

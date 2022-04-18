@@ -17,25 +17,27 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:target-path (vector)(opt)}
   ; @param (*) server-response
   ;
   ; @return (map)
-  [db [_ request-id server-response]]
-  (if-let [target-path (get-in db [:sync :request-handler/data-items request-id :target-path])]
-          (r db/set-item! db target-path server-response)
-          (return db)))
+  [db [_ _ {:keys [target-path]} server-response]]
+  (if target-path (r db/set-item! db target-path server-response)
+                  (return         db)))
 
 (defn store-request-response!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
   ; @param (*) server-response
   ;
   ; @return (map)
-  [db [_ request-id server-response]]
+  [db [_ request-id request-props server-response]]
+  ; DEBUG
+  ; A request-id azonosítójú lekérés érkezett szerver-válasz utolsó 256 példányát eltárolja
   (as-> db % (r target-request-response! % request-id server-response)
-             ; DEBUG
-             ; A request-id azonosítójú lekérés érkezett szerver-válasz utolsó 256 példányát eltárolja
              (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/conj-item server-response)
              (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/last-items 256)
              (r db/set-item!   % [:sync :response-handler/data-items   request-id] server-response)))

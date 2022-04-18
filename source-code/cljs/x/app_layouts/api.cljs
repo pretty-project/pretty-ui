@@ -5,7 +5,6 @@
 (ns x.app-layouts.api
     (:require [x.app-layouts.form-a.helpers :as form-a.helpers]
               [x.app-layouts.form-a.views   :as form-a.views]
-              [x.app-layouts.header-a.views :as header-a.views]
               [x.app-layouts.layout-a.views :as layout-a.views]
               [x.app-layouts.layout-b.views :as layout-b.views]))
 
@@ -22,9 +21,6 @@
 ; x.app-layouts.form-a.views
 (def input-group-label  form-a.views/input-group-label)
 (def input-group-header form-a.views/input-group-header)
-
-; x.app-layouts.header-a.views
-(def header-a header-a.views/header)
 
 ; x.app-layouts.layout-a.views
 (def layout-a layout-a.views/layout)

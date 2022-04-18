@@ -221,7 +221,7 @@
   ;   :class (keyword or keywords in vector)(opt)
   ;   :columns (maps in vector or integer)
   ;    [{:horizontal-align (keyword)(opt)
-  ;       :left, :center, :right
+  ;       :center, :left, :right
   ;       Default: :left
   ;      :label (metamorphic-content)(opt)
   ;      :width (string)(opt)}]

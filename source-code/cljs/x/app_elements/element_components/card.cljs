@@ -87,7 +87,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :center
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

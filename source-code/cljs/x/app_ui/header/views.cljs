@@ -3,10 +3,33 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.header.views
-    (:require [x.app-components.api  :as components]
-              [x.app-core.api        :as a :refer [r]]
-              [x.app-elements.api    :as elements]
-              [x.app-ui.header.state :as header.state]))
+    (:require [mid-fruits.css          :as css]
+              [reagent.api             :as reagent]
+              [x.app-components.api    :as components]
+              [x.app-core.api          :as a]
+              [x.app-elements.api      :as elements]
+              [x.app-ui.header.helpers :as header.helpers]
+              [x.app-ui.header.state   :as header.state]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn title-sensor
+  ; @param (keyword)(opt) sensor-id
+  ; @param (map) sensor-props
+  ;  {:offset (px)(opt)
+  ;   :title (metamorphic-content)}
+  ([sensor-props]
+   [title-sensor (a/id) sensor-props])
+
+  ([sensor-id {:keys [offset] :as sensor-props}]
+   (reagent/lifecycles {:component-did-mount    (fn [] (header.helpers/sensor-did-mount-f    sensor-id sensor-props))
+                        :component-will-unmount (fn [] (header.helpers/sensor-will-unmount-f sensor-id))
+                        :component-did-update   (fn [this] (let [[_ sensor-props] (reagent/arguments this)]
+                                                                (header.helpers/sensor-did-update-f sensor-id sensor-props)))
+                        :reagent-render         (fn [] [:div#x-app-header--title-sensor (if offset {:style {:top (css/px offset)}})])})))
 
 
 

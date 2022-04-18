@@ -16,7 +16,7 @@
 (defn get-request-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (map/get-keys (get-in db [:sync :request-handler/data-items])))
+  (map/get-keys (get-in db [:sync :request-handler/data-history])))
 
 (defn get-inspected-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

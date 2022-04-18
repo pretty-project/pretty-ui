@@ -23,6 +23,7 @@
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def get-current-item-id   core.subs/get-current-item-id)
 (def get-current-item      core.subs/get-current-item)
 
 
@@ -38,21 +39,6 @@
   ; @return (boolean)
   [db [_ lister-id]]
   (r core.subs/get-request-id db lister-id :browser))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-current-item-id
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ;  (r item-browser/get-current-item-id db :my-browser)
-  ;
-  ; @return (string)
-  [db [_ browser-id]]
-  (r core.subs/get-current-item-id db browser-id))
 
 
 
@@ -148,6 +134,18 @@
 ; @usage
 ;  [:item-browser/get-meta-item :my-browser :my-item]
 (a/reg-sub :item-browser/get-meta-item get-meta-item)
+
+; @param (keyword) browser-id
+;
+; @usage
+;  [:item-browser/get-current-item-id :my-browser]
+(a/reg-sub :item-browser/get-current-item-id get-current-item-id)
+
+; @param (keyword) browser-id
+;
+; @usage
+;  [:item-browser/get-current-item :my-browser]
+(a/reg-sub :item-browser/get-current-item get-current-item)
 
 ; @param (keyword) browser-id
 ;

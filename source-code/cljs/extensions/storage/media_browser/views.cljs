@@ -202,9 +202,12 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [description @(a/subscribe [:item-browser/get-description        :storage.media-browser])
-        label       @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
-       [:<> [layouts/header-a {:description description :label label :offset -48}]
+  ; TEMP
+  (let [browsed-directory @(a/subscribe [:item-browser/get-current-item       :storage.media-browser])
+        label             @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])
+        description        (if browsed-directory (media-browser.helpers/directory-item->size browsed-directory))]
+       [:<> ;[layouts/header-a {:description (str description) :label (or label "") :offset -48}]
+  ; TEMP
             [item-browser/body :storage.media-browser
                                {:auto-title?  true
                                 :item-path    [:storage :media-browser/browsed-item]

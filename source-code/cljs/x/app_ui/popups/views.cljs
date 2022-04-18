@@ -18,30 +18,42 @@
 (defn popup-accept-button
   ; @param (keyword) popup-id
   ; @param (map) button-props
-  ;  {:on-accept (metamorphic-event)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :label (metamorphic-content)(opt)
+  ;    Default: :accept!
+  ;   :on-accept (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [ui/popup-accept-button :my-popup {...}]
-  [popup-id {:keys [on-accept]}]
-  [elements/button {:indent   {:horizontal :xxs :vertical :xs}
-                    :keypress {:key-code 13}
-                    :on-click (if on-accept {:dispatch-n [on-accept [:ui/close-popup! popup-id]]}
-                                            [:ui/close-popup! popup-id])
-                    :preset   :accept}])
+  [popup-id {:keys [disabled? label on-accept]}]
+  [elements/button {:disabled? disabled?
+                    :indent    {:horizontal :xxs :vertical :xs}
+                    :keypress  {:key-code 13}
+                    :label     (or label :accept!)
+                    :on-click  (if on-accept {:dispatch-n [on-accept [:ui/close-popup! popup-id]]}
+                                             [:ui/close-popup! popup-id])
+                    :preset    :accept}])
 
 (defn popup-save-button
   ; @param (keyword) popup-id
   ; @param (map) button-props
-  ;  {:on-save (metamorphic-event)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :label (metamorphic-content)(opt)
+  ;    Default: :save!
+  ;   :on-save (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [ui/popup-save-button :my-popup {...}]
-  [popup-id {:keys [on-save]}]
-  [elements/button {:indent   {:horizontal :xxs :vertical :xs}
-                    :keypress {:key-code 13}
-                    :on-click (if on-save {:dispatch-n [on-save [:ui/close-popup! popup-id]]}
-                                          [:ui/close-popup! popup-id])
-                    :preset   :save}])
+  [popup-id {:keys [disabled? label on-save]}]
+  [elements/button {:disabled? disabled?
+                    :indent    {:horizontal :xxs :vertical :xs}
+                    :keypress  {:key-code 13}
+                    :label     (or label :save!)
+                    :on-click  (if on-save {:dispatch-n [on-save [:ui/close-popup! popup-id]]}
+                                           [:ui/close-popup! popup-id])
+                    :preset    :save}])
 
 (defn popup-cancel-button
   ; @param (keyword) popup-id
@@ -105,7 +117,9 @@
 (defn accept-popup-header
   ; @param (keyword) popup-id
   ; @param (map)(opt) bar-props
-  ;  {:on-accept (metamorphic-event)(opt)}
+  ;  {:disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :on-accept (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [ui/accept-popup-header :my-popup {...}]
@@ -115,15 +129,21 @@
 (defn save-popup-header
   ; @param (keyword) popup-id
   ; @param (map) bar-props
-  ;  {:label (metamorphic-content)(opt)
+  ;  {:disabled? (boolean)(opt)
+  ;    Default: false
+  ;   :label (metamorphic-content)(opt)
   ;   :on-save (metamorphic-event)}
   ;
   ; @usage
   ;  [ui/save-popup-header :my-popup {...}]
-  [popup-id bar-props]
+  [popup-id {:keys [disabled? on-save] :as bar-props}]
+  ; A save-popup-header komponens bar-props paramétere nem adható át a popup-save-button komponens
+  ; számára, mert a bar-props térképt {:label ...} tulajdonsága a popup-save-button komponens button-props
+  ; paraméterének {:label ...} tulajdonságaként jelenne meg.
   [elements/horizontal-polarity {:start-content  [popup-cancel-button popup-id]
                                  :middle-content [popup-label         popup-id bar-props]
-                                 :end-content    [popup-save-button   popup-id bar-props]}])
+                                 :end-content    [popup-save-button   popup-id {:disabled? disabled?
+                                                                                :on-save   on-save}]}])
 
 (defn cancel-popup-header
   ; @param (keyword) popup-id

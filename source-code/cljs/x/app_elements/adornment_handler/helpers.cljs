@@ -37,8 +37,8 @@
   ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
   ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
   ; felület React-fából történő lecsatolását okozná.
-  (merge {:title          (components/content tooltip)
-          :on-mouse-down #(.preventDefault %)}
+  (merge {:on-mouse-down #(.preventDefault %)
+          :title          (components/content tooltip)}
          (if     icon         {:data-icon-family icon-family})
          (if     disabled?    {:disabled   "1" :data-disabled true})
          (if-not tab-indexed? {:tab-index "-1"})

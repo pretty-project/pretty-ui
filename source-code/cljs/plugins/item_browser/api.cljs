@@ -36,6 +36,7 @@
 
 ; plugins.item-browser.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
+(def get-current-item    core.subs/get-current-item)
 (def browsing-item?      core.subs/browsing-item?)
 
 ; plugins.item-browser.header.views

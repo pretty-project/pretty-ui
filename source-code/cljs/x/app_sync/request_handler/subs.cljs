@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.subs
-    (:require [x.app-core.api                    :as a :refer [r]]
-              [x.app-sync.request-handler.config :as request-handler.config]))
+    (:require [x.app-core.api :as a :refer [r]]))
 
 
 
@@ -29,7 +28,7 @@
   ;
   ; @return (string)
   [db [_ request-id]]
-  (get-in db [:sync :request-handler/data-items request-id :sent-time]))
+  (get-in db [:sync :request-handler/meta-items request-id :sent-time]))
 
 (defn get-request-activity
   ; @param (keyword) request-id
@@ -102,7 +101,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (get-in db [:sync :request-handler/data-items request-id :aborted?]))
+  (get-in db [:sync :request-handler/meta-items request-id :aborted?]))
 
 (defn request-resent?
   ; @param (keyword) request-id
@@ -114,7 +113,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id {:keys [sent-time]}]]
-  (not= sent-time (get-in db [:sync :request-handler/data-items request-id :sent-time])))
+  (not= sent-time (r get-request-sent-time db request-id)))
 
 (defn listening-to-request?
   ; @param (keyword) request-id
@@ -132,43 +131,37 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:on-failure (metamorphic-event)(opt)}
   ; @param (map) server-response
   ;
   ; @return (metamorphic-event)
-  [db [_ request-id server-response]]
-  (if-let [on-failure-event (get-in db [:sync :request-handler/data-items request-id :on-failure])]
-          (a/metamorphic-event<-params on-failure-event server-response)))
+  [db [_ _ {:keys [on-failure]} server-response]]
+  (if on-failure (a/metamorphic-event<-params on-failure server-response)))
 
 (defn get-request-on-success-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:on-success (metamorphic-event)(opt)}
   ; @param (*) server-response
   ;
   ; @return (metamorphic-event)
-  [db [_ request-id server-response]]
-  (if-let [on-success-event (get-in db [:sync :request-handler/data-items request-id :on-success])]
-          (a/metamorphic-event<-params on-success-event server-response)))
-
-(defn get-request-on-sent-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (metamorphic-event)
-  [db [_ request-id]]
-  (get-in db [:sync :request-handler/data-items request-id :on-sent]))
+  [db [_ _ {:keys [on-success]} server-response]]
+  (if on-success (a/metamorphic-event<-params on-success server-response)))
 
 (defn get-request-on-responsed-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-props
+  ;  {:on-responsed (metamorphic-event)(opt)}
   ; @param (*) server-response
   ;
   ; @return (metamorphic-event)
-  [db [_ request-id server-response]]
-  (if-let [on-responsed-event (get-in db [:sync :request-handler/data-items request-id :on-responsed])]
-          (a/metamorphic-event<-params on-responsed-event server-response)))
+  [db [_ _ {:keys [on-responsed]} server-response]]
+  (if on-responsed (a/metamorphic-event<-params on-responsed server-response)))
 
 (defn get-request-on-stalled-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -180,21 +173,11 @@
   ; @param (*) server-response
   ;
   ; @return (metamorphic-event)
-  [db [_ request-id {:keys [on-stalled request-successed?]} server-response]]
-  ; Az {:on-stalled ...} esemény használható az {:on-success ...} esemény alternatívájaként,
-  ; mert hibás teljesítés esetén nem történik meg.
+  [db [_ _ {:keys [on-stalled request-successed?]} server-response]]
+  ; Az {:on-stalled ...} tulajdonságként átadott esemény használható az {:on-success ...}
+  ; tulajdonságként átadott esemény alternatívájaként, mert hibás teljesítés esetén nem történik meg.
   (if (and on-stalled request-successed?)
       (a/metamorphic-event<-params on-stalled server-response)))
-
-(defn get-request-idle-timeout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) request-id
-  ;
-  ; @return (integer)
-  [db [_ request-id]]
-  (get-in db [:sync :request-handler/data-items request-id :idle-timeout]
-             request-handler.config/DEFAULT-IDLE-TIMEOUT))
 
 
 

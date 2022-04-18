@@ -17,6 +17,7 @@
               [x.app-ui.popups.subs]
               [x.app-ui.progress-bar.effects]
               [x.app-ui.progress-bar.subs]
+              [x.app-ui.progress-screen.subs]
               [x.app-ui.sounds.subs]
               [x.app-ui.surface.effects]
               [x.app-ui.surface.subs]
@@ -25,17 +26,19 @@
               [x.app-ui.themes.lifecycles]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
-              [x.app-ui.bubbles.views       :as bubbles.views]
-              [x.app-ui.graphics.views      :as graphics.views]
-              [x.app-ui.interface.subs      :as interface.subs]
-              [x.app-ui.progress-bar.events :as progress-bar.events]
-              [x.app-ui.renderer            :as renderer]
-              [x.app-ui.shield.helpers      :as shield.helpers]
-              [x.app-ui.shield.side-effects :as shield.side-effects]
-              [x.app-ui.sounds.side-effects :as sounds.side-effects]
-              [x.app-ui.structure.views     :as structure.views]
-              [x.app-ui.themes.subs         :as themes.subs]
-              [x.app-ui.popups.views        :as popups.views]))
+              [x.app-ui.bubbles.views          :as bubbles.views]
+              [x.app-ui.graphics.views         :as graphics.views]
+              [x.app-ui.header.views           :as header.views]
+              [x.app-ui.interface.subs         :as interface.subs]
+              [x.app-ui.progress-bar.events    :as progress-bar.events]
+              [x.app-ui.progress-screen.events :as progress-screen.events]
+              [x.app-ui.renderer               :as renderer]
+              [x.app-ui.shield.helpers         :as shield.helpers]
+              [x.app-ui.shield.side-effects    :as shield.side-effects]
+              [x.app-ui.sounds.side-effects    :as sounds.side-effects]
+              [x.app-ui.structure.views        :as structure.views]
+              [x.app-ui.themes.subs            :as themes.subs]
+              [x.app-ui.popups.views           :as popups.views]))
 
 
 
@@ -49,6 +52,9 @@
 (def app-logo          graphics.views/app-logo)
 (def app-title         graphics.views/app-title)
 (def loading-animation graphics.views/loading-animation)
+
+; x.app-ui.header.views
+(def title-sensor header.views/title-sensor)
 
 ; x.app-ui.interface.subs
 (def get-interface          interface.subs/get-interface)
@@ -76,6 +82,10 @@
 (def stop-listening-to-process! progress-bar.events/stop-listening-to-process!)
 (def fake-process!              progress-bar.events/fake-process!)
 (def stop-faking-process!       progress-bar.events/stop-faking-process!)
+
+; x.app-ui.progress-screen.events
+(def lock-screen!   progress-screen.events/lock-screen!)
+(def unlock-screen! progress-screen.events/unlock-screen!)
 
 ; x.app-ui.renderer
 (def element-rendered?      renderer/element-rendered?)

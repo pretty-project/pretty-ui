@@ -161,9 +161,10 @@
   font-size: var( --font-size-xl );
   font-weight: 600;
   line-height: 48px;
-  /* A header komponens {:label ...} paraméterét kötelező megadni, ezért az #x-header-a--label
-   * elem magasságának beállítható, hogy minden esetben 48px legyen.
-   * Pl.: Ha a label paraméter értéke a szerver válaszának megérkezéséig NIL, akkor a {min-height: 48px}
+  /* XXX#4655
+   * Ha a header komponens {:label ...} paramétereként egy üres string típus kap, akkor az elem
+   * magassága ugyanúgy 48px, mint nem üres string típus esetén.
+   * Pl.: Ha a label paraméter értéke a szerver válaszának megérkezéséig "", akkor a {min-height: 48px}
    *      beállítás használatával az #x-header-a--label placeholder elemként funkciónál. */
   min-height: 48px }
 
@@ -171,7 +172,9 @@
   color: var( --color-muted );
   font-size: var( --font-size-xxs );
   font-weight: 500;
-  line-height: 24px }
+  line-height: 24px;
+  /* XXX#4655 */
+  min-height: 24px }
 
 /***** Header A *****/
 

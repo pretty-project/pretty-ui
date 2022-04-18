@@ -5,7 +5,6 @@
 (ns plugins.item-editor.api
     (:require [plugins.item-editor.backup.events]
               [plugins.item-editor.backup.subs]
-              [plugins.item-editor.colors.effects]
               [plugins.item-editor.core.effects]
               [plugins.item-editor.core.events]
               [plugins.item-editor.core.helpers]
@@ -24,7 +23,6 @@
               [plugins.item-editor.update.subs]
               [plugins.item-editor.body.subs    :as body.subs]
               [plugins.item-editor.body.views   :as body.views]
-              [plugins.item-editor.colors.views :as colors.views]
               [plugins.item-editor.core.subs    :as core.subs]
               [plugins.item-editor.footer.views :as footer.views]
               [plugins.item-editor.header.views :as header.views]
@@ -40,17 +38,13 @@
 (def form-changed?   body.subs/form-changed?)
 
 ; plugins.item-editor.body.views
-(def item-label         body.views/item-label)
-(def input-group-header body.views/input-group-header)
-(def description-field  body.views/description-field)
-(def error-body         body.views/error-body)
-(def body               body.views/body)
-
-; plugins.item-editor.colors.views
-(def color-selector colors.views/color-selector)
+(def item-label body.views/item-label)
+(def error-body body.views/error-body)
+(def body       body.views/body)
 
 ; plugins.item-editor.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
+(def get-current-item    core.subs/get-current-item)
 (def editing-item?       core.subs/editing-item?)
 
 ; plugins.item-editor.footer.views

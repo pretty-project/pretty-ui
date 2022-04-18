@@ -127,7 +127,7 @@
   ;    :bold, :extra-bold
   ;    Default: :bold
   ;   :horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
+  ;    :center, :left, :right
   ;    Default: :center
   ;   :hover-color (keyword)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning

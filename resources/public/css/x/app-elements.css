@@ -8,6 +8,7 @@
 /***** Font-size profiles *****/
 /***** Font-weight profiles *****/
 /***** Orientation profiles *****/
+/***** Position profiles *****/
 /***** Size profiles *****/
 /***** Stretch profiles *****/
 /***** Element badge *****/
@@ -70,6 +71,9 @@ body {
 
 /***** Active state and focused state *****/
 
+[data-clickable="true"]:active,
+[data-clickable="true"]:focus,
+
 .x-anchor:active,
 .x-anchor:focus,
 .x-button--body:active,
@@ -84,8 +88,6 @@ button.x-card:focus,
 .x-chip--delete-button:focus,
 .x-clickable:active,
 .x-clickable:focus,
-.x-color-picker--option:active,
-.x-color-picker--option:focus,
 .x-color-stamp:active,
 .x-color-stamp:focus,
 .x-counter--decrease-button:active,
@@ -180,59 +182,7 @@ button.x-card:focus,
 
 /***** User select *****/
 
-.x-field-adornments--button-adornment,
-.x-field-adornments--static-adornment,
-.x-anchor,
-.x-button--icon,
-.x-button--label,
-.x-chip--icon,
-.x-chip--delete-button-icon,
-.x-chip--label,
-.x-chip-group--label,
-.x-chip-group--no-chips-label,
-.x-color-picker--label,
-.x-checkbox--label,
-.x-clickable,
-.x-combo-box--no-options-label,
-.x-counter--label,
-.x-directory--icon,
-.x-directory--label,
-.x-directory--content-size,
-.x-directory--timestamp,
-.x-element--helper,
-.x-element--info-text--button
-.x-expandable--icon,
-.x-expandable--label,
-.x-expandable--expand-icon,
-.x-file--icon,
-.x-file--label,
-.x-file--filesize,
-.x-file--timestamp,
-.x-file--preview-icon,
-.x-file-drop-area--label,
-.x-file-drop-area--icon,
-.x-icon,
-.x-icon-button--icon,
-.x-icon-button--label,
-.x-label--icon,
-.x-label[data-selectable="false"] .x-label--body,
-.x-line-diagram--label,
-.x-menu-bar--menu-item,
-.x-radio-button--label,
-.x-radio-button--option-label,
-.x-select--label,
-.x-select--button-label,
-.x-select--button-icon,
-.x-select--no-options-label,
-.x-select--option,
-.x-switch--label,
-.x-switch--primary-label,
-.x-switch--secondary-label,
-.x-text[data-selectable="false"] .x-text--body,
-.x-text-field--label,
-.x-text-field--placeholder,
-.x-text-field--invalid-message,
-.x-toggle--body {
+.x-element[data-selectable="false"] {
   /* user-select not supperted properly in all browsers */
   -ms-user-select: none;
   -moz-user-select: none;
@@ -248,7 +198,7 @@ button.x-card:focus,
 .x-combo-box--extender-icon,
 .x-checkbox--button::after,
 .x-chip--delete-button-icon,
-.x-color-picker--option::after,
+.x-color-selector--option::after,
 .x-expandable--expand-icon,
 .x-file-drop-area--icon,
 .x-element--info-text--button,
@@ -1137,6 +1087,24 @@ button.x-card:focus,
 
 
 
+/***** Position profiles *****/
+/*** Horizontal position ***/
+
+.x-element[data-horizontal-position="left"] {
+  align-self: flex-start }
+
+.x-element[data-horizontal-position="center"] {
+  align-self: center }
+
+.x-element[data-horizontal-position="right"] {
+  align-self: flex-end }
+
+/*** Horizontal position ***/
+
+/*** Vertical position ***/
+/*** Vertical position ***/
+/***** Position profiles *****/
+
 
 
 /***** Size profiles *****/
@@ -1954,46 +1922,43 @@ button.x-card:focus,
 
 
 
-/***** Clickable *****/
+/***** Color-selector *****/
+/*** Color-selector body ***/
 
-.x-clickable {
-  cursor: pointer;
+.x-color-selector--body {
   display: block }
 
-/***** Clickable *****/
+/*** Color-selector body ***/
 
+/*** Color-selector no colors label ***/
 
-
-/***** Color-picker *****/
-/*** Color-picker label ***/
-
-.x-color-picker--label {
+.x-color-selector--no-colors-label {
+  color: var( --color-muted );
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
+  line-height: 48px }
 
-/*** Color-picker label ***/
+/*** Color-selector no colors label ***/
 
-/*** Color-picker options ***/
+/*** Color-selector options ***/
 
-.x-color-picker--options {
+.x-color-selector--options {
   display: flex;
-  flex-direction: row;
-  grid-gap: 12px }
+  grid-gap: 12px;
+  padding: 0 12px }
 
-/*** Color-picker options ***/
+/*** Color-selector options ***/
 
-/*** Color-picker option ***/
+/*** Color-selector option ***/
 
-.x-color-picker--option[data-collected="true"]::after {
+.x-color-selector--option[data-collected="true"]::after {
   align-items: center;
   background-color: var( --fill-color );
   border-radius: 12px;
   color: var( --color );
   content: 'check';
   display: flex;
-  flex-direction: column;
   font-size: var( --icon-size-xxs );
   font-weight: 600;
   height: 20px;
@@ -2004,13 +1969,13 @@ button.x-card:focus,
   top: 14px;
   width: 20px }
 
-.x-color-picker--option--color {
+.x-color-selector--option--color {
   border-radius: var( --border-radius-m );
   height: 48px;
   width: 48px }
 
-/*** Color-picker option ***/
-/***** Color-picker *****/
+/*** Color-selector option ***/
+/***** Color-selector *****/
 
 
 

@@ -16,9 +16,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
+  ; @param (map) request-response
+  ;  {:filename (string)}
   ; @param (string) server-response-body
   ;  "{...}"
-  (fn [{:keys [db]} [_ request-id server-response-body]]
-      (let [filename (get-in db [:sync :request-handler/data-items request-id :filename])
-            data-url (mixed/to-data-url server-response-body)])))
+  (fn [{:keys [db]} [_ request-id {:keys [filename]} server-response-body]]
+      (let [data-url (mixed/to-data-url server-response-body)])))
           ;[:tools/save-file! ...]

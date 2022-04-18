@@ -23,6 +23,7 @@
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def get-current-item-id   core.subs/get-current-item-id)
 (def get-current-item      core.subs/get-current-item)
 (def export-current-item   core.subs/export-current-item)
 
@@ -48,21 +49,6 @@
   ; @return (boolean)
   [db [_ editor-id]]
   (r plugin-synchronizing? db editor-id :editor))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-current-item-id
-  ; @param (keyword) editor-id
-  ;
-  ; @usage
-  ;  (r item-editor/get-current-item-id db :my-editor)
-  ;
-  ; @return (string)
-  [db [_ editor-id]]
-  (r core.subs/get-current-item-id db editor-id))
 
 
 
@@ -204,6 +190,12 @@
 ; @usage
 ;  [:item-editor/get-meta-item :my-editor :my-item]
 (a/reg-sub :item-editor/get-meta-item get-meta-item)
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/get-current-item-id :my-editor]
+(a/reg-sub :item-editor/get-current-item-id get-current-item-id)
 
 ; @param (keyword) editor-id
 ;

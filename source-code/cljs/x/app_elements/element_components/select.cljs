@@ -60,13 +60,12 @@
   ;
   ; @return (map)
   [select-id {:keys [autoclear? on-popup-closed on-select value-path]}]
-  (let [popup-id (engine/element-id->extended-id select-id :popup)]
-       {:dispatch on-select
-        :dispatch-later [{:ms CLOSE-POPUP-DELAY :dispatch [:ui/close-popup! popup-id]}
-                         (when (boolean autoclear?) ; XXX#0134
-                               {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:elements/clear-input-value! select-id]})
-                         (when (some? on-popup-closed)
-                               {:ms ON-POPUP-CLOSED-DELAY :dispatch on-popup-closed})]}))
+  {:dispatch on-select
+   :dispatch-later [{:ms CLOSE-POPUP-DELAY :dispatch [:ui/close-popup! :elements/select-options]}
+                    (when (boolean autoclear?) ; XXX#0134
+                          {:ms AUTOCLEAR-VALUE-DELAY :dispatch [:elements/clear-input-value! select-id]})
+                    (when (some? on-popup-closed)
+                          {:ms ON-POPUP-CLOSED-DELAY :dispatch on-popup-closed})]})
 
 (defn- select-props->select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -179,16 +178,16 @@
 (defn- select-options-close-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
-  [popup-id _]
+  [options-id _]
   [button {:preset   :close-icon-button
-           :on-click [:ui/close-popup! popup-id]}])
+           :on-click [:ui/close-popup! :elements/select-options]}])
 
 (defn- select-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   [_ {:keys [options-label]}]
   [label {:content options-label
@@ -197,39 +196,39 @@
 (defn- select-options-label-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
-  [popup-id options-props]
+  [options-id options-props]
   [horizontal-polarity ::select-options-label-header
-                       {:middle-content [select-options-label popup-id options-props]}])
+                       {:middle-content [select-options-label options-id options-props]}])
 
 (defn- select-options-cancel-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
-  [popup-id options-props]
+  [options-id options-props]
   [horizontal-polarity ::select-options-cancel-header
-                       {:end-content [select-options-close-button popup-id options-props]}])
+                       {:end-content [select-options-close-button options-id options-props]}])
 
 (defn- select-options-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
-  [popup-id {:keys [options-label user-cancel?] :as options-props}]
-  (cond (some?   options-label) [select-options-label-header  popup-id options-props]
-        (boolean user-cancel?)  [select-options-cancel-header popup-id options-props]))
+  [options-id {:keys [options-label user-cancel?] :as options-props}]
+  (cond (some?   options-label) [select-options-label-header  options-id options-props]
+        (boolean user-cancel?)  [select-options-cancel-header options-id options-props]))
 
 (defn- select-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   ;  {:get-label-f (function)
   ;   :options-id (keyword)}
   ; @param (*) option
-  [popup-id {:keys [get-label-f options-id] :as options-props} option]
+  [options-id {:keys [get-label-f options-id] :as options-props} option]
   (let [option-label (get-label-f option)]
        [:button.x-select--option (engine/selectable-option-attributes options-id options-props option)
                                  [components/content option-label]]))
@@ -237,17 +236,17 @@
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   ;  {:options (vector)}
-  [popup-id {:keys [options] :as options-props}]
-  (letfn [(f [options option] (conj options [select-option popup-id options-props option]))]
+  [options-id {:keys [options] :as options-props}]
+  (letfn [(f [options option] (conj options [select-option options-id options-props option]))]
          (reduce f [:div.x-select--options] options)))
 
 (defn- no-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   ;  {:options (vector)}
   [_ {:keys [no-options-label]}]
@@ -256,21 +255,21 @@
 (defn- select-options-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   ;  {:options (vector)}
-  [popup-id {:keys [options] :as options-props}]
+  [options-id {:keys [options] :as options-props}]
   (if (vector/nonempty? options)
-      [select-options   popup-id options-props]
-      [no-options-label popup-id options-props]))
+      [select-options   options-id options-props]
+      [no-options-label options-id options-props]))
 
 (defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
+  ; @param (keyword) options-id
   ; @param (map) options-props
   ;  {:options-id (keyword)}
-  [popup-id {:keys [options-id] :as options-props}]
+  [options-id {:keys [options-id] :as options-props}]
   [engine/stated-element options-id
                          {:element-props options-props
                           :render-f      #'select-options-structure
@@ -419,6 +418,12 @@
 
 
 
+; TODO
+; A color selector elemhez hasonloan a kirenderelt popupnak nincs szüksége header elemre!
+; A inicializálás ráér a popup kirenderelésekor
+
+
+
 ;; -- Lifecycle events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -442,9 +447,9 @@
   ; @param (map) options-props
   [a/event-vector<-id]
   (fn [_ [_ select-id options-props]]
-      (let [options-id    (engine/element-id->extended-id select-id :popup)
+      (let [options-id    (engine/element-id->extended-id select-id :options)
             options-props (options-props-prototype        select-id options-props)]
-           [:ui/add-popup! options-id
+           [:ui/add-popup! :elements/select-options
                            {:body   [select-options-body options-id options-props]
                             :header (if (options-props->render-popup-header? options-props)
                                         [select-options-header options-id options-props])
