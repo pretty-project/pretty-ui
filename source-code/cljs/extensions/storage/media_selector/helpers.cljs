@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-selector.helpers
-    (:require [mid-fruits.candy :refer [return]]
-              [x.app-core.api   :as a]))
+    (:require [x.app-core.api :as a]))
 
 
 
@@ -15,5 +14,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [media-item]
   (if-let [file-selected? @(a/subscribe [:storage.media-selector/file-selected? media-item])]
-          (return :check_circle_outline)
-          (return :radio_button_unchecked)))
+          :check_circle_outline :radio_button_unchecked))

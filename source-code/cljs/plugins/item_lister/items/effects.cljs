@@ -18,19 +18,31 @@
   ; @param (keyword) lister-id
   ; @param (integer) item-dex
   ; @param (map) item-props
-  ;  {:on-click (metamorphic-event)
+  ;  {:memory-mode? (boolean)(opt)
+  ;   :on-click (metamorphic-event)
   ;   :on-select (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [:item-lister/item-clicked :my-lister 0 {...}]
-  (fn [{:keys [db]} [_ lister-id item-dex {:keys [on-click on-select]}]]
+  (fn [{:keys [db]} [_ lister-id item-dex {:keys [memory-mode? on-click on-select]}]]
       ; A) ...
       ;
       ; B) ...
-      (if (r items.subs/toggle-item-selection? db lister-id item-dex)
-          ; A)
-          {:db (r items.events/toggle-item-selection! db lister-id item-dex)
-           :dispatch on-select}
-          ; B)
-          {:db (r core.events/set-memory-mode! db lister-id)
-           :dispatch on-click})))
+      ;    TEMP
+      ;    Az egyes listaelemekre való kattintáskor az item-lister plugin {:memory-mode? true}
+      ;    állapotba lép és megjegyzi a lista keresési és rendezési beállításait, így a listaelemekre
+      ;    történő kattintás következményeként elhagyott item-lister a következő betöltődéskor
+      ;    az előző beállításokkal fog elindulni.
+      ;    TEMP
+      ;
+      ; C) ...
+      (cond ; A)
+            (r items.subs/toggle-item-selection? db lister-id item-dex)
+            {:db (r items.events/toggle-item-selection! db lister-id item-dex)
+             :dispatch on-select}
+            ; B)
+            memory-mode?
+            {:db (r core.events/set-memory-mode! db lister-id)
+             :dispatch on-click}
+            ; C)
+            :else on-click)))

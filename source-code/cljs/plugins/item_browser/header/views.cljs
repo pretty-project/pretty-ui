@@ -55,7 +55,7 @@
                                                [go-home-icon-button                   browser-id]
                                                [item-lister/new-item-block            browser-id]
                                                [item-lister/sort-items-block          browser-id]
-                                               [item-lister/toggle-actions-mode-block browser-id]
+                                               [item-lister/set-actions-mode-block    browser-id]
                                                [item-lister/toggle-reorder-mode-block browser-id]]
     [:div.item-lister--header--menu-item-group [item-lister/search-block              browser-id]]])
 

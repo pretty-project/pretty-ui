@@ -26,7 +26,7 @@
        [elements/icon-button ::quit-search-mode-icon-button
                              {:disabled? lister-disabled?
                               :keypress  {:key-code 27}
-                              :on-click  [:item-lister/toggle-search-mode! lister-id]
+                              :on-click  [:item-lister/quit-search-mode! lister-id]
                               :preset    :close}]))
 
 
@@ -55,16 +55,16 @@
                                :on-type-ended [:item-lister/search-items!          lister-id]
                                :value-path    [:plugins :plugin-handler/meta-items lister-id :search-term]}]))
 
-(defn toggle-search-mode-icon-button
+(defn set-search-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
   (let [error-mode?      @(a/subscribe [:item-lister/get-meta-item    lister-id :error-mode?])
         lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
-       [elements/icon-button ::toggle-search-mode-icon-button
+       [elements/icon-button ::set-search-mode-icon-button
                              {:disabled? (or error-mode? lister-disabled?)
-                              :on-click  [:item-lister/toggle-search-mode! lister-id]
+                              :on-click  [:item-lister/set-search-mode! lister-id]
                               :preset    :search}]))
 
 (defn search-block
@@ -74,8 +74,8 @@
   ;  [item-lister/search-block :my-lister]
   [lister-id]
   (let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-       (if viewport-small? [toggle-search-mode-icon-button lister-id]
-                           [search-items-field             lister-id])))
+       (if viewport-small? [set-search-mode-icon-button lister-id]
+                           [search-items-field          lister-id])))
 
 
 
@@ -91,7 +91,7 @@
        [elements/icon-button ::quit-actions-mode-icon-button
                              {:disabled? lister-disabled?
                               :keypress  {:key-code 27}
-                              :on-click  [:item-lister/toggle-actions-mode! lister-id]
+                              :on-click  [:item-lister/quit-actions-mode! lister-id]
                               :preset    :close}]))
 
 
@@ -359,7 +359,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-actions-mode-icon-button
+(defn set-actions-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -367,13 +367,13 @@
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-      [elements/icon-button ::toggle-actions-mode-icon-button
+      [elements/icon-button ::set-actions-mode-icon-button
                             {:color     :default
                              :disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                             :on-click  [:item-lister/toggle-actions-mode! lister-id]
+                             :on-click  [:item-lister/set-actions-mode! lister-id]
                              :preset    :select}]))
 
-(defn toggle-actions-mode-button
+(defn set-actions-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -381,25 +381,25 @@
   (let [error-mode?       @(a/subscribe [:item-lister/get-meta-item     lister-id :error-mode?])
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
-      [elements/button ::toggle-actions-mode-button
+      [elements/button ::set-actions-mode-button
                        {:color       :default
                         :disabled?   (or error-mode? lister-disabled? no-items-to-show?)
                         :font-size   :xs
                         :hover-color :highlight
                         :indent      {:horizontal :xxs :left :xxs}
-                        :on-click    [:item-lister/toggle-actions-mode! lister-id]
+                        :on-click    [:item-lister/set-actions-mode! lister-id]
                         :preset      :select}]))
 
-(defn toggle-actions-mode-block
+(defn set-actions-mode-block
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [item-lister/toggle-actions-mode-block :my-lister]
+  ;  [item-lister/set-actions-mode-block :my-lister]
   [lister-id]
   (if-let [items-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
           (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-                  [toggle-actions-mode-icon-button lister-id]
-                  [toggle-actions-mode-button      lister-id])))
+                  [set-actions-mode-icon-button lister-id]
+                  [set-actions-mode-button      lister-id])))
 
 
 
@@ -547,7 +547,7 @@
   [:div.item-lister--header--menu-bar
     [:div.item-lister--header--menu-item-group [new-item-block            lister-id]
                                                [sort-items-block          lister-id]
-                                               [toggle-actions-mode-block lister-id]
+                                               [set-actions-mode-block    lister-id]
                                                [toggle-reorder-mode-block lister-id]]
     [:div.item-lister--header--menu-item-group [search-block              lister-id]]])
 
@@ -587,18 +587,25 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; BUG#0041
-  ; Az #item-lister--header-placeholder elem biztosítja a header magasságát,
-  ; a header komponens component-did-mount életciklusának megtörténésig.
-  ; Az #item-lister--header-placeholder elem használata nélkül a header komponens alatt
-  ; elhelyezett elemek (pl. vízszintes elválasztó vonal) egy rövid ideig a header komponens
-  ; helyén (és nem alatta) jelennének meg.
-  (if @(a/subscribe [:item-lister/header-did-mount? lister-id])
-       [:div#item-lister--header-structure [menu-mode-header    lister-id]
-                                           [reorder-mode-header lister-id]
-                                           [actions-mode-header lister-id]
-                                           [search-mode-header  lister-id]]
-       [:div#item-lister--header-placeholder]))
+  ; - BUG#0041
+  ;   Az #item-lister--header-placeholder elem biztosítja a header komponens magasságát,
+  ;   annak tartalmának megjelenéséig.
+  ;   Az #item-lister--header-placeholder elem használata nélkül a header komponens alatt
+  ;   elhelyezett elemek (pl. vízszintes elválasztó vonal, body komponens, ...) helyzete
+  ;   megváltozna a header komponens tartalmának megjelenésekor.
+  ;
+  ; - XXX#7080
+  ;   A header komponens tartalma az x4.7.0 verzióig az [:item-lister/header-props-stored? ...]
+  ;   feliratkozás kimenetétől függően jelent meg.
+  ;   Az [:item-lister/items-received? ...] feliratkozás használatával az item-lister plugin
+  ;   betöltésekor a header komponens tartalma egy időben jelenik meg, a letöltésjelző eltűnésével
+  ;   és a listaelemek megjelenésével.
+  (if-let [items-received? @(a/subscribe [:item-lister/items-received? lister-id])]
+          [:div.item-lister--header-structure [menu-mode-header    lister-id]
+                                              [reorder-mode-header lister-id]
+                                              [actions-mode-header lister-id]
+                                              [search-mode-header  lister-id]]))
+         ;[:div.item-lister--header-placeholder]
 
 (defn header
   ; @param (keyword) lister-id

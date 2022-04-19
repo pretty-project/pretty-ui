@@ -29,7 +29,8 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (if @(a/subscribe [:item-editor/header-did-mount? editor-id])
+  ; XXX#7080
+  (if @(a/subscribe [:item-editor/data-received? editor-id])
        [header-menu-items editor-id]))
 
 (defn header

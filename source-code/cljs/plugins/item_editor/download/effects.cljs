@@ -37,7 +37,12 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
-      ; helyettesíti, amikor nem szükséges adatokat letölteni.
+      ; - Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
+      ;   helyettesíti, amikor nem szükséges adatokat letölteni.
+      ;
+      ; - Ha az item-editor plugin indulásakor az [:item-editor/load-item! ...] esemény történik
+      ;   meg az [:item-editor/request-item! ...] esemény helyett, akkor is szükséges átléptetni
+      ;   a plugint a {:data-received? true} állapotba, miután a progress-bar elemen szimulált
+      ;   folyamat befejeződött!
       {:db       (r download.events/load-item! db editor-id)
-       :dispatch [:ui/simulate-process!]}))
+       :dispatch [:ui/simulate-process! {:on-process-ended [:item-editor/data-received editor-id]}]}))

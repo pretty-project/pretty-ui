@@ -165,12 +165,28 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (cond @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
+  ; A) ...
+  ;
+  ; B) ...
+  ;
+  ; C) ...
+  ;
+  ; D) XXX#0506
+  ;    A downloading-item komponens már akkor megjelenik, amikor még az [:item-editor/body-props-stored? ...]
+  ;    feliratkozás visszatérési értéke FALSE. Így az item-editor plugin betöltésekor a body komponens
+  ;    React-fába csatolódása és az [:item-editor/body-props-stored? ...] feliratkozás visszatérési értékének
+  ;    TRUE értére változása közötti pillanatban is látható.
+  (cond ; A)
+        @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
          [error-body editor-id]
-        @(a/subscribe [:item-editor/body-did-mount? editor-id])
-         (if-let [data-received? @(a/subscribe [:item-editor/get-meta-item editor-id :data-received?])]
+        ; B)
+        @(a/subscribe [:item-editor/body-props-stored? editor-id])
+         (if-let [data-received? @(a/subscribe [:item-editor/data-received? editor-id])]
                  [form-element     editor-id]
-                 [downloading-item editor-id])))
+                 [downloading-item editor-id])
+        ; C)
+        :body-props-not-stored-yet
+        [downloading-item editor-id]))
 
 (defn body
   ; @param (keyword) editor-id

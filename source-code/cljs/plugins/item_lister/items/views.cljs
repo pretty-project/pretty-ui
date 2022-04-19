@@ -140,6 +140,8 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;   :label (metamorphic-content)
+  ;   :memory-mode? (boolean)(opt)
+  ;    Default: false
   ;   :on-click (metamorphic-event)(opt)
   ;   :on-right-click (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(opt)

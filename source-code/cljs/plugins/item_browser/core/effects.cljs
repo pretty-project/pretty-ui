@@ -34,7 +34,7 @@
       ;
       ; - Az [:item-browser/handle-route! ...] esemény az [:item-browser/browse-item! ...] eseménytől
       ;   függetlenül megtörténik és ...
-      ;   Pl.: a felhasználó a böngésző "Vissza" gombjára kattint az item-browser plugin hanszálata
+      ;   Pl.: Ha a felhasználó a böngésző "Vissza" gombjára kattint az item-browser plugin hanszálata
       ;        közben.
       ;
       ; A) ...

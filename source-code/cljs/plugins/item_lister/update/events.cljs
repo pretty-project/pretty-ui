@@ -32,7 +32,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (as-> db % (r core.events/quit-select-mode!  % lister-id)
+  (as-> db % (r core.events/quit-actions-mode! % lister-id)
              (r items.events/enable-all-items! % lister-id)))
 
 
@@ -47,4 +47,4 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (r core.events/quit-select-mode! db lister-id))
+  (r core.events/quit-actions-mode! db lister-id))

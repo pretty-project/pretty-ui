@@ -95,7 +95,7 @@
       ;
       ; A) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
       ;    a React-fába van csatolva, ...
-      ;    ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ;    ... kilépteti a plugint a {:actions-mode? true} állapotból.
       ;    ... engedélyezi az ideiglenesen letiltott elemeket.
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;    ... megjelenít egy értesítést.
@@ -232,7 +232,7 @@
       ;
       ; A) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
       ;    a React-fába van csatolva, ...
-      ;    ... kilépteti a plugint a {:select-mode? true} állapotból.
+      ;    ... kilépteti a plugint a {:actions-mode? true} állapotból.
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;    ... megjelenít egy értesítést.
       ;

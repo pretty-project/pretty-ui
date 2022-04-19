@@ -2,11 +2,11 @@
 /***** Item-lister *****/
 /*** Item-lister header ***/
 
-#item-lister--header-structure {
+.item-lister--header-structure {
    height: 48px;
    width: 100% }
 
-#item-lister--header-placeholder {
+.item-lister--header-placeholder {
   height: 48px }
 
  /* Az .item-lister--header--menu-bar osztályú elemek osztályként és nem egyedi elemként

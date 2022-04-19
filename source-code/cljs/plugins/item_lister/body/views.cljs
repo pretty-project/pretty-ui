@@ -19,35 +19,17 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-items-label
+(defn downloading-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; - Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
-  ;   a downloading-items-label feliratot, hogy ne a body komponens megjelenése után
-  ;   villanjon fel!
-  ;
-  ; - Ha még nincs letöltve az összes elem, akkor görgetéskor a lista aljához érve várható
-  ;   a downloading-items-label felirat megjelenése, ami a lista magasságának változásával járna.
-  ;   Ezért, amíg nincs letöltve az összes elem addig a downloading-items-label felirat magassága
-  ;   állandó kell legyen!
-  ;   Amíg nincs letöltve az összes elem de a downloading-items-label felirat éppen nincs megjelenítve,
-  ;   addig tartalom nélküli placeholder elemként biztosítja, hogy a felirat megjelenésekor
-  ;   és eltűnésekor ne változzon a lista magassága.
+  ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
+  ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
+  ; villanjon fel!
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
-        downloading-items?    @(a/subscribe [:item-lister/downloading-items?    lister-id])
         items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
-       (if-not (and all-items-downloaded? items-received?) ; XXX#0499
-               [elements/label ::downloading-items-label
-                                        {:color       :highlight
-                                         :font-size   :xs
-                                         :font-weight :bold
-                                         :content (if (or downloading-items? (nor downloading-items? items-received?))
-                                                      :downloading-items...)}])
-
        ; TEMP
-       ; A downloading-items-label komponenst az indicators komponensben nem kell column elemben megjeleníteni!
        (if-not (and all-items-downloaded? items-received?) ; XXX#0499
                [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px"}}
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
@@ -78,18 +60,14 @@
                             :font-size   :xs
                             :font-weight :bold}])))
 
-(defn indicators
+(defn no-items-to-show
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; A column komponens {:stretch-orientation :vertical} alapbeállítással használva popup elemen
-  ; megejelenített item-lister esetén a {height: 100%} css tulajdonság miatt örökölte a szülő
-  ; elem teljes magasságát.
-  [elements/column ::indicators
-                   {:content [:<> [no-items-to-show-label  lister-id]
-                                  [downloading-items-label lister-id]]
-                    :stretch-orientation :none}])
+  [elements/row ::no-items-to-show
+                {:content [no-items-to-show-label lister-id]
+                 :horizontal-align :center}])
 
 
 
@@ -165,14 +143,32 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (cond @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
+  ; A) ...
+  ;
+  ; B) ...
+  ;
+  ; C) ...
+  ;
+  ; D) XXX#0506
+  ;    A downloading-items komponens már akkor megjelenik, amikor még az [:item-lister/body-props-stored? ...]
+  ;    feliratkozás visszatérési értéke FALSE. Így az item-lister plugin betöltésekor a body komponens
+  ;    React-fába csatolódása és az [:item-lister/body-props-stored? ...] feliratkozás visszatérési értékének
+  ;    TRUE értére változása közötti pillanatban is látható.
+  (cond ; A)
+        @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
          [error-body lister-id]
+        ; B)
         ;@(a/subscribe [:environment/browser-offline?])
         ; [offline-body lister-id]
-        @(a/subscribe [:item-lister/body-did-mount? lister-id])
+        ; C)
+        @(a/subscribe [:item-lister/body-props-stored? lister-id])
          [:div.item-lister--body--structure [item-list             lister-id]
                                             [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-                                            [indicators            lister-id]]))
+                                            [no-items-to-show      lister-id]
+                                            [downloading-items     lister-id]]
+        ; D)
+        :body-props-not-stored-yet
+        [downloading-items lister-id]))
 
 (defn body
   ; @param (keyword) lister-id

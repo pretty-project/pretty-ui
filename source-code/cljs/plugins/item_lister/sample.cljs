@@ -131,12 +131,12 @@
 
 ; - A header komponens számára átadott {:menu-element #'...} tulajdonság beállításával lehetséges
 ;   egyedi menüt használni.
-; - Az item-lister plugin [:item-lister/toggle-*-mode! ...] események használatával
+; - Az item-lister plugin [:item-lister/set-*-mode! ...] események használatával
 ;  tudsz a különbözű menü módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
 (defn my-menu-element
   [lister-id]
-  [elements/row {:content [item-lister/add-new-item-button  lister-id]
-                          [item-lister/toggle-select-button lister-id]}])
+  [elements/row {:content [item-lister/new-item-block lister-id]
+                          [item-lister/search-block   lister-id]}])
 
 (defn my-header-with-my-menu
   []

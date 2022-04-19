@@ -44,11 +44,8 @@
   ;
   ; @return (boolean)
   [db [_ popup-id]]
-  (let [visible-popup-order (r renderer/get-visible-element-order db :popups)]
-       (if (vector/min? visible-popup-order 2)
-           (= popup-id (last visible-popup-order))
-           (or (r renderer/any-element-rendered? db :surface)
-               (r header.subs/render-header?     db)))))
+  (or (r renderer/any-element-rendered? db :surface)
+      (r header.subs/render-header?     db)))
 
 
 

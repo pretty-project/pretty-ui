@@ -233,7 +233,8 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (if @(a/subscribe [:item-editor/footer-did-mount? editor-id])
+  ; XXX#7080
+  (if @(a/subscribe [:item-editor/data-received? editor-id])
        (if-let [menu-element @(a/subscribe [:item-editor/get-footer-prop editor-id :menu-element])]
                [menu-element     editor-id]
                [menu-mode-footer editor-id])))

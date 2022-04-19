@@ -43,7 +43,7 @@
   ;   veszi a NIL és a különböző üres típusok közötti különbséget!
   ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
   ;        üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
-  (boolean (if-let [data-received? (r core.subs/get-meta-item db editor-id :data-received?)]
+  (boolean (if-let [data-received? (r core.subs/data-received? db editor-id)]
                    (let [current-item-id (r core.subs/get-current-item-id db editor-id)
                          current-item    (r core.subs/get-current-item    db editor-id)
                          backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]

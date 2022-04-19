@@ -22,26 +22,23 @@
   ; @usage
   ;  [:item-editor/edit-item! :my-editor "my-item"]
   (fn [{:keys [db]} [_ editor-id item-id]]
-      ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal, ...
       ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:route-template "..."} tulajdonságot)
       ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;    Ha a body komponens már a React-fába van csatolva, akkor az [:item-editor/handle-route! ...]
+      ;    esemény feladata, hogy meghívja az [:item-editor/request-item ...] eseményt, mivel a body
+      ;    komponens :component-did-mount életciklusa már nem fog megtörténni, ami elindítaná az elem
+      ;    letöltését.
       ;
-      ; B) Ha az item-editor plugin NEM rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... eltárolja a paraméterként kapott item-id azonosítót, mert az útvonal használatának hiányában
+      ; B) Ha az item-editor plugin NEM rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal, ...
+      ;    ... akkor eltárolja a paraméterként kapott item-id azonosítót, mert az útvonal használatának hiányában
       ;        az [:item-editor/handle-route! ...] esemény nem történik meg és nem tárolja el az útvonalból
       ;        származtatott item-id azonosítót.
-      ;
-      ; A+B) Mindkét esetben ha a body komponens már a React-fába van csatolva, akkor meghívja
-      ;      az [:item-editor/request-item ...] eseményt.
-      ;      Pl.: Egy elem szerkesztése közben az elem duplikálása után a "Másolat szerkesztése" gombra kattintva
-      ;           megtörténik az [:item-editor/edit-item! ...] esemény, de a body komponens már a React-fába van
-      ;           csatolva, ezért a :component-did-mount esemény már nem fog megtörténni, ami elindítaná az elem
-      ;           letöltését, ezért szükséges a letöltést ebben az eseményben elindítani!
+      ;     Ha a body komponens már a React-fába van csatolva, akkor meghívja az [:item-editor/request-item ...]
+      ;     eseményt, mivel a body komponens :component-did-mount életciklusa már nem fog megtörténni ...
       (if-let [item-route (r routes.subs/get-item-route db editor-id item-id)]
               ; A)
-              {:dispatch    [:router/go-to! item-route]
-               :dispatch-if [(r mount.subs/body-did-mount? db editor-id)
-                             [:item-editor/request-item! editor-id]]}
+              {:dispatch [:router/go-to! item-route]}
               ; B)
               {:db          (r core.events/store-item-id! db editor-id item-id)
                :dispatch-if [(r mount.subs/body-did-mount? db editor-id)

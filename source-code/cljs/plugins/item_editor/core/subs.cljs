@@ -55,6 +55,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn data-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [db [_ editor-id]]
+  (r get-meta-item db editor-id :data-received?))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn editing-item?
   ; @param (keyword) editor-id
   ; @param (string) item-id
@@ -175,7 +187,7 @@
   ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy a szerkesztő
   ; {:disabled? true} állapotban legyen, amíg NEM kezdődött még el az adatok letöltése!
   (boolean (if-let [download-data? (r download-data? db editor-id)]
-                   (let [data-received?        (r get-meta-item         db editor-id :data-received?)
+                   (let [data-received?        (r data-received?        db editor-id)
                          editor-synchronizing? (r editor-synchronizing? db editor-id)]
                         (or editor-synchronizing? (not data-received?))))))
 
@@ -190,6 +202,12 @@
 ; @usage
 ;  [:item-editor/get-meta-item :my-editor :my-item]
 (a/reg-sub :item-editor/get-meta-item get-meta-item)
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/data-received? :my-editor]
+(a/reg-sub :item-editor/data-received? data-received?)
 
 ; @param (keyword) editor-id
 ;

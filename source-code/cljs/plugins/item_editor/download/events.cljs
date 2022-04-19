@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [plugins.item-editor.backup.events :as backup.events]
+    (:require [mid-fruits.candy                  :refer [return]]
+              [plugins.item-editor.backup.events :as backup.events]
               [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
               [plugins.item-editor.mount.subs    :as mount.subs]
@@ -94,19 +95,17 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; Az item-editor plugin indulásakor ha az [:item-editor/load-item! ...] esemény történik
-  ; meg az [:item-editor/request-item! ...] esemény helyett, akkor is szükséges átléptetni
-  ; a plugint a {:data-received? true} állapotba ezért a load-item! függvény is alkalmazza
-  ; a data-received függvényt.
   (if (r core.subs/get-meta-item db editor-id :recovery-mode?)
-      (as-> db % (r backup.events/recover-item! % editor-id)
-                 (r data-received               % editor-id))
-      (as-> db % (r data-received               % editor-id))))
+      (r backup.events/recover-item! db editor-id)
+      (return db)))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :item-editor/data-received data-received)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-editor/receive-item! receive-item!)
