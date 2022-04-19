@@ -31,6 +31,32 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- clients-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [items-received? @(a/subscribe [:item-lister/items-received? :clients.client-lister])]
+          [:<> [ui/title-sensor {:title :clients}]
+               [elements/label ::clients-label
+                               {:content     :clients
+                                :font-size   :xl
+                                :font-weight :extra-bold
+                                :indent      {:top :xxl}}]]))
+
+(defn- clients-items-info-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [items-received? @(a/subscribe [:item-lister/items-received? :clients.client-lister])]
+          (let [items-info @(a/subscribe [:item-lister/get-items-info :clients.client-lister])]
+               [elements/label ::clients-items-info-label
+                               {:color     :muted
+                                :content   items-info
+                                :font-size :xxs}])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -43,28 +69,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [:<> [ui/title-sensor {:title :clients}]
-       [elements/label {:content     :clients
-                        :font-size   :xl
-                        :font-weight :extra-bold
-                        :indent      {:top :xxl}}]])
-
-(defn- body-description
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [description @(a/subscribe [:item-lister/get-description :clients.client-lister])]
-       [elements/label {:color     :muted
-                        :content   description
-                        :font-size :xxs}]))
-
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [body-label]
-       [body-description]
+  [:<> [clients-label]
+       [clients-items-info-label]
+       [elements/horizontal-separator {:size :xxl}]
        [item-lister/body :clients.client-lister
                          {:items-path   [:clients :client-lister/downloaded-items]
                           :list-element #'client-item

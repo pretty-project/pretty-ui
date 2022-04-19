@@ -16,9 +16,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.subs
-(def get-description      plugins.item-lister.core.subs/get-description)
+(def get-items-info       plugins.item-lister.core.subs/get-items-info)
 (def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
+(def items-received?      plugins.item-lister.core.subs/items-received?)
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
@@ -153,6 +154,10 @@
 ;  [:item-browser/get-current-item-label :my-browser]
 (a/reg-sub :item-browser/get-current-item-label get-current-item-label)
 
+; @usage
+;  [:item-browser/items-received? :my-browser]
+(a/reg-sub :item-browser/items-received? items-received?)
+
 ; @param (keyword) browser-id
 ;
 ; @usage
@@ -168,5 +173,5 @@
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-description :my-browser]
-(a/reg-sub :item-browser/get-description get-description)
+;  [:item-browser/get-items-info :my-browser]
+(a/reg-sub :item-browser/get-items-info get-items-info)

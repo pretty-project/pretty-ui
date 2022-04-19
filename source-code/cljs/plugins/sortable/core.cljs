@@ -682,7 +682,7 @@
   (fn [{:keys [db]} [_ sortable-id event]]
       (if (r sortable-item-order-changed? db sortable-id event)
           ; If sortable-item-order changed ...
-          {:db (r update-sortable-item-order! db sortable-id event)
+          {:db         (r update-sortable-item-order! db sortable-id event)
            :dispatch-n [(r get-sortable-prop db sortable-id :on-order-change)
                         (r get-sortable-prop db sortable-id :on-drag-end)]}
           ; If sortable-item-order unchanged ...

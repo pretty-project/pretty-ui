@@ -28,6 +28,6 @@
   ;  [:item-editor/init-editor! :my-editor {...}]
   (fn [{:keys [db]} [_ editor-id {:keys [route-template] :as editor-props}]]
       (let [editor-props (core.prototypes/editor-props-prototype editor-id editor-props)]
-           {:db (r core.events/init-editor! db editor-id editor-props)
+           {:db         (r core.events/init-editor! db editor-id editor-props)
             :dispatch-n [[:item-editor/reg-transfer-editor-props! editor-id editor-props]
                          (if route-template [:item-editor/add-extended-route! editor-id editor-props])]})))

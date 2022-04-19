@@ -970,7 +970,7 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
-      {:db (r update-element-props! db renderer-id element-id element-props)
+      {:db       (r update-element-props! db renderer-id element-id element-props)
        :dispatch [:ui/rendering-ended renderer-id]}))
 
 (a/reg-event-fx
@@ -1022,8 +1022,8 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       (if (r render-element-now? db renderer-id element-id)
-          {:db (as-> db % (r reserve-renderer!  % renderer-id)
-                          (r update-render-log! % renderer-id element-id :render-requested-at))
+          {:db       (as-> db % (r reserve-renderer!  % renderer-id)
+                                (r update-render-log! % renderer-id element-id :render-requested-at))
            :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}
           {:dispatch [:ui/render-element-later!  renderer-id element-id element-props]})))
 
@@ -1034,9 +1034,9 @@
   ; @param (keyword) renderer-id
   (fn [{:keys [db]} [_ renderer-id]]
       (if-let [[element-id element-props] (r get-next-rendering db renderer-id)]
-              {:db (r trim-rendering-queue! db renderer-id)
-               :dispatch-later
-               [{:ms RENDER-DELAY-OFFSET :dispatch [:ui/request-rendering-element! renderer-id element-id element-props]}]})))
+              {:db             (r trim-rendering-queue! db renderer-id)
+               :dispatch-later [{:ms       RENDER-DELAY-OFFSET
+                                 :dispatch [:ui/request-rendering-element! renderer-id element-id element-props]}]})))
 
 (a/reg-event-fx
   :ui/destroy-element-animated!

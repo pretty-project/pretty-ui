@@ -38,9 +38,39 @@
   ;
   ; @return (integer)
   [db [_ lister-id item-id]]
+  ; A get-item-dex függvény visszatérési értéke az item-id paraméterként átadott azonosítójú elem indexe.
   (letfn [(f [item-dex {:keys [id]}] (if (= id item-id) item-dex))]
          (let [downloaded-items (r core.subs/get-downloaded-items db lister-id)]
               (some-indexed f downloaded-items))))
+
+(defn get-item-dexes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (string) item-ids
+  ;
+  ; @return (integers in vector)
+  [db [_ lister-id item-ids]]
+  ; A get-item-dexes függvény visszatérési értéke az item-ids paraméterként átadott vektorban felsorolt
+  ; azonosítójú elemek indexei egy vektorban felsorolva.
+  (let [downloaded-items (r core.subs/get-downloaded-items db lister-id)]
+       (letfn [(f [item-dexes item-ids dex]
+                  (let [item-id (get-in downloaded-items [dex :id])]
+                       (cond ; Ha a vizsgált index magasabb, mint az utolsó listaelem indexe, ...
+                             (= dex (count downloaded-items))
+                             ; ... akkor a vizsgálat a lista végéhez ért.
+                             (return item-dexes)
+                             ; Ha a vizsgált indexű elem azonosítója szerepel az item-ids vektorban, ...
+                             (vector/contains-item? item-ids item-id)
+                             ; ... akkor az item-dexes vektorhoz adja a vizsgált indexet,
+                             ;     eltávolítja az elem azonosítóját az item-ids vektorból és folytaja a keresést.
+                             (f (conj item-dexes dex)
+                                (vector/remove-item item-ids item-id)
+                                (inc dex))
+                             ; Ha a vizsgált indexű elem azonosítója NEM szerepel az item-ids vektorban, ...
+                             ; ... akkor folytaja a keresést.
+                             :else (f item-dexes item-ids (inc dex)))))]
+              (f [] item-ids 0))))
 
 
 
@@ -101,6 +131,8 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id]]
+  ; A get-selected-item-ids függvény visszatérési értéke a kijelölt listaelemek azonosítói egy
+  ; vektorban felsorolva.
   (let [items-path     (r mount.subs/get-body-prop db lister-id :items-path)
         selected-items (r core.subs/get-meta-item  db lister-id :selected-items)]
        (letfn [(f [result item-dex]
@@ -171,12 +203,15 @@
   ; @usage
   ;  (r item-lister/toggle-item-selection? db :my-lister 42)
   [db [_ lister-id item-dex]]
-  ; Az elemre kattintva az elem hozzáadódik a kijelölt elemek listájához, ha ...
-  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva.
-  ; ... és/vagy az item-lister plugin {:select-mode? true} állapotban van.
-  ; ...
-  (and (or (r environment/key-pressed? db 16)
-           (r core.subs/get-meta-item  db lister-id :select-mode?))
+  ; A elemre kattintva az elem hozzáadódik a kijelölt elemek listájához, ha ...
+  ; ... az item-lister plugin {:select-mode? true} állapotban van.
+  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva, és a header
+  ;     komponens megkapja az {:item-actions [...]} paramétert.
+  (and (or (r core.subs/get-meta-item  db lister-id :select-mode?)
+           ; B)
+           (and (r environment/key-pressed? db 16)
+                (let [item-actions (r mount.subs/get-header-prop db lister-id :item-actions)]
+                     (vector/nonempty? item-actions))))
        (not (r core.subs/lister-disabled? db lister-id))))
 
 

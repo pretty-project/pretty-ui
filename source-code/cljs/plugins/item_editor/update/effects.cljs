@@ -83,7 +83,7 @@
       ;   pontatlan visszaálltást okozhat!
       (let [query        (r update.queries/get-save-item-query          db editor-id)
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]
-           {:db (r update.events/save-item! db editor-id)
+           {:db       (r update.events/save-item! db editor-id)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
                                          {:on-success [:item-editor/item-saved       editor-id]
                                           :on-failure [:item-editor/save-item-failed editor-id]
@@ -153,7 +153,7 @@
   (fn [{:keys [db]} [_ editor-id]]
       (let [query        (r update.queries/get-delete-item-query          db editor-id)
             validator-f #(r update.validators/delete-item-response-valid? db editor-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
                                          {:on-success [:item-editor/item-deleted       editor-id]
                                           :on-failure [:item-editor/delete-item-failed editor-id]
@@ -176,7 +176,7 @@
       ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:db (r update.events/item-deleted db editor-id)
+      {:db         (r update.events/item-deleted db editor-id)
        :dispatch-n [[:item-editor/render-item-deleted-dialog! editor-id]
                     (let [item-id    (r update.subs/get-deleted-item-id   db editor-id server-response)
                           base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
@@ -223,7 +223,7 @@
   (fn [{:keys [db]} [_ editor-id item-id]]
       (let [query        (r update.queries/get-undo-delete-item-query          db editor-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db editor-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
                                          {:on-success [:item-editor/delete-item-undid       editor-id item-id]
                                           :on-failure [:item-editor/undo-delete-item-failed editor-id]
@@ -245,7 +245,7 @@
       ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin NEM rendelkezik
       ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:db (r core.events/set-recovery-mode! db editor-id)
+      {:db         (r core.events/set-recovery-mode! db editor-id)
        :dispatch-n [(if-let [item-route (r routes.subs/get-item-route db editor-id item-id)]
                             ; A)
                             [:router/go-to! item-route]
@@ -330,5 +330,5 @@
   ; @param (keyword) editor-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
-      {:db (r core.events/set-recovery-mode! db editor-id)
+      {:db       (r core.events/set-recovery-mode! db editor-id)
        :dispatch [:item-editor/edit-item! editor-id item-id]}))

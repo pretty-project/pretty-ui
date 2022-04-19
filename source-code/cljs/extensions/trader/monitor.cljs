@@ -425,7 +425,7 @@
 (a/reg-event-fx
   :trader/init-monitor!
   (fn [{:keys [db]} _]
-      {:db (r init-monitor! db)
+      {:db       (r init-monitor! db)
        :dispatch [:trader/toggle-monitor-connection!]}))
 
 (a/reg-event-fx
@@ -434,7 +434,7 @@
   (fn [{:keys [db]} _]
       (if (r sync/subscribed? db :trader/monitor)
           [:trader/unsubscribe-from-query! :trader/monitor]
-          {:db (r show-monitor-chart! db)
+          {:db       (r show-monitor-chart! db)
            :dispatch [:trader/subscribe-to-query! :trader/monitor
                                                   {:query [`(:trader/download-monitor-data ~(r get-monitor-settings db))]}]})))
 

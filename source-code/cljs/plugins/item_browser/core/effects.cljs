@@ -44,7 +44,7 @@
               ; A)
               [:router/go-to! item-route]
               ; B)
-              {:db (r core.events/browse-item! db browser-id item-id)
+              {:db         (r core.events/browse-item! db browser-id item-id)
                :dispatch-n [[:tools/reload-infinite-loader! browser-id]
                             [:item-browser/request-item!    browser-id]]})))
 
@@ -74,14 +74,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-browser/use-filter!
+  :item-browser/filter-items!
   ; @param (keyword) browser-id
   ; @param (map) filter-pattern
   ;
   ; @usage
-  ;  [:item-browser/use-filter! :my-browser {...}]
+  ;  [:item-browser/filter-items! :my-browser {...}]
   (fn [{:keys [db]} [_ browser-id filter-pattern]]
-      {:db (r core.events/use-filter! db browser-id filter-pattern)
+      {:db       (r core.events/filter-items! db browser-id filter-pattern)
        :dispatch [:tools/reload-infinite-loader! browser-id]}))
 
 

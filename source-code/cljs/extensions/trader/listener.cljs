@@ -87,7 +87,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/toggle-listener!
   (fn [{:keys [db]} _]
-      {:db (update-in db [:trader :listener :listener-active?] not)
+      {:db       (update-in db [:trader :listener :listener-active?] not)
        :dispatch [:sync/send-query! :trader/synchronize!
                                     {:display-progress? true
                                      :query [:debug `(trader/toggle-listener! ~{})]}]}))

@@ -33,7 +33,7 @@
   ; A selector-id azonosító nincs felhasználva sehol, kizárólag az *-id & *-props formula
   ; egységes használata miatt adható meg.
   (fn [{:keys [db]} [_ selector-id selector-props]]
-      {:db (r media-selector.events/load-selector! db selector-id selector-props)
+      {:db       (r media-selector.events/load-selector! db selector-id selector-props)
        :dispatch [:storage.media-selector/render-selector!]}))
 
 
@@ -59,7 +59,7 @@
   :storage.media-selector/save-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r media-selector.events/save-selected-items! db)
+      {:db       (r media-selector.events/save-selected-items! db)
        :dispatch [:ui/close-popup! :storage.media-selector/view]}))
 
 (a/reg-event-fx

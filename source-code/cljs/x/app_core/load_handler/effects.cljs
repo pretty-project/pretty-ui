@@ -77,6 +77,6 @@
   :core/initialize-load-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (as-> db % (r load-handler.events/set-load-status!  % :loading)
-                      (r load-handler.events/reg-load-started! %))
+      {:db             (as-> db % (r load-handler.events/set-load-status!  % :loading)
+                                  (r load-handler.events/reg-load-started! %))
        :dispatch-later [{:ms load-handler.config/LOAD-TIMEOUT :dispatch [:core/load-test!]}]}))

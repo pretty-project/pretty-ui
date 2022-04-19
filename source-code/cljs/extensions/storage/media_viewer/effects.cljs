@@ -31,7 +31,7 @@
   ;                                       :directory-id "my-directory"}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ viewer-id viewer-props]]
-      {:db (r media-viewer.events/load-viewer! db viewer-id viewer-props)
+      {:db         (r media-viewer.events/load-viewer! db viewer-id viewer-props)
        :dispatch-n [[:storage.media-viewer/render-viewer!          viewer-id]
                     [:storage.media-viewer/request-directory-item! viewer-id]]}))
 

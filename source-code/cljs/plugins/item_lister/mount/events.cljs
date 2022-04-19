@@ -18,6 +18,7 @@
 (def store-header-props!  mount.events/store-header-props!)
 (def remove-body-props!   mount.events/remove-body-props!)
 (def remove-header-props! mount.events/remove-header-props!)
+(def update-body-props!   mount.events/update-body-props!)
 
 
 
@@ -73,3 +74,20 @@
   (as-> db % (r core.events/reset-meta-items! % lister-id)
              (r core.events/reset-downloads!  % lister-id)
              (r remove-body-props!            % lister-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  [db [_ lister-id body-props]]
+  (as-> db % (r core.events/reset-downloads!  % lister-id)
+             (r core.events/reset-selections! % lister-id)
+             (r update-body-props!            % lister-id body-props)))

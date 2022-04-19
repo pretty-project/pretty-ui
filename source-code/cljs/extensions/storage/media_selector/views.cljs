@@ -31,29 +31,13 @@
 ;; -- Footer components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn footer-selection-bar-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [_]
-  (let [no-items-selected?  @(a/subscribe [:storage.media-selector/no-items-selected?])
-        selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
-       [:<> [elements/label {:color     :muted
-                             :content   {:content :n-items-selected :replacements [selected-item-count]}
-                             :font-size :xs}]
-            [elements/icon-button {:height    :l
-                                   :disabled? no-items-selected?
-                                   :on-click  [:storage.media-selector/discard-selection!]
-                                   :preset    :close}]]))
-
-(defn footer-selection-bar
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [selector-id]
-  [elements/row {:content [footer-selection-bar-structure selector-id]
-                 :horizontal-align :right}])
-
 (defn footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selector-id]
-  [footer-selection-bar selector-id])
+  (let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
+       [ui/selection-popup-footer :storage.media-selector/view
+                                  {:on-discard [:storage.media-selector/discard-selection!]
+                                   :selected-item-count selected-item-count}]))
 
 
 

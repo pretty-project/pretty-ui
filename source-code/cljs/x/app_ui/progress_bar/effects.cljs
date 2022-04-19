@@ -17,7 +17,7 @@
   ;  [:ui/simulate-process!]
   (fn [{:keys [db]} _]
       ; A [:ui/simulate-process!] esemény megjelenít az állapotjelzőn egy hamis folyamatot.
-      {:db (r progress-bar.events/fake-process! db 100)
+      {:db             (r progress-bar.events/fake-process! db 100)
        :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}]}))
 
 (a/reg-event-fx
@@ -40,5 +40,5 @@
       ;        folyamatot, ami befejezi a szimulált hamis állapotot, akkor a [:ui/end-fake-process!]
       ;        eseménynek már nem szabad újra szimulálnia a hamis állapot befejezését!
       (if-let [fake-progress (get-in db [:ui :progress-bar/meta-items :fake-progress])]
-              {:db (r progress-bar.events/fake-process! db 100)
+              {:db             (r progress-bar.events/fake-process! db 100)
                :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}]})))

@@ -36,7 +36,7 @@
   ;  [:storage.directory-creator/load-creator! {:destination-id "..."}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ creator-id creator-props]]
-      {:db (r directory-creator.events/store-creator-props! db creator-id creator-props)
+      {:db       (r directory-creator.events/store-creator-props! db creator-id creator-props)
        :dispatch [:storage.directory-creator/render-dialog! creator-id]}))
 
 
@@ -50,7 +50,7 @@
   (fn [{:keys [db]} [_ creator-id directory-name]]
       (let [query        (r directory-creator.queries/get-create-directory-query          db creator-id directory-name)
             validator-f #(r directory-creator.validators/create-directory-response-valid? db creator-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! :storage.directory-creator/create-directory!
                                          {:query query :validator-f validator-f
                                           :on-success [:storage.directory-creator/directory-created         creator-id]

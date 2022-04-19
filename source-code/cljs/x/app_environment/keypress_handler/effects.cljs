@@ -109,7 +109,7 @@
       ; leütött billentyűk kódjait, így csökkentve a Re-Frame adatbázis írásainak számát és ezáltal
       ; a keypress-handler erőforrásigényét írás közben.
       (if-not (r keypress-handler.subs/type-mode-enabled? db)
-              {:db (assoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code] true)
+              {:db         (assoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code] true)
                :dispatch-n (r keypress-handler.subs/get-on-keydown-events db key-code)}
               {:dispatch-n (r keypress-handler.subs/get-on-keydown-events db key-code)})))
 
@@ -120,6 +120,6 @@
   ; @param (integer) key-code
   (fn [{:keys [db]} [_ key-code]]
       (if-not (r keypress-handler.subs/type-mode-enabled? db)
-              {:db (dissoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code])
+              {:db         (dissoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code])
                :dispatch-n (r keypress-handler.subs/get-on-keyup-events db key-code)}
               {:dispatch-n (r keypress-handler.subs/get-on-keyup-events db key-code)})))

@@ -27,6 +27,6 @@
   ;  [:item-lister/init-lister! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id {:keys [route-template] :as lister-props}]]
       (let [lister-props (core.prototypes/lister-props-prototype lister-id lister-props)]
-           {:db (r core.events/init-lister! db lister-id lister-props)
+           {:db         (r core.events/init-lister! db lister-id lister-props)
             :dispatch-n [[:item-lister/reg-transfer-lister-props! lister-id lister-props]
                          (if route-template [:item-lister/add-base-route! lister-id lister-props])]})))

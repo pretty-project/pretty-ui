@@ -470,7 +470,7 @@
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ input-id]]
       (let [on-reset-event (r element/get-element-prop db input-id :on-reset)]
-           {:db (r reset-input-value! db input-id)
+           {:db       (r reset-input-value! db input-id)
             :dispatch on-reset-event})))
 
 (a/reg-event-fx

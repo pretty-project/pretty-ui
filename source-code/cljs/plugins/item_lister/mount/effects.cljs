@@ -24,7 +24,7 @@
       ; amiért szükséges az [:environment/listen-to-pressed-key! ...] esemény használatával
       ; beállítani a SHIFT billentyű figyelését, hogy az items.subs/toggle-item-selection? függvény
       ; hozzáférjen a SHIFT billentyű állapotához (fókuszált search-field input mező esetén is).
-      {:db (r mount.events/body-did-mount db lister-id body-props)
+      {:db       (r mount.events/body-did-mount db lister-id body-props)
        :dispatch [:environment/listen-to-pressed-key! :item-lister/SHIFT {:key-code 16}]}))
 
 (a/reg-event-fx
@@ -46,7 +46,7 @@
       ;      lenyomásával alaphelyzetbe állíthatja a keresést.
       ;      A keresés alaphelyzetbe állítása után az {:auto-focus? true} beállítás miatt a search-field
       ;      input mező újra fókuszált állapotba kerül, így a felhasználó beírhatja a következő kifejezést.
-      {:db (r mount.events/header-did-mount db lister-id header-props)
+      {:db       (r mount.events/header-did-mount db lister-id header-props)
        :dispatch (let [on-keydown [:elements/empty-field! :plugins.item-lister.header.views/search-items-field]]
                       [:environment/reg-keypress-event! :item-lister/ESC
                                                         {:key-code   27
@@ -63,7 +63,7 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r mount.events/body-will-unmount db lister-id)
+      {:db       (r mount.events/body-will-unmount db lister-id)
        :dispatch [:environment/stop-listening-to-pressed-key! :item-lister/SHIFT]}))
 
 (a/reg-event-fx
@@ -72,5 +72,20 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r mount.events/header-will-unmount db lister-id)
+      {:db       (r mount.events/header-will-unmount db lister-id)
        :dispatch [:environment/remove-keypress-event! :item-lister/ESC]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/body-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) body-props
+  (fn [{:keys [db]} [_ lister-id body-props]]
+      {:db       (r mount.events/body-did-update db lister-id body-props)
+       :dispatch [:tools/reload-infinite-loader! lister-id]}))

@@ -12,7 +12,7 @@
 
 
 
-;; -- Preset components -------------------------------------------------------
+;; -- Preset button components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn popup-accept-button
@@ -66,6 +66,11 @@
                     :on-click [:ui/close-popup! popup-id]
                     :preset   :cancel}])
 
+
+
+;; -- Preset icon-button components -------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn popup-go-up-icon-button
   ; @param (keyword) popup-id
   ;
@@ -102,9 +107,40 @@
   [_]
   [elements/icon-button {:variant :placeholder}])
 
+(defn discard-selection-icon-button
+  ; @param (keyword) popup-id
+  ; @param (map)(opt) footer-props
+  ;  {:on-discard (metamorphic-event)(opt)
+  ;   :selected-item-count (integer)}
+  ;
+  ; @usage
+  ;  [ui/discard-selection-icon-button :my-popup {...}]
+  [_ {:keys [on-discard selected-item-count]}]
+  (if on-discard [elements/icon-button {:height    :l
+                                        :disabled? (= 0 selected-item-count)
+                                        :on-click  on-discard
+                                        :preset    :close}]))
+
+
+
+;; -- Preset label components -------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn selection-label
+  ; @param (keyword) popup-id
+  ; @param (map)(opt) footer-props
+  ;  {:selected-item-count (integer)}
+  ;
+  ; @usage
+  ;  [ui/selection-label :my-popup {...}]
+  [_ {:keys [selected-item-count]}]
+  [elements/label {:color     :muted
+                   :content   {:content :n-items-selected :replacements [selected-item-count]}
+                   :font-size :xs}])
+
 (defn popup-label
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @usage
@@ -114,21 +150,27 @@
                              :font-weight :extra-bold
                              :indent      {:horizontal :xs}}]))
 
+
+
+;; -- Preset header components ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn accept-popup-header
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;  {:disabled? (boolean)(opt)
   ;    Default: false
   ;   :on-accept (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [ui/accept-popup-header :my-popup {...}]
-  [popup-id bar-props]
-  [elements/horizontal-polarity {:end-content [popup-accept-button popup-id bar-props]}])
+  [popup-id header-props]
+  [elements/row {:content [popup-accept-button popup-id header-props]
+                 :horizontal-align :right}])
 
 (defn save-popup-header
   ; @param (keyword) popup-id
-  ; @param (map) bar-props
+  ; @param (map) header-props
   ;  {:disabled? (boolean)(opt)
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
@@ -136,56 +178,77 @@
   ;
   ; @usage
   ;  [ui/save-popup-header :my-popup {...}]
-  [popup-id {:keys [disabled? on-save] :as bar-props}]
-  ; A save-popup-header komponens bar-props paramétere nem adható át a popup-save-button komponens
-  ; számára, mert a bar-props térképt {:label ...} tulajdonsága a popup-save-button komponens button-props
-  ; paraméterének {:label ...} tulajdonságaként jelenne meg.
+  [popup-id {:keys [disabled? on-save] :as header-props}]
+  ; A save-popup-header komponens header-props paramétere nem adható át a popup-save-button komponens
+  ; számára, mert a headerbar-props térképt {:label ...} tulajdonsága a popup-save-button komponens
+  ; button-props paraméterének {:label ...} tulajdonságaként jelenne meg.
   [elements/horizontal-polarity {:start-content  [popup-cancel-button popup-id]
-                                 :middle-content [popup-label         popup-id bar-props]
+                                 :middle-content [popup-label         popup-id header-props]
                                  :end-content    [popup-save-button   popup-id {:disabled? disabled?
                                                                                 :on-save   on-save}]}])
 
 (defn cancel-popup-header
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;
   ; @usage
   ;  [ui/cancel-popup-header :my-popup {...}]
-  [popup-id bar-props]
-  [elements/horizontal-polarity {:start-content [popup-cancel-button popup-id bar-props]}])
+  [popup-id header-props]
+  [elements/row {:content [popup-cancel-button popup-id header-props]
+                 :horizontal-align :left}])
 
 (defn close-popup-header
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;
   ; @usage
   ;  [ui/close-popup-header :my-popup {...}]
-  [popup-id bar-props]
-  [elements/horizontal-polarity {:start-content  [popup-placeholder-icon-button popup-id bar-props]
-                                 :middle-content [popup-label                   popup-id bar-props]
-                                 :end-content    [popup-close-icon-button       popup-id bar-props]}])
+  [popup-id header-props]
+  [elements/horizontal-polarity {:start-content  [popup-placeholder-icon-button popup-id header-props]
+                                 :middle-content [popup-label                   popup-id header-props]
+                                 :end-content    [popup-close-icon-button       popup-id header-props]}])
 
 (defn go-up-popup-header
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [ui/go-up-popup-header :my-popup {...}]
-  [popup-id bar-props]
-  [elements/horizontal-polarity {:start-content [:<> [popup-go-up-icon-button popup-id bar-props]
-                                                     [popup-label             popup-id bar-props]]}])
+  [popup-id header-props]
+  [elements/row {:content [:<> [popup-go-up-icon-button popup-id header-props]
+                               [popup-label             popup-id header-props]]
+                 :horizontal-align :left}])
 
 (defn go-back-popup-header
   ; @param (keyword) popup-id
-  ; @param (map)(opt) bar-props
+  ; @param (map)(opt) header-props
   ;  {:label (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [ui/go-back-popup-header :my-popup {...}]
-  [popup-id bar-props]
-  [elements/horizontal-polarity {:start-content [:<> [popup-go-back-icon-button popup-id bar-props]
-                                                     [popup-label               popup-id bar-props]]}])
+  [popup-id header-props]
+  [elements/row {:content [:<> [popup-go-back-icon-button popup-id header-props]
+                               [popup-label               popup-id header-props]]
+                 :horizontal-align :left}])
+
+
+
+;; -- Preset footer components ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn selection-popup-footer
+  ; @param (keyword) popup-id
+  ; @param (map) footer-props
+  ;  {:on-discard (metamorphic-event)(opt)
+  ;   :selected-item-count (integer)}
+  ;
+  ; @usage
+  ;  [ui/selection-popup-footer :my-popup {...}]
+  [popup-id footer-props]
+  [elements/row {:content [:<> [selection-label               popup-id footer-props]
+                               [discard-selection-icon-button popup-id footer-props]]
+                 :horizontal-align :right}])
 
 
 

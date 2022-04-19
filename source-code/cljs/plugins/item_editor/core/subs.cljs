@@ -112,7 +112,7 @@
           (if-let [route-title (r transfer.subs/get-transfer-item db editor-id :route-title)]
                   (return route-title))))
 
-(defn get-description
+(defn get-current-item-modified-at
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -206,8 +206,8 @@
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/get-description :my-editor]
-(a/reg-sub :item-editor/get-description get-description)
+;  [:item-editor/get-current-item-modified-at :my-editor]
+(a/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) editor-id
 ;

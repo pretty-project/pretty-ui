@@ -31,7 +31,7 @@
                       (not progressive-stepping?))
                  [:db/set-item! [:gestures :step-handler/data-items handler-id :current-dex] prev-dex]))))
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -88,7 +88,7 @@
   (fn [{:keys [db]} [_ handler-id handler-props]]
       (let [handler-props (step-handler.prototypes/handler-props-prototype handler-props)]
            (if-not (r step-handler.subs/step-handler-inited? db handler-id)
-                   {:db (assoc-in db [:gestures :step-handler/data-items handler-id] handler-props)
+                   {:db       (assoc-in db [:gestures :step-handler/data-items handler-id] handler-props)
                     :dispatch [:gestures/check-autostep! handler-id]}))))
 
 

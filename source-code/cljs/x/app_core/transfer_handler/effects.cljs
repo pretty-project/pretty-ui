@@ -36,7 +36,7 @@
   ; @usage
   ;  [:core/app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
-      {:db (r transfer-handler.events/store-transfer-data! db server-response)
+      {:db          (r transfer-handler.events/store-transfer-data! db server-response)
        :dispatch-if [(-> server-response map/nonempty? not)
                      [:core/error-catched {:cofx cofx :error "Failed to synchronize app!"}]
                      [:boot-loader/app-synchronized app]]}))

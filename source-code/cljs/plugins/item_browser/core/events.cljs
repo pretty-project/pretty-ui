@@ -21,7 +21,7 @@
 (def quit-search-mode! plugins.item-lister.core.events/quit-search-mode!)
 (def quit-select-mode! plugins.item-lister.core.events/quit-select-mode!)
 (def reset-downloads!  plugins.item-lister.core.events/reset-downloads!)
-(def use-filter!       plugins.item-lister.core.events/use-filter!)
+(def filter-items!     plugins.item-lister.core.events/filter-items!)
 
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)

@@ -18,7 +18,7 @@
 ;; -- Item-menu components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn media-menu-label
+(defn- media-menu-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias] :as media-item}]
   [elements/label ::media-menu-label
@@ -27,7 +27,7 @@
                    :font-size :xs
                    :indent    {:horizontal :xxs :left :s}}])
 
-(defn media-menu-header
+(defn- media-menu-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [media-item]
   [elements/horizontal-polarity ::media-menu-header
@@ -188,7 +188,36 @@
 
 
 
-;; -- View components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- storage-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [items-received? @(a/subscribe [:item-browser/items-received? :storage.media-browser])]
+          (let [label @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
+               [:<> [ui/title-sensor {:title label}]
+                    [elements/label ::storage-label
+                                    {:content     label
+                                     :font-size   :xl
+                                     :font-weight :extra-bold
+                                     :indent      {:top :xxl}}]])))
+
+(defn- storage-directory-content-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (if-let [items-received? @(a/subscribe [:item-browser/items-received? :storage.media-browser])]
+          (let [browsed-directory @(a/subscribe [:item-browser/get-current-item :storage.media-browser])
+                directory-content  (media-browser.helpers/directory-item->size browsed-directory)]
+               [elements/label ::storage-directory-content-label
+                               {:color       :muted
+                                :content     directory-content
+                                :font-size   :xxs
+                                :font-weight :extra-bold}])))
+
+
+
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- header
@@ -202,20 +231,17 @@
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  ; TEMP
-  (let [browsed-directory @(a/subscribe [:item-browser/get-current-item       :storage.media-browser])
-        label             @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])
-        description        (if browsed-directory (media-browser.helpers/directory-item->size browsed-directory))]
-       [:<> ;[layouts/header-a {:description (str description) :label (or label "") :offset -48}]
-  ; TEMP
-            [item-browser/body :storage.media-browser
-                               {:auto-title?  true
-                                :item-path    [:storage :media-browser/browsed-item]
-                                :items-path   [:storage :media-browser/downloaded-items]
-                                :label-key    :alias
-                                :list-element #'media-item
-                                :root-item-id core.config/ROOT-DIRECTORY-ID
-                                :search-keys  [:alias]}]]))
+  [:<> [storage-label]
+       [storage-directory-content-label]
+       [elements/horizontal-separator {:size :xxl}]
+       [item-browser/body :storage.media-browser
+                          {:auto-title?  true
+                           :item-path    [:storage :media-browser/browsed-item]
+                           :items-path   [:storage :media-browser/downloaded-items]
+                           :label-key    :alias
+                           :list-element #'media-item
+                           :root-item-id core.config/ROOT-DIRECTORY-ID
+                           :search-keys  [:alias]}]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

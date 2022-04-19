@@ -18,7 +18,7 @@
   ; @param (keyword) browser-id
   ; @param (map) body-props
   (fn [{:keys [db]} [_ browser-id body-props]]
-      {:db (r mount.events/body-did-mount db browser-id body-props)
+      {:db       (r mount.events/body-did-mount db browser-id body-props)
        :dispatch [:item-browser/request-item! browser-id]}))
 
 

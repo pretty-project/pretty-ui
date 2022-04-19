@@ -39,5 +39,5 @@
   (fn [{:keys [db]} [_ editor-id]]
       ; Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
       ; helyettesíti, amikor nem szükséges adatokat letölteni.
-      {:db (r download.events/load-item! db editor-id)
+      {:db       (r download.events/load-item! db editor-id)
        :dispatch [:ui/simulate-process!]}))

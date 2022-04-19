@@ -71,8 +71,8 @@ body {
 
 /***** Active state and focused state *****/
 
-[data-clickable="true"]:active,
-[data-clickable="true"]:focus,
+.x-element [data-clickable="true"]:active,
+.x-element [data-clickable="true"]:focus,
 
 .x-anchor:active,
 .x-anchor:focus,
@@ -86,10 +86,6 @@ button.x-card:focus,
 .x-checkbox--label,
 .x-chip--delete-button:active,
 .x-chip--delete-button:focus,
-.x-clickable:active,
-.x-clickable:focus,
-.x-color-stamp:active,
-.x-color-stamp:focus,
 .x-counter--decrease-button:active,
 .x-counter--decrease-button:focus,
 .x-counter--increase-button:active,
@@ -740,15 +736,20 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="xxs"] {
-  /* XXX#9811
-   * Egyes esetekben a megjelenített szöveg értéke egy üres string, amíg a tényleges érték, nem
-   * töltődik le vagy nem töltődik be.
-   * Ilyenkor {min-height: ...} tulajdonság használata nélkül 0px magasságú lenne a szöveget
-   * megjelenítő elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
-   * esetleges ugrását okozná (a szöveg tényleges megjelenésekor) */
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
-  line-height: 24px;
+  line-height: 24px }
+
+.x-label[data-font-size="xxs"] .x-label--body {
+  /* XXX#9811
+   * - Egyes esetekben a megjelenített szöveg értéke egy üres string, amíg a tényleges érték, nem
+   *   töltődik le vagy nem töltődik be.
+   *   Ilyenkor {min-height: ...} tulajdonság használata nélkül 0px magasságú lenne a szöveget
+   *   megjelenítő elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
+   *   esetleges ugrását okozná (a szöveg tényleges megjelenésekor)
+   *
+   * - A {min-height: ...} tulajdonság azért .x-label--body elem magasságát állítja, mert a szöveges
+   *   tartalom nélküli .x-label elem magasságát a függeleges indent értéke befolyásolja! */
   min-height: 24px }
 
 .x-label[data-font-size="xs"] .x-label--icon {
@@ -785,10 +786,12 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="xs"] {
-  /* XXX#9811 */
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 24px;
+  line-height: 24px }
+
+.x-label[data-font-size="xs"] .x-label--body {
+  /* XXX#9811 */
   min-height: 24px }
 
 .x-label[data-font-size="xs"] .x-label--icon {
@@ -825,10 +828,12 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="s"] {
-  /* XXX#9811 */
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
-  line-height: 24px;
+  line-height: 24px }
+
+.x-label[data-font-size="s"] .x-label--body {
+  /* XXX#9811 */
   min-height: 24px }
 
 .x-label[data-font-size="s"] .x-label--icon {
@@ -859,10 +864,12 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="m"] {
-  /* XXX#9811 */
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
-  line-height: 24px;
+  line-height: 24px }
+
+.x-label[data-font-size="m"] .x-label--body {
+  /* XXX#9811 */
   min-height: 24px }
 
 .x-label[data-font-size="m"] .x-label--icon {
@@ -892,10 +899,12 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="l"] {
-  /* XXX#9811 */
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
-  line-height: 48px;
+  line-height: 48px }
+
+.x-label[data-font-size="l"] .x-label--body {
+  /* XXX#9811 */
   min-height: 48px }
 
 .x-label[data-font-size="l"] .x-label--icon {
@@ -925,10 +934,12 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="xl"] {
-  /* XXX#9811 */
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
-  line-height: 48px;
+  line-height: 48px }
+
+.x-label[data-font-size="xl"] .x-label--body {
+  /* XXX#9811 */
   min-height: 48px }
 
 .x-label[data-font-size="xl"] .x-label--icon {
@@ -958,12 +969,14 @@ button.x-card:focus,
   line-height: 36px }
 
 .x-label[data-font-size="xxl"] {
-  /* XXX#9811 */
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
-  line-height: 48px;
-  min-height: 48px }
+  line-height: 48px }
 
+.x-label[data-font-size="xxl"] .x-label--body {
+  /* XXX#9811 */
+  min-height: 48px }
+  
 .x-label[data-font-size="xxl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
 
@@ -1926,7 +1939,9 @@ button.x-card:focus,
 /*** Color-selector body ***/
 
 .x-color-selector--body {
-  display: block }
+  align-items: center;
+  display: flex;
+  height: 48px }
 
 /*** Color-selector body ***/
 

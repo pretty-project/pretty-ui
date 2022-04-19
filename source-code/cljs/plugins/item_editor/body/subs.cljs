@@ -39,19 +39,19 @@
   ; - A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
   ;   átadott kulcsainak értékeit az elemről tárolt másolat értékeivel.
   ;
-  ; - Az egyes értékek összehasonlítását csak akkor végzi el, ha az adott érték nem üres!
-  ;   Ha egy érték pl. nil, üres string vagy üres vektor, akkor nem hasonlítja össze a tárolt
-  ;   másolat azonos kulcsú értékével!
-  ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt,
-  ;        akkor a visszamaradó üres string értéket a mező használata előtti nil értékkel
-  ;        összehasonlítva különbségként érzékelné!
-  (boolean (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-                 current-item    (r core.subs/get-current-item    db editor-id)
-                 backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
-                (letfn [(f [change-key] (if (-> current-item change-key empty? not)
-                                            (not= (change-key current-item)
-                                                  (change-key backup-item))))]
-                       (some f change-keys)))))
+  ; - Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
+  ;   veszi a NIL és a különböző üres típusok közötti különbséget!
+  ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
+  ;        üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
+  (boolean (if-let [data-received? (r core.subs/get-meta-item db editor-id :data-received?)]
+                   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
+                         current-item    (r core.subs/get-current-item    db editor-id)
+                         backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
+                        (letfn [(f [change-key] (if (-> current-item change-key empty?)
+                                                    (-> backup-item  change-key empty? not)
+                                                    (not= (change-key current-item)
+                                                          (change-key backup-item))))]
+                               (some f change-keys))))))
 
 
 

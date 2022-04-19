@@ -217,7 +217,7 @@
        ; XXX#3219
        (or lister-synchronizing? (not items-received?))))
 
-(defn get-description
+(defn get-items-info
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -241,12 +241,11 @@
   ; @param (keyword) lister-id
   ;
   ; @return (map)
-  ;  {:$and (maps in vector)}
   [db [_ lister-id]]
-  (let [active-filter (r get-meta-item            db lister-id :active-filter)
-            prefilter (r mount.subs/get-body-prop db lister-id     :prefilter)]
-       (cond-> {} active-filter (update :$and vector/conj-item active-filter)
-                      prefilter (update :$and vector/conj-item     prefilter))))
+  ; Az {:active-filter ...} tulajdonság beállítása után az item-lister figyelmen kívül
+  ; hagyja a {:prefilter ...} tulajdonságként átadott szűrési feltételeket az elemek letöltésekor.
+  (or (r get-meta-item            db lister-id :active-filter)
+      (r mount.subs/get-body-prop db lister-id :prefilter)))
 
 
 
@@ -293,8 +292,8 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-description :my-lister]
-(a/reg-sub :item-lister/get-description get-description)
+;  [:item-lister/get-items-info :my-lister]
+(a/reg-sub :item-lister/get-items-info get-items-info)
 
 ; @param (keyword) lister-id
 ;

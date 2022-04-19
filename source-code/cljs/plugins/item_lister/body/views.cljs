@@ -4,8 +4,8 @@
 
 (ns plugins.item-lister.body.views
     (:require [mid-fruits.logical                  :refer [nor]]
+              [plugins.item-lister.body.prototypes :as body.prototypes]
               [plugins.item-lister.core.helpers    :as core.helpers]
-              [plugins.item-lister.core.prototypes :as core.prototypes]
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
@@ -39,22 +39,23 @@
         downloading-items?    @(a/subscribe [:item-lister/downloading-items?    lister-id])
         items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
        (if-not (and all-items-downloaded? items-received?) ; XXX#0499
-
-               ; TEMP
-               [:div {:style {:width "100%"}}
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :margin "24px"}}]]
-
-               (comment [elements/label ::downloading-items-label
+               [elements/label ::downloading-items-label
                                         {:color       :highlight
                                          :font-size   :xs
                                          :font-weight :bold
                                          :content (if (or downloading-items? (nor downloading-items? items-received?))
-                                                      :downloading-items...)}]))))
-               ; TEMP
+                                                      :downloading-items...)}])
+
+       ; TEMP
+       ; A downloading-items-label komponenst az indicators komponensben nem kell column elemben megjeleníteni!
+       (if-not (and all-items-downloaded? items-received?) ; XXX#0499
+               [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px"}}
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
+                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]])))
+       ; TEMP
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,6 +189,7 @@
   ;    Default: core.config/DEFAULT-SEARCH-KEYS
   ;   :select-mode? (boolean)(opt)
   ;    Default: false
+  ;   :selected-items (strings in vector)(opt)
   ;   :sortable? (boolean)(opt)
   ;    Default: false}
   ;
@@ -199,8 +201,20 @@
   ;  [item-lister/body :my-lister {:list-element #'my-list-element
   ;                                :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
-  (let [body-props (core.prototypes/body-props-prototype lister-id body-props)]
+  ; - A body komponens a {:component-did-update ...} életciklussal reagál többek között
+  ;   a {:prefilter ...} paraméter megváltozására.
+  ;
+  ; - A {:prefilter ...} paraméter változására szükséges reagálni!
+  ;   Pl.: Egy item-editor pluginban megejelenített item-lister plugin body komponensének
+  ;        {:prefilter ...} paramétere feliratkozik az item-editor pluginnal szerkesztett
+  ;        elem egyik értékére.
+  ;        A felhasználó az item-editor plugin "Visszaállítás" gombjával megváltoztathatja
+  ;        a szerkesztett elem azon értékét, amire az item-lister plugin body komponensének
+  ;        {:prefilter ...} tulajdonsága van feliratkozva!
+  (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)
                            {:reagent-render         (fn []             [body-structure                 lister-id])
                             :component-did-mount    (fn [] (a/dispatch [:item-lister/body-did-mount    lister-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-lister/body-will-unmount lister-id]))})))
+                            :component-will-unmount (fn [] (a/dispatch [:item-lister/body-will-unmount lister-id]))
+                            :component-did-update   (fn [this] (let [[_ body-props] (reagent/arguments this)]
+                                                                    (a/dispatch [:item-lister/body-did-update lister-id body-props])))})))

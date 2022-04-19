@@ -12,14 +12,14 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-lister/use-filter!
+  :item-lister/filter-items!
   ; @param (keyword) lister-id
   ; @param (map) filter-pattern
   ;
   ; @usage
-  ;  [:item-lister/use-filter! :my-lister {...}]
+  ;  [:item-lister/filter-items! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id filter-pattern]]
-      {:db (r core.events/use-filter! db lister-id filter-pattern)
+      {:db       (r core.events/filter-items! db lister-id filter-pattern)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))
 
 
@@ -33,7 +33,7 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r core.events/reset-downloads! db lister-id)
+      {:db       (r core.events/reset-downloads! db lister-id)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))
 
 
@@ -47,5 +47,5 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      {:db (r core.events/reset-downloads! db lister-id)
+      {:db       (r core.events/reset-downloads! db lister-id)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))

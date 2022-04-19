@@ -71,3 +71,38 @@
   ; @return (map)
   [db [_ plugin-id]]
   (dissoc-in db [:plugins :plugin-handler/header-props plugin-id]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn update-footer-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) footer-props
+  ;
+  ; @return (map)
+  [db [_ plugin-id footer-props]]
+  (update-in db [:plugins :plugin-handler/footer-props plugin-id] merge footer-props))
+
+(defn update-body-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  [db [_ plugin-id body-props]]
+  (update-in db [:plugins :plugin-handler/body-props plugin-id] merge body-props))
+
+(defn update-header-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) header-props
+  ;
+  ; @return (map)
+  [db [_ plugin-id header-props]]
+  (update-in db [:plugins :plugin-handler/header-props plugin-id] merge header-props))

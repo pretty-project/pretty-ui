@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.core.prototypes
+(ns plugins.item-lister.body.prototypes
     (:require [mid-fruits.candy                 :refer [param]]
               [plugins.item-lister.core.config  :as core.config]
               [plugins.item-lister.core.helpers :as core.helpers]))

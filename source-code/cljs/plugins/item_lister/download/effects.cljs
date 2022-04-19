@@ -109,5 +109,5 @@
   (fn [{:keys [db]} [_ lister-id server-response]]
       ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
       ; hogy az a viewport területén van-e még és szükséges-e további elemeket letölteni.
-      {:db (r download.events/receive-items! db lister-id server-response)
+      {:db       (r download.events/receive-items! db lister-id server-response)
        :dispatch [:tools/reload-infinite-loader! lister-id]}))

@@ -7,6 +7,7 @@
               [plugins.item-lister.core.events   :as core.events]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.item-lister.items.events  :as items.events]
+              [plugins.item-lister.items.subs    :as items.subs]
               [plugins.item-lister.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
@@ -69,6 +70,20 @@
              ; értéket eltárolni, ami a fogadott dokumentumok mennyiségére utal.
              (assoc-in [:plugins :plugin-handler/meta-items lister-id :received-count] received-count))))
 
+(defn select-received-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ lister-id server-response]]
+  (if-let [selected-item-ids (r mount.subs/get-body-prop db lister-id :selected-items)]
+          (let [selected-item-dexes (r items.subs/get-item-dexes db lister-id selected-item-ids)]
+               db)
+          ;(return db)))
+          db))
+
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,7 +94,9 @@
   [db [_ lister-id server-response]]
   (as-> db % (r store-received-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
+             (r select-received-items!         % lister-id)
              (r items-received                 % lister-id)))
+
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -120,12 +137,14 @@
   ;   Pl.: Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
   ;        és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
   ;        plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
-  ;        indított elemek újratöltése még folyamatban.
-  ;        A plugon nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
-  ;        előfordulhat, hogy a megnyitás után a plugin nem a request-items! lekéréssel tölti le
-  ;        az első elemeket.
+  ;        indított elemek újratöltése még folyamatban van.
+  ;        A plugin nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
+  ;        előfordulhat, hogy a megnyitás után a plugin nem az [:item-lister/request-items! ...]
+  ;        esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
+  ;        követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
+  ;        lekérés tölti le megnyitás után az első elemeket.
   ;        XXX#5476 HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
-  ;                 SZÜKSÉGES FELÜLVIZSGÁLNI!
+  ;                 SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)

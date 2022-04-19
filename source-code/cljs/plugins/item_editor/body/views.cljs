@@ -88,16 +88,36 @@
                    :content     :downloading...
                    :font-size   :xs
                    :font-weight :bold
-                   :indent      {:top :xxl}}])
+                   :indent      {:top :xxl}}]
+
+  ; TEMP
+  [:div {:style {:width "100%"}}
+        [:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px"}}
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]]
+        [:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px"}}
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]]
+        ;[:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px"}}
+        ;      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]
+        ;      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]]
+        [:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px"}}
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :flex-grow 1}}]]
+        [:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px" :justify-content "center"}}
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "72px" :width "50%"}}]]])
+  ; TEMP
 
 (defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  [elements/row ::downloading-item
-                {:content          [downloading-item-label editor-id]
-                 :horizontal-align :center}])
+  [downloading-item-label editor-id])
+  ;[elements/row ::downloading-item
+  ;              {:content          [downloading-item-label editor-id]
+  ;               :horizontal-align :center])
 
 
 

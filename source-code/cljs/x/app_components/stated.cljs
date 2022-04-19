@@ -239,8 +239,8 @@
   (fn [{:keys [db]} [_ component-id {:keys [destructor] :as context-props} mount-id]]
       (if (and (r component-unmounted?  db component-id)
                (r component-mounted-as? db component-id mount-id))
-          {:db (as-> db % (r engine/remove-component-props!  % component-id)
-                          (r remove-component-initial-props! % component-id context-props))
+          {:db       (as-> db % (r engine/remove-component-props!  % component-id)
+                                (r remove-component-initial-props! % component-id context-props))
            :dispatch (if-let [current-props (r get-component-current-props db component-id context-props)]
                              ; If current-props is NOT nil ...
                              (a/metamorphic-event<-params destructor current-props)
@@ -292,7 +292,7 @@
   ; @param (map) context-props
   ; @param (keyword) mount-id
   (fn [{:keys [db]} [_ component-id context-props mount-id]]
-      {:db (r engine/set-component-prop! db component-id :status :unmounted)
+      {:db             (r engine/set-component-prop! db component-id :status :unmounted)
        :dispatch-later [{:ms COMPONENT-DESTRUCTION-DELAY
                          :dispatch [:components/destruct-component! component-id context-props mount-id]}]}))
 

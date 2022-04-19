@@ -20,5 +20,5 @@
   (fn [{:keys [db]} [_ selector-id]]
       (let [on-route    (r transfer.subs/get-transfer-item db selector-id :on-route)
             route-title (r transfer.subs/get-transfer-item db selector-id :route-title)]
-           {:db (r routes.events/handle-route! db selector-id)
+           {:db         (r routes.events/handle-route! db selector-id)
             :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]})))

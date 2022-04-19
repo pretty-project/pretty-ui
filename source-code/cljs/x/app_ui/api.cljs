@@ -76,6 +76,7 @@
 (def close-popup-header            popups.views/close-popup-header)
 (def go-up-popup-header            popups.views/go-up-popup-header)
 (def go-back-popup-header          popups.views/go-back-popup-header)
+(def selection-popup-footer        popups.views/selection-popup-footer)
 
 ; x.app-ui.progress-bar.events
 (def listen-to-process!         progress-bar.events/listen-to-process!)

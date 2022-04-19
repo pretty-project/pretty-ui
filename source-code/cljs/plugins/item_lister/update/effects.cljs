@@ -54,7 +54,7 @@
       (let [item-ids     (r items.subs/get-selected-item-ids               db lister-id)
             query        (r update.queries/get-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/delete-items-response-valid? db lister-id %)]
-           {:db (r update.events/delete-selected-items! db lister-id)
+           {:db       (r update.events/delete-selected-items! db lister-id)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
                                          {:on-success [:item-lister/items-deleted       lister-id]
                                           :on-failure [:item-lister/delete-items-failed lister-id]
@@ -106,7 +106,7 @@
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (if (r mount.subs/body-did-mount? db lister-id)
           ; A)
-          {:db (r update.events/delete-items-failed db lister-id)
+          {:db         (r update.events/delete-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-delete}]]}
           ; B)
@@ -126,7 +126,7 @@
   (fn [{:keys [db]} [_ lister-id item-ids]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
                                          {:on-success [:item-lister/delete-items-undid       lister-id]
                                           :on-failure [:item-lister/undo-delete-items-failed lister-id]
@@ -190,7 +190,7 @@
       (let [item-ids     (r items.subs/get-selected-item-ids                  db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
                                          {:on-success [:item-lister/items-duplicated       lister-id]
                                           :on-failure [:item-lister/duplicate-items-failed lister-id]
@@ -242,7 +242,7 @@
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (if (r mount.subs/body-did-mount? db lister-id)
           ; A)
-          {:db (r update.events/duplicate-items-failed db lister-id)
+          {:db         (r update.events/duplicate-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
           ; B)

@@ -198,7 +198,7 @@
         filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
         object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [item-browser/list-item :storage.file-uploader file-dex
+       [item-browser/list-item :storage.media-browser file-dex
                                {:description (media-browser.helpers/file-item->size   {:filesize filesize})
                                 :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
                                 :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)

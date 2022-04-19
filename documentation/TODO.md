@@ -14,6 +14,22 @@
 
 # x4.7.0
 
+- Az item-lsiter/list-item komponensből valahogy ki kellene választani a designt és visszatenni
+  a layouts-ba! De így most gyorsabb, ha pl. a [:item-lister/item-disabled? ...]
+  [:item-lister/item-selected? ...] feliratkozások kimetét nem a paraméterként kapják a listaelemek
+  Ha sikerült különválasztani, akkor a file-uploaderben sem lesz szükség rá, hogy az item-browser/list-item
+  komponens legyen a listaelem, mivel semmi köze az item-browser-hez a fájlfeltöltének!
+
+
+- A css class és data-attribute selector-ok elerési ideje köbö egyforma.
+  Egyes elemeken pl. buttonokon rengeteg data-attribute van, amit ugy lehet gyorsitani, hogy
+  a css fájlba lennének preset-ek! [:div.x-button {:data-preset :my-preset}]
+  Így a border-radius, hover-color, color, stb nem 5-6-7 data-attribute használatával
+  volna meghatározva, hanem volna 20-30 preset azt csá.
+  Ezt majd akkor amikor több fájlra lesz darabolva az .x-app-elements.css
+
+
+
 - Mi lenne ha a ui névterek nem tartalmaznának design-t?
   A popup csak egy fekete layer lenne. A notification csak egy pozicio lenne ...
   És a layouts-ban volna benne a notification-bubble és boxed-popup, ...
@@ -40,9 +56,6 @@
     a "/models/:model-id" útvonalra dobjon
   - A view-selector load-selector eseménye is állítsa be hogy az "/@app-home/extension/:view-id"
     ne az "/@app-home/extension" utvonalra vigyen vissza, hanem az "/@app-home" -ra
-
-- Valahogy az item-editornak legyen valami default-ja, hogy pölö új típus hozzáadásakor
-  bekerüljön a dokumentumba a :type/model-id érték
 
 - Milyen hatással van a view-selector plugin-ra, hogy hamarabb feliratkozhatsz a selected-view-id
   értékére mint, ahogy a body komponens eltárolja a default-view-id értékét
@@ -73,18 +86,11 @@
   - A plugin-ok visszamehetnek az x-be x.app-plugins. ...
     (az item-sorter is maradhat plugin, csak használja a sortable.api-t)
 
-- Ha az engine.cl* fájlokban már csak helper fuggvények maradnak, akkor átnevezhetők helpers.clj*
-
 - Az item-editor duplikálás -> majd másolat szerkesztése átirányit az uj route-ra de nem
   történik ujratöltés
 
 - Az item-editor elem törlése utáni visszaállítás után már nincsenek ez editor beállításai a db-ben
   ami alapján összerakná a visszaállított elem útvonalát amire irányítania kéne
-
-
-- Lehessen route-parent-et és header-title egy eseményben állítani,  a kevesebb írás miatt
-
-- A hosszu require-ök ne kerüljenek a lista végére
 
 ; - A megfelelő hely:
 ;   [:plugins :item-browser/data-items :my-browser {...}]
@@ -99,22 +105,14 @@
 - az elementek min-width tulajdonságara lehet hogy nincs többé szükség, ha a form-ok
   wrapper-jei határozzák meg az inputok szélességét,
 
-- és minden element olyan magas amielny magas, és van indent-left, indent-right, indent-top, indent-bottom
-  mindenhez
-
 - a pluginok :item-actions tulajdonsága hol a header-ön van hol a body-n egységesíteni kell
 
 - pluginok error-mode-ját teszteni kell
 
 - A szerver kezelje a 404 képernyőt, ne a kliens! Ne kelljen a 404-hez letölteni az appot
 
-- A ; @return (component) és (hiccup) nem szükséges a view komponensek leírásába!
-
 - Ha a szerver-oldalon müködik a dispatch-later, akkor leválthatja a dispatch-tick-et
   a boot-loader.clj-ben és aztán a dispatch-tick törölhető
-
-- Az x modulok névterei is legyenek mappákra bontva amiben van subs events ?? really ?? ...
-- Az x modulok is tárolják ugy az adatot, mint az extension [:core :load-handler/meta-items ...]
 
 - A ui-renderer az elemek megjelenítésekor több különálló alkalommal ír a re-frame db-be, ami nem jo
   mert sokszor ujrakalkulalodnak a subscription-ök, ha react-transition-el lenne megoldva az animálás,
@@ -128,10 +126,6 @@
   eljárásokat react-transition vezérlésre cserélni
 
 - Media picker SHIFT billentyűvel átrakja magát az item-lsiter select-mode-ba!
-
-- A send-query! {:debug? true} beállítással tegye be a :debug resolver-t a query-vektorba
-
-- db/apply!-t átnevezni db/apply-item!-re
 
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 

@@ -56,14 +56,14 @@
   ;  [:tools/reg-schedule! {:hour 3 :minute 10 :event [:my-event]}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ schedule-id schedule-props]]
-      {:db (r scheduler.events/store-schedule-props! db schedule-id schedule-props)
+      {:db       (r scheduler.events/store-schedule-props! db schedule-id schedule-props)
        :dispatch [:tools/init-scheduler!]}))
 
 (a/reg-event-fx
   :tools/remove-schedule!
   ; @param (keyword) schedule-id
   (fn [{:keys [db]} [_ schedule-id]]
-      {:db (r scheduler.events/remove-schedule-props! db schedule-id)
+      {:db       (r scheduler.events/remove-schedule-props! db schedule-id)
        :dispatch [:tools/schedule-removed]}))
 
 (a/reg-event-fx

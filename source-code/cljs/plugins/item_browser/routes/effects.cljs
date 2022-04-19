@@ -28,9 +28,9 @@
             route-title (r transfer.subs/get-transfer-item db browser-id :route-title)]
            (if (r mount.subs/body-did-mount? db browser-id)
                ; A)
-               {:db (r routes.events/handle-route! db browser-id)
+               {:db         (r routes.events/handle-route! db browser-id)
                 :dispatch-n [on-route [:tools/reload-infinite-loader! browser-id]
                                       [:item-browser/request-item!    browser-id]]}
                ; B)
-               {:db (r routes.events/handle-route! db browser-id)
+               {:db         (r routes.events/handle-route! db browser-id)
                 :dispatch-n [on-route (if route-title [:ui/set-window-title! route-title])]}))))

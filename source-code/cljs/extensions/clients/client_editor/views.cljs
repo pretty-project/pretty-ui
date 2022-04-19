@@ -10,7 +10,8 @@
               [x.app-core.api          :as a :refer [r]]
               [x.app-elements.api      :as elements]
               [x.app-layouts.api       :as layouts]
-              [x.app-locales.api       :as locales]))
+              [x.app-locales.api       :as locales]
+              [x.app-ui.api            :as ui]))
 
 
 
@@ -233,14 +234,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
-       [item-editor/item-label :clients.client-editor {:name client-name}]))
+       [:<> [ui/title-sensor {:title client-name :offset -48}]
+            [item-editor/item-label :clients.client-editor {:name client-name}]]))
 
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/color-selector {:disabled?  editor-disabled?
+       [elements/color-selector ::client-colors
+                                {:disabled?  editor-disabled?
                                  :value-path [:clients :client-editor/edited-item :colors]}]))
+
+(defn- client-modified-at-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [modified-at @(a/subscribe [:item-editor/get-current-item-modified-at :clients.client-editor])]
+       [elements/label ::client-modified-at-label
+                       {:color     :muted
+                        :content   modified-at
+                        :font-size :xxs}]))
 
 
 
@@ -251,9 +263,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> ; Color and name
-       [elements/horizontal-separator {:size :xxl}]
        [client-colors]
        [client-label]
+       [client-modified-at-label]
        ; Basic info
        [basic-info-label]
        [client-name]
@@ -264,6 +276,19 @@
        ; Description
        [description-label]
        [client-additional-information]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [item-editor/header :clients.client-editor
+                      {:menu-items [{:label "Adatok" :view-id :default
+                                     :change-keys [:address :city :colors :country :description :email-address
+                                                   :first-name :last-name :phone-number :vat-no :zip-code]}]}])
 
 
 
@@ -281,31 +306,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [])
-  ;(let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
-  ;     [item-editor/item-label :clients.client-editor {:name client-name}]])
-
-(defn body-description
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (let [description @(a/subscribe [:item-editor/get-description :clients.client-editor])]))
-
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
-       [item-editor/body :clients.client-editor
-                         {:auto-title?      true
-                          :form-element     #'client-form
-                          :form-id          :clients.client-editor/form
-                          :initial-item     {:country (locales/country-native-name selected-language)}
-                          :item-actions     [:delete :duplicate :revert :save]
-                          :item-path        [:clients :client-editor/edited-item]
-                          :new-item-id      "new-client"
-                          :suggestion-keys  [:city]
-                          :suggestions-path [:clients :client-editor/suggestions]}]))
+       [:<> [elements/horizontal-separator {:size :xxl}]
+            [item-editor/body :clients.client-editor
+                              {:auto-title?      true
+                               :form-element     #'client-form
+                               :form-id          :clients.client-editor/form
+                               :initial-item     {:country (locales/country-native-name selected-language)}
+                               :item-actions     [:delete :duplicate :revert :save]
+                               :item-path        [:clients :client-editor/edited-item]
+                               :new-item-id      "new-client"
+                               :suggestion-keys  [:city]
+                               :suggestions-path [:clients :client-editor/suggestions]}]]))
 
 
 
@@ -317,5 +332,5 @@
   [surface-id]
   [layouts/layout-a surface-id
                     {:body   #'body
-                     :footer #'footer}])
-                    ;:header #'header
+                     :footer #'footer
+                     :header #'header}])

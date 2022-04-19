@@ -26,8 +26,8 @@
             get-value-f      (r element/get-element-prop db input-id :get-value-f)
             value-path       (r element/get-element-prop db input-id :value-path)
             value            (get-value-f option)]
-           {:db (as-> db % (r db/apply-item!               % value-path vector/conj-item-once value)
-                           (r input/mark-input-as-visited! % input-id))
+           {:db       (as-> db % (r db/apply-item!               % value-path vector/conj-item-once value)
+                                 (r input/mark-input-as-visited! % input-id))
             :dispatch on-collect-event})))
 
 (a/reg-event-fx
@@ -41,7 +41,7 @@
             value-path         (r element/get-element-prop db input-id :value-path)
             get-value-f        (r element/get-element-prop db input-id :get-value-f)
             value              (get-value-f option)]
-           {:db (r db/apply-item! db value-path vector/remove-item value)
+           {:db       (r db/apply-item! db value-path vector/remove-item value)
             :dispatch on-uncollect-event})))
 
 (a/reg-event-fx

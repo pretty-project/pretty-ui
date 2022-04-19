@@ -51,7 +51,7 @@
   :storage.file-uploader/cancel-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ uploader-id]]
-      {:db (r file-uploader.events/clean-uploader! db uploader-id)
+      {:db       (r file-uploader.events/clean-uploader! db uploader-id)
        :dispatch [:ui/close-popup! :storage.file-uploader/view]}))
 
 
@@ -79,7 +79,7 @@
   (fn [{:keys [db]} [_ uploader-id]]
       ; A storage--file-selector input on-change eseménye indítja el a feltöltés inicializálását.
       (if-let [any-file-selected? (file-uploader.side-effects/any-file-selected?)]
-              {:db (r file-uploader.events/init-uploader! db uploader-id)
+              {:db       (r file-uploader.events/init-uploader! db uploader-id)
                :dispatch [:storage.file-uploader/render-uploader! uploader-id]})))
 
 (a/reg-event-fx

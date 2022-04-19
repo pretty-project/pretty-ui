@@ -470,9 +470,9 @@
       (if-let [auto-focus? (r element/get-element-prop db field-id :auto-focus?)]
               {:dispatch-n (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
                                 [on-focus-event [:elements/reg-field-keypress-events! field-id]])
-               :db (as-> db % (r input/init-input! % field-id)
-                              (r field-focused     % field-id))}
-              {:db (r input/init-input! db field-id)})))
+               :db         (as-> db % (r input/init-input! % field-id)
+                                      (r field-focused     % field-id))}
+              {:db         (r input/init-input! db field-id)})))
 
 (a/reg-event-fx
   :elements/reg-field-keypress-events!
@@ -529,7 +529,7 @@
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
       (let [on-blur-event (r element/get-element-prop db field-id :on-blur)]
-           {:db (r field-blurred db field-id)
+           {:db         (r field-blurred db field-id)
             :dispatch-n [on-blur-event [:elements/remove-field-keypress-events! field-id]]})))
 
 (a/reg-event-fx
@@ -539,5 +539,5 @@
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
       (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
-           {:db (r field-focused db field-id)
+           {:db         (r field-focused db field-id)
             :dispatch-n [on-focus-event [:elements/reg-field-keypress-events! field-id]]})))

@@ -105,7 +105,7 @@
       ;    ... megjelenít egy értesítést.
       (if (r items.subs/item-downloaded? db browser-id item-id)
           ; A)
-          {:db (r update.events/update-item-failed db browser-id item-id)
+          {:db       (r update.events/update-item-failed db browser-id item-id)
            :dispatch [:ui/blow-bubble! {:body :failed-to-update}]}
           ; B)
           [:ui/blow-bubble! {:body :failed-to-update}])))
@@ -125,7 +125,7 @@
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/delete-item-response-valid? db browser-id %)]
-           {:db (r update.events/delete-item! db browser-id item-id)
+           {:db       (r update.events/delete-item! db browser-id item-id)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
                                          {:on-success [:item-browser/item-deleted       browser-id item-id]
                                           :on-failure [:item-browser/delete-item-failed browser-id item-id]
@@ -177,7 +177,7 @@
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (if (r items.subs/item-downloaded? db browser-id item-id)
           ; A)
-          {:db (r update.events/delete-item-failed db browser-id item-id)
+          {:db         (r update.events/delete-item-failed db browser-id item-id)
            :dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-delete}]]}
           ; B)
@@ -197,7 +197,7 @@
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
                                          {:on-success [:item-browser/delete-item-undid       browser-id]
                                           :on-failure [:item-browser/undo-delete-item-failed browser-id]
@@ -261,7 +261,7 @@
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-duplicate-item-query          db browser-id item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
-           {:db (r ui/fake-process! db 15)
+           {:db       (r ui/fake-process! db 15)
             :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
                                          {:on-success [:item-browser/item-duplicated       browser-id]
                                           :on-failure [:item-browser/duplicate-item-failed browser-id]

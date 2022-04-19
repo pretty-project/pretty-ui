@@ -19,7 +19,7 @@
   ; @usage
   ;  [:ui/change-theme! :light]
   (fn [{:keys [db]} [_ theme-id]]
-      {:db (r themes.events/store-selected-theme! db theme-id)
+      {:db       (r themes.events/store-selected-theme! db theme-id)
        :dispatch [:ui/theme-changed]}))
 
 (a/reg-event-fx

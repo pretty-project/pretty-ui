@@ -22,4 +22,4 @@
   (fn [{:keys [db]} [_ selector-id view-id]]
       (if-let [view-route (r routes.subs/get-view-route db selector-id view-id)]
               {:dispatch [:router/go-to! view-route]}
-              {:db (r core.events/change-view! db selector-id view-id)})))
+              {:db       (r core.events/change-view! db selector-id view-id)})))

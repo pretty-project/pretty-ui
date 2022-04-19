@@ -45,13 +45,25 @@
 
 
 
+;; -- Listaelemek megjelenítése előszűréssel ----------------------------------
+;; ----------------------------------------------------------------------------
+
+; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
+; csak az előszűrésnek megfelelő elemek jelenjenek meg.
+(defn my-filtered-body
+  []
+  [item-lister/body :my-lister {:list-element [:div "My item"]
+                                :prefilter    {:my-type/color "red"}}])
+
+
+
 ;; -- Listaelemek szűrése eseménnyel ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az [:item-lister/use-filter! ...] esemény használatával lehetséges szűrési feltételeket beállítani
+; Az [:item-lister/filter-items! ...] esemény használatával lehetséges szűrési feltételeket beállítani
 (a/reg-event-fx
   :use-my-filter!
-  [:item-lister/use-filter! :my-lister {}])
+  [:item-lister/filter-items! :my-lister {:$or [{:my-type/id "my-item"} {:your-type/id "your-item"}]}])
 
 
 
@@ -60,7 +72,7 @@
 
 (defn my-filters
   []
-  (let [my-filter-event [:item-lister/use-filter! :my-lister {}]]
+  (let [my-filter-event [:item-lister/filter-items! :my-lister {}]]
        [elements/menu-bar {:menu-items [{:label "My filter" :on-click my-filter-event}]}]))
 
 (defn my-view-with-filters
@@ -71,15 +83,12 @@
 
 
 
-;; -- Listaelemek megjelenítése előszűréssel ----------------------------------
+;; -- Előre kijelölt elemek ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A {:prefilter {...}} tulajdonság használatával beállíthatod, hogy a listában
-; csak az előszűrésnek megfelelő elemek jelenjenek meg.
-(defn my-filtered-body
-  []
-  [item-lister/body :my-lister {:list-element [:div "My item"]
-                                :prefilter    {:my-type/color "red"}}])
+; Az item-lister/body komponensének {:selected-items [...]} paraméterként lehetséges
+; azon elemek azonosítóit átadni, amely elemeket szeretnéd, ha a letöltődésük után
+; ki lennének jelölve.
 
 
 

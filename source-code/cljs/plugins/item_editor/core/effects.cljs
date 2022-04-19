@@ -43,6 +43,6 @@
                :dispatch-if [(r mount.subs/body-did-mount? db editor-id)
                              [:item-editor/request-item! editor-id]]}
               ; B)
-              {:db (r core.events/store-item-id! db editor-id item-id)
+              {:db          (r core.events/store-item-id! db editor-id item-id)
                :dispatch-if [(r mount.subs/body-did-mount? db editor-id)
                              [:item-editor/request-item! editor-id]]})))

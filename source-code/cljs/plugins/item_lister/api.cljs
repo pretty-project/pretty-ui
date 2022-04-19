@@ -23,8 +23,8 @@
               [plugins.item-lister.body.views   :as body.views]
               [plugins.item-lister.header.views :as header.views]
               [plugins.item-lister.items.events :as items.events]
-              [plugins.item-lister.items.views  :as items.views]
-              [plugins.item-lister.items.subs   :as items.subs]))
+              [plugins.item-lister.items.subs   :as items.subs]
+              [plugins.item-lister.items.views  :as items.views]))
 
 
 
@@ -45,10 +45,11 @@
 ; plugins.item-lister.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)
 
+; plugins.item-lister.items.subs
+(def get-selected-item-ids  items.subs/get-selected-item-ids)
+(def toggle-item-selection? items.subs/toggle-item-selection?)
+
 ; plugins.item-lister.items.views
 (def list-item      items.views/list-item)
 (def card-item      items.views/card-item)
 (def thumbnail-item items.views/thumbnail-item)
-
-; plugins.item-lister.items.subs
-(def toggle-item-selection? items.subs/toggle-item-selection?)

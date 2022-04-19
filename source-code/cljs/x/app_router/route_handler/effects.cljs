@@ -23,10 +23,10 @@
   (fn [{:keys [db]} [_ route-string]]
       (let [route-id          (r route-handler.subs/match-route-id       db route-string)
             previous-route-id (r route-handler.subs/get-current-route-id db)]
-           {:db (as-> db % ; Store the current route
-                           (r route-handler.events/store-current-route! % route-string)
-                           ; Make history
-                           (r route-handler.events/reg-to-history!      % route-id))
+           {:db       (as-> db % ; Store the current route
+                                 (r route-handler.events/store-current-route! % route-string)
+                                 ; Make history
+                                 (r route-handler.events/reg-to-history!      % route-id))
             :dispatch-n [; Dispatch on-leave-event if ...
                          (if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
                                  (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))

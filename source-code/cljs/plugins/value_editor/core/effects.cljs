@@ -47,7 +47,7 @@
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ editor-id editor-props]]
       (let [editor-props (core.prototypes/editor-props-prototype editor-id editor-props)]
-           {:db (r core.events/load-editor! db editor-id editor-props)
+           {:db       (r core.events/load-editor! db editor-id editor-props)
             :dispatch [:value-editor/render-editor! editor-id]})))
 
 
@@ -69,7 +69,7 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      {:db (r core.events/save-value! db editor-id)
+      {:db         (r core.events/save-value! db editor-id)
        :dispatch-n [(r core.subs/get-on-save-event db editor-id)
                     [:ui/close-popup! (core.helpers/component-id editor-id :view)]]}))
 

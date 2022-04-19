@@ -27,7 +27,7 @@
   ;  [:item-browser/init-browser! :my-browser {...}]
   (fn [{:keys [db]} [_ browser-id browser-props]]
       (let [browser-props (core.prototypes/browser-props-prototype browser-id browser-props)]
-           {:db (r core.events/init-browser! db browser-id browser-props)
+           {:db         (r core.events/init-browser! db browser-id browser-props)
             :dispatch-n [[:item-browser/reg-transfer-browser-props! browser-id browser-props]
                          [:item-browser/add-base-route!             browser-id browser-props]
                          [:item-browser/add-extended-route!         browser-id browser-props]]})))

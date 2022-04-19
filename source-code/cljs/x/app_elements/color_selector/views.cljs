@@ -77,7 +77,7 @@
                                         :on-mouse-up #(environment/blur-element!)
                                         :data-clickable true}
                                        (if (vector/nonempty? colors)
-                                           [color-stamp     selector-id {:colors colors :disabled? disabled? :size :xxl}]
+                                           [color-stamp     selector-id {:colors colors :disabled? disabled? :size :l}]
                                            [no-colors-label selector-id selector-props])]))
 
 (defn- color-selector

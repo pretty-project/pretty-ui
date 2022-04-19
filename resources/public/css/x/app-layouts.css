@@ -382,8 +382,8 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 .x-list-item-a--selection-icon {
   align-items: center;
   display: flex;
-  justify-content: center;
-  width: 48px }
+  justify-content: right;
+  width: 36px }
 
 .x-list-item-a--header {
   align-items: center;
