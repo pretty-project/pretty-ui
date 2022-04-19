@@ -9,6 +9,7 @@
               [plugins.item-lister.download.queries    :as download.queries]
               [plugins.item-lister.download.subs       :as download.subs]
               [plugins.item-lister.download.validators :as download.validators]
+              [plugins.item-lister.mount.subs          :as mount.subs]
               [x.app-core.api                          :as a :refer [r]]))
 
 
@@ -68,9 +69,15 @@
   ;      ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
   ;      van és a plugin egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
   ;      ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
+  ;
+  ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
+  ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor
+  ;   nem tárolja el a letöltött elemeket.
   (fn [{:keys [db]} [_ lister-id {:keys [on-reload]} server-response]]
-      {:db (r download.events/receive-reloaded-items! db lister-id server-response)
-       :dispatch on-reload}))
+      (if (r mount.subs/body-did-mount? db lister-id)
+          {:db (r download.events/receive-reloaded-items! db lister-id server-response)
+           :dispatch on-reload}
+          {:dispatch on-reload})))
 
 
 
@@ -107,7 +114,11 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id server-response]]
-      ; Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
-      ; hogy az a viewport területén van-e még és szükséges-e további elemeket letölteni.
-      {:db       (r download.events/receive-items! db lister-id server-response)
-       :dispatch [:tools/reload-infinite-loader! lister-id]}))
+      ; - Az elemek letöltődése után újratölti az infinite-loader komponenst, hogy megállapítsa,
+      ;   hogy az a viewport területén van-e még és szükséges-e további elemeket letölteni.
+      ;
+      ; - Ha az [:item-lister/receive-items! ...] esemény megtörténésekor a body komponens már
+      ;   nincs a React-fába csatolva, akkor az esemény nem végez műveletet!
+      (if (r mount.subs/body-did-mount? db lister-id)
+          {:db       (r download.events/receive-items! db lister-id server-response)
+           :dispatch [:tools/reload-infinite-loader! lister-id]})))

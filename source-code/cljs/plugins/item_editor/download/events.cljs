@@ -106,6 +106,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-editor/data-received data-received)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-editor/receive-item! receive-item!)

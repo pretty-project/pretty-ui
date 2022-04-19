@@ -7,6 +7,7 @@
               [plugins.item-editor.download.events     :as download.events]
               [plugins.item-editor.download.queries    :as download.queries]
               [plugins.item-editor.download.validators :as download.validators]
+              [plugins.item-editor.mount.subs          :as mount.subs]
               [x.app-core.api                          :as a :refer [r]]))
 
 
@@ -30,6 +31,17 @@
                                :on-stalled [:item-editor/receive-item!   editor-id]
                                :on-failure [:item-editor/set-error-mode! editor-id]
                                :query query :validator-f validator-f}])))
+
+(a/reg-event-fx
+  :item-editor/receive-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  (fn [{:keys [db]} [_ editor-id server-response]]
+      ; Ha az [:item-editor/receive-item! ...] esemény megtörténésekor a body komponens már
+      ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.
+      (if (r mount.subs/body-did-mount? db editor-id)
+          {:db (r download.events/receive-item! db editor-id server-response)})))
 
 (a/reg-event-fx
   :item-editor/load-item!

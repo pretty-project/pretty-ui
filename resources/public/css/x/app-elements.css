@@ -976,7 +976,7 @@ button.x-card:focus,
 .x-label[data-font-size="xxl"] .x-label--body {
   /* XXX#9811 */
   min-height: 48px }
-  
+
 .x-label[data-font-size="xxl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
 
@@ -2065,7 +2065,7 @@ button.x-card:focus,
   width: 100% }
 
 .x-combo-box--extender-button:hover {
-  background-color: var( --background-color-highlight ) }
+  background-color: var( --hover-color-highlight ) }
 
 .x-combo-box--extender-icon {
   padding-right: 8px }
@@ -2104,9 +2104,11 @@ button.x-card:focus,
   text-align: left;
   width: 100% }
 
-.x-combo-box--option[data-highlighted="true"],
-.x-combo-box--option:hover {
+.x-combo-box--option[data-highlighted="true"] {
   background-color: var( --background-color-highlight ) }
+
+.x-combo-box--option:hover {
+  background-color: var( --hover-color-highlight ) }
 
 /*** Combo-box option ***/
 
