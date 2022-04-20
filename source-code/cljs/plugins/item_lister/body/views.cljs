@@ -58,7 +58,8 @@
                            {:color       :highlight
                             :content     :no-items-to-show
                             :font-size   :xs
-                            :font-weight :bold}])))
+                            :font-weight :bold
+                            :indent      {:all :xs}}])))
 
 (defn no-items-to-show
   ; WARNING! NON-PUBLIC! DO NOT USE!

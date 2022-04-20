@@ -188,30 +188,17 @@
                                        :on-mouse-up   #(a/dispatch [:elements/hide-surface! field-id])}
                                       [components/content no-options-label]])
 
-(defn- combo-box-extender
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {:value (*)}
-  [field-id {:keys [value]}]            ; BUG#2105
-  [:button.x-combo-box--extender-button {:on-mouse-down #(.preventDefault %)
-                                         :on-mouse-up   #(a/dispatch [:elements/add-option! field-id value])}
-                                        [:i.x-combo-box--extender-icon    (param :add)]
-                                        [:div.x-combo-box--extender-label (str   value)]])
-
 (defn- combo-box-surface-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-combo-box--surface (if (engine/field-props->render-options?  field-props)
-                                 [combo-box-options           field-id field-props])
+  [:div.x-combo-box--surface ; Miért kellet ez a feltétel?
+                             ;(if (engine/field-props->render-options? field-props))
+                             [combo-box-options          field-id field-props]])
                                 ; Szükségtelen megjeleníteni a no-options-label feliratot.
                                 ;[combo-box-no-options-label field-id field-props]
-                             (if (engine/field-props->render-extender? field-props)
-                                 [combo-box-extender          field-id field-props])])
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -238,8 +225,6 @@
   ;    Default: false
   ;   :emptiable? (boolean)(opt)
   ;    Default: true
-  ;   :extendable? (boolean)(opt)
-  ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return

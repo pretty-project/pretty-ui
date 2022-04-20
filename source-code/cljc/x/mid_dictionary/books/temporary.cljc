@@ -21,6 +21,12 @@
            :content
            {:en "Content"
             :hu "Tartalom"}
+           :tag
+           {:en "Tag"
+            :hu "Címke"}
+           :tags
+           {:en "Tags"
+            :hu "Címkék"}
 
            :size-n
            {:en "Size: %"
@@ -133,7 +139,7 @@
 
            :reorder
            {:en "Reorder"
-            :hu "Egyedi sorrend"}
+            :hu "Sorrend"}
            :save-order!
            {:en "Save order"
             :hu "Sorrend mentése"}})

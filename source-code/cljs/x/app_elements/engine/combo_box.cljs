@@ -40,6 +40,13 @@
 ; rendelkeznek saját egyedi azonosítóval és egy közös group-id azonosítóval.
 ; A multi-combo-box az input-group eszközkészletet alkalmazza.
 
+; TODO
+; A multi-combo-box elem surface felületén ne jelenjenek meg azok az opciók,
+; amelyek már ki vannak választva.
+; Pl.: Most a kiválasztottak lehetnek olyan elemek, amelyek az options listában
+;      is megjelennek és olyanok is, amik a mező értékéből kerültek kiválasztásra.
+;      Ezért a kiválasztott elemek listája és az opciók listája eltérhet.
+
 
 
 ;; -- Helpers -----------------------------------------------------------------
@@ -69,11 +76,12 @@
   ;
   ; @return (boolean)
   [{:keys [get-label-f value]} option]
-  (and (string/not-pass-with? option value {:case-sensitive? false})
+  (and (not (string/pass-with? option value {:case-sensitive? false}))
        (string/starts-with? (get-label-f option)
                             (param       value)
                             {:case-sensitive? false})))
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn field-props->rendered-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -87,50 +95,10 @@
                 (conj   rendered-options option)
                 (return rendered-options)))]
          (reduce f [] options)))
+; WARNING! DEPRECATED! DO NOT USE!
 
-(defn field-props->value-extendable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:get-label-f (function)
-  ;   :options (maps in vector)
-  ;   :value (keyword)(opt)}
-  ;
-  ; @example
-  ;  (combo-box/field-props->value-extendable?
-  ;    {:get-label-f #(get % :label)
-  ;     :options     [{:label "Apple juice"   :value "apple-juice"}
-  ;                   {:label "Avocado juice" :value "avocado-juice"}]
-  ;     :value       "apple-juice"})
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (combo-box/field-props->value-extendable?
-  ;    {:get-label-f #(get % :label)
-  ;     :options     [{:label "Apple juice"   :value "apple-juice"}
-  ;                   {:label "Avocado juice" :value "avocado-juice"}]
-  ;     :value       "mango-juice"})
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [{:keys [get-label-f options value]}]
-  (not (vector/any-item-match? options #(= value (get-label-f %1)))))
 
-(defn field-props->render-extender?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:extendable? (boolean)
-  ;   :value (keyword)}
-  ;
-  ; @return (boolean)
-  [{:keys [extendable? value] :as field-props}]
-  (and (boolean                        extendable?)
-       (string/nonempty?               value)
-       (field-props->value-extendable? field-props)))
-
+; WARNING! DEPRECATED! DO NOT USE!
 (defn field-props->render-options?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -141,6 +109,7 @@
   [{:keys [options] :as field-props}]
   (and (vector/nonempty? options)
        (vector/any-item-match? options #(field-props->render-option? field-props %1))))
+; WARNING! DEPRECATED! DO NOT USE!
 
 
 
@@ -175,9 +144,22 @@
   [db [_ field-id]]
   (if-let [value (r input/get-input-value db field-id)]
           (if (string? value)
-              (return value)
+              (return  value)
               (let [get-label-f (r element/get-element-prop db field-id :get-label-f)]
                    (get-label-f value)))))
+
+(defn get-multi-combo-box-value
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (string)
+  [db [_ field-id]]
+  ; A multi-combo-box mezőbe írás közben a "," billentyű leütése hozzáadja a kiválasztott
+  ; opciók listájához a mező tartalmát, amihez szükséges a tartalom végéről a "," karaktert
+  ; eltávolítani!
+  (if-let [value (r get-combo-box-value db field-id)]
+          (string/not-ends-with! value ",")))
 
 (defn combo-box-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -364,7 +346,20 @@
         highlighted-option (r get-highlighted-option         db field-id)]
        (r input-group/stack-to-group-value! db group-id field-id highlighted-option)))
 
-(defn up-combo-box!
+(defn use-multi-combo-box-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (map)
+  [db [_ field-id]]
+  (let [value (r get-multi-combo-box-value db field-id)]
+       (if (string/nonempty? value)
+           (let [group-id (r input-group/get-input-group-id db field-id)]
+                (r input-group/stack-to-group-value! db group-id field-id value))
+           (return db))))
+
+(defn UP-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -380,9 +375,9 @@
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] prev-option-dex))
         :else (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option])))
 
-(a/reg-event-db :elements/up-combo-box! up-combo-box!)
+(a/reg-event-db :elements/UP-combo-box! UP-combo-box!)
 
-(defn down-combo-box!
+(defn DOWN-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -399,9 +394,9 @@
              (r element/set-element-subprop! db field-id [:surface-props :highlighted-option] next-option-dex))
         :else (r element/remove-element-subprop! db field-id [:surface-props :highlighted-option])))
 
-(a/reg-event-db :elements/down-combo-box! down-combo-box!)
+(a/reg-event-db :elements/DOWN-combo-box! DOWN-combo-box!)
 
-(defn enter-combo-box!
+(defn ENTER-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -415,9 +410,9 @@
       (as-> db % (r discard-option-highlighter!          % field-id)
                  (r surface-handler.events/hide-surface! % field-id))))
 
-(a/reg-event-db :elements/enter-combo-box! enter-combo-box!)
+(a/reg-event-db :elements/ENTER-combo-box! ENTER-combo-box!)
 
-(defn enter-multi-combo-box!
+(defn ENTER-multi-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -426,14 +421,31 @@
   [db [_ field-id]]
   (if (r any-option-highlighted? db field-id)
       (as-> db % (r use-highlighted-multi-combo-box-option! % field-id)
+                 (r field/empty-field-value!                % field-id)
                  (r discard-option-highlighter!             % field-id)
                  (r surface-handler.events/hide-surface!    % field-id))
-      (as-> db % (r discard-option-highlighter!             % field-id)
+      (as-> db % (r use-multi-combo-box-value!              % field-id)
+                 (r field/empty-field-value!                % field-id)
+                 (r discard-option-highlighter!             % field-id)
                  (r surface-handler.events/hide-surface!    % field-id))))
 
-(a/reg-event-db :elements/enter-multi-combo-box! enter-multi-combo-box!)
+(a/reg-event-db :elements/ENTER-multi-combo-box! ENTER-multi-combo-box!)
 
-(defn escape-combo-box!
+(defn COMMA-multi-combo-box!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (map)
+  [db [_ field-id]]
+  (as-> db % (r use-multi-combo-box-value!           % field-id)
+             (r field/empty-field-value!             % field-id)
+             (r discard-option-highlighter!          % field-id)
+             (r surface-handler.events/hide-surface! % field-id)))
+
+(a/reg-event-db :elements/COMMA-multi-combo-box! COMMA-multi-combo-box!)
+
+(defn ESC-combo-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -444,7 +456,7 @@
           (r discard-option-highlighter!          db field-id)
           (r surface-handler.events/hide-surface! db field-id)))
 
-(a/reg-event-db :elements/escape-combo-box! escape-combo-box!)
+(a/reg-event-db :elements/ESC-combo-box! ESC-combo-box!)
 
 (defn combo-box-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -469,13 +481,13 @@
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!   field-id] :prevent-default? true}]
+                                                      {:key-code 40 :on-keydown [:elements/DOWN-combo-box!  field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!     field-id] :prevent-default? true}]
+                                                      {:key-code 38 :on-keydown [:elements/UP-combo-box!    field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
-                                                      {:key-code 27 :on-keydown [:elements/escape-combo-box! field-id]}]
+                                                      {:key-code 27 :on-keydown [:elements/ESC-combo-box!   field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
-                                                      {:key-code 13 :on-keydown [:elements/enter-combo-box!  field-id]}]]}))
+                                                      {:key-code 13 :on-keydown [:elements/ENTER-combo-box! field-id]}]]}))
 
 (a/reg-event-fx
   :elements/reg-multi-combo-box-controllers!
@@ -484,13 +496,15 @@
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
       {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:elements/down-combo-box!        field-id] :prevent-default? true}]
+                                                      {:key-code 40 :on-keydown [:elements/DOWN-combo-box!        field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:elements/up-combo-box!          field-id] :prevent-default? true}]
+                                                      {:key-code 38 :on-keydown [:elements/UP-combo-box!          field-id] :prevent-default? true}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
-                                                      {:key-code 27 :on-keydown [:elements/escape-combo-box!      field-id]}]
+                                                      {:key-code 27 :on-keydown [:elements/ESC-combo-box!         field-id]}]
                     [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
-                                                      {:key-code 13 :on-keydown [:elements/enter-multi-combo-box! field-id]}]]}))
+                                                      {:key-code 13 :on-keydown [:elements/ENTER-multi-combo-box! field-id]}]
+                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 188)
+                                                      {:key-code 188 :on-keydown [:elements/COMMA-multi-combo-box! field-id]}]]}))
 
 (a/reg-event-fx
   :elements/remove-combo-box-controllers!
@@ -502,3 +516,15 @@
                     [:environment/remove-keypress-event! (key-code->keypress-id field-id 38)]
                     [:environment/remove-keypress-event! (key-code->keypress-id field-id 27)]
                     [:environment/remove-keypress-event! (key-code->keypress-id field-id 13)]]}))
+
+(a/reg-event-fx
+  :elements/remove-multi-combo-box-controllers!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  (fn [_ [_ field-id]]
+      {:dispatch-n [[:environment/remove-keypress-event! (key-code->keypress-id field-id 40)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 38)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 27)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 13)]
+                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 188)]]}))

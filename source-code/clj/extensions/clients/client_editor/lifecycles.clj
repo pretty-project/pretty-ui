@@ -14,9 +14,9 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-editor/init-editor! :clients.client-editor
-                                              {:collection-name "clients"
+                                              {:base-route      "/@app-home/clients"
+                                               :collection-name "clients"
                                                :handler-key     :clients.client-editor
                                                :item-namespace  :client
                                                :on-route        [:clients.client-editor/load-editor!]
-                                               :route-template  "/@app-home/clients/:item-id"
                                                :route-title     :clients}]})

@@ -11,5 +11,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.item-lister.routes.helpers
-(def route-id   routes.helpers/route-id)
-(def base-route routes.helpers/base-route)
+(def route-id routes.helpers/route-id)

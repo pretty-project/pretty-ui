@@ -92,6 +92,7 @@
   [field-id field-props]
   [:div.x-text-field (engine/element-attributes          field-id field-props)
                      [text-field-label                   field-id field-props]
+                     [engine/info-text-content           field-id field-props]
                      [multiline-field-textarea-container field-id field-props]
                      [text-field-invalid-message         field-id field-props]
                      [engine/element-helper              field-id field-props]])

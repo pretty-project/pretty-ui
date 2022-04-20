@@ -13,6 +13,6 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:view-selector/init-selector! :playground.view-selector
-                                                  {:on-route       [:playground.view-selector/load-selector!]
-                                                   :route-template "/@app-home/playground/:view-id"
-                                                   :route-title    "Playground"}]})
+                                                  {:base-route  "/@app-home/playground"
+                                                   :on-route    [:playground.view-selector/load-selector!]
+                                                   :route-title "Playground"}]})

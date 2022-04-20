@@ -39,7 +39,6 @@
                   :indent           {:vertical :xs}
                   :selectable?      false}])
 
-
 (defn- error-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

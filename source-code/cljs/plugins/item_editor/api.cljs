@@ -11,6 +11,7 @@
               [plugins.item-editor.download.effects]
               [plugins.item-editor.download.events]
               [plugins.item-editor.download.subs]
+              [plugins.item-editor.header.effects]
               [plugins.item-editor.header.events]
               [plugins.item-editor.header.subs]
               [plugins.item-editor.mount.effects]

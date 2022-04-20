@@ -16,18 +16,18 @@
   :item-editor/init-editor!
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:collection-name (string)
+  ;  {:base-route (string)(opt)
+  ;   :collection-name (string)
   ;   :handler-key (keyword)
   ;   :item-namespace (keyword)
   ;   :on-route (metamorphic-event)(opt)
-  ;   :route-template (string)(opt)
-  ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [:item-editor/init-editor! :my-editor {...}]
-  (fn [{:keys [db]} [_ editor-id {:keys [route-template] :as editor-props}]]
+  (fn [{:keys [db]} [_ editor-id {:keys [base-route] :as editor-props}]]
       (let [editor-props (core.prototypes/editor-props-prototype editor-id editor-props)]
            {:db         (r core.events/init-editor! db editor-id editor-props)
             :dispatch-n [[:item-editor/reg-transfer-editor-props! editor-id editor-props]
-                         (if route-template [:item-editor/add-extended-route! editor-id editor-props])]})))
+                         (if base-route [:item-editor/add-extended-route! editor-id editor-props])
+                         (if base-route [:item-editor/add-sub-route!      editor-id editor-props])]})))

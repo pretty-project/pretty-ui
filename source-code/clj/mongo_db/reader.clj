@@ -304,6 +304,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn get-specified-values
   ; @param (string) collection-name
   ; @param (keywords in vector) specified-keys
@@ -330,3 +331,4 @@
                      (reduce f result specified-keys)))]
           (let [collection (get-collection collection-name)]
                (reduce f {} collection)))))
+; WARNING! DEPRECATED! DO NOT USE!

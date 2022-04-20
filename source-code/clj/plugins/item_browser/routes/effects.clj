@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.routes.effects
-    (:require [plugins.plugin-handler.routes.effects]
-              [x.server-core.api :as a]))
+    (:require [mid-fruits.uri                      :as uri]
+              [plugins.item-browser.routes.helpers :as routes.helpers]
+              [x.server-core.api                   :as a]))
 
 
 
@@ -17,13 +18,15 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:base-route (string)
-  ;   :parent-route (string)}
-  (fn [_ [_ browser-id {:keys [base-route parent-route]}]]
-      [:plugin-handler/add-base-route! browser-id
-                                       {:base-route   base-route
-                                        :parent-route parent-route
-                                        :client-event [:item-browser/handle-route! browser-id]}]))
+  ;  {:base-route (string)}
+  (fn [_ [_ browser-id {:keys [base-route]}]]
+      (let [base-route   (uri/valid-path      base-route)
+            parent-route (uri/uri->parent-uri base-route)]
+           [:router/add-route! (routes.helpers/route-id browser-id :base)
+                               {:client-event   [:item-browser/handle-route! browser-id]
+                                :route-parent   parent-route
+                                :restricted?    true
+                                :route-template base-route}])))
 
 (a/reg-event-fx
   :item-browser/add-extended-route!
@@ -31,10 +34,13 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:extended-route (string)
-  ;   :parent-route (string)}
-  (fn [_ [_ browser-id {:keys [extended-route parent-route]}]]
-      [:plugin-handler/add-extended-route! browser-id
-                                          {:client-event   [:item-browser/handle-route! browser-id]
-                                           :extended-route extended-route
-                                           :parent-route   parent-route}]))
+  ;  {:base-route (string)}
+  (fn [_ [_ browser-id {:keys [base-route]}]]
+      (let [base-route     (uri/valid-path      base-route)
+            extended-route (str                 base-route "/:item-id")
+            parent-route   (uri/uri->parent-uri base-route)]
+           [:router/add-route! (routes.helpers/route-id browser-id :extended)
+                               {:client-event   [:item-browser/handle-route! browser-id]
+                                :route-parent   parent-route
+                                :restricted?    true
+                                :route-template extended-route}])))

@@ -26,9 +26,18 @@
   ;
   ; @param (keyword) editor-id
   ;
-  ; @return (keyword)
+  ; @return (string)
   [db [_ _]]
   (r router/get-current-route-path-param db :item-id))
+
+(defn get-derived-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (string)
+  [db [_ _]]
+  (r router/get-current-route-path-param db :view-id))
 
 
 
@@ -47,6 +56,21 @@
   ; @return (string)
   [db [_ editor-id item-id]]
   (r get-extended-route db editor-id item-id))
+
+(defn get-view-route
+  ; @param (keyword) editor-id
+  ; @param (string) item-id
+  ; @param (keyword) view-id
+  ;
+  ; @example
+  ;  (r item-editor/get-view-route db :my-editor "my-item" :my-view)
+  ;  =>
+  ;  "/@app-home/my-editor/my-item/my-view"
+  ;
+  ; @return (string)
+  [db [_ editor-id item-id view-id]]
+  (let [item-route (r get-item-route db editor-id item-id)]
+       (str item-route"/" (name view-id))))
 
 
 

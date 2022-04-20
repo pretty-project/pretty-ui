@@ -15,4 +15,4 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:view-selector/init-selector! :my-selector
-                                                  {:route-template "/@app-home/my-selector/:view-id"}]})
+                                                  {:base-route "/@app-home/my-selector"}]})

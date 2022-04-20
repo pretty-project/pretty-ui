@@ -84,9 +84,12 @@
   ; @param (map) item-props
   ;  {:icon (keyword)(opt)}
   [lister-id _ {:keys [icon]}]
-  (if icon (if-let [select-mode? @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])]
-                   [:div.x-list-item-a--icon [elements/icon {:icon icon :color :highlight}]]
-                   [:div.x-list-item-a--icon [elements/icon {:icon icon}]])))
+  (if icon (cond @(a/subscribe [:item-lister/get-meta-item lister-id :select-mode?])
+                  [:div.x-list-item-a--icon [elements/icon {:icon icon :color :highlight}]]
+                 @(a/subscribe [:item-lister/get-meta-item lister-id :reorder-mode?])
+                  [:div.x-list-item-a--icon [elements/icon {:icon :drag_handle}]]
+                  :default
+                  [:div.x-list-item-a--icon [elements/icon {:icon icon}]])))
 
 (defn- list-item-selection-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!

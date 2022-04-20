@@ -15,15 +15,14 @@
   :view-selector/init-selector!
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:on-route (metamorphic-event)(opt)
-  ;   :route-template (string)(opt)
-  ;    Az útvonalnak az ".../:view-id" kifejezésre kell végződnie!
+  ;  {:base-route (string)(opt)
+  ;   :on-route (metamorphic-event)(opt)
   ;   :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [:view-selector/init-selector! :my-selector {...}]
-  (fn [_ [_ selector-id {:keys [route-template] :as selector-props}]]
+  (fn [_ [_ selector-id {:keys [base-route] :as selector-props}]]
       (let [selector-props (core.prototypes/selector-props-prototype selector-id selector-props)]
            {:dispatch-n [[:view-selector/reg-transfer-selector-props! selector-id selector-props]
-                         (if route-template [:view-selector/add-base-route!     selector-id selector-props])
-                         (if route-template [:view-selector/add-extended-route! selector-id selector-props])]})))
+                         (if base-route [:view-selector/add-base-route!     selector-id selector-props])
+                         (if base-route [:view-selector/add-extended-route! selector-id selector-props])]})))

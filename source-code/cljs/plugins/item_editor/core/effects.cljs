@@ -23,7 +23,7 @@
   ;  [:item-editor/edit-item! :my-editor "my-item"]
   (fn [{:keys [db]} [_ editor-id item-id]]
       ; A) Ha az item-editor plugin rendelkezik az útvonal elkészítéséhez szükséges tulajdonságokkal, ...
-      ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:route-template "..."} tulajdonságot)
+      ;    (a szerver-oldali [:item-editor/init-editor! ...] esemény megkapta a {:base-route "..."} tulajdonságot)
       ;    ... akkor elkészíti az elemhez tartozó útvonalat és átírányít arra.
       ;    Ha a body komponens már a React-fába van csatolva, akkor az [:item-editor/handle-route! ...]
       ;    esemény feladata, hogy meghívja az [:item-editor/request-item ...] eseményt, mivel a body

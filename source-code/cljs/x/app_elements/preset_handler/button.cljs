@@ -54,6 +54,8 @@
                      :label            :more-options}
       :order-by     {:horizontal-align :left
                      :label            :order-by}
+      :reorder      {:horizontal-align :left
+                     :label            :reorder}
       :restore      {:horizontal-align :left
                      :label            :restore!}
       :save         {:color            :primary

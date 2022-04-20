@@ -245,8 +245,9 @@
   (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? lister-id])]
        [elements/icon-button ::quit-reorder-mode-icon-button
                              {:disabled? lister-disabled?
-                              :keypress  {:key-code 27} :preset :close
-                              :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
+                              :keypress  {:key-code 27}
+                              :on-click  [:item-lister/quit-reorder-mode! lister-id]
+                              :preset    :close}]))
 
 
 
@@ -262,6 +263,8 @@
         order-changed?   @(a/subscribe [:item-lister/order-changed?   lister-id])]
        [elements/button ::save-order-button
                         {:disabled? (or lister-disabled? (not order-changed?))
+                         :font-size :xs
+                         :indent    {:horizontal :xxs :vertical :xs}
                          :label     :save-order!
                          :on-click  [:item-lister/save-order! lister-id]
                          :preset    :primary}]))
@@ -416,8 +419,8 @@
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
        [elements/icon-button ::toggle-reorder-mode-icon-button
                              {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                              :preset    :reorder-mode
-                              :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
+                              :on-click  [:item-lister/set-reorder-mode! lister-id]
+                              :preset    :reorder}]))
 
 (defn toggle-reorder-mode-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -428,9 +431,12 @@
         lister-disabled?  @(a/subscribe [:item-lister/lister-disabled?  lister-id])
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
        [elements/button ::toggle-reorder-mode-button
-                        {:disabled? (or error-mode? lister-disabled? no-items-to-show?)
-                         :preset    :reorder-mode
-                         :on-click  [:item-lister/toggle-reorder-mode! lister-id]}]))
+                        {:disabled?   (or error-mode? lister-disabled? no-items-to-show?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:horizontal :xxs :left :xxs}
+                         :on-click    [:item-lister/set-reorder-mode! lister-id]
+                         :preset      :reorder}]))
 
 (defn toggle-reorder-mode-block
   ; @param (keyword) lister-id

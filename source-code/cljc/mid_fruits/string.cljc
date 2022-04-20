@@ -651,45 +651,6 @@
             (= (string/lower-case n)
                (string/lower-case x))))))
 
-(defn not-pass-with?
-  ; @param (string) n
-  ; @param (string) x
-  ; @param (map)(opt) options
-  ;  {:case-sensitive? (boolean)
-  ;    Default: true}
-  ;
-  ; @example
-  ;  (string/not-pass-with? "abc" "ab")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (string/not-pass-with? "abc" "abc")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (string/not-pass-with? "abc" "Abc")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (string/not-pass-with? "abc" "Abc" {:case-sensitive? false})
-  ;  =>
-  ;  false
-  ;
-  ; @return (string)
-  ([n x]
-   (not-pass-with? n x {:case-sensitive? true}))
-
-  ([n x {:keys [case-sensitive?]}]
-   (not (or (= n x)
-            (and (not case-sensitive?)
-                 (nonempty? n)
-                 (nonempty? x)
-                 (= (string/lower-case n)
-                    (string/lower-case x)))))))
-
 (defn contains-part?
   ; @param (string) n
   ; @param (string) x

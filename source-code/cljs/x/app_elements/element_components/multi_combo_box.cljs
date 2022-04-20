@@ -20,8 +20,8 @@
 ; @constant (keywords in vector)
 ;  A multi-combo-box elem mely paramétereit örökölje a combo-box elem
 (def INHERITED-FIELD-PROPS
-     [:auto-focus? :border-color :extendable? :min-width :get-label-f
-      :get-value-f :group-value :no-options-label :max-length :on-blur
+     [:auto-focus? :border-color :min-width :get-label-f
+      :get-value-f :group-value :max-length :no-options-label :on-blur
       :on-empty :on-focus :on-reset :on-select :on-type-ended
       :option-component :options-path :placeholder
       :debug])
@@ -122,7 +122,8 @@
   (let [field-id (group-id->field-id group-id)]
        (merge (select-keys group-props INHERITED-FIELD-PROPS)
               {:group-id group-id
-               :on-focus            [:elements/reg-multi-combo-box-controllers! field-id]
+               :on-blur             [:elements/remove-multi-combo-box-controllers! field-id]
+               :on-focus            [:elements/reg-multi-combo-box-controllers!    field-id]
                :select-option-event [:elements/stack-to-group-value! group-id]})))
 
 
@@ -194,10 +195,10 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.x-multi-combo-box (engine/element-attributes   group-id group-props)
-                          [multi-combo-box-chip-group  group-id group-props]
-                          [multi-combo-box-field       group-id group-props]
-                          [engine/element-helper       group-id group-props]])
+  [:div.x-multi-combo-box (engine/element-attributes  group-id group-props)
+                          [multi-combo-box-chip-group group-id group-props]
+                          [multi-combo-box-field      group-id group-props]
+                          [engine/element-helper      group-id group-props]])
 
 (defn element
   ; @param (keyword)(opt) group-id
@@ -212,8 +213,6 @@
   ;    Default: false
   ;   :emptiable? (boolean)(opt)
   ;    Default: true
-  ;   :extendable? (boolean)(opt)
-  ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return

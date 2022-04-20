@@ -15,7 +15,7 @@
 ;; -- A plugin beállítása -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin használatához szükséges megadni ...
+; A plugin használatához SZÜKSÉGES megadni ...
 ; ...
 ;
 ; A plugin használatához OPCIONÁLISAN megadható ...
@@ -23,7 +23,10 @@
 (a/reg-event-fx
   :init-my-browser!
   [:item-browser/init-browser! :my-browser
-                               {}])
+                               {:handler-key    :my-handler
+                                :on-route       [:my-event]
+                                :route-template "/@app-home/my-browser"
+                                :route-title    "My browser"}])
 
 
 

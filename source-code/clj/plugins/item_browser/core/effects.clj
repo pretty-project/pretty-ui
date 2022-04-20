@@ -16,18 +16,17 @@
   :item-browser/init-browser!
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:collection-name (string)
+  ;  {:base-route (string)(opt)
+  ;   :collection-name (string)
   ;   :handler-key (keyword)
   ;   :on-route (metamorphic-event)
-  ;   :route-template (string)
-  ;    Az útvonalnak az ".../:item-id" kifejezésre kell végződnie!
   ;   :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [:item-browser/init-browser! :my-browser {...}]
-  (fn [{:keys [db]} [_ browser-id browser-props]]
+  (fn [{:keys [db]} [_ browser-id {:keys [base-route] :as browser-props}]]
       (let [browser-props (core.prototypes/browser-props-prototype browser-id browser-props)]
            {:db         (r core.events/init-browser! db browser-id browser-props)
             :dispatch-n [[:item-browser/reg-transfer-browser-props! browser-id browser-props]
-                         [:item-browser/add-base-route!             browser-id browser-props]
-                         [:item-browser/add-extended-route!         browser-id browser-props]]})))
+                         (if base-route [:item-browser/add-base-route!     browser-id browser-props])
+                         (if base-route [:item-browser/add-extended-route! browser-id browser-props])]})))

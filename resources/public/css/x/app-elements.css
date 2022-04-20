@@ -191,7 +191,6 @@ button.x-card:focus,
 
 /***** Material icons *****/
 
-.x-combo-box--extender-icon,
 .x-checkbox--button::after,
 .x-chip--delete-button-icon,
 .x-color-selector--option::after,
@@ -2049,29 +2048,6 @@ button.x-card:focus,
 
 /*** Combo-box surface ***/
 
-/*** Combo-box extender button ***/
-
-.x-combo-box--extender-button {
-  align-items: center;
-  border-top-color: var( --border-color-highlight );
-  border-top-style: solid;
-  border-top-width: 1px;
-  color: var( --color-primary );
-  display: flex;
-  flex-direction: row;
-  height: 32px;
-  padding: 0 8px;
-  text-align: left;
-  width: 100% }
-
-.x-combo-box--extender-button:hover {
-  background-color: var( --hover-color-highlight ) }
-
-.x-combo-box--extender-icon {
-  padding-right: 8px }
-
-/*** Combo-box extender button ***/
-
 /*** Combo-box options ***/
 
 .x-combo-box--options {
@@ -3329,7 +3305,12 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: 32px;
   position: absolute;
-  top: 0 }
+  top: 0;
+
+  /* Kis méretű kijelzőkön a hosszabb placeholder szövegek több sorba törnének ... */
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap }
 
 /*** Field placeholder ***/
 
@@ -3342,9 +3323,11 @@ button.x-card:focus,
   left: 0;
   overflow: hidden;
   position: absolute;
-  top: 32px;
+  top: 36px;
   width: 100%;
-  z-index: 9999 }
+  /* XXX#0567
+   * Az #x-app-bubbles elem alatt szükséges megjeleníteni! */
+  z-index: 996 }
 
 /*** Field surface ***/
 

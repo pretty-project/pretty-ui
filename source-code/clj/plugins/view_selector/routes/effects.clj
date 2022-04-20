@@ -3,8 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.routes.effects
-    (:require [plugins.plugin-handler.routes.effects]
-              [x.server-core.api :as a]))
+    (:require [mid-fruits.uri                       :as uri]
+              [plugins.view-selector.routes.helpers :as routes.helpers]
+              [x.server-core.api                    :as a]))
 
 
 
@@ -17,13 +18,15 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:base-route (string)
-  ;   :parent-route (string)}
-  (fn [_ [_ selector-id {:keys [base-route parent-route]}]]
-      [:plugin-handler/add-base-route! selector-id
-                                       {:base-route   base-route
-                                        :parent-route parent-route
-                                        :client-event [:view-selector/handle-route! selector-id]}]))
+  ;  {:base-route (string)}
+  (fn [_ [_ selector-id {:keys [base-route]}]]
+      (let [base-route   (uri/valid-path      base-route)
+            parent-route (uri/uri->parent-uri base-route)]
+           [:router/add-route! (routes.helpers/route-id selector-id :base)
+                               {:client-event   [:view-selector/handle-route! selector-id]
+                                :restricted?    true
+                                :route-parent   parent-route
+                                :route-template base-route}])))
 
 (a/reg-event-fx
   :view-selector/add-extended-route!
@@ -31,10 +34,13 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:extended-route (string)
-  ;   :parent-route (string)}
-  (fn [_ [_ selector-id {:keys [extended-route parent-route]}]]
-      [:plugin-handler/add-extended-route! selector-id
-                                           {:client-event   [:view-selector/handle-route! selector-id]
-                                            :extended-route extended-route
-                                            :parent-route   parent-route}]))
+  ;  {:base-route (string)}
+  (fn [_ [_ selector-id {:keys [base-route]}]]
+      (let [base-route     (uri/valid-path      base-route)
+            extended-route (str                 base-route "/:view-id")
+            parent-route   (uri/uri->parent-uri base-route)]
+           [:router/add-route! (routes.helpers/route-id selector-id :extended)
+                               {:client-event   [:view-selector/handle-route! selector-id]
+                                :restricted?    true
+                                :route-parent   parent-route
+                                :route-template extended-route}])))

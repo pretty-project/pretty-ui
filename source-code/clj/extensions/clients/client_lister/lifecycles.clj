@@ -14,9 +14,9 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:item-lister/init-lister! :clients.client-lister
-                                              {:collection-name "clients"
+                                              {:base-route      "/@app-home/clients"
+                                               :collection-name "clients"
                                                :handler-key     :clients.client-lister
                                                :item-namespace  :client
                                                :on-route        [:clients.client-lister/load-lister!]
-                                               :route-template  "/@app-home/clients"
                                                :route-title     :clients}]})

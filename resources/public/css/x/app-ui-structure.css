@@ -167,6 +167,7 @@
   right: 0;
   width: 420px;
   /* BUG#4376 */
+  /* XXX#0567 */
   z-index: 997 }
 
 [data-viewport-profile="xxs"] #x-app-bubbles,

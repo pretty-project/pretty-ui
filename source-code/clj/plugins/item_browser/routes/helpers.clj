@@ -11,7 +11,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.plugins.item-browser.routes.helpers
-(def route-id       routes.helpers/route-id)
-(def base-route     routes.helpers/base-route)
-(def extended-route routes.helpers/extended-route)
-(def parent-route   routes.helpers/parent-route)
+(def route-id routes.helpers/route-id)

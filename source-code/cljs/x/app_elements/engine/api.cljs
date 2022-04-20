@@ -41,12 +41,10 @@
 (def get-checkable-props                 checkable/get-checkable-props)
 
 ; x.app-elements.engine.combo-box
-(def field-props->render-option?    combo-box/field-props->render-option?)
-(def field-props->rendered-options  combo-box/field-props->rendered-options)
-(def field-props->value-extendable? combo-box/field-props->value-extendable?)
-(def field-props->render-extender?  combo-box/field-props->render-extender?)
-(def field-props->render-options?   combo-box/field-props->render-options?)
-(def get-combo-box-props            combo-box/get-combo-box-props)
+(def field-props->render-option?   combo-box/field-props->render-option?)
+(def field-props->rendered-options combo-box/field-props->rendered-options)
+(def field-props->render-options?  combo-box/field-props->render-options?)
+(def get-combo-box-props           combo-box/get-combo-box-props)
 
 ; x.app-elements.engine.countable
 (def countable-decrease-attributes countable/countable-decrease-attributes)

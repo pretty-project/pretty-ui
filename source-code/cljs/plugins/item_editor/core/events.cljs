@@ -58,7 +58,8 @@
   [db [_ editor-id]]
   (let [item-path        (r mount.subs/get-body-prop db editor-id :item-path)
         suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)]
-       (-> db (dissoc-in item-path)
+       (-> db (dissoc-in [:plugins :plugin-handler/meta-items editor-id :data-received?])
+              (dissoc-in item-path)
               (dissoc-in suggestions-path))))
 
 

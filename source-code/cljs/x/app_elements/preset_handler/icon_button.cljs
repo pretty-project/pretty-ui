@@ -47,7 +47,7 @@
       :menu-bar           {:icon        :more_horiz}
       :next               {:icon        :arrow_forward_ios}
       :prev               {:icon        :arrow_back_ios}
-      :reorder-mode       {:icon        :reorder}
+      :reorder            {:icon        :reorder}
       :restore            {:icon        :restart_alt}
       :save               {:color       :primary
                            :icon        :save}
