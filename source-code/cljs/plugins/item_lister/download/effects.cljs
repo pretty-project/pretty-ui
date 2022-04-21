@@ -3,13 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.effects
-    (:require [plugins.item-lister.core.events         :as core.events]
+    (:require [plugins.item-lister.body.subs           :as body.subs]
+              [plugins.item-lister.core.events         :as core.events]
               [plugins.item-lister.core.subs           :as core.subs]
               [plugins.item-lister.download.events     :as download.events]
               [plugins.item-lister.download.queries    :as download.queries]
               [plugins.item-lister.download.subs       :as download.subs]
               [plugins.item-lister.download.validators :as download.validators]
-              [plugins.item-lister.mount.subs          :as mount.subs]
               [x.app-core.api                          :as a :refer [r]]))
 
 
@@ -74,7 +74,7 @@
   ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor
   ;   nem tárolja el a letöltött elemeket.
   (fn [{:keys [db]} [_ lister-id {:keys [on-reload]} server-response]]
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           {:db (r download.events/receive-reloaded-items! db lister-id server-response)
            :dispatch on-reload}
           {:dispatch on-reload})))
@@ -119,6 +119,6 @@
       ;
       ; - Ha az [:item-lister/receive-items! ...] esemény megtörténésekor a body komponens már
       ;   nincs a React-fába csatolva, akkor az esemény nem végez műveletet!
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           {:db       (r download.events/receive-items! db lister-id server-response)
            :dispatch [:tools/reload-infinite-loader! lister-id]})))

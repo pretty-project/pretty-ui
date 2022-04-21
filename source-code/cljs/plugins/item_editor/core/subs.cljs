@@ -5,8 +5,8 @@
 (ns plugins.item-editor.core.subs
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.vector                 :as vector]
+              [plugins.item-editor.body.subs     :as body.subs]
               [plugins.item-editor.core.helpers  :as core.helpers]
-              [plugins.item-editor.mount.subs    :as mount.subs]
               [plugins.item-editor.transfer.subs :as transfer.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
               [x.app-activities.api              :as activities]
@@ -26,6 +26,7 @@
 (def get-current-item-id   core.subs/get-current-item-id)
 (def get-current-item      core.subs/get-current-item)
 (def export-current-item   core.subs/export-current-item)
+(def get-current-view-id   core.subs/get-current-view-id)
 
 
 
@@ -88,8 +89,8 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  (= (r get-current-item-id      db editor-id)
-     (r mount.subs/get-body-prop db editor-id :new-item-id)))
+  (= (r get-current-item-id     db editor-id)
+     (r body.subs/get-body-prop db editor-id :new-item-id)))
 
 (defn get-editor-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,7 +116,7 @@
   ;       a {:route-title ...} paraméterként átadott címkét az automatikus címkére.
   ;   Ezért, ha az [:item-editor/handle-route! ...] esemény megtörténésekor a body komponens,
   ;   már a React-fába lenne csatolva, nem volna szükséges beállítani a route-title címkét!
-  (if-let [auto-title? (r mount.subs/get-body-prop db editor-id :auto-title?)]
+  (if-let [auto-title? (r body.subs/get-body-prop db editor-id :auto-title?)]
           (if-let [new-item? (r new-item? db editor-id)]
                   (let [item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)]
                        (core.helpers/add-item-label  editor-id item-namespace))
@@ -148,7 +149,7 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  (let [suggestion-keys (r mount.subs/get-body-prop db editor-id :suggestion-keys)]
+  (let [suggestion-keys (r body.subs/get-body-prop db editor-id :suggestion-keys)]
        (vector/nonempty? suggestion-keys)))
 
 (defn download-item?
@@ -226,6 +227,12 @@
 ; @usage
 ;  [:item-editor/get-current-item-modified-at :my-editor]
 (a/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/get-current-view-id :my-editor]
+(a/reg-sub :item-editor/get-current-view-id get-current-view-id)
 
 ; @param (keyword) editor-id
 ;

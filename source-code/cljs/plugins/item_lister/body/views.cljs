@@ -176,6 +176,8 @@
   ; @param (map) body-props
   ;  {:download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   :item-actions (keywords in vector)(opt)
+  ;    [:delete, :duplicate]
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)

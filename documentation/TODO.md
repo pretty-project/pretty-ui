@@ -30,10 +30,11 @@
 
 
 
-- Mi lenne ha a ui névterek nem tartalmaznának design-t?
+- Mi lenne ha az X (ui) névterek nem tartalmaznának design-t?
   A popup csak egy fekete layer lenne. A notification csak egy pozicio lenne ...
   És a layouts-ban volna benne a notification-bubble és boxed-popup, ...
   layout-a -> boxed-surface, layout-b -> card-surface, flip-popup, boxed-popup, ...
+  Akkor az elements is elhagyhatná az x-et
 
 - Az item editor fülei ne csak a változást jelezzék, ha az egyik mező required-warning állapotban van,
   akkor legyen warning badge a fülön

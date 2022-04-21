@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.header.config)
+(ns plugins.item-editor.body.config)
 
 
 
@@ -10,4 +10,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keyword)
-(def DEFAULT-VIEW-ID :default)
+(def DEFAULT-VIEW-ID :edit)

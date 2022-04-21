@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.update.effects
-    (:require [plugins.item-editor.core.events       :as core.events]
+    (:require [plugins.item-editor.body.subs         :as body.subs]
+              [plugins.item-editor.core.events       :as core.events]
               [plugins.item-editor.core.subs         :as core.subs]
-              [plugins.item-editor.mount.subs        :as mount.subs]
               [plugins.item-editor.routes.subs       :as routes.subs]
               [plugins.item-editor.transfer.subs     :as transfer.subs]
               [plugins.item-editor.update.events     :as update.events]
@@ -132,7 +132,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db editor-id)
+      (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-save}]]}
@@ -202,7 +202,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db editor-id)
+      (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-delete}]]}
@@ -268,7 +268,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db editor-id)
+      (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.events
-    (:require [plugins.item-browser.download.subs :as download.subs]
-              [plugins.item-browser.mount.subs    :as mount.subs]
+    (:require [plugins.item-browser.body.subs     :as body.subs]
+              [plugins.item-browser.download.subs :as download.subs]
               [x.app-core.api                     :refer [r]]
               [x.app-db.api                       :as db]))
 
@@ -24,7 +24,7 @@
   ; XXX#3907
   ; Az item-lister pluginnal megegyezően az item-browser plugin is névtér nélkül tárolja a letöltött dokumentumot
   (let [resolver-id (r download.subs/get-resolver-id db browser-id :get-item)
-        item-path   (r mount.subs/get-body-prop      db browser-id :item-path)
+        item-path   (r body.subs/get-body-prop       db browser-id :item-path)
         document    (-> server-response resolver-id db/document->non-namespaced-document)]
        (assoc-in db item-path document)))
 

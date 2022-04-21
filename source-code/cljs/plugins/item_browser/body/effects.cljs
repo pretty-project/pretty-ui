@@ -2,9 +2,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.mount.effects
-    (:require [plugins.item-browser.mount.events :as mount.events]
-              [x.app-core.api                    :as a :refer [r]]))
+(ns plugins.item-browser.body.effects
+    (:require [plugins.item-browser.body.events :as body.events]
+              [x.app-core.api                   :as a :refer [r]]))
 
 
 
@@ -18,7 +18,7 @@
   ; @param (keyword) browser-id
   ; @param (map) body-props
   (fn [{:keys [db]} [_ browser-id body-props]]
-      {:db       (r mount.events/body-did-mount db browser-id body-props)
+      {:db       (r body.events/body-did-mount db browser-id body-props)
        :dispatch [:item-browser/request-item! browser-id]}))
 
 
@@ -32,4 +32,4 @@
   ;
   ; @param (keyword) browser-id
   (fn [{:keys [db]} [_ browser-id]]
-      {:db (r mount.events/body-will-unmount db browser-id)}))
+      {:db (r body.events/body-will-unmount db browser-id)}))

@@ -4,11 +4,11 @@
 
 (ns plugins.item-lister.download.events
     (:require [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.core.events   :as core.events]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.item-lister.items.events  :as items.events]
               [plugins.item-lister.items.subs    :as items.subs]
-              [plugins.item-lister.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]))
 
@@ -37,7 +37,7 @@
   ; @return (map)
   [db [_ lister-id server-response]]
   (let [resolver-id (r download.subs/get-resolver-id db lister-id :get-items)
-        items-path  (r mount.subs/get-body-prop      db lister-id :items-path)
+        items-path  (r body.subs/get-body-prop       db lister-id :items-path)
         documents   (get-in server-response [resolver-id :documents])
         ; XXX#3907
         ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
@@ -78,7 +78,7 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
-  (if-let [selected-item-ids (r mount.subs/get-body-prop db lister-id :selected-items)]
+  (if-let [selected-item-ids (r body.subs/get-body-prop db lister-id :selected-items)]
           (let [selected-item-dexes (r items.subs/get-item-dexes db lister-id selected-item-ids)]
                db)
           ;(return db)))
@@ -107,7 +107,7 @@
   ; @return (map)
   [db [_ lister-id server-response]]
   (let [resolver-id (r download.subs/get-resolver-id db lister-id :get-items)
-        items-path  (r mount.subs/get-body-prop      db lister-id :items-path)
+        items-path  (r body.subs/get-body-prop       db lister-id :items-path)
         documents   (get-in server-response [resolver-id :documents])
         ; XXX#3907
         documents (db/collection->non-namespaced-collection documents)]

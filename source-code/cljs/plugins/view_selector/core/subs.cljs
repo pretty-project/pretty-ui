@@ -6,7 +6,7 @@
     (:require [mid-fruits.candy                 :refer [return]]
               [mid-fruits.vector                :as vector]
               [plugins.plugin-handler.core.subs :as core.subs]
-              [plugins.view-selector.mount.subs :as mount.subs]
+              [plugins.view-selector.body.subs  :as body.subs]
               [x.app-core.api                   :as a :refer [r]]))
 
 
@@ -30,9 +30,9 @@
   ;
   ; @return (keyword)
   [db [_ selector-id]]
-  (let [selected-view-id (r get-meta-item db selector-id :view-id)
-        default-view-id  (r mount.subs/get-body-prop db selector-id :default-view-id)]
-       (if-let [allowed-view-ids (r mount.subs/get-body-prop db selector-id :allowed-view-ids)]
+  (let [selected-view-id (r get-meta-item           db selector-id :view-id)
+        default-view-id  (r body.subs/get-body-prop db selector-id :default-view-id)]
+       (if-let [allowed-view-ids (r body.subs/get-body-prop db selector-id :allowed-view-ids)]
                ; Ha az {:allowed-view-ids [...]} beállítás használatban van ...
                (or ; ... és a selected-view-id megtalálható az allowed-view-ids vektorban,
                    ;     akkor a visszatérési érték a selected-view-id.

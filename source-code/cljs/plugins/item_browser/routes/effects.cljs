@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.routes.effects
-    (:require [plugins.item-browser.mount.subs    :as mount.subs]
+    (:require [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.routes.events :as routes.events]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [x.app-core.api                     :as a :refer [r]]))
@@ -26,7 +26,7 @@
       ; B) ... NINCS a React-fába csatolva, akkor
       (let [on-route    (r transfer.subs/get-transfer-item db browser-id :on-route)
             route-title (r transfer.subs/get-transfer-item db browser-id :route-title)]
-           (if (r mount.subs/body-did-mount? db browser-id)
+           (if (r body.subs/body-did-mount? db browser-id)
                ; A)
                {:db         (r routes.events/handle-route! db browser-id)
                 :dispatch-n [on-route [:tools/reload-infinite-loader! browser-id]

@@ -5,8 +5,8 @@
 (ns plugins.item-lister.core.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-lister.body.subs      :as body.subs]
               [plugins.item-lister.core.subs      :as core.subs]
-              [plugins.item-lister.mount.subs     :as mount.subs]
               [plugins.plugin-handler.core.events :as core.events]
               [x.app-core.api                     :as a :refer [r]]))
 
@@ -175,7 +175,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (let [items-path (r mount.subs/get-body-prop db lister-id :items-path)]
+  (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
        (-> db (dissoc-in items-path)
               (dissoc-in [:plugins :plugin-handler/meta-items lister-id :document-count])
               (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-count])
@@ -202,7 +202,7 @@
   ; ... a listaelemek letöltésekor a szerver nem kapná meg az {:order-by ...} tulajdonság értékét!
   (if-let [order-by (r core.subs/get-meta-item db lister-id :order-by)]
           (return db)
-          (let [order-by-options (r mount.subs/get-body-prop db lister-id :order-by-options)]
+          (let [order-by-options (r body.subs/get-body-prop db lister-id :order-by-options)]
                (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] (first order-by-options)))))
 
 

@@ -3,11 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.effects
-    (:require [plugins.item-browser.core.events  :as core.events]
+    (:require [plugins.item-browser.body.subs    :as body.subs]
+              [plugins.item-browser.core.events  :as core.events]
               [plugins.item-browser.core.subs    :as core.subs]
               [plugins.item-browser.items.events :as items.events]
               [plugins.item-browser.items.subs   :as items.subs]
-              [plugins.item-browser.mount.subs   :as mount.subs]
               [plugins.item-browser.routes.subs  :as routes.subs]
               [x.app-core.api                    :as a :refer [r]]))
 
@@ -55,7 +55,7 @@
   ; @usage
   ;  [:item-browser/go-home! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
-      (let [root-item-id (r mount.subs/get-body-prop db browser-id :root-item-id)]
+      (let [root-item-id (r body.subs/get-body-prop db browser-id :root-item-id)]
            [:item-browser/browse-item! browser-id root-item-id])))
 
 (a/reg-event-fx

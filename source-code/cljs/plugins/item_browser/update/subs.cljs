@@ -4,8 +4,8 @@
 
 (ns plugins.item-browser.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
+              [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.core.subs     :as core.subs]
-              [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.plugin-handler.update.subs :as update.subs]
               [x.app-core.api                     :refer [r]]))
@@ -64,11 +64,11 @@
   ;
   ; - A vizsgálat elvégzéséhez szükséges, ...
   ;   ... hogy a body komponens a React-fába legyen csatolva (szükséges a :path-key tulajdonság olvasásához)!
-  (boolean (if (r mount.subs/body-did-mount? db browser-id)
+  (boolean (if (r body.subs/body-did-mount? db browser-id)
                (let [mutation-name   (r get-mutation-name               db browser-id action-key)
                      current-item-id (r core.subs/get-current-item-id   db browser-id)
                      item-namespace  (r transfer.subs/get-transfer-item db browser-id :item-namespace)
-                     path-key        (r mount.subs/get-body-prop        db browser-id :path-key)
+                     path-key        (r body.subs/get-body-prop         db browser-id :path-key)
                      path-key        (keyword/add-namespace item-namespace path-key)
                      id-key          (keyword/add-namespace item-namespace :id)
                      document        ((symbol mutation-name) server-response)]

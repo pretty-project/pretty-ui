@@ -61,8 +61,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-lister/header :clients.client-lister
-                      {:item-actions [:delete :duplicate]
-                       :new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
+                      {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
 
 
 
@@ -76,7 +75,8 @@
        [clients-items-info-label]
        [elements/horizontal-separator {:size :xxl}]
        [item-lister/body :clients.client-lister
-                         {:items-path   [:clients :client-lister/downloaded-items]
+                         {:item-actions [:delete :duplicate]
+                          :items-path   [:clients :client-lister/downloaded-items]
                           :list-element #'client-item
                           :search-keys  [:name :email-address]}]])
 

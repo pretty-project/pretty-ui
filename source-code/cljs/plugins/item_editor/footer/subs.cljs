@@ -2,18 +2,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.mount.subs
-    (:require [plugins.plugin-handler.mount.subs :as mount.subs]
-              [x.app-core.api                    :as a]))
+(ns plugins.item-editor.footer.subs
+    (:require [plugins.plugin-handler.footer.subs :as footer.subs]
+              [x.app-core.api                     :as a]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.mount.subs
-(def get-body-prop   mount.subs/get-body-prop)
-(def body-did-mount? mount.subs/body-did-mount?)
+; plugins.plugin-handler.footer.subs
+(def get-footer-prop      footer.subs/get-footer-prop)
+(def footer-props-stored? footer.subs/footer-props-stored?)
+(def footer-did-mount?    footer.subs/footer-did-mount?)
 
 
 
@@ -21,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :view-selector/get-body-prop get-body-prop)
+(a/reg-sub :item-editor/get-footer-prop get-footer-prop)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :view-selector/body-did-mount? body-did-mount?)
+(a/reg-sub :item-editor/footer-props-stored? footer-props-stored?)

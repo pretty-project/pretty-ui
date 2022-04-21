@@ -4,7 +4,7 @@
 
 (ns plugins.item-browser.core.subs
     (:require [mid-fruits.keyword                 :as keyword]
-              [plugins.item-browser.mount.subs    :as mount.subs]
+              [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
               [plugins.plugin-handler.core.subs   :as core.subs]
@@ -72,7 +72,7 @@
   ; plugin body komponensének React-fába csatolása előtt, amikor még NEM elérhetők az {:item-path ...}
   ; és {:label-key ...} paraméterek a Re-Frame adatbázisban, ezért szükséges ezen paraméterek meglétének
   ; vizsgálata!
-  (let [label-key (r mount.subs/get-body-prop db browser-id :label-key)]
+  (let [label-key (r body.subs/get-body-prop db browser-id :label-key)]
        (if-let [current-item (r get-current-item db browser-id)]
                (label-key current-item))))
 
@@ -84,7 +84,7 @@
   ; @return (maps in vector)
   [db [_ browser-id]]
   ; XXX#6487
-  (let [path-key (r mount.subs/get-body-prop db browser-id :path-key)]
+  (let [path-key (r body.subs/get-body-prop db browser-id :path-key)]
        (if-let [current-item (r get-current-item db browser-id)]
                (-> current-item path-key vec))))
 

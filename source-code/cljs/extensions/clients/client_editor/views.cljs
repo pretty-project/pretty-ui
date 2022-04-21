@@ -286,7 +286,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-editor/header :clients.client-editor
-                      {:menu-items [{:label "Adatok" :view-id :default
+                      {:menu-items [{:label "Adatok" :view-id :edit
                                      :change-keys [:address :city :colors :country :description :email-address
                                                    :first-name :last-name :phone-number :vat-no :zip-code]}]}])
 
@@ -312,7 +312,9 @@
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
             [item-editor/body :clients.client-editor
-                              {:auto-title?      true
+                              {:allowed-view-ids [:edit]
+                               :auto-title?      true
+                               :default-view-id  :edit
                                :form-element     #'client-form
                                :form-id          :clients.client-editor/form
                                :initial-item     {:country (locales/country-native-name selected-language)}

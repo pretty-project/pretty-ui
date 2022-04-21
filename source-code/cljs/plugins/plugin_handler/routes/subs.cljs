@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.routes.subs
-    (:require [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [plugins.item-editor.transfer.subs :as transfer.subs]
+              [x.app-core.api                    :refer [r]]
+              [x.app-router.api                  :as router]))
 
 
 
@@ -25,3 +27,28 @@
   ; ... akkor a {:base-route "..."} tulajdonságból előállítható az extended-route útvonal.
   (if-let [base-route (r transfer.subs/get-transfer-item db plugin-id :base-route)]
           (str base-route "/" item-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (string)
+  [db [_ _]]
+  (if-let [item-id (r router/get-current-route-path-param db :item-id)]
+          (return item-id)))
+
+(defn get-derived-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (keyword)
+  [db [_ _]]
+  (if-let [view-id (r router/get-current-route-path-param db :view-id)]
+          (keyword view-id)))

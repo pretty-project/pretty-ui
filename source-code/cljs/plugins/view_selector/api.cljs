@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.api
-    (:require [plugins.view-selector.core.effects]
-              [plugins.view-selector.mount.events]
-              [plugins.view-selector.mount.subs]
+    (:require [plugins.view-selector.body.events]
+              [plugins.view-selector.body.subs]
+              [plugins.view-selector.core.effects]
               [plugins.view-selector.routes.effects]
               [plugins.view-selector.routes.events]
               [plugins.view-selector.transfer.subs]

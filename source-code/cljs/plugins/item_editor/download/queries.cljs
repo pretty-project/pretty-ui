@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.queries
-    (:require [plugins.item-editor.core.subs     :as core.subs]
+    (:require [plugins.item-editor.body.subs     :as body.subs]
+              [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
-              [plugins.item-editor.mount.subs    :as mount.subs]
               [x.app-core.api                    :refer [r]]))
 
 
@@ -22,7 +22,7 @@
   ;  {:editor-id (keyword)
   ;   :suggestion-keys (keywords in vector)}
   [db [_ editor-id]]
-  (let [suggestion-keys (r mount.subs/get-body-prop db editor-id :suggestion-keys)]
+  (let [suggestion-keys (r body.subs/get-body-prop db editor-id :suggestion-keys)]
        (merge (r core.subs/get-meta-item db editor-id :default-query-params)
               {:editor-id       editor-id
                :suggestion-keys suggestion-keys})))

@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.subs
-    (:require [plugins.plugin-handler.mount.subs    :as mount.subs]
+    (:require [plugins.plugin-handler.body.subs     :as body.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
               [x.app-core.api                       :refer [r]]
               [x.app-db.api                         :as db]
@@ -96,7 +96,7 @@
   ; @return (map)
   [db [_ plugin-id]]
   ; XXX#6487
-  (if-let [item-path (r mount.subs/get-body-prop db plugin-id :item-path)]
+  (if-let [item-path (r body.subs/get-body-prop db plugin-id :item-path)]
           (get-in db item-path)))
 
 (defn export-current-item
@@ -109,3 +109,17 @@
   (let [item-namespace (r transfer.subs/get-transfer-item db plugin-id :item-namespace)
         current-item   (r get-current-item                db plugin-id)]
        (db/document->namespaced-document current-item item-namespace)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-current-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (keyword)
+  [db [_ plugin-id]]
+  (r get-meta-item db plugin-id :view-id))

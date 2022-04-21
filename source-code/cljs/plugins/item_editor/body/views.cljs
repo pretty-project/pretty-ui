@@ -191,8 +191,10 @@
 (defn body
   ; @param (keyword) editor-id
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
+  ;  {:allowed-view-ids (keywords in vector)(opt)
+  ;   :auto-title? (boolean)(opt)
   ;    Default: false
+  ;   :default-view-id (keyword)(opt)
   ;   :form-element (metamorphic-content)
   ;   :initial-item (map)(opt)
   ;   :item-actions (keywords in vector)(opt)

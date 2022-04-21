@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.download.effects
-    (:require [plugins.item-browser.core.subs           :as core.subs]
-              [plugins.item-browser.mount.subs          :as mount.subs]
+    (:require [plugins.item-browser.body.subs           :as body.subs]
+              [plugins.item-browser.core.subs           :as core.subs]
               [plugins.item-browser.download.events     :as download.events]
               [plugins.item-browser.download.queries    :as download.queries]
               [plugins.item-browser.download.validators :as download.validators]
@@ -60,9 +60,9 @@
       ;
       ; - Ha az [:item-browser/receive-item! ...] esemény megtörténésekor a body komponens már nincs
       ;   a React-fába csatolva, akkor az esemény nem végez műveletet.
-      (if (r mount.subs/body-did-mount? db browser-id)
+      (if (r body.subs/body-did-mount? db browser-id)
           (let [db (r download.events/receive-item! db browser-id server-response)]
-               (if-let [auto-title? (r mount.subs/get-body-prop db browser-id :auto-title?)]
+               (if-let [auto-title? (r body.subs/get-body-prop db browser-id :auto-title?)]
                        {:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db browser-id)]
                                                     [:ui/set-window-title! item-label])]}
                        {:db db})))))

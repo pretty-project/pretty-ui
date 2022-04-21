@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.queries
-    (:require [plugins.item-lister.core.subs     :as core.subs]
+    (:require [plugins.item-lister.body.subs     :as body.subs]
+              [plugins.item-lister.core.subs     :as core.subs]
               [plugins.item-lister.download.subs :as download.subs]
-              [plugins.item-lister.mount.subs    :as mount.subs]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -28,10 +28,10 @@
   ;   :search-term (string)}
   [db [_ lister-id]]
   (merge (r core.subs/get-meta-item db lister-id :default-query-params)
-         {:download-limit        (r mount.subs/get-body-prop            db lister-id :download-limit)
+         {:download-limit        (r body.subs/get-body-prop             db lister-id :download-limit)
           :order-by              (r core.subs/get-meta-item             db lister-id :order-by)
           :reload-items?         (r core.subs/get-meta-item             db lister-id :reload-mode?)
-          :search-keys           (r mount.subs/get-body-prop            db lister-id :search-keys)
+          :search-keys           (r body.subs/get-body-prop             db lister-id :search-keys)
           :search-term           (r core.subs/get-meta-item             db lister-id :search-term)
           :downloaded-item-count (r core.subs/get-downloaded-item-count db lister-id)
           :filter-pattern        (r core.subs/get-filter-pattern        db lister-id)}))

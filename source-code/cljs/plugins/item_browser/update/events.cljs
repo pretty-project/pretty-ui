@@ -5,9 +5,9 @@
 (ns plugins.item-browser.update.events
     (:require [plugins.item-browser.backup.events :as backup.events]
               [plugins.item-browser.backup.subs   :as backup.subs]
+              [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-browser.items.subs    :as items.subs]
-              [plugins.item-browser.mount.subs    :as mount.subs]
               [x.app-core.api                     :refer [r]]
               [x.app-ui.api                       :as ui]))
 
@@ -25,8 +25,8 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id item-changes]]
-  (let [items-path (r mount.subs/get-body-prop db browser-id :items-path)
-        item-dex   (r items.subs/get-item-dex  db browser-id item-id)]
+  (let [items-path (r body.subs/get-body-prop db browser-id :items-path)
+        item-dex   (r items.subs/get-item-dex db browser-id item-id)]
        (update-in db (conj items-path item-dex) merge item-changes)))
 
 (defn revert-changes!
@@ -37,7 +37,7 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
-  (let [items-path  (r mount.subs/get-body-prop    db browser-id :items-path)
+  (let [items-path  (r body.subs/get-body-prop     db browser-id :items-path)
         backup-item (r backup.subs/get-backup-item db browser-id item-id)
         item-dex    (r items.subs/get-item-dex     db browser-id item-id)]
        (assoc-in db (conj items-path item-dex) backup-item)))

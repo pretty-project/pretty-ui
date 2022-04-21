@@ -5,8 +5,8 @@
 (ns plugins.item-browser.core.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.items.events  :as items.events]
-              [plugins.item-browser.mount.subs    :as mount.subs]
               [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
               [plugins.plugin-handler.core.events :as core.events]
               [x.app-core.api                     :as a :refer [r]]))
@@ -47,31 +47,6 @@
   (-> db (assoc-in [:plugins :plugin-handler/meta-items browser-id                       :item-id] item-id)
          (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :item-id] item-id)))
 
-(defn use-root-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (map)
-  [db [_ browser-id]]
-  ; XXX#5006
-  ;
-  ; Ha az [:item-browser/body-did-mount ...] esemény megtörténtekor az aktuálisan böngészett
-  ; elem azonosítója ...
-  ;
-  ; A) ... már eltárolásra került, akkor NEM használja a body komponens {:root-item-id "..."}
-  ;        paraméterének értékét.
-  ;
-  ; B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:root-item-id "..."}
-  ;        tulajdonságot, akkor azt eltárolja az aktuálisan böngészett elem azonosítójaként.
-  (if-let [item-id (get-in db [:plugins :plugin-handler/meta-items browser-id :item-id])]
-          ; A)
-          (return db)
-          (if-let [root-item-id (r mount.subs/get-body-prop db browser-id :root-item-id)]
-                  ; B)
-                  (r set-current-item-id! db browser-id root-item-id)
-                  (return db))))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -84,7 +59,7 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  (let [item-path (r mount.subs/get-body-prop db browser-id :item-path)]
+  (let [item-path (r body.subs/get-body-prop db browser-id :item-path)]
        (dissoc-in db item-path)))
 
 

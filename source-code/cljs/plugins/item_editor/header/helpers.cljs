@@ -42,9 +42,9 @@
   ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)}
   [editor-id {:keys [label view-id] :as menu-item}]
-  (let [badge-color       (header-menu-item-badge-color editor-id menu-item)
-        selected-view-id @(a/subscribe [:item-editor/get-selected-view-id editor-id])]
-       {:active?     (= view-id selected-view-id)
+  (let [badge-color      (header-menu-item-badge-color editor-id menu-item)
+        current-view-id @(a/subscribe [:item-editor/get-current-view-id editor-id])]
+       {:active?     (= view-id current-view-id)
         :badge-color badge-color
         :label       label
         :on-click    [:item-editor/change-view! editor-id view-id]}))

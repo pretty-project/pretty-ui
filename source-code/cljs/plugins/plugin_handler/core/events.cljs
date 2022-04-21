@@ -44,3 +44,28 @@
   ; @return (map)
   [db [_ plugin-id keep-keys]]
   (update-in db [:plugins :plugin-handler/meta-items] select-keys keep-keys))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id item-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :item-id] item-id))
+
+(defn set-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) view-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id view-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id] view-id))

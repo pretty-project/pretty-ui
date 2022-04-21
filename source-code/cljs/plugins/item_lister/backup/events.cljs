@@ -4,8 +4,8 @@
 
 (ns plugins.item-lister.backup.events
     (:require [mid-fruits.vector                    :as vector]
+              [plugins.item-lister.body.subs        :as body.subs]
               [plugins.item-lister.core.subs        :as core.subs]
-              [plugins.item-lister.mount.subs       :as mount.subs]
               [plugins.plugin-handler.backup.events :as backup.events]
               [x.app-core.api                       :as a :refer [r]]))
 
@@ -34,8 +34,8 @@
   ;   a művelet visszavonása lehetőséget választja.
   ;
   ; - A (kijelölt) elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
-  (let [items-path     (r mount.subs/get-body-prop db plugin-id :items-path)
-        selected-items (r core.subs/get-meta-item  db plugin-id :selected-items)]
+  (let [items-path     (r body.subs/get-body-prop db plugin-id :items-path)
+        selected-items (r core.subs/get-meta-item db plugin-id :selected-items)]
        (letfn [(f [db item-dex]
                   (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))
                         item    (get-in db (vector/conj-item    items-path item-dex))]

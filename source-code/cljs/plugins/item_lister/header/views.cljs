@@ -183,7 +183,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
+  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :delete)
            (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
                    [delete-selected-items-icon-button lister-id]
@@ -226,7 +226,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [item-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
+  (let [item-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
        (if (vector/contains-item? item-actions :duplicate)
            (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
                    [duplicate-selected-items-icon-button lister-id]
@@ -399,7 +399,7 @@
   ; @usage
   ;  [item-lister/set-actions-mode-block :my-lister]
   [lister-id]
-  (if-let [items-actions @(a/subscribe [:item-lister/get-header-prop lister-id :item-actions])]
+  (if-let [items-actions @(a/subscribe [:item-lister/get-body-prop lister-id :item-actions])]
           (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
                   [set-actions-mode-icon-button lister-id]
                   [set-actions-mode-button      lister-id])))
@@ -616,9 +616,7 @@
 (defn header
   ; @param (keyword) lister-id
   ; @param (map) header-props
-  ;  {:item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
-  ;   :menu-element (metamorphic-content)(opt)
+  ;  {:menu-element (metamorphic-content)(opt)
   ;   :new-item-event (metamorphic-event)(opt)
   ;   :new-item-options (vector)(opt)}
   ;

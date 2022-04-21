@@ -14,22 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.routes.subs
-(def get-extended-route routes.subs/get-extended-route)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-derived-view-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ;
-  ; @return (keyword)
-  [db [_ _]]
-  (if-let [derived-view-id (r router/get-current-route-path-param db :view-id)]
-          (keyword derived-view-id)))
+(def get-extended-route  routes.subs/get-extended-route)
+(def get-derived-view-id routes.subs/get-derived-view-id)
 
 
 

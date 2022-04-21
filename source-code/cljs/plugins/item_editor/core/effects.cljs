@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.core.effects
-    (:require [plugins.item-editor.core.events :as core.events]
+    (:require [plugins.item-editor.body.subs   :as body.subs]
+              [plugins.item-editor.core.events :as core.events]
               [plugins.item-editor.core.subs   :as core.subs]
-              [plugins.item-editor.mount.subs  :as mount.subs]
               [plugins.item-editor.routes.subs :as routes.subs]
               [x.app-core.api                  :as a :refer [r]]))
 
@@ -35,11 +35,12 @@
       ;        az [:item-editor/handle-route! ...] esemény nem történik meg és nem tárolja el az útvonalból
       ;        származtatott item-id azonosítót.
       ;     Ha a body komponens már a React-fába van csatolva, akkor meghívja az [:item-editor/request-item ...]
-      ;     eseményt, mivel a body komponens :component-did-mount életciklusa már nem fog megtörténni ...
+      ;     eseményt, mivel a body komponens :component-did-mount életciklusa már nem fog megtörténni,
+      ;     ami elindítaná az adatok letöltését ...
       (if-let [item-route (r routes.subs/get-item-route db editor-id item-id)]
               ; A)
               {:dispatch [:router/go-to! item-route]}
               ; B)
-              {:db          (r core.events/store-item-id! db editor-id item-id)
-               :dispatch-if [(r mount.subs/body-did-mount? db editor-id)
+              {:db          (r core.events/set-item-id! db editor-id item-id)
+               :dispatch-if [(r body.subs/body-did-mount? db editor-id)
                              [:item-editor/request-item! editor-id]]})))

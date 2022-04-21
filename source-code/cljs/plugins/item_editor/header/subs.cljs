@@ -3,11 +3,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.header.subs
-    (:require [mid-fruits.candy                  :refer [return]]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.header.config :as header.config]
-              [plugins.item-editor.mount.subs    :as mount.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [plugins.item-editor.core.subs      :as core.subs]
+              [plugins.plugin-handler.header.subs :as header.subs]
+              [x.app-core.api                     :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.header.subs
+(def get-header-prop      header.subs/get-header-prop)
+(def header-props-stored? header.subs/header-props-stored?)
+(def header-did-mount?    header.subs/header-did-mount?)
 
 
 
@@ -20,7 +29,7 @@
   ; @param (keyword) editor-id
   ;
   ; @return (keyword)
-  [db [_ editor-id]]
+  [db [_ editor-id]])
   ; - A get-selected-view-id függvény visszatérési értéke:
   ;   1. az [:item-editor/change-view! ...] esemény használatával beállított {:view-id ...} tulajdonság.
   ;   2. a header komponens {:menu-items [...]} paraméterének első elemének {:view-id ...} tulajdonsága.
@@ -34,10 +43,10 @@
   ;   A body komponenseken használt (case selected-view-id ...) függvényeknek szüksége van
   ;   a selected-view-id értékére, hogy ne kelljen a (case ...) függvény default ágát használni
   ;   minden body komponensnél.
-  (or (r core.subs/get-meta-item db editor-id :view-id)
-      (get-in (r mount.subs/get-header-prop db editor-id :menu-items)
-              [0 :view-id])
-      (return header.config/DEFAULT-VIEW-ID)))
+  ;(or (r core.subs/get-meta-item db editor-id :view-id)))
+      ;(get-in (r mount.subs/get-header-prop db editor-id :menu-items)
+      ;        [0 :view-id])
+      ;(return header.config/DEFAULT-VIEW-ID)))
 
 
 
@@ -45,4 +54,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-editor/get-selected-view-id get-selected-view-id)
+(a/reg-sub :item-editor/get-header-prop get-header-prop)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :item-editor/header-props-stored? header-props-stored?)

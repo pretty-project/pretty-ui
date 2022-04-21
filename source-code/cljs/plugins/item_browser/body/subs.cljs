@@ -2,18 +2,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.mount.subs
-    (:require [plugins.plugin-handler.mount.subs :as mount.subs]
-              [x.app-core.api                    :as a]))
+(ns plugins.item-browser.body.subs
+    (:require [plugins.plugin-handler.body.subs :as body.subs]
+              [x.app-core.api                   :as a]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.mount.subs
-(def get-body-prop   mount.subs/get-body-prop)
-(def body-did-mount? mount.subs/body-did-mount?)
+; plugins.plugin-handler.body.subs
+(def get-body-prop   body.subs/get-body-prop)
+(def body-did-mount? body.subs/body-did-mount?)
 
 
 

@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.update.effects
-    (:require [plugins.item-lister.core.subs         :as core.subs]
+    (:require [plugins.item-lister.body.subs         :as body.subs]
+              [plugins.item-lister.core.subs         :as core.subs]
               [plugins.item-lister.items.subs        :as items.subs]
-              [plugins.item-lister.mount.subs        :as mount.subs]
               [plugins.item-lister.update.events     :as update.events]
               [plugins.item-lister.update.queries    :as update.queries]
               [plugins.item-lister.update.subs       :as update.subs]
@@ -77,7 +77,7 @@
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [item-ids (r update.subs/get-deleted-item-ids db lister-id server-response)]
-           (if (r mount.subs/body-did-mount? db lister-id)
+           (if (r body.subs/body-did-mount? db lister-id)
                ; A)
                (let [on-reload [:item-lister/render-items-deleted-dialog! lister-id item-ids]]
                     [:item-lister/reload-items! lister-id {:on-reload on-reload}])
@@ -104,7 +104,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:db         (r update.events/delete-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]
@@ -147,7 +147,7 @@
       ; B) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
       ;    NINCS a React-fába csatolva, ...
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           [:item-lister/reload-items! lister-id])))
 
@@ -169,7 +169,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-delete}]]}
@@ -214,7 +214,7 @@
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [copy-ids (r update.subs/get-duplicated-item-ids db lister-id server-response)]
-           (if (r mount.subs/body-did-mount? db lister-id)
+           (if (r body.subs/body-did-mount? db lister-id)
                ; A)
                (let [on-reload [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]]
                     [:item-lister/reload-items! lister-id {:on-reload on-reload}])
@@ -240,7 +240,7 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r mount.subs/body-did-mount? db lister-id)
+      (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:db         (r update.events/duplicate-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]

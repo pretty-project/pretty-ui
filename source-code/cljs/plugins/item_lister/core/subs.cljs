@@ -5,7 +5,7 @@
 (ns plugins.item-lister.core.subs
     (:require [mid-fruits.candy                 :refer [return]]
               [mid-fruits.vector                :as vector]
-              [plugins.item-lister.mount.subs   :as mount.subs]
+              [plugins.item-lister.body.subs    :as body.subs]
               [plugins.plugin-handler.core.subs :as core.subs]
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a :refer [r]]))
@@ -54,7 +54,7 @@
   ;
   ; @return (maps in vector)
   [db [_ lister-id]]
-  (let [items-path (r mount.subs/get-body-prop db lister-id :items-path)]
+  (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
        (get-in db items-path)))
 
 (defn items-received?
@@ -244,8 +244,8 @@
   [db [_ lister-id]]
   ; Az {:active-filter ...} tulajdonság beállítása után az item-lister figyelmen kívül
   ; hagyja a {:prefilter ...} tulajdonságként átadott szűrési feltételeket az elemek letöltésekor.
-  (or (r get-meta-item            db lister-id :active-filter)
-      (r mount.subs/get-body-prop db lister-id :prefilter)))
+  (or (r get-meta-item           db lister-id :active-filter)
+      (r body.subs/get-body-prop db lister-id :prefilter)))
 
 
 

@@ -6,8 +6,8 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.loop                   :refer [some-indexed]]
               [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.core.subs     :as core.subs]
-              [plugins.item-lister.mount.subs    :as mount.subs]
               [plugins.item-lister.transfer.subs :as transfer.subs]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-db.api                      :as db]
@@ -133,8 +133,8 @@
   [db [_ lister-id]]
   ; A get-selected-item-ids függvény visszatérési értéke a kijelölt listaelemek azonosítói egy
   ; vektorban felsorolva.
-  (let [items-path     (r mount.subs/get-body-prop db lister-id :items-path)
-        selected-items (r core.subs/get-meta-item  db lister-id :selected-items)]
+  (let [items-path     (r body.subs/get-body-prop db lister-id :items-path)
+        selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (letfn [(f [result item-dex]
                   (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))]
                        (conj result item-id)))]
@@ -205,12 +205,12 @@
   [db [_ lister-id item-dex]]
   ; A elemre kattintva az elem hozzáadódik a kijelölt elemek listájához, ha ...
   ; ... az item-lister plugin {:select-mode? true} állapotban van.
-  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva, és a header
+  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva, és a body
   ;     komponens megkapja az {:item-actions [...]} paramétert.
   (and (or (r core.subs/get-meta-item  db lister-id :select-mode?)
            ; B)
            (and (r environment/key-pressed? db 16)
-                (let [item-actions (r mount.subs/get-header-prop db lister-id :item-actions)]
+                (let [item-actions (r body.subs/get-body-prop db lister-id :item-actions)]
                      (vector/nonempty? item-actions))))
        (not (r core.subs/lister-disabled? db lister-id))))
 

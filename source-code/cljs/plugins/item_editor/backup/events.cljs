@@ -6,8 +6,8 @@
     (:require [mid-fruits.candy                :refer [return]]
               [mid-fruits.map                  :as map :refer [dissoc-in]]
               [plugins.item-editor.backup.subs :as backup.subs]
+              [plugins.item-editor.body.subs   :as body.subs]
               [plugins.item-editor.core.subs   :as core.subs]
-              [plugins.item-editor.mount.subs  :as mount.subs]
               [x.app-core.api                  :as a :refer [r]]))
 
 
@@ -82,7 +82,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (let [item-path       (r mount.subs/get-body-prop      db editor-id :item-path)
+  (let [item-path       (r body.subs/get-body-prop       db editor-id :item-path)
         current-item-id (r core.subs/get-current-item-id db editor-id)
         local-changes   (r backup.subs/get-local-changes db editor-id current-item-id)]
        (-> db (update-in item-path merge local-changes)
@@ -95,7 +95,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (let [item-path       (r mount.subs/get-body-prop      db editor-id :item-path)
+  (let [item-path       (r body.subs/get-body-prop       db editor-id :item-path)
         current-item-id (r core.subs/get-current-item-id db editor-id)
         backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]
        (assoc-in db item-path backup-item)))

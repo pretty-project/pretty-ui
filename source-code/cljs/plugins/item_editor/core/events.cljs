@@ -5,8 +5,8 @@
 (ns plugins.item-editor.core.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
-              [plugins.item-editor.mount.subs     :as mount.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.core.events :as core.events]
               [x.app-core.api                     :as a :refer [r]]))
@@ -19,6 +19,8 @@
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
+(def set-item-id!       core.events/set-item-id!)
+(def set-view-id!       core.events/set-view-id!)
 
 
 
@@ -56,26 +58,11 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (let [item-path        (r mount.subs/get-body-prop db editor-id :item-path)
-        suggestions-path (r mount.subs/get-body-prop db editor-id :suggestions-path)]
+  (let [item-path        (r body.subs/get-body-prop db editor-id :item-path)
+        suggestions-path (r body.subs/get-body-prop db editor-id :suggestions-path)]
        (-> db (dissoc-in [:plugins :plugin-handler/meta-items editor-id :data-received?])
               (dissoc-in item-path)
               (dissoc-in suggestions-path))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn store-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ editor-id item-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :item-id] item-id))
 
 
 

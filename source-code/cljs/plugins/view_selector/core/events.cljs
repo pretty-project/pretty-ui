@@ -14,6 +14,7 @@
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
+(def set-view-id!       core.events/set-view-id!)
 
 
 
@@ -29,4 +30,4 @@
   ;
   ; @return (map)
   [db [_ selector-id view-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items selector-id :view-id] view-id))
+  (r set-view-id! db selector-id view-id))

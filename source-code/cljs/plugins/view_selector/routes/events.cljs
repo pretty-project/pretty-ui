@@ -3,23 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.routes.events
-    (:require [plugins.view-selector.routes.subs :as routes.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [plugins.plugin-handler.routes.events :as routes.events]
+              [x.app-core.api                       :refer [r]]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn store-derived-view-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ;
-  ; @return (map)
-  [db [_ selector-id]]
-  (let [derived-view-id (r routes.subs/get-derived-view-id db selector-id)]
-       (assoc-in db [:plugins :plugin-handler/meta-items selector-id :view-id] derived-view-id)))
+; plugins.plugin-handler.routes.events
+(def store-derived-view-id! routes.events/store-derived-view-id!)
 
 
 

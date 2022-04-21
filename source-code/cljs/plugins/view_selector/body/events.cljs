@@ -2,20 +2,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.mount.events
-    (:require [mid-fruits.map                      :refer [dissoc-in]]
-              [plugins.plugin-handler.mount.events :as mount.events]
-              [plugins.view-selector.core.events   :as core.events]
-              [x.app-core.api                      :as a :refer [r]]))
+(ns plugins.view-selector.body.events
+    (:require [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.plugin-handler.body.events :as body.events]
+              [plugins.view-selector.core.events  :as core.events]
+              [x.app-core.api                     :as a :refer [r]]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.mount.events
-(def store-body-props!  mount.events/store-body-props!)
-(def remove-body-props! mount.events/remove-body-props!)
+; plugins.plugin-handler.body.events
+(def store-body-props!  body.events/store-body-props!)
+(def remove-body-props! body.events/remove-body-props!)
 
 
 

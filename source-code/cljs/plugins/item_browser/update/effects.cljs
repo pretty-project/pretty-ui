@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.effects
-    (:require [plugins.item-browser.core.subs         :as core.subs]
-              [plugins.item-browser.mount.subs        :as mount.subs]
+    (:require [plugins.item-browser.body.subs         :as body.subs]
+              [plugins.item-browser.core.subs         :as core.subs]
               [plugins.item-browser.items.subs        :as items.subs]
               [plugins.item-browser.update.events     :as update.events]
               [plugins.item-browser.update.queries    :as update.queries]
@@ -239,7 +239,7 @@
       ; B) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
       ;    NINCS a React-fába csatolva ...
       ;    ... megjelenít egy értesítést.
-      (if (r mount.subs/body-did-mount? db browser-id)
+      (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
@@ -307,7 +307,7 @@
       ; B) Ha az "Elem duplikálása" művelet sikertelen befejeződésekor a body komponens
       ;    NINCS a React-fába csatolva ...
       ;    ... megjelenít egy értesítést.
-      (if (r mount.subs/body-did-mount? db browser-id)
+      (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
                         [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
