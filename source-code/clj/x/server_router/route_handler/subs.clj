@@ -14,8 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-router.route-handler.subs
-(def get-app-home     route-handler.subs/get-app-home)
-(def get-resolved-uri route-handler.subs/get-resolved-uri)
+(def get-app-home route-handler.subs/get-app-home)
+(def use-app-home route-handler.subs/use-app-home)
 
 
 

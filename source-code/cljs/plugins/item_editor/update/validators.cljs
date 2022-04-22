@@ -4,6 +4,7 @@
 
 (ns plugins.item-editor.update.validators
     (:require [mid-fruits.string               :as string]
+              [plugins.item-editor.core.subs   :as core.subs]
               [plugins.item-editor.update.subs :as update.subs]
               [x.app-core.api                  :refer [r]]
               [x.app-db.api                    :as db]))
@@ -21,7 +22,8 @@
   ;
   ; @return (boolean)
   [db [_ editor-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db editor-id :save-item!)
+  (let [new-item?     (r core.subs/new-item? db editor-id)
+        mutation-name (r update.subs/get-mutation-name db editor-id (if new-item? :add-item! :save-item!))
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
 

@@ -90,7 +90,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ {:keys [id]}]]
       (let [directory-uri (r item-browser/get-item-route db :storage.media-browser id)
-            directory-uri (r router/get-resolved-uri     db directory-uri)
+            directory-uri (r router/use-app-home         db directory-uri)
             uri-base      (window/get-uri-base)]
            {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
                          [:tools/copy-to-clipboard! (str uri-base directory-uri)]]})))

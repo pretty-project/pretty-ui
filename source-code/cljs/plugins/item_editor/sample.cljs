@@ -76,6 +76,31 @@
 
 
 
+;; -- Az item-label komponens/feliratkozás használata -------------------------
+;; ----------------------------------------------------------------------------
+
+; ...
+(defn my-item-label
+  []
+  (let [my-item-name @(a/subscribe [:db/get-item [:my-editor :name]])]
+       [item-editor/item-label {:name my-item-name}]))
+
+; ...
+(defn your-item-label
+  []
+  (let [your-item-name  @(a/subscribe [:db/get-item [:your-editor :name]])
+        your-item-label @(a/subscribe [:item-editor/get-current-item-label :your-editor your-item-name])]
+       [:div your-item-label]))
+
+; Az item-editor plugin item-label funkciójának használatakor szükséges a szótárhoz adni
+; a megfelelő kifejezéseket!
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-app-boot [:dictionary/add-terms! {:new-my-type     {:en "New my type"     :hu "Új típusom"}
+                                         :unnamed-my-type {:en "Unnamed my type" :hu "Névtelen típusom"}}]})
+
+
+
 ;; -- Az {:initial-item {...}} tulajdonság használata -------------------------
 ;; ----------------------------------------------------------------------------
 

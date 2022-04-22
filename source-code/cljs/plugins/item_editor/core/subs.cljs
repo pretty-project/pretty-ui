@@ -137,6 +137,19 @@
                (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                     (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
 
+(defn get-current-item-label
+  ; @param (keyword) editor-id
+  ; @param (metamorphic-contet) item-name
+  ;
+  ; @return (metamorphic-content)
+  [db [_ editor-id item-name]]
+  (if (empty? item-name)
+      (let [item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)]
+           (if-let [new-item? (r new-item? db editor-id)]
+                   (core.helpers/new-item-label     editor-id item-namespace)
+                   (core.helpers/unnamed-item-label editor-id item-namespace)))
+      (return item-name)))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -227,6 +240,12 @@
 ; @usage
 ;  [:item-editor/get-current-item-modified-at :my-editor]
 (a/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/get-current-item-label :my-editor]
+(a/reg-sub :item-editor/get-current-item-label get-current-item-label)
 
 ; @param (keyword) editor-id
 ;

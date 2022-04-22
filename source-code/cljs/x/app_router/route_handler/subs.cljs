@@ -4,6 +4,7 @@
 
 (ns x.app-router.route-handler.subs
     (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.string                  :as string]
               [mid-fruits.uri                     :as uri]
               [mid-fruits.vector                  :as vector]
               [reitit.frontend                    :as reitit.frontend]
@@ -19,15 +20,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-router.route-handler.subs
-(def get-app-home     route-handler.subs/get-app-home)
-(def get-resolved-uri route-handler.subs/get-resolved-uri)
+(def get-app-home route-handler.subs/get-app-home)
+(def use-app-home route-handler.subs/use-app-home)
 
 
 
 ;; -- Debug subscriptions -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-debug-route-string
+(defn use-debug-mode
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -240,6 +241,50 @@
   ; @return (string)
   [db _]
   (get-in db [:router :route-handler/meta-items :route-parent]))
+
+(defn use-path-params
+  ; @param (string) uri
+  ;
+  ; @usage
+  ;  (r router/use-path-params db "/@app-home/my-route/:my-param/xxx")
+  ;  =>
+  ;  "/@app-home/my-route/my-value/xxx"
+  ;
+  ; @return (string)
+  [db [_ uri]]
+  (letfn [; 2. Az f0 függvény az n paraméterként kapott szöveget felbontja (param-key, trail)
+          ;    a "/" karakter első előfordulásánál és egy vektorban felsorolva visszatér
+          ;    a két felbontott részlettel (az első részletből kulcsszó típust készít)
+          ;    Pl.: n: ":my-param/xxx"
+          ;         =>
+          ;         [:my-param "/xxx"]
+          (f0 [n] (if-let [pos (string/first-index-of n "/")]
+                          [(keyword (subs n 1 pos))
+                           (str     (subs n   pos))]
+                          [(keyword (subs n 1)) ""]))
+          ; 1. Az f1 függvény az n paraméterként kapott szöveget felbontja (base, end),
+          ;    a "/:" részlet első előfordulásánál.
+          ;    Pl.: n:    "/@app-home/my-route/:my-param/xxx"
+          ;         =>
+          ;         base: "/@app-home/my-route/"
+          ;         end:  ":my-param/xxx"
+          ;
+          ; 3. Az f1 függvény n paramétereként kapott szövegben az első útvonal-paramétert
+          ;    behelyettesíti az aktuális útvonalbeli értékével (ha lehetséges),
+          ;    majd a behelyettesítés után az eredménnyel újra meghívja önmagát, további
+          ;    útvonal-paramétereket keresve a szövegben.
+          (f1 [n]
+              (if-let [pos (string/first-index-of n "/:")]
+                      ; Ha az f függvény n paramétere tartalmazza a "/:" részletet ...
+                      (let [base (subs n 0 (inc pos))
+                            end  (subs n   (inc pos))
+                            [param-key trail] (f0 end)]
+                           (if-let [param-value (r get-current-route-path-param db param-key)]
+                                   (f1 (str base param-value trail))
+                                   (f1 (str base param-key   trail))))
+                      ; Ha az f függvény n paramétere NEM tartalmazza az "/:" részletet ...
+                      (return n)))]
+         (f1 uri)))
 
 
 

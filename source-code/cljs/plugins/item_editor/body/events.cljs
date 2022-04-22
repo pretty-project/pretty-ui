@@ -32,20 +32,20 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; Az update-item-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
-  ; az aktuálisan szerkesztett elem azonosítóját.
+  ; - Az update-item-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
+  ;   az aktuálisan szerkesztett elem azonosítóját.
   ;
-  ; Ha az [:item-editor/body-did-mount ...] esemény megtörténtekor az aktuálisan szerkesztett
-  ; elem azonosítója ...
+  ; - Ha az [:item-editor/body-did-mount ...] esemény megtörténtekor az aktuálisan szerkesztett
+  ;   elem azonosítója ...
   ;
-  ; A) ... már eltárolásra került, akkor NEM használja a body komponens {:item-id "..."}
-  ;        paraméterének értékét.
+  ;   A) ... már eltárolásra került, akkor NEM használja a body komponens {:item-id "..."}
+  ;          paraméterének értékét.
   ;
-  ; B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta az {:item-id "..."}
-  ;        tulajdonságot, akkor azt eltárolja az aktuálisan szerkesztett elem azonosítójaként.
-  ;        Az item-editor plugin body komponensének ...
-  ;        ... {:item-id "..."} tulajdonsága is lehet a szerkesztett elem azonosítójának forrása,
-  ;            így lehetséges a szerkesztett dokumentum azonosítóját a body komponens paramétereként is átadni.
+  ;   B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta az {:item-id "..."}
+  ;          tulajdonságot, akkor azt eltárolja az aktuálisan szerkesztett elem azonosítójaként.
+  ;          Az item-editor plugin body komponensének ...
+  ;          ... {:item-id "..."} tulajdonsága is lehet a szerkesztett elem azonosítójának forrása,
+  ;              így lehetséges a szerkesztett dokumentum azonosítóját a body komponens paramétereként is átadni.
   (r core.events/set-item-id! db editor-id (or (r core.subs/get-current-item-id db editor-id)             ; A)
                                                (r body.subs/get-body-prop       db editor-id :item-id)))) ; B)
 
@@ -56,21 +56,30 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; Az update-view-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
-  ; az aktuálisan beállított nézet azonosítóját.
+  ; - Az update-view-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
+  ;   az aktuálisan beállított nézet azonosítóját.
   ;
-  ; Ha az [:item-editor/body-did-mount ...] esemény megtörténtekor az aktuálisan beállított
-  ; nézet azonosítója ...
+  ; - Ha az [:item-editor/body-did-mount ...] esemény megtörténtekor az aktuálisan beállított
+  ;   nézet azonosítója ...
   ;
-  ; A1) ... már eltárolásra került, és az allowed-view-ids vektor tartalmazza, akkor nem
-  ;         használja a body komponens {:default-view-id ...}  paraméterének értékét.
+  ;   A1) ... már eltárolásra került, és az allowed-view-ids vektor tartalmazza, akkor nem
+  ;           használja a body komponens {:default-view-id ...}  paraméterének értékét.
   ;
-  ; A2) ... már eltárolásra került, de az allowed-view-ids vektor NEM tartalmazza, akkor
-  ;         a body komponens {:default-view-id ...} paraméterének értékét eltárolja az aktuálisan
-  ;         beállított nézet azonosítójaként.
+  ;   A2) ... már eltárolásra került, de az allowed-view-ids vektor NEM tartalmazza, akkor
+  ;           a body komponens {:default-view-id ...} paraméterének értékét eltárolja az aktuálisan
+  ;           beállított nézet azonosítójaként.
   ;
-  ; B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:default-view-id ...}
-  ;        tulajdonságot, akkor azt eltárolja az aktuálisan beállított nézet azonosítójaként.
+  ;   B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:default-view-id ...}
+  ;          tulajdonságot, akkor azt eltárolja az aktuálisan beállított nézet azonosítójaként.
+  ;
+  ; - Ha a body komponens React-fába csatolása után történne meg az [:item-editor/handle-route! ...]
+  ;   esemény, akkor az update-view-id! függvény már nem fog megtörténni, hogy ellenőrizze
+  ;   aktuális útvonalból származtatott nézet azonosítóját, mivel nem valószínű, hogy az applikáció
+  ;   valamely hivatkozása hibás lenne és az útvonalban szereplő :view-id útvonal-paraméter
+  ;   nem szerepelne az allowed-view-ids vektorban.
+  ;   Az útvonalból származtatott :view-id útvonal-paramétert azért szükséges ellenőrizni, hogy
+  ;   szerepel-e az allowed-view-ids vektorban, mert az applikáción kívülről megnyitott
+  ;   útvonal esetleg hibás, vagy elavult lehet.
   (let [default-view-id (r body.subs/get-body-prop db editor-id :default-view-id)]
        (if-let [current-view-id (r core.subs/get-current-view-id db editor-id)]
                ; A)

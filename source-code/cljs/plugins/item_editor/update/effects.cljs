@@ -68,12 +68,6 @@
   ; @usage
   ;  [:item-editor/save-item! :my-editor]
   (fn [{:keys [db]} [_ editor-id]]
-      ; - Az új elemek hozzáadása (mentése), azért nem különálló [:item-editor/add-item! ...] eseménnyel
-      ;   történik, mert az új elem szerver-oldali hozzáadása (kliens-oldali első mentése) utáni,
-      ;   az aktuális szerkesztés közbeni további mentések, már nem számítanának elem-hozzáadásnak,
-      ;   miközben az item-editor plugin továbbra is "Új elem hozzáadása" módban fut, ezért
-      ;   nem tudná megkülönböztetni a további mentéseket a hozzáadástól (első mentéstől)!
-      ;
       ; - Az elem esetleges törlése utáni – kliens-oldali adatból történő – visszaállításhoz
       ;   szükséges az elem feltételezett szerver-oldali állapotáról másolatot tárolni!
       ;
@@ -98,7 +92,7 @@
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; A) Ha az "Elem mentése" művelet sikeres befejeződésekor a body komponens
       ;    a React-fába van csatolva, a mentett elem van megnyitva szerkesztésre
-      ;    vagy új elem hozzáadása történik és a plugin rendelkezik a {:base-route "..."}
+      ;    vagy új elem mentése történt és a plugin rendelkezik a {:base-route "..."}
       ;    tulajdonsággal ...
       ;    ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
       ;        elküldött útvonalra.

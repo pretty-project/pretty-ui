@@ -23,11 +23,11 @@
   (let [app-home (r a/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))
 
-(defn get-resolved-uri
-  ; @param (route-string) uri
+(defn use-app-home
+  ; @param (string) uri
   ;
   ; @example
-  ;  (r router/get-resolved-uri db "/@app-home/my-route")
+  ;  (r router/use-app-home db "/@app-home/my-route")
   ;  =>
   ;  "/my-app/my-route"
   ;

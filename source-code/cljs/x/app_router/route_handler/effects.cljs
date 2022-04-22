@@ -16,29 +16,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :router/handle-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+  :router/change-to!
   ; @param (string) route-string
+  ;
+  ; @usage
+  ;  [:router/change-to! "/my-route"]
   (fn [{:keys [db]} [_ route-string]]
-      (let [route-id          (r route-handler.subs/match-route-id       db route-string)
-            previous-route-id (r route-handler.subs/get-current-route-id db)]
-           {:db       (as-> db % ; Store the current route
-                                 (r route-handler.events/store-current-route! % route-string)
-                                 ; Make history
-                                 (r route-handler.events/reg-to-history!      % route-id))
-            :dispatch-n [; Dispatch on-leave-event if ...
-                         (if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
-                                 (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
-                         ; Render login screen if ...
-                         (if (r route-handler.subs/require-authentication? db route-id)
-                             [:views/render-login-box!])
-                         ; Set restart-target if ...
-                         (if (r route-handler.subs/require-authentication? db route-id)
-                             [:boot-loader/set-restart-target! route-string])
-                         ; Dispatch client-event if ...
-                         (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
-                                 (if-not (r route-handler.subs/require-authentication? db route-id) client-event))]})))
+      ; A [:router/change-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
+      ; események megtörténése nélkül.
+      {:db       (r route-handler.events/set-change-mode! db)
+       :dispatch [:router/go-to! route-string]}))
 
 (a/reg-event-fx
   :router/go-home!
@@ -74,24 +61,67 @@
   ;
   ; @usage
   ;  [:router/go-to! "/@app-home/your-route"]
+  ;
+  ; @usage
+  ;  [:router/go-to! "/@app-home/my-route/:my-param"]
   (fn [{:keys [db]} [_ route-string]]
-      (if (route-handler.helpers/variable-route-string? route-string)
+      ; A [:router/go-to! ...] esemény a route-string paraméterként átadott útvonalban ...
+      ; ... behelyettesíti a "/@app-home" kifejezést az aktuális értékével.
+      ; ... behelyettesíti az útvonal-paramétereket az aktuális értékeikkel.
+      ; ... megtartja az aktuális debug-mode értékét.
+      (let [route-string (r route-handler.subs/use-app-home    db route-string)
+            route-string (r route-handler.subs/use-path-params db route-string)
+            route-string (r route-handler.subs/use-debug-mode  db route-string)]
+           (if (r route-handler.subs/reload-same-path? db route-string)
+               {:dispatch [:router/handle-route! route-string]}
+               {:fx       [:router/navigate!     route-string]}))))
 
-          ; If route-string is variable ...
-          (let [app-home     (r route-handler.subs/get-app-home db)
-                route-string (route-handler.helpers/resolve-variable-route-string route-string app-home)
-                ; Az applikáció az útvonalváltás után is debug módban marad
-                route-string (r route-handler.subs/get-debug-route-string db route-string)]
-               (if (r route-handler.subs/reload-same-path? db route-string)
-                   {:dispatch [:router/handle-route! route-string]}
-                   {:fx       [:router/navigate!     route-string]}))
 
-          ; If route-string is static ...
-          (let [; Az applikáció az útvonalváltás után is debug módban marad
-                route-string (r route-handler.subs/get-debug-route-string db route-string)]
-               (if (r route-handler.subs/reload-same-path? db route-string)
-                   {:dispatch [:router/handle-route! route-string]}
-                   {:fx       [:router/navigate!     route-string]})))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :router/handle-events!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (string) route-string
+  (fn [{:keys [db]} [_ route-id route-string]]
+      (let [previous-route-id (r route-handler.subs/get-current-route-id db)]
+           {:dispatch-n [(if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
+                                 (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
+                         (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
+                                 client-event)]})))
+
+(a/reg-event-fx
+  :router/handle-login!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (string) route-string
+  (fn [{:keys [db]} [_ route-id route-string]]
+      {:dispatch-n [[:boot-loader/set-restart-target! route-string]
+                    [:views/render-login-box!]]}))
+
+(a/reg-event-fx
+  :router/handle-route!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-string
+  (fn [{:keys [db]} [_ route-string]]
+      (let [route-id (r route-handler.subs/match-route-id db route-string)]
+           (if-let [change-mode? (get-in db [:router :route-handler/meta-items :change-mode?])]
+                   ; Ha az útvonal-kezelő {:change-mode? true} állapotban van ...
+                   {:db (r route-handler.events/handle-route! db route-id route-string)}
+                   ; Ha az útvonal-kezelő NINCS {:change-mode? true} állapotban ...
+                   (if (r route-handler.subs/require-authentication? db route-id)
+                       ; Ha az útvonal kezeléséhez bejelentkezés szükséges ...
+                       {:db       (r route-handler.events/handle-route! db route-id route-string)
+                        :dispatch [:router/handle-login! route-id route-string]}
+                       ; Ha az útvonal kezeléséhez NEM szüksége bejelentkezés ...
+                       {:db       (r route-handler.events/handle-route! db route-id route-string)
+                        :dispatch [:router/handle-events! route-id route-string]})))))
 
 (a/reg-event-fx
   :router/init-router!

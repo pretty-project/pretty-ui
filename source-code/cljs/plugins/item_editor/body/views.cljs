@@ -195,6 +195,7 @@
   ;   :auto-title? (boolean)(opt)
   ;    Default: false
   ;   :default-view-id (keyword)(opt)
+  ;    Default: body.config/DEFAULT-VIEW-ID}
   ;   :form-element (metamorphic-content)
   ;   :initial-item (map)(opt)
   ;   :item-actions (keywords in vector)(opt)

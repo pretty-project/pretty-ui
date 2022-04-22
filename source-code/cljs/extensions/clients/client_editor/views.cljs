@@ -288,7 +288,8 @@
   [item-editor/header :clients.client-editor
                       {:menu-items [{:label "Adatok" :view-id :edit
                                      :change-keys [:address :city :colors :country :description :email-address
-                                                   :first-name :last-name :phone-number :vat-no :zip-code]}]}])
+                                                   :first-name :last-name :phone-number :vat-no :zip-code]}
+                                    {:label "Árajánlatok" :view-id :price-quotes}]}])
 
 
 
@@ -312,7 +313,7 @@
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
             [item-editor/body :clients.client-editor
-                              {:allowed-view-ids [:edit]
+                              {:allowed-view-ids [:edit :price-quotes]
                                :auto-title?      true
                                :default-view-id  :edit
                                :form-element     #'client-form

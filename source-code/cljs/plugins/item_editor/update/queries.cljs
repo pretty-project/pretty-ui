@@ -32,7 +32,8 @@
   ;
   ; @return (vector)
   [db [_ editor-id]]
-  (let [mutation-name  (r update.subs/get-mutation-name db editor-id :save-item!)
+  (let [new-item?      (r core.subs/new-item?           db editor-id)
+        mutation-name  (r update.subs/get-mutation-name db editor-id (if new-item? :add-item! :save-item!))
         mutation-props (r get-save-item-mutation-props  db editor-id)]
        [`(~(symbol mutation-name) ~mutation-props)]))
 

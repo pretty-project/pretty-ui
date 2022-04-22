@@ -95,6 +95,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- layout-breadcrumbs
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) layout-id
+  ; @param (map) layout-props
+  [layout-id layout-props]
+  [:div "xxx"])
+
 (defn- layout-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -114,10 +122,12 @@
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {:description (metamorphic-content)(opt)}
-  [layout-id {:keys [description] :as layout-props}]
-  [:<> (if description [:div#x-layout-a--description (components/content {:content description})]
-                       [:div#x-layout-a--description {:data-placeholder true}])
+  ;  {:breadcrumbs (maps in vector)(opt)
+  ;   :description (metamorphic-content)(opt)}
+  [layout-id {:keys [breadcrumbs description] :as layout-props}]
+  [:<> (cond description [:div#x-layout-a--description (components/content {:content description})]
+             breadcrumbs [layout-breadcrumbs layout-id layout-props]
+                :default [:div#x-layout-a--description {:data-placeholder true}])
        [layout-content layout-id layout-props]
        [:div#x-layout-a--footer]])
 
@@ -125,6 +135,9 @@
   ; @param (keyword)(opt) layout-id
   ; @param (map) layout-props
   ;  {:body (metamorphic-content)
+  ;   :breadcrumbs (maps in vector)(opt)
+  ;    [{:label (metamorphic-content)
+  ;      :on-click (metamorphic-event)(opt)}]
   ;   :class (keyword or keywords in vector)(opt)
   ;   :description (metamorphic-content)(opt)
   ;   :disabled? (boolean)(opt)

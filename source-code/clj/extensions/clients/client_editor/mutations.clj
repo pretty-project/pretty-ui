@@ -13,11 +13,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defmutation undo-delete-item!
+(defmutation add-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
-             [_ {:keys [item]}]
-             {::pathom.co/op-name 'clients.client-editor/undo-delete-item!}
-             (mongo-db/insert-document! "clients" item))
+             [{:keys [request]} {:keys [item]}]
+             {::pathom.co/op-name 'clients.client-editor/add-item!}
+             (mongo-db/save-document! "clients" item
+                                      {:prototype-f #(mongo-db/added-document-prototype request :client %)}))
 
 (defmutation save-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -31,6 +32,12 @@
              [_ {:keys [item-id]}]
              {::pathom.co/op-name 'clients.client-editor/delete-item!}
              (mongo-db/remove-document! "clients" item-id))
+
+(defmutation undo-delete-item!
+             ; WARNING! NON-PUBLIC! DO NOT USE!
+             [_ {:keys [item]}]
+             {::pathom.co/op-name 'clients.client-editor/undo-delete-item!}
+             (mongo-db/insert-document! "clients" item))
 
 (defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,6 +53,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (functions in vector)
-(def HANDLERS [delete-item! duplicate-item! save-item! undo-delete-item!])
+(def HANDLERS [add-item! delete-item! duplicate-item! save-item! undo-delete-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -16,6 +16,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn set-change-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (assoc-in db [:router :route-handler/meta-items :change-mode?] true))
+
+(defn quit-change-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (assoc-in db [:router :route-handler/meta-items :change-mode?] false))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn store-current-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -63,3 +82,19 @@
   ; @return (map)
   [db [_ route-id]]
   (r db/apply-item! db [:router :route-handler/meta-items :history] vector/conj-item route-id))
+
+(defn handle-route!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (string) route-string
+  ;
+  ; @return (map)
+  [db [_ route-id route-string]]
+  ; A handle-route! függvény ...
+  ; ... eltárolja az aktuális route-string paraméterből származtatott értékeket.
+  ; ... eltárolja az aktuális route-id azonosítót
+  ; ... kilépteti az útvonal-kezelőt az esetlegesen beállított {:change-mode? true} állapotból.
+  (as-> db % (r store-current-route! % route-string)
+             (r reg-to-history!      % route-id)
+             (r quit-change-mode!    % route-id)))

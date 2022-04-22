@@ -81,7 +81,6 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (println (str "hello"))
   (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :actions-mode?])
              (r quit-select-mode! % lister-id)))
 

@@ -48,7 +48,7 @@
   ; @return (string)
   [db [_ editor-id item-id view-id]]
   (let [item-route (r get-item-route db editor-id item-id)]
-       (str item-route"/" (name view-id))))
+       (str item-route "/" (name view-id))))
 
 
 

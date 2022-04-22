@@ -20,17 +20,17 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  ; Az update-item-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
-  ; az aktuálisan böngészett elem azonosítóját.
+  ; - Az update-item-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
+  ;   az aktuálisan böngészett elem azonosítóját.
   ;
-  ; Ha az [:item-browser/body-did-mount ...] esemény megtörténtekor az aktuálisan böngészett
-  ; elem azonosítója ...
+  ; - Ha az [:item-browser/body-did-mount ...] esemény megtörténtekor az aktuálisan böngészett
+  ;   elem azonosítója ...
   ;
-  ; A) ... már eltárolásra került, akkor NEM használja a body komponens {:root-item-id "..."}
-  ;        paraméterének értékét.
+  ;   A) ... már eltárolásra került, akkor NEM használja a body komponens {:root-item-id "..."}
+  ;          paraméterének értékét.
   ;
-  ; B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:root-item-id "..."}
-  ;        tulajdonságot, akkor azt eltárolja az aktuálisan böngészett elem azonosítójaként.
+  ;   B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:root-item-id "..."}
+  ;          tulajdonságot, akkor azt eltárolja az aktuálisan böngészett elem azonosítójaként.
   (r core.events/set-current-item-id! db browser-id (or (r core.subs/get-current-item-id db browser-id)                  ; A)
                                                         (r body.subs/get-body-prop       db browser-id :root-item-id)))) ; B)
 
@@ -51,7 +51,7 @@
   [db [_ browser-id {:keys [items-key path-key]}]]
   ; Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
   ; {:items-key ...} és {:path-key ...} tulajdonságát.
-  (cond-> db :update-item-id! (as-> % (r update-item-id! % browser-id))
+  (cond-> db :update-item-id! (as-> %   (r update-item-id! % browser-id))
              :send-items-key! (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :items-key] items-key)
              :send-path-key!  (assoc-in [:plugins :plugin-handler/meta-items browser-id :default-query-params :path-key]  path-key)))
 
