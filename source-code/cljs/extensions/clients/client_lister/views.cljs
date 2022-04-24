@@ -61,7 +61,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-lister/header :clients.client-lister
-                      {:new-item-event [:router/go-to! "/@app-home/clients/new-client"]}])
+                      {:new-item-event [:router/go-to! "/@app-home/clients/create"]}])
 
 
 

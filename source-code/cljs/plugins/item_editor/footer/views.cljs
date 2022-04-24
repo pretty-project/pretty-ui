@@ -177,7 +177,10 @@
                          :hover-color :highlight
                          :indent      {:horizontal :xxs :right :xxs}
                          :on-click    [:item-editor/save-item! editor-id]
-                         :preset      :save}]))
+                         :preset      :save
+
+                         ; TEMP
+                         :label :edit!}]))
 
 (defn save-item-block
   ; @param (keyword) editor-id

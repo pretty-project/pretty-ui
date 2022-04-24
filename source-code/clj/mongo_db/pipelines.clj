@@ -136,7 +136,7 @@
   [{:keys [field-pattern filter-pattern max-count search-pattern skip sort-pattern unset-pattern]}]
              ; Az $addFields operátor a $match és $sort operátorok végrehajtása előtt adja hozzá a virtuális mező(ke)t ...
   (cond-> [] field-pattern (conj {"$addFields"      (add-fields-query field-pattern)})
-             :match        (conj {"$match" {"$and" [;(filter-query     filter-pattern)
+             :match        (conj {"$match" {"$and" [(filter-query     filter-pattern)
                                                     (search-query     search-pattern)]}})
              sort-pattern  (conj {"$sort"           (sort-query       sort-pattern)})
              ; Az $unset operátor a $match és $sort operátorok végrehajtása után távolítja el az eltávolítandó mező(ke)t ...

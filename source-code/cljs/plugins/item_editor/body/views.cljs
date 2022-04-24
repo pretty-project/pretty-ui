@@ -203,7 +203,6 @@
   ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
-  ;   :new-item-id (string)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
   ;    Default: core.helpers/default-suggestions-path}

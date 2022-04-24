@@ -89,8 +89,7 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  (= (r get-current-item-id     db editor-id)
-     (r body.subs/get-body-prop db editor-id :new-item-id)))
+  (= "create" (r get-current-item-id db editor-id)))
 
 (defn get-editor-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -139,7 +138,7 @@
 
 (defn get-current-item-label
   ; @param (keyword) editor-id
-  ; @param (metamorphic-contet) item-name
+  ; @param (metamorphic-content) item-name
   ;
   ; @return (metamorphic-content)
   [db [_ editor-id item-name]]

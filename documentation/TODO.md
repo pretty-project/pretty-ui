@@ -14,6 +14,10 @@
 
 # x4.7.0
 
+- https://www.behance.net/gallery/130899041/Healthcare-management-system-UXUI?tracking_source=search_projects%7Cux
+  Item lister new layout, fontos lesz majd, hogy a listázóban a listaelemek sok adatot mutatssanak,
+  hogy össze lehessen öket hasonlitani, és legyen egy fejlec az adatok cimeivel (excel-like)
+
 - Az item-lsiter/list-item komponensből valahogy ki kellene választani a designt és visszatenni
   a layouts-ba! De így most gyorsabb, ha pl. a [:item-lister/item-disabled? ...]
   [:item-lister/item-selected? ...] feliratkozások kimetét nem a paraméterként kapják a listaelemek

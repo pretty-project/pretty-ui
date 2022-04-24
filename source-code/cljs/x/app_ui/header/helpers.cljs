@@ -16,9 +16,10 @@
   ;
   ; @param (keyword) sensor-id
   ; @param (map) sensor-props
-  ;  {:title (metamorphic-content)}
-  [_ {:keys [title]}]
-  (letfn [(f [intersecting?] (if intersecting? (a/fx [:ui/remove-header-title!])
+  ;  {:default-title (metamorphic-content)(opt)
+  ;   :title (metamorphic-content)}
+  [_ {:keys [default-title title]}]
+  (letfn [(f [intersecting?] (if intersecting? (a/fx [:ui/set-header-title! default-title])
                                                (a/fx [:ui/set-header-title! title])))]
          (environment/setup-intersection-observer! "x-app-header--title-sensor" f)))
 
