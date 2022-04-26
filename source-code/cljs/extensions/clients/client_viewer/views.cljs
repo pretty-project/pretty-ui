@@ -236,16 +236,18 @@
   (let [client-name @(a/subscribe [:clients.client-viewer/get-client-name])]
        [:<> [ui/title-sensor {:title client-name :offset -48}]
             [elements/label ::client-label
-                            {:content client-name}]]))
+                            {:content     client-name
+                             :font-size   :l
+                             :font-weight :extra-bold}]]))
 
 
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/color-selector ::client-colors
-                                {:disabled?  editor-disabled?
-                                 :value-path [:clients :client-editor/edited-item :colors]}]))
+  (let [client-colors @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :colors]])]
+       [elements/color-stamp ::client-colors
+                             {:colors client-colors
+                              :size   :xxl}]))
 
 (defn- client-modified-at-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -265,7 +267,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> ; Color and name
-       ;[client-colors]
+       [client-colors]
        [client-label]])
        ;[client-modified-at-label]
        ; Basic info
@@ -286,7 +288,10 @@
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [])
+  []
+  [elements/menu-bar ::menu-bar
+                     {:menu-items [{:label "Áttekintés"  :on-click [] :active? true}
+                                   {:label "Árajánlatok" :on-click []}]}])
   ;[item-editor/header :clients.client-editor
   ;                    {:menu-items [{:label "Adatok" :view-id :edit
   ;                                   :change-keys [:address :city :colors :country :description :email-address

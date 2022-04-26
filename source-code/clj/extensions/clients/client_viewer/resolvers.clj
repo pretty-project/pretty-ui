@@ -17,9 +17,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
   ; XXX#7601
-  (let [item-id     (pathom/env->param env :item-id)
-        client-item (mongo-db/get-document-by-id "clients" item-id)]
-       (client-viewer.helpers/client-item<-name-field env client-item)))
+  (let [item-id (pathom/env->param env :item-id)]
+       (if-let [client-item (mongo-db/get-document-by-id "clients" item-id)]
+               (client-viewer.helpers/client-item<-name-field env client-item))))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

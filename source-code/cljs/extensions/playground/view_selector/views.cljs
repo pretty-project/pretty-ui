@@ -234,10 +234,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
-       [section-header {:label "Color-picker"}]
-       [elements/color-picker {:initial-options ["var( --background-color-primary )" "var( --background-color-secondary )" "var( --background-color-warning )" "var( --background-color-success )"]
-                               :get-label-f return
-                               :label "Color-picker"}]])
+       [section-header {:label "Color-picker"}]])
+       ;[elements/color-picker {:initial-options ["var( --background-color-primary )" "var( --background-color-secondary )" "var( --background-color-warning )" "var( --background-color-success )"]
+        ;                       :get-label-f return
+        ;                       :label "Color-picker"}]])
 
 (defn- selectors
   ; WARNING! NON-PUBLIC! DO NOT USE!
