@@ -4,7 +4,7 @@
 
 (ns x.app-elements.preset-handler.button)
 
-
+  
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,6 +39,9 @@
                      :label            :delete!}
       :duplicate    {:horizontal-align :left
                      :label            :duplicate!}
+      :edit         {:color            :primary
+                     :horizontal-align :left
+                     :label            :edit!}
       :help         {:horizontal-align :left
                      :icon             :help_outline
                      :label            :help}

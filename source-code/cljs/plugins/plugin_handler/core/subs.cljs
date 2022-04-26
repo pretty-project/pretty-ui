@@ -169,3 +169,17 @@
        (if-let [modified-at (:modified-at current-item)]
                (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                     (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-auto-title
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  [db [_ plugin-id]]
+  ; ...
+  (if-let [auto-title? (r body.subs/get-body-prop db plugin-id :auto-title?)]
+          (r get-current-item-label db plugin-id)))

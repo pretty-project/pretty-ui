@@ -37,6 +37,8 @@
       :delete             {:color       :warning
                            :icon        :delete_outline}
       :duplicate          {:icon        :content_copy}
+      :edit               {:color       :primary
+                           :icon        :edit}
       :filters-visible    {:icon        :filter_alt}
       :filters-nonvisible {:icon        :filter_alt
                            :icon-family :material-icons-outlined}

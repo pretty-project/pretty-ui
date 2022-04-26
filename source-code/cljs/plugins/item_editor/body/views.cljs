@@ -133,7 +133,7 @@
         @(a/subscribe [:item-editor/data-received? editor-id])
          [form-element editor-id]
         :data-not-received
-        [downloading-item editor-id]))
+         [downloading-item editor-id]))
 
 (defn body
   ; @param (keyword) editor-id

@@ -233,9 +233,11 @@
 (defn- client-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]))
-;       [:<> [ui/title-sensor {:title client-name :offset -48}]]))
-;            [item-editor/item-label :clients.client-editor {:name client-name}]]))
+  (let [client-name @(a/subscribe [:clients.client-viewer/get-client-name])]
+       [:<> [ui/title-sensor {:title client-name :offset -48}]
+            [elements/label ::client-label
+                            {:content client-name}]]))
+
 
 (defn- client-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -263,9 +265,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> ; Color and name
-      [:div "Client viewer"]])
        ;[client-colors]
-       ;[client-label]
+       [client-label]])
        ;[client-modified-at-label]
        ; Basic info
        ;[basic-info-label]
@@ -299,9 +300,9 @@
 
 (defn footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [])
-  ;;[item-editor/footer :clients.client-editor
-    ;                  {}])
+  []
+  [item-viewer/footer :clients.client-viewer
+                      {}])
 
 
 
@@ -314,7 +315,7 @@
   [:<> [elements/horizontal-separator {:size :xxl}]
        [item-viewer/body :clients.client-viewer
                            {:auto-title?  true
-                            :item-actions [:delete :duplicate]
+                            :item-actions [:delete :duplicate :edit]
                             :item-element #'client-viewer
                             :item-path    [:clients :client-viewer/viewed-item]
                             :label-key    :name}]])

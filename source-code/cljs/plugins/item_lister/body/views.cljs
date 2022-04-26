@@ -135,7 +135,7 @@
                                             [no-items-to-show      lister-id]
                                             [downloading-items     lister-id]]
         :data-not-received
-        [downloading-items lister-id]))
+         [downloading-items lister-id]))
 
 (defn body
   ; @param (keyword) lister-id

@@ -11,12 +11,9 @@
               [plugins.item-viewer.download.effects]
               [plugins.item-viewer.download.events]
               [plugins.item-viewer.download.subs]
-              ;[plugins.item-viewer.footer.effects]
-              ;[plugins.item-viewer.footer.events]
-              ;[plugins.item-viewer.footer.subs]
-              ;[plugins.item-viewer.header.effects]
-              ;[plugins.item-viewer.header.events]
-              ;[plugins.item-viewer.header.subs]
+              [plugins.item-viewer.footer.effects]
+              [plugins.item-viewer.footer.events]
+              [plugins.item-viewer.footer.subs]
               [plugins.item-viewer.routes.effects]
               [plugins.item-viewer.transfer.subs]
               ;[plugins.item-viewer.update.effects]))
@@ -24,7 +21,7 @@
               ;[plugins.item-viewer.update.subs]
               [plugins.item-viewer.body.views   :as body.views]
               [plugins.item-viewer.core.subs    :as core.subs]
-              ;[plugins.item-viewer.footer.views :as footer.views]
+              [plugins.item-viewer.footer.views :as footer.views]
               ;[plugins.item-viewer.header.views :as header.views]
               [plugins.item-viewer.routes.subs  :as routes.subs]))
 
@@ -42,9 +39,10 @@
 (def viewing-item?       core.subs/viewing-item?)
 
 ; plugins.item-viewer.footer.views
-;(def delete-item-block footer.views/delete-item-block)
-;(def copy-item-block   footer.views/copy-item-block)
-;(def footer            footer.views/footer)
+(def delete-item-block    footer.views/delete-item-block)
+(def duplicate-item-block footer.views/duplicate-item-block)
+(def edit-item-block      footer.views/edit-item-block)
+(def footer               footer.views/footer)
 
 ; plugins.item-viewer.header.views
 ;(def header header.views/header)

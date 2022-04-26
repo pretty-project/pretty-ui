@@ -63,7 +63,7 @@
         @(a/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]
         :data-not-received
-        [downloading-item viewer-id]))
+         [downloading-item viewer-id]))
 
 (defn body
   ; @param (keyword) viewer-id
@@ -74,7 +74,7 @@
   ;   :default-item-id (string)
   ;   :default-view-id (keyword)
   ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
+  ;    [:delete, :duplicate, :edit]
   ;   :item-element (metamorphic-content)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path

@@ -20,6 +20,7 @@
 (def export-current-item          core.subs/export-current-item)
 (def get-current-item-label       core.subs/get-current-item-label)
 (def get-current-item-modified-at core.subs/get-current-item-modified-at)
+(def get-auto-title               core.subs/get-auto-title)
 
 
 

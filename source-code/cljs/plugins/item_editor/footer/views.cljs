@@ -14,11 +14,10 @@
 ;; -- Revert item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn revert-item-icon-button
-  ; @param (keyword) editor-id
+(defn- revert-item-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/revert-item-icon-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         item-changed?    @(a/subscribe [:item-editor/item-changed?    editor-id])
@@ -28,11 +27,10 @@
                               :on-click  [:item-editor/revert-item! editor-id]
                               :preset    :restore}]))
 
-(defn revert-item-button
-  ; @param (keyword) editor-id
+(defn- revert-item-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/revert-item-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         item-changed?    @(a/subscribe [:item-editor/item-changed?    editor-id])
@@ -60,11 +58,10 @@
 ;; -- Delete item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn delete-item-icon-button
-  ; @param (keyword) editor-id
+(defn- delete-item-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/delete-item-icon-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
@@ -73,11 +70,10 @@
                               :on-click  [:item-editor/delete-item! editor-id]
                               :preset    :delete}]))
 
-(defn delete-item-button
-  ; @param (keyword) editor-id
+(defn- delete-item-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/delete-item-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
@@ -104,11 +100,10 @@
 ;; -- Copy item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn copy-item-icon-button
-  ; @param (keyword) editor-id
+(defn- copy-item-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/copy-item-icon-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
@@ -118,10 +113,9 @@
                               :preset    :duplicate}]))
 
 (defn copy-item-button
-  ; @param (keyword) editor-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/copy-item-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
@@ -148,11 +142,10 @@
 ;; -- Save item components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn save-item-icon-button
-  ; @param (keyword) editor-id
+(defn- save-item-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/save-item-icon-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])
@@ -162,11 +155,10 @@
                               :on-click  [:item-editor/save-item! editor-id]
                               :preset    :save}]))
 
-(defn save-item-button
-  ; @param (keyword) editor-id
+(defn- save-item-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [item-editor/save-item-button :my-editor]
+  ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])

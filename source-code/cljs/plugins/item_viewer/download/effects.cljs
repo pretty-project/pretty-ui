@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.effects
-    (:require [plugins.plugin-handler.download.effects]
-              [plugins.item-viewer.body.subs           :as body.subs]
+    (:require [plugins.item-viewer.body.subs           :as body.subs]
               [plugins.item-viewer.core.subs           :as core.subs]
               [plugins.item-viewer.download.events     :as download.events]
               [plugins.item-viewer.download.queries    :as download.queries]
@@ -41,6 +40,14 @@
       ; Ha az [:item-viewer/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.
       (if (r body.subs/body-did-mount? db viewer-id)
-          {:db (r download.events/receive-item! db viewer-id server-response)
-           :dispatch-if [(r body.subs/get-body-prop db viewer-id :auto-title?)
-                         [:plugin-handler/set-auto-title! viewer-id]]})))
+          {:db       (r download.events/receive-item! db viewer-id server-response)
+           :dispatch [:item-viewer/item-received viewer-id]})))
+
+(a/reg-event-fx
+  :item-viewer/item-received
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  (fn [{:keys [db]} [_ viewer-id]]
+      (if-let [auto-title (r core.subs/get-auto-title db viewer-id)]
+              [:ui/set-window-title! auto-title])))
