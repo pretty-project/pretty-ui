@@ -78,9 +78,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selector-id]
   [item-browser/body :storage.media-selector
-                     {:item-path     [:storage :media-selector/browsed-item]
-                      :items-path    [:storage :media-selector/downloaded-items]
-                      :label-key     :alias
-                      :list-element  #'media-item
-                      :root-item-id  core.config/ROOT-DIRECTORY-ID
-                      :search-keys   [:alias]}])
+                     {:item-path    [:storage :media-selector/browsed-item]
+                      :items-path   [:storage :media-selector/downloaded-items]
+                      :items-key    :items
+                      :label-key    :alias
+                      :path-key     :path
+                      :list-element #'media-item
+                      :root-item-id core.config/ROOT-DIRECTORY-ID
+                      :search-keys  [:alias]}])

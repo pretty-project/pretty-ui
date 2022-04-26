@@ -55,7 +55,7 @@
   ; @usage
   ;  [:item-browser/go-home! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
-      (let [root-item-id (r body.subs/get-body-prop db browser-id :root-item-id)]
+      (let [root-item-id (r body.subs/get-body-prop db browser-id :item-id)]
            [:item-browser/browse-item! browser-id root-item-id])))
 
 (a/reg-event-fx

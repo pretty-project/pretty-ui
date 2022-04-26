@@ -27,27 +27,26 @@
   ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
+  ;    Only w/ {:label-key ...}
+  ;   :default-item-id (string)
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
-  ;   :items-key (keyword)(opt)
-  ;    Default: config/DEFAULT-ITEMS-KEY
+  ;   :items-key (keyword)
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
-  ;   :label-key (keyword)(opt)
-  ;    Default: config/DEFAULT-LABEL-KEY
+  ;   :label-key (keyword)
+  ;    Only w/ {:auto-title? true}
   ;   :list-element (metamorphic-content)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-ORDER-BY-OPTIONS
-  ;   :path-key (keyword)(opt)
-  ;    Default: config/DEFAULT-PATH-KEY
+  ;   :path-key (keyword)
   ;   :prefilter (map)(opt)
-  ;   :root-item-id (string)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
   ;

@@ -37,7 +37,8 @@
       ; Ha az útvonal kezelése előtt ugyanaz az elem volt megnyitva szerkesztésre, akkor nem szükséges
       ; az [:item-editor/request-item! ...] eseményt meghívni!
       ; Pl.: Egy elem szerkesztése közben a felhasználó egy másik fülre kattint a header komponensen
-      ;      megjelenített menüben. (pl. "/@app-home/my-editor/my-item" => "/@app-home/my-editor/my-item/my-view")
+      ;      megjelenített menüben.
+      ;      "/@app-home/my-editor/my-item/edit" => "/@app-home/my-editor/my-item/images"
       (let [derived-item-id    (r routes.subs/get-derived-item-id db editor-id)
             on-route           (r transfer.subs/get-transfer-item db editor-id :on-route)
             body-did-mount?    (r body.subs/body-did-mount?       db editor-id)

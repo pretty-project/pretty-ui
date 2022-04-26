@@ -172,7 +172,7 @@
       (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
           ; B)
           [:ui/blow-bubble! {:body :failed-to-delete}])))
 

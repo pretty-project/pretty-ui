@@ -603,10 +603,10 @@
   ; - XXX#7080
   ;   A header komponens tartalma az x4.7.0 verzióig az [:item-lister/header-props-stored? ...]
   ;   feliratkozás kimenetétől függően jelent meg.
-  ;   Az [:item-lister/items-received? ...] feliratkozás használatával az item-lister plugin
+  ;   Az [:item-lister/data-received? ...] feliratkozás használatával az item-lister plugin
   ;   betöltésekor a header komponens tartalma egy időben jelenik meg, a letöltésjelző eltűnésével
   ;   és a listaelemek megjelenésével.
-  (if-let [items-received? @(a/subscribe [:item-lister/items-received? lister-id])]
+  (if-let [data-received? @(a/subscribe [:item-lister/data-received? lister-id])]
           [:div.item-lister--header-structure [menu-mode-header    lister-id]
                                               [reorder-mode-header lister-id]
                                               [actions-mode-header lister-id]

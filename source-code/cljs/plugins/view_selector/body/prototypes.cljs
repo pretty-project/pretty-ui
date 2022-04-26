@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.view-selector.body.prototypes
-    (:require [mid-fruits.candy                  :refer [param]]
-              [plugins.view-selector.core.config :as core.config]))
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
@@ -17,7 +16,6 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:default-view-id (keyword)}
   [body-props]
-  (merge {:default-view-id core.config/DEFAULT-VIEW-ID}
+  (merge {}
          (param body-props)))

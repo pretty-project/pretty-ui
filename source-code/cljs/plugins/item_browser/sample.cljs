@@ -26,3 +26,14 @@
 
 ;; -- Az {:auto-title? true} beállítás használata -----------------------------
 ;; ----------------------------------------------------------------------------
+
+; ...
+; A body komponens {:label-key ...} paraméterét is szükséges megadni
+; az {:auto-title? true} beállítás használatához!
+
+
+
+;; -- Az {:default-item-id "..."} paraméter használata ------------------------
+;; ----------------------------------------------------------------------------
+
+; ...

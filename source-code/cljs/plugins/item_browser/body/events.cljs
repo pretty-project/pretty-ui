@@ -3,36 +3,19 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.body.events
-    (:require [plugins.item-browser.body.subs   :as body.subs]
-              [plugins.item-browser.core.events :as core.events]
-              [plugins.item-browser.core.subs   :as core.subs]
-              [x.app-core.api                   :refer [r]]))
+    (:require [plugins.item-browser.body.subs     :as body.subs]
+              [plugins.item-browser.core.events   :as core.events]
+              [plugins.item-browser.core.subs     :as core.subs]
+              [plugins.plugin-handler.body.events :as body.events]
+              [x.app-core.api                     :refer [r]]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn update-item-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (map)
-  [db [_ browser-id]]
-  ; - Az update-item-id! függvény a body komponens React-fába csatolásakor felülvizsgálja
-  ;   az aktuálisan böngészett elem azonosítóját.
-  ;
-  ; - Ha az [:item-browser/body-did-mount ...] esemény megtörténtekor az aktuálisan böngészett
-  ;   elem azonosítója ...
-  ;
-  ;   A) ... már eltárolásra került, akkor NEM használja a body komponens {:root-item-id "..."}
-  ;          paraméterének értékét.
-  ;
-  ;   B) ... még NEM került eltárolásra és a body komponens paraméterként megkapta a {:root-item-id "..."}
-  ;          tulajdonságot, akkor azt eltárolja az aktuálisan böngészett elem azonosítójaként.
-  (r core.events/set-current-item-id! db browser-id (or (r core.subs/get-current-item-id db browser-id)                  ; A)
-                                                        (r body.subs/get-body-prop       db browser-id :root-item-id)))) ; B)
+; plugins.plugin-handler.body.events
+(def update-item-id! body.events/update-item-id!)
 
 
 

@@ -34,7 +34,7 @@
 (defn- clients-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [items-received? @(a/subscribe [:item-lister/items-received? :clients.client-lister])]
+  (if-let [data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
           [:<> [ui/title-sensor {:title :clients}]
                [elements/label ::clients-label
                                {:content     :clients
@@ -45,7 +45,7 @@
 (defn- clients-items-info-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [items-received? @(a/subscribe [:item-lister/items-received? :clients.client-lister])]
+  (if-let [data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
           (let [items-info @(a/subscribe [:item-lister/get-items-info :clients.client-lister])]
                [elements/label ::clients-items-info-label
                                {:color     :muted

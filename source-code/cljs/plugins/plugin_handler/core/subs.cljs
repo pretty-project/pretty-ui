@@ -4,7 +4,10 @@
 
 (ns plugins.plugin-handler.core.subs
     (:require [plugins.plugin-handler.body.subs     :as body.subs]
+              [plugins.plugin-handler.routes.subs   :as routes.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
+              [x.app-activities.api                 :as activities]
+              [x.app-components.api                 :as components]
               [x.app-core.api                       :refer [r]]
               [x.app-db.api                         :as db]
               [x.app-sync.api                       :as sync]))
@@ -79,6 +82,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn current-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (string) item-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id item-id]]
+  (= item-id (r get-meta-item db plugin-id :item-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-current-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -87,6 +105,20 @@
   ; @return (string)
   [db [_ plugin-id]]
   (r get-meta-item db plugin-id :item-id))
+
+(defn get-current-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (keyword)
+  [db [_ plugin-id]]
+  (r get-meta-item db plugin-id :view-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,11 +147,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-current-view-id
+(defn get-current-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
   ;
-  ; @return (keyword)
+  ; @return (metamorphic-content)
   [db [_ plugin-id]]
-  (r get-meta-item db plugin-id :view-id))
+  (let [current-item (r get-current-item        db plugin-id)
+        label-key    (r body.subs/get-body-prop db plugin-id :label-key)]
+       (label-key current-item)))
+
+(defn get-current-item-modified-at
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (string)
+  [db [_ plugin-id]]
+  (let [current-item (r get-current-item db plugin-id)]
+       (if-let [modified-at (:modified-at current-item)]
+               (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
+                    (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))

@@ -178,7 +178,7 @@
        (-> db (dissoc-in items-path)
               (dissoc-in [:plugins :plugin-handler/meta-items lister-id :document-count])
               (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :items-received?]))))
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :data-received?]))))
 
 
 

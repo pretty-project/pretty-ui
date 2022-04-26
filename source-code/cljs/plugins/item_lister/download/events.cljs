@@ -3,30 +3,28 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.events
-    (:require [mid-fruits.vector                 :as vector]
-              [plugins.item-lister.body.subs     :as body.subs]
-              [plugins.item-lister.core.events   :as core.events]
-              [plugins.item-lister.download.subs :as download.subs]
-              [plugins.item-lister.items.events  :as items.events]
-              [plugins.item-lister.items.subs    :as items.subs]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]))
+    (:require [mid-fruits.vector                      :as vector]
+              [plugins.item-lister.body.subs          :as body.subs]
+              [plugins.item-lister.core.events        :as core.events]
+              [plugins.item-lister.download.subs      :as download.subs]
+              [plugins.item-lister.items.events       :as items.events]
+              [plugins.item-lister.items.subs         :as items.subs]
+              [plugins.plugin-handler.download.events :as download.events]
+              [x.app-core.api                         :as a :refer [r]]
+              [x.app-db.api                           :as db]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.download.events
+(def data-received download.events/data-received)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn items-received
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  ; XXX#0499
-  ; Szükséges eltárolni, hogy megtörtént-e az első kommunikáció a szerverrel!
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :items-received?] true))
 
 (defn store-received-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,8 +93,7 @@
   (as-> db % (r store-received-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
              (r select-received-items!         % lister-id)
-             (r items-received                 % lister-id)))
-
+             (r data-received                  % lister-id)))
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -132,8 +129,8 @@
   ;   állapotból, mert a listaelemek újratöltése ESETLEGESEN egy a kijelölt listaelemeken végzett
   ;   művelet befejezése.
   ;
-  ; - Az újra letöltött elemek fogadásakor is szükséges {:items-received? true} állapotba léptetni
-  ;   a plugint az items-received függvény alkalmazásával!
+  ; - Az újra letöltött elemek fogadásakor is szükséges {:data-received? true} állapotba léptetni
+  ;   a plugint az data-received függvény alkalmazásával!
   ;   Pl.: Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
   ;        és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
   ;        plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
@@ -149,4 +146,4 @@
              (r store-received-document-count! % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)
              (r core.events/quit-actions-mode! % lister-id)
-             (r items-received                 % lister-id)))
+             (r data-received                  % lister-id)))

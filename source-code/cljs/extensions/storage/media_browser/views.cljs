@@ -238,7 +238,9 @@
                            :item-actions [:delete :duplicate]
                            :item-path    [:storage :media-browser/browsed-item]
                            :items-path   [:storage :media-browser/downloaded-items]
+                           :items-key    :items
                            :label-key    :alias
+                           :path-key     :path
                            :list-element #'media-item
                            :root-item-id core.config/ROOT-DIRECTORY-ID
                            :search-keys  [:alias]}]])

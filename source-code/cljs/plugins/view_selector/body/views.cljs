@@ -24,10 +24,8 @@
 (defn body
   ; @param (keyword) selector-id
   ; @param (map) body-props
-  ;  {:allowed-view-ids (keywords in vector)(opt)
-  ;   :content (metamorphic-content)
-  ;   :default-view-id (keyword)(opt)
-  ;    Default: core.config/DEFAULT-VIEW-ID}
+  ;  {:content (metamorphic-content)
+  ;   :default-view-id (keyword)}
   ;
   ; @usage
   ;  [view-selector/body :my-selector {...}]
@@ -36,7 +34,7 @@
   ;  (defn my-content [selector-id] [:div ...])
   ;  [view-selector/body :my-selector {:content #'my-content}]
   [selector-id body-props]
-  (let [body-props (body.prototypes/body-props-prototype body-props)]
+  (let [];body-props (body.prototypes/body-props-prototype body-props)
        (reagent/lifecycles (core.helpers/component-id selector-id :body)
                            {:reagent-render         (fn []             [body-structure                   selector-id])
                             :component-did-mount    (fn [] (a/dispatch [:view-selector/body-did-mount    selector-id body-props]))

@@ -23,8 +23,9 @@
       ; amiért szükséges az [:environment/listen-to-pressed-key! ...] esemény használatával
       ; beállítani a SHIFT billentyű figyelését, hogy az items.subs/toggle-item-selection? függvény
       ; hozzáférjen a SHIFT billentyű állapotához (fókuszált search-field input mező esetén is).
-      {:db       (r body.events/body-did-mount db lister-id body-props)
-       :dispatch [:environment/listen-to-pressed-key! :item-lister/SHIFT {:key-code 16}]}))
+      {:db         (r body.events/body-did-mount db lister-id body-props)
+       :dispatch-n [[:environment/listen-to-pressed-key! :item-lister/SHIFT {:key-code 16}]
+                    [:item-lister/request-items! lister-id]]}))
 
 
 

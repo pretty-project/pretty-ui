@@ -2,13 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.core.config
-    (:require [mid.plugins.view-selector.core.config :as core.config]))
+(ns plugins.item-viewer.transfer.helpers
+    (:require [mid.plugins.item-viewer.transfer.helpers :as transfer.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.view-selector.core.config
-(def DEFAULT-VIEW-ID core.config/DEFAULT-VIEW-ID)
+; mid.plugins.item-viewer.transfer.helpers
+(def transfer-id transfer.helpers/transfer-id)

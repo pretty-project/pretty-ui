@@ -32,21 +32,7 @@
   [db [_ selector-id]]
   (let [selected-view-id (r get-meta-item           db selector-id :view-id)
         default-view-id  (r body.subs/get-body-prop db selector-id :default-view-id)]
-       (if-let [allowed-view-ids (r body.subs/get-body-prop db selector-id :allowed-view-ids)]
-               ; Ha az {:allowed-view-ids [...]} beállítás használatban van ...
-               (or ; ... és a selected-view-id megtalálható az allowed-view-ids vektorban,
-                   ;     akkor a visszatérési érték a selected-view-id.
-                   (some #(if (= % selected-view-id) %) allowed-view-ids)
-                   ; ... és a selected-view NEM található meg az allowed-view-ids vektorban,
-                   ;     akkor a visszatérési érték a default-view-id.
-                   (return default-view-id))
-               ; Ha az {:allowed-view-ids [...]} beállítás NINCS használatban ...
-               (or ; ... és a selected-view-id értéke NEM nil,
-                   ;     akkor a visszatérési érték a selected-view-id.
-                   (return selected-view-id)
-                   ; ... és a selected-view-id értéke nil,
-                   ;     akkor a visszatérési érték a default-view-id.
-                   (return default-view-id)))))
+       (or selected-view-id default-view-id)))
 
 
 

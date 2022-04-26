@@ -7,13 +7,10 @@
               [mid-fruits.vector                 :as vector]
               [plugins.item-editor.body.subs     :as body.subs]
               [plugins.item-editor.core.helpers  :as core.helpers]
+              [plugins.item-editor.download.subs :as download.subs]
               [plugins.item-editor.transfer.subs :as transfer.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-activities.api              :as activities]
-              [x.app-components.api              :as components]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]
-              [x.app-elements.api                :as elements]))
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -21,12 +18,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.core.subs
-(def get-meta-item         core.subs/get-meta-item)
-(def plugin-synchronizing? core.subs/plugin-synchronizing?)
-(def get-current-item-id   core.subs/get-current-item-id)
-(def get-current-item      core.subs/get-current-item)
-(def export-current-item   core.subs/export-current-item)
-(def get-current-view-id   core.subs/get-current-view-id)
+(def get-meta-item                core.subs/get-meta-item)
+(def plugin-synchronizing?        core.subs/plugin-synchronizing?)
+(def get-current-item-id          core.subs/get-current-item-id)
+(def get-current-view-id          core.subs/get-current-view-id)
+(def get-current-item             core.subs/get-current-item)
+(def export-current-item          core.subs/export-current-item)
+(def get-current-item-modified-at core.subs/get-current-item-modified-at)
 
 
 
@@ -36,11 +34,11 @@
 (defn get-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) lister-id
+  ; @param (keyword) editor-id
   ;
   ; @return (boolean)
-  [db [_ lister-id]]
-  (r core.subs/get-request-id db lister-id :editor))
+  [db [_ editor-id]]
+  (r core.subs/get-request-id db editor-id :editor))
 
 (defn editor-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,18 +48,6 @@
   ; @return (boolean)
   [db [_ editor-id]]
   (r plugin-synchronizing? db editor-id :editor))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn data-received?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [db [_ editor-id]]
-  (r get-meta-item db editor-id :data-received?))
 
 
 
@@ -80,7 +66,7 @@
   ; Az editing-item? függvény visszatérési értéke akkor TRUE, ...
   ; ... ha az item-editor plugin body komponense a React-fába van csatolva.
   ; ... ha az item-id paraméterként átadott azonosítójú elem van megnyitva szerkesztésre.
-  (= item-id (r get-meta-item db editor-id :item-id)))
+  (r core.subs/current-item? db editor-id item-id))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,31 +109,6 @@
                        (core.helpers/edit-item-label editor-id item-namespace)))
           (if-let [route-title (r transfer.subs/get-transfer-item db editor-id :route-title)]
                   (return route-title))))
-
-(defn get-current-item-modified-at
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (string)
-  [db [_ editor-id]]
-  (let [current-item (r get-current-item db editor-id)]
-       (if-let [modified-at (:modified-at current-item)]
-               (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
-                    (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
-
-(defn get-current-item-label
-  ; @param (keyword) editor-id
-  ; @param (metamorphic-content) item-name
-  ;
-  ; @return (metamorphic-content)
-  [db [_ editor-id item-name]]
-  (if (empty? item-name)
-      (let [item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)]
-           (if-let [new-item? (r new-item? db editor-id)]
-                   (core.helpers/new-item-label     editor-id item-namespace)
-                   (core.helpers/unnamed-item-label editor-id item-namespace)))
-      (return item-name)))
 
 
 
@@ -199,10 +160,10 @@
   ; XXX#3219
   ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy a szerkesztő
   ; {:disabled? true} állapotban legyen, amíg NEM kezdődött még el az adatok letöltése!
-  (boolean (if-let [download-data? (r download-data? db editor-id)]
-                   (let [data-received?        (r data-received?        db editor-id)
-                         editor-synchronizing? (r editor-synchronizing? db editor-id)]
-                        (or editor-synchronizing? (not data-received?))))))
+  (if-let [download-data? (r download-data? db editor-id)]
+          (let [data-received?        (r download.subs/data-received? db editor-id)
+                editor-synchronizing? (r editor-synchronizing?        db editor-id)]
+               (or editor-synchronizing? (not data-received?)))))
 
 
 
@@ -215,12 +176,6 @@
 ; @usage
 ;  [:item-editor/get-meta-item :my-editor :my-item]
 (a/reg-sub :item-editor/get-meta-item get-meta-item)
-
-; @param (keyword) editor-id
-;
-; @usage
-;  [:item-editor/data-received? :my-editor]
-(a/reg-sub :item-editor/data-received? data-received?)
 
 ; @param (keyword) editor-id
 ;
@@ -239,12 +194,6 @@
 ; @usage
 ;  [:item-editor/get-current-item-modified-at :my-editor]
 (a/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
-
-; @param (keyword) editor-id
-;
-; @usage
-;  [:item-editor/get-current-item-label :my-editor]
-(a/reg-sub :item-editor/get-current-item-label get-current-item-label)
 
 ; @param (keyword) editor-id
 ;

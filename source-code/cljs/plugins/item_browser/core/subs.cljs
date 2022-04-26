@@ -19,13 +19,13 @@
 (def get-items-info       plugins.item-lister.core.subs/get-items-info)
 (def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
-(def items-received?      plugins.item-lister.core.subs/items-received?)
 
 ; plugins.plugin-handler.core.subs
-(def get-meta-item         core.subs/get-meta-item)
-(def plugin-synchronizing? core.subs/plugin-synchronizing?)
-(def get-current-item-id   core.subs/get-current-item-id)
-(def get-current-item      core.subs/get-current-item)
+(def get-meta-item          core.subs/get-meta-item)
+(def plugin-synchronizing?  core.subs/plugin-synchronizing?)
+(def get-current-item-id    core.subs/get-current-item-id)
+(def get-current-item       core.subs/get-current-item)
+(def get-current-item-label core.subs/get-current-item-label)
 
 
 
@@ -58,23 +58,7 @@
   ; A browsing-item? függvény visszatérési értéke akkor TRUE, ...
   ; ... ha az item-browser plugin body komponense a React-fába van csatolva.
   ; ... ha az item-id paraméterként átadott azonosító az aktuálisan böngészett elem azonosítója.
-  (= item-id (r get-meta-item db browser-id :item-id)))
-
-(defn get-current-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (metamorphic-content)
-  [db [_ browser-id]]
-  ; XXX#6487
-  ; Az [:item-browser/get-current-item-label ...] Re-Frame feliratkozás meghívható az item-browser
-  ; plugin body komponensének React-fába csatolása előtt, amikor még NEM elérhetők az {:item-path ...}
-  ; és {:label-key ...} paraméterek a Re-Frame adatbázisban, ezért szükséges ezen paraméterek meglétének
-  ; vizsgálata!
-  (let [label-key (r body.subs/get-body-prop db browser-id :label-key)]
-       (if-let [current-item (r get-current-item db browser-id)]
-               (label-key current-item))))
+  (r core.subs/current-item? db browser-id item-id))
 
 (defn get-current-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,10 +67,9 @@
   ;
   ; @return (maps in vector)
   [db [_ browser-id]]
-  ; XXX#6487
-  (let [path-key (r body.subs/get-body-prop db browser-id :path-key)]
-       (if-let [current-item (r get-current-item db browser-id)]
-               (-> current-item path-key vec))))
+  (let [current-item (r get-current-item        db browser-id)
+        path-key     (r body.subs/get-body-prop db browser-id :path-key)]
+       (-> current-item path-key vec)))
 
 
 
@@ -153,10 +136,6 @@
 ; @usage
 ;  [:item-browser/get-current-item-label :my-browser]
 (a/reg-sub :item-browser/get-current-item-label get-current-item-label)
-
-; @usage
-;  [:item-browser/items-received? :my-browser]
-(a/reg-sub :item-browser/items-received? items-received?)
 
 ; @param (keyword) browser-id
 ;

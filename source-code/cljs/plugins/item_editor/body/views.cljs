@@ -5,11 +5,19 @@
 (ns plugins.item-editor.body.views
     (:require [plugins.item-editor.body.prototypes :as body.prototypes]
               [plugins.item-editor.core.helpers    :as core.helpers]
+              [plugins.plugin-handler.body.views   :as body.views]
               [mid-fruits.string                   :as string]
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
-              [x.app-elements.api                  :as elements]
-              [x.app-layouts.api                   :as layouts]))
+              [x.app-elements.api                  :as elements]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.body.views
+(def error-body body.views/error-body)
 
 
 
@@ -78,18 +86,11 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-item-label
+(defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  [editor-id]
-  [elements/label ::downloading-item-label
-                  {:color       :highlight
-                   :content     :downloading...
-                   :font-size   :xs
-                   :font-weight :bold
-                   :indent      {:top :xxl}}]
-
+  [_]
   ; TEMP
   [:div {:style {:width "100%"}}
         [:div {:style {:display "flex" :width "100%" :grid-column-gap "24px" :padding "12px 24px"}}
@@ -109,48 +110,10 @@
               [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "72px" :width "50%"}}]]])
   ; TEMP
 
-(defn downloading-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  [downloading-item-label editor-id])
-  ;[elements/row ::downloading-item
-  ;              {:content          [downloading-item-label editor-id]
-  ;               :horizontal-align :center])
-
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn error-occured-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [_]
-  [elements/label ::error-occured-label
-                  {:color     :warning
-                   :content   :an-error-occured
-                   :font-size :m
-                   :indent    {:top :xxl}}])
-
-(defn may-be-broken-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [_]
-  [elements/label ::may-be-broken-label
-                  {:color   :muted
-                   :content :the-item-you-opened-may-be-broken}])
-
-(defn error-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  [:<> [error-occured-label editor-id]
-       [may-be-broken-label editor-id]])
 
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -165,44 +128,29 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  ; A) ...
-  ;
-  ; B) ...
-  ;
-  ; C) ...
-  ;
-  ; D) XXX#0506
-  ;    A downloading-item komponens már akkor megjelenik, amikor még az [:item-editor/body-props-stored? ...]
-  ;    feliratkozás visszatérési értéke FALSE. Így az item-editor plugin betöltésekor a body komponens
-  ;    React-fába csatolódása és az [:item-editor/body-props-stored? ...] feliratkozás visszatérési értékének
-  ;    TRUE értére változása közötti pillanatban is látható.
-  (cond ; A)
-        @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
-         [error-body editor-id]
-        ; B)
-        @(a/subscribe [:item-editor/body-props-stored? editor-id])
-         (if-let [data-received? @(a/subscribe [:item-editor/data-received? editor-id])]
-                 [form-element     editor-id]
-                 [downloading-item editor-id])
-        ; C)
-        :body-props-not-stored-yet
+  (cond @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
+         [error-body editor-id {:error-description :the-item-you-opened-may-be-broken}]
+        @(a/subscribe [:item-editor/data-received? editor-id])
+         [form-element editor-id]
+        :data-not-received
         [downloading-item editor-id]))
 
 (defn body
   ; @param (keyword) editor-id
   ; @param (map) body-props
-  ;  {:allowed-view-ids (keywords in vector)(opt)
-  ;   :auto-title? (boolean)(opt)
+  ;  {:auto-title? (boolean)(opt)
   ;    Default: false
-  ;   :default-view-id (keyword)(opt)
-  ;    Default: body.config/DEFAULT-VIEW-ID}
+  ;    Only w/ {:label-key ...}
+  ;   :default-item-id (string)
+  ;   :default-view-id (keyword)}
   ;   :form-element (metamorphic-content)
   ;   :initial-item (map)(opt)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate, :revert, :save]
-  ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
+  ;   :label-key (keyword)(opt)
+  ;    Only w/ {:auto-title? true}
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
   ;    Default: core.helpers/default-suggestions-path}

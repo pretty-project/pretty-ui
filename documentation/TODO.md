@@ -14,6 +14,12 @@
 
 # x4.7.0
 
+- A cljs egy alig típusos nyelv, engedd el a sok (boolean ...) függvényt! Felesleges.
+
+- Jó lenne a plugin-okat leválasztani a mongo-db-ről, hogy univerzálisak legyenek.
+  Vagy legalább ne kelljen kollekció/dokument struktura lehessen egy item, bármilyen map, ne kelljen
+  dokumentumnak lennie.
+
 - https://www.behance.net/gallery/130899041/Healthcare-management-system-UXUI?tracking_source=search_projects%7Cux
   Item lister new layout, fontos lesz majd, hogy a listázóban a listaelemek sok adatot mutatssanak,
   hogy össze lehessen öket hasonlitani, és legyen egy fejlec az adatok cimeivel (excel-like)

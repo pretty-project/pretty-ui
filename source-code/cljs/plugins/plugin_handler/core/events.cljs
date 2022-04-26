@@ -3,7 +3,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.events
-    (:require [mid-fruits.map :refer [dissoc-in]]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
+              [plugins.plugin-handler.body.subs   :as body.subs]
+              [plugins.plugin-handler.core.subs   :as core.subs]
+              [plugins.plugin-handler.routes.subs :as routes.subs]
+              [x.app-core.api                     :refer [r]]))
 
 
 
@@ -69,3 +74,44 @@
   ; @return (map)
   [db [_ plugin-id view-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id] view-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn update-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  ; A) Ha a plugin útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása
+  ;    az aktuális útvonal :item-id útvonal-paramétere, annak hiányában a body komponens
+  ;    {:default-item-id "..."} tulajdonsága.
+  ;
+  ; B) Ha a plugin NEM útvonal-vezérelt, akkor az aktuális elem azonosítóját a plugin
+  ;    eseményei vagy a plugint használó modul eseményei állíthatják be.
+  ;    Ha az update-item-id! függvény alkalmazása előtt az aktuális elem azonosítójának
+  ;    beállítása nem történt meg, akkor az azonosító forrása a body komponens {:default-item-id "..."}
+  ;    tulajdonságának értéke.
+  (if-let [route-handled? (r routes.subs/route-handled? db plugin-id)]
+          ; A)
+          (if-let [derived-item-id (r routes.subs/get-derived-item-id db plugin-id)]
+                  (r set-item-id! db plugin-id derived-item-id)
+                  (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
+                       (r set-item-id! db plugin-id default-item-id)))
+          ; B)
+          (if-let [current-item-id (r core.subs/get-current-item-id db plugin-id)]
+                  (return db)
+                  (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
+                       (r set-item-id! db plugin-id default-item-id)))))
+
+(defn update-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]])

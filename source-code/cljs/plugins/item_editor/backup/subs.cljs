@@ -6,6 +6,7 @@
     (:require [mid-fruits.map                     :as map]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
+              [plugins.item-editor.download.subs  :as download.subs]
               [plugins.plugin-handler.backup.subs :as backup.subs]
               [x.app-core.api                     :as a :refer [r]]))
 
@@ -65,15 +66,15 @@
   ;   veszi a NIL és a különböző üres típusok közötti különbséget!
   ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
   ;        üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
-  (boolean (if-let [data-received? (r core.subs/data-received? db editor-id)]
-                   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-                         current-item    (r core.subs/get-current-item    db editor-id)
-                         backup-item     (r get-backup-item               db editor-id current-item-id)]
-                        (letfn [(f [change-key] (if (-> current-item change-key empty?)
-                                                    (-> backup-item  change-key empty? not)
-                                                    (not= (change-key current-item)
-                                                          (change-key backup-item))))]
-                               (some f change-keys))))))
+  (if-let [data-received? (r download.subs/data-received? db editor-id)]
+          (let [current-item-id (r core.subs/get-current-item-id db editor-id)
+                current-item    (r core.subs/get-current-item    db editor-id)
+                backup-item     (r get-backup-item               db editor-id current-item-id)]
+               (letfn [(f [change-key] (if (-> current-item change-key empty?)
+                                           (-> backup-item  change-key empty? not)
+                                           (not= (change-key current-item)
+                                                 (change-key backup-item))))]
+                      (some f change-keys)))))
 
 
 

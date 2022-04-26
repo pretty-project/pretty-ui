@@ -2,12 +2,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-editor.body.config)
+(ns plugins.item-viewer.core.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def DEFAULT-VIEW-ID :edit)
+(defn viewer-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (map) viewer-props
+  ;
+  ; @return (map)
+  [viewer-id viewer-props]
+  (merge {}
+         (param viewer-props)))

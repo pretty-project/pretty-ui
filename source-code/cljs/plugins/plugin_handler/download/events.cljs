@@ -2,12 +2,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.view-selector.core.config)
+(ns plugins.plugin-handler.download.events)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def DEFAULT-VIEW-ID :main)
+(defn data-received
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :data-received?] true))

@@ -3,28 +3,23 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [mid-fruits.candy                  :refer [return]]
-              [plugins.item-editor.backup.events :as backup.events]
-              [plugins.item-editor.body.subs     :as body.subs]
-              [plugins.item-editor.core.events   :as core.events]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.download.subs :as download.subs]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]))
+    (:require [mid-fruits.candy                       :refer [return]]
+              [plugins.item-editor.backup.events      :as backup.events]
+              [plugins.item-editor.body.subs          :as body.subs]
+              [plugins.item-editor.core.events        :as core.events]
+              [plugins.item-editor.core.subs          :as core.subs]
+              [plugins.item-editor.download.subs      :as download.subs]
+              [plugins.plugin-handler.download.events :as download.events]
+              [x.app-core.api                         :as a :refer [r]]
+              [x.app-db.api                           :as db]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn data-received
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :data-received?] true))
+; plugins.plugin-handler.download.events
+(def data-received download.events/data-received)
 
 
 
@@ -38,12 +33,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; Ha az [:item-editor/request-item! ...] esemény megtörténésekor az item-editor plugin
-  ; már használatban van, akkor az adatok letöltése előtt szükséges visszaléptetni a plugint
-  ; {:data-received? false} állapotba, hogy a letöltés idejére újra megjelenjen a letöltésjelző.
-  ; Pl.: Ha a felhasználó egy elem szerkesztése közben duplikálja az elemet, majd a megjelenő
-  ;      értesítésen a "Másolat szerkesztése" gombra kattint, akkor az item-editor plugin
-  ;      letölti a másolat elemet, miközben szükséges megjeleníteni a letöltésjelzőt!
+  ; XXX#3005
   (r core.events/reset-downloads! db editor-id))
 
 (defn store-downloaded-suggestions!
@@ -72,6 +62,8 @@
   ;
   ; - A letöltött dokumentum a merge függvény használatával kerül eltárolásra, így az esetlegesen
   ;   a body komponens számára {:initial-item {...}} tulajdonságként átadott értékek nem íródnak felül.
+  ;
+  ; - MIÉRT SZÜKSÉGES AZ ELEMRŐL MÁSOLATOT KÉSZÍTENI A LETÖLTÉSKOR?
   (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
         item-path   (r body.subs/get-body-prop       db editor-id :item-path)
         document    (-> server-response resolver-id db/document->non-namespaced-document)]

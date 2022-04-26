@@ -4,7 +4,7 @@
 
 (ns extensions.clients.client-lister.mutations
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defmutation]]
-              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.vector                     :as vector]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]))
 
@@ -17,7 +17,10 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              [_ {:keys [items]}]
              {::pathom.co/op-name 'clients.client-lister/undo-delete-items!}
-             (mongo-db/insert-documents! "clients" items))
+             ; XXX#7601
+             ; A :client/name virtuális mezőt szükséges eltávolítani a dokumentumokból!
+             (letfn [(f [item] (dissoc item :client/name))]
+                    (mongo-db/insert-documents! "clients" (vector/->items items f))))
 
 (defmutation delete-items!
              ; WARNING! NON-PUBLIC! DO NOT USE!

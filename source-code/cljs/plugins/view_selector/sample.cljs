@@ -39,15 +39,25 @@
 ;; -- A plugin használata -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A case függvény default ágát is szükséges beállítani, hogy a hibás vagy elavult
+; útvonalak használata esetén is megjelenjen a tartalom!
 (defn my-content
   [selector-id]
   (let [view-id @(a/subscribe [:view-selector/get-selected-view-id selector-id])]
        (case view-id :my-view   [:div "My view"]
                      :your-view [:div "Your view"]
-                                [:div "Default view"])))
+                                [:div "My view (as default)"])))
 
 (defn my-view
   [surface-id]
-  [view-selector/view :my-selector {:allowed-view-ids [:my-view :your-view]
-                                    :default-view-id :my-view
-                                    :content #'my-content}])
+  [view-selector/view :my-selector {:default-view-id :my-view
+                                    :content         #'my-content}])
+
+
+
+;; -- Az {:default-view-id "..."} paraméter használata ------------------------
+;; ----------------------------------------------------------------------------
+
+; A body komponens {:default-view-id "..."} paraméterének értéke ...
+; ... az aktuálisan beállított nézet azonosítója, amikor az aktuális útvonalból
+;     nem származtatható a :view-id útvonal-paraméter.

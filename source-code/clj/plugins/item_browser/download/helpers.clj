@@ -33,7 +33,7 @@
                ; WARNING!
                ; Az env->item-links függvény visszatérési értéke ...
                ; ... minden esetben vektor típus kell legyen!
-               ; ... nem lehet nil, különben az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
+               ; ... nem lehet NIL, különben az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
                (return []))))
 
 (defn env->sort-pattern

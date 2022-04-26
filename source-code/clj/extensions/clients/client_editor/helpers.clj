@@ -2,18 +2,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-browser.core.config)
+(ns extensions.clients.client-editor.helpers
+    (:require [extensions.clients.client-viewer.helpers :as client-viewer.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def DEFAULT-ITEMS-KEY :items)
-
-; @constant (keyword)
-(def DEFAULT-LABEL-KEY :name)
-
-; @constant (keyword)
-(def DEFAULT-PATH-KEY :path)
+; extensions.clients.client-viewer.helpers
+(def client-item<-name-field client-viewer.helpers/client-item<-name-field)

@@ -44,3 +44,16 @@
               {:db          (r core.events/set-item-id! db editor-id item-id)
                :dispatch-if [(r body.subs/body-did-mount? db editor-id)
                              [:item-editor/request-item! editor-id]]})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-editor/load-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  (fn [{:keys [db]} [_ editor-id]]
+      {:db (r core.events/load-editor! db editor-id)}))

@@ -13,6 +13,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn route-handled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  ; Ha a plugin szerver-oldali kezelője megkapja paraméterként a {:base-route "..."}
+  ; tulajdonságot, ...
+  ; ... akkor hozzáadja a plugin elindításához szükséges útvonal(ak)at a rendszerhez.
+  ; ... akkor a plugin útvonal-vezéreltnek számít.
+  (let [base-route (r transfer.subs/get-transfer-item db plugin-id :base-route)]
+       (some? base-route)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-extended-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

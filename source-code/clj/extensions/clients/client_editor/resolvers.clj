@@ -3,9 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.clients.client-editor.resolvers
-    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [mongo-db.api                          :as mongo-db]
-              [pathom.api                            :as pathom]))
+    (:require [com.wsscode.pathom3.connect.operation    :as pathom.co :refer [defresolver defmutation]]
+              [extensions.clients.client-editor.helpers :as client-editor.helpers]
+              [mongo-db.api                             :as mongo-db]
+              [pathom.api                               :as pathom]))
 
 
 
@@ -15,8 +16,10 @@
 (defn get-item-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
-  (let [item-id (pathom/env->param env :item-id)]
-       (mongo-db/get-document-by-id "clients" item-id)))
+  ; XXX#7601
+  (let [item-id     (pathom/env->param env :item-id)
+        client-item (mongo-db/get-document-by-id "clients" item-id)]
+       (client-editor.helpers/client-item<-name-field env client-item)))
 
 (defresolver get-item
              ; WARNING! NON-PUBLIC! DO NOT USE!

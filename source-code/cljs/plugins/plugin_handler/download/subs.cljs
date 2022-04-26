@@ -27,3 +27,17 @@
   (let [handler-key (r transfer.subs/get-transfer-item db plugin-id :handler-key)]
        (keyword      (name handler-key)
                 (str (name action-key)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn data-received?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  (get-in db [:plugins :plugin-handler/meta-items plugin-id :data-received?]))

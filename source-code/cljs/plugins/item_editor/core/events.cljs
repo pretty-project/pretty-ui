@@ -69,5 +69,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn load-editor!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ editor-id item-id]])
+  ;(as-> db % (r set-item-id! db editor-id (or item-id (r core.subs/read-item-id db editor-id)))
+  ;           (r set-view-id! db editor-id (r core.subs/read-view-id db editor-id))]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :item-editor/set-error-mode! set-error-mode!)

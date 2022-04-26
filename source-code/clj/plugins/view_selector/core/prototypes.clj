@@ -18,4 +18,5 @@
   ;
   ; @return (map)
   [selector-id selector-props]
-  (merge (param selector-props)))
+  (merge {}
+         (param selector-props)))

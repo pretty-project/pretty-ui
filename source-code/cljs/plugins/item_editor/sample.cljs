@@ -67,16 +67,20 @@
 ;; -- Az {:auto-title? true} beállítás használata -----------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az item-editor plugin {:auto-title? true} beállítással van használva, akkor a szerkesztő betöltésekor
-; a plugin a megfelelő kifejezést beállítja az applikáció címének, ezért szükséges azokat hozzáadni a szótárhoz!
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:add-my-type  {:en "Add my type"  :hu "Típusom hozzáadása"}
-                                         :edit-my-type {:en "Edit my type" :hu "Típusom szerkesztése"}}]})
+; ...
+; A body komponens {:label-key ...} paraméterét is szükséges megadni
+; az {:auto-title? true} beállítás használatához!
 
 
 
-;; -- Az item-label komponens/feliratkozás használata -------------------------
+;; -- A ".../create" útvonal használata ---------------------------------------
+;; ----------------------------------------------------------------------------
+
+; ...
+
+
+
+;; -- Az item-label komponens használata --------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; ...
@@ -85,14 +89,7 @@
   (let [my-item-name @(a/subscribe [:db/get-item [:my-editor :name]])]
        [item-editor/item-label {:name my-item-name}]))
 
-; ...
-(defn your-item-label
-  []
-  (let [your-item-name  @(a/subscribe [:db/get-item [:your-editor :name]])
-        your-item-label @(a/subscribe [:item-editor/get-current-item-label :your-editor your-item-name])]
-       [:div your-item-label]))
-
-; Az item-editor plugin item-label funkciójának használatakor szükséges a szótárhoz adni
+; Az item-editor plugin item-label komponens használatához szükséges a szótárhoz adni
 ; a megfelelő kifejezéseket!
 (a/reg-lifecycles!
   ::lifecycles
@@ -122,3 +119,21 @@
 (a/reg-event-fx
   :edit-my-item!
   [:item-editor/edit-item! :my-editor "my-item"])
+
+
+
+;; -- Az {:default-item-id "..."} paraméter használata ------------------------
+;; ----------------------------------------------------------------------------
+
+; A body komponens {:default-item-id "..."} paraméterének értéke ...
+; ... az aktuálisan szerkesztett elem azonosítója, amikor az aktuális útvonalból
+;     nem származtatható az :item-id útvonal-paraméter.
+
+
+
+;; -- Az {:default-view-id "..."} paraméter használata ------------------------
+;; ----------------------------------------------------------------------------
+
+; A body komponens {:default-view-id "..."} paraméterének értéke ...
+; ... az aktuálisan beállított nézet azonosítója, amikor az aktuális útvonalból
+;     nem származtatható a :view-id útvonal-paraméter.

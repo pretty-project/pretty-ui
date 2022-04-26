@@ -14,9 +14,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.body.subs
-(def get-body-prop      body.subs/get-body-prop)
-(def body-props-stored? body.subs/body-props-stored?)
-(def body-did-mount?    body.subs/body-did-mount?)
+(def get-body-prop   body.subs/get-body-prop)
+(def body-did-mount? body.subs/body-did-mount?)
 
 
 
@@ -53,6 +52,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :item-editor/get-body-prop get-body-prop)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-editor/body-props-stored? body-props-stored?)

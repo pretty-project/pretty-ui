@@ -15,21 +15,29 @@
 
 
 
-;; -- Settings body components ------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body
+(defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :settings.view-selector])]
        (case view-id :personal      [personal-settings     :settings.view-selector/view]
                      :privacy       [privacy-settings      :settings.view-selector/view]
                      :notifications [notification-settings :settings.view-selector/view]
-                     :appearance    [appearance-settings   :settings.view-selector/view])))
+                     :appearance    [appearance-settings   :settings.view-selector/view]
+                                    [personal-settings     :settings.view-selector/view])))
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [view-selector/body :settings.view-selector
+                      {:content         #'body
+                       :default-view-id :personal}])
 
 
 
-;; -- Settings header components ----------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- menu-bar
@@ -47,14 +55,12 @@
 
 
 
-;; -- Settings components -----------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id {:header #'header
-                                :body   [view-selector/body :settings.view-selector 
-                                                            {:content #'body
-                                                             :allowed-view-ids [:personal :privacy :appearance :notifications]
-                                                             :default-view-id :personal}]}])
+  [layouts/layout-a surface-id
+                    {:body   #'body
+                     :header #'header}])

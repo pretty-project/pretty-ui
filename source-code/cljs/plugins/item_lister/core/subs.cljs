@@ -3,12 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.subs
-    (:require [mid-fruits.candy                 :refer [return]]
-              [mid-fruits.vector                :as vector]
-              [plugins.item-lister.body.subs    :as body.subs]
-              [plugins.plugin-handler.core.subs :as core.subs]
-              [x.app-components.api             :as components]
-              [x.app-core.api                   :as a :refer [r]]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.vector                 :as vector]
+              [plugins.item-lister.body.subs     :as body.subs]
+              [plugins.item-lister.download.subs :as download.subs]
+              [plugins.plugin-handler.core.subs  :as core.subs]
+              [x.app-components.api              :as components]
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -56,20 +57,6 @@
   [db [_ lister-id]]
   (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
        (get-in db items-path)))
-
-(defn items-received?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  ; XXX#0499
-  ; A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
-  ; függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
-  ; megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
-  (let [items-received? (r get-meta-item db lister-id :items-received?)]
-       (boolean items-received?)))
 
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,6 +108,11 @@
   ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
   ;   függvény visszatérési értéke nem tekinthető mérvadónak!
   ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
+  ;
+  ; - XXX#0499
+  ;   A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
+  ;   függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
+  ;   megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
   (let [all-item-count (r get-meta-item db lister-id :document-count)]
        (if (integer? all-item-count)
            (return   all-item-count)
@@ -166,8 +158,8 @@
   (and ; XXX#0499
        ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
        ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-       (or (not (r items-received?       db lister-id))
-           (not (r all-items-downloaded? db lister-id)))
+       (or (not (r download.subs/data-received? db lister-id))
+           (not (r all-items-downloaded?        db lister-id)))
        ; BUG#7009
        (not (r no-items-received? db lister-id))))
 
@@ -212,10 +204,10 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (let [items-received?       (r items-received?       db lister-id)
-        lister-synchronizing? (r lister-synchronizing? db lister-id)]
+  (let [data-received?        (r download.subs/data-received? db lister-id)
+        lister-synchronizing? (r lister-synchronizing?        db lister-id)]
        ; XXX#3219
-       (or lister-synchronizing? (not items-received?))))
+       (or lister-synchronizing? (not data-received?))))
 
 (defn get-items-info
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -224,11 +216,11 @@
   ;
   ; @return (metamorphic-content)
   [db [_ lister-id]]
-  (let [downloaded-item-count (r get-downloaded-item-count db lister-id)
-        all-item-count        (r get-all-item-count        db lister-id)
-        items-received?       (r items-received?           db lister-id)]
-       (if items-received? (components/content {:content      :npn-items-downloaded
-                                                :replacements [downloaded-item-count all-item-count]}))))
+  (let [downloaded-item-count (r get-downloaded-item-count    db lister-id)
+        all-item-count        (r get-all-item-count           db lister-id)
+        data-received?        (r download.subs/data-received? db lister-id)]
+       (if data-received? (components/content {:content      :npn-items-downloaded
+                                               :replacements [downloaded-item-count all-item-count]}))))
 
 
 
@@ -270,12 +262,6 @@
 ; @usage
 ;  [:item-lister/get-downloaded-items :my-lister]
 (a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/items-received? :my-lister]
-(a/reg-sub :item-lister/items-received? items-received?)
 
 ; @param (keyword) lister-id
 ;

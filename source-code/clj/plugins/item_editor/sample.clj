@@ -23,12 +23,12 @@
 ; ... az {:item-namespace ...} tulajdonságot.
 ;
 ; A plugin használatához OPCIONÁLISAN megadható ...
-; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált "/@app-home/my-editor/:item-id"
-;     útvonal használatakor történik meg.
-; ... a {:base-route "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti
-;     "/@app-home/my-editor/:item-id" útvonalat.
-; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált "/@app-home/my-editor/:item-id"
-;     útvonal használatakor beállítódik az applikáció címkéjének.
+; ... a {:base-route "..."} tulajdonság, ami alapján a plugin regisztrálja a példa szerinti
+;     "/@app-home/my-editor/:item-id/:view-id" útvonalat.
+; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált
+;     "/@app-home/my-editor/:item-id/:view-id" útvonal használatakor történik meg.
+; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált
+;     "/@app-home/my-editor/:item-id/:view-id" útvonal használatakor beállítódik az applikáció címkéjének.
 (a/reg-event-fx
   :init-my-editor!
   [:item-editor/init-editor! :my-editor
@@ -67,6 +67,17 @@
 
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
+
+; Sikeres létrehozás esetén a dokumentummal szükséges visszatérni!
+(defmutation add-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:item (namespaced map)}
+             ;
+             ; @return (namespaced map)
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-handler/add-item!}
+             (return {}))
 
 ; Sikeres törlés esetén a kitörölt elem azonosítójával szükséges visszatérni!
 (defmutation delete-item!

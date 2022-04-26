@@ -313,15 +313,14 @@
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
             [item-editor/body :clients.client-editor
-                              {:allowed-view-ids [:edit :price-quotes]
-                               :auto-title?      true
+                              {:auto-title?      true
                                :default-view-id  :edit
                                :form-element     #'client-form
                                :form-id          :clients.client-editor/form
                                :initial-item     {:country (locales/country-native-name selected-language)}
                                :item-actions     [:delete :duplicate :revert :save]
                                :item-path        [:clients :client-editor/edited-item]
-                               :new-item-id      "new-client"
+                               :label-key        :name
                                :suggestion-keys  [:city]
                                :suggestions-path [:clients :client-editor/suggestions]}]]))
 

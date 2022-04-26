@@ -6,6 +6,7 @@
     (:require [mid-fruits.logical                  :refer [nor]]
               [plugins.item-lister.body.prototypes :as body.prototypes]
               [plugins.item-lister.core.helpers    :as core.helpers]
+              [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
@@ -13,6 +14,14 @@
 
               ; TEMP
               [plugins.sortable.core               :refer []]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.body.views
+(def error-body body.views/error-body)
 
 
 
@@ -28,9 +37,9 @@
   ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
   ; villanjon fel!
   (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
-        items-received?       @(a/subscribe [:item-lister/items-received?       lister-id])]
+        data-received?        @(a/subscribe [:item-lister/data-received?        lister-id])]
        ; TEMP
-       (if-not (and all-items-downloaded? items-received?) ; XXX#0499
+       (if-not (and all-items-downloaded? data-received?) ; XXX#0499
                [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px"}}
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
@@ -45,10 +54,10 @@
   ; @param (keyword) lister-id
   [lister-id]
   (let [downloading-items? @(a/subscribe [:item-lister/downloading-items? lister-id])
-        items-received?    @(a/subscribe [:item-lister/items-received?    lister-id])
+        data-received?     @(a/subscribe [:item-lister/data-received?     lister-id])
         no-items-to-show?  @(a/subscribe [:item-lister/no-items-to-show?  lister-id])]
-       (if (and no-items-to-show? items-received?
-                ; - Szükséges a items-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
+       (if (and no-items-to-show? data-received?
+                ; - Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
                 ;   előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
                 ;
                 ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
@@ -74,34 +83,6 @@
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn error-occured-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [_]
-  [elements/label ::error-occured-label
-                  {:color     :warning
-                   :content   :an-error-occured
-                   :font-size :m
-                   :indent    {:top :xxl}}])
-
-(defn may-be-broken-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [_]
-  [elements/label ::may-be-broken-label
-                  {:color   :muted
-                   :content :the-content-you-opened-may-be-broken}])
-
-(defn error-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [lister-id]
-  [:<> [error-occured-label lister-id]
-       [may-be-broken-label lister-id]])
 
 (defn offline-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -144,31 +125,16 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; A) ...
-  ;
-  ; B) ...
-  ;
-  ; C) ...
-  ;
-  ; D) XXX#0506
-  ;    A downloading-items komponens már akkor megjelenik, amikor még az [:item-lister/body-props-stored? ...]
-  ;    feliratkozás visszatérési értéke FALSE. Így az item-lister plugin betöltésekor a body komponens
-  ;    React-fába csatolódása és az [:item-lister/body-props-stored? ...] feliratkozás visszatérési értékének
-  ;    TRUE értére változása közötti pillanatban is látható.
-  (cond ; A)
-        @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
-         [error-body lister-id]
-        ; B)
+  (cond @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
+         [error-body lister-id {:error-description :the-content-you-opened-may-be-broken}]
         ;@(a/subscribe [:environment/browser-offline?])
         ; [offline-body lister-id]
-        ; C)
-        @(a/subscribe [:item-lister/body-props-stored? lister-id])
+        @(a/subscribe [:item-lister/data-received? lister-id])
          [:div.item-lister--body--structure [item-list             lister-id]
                                             [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
                                             [no-items-to-show      lister-id]
                                             [downloading-items     lister-id]]
-        ; D)
-        :body-props-not-stored-yet
+        :data-not-received
         [downloading-items lister-id]))
 
 (defn body
