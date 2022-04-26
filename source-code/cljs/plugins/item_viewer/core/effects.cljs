@@ -25,7 +25,8 @@
       ; A) Ha az item-viewer plugin útvonal-vezérelt, ...
       ;    ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
       ;
-      ; B) Ha az item-viewer plugin NEM útvonal-vezérelt, ...
+      ; B) Ha az item-viewer plugin NEM útvonal-vezérelt és a body komponens a React-fába
+      ;    van csatolva, ...
       ;    ... akkor beállítja az item-id paraméter értékét az aktuálisan megtekintett
       ;        elem azonosítójaként.
       ;    ... meghívja az [:item-viewer/load-viewer! ...] eseményt.
@@ -34,8 +35,9 @@
               (let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
                    {:dispatch [:router/go-to! item-route]})
               ; B)
-              {:db       (r core.events/set-item-id! db viewer-id item-id)
-               :dispatch [:item-viewer/load-viewer! viewer-id]})))
+              (if (r body.subs/body-did-mount? db viewer-id)
+                  {:db       (r core.events/set-item-id! db viewer-id item-id)
+                   :dispatch [:item-viewer/load-viewer! viewer-id]}))))
 
 
 

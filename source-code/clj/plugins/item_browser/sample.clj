@@ -173,15 +173,3 @@
              [env {:keys [item-id]}]
              {::pathom.co/op-name 'my-handler/move-item!}
              (return {}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (functions in vector)
-(def HANDLERS [])
-              ; get-item get-items delete-items! undo-delete-items! duplicate-items!
-              ; delete-item! undo-delete-item! duplicate-item! update-item!
-
-(pathom/reg-handlers! ::handlers HANDLERS)

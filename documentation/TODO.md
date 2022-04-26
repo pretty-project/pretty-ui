@@ -14,6 +14,15 @@
 
 # x4.7.0
 
+- A projectek deps.edn fájljában addig kell a forráskód mappáját
+  "monoset/source-code/clj" "monoset/source-code/cljc" "monoset/source-code/cljs"
+  mappákra lebontva megadni, amig létezik a project-emulator mappa!
+  Annak törlése után az egész "monoset/source-code" mappát be lehet majd állítani
+  - Ez igaz a x-be épített wrap-reload {:dirs [...]} tulajdonságára is,
+    hogy nem kell majd odafigyelni, hogy a project-emulator ne legyen behivva a projectekben,
+    ha majd nem fog létezni
+
+
 - A cljs egy alig típusos nyelv, engedd el a sok (boolean ...) függvényt! Felesleges.
 
 - Jó lenne a plugin-okat leválasztani a mongo-db-ről, hogy univerzálisak legyenek.

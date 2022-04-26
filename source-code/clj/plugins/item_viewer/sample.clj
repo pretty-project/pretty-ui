@@ -100,13 +100,3 @@
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-handler/duplicate-item!}
              (return {}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (functions in vector)
-(def HANDLERS [delete-item! duplicate-item! get-item undo-delete-item!])
-
-(pathom/reg-handlers! ::handlers HANDLERS)

@@ -3,7 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.api
-    (:require [plugins.item-viewer.body.effects]
+    (:require [plugins.item-viewer.backup.events]
+              [plugins.item-viewer.backup.subs]
+              [plugins.item-viewer.body.effects]
               [plugins.item-viewer.body.events]
               [plugins.item-viewer.body.subs]
               [plugins.item-viewer.core.effects]
@@ -16,9 +18,9 @@
               [plugins.item-viewer.footer.subs]
               [plugins.item-viewer.routes.effects]
               [plugins.item-viewer.transfer.subs]
-              ;[plugins.item-viewer.update.effects]))
-              ;[plugins.item-viewer.update.events]
-              ;[plugins.item-viewer.update.subs]
+              [plugins.item-viewer.update.effects]
+              [plugins.item-viewer.update.events]
+              [plugins.item-viewer.update.subs]
               [plugins.item-viewer.body.views   :as body.views]
               [plugins.item-viewer.core.subs    :as core.subs]
               [plugins.item-viewer.footer.views :as footer.views]
