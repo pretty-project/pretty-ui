@@ -26,9 +26,9 @@
   ; @param (keyword) browser-id
   ; @param (string) item-id
   (fn [_ [_ browser-id item-id]]
-      [:ui/blow-bubble! :plugins.item-browser/item-deleted-dialog
-                        {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
-                         ;:destructor [:item-browser/clean-backup-items! browser-id item-id]}]))
+      [:ui/render-bubble! :plugins.item-browser/item-deleted-dialog
+                          {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
+                           ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
 
 (a/reg-event-fx
   :item-browser/render-item-duplicated-dialog!
@@ -37,8 +37,8 @@
   ; @param (keyword) browser-id
   ; @param (string) copy-id
   (fn [_ [_ browser-id copy-id]]
-      [:ui/blow-bubble! :plugins.item-browser/item-duplicated-dialog
-                        {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
+      [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
+                          {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
 
 
@@ -106,9 +106,9 @@
       (if (r items.subs/item-downloaded? db browser-id item-id)
           ; A)
           {:db       (r update.events/update-item-failed db browser-id item-id)
-           :dispatch [:ui/blow-bubble! {:body :failed-to-update}]}
+           :dispatch [:ui/render-bubble! {:body :failed-to-update}]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-update}])))
+          [:ui/render-bubble! {:body :failed-to-update}])))
 
 
 
@@ -179,9 +179,9 @@
           ; A)
           {:db         (r update.events/delete-item-failed db browser-id item-id)
            :dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-delete}])))
+          [:ui/render-bubble! {:body :failed-to-delete}])))
 
 
 
@@ -242,9 +242,9 @@
       (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-undo-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-undo-delete}])))
+          [:ui/render-bubble! {:body :failed-to-undo-delete}])))
 
 
 
@@ -310,9 +310,9 @@
       (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
+                        [:ui/render-bubble! {:body :failed-to-duplicate}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-duplicate}])))
+          [:ui/render-bubble! {:body :failed-to-duplicate}])))
 
 
 

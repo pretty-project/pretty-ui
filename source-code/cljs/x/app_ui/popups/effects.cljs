@@ -14,56 +14,50 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :ui/add-popup!
+  :ui/render-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
   ;  {:body (metamorphic-content)
-  ;   :destructor (metamorphic-event)(opt)
   ;   :footer (metamorphic-content)(opt)
   ;   :header (metamorphic-content)(opt)
-  ;   :hide-animated? (boolean)(opt)
-  ;    Default: true
   ;   :horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;   :initializer (metamorphic-event)(opt)
   ;   :layout (keyword)(opt)
   ;    :boxed, :unboxed, :flip
   ;    Default: :boxed
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :m
+  ;   :on-popup-closed (metamorphic-event)(opt)
+  ;   :on-popup-rendered (metamorphic-event)(opt)
   ;   :render-exclusive? (boolean)(opt)
   ;    Default: false
-  ;   :reveal-animated? (boolean)(opt)
-  ;    Default: true
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none
   ;    Default: :none
   ;    Only w/ {:layout :boxed}
-  ;   :update-animated? (boolean)(opt)
-  ;    Default: false
   ;   :user-close? (boolean)(opt)
   ;    A popup felület bezárható a surface cover felületre kattintva
   ;    Default: true}
   ;
   ; @usage
-  ;  [:ui/add-popup! {...}]
+  ;  [:ui/render-popup! {...}]
   ;
   ; @usage
-  ;  [:ui/add-popup! :my-popup {...}]
+  ;  [:ui/render-popup! :my-popup {...}]
   ;
   ; @usage
   ;  (defn my-body   [popup-id]              [:div "My body"])
   ;  (defn my-header [popup-id header-props] [:div "My header"])
-  ;  [:ui/add-popup! {:body   {:content #'my-body}
-  ;                   :header {:content #'my-header :subscriber [:get-my-header-props]}}]
+  ;  [:ui/render-popup! {:body   {:content #'my-body}
+  ;                      :header {:content #'my-header :subscriber [:get-my-header-props]}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ popup-id popup-props]]
       (let [popup-props (r popups.prototypes/popup-props-prototype db popup-id popup-props)]
            (if-let [render-exclusive? (get popup-props :render-exclusive?)]
                    [:ui/render-popup-exclusive! popup-id popup-props]
-                   [:ui/render-popup!           popup-id popup-props]))))
+                   [:ui/render-popup-element!   popup-id popup-props]))))
 
 (a/reg-event-fx
   :ui/close-popup!
@@ -82,7 +76,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :ui/render-popup!
+  :ui/render-popup-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -106,4 +100,4 @@
            {:dispatch-later
             [{:ms                   0 :dispatch [:ui/destroy-all-elements! :popups]}
              {:ms close-surface-delay :dispatch [:ui/destroy-all-elements! :surface]}
-             {:ms  render-popup-delay :dispatch [:ui/render-popup! popup-id popup-props]}]})))
+             {:ms  render-popup-delay :dispatch [:ui/render-popup-element! popup-id popup-props]}]})))

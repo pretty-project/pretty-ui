@@ -132,8 +132,8 @@
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-browser!
-  [:ui/set-surface! :storage.media-browser/view
-                    {:view #'media-browser.views/view}])
+  [:ui/render-surface! :storage.media-browser/view
+                       {:view #'media-browser.views/view}])
 
 (a/reg-event-fx
   :storage.media-browser/render-rename-item-dialog!
@@ -150,18 +150,18 @@
   :storage.media-browser/render-directory-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ directory-item]]
-      [:ui/add-popup! :storage.media-browser/media-menu
-                      {:body   [media-browser.views/directory-menu-body directory-item]
-                       :header [media-browser.views/media-menu-header   directory-item]
-                       :horizontal-align :left
-                       :min-width        :xs}]))
+      [:ui/render-popup! :storage.media-browser/media-menu
+                         {:body   [media-browser.views/directory-menu-body directory-item]
+                          :header [media-browser.views/media-menu-header   directory-item]
+                          :horizontal-align :left
+                          :min-width        :xs}]))
 
 (a/reg-event-fx
   :storage.media-browser/render-file-menu!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
-      [:ui/add-popup! :storage.media-browser/media-menu
-                      {:body   [media-browser.views/file-menu-body    file-item]
-                       :header [media-browser.views/media-menu-header file-item]
-                       :horizontal-align :left
-                       :min-width        :xs}]))
+      [:ui/render-popup! :storage.media-browser/media-menu
+                         {:body   [media-browser.views/file-menu-body    file-item]
+                          :header [media-browser.views/media-menu-header file-item]
+                          :horizontal-align :left
+                          :min-width        :xs}]))

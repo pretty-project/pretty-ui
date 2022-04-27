@@ -18,7 +18,7 @@
 ; plugins.plugin-handler.backup.subs
 (def get-backup-item    backup.subs/get-backup-item)
 (def export-backup-item backup.subs/export-backup-item)
-(def get-local-changes  backup.subs/get-local-changes)
+;(def get-local-changes  backup.subs/get-local-changes)
 
 
 

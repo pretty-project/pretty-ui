@@ -20,6 +20,6 @@
   ; @param (map) selector-props
   (fn [{:keys [db]} [_ selector-id selector-props]]
       (let [options-props (r color-selector.prototypes/options-props-prototype db selector-id selector-props)]
-           [:ui/add-popup! :elements/color-selector-options
-                           {:body [color-selector.views/color-selector-options selector-id options-props]
-                            :min-width :none}])))
+           [:ui/render-popup! :elements/color-selector-options
+                              {:body [color-selector.views/color-selector-options selector-id options-props]
+                               :min-width :none}])))

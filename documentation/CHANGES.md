@@ -1,4 +1,12 @@
 
+# 4.7.0
+- [:ui/render-surface! ...] 
+  [:ui/close-surface!  ...]
+  [:ui/render-popup!   ...]
+  [:ui/close-popup!    ...]
+  [:ui/render-bubble!  ...]
+  [:ui/close-bubble!   ...]
+
 # x4.6.9
 
 - Az item-lister-ekben használt listaelemek összevonásra kerültek és ezentúl

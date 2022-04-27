@@ -449,10 +449,10 @@
   (fn [_ [_ select-id options-props]]
       (let [options-id    (engine/element-id->extended-id select-id :options)
             options-props (options-props-prototype        select-id options-props)]
-           [:ui/add-popup! :elements/select-options
-                           {:body   [select-options-body options-id options-props]
-                            :header (if (options-props->render-popup-header? options-props)
-                                        [select-options-header options-id options-props])
-                            :initializer [:elements/reg-select-keypress-events!    options-id]
-                            :desctructor [:elements/remove-select-keypress-events! options-id]
-                            :min-width :xs}])))
+           [:ui/render-popup! :elements/select-options
+                              {:body   [select-options-body options-id options-props]
+                               :header (if (options-props->render-popup-header? options-props)
+                                           [select-options-header options-id options-props])
+                               :on-popup-rendered [:elements/reg-select-keypress-events!    options-id]
+                               :on-popup-closed   [:elements/remove-select-keypress-events! options-id]
+                               :min-width         :xs}])))

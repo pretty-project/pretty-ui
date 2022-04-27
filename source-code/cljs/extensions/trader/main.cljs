@@ -29,12 +29,13 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :trader/render-main!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! ::view {:view {:content #'view}}])
-
-(a/reg-event-fx
   :trader/load-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:dispatch-n [[:ui/set-title! "Trader"]
                 [:trader/render-main!]]})
+
+(a/reg-event-fx
+  :trader/render-main!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/render-surface! ::view
+                       {:view {:content #'view}}])

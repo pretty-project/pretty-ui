@@ -83,6 +83,6 @@
   ;
   ; @param (keyword) editor-id
   (fn [_ [_ editor-id]]
-      [:ui/add-popup! (core.helpers/component-id editor-id :view)
-                      {:body   [body.views/body     editor-id]
-                       :header [header.views/header editor-id]}]))
+      [:ui/render-popup! (core.helpers/component-id editor-id :view)
+                         {:body   [body.views/body     editor-id]
+                          :header [header.views/header editor-id]}]))

@@ -53,7 +53,7 @@
   :storage.media-viewer/render-viewer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ viewer-id]]
-      [:ui/add-popup! :storage.media-viewer/view
-                      {:body   [media-viewer.views/body   viewer-id]
-                       :header [media-viewer.views/header viewer-id]
-                       :layout :unboxed}]))
+      [:ui/render-popup! :storage.media-viewer/view
+                         {:body   [media-viewer.views/body   viewer-id]
+                          :header [media-viewer.views/header viewer-id]
+                          :layout :unboxed}]))

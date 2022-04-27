@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.views
-    (:require [mid-fruits.candy            :refer [param]]
+    (:require [reagent.api                 :as reagent]
               [x.app-components.api        :as components]
               [x.app-core.api              :as a]
               [x.app-elements.api          :as elements]
@@ -42,7 +42,7 @@
   ; @param (keyword) bubble-id
   [bubble-id]
   (if-let [user-close? @(a/subscribe [:ui/get-bubble-prop bubble-id :user-close?])]
-          [elements/icon-button {:on-click [:ui/pop-bubble! bubble-id]
+          [elements/icon-button {:on-click [:ui/close-bubble! bubble-id]
                                  :preset   :close}]))
 
 (defn bubble-body
@@ -67,14 +67,26 @@
                (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
                :default        [components/content bubble-id body])]))
 
+(defn bubble-element-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) bubble-id
+  [bubble-id]
+  [:div (bubbles.helpers/bubble-attributes bubble-id)
+        [bubble-body                       bubble-id]
+        [bubble-close-icon-button          bubble-id]])
+
 (defn bubble-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
-  [bubble-id bubble-props]
-  [:div (bubbles.helpers/bubble-attributes bubble-id bubble-props)
-        [bubble-body                       bubble-id]
-        [bubble-close-icon-button          bubble-id]])
+  [bubble-id]
+  (let [on-bubble-closed   @(a/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-closed])
+        on-bubble-rendered @(a/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-rendered])]
+       (reagent/lifecycles bubble-id
+                           {:reagent-render         (fn [] [bubble-element-structure bubble-id])
+                            :component-will-unmount (fn [] (a/dispatch on-bubble-closed))
+                            :component-did-mount    (fn [] (a/dispatch on-bubble-rendered))})))
 
 
 

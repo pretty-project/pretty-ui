@@ -19,5 +19,5 @@
 (a/reg-event-fx
   :clients.client-editor/render-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :clients.client-editor/view
-                    {:view #'client-editor.views/view}])
+  [:ui/render-surface! :clients.client-editor/view
+                       {:view #'client-editor.views/view}])

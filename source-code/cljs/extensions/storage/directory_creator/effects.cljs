@@ -72,7 +72,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ creator-id server-response]]
       {:dispatch-n [[:ui/end-fake-process!]
-                    [:ui/blow-bubble! {:body :failed-to-create-directory}]]}))
+                    [:ui/render-bubble! {:body :failed-to-create-directory}]]}))
 
 
 

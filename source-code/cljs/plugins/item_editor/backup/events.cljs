@@ -83,10 +83,15 @@
   ; @return (map)
   [db [_ editor-id]]
   (let [item-path       (r body.subs/get-body-prop       db editor-id :item-path)
-        current-item-id (r core.subs/get-current-item-id db editor-id)
-        local-changes   (r backup.subs/get-local-changes db editor-id current-item-id)]
-       (-> db (update-in item-path merge local-changes)
-              (dissoc-in [:plugins :plugin-handler/local-changes editor-id current-item-id]))))
+        current-item-id (r core.subs/get-current-item-id db editor-id)]))
+        
+        ; Mivel nincs már törlés az item-editorban ezért nem kell külön tárolni a megnyitáskori
+        ; állapotot (backup-item) és a kilépéskori állapotot (local-changes) elegendő a kilépéskor
+        ; késziíteni egy backup-item-et amivel vissza lehet állitani a discard-changes esmeeénnyel.
+
+        ;local-changes   (r backup.subs/get-local-changes db editor-id current-item-id)]
+       ;(-> db (update-in item-path merge local-changes)
+        ;      (dissoc-in [:plugins :plugin-handler/local-changes editor-id current-item-id])]))
 
 (defn revert-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

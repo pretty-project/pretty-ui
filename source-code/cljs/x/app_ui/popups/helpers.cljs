@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.helpers
-    (:require [x.app-core.api   :as a]
-              [x.app-ui.element :as element]))
+    (:require [x.app-core.api :as a]))
 
 
 
@@ -15,17 +14,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
   ;
   ; @return (map)
-  ;  {:data-minimized (boolean)
-  ;   :data-stretch-orientation (boolean)}
-  [popup-id popup-props]
-  (merge (element/element-attributes :popups popup-id popup-props {:data-nosnippet true})
-         (if-let [stretch-orientation @(a/subscribe [:ui/get-popup-prop popup-id :stretch-orientation])]
-                 {:data-stretch-orientation stretch-orientation})
-         (if-let [minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
-                 {:data-minimized minimized?})))
+  ;  {}
+  [popup-id]
+  (let [layout              @(a/subscribe [:ui/get-popup-prop popup-id :layout])
+        horizontal-align    @(a/subscribe [:ui/get-popup-prop popup-id :horizontal-align])
+        minimized?          @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])
+        min-width           @(a/subscribe [:ui/get-popup-prop popup-id :min-width])
+        stretch-orientation @(a/subscribe [:ui/get-popup-prop popup-id :stretch-orientation])]
+       (merge {:class                    :x-app-popups--element
+               :data-animation           :reveal
+               :data-horizontal-align    horizontal-align
+               :data-layout              layout
+               :data-minimized           (boolean minimized?)
+               :data-min-width           min-width
+               :data-nosnippet           true
+               :data-stretch-orientation stretch-orientation
+               :id                       (a/dom-value popup-id)
+               :key                      (a/dom-value popup-id)})))
 
 (defn popup-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

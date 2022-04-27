@@ -81,8 +81,8 @@
   :storage.media-selector/render-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ selector-id]]
-      [:ui/add-popup! :storage.media-selector/view
-                      {:header [media-selector.views/header selector-id]
-                       :body   [media-selector.views/body   selector-id]
-                       :footer [media-selector.views/footer selector-id]
-                       :stretch-orientation :vertical}]))
+      [:ui/render-popup! :storage.media-selector/view
+                         {:body   [media-selector.views/body   selector-id]
+                          :footer [media-selector.views/footer selector-id]
+                          :header [media-selector.views/header selector-id]
+                          :stretch-orientation :vertical}]))

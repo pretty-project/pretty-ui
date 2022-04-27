@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.helpers
-    (:require [x.app-ui.element :as element]))
+    (:require [x.app-core.api :as a]))
 
 
 
@@ -14,8 +14,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
-  ; @param (map) surface-props
   ;
   ; @return (map)
-  [surface-id surface-props]
-  (element/element-attributes :surface surface-id surface-props))
+  ;  {}
+  [surface-id]
+  (let [horizontal-align @(a/subscribe [:ui/get-surface-prop surface-id :horizontal-align])
+        trim-content?    @(a/subscribe [:ui/get-surface-prop surface-id :trim-content?])]
+       {:class                 :x-app-surface--element
+        :data-horizontal-align horizontal-align
+        :data-trim-content     (boolean trim-content?)
+        :id                    (a/dom-value surface-id)
+        :key                   (a/dom-value surface-id)}))

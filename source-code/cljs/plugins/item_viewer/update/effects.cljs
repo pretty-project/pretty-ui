@@ -21,32 +21,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-viewer/render-item-deleted-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) viewer-id
-  ; @param (string) item-id
-  (fn [{:keys [db]} [_ viewer-id item-id]]
-      [:ui/blow-bubble! :plugins.item-viewer/item-deleted-dialog
-                        {:body       [update.views/item-deleted-dialog-body viewer-id item-id]
-                         :destructor [:item-viewer/clean-recovery-data!     viewer-id item-id]}]))
-
-(a/reg-event-fx
-  :item-viewer/render-item-duplicated-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) viewer-id
-  ; @param (string) copy-id
-  (fn [_ [_ viewer-id copy-id]]
-      [:ui/blow-bubble! :plugins.item-viewer/item-duplicated-dialog
-                        {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
   :item-viewer/delete-item!
   ; @param (keyword) viewer-id
   ;
@@ -94,7 +68,7 @@
   ;
   ; @param (keyword) viewer-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ viewer-id _]]
+  (fn [{:keys [db]} [_ viewer-id server-response]]
       ; A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a body komponens
       ;    a React-fába van csatolva, ...
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
@@ -104,12 +78,33 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r body.subs/body-did-mount? db viewer-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
-          ; B)
-          [:ui/blow-bubble! {:body :failed-to-delete}])))
+      (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
+           (if (r body.subs/body-did-mount? db viewer-id)
+               ; A)
+               {:dispatch-n [[:ui/end-fake-process!]
+                             [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]]}
+               ; B)
+               [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]))))
+
+(a/reg-event-fx
+  :item-viewer/render-item-deleted-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ viewer-id item-id]]
+      [:ui/render-bubble! :plugins.item-viewer/item-deleted-dialog
+                          {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
+
+(a/reg-event-fx
+  :item-viewer/render-delete-item-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (string) item-id
+  (fn [{:keys [db]} [_ viewer-id item-id]]
+      [:ui/render-bubble! :plugins.item-viewer/delete-item-failed-dialog
+                          {:body :failed-to-delete}]))
 
 
 
@@ -125,16 +120,13 @@
   (fn [{:keys [db]} [_ viewer-id item-id]]
       ; Az [:item-viewer/undo-delete-item! ...] esemény ...
       ; ...
-      (let [dialog-id    (update.helpers/dialog-id viewer-id :delete item-id)
-            query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
+      (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
-           {:db         (r ui/fake-process! db 15)
-            :dispatch-n [[:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                                            {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
-                                             :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
-                                             :query query :validator-f validator-f}]
-                         [:ui/blow-bubble! :plugins.item-viewer/item-deleted-dialog
-                                           {:body [update.views/undo-delete-progress-dialog-body viewer-id item-id]}]]})))
+           {:db       (r ui/fake-process! db 15)
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db viewer-id)
+                                         {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
+                                          :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-viewer/delete-item-undid
@@ -164,7 +156,7 @@
   ;
   ; @param (keyword) viewer-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ viewer-id _]]
+  (fn [{:keys [db]} [_ viewer-id server-response]]
       ; A) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
       ;    a React-fába van csatolva, ...
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
@@ -174,12 +166,23 @@
       ;    NINCS a React-fába csatolva, ...
       ;    ... megjelenít egy értesítést.
       ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r body.subs/body-did-mount? db viewer-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
-          ; B)
-          [:ui/blow-bubble! {:body :failed-to-undo-delete}])))
+      (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
+           (if (r body.subs/body-did-mount? db viewer-id)
+               ; A)
+               {:dispatch-n [[:ui/end-fake-process!]
+                             [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]]}
+               ; B)
+               [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]))))
+
+(a/reg-event-fx
+  :item-viewer/render-undo-delete-item-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (string) item-id
+  (fn [_ [_ viewer-id item-id]]
+      [:ui/render-bubble! :plugins.item-viewer/undo-delete-item-failed-dialog
+                          {:body [update.views/undo-delete-item-failed-dialog-body viewer-id item-id]}]))
 
 
 
@@ -222,4 +225,14 @@
   (fn [_ [_ _ _]]
       ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
       ; ... megjelenít egy értesítést.
-      [:ui/blow-bubble! {:body :failed-to-duplicate}]))
+      [:ui/render-bubble! {:body :failed-to-duplicate}]))
+
+(a/reg-event-fx
+  :item-viewer/render-item-duplicated-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (string) copy-id
+  (fn [_ [_ viewer-id copy-id]]
+      [:ui/render-bubble! :plugins.item-viewer/item-duplicated-dialog
+                          {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))

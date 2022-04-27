@@ -26,9 +26,9 @@
   ; @param (keyword) lister-id
   ; @param (strings in vector) item-ids
   (fn [_ [_ lister-id item-ids]]
-      [:ui/blow-bubble! :plugins.item-lister/items-deleted-dialog
-                        {:body       [update.views/items-deleted-dialog-body lister-id item-ids]
-                         :destructor [:item-lister/clean-backup-items!       lister-id item-ids]}]))
+      [:ui/render-bubble! :plugins.item-lister/items-deleted-dialog
+                          {:body             [update.views/items-deleted-dialog-body lister-id item-ids]
+                           :on-bubble-closed [:item-lister/clean-backup-items!       lister-id item-ids]}]))
 
 (a/reg-event-fx
   :item-lister/render-items-duplicated-dialog!
@@ -37,8 +37,8 @@
   ; @param (keyword) lister-id
   ; @param (strings in vector) copy-ids
   (fn [_ [_ lister-id copy-ids]]
-      [:ui/blow-bubble! :plugins.item-lister/items-duplicated-dialog
-                        {:body [update.views/items-duplicated-dialog-body lister-id copy-ids]}]))
+      [:ui/render-bubble! :plugins.item-lister/items-duplicated-dialog
+                          {:body [update.views/items-duplicated-dialog-body lister-id copy-ids]}]))
 
 
 
@@ -108,9 +108,9 @@
           ; A)
           {:db         (r update.events/delete-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-delete}])))
+          [:ui/render-bubble! {:body :failed-to-delete}])))
 
 
 
@@ -172,9 +172,9 @@
       (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-undo-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-delete}])))
+          [:ui/render-bubble! {:body :failed-to-delete}])))
 
 
 
@@ -244,6 +244,6 @@
           ; A)
           {:db         (r update.events/duplicate-items-failed db lister-id)
            :dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-duplicate}]]}
+                        [:ui/render-bubble! {:body :failed-to-duplicate}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-duplicate}])))
+          [:ui/render-bubble! {:body :failed-to-duplicate}])))

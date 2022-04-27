@@ -12,13 +12,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings.view-selector/render-selector!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :settings.view-selector/view
-                    {:view #'view-selector.views/view}])
-
-(a/reg-event-fx
   :settings.view-selector/load-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      [:settings.view-selector/render-selector!]))
+  [:settings.view-selector/render-selector!])
+
+(a/reg-event-fx
+  :settings.view-selector/render-selector!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/render-surface! :settings.view-selector/view
+                       {:view #'view-selector.views/view}])

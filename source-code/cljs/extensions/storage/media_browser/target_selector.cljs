@@ -66,6 +66,6 @@
 (a/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-target-selector!
-  [:ui/add-popup! :storage.media-browser/target-selector
-                  {:body   #'body
-                   :header #'header}])
+  [:ui/render-popup! :storage.media-browser/target-selector
+                     {:body   #'body
+                      :header #'header}])

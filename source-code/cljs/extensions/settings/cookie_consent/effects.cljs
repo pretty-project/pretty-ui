@@ -34,15 +34,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :settings.cookie-consent/render-consent!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! :settings.cookie-consent/view
-                  {:body   #'cookie-settings.views/body
-                   :header #'cookie-consent.views/header
-                   :horizontal-align :left
-                   :user-close?      false}])
-
-(a/reg-event-fx
   :settings.cookie-consent/init-consent!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
@@ -50,3 +41,12 @@
                      {; BUG#2457
                       :dispatch-later [{:ms cookie-consent.config/BOOT-RENDERING-DELAY
                                         :dispatch [:settings.cookie-consent/render-consent!]}]}]}))
+
+(a/reg-event-fx
+  :settings.cookie-consent/render-consent!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/render-popup! :settings.cookie-consent/view
+                     {:body             #'cookie-settings.views/body
+                      :header           #'cookie-consent.views/header
+                      :horizontal-align :left
+                      :user-close?      false}])

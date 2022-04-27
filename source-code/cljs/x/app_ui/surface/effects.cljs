@@ -19,7 +19,7 @@
       [:ui/destroy-element! :surface surface-id]))
 
 (a/reg-event-fx
-  :ui/render-surface!
+  :ui/render-surface-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
@@ -33,39 +33,33 @@
              {:ms close-popups-duration :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
 
 (a/reg-event-fx
-  :ui/set-surface!
+  :ui/render-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
-  ;  {:destructor (metamorphic-event)(opt)
-  ;   :hide-animated? (boolean)(opt)
-  ;    Default: false
-  ;   :horizontal-align (keyword)(opt)
+  ;  {:horizontal-align (keyword)(opt)
   ;    :left, :center, :right
   ;    Default: :center
-  ;   :initializer (metamorphic-event)(opt)
-  ;   :reveal-animated? (boolean)(opt)
-  ;    Default: false
+  ;   :on-surface-closed (metamorphic-event)(opt)
+  ;   :on-surface-rendered (metamorphic-event)(opt)
   ;   :trim-content? (boolean)(opt)
   ;    A surface felületéről az X tengelyen túlméretes tartalom elrejtése.
   ;    Default: false
   ;    BUG#9330
-  ;    A surface felületén megjelenített {position: sticky;} tulajdonságú
+  ;    A surface felületén megjelenített {position: sticky} tulajdonságú
   ;    tartalmak pozícionálása nem kompatibilis a {:trim-content? true}
   ;    tulajdonság használatával!
-  ;   :update-animated? (boolean)(opt)
-  ;    Default: false
   ;   :view (metamorphic-content)
   ;
   ; @usage
-  ;  [:ui/set-surface! {...}]
+  ;  [:ui/render-surface! {...}]
   ;
   ; @usage
-  ;  [:ui/set-surface! :my-surface {...}]
+  ;  [:ui/render-surface! :my-surface {...}]
   ;
   ; @usage
   ;  (defn my-view [surface-id] [:div "My surface"])
-  ;  [:ui/set-surface! {:view {:content #'my-view}}]
+  ;  [:ui/render-surface! {:view {:content #'my-view}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ surface-id surface-props]]
       (let [surface-props (surface.prototypes/surface-props-prototype surface-props)]
-           [:ui/render-surface! surface-id surface-props])))
+           [:ui/render-surface-element! surface-id surface-props])))

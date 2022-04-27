@@ -122,15 +122,15 @@
       ;    közötti időben is indítható új feltöltési folyamat!)
       {:dispatch-later [{:ms 500 :dispatch [:storage.file-uploader/clean-uploader! uploader-id]}]
        :dispatch-if [(not (r file-uploader.subs/file-upload-in-progress? db))
-                     [:ui/pop-bubble! :storage.file-uploader/progress-notification]]}))
+                     [:ui/close-bubble! :storage.file-uploader/progress-notification]]}))
 
 (a/reg-event-fx
   :storage.file-uploader/render-uploader!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
-      [:ui/add-popup! :storage.file-uploader/view
-                      {:body   [file-uploader.views/body   uploader-id]
-                       :header [file-uploader.views/header uploader-id]}]))
+      [:ui/render-popup! :storage.file-uploader/view
+                         {:body   [file-uploader.views/body   uploader-id]
+                          :header [file-uploader.views/header uploader-id]}]))
 
 
 
@@ -140,6 +140,7 @@
 (a/reg-event-fx
   :storage.file-uploader/render-progress-notification!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/blow-bubble! :storage.file-uploader/progress-notification
-                    {:body #'file-uploader.views/progress-notification-body
-                     :autopop? false :user-close? false}])
+  [:ui/render-bubble! :storage.file-uploader/progress-notification
+                      {:body        #'file-uploader.views/progress-notification-body
+                       :autoclose?  false
+                       :user-close? false}])

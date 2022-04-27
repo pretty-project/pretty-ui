@@ -142,4 +142,8 @@
             :hu "Sorrend"}
            :save-order!
            {:en "Save order"
-            :hu "Sorrend mentése"}})
+            :hu "Sorrend mentése"}
+
+           :view-copy!
+           {:en "View copy"
+            :hu "Másolat megtekintése"}})

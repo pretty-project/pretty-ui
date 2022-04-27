@@ -28,9 +28,9 @@
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
       (let [current-item-id (r core.subs/get-current-item-id db editor-id)]
-           [:ui/blow-bubble! :plugins.item-editor/item-deleted-dialog
-                             {:body       [update.views/item-deleted-dialog-body editor-id current-item-id]
-                              :destructor [:item-editor/clean-recovery-data!     editor-id current-item-id]}])))
+           [:ui/render-bubble! :plugins.item-editor/item-deleted-dialog
+                               {:body             [update.views/item-deleted-dialog-body editor-id current-item-id]
+                                :on-bubble-closed [:item-editor/clean-recovery-data!     editor-id current-item-id]}])))
 
 (a/reg-event-fx
   :item-editor/render-changes-discarded-dialog!
@@ -42,9 +42,9 @@
       ; Az [:item-editor/render-changes-discarded-dialog! ...] esemény paraméterként kapja az item-editor
       ; plugin elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
       ; már nem elérhető a Re-Frame adatbázisban.
-      [:ui/blow-bubble! :plugins.item-editor/changes-discarded-dialog
-                        {:body       [update.views/changes-discarded-dialog-body editor-id item-id]
-                         :destructor [:item-editor/clean-recovery-data!          editor-id item-id]}]))
+      [:ui/render-bubble! :plugins.item-editor/changes-discarded-dialog
+                          {:body             [update.views/changes-discarded-dialog-body editor-id item-id]
+                           :on-bubble-closed [:item-editor/clean-recovery-data!          editor-id item-id]}]))
 
 (a/reg-event-fx
   :item-editor/render-item-duplicated-dialog!
@@ -53,8 +53,8 @@
   ; @param (keyword) editor-id
   ; @param (string) copy-id
   (fn [_ [_ editor-id copy-id]]
-      [:ui/blow-bubble! :plugins.item-editor/item-duplicated-dialog
-                        {:body [update.views/item-duplicated-dialog-body editor-id copy-id]}]))
+      [:ui/render-bubble! :plugins.item-editor/item-duplicated-dialog
+                          {:body [update.views/item-duplicated-dialog-body editor-id copy-id]}]))
 
 
 
@@ -129,9 +129,9 @@
       (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-save}]]}
+                        [:ui/render-bubble! {:body :failed-to-save}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-save}])))
+          [:ui/render-bubble! {:body :failed-to-save}])))
 
 
 
@@ -199,9 +199,9 @@
       (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-delete}])))
+          [:ui/render-bubble! {:body :failed-to-delete}])))
 
 
 
@@ -265,9 +265,9 @@
       (if (r body.subs/body-did-mount? db editor-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/blow-bubble! {:body :failed-to-undo-delete}]]}
+                        [:ui/render-bubble! {:body :failed-to-undo-delete}]]}
           ; B)
-          [:ui/blow-bubble! {:body :failed-to-undo-delete}])))
+          [:ui/render-bubble! {:body :failed-to-undo-delete}])))
 
 
 
@@ -310,7 +310,7 @@
   (fn [_ [_ editor-id _]]
       ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
       ; ... megjelenít egy értesítést.
-      [:ui/blow-bubble! {:body :failed-to-duplicate}]))
+      [:ui/render-bubble! {:body :failed-to-duplicate}]))
 
 
 

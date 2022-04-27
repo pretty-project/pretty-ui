@@ -1121,19 +1121,6 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- stated-element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) renderer-id
-  ; @param (map) renderer-props
-  ; @param (keyword) element-id
-  [renderer-id {:keys [element]} element-id]
-  (let [element-props @(a/subscribe [:ui/get-element-props renderer-id element-id])]
-       (reagent/lifecycles (engine/renderer-id->dom-id renderer-id)
-                           {:reagent-render         (fn [] [element element-id element-props])
-                            :component-will-unmount (fn [] (a/dispatch (:destructor  element-props)))
-                            :component-did-mount    (fn [] (a/dispatch (:initializer element-props)))})))
-
 (defn- wrapper
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -1150,10 +1137,10 @@
   ;
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
-  [renderer-id renderer-props]
+  ;  {:element (component)}
+  [renderer-id {:keys [element] :as renderer-props}]
   (letfn [(f [wrapper element-id]
-             (let [element-props (get elements element-id)]
-                  (conj wrapper ^{:key element-id} [stated-element renderer-id renderer-props element-id])))]
+             (conj wrapper ^{:key element-id} [element element-id]))]
          (let [element-order @(a/subscribe [:ui/get-element-order renderer-id])]
               (reduce f (wrapper renderer-id renderer-props) element-order))))
 

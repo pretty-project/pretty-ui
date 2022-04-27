@@ -115,6 +115,9 @@
            :recover!
            {:en "Recover"
             :hu "Visszaállítás"}
+           :recovering...
+           {:en "Recovering ..."
+            :hu "Visszaállítás ..."}
            :recovered
            {:en "Recovered"
             :hu "Visszaállítva"}

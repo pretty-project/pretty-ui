@@ -50,17 +50,17 @@
   ; @return (ms)
   [db [_ bubble-id]]
   (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)
-        bubble-pop-time     (+ render-requested-at bubbles.config/BUBBLE-LIFETIME)]
-       (- bubble-pop-time (time/elapsed))))
+        bubble-close-time     (+ render-requested-at bubbles.config/BUBBLE-LIFETIME)]
+       (- bubble-close-time (time/elapsed))))
 
-(defn autopop-bubble?
+(defn autoclose-bubble?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
   ;
   ; @return (boolean)
   [db [_ bubble-id]]
-  (boolean (r renderer/get-element-prop db :bubbles bubble-id :autopop?)))
+  (boolean (r renderer/get-element-prop db :bubbles bubble-id :autoclose?)))
 
 
 

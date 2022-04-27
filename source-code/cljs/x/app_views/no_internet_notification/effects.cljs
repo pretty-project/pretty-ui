@@ -19,7 +19,7 @@
   (fn [{:keys [db]} _]
       (if (and (r environment/browser-offline? db)
                (r ui/application-interface?    db))
-          [:ui/blow-bubble! :views.no-internet-notification/notification
-                            {:body        #'no-internet-notification.views/body
-                             :autopop?    false
-                             :user-close? false}])))
+          [:ui/render-bubble! :views.no-internet-notification/notification
+                              {:body        #'no-internet-notification.views/body
+                               :autoclose?  false
+                               :user-close? false}])))

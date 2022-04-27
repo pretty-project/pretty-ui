@@ -17,5 +17,5 @@
   ; @usage
   ;  [:tools/copy-to-clipboard! "My text"]
   (fn [_ [_ text]]
-      {:dispatch [:ui/blow-bubble! ::notification {:body :copied-to-clipboard}]
+      {:dispatch [:ui/render-bubble! ::notification {:body :copied-to-clipboard}]
        :fx       [:tools/copy-to-clipboard! text]}))

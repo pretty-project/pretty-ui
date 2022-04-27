@@ -25,7 +25,8 @@
              {::pathom.co/op-name 'clients.client-viewer/undo-delete-item!}
              ; XXX#7601
              ; A :client/name virtális mezőt szükséges eltávolítani a dokumentumokból!
-             (mongo-db/insert-document! "clients" (dissoc item :client/name)))
+             ;(mongo-db/insert-document! "clients" (dissoc item :client/name)))
+             {})
 
 (defmutation duplicate-item!
              ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -29,6 +29,6 @@
 (a/reg-event-fx
   :settings.remove-stored-cookies/render-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! :settings.remove-stored-cookies/view
-                  {:body   #'remove-stored-cookies.views/body
-                   :header #'remove-stored-cookies.views/header}])
+  [:ui/render-popup! :settings.remove-stored-cookies/view
+                     {:body   #'remove-stored-cookies.views/body
+                      :header #'remove-stored-cookies.views/header}])

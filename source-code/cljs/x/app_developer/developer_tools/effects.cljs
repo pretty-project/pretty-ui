@@ -16,7 +16,7 @@
   :developer/test!
   ; @usage
   ;  [:developer/test!]
-  [:ui/blow-bubble! {:body "It works!"}])
+  [:ui/render-bubble! {:body "It works!"}])
 
 
 
@@ -29,7 +29,7 @@
   (fn [{:keys [db]} _]
       {:db       (r gestures/init-view-handler! db :developer.developer-tools/handler
                                                    {:default-view-id :re-frame-browser :reinit? false})
-       :dispatch [:ui/add-popup! :developer.developer-tools/view
-                                 {:body   #'developer-tools.views/body
-                                  :header #'developer-tools.views/header
-                                  :stretch-orientation :vertical}]}))
+       :dispatch [:ui/render-popup! :developer.developer-tools/view
+                                    {:body   #'developer-tools.views/body
+                                     :header #'developer-tools.views/header
+                                     :stretch-orientation :vertical}]}))

@@ -14,4 +14,4 @@
   ::lifecycles
   {:on-browser-offline [:views/blow-no-internet-bubble?!]
    :on-app-launch      [:views/blow-no-internet-bubble?!]
-   :on-browser-online  [:ui/pop-bubble! :views.no-internet-notification/notification]})
+   :on-browser-online  [:ui/close-bubble! :views.no-internet-notification/notification]})

@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.views
-    (:require [x.app-components.api    :as components]
+    (:require [reagent.api             :as reagent]
+              [x.app-components.api    :as components]
               [x.app-core.api          :as a :refer [r]]
               [x.app-elements.api      :as elements]
               [x.app-environment.api   :as environment]
@@ -260,7 +261,7 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (if-let [minimizable? @(a/subscribe [:ui/get-popup-prop popup-id :minimizable?])]
+  (if-let [debug-mode-detected? @(a/subscribe [:core/debug-mode-detected?])]
           [elements/icon-button {:class    :x-app-popups--element--minimize-button
                                  :color    :invert
                                  :icon     :close_fullscreen
@@ -361,16 +362,27 @@
                     :flip    [boxed-popup-structure   popup-id]
                     :unboxed [unboxed-popup-structure popup-id])))
 
-(defn- popup-element
+(defn- popup-element-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; @param (map) popup-props
-  [popup-id popup-props]
+  [popup-id]
   [:<> [popup-maximize-button popup-id]
-       [:div (popups.helpers/popup-attributes popup-id popup-props)
+       [:div (popups.helpers/popup-attributes popup-id)
              [popup-cover                     popup-id]
              [popup-layout                    popup-id]]])
+
+(defn popup-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  [popup-id]
+  (let [on-popup-closed   @(a/subscribe [:ui/get-popup-prop popup-id :on-popup-closed])
+        on-popup-rendered @(a/subscribe [:ui/get-popup-prop popup-id :on-popup-rendered])]
+       (reagent/lifecycles popup-id
+                           {:reagent-render         (fn [] [popup-element-structure popup-id])
+                            :component-will-unmount (fn [] (a/dispatch on-popup-closed))
+                            :component-did-mount    (fn [] (a/dispatch on-popup-rendered))})))
 
 
 

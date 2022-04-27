@@ -18,7 +18,8 @@
   [browser-id item-id]
   (let [undo-event [:item-browser/undo-delete-item! browser-id item-id]]
        [ui/state-changed-bubble-body :plugins.item-browser/item-deleted-dialog
-                                     {:label :item-deleted :primary-button {:on-click undo-event :label :recover!}}]))
+                                     {:label          :item-deleted
+                                      :primary-button {:label :recover! :on-click undo-event}}]))
 
 (defn item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

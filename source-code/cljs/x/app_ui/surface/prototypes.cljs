@@ -13,7 +13,6 @@
 (defn surface-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) surface-id
   ; @param (map) surface-props
   ;
   ; @return (map)
@@ -23,9 +22,9 @@
   ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
   [surface-props]
-  (merge {:hide-animated?   false
-          :reveal-animated? false
-          :trim-content?    false
-          :update-animated? false
+  (merge {:trim-content?    false
           :horizontal-align :center}
-         (param surface-props)))
+         (param surface-props)
+         {:hide-animated?   false
+          :reveal-animated? false
+          :update-animated? false}))

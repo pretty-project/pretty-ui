@@ -37,9 +37,9 @@
 
 (a/reg-event-fx
   :add-my-popup!
-  [:ui/add-popup! :my-popup
-                  {:body   #'my-body
-                   :header #'my-header}])
+  [:ui/render-popup! :my-popup
+                     {:body   #'my-body
+                      :header #'my-header}])
 
 
 

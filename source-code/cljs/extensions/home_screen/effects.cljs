@@ -27,11 +27,6 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :home-screen/render!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/set-surface! :home-screen/view {:view #'views/view}])
-
-(a/reg-event-fx
   :home-screen/load!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
@@ -39,3 +34,8 @@
            {:dispatch-n [[:ui/simulate-process!]
                          [:ui/restore-default-title!]
                          [:home-screen/render!]]})))
+
+(a/reg-event-fx
+  :home-screen/render!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [:ui/render-surface! :home-screen/view {:view #'views/view}])

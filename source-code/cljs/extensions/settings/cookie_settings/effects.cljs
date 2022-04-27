@@ -22,8 +22,8 @@
 (a/reg-event-fx
   :settings.cookie-settings/render-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/add-popup! :settings.cookie-settings/view
-                  {:body   #'cookie-settings.views/body
-                   :header #'cookie-settings.views/header
-                   :horizontal-align :left
-                   :user-close?      false}])
+  [:ui/render-popup! :settings.cookie-settings/view
+                     {:body             #'cookie-settings.views/body
+                      :header           #'cookie-settings.views/header
+                      :horizontal-align :left
+                      :user-close?      false}])

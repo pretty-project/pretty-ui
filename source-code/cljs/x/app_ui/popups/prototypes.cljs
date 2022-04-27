@@ -36,19 +36,18 @@
   ;   :layout (keyword)
   ;   :min-width (keyword)
   ;   :reveal-animated? (boolean)
+  ;   :stretch-orientation (keyword)
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
   [db [_ popup-id popup-props]]
-  (merge {:hide-animated?   true
-          :horizontal-align :center
-          :layout           :boxed
-          :min-width        :m
-          :reveal-animated? true
-          :update-animated? false
-          :user-close?      true}
+  (merge {:horizontal-align    :center
+          :layout              :boxed
+          :min-width           :m
+          :stretch-orientation :none
+          :user-close?         true}
          (param popup-props)
+         {:hide-animated?   true
+          :reveal-animated? true
+          :update-animated? false}
          (if (r flip-layout-anyway? db popup-id popup-props)
-             {:layout :flip})
-         (if ; DEBUG
-             (r a/debug-mode-detected? db)
-             {:minimizable? true})))
+             {:layout :flip})))
