@@ -72,9 +72,8 @@
   ;    Default: false
   ;    Only w/ {:label-key ...}
   ;   :default-item-id (string)
-  ;   :default-view-id (keyword)
   ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate, :edit]
+  ;    [:delete, :duplicate]
   ;   :item-element (metamorphic-content)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
@@ -90,6 +89,7 @@
   [viewer-id body-props]
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]
        (reagent/lifecycles (core.helpers/component-id viewer-id :body)
-                           {:reagent-render         (fn []             [body-structure                 viewer-id])
-                            :component-did-mount    (fn [] (a/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-viewer/body-will-unmount viewer-id]))})))
+                           {:reagent-render         (fn []              [body-structure                 viewer-id])
+                            :component-did-mount    (fn []  (a/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
+                            :component-will-unmount (fn []  (a/dispatch [:item-viewer/body-will-unmount viewer-id]))
+                            :component-did-update   (fn [%] (a/dispatch [:item-viewer/body-did-update   viewer-id %]))})))

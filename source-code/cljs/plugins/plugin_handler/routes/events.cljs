@@ -3,9 +3,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.routes.events
-    (:require [plugins.item-editor.core.events :as core.events]
-              [plugins.item-editor.routes.subs :as routes.subs]
-              [x.app-core.api                  :refer [r]]))
+    (:require [plugins.plugin-handler.core.events :as core.events]
+              [plugins.plugin-handler.routes.subs :as routes.subs]
+              [x.app-core.api                     :refer [r]]))
 
 
 

@@ -3,20 +3,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.clients.client-editor.subs
-    (:require [x.app-core.api    :as a :refer [r]]
-              [x.app-locales.api :as locales]))
+    (:require [extensions.clients.client-viewer.subs :as client-viewer.subs]
+              [x.app-core.api                        :as a]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn get-client-name
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [db _]
-  (let [first-name (get-in db [:clients :client-editor/edited-item :first-name])
-        last-name  (get-in db [:clients :client-editor/edited-item :last-name])]
-       (r locales/get-ordered-name db first-name last-name)))
+; extensions.clients.client-viewer.subs
+(def get-client-name client-viewer.subs/get-client-name)
 
 
 

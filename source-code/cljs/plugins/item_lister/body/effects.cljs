@@ -4,6 +4,7 @@
 
 (ns plugins.item-lister.body.effects
     (:require [plugins.item-lister.body.events :as body.events]
+              [reagent.api                     :as reagent]
               [x.app-core.api                  :as a :refer [r]]))
 
 
@@ -51,7 +52,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
-  ; @param (map) body-props
-  (fn [{:keys [db]} [_ lister-id body-props]]
-      {:db       (r body.events/body-did-update db lister-id body-props)
-       :dispatch [:tools/reload-infinite-loader! lister-id]}))
+  ; @param (?) %
+  (fn [{:keys [db]} [_ lister-id %]]
+      (let [[_ body-props] (reagent/arguments %)]
+           {:db       (r body.events/body-did-update db lister-id body-props)
+            :dispatch [:tools/reload-infinite-loader! lister-id]})))

@@ -23,6 +23,7 @@
                                :header      {:colors (or colors :placeholder)}
                                :icon        :navigate_next
                                :label       client-name
+                               :memory-mode? true
                                :on-click    [:router/go-to! (str "/@app-home/clients/" id)]
                                :timestamp   modified-at}]))
 
@@ -88,6 +89,6 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id
+  [layouts/layout-a ::client-lister
                     {:body   #'body
                      :header #'header}])

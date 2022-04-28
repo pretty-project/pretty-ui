@@ -436,6 +436,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   height: 24px;
   justify-content: center }
 

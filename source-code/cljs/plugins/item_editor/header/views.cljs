@@ -45,6 +45,7 @@
   ;  [item-editor/header :my-editor {...}]
   [editor-id header-props]
   (reagent/lifecycles (core.helpers/component-id editor-id :header)
-                      {:reagent-render         (fn []             [header-structure                 editor-id])
-                       :component-did-mount    (fn [] (a/dispatch [:item-editor/header-did-mount    editor-id header-props]))
-                       :component-will-unmount (fn [] (a/dispatch [:item-editor/header-will-unmount editor-id]))}))
+                      {:reagent-render         (fn []              [header-structure                 editor-id])
+                       :component-did-mount    (fn []  (a/dispatch [:item-editor/header-did-mount    editor-id header-props]))
+                       :component-will-unmount (fn []  (a/dispatch [:item-editor/header-will-unmount editor-id]))
+                       :component-did-update   (fn [%] (a/dispatch [:item-editor/header-did-update   editor-id %]))}))

@@ -63,7 +63,8 @@
   ; - A letöltött dokumentum a merge függvény használatával kerül eltárolásra, így az esetlegesen
   ;   a body komponens számára {:initial-item {...}} tulajdonságként átadott értékek nem íródnak felül.
   ;
-  ; - MIÉRT SZÜKSÉGES AZ ELEMRŐL MÁSOLATOT KÉSZÍTENI A LETÖLTÉSKOR?
+  ; - Az elemről letöltéskor másolat készül, hogy a "Visszaállítás" gomb használatával
+  ;   a letöltéskori állapota visszaállítható legyen.
   (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
         item-path   (r body.subs/get-body-prop       db editor-id :item-path)
         document    (-> server-response resolver-id db/document->non-namespaced-document)]
@@ -89,27 +90,3 @@
           ; If editor in recovery-mode ...
           (r core.subs/get-meta-item db editor-id :recovery-mode?)
           (as-> % (r backup.events/recover-item! % editor-id))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn load-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (if (r core.subs/get-meta-item db editor-id :recovery-mode?)
-      (r backup.events/recover-item! db editor-id)
-      (return db)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-editor/data-received data-received)

@@ -21,24 +21,17 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; A) ...
-      ;
-      ; B) ...
-      (if-let [download-data? (r core.subs/download-data? db editor-id)]
-              ; A)
-              (let [query        (r download.queries/get-request-item-query          db editor-id)
-                    validator-f #(r download.validators/request-item-response-valid? db editor-id %)]
-                   {:db       (r download.events/request-item! db editor-id)
-                    :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
-                                                 {:display-progress? true
-                                                  ; XXX#4057
-                                                  ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
-                                                  ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
-                                                  :on-stalled [:item-editor/receive-item!   editor-id]
-                                                  :on-failure [:item-editor/set-error-mode! editor-id]
-                                                  :query query :validator-f validator-f}]})
-              ; B)
-              {:dispatch [:item-editor/load-item! editor-id]})))
+      (let [query        (r download.queries/get-request-item-query          db editor-id)
+            validator-f #(r download.validators/request-item-response-valid? db editor-id %)]
+           {:db       (r download.events/request-item! db editor-id)
+            :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
+                                         {:display-progress? true
+                                          ; XXX#4057
+                                          ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
+                                          ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
+                                          :on-stalled [:item-editor/receive-item!   editor-id]
+                                          :on-failure [:item-editor/set-error-mode! editor-id]
+                                          :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-editor/receive-item!
@@ -49,19 +42,14 @@
       ; Ha az [:item-editor/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.
       (if (r body.subs/body-did-mount? db editor-id)
-          {:db (r download.events/receive-item! db editor-id server-response)})))
+          {:db       (r download.events/receive-item! db editor-id server-response)
+           :dispatch [:item-editor/item-received editor-id]})))
 
 (a/reg-event-fx
-  :item-editor/load-item!
+  :item-editor/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; - Az [:item-editor/load-item! ...] esemény az [:item-editor/request-item! ...] eseményt
-      ;   helyettesíti, amikor nem szükséges adatokat letölteni.
-      ;
-      ; - Ha az [:item-editor/load-item! ...] esemény történik meg az [:item-editor/request-item! ...]
-      ;   esemény helyett, akkor is szükséges átléptetni a plugint a {:data-received? true}
-      ;   állapotba, miután a progress-bar elemen szimulált folyamat befejeződött!
-      {:db       (r download.events/load-item! db editor-id)
-       :dispatch [:ui/simulate-process! {:on-process-ended [:item-editor/data-received editor-id]}]}))
+      (if-let [auto-title (r core.subs/get-auto-title db editor-id)]
+              [:ui/set-window-title! auto-title])))

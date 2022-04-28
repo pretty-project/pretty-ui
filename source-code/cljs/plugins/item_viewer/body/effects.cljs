@@ -4,6 +4,7 @@
 
 (ns plugins.item-viewer.body.effects
     (:require [plugins.item-viewer.body.events :as body.events]
+              [reagent.api                     :as reagent]
               [x.app-core.api                  :as a :refer [r]]))
 
 
@@ -33,3 +34,18 @@
   ; @param (keyword) viewer-id
   (fn [{:keys [db]} [_ viewer-id]]
       {:db (r body.events/body-will-unmount db viewer-id)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-viewer/body-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (?) %
+  (fn [{:keys [db]} [_ viewer-id %]]
+      (let [[_ body-props] (reagent/arguments %)]
+           {:db (r body.events/body-did-update db viewer-id body-props)})))

@@ -71,7 +71,7 @@
                   :else                  (str "<div style=\"padding: 8px\">"   current-item "</div>"))
             "</div>"
             "<div style\"width: 50%;\">"
-            "<pre style=\""item-preview-style"\">"(pretty/mixed->string current-item)"</pre>"
+            "<pre style=\""item-preview-style"\">"(pretty/mixed->string current-item {:abc? true})"</pre>"
             "</div>"
             "</div>")))
 

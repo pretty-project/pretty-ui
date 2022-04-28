@@ -104,10 +104,11 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? viewer-id])
-        error-mode?      @(a/subscribe [:item-viewer/get-meta-item    viewer-id :error-mode?])]
+        error-mode?      @(a/subscribe [:item-viewer/get-meta-item    viewer-id :error-mode?])
+        on-edit-event    @(a/subscribe [:item-viewer/get-footer-prop  viewer-id :on-edit-event])]
        [elements/icon-button ::edit-item-icon-button
                              {:disabled? (or viewer-disabled? error-mode?)
-                              :on-click  [:item-viewer/edit-item! viewer-id]
+                              :on-click  on-edit-event
                               :preset    :edit}]))
 
 (defn- edit-item-button
@@ -116,13 +117,14 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? viewer-id])
-        error-mode?      @(a/subscribe [:item-viewer/get-meta-item    viewer-id :error-mode?])]
+        error-mode?      @(a/subscribe [:item-viewer/get-meta-item    viewer-id :error-mode?])
+        on-edit-event    @(a/subscribe [:item-viewer/get-footer-prop  viewer-id :on-edit-event])]
        [elements/button ::save-item-button
                         {:disabled?   (or viewer-disabled? error-mode?)
                          :font-size   :xs
                          :hover-color :highlight
                          :indent      {:horizontal :xxs :right :xxs}
-                         :on-click    [:item-viewer/edit-item! viewer-id]
+                         :on-click    on-edit-event
                          :preset      :edit}]))
 
 (defn edit-item-block
@@ -154,8 +156,8 @@
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (let [item-actions @(a/subscribe [:item-viewer/get-body-prop viewer-id :item-actions])]
-       (if (vector/contains-item? item-actions :edit) [edit-item-block viewer-id])))
+  (if-let [on-edit-event @(a/subscribe [:item-viewer/get-footer-prop viewer-id :on-edit-event])]
+          [edit-item-block viewer-id]))
 
 (defn menu-mode-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -180,7 +182,8 @@
 (defn footer
   ; @param (keyword) viewer-id
   ; @param (map) footer-props
-  ;  {:menu-element (metamorphic-content)(opt)}
+  ;  {:menu-element (metamorphic-content)(opt)
+  ;   :on-edit-event (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [item-viewer/footer :my-viewer {...}]
@@ -190,6 +193,7 @@
   ;  [item-viewer/footer :my-viewer {:menu #'my-menu-element}]
   [viewer-id footer-props]
   (reagent/lifecycles (core.helpers/component-id viewer-id :footer)
-                      {:reagent-render         (fn []             [footer-structure                 viewer-id])
-                       :component-did-mount    (fn [] (a/dispatch [:item-viewer/footer-did-mount    viewer-id footer-props]))
-                       :component-will-unmount (fn [] (a/dispatch [:item-viewer/footer-will-unmount viewer-id]))}))
+                      {:reagent-render         (fn []              [footer-structure                 viewer-id])
+                       :component-did-mount    (fn []  (a/dispatch [:item-viewer/footer-did-mount    viewer-id footer-props]))
+                       :component-will-unmount (fn []  (a/dispatch [:item-viewer/footer-will-unmount viewer-id]))
+                       :component-did-update   (fn [%] (a/dispatch [:item-viewer/footer-did-update   viewer-id %]))}))

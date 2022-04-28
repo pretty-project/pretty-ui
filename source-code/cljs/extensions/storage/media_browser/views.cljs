@@ -248,5 +248,6 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id {:body   #'body
-                                :header #'header}])
+  [layouts/layout-a ::media-browser
+                    {:body   #'body
+                     :header #'header}])

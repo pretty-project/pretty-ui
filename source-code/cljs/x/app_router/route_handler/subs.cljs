@@ -62,8 +62,11 @@
   ;
   ; @return (?)
   [db _]
+  ; XXX#4005
+  ; A szerver-oldali útvonal-kezelőhöz hasonlóan a kliens-oldalon is szükséges
+  ; átadni a {:conflicts nil} beállítást.
   (let [router-routes (r get-router-routes db)]
-       (reitit.frontend/router router-routes)))
+       (reitit.frontend/router router-routes {:conflicts nil})))
 
 (defn get-route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!

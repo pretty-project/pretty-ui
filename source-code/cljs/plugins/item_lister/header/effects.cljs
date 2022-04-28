@@ -4,6 +4,7 @@
 
 (ns plugins.item-lister.header.effects
     (:require [plugins.item-lister.header.events :as header.events]
+              [reagent.api                     :as reagent]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -49,3 +50,18 @@
   (fn [{:keys [db]} [_ lister-id]]
       {:db       (r header.events/header-will-unmount db lister-id)
        :dispatch [:environment/remove-keypress-event! :item-lister/ESC]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-lister/header-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (?) %
+  (fn [{:keys [db]} [_ lister-id %]]
+      (let [[_ header-props] (reagent/arguments %)]
+           {:db (r header.events/header-did-update db lister-id header-props)})))

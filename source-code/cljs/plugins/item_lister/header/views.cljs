@@ -628,6 +628,7 @@
   ;  [item-lister/header :my-lister {:menu #'my-menu-element}}]
   [lister-id header-props]
   (reagent/lifecycles (core.helpers/component-id lister-id :header)
-                      {:reagent-render         (fn []             [header-structure                 lister-id])
-                       :component-did-mount    (fn [] (a/dispatch [:item-lister/header-did-mount    lister-id header-props]))
-                       :component-will-unmount (fn [] (a/dispatch [:item-lister/header-will-unmount lister-id]))}))
+                      {:reagent-render         (fn []              [header-structure                 lister-id])
+                       :component-did-mount    (fn []  (a/dispatch [:item-lister/header-did-mount    lister-id header-props]))
+                       :component-will-unmount (fn []  (a/dispatch [:item-lister/header-will-unmount lister-id]))
+                       :component-did-update   (fn [%] (a/dispatch [:item-lister/header-did-update   lister-id %]))}))

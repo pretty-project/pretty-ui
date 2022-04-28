@@ -36,6 +36,7 @@
   [selector-id body-props]
   (let [];body-props (body.prototypes/body-props-prototype body-props)
        (reagent/lifecycles (core.helpers/component-id selector-id :body)
-                           {:reagent-render         (fn []             [body-structure                   selector-id])
-                            :component-did-mount    (fn [] (a/dispatch [:view-selector/body-did-mount    selector-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:view-selector/body-will-unmount selector-id]))})))
+                           {:reagent-render         (fn []              [body-structure                   selector-id])
+                            :component-did-mount    (fn []  (a/dispatch [:view-selector/body-did-mount    selector-id body-props]))
+                            :component-will-unmount (fn []  (a/dispatch [:view-selector/body-will-unmount selector-id]))
+                            :component-did-update   (fn [%] (a/dispatch [:view-selector/body-did-update   selector-id %]))})))

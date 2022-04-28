@@ -35,9 +35,10 @@
 (defn your-view
   [surface-id]
   (let [description @(a/subscribe [:item-editor/get-description :your-editor])]
-       [layouts/layout-a surface-id {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
-                                     :footer [item-editor/footer :your-editor {}]
-                                     :description description}]))
+       [layouts/layout-a ::sample
+                         {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
+                          :footer [item-editor/footer :your-editor {}]
+                          :description description}]))
 
 
 
@@ -128,12 +129,3 @@
 ; A body komponens {:default-item-id "..."} paraméterének értéke ...
 ; ... az aktuálisan szerkesztett elem azonosítója, amikor az aktuális útvonalból
 ;     nem származtatható az :item-id útvonal-paraméter.
-
-
-
-;; -- Az {:default-view-id "..."} paraméter használata ------------------------
-;; ----------------------------------------------------------------------------
-
-; A body komponens {:default-view-id "..."} paraméterének értéke ...
-; ... az aktuálisan beállított nézet azonosítója, amikor az aktuális útvonalból
-;     nem származtatható a :view-id útvonal-paraméter.

@@ -24,11 +24,11 @@
 ;
 ; A plugin használatához OPCIONÁLISAN megadható ...
 ; ... a {:base-route "..."} tulajdonság, ami alapján a plugin regisztrálja a példa szerinti
-;     "/@app-home/my-editor/:item-id/:view-id" útvonalat.
-; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált
-;     "/@app-home/my-editor/:item-id/:view-id" útvonal használatakor történik meg.
-; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált
-;     "/@app-home/my-editor/:item-id/:view-id" útvonal használatakor beállítódik az applikáció címkéjének.
+;     "/@app-home/my-editor/:item-id/edit" útvonalat.
+; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
+;     történik meg.
+; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
+;     beállítódik az applikáció címkéjének.
 (a/reg-event-fx
   :init-my-editor!
   [:item-editor/init-editor! :my-editor

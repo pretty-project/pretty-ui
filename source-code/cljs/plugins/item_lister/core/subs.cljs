@@ -4,7 +4,6 @@
 
 (ns plugins.item-lister.core.subs
     (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.vector                 :as vector]
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
@@ -68,16 +67,6 @@
   (let [downloaded-items (r get-downloaded-items db lister-id)]
        (empty? downloaded-items)))
 
-(defn any-item-to-show?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (let [downloaded-items (r get-downloaded-items db lister-id)]
-       (vector/nonempty? downloaded-items)))
-
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -95,28 +84,9 @@
   ;
   ; @return (integer)
   [db [_ lister-id]]
-  ; - Ha a tárolt érték nil, akkor a visszatérési érték 0
-  ;
-  ; - Ha a szerver hibásan nil értéket küld le, akkor a 0 visszatérési érték miatt
-  ;   az all-items-downloaded? függvény visszatérési értéke true lesz ezért megáll
-  ;   az újabb elemek letöltése.
-  ;
-  ; - Hibás szerver-működés esetén szükséges, hogy az infinite-loader komponens
-  ;   ne próbálja újra és újra letölteni a további feltételezett elemeket.
-  ;
-  ; - XXX#0499
-  ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor a get-all-item-count
-  ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-  ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
-  ;
-  ; - XXX#0499
-  ;   A szerverrel való első kommunkáció megtörténtét, nem lehetséges az (r sync/request-sent? db ...)
-  ;   függvénnyel vizsgálni, mert ha az item-lister már meg volt jelenítve, akkor az újbóli
-  ;   megjelenítéskor (r sync/request-sent? db ...) függvény visszatérési értéke true lenne!
-  (let [all-item-count (r get-meta-item db lister-id :document-count)]
-       (if (integer? all-item-count)
-           (return   all-item-count)
-           (return   0))))
+  (if-let [document-count (r get-meta-item db lister-id :document-count)]
+          (return document-count)
+          (return 0)))
 
 (defn all-items-downloaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -126,17 +96,13 @@
   ; @return (boolean)
   [db [_ lister-id]]
   ; XXX#0791
-  ; - = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
-  ;   nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
-  ;   akkor ne próbáljon további feltételezett elemeket letölteni.
-  ;
-  ; - XXX#0499
-  ;   Ha még nem történt meg az első kommunikáció a szerverrel, akkor az all-items-downloaded?
-  ;   függvény visszatérési értéke nem tekinthető mérvadónak!
-  ;   Ezért az első kommunikáció megtörténtét szükséges külön vizsgálni!
-  (let [       all-item-count (r        get-all-item-count db lister-id)
-        downloaded-item-count (r get-downloaded-item-count db lister-id)]
-       (>= downloaded-item-count all-item-count)))
+  ; = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
+  ; nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
+  ; akkor ne próbáljon további feltételezett elemeket letölteni.
+  (let [       all-item-count (r        get-all-item-count    db lister-id)
+        downloaded-item-count (r get-downloaded-item-count    db lister-id)
+        data-received?        (r download.subs/data-received? db lister-id)]
+       (and data-received? (>= downloaded-item-count all-item-count))))
 
 (defn no-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,13 +121,9 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (and ; XXX#0499
-       ; Ha még nem történt meg az első kommunikáció a szerverrel, akkor
-       ; az all-items-downloaded? függvény visszatérési értéke nem tekinthető mérvadónak!
-       (or (not (r download.subs/data-received? db lister-id))
-           (not (r all-items-downloaded?        db lister-id)))
-       ; BUG#7009
-       (not (r no-items-received? db lister-id))))
+  ; BUG#7009
+  (and (not (r all-items-downloaded? db lister-id))
+       (not (r no-items-received?    db lister-id))))
 
 (defn request-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -14,6 +14,28 @@
 
 # x4.7.0
 
+- Az item-lister reset-downloads! függvény {:data-received? false} állapotba lépteti
+  a plugin ami miatt a header eltünik az elemek letöltése utánig kereséskor is,
+  és emiatt a search-field újra-fókuszál és a mező elejére teszi a kurzort.
+
+- Az item-lister {:memory-mode? true} beállítását ki lehet kerülni!
+  - Rákattintasz a listaelemre, ami memory-mode? true állapotba lépteti a listát
+  - megnyilik az item-viewer, -> menü -> beállítások -> föoldal -> vissza a listába
+    és hoppá!
+
+- Miután a UI renderer események refaktorálása megtörtént szükséges lellenőrizni,
+  hogy az item-viewer plugin undo-delete-item folyamata által megjelenített
+  undo-delete-item-failed (failed) értesítése megjelenik-e újra, ha az értesítésen
+  lévő "Retry" gombra kattintva a folyamat ismételten failed.
+  - Elem törlésének sikertelen visszaállítása
+  - Értesítés megjelenik
+  - "Retry" gomb megnyomása
+  - close-bubble! folyamat elindul
+  - Visszajön a szerver-válasz, hogy (megint) nem sikerült a visszaállítás
+  - Értesítés (megint) megjelenik
+  - close-bubble folyamat annyira hosszú, hogy most fejeződik be és bezárja
+    az azóta újra megjelent értesítést
+
 - A projectek deps.edn fájljában addig kell a forráskód mappáját
   "monoset/source-code/clj" "monoset/source-code/cljc" "monoset/source-code/cljs"
   mappákra lebontva megadni, amig létezik a project-emulator mappa!

@@ -36,6 +36,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::vat-no-field
                             {:disabled?  editor-disabled?
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :vat-no
                              :min-width  :s
                              :value-path [:clients :client-editor/edited-item :vat-no]
@@ -48,6 +49,7 @@
   (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/select ::country-select
                         {:disabled?       editor-disabled?
+                         :indent          {:horizontal :xxs :vertical :xs}
                          :label           :country ;:user-cancel? false
                          :initial-options locales/EU-COUNTRY-NAMES
                          :value-path      [:clients :client-editor/edited-item :country]}]))
@@ -58,6 +60,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::zip-code-field
                             {:disabled?  editor-disabled?
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :zip-code
                              :value-path [:clients :client-editor/edited-item :zip-code]}]))
 
@@ -68,6 +71,7 @@
        [elements/combo-box ::city-field
                            {:disabled?    editor-disabled?
                             :emptiable?   false
+                            :indent       {:horizontal :xxs :vertical :xs}
                             :min-width    :s
                             :label        :city
                             :options-path [:clients :client-editor/suggestions :city]
@@ -79,6 +83,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::address-field
                             {:disabled?  editor-disabled?
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :min-width  :s
                              :label      :address
                              :value-path [:clients :client-editor/edited-item :address]}]))
@@ -86,17 +91,17 @@
 (defn- client-secondary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<> [:div (layouts/input-row-attributes)
-             [:div (layouts/input-block-attributes {:ratio 30})
+  [:<> [:div (layouts/form-row-attributes)
+             [:div (layouts/form-block-attributes {:ratio 30})
                    [client-country-select]]
-             [:div (layouts/input-block-attributes {:ratio 30})
+             [:div (layouts/form-block-attributes {:ratio 30})
                    [client-zip-code-field]]
-             [:div (layouts/input-block-attributes {:ratio 40})
+             [:div (layouts/form-block-attributes {:ratio 40})
                    [client-city-field]]]
-       [:div (layouts/input-row-attributes)
-             [:div (layouts/input-block-attributes {:ratio 60})
+       [:div (layouts/form-row-attributes)
+             [:div (layouts/form-block-attributes {:ratio 60})
                    [client-address-field]]
-             [:div (layouts/input-block-attributes {:ratio 40})
+             [:div (layouts/form-block-attributes {:ratio 40})
                    [client-vat-no-field]]]])
 
 
@@ -111,6 +116,7 @@
        [elements/text-field ::phone-number-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :phone-number
                              :min-width  :s
                             ; Ha le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a mező használata!
@@ -127,6 +133,7 @@
        [elements/text-field ::email-address-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :email-address
                              :min-width  :s
                              :required?  true
@@ -136,10 +143,10 @@
 (defn- client-primary-contacts
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div (layouts/input-row-attributes)
-        [:div (layouts/input-block-attributes {:ratio 50})
+  [:div (layouts/form-row-attributes)
+        [:div (layouts/form-block-attributes {:ratio 50})
               [client-email-address-field]]
-        [:div (layouts/input-block-attributes {:ratio 50})
+        [:div (layouts/form-block-attributes {:ratio 50})
               [client-phone-number-field]]])
 
 
@@ -166,6 +173,7 @@
        [elements/text-field ::last-name-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :last-name
                              :min-width  :s
                              :required?  true
@@ -178,6 +186,7 @@
        [elements/text-field ::first-name-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
+                             :indent     {:horizontal :xxs :vertical :xs}
                              :label      :first-name
                              :min-width  :s
                              :required?  true
@@ -186,10 +195,10 @@
 (defn- client-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div (layouts/input-row-attributes)
-        [locales/name-order [:div (layouts/input-block-attributes {:ratio 50})
+  [:div (layouts/form-row-attributes)
+        [locales/name-order [:div (layouts/form-block-attributes {:ratio 50})
                                   [client-first-name-field]]
-                            [:div (layouts/input-block-attributes {:ratio 50})
+                            [:div (layouts/form-block-attributes {:ratio 50})
                                   [client-last-name-field]]
                            @(a/subscribe [:locales/get-name-order])]])
 
@@ -216,13 +225,14 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/multiline-field ::client-description-field
                                  {:disabled?  editor-disabled?
+                                  :indent     {:horizontal :xxs :vertical :xs}
                                   :value-path [:clients :client-editor/edited-item :description]}]))
 
 (defn- client-additional-information
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div (layouts/input-row-attributes)
-        [:div (layouts/input-block-attributes {:ratio 100})
+  [:div (layouts/form-row-attributes)
+        [:div (layouts/form-block-attributes {:ratio 100})
               [client-description-field]]])
 
 
@@ -234,7 +244,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [client-name @(a/subscribe [:clients.client-editor/get-client-name])]
-       [:<> [ui/title-sensor {:title client-name :offset -48}]
+       [:<> [ui/title-sensor {:title client-name :offset -18}]
             [item-editor/item-label :clients.client-editor {:name client-name}]]))
 
 (defn- client-colors
@@ -284,12 +294,12 @@
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  [item-editor/header :clients.client-editor
-                      {:menu-items [{:label "Adatok" :view-id :edit
-                                     :change-keys [:address :city :colors :country :description :email-address
-                                                   :first-name :last-name :phone-number :vat-no :zip-code]}
-                                    {:label "Árajánlatok" :view-id :price-quotes}]}])
+  [])
+  ;[item-editor/header :clients.client-editor
+  ;                    {:menu-items [{:label "Adatok" :view-id :edit
+  ;                                   :change-keys [:address :city :colors :country :description :email-address
+  ;                                                 :first-name :last-name :phone-number :vat-no :zip-code
+  ;                                  {:label "Árajánlatok" :view-id :price-quotes}])
 
 
 
@@ -318,7 +328,6 @@
                                :form-element     #'client-form
                                :form-id          :clients.client-editor/form
                                :initial-item     {:country (locales/country-native-name selected-language)}
-                               :item-actions     [:delete :duplicate :revert :save]
                                :item-path        [:clients :client-editor/edited-item]
                                :label-key        :name
                                :suggestion-keys  [:city]
@@ -332,7 +341,7 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id
+  [layouts/layout-a ::client-editor
                     {:body   #'body
-                     :footer #'footer
-                     :header #'header}])
+                     :footer #'footer}])
+                     ;:header #'header}])

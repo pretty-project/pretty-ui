@@ -25,10 +25,10 @@
 ; A plugin használatához OPCIONÁLISAN megadható ...
 ; ... a {:base-route "..."} tulajdonság, ami alapján a plugin regisztrálja a példa szerinti
 ;     "/@app-home/my-viewer/:item-id" útvonalat.
-; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált
-;     "/@app-home/my-viewer/:item-id" útvonal használatakor történik meg.
-; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált
-;     "/@app-home/my-viewer/:item-id" útvonal használatakor beállítódik az applikáció címkéjének.
+; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
+;     történik meg.
+; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
+;     beállítódik az applikáció címkéjének.
 (a/reg-event-fx
   :init-my-viewer!
   [:item-viewer/init-viewer! :my-viewer
@@ -94,9 +94,9 @@
 (defmutation duplicate-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item (namespaced map)}
+             ;  {:item-id (string)}
              ;
              ; @return (namespaced map)
-             [env {:keys [item]}]
+             [env {:keys [item-id]}]
              {::pathom.co/op-name 'my-handler/duplicate-item!}
              (return {}))

@@ -10,47 +10,47 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input-block-attributes
+(defn form-block-attributes
   ; @param (map)(opt) options
   ;  {:ratio (%)(opt)
   ;    Default: 100}
   ;
   ; @usage
-  ;  (layouts/input-block-attributes)
+  ;  (layouts/form-block-attributes)
   ;
   ; @usage
-  ;  (layouts/input-block-attributes {...})
+  ;  (layouts/form-block-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)
   ;   :style (map)}
-  ([]                (input-block-attributes {:ratio 100}))
-  ([{:keys [ratio]}] {:style {:min-width (css/percent ratio)} :class :x-form-a--input-block}))
+  ([]                (form-block-attributes {:ratio 100}))
+  ([{:keys [ratio]}] {:style {:min-width (css/percent ratio)} :class :x-form-a--form-block}))
 
-(defn input-row-attributes
+(defn form-row-attributes
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (layouts/input-row-attributes)
+  ;  (layouts/form-row-attributes)
   ;
   ; @usage
-  ;  (layouts/input-row-attributes {...})
+  ;  (layouts/form-row-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)}
-  ([]           (input-row-attributes {}))
-  ([{:keys []}] {:class :x-form-a--input-row}))
+  ([]           (form-row-attributes {}))
+  ([{:keys []}] {:class :x-form-a--form-row}))
 
-(defn input-column-attributes
+(defn form-column-attributes
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (layouts/input-column-attributes)
+  ;  (layouts/form-column-attributes)
   ;
   ; @usage
-  ;  (layouts/input-column-attributes {...})
+  ;  (layouts/form-column-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)}
-  ([]           (input-column-attributes {}))
-  ([{:keys []}] {:class :x-form-a--input-column}))
+  ([]           (form-column-attributes {}))
+  ([{:keys []}] {:class :x-form-a--form-column}))

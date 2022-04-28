@@ -20,7 +20,7 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-item-id!       core.events/set-item-id!)
-(def set-view-id!       core.events/set-view-id!)
+(def update-item-id!    core.events/update-item-id!)
 
 
 
@@ -43,7 +43,8 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja az elem eltárolt változtatásait
+  ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja
+  ; az elemet az utoljára eltárolt másolat alapján.
   (assoc-in db [:plugins :plugin-handler/meta-items editor-id :recovery-mode?] true))
 
 
@@ -73,12 +74,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ editor-id item-id]])
-  ;(as-> db % (r set-item-id! db editor-id (or item-id (r core.subs/read-item-id db editor-id)))
-  ;           (r set-view-id! db editor-id (r core.subs/read-view-id db editor-id))]])
+  [db [_ editor-id]]
+  (r update-item-id! db editor-id))
 
 
 

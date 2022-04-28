@@ -24,10 +24,9 @@
 ; A plugin használatához OPCIONÁLISAN megadható ...
 ; ... az {:on-route ...} tulajdonság, ami a plugin által a példában regisztrált "/@app-home/my-lister"
 ;     útvonal használatakor történik meg.
-; ... a {:base-route "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti
-;     "/@app-home/my-lister" útvonalat.
-; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált "/@app-home/my-lister"
-;     útvonal használatakor beállítódik az applikáció címkéjének.
+; ... a {:base-route "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti útvonalat.
+; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált útvonalak
+;     használatakor beállítódik az applikáció címkéjének.
 (a/reg-event-fx
   :init-my-lister!
   [:item-lister/init-lister! :my-lister

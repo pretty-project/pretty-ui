@@ -166,20 +166,10 @@
   ;  [item-lister/body :my-lister {:list-element #'my-list-element
   ;                                :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
-  ; - A body komponens a {:component-did-update ...} életciklussal reagál többek között
-  ;   a {:prefilter ...} paraméter megváltozására.
-  ;
-  ; - A {:prefilter ...} paraméter változására szükséges reagálni!
-  ;   Pl.: Egy item-editor pluginban megejelenített item-lister plugin body komponensének
-  ;        {:prefilter ...} paramétere feliratkozik az item-editor pluginnal szerkesztett
-  ;        elem egyik értékére.
-  ;        A felhasználó az item-editor plugin "Visszaállítás" gombjával megváltoztathatja
-  ;        a szerkesztett elem azon értékét, amire az item-lister plugin body komponensének
-  ;        {:prefilter ...} tulajdonsága van feliratkozva!
   (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)
-                           {:reagent-render         (fn []             [body-structure                 lister-id])
-                            :component-did-mount    (fn [] (a/dispatch [:item-lister/body-did-mount    lister-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-lister/body-will-unmount lister-id]))
-                            :component-did-update   (fn [this] (let [[_ body-props] (reagent/arguments this)]
-                                                                    (a/dispatch [:item-lister/body-did-update lister-id body-props])))})))
+                           {:reagent-render         (fn []              [body-structure                 lister-id])
+                            :component-did-mount    (fn []  (a/dispatch [:item-lister/body-did-mount    lister-id body-props]))
+                            :component-will-unmount (fn []  (a/dispatch [:item-lister/body-will-unmount lister-id]))
+                            :component-did-update   (fn [%] (let [[_ body-props] (reagent/arguments %)]
+                                                                 (a/dispatch [:item-lister/body-did-update lister-id body-props])))})))

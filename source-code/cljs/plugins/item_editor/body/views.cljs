@@ -142,11 +142,8 @@
   ;    Default: false
   ;    Only w/ {:label-key ...}
   ;   :default-item-id (string)
-  ;   :default-view-id (keyword)}
   ;   :form-element (metamorphic-content)
   ;   :initial-item (map)(opt)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate, :revert, :save]
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
@@ -164,6 +161,7 @@
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)
-                           {:reagent-render         (fn []             [body-structure                 editor-id])
-                            :component-did-mount    (fn [] (a/dispatch [:item-editor/body-did-mount    editor-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-editor/body-will-unmount editor-id]))})))
+                           {:reagent-render         (fn []              [body-structure                 editor-id])
+                            :component-did-mount    (fn []  (a/dispatch [:item-editor/body-did-mount    editor-id body-props]))
+                            :component-will-unmount (fn []  (a/dispatch [:item-editor/body-will-unmount editor-id]))
+                            :component-did-update   (fn [%] (a/dispatch [:item-editor/body-did-update   editor-id %]))})))

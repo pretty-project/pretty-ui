@@ -18,7 +18,21 @@
 ; plugins.plugin-handler.backup.subs
 (def get-backup-item    backup.subs/get-backup-item)
 (def export-backup-item backup.subs/export-backup-item)
-;(def get-local-changes  backup.subs/get-local-changes)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-item-changes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ editor-id item-id]]
+  (get-in db [:plugins :plugin-handler/item-changes editor-id item-id]))
 
 
 

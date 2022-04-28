@@ -62,11 +62,7 @@
   ;
   ; @return (map)
   [db [_ viewer-id]]
-  (as-> db % (r update-item-id! db viewer-id)))
-
-
-  ;(as-> db % (r set-item-id! db editor-id (or item-id (r core.subs/read-item-id db editor-id)))
-  ;           (r set-view-id! db editor-id (r core.subs/read-view-id db editor-id))]])
+  (r update-item-id! db viewer-id))
 
 
 

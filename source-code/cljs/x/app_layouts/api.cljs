@@ -14,13 +14,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.app-layouts.form-a.helpers
-(def input-block-attributes  form-a.helpers/input-block-attributes)
-(def input-row-attributes    form-a.helpers/input-row-attributes)
-(def input-column-attributes form-a.helpers/input-column-attributes)
+(def form-block-attributes  form-a.helpers/form-block-attributes)
+(def form-row-attributes    form-a.helpers/form-row-attributes)
+(def form-column-attributes form-a.helpers/form-column-attributes)
 
 ; x.app-layouts.form-a.views
-(def input-group-label  form-a.views/input-group-label)
-(def input-group-header form-a.views/input-group-header)
+(def form-group-label  form-a.views/form-group-label)
+(def form-group-header form-a.views/form-group-header)
 
 ; x.app-layouts.layout-a.views
 (def layout-a layout-a.views/layout)

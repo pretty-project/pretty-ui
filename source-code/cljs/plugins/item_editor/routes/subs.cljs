@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.routes.subs
+(def route-handled?      routes.subs/route-handled?)
 (def get-extended-route  routes.subs/get-extended-route)
 (def get-derived-item-id routes.subs/get-derived-item-id)
-(def get-derived-view-id routes.subs/get-derived-view-id)
 
 
 
@@ -33,22 +33,22 @@
   ;
   ; @return (string)
   [db [_ editor-id item-id]]
-  (r get-extended-route db editor-id item-id))
+  (let [extended-route (r get-extended-route db editor-id item-id)]
+       (str extended-route)))
 
-(defn get-view-route
+(defn get-edit-route
   ; @param (keyword) editor-id
   ; @param (string) item-id
-  ; @param (keyword) view-id
   ;
   ; @example
-  ;  (r item-editor/get-view-route db :my-editor "my-item" :my-view)
+  ;  (r item-editor/get-edit-route db :my-editor "my-item")
   ;  =>
-  ;  "/@app-home/my-editor/my-item/my-view"
+  ;  "/@app-home/my-editor/my-item/edit"
   ;
   ; @return (string)
-  [db [_ editor-id item-id view-id]]
-  (let [item-route (r get-item-route db editor-id item-id)]
-       (str item-route "/" (name view-id))))
+  [db [_ editor-id item-id]]
+  (let [extended-route (r get-extended-route db editor-id item-id)]
+       (str extended-route "/edit")))
 
 
 

@@ -15,6 +15,7 @@
 ; plugins.plugin-handler.body.events
 (def store-body-props!  body.events/store-body-props!)
 (def remove-body-props! body.events/remove-body-props!)
+(def update-body-props! body.events/update-body-props!)
 
 
 
@@ -46,3 +47,18 @@
   (as-> db % (r core.events/remove-meta-items! % viewer-id)
              (r core.events/reset-downloads!   % viewer-id)
              (r remove-body-props!             % viewer-id)))
+
+             
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn body-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (map) body-props
+  ;
+  ; @return (map)
+  [db [_ viewer-id body-props]]
+  (r update-body-props! db viewer-id body-props))

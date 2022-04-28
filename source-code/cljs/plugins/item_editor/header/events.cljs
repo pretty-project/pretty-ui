@@ -14,6 +14,7 @@
 ; plugins.plugin-handler.header.events
 (def store-header-props!  header.events/store-header-props!)
 (def remove-header-props! header.events/remove-header-props!)
+(def update-header-props! header.events/update-header-props!)
 
 
 
@@ -43,3 +44,18 @@
   ; @return (map)
   [db [_ editor-id]]
   (r remove-header-props! db editor-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) header-props
+  ;
+  ; @return (map)
+  [db [_ editor-id header-props]]
+  (r update-header-props! db editor-id header-props))

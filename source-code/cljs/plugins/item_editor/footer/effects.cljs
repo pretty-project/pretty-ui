@@ -4,6 +4,7 @@
 
 (ns plugins.item-editor.footer.effects
     (:require [plugins.item-editor.footer.events :as footer.events]
+              [reagent.api                       :as reagent]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -32,3 +33,18 @@
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
       {:db (r footer.events/footer-will-unmount db editor-id)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-editor/footer-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (?) %
+  (fn [{:keys [db]} [_ editor-id %]]
+      (let [[_ footer-props] (reagent/arguments %)]
+           {:db (r footer.events/footer-did-update db editor-id footer-props)})))

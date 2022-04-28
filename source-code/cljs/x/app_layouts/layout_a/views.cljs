@@ -29,7 +29,8 @@
   ; Ha az #x-layout-a--content-header elem {overflow-x: auto} beállítással jelenne meg,
   ; akkor az ... pszeudoelem nem "lóghatna ki" az #x-layout-a--content-header elem területéről.
   [:<> [:div#x-layout-a--content-header--sensor]
-       [:div#x-layout-a--content-header [:div#x-layout-a--content-header--scroll-container [components/content layout-id header]]]])
+       [:div#x-layout-a--content-header (if header [:div#x-layout-a--content-header--scroll-container [components/content layout-id header]]
+                                                   {:data-placeholder true})]])
 
 (defn- layout-content-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -108,12 +109,11 @@
   ;
   ; @param (keyword) layout-id
   ; @param (map) layout-props
-  ;  {:footer (metamorphic-content)(opt)
-  ;   :header (metamorphic-content)(opt)}
-  [layout-id {:keys [footer header] :as layout-props}]
+  ;  {:footer (metamorphic-content)(opt)}
+  [layout-id {:keys [footer] :as layout-props}]
   [:div#x-layout-a (layout-a.helpers/layout-body-attributes layout-id layout-props)
                    [:div#x-layout-a--content-structure [layout-content-body   layout-id layout-props]
-                                            (if header [layout-content-header layout-id layout-props])]
+                                                       [layout-content-header layout-id layout-props]]
                    (if footer [layout-content-footer layout-id layout-props]
                               [:div#x-layout-a--content-tail])])
 

@@ -61,6 +61,7 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a surface-id
-                    {:body   #'body
-                     :header #'header}])
+  [:div "Settings"])
+  ;[layouts/layout-a ::settings
+  ;                  {:body   #'body
+  ;                   :header #'header])

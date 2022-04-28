@@ -24,10 +24,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [ordered-routes @(event-handler/subscribe [:router/get-ordered-routes])]
-      ; Disable route conflicts handling:
-      ;(reitit-ring/router ordered-routes)
+       ; Disable route conflicts handling:
+       ;(reitit-ring/router ordered-routes)
 
-      ; Enable route conflicts handling:
+       ; Enable route conflicts handling:
+       ; XXX#4005
        (reitit-ring/router ordered-routes {:conflicts nil})))
 
 (defn ring-handler

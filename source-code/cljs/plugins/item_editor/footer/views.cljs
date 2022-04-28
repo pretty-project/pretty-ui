@@ -55,87 +55,45 @@
 
 
 
-;; -- Delete item components --------------------------------------------------
+;; -- Cancel item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- delete-item-icon-button
+(defn- cancel-item-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
-       [elements/icon-button ::delete-item-icon-button
+       [elements/icon-button ::cancel-item-icon-button
                              {:disabled? (or editor-disabled? error-mode?)
-                              :on-click  [:item-editor/delete-item! editor-id]
-                              :preset    :delete}]))
+                              :on-click  [:item-editor/cancel-item! editor-id]
+                              :preset    :cancel}]))
 
-(defn- delete-item-button
+(defn- cancel-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
         error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
-       [elements/button ::delete-item-button
+       [elements/button ::cancel-item-button
                         {:disabled?   (or editor-disabled? error-mode?)
                          :font-size   :xs
                          :hover-color :highlight
                          :indent      {:horizontal :xxs :left :xxs}
-                         :on-click    [:item-editor/delete-item! editor-id]
-                         :preset      :delete}]))
+                         :on-click    [:item-editor/cancel-item! editor-id]
+                         :preset      :cancel}]))
 
-(defn delete-item-block
+(defn cancel-item-block
   ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  [item-editor/delete-item-block :my-editor]
+  ;  [item-editor/cancel-item-block :my-editor]
   [editor-id]
   (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-          [delete-item-icon-button editor-id]
-          [delete-item-button      editor-id]))
-
-
-
-;; -- Copy item components ----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- copy-item-icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
-       [elements/icon-button ::copy-item-icon-button
-                             {:disabled? (or editor-disabled? error-mode?)
-                              :on-click  [:item-editor/duplicate-item! editor-id]
-                              :preset    :duplicate}]))
-
-(defn copy-item-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        error-mode?      @(a/subscribe [:item-editor/get-meta-item    editor-id :error-mode?])]
-       [elements/button ::copy-item-button
-                        {:disabled?   (or editor-disabled? error-mode?)
-                         :font-size   :xs
-                         :hover-color :highlight
-                         :indent      {:horizontal :xxs :left :xxs}
-                         :on-click    [:item-editor/duplicate-item! editor-id]
-                         :preset      :duplicate}]))
-
-(defn copy-item-block
-  ; @param (keyword) editor-id
-  ;
-  ; @usage
-  ;  [item-editor/copy-item-block :my-editor]
-  [editor-id]
-  (if-let [viewport-small? @(a/subscribe [:environment/viewport-small?])]
-          [copy-item-icon-button editor-id]
-          [copy-item-button      editor-id]))
+          [cancel-item-icon-button editor-id]
+          [cancel-item-button      editor-id]))
 
 
 
@@ -169,10 +127,7 @@
                          :hover-color :highlight
                          :indent      {:horizontal :xxs :right :xxs}
                          :on-click    [:item-editor/save-item! editor-id]
-                         :preset      :save
-
-                         ; TEMP
-                         :label :edit!}]))
+                         :preset      :save}]))
 
 (defn save-item-block
   ; @param (keyword) editor-id
@@ -194,11 +149,7 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
-       (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
-               [:<>]
-               [:<> (if (vector/contains-item? item-actions :delete)    [delete-item-block editor-id])
-                    (if (vector/contains-item? item-actions :duplicate) [copy-item-block   editor-id])])))
+  [cancel-item-block editor-id])
 
 (defn menu-end-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -208,11 +159,10 @@
   ; XXX#0455
   ; "Új elem hozzáadása" módban a "Visszaállítás" gomb nem jelenik meg, mivel nem számít
   ; releváns információnak a dokumentum megnyitáskori (üres) állapota.
-  (let [item-actions @(a/subscribe [:item-editor/get-body-prop editor-id :item-actions])]
-       (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
-               [:<> (if (vector/contains-item? item-actions :save)   [save-item-block   editor-id])]
-               [:<> (if (vector/contains-item? item-actions :revert) [revert-item-block editor-id])
-                    (if (vector/contains-item? item-actions :save)   [save-item-block   editor-id])])))
+  (if-let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
+          [:<> [save-item-block   editor-id]]
+          [:<> [revert-item-block editor-id]
+               [save-item-block   editor-id]]))
 
 (defn menu-mode-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -247,6 +197,7 @@
   ;  [item-editor/footer :my-editor {:menu #'my-menu-element}]
   [editor-id footer-props]
   (reagent/lifecycles (core.helpers/component-id editor-id :footer)
-                      {:reagent-render         (fn []             [footer-structure                 editor-id])
-                       :component-did-mount    (fn [] (a/dispatch [:item-editor/footer-did-mount    editor-id footer-props]))
-                       :component-will-unmount (fn [] (a/dispatch [:item-editor/footer-will-unmount editor-id]))}))
+                      {:reagent-render         (fn []              [footer-structure                 editor-id])
+                       :component-did-mount    (fn []  (a/dispatch [:item-editor/footer-did-mount    editor-id footer-props]))
+                       :component-will-unmount (fn []  (a/dispatch [:item-editor/footer-will-unmount editor-id]))
+                       :component-did-update   (fn [%] (a/dispatch [:item-lister/footer-did-update   editor-id %]))}))

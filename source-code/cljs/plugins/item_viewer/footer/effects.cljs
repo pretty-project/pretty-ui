@@ -4,6 +4,7 @@
 
 (ns plugins.item-viewer.footer.effects
     (:require [plugins.item-viewer.footer.events :as footer.events]
+              [reagent.api                       :as reagent]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -32,3 +33,18 @@
   ; @param (keyword) viewer-id
   (fn [{:keys [db]} [_ viewer-id]]
       {:db (r footer.events/footer-will-unmount db viewer-id)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-viewer/footer-did-update
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (?) %
+  (fn [{:keys [db]} [_ viewer-id %]]
+      (let [[_ footer-props] (reagent/arguments %)]
+           {:db (r footer.events/footer-did-update db viewer-id footer-props)})))

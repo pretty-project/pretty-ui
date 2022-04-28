@@ -18,10 +18,8 @@
               [plugins.item-editor.header.events]
               [plugins.item-editor.header.subs]
               [plugins.item-editor.routes.effects]
-              [plugins.item-editor.routes.events]
               [plugins.item-editor.transfer.subs]
               [plugins.item-editor.update.effects]
-              [plugins.item-editor.update.events]
               [plugins.item-editor.update.subs]
               [plugins.item-editor.backup.subs  :as backup.subs]
               [plugins.item-editor.body.subs    :as body.subs]
@@ -53,8 +51,7 @@
 
 ; plugins.item-editor.footer.views
 (def revert-item-block footer.views/revert-item-block)
-(def delete-item-block footer.views/delete-item-block)
-(def copy-item-block   footer.views/copy-item-block)
+(def cancel-item-block footer.views/cancel-item-block)
 (def save-item-block   footer.views/save-item-block)
 (def footer            footer.views/footer)
 
@@ -63,4 +60,4 @@
 
 ; plugins.item-editor.routes.subs
 (def get-item-route routes.subs/get-item-route)
-(def get-view-route routes.subs/get-view-route)
+(def get-edit-route routes.subs/get-edit-route)

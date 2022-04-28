@@ -20,7 +20,7 @@
   ;  [:item-lister/filter-items! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id filter-pattern]]
       {:db       (r core.events/filter-items! db lister-id filter-pattern)
-       :dispatch [:tools/reload-infinite-loader! lister-id]}))
+       :dispatch [:item-lister/request-items! lister-id]}))
 
 
 
@@ -34,7 +34,7 @@
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
       {:db       (r core.events/reset-downloads! db lister-id)
-       :dispatch [:tools/reload-infinite-loader! lister-id]}))
+       :dispatch [:item-lister/request-items! lister-id]}))
 
 
 
@@ -48,4 +48,4 @@
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
       {:db       (r core.events/reset-downloads! db lister-id)
-       :dispatch [:tools/reload-infinite-loader! lister-id]}))
+       :dispatch [:item-lister/request-items! lister-id]}))

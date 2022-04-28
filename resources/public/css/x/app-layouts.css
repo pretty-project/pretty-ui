@@ -71,7 +71,7 @@
 
 /*** M ***/
 
-#x-layout-a[data-min-width="m"] .x-form-a--input-row {
+#x-layout-a[data-min-width="m"] .x-form-a--form-row {
   -max-width: 660px }
 
 #x-layout-a[data-min-width="m"] {
@@ -81,7 +81,7 @@
 
 /*** L ***/
 
-#x-layout-a[data-min-width="l"] .x-form-a--input-row {
+#x-layout-a[data-min-width="l"] .x-form-a--form-row {
   -max-width: 920px }
 
 #x-layout-a[data-min-width="l"] {
@@ -91,7 +91,7 @@
 
 /*** XL ***/
 
-#x-layout-a[data-min-width="xl"] .x-form-a--input-row {
+#x-layout-a[data-min-width="xl"] .x-form-a--form-row {
   -max-width: 920px }
 
 #x-layout-a[data-min-width="xl"] {
@@ -101,7 +101,7 @@
 
 /*** XXL ***/
 
-#x-layout-a[data-min-width="xxl"] .x-form-a--input-row {
+#x-layout-a[data-min-width="xxl"] .x-form-a--form-row {
   -max-width: calc(var( --content-width-xxl ) - 72px) }
 
 #x-layout-a[data-min-width="xxl"] {
@@ -114,7 +114,7 @@
 
 /***** Form A *****/
 
-/* - A .x-form-a--input-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
+/* - A .x-form-a--form-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
  *   gap távolságok használata nélkül lehetséges.
  *
  *   Update x4.6.9 #17
@@ -122,18 +122,18 @@
  *   VAGY EZ CSAK A FÜGGŐLEGESRE VONATKOZIK?
  *   A {grid-row-gap: ...} beállítás hozzáadva ...
  *
- * - Az .x-form-a--input-row sorokban felsorolt .x-form-a--input-block elemekben
+ * - Az .x-form-a--form-row sorokban felsorolt .x-form-a--form-block elemekben
  *   kell megoldalni az esztétikai távolságok beállítását! */
 
 
-.x-form-a--input-row {
+.x-form-a--form-row {
   width: 100%;
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap }
 
-.x-form-a--input-column {
+.x-form-a--form-column {
   -max-width: 800px;
   width: 100%;
 
@@ -141,9 +141,9 @@
   flex-direction: column;
   flex-wrap: wrap }
 
-.x-form-a--input-block {
+.x-form-a--form-block {
   flex-grow: 1;
-  padding: 12px }
+  -padding: 12px }
 
 /***** Form A *****/
 
@@ -242,6 +242,14 @@
   position: sticky;
   /* XXX#0034 */
   top: 48px }
+
+#x-layout-a--content-header[data-placeholder="true"] {
+  /* Ha a layout-a header komponense nem jelenít meg tartalmat,
+   * akkor az #x-layout-a--content-header[data-placeholder="true"]
+   * elem biztosítja az applikáció header eleme alatt megjelenő árnyékot. */
+  position: fixed;
+  top: 0;
+  width: 100% }
 
 #x-layout-a--content-header--scroll-container {
   background-color: var( --background-color );
