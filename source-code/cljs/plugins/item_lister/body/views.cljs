@@ -53,16 +53,15 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
+  ; - Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
+  ;   előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
+  ;
+  ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
+  ;   ne jelenjen meg a no-items-to-show-label felirat!
   (let [downloading-items? @(a/subscribe [:item-lister/downloading-items? lister-id])
         data-received?     @(a/subscribe [:item-lister/data-received?     lister-id])
         no-items-to-show?  @(a/subscribe [:item-lister/no-items-to-show?  lister-id])]
-       (if (and no-items-to-show? data-received?
-                ; - Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
-                ;   előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
-                ;
-                ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
-                ;   ne jelenjen meg a no-items-to-show-label felirat!
-                (not downloading-items?))
+       (if (and no-items-to-show? data-received? (not downloading-items?))
            [elements/label ::no-items-to-show-label
                            {:color       :highlight
                             :content     :no-items-to-show
@@ -171,5 +170,4 @@
                            {:reagent-render         (fn []              [body-structure                 lister-id])
                             :component-did-mount    (fn []  (a/dispatch [:item-lister/body-did-mount    lister-id body-props]))
                             :component-will-unmount (fn []  (a/dispatch [:item-lister/body-will-unmount lister-id]))
-                            :component-did-update   (fn [%] (let [[_ body-props] (reagent/arguments %)]
-                                                                 (a/dispatch [:item-lister/body-did-update lister-id body-props])))})))
+                            :component-did-update   (fn [%] (a/dispatch [:item-lister/body-did-update   lister-id %]))})))

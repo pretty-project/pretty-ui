@@ -34,11 +34,9 @@
 
 (defn your-view
   [surface-id]
-  (let [description @(a/subscribe [:item-editor/get-description :your-editor])]
-       [layouts/layout-a ::sample
-                         {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
-                          :footer [item-editor/footer :your-editor {}]
-                          :description description}]))
+  [layouts/layout-a ::your-view
+                    {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
+                     :footer [item-editor/footer :your-editor {}]}])
 
 
 
@@ -50,7 +48,7 @@
 ; ... {:required? true} beállítással rendelkezik.
 ; ... a {:form-id ...} tulajdonsága megyegyezik az item-editor body komponensének {:form-id ...}
 ;     tulajdonságával.
-; (Fejlesztői módban elindítitott applikáció esetén a funkció inaktív!)
+; (Fejlesztői módban elindítitott applikáció esetén ez a funkció inaktív!)
 (defn our-type-form
   [editor-id]
   [elements/text-field ::our-sample-field
@@ -78,24 +76,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; ...
-
-
-
-;; -- Az item-label komponens használata --------------------------------------
-;; ----------------------------------------------------------------------------
-
-; ...
-(defn my-item-label
-  []
-  (let [my-item-name @(a/subscribe [:db/get-item [:my-editor :name]])]
-       [item-editor/item-label {:name my-item-name}]))
-
-; Az item-editor plugin item-label komponens használatához szükséges a szótárhoz adni
-; a megfelelő kifejezéseket!
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:new-my-type     {:en "New my type"     :hu "Új típusom"}
-                                         :unnamed-my-type {:en "Unnamed my type" :hu "Névtelen típusom"}}]})
 
 
 

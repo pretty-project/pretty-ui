@@ -272,8 +272,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  (fn [{:keys [db]} [_ input-id]]
-      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:ui/close-popup! input-id]}]
+  (fn [{:keys [db]} [_ _]]
+      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:ui/close-popup! :elements/select-options]}]
            {:dispatch-n [[:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]]})))
 
 (a/reg-event-fx

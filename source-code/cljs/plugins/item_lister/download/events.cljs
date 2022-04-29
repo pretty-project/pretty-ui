@@ -34,15 +34,15 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
+  ; XXX#3907
+  ; Az item-lister plugin a dokumentumokat névtér nélkül tárolja, így a lista-elemek
+  ; felsorolásakor és egyes Re-Frame feliratkozásokban a dokumentumok egyes értékeinek
+  ; olvasása kevesebb erőforrást igényel, mivel nem szükséges az értékek kulcsaihoz
+  ; az aktuális névteret hozzáfűzni/eltávolítani.
   (let [resolver-id (r download.subs/get-resolver-id db lister-id :get-items)
         items-path  (r body.subs/get-body-prop       db lister-id :items-path)
         documents   (get-in server-response [resolver-id :documents])
-        ; XXX#3907
-        ; Az item-lister a dokumentumokat névtér nélkül tárolja, így
-        ; a lista-elemek felsorolásakor és egyes Re-Frame feliratkozásokban
-        ; a dokumentumok egyes értékeinek olvasása kevesebb erőforrást igényel,
-        ; ha nem szükséges az értékek kulcsaihoz az aktuális névteret hozzáfűzni.
-        documents (db/collection->non-namespaced-collection documents)]
+        documents   (db/collection->non-namespaced-collection documents)]
        (update-in db items-path vector/concat-items documents)))
 
 (defn store-received-document-count!
@@ -53,19 +53,20 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
+  ; - A document-count értéke NEM a fogadott dokumentumok mennyiségére utal, hanem
+  ;   arra, hogy hány dokumentum van a szerveren, ami megfelel a letöltési feltételeknek.
+  ;
+  ; - BUG#7009
+  ;   Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
+  ;   száma kevesebb, mint a szerverről érkezett document-count érték, akkor
+  ;   az elemek letöltésével kapcsolatban valamilyen hiba történt.
+  ;   Az ilyen típusú hibák megállapításához szükséges a received-count
+  ;   értéket eltárolni, ami a fogadott dokumentumok mennyiségére utal.
   (let [resolver-id    (r download.subs/get-resolver-id db lister-id :get-items)
         document-count (get-in server-response [resolver-id :document-count])
         documents      (get-in server-response [resolver-id :documents])
         received-count (count documents)]
-      (-> db ; A document-count értéke NEM a fogadott dokumentumok mennyiségére utal, hanem
-             ; hány dokumentum van a szerveren, ami megfelel a letöltési feltételeknek.
-             (assoc-in [:plugins :plugin-handler/meta-items lister-id :document-count] document-count)
-             ; BUG#7009
-             ; Ha a legutoljára letöltött dokumentumok száma 0, de a letöltött dokumentumok
-             ; száma kevesebb, mint a szerverről érkezett document-count érték, akkor
-             ; az elemek letöltésével kapcsolatban valamilyen hiba történt.
-             ; Az ilyen típusú hibák megállapításához szükséges a received-count
-             ; értéket eltárolni, ami a fogadott dokumentumok mennyiségére utal.
+      (-> db (assoc-in [:plugins :plugin-handler/meta-items lister-id :document-count] document-count)
              (assoc-in [:plugins :plugin-handler/meta-items lister-id :received-count] received-count))))
 
 (defn select-received-items!
@@ -76,10 +77,10 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
+  ; ...
   (if-let [selected-item-ids (r body.subs/get-body-prop db lister-id :selected-items)]
           (let [selected-item-dexes (r items.subs/get-item-dexes db lister-id selected-item-ids)]
                db)
-          ;(return db)))
           db))
 
 (defn receive-items!
@@ -93,7 +94,17 @@
   (as-> db % (r store-received-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
              (r select-received-items!         % lister-id)
-             (r data-received                  % lister-id)))
+             (r data-received                  % lister-id)
+
+             ; TEMP#4681
+             ; A plugin kilép a {:data-received? true} állapotból, amikor a listaelemek törlődnek
+             ; (pl. kereséskor, stb.)
+             ; A header komponens ezért nem iratkozhat fel a {:data-received? ...} tulajdonság
+             ; értékére, hogy eldöntse mikor jelenjen meg, mert az első elemek érkezésével egy időben
+             ; a letöltésjelző eltűnésekor jelenik meg a header komponens, de kereséskor amikor
+             ; törlődnek a letöltött elemek és {:data-received? false} állapotba lép vissza a plugin,
+             ; akkor már nem szabad, hogy újra eltűnjön (a header komponens).
+             (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,11 +114,11 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
+  ; XXX#3907
   (let [resolver-id (r download.subs/get-resolver-id db lister-id :get-items)
         items-path  (r body.subs/get-body-prop       db lister-id :items-path)
         documents   (get-in server-response [resolver-id :documents])
-        ; XXX#3907
-        documents (db/collection->non-namespaced-collection documents)]
+        documents   (db/collection->non-namespaced-collection documents)]
        (assoc-in db items-path documents)))
 
 (defn receive-reloaded-items!
@@ -146,4 +157,7 @@
              (r store-received-document-count! % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)
              (r core.events/quit-actions-mode! % lister-id)
-             (r data-received                  % lister-id)))
+             (r data-received                  % lister-id)
+
+             ; TEMP#4681
+             (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))

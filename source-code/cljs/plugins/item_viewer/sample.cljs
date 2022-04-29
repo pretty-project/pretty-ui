@@ -32,7 +32,7 @@
 
 (defn your-view
   [surface-id]
-  [layouts/layout-a ::sample
+  [layouts/layout-a ::your-view
                     {:body   [item-viewer/body   :your-viewer {:item-element [:div "Your item"]}]
                      :footer [item-viewer/footer :your-viewer {}]}])
 

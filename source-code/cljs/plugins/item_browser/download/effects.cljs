@@ -54,15 +54,15 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ browser-id server-response]]
+  (fn [{:keys [db]} [_ browser-id server-response]]))
       ; - A download.events/receive-item! függvény eltárolja az aktuálisan letöltött elem adatait, ezért ...
       ;   ... a core.subs/get-current-item-label függvény lefutása előtt szükséges meghívni.
       ;
       ; - Ha az [:item-browser/receive-item! ...] esemény megtörténésekor a body komponens már nincs
       ;   a React-fába csatolva, akkor az esemény nem végez műveletet.
-      (if (r body.subs/body-did-mount? db browser-id)
-          (let [db (r download.events/receive-item! db browser-id server-response)]
-               (if-let [auto-title? (r body.subs/get-body-prop db browser-id :auto-title?)]
-                       {:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db browser-id)]
-                                                    [:ui/set-window-title! item-label])]}
-                       {:db db})))))
+      ;(if (r body.subs/body-did-mount? db browser-id)
+      ;    (let [db (r download.events/receive-item! db browser-id server-response)]
+      ;         (if-let [auto-title? (r body.subs/get-body-prop db browser-id :auto-title?)])]))
+                       ;{:db db :dispatch-n [(if-let [item-label (r core.subs/get-current-item-label db browser-id)]
+                        ;                            [:ui/set-window-title! item-label])]
+                       ;{:db db})))))

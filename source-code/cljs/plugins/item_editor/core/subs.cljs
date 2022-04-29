@@ -63,8 +63,8 @@
   ; @return (boolean)
   [db [_ editor-id item-id]]
   ; Az editing-item? függvény visszatérési értéke akkor TRUE, ...
-  ; ... ha az item-editor plugin body komponense a React-fába van csatolva.
   ; ... ha az item-id paraméterként átadott azonosítójú elem van megnyitva szerkesztésre.
+  ; ... ha az item-editor plugin body komponense a React-fába van csatolva.
   (r core.subs/current-item? db editor-id item-id))
 
 (defn new-item?
@@ -74,6 +74,12 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
+  ; Mivel az item-viewer plugin használja a "/my-route/:item-id" formátumú útvonalat,
+  ; ezért az item-editor számára szükséges külön beállítani a "/my-route/create" útvonalat,
+  ; hogy annak használatakor ne az item-viewer plugin induljon el.
+  ; Ezért a "/my-route/create" formátumú útvonalak használatakor az :item-id útvonal-paraméter
+  ; nem elérhető, ami miatt az "Új elem hozzáadása" mód megállapítása az útvonal azonosítója
+  ; alapján történik.
   (let [current-route-id (r router/get-current-route-id db)]
        (= :clients.client-editor/creator-route current-route-id)))
 

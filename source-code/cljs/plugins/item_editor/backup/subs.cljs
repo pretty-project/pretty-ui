@@ -74,10 +74,10 @@
   ; @return (boolean)
   [db [_ editor-id change-keys]]
   ; - A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
-  ;   átadott kulcsainak értékeit az elemről tárolt másolat értékeivel.
+  ;   átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
   ;
   ; - Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
-  ;   veszi a NIL és a különböző üres típusok közötti különbséget!
+  ;   veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
   ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
   ;        üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
   (if-let [data-received? (r download.subs/data-received? db editor-id)]

@@ -3,14 +3,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [mid-fruits.candy                       :refer [return]]
-              [plugins.item-editor.backup.events      :as backup.events]
+    (:require [plugins.item-editor.backup.events      :as backup.events]
               [plugins.item-editor.body.subs          :as body.subs]
               [plugins.item-editor.core.events        :as core.events]
               [plugins.item-editor.core.subs          :as core.subs]
               [plugins.item-editor.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :as a :refer [r]]
+              [x.app-core.api                         :refer [r]]
               [x.app-db.api                           :as db]))
 
 
@@ -60,15 +59,12 @@
   ; - XXX#3907
   ;   Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot
   ;
-  ; - A letöltött dokumentum a merge függvény használatával kerül eltárolásra, így az esetlegesen
-  ;   a body komponens számára {:initial-item {...}} tulajdonságként átadott értékek nem íródnak felül.
-  ;
-  ; - Az elemről letöltéskor másolat készül, hogy a "Visszaállítás" gomb használatával
-  ;   a letöltéskori állapota visszaállítható legyen.
-  (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
-        item-path   (r body.subs/get-body-prop       db editor-id :item-path)
-        document    (-> server-response resolver-id db/document->non-namespaced-document)]
-       (as-> db % (update-in % item-path merge document)
+  ; - Az elemről letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb használatával
+  ;   az elem letöltéskori állapota visszaállítható legyen.
+  (let [resolver-id  (r download.subs/get-resolver-id db editor-id :get-item)
+        item-path    (r body.subs/get-body-prop       db editor-id :item-path)
+        document     (-> server-response resolver-id db/document->non-namespaced-document)]
+       (as-> db % (assoc-in % item-path document)
                   (r backup.events/backup-current-item! % editor-id))))
 
 (defn receive-item!
@@ -89,4 +85,7 @@
           (as-> % (r store-downloaded-suggestions! % editor-id server-response))
           ; If editor in recovery-mode ...
           (r core.subs/get-meta-item db editor-id :recovery-mode?)
-          (as-> % (r backup.events/recover-item! % editor-id))))
+          (as-> % (r backup.events/recover-item! % editor-id))
+          ; If use initial-item ...
+          (r body.subs/get-body-prop db editor-id :initial-item)
+          (as-> % (r core.events/use-initial-item! % editor-id))))

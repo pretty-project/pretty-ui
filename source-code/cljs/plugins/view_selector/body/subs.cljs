@@ -12,8 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.body.subs
-(def get-body-prop   body.subs/get-body-prop)
-(def body-did-mount? body.subs/body-did-mount?)
+(def get-body-prop body.subs/get-body-prop)
 
 
 
@@ -22,6 +21,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :view-selector/get-body-prop get-body-prop)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :view-selector/body-did-mount? body-did-mount?)

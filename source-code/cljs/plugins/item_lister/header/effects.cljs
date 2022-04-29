@@ -28,7 +28,7 @@
       ; trigger helyett {:on-keydown ...} triggert használ.
       ; Pl.: Ha a felhasználó egy olyan listában keres, ahol elemeket lehet kijelölni, akkor
       ;      az egyes keresésekkor miután befejezte a listaelemek kijelölését, akkor az ESC billentyű
-      ;      lenyomásával alaphelyzetbe állíthatja a keresést.
+      ;      lenyomásával GYORSAN alaphelyzetbe állíthatja a keresést.
       ;      A keresés alaphelyzetbe állítása után az {:auto-focus? true} beállítás miatt a search-field
       ;      input mező újra fókuszált állapotba kerül, így a felhasználó beírhatja a következő kifejezést.
       {:db       (r header.events/header-did-mount db lister-id header-props)

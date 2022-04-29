@@ -41,8 +41,7 @@
 (def form-completed? body.subs/form-completed?)
 
 ; plugins.item-editor.body.views
-(def item-label body.views/item-label)
-(def body       body.views/body)
+(def body body.views/body)
 
 ; plugins.item-editor.core.subs
 (def get-current-item-id core.subs/get-current-item-id)

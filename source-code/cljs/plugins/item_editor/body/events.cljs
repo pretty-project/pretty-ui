@@ -32,19 +32,10 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) body-props
-  ;  {:initial-item (map)(opt)
-  ;   :item-path (vector)}
   ;
   ; @return (map)
-  [db [_ editor-id {:keys [initial-item item-path] :as body-props}]]
-  ; Az item-editor plugin body komponensének ...
-  ; ... {:initial-item {...}} tulajdonságával megadható a szerkesztett dokumentum kezdeti állapota ...
-  ;     ... így elkerülhető az input mezők {:initial-value ...} tulajdonságának használata, ami miatt
-  ;         a plugin felhasználói változtatás nélküli elhagyásakor az tévesen felajánlaná
-  ;         a "Nem mentett változtatások visszaállítása" lehetőséget.
-  ;     ... így beállíthatók a dokumentum felhasználó által nem szerkeszthető tulajdonságai.
-  (cond-> db :store-body-props! (as-> % (r store-body-props! % editor-id body-props))
-             initial-item       (assoc-in item-path initial-item)))
+  [db [_ editor-id body-props]]
+  (r store-body-props! db editor-id body-props))
 
 
 

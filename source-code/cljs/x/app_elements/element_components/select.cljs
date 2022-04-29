@@ -380,6 +380,9 @@
   ;   :layout (keyword)(opt)
   ;    :button, :icon-button, :select
   ;    Default: :select
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;    Default: :none
   ;   :no-options-label (metamorphic-content)(opt)
   ;     Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)

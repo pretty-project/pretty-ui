@@ -34,7 +34,7 @@
   [db [_ lister-id {:keys [reorder-mode? select-mode?] :as body-props}]]
   ; Az item-lister plugin {:reorder-mode? ...} és {:select-mode? ...} állapotának kezdeti értéke
   ; a body komponens paramétereként is átadható, így a header komponens gombjainak használata nélkül
-  ; beállíthatók ezek az állapotok.
+  ; is beállíthatók ezek az állapotok.
   (cond-> db :store-body-props!     (as-> % (r store-body-props!                 % lister-id body-props))
              :set-default-order-by! (as-> % (r core.events/set-default-order-by! % lister-id))
              (some? reorder-mode?)  (as-> % (r core.events/set-meta-item!        % lister-id :reorder-mode? reorder-mode?))

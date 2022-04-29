@@ -31,14 +31,15 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  ; A store-current-item-changes! eltárolja az elem aktuális állapota és az elemről készült
-  ; másolat közötti különbséget.
+  ; A store-current-item-changes! eltárolja az elem aktuális állapota és az elemről utoljára
+  ; készült másolat közötti különbséget.
   ; Pl.: Ha az el nem mentett változtatásokat tartalmazó szerkesztő elhagyásakor megjelenő
   ;      értesítésen, a felhasználó a "Visszaállítás (restore)" gombra kattint, akkor szükséges
   ;      a szerkesztő elindulása után az elem állapotát visszaállítani úgy, hogy
   ;      a szerkesztő láblécében megjelenő "Visszaállítás (revert)" gomb használatával
   ;      az elem az előző szerkesztés megnyitáskori állapotára is visszaállítható legyen.
-  ;      Ehhez szükséges az elemről másolatot készíteni és a változtatásokat külön tárolni.
+  ;      Ehhez szükséges az elemről a letöltéskor készült másolatot megőrizni és kilépéskor
+  ;      eltárolni a másolat és az aktuális állapot közötti különbséget.
   (let [current-item-id (r core.subs/get-current-item-id db plugin-id)
         current-item    (r core.subs/get-current-item    db plugin-id)
         backup-item     (r backup.subs/get-backup-item   db plugin-id current-item-id)
@@ -59,7 +60,7 @@
   ; @return (map)
   [db [_ editor-id item-id]]
   ; Ha a clean-recovery-data! függvény alkalmazásakor ismételten ugyanaz az elem van megnyitva
-  ; szerkesztésre, akkor a függvény nem végez műveletet.
+  ; szerkesztésre, akkor a clean-recovery-data! függvény nem végez műveletet.
   ; Pl.: A felhasználó a :plugins.item-editor/changes-discarded-dialog értesítésen
   ;      a "Visszaállítás" lehetőséget választja és a szerkesztő {:recovery-mode? true}
   ;      beállítással megnyitja ugyanazt az elemet szerkesztésre, mielőtt
@@ -67,7 +68,7 @@
   ; Pl.: A felhasználó újra megnyitja ugyanazt az elemet szerkesztésre, mielőtt
   ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
   (if-let [editing-item? (r core.subs/editing-item? db editor-id item-id)]
-          (return    db)
+          (return db)
           (-> db (dissoc-in [:plugins :plugin-handler/backup-items editor-id item-id])
                  (dissoc-in [:plugins :plugin-handler/item-changes editor-id item-id]))))
 
@@ -78,6 +79,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
+  ; A {:recovery-mode? true} állapotban elinduló szerkesztő ...
   (let [item-path       (r body.subs/get-body-prop       db editor-id :item-path)
         current-item-id (r core.subs/get-current-item-id db editor-id)
         backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)
@@ -92,6 +94,8 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
+  ; A revert-item! függvény visszaállítja az aktuálisan szerkesztett elemet a megnyitáskori
+  ; állapotára az elem letöltésekor eltárolt másolat alapján.
   (let [item-path       (r body.subs/get-body-prop       db editor-id :item-path)
         current-item-id (r core.subs/get-current-item-id db editor-id)
         backup-item     (r backup.subs/get-backup-item   db editor-id current-item-id)]

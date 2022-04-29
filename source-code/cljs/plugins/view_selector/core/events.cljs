@@ -15,6 +15,7 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-view-id!       core.events/set-view-id!)
+(def update-view-id!    core.events/update-view-id!)
 
 
 

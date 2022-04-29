@@ -90,8 +90,6 @@ button.x-card:focus,
 .x-counter--decrease-button:focus,
 .x-counter--increase-button:active,
 .x-counter--increase-button:focus,
-.x-directory--body:active,
-.x-directory--body:focus,
 .x-field-adornments--button-adornment:active,
 .x-field-adornments--button-adornment:focus,
 .x-element--info-text--button:active,
@@ -203,10 +201,7 @@ button.x-card:focus,
 .x-slideshow--controls--go-fwd,
 .x-button[data-icon-family="material-icons-filled"] .x-button--icon,
 .x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
-.x-directory[data-icon-family="material-icons-filled"] .x-directory--icon,
 .x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
-.x-file[data-icon-family="material-icons-filled"] .x-file--icon,
-.x-file[data-icon-family="material-icons-filled"] .x-file--preview-icon,
 .x-icon[data-icon-family="material-icons-filled"],
 .x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
@@ -223,10 +218,7 @@ button.x-card:focus,
 
 .x-button[data-icon-family="material-icons-outlined"] .x-button--icon,
 .x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
-.x-directory[data-icon-family="material-icons-outlined"] .x-directory--icon,
 .x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
-.x-file[data-icon-family="material-icons-outlined"] .x-file--icon,
-.x-file[data-icon-family="material-icons-outlined"] .x-file--preview-icon,
 .x-icon[data-icon-family="material-icons-outlined"],
 .x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
@@ -739,18 +731,6 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xxs );
   line-height: 24px }
 
-.x-label[data-font-size="xxs"] .x-label--body {
-  /* XXX#9811
-   * - Egyes esetekben a megjelenített szöveg értéke egy üres string, amíg a tényleges érték, nem
-   *   töltődik le vagy nem töltődik be.
-   *   Ilyenkor {min-height: ...} tulajdonság használata nélkül 0px magasságú lenne a szöveget
-   *   megjelenítő elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
-   *   esetleges ugrását okozná (a szöveg tényleges megjelenésekor)
-   *
-   * - A {min-height: ...} tulajdonság azért .x-label--body elem magasságát állítja, mert a szöveges
-   *   tartalom nélküli .x-label elem magasságát a függeleges indent értéke befolyásolja! */
-  min-height: 24px }
-
 .x-label[data-font-size="xs"] .x-label--icon {
   font-size: var( --icon-size-xxs ) }
 
@@ -788,10 +768,6 @@ button.x-card:focus,
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: 24px }
-
-.x-label[data-font-size="xs"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 24px }
 
 .x-label[data-font-size="xs"] .x-label--icon {
   font-size: var( --icon-size-xxs ) }
@@ -831,10 +807,6 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
-.x-label[data-font-size="s"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 24px }
-
 .x-label[data-font-size="s"] .x-label--icon {
   font-size: var( --icon-size-xs ) }
 
@@ -867,10 +839,6 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-m );
   line-height: 24px }
 
-.x-label[data-font-size="m"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 24px }
-
 .x-label[data-font-size="m"] .x-label--icon {
   font-size: var( --icon-size-s ) }
 
@@ -901,10 +869,6 @@ button.x-card:focus,
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: 48px }
-
-.x-label[data-font-size="l"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 48px }
 
 .x-label[data-font-size="l"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -937,10 +901,6 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xl );
   line-height: 48px }
 
-.x-label[data-font-size="xl"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 48px }
-
 .x-label[data-font-size="xl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
 
@@ -972,10 +932,6 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xxl );
   line-height: 48px }
 
-.x-label[data-font-size="xxl"] .x-label--body {
-  /* XXX#9811 */
-  min-height: 48px }
-
 .x-label[data-font-size="xxl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
 
@@ -987,8 +943,8 @@ button.x-card:focus,
 /***** Font weight profiles *****/
 /*** Normal ***/
 
-.x-label[data-font-weight="normal"] .x-label--body,
-.x-text[data-font-weight="normal"] .x-text--body {
+.x-label[data-font-weight="normal"],
+.x-text[data-font-weight="normal"] {
   font-weight: 400 }
 
 /*** Normal ***/
@@ -996,8 +952,8 @@ button.x-card:focus,
 /*** Bold ***/
 
 .x-button[data-font-weight="bold"] .x-button--label,
-.x-label[data-font-weight="bold"]  .x-label--body,
-.x-text[data-font-weight="bold"]   .x-text--body {
+.x-label[data-font-weight="bold"],
+.x-text[data-font-weight="bold"] {
   font-weight: 500 }
 
 /*** Bold ***/
@@ -1005,8 +961,8 @@ button.x-card:focus,
 /*** Extra bold ***/
 
 .x-button[data-font-weight="extra-bold"] .x-button--label,
-.x-label[data-font-weight="extra-bold"]  .x-label--body,
-.x-text[data-font-weight="extra-bold"]   .x-text--body {
+.x-label[data-font-weight="extra-bold"],
+.x-text[data-font-weight="extra-bold"] {
   font-weight: 600 }
 
 /*** Extra bold ***/
@@ -1122,6 +1078,9 @@ button.x-card:focus,
 /***** Size profiles *****/
 /*** XXS ***/
 
+.x-element[data-min-width="xxs"] {
+  min-width: var( --element-min-width-xxs ) }
+
 .x-color-stamp[data-size="xxs"] {
   grid-gap: 1px;
   height: 12px;
@@ -1132,28 +1091,18 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
-.x-card[data-min-width="xxs"],
-.x-select[data-min-width="xxs"],
-.x-text-field[data-min-width="xxs"] {
-  min-width: var( --element-min-width-xxs ) }
-
 .x-horizontal-separator[data-size="xxs"] {
   height: 4px }
 
 .x-vertical-separator[data-size="xxs"] {
   width: 4px }
 
-.x-directory[data-size="xxs"] {
-  height: 78px;
-  width: 160px }
-
-.x-file[data-size="xxs"] {
-  height: 160px;
-  width: 160px }
-
 /*** XXS ***/
 
 /*** XS ***/
+
+.x-element[data-min-width="xs"] {
+  min-width: var( --element-min-width-xs ) }
 
 .x-color-stamp[data-size="xs"] {
   grid-gap: 1px;
@@ -1165,28 +1114,18 @@ button.x-card:focus,
   height: 48px;
   width: 48px }
 
-.x-card[data-min-width="xs"],
-.x-select[data-min-width="xs"],
-.x-text-field[data-min-width="xs"] {
-  min-width: var( --element-min-width-xs ) }
-
 .x-horizontal-separator[data-size="xs"] {
   height: 8px }
 
 .x-vertical-separator[data-size="xs"] {
   width: 8px }
 
-.x-directory[data-size="xs"] {
-  height: 78px;
-  width: 180px }
-
-.x-file[data-size="xs"] {
-  height: 160px;
-  width: 180px }
-
 /*** XS ***/
 
 /*** S ***/
+
+.x-element[data-min-width="s"] {
+  min-width: var( --element-min-width-s ) }
 
 .x-color-stamp[data-size="s"] {
   grid-gap: 1px;
@@ -1198,28 +1137,18 @@ button.x-card:focus,
   height: 60px;
   width: 60px }
 
-.x-card[data-min-width="s"],
-.x-select[data-min-width="s"],
-.x-text-field[data-min-width="s"] {
-  min-width: var( --element-min-width-s ) }
-
 .x-horizontal-separator[data-size="s"] {
   height: 12px }
 
 .x-vertical-separator[data-size="s"] {
   width: 12px }
 
-.x-directory[data-size="s"] {
-  height: 78px;
-  width: 240px }
-
-.x-file[data-size="s"] {
-  height: 160px;
-  width: 240px }
-
 /*** S ***/
 
 /*** M ***/
+
+.x-element[data-min-width="m"] {
+  min-width: var( --element-min-width-m ) }
 
 .x-color-stamp[data-size="m"] {
   grid-gap: 1px;
@@ -1231,28 +1160,18 @@ button.x-card:focus,
   height: 72px;
   width: 72px }
 
-.x-card[data-min-width="m"],
-.x-select[data-min-width="m"],
-.x-text-field[data-min-width="m"] {
-  min-width: var( --element-min-width-m ) }
-
 .x-horizontal-separator[data-size="m"] {
   height: 18px }
 
 .x-vertical-separator[data-size="m"] {
   width: 18px }
 
-.x-directory[data-size="m"] {
-  height: 78px;
-  width: 260px }
-
-.x-file[data-size="m"] {
-  height: 180px;
-  width: 260px }
-
 /*** M ***/
 
 /*** L ***/
+
+.x-element[data-min-width="l"] {
+  min-width: var( --element-min-width-l ) }
 
 .x-color-stamp[data-size="l"] {
   grid-gap: 2px;
@@ -1264,28 +1183,18 @@ button.x-card:focus,
   height: 84px;
   width: 84px }
 
-.x-card[data-min-width="l"],
-.x-select[data-min-width="l"],
-.x-text-field[data-min-width="l"] {
-  min-width: var( --element-min-width-l ) }
-
 .x-horizontal-separator[data-size="l"] {
   height: 24px }
 
 .x-vertical-separator[data-size="l"] {
   width: 24px }
 
-.x-directory[data-size="l"] {
-  height: 78px;
-  width: 240px }
-
-.x-file[data-size="l"] {
-  height: 200px;
-  width: 240px }
-
 /*** L ***/
 
 /*** XL ***/
+
+.x-element[data-min-width="xl"] {
+  min-width: var( --element-min-width-xl ) }
 
 .x-color-stamp[data-size="xl"] {
   grid-gap: 2px;
@@ -1297,28 +1206,18 @@ button.x-card:focus,
   height: 96px;
   width: 96px }
 
-.x-card[data-min-width="xl"],
-.x-select[data-min-width="xl"],
-.x-text-field[data-min-width="xl"] {
-  min-width: var( --element-min-width-xl ) }
-
 .x-horizontal-separator[data-size="xl"] {
   height: 36px }
 
 .x-vertical-separator[data-size="xl"] {
   width: 36px }
 
-.x-directory[data-size="xl"] {
-  height: 78px;
-  width: 240px }
-
-.x-file[data-size="xl"] {
-  height: 220px;
-  width: 240px }
-
 /*** XL ***/
 
 /*** XXL ***/
+
+.x-element[data-min-width="xxl"] {
+  min-width: var( --element-min-width-xxl ) }
 
 .x-color-stamp[data-size="xxl"] {
   grid-gap: 2px;
@@ -1330,24 +1229,11 @@ button.x-card:focus,
   height: 108px;
   width: 108px }
 
-.x-card[data-min-width="xxl"],
-.x-select[data-min-width="xxl"],
-.x-text-field[data-min-width="xxl"] {
-  min-width: var( --element-min-width-xxl ) }
-
 .x-horizontal-separator[data-size="xxl"] {
   height: 48px }
 
 .x-vertical-separator[data-size="xxl"] {
   width: 48px }
-
-.x-directory[data-size="xxl"] {
-  height: 78px;
-  width: 240px }
-
-.x-file[data-size="xxl"] {
-  height: 240px;
-  width: 240px }
 
 /*** XXL ***/
 /***** Size profiles *****/
@@ -2408,6 +2294,13 @@ button.x-card:focus,
 
 /*** Label body ***/
 
+/*** Label placeholder ***/
+
+.x-label--placeholder {
+  color: var( --color-muted ) }
+
+/*** Label placeholder ***/
+
 /*** Label icon ***/
 
 .x-label--icon {
@@ -3213,6 +3106,13 @@ button.x-card:focus,
   padding: 6px 0 }
 
 /*** Text body ***/
+
+/*** Text placeholder ***/
+
+.x-text--placeholder {
+  color: var( --color-muted ) }
+
+/*** Text placeholder ***/
 /***** Text *****/
 
 
@@ -3302,7 +3202,7 @@ button.x-card:focus,
   color: var( --color-muted);
   font-size: var( --font-size-xs );
   left: 0;
-  letter-spacing: var( --letter-spacing-s );
+  letter-spacing: var( --letter-spacing-xs );
   line-height: 32px;
   position: absolute;
   top: 0;

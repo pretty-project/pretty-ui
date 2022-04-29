@@ -606,7 +606,11 @@
   ;   Az [:item-lister/data-received? ...] feliratkozás használatával az item-lister plugin
   ;   betöltésekor a header komponens tartalma egy időben jelenik meg, a letöltésjelző eltűnésével
   ;   és a listaelemek megjelenésével.
-  (if-let [data-received? @(a/subscribe [:item-lister/data-received? lister-id])]
+
+  ; TEMP#4681
+  (if-let [data-received? @(a/subscribe [:item-lister/get-meta-item lister-id :first-data-received?])]
+  ; TEMP#4681
+
           [:div.item-lister--header-structure [menu-mode-header    lister-id]
                                               [reorder-mode-header lister-id]
                                               [actions-mode-header lister-id]

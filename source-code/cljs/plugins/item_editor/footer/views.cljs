@@ -3,8 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.footer.views
-    (:require [mid-fruits.vector                :as vector]
-              [plugins.item-editor.core.helpers :as core.helpers]
+    (:require [plugins.item-editor.core.helpers :as core.helpers]
               [reagent.api                      :as reagent]
               [x.app-core.api                   :as a]
               [x.app-elements.api               :as elements]))

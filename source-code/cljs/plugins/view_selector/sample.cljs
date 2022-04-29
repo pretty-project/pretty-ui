@@ -43,15 +43,16 @@
 ; útvonalak használata esetén is megjelenjen a tartalom!
 (defn my-content
   [selector-id]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id selector-id])]
+  (let [view-id @(a/subscribe [:view-selector/get-current-view-id selector-id])]
        (case view-id :my-view   [:div "My view"]
                      :your-view [:div "Your view"]
                                 [:div "My view (as default)"])))
 
 (defn my-view
   [surface-id]
-  [view-selector/view :my-selector {:default-view-id :my-view
-                                    :content         #'my-content}])
+  [view-selector/view :my-selector
+                      {:default-view-id :my-view
+                       :content         #'my-content}])
 
 
 

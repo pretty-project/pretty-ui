@@ -44,14 +44,18 @@
       ; BUG#5161
       ; Az x4.7.0 változat óta, ha a plugin "Új elem hozzáadása" módban fut, a current-item-id
       ; értéke NIL, ezért nem lehetséges az új elemről másolatot készíteni kilépéskor.
-      (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-            item-changed?   (r backup.subs/item-changed?     db editor-id)
-            new-item?       (r core.subs/new-item?           db editor-id)]
-           (if-not (and item-changed? (not new-item?))
-                   {:db (as-> db % (r body.events/body-will-unmount             % editor-id))}
-                   {:db (as-> db % (r backup.events/store-current-item-changes! % editor-id)
-                                   (r body.events/body-will-unmount             % editor-id))
-                    :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]}))))
+      ;
+      ; + A body-will-unmount esemény megtörténésekor a new-item? függvény már használható,
+      ;   mert az útvonal megváltozása után történik meg az esemény.
+      {:db (r body.events/body-will-unmount db editor-id)}))
+      ;(let [current-item-id (r core.subs/get-current-item-id db editor-id)
+      ;      item-changed?   (r backup.subs/item-changed?     db editor-id)
+      ;      new-item?       (r core.subs/new-item?           db editor-id))}))
+      ;     (if (or new-item? (not item-changed?))
+      ;         {:db (as-> db % (r body.events/body-will-unmount             % editor-id))}
+      ;         {:db (as-> db % (r backup.events/store-current-item-changes! % editor-id)
+      ;                         (r body.events/body-will-unmount             % editor-id))
+      ;          :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]])))
 
 
 

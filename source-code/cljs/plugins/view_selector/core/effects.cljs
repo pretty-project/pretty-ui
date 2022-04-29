@@ -20,6 +20,11 @@
   ; @usage
   ;  [:view-selector/change-view! :my-selector :my-view]
   (fn [{:keys [db]} [_ selector-id view-id]]
+      ; A) ...
+      ;
+      ; B) ...
       (if-let [view-route (r routes.subs/get-view-route db selector-id view-id)]
+              ; A)
               {:dispatch [:router/go-to! view-route]}
+              ; B)
               {:db       (r core.events/change-view! db selector-id view-id)})))

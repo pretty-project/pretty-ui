@@ -36,9 +36,10 @@
       ;
       ; - Ha pl. a kliens-oldalon az újratöltés előtt 42 elem van letöltve és a {:download-limit ...}
       ;   értéke 20, akkor az esemény az 1. - 60. elemeket kéri le a szerverről.
-      (let [; A {:reload-mode? true} beállítás a query elkészítéséhez szükséges, utána nincs szükség
-            ; rá, hogy érvényben maradjon, ezért nincs eltárolva!
-            db           (r core.events/set-reload-mode!                      db lister-id)
+      ;
+      ; - A {:reload-mode? true} beállítás csak a query elkészítéséhez szükséges, utána már nincs
+      ;   szükség rá, hogy érvényben maradjon, ezért a megváltoztatott db értéke nincs eltárolva!
+      (let [db           (r core.events/set-reload-mode!                      db lister-id)
             query        (r download.queries/get-request-items-query          db lister-id)
             validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
            [:sync/send-query! (r core.subs/get-request-id db lister-id)

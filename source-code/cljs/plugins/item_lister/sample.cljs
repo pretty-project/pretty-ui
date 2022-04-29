@@ -120,7 +120,7 @@
 (defn your-view
   [surface-id]
   (let [description @(a/subscribe [:item-lister/get-description :my-lister])]
-       [layouts/layout-a ::sample
+       [layouts/layout-a ::your-view
                          {:header [item-lister/header :my-lister {}]
                           :body   [item-lister/body   :my-lister {:list-element [:div "My item"]}]
                           :description description}]))

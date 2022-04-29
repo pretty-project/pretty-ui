@@ -89,6 +89,6 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a ::client-lister
+  [layouts/layout-a ::view
                     {:body   #'body
                      :header #'header}])

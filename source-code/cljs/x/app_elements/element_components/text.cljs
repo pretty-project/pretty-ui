@@ -39,10 +39,16 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:content (metamorphic-content)}
-  [text-id {:keys [content] :as text-props}]
-  [:div.x-text (engine/element-attributes text-id text-props)
-               [:div.x-text--body [components/content text-id content]]])
+  ;  {:content (metamorphic-content)
+  ;   :placeholder (metamorphic-content)(opt)}
+  [text-id {:keys [content placeholder] :as text-props}]
+  ; XXX#9811
+  (let [content (components/content text-id content)]
+       [:div.x-text (engine/element-attributes text-id text-props)
+                    (if (empty? content)
+                        (if placeholder [:div.x-text--placeholder (components/content text-id content)]
+                                        [:div.x-text--placeholder "\u00A0"])
+                        [:div.x-text--body content])]))
 
 (defn element
   ; XXX#0439
@@ -74,6 +80,10 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;    Default: :none
+  ;   :placeholder (metamorphic-content)(opt)
   ;   :selectable? (boolean)(opt)
   ;    Default: true
   ;   :style (map)(opt)}

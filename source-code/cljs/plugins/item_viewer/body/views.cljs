@@ -33,11 +33,11 @@
               [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "60px" :width "60px"}}]
               [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "200px"}}]]
         [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content :center}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "50%"}}]]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "75%"}}]]
         [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content :center}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "50%"}}]]
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "75%"}}]]
         [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content "center"}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "72px" :width "50%"}}]]])
+              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "72px" :width "75%"}}]]])
   ; TEMP
 
 

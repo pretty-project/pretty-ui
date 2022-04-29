@@ -19,66 +19,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn add-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (core.helpers/add-item-label :my-editor :my-type)
-  ;  =>
-  ;  :add-my-type
-  ;
-  ; @return (metamorphic-content)
-  [_ item-namespace]
-  (keyword (str "add-" (name item-namespace))))
-
-(defn edit-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (core.helpers/edit-item-label :my-editor :my-type)
-  ;  =>
-  ;  :edit-my-type
-  ;
-  ; @return (metamorphic-content)
-  [_ item-namespace]
-  (keyword (str "edit-" (name item-namespace))))
-
-(defn new-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (core.helpers/new-item-label :my-editor :my-type)
-  ;  =>
-  ;  :new-my-type
-  ;
-  ; @return (metamorphic-content)
-  [_ item-namespace]
-  (keyword (str "new-" (name item-namespace))))
-
-(defn unnamed-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (keyword) item-namespace
-  ;
-  ; @example
-  ;  (core.helpers/new-item-label :my-editor :my-type)
-  ;  =>
-  ;  :unnamed-my-type
-  ;
-  ; @return (metamorphic-content)
-  [_ item-namespace]
-  (keyword (str "unnamed-" (name item-namespace))))
-
 (defn default-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

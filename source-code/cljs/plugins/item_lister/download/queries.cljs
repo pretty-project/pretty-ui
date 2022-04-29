@@ -6,7 +6,7 @@
     (:require [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.core.subs     :as core.subs]
               [plugins.item-lister.download.subs :as download.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [x.app-core.api                    :refer [r]]))
 
 
 

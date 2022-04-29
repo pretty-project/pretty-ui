@@ -6,10 +6,8 @@
     (:require [plugins.item-editor.body.prototypes :as body.prototypes]
               [plugins.item-editor.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
-              [mid-fruits.string                   :as string]
               [reagent.api                         :as reagent]
-              [x.app-core.api                      :as a]
-              [x.app-elements.api                  :as elements]))
+              [x.app-core.api                      :as a]))
 
 
 
@@ -18,68 +16,6 @@
 
 ; plugins.plugin-handler.body.views
 (def error-body body.views/error-body)
-
-
-
-;; -- Form components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn new-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  (let [item-namespace @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
-        new-item-label  (core.helpers/new-item-label editor-id item-namespace)]
-       [elements/label ::new-item-label
-                       {:color       :highlight
-                        :content     new-item-label
-                        :font-size   :l
-                        :font-weight :extra-bold}]))
-
-(defn named-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (map) element-props
-  ;  {:name (metamorphic-content)}
-  [editor-id {:keys [name]}]
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? editor-id])
-        color             (if editor-disabled? :highlight :default)]
-       [elements/label ::named-item-label
-                       {:color       color
-                        :content     name
-                        :font-size   :l
-                        :font-weight :extra-bold}]))
-
-(defn unnamed-item-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  [editor-id]
-  (let [item-namespace    @(a/subscribe [:item-editor/get-transfer-item editor-id :item-namespace])
-        unnamed-item-label (core.helpers/unnamed-item-label editor-id item-namespace)]
-       [elements/label ::unnamed-item-label
-                       {:color       :highlight
-                        :content     unnamed-item-label
-                        :font-size   :l
-                        :font-weight :extra-bold}]))
-
-(defn item-label
-  ; @param (keyword) editor-id
-  ; @param (map) element-props
-  ;  {:name (metamorphic-content)(opt)}
-  ;
-  ; @usage
-  ;  [item-editor/item-label :my-editor {...}]
-  [editor-id {:keys [name] :as element-props}]
-  ; Az [item-label ...] komponens használatához szükséges a szótárhoz adni ...
-  ; ... a  {:new-my-type     {...}} kifejezést!
-  ; ... az {:unnamed-my-type {...}} kifejezést!
-  (let [new-item? @(a/subscribe [:item-editor/new-item? editor-id])]
-       (cond (string/nonempty? name) [named-item-label   editor-id element-props]
-             (boolean new-item?)     [new-item-label     editor-id]
-             :unnamed-item           [unnamed-item-label editor-id])))
 
 
 

@@ -53,9 +53,20 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:content (metamorphic-content)}
-  [_ {:keys [content]}]
-  [:div.x-label--body [components/content content]])
+  ;  {:content (metamorphic-content)
+  ;   :placeholder (metamorphic-content)(opt)}
+  [label-id {:keys [content placeholder]}]
+  ; XXX#9811
+  ; Egyes esetekben a megjelenített szöveg értéke egy üres string, amíg a tényleges érték, nem
+  ; töltődik le vagy nem töltődik be.
+  ; Ilyenkor ha nem lenne minden esetben placeholder alkalmazva, akkor 0px magasságú lenne
+  ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
+  ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
+  (let [content (components/content label-id content)]
+       (if (empty? content)
+           (if placeholder [:div.x-label--placeholder (components/content label-id placeholder)]
+                           [:div.x-label--placeholder "\u00A0"])
+           [:div.x-label--body content])))
 
 (defn- label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,6 +120,10 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;    Default: :none
+  ;   :placeholder (metamorphic-content)(opt)
   ;   :selectable? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)

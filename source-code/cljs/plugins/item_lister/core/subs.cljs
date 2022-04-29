@@ -149,8 +149,10 @@
   ; @return (boolean)
   [db [_ lister-id]]
   ; A kiválasztott elemeken végzett műveletek is {:lister-synchronizing? true} állapotba hozzák
-  ; az item-lister plugint, ezért szükséges megkülönböztetni az elemek letöltése szinkronizációt,
-  ; az elemeken végzett műveletek szinkronizációval.
+  ; az item-lister plugint, ezért önmagában a {:lister-synchronizing? true} állapot nem
+  ; feltétlenül azt jelenti, hogy elemek letöltése történik. Ezért szükséges az elemek letöltése
+  ; állapot megállapításához a lister-synchronizing? és download-more-items? függvényt
+  ; együtt alkalmazni.
   (and (r download-more-items?  db lister-id)
        (r lister-synchronizing? db lister-id)))
 
