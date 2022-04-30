@@ -5,7 +5,6 @@
 (ns plugins.item-viewer.core.effects
     (:require [plugins.item-viewer.body.subs   :as body.subs]
               [plugins.item-viewer.core.events :as core.events]
-              ;[plugins.item-viewer.core.subs   :as core.subs]
               [plugins.item-viewer.routes.subs :as routes.subs]
               [x.app-core.api                  :as a :refer [r]]))
 
@@ -22,6 +21,8 @@
   ; @usage
   ;  [:item-viewer/view-item! :my-viewer "my-item"]
   (fn [{:keys [db]} [_ viewer-id item-id]]
+      ; XXX#5575
+      ;
       ; A) Ha az item-viewer plugin útvonal-vezérelt, ...
       ;    ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
       ;

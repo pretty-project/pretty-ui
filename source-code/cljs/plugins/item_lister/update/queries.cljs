@@ -10,7 +10,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete items queries ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-delete-items-mutation-props
@@ -22,7 +22,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
-  (merge (r core.subs/get-meta-item db lister-id :default-query-params)
+  (merge (r core.subs/get-query-params db lister-id)
          {:item-ids item-ids}))
 
 (defn get-delete-items-query
@@ -39,7 +39,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Undo delete items queries -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-undo-delete-items-mutation-props
@@ -52,7 +52,7 @@
   ;  {:items (namespaced maps in vector)}
   [db [_ lister-id item-ids]]
   (let [exported-items (r backup.subs/export-backup-items db lister-id item-ids)]
-       (merge (r core.subs/get-meta-item db lister-id :default-query-params)
+       (merge (r core.subs/get-query-params db lister-id)
               {:items exported-items})))
 
 (defn get-undo-delete-items-query
@@ -69,7 +69,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Duplicate items queries -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-duplicate-items-mutation-props
@@ -81,7 +81,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
-  (merge (r core.subs/get-meta-item db lister-id :default-query-params)
+  (merge (r core.subs/get-query-params db lister-id)
          {:item-ids item-ids}))
 
 (defn get-duplicate-items-query

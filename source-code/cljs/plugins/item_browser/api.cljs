@@ -14,7 +14,6 @@
               [plugins.item-browser.download.events]
               [plugins.item-browser.download.subs]
               [plugins.item-browser.routes.effects]
-              [plugins.item-browser.routes.events]
               [plugins.item-browser.transfer.subs]
               [plugins.item-browser.update.effects]
               [plugins.item-browser.update.events]

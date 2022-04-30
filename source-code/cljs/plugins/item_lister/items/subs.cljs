@@ -8,27 +8,24 @@
               [mid-fruits.vector                 :as vector]
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.core.subs     :as core.subs]
-              [plugins.item-lister.transfer.subs :as transfer.subs]
+              [plugins.plugin-handler.items.subs :as items.subs]
               [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]
               [x.app-environment.api             :as environment]))
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ lister-id item-id]]
-  (letfn [(f [{:keys [id] :as item}] (if (= id item-id) item))]
-         (let [downloaded-items (r core.subs/get-downloaded-items db lister-id)]
-              (some f downloaded-items))))
+; plugins.plugin-handler.items.subs
+(def get-item         items.subs/get-item)
+(def export-item      items.subs/export-item)
+(def item-downloaded? items.subs/item-downloaded?)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-item-dex
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,34 +73,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn export-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @return (namespaced map)
-  [db [_ lister-id item-id]]
-  (let [item-namespace (r transfer.subs/get-transfer-item db lister-id :item-namespace)
-        item           (r get-item                        db lister-id item-id)]
-       (db/document->namespaced-document item item-namespace)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn item-downloaded?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @return (boolean)
-  [db [_ lister-id item-id]]
-  (let [item (r get-item db lister-id item-id)]
-       (boolean item)))
 
 (defn item-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!

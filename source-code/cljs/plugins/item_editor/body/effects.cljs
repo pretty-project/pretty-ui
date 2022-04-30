@@ -12,7 +12,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Body lifecycles effects -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -24,11 +24,6 @@
   (fn [{:keys [db]} [_ editor-id body-props]]
       {:db       (r body.events/body-did-mount db editor-id body-props)
        :dispatch [:item-editor/load-editor! editor-id]}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-editor/body-will-unmount
@@ -56,11 +51,6 @@
       ;         {:db (as-> db % (r backup.events/store-current-item-changes! % editor-id)
       ;                         (r body.events/body-will-unmount             % editor-id))
       ;          :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]])))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-editor/body-did-update

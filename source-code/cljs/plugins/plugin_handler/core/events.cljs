@@ -12,7 +12,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Meta-item events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn set-meta-item!
@@ -25,11 +25,6 @@
   ; @return (map)
   [db [_ plugin-id item-key item-value]]
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id item-key] item-value))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn remove-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,7 +47,33 @@
 
 
 
+;; -- Query-param events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn set-query-param!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) param-key
+  ; @param (*) param-value
+  ;
+  ; @return (map)
+  [db [_ plugin-id param-key param-value]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :query-params param-key] param-value))
+
+(defn remove-query-param!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) param-key
+  ;
+  ; @return (map)
+  [db [_ plugin-id param-key]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :query-params param-key]))
+
+
+
+;; -- Current item events -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn set-item-id!
@@ -64,21 +85,6 @@
   ; @return (map)
   [db [_ plugin-id item-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :item-id] item-id))
-
-(defn set-view-id!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ; @param (keyword) view-id
-  ;
-  ; @return (map)
-  [db [_ plugin-id view-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id] view-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (defn update-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,6 +115,21 @@
                   (return db)
                   (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
                        (r set-item-id! db plugin-id default-item-id)))))
+
+
+
+;; -- Current view events -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) view-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id view-id]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id] view-id))
 
 (defn update-view-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!

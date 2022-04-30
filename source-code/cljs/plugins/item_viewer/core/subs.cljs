@@ -14,6 +14,7 @@
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
+(def get-query-params             core.subs/get-query-params)
 (def plugin-synchronizing?        core.subs/plugin-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item             core.subs/get-current-item)

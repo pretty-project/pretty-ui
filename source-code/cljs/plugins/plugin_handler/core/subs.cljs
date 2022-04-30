@@ -14,7 +14,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Meta-items subscriptions ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-meta-item
@@ -29,7 +29,21 @@
 
 
 
+;; -- Query-param subscriptions -----------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-query-params
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  (get-in db [:plugins :plugin-handler/meta-items plugin-id :query-params]))
+
+
+
+;; -- Request subscriptions ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-request-id
@@ -79,22 +93,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn current-item?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ; @param (string) item-id
-  ;
-  ; @return (boolean)
-  [db [_ plugin-id item-id]]
-  (= item-id (r get-meta-item db plugin-id :item-id)))
-
-
-
-;; ----------------------------------------------------------------------------
+;; -- Current-item subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-current-item-id
@@ -106,19 +105,15 @@
   [db [_ plugin-id]]
   (r get-meta-item db plugin-id :item-id))
 
-(defn get-current-view-id
+(defn current-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
+  ; @param (string) item-id
   ;
-  ; @return (keyword)
-  [db [_ plugin-id]]
-  (r get-meta-item db plugin-id :view-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  ; @return (boolean)
+  [db [_ plugin-id item-id]]
+  (= item-id (r get-meta-item db plugin-id :item-id)))
 
 (defn get-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,11 +137,6 @@
         current-item   (r get-current-item                db plugin-id)]
        (db/document->namespaced-document current-item item-namespace)))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-current-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -154,9 +144,9 @@
   ;
   ; @return (metamorphic-content)
   [db [_ plugin-id]]
-  (let [current-item (r get-current-item        db plugin-id)
-        label-key    (r body.subs/get-body-prop db plugin-id :label-key)]
-       (label-key current-item)))
+  (if-let [current-item (r get-current-item db plugin-id)]
+          (let [label-key (r body.subs/get-body-prop db plugin-id :label-key)]
+               (label-key current-item))))
 
 (defn get-current-item-modified-at
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -170,11 +160,6 @@
                (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
                     (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -183,3 +168,42 @@
   ; ...
   (if-let [auto-title? (r body.subs/get-body-prop db plugin-id :auto-title?)]
           (r get-current-item-label db plugin-id)))
+
+
+
+;; -- Current view subscriptions ----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-current-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (keyword)
+  [db [_ plugin-id]]
+  (r get-meta-item db plugin-id :view-id))
+
+
+
+;; -- Downloaded items subscriptions ------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-downloaded-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (maps in vector)
+  [db [_ plugin-id]]
+  (let [items-path (r body.subs/get-body-prop db plugin-id :items-path)]
+       (get-in db items-path)))
+
+(defn get-downloaded-item-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (integer)
+  [db [_ plugin-id]]
+  (let [downloaded-items (r get-downloaded-items db plugin-id)]
+       (count downloaded-items)))

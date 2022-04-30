@@ -74,7 +74,7 @@
                              :form-id    :clients.client-editor/form
                              :indent     {:horizontal :xxs :vertical :xs}
                              :label      :last-name
-                             :min-width  :s
+                             :min-width  :xs
                              :required?  true
                              :value-path [:clients :client-editor/edited-item :last-name]}]))
 
@@ -87,7 +87,7 @@
                              :form-id    :clients.client-editor/form
                              :indent     {:horizontal :xxs :vertical :xs}
                              :label      :first-name
-                             :min-width  :s
+                             :min-width  :xs
                              :required?  true
                              :value-path [:clients :client-editor/edited-item :first-name]}]))
 
@@ -110,7 +110,7 @@
                              :form-id    :clients.client-editor/form
                              :indent     {:horizontal :xxs :vertical :xs}
                              :label      :phone-number
-                             :min-width  :s
+                             :min-width  :xs
                              ; Ha le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a mező használata!
                              ;:modifier   form/phone-number
                              :modifier   #(string/starts-with! % "+")
@@ -127,7 +127,7 @@
                              :form-id    :clients.client-editor/form
                              :indent     {:horizontal :xxs :vertical :xs}
                              :label      :email-address
-                             :min-width  :s
+                             :min-width  :xs
                              :required?  true
                              :validator  {:f form/email-address? :invalid-message :invalid-email-address}
                              :value-path [:clients :client-editor/edited-item :email-address]}]))
@@ -173,7 +173,7 @@
                             {:disabled?  editor-disabled?
                              :indent     {:horizontal :xxs :vertical :xs}
                              :label      :vat-no
-                             :min-width  :s
+                             :min-width  :xs
                              :value-path [:clients :client-editor/edited-item :vat-no]
                              ; TEMP
                              :info-text "Lorem ipsum dolor ..."}]))
@@ -187,7 +187,7 @@
                          :indent          {:horizontal :xxs :vertical :xs}
                          :label           :country ;:user-cancel? false
                          :initial-options locales/EU-COUNTRY-NAMES
-                        ;:min-width       :s
+                         :min-width       :xs
                          :value-path      [:clients :client-editor/edited-item :country]}]))
 
 (defn- zip-code-field
@@ -197,7 +197,7 @@
        [elements/text-field ::zip-code-field
                             {:disabled?  editor-disabled?
                              :indent     {:horizontal :xxs :vertical :xs}
-                             :min-width  :s
+                             :min-width  :xs
                              :label      :zip-code
                              :value-path [:clients :client-editor/edited-item :zip-code]}]))
 
@@ -209,7 +209,7 @@
                            {:disabled?    editor-disabled?
                             :emptiable?   false
                             :indent       {:horizontal :xxs :vertical :xs}
-                            :min-width    :s
+                            :min-width    :xs
                             :label        :city
                             :options-path [:clients :client-editor/suggestions :city]
                             :value-path   [:clients :client-editor/edited-item :city]}]))
@@ -221,7 +221,7 @@
        [elements/text-field ::address-field
                             {:disabled?  editor-disabled?
                              :indent     {:horizontal :xxs :vertical :xs}
-                             :min-width  :s
+                             :min-width  :xs
                              :label      :address
                              :value-path [:clients :client-editor/edited-item :address]}]))
 
@@ -271,7 +271,7 @@
        [elements/multiline-field ::description-field
                                  {:disabled?  editor-disabled?
                                   :indent     {:horizontal :xxs :vertical :xs}
-                                  :min-width  :s
+                                  :min-width  :xs
                                   :value-path [:clients :client-editor/edited-item :description]}]))
 
 (defn- additional-info

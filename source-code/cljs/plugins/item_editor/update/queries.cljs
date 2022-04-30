@@ -9,7 +9,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Save item queries -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-save-item-mutation-props
@@ -21,7 +21,7 @@
   ;  {:item (namespaced map)}
   [db [_ editor-id]]
   (let [exported-item (r core.subs/export-current-item db editor-id)]
-       (merge (r core.subs/get-meta-item db editor-id :default-query-params)
+       (merge (r core.subs/get-query-params db editor-id)
               {:item exported-item})))
 
 (defn get-save-item-query

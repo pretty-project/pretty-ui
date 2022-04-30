@@ -21,7 +21,7 @@
   ;  {:item-id (string)}
   [db [_ browser-id]]
   (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
-       (merge (r core.subs/get-meta-item db browser-id :default-query-params)
+       (merge (r core.subs/get-query-params db browser-id)
               {:item-id current-item-id})))
 
 (defn get-request-item-query

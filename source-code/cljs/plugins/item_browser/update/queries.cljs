@@ -11,7 +11,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete item queries -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-delete-item-mutation-props
@@ -23,7 +23,7 @@
   ; @return (map)
   ;  {:item-id (string)}
   [db [_ browser-id item-id]]
-  (merge (r core.subs/get-meta-item db browser-id :default-query-params)
+  (merge (r core.subs/get-query-params db browser-id)
          {:item-id item-id}))
 
 (defn get-delete-item-query
@@ -40,7 +40,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Undo delete item queries ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-undo-delete-item-mutation-props
@@ -53,7 +53,7 @@
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db browser-id item-id)]
-       (merge (r core.subs/get-meta-item db browser-id :default-query-params)
+       (merge (r core.subs/get-query-params db browser-id)
               {:item backup-item})))
 
 (defn get-undo-delete-item-query
@@ -70,7 +70,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Duplicate item queries --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-duplicate-item-mutation-props
@@ -87,7 +87,7 @@
   ; paraméterezéssel működjenek.
   ; (az item-browser plugin működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
-       (merge (r core.subs/get-meta-item db browser-id :default-query-params)
+       (merge (r core.subs/get-query-params db browser-id)
               {:item exported-item})))
 
 (defn get-duplicate-item-query
@@ -104,7 +104,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Update item queries -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-update-item-mutation-props
@@ -117,7 +117,7 @@
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
-       (merge (r core.subs/get-meta-item db browser-id :default-query-params)
+       (merge (r core.subs/get-query-params db browser-id)
               {:item exported-item})))
 
 (defn get-update-item-query

@@ -3,8 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.body.prototypes
-    (:require [mid-fruits.candy                  :refer [param]]
-              [plugins.item-browser.core.helpers :as core.helpers]))
+    (:require [plugins.item-browser.core.helpers   :as core.helpers]
+              [plugins.item-lister.body.prototypes :as body.prototypes]))
 
 
 
@@ -18,9 +18,8 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:item-path (vector)
-  ;   :items-path (vector)}
+  ;  {:item-path (vector)}
   [browser-id body-props]
-  (merge {:item-path  (core.helpers/default-item-path  browser-id)
-          :items-path (core.helpers/default-items-path browser-id)}
-         (param body-props)))
+  ; XXX#6177
+  (merge {:item-path (core.helpers/default-item-path browser-id)}
+         (body.prototypes/body-props-prototype browser-id body-props)))

@@ -9,7 +9,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Header lifecycles effects -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -21,11 +21,6 @@
   (fn [{:keys [db]} [_ editor-id header-props]]
       {:db (r header.events/header-did-mount db editor-id header-props)}))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
   :item-editor/header-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -33,11 +28,6 @@
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
       {:db (r header.events/header-will-unmount db editor-id)}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-editor/header-did-update

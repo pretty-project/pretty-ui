@@ -9,7 +9,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Body lifecycles effects -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -28,11 +28,6 @@
        :dispatch-n [[:environment/listen-to-pressed-key! :item-lister/SHIFT {:key-code 16}]
                     [:item-lister/request-items! lister-id]]}))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
   :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -41,11 +36,6 @@
   (fn [{:keys [db]} [_ lister-id]]
       {:db       (r body.events/body-will-unmount db lister-id)
        :dispatch [:environment/stop-listening-to-pressed-key! :item-lister/SHIFT]}))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :item-lister/body-did-update

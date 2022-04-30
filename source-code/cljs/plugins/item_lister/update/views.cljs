@@ -7,7 +7,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete items components -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn items-deleted-dialog-body
@@ -20,6 +20,11 @@
        [ui/state-changed-bubble-body :plugins.item-lister/items-deleted-dialog
                                      {:label          {:content :n-items-deleted :replacements [(count item-ids)]}
                                       :primary-button {:label :recover! :on-click undo-event}}]))
+
+
+
+;; -- Duplicate items components ----------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn items-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

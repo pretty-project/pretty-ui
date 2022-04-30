@@ -8,7 +8,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn item-deleted-dialog-body
@@ -22,6 +22,11 @@
                                      {:label          :item-deleted
                                       :primary-button {:label :recover! :on-click undo-event}}]))
 
+
+
+;; -- Undo delete item components ---------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn undo-delete-item-failed-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -32,6 +37,11 @@
        [ui/state-changed-bubble-body :plugins.item-viewer/undo-delete-item-failed-dialog
                                      {:label          :failed-to-undo-delete
                                       :primary-button {:label :retry! :on-click retry-event}}]))
+
+
+
+;; -- Duplicate item components -----------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn item-duplicated-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

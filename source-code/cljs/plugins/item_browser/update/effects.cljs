@@ -16,33 +16,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :item-browser/render-item-deleted-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) item-id
-  (fn [_ [_ browser-id item-id]]
-      [:ui/render-bubble! :plugins.item-browser/item-deleted-dialog
-                          {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
-                           ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
-
-(a/reg-event-fx
-  :item-browser/render-item-duplicated-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) copy-id
-  (fn [_ [_ browser-id copy-id]]
-      [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
-                          {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
-
-
-
-;; ----------------------------------------------------------------------------
+;; -- Update item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -112,7 +86,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -183,9 +157,20 @@
           ; B)
           [:ui/render-bubble! {:body :failed-to-delete}])))
 
+(a/reg-event-fx
+  :item-browser/render-item-deleted-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  (fn [_ [_ browser-id item-id]]
+      [:ui/render-bubble! :plugins.item-browser/item-deleted-dialog
+                          {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
+                           ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
 
 
-;; ----------------------------------------------------------------------------
+
+;; -- Undo delete item effects ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -248,7 +233,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Duplicate item effects --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -314,9 +299,19 @@
           ; B)
           [:ui/render-bubble! {:body :failed-to-duplicate}])))
 
+(a/reg-event-fx
+  :item-browser/render-item-duplicated-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (string) copy-id
+  (fn [_ [_ browser-id copy-id]]
+      [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
+                          {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
 
-;; ----------------------------------------------------------------------------
+
+;; -- Move item effects -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx

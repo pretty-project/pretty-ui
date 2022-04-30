@@ -19,20 +19,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn default-items-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @example
-  ;  (core.helpers/default-items-path :my-browser)
-  ;  =>
-  ;  [:plugins :plugin-handler/downloaded-items :my-browser]
-  ;
-  ; @return (vector)
-  [browser-id]
-  (default-data-path browser-id :downloaded-items))
-
 (defn default-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

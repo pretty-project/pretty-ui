@@ -1,3 +1,3 @@
 
-# A {:default-query-params {...}} térkép
+# A {:query-params {...}} térkép
   XXX#7061

@@ -19,7 +19,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete items subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-deleted-item-ids
@@ -37,6 +37,11 @@
   [db [_ lister-id server-response]]
   (let [mutation-name (r get-mutation-name db lister-id :delete-items!)]
        (get server-response (symbol mutation-name))))
+
+
+
+;; -- Duplicate items subscriptions -------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-duplicated-item-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -194,7 +194,7 @@
 (defn- storage-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [items-received? @(a/subscribe [:item-browser/items-received? :storage.media-browser])]
+  (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
           (let [label @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
                [:<> [ui/title-sensor {:title label}]
                     [elements/label ::storage-label
@@ -206,7 +206,7 @@
 (defn- storage-directory-content-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [items-received? @(a/subscribe [:item-browser/items-received? :storage.media-browser])]
+  (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
           (let [browsed-directory @(a/subscribe [:item-browser/get-current-item :storage.media-browser])
                 directory-content  (media-browser.helpers/directory-item->size browsed-directory)]
                [elements/label ::storage-directory-content-label
@@ -234,16 +234,16 @@
        [storage-directory-content-label]
        [elements/horizontal-separator {:size :xxl}]
        [item-browser/body :storage.media-browser
-                          {:auto-title?  true
-                           :item-actions [:delete :duplicate]
-                           :item-path    [:storage :media-browser/browsed-item]
-                           :items-path   [:storage :media-browser/downloaded-items]
-                           :items-key    :items
-                           :label-key    :alias
-                           :path-key     :path
-                           :list-element #'media-item
-                           :root-item-id core.config/ROOT-DIRECTORY-ID
-                           :search-keys  [:alias]}]])
+                          {:auto-title?     true
+                           :default-item-id core.config/ROOT-DIRECTORY-ID
+                           :item-actions    [:delete :duplicate]
+                           :item-path       [:storage :media-browser/browsed-item]
+                           :items-path      [:storage :media-browser/downloaded-items]
+                           :items-key       :items
+                           :label-key       :alias
+                           :path-key        :path
+                           :list-element    #'media-item
+                           :search-keys     [:alias]}]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

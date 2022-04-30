@@ -21,7 +21,7 @@
   ;  {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
-       (merge (r core.subs/get-meta-item db viewer-id :default-query-params)
+       (merge (r core.subs/get-query-params db viewer-id)
               {:item-id current-item-id})))
 
 (defn get-request-item-query

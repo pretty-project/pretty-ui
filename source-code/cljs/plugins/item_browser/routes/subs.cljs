@@ -12,6 +12,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.routes.subs
+(def route-handled?      routes.subs/route-handled?)
 (def get-extended-route  routes.subs/get-extended-route)
 (def get-derived-item-id routes.subs/get-derived-item-id)
 

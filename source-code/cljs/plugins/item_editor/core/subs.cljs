@@ -18,10 +18,12 @@
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
+(def get-query-params             core.subs/get-query-params)
 (def plugin-synchronizing?        core.subs/plugin-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
+(def get-current-item-label       core.subs/get-current-item-label)
 (def get-current-item-modified-at core.subs/get-current-item-modified-at)
 (def get-auto-title               core.subs/get-auto-title)
 
@@ -151,6 +153,12 @@
 ; @usage
 ;  [:item-editor/get-current-item :my-editor]
 (a/reg-sub :item-editor/get-current-item get-current-item)
+
+; @param (keyword) editor-id
+;
+; @usage
+;  [:item-editor/get-current-item-label :my-editor]
+(a/reg-sub :item-editor/get-current-item-label get-current-item-label)
 
 ; @param (keyword) editor-id
 ;

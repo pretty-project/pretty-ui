@@ -18,7 +18,28 @@
 
 
 
+;; -- Delete item subscriptions -----------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-deleted-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r update.subs/get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ viewer-id server-response]]
+  (let [mutation-name (r get-mutation-name db viewer-id :delete-item!)]
+       (get server-response (symbol mutation-name))))
+
+
+
+;; -- Duplicate item subscriptions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-duplicated-item-id
@@ -38,19 +59,3 @@
         item-namespace (r transfer.subs/get-transfer-item db viewer-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
        (get-in server-response [(symbol mutation-name) id-key])))
-
-(defn get-deleted-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) viewer-id
-  ; @param (map) server-response
-  ;
-  ; @example
-  ;  (r update.subs/get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
-  ;  =>
-  ;  "my-item"
-  ;
-  ; @return (string)
-  [db [_ viewer-id server-response]]
-  (let [mutation-name (r get-mutation-name db viewer-id :delete-item!)]
-       (get server-response (symbol mutation-name))))

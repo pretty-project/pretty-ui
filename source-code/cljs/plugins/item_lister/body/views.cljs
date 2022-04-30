@@ -129,10 +129,10 @@
         ;@(a/subscribe [:environment/browser-offline?])
         ; [offline-body lister-id]
         @(a/subscribe [:item-lister/data-received? lister-id])
-         [:div.item-lister--body--structure [item-list             lister-id]
-                                            [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-                                            [no-items-to-show      lister-id]
-                                            [downloading-items     lister-id]]
+         [:<> [item-list             lister-id]
+              [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
+              [no-items-to-show      lister-id]
+              [downloading-items     lister-id]]
         :data-not-received
          [downloading-items lister-id]))
 

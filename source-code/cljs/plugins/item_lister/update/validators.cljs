@@ -9,7 +9,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete items validators -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn delete-items-response-valid?
@@ -24,6 +24,11 @@
         deleted-item-ids (get server-response (symbol mutation-name))]
        (vector/nonempty? deleted-item-ids)))
 
+
+
+;; -- Undo delete items validators --------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn undo-delete-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -35,6 +40,11 @@
   (let [mutation-name   (r update.subs/get-mutation-name db lister-id :undo-delete-items!)
         recovered-items (get server-response (symbol mutation-name))]
        (vector/nonempty? recovered-items)))
+
+
+
+;; -- Duplicate items validators ----------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn duplicate-items-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!

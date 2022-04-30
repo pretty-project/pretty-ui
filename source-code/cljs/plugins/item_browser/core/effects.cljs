@@ -24,29 +24,13 @@
   ; @usage
   ;  [:item-browser/browse-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
-      ; Az item-browser pluginban az aktuálisan böngészett elem többféleképpen változhat meg:
-      ; - Az [:item-browser/browse-item! ...] esemény A) kimenetele átirányít az elemhez készített
-      ;   útvonalra, majd az [:item-browser/handle-route! ...] esemény újratölti az infinite-loader
-      ;   komponenst és letölti az aktuálisan böngészett elem adatait.
-      ;
-      ; - Az [:item-browser/browse-item! ...] esemény B) kimenetele újratölti az infinite-loader
-      ;   komponenst és letölti az aktuálisan böngészett elem adatait.
-      ;
-      ; - Az [:item-browser/handle-route! ...] esemény az [:item-browser/browse-item! ...] eseménytől
-      ;   függetlenül megtörténik és ...
-      ;   Pl.: Ha a felhasználó a böngésző "Vissza" gombjára kattint az item-browser plugin hanszálata
-      ;        közben.
-      ;
-      ; A) ...
-      ;
-      ; B) ...
-      (if-let [item-route (r routes.subs/get-item-route db browser-id item-id)]
-              ; A)
-              [:router/go-to! item-route]
-              ; B)
-              {:db         (r core.events/browse-item! db browser-id item-id)
-               :dispatch-n [[:tools/reload-infinite-loader! browser-id]
-                            [:item-browser/request-item!    browser-id]]})))
+      ; XXX#5575
+      (if-let [route-handled? (r routes.subs/route-handled? db browser-id)]
+              (let [item-route (r routes.subs/get-item-route db browser-id item-id)]
+                   {:dispatch [:router/go-to! item-route]})
+              (if (r body.subs/body-did-mount? db browser-id)
+                  {:db       (r core.events/set-item-id! db browser-id item-id)
+                   :dispatch [:item-browser/load-browser! browser-id]}))))
 
 (a/reg-event-fx
   :item-browser/go-home!
@@ -55,8 +39,8 @@
   ; @usage
   ;  [:item-browser/go-home! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
-      (let [root-item-id (r body.subs/get-body-prop db browser-id :item-id)]
-           [:item-browser/browse-item! browser-id root-item-id])))
+      (let [default-item-id (r body.subs/get-body-prop db browser-id :default-item-id)]
+           [:item-browser/browse-item! browser-id default-item-id])))
 
 (a/reg-event-fx
   :item-browser/go-up!
@@ -90,20 +74,11 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :item-browser/item-clicked
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  ; @param (map) options
-  ;  {:on-click (metamorphic-event)}
+  :item-browser/load-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  [:item-browser/item-clicked :my-browser 0 {...}]
-  (fn [{:keys [db]} [_ browser-id item-dex {:keys [on-click]}]]
-      ; A) ...
-      ;
-      ; B) ...
-      (if (r items.subs/toggle-item-selection? db browser-id item-dex)
-          ; A)
-          {:db (r items.events/toggle-item-selection! db browser-id item-dex)}
-          ; B)
-          {:dispatch on-click})))
+  ; @param (keyword) browser-id
+  (fn [{:keys [db]} [_ browser-id]]
+      {:db         (r core.events/load-browser! db browser-id)
+       :dispatch-n [[:item-browser/request-items! browser-id]
+                    [:item-browser/request-item!  browser-id]]}))

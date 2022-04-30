@@ -23,7 +23,7 @@
   ;   :suggestion-keys (keywords in vector)}
   [db [_ editor-id]]
   (let [suggestion-keys (r body.subs/get-body-prop db editor-id :suggestion-keys)]
-       (merge (r core.subs/get-meta-item db editor-id :default-query-params)
+       (merge (r core.subs/get-query-params db editor-id)
               {:editor-id       editor-id
                :suggestion-keys suggestion-keys})))
 
@@ -36,7 +36,7 @@
   ;  {:item-id (string)}
   [db [_ editor-id]]
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)]
-       (merge (r core.subs/get-meta-item db editor-id :default-query-params)
+       (merge (r core.subs/get-query-params db editor-id)
               {:item-id current-item-id})))
 
 (defn get-request-item-query

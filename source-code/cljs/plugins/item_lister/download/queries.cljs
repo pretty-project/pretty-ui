@@ -27,7 +27,7 @@
   ;   :search-keys (keywords in vector)
   ;   :search-term (string)}
   [db [_ lister-id]]
-  (merge (r core.subs/get-meta-item db lister-id :default-query-params)
+  (merge (r core.subs/get-query-params db lister-id)
          {:download-limit        (r body.subs/get-body-prop             db lister-id :download-limit)
           :order-by              (r core.subs/get-meta-item             db lister-id :order-by)
           :reload-items?         (r core.subs/get-meta-item             db lister-id :reload-mode?)

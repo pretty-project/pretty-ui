@@ -4,7 +4,7 @@
 
 (ns plugins.item-browser.items.events
     (:require [plugins.item-browser.items.subs  :as items.subs]
-              [plugins.item-lister.items.events :as plugins.item-lister.items.events]
+              [plugins.item-lister.items.events :as items.events]
               [x.app-core.api                   :refer [r]]))
 
 
@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.items.events
-(def disable-items!         plugins.item-lister.items.events/disable-items!)
-(def enable-items!          plugins.item-lister.items.events/enable-items!)
-(def enable-all-items!      plugins.item-lister.items.events/enable-all-items!)
-(def toggle-item-selection! plugins.item-lister.items.events/toggle-item-selection!)
+(def disable-items!         items.events/disable-items!)
+(def enable-items!          items.events/enable-items!)
+(def enable-all-items!      items.events/enable-all-items!)
+(def toggle-item-selection! items.events/toggle-item-selection!)
 
 
 

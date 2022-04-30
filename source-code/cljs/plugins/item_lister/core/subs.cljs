@@ -16,8 +16,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.core.subs
-(def get-meta-item         core.subs/get-meta-item)
-(def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def get-meta-item             core.subs/get-meta-item)
+(def get-query-params          core.subs/get-query-params)
+(def plugin-synchronizing?     core.subs/plugin-synchronizing?)
+(def get-downloaded-items      core.subs/get-downloaded-items)
+(def get-downloaded-item-count core.subs/get-downloaded-item-count)
 
 
 
@@ -47,16 +50,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-downloaded-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (maps in vector)
-  [db [_ lister-id]]
-  (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
-       (get-in db items-path)))
-
 (defn no-items-to-show?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -66,16 +59,6 @@
   [db [_ lister-id]]
   (let [downloaded-items (r get-downloaded-items db lister-id)]
        (empty? downloaded-items)))
-
-(defn get-downloaded-item-count
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (integer)
-  [db [_ lister-id]]
-  (let [downloaded-items (r get-downloaded-items db lister-id)]
-       (count downloaded-items)))
 
 (defn get-all-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!

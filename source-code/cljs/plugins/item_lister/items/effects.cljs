@@ -38,7 +38,7 @@
       ; C) ...
       (cond ; A)
             (r items.subs/toggle-item-selection? db lister-id item-dex)
-            {:db (r items.events/toggle-item-selection! db lister-id item-dex)
+            {:db       (r items.events/toggle-item-selection! db lister-id item-dex)
              :dispatch on-select}
             ; B)
             memory-mode?

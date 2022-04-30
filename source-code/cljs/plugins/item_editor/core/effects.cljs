@@ -23,19 +23,10 @@
   ; @usage
   ;  [:item-editor/edit-item! :my-editor "my-item"]
   (fn [{:keys [db]} [_ editor-id item-id]]
-      ; A) Ha az item-editor plugin útvonal-vezérelt, ...
-      ;    ... akkor elkészíti az elem szerkesztéséhez az útvonalat és átirányít arra.
-      ;
-      ; B) Ha az item-editor plugin NEM útvonal-vezérelt és a body komponens a React-fába
-      ;    van csatolva, ...
-      ;    ... akkor beállítja az item-id paraméter értékét az aktuálisan szerkesztett
-      ;        elem azonosítójaként.
-      ;    ... meghívja az [:item-editor/load-editor! ...] eseményt.
+      ; XXX#5575
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
-              ; A)
-              (let [item-route (r routes.subs/get-edit-route db editor-id item-id)]
-                   {:dispatch [:router/go-to! item-route]})
-              ; B)
+              (let [edit-route (r routes.subs/get-edit-route db editor-id item-id)]
+                   {:dispatch [:router/go-to! edit-route]})
               (if (r body.subs/body-did-mount? db editor-id)
                   {:db       (r core.events/set-item-id! db editor-id item-id)
                    :dispatch [:item-editor/load-editor! editor-id]}))))

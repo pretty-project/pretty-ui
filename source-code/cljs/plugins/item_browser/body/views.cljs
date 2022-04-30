@@ -5,9 +5,21 @@
 (ns plugins.item-browser.body.views
     (:require [plugins.item-browser.body.prototypes :as body.prototypes]
               [plugins.item-browser.core.helpers    :as core.helpers]
-              [plugins.item-lister.api              :as item-lister]
+              [plugins.item-lister.body.views       :as body.views]
               [reagent.api                          :as reagent]
-              [x.app-core.api                       :as a]))
+              [x.app-core.api                       :as a]
+              [x.app-tools.api                      :as tools]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.item-lister.body.views
+(def error-body        body.views/error-body)
+(def item-list         body.views/item-list)
+(def no-items-to-show  body.views/no-items-to-show)
+(def downloading-items body.views/downloading-items)
 
 
 
@@ -18,9 +30,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
-  ; @param (map) body-props
-  [browser-id body-props]
-  [item-lister/body browser-id body-props])
+  [browser-id]
+  ; XXX#6177
+  (cond @(a/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
+         [error-body browser-id {:error-description :the-content-you-opened-may-be-broken}]
+        ;@(a/subscribe [:environment/browser-offline?])
+        ; [offline-body browser-id]
+        @(a/subscribe [:item-browser/data-received? browser-id])
+         [:<> [item-list             browser-id]
+              [tools/infinite-loader browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
+              [no-items-to-show      browser-id]
+              [downloading-items     browser-id]]
+        :data-not-received
+         [downloading-items browser-id]))
 
 (defn body
   ; @param (keyword) browser-id
@@ -58,11 +80,9 @@
   ;  [item-browser/body :my-browser {:list-element #'my-list-element
   ;                                  :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]
-  ; Az item-browser body komponensének Reagent azonosítója nem egyezhet meg az item-lister
-  ; body komponensének Reagent azonosítójával, mert a két komponens egy időben van a React-fába
-  ; csatolva!
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
-       (reagent/lifecycles (core.helpers/component-id browser-id :body-wrapper)
-                           {:reagent-render         (fn []             [body-structure                  browser-id body-props])
-                            :component-did-mount    (fn [] (a/dispatch [:item-browser/body-did-mount    browser-id body-props]))
-                            :component-will-unmount (fn [] (a/dispatch [:item-browser/body-will-unmount browser-id]))})))
+       (reagent/lifecycles (core.helpers/component-id browser-id :body)
+                           {:reagent-render         (fn []              [body-structure                  browser-id body-props])
+                            :component-did-mount    (fn []  (a/dispatch [:item-browser/body-did-mount    browser-id body-props]))
+                            :component-will-unmount (fn []  (a/dispatch [:item-browser/body-will-unmount browser-id]))
+                            :component-did-update   (fn [%] (a/dispatch [:item-browser/body-did-update   browser-id %]))})))

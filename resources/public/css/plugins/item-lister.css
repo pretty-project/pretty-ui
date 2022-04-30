@@ -36,13 +36,13 @@
 /*** Item-lister header ***/
 
 /*** Item-lister body ***/
-
-.item-lister--body--structure {
-  width: 100% }
-
 /*** Item-lister body ***/
 
 /*** Item-lister item-list ***/
+
+.item-lister--item-list {
+  width: 100% }
+
 /*** Item-lister item-list ***/
 
 /*** Item-lister list-item ***/

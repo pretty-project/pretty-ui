@@ -10,7 +10,7 @@
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Delete item validators --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn delete-item-response-valid?
@@ -25,6 +25,11 @@
         document-id   (get server-response (symbol mutation-name))]
        (string/nonempty? document-id)))
 
+
+
+;; -- Undo delete item validators ---------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn undo-delete-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -36,6 +41,11 @@
   (let [mutation-name (r update.subs/get-mutation-name db viewer-id :undo-delete-item!)
         document      (get server-response (symbol mutation-name))]
        (db/document->document-namespaced? document)))
+
+
+
+;; -- Duplicate item validators -----------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn duplicate-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
