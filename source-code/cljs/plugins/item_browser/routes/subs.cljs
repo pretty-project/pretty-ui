@@ -33,3 +33,15 @@
   ; @return (string)
   [db [_ browser-id item-id]]
   (r get-extended-route db browser-id item-id))
+
+  
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) browser-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-browser/get-item-route db :my-browser "my-item"]
+(a/reg-sub :item-browser/get-item-route get-item-route)

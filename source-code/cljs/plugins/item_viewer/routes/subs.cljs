@@ -33,3 +33,15 @@
   ; @return (string)
   [db [_ viewer-id item-id]]
   (r get-extended-route db viewer-id item-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) viewer-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-viewer/get-item-route db :my-viewer "my-item"]
+(a/reg-sub :item-viewer/get-item-route get-item-route)

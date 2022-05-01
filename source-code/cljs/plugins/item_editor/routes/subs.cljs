@@ -49,3 +49,22 @@
   [db [_ editor-id item-id]]
   (let [extended-route (r get-extended-route db editor-id item-id)]
        (str extended-route "/edit")))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) editor-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-editor/get-item-route db :my-editor "my-item"]
+(a/reg-sub :item-editor/get-item-route get-item-route)
+
+; @param (keyword) editor-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-editor/get-edit-route db :my-editor "my-item"]
+(a/reg-sub :item-editor/get-edit-route get-edit-route)
