@@ -327,6 +327,7 @@
   border-top: 2px solid transparent;
   /* XXX#0034 */
   bottom: 0;
+  min-height: 48px;
   position: sticky }
 
 #x-layout-a--content-footer[data-sticky="true"] {
