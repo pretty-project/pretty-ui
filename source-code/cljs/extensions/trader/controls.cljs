@@ -44,9 +44,9 @@
   ; - A [sync/synchronizing-label ...] komponens működéséhez szükséges tulajdonságok:
   ;   {:responsed? ...}, {:subscribed? ...}
   {:subscribed? true
-   :responsed?  (r sync/synchronized?            db)
-   :view-id     (r gestures/get-selected-view-id db :trader/controls)
-   :syncing?    (r sync/sync-active?             db)})
+   :responsed?  (r sync/synchronized?           db)
+   :view-id     (r gestures/get-current-view-id db :trader/controls)
+   :syncing?    (r sync/sync-active?            db)})
 
 (a/reg-sub :trader/get-controls-props get-controls-props)
 

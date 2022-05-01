@@ -45,7 +45,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(a/subscribe [:gestures/get-selected-view-id :developer.developer-tools/handler])]
+  (let [view-id @(a/subscribe [:gestures/get-current-view-id :developer.developer-tools/handler])]
        (case view-id :re-frame-browser  [re-frame-browser]
                      :request-inspector [request-inspector]
                      :route-browser     [route-browser]

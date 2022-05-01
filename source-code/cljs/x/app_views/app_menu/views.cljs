@@ -210,7 +210,7 @@
 (defn- app-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(a/subscribe [:gestures/get-selected-view-id :views.app-menu/handler])]
+  (let [view-id @(a/subscribe [:gestures/get-current-view-id :views.app-menu/handler])]
        (case view-id :about-app         [about-app]
                      :language-selector [language-selector]
                      :main              [main]

@@ -50,4 +50,4 @@
 (def change-view!       view-handler.events/change-view!)
 
 ; x.app-gestures.view-handler.subs
-(def get-selected-view-id view-handler.subs/get-selected-view-id)
+(def get-current-view-id view-handler.subs/get-current-view-id)

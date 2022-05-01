@@ -10,11 +10,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-selected-view-id
+(defn get-current-view-id
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-selected-view-id db :my-view-handler)
+  ;  (r gestures/get-current-view-id db :my-view-handler)
   ;
   ; @return (keyword)
   [db [_ handler-id]]
@@ -26,5 +26,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:gestures/get-selected-view-id]
-(a/reg-sub :gestures/get-selected-view-id get-selected-view-id)
+;  [:gestures/get-current-view-id]
+(a/reg-sub :gestures/get-current-view-id get-current-view-id)

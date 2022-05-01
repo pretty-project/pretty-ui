@@ -340,13 +340,13 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground.view-selector])]
+  (let [view-id @(a/subscribe [:view-selector/get-current-view-id :playground.view-selector])]
        [elements/menu-bar {:menu-items (view-selector.helpers/menu-items view-id)}]))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [view-id @(a/subscribe [:view-selector/get-selected-view-id :playground.view-selector])]
+  (let [view-id @(a/subscribe [:view-selector/get-current-view-id :playground.view-selector])]
        (case view-id :anchors    [anchors]
                      :buttons    [buttons]
                      :chips      [chips]
