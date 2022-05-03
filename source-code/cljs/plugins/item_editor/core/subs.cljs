@@ -83,7 +83,7 @@
   ; nem elérhető, ami miatt az "Új elem hozzáadása" mód megállapítása az útvonal azonosítója
   ; alapján történik.
   (let [current-route-id (r router/get-current-route-id db)]
-       (= :clients.client-editor/creator-route current-route-id)))
+       (= "creator-route" (name current-route-id))))
 
 
 

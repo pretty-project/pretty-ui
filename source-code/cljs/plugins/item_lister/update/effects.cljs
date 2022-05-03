@@ -111,11 +111,12 @@
   (fn [{:keys [db]} [_ lister-id item-ids]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
-           {:db       (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                                         {:on-success [:item-lister/delete-items-undid       lister-id]
-                                          :on-failure [:item-lister/undo-delete-items-failed lister-id]
-                                          :query query :validator-f validator-f}]})))
+           {:db         (r ui/fake-process! db 15)
+            :dispatch-n [[:ui/close-bubble! :plugins.item-lister/items-deleted-dialog]
+                         [:sync/send-query! (r core.subs/get-request-id db lister-id)
+                                            {:on-success [:item-lister/delete-items-undid       lister-id]
+                                             :on-failure [:item-lister/undo-delete-items-failed lister-id]
+                                             :query query :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :item-lister/delete-items-undid

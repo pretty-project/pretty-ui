@@ -69,15 +69,16 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   ;  {:disabled? (boolean)(opt)
+  ;   :size (keyword)
   ;   :value-path (vector)}
-  [selector-id {:keys [disabled? value-path] :as selector-props}]
+  [selector-id {:keys [disabled? size value-path] :as selector-props}]
   (let [on-click [:elements/render-color-selector-options! selector-id selector-props]
         colors   @(a/subscribe [:db/get-item value-path])]
        [:button.x-color-selector--body {:on-click    #(a/dispatch on-click)
                                         :on-mouse-up #(environment/blur-element!)
                                         :data-clickable true}
                                        (if (vector/nonempty? colors)
-                                           [color-stamp     selector-id {:colors colors :disabled? disabled? :size :l}]
+                                           [color-stamp     selector-id {:colors colors :disabled? disabled? :size size}]
                                            [no-colors-label selector-id selector-props])]))
 
 (defn- color-selector
@@ -99,6 +100,9 @@
   ;    Default: DEFAULT-NO-COLORS-LABEL
   ;   :options (strings in vector)(opt)
   ;   :options-path (vector)(opt)
+  ;   :size (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
   ;   :style (map)(opt)
   ;   :value-path (vector)(opt)}
   ;

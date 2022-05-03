@@ -37,9 +37,11 @@
   ;
   ; @return (map)
   ;  {:no-colors-label (metamorphic-content)
+  ;   :size (keyword)
   ;   :value-path (vector)}
   [selector-id {:keys [options options-path] :as selector-props}]
   (merge {:no-colors-label color-selector.config/DEFAULT-NO-COLORS-LABEL
-          :value-path (engine/default-value-path selector-id)}
+          :size            :s
+          :value-path      (engine/default-value-path selector-id)}
          (param selector-props)
          (if (nor options options-path) {:options color-selector.config/DEFAULT-OPTIONS})))

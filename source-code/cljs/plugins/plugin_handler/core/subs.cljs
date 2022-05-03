@@ -7,7 +7,6 @@
               [plugins.plugin-handler.routes.subs   :as routes.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
               [x.app-activities.api                 :as activities]
-              [x.app-components.api                 :as components]
               [x.app-core.api                       :refer [r]]
               [x.app-db.api                         :as db]
               [x.app-sync.api                       :as sync]))
@@ -157,8 +156,7 @@
   [db [_ plugin-id]]
   (let [current-item (r get-current-item db plugin-id)]
        (if-let [modified-at (:modified-at current-item)]
-               (let [actual-modified-at (r activities/get-actual-timestamp db modified-at)]
-                    (components/content {:content :last-modified-at-n :replacements [actual-modified-at]})))))
+               (r activities/get-actual-timestamp db modified-at))))
 
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,6 +1,6 @@
 
 (ns mongo-db.prototypes
-    (:require [mid-fruits.candy   :refer [param return]]
+    (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.time    :as time]
               [server-fruits.http :as http]))
 

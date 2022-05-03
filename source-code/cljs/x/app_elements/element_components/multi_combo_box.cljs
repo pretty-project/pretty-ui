@@ -72,15 +72,16 @@
   ;   :delete-chip-event (metamorphic-event)
   ;   :no-chips-label (metamorphic-content)}
   [group-id {:keys [no-options-selected-label] :as group-props}]
-  (merge group-props {:chips     (group-props->chips group-props)
-                      :on-delete [:elements/unstack-from-group-value! group-id]
-                      ; Mivel a multi-combo-box elem a chip-group elem feliratát használja, ezért
-                      ; ha nincs kiválasztva opció, akkor a chip-group elem felirata és a text-field
-                      ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
-                      ; közötti távolság.
-                      ; Ezért szükséges a chip-group elem {:no-chips-label ...} tulajdonságának
-                      ; használatával megjelenített szöveggel megtörni ezt a távolságot.
-                      :no-chips-label (param no-options-selected-label)}))
+  (merge (select-keys group-props [:label])
+         {:chips     (group-props->chips group-props)
+          :on-delete [:elements/unstack-from-group-value! group-id]
+          ; Mivel a multi-combo-box elem a chip-group elem feliratát használja, ezért
+          ; ha nincs kiválasztva opció, akkor a chip-group elem felirata és a text-field
+          ; közötti távolság nagyobb, mint az alap text-field elem és annak a felirata
+          ; közötti távolság.
+          ; Ezért szükséges a chip-group elem {:no-chips-label ...} tulajdonságának
+          ; használatával megjelenített szöveggel megtörni ezt a távolságot.
+          :no-chips-label (param no-options-selected-label)}))
 
 
 
@@ -104,8 +105,8 @@
           :get-value-f               return
           :no-options-selected-label :no-options-selected
           :options-path              (engine/default-options-path group-id)
-          :value-path                (engine/default-value-path   group-id)
-          :layout :row}
+          :value-path                (engine/default-value-path   group-id)}
+          ;:layout :row}
          (param group-props)))
 
 (defn field-props-prototype

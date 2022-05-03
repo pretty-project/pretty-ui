@@ -6,6 +6,7 @@
     (:require [plugins.item-editor.body.subs         :as body.subs]
               [plugins.item-editor.core.events       :as core.events]
               [plugins.item-editor.core.subs         :as core.subs]
+              [plugins.item-editor.routes.subs       :as routes.subs]
               [plugins.item-editor.transfer.subs     :as transfer.subs]
               [plugins.item-editor.update.queries    :as update.queries]
               [plugins.item-editor.update.subs       :as update.subs]
@@ -43,23 +44,22 @@
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; A) Ha az "Elem mentése" művelet sikeres befejeződésekor a body komponens
       ;    a React-fába van csatolva, a mentett elem van megnyitva szerkesztésre
-      ;    vagy új elem mentése történt és a plugin rendelkezik a {:base-route "..."}
-      ;    tulajdonsággal ...
-      ;    ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
-      ;        elküldött útvonalra.
+      ;    vagy új elem mentése történt és a plugin útvonal-vezérelt, ...
+      ;    ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
+      ;        útvonalra.
       ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
       ;        15%-ig szimulált folyamat.
       ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
       ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      (let [item-id    (r update.subs/get-saved-item-id   db editor-id server-response)
-            base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-           (if (and base-route (or (r core.subs/editing-item? db editor-id item-id)
-                                   (r core.subs/new-item?     db editor-id)))
-               ; A)
-               [:router/go-to! base-route]
-               ; B)
-               [:ui/end-fake-process!]))))
+      (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
+              ; A)
+              (let [item-id (r update.subs/get-saved-item-id db editor-id server-response)]
+                   (if (or (r core.subs/editing-item? db editor-id item-id)
+                           (r core.subs/new-item?     db editor-id))
+                       [:item-editor/go-up! editor-id]))
+              ; B)
+              [:ui/end-fake-process!])))
 
 (a/reg-event-fx
   :item-editor/save-item-failed
@@ -96,8 +96,9 @@
   ; @param (keyword) editor-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
-      {:db       (r core.events/set-recovery-mode! db editor-id)
-       :dispatch [:item-editor/edit-item! editor-id item-id]}))
+      {:db         (r core.events/set-recovery-mode! db editor-id)
+       :dispatch-n [[:ui/close-bubble! :plugins.item-editor/changes-discarded-dialog]
+                    [:item-editor/edit-item! editor-id item-id]]}))
 
 (a/reg-event-fx
   :item-editor/render-changes-discarded-dialog!

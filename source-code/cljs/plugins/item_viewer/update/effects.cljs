@@ -124,10 +124,11 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                                         {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
-                                          :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch-n [[:ui/close-bubble! :plugins.item-viewer/item-deleted-dialog]
+                         [:sync/send-query! (r core.subs/get-request-id db viewer-id)
+                                            {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
+                                             :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
+                                             :query query :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :item-viewer/delete-item-undid
@@ -238,3 +239,13 @@
   (fn [_ [_ viewer-id copy-id]]
       [:ui/render-bubble! :plugins.item-viewer/item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
+
+(a/reg-event-fx
+  :item-viewer/view-duplicated-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (string) copy-id
+  (fn [_ [_ viewer-id copy-id]]
+      {:dispatch-n [[:ui/close-bubble! :plugins.item-viewer/item-duplicated-dialog]
+                    [:item-viewer/view-item! viewer-id copy-id]]}))

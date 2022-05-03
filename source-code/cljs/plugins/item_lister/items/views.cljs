@@ -160,8 +160,9 @@
   ;
   ; @usage
   ;  [item-lister/list-item :my-lister 0 {...}]
-  [lister-id item-dex item-props]
-  [list-item-toggle lister-id item-dex item-props])
+  [lister-id item-dex {:keys [on-click] :as item-props}]
+  (if on-click [list-item-toggle    lister-id item-dex item-props]
+               [list-item-structure lister-id item-dex item-props]))
 
 
 

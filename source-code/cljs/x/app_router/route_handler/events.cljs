@@ -3,13 +3,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.events
-    (:require [mid-fruits.map                    :refer [dissoc-in]]
-              [mid-fruits.uri                    :as uri]
-              [mid-fruits.vector                 :as vector]
-              [x.app-core.api                    :as a :refer [r]]
-              [x.app-db.api                      :as db]
-              [x.app-router.route-handler.config :as route-handler.config]
-              [x.app-router.route-handler.subs   :as route-handler.subs]))
+    (:require [mid-fruits.map                     :refer [dissoc-in]]
+              [mid-fruits.uri                     :as uri]
+              [mid-fruits.vector                  :as vector]
+              [x.app-core.api                     :as a :refer [r]]
+              [x.app-db.api                       :as db]
+              [x.app-router.route-handler.config  :as route-handler.config]
+              [x.app-router.route-handler.helpers :as route-handler.helpers]
+              [x.app-router.route-handler.subs    :as route-handler.subs]))
 
 
 
@@ -98,3 +99,29 @@
   (as-> db % (r store-current-route! % route-string)
              (r reg-to-history!      % route-id)
              (r quit-change-mode!    % route-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn order-client-routes!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  ; A konfliktus-hierarchia szerinti sorrendbe rendezett útvonalakat az útvonal-kezelő indulásakor
+  ; szükséges eltárolni, hogy ne kelljen az egyes útvonalak kezelésekor ezt a vektroba rendezett
+  ; adatszerkezetet újra és újra létrehozni.
+  (let [client-routes     (r route-handler.subs/get-client-routes db)
+        destructed-routes (route-handler.helpers/routes->destructed-routes         client-routes)
+        ordered-routes    (route-handler.helpers/destructed-routes->ordered-routes destructed-routes)]
+       (assoc-in db [:router :route-handler/ordered-routes] ordered-routes)))
+
+(defn init-router!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  (as-> db % (r set-default-routes!  % route-handler.config/DEFAULT-ROUTES)
+             (r order-client-routes! %)))

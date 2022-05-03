@@ -40,16 +40,12 @@
 (defn primary-button-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) bubble-id
   ; @param (map) button-props
-  ;  {:on-click (metamorphic-event)}
   ;
   ; @return (map)
   ;  {:indent (map)
-  ;   :on-click (metamorphic-event)
   ;   :preset (keyword)}
-  [bubble-id {:keys [on-click] :as button-props}]
+  [button-props]
   (merge {:indent {:bottom :xxs :vertical :xs}
           :preset :primary}
-         (param button-props)
-         {:on-click {:dispatch-n [on-click [:ui/close-bubble! bubble-id]]}}))
+         (param button-props)))

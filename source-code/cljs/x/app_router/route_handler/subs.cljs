@@ -3,16 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.subs
-    (:require [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.string                  :as string]
-              [mid-fruits.uri                     :as uri]
-              [mid-fruits.vector                  :as vector]
-              [reitit.frontend                    :as reitit.frontend]
-              [x.app-core.api                     :as a :refer [r]]
-              [x.app-router.route-handler.config  :as route-handler.config]
-              [x.app-router.route-handler.helpers :as route-handler.helpers]
-              [x.app-user.api                     :as user]
-              [x.mid-router.route-handler.subs    :as route-handler.subs]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.string                 :as string]
+              [mid-fruits.uri                    :as uri]
+              [mid-fruits.vector                 :as vector]
+              [reitit.frontend                   :as reitit.frontend]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-router.route-handler.config :as route-handler.config]
+              [x.app-user.api                    :as user]
+              [x.mid-router.route-handler.subs   :as route-handler.subs]))
 
 
 
@@ -49,13 +48,16 @@
   [db _]
   (get-in db [:router :route-handler/client-routes]))
 
-(defn get-router-routes
+(defn get-ordered-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (vector)
+  ; @return (vectors in vector)
+  ;  [[(string) route-template
+  ;    (keyword) route-id]
+  ;   [...]
+  ;   [...]]
   [db _]
-  (let [client-routes (r get-client-routes db)]
-       (route-handler.helpers/routes->router-routes client-routes)))
+  (get-in db [:router :route-handler/ordered-routes]))
 
 (defn get-router
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -65,8 +67,8 @@
   ; XXX#4005
   ; A szerver-oldali útvonal-kezelőhöz hasonlóan a kliens-oldalon is szükséges
   ; átadni a {:conflicts nil} beállítást.
-  (let [router-routes (r get-router-routes db)]
-       (reitit.frontend/router router-routes {:conflicts nil})))
+  (let [ordered-routes (r get-ordered-routes db)]
+       (reitit.frontend/router ordered-routes {:conflicts nil})))
 
 (defn get-route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!

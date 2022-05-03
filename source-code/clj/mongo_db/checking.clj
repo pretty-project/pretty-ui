@@ -1,6 +1,6 @@
 
 (ns mongo-db.checking
-    (:require [mid-fruits.candy :refer [param return]]
+    (:require [mid-fruits.candy :refer [return]]
               [mongo-db.errors  :as errors]
               [x.server-db.api  :as db]))
 
@@ -14,11 +14,15 @@
   ;
   ; @param (*) query
   ;
+  ; @usage
+  ;  (checking/find-query {:namespace/my-string "my-value"
+  ;                        :$or [{:namespace/id "MyObjectId"}]})
+  ;
   ; @return (*)
   [query]
-  (try (if-let [namespace (db/document->namespace query)]
-               (return query)
-               (throw (Exception. errors/MISSING-NAMESPACE-ERROR)))
+  (try (if (map?   query)
+           (return query)
+           (throw (Exception. errors/QUERY-MUST-BE-MAP-ERROR)))
        (catch Exception e (println (str e "\n" {:query query})))))
 
 

@@ -47,12 +47,7 @@
       ; B) ...
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               ; A)
-              (if (r core.subs/new-item? db editor-id)
-                  (let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-                       [:router/go-to! base-route])
-                  (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-                        item-route      (r routes.subs/get-item-route    db editor-id current-item-id)]
-                       [:router/go-to! item-route])))))
+              [:item-editor/go-up! editor-id])))
               ; B)
               ; ...
 
@@ -69,3 +64,21 @@
   (fn [{:keys [db]} [_ editor-id]]
       {:db       (r core.events/load-editor! db editor-id)
        :dispatch [:item-editor/request-item! editor-id]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-editor/go-up!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  (fn [{:keys [db]} [_ editor-id]]
+      (if (r core.subs/new-item? db editor-id)
+          (let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
+               [:router/go-to! base-route])
+          (let [current-item-id (r core.subs/get-current-item-id db editor-id)
+                item-route      (r routes.subs/get-item-route    db editor-id current-item-id)]
+               [:router/go-to! item-route]))))

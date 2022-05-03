@@ -327,7 +327,10 @@
   border-top: 2px solid transparent;
   /* XXX#0034 */
   bottom: 0;
-  min-height: 48px;
+  /* Ha az #x-layout-a--content-footer elem magassága kisebb lenne,
+   * mint a var( --border-radius-m ) értéke, akkor az elem beállított háttérszíne miatt,
+   * a lekerekített sarkainál kilógna a háttérszín! */
+  min-height: var( --border-radius-m );
   position: sticky }
 
 #x-layout-a--content-footer[data-sticky="true"] {
@@ -385,7 +388,7 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 .x-list-item-a {
   display: flex }
 
-.x-list-item-a:hover {
+.x-list-item-a[data-clickable="true"]:hover {
   background-color: var( --hover-color-highlight ) }
 
 .x-list-item-a--selection-icon {

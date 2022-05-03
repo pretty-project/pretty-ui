@@ -153,9 +153,18 @@
           ; A)
           {:db         (r update.events/delete-item-failed db browser-id item-id)
            :dispatch-n [[:ui/end-fake-process!]
-                        [:ui/render-bubble! {:body :failed-to-delete}]]}
+                        [:item-browser/render-delete-item-failed-dialog! browser-id]]}
           ; B)
-          [:ui/render-bubble! {:body :failed-to-delete}])))
+          [:item-browser/render-delete-item-failed-dialog! browser-id])))
+
+(a/reg-event-fx
+  :item-browser/render-delete-item-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  (fn [_ [_ _]]
+      [:ui/render-bubble! :plugins.item-browser/delete-item-failed-dialog
+                          {:body :failed-to-delete}]))
 
 (a/reg-event-fx
   :item-browser/render-item-deleted-dialog!
@@ -183,10 +192,11 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
-                                         {:on-success [:item-browser/delete-item-undid       browser-id]
-                                          :on-failure [:item-browser/undo-delete-item-failed browser-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch-n [[:ui/close-bubble! :plugins.item-browser/item-deleted-dialog]
+                         [:sync/send-query! (r core.subs/get-request-id db browser-id)
+                                            {:on-success [:item-browser/delete-item-undid       browser-id]
+                                             :on-failure [:item-browser/undo-delete-item-failed browser-id]
+                                             :query query :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :item-browser/delete-item-undid
@@ -227,9 +237,18 @@
       (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/render-bubble! {:body :failed-to-undo-delete}]]}
+                        [:item-browser/render-undo-delete-item-failed-dialog! browser-id]]}
           ; B)
-          [:ui/render-bubble! {:body :failed-to-undo-delete}])))
+          [:item-browser/render-undo-delete-item-failed-dialog! browser-id])))
+
+(a/reg-event-fx
+  :item-browser/render-undo-delete-item-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  (fn [_ [_ _]]
+      [:ui/render-bubble! :plugins.item-browser/undo-delete-item-failed-dialog
+                          {:body :failed-to-undo-delete}]))
 
 
 
@@ -295,9 +314,9 @@
       (if (r body.subs/body-did-mount? db browser-id)
           ; A)
           {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/render-bubble! {:body :failed-to-duplicate}]]}
+                        [:item-browser/render-duplicate-item-failed-dialog! browser-id]]}
           ; B)
-          [:ui/render-bubble! {:body :failed-to-duplicate}])))
+          [:item-browser/render-duplicate-item-failed-dialog! browser-id])))
 
 (a/reg-event-fx
   :item-browser/render-item-duplicated-dialog!
@@ -308,6 +327,15 @@
   (fn [_ [_ browser-id copy-id]]
       [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
+
+(a/reg-event-fx
+  :item-browser/render-duplicate-item-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  (fn [_ [_ _]]
+      [:ui/render-bubble! :plugins.item-browser/duplicate-item-failed-dialog
+                          {:body :failed-to-duplicate}]))
 
 
 

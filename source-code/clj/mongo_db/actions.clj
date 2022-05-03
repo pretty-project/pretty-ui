@@ -1,7 +1,7 @@
 
 (ns mongo-db.actions
     (:require monger.joda-time
-              [mid-fruits.candy    :refer [param return]]
+              [mid-fruits.candy    :refer [return]]
               [mid-fruits.keyword  :as keyword]
               [mid-fruits.vector   :as vector]
               [monger.collection   :as mcl]
@@ -163,7 +163,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/insert-document! "my_collection" {:namespace/id "MyObjectId" ...})
+  ;  (mongo-db/insert-document! "my_collection" {:namespace/id "MyObjectId" ...} {...})
   ;  =>
   ;  {:namespace/id "MyObjectId" ...}
   ;
@@ -194,7 +194,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/insert-documents! "my_collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}])
+  ;  (mongo-db/insert-documents! "my_collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}] {...})
   ;  =>
   ;  [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}]
   ;
@@ -221,7 +221,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/save-document! "my_collection" {:namespace/id "MyObjectId" ...})
+  ;  (mongo-db/save-document! "my_collection" {:namespace/id "MyObjectId" ...} {...})
   ;  =>
   ;  {:namespace/id "MyObjectId" ...}
   ;
@@ -252,7 +252,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/save-documents! "my_collection" [{:namespace/id "MyObjectId" ...}])
+  ;  (mongo-db/save-documents! "my_collection" [{:namespace/id "MyObjectId" ...}] {...})
   ;  =>
   ;  [{:namespace/id "MyObjectId" ...}]
   ;
@@ -271,17 +271,17 @@
 
 (defn update-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;  {:namespace/id (string)(opt)}
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
   ;
   ; @usage
-  ;  (mongo-db/update-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;  (mongo-db/update-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -302,17 +302,17 @@
 
 (defn update-documents!
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;  {:namespace/id (string)(opt)}
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
   ;
   ; @usage
-  ;  (mongo-db/update-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;  (mongo-db/update-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -335,16 +335,16 @@
 
 (defn upsert-document!
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
   ;
   ; @usage
-  ;  (mongo-db/upsert-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;  (mongo-db/upsert-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -365,16 +365,16 @@
 
 (defn upsert-documents!
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0})
+  ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
   ;
   ; @usage
-  ;  (mongo-db/upsert-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0})
+  ;  (mongo-db/upsert-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -403,7 +403,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :color "Blue"))
+  ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :color "Blue") {...})
   ;
   ; @return (namespaced map)
   ([collection-name document-id f]
@@ -458,7 +458,7 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-document "my_collection" "MyObjectId")
+  ;  (mongo-db/remove-document "my_collection" "MyObjectId" {...})
   ;  =>
   ;  "MyObjectId"
   ;
@@ -483,7 +483,7 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (mongo-db/remove-documents! "my_collection" ["MyObjectId" "YourObjectId"])
+  ;  (mongo-db/remove-documents! "my_collection" ["MyObjectId" "YourObjectId"] {...})
   ;  =>
   ;  ["MyObjectId" "YourObjectId"]
   ;
@@ -548,7 +548,7 @@
 (defn duplicate-document!
   ; @param (string) collection-name
   ; @param (string) document-id
-  ; @param (map) options
+  ; @param (map)(opt) options
   ;  {:changes (namespaced map)(opt)
   ;   :label-key (namespaced keyword)(opt)
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "#..." kifejezést
@@ -557,7 +557,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/duplicate-document! "my_collection" "MyObjectId")
+  ;  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {...})
   ;  =>
   ;  {:namespace/id "MyObjectId" :namespace/label "My document"}
   ;
@@ -591,7 +591,7 @@
   ;   :prototype-f (function)(opt)}
   ;
   ; @example
-  ;  (mongo-db/duplicate-documents! "my_collection" ["MyObjectId" "YourObjectId"])
+  ;  (mongo-db/duplicate-documents! "my_collection" ["MyObjectId" "YourObjectId"] {...})
   ;  =>
   ;  [{...} {...}]
   ;

@@ -38,10 +38,10 @@
   ;  {:on-click (metamorphic-event)(opt)
   ;   :uri (string)(opt)}
   [thumbnail-id {:keys [on-click uri] :as thumbnail-props}]
-  [:button.x-thumbnail (engine/element-attributes thumbnail-id thumbnail-props
-                                                  {:on-click    #(a/dispatch on-click)
-                                                   :on-mouse-up #(environment/blur-element!)
-                                                   :style {:background-image (css/url uri)}})])
+  [:button.x-thumbnail--body {:data-clickable true
+                              :on-click       #(a/dispatch on-click)
+                              :on-mouse-up    #(environment/blur-element!)
+                              :style          {:background-image (css/url uri)}}])
 
 (defn- static-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,8 +50,7 @@
   ; @param (map) thumbnail-props
   ;  {:uri (string)(opt)}
   [thumbnail-id {:keys [uri] :as thumbnail-props}]
-  [:div.x-thumbnail (engine/element-attributes thumbnail-id thumbnail-props
-                                               {:style {:background-image (css/url uri)}})])
+  [:div.x-thumbnail--body {:style {:background-image (css/url uri)}}])
 
 (defn- thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,8 +59,9 @@
   ; @param (map) thumbnail-props
   ;  {:on-click (metamorphic-event)(opt)}
   [thumbnail-id {:keys [on-click] :as thumbnail-props}]
-  (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
-        (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props]))
+  [:div.x-thumbnail (engine/element-attributes thumbnail-id thumbnail-props)
+                    (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
+                          (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props])])
 
 (defn element
   ; @param (keyword)(opt) thumbnail-id

@@ -1,7 +1,7 @@
 
 (ns mongo-db.reader
     (:require monger.joda-time
-              [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.candy     :refer [return]]
               [mid-fruits.vector    :as vector]
               [monger.collection    :as mcl]
               [monger.core          :as mcr]
@@ -75,7 +75,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;
   ; @return (integer)
   [collection-name query]
@@ -131,7 +131,7 @@
 
 (defn get-document-count-by-query
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;
   ; @usage
   ;  (mongo-db/get-document-count-by-query "my_collection" {:namespace/my-keyword :my-value})
@@ -173,7 +173,7 @@
 
 (defn get-documents-by-query
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ; @param (namespaced map)(opt) projection
   ;
   ; @usage
@@ -210,7 +210,7 @@
 
 (defn get-document-by-query
   ; @param (string) collection-name
-  ; @param (namespaced map) query
+  ; @param (map) query
   ;
   ; @usage
   ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})

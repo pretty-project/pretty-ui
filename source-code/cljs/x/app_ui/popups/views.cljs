@@ -23,18 +23,19 @@
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;    Default: :accept!
-  ;   :on-accept (metamorphic-event)(opt)}
+  ;   :on-accept (metamorphic-event)}
   ;
   ; @usage
   ;  [ui/popup-accept-button :my-popup {...}]
   [popup-id {:keys [disabled? label on-accept]}]
-  [elements/button {:disabled? disabled?
-                    :indent    {:horizontal :xxs :vertical :xs}
-                    :keypress  {:key-code 13}
-                    :label     (or label :accept!)
-                    :on-click  (if on-accept {:dispatch-n [on-accept [:ui/close-popup! popup-id]]}
-                                             [:ui/close-popup! popup-id])
-                    :preset    :accept}])
+  [elements/button {:disabled?   disabled?
+                    :font-size   :xs
+                    :hover-color :highlight
+                    :indent      {:all :xxs}
+                    :keypress    {:key-code 13}
+                    :label       (or label :accept!)
+                    :on-click    on-accept
+                    :preset      :accept}])
 
 (defn popup-save-button
   ; @param (keyword) popup-id
@@ -43,18 +44,19 @@
   ;    Default: false
   ;   :label (metamorphic-content)(opt)
   ;    Default: :save!
-  ;   :on-save (metamorphic-event)(opt)}
+  ;   :on-save (metamorphic-event)}
   ;
   ; @usage
   ;  [ui/popup-save-button :my-popup {...}]
   [popup-id {:keys [disabled? label on-save]}]
-  [elements/button {:disabled? disabled?
-                    :indent    {:horizontal :xxs :vertical :xs}
-                    :keypress  {:key-code 13}
-                    :label     (or label :save!)
-                    :on-click  (if on-save {:dispatch-n [on-save [:ui/close-popup! popup-id]]}
-                                           [:ui/close-popup! popup-id])
-                    :preset    :save}])
+  [elements/button {:disabled?   disabled?
+                    :font-size   :xs
+                    :hover-color :highlight
+                    :indent      {:all :xxs}
+                    :keypress    {:key-code 13}
+                    :label       (or label :save!)
+                    :on-click    on-save
+                    :preset      :save}])
 
 (defn popup-cancel-button
   ; @param (keyword) popup-id
@@ -62,10 +64,12 @@
   ; @usage
   ;  [ui/popup-cancel-button :my-popup]
   [popup-id]
-  [elements/button {:indent   {:horizontal :xxs :vertical :xs}
-                    :keypress {:key-code 27}
-                    :on-click [:ui/close-popup! popup-id]
-                    :preset   :cancel}])
+  [elements/button {:font-size   :xs
+                    :hover-color :highlight
+                    :indent      {:all :xxs}
+                    :keypress    {:key-code 27}
+                    :on-click    [:ui/close-popup! popup-id]
+                    :preset      :cancel}])
 
 
 
@@ -161,7 +165,7 @@
   ; @param (map)(opt) header-props
   ;  {:disabled? (boolean)(opt)
   ;    Default: false
-  ;   :on-accept (metamorphic-event)(opt)}
+  ;   :on-accept (metamorphic-event)}
   ;
   ; @usage
   ;  [ui/accept-popup-header :my-popup {...}]

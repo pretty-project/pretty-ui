@@ -49,7 +49,7 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   [viewer-id copy-id]
-  (let [view-event [:item-viewer/view-item! viewer-id copy-id]]
+  (let [view-event [:item-viewer/view-duplicated-item! viewer-id copy-id]]
        [ui/state-changed-bubble-body :plugins.item-viewer/item-duplicated-dialog
                                      {:label          :item-duplicated
                                       :primary-button {:label :view-copy! :on-click view-event}}]))

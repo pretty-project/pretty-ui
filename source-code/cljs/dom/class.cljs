@@ -26,4 +26,3 @@
   ;  (dom/remove-element-class! my-element "my-class")
   [element class-name]
   (-> element .-classList (.remove class-name)))
-  

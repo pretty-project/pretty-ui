@@ -1,7 +1,6 @@
 
 (ns mongo-db.aggregation
-    (:require [mid-fruits.candy    :refer [param return]]
-              [monger.core         :as mcr]
+    (:require [monger.core         :as mcr]
               [mongo-db.adaptation :as adaptation]
               [mongo-db.config     :as config]
               [x.server-core.api   :as a]))

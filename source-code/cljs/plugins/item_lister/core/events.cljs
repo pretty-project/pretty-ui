@@ -226,46 +226,68 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-search-mode! :my-lister]
 (a/reg-event-db :item-lister/set-search-mode! set-search-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/quit-search-mode! :my-lister]
 (a/reg-event-db :item-lister/quit-search-mode! quit-search-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-select-mode! :my-lister]
 (a/reg-event-db :item-lister/set-select-mode! set-select-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/quit-select-mode! :my-lister]
 (a/reg-event-db :item-lister/quit-select-mode! quit-select-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-actions-mode! :my-lister]
 (a/reg-event-db :item-lister/set-actions-mode! set-actions-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/quit-actions-mode! :my-lister]
 (a/reg-event-db :item-lister/quit-actions-mode! quit-actions-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-reorder-mode! :my-lister]
 (a/reg-event-db :item-lister/set-reorder-mode! set-reorder-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/quit-reorder-mode! :my-lister]
 (a/reg-event-db :item-lister/quit-reorder-mode! quit-reorder-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-error-mode! :my-lister]
 (a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/set-memory-mode! :my-lister]
 (a/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
 
+; @param (keyword) lister-id
+;
 ; @usage
 ;  [:item-lister/reset-selections! :my-lister]
 (a/reg-event-db :item-lister/reset-selections! reset-selections!)

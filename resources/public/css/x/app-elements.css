@@ -122,8 +122,6 @@ button.x-card:focus,
 .x-switch--secondary-label,
 .x-switch--secondary-body:focus
 .x-switch--secondary-label,
-.x-thumbnail:active,
-.x-thumbnail:focus,
 .x-toggle--body:active,
 .x-toggle--body:focus {
   opacity: .5 }
@@ -1086,7 +1084,7 @@ button.x-card:focus,
   height: 12px;
   width: 12px }
 
-.x-thumbnail[data-size="xxs"] {
+.x-thumbnail[data-size="xxs"] .x-thumbnail--body {
   border-radius: var( --border-radius-s );
   height: 36px;
   width: 36px }
@@ -1109,7 +1107,7 @@ button.x-card:focus,
   height: 18px;
   width: 18px }
 
-.x-thumbnail[data-size="xs"] {
+.x-thumbnail[data-size="xx"] .x-thumbnail--body {
   border-radius: var( --border-radius-s );
   height: 48px;
   width: 48px }
@@ -1132,7 +1130,7 @@ button.x-card:focus,
   height: 24px;
   width: 24px }
 
-.x-thumbnail[data-size="s"] {
+.x-thumbnail[data-size="s"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 60px;
   width: 60px }
@@ -1155,7 +1153,7 @@ button.x-card:focus,
   height: 30px;
   width: 30px }
 
-.x-thumbnail[data-size="m"] {
+.x-thumbnail[data-size="m"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 72px;
   width: 72px }
@@ -1178,7 +1176,7 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
-.x-thumbnail[data-size="l"] {
+.x-thumbnail[data-size="l"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 84px;
   width: 84px }
@@ -1201,7 +1199,7 @@ button.x-card:focus,
   height: 42px;
   width: 42px }
 
-.x-thumbnail[data-size="xl"] {
+.x-thumbnail[data-size="xl"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 96px;
   width: 96px }
@@ -1224,7 +1222,7 @@ button.x-card:focus,
   height: 48px;
   width: 48px }
 
-.x-thumbnail[data-size="xxl"] {
+.x-thumbnail[data-size="xxl"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 108px;
   width: 108px }
@@ -1778,7 +1776,9 @@ button.x-card:focus,
   color: var( --color-highlight );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs ) }
+  /* A .x-chip-group--no-chips-label elem magassága megegyzik az .x-chip-group--chips elem
+   * magasságával */
+  line-height: 36px }
 
 /*** Chip-group no-chips label ***/
 /***** Chip-group *****/
@@ -3245,7 +3245,7 @@ button.x-card:focus,
 
 /***** Thumbnail *****/
 
-.x-thumbnail {
+.x-thumbnail--body {
   -background-color: var( --background-color-highlight );
   background-position: center;
   background-repeat: no-repeat;

@@ -46,4 +46,4 @@
   (fn [{:keys [db]} [_ lister-id %]]
       (let [[_ body-props] (reagent/arguments %)]
            {:db       (r body.events/body-did-update db lister-id body-props)
-            :dispatch [:tools/reload-infinite-loader! lister-id]})))
+            :dispatch [:item-lister/request-items! lister-id]})))

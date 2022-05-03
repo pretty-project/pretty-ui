@@ -29,7 +29,7 @@
   ;  [ui/state-changed-bubble-body :my-bubble {...}]
   [bubble-id {:keys [label primary-button]}]
   [:<> (if label          [elements/label  {:content label :indent {:all :xs}}])
-       (if primary-button [elements/button (bubbles.prototypes/primary-button-props-prototype bubble-id primary-button)])])
+       (if primary-button [elements/button (bubbles.prototypes/primary-button-props-prototype primary-button)])])
 
 
 

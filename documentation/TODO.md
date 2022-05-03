@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- item-editor/header DEPRECATED
+
 - Az item-lister reset-downloads! függvény {:data-received? false} állapotba lépteti
   a plugin ami miatt a header eltünik az elemek letöltése utánig kereséskor is,
   és emiatt a search-field újra-fókuszál és a mező elejére teszi a kurzort.

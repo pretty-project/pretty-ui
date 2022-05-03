@@ -13,14 +13,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; DEBUG
-(def DEBUG? false)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (a/reg-event-fx
   :boot-loader/start-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -39,11 +31,6 @@
   :boot-loader/init-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-
-      ; DEBUG
-      (if DEBUG? (println ":on-server-init-events:"))
-      (if DEBUG? (println (str (r a/get-period-events db :on-server-init))))
-
       (println details/app-codename "initializing server ...")
       {; 1. Az inicializálási események meghívása
        ;    (Dispatch on-server-init events)
@@ -56,11 +43,6 @@
   :boot-loader/boot-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-
-      ; DEBUG
-      (if DEBUG? (println ":on-server-boot-events:"))
-      (if DEBUG? (println (str (r a/get-period-events db :on-server-boot))))
-
       (println details/app-codename "booting server ...")
       {; 1. Az indítási események meghívása
        ;    (Dispatch on-server-boot events)
