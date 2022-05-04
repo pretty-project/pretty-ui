@@ -16,11 +16,10 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-name-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-name      @(a/subscribe [:clients.client-viewer/get-client-name])]
-       [:<> [ui/title-sensor {:title client-name :offset -18}]
+       [:<> ;[ui/title-sensor {:title client-name :offset -18}]
             [elements/label ::client-name-label
                             {:content     client-name
                              :disabled?   viewer-disabled?
@@ -28,7 +27,6 @@
                              :font-weight :extra-bold}]]))
 
 (defn- client-color-stamp
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-colors    @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :colors]])]
@@ -38,7 +36,6 @@
                               :size      :l}]))
 
 (defn- client-modified-at-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?   @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-modified-at @(a/subscribe [:item-viewer/get-current-item-modified-at :clients.client-viewer])]
@@ -54,7 +51,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-basic-info-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-basic-info-label
@@ -66,7 +62,6 @@
                         :indent              {:left :m}}]))
 
 (defn- client-last-name-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-last-name-label
@@ -77,7 +72,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-last-name-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-last-name @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :last-name]])]
@@ -91,7 +85,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-first-name-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?  @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-first-name-label
@@ -102,7 +95,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-first-name-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?  @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-first-name @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :first-name]])]
@@ -116,7 +108,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-name-values
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/form-row-attributes)
         [locales/name-order [:<> [:div (layouts/form-block-attributes {:ratio 50})
@@ -128,7 +119,6 @@
                             @(a/subscribe [:locales/get-name-order])]])
 
 (defn- client-phone-number-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-phone-number-label
@@ -139,7 +129,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-phone-number-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?    @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-phone-number @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :phone-number]])]
@@ -153,7 +142,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-email-address-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-email-address-label
@@ -164,7 +152,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-email-address-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?     @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-email-address @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :email-address]])]
@@ -178,7 +165,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-primary-contacts
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/form-row-attributes)
         [:div (layouts/form-block-attributes {:ratio 50})
@@ -189,7 +175,6 @@
               [client-phone-number-value]]])
 
 (defn- client-basic-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-basic-info-label]
@@ -202,7 +187,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-more-info-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-more-info-label
@@ -214,7 +198,6 @@
                         :indent              {:left :m}}]))
 
 (defn- client-vat-no-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-vat-no-label
@@ -225,7 +208,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-vat-no-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-vat-no    @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :vat-no]])]
@@ -239,7 +221,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-country-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-country-label
@@ -250,7 +231,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-country-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-country   @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :country]])]
@@ -264,7 +244,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-zip-code-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-zip-code-label
@@ -275,7 +254,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-zip-code-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-zip-code  @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :zip-code]])]
@@ -289,7 +267,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-city-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-city-label
@@ -300,7 +277,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-city-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-city      @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :city]])]
@@ -314,7 +290,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-address-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-address-label
@@ -325,7 +300,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-address-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-address   @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :address]])]
@@ -339,7 +313,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-secondary-contacts
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [:div (layouts/form-row-attributes)
              [:div (layouts/form-block-attributes {:ratio 30})
@@ -360,7 +333,6 @@
                    [client-vat-no-value]]]])
 
 (defn- client-more-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-more-info-label]
@@ -372,7 +344,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-description-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-description-label
@@ -385,7 +356,6 @@
                         :indent              {:vertical :m :top :xs}}]))
 
 (defn- client-description-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [viewer-disabled?   @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-description @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :description]])]
@@ -399,7 +369,6 @@
                         :placeholder         "-"}]))
 
 (defn- client-additional-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-description-label]
@@ -411,7 +380,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-overview
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [client-color-stamp]
        [client-name-label]
@@ -426,7 +394,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn footer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [client-id @(a/subscribe [:router/get-current-route-path-param :item-id])]
        [item-viewer/footer :clients.client-viewer
@@ -438,7 +405,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [item-viewer/body :clients.client-viewer
@@ -455,7 +421,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a ::view
                     {:body   #'body

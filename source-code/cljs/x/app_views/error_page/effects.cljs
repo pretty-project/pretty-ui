@@ -23,4 +23,4 @@
       (let [content-props (get error-page.config/ERROR-CONTENT error-id)]
            {:dispatch-n [[:ui/restore-default-title!]
                          [:ui/render-surface! :views.error-page/view
-                                              {:view [error-page.views/view :views.error-page/view content-props]}]]})))
+                                              {:content [error-page.views/view :views.error-page/view content-props]}]]})))

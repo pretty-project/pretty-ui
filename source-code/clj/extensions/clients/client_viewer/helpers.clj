@@ -11,7 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn client-item<-name-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request]} {:client/keys [first-name last-name] :as client-item}]
   ; XXX#7601
   ; Ha az item-viewer plugin kliens-oldali kezelője {:auto-title? true} beállítással van használva,

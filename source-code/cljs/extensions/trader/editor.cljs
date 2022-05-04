@@ -180,7 +180,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :trader/load-editor!
   {:dispatch-n [[:db/remove-item! [:trader :editor]]
-                [:ui/render-surface! ::view {:view {:content #'view}}]
+                [:ui/render-surface! ::view {:content {:content #'view}}]
                 [:ui/set-title! "Source code editor"]]})
 
 (a/reg-event-fx

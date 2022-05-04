@@ -213,6 +213,12 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
+;  [:item-lister/get-all-item-count :my-lister]
+(a/reg-sub :item-lister/get-all-item-count get-all-item-count)
+
+; @param (keyword) lister-id
+;
+; @usage
 ;  [:item-lister/no-items-to-show? :my-lister]
 (a/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
 

@@ -31,7 +31,7 @@
          {:download-limit        (r body.subs/get-body-prop             db lister-id :download-limit)
           :order-by              (r core.subs/get-meta-item             db lister-id :order-by)
           :reload-items?         (r core.subs/get-meta-item             db lister-id :reload-mode?)
-          :search-keys           (r body.subs/get-body-prop             db lister-id :search-keys)
+          :search-keys           (r core.subs/get-meta-item             db lister-id :search-keys)
           :search-term           (r core.subs/get-meta-item             db lister-id :search-term)
           :downloaded-item-count (r core.subs/get-downloaded-item-count db lister-id)
           :filter-pattern        (r core.subs/get-filter-pattern        db lister-id)}))

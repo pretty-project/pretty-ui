@@ -17,8 +17,6 @@
   (let [app-title @(a/subscribe [:core/get-app-config-item :app-title])]
        [elements/label ::app-title-label
                        {:content          app-title
-                        :color            :muted
-                        :font-size        :m
                         :font-weight      :extra-bold
                         :horizontal-align :center
                         :indent           {:horizontal :xs}}]))
@@ -68,7 +66,7 @@
                                 :disabled?        disabled?
                                 :label            :login!
                                 :keypress         {:key-code 13 :required? true}
-                                :indent           {:bottom :xxs :top :xxl :vertical :xs}
+                                :indent           {:bottom :xs :top :xxl :vertical :xs}
                                 :input-ids        [::email-address-field ::password-field]
                                 :on-click         [:user/authenticate!]}]))
 
@@ -104,7 +102,7 @@
   []
   [elements/button ::logout-button
                    {:hover-color :highlight
-                    :indent      {:vertical :xs}
+                    :indent      {:bottom :xs :vertical :xs}
                     :label       :logout!
                     :on-click    [:user/logout!]}])
 
@@ -144,22 +142,27 @@
 (defn- logged-in-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:<>
-       [user-name-label]
+  [:<> [user-name-label]
        [user-email-address-label]
        [continue-as-button]
        [logout-button]])
 
 
 
+
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn body
+(defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  [_]
+  []
   (if-let [user-identified? @(a/subscribe [:user/user-identified?])]
           [logged-in-form]
           [login-form]))
+
+(defn view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  [_]
+  [:div#login-box [:div#login-box--body [view-structure]]])

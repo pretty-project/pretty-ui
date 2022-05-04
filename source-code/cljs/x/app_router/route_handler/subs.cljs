@@ -306,6 +306,15 @@
         current-route-path (r get-current-route-path db)]
        (= current-route-path app-home)))
 
+(defn home-next-door?
+  ; @usage
+  ;  (r router/home-next-door? db)
+  ;
+  ; @return (boolean)
+  [db _]
+  (= (r get-app-home             db)
+     (r get-current-route-parent db)))
+
 (defn route-id-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -403,3 +412,7 @@
 ; @usage
 ;  [:router/at-home?]
 (a/reg-sub :router/at-home? at-home?)
+
+; @usage
+;  [:router/home-next-door?]
+(a/reg-sub :router/home-next-door? home-next-door?)

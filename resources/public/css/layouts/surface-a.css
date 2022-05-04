@@ -1,0 +1,74 @@
+
+/* */
+
+#surface-a {
+  width: 100% }
+
+/* */
+
+/* */
+
+#surface-a--header {
+  background-color: var( --app-background-color );
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+#surface-a--header-shadow {
+  animation-fill-mode: both;
+  animation-duration: .5s;
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
+  box-shadow: 0 0 12px 0 #e0e1e2;
+  height: 48px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
+
+#surface-a--header-shadow.r-mounting {
+  animation-name: opacity-0-1 }
+
+#surface-a--header-shadow.r-unmounting {
+  animation-name: opacity-1-0 }
+
+#surface-a--header-content {
+  display: flex;
+  justify-content: space-between;
+  max-width: var( --content-width-l );
+  width: 100% }
+
+.surface-a--header-block {
+  display: flex }
+
+#surface-a--header-title {
+  animation-fill-mode: both;
+  animation-duration: .15s;
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 48px }
+
+#surface-a--header-title.r-mounting {
+  animation-name: opacity-0-1 }
+
+#surface-a--header-title.r-unmounting {
+  animation-name: opacity-1-0 }
+
+/* */
+
+/* */
+
+#surface-a--body {
+  display: flex;
+  justify-content: center;
+  padding-top: 48px;
+  width: 100% }
+
+#surface-a--body-content {
+  max-width: var( --content-width-l );
+  width: 100% }
+
+/* */

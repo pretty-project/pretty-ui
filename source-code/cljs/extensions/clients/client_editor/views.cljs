@@ -19,11 +19,10 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-name-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
         client-name      @(a/subscribe [:clients.client-editor/get-client-name])]
-       [:<> [ui/title-sensor {:title client-name :offset -18}]
+       [:<> ;[ui/title-sensor {:title client-name :offset -18}]
             [elements/label ::client-name-label
                             {:content     client-name
                              :disabled?   editor-disabled?
@@ -32,7 +31,6 @@
                              :placeholder "Névtelen ügyfél"}]]))
 
 (defn- client-color-selector
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/color-selector ::client-color-selector
@@ -41,7 +39,6 @@
                                  :value-path [:clients :client-editor/edited-item :colors]}]))
 
 (defn- client-modified-at-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [client-modified-at @(a/subscribe [:item-editor/get-current-item-modified-at :clients.client-editor])]
        [elements/label ::client-modified-at-label
@@ -55,7 +52,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-basic-info-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-basic-info-label
@@ -67,7 +63,6 @@
                         :indent              {:left :xs :top :xxl}}]))
 
 (defn- client-last-name-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-last-name-field
@@ -80,7 +75,6 @@
                              :value-path [:clients :client-editor/edited-item :last-name]}]))
 
 (defn- client-first-name-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-first-name-field
@@ -93,7 +87,6 @@
                              :value-path [:clients :client-editor/edited-item :first-name]}]))
 
 (defn- client-name-fields
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/form-row-attributes)
         [locales/name-order [:div (layouts/form-block-attributes {:ratio 50})
@@ -103,7 +96,6 @@
                            @(a/subscribe [:locales/get-name-order])]])
 
 (defn- client-phone-number-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-phone-number-field
@@ -120,7 +112,6 @@
                              :value-path [:clients :client-editor/edited-item :phone-number]}]))
 
 (defn- client-email-address-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-email-address-field
@@ -134,7 +125,6 @@
                              :value-path [:clients :client-editor/edited-item :email-address]}]))
 
 (defn- client-primary-contacts
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div (layouts/form-row-attributes)
         [:div (layouts/form-block-attributes {:ratio 50})
@@ -143,7 +133,6 @@
               [client-phone-number-field]]])
 
 (defn- client-basic-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [client-basic-info-label]
        [client-name-fields]
@@ -155,7 +144,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-more-info-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-more-info-label
@@ -167,7 +155,6 @@
                         :indent              {:left :xs :top :xxl}}]))
 
 (defn- client-vat-no-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-vat-no-field
@@ -180,7 +167,6 @@
                              :info-text "Lorem ipsum dolor ..."}]))
 
 (defn- client-country-select
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/select ::client-country-select
@@ -192,7 +178,6 @@
                          :value-path      [:clients :client-editor/edited-item :country]}]))
 
 (defn- client-zip-code-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-zip-code-field
@@ -203,7 +188,6 @@
                              :value-path [:clients :client-editor/edited-item :zip-code]}]))
 
 (defn- client-city-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/combo-box ::client-city-field
@@ -216,7 +200,6 @@
                             :value-path   [:clients :client-editor/edited-item :city]}]))
 
 (defn- client-address-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-address-field
@@ -227,7 +210,6 @@
                              :value-path [:clients :client-editor/edited-item :address]}]))
 
 (defn- client-secondary-contacts
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [:div (layouts/form-row-attributes)
              [:div (layouts/form-block-attributes {:ratio 30})
@@ -243,7 +225,6 @@
                    [client-vat-no-field]]]])
 
 (defn- client-more-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [client-more-info-label]
        [client-secondary-contacts]])
@@ -254,7 +235,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-description-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-description-label
@@ -266,7 +246,6 @@
                         :indent              {:left :xs :top :xxl}}]))
 
 (defn- client-description-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/multiline-field ::client-description-field
@@ -276,7 +255,6 @@
                                   :value-path [:clients :client-editor/edited-item :description]}]))
 
 (defn- client-additional-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [client-description-label]
        [:div (layouts/form-row-attributes)
@@ -289,7 +267,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- client-form
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:<> [client-color-selector]
        [client-name-label]
@@ -304,7 +281,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn footer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-editor/footer :clients.client-editor
                       {}])
@@ -315,7 +291,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
@@ -337,7 +312,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a ::view
                     {:body   #'body

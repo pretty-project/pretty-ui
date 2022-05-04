@@ -21,7 +21,7 @@
   [selector-id]
   (let [header-label @(a/subscribe [:item-browser/get-current-item-label :storage.media-selector])
         on-save       [:storage.media-selector/save-selected-items!]]
-       [:<> [ui/save-popup-header :storage.media-selector/view {:label header-label :on-save on-save}]
+       [:<> ;[ui/save-popup-header :storage.media-selector/view {:label header-label :on-save on-save}]
             [item-browser/header  :storage.media-selector
                                   {:new-item-event   [:storage.media-selector/add-new-item!]
                                    :new-item-options [:create-directory! :upload-files!]}]]))
@@ -34,10 +34,10 @@
 (defn footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [selector-id]
-  (let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
-       [ui/selection-popup-footer :storage.media-selector/view
-                                  {:on-discard [:storage.media-selector/discard-selection!]
-                                   :selected-item-count selected-item-count}]))
+  (let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]))
+       ;[ui/selection-popup-footer :storage.media-selector/view
+        ;                          {:on-discard [:storage.media-selector/discard-selection!]
+        ;                           :selected-item-count selected-item-count)]))
 
 
 

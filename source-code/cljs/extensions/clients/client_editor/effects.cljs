@@ -13,11 +13,9 @@
 
 (a/reg-event-fx
   :clients.client-editor/load-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [:clients.client-editor/render-editor!])
 
 (a/reg-event-fx
   :clients.client-editor/render-editor!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/render-surface! :clients.client-editor/view
-                       {:view #'client-editor.views/view}])
+                       {:content #'client-editor.views/view}])

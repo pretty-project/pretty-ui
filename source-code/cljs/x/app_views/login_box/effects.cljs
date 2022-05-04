@@ -14,8 +14,5 @@
 (a/reg-event-fx
   :views/render-login-box!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/render-popup! :views.login-box/view
-                     {:body              #'login-box.views/body
-                      :min-width         :xs
-                      :render-exclusive? true
-                      :user-close?       false}])
+  [:ui/render-surface! :views.login-box/view
+                       {:content #'login-box.views/view}])

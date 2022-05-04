@@ -11,4 +11,7 @@
               [extensions.clients.client-lister.resolvers]
               [extensions.clients.client-viewer.lifecycles]
               [extensions.clients.client-viewer.mutations]
-              [extensions.clients.client-viewer.resolvers]))
+              [extensions.clients.client-viewer.resolvers]
+
+              ; TEMP
+              [layouts.surface-a.api]))

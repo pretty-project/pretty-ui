@@ -31,3 +31,4 @@
 (def get-current-route-parent       route-handler.subs/get-current-route-parent)
 (def current-route-path-param?      route-handler.subs/current-route-path-param?)
 (def at-home?                       route-handler.subs/at-home?)
+(def home-next-door?                route-handler.subs/home-next-door?)

@@ -180,7 +180,7 @@ body {
 --font-size-m:       16.000px;
 --font-size-l:       18.000px;
 --font-size-xl:      20.000px;
---font-size-xxl:     22.000px;
+--font-size-xxl:     30.000px;
 
 --letter-spacing-default: 0.800px;
 --letter-spacing-xxs:     0.500px;
@@ -189,7 +189,7 @@ body {
 --letter-spacing-m:       0.800px;
 --letter-spacing-l:       0.900px;
 --letter-spacing-xl:      1.000px;
---letter-spacing-xxl:     1.100px;
+--letter-spacing-xxl:     1.500px;
 
 --line-height-default: 24.0px;
 --line-height-xxs:     15.0px;
@@ -198,7 +198,7 @@ body {
 --line-height-m:       24.0px;
 --line-height-l:       27.0px;
 --line-height-xl:      30.0px;
---line-height-xxl:     33.0px;
+--line-height-xxl:     45.0px;
 
 /***** Font *****/
 

@@ -30,8 +30,8 @@
   ;
   ; @usage
   ;  (defn my-component   [] [:div "My component"])
-  ;  (defn your-component [] [react-transition/mount-animation {:mounted? true}
-  ;                                                            [my-component]])
+  ;  (defn your-component [] [react/mount-animation {:mounted? true}
+  ;                                                 [my-component]])
   ;
   ; @return (component)
   [{:keys [animation-timeout mounted?]} component]

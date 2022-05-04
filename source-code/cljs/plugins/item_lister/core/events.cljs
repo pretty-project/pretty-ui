@@ -226,6 +226,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn search-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) search-props
+  ;  {:search-keys (keywords in vector)}
+  ; @param (string) search-term
+  ;
+  ; @return (map)
+  [db [_ lister-id {:keys [search-keys]} search-term]]
+  (as-> db % (r reset-downloads! % lister-id)
+             (r set-meta-item!   % lister-id :search-keys search-keys)
+             (r set-meta-item!   % lister-id :search-term search-term)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @param (keyword) lister-id
 ;
 ; @usage

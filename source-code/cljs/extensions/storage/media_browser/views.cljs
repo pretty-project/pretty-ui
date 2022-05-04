@@ -31,8 +31,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [media-item]
   [elements/horizontal-polarity ::media-menu-header
-                                {:start-content [media-menu-label media-item]
-                                 :end-content   [ui/popup-close-icon-button :storage.media-browser/media-menu {}]}])
+                                {:start-content [media-menu-label media-item]}])
+                                 ;:end-content   [ui/popup-close-icon-button :storage.media-browser/media-menu {}]}])
 
 
 
@@ -196,7 +196,7 @@
   []
   (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
           (let [label @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
-               [:<> [ui/title-sensor {:title label}]
+               [:<> ;[ui/title-sensor {:title label}]
                     [elements/label ::storage-label
                                     {:content     label
                                      :font-size   :xl

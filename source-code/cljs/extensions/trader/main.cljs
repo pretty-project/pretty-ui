@@ -38,4 +38,4 @@
   :trader/render-main!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/render-surface! ::view
-                       {:view {:content #'view}}])
+                       {:content #'view}])

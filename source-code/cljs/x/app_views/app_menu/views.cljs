@@ -3,10 +3,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.app-menu.views
-    (:require [mid-fruits.css     :as css]
-              [x.app-core.api     :as a :refer [r]]
-              [x.app-details      :as details]
-              [x.app-elements.api :as elements]))
+    (:require [layouts.popup-a.api :as popup-a]
+              [mid-fruits.css      :as css]
+              [x.app-core.api      :as a :refer [r]]
+              [x.app-details       :as details]
+              [x.app-elements.api  :as elements]))
 
 
 
@@ -251,10 +252,31 @@
                     :indent {:bottom :m}
                     :stretch-orientation :horizontal}])
 
-(defn body
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:<> [user-card]
+       [app-menu]
+       [elements/horizontal-separator {:size :s}]])
+
+(defn- close-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/icon-button ::close-icon-button
+                        {:on-click [:ui/close-popup! :views.app-menu/view]
+                         :preset   :close}])
+
+(defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/horizontal-polarity ::header
+                                {:end-content [close-icon-button]}])
+
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  [_]
-  [:<> [user-card]
-       [app-menu]])
+  [popup-id]
+  [popup-a/layout popup-id {:body      #'body
+                            :header    #'header
+                            :min-width :xs}])

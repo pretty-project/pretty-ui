@@ -21,10 +21,12 @@
   ; @param (map) card-props
   ;
   ; @return (map)
-  ;  {:horizontal-align (keyword)
+  ;  {:border-radius (keyword)
+  ;   :horizontal-align (keyword)
   ;   :min-width (keyword)}
   [card-props]
-  (merge {:horizontal-align :center
+  (merge {:border-radius    :s
+          :horizontal-align :center
           :min-width        :xxs}
          (param card-props)))
 
@@ -79,9 +81,18 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
-  ;  {:badge-color (keyword)(opt)
+  ;  {:background-color (keyword)(opt)
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
+  ;   :badge-color (keyword)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
+  ;   :border-color (keyword)(opt)
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
+  ;   :border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
   ;   :content (metamorphic-content)(opt)
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
@@ -89,6 +100,9 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right
   ;    Default: :center
+  ;   :hover-color (keyword)(opt)
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

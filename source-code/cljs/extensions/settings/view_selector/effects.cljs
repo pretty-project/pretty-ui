@@ -20,4 +20,4 @@
   :settings.view-selector/render-selector!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:ui/render-surface! :settings.view-selector/view
-                       {:view #'view-selector.views/view}])
+                       {:content #'view-selector.views/view}])

@@ -66,7 +66,7 @@ body[data-theme="light"] {
   /* Background color */
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );
-  --background-color-highlight: var( --white-dark );
+  --background-color-highlight: var( --white-light );
   --background-color-primary:   var( --soft-blue );
   --background-color-secondary: var( --soft-purple );
   --background-color-success:   var( --soft-green );
@@ -106,12 +106,12 @@ body[data-theme="high-contrast"] {}
 /***** Body container *****/
 
 body[data-theme="dark"] {
-  background-color: var( --app-background-color );
-  color:            var( --color ) }
+  -background-color: var( --app-background-color );
+  -color:            var( --color ) }
 
 body[data-theme="light"] {
-  background-color: var( --app-background-color );
-  color:            var( --color ) }
+  -background-color: var( --app-background-color );
+  -color:            var( --color ) }
 
 body[data-theme="high-contrast"] {}
 

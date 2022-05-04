@@ -16,8 +16,8 @@
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [viewer-id]
-  [ui/close-popup-header :storage.media-viewer/view {}])
+  [viewer-id])
+  ;[ui/close-popup-header :storage.media-viewer/view {}])
 
 
 

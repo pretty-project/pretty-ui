@@ -149,8 +149,6 @@
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: core.config/DEFAULT-ORDER-BY-OPTIONS
   ;   :prefilter (map)(opt)
-  ;   :search-keys (keywords in vector)(opt)
-  ;    Default: core.config/DEFAULT-SEARCH-KEYS
   ;   :select-mode? (boolean)(opt)
   ;    Default: false
   ;   :selected-items (strings in vector)(opt)

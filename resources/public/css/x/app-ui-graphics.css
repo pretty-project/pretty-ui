@@ -44,7 +44,7 @@
   animation-duration: .2s;
   animation-iteration-count: 1;
   animation-delay: 3s;
-  animation-name: x-opacity-0-1;
+  animation-name: opacity-0-1;
   opacity: 0 }
 
 /***** Loading animation *****/

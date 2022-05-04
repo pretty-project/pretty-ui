@@ -5,8 +5,6 @@
 (ns x.app-ui.api
     (:require [x.app-ui.bubbles.effects]
               [x.app-ui.bubbles.subs]
-              [x.app-ui.header.side-effects]
-              [x.app-ui.header.subs]
               [x.app-ui.interface.effects]
               [x.app-ui.interface.events]
               [x.app-ui.interface.lifecycles]
@@ -26,7 +24,6 @@
               [x.app-ui.title.effects]
               [x.app-ui.bubbles.views          :as bubbles.views]
               [x.app-ui.graphics.views         :as graphics.views]
-              [x.app-ui.header.views           :as header.views]
               [x.app-ui.interface.subs         :as interface.subs]
               [x.app-ui.progress-bar.events    :as progress-bar.events]
               [x.app-ui.progress-screen.events :as progress-screen.events]
@@ -35,8 +32,7 @@
               [x.app-ui.shield.side-effects    :as shield.side-effects]
               [x.app-ui.sounds.side-effects    :as sounds.side-effects]
               [x.app-ui.structure.views        :as structure.views]
-              [x.app-ui.themes.subs            :as themes.subs]
-              [x.app-ui.popups.views           :as popups.views]))
+              [x.app-ui.themes.subs            :as themes.subs]))
 
 
 
@@ -51,30 +47,10 @@
 (def app-title         graphics.views/app-title)
 (def loading-animation graphics.views/loading-animation)
 
-; x.app-ui.header.views
-(def title-sensor header.views/title-sensor)
-
 ; x.app-ui.interface.subs
 (def get-interface          interface.subs/get-interface)
 (def application-interface? interface.subs/application-interface?)
 (def website-interface?     interface.subs/website-interface?)
-
-; x.app-ui.popups.views
-(def popup-accept-button           popups.views/popup-accept-button)
-(def popup-save-button             popups.views/popup-save-button)
-(def popup-cancel-button           popups.views/popup-cancel-button)
-(def popup-go-up-icon-button       popups.views/popup-go-up-icon-button)
-(def popup-go-back-icon-button     popups.views/popup-go-back-icon-button)
-(def popup-close-icon-button       popups.views/popup-close-icon-button)
-(def popup-placeholder-icon-button popups.views/popup-label)
-(def popup-label                   popups.views/popup-label)
-(def accept-popup-header           popups.views/accept-popup-header)
-(def save-popup-header             popups.views/save-popup-header)
-(def cancel-popup-header           popups.views/cancel-popup-header)
-(def close-popup-header            popups.views/close-popup-header)
-(def go-up-popup-header            popups.views/go-up-popup-header)
-(def go-back-popup-header          popups.views/go-back-popup-header)
-(def selection-popup-footer        popups.views/selection-popup-footer)
 
 ; x.app-ui.progress-bar.events
 (def listen-to-process!         progress-bar.events/listen-to-process!)

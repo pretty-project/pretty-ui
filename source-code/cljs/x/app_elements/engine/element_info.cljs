@@ -63,7 +63,7 @@
   ; @param (map) element-props
   ;  {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div.x-element--helper [components/content {:content helper}]]))
+  (if helper [:div.x-element--helper (components/content helper)]))
 
 
 
@@ -77,8 +77,8 @@
   ; @param (map) element-props
   ;  {:info-text (metamorphic-content)(opt)}
   [element-id {:keys [info-text]}]
-  (if info-text (if-let [info-text-visible? @(a/subscribe [:elements/info-text-visible? element-id])]
-                        [:div.x-element--info-text--content (components/content info-text)])))
+  (if-let [info-text-visible? @(a/subscribe [:elements/info-text-visible? element-id])]
+          [:div.x-element--info-text--content (components/content info-text)]))
 
 (defn info-text-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,3 +89,20 @@
   [:button.x-element--info-text--button {:on-click    #(a/dispatch [:elements/toggle-info-text! element-id])
                                          :on-mouse-up #(environment/blur-element!)}
                                         (param :info_outline)])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn element-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ;  {}
+  [element-id {:keys [info-text label required?] :as element-props}]
+  [:div.x-element--header (if label [:div.x-element--label (components/content label)
+                                                           (if required? [:span.x-element--label-asterisk "*"])])
+                          (if info-text [info-text-button  element-id element-props])
+                          (if info-text [info-text-content element-id element-props])])

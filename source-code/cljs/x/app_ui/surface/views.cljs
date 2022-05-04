@@ -11,16 +11,16 @@
 
 
 
-;; -- Surface layout components -----------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-view
+(defn surface-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
   [surface-id]
-  (let [view @(a/subscribe [:ui/get-surface-prop surface-id :view])]
-       [:div.x-app-surface--element--view [components/content surface-id view]]))
+  (let [content @(a/subscribe [:ui/get-surface-prop surface-id :content])]
+       [:div.x-app-surface--element--content [components/content surface-id content]]))
 
 (defn surface-element-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,7 +28,7 @@
   ; @param (keyword) surface-id
   [surface-id]
   [:div (surface.helpers/surface-attributes surface-id)
-        [surface-view                       surface-id]])
+        [surface-content                    surface-id]])
 
 (defn surface-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
 
 
 
-;; -- Renderer components -----------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn view

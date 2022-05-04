@@ -38,4 +38,4 @@
 (a/reg-event-fx
   :home-screen/render!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/render-surface! :home-screen/view {:view #'views/view}])
+  [:ui/render-surface! :home-screen/view {:content #'views/view}])

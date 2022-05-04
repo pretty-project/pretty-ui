@@ -1,0 +1,56 @@
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns layouts.surface-a.helpers
+    (:require [layouts.surface-a.state :as state]
+              [x.app-core.api          :as a]
+              [x.app-environment.api   :as environment]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn title-sensor-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) sensor-props
+  ;  {:title (metamorphic-content)}
+  [{:keys [title]}]
+  (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-TITLE-VISIBLE? false)
+                                               (reset! state/HEADER-TITLE-VISIBLE? true)))]
+         (reset! state/HEADER-TITLE title)
+         (environment/setup-intersection-observer! "surface-a--title-sensor" f)))
+
+(defn title-sensor-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (environment/remove-intersection-observer! "surface-a--title-sensor"))
+
+(defn title-sensor-did-update-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) sensor-props
+  [sensor-props]
+  ; Ha a title-sensor komponens {:title ...} paramétere megváltozik, akkor szükséges az intersection-observer
+  ; figyelőt újra létrehozni a megváltozott {:title ...} paraméter átadásával.
+  ; Pl.: Ha a title-sensor komponens egy Re-Frame feliratkozás kimenetét kapja meg {:title ...} paraméterként,
+  ;      ami a komponens React-fába csatolása után megváltozik.
+  (title-sensor-will-unmount-f)
+  (title-sensor-did-mount-f sensor-props))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn header-did-mount-f
+  []
+  (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-SHADOW-VISIBLE? false)
+                                               (reset! state/HEADER-SHADOW-VISIBLE? true)))]
+         (environment/setup-intersection-observer! "surface-a--header-sensor" f)))
+
+(defn header-will-unmount-f
+  []
+  (environment/remove-intersection-observer! "surface-a--header-sensor"))

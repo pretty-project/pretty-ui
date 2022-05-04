@@ -2,16 +2,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.header.state
-    (:require [reagent.api :refer [ratom]]))
+(ns layouts.popup-a.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (metamorphic-content)
-;
-; A HEADER-TITLE értéke a Re-Frame adatbázis helyett atom típusban van tárolva,
-; így az értékének változtatása kevesebb erőforrást igényel.
-(defonce HEADER-TITLE (ratom nil))
+(defn layout-props-prototype
+  [layout-props]
+  (merge {:close-by-cover?     true
+          :min-width           :none
+          :stretch-orientation :none}
+         (param layout-props)))

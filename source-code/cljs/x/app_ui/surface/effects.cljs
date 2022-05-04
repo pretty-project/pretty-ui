@@ -36,19 +36,9 @@
   :ui/render-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
-  ;  {:horizontal-align (keyword)(opt)
-  ;    :left, :center, :right
-  ;    Default: :center
+  ;  {:content (metamorphic-content)
   ;   :on-surface-closed (metamorphic-event)(opt)
-  ;   :on-surface-rendered (metamorphic-event)(opt)
-  ;   :trim-content? (boolean)(opt)
-  ;    A surface felületéről az X tengelyen túlméretes tartalom elrejtése.
-  ;    Default: false
-  ;    BUG#9330
-  ;    A surface felületén megjelenített {position: sticky} tulajdonságú
-  ;    tartalmak pozícionálása nem kompatibilis a {:trim-content? true}
-  ;    tulajdonság használatával!
-  ;   :view (metamorphic-content)
+  ;   :on-surface-rendered (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [:ui/render-surface! {...}]
@@ -58,7 +48,7 @@
   ;
   ; @usage
   ;  (defn my-view [surface-id] [:div "My surface"])
-  ;  [:ui/render-surface! {:view {:content #'my-view}}]
+  ;  [:ui/render-surface! {:content #'my-view}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ surface-id surface-props]]
       (let [surface-props (surface.prototypes/surface-props-prototype surface-props)]

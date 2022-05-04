@@ -17,13 +17,10 @@
   ;
   ; @return (map)
   ;  {:hide-animated? (boolean)
-  ;   :horizontal-align (keyword)
   ;   :reveal-animated? (boolean)
-  ;   :trim-content? (boolean)
   ;   :update-animated? (boolean)}
   [surface-props]
-  (merge {:trim-content?    false
-          :horizontal-align :center}
+  (merge {}
          (param surface-props)
          {:hide-animated?   false
           :reveal-animated? false

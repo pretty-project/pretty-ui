@@ -6,7 +6,6 @@
     (:require [x.app-core.api                 :as a :refer [r]]
               [x.app-ui.background.views      :rename {view app-background}]
               [x.app-ui.bubbles.views         :rename {view app-bubbles}]
-              [x.app-ui.header.views          :rename {view app-header}]
               [x.app-ui.locker.views          :rename {view app-locker}]
               [x.app-ui.popups.views          :rename {view app-popups}]
               [x.app-ui.progress-bar.views    :rename {view progress-bar}]
@@ -28,10 +27,9 @@
   []
   [:div#x-app-ui-structure ;[app-background]
                            [app-surface]
-                           [app-header]
                            [app-popups]
                            [app-bubbles]
-                           [progress-screen]
+                           ;[progress-screen]
                            [progress-bar]])
                           ;[app-sounds]
 

@@ -13,14 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defmutation add-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
              [{:keys [request]} {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/add-item!}
              (mongo-db/save-document! "clients" item
                                       {:prototype-f #(mongo-db/added-document-prototype request :client %)}))
 
 (defmutation save-item!
-             ; WARNING! NON-PUBLIC! DO NOT USE!
              [{:keys [request]} {:keys [item]}]
              {::pathom.co/op-name 'clients.client-editor/save-item!}
              ; XXX#7601
@@ -32,7 +30,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (functions in vector)
 (def HANDLERS [add-item! save-item!])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

@@ -13,7 +13,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn env->name-field-pattern
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request]}]
   ; A :client/first-name és :client/last-name tulajdonságok sorrendjéhez a felhasználó által
   ; kiválaszott nyelv szerinti sorrendet alkalmazza.
@@ -22,7 +21,6 @@
                                   {:client/name {:$concat [:$client/first-name " " :$client/last-name]}})))
 
 (defn env->get-pipeline
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   ; XXX#7601
   ; A :client/name virtuális mezőt szükséges hozzáadni a dokumentumokhoz a keresés és rendezés előtt!
@@ -31,7 +29,6 @@
        (item-lister/env->get-pipeline env :clients.client-lister)))
 
 (defn env->count-pipeline
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [env]
   (let [name-field-pattern (env->name-field-pattern env)
         env (pathom/env<-param env :field-pattern name-field-pattern)]

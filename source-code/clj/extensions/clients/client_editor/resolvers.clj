@@ -14,7 +14,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-item-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [env _]
   ; XXX#7601
   (let [item-id (pathom/env->param env :item-id)]
@@ -22,7 +21,6 @@
                (client-editor.helpers/client-item<-name-field env client-item))))
 
 (defresolver get-item
-             ; WARNING! NON-PUBLIC! DO NOT USE!
              [env resolver-props]
              {:clients.client-editor/get-item (get-item-f env resolver-props)})
 
@@ -31,7 +29,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (functions in vector)
 (def HANDLERS [get-item])
 
 (pathom/reg-handlers! ::handlers HANDLERS)

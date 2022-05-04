@@ -32,8 +32,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
-  (fn [{:keys [db]} [_ lister-id]]
-      {:db       (r core.events/reset-downloads! db lister-id)
+  ; @param (map) search-props
+  ;  {:search-keys (keywords in vector)}
+  ; @param (string) search-term
+  (fn [{:keys [db]} [_ lister-id search-props search-term]]
+      {:db       (r core.events/search-items! db lister-id search-props search-term)
        :dispatch [:item-lister/request-items! lister-id]}))
 
 

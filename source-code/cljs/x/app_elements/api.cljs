@@ -17,6 +17,8 @@
               [x.app-elements.surface-handler.subs]
               [x.app-elements.passfield-handler.events]
               [x.app-elements.passfield-handler.subs]
+              [x.app-elements.select.effects]
+              [x.app-elements.select.events]
               [x.app-elements.element-components.anchor               :as element-components.anchor]
               [x.app-elements.element-components.button               :as element-components.button]
               [x.app-elements.element-components.card                 :as element-components.card]
@@ -55,7 +57,7 @@
               [x.app-elements.element-components.radio-button         :as element-components.radio-button]
               [x.app-elements.element-components.row                  :as element-components.row]
               [x.app-elements.element-components.search-field         :as element-components.search-field]
-              [x.app-elements.element-components.select               :as element-components.select]
+              [x.app-elements.select.views                            :as select.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
               [x.app-elements.element-components.submit-button        :as element-components.submit-button]
               [x.app-elements.element-components.switch               :as element-components.switch]
@@ -183,7 +185,7 @@
 (def radio-button         element-components.radio-button/element)
 (def row                  element-components.row/element)
 (def search-field         element-components.search-field/element)
-(def select               element-components.select/element)
+(def select               select.views/element)
 (def slideshow            element-components.slideshow/element)
 (def submit-button        element-components.submit-button/element)
 (def switch               element-components.switch/element)

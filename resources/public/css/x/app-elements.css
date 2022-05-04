@@ -3,6 +3,7 @@
 /***** Active state and focused state *****/
 /***** Animations *****/
 /***** Material icons *****/
+/***** Element header *****/
 /***** Align profiles *****/
 /***** Color profiles *****/
 /***** Font-size profiles *****/
@@ -10,6 +11,7 @@
 /***** Orientation profiles *****/
 /***** Position profiles *****/
 /***** Size profiles *****/
+/***** Border-radius profiles *****/
 /***** Stretch profiles *****/
 /***** Element badge *****/
 /***** Element info *****/
@@ -108,8 +110,6 @@ button.x-card:focus,
 .x-radio-button--option-label,
 .x-radio-button--option:focus
 .x-radio-button--option-label,
-.x-select--button-body:active,
-.x-select--button-body:focus,
 .x-switch--body:active
 .x-switch--label,
 .x-switch--body:focus
@@ -235,14 +235,40 @@ button.x-card:focus,
 
 
 
-/***** Label asterisk *****/
+/***** Element header *****/
+
+.x-element--header {
+  -display: flex }
+
+.x-element--label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px }
+
+.x-element--label-asterisk {
+  color: var( --color-warning );
+  font-weight: 600;
+  padding-left: 2px }
+
+
+
+/* WARNING! DEPRECATED! DO NOT USE! */
+.x-input--label {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px }
 
 .x-input--label-asterisk {
   color: var( --color-warning );
   font-weight: 600;
   padding-left: 2px }
+/* WARNING! DEPRECATED! DO NOT USE! */
 
-/***** Label asterisk *****/
+
+
+/***** Element header *****/
 
 
 
@@ -356,14 +382,20 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="muted"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="muted"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
   background-color: var( --hover-color-muted ) }
 
 .x-button[data-background-color="muted"] .x-button--body,
+.x-card[data-background-color="muted"] .x-card--body,
 .x-chip[data-background-color="muted"] .x-chip--body,
 .x-icon-button[data-background-color="muted"] .x-icon-button--body {
   background-color: var( --background-color-muted ) }
+
+.x-button[data-border-color="muted"] .x-button--body,
+.x-card[data-border-color="muted"] .x-card--body {
+  border-color: var( --border-color-muted ) }
 
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
@@ -414,14 +446,20 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="highlight"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="highlight"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
   background-color: var( --hover-color-highlight ) }
 
 .x-button[data-background-color="highlight"] .x-button--body,
+.x-card[data-background-color="highlight"] .x-card--body,
 .x-chip[data-background-color="highlight"] .x-chip--body,
 .x-icon-button[data-background-color="highlight"] .x-icon-button--body {
   background-color: var( --background-color-highlight ) }
+
+.x-button[data-border-color="highlight"] .x-button--body,
+.x-card[data-border-color="highlight"] .x-card--body {
+  border-color: var( --border-color-highlight ) }
 
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
@@ -468,17 +506,23 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="primary"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="primary"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-primary ) }
 
-.x-circle-diagram--section[data-color="primary"] {
-  stroke: var( --border-color-primary ) }
-
 .x-button[data-background-color="primary"] .x-button--body,
+.x-card[data-background-color="primary"] .x-card--body,
 .x-chip[data-background-color="primary"] .x-chip--body,
 .x-icon-button[data-background-color="primary"] .x-icon-button--body {
   background-color: var( --background-color-primary ) }
+
+.x-button[data-border-color="primary"] .x-button--body,
+.x-card[data-border-color="primary"] .x-card--body {
+  border-color: var( --border-color-primary ) }
+
+.x-circle-diagram--section[data-color="primary"] {
+  stroke: var( --border-color-primary ) }
 
 .x-checkbox[data-border-color="primary"]
 .x-checkbox--button::before,
@@ -531,17 +575,23 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="secondary"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="secondary"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-secondary ) }
 
-.x-circle-diagram--section[data-color="secondary"] {
-  stroke: var( --border-color-secondary ) }
-
 .x-button[data-background-color="secondary"] .x-button--body,
+.x-card[data-background-color="secondary"] .x-card--body,
 .x-chip[data-background-color="secondary"] .x-chip--body,
 .x-icon-button[data-background-color="secondary"] .x-icon-button--body {
   background-color: var( --background-color-secondary ) }
+
+.x-button[data-border-color="secondary"] .x-button--body,
+.x-card[data-border-color="secondary"] .x-card--body {
+  border-color: var( --border-color-secondary ) }
+
+.x-circle-diagram--section[data-color="secondary"] {
+  stroke: var( --border-color-secondary ) }
 
 .x-checkbox[data-border-color="secondary"]
 .x-checkbox--button::before,
@@ -594,17 +644,23 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="success"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="success"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
   background-color: var( --hover-color-success ) }
 
-.x-circle-diagram--section[data-color="success"] {
-  stroke: var( --border-color-success ) }
-
 .x-button[data-background-color="success"] .x-button--body,
+.x-card[data-background-color="success"] .x-card--body,
 .x-chip[data-background-color="success"] .x-chip--body,
 .x-icon-button[data-background-color="success"] .x-icon-button--body {
   background-color: var( --background-color-success ) }
+
+.x-button[data-border-color="success"] .x-button--body,
+.x-card[data-border-color="success"] .x-card--body {
+  border-color: var( --border-color-success ) }
+
+.x-circle-diagram--section[data-color="success"] {
+  stroke: var( --border-color-success ) }
 
 .x-checkbox[data-border-color="success"]
 .x-checkbox--button::before,
@@ -643,17 +699,23 @@ button.x-card:focus,
 
 /* XXX#4005 */
 .x-button[data-hover-color="warning"][data-disabled="false"] .x-button--body:hover,
+.x-card[data-hover-color="warning"][data-disabled="false"] .x-card--body:hover,
 .x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
   background-color: var( --hover-color-warning ) }
 
-.x-circle-diagram--section[data-color="warning"] {
-  stroke: var( --border-color-warning ) }
-
 .x-button[data-background-color="warning"] .x-button--body,
+.x-card[data-background-color="warning"] .x-card--body,
 .x-chip[data-background-color="warning"] .x-chip--body,
 .x-icon-button[data-background-color="warning"] .x-icon-button--body {
   background-color: var( --background-color-warning ) }
+
+.x-button[data-border-color="warning"] .x-button--body,
+.x-card[data-border-color="warning"] .x-card--body {
+  border-color: var( --border-color-warning ) }
+
+.x-circle-diagram--section[data-color="warning"] {
+  stroke: var( --border-color-warning ) }
 
 .x-checkbox[data-border-color="warning"]
 .x-checkbox--button::before,
@@ -1029,26 +1091,34 @@ button.x-card:focus,
 .x-element[data-min-height="xxl"] {
   min-height: 48px }
 
+
+/* BUG
+   Az icon-button elem minden esetben használ height attributumot és
+   ha nem az .x-icon-button--body elem magasságát állítaná, hanem
+   az .x-icon-button.x-element elemét, akkor nem müködne együtt az
+   horizontal indent beállításokkal!
+   + Az .x-element[data-height="..."] formátum az indent bevezetése
+     előtt, volt egy próbálkozás csupán ... */
 .x-element[data-height="xxs"] {
-  height: 12px }
+  -height: 12px }
 
 .x-element[data-height="xs"] {
-  height: 18px }
+  -height: 18px }
 
 .x-element[data-height="s"] {
-  height: 24px }
+  -height: 24px }
 
 .x-element[data-height="m"] {
-  height: 30px }
+  -height: 30px }
 
 .x-element[data-height="l"] {
-  height: 36px }
+  -height: 36px }
 
 .x-element[data-height="xl"] {
-  height: 42px }
+  -height: 42px }
 
 .x-element[data-height="xxl"] {
-  height: 48px }
+  -height: 48px }
 /* TEMP */
 
 
@@ -1079,6 +1149,9 @@ button.x-card:focus,
 .x-element[data-min-width="xxs"] {
   min-width: var( --element-min-width-xxs ) }
 
+.x-icon-button[data-height="xxs"] .x-icon-button--body {
+  height: 12px }
+
 .x-color-stamp[data-size="xxs"] {
   grid-gap: 1px;
   height: 12px;
@@ -1101,6 +1174,9 @@ button.x-card:focus,
 
 .x-element[data-min-width="xs"] {
   min-width: var( --element-min-width-xs ) }
+
+.x-icon-button[data-height="xs"] .x-icon-button--body {
+  height: 18px }
 
 .x-color-stamp[data-size="xs"] {
   grid-gap: 1px;
@@ -1125,6 +1201,9 @@ button.x-card:focus,
 .x-element[data-min-width="s"] {
   min-width: var( --element-min-width-s ) }
 
+.x-icon-button[data-height="s"] .x-icon-button--body {
+  height: 24px }
+
 .x-color-stamp[data-size="s"] {
   grid-gap: 1px;
   height: 24px;
@@ -1147,6 +1226,9 @@ button.x-card:focus,
 
 .x-element[data-min-width="m"] {
   min-width: var( --element-min-width-m ) }
+
+.x-icon-button[data-height="m"] .x-icon-button--body {
+  height: 30px }
 
 .x-color-stamp[data-size="m"] {
   grid-gap: 1px;
@@ -1171,6 +1253,9 @@ button.x-card:focus,
 .x-element[data-min-width="l"] {
   min-width: var( --element-min-width-l ) }
 
+.x-icon-button[data-height="l"] .x-icon-button--body {
+  height: 36px }
+
 .x-color-stamp[data-size="l"] {
   grid-gap: 2px;
   height: 36px;
@@ -1194,6 +1279,9 @@ button.x-card:focus,
 .x-element[data-min-width="xl"] {
   min-width: var( --element-min-width-xl ) }
 
+.x-icon-button[data-height="xl"] .x-icon-button--body {
+  height: 42px }
+
 .x-color-stamp[data-size="xl"] {
   grid-gap: 2px;
   height: 42px;
@@ -1216,6 +1304,9 @@ button.x-card:focus,
 
 .x-element[data-min-width="xxl"] {
   min-width: var( --element-min-width-xxl ) }
+
+.x-icon-button[data-height="xxl"] .x-icon-button--body {
+  height: 48px }
 
 .x-color-stamp[data-size="xxl"] {
   grid-gap: 2px;
@@ -1245,6 +1336,10 @@ button.x-card:focus,
   border-radius: var( --border-radius-xxs );
   padding: 0 var( --border-radius-xxs ) }
 
+.x-card[data-border-radius="xxs"] .x-card--body,
+.x-icon-button[data-border-radius="xxs"] .x-icon-button--body {
+  border-radius: var( --border-radius-xxs ) }
+
 /*** XXS ***/
 
 /*** XS ***/
@@ -1252,6 +1347,10 @@ button.x-card:focus,
 .x-button[data-border-radius="xs"] .x-button--body {
   border-radius: var( --border-radius-xs );
   padding: 0 var( --border-radius-xs ) }
+
+.x-card[data-border-radius="xs"] .x-card--body,
+.x-icon-button[data-border-radius="xs"] .x-icon-button--body {
+  border-radius: var( --border-radius-xs ) }
 
 /*** XS ***/
 
@@ -1261,6 +1360,10 @@ button.x-card:focus,
   border-radius: var( --border-radius-s );
   padding: 0 var( --border-radius-s ) }
 
+.x-card[data-border-radius="s"] .x-card--body,
+.x-icon-button[data-border-radius="s"] .x-icon-button--body {
+  border-radius: var( --border-radius-s ) }
+
 /*** S ***/
 
 /*** M ***/
@@ -1269,13 +1372,21 @@ button.x-card:focus,
   border-radius: var( --border-radius-m );
   padding: 0 var( --border-radius-m ) }
 
+.x-card[data-border-radius="m"] .x-card--body,
+.x-icon-button[data-border-radius="m"] .x-icon-button--body {
+  border-radius: var( --border-radius-m ) }
+
 /*** M ***/
 
 /*** L ***/
 
-.x-button[data-border-radius="l"] .x-button--body {
+.x-button[data-border-radius="l"] .x-button--body,
+.x-icon-button[data-border-radius="l"] .x-icon-button--body {
   border-radius: var( --border-radius-l );
   padding: 0 var( --border-radius-l ) }
+
+.x-card[data-border-radius="l"] .x-card--body {
+  border-radius: var( --border-radius-l ) }
 
 /*** L ***/
 
@@ -1284,6 +1395,10 @@ button.x-card:focus,
 .x-button[data-border-radius="xl"] .x-button--body {
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
 
+.x-card[data-border-radius="xl"] .x-card--body,
+.x-icon-button[data-border-radius="xl"] .x-icon-button--body {
+  border-radius: var( --border-radius-xl ) }
+
 /*** XL ***/
 
 /*** XXL ***/
@@ -1291,8 +1406,13 @@ button.x-card:focus,
 .x-button[data-border-radius="xxl"] .x-button--body {
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
 
+.x-card[data-border-radius="xxl"] .x-card--body,
+.x-icon-button[data-border-radius="xxl"] .x-icon-button--body {
+  border-radius: var( --border-radius-xxl ) }
+
 /*** XXL ***/
 /***** Border-radius profiles *****/
+
 
 
 /***** Stretch profiles *****/
@@ -1344,6 +1464,7 @@ button.x-card:focus,
   height: 24px;
   right: 0;
   position: absolute;
+  top: 0;
   width: 24px }
 
 .x-element--info-text--content {
@@ -1509,6 +1630,10 @@ button.x-card:focus,
   width: 100%;
  }
 
+.x-button[data-border-color] .x-button--body {
+  border-style: solid;
+  border-width: 1px }
+
 /*** Button body ***/
 
 /*** Button icon ***/
@@ -1551,12 +1676,12 @@ button.x-card:focus,
 /*** Card wrapper ***/
 
 .x-card {
-  background-color: var( --background-color );
-  border-radius: var( --border-radius-m );
+
+
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
-  height: calc(100% - 24px) }
+  -height: calc(100% - 24px) }
 
 /*** Card wrapper ***/
 
@@ -1572,11 +1697,11 @@ button.x-card:focus,
 
 .x-card--body {
   display: flex;
-  font-size: var( --font-size-s );
-  flex-direction: column;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s );
-  padding: 12px }
+  flex-direction: column }
+
+.x-card[data-border-color] .x-card--body {
+  border-style: solid;
+  border-width: 1px }
 
 /*** Card body ***/
 /***** Card *****/
@@ -2618,7 +2743,7 @@ button.x-card:focus,
 
 .x-radio-button--option[data-selected="true"]
 .x-radio-button--option-button::before {
-  animation-name: x-opacity-0-1;
+  animation-name: opacity-0-1;
   animation-duration: .15s;
   background-color: var( --color );
   border-radius: 50%;
@@ -2695,23 +2820,6 @@ button.x-card:focus,
 
 
 /***** Select *****/
-/*** Select wrapper ***/
-
-.x-select[data-layout="row"] {
-  padding: 8px 0 }
-
-/*** Select wrapper ***/
-
-/*** Select label ***/
-
-.x-select--label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
-
-/*** Select label ***/
-
 /*** Select button ***/
 
 .x-select--button-body {
@@ -2748,17 +2856,18 @@ button.x-card:focus,
 
 /*** Select options ***/
 
-.x-select--options {
+.x-select--option-list {
   display: flex;
   flex-direction: column;
-  min-width: var( --element-min-width-s ) }
+  padding-bottom: 12px }
 
 .x-select--no-options-label {
+  align-self: center;
   color: var( --color-highlight );
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: var( --line-height-s )  }
+  line-height: 24px }
 
 /*** Select options ***/
 
@@ -2767,11 +2876,11 @@ button.x-card:focus,
 .x-select--option {
   border-radius: var( --border-radius-xs );
   display: flex;
-  padding: 0 18px;
+  padding: 0 24px;
   width: 100% }
 
 .x-select--option:hover {
-  background-color: var( --background-color-highlight ) }
+  background-color: var( --hover-color-highlight ) }
 
 /*** Select option ***/
 
@@ -2787,11 +2896,11 @@ button.x-card:focus,
   font-weight: 600 }
 
 .x-select--option[data-selected="true"]::before {
-  background-color: var( --background-color-primary );
+  background-color: var( --color-primary );
   border-radius: 50%;
   content: '';
   height: 4px;
-  left: 7px;
+  left: 10px;
   position: absolute;
   top: 16px;
   width: 4px }
@@ -2811,6 +2920,19 @@ button.x-card:focus,
   width: 24px }
 
 /*** Select option icon ***/
+
+/*** Select options header ***/
+
+.x-select--options--header {
+  display: flex;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 36px }
+
+.x-select--options--header[data-placeholder="true"] {
+  height: 12px }
+
+/*** Select options header ***/
 /***** Select *****/
 
 
@@ -2889,7 +3011,7 @@ button.x-card:focus,
 
 .x-slideshow--controls {
   animation-fill-mode: both;
-  animation-name: x-opacity-1-0;
+  animation-name: opacity-1-0;
   animation-duration: .3s;
   height: 100%;
   left: 0;

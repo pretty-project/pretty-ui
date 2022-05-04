@@ -133,7 +133,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   :storage.media-browser/render-browser!
   [:ui/render-surface! :storage.media-browser/view
-                       {:view #'media-browser.views/view}])
+                       {:content #'media-browser.views/view}])
 
 (a/reg-event-fx
   :storage.media-browser/render-rename-item-dialog!

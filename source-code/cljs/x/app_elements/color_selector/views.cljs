@@ -74,9 +74,9 @@
   [selector-id {:keys [disabled? size value-path] :as selector-props}]
   (let [on-click [:elements/render-color-selector-options! selector-id selector-props]
         colors   @(a/subscribe [:db/get-item value-path])]
-       [:button.x-color-selector--body {:on-click    #(a/dispatch on-click)
-                                        :on-mouse-up #(environment/blur-element!)
-                                        :data-clickable true}
+       [:button.x-color-selector--body (if-not disabled? {:data-clickable true
+                                                          :on-click       #(a/dispatch on-click)
+                                                          :on-mouse-up    #(environment/blur-element!)})
                                        (if (vector/nonempty? colors)
                                            [color-stamp     selector-id {:colors colors :disabled? disabled? :size size}]
                                            [no-colors-label selector-id selector-props])]))

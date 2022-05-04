@@ -21,11 +21,9 @@
   ; @return (map)
   ;  {:download-limit (integer)
   ;   :items-path (vector)
-  ;   :order-by-options (namespaced keywords in vector)
-  ;   :search-keys (keywords in vector)}
+  ;   :order-by-options (namespaced keywords in vector)}
   [lister-id body-props]
   (merge {:items-path       (core.helpers/default-items-path lister-id)
           :download-limit   core.config/DEFAULT-DOWNLOAD-LIMIT
-          :order-by-options core.config/DEFAULT-ORDER-BY-OPTIONS
-          :search-keys      core.config/DEFAULT-SEARCH-KEYS}
+          :order-by-options core.config/DEFAULT-ORDER-BY-OPTIONS}
          (param body-props)))

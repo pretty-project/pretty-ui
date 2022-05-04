@@ -1,0 +1,128 @@
+
+
+
+/***** Hide scrollbar *****/
+
+.popup-a--body {
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none }
+
+.popup-a--body::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none }
+
+/***** Hide scrollbar *****/
+
+
+
+/***** Size profiles *****/
+
+[data-min-width="xxs"] .popup-a--layout-structure {
+  min-width: var( --content-width-xxs ) }
+
+[data-min-width="xs"] .popup-a--layout-structure {
+  min-width: var( --content-width-xs ) }
+
+[data-min-width="s"] .popup-a--layout-structure {
+  min-width: var( --content-width-s ) }
+
+[data-min-width="m"] .popup-a--layout-structure {
+  min-width: var( --content-width-m ) }
+
+[data-min-width="l"] .popup-a--layout-structure {
+  min-width: var( --content-width-l ) }
+
+[data-min-width="xl"] .popup-a--layout-structure {
+  min-width: var( --content-width-xl ) }
+
+[data-min-width="xxl"] .popup-a--layout-structure {
+  min-width: var( --content-width-xxl ) }
+
+/***** Size profiles *****/
+
+
+
+/* */
+
+.popup-a {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center }
+
+/* */
+
+/* */
+
+.popup-a--cover {
+  background-color: var( --black-semi-transparent );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* */
+
+/* */
+
+.popup-a--layout-structure {
+  border-radius: var( --border-radius-m );
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 96px);
+  max-width:  calc(100% - 96px);
+  overflow: hidden }
+
+[data-stretch-orientation="both"]       .popup-a--layout-structure,
+[data-stretch-orientation="horizontal"] .popup-a--layout-structure {
+  width: calc(100% - 96px) }
+
+[data-stretch-orientation="both"]     .popup-a--layout-structure,
+[data-stretch-orientation="vertical"] .popup-a--layout-structure {
+  height: calc(100vh - 96px) }
+
+.popup-a--layout-hack {
+  /* A popup-a layouton megjeleneített header és footer tartalmakat a body tartalom felett szükséges,
+   * megjeleníteni (a DOM-fában későbbi elemekként), hogy a header és footer tartalmakon esetlegesen
+   * megjelenített scroll-shadow árnyékot ne takarja el a body tartalom!
+   * A body és header tartalmakat fordított sorrendben (body után header) szükséges a DOM-fába
+   * csatolni, és a .popup-a--layout-hack elem jeleníti meg őket visszafordítva. */
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1;
+  overflow: hidden }
+
+/* */
+
+/* */
+
+.popup-a--header {
+  background-color: var( --background-color ) }
+
+.popup-a--header[data-shadow-visible="true"] {
+  box-shadow: var( --scroll-shadow-bottom ) }
+
+/* */
+
+/* */
+
+.popup-a--body {
+  background-color: var( --background-color );
+  overflow-y: scroll;
+  flex-grow: 1 }
+
+/* */
+
+/* */
+
+.popup-a--footer {
+  background-color: var( --background-color ) }
+
+.popup-a--footer[data-shadow-visible="true"] {
+  box-shadow: var( --scroll-shadow-top ) }
+
+/* */
