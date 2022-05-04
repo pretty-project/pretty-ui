@@ -25,7 +25,7 @@
 (defn- unlocked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div#x-app-ui-structure ;[app-background]
+  [:div#x-app-ui-structure [app-background]
                            [app-surface]
                            [app-popups]
                            [app-bubbles]

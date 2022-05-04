@@ -386,6 +386,7 @@ body[data-viewport-profile="s"]   #x-layout-a { border-radius: 0 }
 /*** List-item ***/
 
 .x-list-item-a {
+  border-radius: var( --border-radius-m );
   display: flex }
 
 .x-list-item-a[data-clickable="true"]:hover {

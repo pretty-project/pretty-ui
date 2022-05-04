@@ -30,7 +30,8 @@
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
-  ;   :icon-family (keyword)}
+  ;   :icon-family (keyword)
+  ;   :icon-position (keyword)}
   [{:keys [background-color hover-color icon] :as button-props}]
   (merge {:color            :default
           :font-size        :s
@@ -38,7 +39,8 @@
           :horizontal-align :center}
          (if background-color {:border-radius :s})
          (if hover-color      {:border-radius :s})
-         (if icon             {:icon-family   :material-icons-filled})
+         (if icon             {:icon-family   :material-icons-filled
+                               :icon-position :left})
          (param button-props)))
 
 
@@ -70,11 +72,13 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
-  [button-id {:keys [icon] :as button-props}]
+  [button-id {:keys [icon icon-position] :as button-props}]
   [:button.x-button--body (engine/clickable-body-attributes button-id button-props)
-                          (if icon [button-icon button-id button-props])
+                          (if icon (case icon-position :left  [button-icon button-id button-props]
+                                                       :right [:div.x-button--icon-placeholder]))
                           [button-label button-id button-props]
-                          (if icon [:div.x-button--icon-placeholder])
+                          (if icon (case icon-position :left  [:div.x-button--icon-placeholder]
+                                                       :right [button-icon button-id button-props]))
                           [badge-handler.views/element-badge button-id button-props]])
 
 (defn- button
@@ -137,6 +141,9 @@
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
   ;    Only w/ {:icon ...}
+  ;   :icon-position (keyword)(opt)
+  ;    :left, :right
+  ;    Default: :left
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

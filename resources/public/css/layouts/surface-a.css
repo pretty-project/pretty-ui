@@ -9,7 +9,6 @@
 /* */
 
 #surface-a--header {
-  background-color: var( --app-background-color );
   display: flex;
   justify-content: center;
   left: 0;
@@ -19,7 +18,7 @@
 
 #surface-a--header-shadow {
   animation-fill-mode: both;
-  animation-duration: .5s;
+  animation-duration: .25s;
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   box-shadow: 0 0 12px 0 #e0e1e2;
   height: 48px;
@@ -35,6 +34,7 @@
   animation-name: opacity-1-0 }
 
 #surface-a--header-content {
+  background-color: var( --app-background-color );
   display: flex;
   justify-content: space-between;
   max-width: var( --content-width-l );
@@ -56,6 +56,9 @@
 
 #surface-a--header-title.r-unmounting {
   animation-name: opacity-1-0 }
+
+#surface-a--title-sensor {
+  position: absolute }
 
 /* */
 

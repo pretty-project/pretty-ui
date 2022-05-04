@@ -18,7 +18,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-name-label
+(defn client-name-label
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
         client-name      @(a/subscribe [:clients.client-editor/get-client-name])]
@@ -30,7 +30,7 @@
                              :font-weight :extra-bold
                              :placeholder "Névtelen ügyfél"}]]))
 
-(defn- client-color-selector
+(defn client-color-selector
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/color-selector ::client-color-selector
@@ -38,7 +38,7 @@
                                  :size       :l
                                  :value-path [:clients :client-editor/edited-item :colors]}]))
 
-(defn- client-modified-at-label
+(defn client-modified-at-label
   []
   (let [client-modified-at @(a/subscribe [:item-editor/get-current-item-modified-at :clients.client-editor])]
        [elements/label ::client-modified-at-label
@@ -51,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-basic-info-label
+(defn client-basic-info-label
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-basic-info-label
@@ -62,7 +62,7 @@
                         :horizontal-position :left
                         :indent              {:left :xs :top :xxl}}]))
 
-(defn- client-last-name-field
+(defn client-last-name-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-last-name-field
@@ -74,7 +74,7 @@
                              :required?  true
                              :value-path [:clients :client-editor/edited-item :last-name]}]))
 
-(defn- client-first-name-field
+(defn client-first-name-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-first-name-field
@@ -86,7 +86,7 @@
                              :required?  true
                              :value-path [:clients :client-editor/edited-item :first-name]}]))
 
-(defn- client-name-fields
+(defn client-name-fields
   []
   [:div (layouts/form-row-attributes)
         [locales/name-order [:div (layouts/form-block-attributes {:ratio 50})
@@ -95,7 +95,7 @@
                                   [client-last-name-field]]
                            @(a/subscribe [:locales/get-name-order])]])
 
-(defn- client-phone-number-field
+(defn client-phone-number-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-phone-number-field
@@ -111,7 +111,7 @@
                              :validator  {:f form/phone-number? :invalid-message :invalid-phone-number}
                              :value-path [:clients :client-editor/edited-item :phone-number]}]))
 
-(defn- client-email-address-field
+(defn client-email-address-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-email-address-field
@@ -124,7 +124,7 @@
                              :validator  {:f form/email-address? :invalid-message :invalid-email-address}
                              :value-path [:clients :client-editor/edited-item :email-address]}]))
 
-(defn- client-primary-contacts
+(defn client-primary-contacts
   []
   [:div (layouts/form-row-attributes)
         [:div (layouts/form-block-attributes {:ratio 50})
@@ -132,7 +132,7 @@
         [:div (layouts/form-block-attributes {:ratio 50})
               [client-phone-number-field]]])
 
-(defn- client-basic-info
+(defn client-basic-info
   []
   [:<> [client-basic-info-label]
        [client-name-fields]
@@ -143,7 +143,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-more-info-label
+(defn client-more-info-label
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-more-info-label
@@ -154,7 +154,7 @@
                         :horizontal-position :left
                         :indent              {:left :xs :top :xxl}}]))
 
-(defn- client-vat-no-field
+(defn client-vat-no-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-vat-no-field
@@ -166,7 +166,7 @@
                              ; TEMP
                              :info-text "Lorem ipsum dolor ..."}]))
 
-(defn- client-country-select
+(defn client-country-select
   []
   (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/select ::client-country-select
@@ -177,7 +177,7 @@
                          :min-width       :xs
                          :value-path      [:clients :client-editor/edited-item :country]}]))
 
-(defn- client-zip-code-field
+(defn client-zip-code-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-zip-code-field
@@ -187,7 +187,7 @@
                              :label      :zip-code
                              :value-path [:clients :client-editor/edited-item :zip-code]}]))
 
-(defn- client-city-field
+(defn client-city-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/combo-box ::client-city-field
@@ -199,7 +199,7 @@
                             :options-path [:clients :client-editor/suggestions :city]
                             :value-path   [:clients :client-editor/edited-item :city]}]))
 
-(defn- client-address-field
+(defn client-address-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-address-field
@@ -209,7 +209,7 @@
                              :label      :address
                              :value-path [:clients :client-editor/edited-item :address]}]))
 
-(defn- client-secondary-contacts
+(defn client-secondary-contacts
   []
   [:<> [:div (layouts/form-row-attributes)
              [:div (layouts/form-block-attributes {:ratio 30})
@@ -224,7 +224,7 @@
              [:div (layouts/form-block-attributes {:ratio 40})
                    [client-vat-no-field]]]])
 
-(defn- client-more-info
+(defn client-more-info
   []
   [:<> [client-more-info-label]
        [client-secondary-contacts]])
@@ -234,7 +234,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-description-label
+(defn client-description-label
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/label ::client-description-label
@@ -245,7 +245,7 @@
                         :horizontal-position :left
                         :indent              {:left :xs :top :xxl}}]))
 
-(defn- client-description-field
+(defn client-description-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/multiline-field ::client-description-field
@@ -254,7 +254,7 @@
                                   :min-width  :xs
                                   :value-path [:clients :client-editor/edited-item :description]}]))
 
-(defn- client-additional-info
+(defn client-additional-info
   []
   [:<> [client-description-label]
        [:div (layouts/form-row-attributes)
@@ -266,7 +266,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-form
+(defn client-form
   [_ _]
   [:<> [client-color-selector]
        [client-name-label]

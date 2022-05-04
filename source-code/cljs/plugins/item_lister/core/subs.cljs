@@ -191,6 +191,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-current-order-by
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (namespaced keyword)
+  [db [_ lister-id]]
+  (r get-meta-item db lister-id :order-by))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @param (keyword) lister-id
 ; @param (keyword) item-key
 ;
@@ -239,3 +253,9 @@
 ; @usage
 ;  [:item-lister/lister-disabled? :my-lister]
 (a/reg-sub :item-lister/lister-disabled? lister-disabled?)
+
+; @param (keyword) lister-id
+;
+; @usage
+;  [:item-lister/get-current-order-by :my-lister]
+(a/reg-sub :item-lister/get-current-order-by get-current-order-by)

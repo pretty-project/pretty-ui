@@ -139,15 +139,19 @@
 (defn body
   ; @param (keyword) lister-id
   ; @param (map) body-props
-  ;  {:download-limit (integer)(opt)
+  ;  {:default-order-by (namespaced keyword)
+  ;   :download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
+
+  ;   WARNING! DEPRECATED! DO NOT USE!
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: core.config/DEFAULT-ORDER-BY-OPTIONS
+
   ;   :prefilter (map)(opt)
   ;   :select-mode? (boolean)(opt)
   ;    Default: false

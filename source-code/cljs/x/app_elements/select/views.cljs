@@ -175,7 +175,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [on-click [:elements.select/render-options! select-id select-props]]
-       [button/element select-id (assoc select-props :on-click on-click)]))
+       [icon-button/element select-id (assoc select-props :on-click on-click)]))
 
 
 
@@ -189,7 +189,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [on-click [:elements.select/render-options! select-id select-props]]
-       [icon-button/element select-id (assoc select-props :on-click on-click)]))
+       [button/element select-id (assoc select-props :on-click on-click)]))
 
 
 

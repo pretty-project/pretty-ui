@@ -245,6 +245,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn order-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (namespaced keyword) order-by
+  ;
+  ; @return (map)
+  [db [_ lister-id order-by]]
+  (as-> db % (r reset-downloads! % lister-id)
+             (r set-meta-item!   % lister-id :order-by order-by)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @param (keyword) lister-id
 ;
 ; @usage

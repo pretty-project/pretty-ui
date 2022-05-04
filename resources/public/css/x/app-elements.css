@@ -394,6 +394,7 @@ button.x-card:focus,
   background-color: var( --background-color-muted ) }
 
 .x-button[data-border-color="muted"] .x-button--body,
+.x-icon-button[data-border-color="muted"] .x-icon-button--body,
 .x-card[data-border-color="muted"] .x-card--body {
   border-color: var( --border-color-muted ) }
 
@@ -458,6 +459,7 @@ button.x-card:focus,
   background-color: var( --background-color-highlight ) }
 
 .x-button[data-border-color="highlight"] .x-button--body,
+.x-icon-button[data-border-color="highlight"] .x-icon-button--body,
 .x-card[data-border-color="highlight"] .x-card--body {
   border-color: var( --border-color-highlight ) }
 
@@ -518,6 +520,7 @@ button.x-card:focus,
   background-color: var( --background-color-primary ) }
 
 .x-button[data-border-color="primary"] .x-button--body,
+.x-icon-button[data-border-color="primary"] .x-icon-button--body,
 .x-card[data-border-color="primary"] .x-card--body {
   border-color: var( --border-color-primary ) }
 
@@ -587,6 +590,7 @@ button.x-card:focus,
   background-color: var( --background-color-secondary ) }
 
 .x-button[data-border-color="secondary"] .x-button--body,
+.x-icon-button[data-border-color="secondary"] .x-icon-button--body,
 .x-card[data-border-color="secondary"] .x-card--body {
   border-color: var( --border-color-secondary ) }
 
@@ -656,6 +660,7 @@ button.x-card:focus,
   background-color: var( --background-color-success ) }
 
 .x-button[data-border-color="success"] .x-button--body,
+.x-icon-button[data-border-color="success"] .x-icon-button--body,
 .x-card[data-border-color="success"] .x-card--body {
   border-color: var( --border-color-success ) }
 
@@ -711,6 +716,7 @@ button.x-card:focus,
   background-color: var( --background-color-warning ) }
 
 .x-button[data-border-color="warning"] .x-button--body,
+.x-icon-button[data-border-color="warning"] .x-icon-button--body,
 .x-card[data-border-color="warning"] .x-card--body {
   border-color: var( --border-color-warning ) }
 
@@ -1645,9 +1651,15 @@ button.x-card:focus,
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
   justify-content: center;
-  /* XXX#4509 */
-  margin-right: 12px;
+
   width: var( --icon-size-default ) }
+
+.x-button[data-icon-position="left"] .x-button--icon {
+  /* XXX#4509 */
+  margin-right: 12px }
+
+.x-button[data-icon-position="right"] .x-button--icon {
+  margin-left: 12px }
 
 .x-button--icon-placeholder {
   /* XXX#4509
@@ -2478,10 +2490,14 @@ button.x-card:focus,
 /***** Icon-button *****/
 /*** Icon-button wrapper ***/
 
-.x-icon-button {
+.x-icon-button--body {
   /* A min-width tulajdonság azért szükséges, hogy az icon-button elemet a környező tartalom ne
    * kényszerítse méretcsökkenésre */
   min-width: 48px }
+
+.x-icon-button[data-border-color] .x-icon-button--body {
+  border-style: solid;
+  border-width: 1px }
 
 /*** Icon-button wrapper ***/
 
@@ -2925,9 +2941,11 @@ button.x-card:focus,
 
 .x-select--options--header {
   display: flex;
+  font-size: var( --font-size-s );
   font-weight: 500;
   justify-content: center;
-  line-height: 36px }
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 48px }
 
 .x-select--options--header[data-placeholder="true"] {
   height: 12px }

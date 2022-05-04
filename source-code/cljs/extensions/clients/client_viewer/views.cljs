@@ -15,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-name-label
+(defn client-name-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-name      @(a/subscribe [:clients.client-viewer/get-client-name])]
@@ -26,7 +26,7 @@
                              :font-size   :l
                              :font-weight :extra-bold}]]))
 
-(defn- client-color-stamp
+(defn client-color-stamp
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-colors    @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :colors]])]
@@ -35,7 +35,7 @@
                               :disabled? viewer-disabled?
                               :size      :l}]))
 
-(defn- client-modified-at-label
+(defn client-modified-at-label
   []
   (let [viewer-disabled?   @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-modified-at @(a/subscribe [:item-viewer/get-current-item-modified-at :clients.client-viewer])]
@@ -50,7 +50,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-basic-info-label
+(defn client-basic-info-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-basic-info-label
@@ -61,7 +61,7 @@
                         :horizontal-position :left
                         :indent              {:left :m}}]))
 
-(defn- client-last-name-label
+(defn client-last-name-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-last-name-label
@@ -71,7 +71,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-last-name-value
+(defn client-last-name-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-last-name @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :last-name]])]
@@ -84,7 +84,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-first-name-label
+(defn client-first-name-label
   []
   (let [viewer-disabled?  @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-first-name-label
@@ -94,7 +94,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-first-name-value
+(defn client-first-name-value
   []
   (let [viewer-disabled?  @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-first-name @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :first-name]])]
@@ -107,7 +107,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-name-values
+(defn client-name-values
   []
   [:div (layouts/form-row-attributes)
         [locales/name-order [:<> [:div (layouts/form-block-attributes {:ratio 50})
@@ -118,7 +118,7 @@
                                        [client-last-name-value]]]
                             @(a/subscribe [:locales/get-name-order])]])
 
-(defn- client-phone-number-label
+(defn client-phone-number-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-phone-number-label
@@ -128,7 +128,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-phone-number-value
+(defn client-phone-number-value
   []
   (let [viewer-disabled?    @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-phone-number @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :phone-number]])]
@@ -141,7 +141,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-email-address-label
+(defn client-email-address-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-email-address-label
@@ -151,7 +151,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-email-address-value
+(defn client-email-address-value
   []
   (let [viewer-disabled?     @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-email-address @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :email-address]])]
@@ -164,7 +164,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-primary-contacts
+(defn client-primary-contacts
   []
   [:div (layouts/form-row-attributes)
         [:div (layouts/form-block-attributes {:ratio 50})
@@ -174,7 +174,7 @@
               [client-phone-number-label]
               [client-phone-number-value]]])
 
-(defn- client-basic-info
+(defn client-basic-info
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-basic-info-label]
@@ -186,7 +186,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-more-info-label
+(defn client-more-info-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-more-info-label
@@ -197,7 +197,7 @@
                         :horizontal-position :left
                         :indent              {:left :m}}]))
 
-(defn- client-vat-no-label
+(defn client-vat-no-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-vat-no-label
@@ -207,7 +207,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-vat-no-value
+(defn client-vat-no-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-vat-no    @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :vat-no]])]
@@ -220,7 +220,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-country-label
+(defn client-country-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-country-label
@@ -230,7 +230,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-country-value
+(defn client-country-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-country   @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :country]])]
@@ -243,7 +243,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-zip-code-label
+(defn client-zip-code-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-zip-code-label
@@ -253,7 +253,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-zip-code-value
+(defn client-zip-code-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-zip-code  @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :zip-code]])]
@@ -266,7 +266,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-city-label
+(defn client-city-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-city-label
@@ -276,7 +276,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-city-value
+(defn client-city-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-city      @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :city]])]
@@ -289,7 +289,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-address-label
+(defn client-address-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-address-label
@@ -299,7 +299,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-address-value
+(defn client-address-value
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-address   @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :address]])]
@@ -312,7 +312,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-secondary-contacts
+(defn client-secondary-contacts
   []
   [:<> [:div (layouts/form-row-attributes)
              [:div (layouts/form-block-attributes {:ratio 30})
@@ -332,7 +332,7 @@
                    [client-vat-no-label]
                    [client-vat-no-value]]]])
 
-(defn- client-more-info
+(defn client-more-info
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-more-info-label]
@@ -343,7 +343,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-description-label
+(defn client-description-label
   []
   (let [viewer-disabled? @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])]
        [elements/label ::client-description-label
@@ -355,7 +355,7 @@
                         :horizontal-position :left
                         :indent              {:vertical :m :top :xs}}]))
 
-(defn- client-description-value
+(defn client-description-value
   []
   (let [viewer-disabled?   @(a/subscribe [:item-viewer/viewer-disabled? :clients.client-viewer])
         client-description @(a/subscribe [:db/get-item [:clients :client-viewer/viewed-item :description]])]
@@ -368,7 +368,7 @@
                         :min-width           :xs
                         :placeholder         "-"}]))
 
-(defn- client-additional-info
+(defn client-additional-info
   []
   [:<> [elements/horizontal-separator {:size :xxl}]
        [client-description-label]
@@ -379,7 +379,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- client-overview
+(defn client-overview
   []
   [:<> [client-color-stamp]
        [client-name-label]

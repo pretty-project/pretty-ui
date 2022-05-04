@@ -6,7 +6,6 @@
     (:require [mid-fruits.logical                 :refer [nor]]
               [mid-fruits.vector                  :as vector]
               [plugins.item-lister.core.helpers   :as core.helpers]
-              [plugins.item-lister.header.helpers :as header.helpers]
               [react.api                          :as react]
               [reagent.api                        :as reagent]
               [x.app-core.api                     :as a]
@@ -464,7 +463,7 @@
         no-items-to-show? @(a/subscribe [:item-lister/no-items-to-show? lister-id])]
        [elements/select ::sort-items-icon-select
                         {:disabled?     (or error-mode? lister-disabled? no-items-to-show?)
-                         :get-label-f   header.helpers/order-by-label-f
+                         ;:get-label-f   header.helpers/order-by-label-f
                          :layout        :icon-button
                          :on-select     [:item-lister/order-items! lister-id]
                          :options-label :order-by
@@ -483,7 +482,7 @@
        [elements/select ::sort-items-select
                         {:disabled?     (or error-mode? lister-disabled? no-items-to-show?)
                          :font-size     :xs
-                         :get-label-f   header.helpers/order-by-label-f
+                         ;:get-label-f   header.helpers/order-by-label-f
                          :hover-color   :highlight
                          :indent        {:horizontal :xxs :left :xxs}
                          :layout        :button
