@@ -19,7 +19,7 @@
   ; @param (map) anchor-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:color (keyword or string)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [anchor-props]
@@ -64,7 +64,7 @@
   ;
   ; @param (keyword)(opt) anchor-id
   ; @param (map) anchor-props
-  ;  {:color (keyword)(opt)
+  ;  {:color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)

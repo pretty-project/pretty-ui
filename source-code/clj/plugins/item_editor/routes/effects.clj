@@ -25,7 +25,7 @@
            [:router/add-route! (routes.helpers/route-id editor-id :extended)
                                {:client-event   [:item-editor/handle-route! editor-id]
                                 :restricted?    true
-                                :route-parent   base-route
+                                ;:route-parent   base-route
                                 :route-template extended-route}])))
 
 (a/reg-event-fx

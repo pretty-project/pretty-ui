@@ -36,7 +36,7 @@
   ; a body komponens paramétereként is átadható, így a header komponens gombjainak használata nélkül
   ; is beállíthatók ezek az állapotok.
   (cond-> db :store-body-props!     (as-> % (r store-body-props!                 % lister-id body-props))
-             :set-default-order-by! (as-> % (r core.events/set-default-order-by! % lister-id))
+             :use-default-order-by! (as-> % (r core.events/use-default-order-by! % lister-id))
              (some? reorder-mode?)  (as-> % (r core.events/set-meta-item!        % lister-id :reorder-mode? reorder-mode?))
              (some? select-mode?)   (as-> % (r core.events/set-meta-item!        % lister-id :select-mode?  select-mode?))))
 

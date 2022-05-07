@@ -10,14 +10,14 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- cancel-button
+(defn cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::cancel-button
                    {:preset   :cancel-button
                     :on-click [:ui/close-popup! :settings.cookie-settings/view]}])
 
-(defn- save-button
+(defn save-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::save-button
@@ -26,7 +26,7 @@
                     :on-click {:dispatch-n [[:ui/close-popup! :settings.cookie-settings/view]
                                             [:environment/cookie-settings-changed]]}}])
 
-(defn- header-label
+(defn header-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [])
   ;[elements/label {:content :privacy-settings :indent _}])
@@ -44,14 +44,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- privacy-policy-button
+(defn privacy-policy-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::policy-button
                    {:label :privacy-policy :preset :primary-button :layout :fit
                     :on-click [:router/go-to! "/@app-home/privacy-policy"]}])
 
-(defn- terms-of-service-button
+(defn terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::terms-of-service-button

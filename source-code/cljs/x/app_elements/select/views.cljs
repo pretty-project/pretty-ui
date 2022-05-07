@@ -145,10 +145,10 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select (engine/element-attributes select-id select-props)
-                 [engine/element-header     select-id select-props]
-                 [select-button             select-id select-props]
-                 [engine/element-helper     select-id select-props]])
+  [:div.x-select (select.helpers/select-attributes select-id select-props)
+                 [engine/element-header            select-id select-props]
+                 [select-button                    select-id select-props]
+                 [engine/element-helper            select-id select-props]])
 
 (defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!

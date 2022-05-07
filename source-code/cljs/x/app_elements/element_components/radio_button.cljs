@@ -21,7 +21,7 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
+  ;  {:border-color (keyword or string)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
@@ -124,7 +124,7 @@
 (defn element
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:border-color (keyword)(opt)
+  ;  {:border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)

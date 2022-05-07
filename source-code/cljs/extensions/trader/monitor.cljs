@@ -34,7 +34,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- diagram-close-points
+(defn diagram-close-points
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list total-high total-low]}]
   ; - Egy n sávos pont-diagram n+1 pont által írható le.
@@ -53,7 +53,7 @@
                              (str o "0," y1 " " x2 "," y2))))]
               (reduce-kv f nil kline-list))))
 
-(defn- diagram-bars
+(defn diagram-bars
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list total-high total-low]}]
   (let [range (- total-high total-low)
@@ -75,7 +75,7 @@
                                                          :height height :width "2px" :background-color color}}])])))]
               (reduce-kv f [:<>] kline-list))))
 
-(defn- diagram-period-points
+(defn diagram-period-points
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [kline-list total-high total-low]}]
   (let [range (- total-high total-low)
@@ -101,13 +101,13 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-monitor-settings
+(defn get-monitor-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:interval (get-in db [:trader :monitor :settings :interval :value])
    :limit    (get-in db [:trader :monitor :settings :limit])})
 
-(defn- get-monitor-props
+(defn get-monitor-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [monitor-data  (r sync/get-response db :trader/download-monitor-data)
@@ -125,7 +125,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- init-monitor!
+(defn init-monitor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (as-> db % (assoc-in % [:trader :monitor :settings-mode?] true)
@@ -133,21 +133,21 @@
                          {:limit    DEFAULT-LIMIT
                           :interval DEFAULT-INTERVAL})))
 
-(defn- show-monitor-settings!
+(defn show-monitor-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (assoc-in db [:trader :monitor :settings-mode?] true))
 
 (a/reg-event-db :trader/show-monitor-settings! show-monitor-settings!)
 
-(defn- show-monitor-chart!
+(defn show-monitor-chart!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (assoc-in db [:trader :monitor :settings-mode?] false))
 
 (a/reg-event-db :trader/show-monitor-chart! show-monitor-chart!)
 
-(defn- highlight-kline-item!
+(defn highlight-kline-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ dex]]
   (assoc-in db [:trader :monitor :highlighted-kline] dex))
@@ -159,7 +159,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- connection-toggle-button
+(defn connection-toggle-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [subscribed?] :as module-props}]
   [:div {:style (styles/monitor-connection-toggle-button-style module-id module-props)}
@@ -172,13 +172,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- monitor-tl-controls
+(defn monitor-tl-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/box-tl-controls-style)}
         [connection-toggle-button module-id module-props]])
 
-(defn- monitor-bl-controls
+(defn monitor-bl-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [settings-mode?] :as module-props}]
   [:div {:style (styles/box-bl-controls-style)}
@@ -189,7 +189,7 @@
                                              :preset :default-icon-button
                                              :on-click [:trader/show-monitor-settings!]}])])
 
-(defn- monitor-controls
+(defn monitor-controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:<> [monitor-tl-controls module-id module-props]
@@ -200,7 +200,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- price-box-open-close-price
+(defn price-box-open-close-price
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [highlighted-kline kline-list]}]
   (let [{:keys [open close]} (vector/nth-item kline-list highlighted-kline)]
@@ -211,7 +211,7 @@
                   [:div (format/decimals open  2) " USD"]
                   [:div (format/decimals close 2) " USD"]]]))
 
-(defn- price-box-open-close-timestamp
+(defn price-box-open-close-timestamp
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [highlighted-kline kline-list] :as module-props}]
   (let [{:keys [open-timestamp close-timestamp]} (vector/nth-item kline-list highlighted-kline)]
@@ -224,7 +224,7 @@
                       [:div (time/timestamp-string->date-time open-timestamp)]
                  [:div (time/timestamp-string->date-time close-timestamp)]])]))
 
-(defn- price-box-low-high-price
+(defn price-box-low-high-price
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [highlighted-kline kline-list]}]
   (let [{:keys [low high]} (vector/nth-item kline-list highlighted-kline)]
@@ -235,7 +235,7 @@
                   [:div (format/decimals low  2) " USD"]
                   [:div (format/decimals high 2) " USD"]]]))
 
-(defn- price-box-range
+(defn price-box-range
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [highlighted-kline kline-list]}]
   (let [{:keys [open close]} (vector/nth-item kline-list highlighted-kline)]
@@ -246,14 +246,14 @@
                                  [:span {:style (styles/price-box-neg-diff-style)}
                                         (format/decimals (- close open) 2)]))]))
 
-(defn- price-box-volume
+(defn price-box-volume
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [highlighted-kline kline-list]}]
   (let [{:keys [volume]} (vector/nth-item kline-list highlighted-kline)]
        [:div {:style (styles/price-box-volume-style)}
              (format/round volume)]))
 
-(defn- price-box
+(defn price-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [highlighted-kline kline-list] :as module-props}]
   (if (some? highlighted-kline)
@@ -271,20 +271,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- price-sensor
+(defn price-sensor
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props dex]
   [:div {:style (styles/price-sensor-style module-id module-props dex)
          :class "trader--sensor" :on-mouse-over #(a/dispatch [:trader/highlight-kline-item! dex])}])
 
-(defn- price-sensors
+(defn price-sensors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [kline-list] :as module-props}]
   (letfn [(f [o dex _] (conj o [price-sensor module-id module-props dex]))]
          (reduce-kv f [:div {:style (styles/price-sensors-style)}]
                       (param kline-list))))
 
-(defn- monitor-chart-price-data
+(defn monitor-chart-price-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [total-high total-low]}]
   [:div {:style (styles/monitor-chart-price-data-style)}
@@ -301,7 +301,7 @@
         [:span {:style (styles/monitor-chart-price-value-style)}
                (format/decimals (+ 0 total-low) 2)]])
 
-(defn- monitor-chart-x-labels
+(defn monitor-chart-x-labels
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [total-high total-low]}]
   [:div {:style (styles/monitor-chart-x-labels-style)}
@@ -310,7 +310,7 @@
         [elements/label {:content total-low  :indent :right :style {:opacity ".2" :margin-right "24px"}
                          :font-weight :extra-bold :layout :fit :font-size :m}]])
 
-(defn- monitor-chart-y-labels
+(defn monitor-chart-y-labels
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [kline-list] :as module-props}]
   (if (more-than-24h? module-props)
@@ -323,7 +323,7 @@
             [:div (time/timestamp-string->date-time (:open-timestamp  (first kline-list)))]
             [:div (time/timestamp-string->date-time (:close-timestamp (last  kline-list)))]]))
 
-(defn- monitor-details
+(defn monitor-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [settings symbol]}]
   [:div {:style (styles/monitor-details-style)}
@@ -334,7 +334,7 @@
                          :font-weight :extra-bold :font-size :xs :layout :fit
                          :style {:opacity ".1"}}]])
 
-(defn- monitor-chart
+(defn monitor-chart
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [kline-list total-high total-low] :as module-props}]
   [:div {:style (styles/monitor-chart-style)
@@ -357,7 +357,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- interval-select
+(defn interval-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id _]
   [elements/select {:initial-options engine/INTERVAL-OPTIONS
@@ -367,7 +367,7 @@
                     :on-select  [:trader/monitor-settings-changed]
                     :value-path [:trader :monitor :settings :interval]}])
 
-(defn- period-limit-select
+(defn period-limit-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id _]
   [elements/select {:label "Period count"
@@ -376,7 +376,7 @@
                     :on-select  [:trader/monitor-settings-changed]
                     :value-path [:trader :monitor :settings :limit]}])
 
-(defn- monitor-settings-form
+(defn monitor-settings-form
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:<> [:div {:style {:display :flex}}
@@ -385,7 +385,7 @@
        [:div {:style {:display :flex}}
              [period-limit-select module-id module-props]]])
 
-(defn- monitor-settings
+(defn monitor-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/monitor-settings-style)}
@@ -396,7 +396,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- monitor-structure
+(defn monitor-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [settings-mode? subscribed?] :as module-props}]
   [:div {:style (styles/box-structure-style) :data-subscribed (boolean subscribed?)}
@@ -410,7 +410,7 @@
         [monitor-chart-y-labels module-id module-props]
         [elements/horizontal-separator {:size :xxl}]])
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [body-id]
   [components/stated :trader/monitor

@@ -60,6 +60,8 @@
   ; @param (map) row-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)(opt)
+  ;   :gap (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right, :space-around, :space-between, :space-evenly
   ;    Default: :left

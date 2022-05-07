@@ -69,8 +69,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::menu-icon-button
-                        {:preset :user-menu
-                         :on-click [:views/render-app-menu!]}])
+                        {:border-radius :xxl
+                         ;:hover-color   :highlight
+                         ;:indent        {:all :xxs}
+                         :on-click      [:views/render-app-menu!]
+                         :preset        :user-menu}])
 
 
 
@@ -81,7 +84,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::go-home-icon-button
-                        {:preset :apps :on-click [:router/go-home!]}])
+                        {:border-radius :xxl
+                         ;:hover-color   :highlight
+                         ;:indent        {:all :xxs}
+                         :on-click      [:router/go-home!]
+                         :preset        :apps}])
                         ;:badge-color :secondary
 
 (defn go-up-icon-button
@@ -129,7 +136,7 @@
 (defn surface-a
   [surface-id {:keys [content] :as layout-props}]
   [:div#surface-a [:div#surface-a--header-sensor]
-                  [:div#surface-a--body [:div#surface-a--body-content content]]
+                  [:div#surface-a--body [:div#surface-a--body-content [components/content content]]]
                   [header]])
 
 (defn layout

@@ -41,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- section-header
+(defn section-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [label]}]
   [:<> [elements/label {:content label :font-weight :extra-bold :font-size :m :layout :fit}]
@@ -49,12 +49,12 @@
        [elements/horizontal-line      {:color :highlight :fade :out}]
        [elements/horizontal-separator {:size :m}]])
 
-(defn- section-footer
+(defn section-footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/horizontal-separator {:size :xxl}])
 
-(defn- infinite-loader
+(defn infinite-loader
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/text {:content "Infinite loader printed to console" :color :highlight :font-size :xs :layout :fit :selectable? false}]
@@ -63,14 +63,14 @@
                         {:label "Reload infinite loader!" :on-click [:tools/reload-infinite-loader! :playground]
                          :variant :transparent :color :secondary :layout :fit}]])
 
-(defn- anchors
+(defn anchors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/anchor {:content "Anchor link"     :href "/link"}]
        [elements/anchor {:content "Anchor button"   :on-click [:router/go-to! "/link"]}]
        [elements/anchor {:content "Disabled anchor" :on-click [] :disabled? true}]])
 
-(defn- buttons
+(defn buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
@@ -132,7 +132,7 @@
        [section-footer]
        [section-header {:label "Submit button"}]])
 
-(defn- card-group
+(defn card-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [])
   ;[elements/card-group ::card-group
@@ -140,7 +140,7 @@
   ;                              {:content "Card #2" :on-click [:developer/test!]}
   ;                              {:content "Card #3" :on-click [:developer/test!] :badge-color :secondary}])
 
-(defn- chips
+(defn chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/chip {:label "Chip" :icon :apps}]
@@ -150,7 +150,7 @@
                                                          {:label "Chip #2" :color :secondary}]
                              :on-delete [:developer/test!]}]])
 
-(defn- diagrams
+(defn diagrams
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
@@ -168,12 +168,12 @@
        [elements/point-diagram {:points [4000 4050 4150 4120 4150 4180]
                                 :x-max 3800}]])
 
-(defn- expandable
+(defn expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/expandable {:content "Here comes the sun!" :label "Click to expand!" :icon :people}])
 
-(defn- fields
+(defn fields
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/multi-field ::multi-field
@@ -225,12 +225,12 @@
        [elements/search-field ::search-field
                               {:label "Search-field" :placeholder "Placeholder"}]])
 
-(defn- files
+(defn files
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/file-drop-area {}]])
 
-(defn- pickers
+(defn pickers
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
@@ -239,7 +239,7 @@
         ;                       :get-label-f return
         ;                       :label "Color-picker"}]])
 
-(defn- selectors
+(defn selectors
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
@@ -292,7 +292,7 @@
        [elements/counter ::counter-2
                          {:label "Counter #2" :resetable? true :initial-value 420}]])
 
-(defn- tables
+(defn tables
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/data-table {:columns [{:label "Name"}
@@ -302,7 +302,7 @@
                                     ["Data #2" 10 90]
                                     ["Data #3" 20 75]]}]])
 
-(defn- text
+(defn text
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [section-footer]
@@ -337,13 +337,13 @@
        [:div {:style {:position :fixed :right 0 :bottom 0 :background :white :z-index 999 :font-size :10px}}
              [:pre (mid-fruits.pretty/mixed->string debug)]]))
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [view-id @(a/subscribe [:view-selector/get-current-view-id :playground.view-selector])]
        [elements/menu-bar {:menu-items (view-selector.helpers/menu-items view-id)}]))
 
-(defn- body-structure
+(defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [view-id @(a/subscribe [:view-selector/get-current-view-id :playground.view-selector])]
@@ -359,7 +359,7 @@
                      :tables     [tables]
                      :text       [text])))
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [view-selector/body :playground.view-selector

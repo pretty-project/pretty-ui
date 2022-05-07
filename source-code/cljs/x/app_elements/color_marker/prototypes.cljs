@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-layouts.layout-b.prototypes
+(ns x.app-elements.color-marker.prototypes
     (:require [mid-fruits.candy :refer [param]]))
 
 
@@ -10,13 +10,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-props-prototype
+(defn marker-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) layout-props
+  ; @param (map) marker-props
   ;
   ; @return (map)
-  ;  {:horizontal-align (keyword)}
-  [layout-props]
-  (merge {:horizontal-align :center}
-         (param layout-props)))
+  ;  {:colors (keywords or strings in vector)
+  ;   :size (keyword)}
+  [marker-props]
+  (merge {:colors [:highlight]
+          :size   :s}
+         (param marker-props)))

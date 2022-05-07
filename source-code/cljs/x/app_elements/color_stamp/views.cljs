@@ -5,8 +5,8 @@
 (ns x.app-elements.color-stamp.views
     (:require [mid-fruits.vector                     :as vector]
               [x.app-core.api                        :as a]
-              [x.app-elements.color-stamp.prototypes :as color-stamp.prototypes]
-              [x.app-elements.engine.api             :as engine]))
+              [x.app-elements.color-stamp.helpers    :as color-stamp.helpers]
+              [x.app-elements.color-stamp.prototypes :as color-stamp.prototypes]))
 
 
 
@@ -19,9 +19,11 @@
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
   ;  {:colors (strings in vector)(opt)}
-  [_ {:keys [colors] :as stamp-props}]
+  [stamp-id {:keys [colors] :as stamp-props}]
   (if (vector/nonempty? colors)
-      (letfn [(f [color-stamp color] (conj color-stamp [:div.x-color-stamp--color {:style {:background-color color}}]))]
+      (letfn [(f [color-stamp color]
+                 (let [stamp-color-attributes (color-stamp.helpers/stamp-color-attributes stamp-id stamp-props color)]
+                      (conj color-stamp [:div.x-color-stamp--color stamp-color-attributes])))]
              (reduce f [:<>] colors))
       [:div.x-color-stamp--placeholder]))
 
@@ -31,16 +33,26 @@
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
   [stamp-id stamp-props]
-  [:div.x-color-stamp (engine/element-attributes stamp-id stamp-props)
-                      [color-stamp-colors        stamp-id stamp-props]])
+  [:div.x-color-stamp (color-stamp.helpers/stamp-attributes stamp-id stamp-props)
+                      [color-stamp-colors                   stamp-id stamp-props]])
 
 (defn element
   ; @param (keyword)(opt) stamp-id
   ; @param (map) stamp-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :colors (strings in vector)(opt)
+  ;   :colors (keywords or strings in vector)(opt)
+  ;    []
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :indent (map)(opt)
+  ;    {:bottom (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :left (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :right (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;     :top (keyword)(opt)
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s

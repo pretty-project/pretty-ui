@@ -25,7 +25,7 @@
   ; @param (map) switch-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
+  ;  {:border-color (keyword or string)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [switch-id switch-props]
@@ -152,7 +152,7 @@
 (defn element
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
-  ;  {:border-color (keyword)(opt)
+  ;  {:border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)

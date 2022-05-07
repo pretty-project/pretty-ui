@@ -4,6 +4,7 @@
 
 (ns extensions.clients.client-lister.views
     (:require [layouts.surface-a.api   :as surface-a]
+              [mid-fruits.keyword      :as keyword]
               [plugins.item-lister.api :as item-lister]
               [x.app-core.api          :as a]
               [x.app-elements.api      :as elements]
@@ -15,235 +16,150 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn client-item
-  [lister-id item-dex {:keys [colors email-address id modified-at] :as client-item}]
-  (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])]
-       [:div {:style {:display "flex" :padding "0" :background "white"
-                      :font-weight 500
-                      :height "42px" :align-items "center"
-                      :border-bottom "1px solid #f0f0f0"}
-              :class "ggg"}
-             [:div {:style {:width "60px" :padding-left "12px" :height "24px"}}
-                   [:div {:style {:height "100%" :width "6px" :border-radius "3px" :background-color (first colors)}}]]
-             [:div {:style {:width "180px" :font-size "var(--font-size-s)" :font-weight 500 :color "#333"
-                            :text-overflow "ellipsis" :overflow "hidden" :white-space "nowrap"}}
-                   client-name]
-             [:div {:style {:width "240px" :font-size "var(--font-size-xs)" :color "#555"
-                            :text-overflow "ellipsis" :overflow "hidden" :white-space "nowrap"}}
-                   email-address]
-             [:div {:style {:width "240px" :font-size "var(--font-size-xs)" :color "#555"
-                            :text-overflow "ellipsis" :overflow "hidden" :white-space "nowrap"}}
-                            ;:flex-grow 1}}
-                   (:phone-number client-item)]
-             [:div {:style {:width "160px" :font-size "var(--font-size-xs)" :color "#555"; :text-align :right
-                            :text-overflow "ellipsis" :overflow "hidden" :white-space "nowrap"}}
-                   @(a/subscribe [:activities/get-actual-timestamp (:modified-at client-item)])]
-             [:div {:style {:flex-grow 1 :background_ :red :display :flex
-                            :justify-content :right}}
-
-                   [elements/icon {:icon :navigate_next
-                                   :size :xs}]]]))
-  ;     [item-lister/list-item :clients.client-lister item-dex
-  ;                            {:description email-address
-  ;                             :header      {:colors (or colors :placeholder)}
-  ;                             :icon        :navigate_next
-  ;                             :label       client-name
-  ;                             :memory-mode? true
-  ;                             :on-click    [:router/go-to! (str "/@app-home/clients/" id)]
-  ;                             :timestamp   modified-at}])
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn clients-label
   []
-  [:<> [surface-a/title-sensor {:title :clients :offset -12}]
+  [:<> [surface-a/title-sensor {:title :clients :offset 36}]
        [elements/label ::clients-label
-                       {:content             :clients
-                        :font-size           :xxl
-                        :font-weight         :extra-bold
-                        :horizontal-position :left
-                        :indent              {:left :xs :top_ :xxl}}]])
-
-(defn client-list-label
-  []
-  (let [all-item-count @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
-       [elements/label ::client-list-label
-                       {:content   (str "Találatok ("all-item-count")")
-                        :font-size :xxs
-                        :color :muted
-                        :indent    {:left_ :m :top :xs}}]))
-
+                       {:content     :clients
+                        :font-size   :xxl
+                        :font-weight :extra-bold
+                        :indent      {:top :xxl}}]])
 
 (defn search-clients-field
   []
-  (let [search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:name :email-address]}]]
-      [:div {:style {:display "flex" :justify-content "space-between"}}
-        ;{:start-content
-           [elements/search-field ::search-clients-field
-                                 {:indent        {:top :m :bottom_ :xxs :right_ :m}; :vertical :xs}
-                                  :on-empty      search-event
-                                  :on-type-ended search-event
-                                  :placeholder   "Keresés az ügyfelek között"
-                                  ;:min-width :xl}]
-                                  :style {:flex-grow 1}}]]))
-         ;:end-content
-         ;[client-list-label]]))
+  (let [search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
+       [elements/search-field ::search-clients-field
+                             {:indent        {:top :s}
+                              :on-empty      search-event
+                              :on-type-ended search-event
+                              :placeholder   "Keresés az ügyfelek között"}]))
 
-(defn add-client-button-label
+(defn client-list-description
   []
-  [elements/label {:content   "Ügyfél létrehozása"
-                   :font-size :xs
-                   :icon      :add
-                   :indent    {:horizontal :s :vertical :xs}}])
-
-(defn add-client-button
-  []
-  [elements/card ::add-client-button
-                 {:background-color :highlight
-                  :border-color     :highlight
-                  :border-radius    :s
-                  :content #'add-client-button-label
-                  :horizontal-align    :left
-                  :horizontal-position :left
-                  :hover-color         :highlight
-                  :indent              {:left :xs :top :xxl}
-                  :on-click            [:router/go-to! "/@app-home/clients/create"]
-                  :style               {:width "280px"}}])
-
-(defn order-clients-button
-  []
-  [elements/icon-button ::order-clients-button
-                        {:border-radius :s
-                         :indent        {:top :m}
-                         :hover-color   :highlight
-                         :on-click      [:item-lister/choose-order-by! :clients.client-lister]
-                         :preset        :order-by}])
-
-(defn client-list-header
-  []
-  [elements/horizontal-polarity ::client-list-header
-                                {:end-content [client-list-label]}])
-                            ;     :end-content   [order-clients-button]}])
-
-(defn clients-header
-  []
-  [:<>
-   [elements/horizontal-polarity ::client-list-header
-                                {:start-content [clients-label]}]])
-                                 ;:end-content   [client-list-label]}]])
+  (let [all-item-count @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
+       [elements/label ::client-list-label
+                       {:color            :muted
+                        :content          (str "Találatok ("all-item-count")")
+                        :font-size        :xxs
+                        :horizontal-align :right
+                        :indent           {:top :xs}}]))
 
 (defn create-client-button
   []
   [:div {:style {:position :fixed :bottom 0 :right 0}}
-        [elements/icon-button ::xxx
-                              {:preset :add
-                               :background-color :highlight
+        [elements/icon-button ::create-client-button
+                              {:border-color  :muted
                                :border-radius :xxl
-                               :border-color :muted
-                               :hover-color :highlight
-                               :indent {:all :m}
-                               :color :primary}]])
-
+                               :color         :primary
+                               :hover-color   :highlight
+                               :indent        {:all :m}
+                               :preset        :add}]])
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn client-item-structure
+  [lister-id item-dex {:keys [colors email-address id modified-at phone-number]}]
+  (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])]
+       [:div {:style {:display "flex" :font-weight 500
+                      :height "48px" :align-items "center"
+                      :border-bottom "1px solid #f0f0f0"}
+              :class "client-list-item"}
+             [:div {:style {:width "48px"}}
+                   [elements/color-marker {:colors colors
+                                           :indent {:left :xs}
+                                           :size   :m}]]
+             [:div {:style {:width "180px" :flex-grow 1}}
+                   [elements/label {:color   "#333"
+                                    :content client-name
+                                    :indent  {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "240px"}}
+                   [elements/label {:content   email-address
+                                    :color     "#555"
+                                    :font-size :xs
+                                    :indent    {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "240px"}}
+                   [elements/label {:content   phone-number
+                                    :color     "#555"
+                                    :font-size :xs
+                                    :indent    {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "160px"}}
+                   [elements/label {:content @(a/subscribe [:activities/get-actual-timestamp modified-at])
+                                    :color     "#555"
+                                    :font-size :xs
+                                    :indent    {:horizontal :xs :right :xs}}]]
+             [:div {:style {:display :flex :justify-content :right :width "36px"}}
+                   [elements/icon {:icon :navigate_next
+                                   :size :xs}]]]))
+
+(defn client-item
+  [lister-id item-dex {:keys [id] :as client-item}]
+  [elements/toggle {:content     [client-item-structure lister-id item-dex client-item]
+                    :hover-color :highlight
+                    :on-click    [:router/go-to! (str "/@app-home/clients/"id)]}])
 
 (defn client-list
   []
-  [:<> [item-lister/body :clients.client-lister
-                         {:default-order-by :modified-at/descending
-                          :items-path   [:clients :client-lister/downloaded-items]
-                          :list-element #'client-item}]])
-       ;[elements/horizontal-separator {:size :xxl}]])
+  [item-lister/body :clients.client-lister
+                    {:default-order-by :modified-at/descending
+                     :items-path   [:clients :client-lister/downloaded-items]
+                     :list-element #'client-item}])
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn xxx
+(defn client-list-column-label
   [{:keys [label order-by-key]}]
-  (if-let [current-order-by @(a/subscribe [:item-lister/get-current-order-by :clients.client-lister])]
-          (if-let [current-key? (= (namespace current-order-by) (name order-by-key))]
-                  (let [direction (name current-order-by)]
-                       [elements/button {:color            :default
-                                         :label            label
-                                         :font-size        :xs
-                                         :horizontal-align :left
-                                         :icon (if (= direction "descending") :arrow_drop_down :arrow_drop_up)
-                                         :icon-position    :right
-                                         :on-click (if (= direction "descending")
-                                                       [:item-lister/order-items! :clients.client-lister (keyword (name order-by-key) "ascending")]
-                                                       [:item-lister/order-items! :clients.client-lister (keyword (name order-by-key) "descending")])}])
-                  [elements/button {:color            :highlight
-                                    :label            label
-                                    :font-size        :xs
-                                    :horizontal-align :left
-                                    :on-click [:item-lister/order-items! :clients.client-lister (keyword (name order-by-key) "descending")]}])))
+  (let [current-order-by @(a/subscribe [:item-lister/get-current-order-by :clients.client-lister])
+        current-order-by-key       (keyword/get-namespace current-order-by)
+        current-order-by-direction (keyword/get-name      current-order-by)]
+       [elements/button {:color (if (= order-by-key current-order-by-key) :default :muted)
+                         :icon  (if (= order-by-key current-order-by-key)
+                                    (case current-order-by-direction :descending :arrow_drop_down :ascending :arrow_drop_up))
+                         :on-click (if (= order-by-key current-order-by-key)
+                                       [:item-lister/swap-items!  :clients.client-lister]
+                                       [:item-lister/order-items! :clients.client-lister (keyword/add-namespace order-by-key :descending)])
+                         :label            label
+                         :font-size        :xs
+                         :horizontal-align :left
+                         :icon-position    :right
+                         :indent           {:horizontal :xxs}}]))
 
-(defn x
+(defn client-list-header
   []
-  (if-let [current-order-by @(a/subscribe [:item-lister/get-current-order-by :clients.client-lister])]
-       [:div {:style {:display "flex" :position "sticky" :padding "48px 0 0 0" :background "white"
-                      :font-weight 500 :font-size "var(--font-size-xs)" :top "18px"
-                      ;:color "var(--color-muted)"
-                      :height "90px"
-                      :border-bottom "1px solid #ddd"
-                      :margin-bottom "12px"}}
-             [:div {:style {:width "60px"}}]
-             [:div {:style {:width "180px"}}
-                   [xxx {:label :name :order-by-key :name}]]
-             [:div {:style {:width "240px"}}
-                   [xxx {:label :email-address :order-by-key :email-address}]]
-             [:div {:style {:width "240px"}}
-                   [xxx {:label :phone-number :order-by-key :phone-number}]]
-             [:div {:style {:width "160px"}}
-                [xxx {:label :last-modified :order-by-key :modified-at}]]]))
+  (if-let [data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
+          [:div {:style {:background-color "white"  :border-bottom "1px solid #ddd" :display "flex"
+                         :position         "sticky" :top           "48px"}}
+                [:div {:style {:width "48px"}}]
+                [:div {:style {:display_ "flex" :width "180px" :flex-grow 1}} [client-list-column-label {:label :name          :order-by-key :name}]]
+                [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :email-address :order-by-key :email-address}]]
+                [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :phone-number  :order-by-key :phone-number}]]
+                [:div {:style {:display_ "flex" :width "160px"}} [client-list-column-label {:label :last-modified :order-by-key :modified-at}]]
+                [:div {:style {:width "36px"}}]]))
 
-(defn t
-  []
-  [:div {:style {}};:position "absolute"}}])
-        "t"])
 
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn view-structure
   []
-  [:<> ;[clients-label]
-       ;[add-client-button]
-       [elements/horizontal-separator {:size :xxl}]
-       [clients-header]
-
-       ;[elements/horizontal-separator {:size :xxl}]
+  [:<> [clients-label]
        [search-clients-field]
-       [client-list-header]
-
-
-
-       [:style {:type "text/css"} ".ggg:hover { background: #f5f5f5 !important; cursor: pointer } "]
-
-       ;[:div {:style {:position "sticky" :top "60px" :z-index "9999"}}
-             ;[client-list]
-             ;[t]
-        ;     [:div {:style {:height "calc(100vh - 72px)" :background "#f0f0f0" :width "300px"
-        ;                    :overflow "auto" :border "1px solid red"
-        ;           [:div {:style {:background-image "linear-gradient(180deg, #fff,#000)"
-                                  ;:height "1900px"]
-                   ;[:div {:style {:overflow "auto" :height "100%" :width "10px" :background :black}}]]]
-
-       ;[:div {:style {:background-image "linear-gradient(#fff,#000)"
-        ;              :height "1900px"]])
-;
+       [client-list-description]
+       [elements/horizontal-separator {:size :xxl}]
        [:div {:style {:display :flex :flex-direction :column-reverse}}
              [:div {:style {:width "100%"}}
                    [client-list]]
-             [x]]
+             [client-list-header]]
+      [elements/horizontal-separator {:size :xxl}]
       [create-client-button]])
 
 (defn view
   [surface-id]
-  [surface-a/layout surface-id {:content [view-structure]}])
+  [surface-a/layout surface-id
+                    {:content [view-structure]}])

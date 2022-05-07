@@ -83,7 +83,7 @@
   ;   :strength (px)
   ;   :total-value (integer)}
   ; @param (map) section-props
-  ;  {:color (keyword)
+  ;  {:color (keyword or string)
   ;   :sub (integer)
   ;   :value (integer)}
   [_ {:keys [diameter strength total-value] :as diagram-props} {:keys [color sum value]}]
@@ -164,7 +164,7 @@
   ;    :fit, :row
   ;    Default: :fit
   ;   :sections (maps in vector)}
-  ;    [{:color (keyword)
+  ;    [{:color (keyword or string)
   ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;      :label (metamorphic-content)(opt)
   ;       TODO ...

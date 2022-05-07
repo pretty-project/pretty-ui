@@ -21,8 +21,8 @@
   ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:background-color (keyword)
-  ;   :color (keyword)
+  ;  {:background-color (keyword or string)
+  ;   :color (keyword or string)
   ;   :delete-button-icon (keyword)
   ;   :icon-family (keyword)
   ;   :layout (keyword)}
@@ -92,10 +92,10 @@
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
   ;  XXX#7701
-  ;  {:background-color (keyword)(opt)
+  ;  {:background-color (keyword or string)(opt)
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)

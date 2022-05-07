@@ -14,6 +14,10 @@
 
 # x4.7.0
 
+- Amikor keresel pl item-listerben, akkor kereséskor az útvonalba is bele kell irni
+  a keresőszot pl.: "/admin/clients/search=xyz"
+  Mindenhol igy csinálják és ha ráfrissitesz akkor megmarad a keresőszo
+
 - item-editor/header DEPRECATED
 
 - Az item-lister reset-downloads! függvény {:data-received? false} állapotba lépteti

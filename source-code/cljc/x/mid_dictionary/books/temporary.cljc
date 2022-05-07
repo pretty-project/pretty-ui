@@ -28,6 +28,10 @@
            {:en "Tags"
             :hu "Címkék"}
 
+           :overview
+           {:en "Overview"
+            :hu "Áttekintés"}
+
            :size-n
            {:en "Size: %"
             :hu "Méret: %"}

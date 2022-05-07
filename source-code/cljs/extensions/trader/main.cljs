@@ -14,7 +14,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [:div {:style (styles/box-list-style)}

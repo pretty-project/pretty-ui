@@ -63,7 +63,7 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:auto-focus? (boolean)(constant)(opt)
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :default, :primary, :secondary
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)

@@ -10,7 +10,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- cancel-button
+(defn cancel-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::cancel-button
@@ -20,7 +20,7 @@
                     :variant  :transparent
                     :on-click [:ui/close-popup! :settings.remove-stored-cookies/view]}])
 
-(defn- remove-button
+(defn remove-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::remove-button

@@ -28,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- wallet-data
+(defn wallet-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [wallet-balance]}]
   (let [btc-equity (get-in wallet-balance [:BTC :equity])
@@ -38,12 +38,12 @@
            [elements/label {:content (str eth-equity " ETH")
                             :font-size :xxl :indent :both}]]))
 
-(defn- api-key-label
+(defn api-key-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [api-key]}]
   [elements/label {:color :primary :layout :fit :font-size :m  :content (str "API-key: " api-key)}])
 
-(defn- api-synchronized-label
+(defn api-synchronized-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [timestamp]}]
   (let [timestamp (time/timestamp-string->date-time timestamp)]
@@ -55,7 +55,7 @@
   (if use-mainnet? [elements/icon {:layout :touch-target :icon :fingerprint
                                    :color :warning}]))
 
-(defn- wallet-structure
+(defn wallet-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/overlay-center-style)}
@@ -71,7 +71,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- wallet
+(defn wallet
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [error] :as module-props}]
   [:div {:style (styles/box-structure-style)}

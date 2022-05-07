@@ -20,7 +20,7 @@
 ;; -- Temporary components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- file-selector
+(defn file-selector
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id uploader-props]
   [:input#storage--file-selector {:multiple 1 :type "file"
@@ -32,7 +32,7 @@
 ;; -- Dialog components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- abort-progress-button
+(defn abort-progress-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (let [request-id         (file-uploader.helpers/request-id uploader-id)
@@ -44,7 +44,7 @@
                                       :on-click [:sync/abort-request! request-id]
                                       :preset   :close}])))
 
-(defn- progress-diagram
+(defn progress-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   ; Az upload-progress-diagram komponens önálló feliratkozással rendelkezik, hogy a feltöltési folyamat
@@ -58,7 +58,7 @@
                                :sections [{:color line-color :value        uploader-progress}
                                           {:color :highlight :value (- 100 uploader-progress)}]}]))
 
-(defn- progress-label
+(defn progress-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (let [request-id         (file-uploader.helpers/request-id uploader-id)
@@ -73,7 +73,7 @@
                         :font-size :xs
                         :indent    {:left :xs :horizontal :xxs}}]))
 
-(defn- progress-state
+(defn progress-state
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (let [request-id     (file-uploader.helpers/request-id uploader-id)
@@ -85,14 +85,14 @@
                               [:div {:style {:width "100%"}}
                                     [progress-diagram uploader-id]]])))
 
-(defn- progress-list
+(defn progress-list
   ; WARNING!
   [dialog-id]
   (let [uploader-ids @(a/subscribe [:storage.file-uploader/get-uploader-ids])]
        (reduce #(conj %1 ^{:key %2} [progress-state %2])
                 [:<>] uploader-ids)))
 
-(defn- progress-notification-body
+(defn progress-notification-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id]
   [:<> [progress-list dialog-id]
@@ -103,7 +103,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- cancel-upload-button
+(defn cancel-upload-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/button ::cancel-upload-button
@@ -112,7 +112,7 @@
                     :on-click [:storage.file-uploader/cancel-uploader! uploader-id]
                     :preset   :cancel}])
 
-(defn- upload-files-button
+(defn upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   (let [all-files-cancelled?     @(a/subscribe [:storage.file-uploader/all-files-cancelled?     uploader-id])
@@ -125,7 +125,7 @@
                          :on-click  [:storage.file-uploader/start-progress! uploader-id]
                          :preset    :upload}]))
 
-(defn- available-capacity-label
+(defn available-capacity-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   ; XXX#0506
@@ -148,7 +148,7 @@
                        :horizontal-align :center
                        :indent           {:vertical :xs}}]))
 
-(defn- uploading-size-label
+(defn uploading-size-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   ; XXX#0506
@@ -165,7 +165,7 @@
                        :horizontal-align :center
                        :indent           {:vertical :xs}}]))
 
-(defn- file-upload-summary
+(defn file-upload-summary
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/column {:content [:<> [available-capacity-label uploader-id]
@@ -173,7 +173,7 @@
                                   [elements/horizontal-separator {:size :s}]]
                     :horizontal-align :center}])
 
-(defn- action-buttons
+(defn action-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/horizontal-polarity ::file-uploader-action-buttons
@@ -191,7 +191,7 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- file-item
+(defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id file-dex]
   (let [file-cancelled? @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :cancelled?])

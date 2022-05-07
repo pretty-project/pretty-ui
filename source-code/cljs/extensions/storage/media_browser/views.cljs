@@ -18,7 +18,7 @@
 ;; -- Item-menu components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- media-menu-label
+(defn media-menu-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [alias] :as media-item}]
   [elements/label ::media-menu-label
@@ -27,7 +27,7 @@
                    :font-size :xs
                    :indent    {:horizontal :xxs :left :s}}])
 
-(defn- media-menu-header
+(defn media-menu-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [media-item]
   [elements/horizontal-polarity ::media-menu-header
@@ -191,7 +191,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- storage-label
+(defn storage-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
@@ -203,7 +203,7 @@
                                      :font-weight :extra-bold
                                      :indent      {:top :xxl}}]])))
 
-(defn- storage-directory-content-label
+(defn storage-directory-content-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
@@ -220,14 +220,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [item-browser/header :storage.media-browser
                        {:new-item-event   [:storage.media-browser/add-new-item!]
                         :new-item-options [:create-directory! :upload-files!]}])
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [storage-label]

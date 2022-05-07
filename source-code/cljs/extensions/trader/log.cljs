@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-log-props
+(defn get-log-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :log])
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- log-item
+(defn log-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _ {:keys [module-id log-entry timestamp] :as log-item}]
   [:div {:style {:display "flex"}}
@@ -36,7 +36,7 @@
         [:div {:style (styles/log-item-message-style log-item)}
               (str log-entry)]])
 
-(defn- log-items
+(defn log-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [log-items] :as module-props}]
   (reduce #(conj %1 [log-item module-id module-props %2])
@@ -48,7 +48,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- log
+(defn log
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:<> [:div {:style (styles/log-style)}

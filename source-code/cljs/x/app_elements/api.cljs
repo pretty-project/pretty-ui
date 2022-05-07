@@ -29,6 +29,7 @@
               [x.app-elements.element-components.chip                 :as element-components.chip]
               [x.app-elements.element-components.circle-diagram       :as element-components.circle-diagram]
               [x.app-elements.color-selector.views                    :as color-selector.views]
+              [x.app-elements.color-marker.views                      :as color-marker.views]
               [x.app-elements.color-stamp.views                       :as color-stamp.views]
               [x.app-elements.element-components.column               :as element-components.column]
               [x.app-elements.element-components.combo-box            :as element-components.combo-box]
@@ -157,6 +158,7 @@
 (def chip                 element-components.chip/element)
 (def circle-diagram       element-components.circle-diagram/element)
 (def color-selector       color-selector.views/element)
+(def color-marker         color-marker.views/element)
 (def color-stamp          color-stamp.views/element)
 (def column               element-components.column/element)
 (def combo-box            element-components.combo-box/element)

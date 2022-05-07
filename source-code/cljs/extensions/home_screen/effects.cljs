@@ -28,7 +28,6 @@
 
 (a/reg-event-fx
   :home-screen/load!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]}]
       (let [app-title (r a/get-app-config-item db :app-title)]
            {:dispatch-n [[:ui/simulate-process!]
@@ -37,5 +36,5 @@
 
 (a/reg-event-fx
   :home-screen/render!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:ui/render-surface! :home-screen/view {:content #'views/view}])
+  [:ui/render-surface! :home-screen/view
+                       {:content #'views/view}])

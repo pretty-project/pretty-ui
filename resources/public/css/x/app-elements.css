@@ -8,6 +8,7 @@
 /***** Color profiles *****/
 /***** Font-size profiles *****/
 /***** Font-weight profiles *****/
+/***** Gap profiles *****/
 /***** Orientation profiles *****/
 /***** Position profiles *****/
 /***** Size profiles *****/
@@ -122,8 +123,8 @@ button.x-card:focus,
 .x-switch--secondary-label,
 .x-switch--secondary-body:focus
 .x-switch--secondary-label,
-.x-toggle--body:active,
-.x-toggle--body:focus {
+.x-toggle:active,
+.x-toggle:focus {
   opacity: .5 }
 
 /***** Active state and focused state *****/
@@ -389,6 +390,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="muted"] .x-button--body,
 .x-card[data-background-color="muted"] .x-card--body,
+.x-color-marker--color[data-color="muted"],
 .x-chip[data-background-color="muted"] .x-chip--body,
 .x-icon-button[data-background-color="muted"] .x-icon-button--body {
   background-color: var( --background-color-muted ) }
@@ -454,6 +456,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="highlight"] .x-button--body,
 .x-card[data-background-color="highlight"] .x-card--body,
+.x-color-marker--color[data-color="highlight"],
 .x-chip[data-background-color="highlight"] .x-chip--body,
 .x-icon-button[data-background-color="highlight"] .x-icon-button--body {
   background-color: var( --background-color-highlight ) }
@@ -515,6 +518,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="primary"] .x-button--body,
 .x-card[data-background-color="primary"] .x-card--body,
+.x-color-marker--color[data-color="primary"],
 .x-chip[data-background-color="primary"] .x-chip--body,
 .x-icon-button[data-background-color="primary"] .x-icon-button--body {
   background-color: var( --background-color-primary ) }
@@ -585,6 +589,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="secondary"] .x-button--body,
 .x-card[data-background-color="secondary"] .x-card--body,
+.x-color-marker--color[data-color="secondary"],
 .x-chip[data-background-color="secondary"] .x-chip--body,
 .x-icon-button[data-background-color="secondary"] .x-icon-button--body {
   background-color: var( --background-color-secondary ) }
@@ -655,6 +660,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="success"] .x-button--body,
 .x-card[data-background-color="success"] .x-card--body,
+.x-color-marker--color[data-color="success"],
 .x-chip[data-background-color="success"] .x-chip--body,
 .x-icon-button[data-background-color="success"] .x-icon-button--body {
   background-color: var( --background-color-success ) }
@@ -711,6 +717,7 @@ button.x-card:focus,
 
 .x-button[data-background-color="warning"] .x-button--body,
 .x-card[data-background-color="warning"] .x-card--body,
+.x-color-marker--color[data-color="warning"],
 .x-chip[data-background-color="warning"] .x-chip--body,
 .x-icon-button[data-background-color="warning"] .x-icon-button--body {
   background-color: var( --background-color-warning ) }
@@ -1036,6 +1043,80 @@ button.x-card:focus,
 
 
 
+/***** Gap profiles *****/
+/*** XXS ***/
+
+.x-row[data-gap="xxs"] .x-row--body {
+  grid-column-gap: 6px }
+
+.x-column[data-gap="xxs"] .x-column--body {
+  grid-row-gap: 6px }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.x-row[data-gap="xs"] .x-row--body {
+  grid-column-gap: 12px }
+
+.x-column[data-gap="xs"] .x-column--body {
+  grid-row-gap: 12px }
+
+/*** XS ***/
+
+/*** S ***/
+
+.x-row[data-gap="s"] .x-row--body {
+  grid-column-gap: 18px }
+
+.x-column[data-gap="s"] .x-column--body {
+  grid-row-gap: 18px }
+
+/*** S ***/
+
+/*** M ***/
+
+.x-row[data-gap="m"] .x-row--body {
+  grid-column-gap: 24px }
+
+.x-column[data-gap="m"] .x-column--body {
+  grid-row-gap: 24px }
+
+/*** M ***/
+
+/*** L ***/
+
+.x-row[data-gap="l"] .x-row--body {
+  grid-column-gap: 36px }
+
+.x-column[data-gap="l"] .x-column--body {
+  grid-row-gap: 36px }
+
+/*** L ***/
+
+/*** XL ***/
+
+.x-row[data-gap="xl"] .x-row--body {
+  grid-column-gap: 42px }
+
+.x-column[data-gap="xl"] .x-column--body {
+  grid-row-gap: 42px }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.x-row[data-gap="xxl"] .x-row--body {
+  grid-column-gap: 48px }
+
+.x-column[data-gap="xxl"] .x-column--body {
+  grid-row-gap: 48px }
+
+/*** XXL ***/
+/***** Gap profiles *****/
+
+
+
 /***** Orientation profiles *****/
 /*** Horizontal orientation ***/
 
@@ -1163,6 +1244,11 @@ button.x-card:focus,
   height: 12px;
   width: 12px }
 
+.x-color-marker[data-size="xxs"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 12px;
+  width: 6px }
+
 .x-thumbnail[data-size="xxs"] .x-thumbnail--body {
   border-radius: var( --border-radius-s );
   height: 36px;
@@ -1188,6 +1274,11 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 18px;
   width: 18px }
+
+.x-color-marker[data-size="xs"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 18px;
+  width: 6px }
 
 .x-thumbnail[data-size="xx"] .x-thumbnail--body {
   border-radius: var( --border-radius-s );
@@ -1215,6 +1306,11 @@ button.x-card:focus,
   height: 24px;
   width: 24px }
 
+.x-color-marker[data-size="s"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 24px;
+  width: 6px }
+
 .x-thumbnail[data-size="s"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 60px;
@@ -1240,6 +1336,11 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 30px;
   width: 30px }
+
+.x-color-marker[data-size="m"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 30px;
+  width: 6px }
 
 .x-thumbnail[data-size="m"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
@@ -1267,6 +1368,11 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
+.x-color-marker[data-size="l"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 36px;
+  width: 6px }
+
 .x-thumbnail[data-size="l"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 84px;
@@ -1292,6 +1398,11 @@ button.x-card:focus,
   grid-gap: 2px;
   height: 42px;
   width: 42px }
+
+.x-color-marker[data-size="xl"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 42px;
+  width: 6px }
 
 .x-thumbnail[data-size="xl"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
@@ -1319,6 +1430,11 @@ button.x-card:focus,
   height: 48px;
   width: 48px }
 
+.x-color-marker[data-size="xxl"] .x-color-marker--body {
+  border-radius: 3px;
+  height: 48px;
+  width: 6px }
+
 .x-thumbnail[data-size="xxl"] .x-thumbnail--body {
   border-radius: var( --border-radius-m );
   height: 108px;
@@ -1343,7 +1459,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-xxs ) }
 
 .x-card[data-border-radius="xxs"] .x-card--body,
-.x-icon-button[data-border-radius="xxs"] .x-icon-button--body {
+.x-icon-button[data-border-radius="xxs"] .x-icon-button--body,
+.x-toggle[data-border-radius="xxs"] .x-toggle--body {
   border-radius: var( --border-radius-xxs ) }
 
 /*** XXS ***/
@@ -1355,7 +1472,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-xs ) }
 
 .x-card[data-border-radius="xs"] .x-card--body,
-.x-icon-button[data-border-radius="xs"] .x-icon-button--body {
+.x-icon-button[data-border-radius="xs"] .x-icon-button--body,
+.x-toggle[data-border-radius="xs"] .x-toggle--body {
   border-radius: var( --border-radius-xs ) }
 
 /*** XS ***/
@@ -1367,7 +1485,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-s ) }
 
 .x-card[data-border-radius="s"] .x-card--body,
-.x-icon-button[data-border-radius="s"] .x-icon-button--body {
+.x-icon-button[data-border-radius="s"] .x-icon-button--body,
+.x-toggle[data-border-radius="s"] .x-toggle--body {
   border-radius: var( --border-radius-s ) }
 
 /*** S ***/
@@ -1379,19 +1498,21 @@ button.x-card:focus,
   padding: 0 var( --border-radius-m ) }
 
 .x-card[data-border-radius="m"] .x-card--body,
-.x-icon-button[data-border-radius="m"] .x-icon-button--body {
+.x-icon-button[data-border-radius="m"] .x-icon-button--body,
+.x-toggle[data-border-radius="m"] .x-toggle--body {
   border-radius: var( --border-radius-m ) }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-button[data-border-radius="l"] .x-button--body,
-.x-icon-button[data-border-radius="l"] .x-icon-button--body {
+.x-button[data-border-radius="l"] .x-button--body {
   border-radius: var( --border-radius-l );
   padding: 0 var( --border-radius-l ) }
 
-.x-card[data-border-radius="l"] .x-card--body {
+.x-card[data-border-radius="l"] .x-card--body,
+.x-icon-button[data-border-radius="l"] .x-icon-button--body,
+.x-toggle[data-border-radius="l"] .x-toggle--body {
   border-radius: var( --border-radius-l ) }
 
 /*** L ***/
@@ -1402,7 +1523,8 @@ button.x-card:focus,
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
 
 .x-card[data-border-radius="xl"] .x-card--body,
-.x-icon-button[data-border-radius="xl"] .x-icon-button--body {
+.x-icon-button[data-border-radius="xl"] .x-icon-button--body,
+.x-toggle[data-border-radius="xl"] .x-toggle--body {
   border-radius: var( --border-radius-xl ) }
 
 /*** XL ***/
@@ -1413,7 +1535,8 @@ button.x-card:focus,
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
 
 .x-card[data-border-radius="xxl"] .x-card--body,
-.x-icon-button[data-border-radius="xxl"] .x-icon-button--body {
+.x-icon-button[data-border-radius="xxl"] .x-icon-button--body,
+.x-toggle[data-border-radius="xxl"] .x-toggle--body {
   border-radius: var( --border-radius-xxl ) }
 
 /*** XXL ***/
@@ -1957,33 +2080,30 @@ button.x-card:focus,
 
 
 
-/***** Color-selector *****/
-/*** Color-selector body ***/
+/***** Color-marker *****/
 
-.x-color-selector--body {
-  align-items: center;
+.x-color-marker {}
+
+.x-color-marker--body {
   display: flex;
-  height: 48px }
+  flex-direction: column;
+  grid-row-gap: 2px;
+  overflow: hidden }
 
-/*** Color-selector body ***/
+.x-color-marker--color {
+  flex-grow: 1 }
 
-/*** Color-selector no colors label ***/
+/***** Color-marker *****/
 
-.x-color-selector--no-colors-label {
-  color: var( --color-muted );
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 48px }
 
-/*** Color-selector no colors label ***/
 
+/***** Color-selector *****/
 /*** Color-selector options ***/
 
 .x-color-selector--options {
   display: flex;
-  grid-gap: 12px;
-  padding: 0 12px }
+  grid-column-gap: 12px;
+  padding: 12px }
 
 /*** Color-selector options ***/
 
@@ -3396,13 +3516,6 @@ button.x-card:focus,
 
 
 /***** Toggle *****/
-/*** Toggle wrapper ***/
-
-.x-toggle {
-  border-radius: var( --border-radius-m ) }
-
-/*** Toggle wrapper ***/
-
 /*** Toggle body ***/
 
 .x-toggle--body {
@@ -3411,10 +3524,10 @@ button.x-card:focus,
   font-weight: 500;
   white-space: nowrap;
   width: 100%;
-  word-wrap: normal }
+  word-wrap: normal;
 
-.x-toggle--body[data-layout="row"] {
-  min-height: 48px }
+  /* Overwriting user-agent rule */
+  text-align: left }
 
 /*** Toggle body ***/
 /***** Toggle *****/

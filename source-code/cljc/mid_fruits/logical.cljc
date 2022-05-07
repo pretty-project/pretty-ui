@@ -158,3 +158,29 @@
   ; @return (boolean)
   [a & bcd]
   (boolean (some #(= a %) bcd)))
+
+(defn swap
+  ; @param (*) x
+  ; @param (*) a
+  ; @param (*) b
+  ;
+  ; @example
+  ;  (logical/swap "A" "A" "B")
+  ;  =>
+  ;  "B"
+  ;
+  ; @example
+  ;  (logical/swap "B" "A" "B")
+  ;  =>
+  ;  "A"
+  ;
+  ; @example
+  ;  (logical/swap "C" "A" "B")
+  ;  =>
+  ;  "C"
+  ;
+  ; @return (*)
+  [x a b]
+  (cond (= x a) b
+        (= x b) a
+        :else   x))

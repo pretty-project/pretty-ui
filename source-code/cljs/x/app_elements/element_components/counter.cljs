@@ -20,7 +20,7 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
+  ;  {:border-color (keyword or string)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [counter-id counter-props]
@@ -116,7 +116,7 @@
 (defn element
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
-  ;  {:border-color (keyword)(opt)
+  ;  {:border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (integer)(constant)(opt)

@@ -20,7 +20,7 @@
   ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:color (keyword or string)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)}
@@ -88,7 +88,7 @@
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)

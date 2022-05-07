@@ -12,7 +12,7 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- change-profile-picture-button
+(defn change-profile-picture-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::change-profile-picture-button
@@ -20,20 +20,20 @@
                     :preset    :default-button
                     :font-size :xs}])
 
-(defn- user-profile-picture
+(defn user-profile-picture
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [user-profile-picture @(a/subscribe [:user/get-user-profile-picture])]
        [:div.x-user-profile-picture {:style {:backgroundImage (css/url user-profile-picture)}}]))
 
-(defn- user-profile-picture-block
+(defn user-profile-picture-block
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/column ::user-profile-picture-block
                    {:content [:<> [user-profile-picture]
                                   [change-profile-picture-button]]}])
 
-(defn- user-name
+(defn user-name
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/label ::user-name-label
@@ -46,7 +46,7 @@
                          :preset :default-button
                          :layout :fit}]])
 
-(defn- user-email-address
+(defn user-email-address
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/label ::user-email-address-label
@@ -59,7 +59,7 @@
                          :preset :default-button
                          :layout :fit}]])
 
-(defn- user-phone-number
+(defn user-phone-number
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/label ::user-phone-number-label
@@ -72,7 +72,7 @@
                          :preset :default-button
                          :layout :fit}]])
 
-(defn- user-password
+(defn user-password
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/label ::user-password-label
@@ -85,7 +85,7 @@
                          :preset :default-button
                          :layout :fit}]])
 
-(defn- user-pin
+(defn user-pin
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [elements/label ::user-pin-label

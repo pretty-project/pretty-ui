@@ -20,7 +20,7 @@
   ; @param (map) checkbox-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
+  ;  {:border-color (keyword or string)
   ;   :font-size (keyword)
   ;   :layout (keyword)}
   [checkbox-id checkbox-props]
@@ -84,7 +84,7 @@
 (defn element
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:border-color (keyword)(opt)
+  ;  {:border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (boolean)(constant)(opt)

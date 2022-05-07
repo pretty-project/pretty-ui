@@ -18,7 +18,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- menu-items
+(defn menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [view-id]}]
   [{:label "Log" :on-click [:gestures/change-view! :trader/controls :log]
@@ -55,19 +55,19 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- menu-bar-menu
+(defn menu-bar-menu
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [elements/menu-bar ::menu-bar
                      {:indent :both :menu-items (menu-items module-id module-props)}])
 
-(defn- menu-bar
+(defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [elements/horizontal-polarity {:start-content [menu-bar-menu                  module-id module-props]
                                  :end-content   [settings/toggle-syncing-button module-id module-props]}])
 
-(defn- controls
+(defn controls
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [view-id] :as module-props}]
   [:div {:style (styles/box-structure-style)}

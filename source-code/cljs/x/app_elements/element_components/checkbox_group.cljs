@@ -38,7 +38,7 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword)
+  ;  {:border-color (keyword or string)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
@@ -143,7 +143,7 @@
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :default-value (*)(constant)(opt)

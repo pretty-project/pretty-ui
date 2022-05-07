@@ -185,6 +185,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn use-default-order-by!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  [db [_ lister-id]]
+  (let [default-order-by (r body.subs/get-body-prop db lister-id :default-order-by)]
+       (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] default-order-by)))
+
+; WARNING! DEPRECATED! DO NOT USE!
 (defn set-default-order-by!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -203,6 +214,7 @@
           (return db)
           (let [order-by-options (r body.subs/get-body-prop db lister-id :order-by-options)]
                (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] (first order-by-options)))))
+  ; WARNING! DEPRECATED! DO NOT USE!
 
 
 

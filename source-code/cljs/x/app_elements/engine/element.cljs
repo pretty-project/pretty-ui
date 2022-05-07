@@ -27,6 +27,29 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- apply-color
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) element-props
+  ; @param (keyword) color-key
+  ; @param (keyword) color-data-key
+  ; @param (keyword or string) color-value
+  ;
+  ; @example
+  ;  (apply-color {...} :color :data-color :muted)
+  ;  =>
+  ;  {:data-color :muted}
+  ;
+  ; @example
+  ;  (apply-color {...} :color :data-color "#fff")
+  ;  =>
+  ;  {:style {:color "fff"}}
+  ;
+  ; @return (map)
+  [element-props color-key color-data-key color-value]
+  (cond (keyword? color-value) (assoc    element-props color-data-key     color-value)
+        (string?  color-value) (assoc-in element-props [:style color-key] color-value)))
+
 (defn- apply-dimension
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -36,83 +59,86 @@
   ; @param (keyword, px or string) dimension-value
   ;
   ; @example
-  ;  (apply-dimension :my-element {...} :width :data-min-width 128)
+  ;  (apply-dimension {...} :width :data-width 128)
   ;  =>
   ;  {:style {:width "128px"}}
   ;
   ; @example
-  ;  (apply-dimension :my-element {...} :width :data-min-width "128px")
+  ;  (apply-dimension {...} :width :data-width "128px")
   ;  =>
   ;  {:style {:width "128px"}}
   ;
   ; @example
-  ;  (apply-dimension :my-element {...} :width :data-min-width :s)
+  ;  (apply-dimension {...} :width :data-width :s)
   ;  =>
   ;  {:data-min-width :s}
   ;
-  ; @return (keyword or string)
+  ; @return (map)
   [element-props dimension-key dimension-data-key dimension-value]
-  (cond (integer? dimension-value) (assoc-in element-props [:style dimension-key] (css/px dimension-value))
-        (string?  dimension-value) (assoc-in element-props [:style dimension-key] (param  dimension-value))
-        (keyword? dimension-value) (assoc    element-props dimension-data-key dimension-value)))
-
-(defn element-id->extended-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (keyword) flag
-  ;
-  ; @example
-  ;  (element/element-id->extended-id :my-namespace/my-element :popup)
-  ;  =>
-  ;  :my-namespace/my-element--popup
-  ;
-  ; @return (keyword)
-  [element-id flag]
-  (keyword/append element-id flag "--"))
-
-(defn element-props->render-element-header?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) element-props
-  ;  {:icon (keyword)(opt)
-  ;   :label (metamorphic-content)(opt)}
-  ;
-  ; @return (boolean)
-  [{:keys [icon label]}]
-  (or icon label))
+  (cond (keyword? dimension-value) (assoc    element-props dimension-data-key dimension-value)
+        (integer? dimension-value) (assoc-in element-props [:style dimension-key] (css/px dimension-value))
+        (string?  dimension-value) (assoc-in element-props [:style dimension-key] (param  dimension-value))))
 
 (defn element-default-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ;  {:class (keyword or keywords in vector)(opt)}
+  ;  {:class (keyword or keywords in vector)(opt)
+  ;   :disabled? (boolean)(opt)
+  ;   :style (map)(opt)}
   ;
   ; @return (map)
   ;  {:class (keyword or keywords in vector)
+  ;   :data-disabled (boolean)
   ;   :id (string)
-  ;   :key (string)}
-  [element-id {:keys [class]}]
-  ; BUG#4044
-  ; Ha egy listában a listaelemek toggle elemet tartalmaznak és ...
-  ; ... a toggle elem nem kap egyedi azonosítót, mert ugyanaz az azonosító ismétlődne
-  ;     az összes listaelem toggle elemében,
-  ; ... a toggle elem {:hover-color ...} tulajdonsággal rendelkezik,
-  ; ... az element-default-attributes függvény React kulcsként alkalmazza az elemek
-  ;     azonosítóját,
-  ; ... az egyes listaelemekre kattintva olyan változás történik (pl. kijelölés),
-  ;     ami miatt az adott listaelem paraméterezése megváltozik,
-  ; akkor az egyes listaelemekre kattintva ...
-  ; ... a megváltozó paraméterek miatt a listaelem újrarenderelődik,
-  ; ... a listaelem toggle eleme is újrarenderelődik, ami miatt új azonosítót kap,
-  ; ... a toggle elem az új azonosítója miatt úja React kulcsot kap,
-  ; ... a toggle elem az új React kulcs beállításának pillanatában másik React-elemmé
-  ;     változik és a váltás közben Ca. 15ms ideig nem látszódik a {:hover-color ...}
-  ;     tulajdonság színe (rövid villanásnak tűnik)
-  {:class (css/join-class :x-element class)
-   :id    (a/dom-value element-id)})
-  ;:key   (a/dom-value element-id)
+  ;   :key (string)
+  ;   :style (map)}
+  [element-id {:keys [class disabled? style]}]
+  ; - BUG#4044
+  ;   Ha egy listában a listaelemek toggle elemet tartalmaznak és ...
+  ;   ... a toggle elem nem kap egyedi azonosítót, mert ugyanaz az azonosító ismétlődne
+  ;       az összes listaelem toggle elemében,
+  ;   ... a toggle elem {:hover-color ...} tulajdonsággal rendelkezik,
+  ;   ... az element-default-attributes függvény React kulcsként alkalmazza az elemek
+  ;       azonosítóját,
+  ;   ... az egyes listaelemekre kattintva olyan változás történik (pl. kijelölés),
+  ;       ami miatt az adott listaelem paraméterezése megváltozik,
+  ;   akkor az egyes listaelemekre kattintva ...
+  ;   ... a megváltozó paraméterek miatt a listaelem újrarenderelődik,
+  ;   ... a listaelem toggle eleme is újrarenderelődik, ami miatt új azonosítót kap,
+  ;   ... a toggle elem az új azonosítója miatt úja React kulcsot kap,
+  ;   ... a toggle elem az új React kulcs beállításának pillanatában másik React-elemmé
+  ;       változik és a váltás közben Ca. 15ms ideig nem látszódik a {:hover-color ...}
+  ;       tulajdonság színe (rövid villanásnak tűnik)
+  ;
+  ; - XXX#4005
+  ;   A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
+  ;   attribútumot alkalmazni!
+  {:class         (css/join-class :x-element class)
+   :data-disabled (boolean     disabled?)
+   :id            (a/dom-value element-id)
+  ;:key           (a/dom-value element-id)
+   :style         style})
+
+(defn element-indent-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ;  {:indent (map)(opt)
+  ;    {}}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [indent]}]
+  (cond-> {} (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
+             (:left       indent) (assoc :data-indent-left       (:left       indent))
+             (:right      indent) (assoc :data-indent-right      (:right      indent))
+             (:top        indent) (assoc :data-indent-top        (:top        indent))
+             (:horizontal indent) (assoc :data-indent-horizontal (:horizontal indent))
+             (:vertical   indent) (assoc :data-indent-vertical   (:vertical   indent))
+             (:all        indent) (assoc :data-indent-all        (:all        indent))))
 
 (defn element-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,12 +149,6 @@
   ;    :center, :left, :right, :space-between
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :none, :right
-
-  ; TEMP
-  ;   :indent (keyword)(opt)
-  ;    :left, :right, :both
-  ; TEMP
-
   ;   :layout (keyword)(opt)
   ;   :orientation (keyword)(opt)
   ;   :position (keyword)(opt)
@@ -148,22 +168,16 @@
   ;   :data-stretch-orientation (keyword)
   ;   :data-vertical-align (keyword)
   ;   :data-vertical-position (keyword)}
-  [_ {:keys [border-radius horizontal-align horizontal-position indent layout orientation position
+  [_ {:keys [border-radius gap horizontal-align horizontal-position indent layout orientation position
              stretch-orientation vertical-align vertical-position]}]
 
   (cond-> {} horizontal-align    (assoc :data-horizontal-align    horizontal-align)
              horizontal-position (assoc :data-horizontal-position horizontal-position)
 
              ; TEMP
-             (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
-             (:left       indent) (assoc :data-indent-left       (:left       indent))
-             (:right      indent) (assoc :data-indent-right      (:right      indent))
-             (:top        indent) (assoc :data-indent-top        (:top        indent))
-             (:horizontal indent) (assoc :data-indent-horizontal (:horizontal indent))
-             (:vertical   indent) (assoc :data-indent-vertical   (:vertical   indent))
-             (:all        indent) (assoc :data-indent-all        (:all        indent))
-
+             ; TESZTELÉS ALATT:
              border-radius (assoc :data-border-radius border-radius)
+             gap           (assoc :data-gap           gap)
              ; TEMP
 
              layout              (assoc :data-layout              layout)
@@ -185,6 +199,7 @@
   ;   :font-weight (keyword)(opt)
   ;   :hover-color (keyword)(opt)
   ;   :icon-family (keyword)(opt)
+  ;   :icon-position (keyword)(opt)
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)}
   ;
@@ -194,20 +209,22 @@
   ;   :data-font-weight (keyword)
   ;   :data-hover-color (keyword)
   ;   :data-icon-family (keyword)
+  ;   :data-icon-position (keyword)
   ;   :data-variant (keyword)
   ;   :style (map)
   ;    {:height (string or keyword)
   ;     :width (string or keyword)}}
-  [_ {:keys [background-color border-color color font-size font-weight hover-color icon-family style variant]}]
-  (cond-> {} background-color (assoc :data-background-color background-color)
-             border-color     (assoc :data-border-color     border-color)
-             color            (assoc :data-color            color)
-             font-size        (assoc :data-font-size        font-size)
-             font-weight      (assoc :data-font-weight      font-weight)
-             hover-color      (assoc :data-hover-color      hover-color)
-             icon-family      (assoc :data-icon-family      icon-family)
-             style            (assoc :style                 style)
-             variant          (assoc :data-variant          variant)))
+  [_ {:keys [background-color border-color color font-size font-weight hover-color icon-family icon-position variant]}]
+  (cond-> {} background-color (apply-color :background-color :data-background-color background-color)
+             border-color     (apply-color :border-color     :data-border-color     border-color)
+             color            (apply-color :color            :data-color            color)
+             hover-color      (apply-color :hover-color      :data-hover-color      hover-color)
+             font-size        (assoc :data-font-size     font-size)
+             font-weight      (assoc :data-font-weight   font-weight)
+             icon-family      (assoc :data-icon-family   icon-family)
+             icon-family      (assoc :data-icon-position icon-position)
+
+             variant          (assoc :data-variant       variant)))
 
 (defn element-dimension-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -243,25 +260,18 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {:alt (string)(opt)
-  ;   :disabled? (boolean)(opt)
   ;   :selectable? (boolean)(opt)
   ;   :src (string)(opt)}
   ;
   ; @return
   ;  {:alt (string)
-  ;   :data-disabled (boolean)
   ;   :data-selectable (boolean)
   ;   :src (string)}
-  [_ {:keys [alt disabled? hover-color selectable? src]}]
+  [_ {:keys [alt hover-color selectable? src]}]
   (cond-> {} alt (assoc :alt alt)
              src (assoc :src src)
-             (some? disabled?)   (assoc :data-disabled   disabled?)
              (some? selectable?) (assoc :data-selectable selectable?)
-             (nil?  selectable?) (assoc :data-selectable false)
-             ; XXX#4005
-             ; A {:hover-color ...} tulajdonságként átadott szín használatához, minden esetben
-             ; szükséges a {:data-disabled ...} attribútumot alkalmazni!
-             hover-color (assoc :data-disabled (boolean disabled?))))
+             (nil?  selectable?) (assoc :data-selectable false)))
 
 (defn element-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -276,6 +286,7 @@
          (element-layout-attributes    element-id element-props)
          (element-style-attributes     element-id element-props)
          (element-dimension-attributes element-id element-props)
+         (element-indent-attributes    element-id element-props)
          (element-generic-attributes   element-id element-props)
          (param element-attributes)))
 

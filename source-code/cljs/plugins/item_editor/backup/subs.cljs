@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.backup.subs
-    (:require [mid-fruits.map                     :as map]
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :as map]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.download.subs  :as download.subs]
@@ -49,20 +50,31 @@
   ; - Az item-changed? függvény összehasonlítja az elem (megnyitáskor eltárolt!) másolatát
   ;   az elem jelenlegi állapotával.
   ;
-  ; - Az initial-item értékét szükséges kivonni az elemből a vizsgálat előtt, mert befolyásolja
-  ;   az elem változásának vizsgálatát, az hogy a szerkesztő indításakor automatikusan az elem
-  ;   állapotához adódik az initial-item térkép értéke!
+  ; - Az initial-item alkalmazása befolyásolja az elem változásának vizsgálhatóságát!
   ;
-  ; - Az initial-item értékének kivonásakor figyelembe kell venni, azt hogy lehetséges, hogy
-  ;   az elem megnyitáskori állapotában már tartalmazta az initial-item térkép adatait,
-  ;   ezért az összehasonlításkor a backup-item és a current-item térképekből egyaránt szükséges
-  ;   kivonni az initial-item értékét.
+  ; A) Ha a vizsgált érték az initial-item térkép azonos kulcsú értékével megegyezik,
+  ;    akkor nem vizsgálja a változást.
+  ;
+  ; B) Ha a vizsgált érték üres (NIL, "", [], ...), de a tárolt érték NEM üres,
+  ;    akkor az elem megváltozott.
+  ;
+  ; C) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
+  ;    akkor az elem megváltozott!
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
         current-item    (r core.subs/get-current-item    db editor-id)
         backup-item     (r get-backup-item               db editor-id current-item-id)
         initial-item    (r body.subs/get-body-prop       db editor-id :initial-item)]
-       (not= (map/difference backup-item  initial-item)
-             (map/difference current-item initial-item))))
+       (letfn [(f [[key value]]
+                  (cond ; A)
+                        (= value (key initial-item))
+                        (return false)
+                        ; B)
+                        (-> value empty?)
+                        (-> backup-item key empty? not)
+                        ; C)
+                        :else
+                        (not= value (key backup-item))))]
+              (some f current-item))))
 
 (defn form-changed?
   ; @param (keyword) editor-id

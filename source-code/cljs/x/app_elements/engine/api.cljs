@@ -56,14 +56,16 @@
 (def clickable-body-attributes clickable/clickable-body-attributes)
 
 ; x.app-elements.engine.element
-(def element-id->extended-id               element/element-id->extended-id)
-(def element-props->render-element-header? element/element-props->render-element-header?)
-(def element-attributes                    element/element-attributes)
-(def get-element-prop                      element/get-element-prop)
-(def get-element-props                     element/get-element-props)
-(def set-element-prop!                     element/set-element-prop!)
-(def update-element-prop!                  element/update-element-prop!)
-(def remove-element-prop!                  element/remove-element-prop!)
+(def apply-color                element/apply-color)
+(def apply-dimension            element/apply-dimension)
+(def element-default-attributes element/element-default-attributes)
+(def element-indent-attributes  element/element-indent-attributes)
+(def element-attributes   element/element-attributes)
+(def get-element-prop     element/get-element-prop)
+(def get-element-props    element/get-element-props)
+(def set-element-prop!    element/set-element-prop!)
+(def update-element-prop! element/update-element-prop!)
+(def remove-element-prop! element/remove-element-prop!)
 
 ; x.app-elements.engine.element-info
 (def element-helper element-info/element-helper)

@@ -10,7 +10,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- got-it-button
+(defn got-it-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::got-it-button

@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- menu-bar-items
+(defn menu-bar-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (letfn [(f [view-id] [:view-selector/change-view! :settings.view-selector view-id])]

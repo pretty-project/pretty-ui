@@ -24,6 +24,6 @@
   ;   :order-by-options (namespaced keywords in vector)}
   [lister-id body-props]
   (merge {:items-path       (core.helpers/default-items-path lister-id)
-          :download-limit   core.config/DEFAULT-DOWNLOAD-LIMIT
-          :order-by-options core.config/DEFAULT-ORDER-BY-OPTIONS}
+          :download-limit   core.config/DEFAULT-DOWNLOAD-LIMIT}
+          ;:order-by-options core.config/DEFAULT-ORDER-BY-OPTIONS}
          (param body-props)))

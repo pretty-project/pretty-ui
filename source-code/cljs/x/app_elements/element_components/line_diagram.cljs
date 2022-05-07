@@ -52,7 +52,7 @@
   ; @param (map) section-props
   ;
   ; @return (map)
-  ;  {:color (keyword)}
+  ;  {:color (keyword or string)}
   [section-props]
   (merge {:color :primary}
          (param section-props)))
@@ -126,7 +126,7 @@
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :sections (maps in vector)}
-  ;    [{:color (keyword)(opt)
+  ;    [{:color (keyword or string)(opt)
   ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;       Default: primary
   ;      :label (metamorphic-content)(opt)

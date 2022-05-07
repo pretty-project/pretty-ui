@@ -52,7 +52,7 @@
 (defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ;  {:color (keyword)(opt)
+  ;  {:color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary
   ;    Default: :default
   ;    Only w/ {:label ...}

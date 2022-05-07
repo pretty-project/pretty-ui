@@ -39,7 +39,7 @@
   ; @param (map) line-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:color (keyword or string)
   ;   :layout (keyword)
   ;   :strength (px)}
   [line-props]
@@ -65,7 +65,7 @@
 (defn element
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
-  ;  {:color (keyword)(opt)
+  ;  {:color (keyword or string)(opt)
   ;    :highlight, :muted, :primary, :secondary
   ;    Default: :muted
   ;   :fade (keyword)(opt)

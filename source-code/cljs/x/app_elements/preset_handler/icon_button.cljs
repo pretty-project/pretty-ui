@@ -4,7 +4,7 @@
 
 (ns x.app-elements.preset-handler.icon-button)
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -51,6 +51,7 @@
       :prev               {:icon        :arrow_back_ios}
       :reorder            {:icon        :reorder}
       :restore            {:icon        :restart_alt}
+      :revert             {:icon        :xxx}
       :save               {:color       :primary
                            :icon        :save}
       :search             {:icon        :search}

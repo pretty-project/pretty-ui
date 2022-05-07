@@ -21,7 +21,7 @@
   animation-duration: .25s;
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   box-shadow: 0 0 12px 0 #e0e1e2;
-  height: 48px;
+  height: 100%;
   left: 0;
   position: absolute;
   top: 0;
@@ -41,6 +41,7 @@
   width: 100% }
 
 .surface-a--header-block {
+  align-items: center;
   display: flex }
 
 #surface-a--header-title {
@@ -49,7 +50,7 @@
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 48px }
+  line-height: 36px }
 
 #surface-a--header-title.r-mounting {
   animation-name: opacity-0-1 }
@@ -72,6 +73,8 @@
 
 #surface-a--body-content {
   max-width: var( --content-width-l );
+  padding-left: 12px;
+  padding-right: 12px;
   width: 100% }
 
 /* */

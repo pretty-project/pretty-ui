@@ -45,19 +45,19 @@
   [db _]
   (get-in db [:trader :sync :active?]))
 
-(defn- get-subscription-queries
+(defn get-subscription-queries
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [subscriptions (get-in db [:trader :sync :subscriptions])]
        (reduce-kv #(vector/concat-items %1 (:query %3)) [] subscriptions)))
 
-(defn- any-subscription-added?
+(defn any-subscription-added?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [subscriptions (get-in db [:trader :sync :subscriptions])]
        (map/nonempty? subscriptions)))
 
-(defn- synchronizing?
+(defn synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (and (r any-subscription-added? db)
@@ -68,32 +68,32 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- remove-response!
+(defn remove-response!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ resolver-id]]
   (dissoc-in db [:trader :sync :responses resolver-id]))
 
-(defn- add-subscription!
+(defn add-subscription!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ subscription-id subscription-props]]
   (assoc-in db [:trader :sync :subscriptions subscription-id] subscription-props))
 
-(defn- remove-subscription!
+(defn remove-subscription!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ subscription-id]]
   (dissoc-in db [:trader :sync :subscriptions subscription-id]))
 
-(defn- start-syncing!
+(defn start-syncing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (assoc-in db [:trader :sync :active?] true))
 
-(defn- stop-syncing!
+(defn stop-syncing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (dissoc-in db [:trader :sync :active?]))
 
-(defn- toggle-syncing!
+(defn toggle-syncing!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (update-in db [:trader :sync :active?] not))

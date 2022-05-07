@@ -46,7 +46,7 @@
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :icon (keyword)

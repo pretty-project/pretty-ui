@@ -81,17 +81,17 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ;  XXX#3240
-  ;  {:background-color (keyword)(opt)
+  ;  {:background-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
-  ;   :badge-color (keyword)(opt)
+  ;   :badge-color (keyword or string)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-radius (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :content (metamorphic-content)(opt)
   ;   :class (keyword or keywords in vector)(opt)
@@ -100,7 +100,7 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right
   ;    Default: :center
-  ;   :hover-color (keyword)(opt)
+  ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :indent (map)(opt)

@@ -13,13 +13,24 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :elements/render-color-selector-options!
+  :elements.color-selector/render-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   (fn [{:keys [db]} [_ selector-id selector-props]]
-      (let [options-props (r color-selector.prototypes/options-props-prototype db selector-id selector-props)]
-           [:ui/render-popup! :elements/color-selector-options
-                              {:body [color-selector.views/color-selector-options selector-id options-props]
-                               :min-width :none}])))
+      [:ui/render-popup! :elements.color-selector/options
+                         {:content [color-selector.views/color-selector selector-id selector-props]}]))
+
+(a/reg-event-fx
+  :elements.color-selector/render-selector!
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ;  {}
+  ;
+  ; @usage
+  ;  []
+  [a/event-vector<-id]
+  (fn [{:keys [db]} [_ selector-id selector-props]]
+      (let [selector-props (r color-selector.prototypes/selector-props-prototype db selector-id selector-props)]
+           [:elements.color-selector/render-options! selector-id selector-props])))

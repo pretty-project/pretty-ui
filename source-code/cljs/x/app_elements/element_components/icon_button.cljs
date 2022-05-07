@@ -20,13 +20,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ;  {:background-color (keyword)(opt)
-  ;   :hover-color (keyword)(opt)}
+  ;  {:background-color (keyword or string)(opt)
+  ;   :hover-color (keyword or string)(opt)}
   ;
   ; @return (map)
-  ;  {:background-color (keyword)
+  ;  {:background-color (keyword or string)
   ;   :border-radius (keyword)
-  ;   :color (keyword)
+  ;   :color (keyword or string)
   ;   :icon-family (keyword)
   ;   :height (keyword)}
   [{:keys [background-color hover-color] :as button-props}]
@@ -96,25 +96,25 @@
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ;  {:badge-color (keyword)(opt)
+  ;  {:badge-color (keyword or string)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
-  ;   :background-color (keyword)(opt)
+  ;   :background-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-radius (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl
+  ;    :none, :xxs, :xs, :s, :m, :l, :xl
   ;    Default: :xs
   ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :hover-color (keyword)(opt)
+  ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :icon (keyword)

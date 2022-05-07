@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- media-picker-toggle-auto-label
+(defn media-picker-toggle-auto-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
@@ -25,7 +25,7 @@
           (let [picked-item-count @(a/subscribe [:storage.media-picker/get-picked-item-count picker-id picker-props])]
                {:content :n-items-selected :replacements [picked-item-count]})))
 
-(defn- media-picker-toggle-label
+(defn media-picker-toggle-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
@@ -59,7 +59,7 @@
                     :on-click  [:storage.media-selector/load-selector! picker-id picker-props]
                     :disabled? disabled?}])
 
-(defn- media-picker-thumbnail
+(defn media-picker-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
@@ -89,7 +89,7 @@
                                       (vector/first-items picked-items max-count)
                                       (param              picked-items))))))
 
-(defn- media-picker-thumbnails
+(defn media-picker-thumbnails
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id

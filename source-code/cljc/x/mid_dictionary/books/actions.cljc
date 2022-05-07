@@ -163,6 +163,12 @@
            :retried
            {:en ""
             :hu ""}
+           :revert!
+           {:en "Revert"
+            :hu "Visszaállítás"}
+           :reverted
+           {:en "Reverted"
+            :hu "Visszaállítva"}
            :save!
            {:en "Save"
             :hu "Mentés"}

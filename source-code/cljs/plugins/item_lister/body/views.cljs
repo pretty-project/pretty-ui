@@ -40,7 +40,7 @@
         data-received?        @(a/subscribe [:item-lister/data-received?        lister-id])]
        ; TEMP
        (if-not (and all-items-downloaded? data-received?) ; XXX#0499
-               [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px"}}
+               [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px 0"}}
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
                      [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]

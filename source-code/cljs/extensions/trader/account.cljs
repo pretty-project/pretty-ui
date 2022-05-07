@@ -28,7 +28,7 @@
   [db _]
   (get-in db [:trader :account :use-mainnet?]))
 
-(defn- get-api-details
+(defn get-api-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   {:api-key      (get-in db [:trader :account :api-key])
@@ -50,13 +50,13 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- invalid-api-details-label
+(defn invalid-api-details-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:div {:style (styles/overlay-center-style)}
         [elements/label {:content "Invalid api details" :color :warning}]])
 
-(defn- missing-api-details-label
+(defn missing-api-details-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [:div {:style (styles/overlay-center-style)}
@@ -67,7 +67,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- use-mainnet-switch
+(defn use-mainnet-switch
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/switch ::use-mainnet-switch
@@ -75,7 +75,7 @@
                     :font-size :xs :indent :both :initial-value false :border-color :default
                     :value-path [:trader :account :use-mainnet?]}])
 
-(defn- api-key-field
+(defn api-key-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/text-field ::api-key-field
@@ -83,7 +83,7 @@
                         :min-width :s :indent :both :autofill? true :name :favorite-color
                         :value-path [:trader :account :api-key]}])
 
-(defn- api-secret-field
+(defn api-secret-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/text-field ::api-secret-field
@@ -92,7 +92,7 @@
                         :min-width :s :indent :both
                         :value-path [:trader :account :api-secret]}])
 
-(defn- save-api-details-button
+(defn save-api-details-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [api-details-filled?] :as module-props}]
   [elements/button ::save-account-button
@@ -100,7 +100,7 @@
                     :indent :right :disabled? (not api-details-filled?)
                     :on-click [:trader/upload-api-details!]}])
 
-(defn- api-details
+(defn api-details
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [failured?] :as module-props}]
   [:div {:style (styles/overlay-center-style)}
@@ -119,7 +119,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- account
+(defn account
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [api-details module-id module-props])

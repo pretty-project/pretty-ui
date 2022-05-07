@@ -58,7 +58,7 @@
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)(opt)

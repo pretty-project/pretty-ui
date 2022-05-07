@@ -206,7 +206,7 @@
   ; @param (map) group-props
   ;  {:auto-focus? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :default, :primary, :secondary
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)

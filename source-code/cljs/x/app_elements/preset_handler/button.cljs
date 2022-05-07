@@ -4,7 +4,7 @@
 
 (ns x.app-elements.preset-handler.button)
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,6 +61,8 @@
                      :label            :reorder}
       :restore      {:horizontal-align :left
                      :label            :restore!}
+      :revert       {:horizontal-align :left
+                     :label            :revert!}
       :save         {:color            :primary
                      :horizontal-align :left
                      :label            :save!}

@@ -4,6 +4,7 @@
 
 (ns x.app-elements.select.helpers
     (:require [x.app-core.api               :as a]
+              [x.app-elements.engine.api    :as engine]
               [x.app-elements.select.config :as select.config]
               [x.app-environment.api        :as environment]))
 
@@ -12,11 +13,29 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn select-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [select-id {:keys [layout min-width] :as select-props}]
+  (merge (engine/element-default-attributes select-id select-props)
+         (engine/element-indent-attributes  select-id select-props)
+         {:layout    layout
+          :min-width min-width}))
+
 (defn select-button-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (map)
   ;  {}
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click [:elements.select/render-options! select-id select-props]]
@@ -31,6 +50,9 @@
   ; @param (map) select-props
   ;  {}
   ; @param (*) option
+  ;
+  ; @return (map)
+  ;  {}
   [select-id {:keys [value-path] :as select-props} option]
   (let [selected-value  @(a/subscribe [:db/get-item value-path])
         option-selected? (= selected-value option)

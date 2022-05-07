@@ -3,8 +3,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.effects
-    (:require [plugins.item-lister.core.events  :as core.events]
+    (:require [mid-fruits.logical               :refer [swap]]
+              [plugins.item-lister.core.events  :as core.events]
               [plugins.item-lister.core.helpers :as core.helpers]
+              [plugins.item-lister.core.subs    :as core.subs]
               [x.app-core.api                   :as a :refer [r]]))
 
 
@@ -54,6 +56,20 @@
   (fn [{:keys [db]} [_ lister-id order-by]]
       {:db       (r core.events/order-items! db lister-id order-by)
        :dispatch [:item-lister/request-items! lister-id]}))
+
+(a/reg-event-fx
+  :item-lister/swap-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  (fn [{:keys [db]} [_ lister-id]]
+      ; ...
+      (let [current-order-by (r core.subs/get-meta-item db lister-id :order-by)
+            current-order-by-direction (name      current-order-by)
+            current-order-by-key       (namespace current-order-by)
+            swap-order-by-direction    (swap current-order-by-direction "descending" "ascending")
+            swap-order-by              (keyword current-order-by-key swap-order-by-direction)]
+           [:item-lister/order-items! lister-id swap-order-by])))
 
 
 

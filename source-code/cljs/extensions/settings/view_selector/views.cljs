@@ -18,7 +18,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- body-structure
+(defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [current-view-id @(a/subscribe [:view-selector/get-current-view-id :settings.view-selector])]
@@ -28,7 +28,7 @@
                              :appearance    [appearance-settings   :settings.view-selector/view]
                                             [personal-settings     :settings.view-selector/view])))
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [view-selector/body :settings.view-selector
@@ -40,14 +40,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- menu-bar
+(defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/menu-bar ::menu-bar
                      {:menu-items (view-selector.helpers/menu-bar-items)
                       :horizontal-align :center}])
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [elements/horizontal-polarity ::header
@@ -58,7 +58,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- view
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
   [layouts/layout-a ::view

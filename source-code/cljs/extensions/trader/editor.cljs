@@ -24,17 +24,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-source-code
+(defn get-source-code
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (get-in db [:trader :editor :source-code]))
 
-(defn- synchronized?
+(defn synchronized?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (some? (get-in db [:trader :editor])))
 
-(defn- get-editor-props
+(defn get-editor-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :editor])
@@ -42,7 +42,7 @@
 
 (a/reg-sub :trader/get-editor-props get-editor-props)
 
-(defn- get-editor-log-props
+(defn get-editor-log-props
   [db _]
   (merge (r sync/get-response db :trader/download-log-data)
          (get-in db [:trader :listener])
@@ -69,21 +69,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- test-source-code-button
+(defn test-source-code-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button {:layout :icon-button :icon :play_arrow :variant :transparent
                     :indent :right :color :invert :on-click [:trader/test-source-code!]
                     :tooltip "Test source code"}])
 
-(defn- toggle-log-button
+(defn toggle-log-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [log-visible?]}]
   [elements/button {:layout :icon-button :icon :terminal :variant :transparent
                     :indent :right :color :invert :on-click [:trader/toggle-editor-log!]
                     :tooltip (if log-visible? "Hide log" "Show log")}])
 
-(defn- editor-log-menu-bar
+(defn editor-log-menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/editor-log-menu-bar-style)}
@@ -91,7 +91,7 @@
         [toggle-log-button               module-id module-props]
         [listener/toggle-listener-button module-id module-props]])
 
-(defn- editor-log-item
+(defn editor-log-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _ {:keys [log-entry timestamp] :as log-item}]
   [:div {:style {:display "flex"}}
@@ -100,21 +100,21 @@
         [:div {:style (styles/log-item-message-style log-item)}
               (str log-entry)]])
 
-(defn- editor-log-items
+(defn editor-log-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [log-items] :as module-props}]
   (reduce #(conj %1 [editor-log-item module-id module-props %2])
            [:div {:style (styles/editor-log-body-style)}]
            (param log-items)))
 
-(defn- editor-log-structure
+(defn editor-log-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/editor-log-style module-id module-props)}
         [editor-log-menu-bar module-id module-props]
         [editor-log-items    module-id module-props]])
 
-(defn- editor-log
+(defn editor-log
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   [components/subscriber :trader/editor-log
@@ -126,7 +126,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- editor-textarea
+(defn editor-textarea
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [source-code synchronized?]}]
   [:textarea {:style (styles/editor-textarea-style)
@@ -135,19 +135,19 @@
               :on-change #(a/dispatch-sync [:db/set-item! [:trader :editor :source-code]
                                                           (dom/event->value %)])}])
 
-(defn- upload-source-code-button
+(defn upload-source-code-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [elements/button ::upload-source-code-button
                    {:layout :icon-button :icon :save :on-click [:trader/upload-source-code!]}])
 
-(defn- menu-bar
+(defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [elements/row {:content [:<> [upload-source-code-button module-id module-props]]
                  :horizontal-align :right :style {:padding-right "48px"}}])
 
-(defn- editor
+(defn editor
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/editor-style) :id "trader--editor"}
@@ -159,7 +159,7 @@
               [:div {:style (styles/editor-menu-bar-style)}
                     [menu-bar module-id module-props]]]])
 
-(defn- view
+(defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [view-id]
   [components/subscriber :trader/editor

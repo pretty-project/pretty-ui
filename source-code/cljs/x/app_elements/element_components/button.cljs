@@ -20,13 +20,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ;  {:background-color (keyword)(opt)
-  ;   :hover-color (keyword)(opt)
+  ;  {:background-color (keyword or string)(opt)
+  ;   :hover-color (keyword or string)(opt)
   ;   :icon (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:border-radius (keyword)
-  ;   :color (keyword)
+  ;   :color (keyword or string)
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
@@ -106,20 +106,20 @@
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ;  XXX#0714
-  ;  {:badge-color (keyword)(opt)
+  ;  {:badge-color (keyword or string)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)
-  ;   :background-color (keyword)(opt)
+  ;   :background-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
-  ;   :border-color (keyword)(opt)
+  ;   :border-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-radius (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l
+  ;    :none, :xxs, :xs, :s, :m, :l
   ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword)(opt)
+  ;   :color (keyword or string)(opt)
   ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
@@ -133,7 +133,7 @@
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right
   ;    Default: :center
-  ;   :hover-color (keyword)(opt)
+  ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :icon (keyword)(opt)

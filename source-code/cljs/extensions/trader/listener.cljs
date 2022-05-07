@@ -13,7 +13,7 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-listener-props
+(defn get-listener-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (merge (get-in db [:trader :listener])
@@ -30,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- source-code-preview
+(defn source-code-preview
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [source-code]}]
   [:button {:style     (styles/source-code-preview-style)
@@ -39,7 +39,7 @@
            [:div {:style (styles/source-code-preview-icon-style)}
                  [elements/icon {:icon :code}]]])
 
-(defn- toggle-listener-button
+(defn toggle-listener-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id {:keys [listener-active?]}]
   [elements/button ::toggle-listener-button
@@ -49,7 +49,7 @@
                     :on-click [:trader/toggle-listener!]}])
 
 
-(defn- listener
+(defn listener
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/box-structure-style)}

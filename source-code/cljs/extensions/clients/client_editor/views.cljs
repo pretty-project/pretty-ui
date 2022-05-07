@@ -3,15 +3,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.clients.client-editor.views
-    (:require [mid-fruits.form         :as form]
+    (:require [layouts.surface-a.api   :as surface-a]
+              [mid-fruits.form         :as form]
               [mid-fruits.string       :as string]
               [plugins.item-editor.api :as item-editor]
               [x.app-components.api    :as components]
               [x.app-core.api          :as a :refer [r]]
               [x.app-elements.api      :as elements]
-              [x.app-layouts.api       :as layouts]
               [x.app-locales.api       :as locales]
-              [x.app-ui.api            :as ui]))
+              [x.app-ui.api            :as ui]
+
+              ; TEMP
+              [x.app-layouts.api       :as layouts]))
 
 
 
@@ -22,45 +25,44 @@
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
         client-name      @(a/subscribe [:clients.client-editor/get-client-name])]
-       [:<> ;[ui/title-sensor {:title client-name :offset -18}]
+       [:<> [surface-a/title-sensor {:title client-name :offset 0}]
             [elements/label ::client-name-label
                             {:content     client-name
                              :disabled?   editor-disabled?
-                             :font-size   :l
+                             :font-size   :xxl
                              :font-weight :extra-bold
+                             :indent      {:right :s}
                              :placeholder "Névtelen ügyfél"}]]))
 
-(defn client-color-selector
+(defn client-color-marker
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/color-selector ::client-color-selector
-                                {:disabled?  editor-disabled?
-                                 :size       :l
-                                 :value-path [:clients :client-editor/edited-item :colors]}]))
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
+        client-colors    @(a/subscribe [:db/get-item [:clients :client-editor/edited-item :colors]])]
+       [elements/color-marker ::client-color-marker
+                              {:colors    client-colors
+                               :disabled? editor-disabled?
+                               :size      :l}]))
 
 (defn client-modified-at-label
   []
-  (let [client-modified-at @(a/subscribe [:item-editor/get-current-item-modified-at :clients.client-editor])]
+  (let [editor-disabled?   @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
+        client-modified-at @(a/subscribe [:item-editor/get-current-item-modified-at :clients.client-editor])]
        [elements/label ::client-modified-at-label
                        {:color     :muted
                         :content   {:content :last-modified-at-n :replacements [client-modified-at]}
+                        :disabled? editor-disabled?
                         :font-size :xxs}]))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn client-basic-info-label
+(defn client-header
   []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/label ::client-basic-info-label
-                       {:content             :basic-info
-                        :disabled?           editor-disabled?
-                        :font-size           :m
-                        :font-weight         :extra-bold
-                        :horizontal-position :left
-                        :indent              {:left :xs :top :xxl}}]))
+  [:<> [elements/row {:content [:<> [client-name-label]
+                                    [client-color-marker]]}]
+       [client-modified-at-label]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn client-last-name-field
   []
@@ -68,7 +70,7 @@
        [elements/text-field ::client-last-name-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :xxl :vertical :xxs}
                              :label      :last-name
                              :min-width  :xs
                              :required?  true
@@ -80,7 +82,7 @@
        [elements/text-field ::client-first-name-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :xxl :vertical :xxs}
                              :label      :first-name
                              :min-width  :xs
                              :required?  true
@@ -101,7 +103,7 @@
        [elements/text-field ::client-phone-number-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :m :vertical :xxs}
                              :label      :phone-number
                              :min-width  :xs
                              ; Ha le lennének tiltva bizonoyos karakterek, nem lenne egyértelmű a mező használata!
@@ -117,7 +119,7 @@
        [elements/text-field ::client-email-address-field
                             {:disabled?  editor-disabled?
                              :form-id    :clients.client-editor/form
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :m :vertical :xxs}
                              :label      :email-address
                              :min-width  :xs
                              :required?  true
@@ -134,8 +136,7 @@
 
 (defn client-basic-info
   []
-  [:<> [client-basic-info-label]
-       [client-name-fields]
+  [:<> [client-name-fields]
        [client-primary-contacts]])
 
 
@@ -143,35 +144,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn client-more-info-label
-  []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/label ::client-more-info-label
-                       {:content             :more-info
-                        :disabled?           editor-disabled?
-                        :font-size           :m
-                        :font-weight         :extra-bold
-                        :horizontal-position :left
-                        :indent              {:left :xs :top :xxl}}]))
-
 (defn client-vat-no-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-vat-no-field
                             {:disabled?  editor-disabled?
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :m :vertical :xxs}
                              :label      :vat-no
                              :min-width  :xs
-                             :value-path [:clients :client-editor/edited-item :vat-no]
-                             ; TEMP
-                             :info-text "Lorem ipsum dolor ..."}]))
+                             :value-path [:clients :client-editor/edited-item :vat-no]}]))
 
 (defn client-country-select
   []
   (let [editor-disabled?  @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/select ::client-country-select
                         {:disabled?       editor-disabled?
-                         :indent          {:horizontal :xxs :vertical :xs}
+                         :indent          {:top :xxl :vertical :xxs}
                          :label           :country ;:user-cancel? false
                          :initial-options locales/EU-COUNTRY-NAMES
                          :min-width       :xs
@@ -182,7 +170,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-zip-code-field
                             {:disabled?  editor-disabled?
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :xxl :vertical :xxs}
                              :min-width  :xs
                              :label      :zip-code
                              :value-path [:clients :client-editor/edited-item :zip-code]}]))
@@ -193,7 +181,7 @@
        [elements/combo-box ::client-city-field
                            {:disabled?    editor-disabled?
                             :emptiable?   false
-                            :indent       {:horizontal :xxs :vertical :xs}
+                            :indent       {:top :xxl :vertical :xxs}
                             :min-width    :xs
                             :label        :city
                             :options-path [:clients :client-editor/suggestions :city]
@@ -204,7 +192,7 @@
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/text-field ::client-address-field
                             {:disabled?  editor-disabled?
-                             :indent     {:horizontal :xxs :vertical :xs}
+                             :indent     {:top :m :vertical :xxs}
                              :min-width  :xs
                              :label      :address
                              :value-path [:clients :client-editor/edited-item :address]}]))
@@ -224,42 +212,102 @@
              [:div (layouts/form-block-attributes {:ratio 40})
                    [client-vat-no-field]]]])
 
-(defn client-more-info
-  []
-  [:<> [client-more-info-label]
-       [client-secondary-contacts]])
-
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn client-description-label
-  []
-  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
-       [elements/label ::client-description-label
-                       {:content             :description
-                        :disabled?           editor-disabled?
-                        :font-size           :m
-                        :font-weight         :extra-bold
-                        :horizontal-position :left
-                        :indent              {:left :xs :top :xxl}}]))
 
 (defn client-description-field
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
        [elements/multiline-field ::client-description-field
                                  {:disabled?  editor-disabled?
-                                  :indent     {:horizontal :xxs :vertical :xs}
+                                  :indent     {:top :xxl :vertical :xxs}
+                                  :label      :description
                                   :min-width  :xs
                                   :value-path [:clients :client-editor/edited-item :description]}]))
 
+(defn client-color-button
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/button ::color-picker-button
+                        {:font-size        :xs
+                         :horizontal-align :left
+                         :icon             :palette
+                         :indent           {:horizontal :xxl :vertical :xxs}
+                         :label            "Szín kiválasztása"
+                         :on-click         [:elements.color-selector/render-selector! ::client-color-selector
+                                                                                      {:value-path [:clients :client-editor/edited-item :colors]}]}]))
+
 (defn client-additional-info
   []
-  [:<> [client-description-label]
-       [:div (layouts/form-row-attributes)
+  [:<> [:div (layouts/form-row-attributes)
              [:div (layouts/form-block-attributes {:ratio 100})
-                   [client-description-field]]]])
+                   [client-description-field]]]
+       [:div (layouts/form-row-attributes)
+             [client-color-button]]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn client-menu-bar
+  []
+  [:<> [elements/menu-bar ::client-menu-bar
+                          {:indent {:top :xxl}
+                           :menu-items [{:label "Adatok" :on-click [] :active? true}]}]
+                                       ;{:label :price-quotes :on-click []}
+       [elements/horizontal-line {:color :highlight}]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn cancel-button
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
+        client-id        @(a/subscribe [:router/get-current-route-path-param :item-id])]
+       [elements/button ::cancel-button
+                        {:disabled?   editor-disabled?
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:vertical :xxs :horizontal :xxs}
+                         :on-click    [:router/go-to! (str "/@app-home/clients/"client-id)]
+                         :preset      :cancel}]))
+
+(defn revert-button
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
+        item-changed?    @(a/subscribe [:item-editor/item-changed?    :clients.client-editor])]
+       [elements/button ::revert-button
+                        {:disabled?   (or editor-disabled? (not item-changed?))
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:vertical :xxs :horizontal :xxs}
+                         :on-click    [:item-editor/revert-item! :clients.client-editor]
+                         :preset      :revert}]))
+
+(defn save-button
+  []
+  (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])]
+       [elements/button ::save-button
+                        {:disabled?   editor-disabled?
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :indent      {:vertical :xxs :horizontal :xxs}
+                         :on-click    [:item-editor/save-item! :clients.client-editor]
+                         :preset      :save}]))
+
+(defn footer
+  []
+  [elements/horizontal-polarity ::footer
+                                {:style {:background-color "white" :border-top "1px solid #ddd"
+                                         :bottom "0" :position "sticky" :width "100%"}
+                                 :start-content [:<> [cancel-button]]
+                                 :end-content   [:<> [revert-button]
+                                                     [save-button]]}])
 
 
 
@@ -268,29 +316,14 @@
 
 (defn client-form
   [_ _]
-  [:<> [client-color-selector]
-       [client-name-label]
-       [client-modified-at-label]
+  [:<> [client-header]
+       [client-menu-bar]
        [client-basic-info]
-       [client-more-info]
-       [client-additional-info]])
+       [client-secondary-contacts]
+       [client-additional-info]
+       [footer]])
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn footer
-  []
-  [item-editor/footer :clients.client-editor
-                      {}])
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn body
+(defn view-structure
   []
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
@@ -303,16 +336,9 @@
                                :item-path        [:clients :client-editor/edited-item]
                                :label-key        :name
                                :suggestion-keys  [:city]
-                               :suggestions-path [:clients :client-editor/suggestions]}]
-            [elements/horizontal-separator {:size :xxl}]]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+                               :suggestions-path [:clients :client-editor/suggestions]}]]))
 
 (defn view
   [surface-id]
-  [layouts/layout-a ::view
-                    {:body   #'body
-                     :footer #'footer}])
+  [surface-a/layout surface-id
+                    {:content #'view-structure}])

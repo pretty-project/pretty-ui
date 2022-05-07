@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- get-settings
+(defn get-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (get-in db [:trader :settings]))
@@ -32,7 +32,7 @@
 ;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- symbol-select
+(defn symbol-select
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/select {:initial-options engine/SYMBOL-OPTIONS
@@ -56,7 +56,7 @@
                     :on-click [:trader/toggle-syncing!]
                     :icon :sync :indent :right :variant :transparent}])
 
-(defn- save-settings-button
+(defn save-settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
   [elements/button ::save-settings-button
@@ -69,7 +69,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- settings
+(defn settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [module-id module-props]
   [:div {:style (styles/overlay-center-style)}

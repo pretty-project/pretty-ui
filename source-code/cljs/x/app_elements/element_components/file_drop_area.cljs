@@ -19,7 +19,7 @@
   ; @param (map) area-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
+  ;  {:color (keyword or string)
   ;   :font-size (keyword)
   ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)}

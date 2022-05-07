@@ -57,6 +57,8 @@
   ; @param (map) column-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :content (metamorphic-content)
+  ;   :gap (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right
   ;    Default: :center

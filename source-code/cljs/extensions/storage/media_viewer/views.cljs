@@ -14,7 +14,7 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- header
+(defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id])
   ;[ui/close-popup-header :storage.media-viewer/view {}])
@@ -24,14 +24,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- pdf-item
+(defn pdf-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
   (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
        [:div.storage--media-viewer--pdf-item
          [:iframe.storage--media-viewer--pdf {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
 
-(defn- image-item
+(defn image-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
   (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
@@ -39,7 +39,7 @@
          [:div.storage--media-viewer--icon  [elements/icon {:icon :insert_drive_file :color :invert}]]
          [:img.storage--media-viewer--image {:src (-> % :item-filename media/filename->media-storage-uri)}]]))
 
-(defn- media-item
+(defn media-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
   (let [% @(a/subscribe [:storage.media-viewer/get-current-item-props viewer-id])]
@@ -47,7 +47,7 @@
              "application/pdf" [pdf-item   viewer-id]
                                [image-item viewer-id])))
 
-(defn- body
+(defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [viewer-id]
   [:<> [media-item viewer-id]])

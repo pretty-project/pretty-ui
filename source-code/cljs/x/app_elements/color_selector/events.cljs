@@ -17,7 +17,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) selector-id
-  ; @param (map) options-props
+  ; @param (map) selector-props
   ;  {:value-path (vector)}
   ; @param (string) option
   [db [_ _ {:keys [value-path]} option]]
