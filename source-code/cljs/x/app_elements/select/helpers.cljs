@@ -25,8 +25,8 @@
   [select-id {:keys [layout min-width] :as select-props}]
   (merge (engine/element-default-attributes select-id select-props)
          (engine/element-indent-attributes  select-id select-props)
-         {:layout    layout
-          :min-width min-width}))
+         {:data-layout    layout
+          :data-min-width min-width}))
 
 (defn select-button-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

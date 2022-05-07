@@ -1469,14 +1469,21 @@
   ;  =>
   ;  true
   ;
+  ; @example
+  ;  (vector/compared-items-ordered? ["a" "b" "c"] ["a" "b"] string/abc?)
+  ;  =>
+  ;  false
+  ;
   ; @return (boolean)
-  ;  A compared-items-ordered? függvény összehasonlítja a és b vektor azonos indexű elemeit.
-  ;  - Az első alkalommal, amikor két összehasonlított elem nem egyezik, visszatér
-  ;    a (comparator-f x y) függvény kimenetével
-  ;  - Ha a és b vektor elemei megegyeznek a visszatérési érték true
   [a b comparator-f]
-  ; Ha a vektor elemeinek száma és b vektor elemeinek száma nem egyenlő,
-  ; akkor az elemek összehasonlítása az alacsonyabb elemszámig történik!
+  ; A compared-items-ordered? függvény összehasonlítja a és b vektor azonos indexű elemeit. ...
+  ; ... Az első alkalommal, amikor két összehasonlított elem nem egyezik, visszatér
+  ;     a (comparator-f x y) függvény kimenetével.
+  ; ... Ha a és b vektor elemei és az elemek száma megegyeznek, a visszatérési érték true!
+  ; ... Ha a vektor elemeinek száma és b vektor elemeinek száma nem egyenlő,
+  ;     akkor az elemek összehasonlítása az alacsonyabb elemszámig történik!
+  ;     (Ha az összehasonlított elemek megegyeznek, akkor a kisebb elemszámú vektor számít
+  ;      a sorrendben hamarabbinak!)
   (let [max-count (min (count a) (count b))]
        (letfn [(compared-items-ordered-f [dex]
                                          (let [x (get a dex)
@@ -1485,7 +1492,7 @@
                                                   ; If the compared items are equal ...
                                                   (if (= (inc dex) max-count)
                                                       ; If NO more items to compare (and NO difference found)...
-                                                      (return true)
+                                                      (<= (count a) (count b))
                                                       ; If more items to compare ...
                                                       (compared-items-ordered-f (inc dex)))
                                                   ; If the compared items are NOT equal ...

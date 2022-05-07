@@ -55,6 +55,7 @@
                                :color         :primary
                                :hover-color   :highlight
                                :indent        {:all :m}
+                               :on-click      [:router/go-to! "/@app-home/clients/create"]
                                :preset        :add}]])
 
 

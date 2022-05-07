@@ -14,9 +14,11 @@
 (defn- app-title-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [app-title @(a/subscribe [:core/get-app-config-item :app-title])]
+  (let [synchronizing? @(a/subscribe [:sync/listening-to-request? :user/authenticate!])
+        app-title      @(a/subscribe [:core/get-app-config-item :app-title])]
        [elements/label ::app-title-label
                        {:content          app-title
+                        :disabled?        synchronizing?
                         :font-weight      :extra-bold
                         :horizontal-align :center
                         :indent           {:horizontal :xs}}]))

@@ -56,9 +56,7 @@
   [routes]
   (letfn [(f [destructed-routes route-id {:keys [route-template] :as route-props}]
              (if (route-conflict? destructed-routes route-template)
-                 (let []
-                   (println (str "r-conflict: " route-template))
-                  (return          destructed-routes))
+                 (return          destructed-routes)
                  (let [route-data (route-props->route-data route-id route-props)]
                       (conj destructed-routes route-data))))]
          (reduce-kv f [] routes)))
