@@ -1249,9 +1249,10 @@ button.x-card:focus,
   height: 12px;
   width: 6px }
 
-.x-thumbnail[data-size="xxs"] .x-thumbnail--body {
-  border-radius: var( --border-radius-s );
-  height: 36px;
+.x-thumbnail[data-height="xxs"] .x-thumbnail--body {
+  height: 36px }
+
+.x-thumbnail[data-width="xxs"] .x-thumbnail--body {
   width: 36px }
 
 .x-horizontal-separator[data-size="xxs"] {
@@ -1280,9 +1281,10 @@ button.x-card:focus,
   height: 18px;
   width: 6px }
 
-.x-thumbnail[data-size="xx"] .x-thumbnail--body {
-  border-radius: var( --border-radius-s );
-  height: 48px;
+.x-thumbnail[data-height="xs"] .x-thumbnail--body {
+  height: 48px }
+
+.x-thumbnail[data-width="xs"] .x-thumbnail--body {
   width: 48px }
 
 .x-horizontal-separator[data-size="xs"] {
@@ -1311,9 +1313,10 @@ button.x-card:focus,
   height: 24px;
   width: 6px }
 
-.x-thumbnail[data-size="s"] .x-thumbnail--body {
-  border-radius: var( --border-radius-m );
-  height: 60px;
+.x-thumbnail[data-height="s"] .x-thumbnail--body {
+  height: 60px }
+
+.x-thumbnail[data-width="s"] .x-thumbnail--body {
   width: 60px }
 
 .x-horizontal-separator[data-size="s"] {
@@ -1342,9 +1345,10 @@ button.x-card:focus,
   height: 30px;
   width: 6px }
 
-.x-thumbnail[data-size="m"] .x-thumbnail--body {
-  border-radius: var( --border-radius-m );
-  height: 72px;
+.x-thumbnail[data-height="m"] .x-thumbnail--body {
+  height: 72px }
+
+.x-thumbnail[data-width="m"] .x-thumbnail--body {
   width: 72px }
 
 .x-horizontal-separator[data-size="m"] {
@@ -1373,9 +1377,10 @@ button.x-card:focus,
   height: 36px;
   width: 6px }
 
-.x-thumbnail[data-size="l"] .x-thumbnail--body {
-  border-radius: var( --border-radius-m );
-  height: 84px;
+.x-thumbnail[data-height="l"] .x-thumbnail--body {
+  height: 84px }
+
+.x-thumbnail[data-width="l"] .x-thumbnail--body {
   width: 84px }
 
 .x-horizontal-separator[data-size="l"] {
@@ -1404,9 +1409,10 @@ button.x-card:focus,
   height: 42px;
   width: 6px }
 
-.x-thumbnail[data-size="xl"] .x-thumbnail--body {
-  border-radius: var( --border-radius-m );
-  height: 96px;
+.x-thumbnail[data-height="xl"] .x-thumbnail--body {
+  height: 96px }
+
+.x-thumbnail[data-width="xl"] .x-thumbnail--body {
   width: 96px }
 
 .x-horizontal-separator[data-size="xl"] {
@@ -1435,9 +1441,10 @@ button.x-card:focus,
   height: 48px;
   width: 6px }
 
-.x-thumbnail[data-size="xxl"] .x-thumbnail--body {
-  border-radius: var( --border-radius-m );
-  height: 108px;
+.x-thumbnail[data-height="xxl"] .x-thumbnail--body {
+  height: 108px }
+
+.x-thumbnail[data-width="xxl"] .x-thumbnail--body {
   width: 108px }
 
 .x-horizontal-separator[data-size="xxl"] {
@@ -1460,6 +1467,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="xxs"] .x-card--body,
 .x-icon-button[data-border-radius="xxs"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="xxs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxs"] .x-toggle--body {
   border-radius: var( --border-radius-xxs ) }
 
@@ -1473,6 +1481,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="xs"] .x-card--body,
 .x-icon-button[data-border-radius="xs"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="xs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xs"] .x-toggle--body {
   border-radius: var( --border-radius-xs ) }
 
@@ -1486,6 +1495,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="s"] .x-card--body,
 .x-icon-button[data-border-radius="s"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="s"] .x-thumbnail--body,
 .x-toggle[data-border-radius="s"] .x-toggle--body {
   border-radius: var( --border-radius-s ) }
 
@@ -1499,6 +1509,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="m"] .x-card--body,
 .x-icon-button[data-border-radius="m"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="m"] .x-thumbnail--body,
 .x-toggle[data-border-radius="m"] .x-toggle--body {
   border-radius: var( --border-radius-m ) }
 
@@ -1512,6 +1523,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="l"] .x-card--body,
 .x-icon-button[data-border-radius="l"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="l"] .x-thumbnail--body,
 .x-toggle[data-border-radius="l"] .x-toggle--body {
   border-radius: var( --border-radius-l ) }
 
@@ -1524,6 +1536,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="xl"] .x-card--body,
 .x-icon-button[data-border-radius="xl"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="xl"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xl"] .x-toggle--body {
   border-radius: var( --border-radius-xl ) }
 
@@ -1536,6 +1549,7 @@ button.x-card:focus,
 
 .x-card[data-border-radius="xxl"] .x-card--body,
 .x-icon-button[data-border-radius="xxl"] .x-icon-button--body,
+.x-thumbnail[data-border-radius="xxl"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxl"] .x-toggle--body {
   border-radius: var( --border-radius-xxl ) }
 

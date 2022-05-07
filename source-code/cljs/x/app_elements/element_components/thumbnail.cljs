@@ -20,9 +20,11 @@
   ; @param (map) thumbnail-props
   ;
   ; @return (map)
-  ;  {:size (keyword)}
+  ;  {:height (keyword)
+  ;   :width (keyword)}
   [thumbnail-props]
-  (merge {:size :s}
+  (merge {:height :s
+          :width  :s}
          (param thumbnail-props)))
 
 
@@ -66,9 +68,15 @@
 (defn element
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:class (keyword or keywords in vector)(opt)
+  ;  {:border-radius (keyword)(opt)
+  ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :none
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :height (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -79,11 +87,11 @@
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :on-click (metamorphic-event)(opt)
-  ;   :size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
   ;   :style (map)(opt)
-  ;   :uri (string)(opt)}
+  ;   :uri (string)(opt)
+  ;   :width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s}
   ;
   ; @usage
   ;  [elements/thumbnail {...}]

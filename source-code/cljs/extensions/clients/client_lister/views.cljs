@@ -31,10 +31,10 @@
   []
   (let [search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
        [elements/search-field ::search-clients-field
-                             {:indent        {:top :s}
-                              :on-empty      search-event
-                              :on-type-ended search-event
-                              :placeholder   "Keresés az ügyfelek között"}]))
+                              {:indent        {:top :s}
+                               :on-empty      search-event
+                               :on-type-ended search-event
+                               :placeholder   "Keresés az ügyfelek között"}]))
 
 (defn client-list-description
   []
@@ -67,8 +67,7 @@
   (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])]
        [:div {:style {:display "flex" :font-weight 500
                       :height "48px" :align-items "center"
-                      :border-bottom "1px solid #f0f0f0"}
-              :class "client-list-item"}
+                      :border-bottom "1px solid #f0f0f0"}}
              [:div {:style {:width "48px"}}
                    [elements/color-marker {:colors colors
                                            :indent {:left :xs}
@@ -137,7 +136,7 @@
           [:div {:style {:background-color "white"  :border-bottom "1px solid #ddd" :display "flex"
                          :position         "sticky" :top           "48px"}}
                 [:div {:style {:width "48px"}}]
-                [:div {:style {:display_ "flex" :width "180px" :flex-grow 1}} [client-list-column-label {:label :name          :order-by-key :name}]]
+                [:div {:style {:display_ "flex" :flex-grow 1}}   [client-list-column-label {:label :name          :order-by-key :name}]]
                 [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :email-address :order-by-key :email-address}]]
                 [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :phone-number  :order-by-key :phone-number}]]
                 [:div {:style {:display_ "flex" :width "160px"}} [client-list-column-label {:label :last-modified :order-by-key :modified-at}]]
