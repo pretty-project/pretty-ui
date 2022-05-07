@@ -8,8 +8,10 @@
               [plugins.item-lister.api :as item-lister]
               [x.app-core.api          :as a]
               [x.app-elements.api      :as elements]
-              [x.app-layouts.api       :as layouts]
-              [x.app-ui.api            :as ui]))
+              [x.app-ui.api            :as ui]
+
+              ; TEMP
+              [x.app-layouts.api :as layouts]))
 
 
 
@@ -162,4 +164,4 @@
 (defn view
   [surface-id]
   [surface-a/layout surface-id
-                    {:content [view-structure]}])
+                    {:content #'view-structure}])
