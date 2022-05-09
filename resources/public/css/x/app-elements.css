@@ -198,10 +198,11 @@ button.x-card:focus,
 .x-select--button-icon,
 .x-slideshow--controls--go-bwd,
 .x-slideshow--controls--go-fwd,
+.x-thumbnail--icon,
 .x-button[data-icon-family="material-icons-filled"] .x-button--icon,
 .x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
 .x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
-.x-icon[data-icon-family="material-icons-filled"],
+.x-icon[data-icon-family="material-icons-filled"] .x-icon--body,
 .x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-filled"] .x-label--icon,
 .x-field-adornments--button-adornment[data-icon-family="material-icons-filled"],
@@ -218,7 +219,7 @@ button.x-card:focus,
 .x-button[data-icon-family="material-icons-outlined"] .x-button--icon,
 .x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
 .x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
-.x-icon[data-icon-family="material-icons-outlined"],
+.x-icon[data-icon-family="material-icons-outlined"] .x-icon--body,
 .x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
 .x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
 .x-field-adornments--button-adornment[data-icon-family="material-icons-outlined"],
@@ -437,7 +438,7 @@ button.x-card:focus,
 .x-anchor[data-color="muted"],
 .x-button[data-color="muted"] .x-button--body,
 .x-chip[data-color="muted"] .x-chip--body,
-.x-icon[data-color="muted"],
+.x-icon[data-color="muted"] .x-icon--body,
 .x-icon-button[data-color="muted"] .x-icon-button--body,
 .x-label[data-color="muted"],
 .x-text[data-color="muted"] {
@@ -490,7 +491,7 @@ button.x-card:focus,
 
 .x-button[data-color="highlight"] .x-button--body,
 .x-chip[data-color="highlight"] .x-chip--body,
-.x-icon[data-color="highlight"],
+.x-icon[data-color="highlight"] .x-icon--body,
 .x-icon-button[data-color="highlight"] .x-icon-button--body,
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
@@ -501,7 +502,7 @@ button.x-card:focus,
 /*** Invert ***/
 
 .x-button[data-color="invert"] .x-button--body,
-.x-icon[data-color="invert"],
+.x-icon[data-color="invert"] .x-icon--body,
 .x-icon-button[data-color="invert"] .x-icon-button--body {
   color: var( --color-invert ) }
 
@@ -570,7 +571,7 @@ button.x-card:focus,
 .x-anchor[data-color="primary"],
 .x-button[data-color="primary"] .x-button--body,
 .x-chip[data-color="primary"] .x-chip--body,
-.x-icon[data-color="primary"],
+.x-icon[data-color="primary"] .x-icon--body,
 .x-icon-button[data-color="primary"] .x-icon-button--body,
 .x-label[data-color="primary"],
 .x-text[data-color="primary"] {
@@ -641,7 +642,7 @@ button.x-card:focus,
 .x-anchor[data-color="secondary"],
 .x-button[data-color="secondary"] .x-button--body,
 .x-chip[data-color="secondary"] .x-chip--body,
-.x-icon[data-color="secondary"],
+.x-icon[data-color="secondary"] .x-icon--body,
 .x-icon-button[data-color="secondary"] .x-icon-button--body,
 .x-label[data-color="secondary"],
 .x-text[data-color="secondary"] {
@@ -698,7 +699,7 @@ button.x-card:focus,
 .x-anchor[data-color="success"],
 .x-button[data-color="success"] .x-button--body,
 .x-chip[data-color="success"] .x-chip--body,
-.x-icon[data-color="success"],
+.x-icon[data-color="success"] .x-icon--body,
 .x-icon-button[data-color="success"] .x-icon-button--body,
 .x-label[data-color="success"],
 .x-text[data-color="success"] {
@@ -755,7 +756,7 @@ button.x-card:focus,
 .x-anchor[data-color="warning"],
 .x-button[data-color="warning"] .x-button--body,
 .x-chip[data-color="warning"] .x-chip--body,
-.x-icon[data-color="warning"],
+.x-icon[data-color="warning"] .x-icon--body,
 .x-icon-button[data-color="warning"] .x-icon-button--body,
 .x-label[data-color="warning"],
 .x-text[data-color="warning"] {
@@ -780,12 +781,12 @@ button.x-card:focus,
 /***** Font-size profiles *****/
 /*** XXS ***/
 
-.x-icon[data-size="xxs"] {
+.x-icon[data-size="xxs"] .x-icon--body {
   font-size: var( --icon-size-xxs );
 
   /* BUG#0983 */
-  height: var( --icon-size-xxs );
-  width: var( --icon-size-xxs ) }
+  height: 24px;
+  width: 24px }
 
 .x-anchor[data-font-size="xxs"],
 .x-table[data-font-size="xxs"],
@@ -811,12 +812,12 @@ button.x-card:focus,
 
 /*** XS ***/
 
-.x-icon[data-size="xs"] {
+.x-icon[data-size="xs"] .x-icon--body {
   font-size: var( --icon-size-xs );
 
   /* BUG#0983 */
-  height: var( --icon-size-xs );
-  width: var( --icon-size-xs ) }
+  height: 24px;
+  width: 24px }
 
 .x-anchor[data-font-size="xs"],
 .x-table[data-font-size="xs"],
@@ -849,12 +850,12 @@ button.x-card:focus,
 
 /*** S ***/
 
-.x-icon[data-size="s"] {
+.x-icon[data-size="s"] .x-icon--body {
   font-size: var( --icon-size-s );
 
   /* BUG#0983 */
-  height: var( --icon-size-s );
-  width: var( --icon-size-s ) }
+  height: 24px;
+  width: 24px }
 
 .x-anchor[data-font-size="s"],
 .x-table[data-font-size="s"],
@@ -887,13 +888,12 @@ button.x-card:focus,
 
 /*** M ***/
 
-.x-icon,
-.x-icon[data-size="m"] {
+.x-icon[data-size="m"] .x-icon--body {
   font-size: var( --icon-size-m );
 
   /* BUG#0983 */
-  height: var( --icon-size-m );
-  width: var( --icon-size-m ) }
+  height: 24px;
+  width: 24px }
 
 .x-anchor[data-font-size="m"],
 .x-table[data-font-size="m"],
@@ -919,12 +919,12 @@ button.x-card:focus,
 
 /*** L ***/
 
-.x-icon[data-size="l"] {
+.x-icon[data-size="l"] .x-icon--body {
   font-size: var( --icon-size-l );
 
   /* BUG#0983 */
-  height: var( --icon-size-l );
-  width: var( --icon-size-l ) }
+  height: 48px;
+  width: 48px }
 
 .x-anchor[data-font-size="l"],
 .x-table[data-font-size="l"],
@@ -950,12 +950,12 @@ button.x-card:focus,
 
 /*** XL ***/
 
-.x-icon[data-size="xl"] {
+.x-icon[data-size="xl"] .x-icon--body {
   font-size: var( --icon-size-xl );
 
   /* BUG#0983 */
-  height: var( --icon-size-xl );
-  width: var( --icon-size-xl ) }
+  height: 48px;
+  width: 48px }
 
 .x-anchor[data-font-size="xl"],
 .x-table[data-font-size="xl"],
@@ -981,12 +981,12 @@ button.x-card:focus,
 
 /*** XXL ***/
 
-.x-icon[data-size="xxl"] {
+.x-icon[data-size="xxl"] .x-icon--body {
   font-size: var( --icon-size-xxl );
 
   /* BUG#0983 */
-  height: var( --icon-size-xxl );
-  width: var( --icon-size-xxl ) }
+  height: 48px;
+  width: 48px }
 
 .x-anchor[data-font-size="xxl"],
 .x-table[data-font-size="xxl"],
@@ -2182,10 +2182,18 @@ button.x-card:focus,
   display: flex;
   flex-direction: column;
   /* BUG
-   * Az .x-column--body nem lehet {height: 100%} magas, mert akkor mindig akkor, mint a szülő elem
+   * Az .x-column--body nem lehet {height: 100%} magas, mert akkor mindig akkora, mint a szülő elem
    * ha azt akarod, hogy kitöltse a rendelkezésre álló helyet, akkor flex-grow tulajdonságot kell
    * beállítani. A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!! */
-  -height: 100% }
+  /* BUG
+   * Vissza kellett állítani a {height: 100%} beállítás használatát, mert enélkül az .x-column--body
+   * elem nem vette fel a .x-column elem magasságát, ezért nem működött a benne megjelenített tartalom
+   * középre igazítása. Tényleg meg lehet oldali flex-grow tulajdonság használatával, de az előző
+   * leírás szerint a {height: 100%} beállítás használatával akkor van probléma, ha:
+   * "A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!!"
+   * De az .x-column--body mindig egyedül van a szülő elemben (.x-column)! (Vagy melyik elem van egyedül, miben?)
+   */
+  height: 100% }
 
 .x-column[data-wrap-items="true"] .x-column--body {
   flex-wrap: wrap }
@@ -2520,7 +2528,7 @@ button.x-card:focus,
 
 /***** Icon *****/
 
-.x-icon {
+.x-icon--body {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -2528,9 +2536,6 @@ button.x-card:focus,
   justify-content: center }
 
 /*** Icon layout ***/
-
-.x-icon[data-layout="row"] {
-  height: 48px }
 
 .x-icon[data-layout="touch-target"] {
   height: 48px;
@@ -3520,10 +3525,25 @@ button.x-card:focus,
 /***** Thumbnail *****/
 
 .x-thumbnail--body {
-  -background-color: var( --background-color-highlight );
+  overflow: hidden }
+
+.x-thumbnail--image {
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover }
+  background-size: cover;
+  height: 100%;
+  width: 100% }
+
+.x-thumbnail--icon {
+  align-items: center;
+  background-color: var( --background-color-highlight );
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% }
 
 /***** Thumbnail *****/
 

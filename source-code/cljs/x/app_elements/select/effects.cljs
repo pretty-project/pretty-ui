@@ -87,6 +87,6 @@
       (let [option-value (get-value-f option)]
            {:db             (r select.events/select-option! db select-id select-props option)
             :dispatch       (a/metamorphic-event<-params on-select option-value)
-            :dispatch-later [                    {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
+            :dispatch-later [reagent.api                    {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
                              (if autoclear?      {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
                              (if on-popup-closed {:ms select.config/ON-POPUP-CLOSED-DELAY :dispatch on-popup-closed})]})))

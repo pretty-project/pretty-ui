@@ -19,11 +19,9 @@
   ;
   ; @return (map)
   ;  {:icon-family
-  ;   :layout (keyword)
   ;   :size (keyword)}
   [icon-props]
   (merge {:icon-family :material-icons-filled
-          :layout      :fit
           :size        :m}
          (param icon-props)))
 
@@ -39,8 +37,8 @@
   ; @param (map) icon-props
   ;  {:icon (keyword)}
   [icon-id {:keys [icon] :as icon-props}]
-  [:i.x-icon (engine/element-attributes icon-id icon-props)
-             (param icon)])
+  [:div.x-icon (engine/element-attributes icon-id icon-props)
+               [:i.x-icon--body icon]])
 
 (defn element
   ; @param (keyword)(opt) icon-id
@@ -64,10 +62,7 @@
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :layout (keyword)(opt)
-  ;    :fit Az ikont tartalmazó elem méretei megegyeznek az ikon méreteivel
-  ;    :row ...
-  ;    :touch-target Az ikont tartalmazó ... az icon-button típus méreteivel
-  ;    Default: :fit
+  ;    :touch-target Az ikont tartalmazó elem méretei megegyeznek az icon-button típus méreteivel
   ;   :size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :m

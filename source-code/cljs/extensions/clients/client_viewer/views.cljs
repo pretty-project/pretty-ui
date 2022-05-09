@@ -27,7 +27,7 @@
                              :disabled?   viewer-disabled?
                              :font-size   :xxl
                              :font-weight :extra-bold
-                             :indent      {:right :s}}]]))
+                             :indent      {:left :xxs :right :s}}]]))
 
 (defn client-color-marker
   []
@@ -46,7 +46,8 @@
                        {:color     :muted
                         :content   {:content :last-modified-at-n :replacements [client-modified-at]}
                         :disabled? viewer-disabled?
-                        :font-size :xxs}]))
+                        :font-size :xxs
+                        :indent    {:left :xxs}}]))
 
 (defn client-header
   []
@@ -67,7 +68,7 @@
                         :content             :last-name
                         :disabled?           viewer-disabled?
                         :horizontal-position :left
-                        :indent              {:vertical :xs :top :xxl}}]))
+                        :indent              {:vertical :xs :top :m}}]))
 
 (defn client-last-name-value
   []
@@ -90,7 +91,7 @@
                         :content             :first-name
                         :disabled?           viewer-disabled?
                         :horizontal-position :left
-                        :indent              {:vertical :xs :top :xxl}}]))
+                        :indent              {:vertical :xs :top :m}}]))
 
 (defn client-first-name-value
   []
@@ -420,6 +421,7 @@
   []
   [:<> [client-header]
        [client-menu-bar]
+       [elements/horizontal-separator {:size :m}]
        [client-name]
        [client-primary-contacts]
        [client-secondary-contacts]

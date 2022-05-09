@@ -214,7 +214,9 @@
 (defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:auto-focus? (boolean)(constant)(opt)
+  ;  {:autoclear? (boolean)(opt)
+  ;    Default: false
+  ;   :auto-focus? (boolean)(constant)(opt)
   ;    Default: false
   ;   :border-color (keyword or string)(opt)
   ;    :default, :primary, :secondary

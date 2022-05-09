@@ -18,13 +18,14 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.events
-(def set-meta-item!     plugins.item-lister.core.events/set-meta-item!)
-(def remove-meta-items! plugins.item-lister.core.events/remove-meta-items!)
-(def set-error-mode!    plugins.item-lister.core.events/set-error-mode!)
-(def quit-search-mode!  plugins.item-lister.core.events/quit-search-mode!)
-(def quit-select-mode!  plugins.item-lister.core.events/quit-select-mode!)
-(def reset-downloads!   plugins.item-lister.core.events/reset-downloads!)
-(def filter-items!      plugins.item-lister.core.events/filter-items!)
+(def set-meta-item!        plugins.item-lister.core.events/set-meta-item!)
+(def remove-meta-items!    plugins.item-lister.core.events/remove-meta-items!)
+(def set-error-mode!       plugins.item-lister.core.events/set-error-mode!)
+(def quit-search-mode!     plugins.item-lister.core.events/quit-search-mode!)
+(def quit-select-mode!     plugins.item-lister.core.events/quit-select-mode!)
+(def reset-downloads!      plugins.item-lister.core.events/reset-downloads!)
+(def use-default-order-by! plugins.item-lister.core.events/use-default-order-by!)
+(def filter-items!         plugins.item-lister.core.events/filter-items!)
 
 ; plugins.plugin-handler.core.events
 (def set-query-param! core.events/set-query-param!)

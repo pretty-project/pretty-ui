@@ -31,7 +31,7 @@
                              :disabled?   editor-disabled?
                              :font-size   :xxl
                              :font-weight :extra-bold
-                             :indent      {:right :s}
+                             :indent      {:left :xxs :right :s}
                              :placeholder "Névtelen ügyfél"}]]))
 
 (defn client-color-marker
@@ -51,7 +51,8 @@
                        {:color     :muted
                         :content   {:content :last-modified-at-n :replacements [client-modified-at]}
                         :disabled? editor-disabled?
-                        :font-size :xxs}]))
+                        :font-size :xxs
+                        :indent    {:left :xxs}}]))
 
 (defn client-header
   []
@@ -269,12 +270,13 @@
   []
   (let [editor-disabled? @(a/subscribe [:item-editor/editor-disabled? :clients.client-editor])
         client-id        @(a/subscribe [:router/get-current-route-path-param :item-id])]
+       ; Új elem hozzáadásakor a client-id értéke NIL!
        [elements/button ::cancel-button
                         {:disabled?   editor-disabled?
                          :font-size   :xs
                          :hover-color :highlight
                          :indent      {:vertical :xxs :horizontal :xxs}
-                         :on-click    [:router/go-to! (str "/@app-home/clients/"client-id)]
+                         :on-click    [:router/go-to! (str "/@app-home/clients" (if client-id (str "/"client-id)))]
                          :preset      :cancel}]))
 
 (defn revert-button
@@ -323,13 +325,17 @@
        [client-additional-info]
        [footer]])
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn view-structure
   []
   (let [selected-language @(a/subscribe [:locales/get-selected-language])]
        [:<> [elements/horizontal-separator {:size :xxl}]
             [item-editor/body :clients.client-editor
                               {:auto-title?      true
-                               :default-view-id  :edit
                                :form-element     #'client-form
                                :form-id          :clients.client-editor/form
                                :initial-item     {:country (locales/country-native-name selected-language)}

@@ -11,7 +11,10 @@
               [x.app-elements.surface-handler.subs    :as surface-handler.subs]
               [x.app-elements.engine.api              :as engine]
               [x.app-elements.adornment-handler.views :as adornment-handler.views]
-              [x.app-elements.target-handler.helpers  :as target-handler.helpers]))
+              [x.app-elements.target-handler.helpers  :as target-handler.helpers]
+
+              ; TEMP
+              [reagent.api :as reagent]))
 
 
 
@@ -209,7 +212,9 @@
 (defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:autofill? (boolean)(opt)
+  ;  {:autoclear? (boolean)(opt)
+  ;    Default: false
+  ;   :autofill? (boolean)(opt)
   ;    Default: false
   ;   :auto-focus? (boolean)(constant)(opt)
   ;   :border-color (keyword or string)(opt)
@@ -342,4 +347,8 @@
                                 :element-props field-props
                                 :modifier      field-props-modifier
                                 :initializer   [:elements/init-field!          field-id]
-                                :subscriber    [:elements/get-text-field-props field-id]}])))
+                                :subscriber    [:elements/get-text-field-props field-id]
+
+                                ; TEMP
+                                :destructor (if (:autoclear? field-props) [:db/remove-item! (:value-path field-props)])}])))
+                                ; TEMP

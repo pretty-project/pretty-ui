@@ -204,7 +204,9 @@
 (defn element
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:auto-focus? (boolean)(constant)(opt)
+  ;  {:autoclear? (boolean)(opt)
+  ;    Default: false
+  ;   :auto-focus? (boolean)(constant)(opt)
   ;    Default: false
   ;   :border-color (keyword or string)(opt)
   ;    :default, :primary, :secondary

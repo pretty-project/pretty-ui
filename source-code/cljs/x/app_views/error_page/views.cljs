@@ -3,7 +3,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.error-page.views
-    (:require [x.app-elements.api :as elements]))
+    (:require [layouts.surface-a.api :as surface-a]
+              [x.app-elements.api    :as elements]))
 
 
 
@@ -46,9 +47,11 @@
   ; @param (map) content-props
   ;  {:icon (keyword)(opt)}
   [_ {:keys [icon]}]
-  (if icon [elements/icon ::error-icon
-                          {:icon icon
-                           :size :xxl}]))
+  (if icon [elements/row ::error-icon-wrapper
+                         {:content [elements/icon ::error-icon
+                                                  {:icon icon
+                                                   :size :xxl}]
+                          :horizontal-align :center}]))
 
 (defn- go-back-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,7 +64,7 @@
                     :label    :back!
                     :on-click [:router/go-back!]}])
 
-(defn- view
+(defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
@@ -72,3 +75,12 @@
        [error-title    surface-id content-props]
        [error-helper   surface-id content-props]
        [go-back-button surface-id content-props]])
+
+(defn view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  [surface-id content-props]
+  [surface-a/layout surface-id
+                    {:content [view-structure surface-id content-props]}])

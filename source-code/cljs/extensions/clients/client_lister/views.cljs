@@ -73,7 +73,7 @@
                    [elements/color-marker {:colors colors
                                            :indent {:left :xs}
                                            :size   :m}]]
-             [:div {:style {:width "180px" :flex-grow 1}}
+             [:div {:style {:flex-grow 1}}
                    [elements/label {:color   "#333"
                                     :content client-name
                                     :indent  {:horizontal :xs :right :xs}}]]
@@ -92,9 +92,10 @@
                                     :color     "#555"
                                     :font-size :xs
                                     :indent    {:horizontal :xs :right :xs}}]]
-             [:div {:style {:display :flex :justify-content :right :width "36px"}}
-                   [elements/icon {:icon :navigate_next
-                                   :size :xs}]]]))
+             [:div {:style {}}
+                   [elements/icon {:icon   :navigate_next
+                                   :indent {:right :xs}
+                                   :size   :xs}]]]))
 
 (defn client-item
   [lister-id item-dex {:keys [id] :as client-item}]
@@ -106,8 +107,8 @@
   []
   [item-lister/body :clients.client-lister
                     {:default-order-by :modified-at/descending
-                     :items-path   [:clients :client-lister/downloaded-items]
-                     :list-element #'client-item}])
+                     :items-path       [:clients :client-lister/downloaded-items]
+                     :list-element     #'client-item}])
 
 
 
@@ -137,10 +138,10 @@
           [:div {:style {:background-color "white"  :border-bottom "1px solid #ddd" :display "flex"
                          :position         "sticky" :top           "48px"}}
                 [:div {:style {:width "48px"}}]
-                [:div {:style {:display_ "flex" :flex-grow 1}}   [client-list-column-label {:label :name          :order-by-key :name}]]
-                [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :email-address :order-by-key :email-address}]]
-                [:div {:style {:display_ "flex" :width "240px"}} [client-list-column-label {:label :phone-number  :order-by-key :phone-number}]]
-                [:div {:style {:display_ "flex" :width "160px"}} [client-list-column-label {:label :last-modified :order-by-key :modified-at}]]
+                [:div {:style {:display "flex" :flex-grow 1}}   [client-list-column-label {:label :name          :order-by-key :name}]]
+                [:div {:style {:display "flex" :width "240px"}} [client-list-column-label {:label :email-address :order-by-key :email-address}]]
+                [:div {:style {:display "flex" :width "240px"}} [client-list-column-label {:label :phone-number  :order-by-key :phone-number}]]
+                [:div {:style {:display "flex" :width "160px"}} [client-list-column-label {:label :last-modified :order-by-key :modified-at}]]
                 [:div {:style {:width "36px"}}]]))
 
 

@@ -51,6 +51,7 @@
   ;    Default: false
   ;    Only w/ {:label-key ...}
   ;   :default-item-id (string)
+  ;   :default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :item-actions (keywords in vector)(opt)

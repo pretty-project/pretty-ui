@@ -14,6 +14,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn popup-size-button
+  [popup-id]
+  (if-let [debug-mode-detected? @(a/subscribe [:core/debug-mode-detected?])]
+          (if-let [popup-minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
+                  [:div.x-app-popups--element--maximize-button {:on-click #(a/dispatch [:ui/maximize-popup! popup-id])}
+                                                               "Maximize"]
+                  [:div.x-app-popups--element--minimize-button {:on-click #(a/dispatch [:ui/minimize-popup! popup-id])}
+                                                               "Minimize"])))
+
 (defn popup-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -27,8 +36,9 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  [:div (popups.helpers/popup-attributes popup-id)
-        [popup-content                   popup-id]])
+  [:<> [:div (popups.helpers/popup-attributes popup-id)
+             [popup-content                   popup-id]]
+       [popup-size-button popup-id]])
 
 (defn popup-element
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -121,6 +121,30 @@
   width: 100% }
 
 /*** Popup ***/
+
+/* */
+
+.x-app-popups--element--maximize-button,
+.x-app-popups--element--minimize-button {
+  align-items: center;
+  background: #222;
+  bottom: 6px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  left: 6px;
+  position: fixed;
+  user-select: none;
+  width: 120px }
+
+.x-app-popups--element[data-minimized="true"] {
+  transform: translateX( 100% ) }
+
+/* */
 /***** App popups *****/
 
 

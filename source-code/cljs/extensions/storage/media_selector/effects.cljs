@@ -43,7 +43,6 @@
 
 (a/reg-event-fx
   :storage.media-selector/add-new-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ selected-option]]
       (let [destination-id (r item-browser/get-current-item-id db :storage.media-selector)
             load-props     {:browser-id :storage.media-selector :destination-id destination-id}]
@@ -57,14 +56,12 @@
 
 (a/reg-event-fx
   :storage.media-selector/save-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db       (r media-selector.events/save-selected-items! db)
        :dispatch [:ui/close-popup! :storage.media-selector/view]}))
 
 (a/reg-event-fx
   :storage.media-selector/file-clicked
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ file-item]]
       (let [db (r media-selector.events/toggle-file-selection! db file-item)]
            (if-not (r media-selector.subs/save-selected-items? db file-item)
@@ -79,10 +76,6 @@
 
 (a/reg-event-fx
   :storage.media-selector/render-selector!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ selector-id]]
       [:ui/render-popup! :storage.media-selector/view
-                         {:body   [media-selector.views/body   selector-id]
-                          :footer [media-selector.views/footer selector-id]
-                          :header [media-selector.views/header selector-id]
-                          :stretch-orientation :vertical}]))
+                         {:content [media-selector.views/view selector-id]}]))

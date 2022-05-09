@@ -115,6 +115,9 @@
   overflow-y: scroll;
   flex-grow: 1 }
 
+.popup-a--body-content {
+  height: 100% }
+
 /* */
 
 /* */

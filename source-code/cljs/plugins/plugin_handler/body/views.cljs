@@ -17,9 +17,10 @@
   ; @param (map) error-props
   [_ _]
   [elements/label ::error-occured-label
-                  {:color     :warning
-                   :content   :an-error-occured
-                   :font-size :m}])
+                  {:color            :warning
+                   :content          :an-error-occured
+                   :font-size        :m
+                   :horizontal-align :center}])
 
 (defn error-description-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,8 +29,9 @@
   ; @param (map) error-props
   [_ {:keys [error-description]}]
   [elements/label ::error-description-label
-                  {:color   :muted
-                   :content error-description}])
+                  {:color            :muted
+                   :content          error-description
+                   :horizontal-align :center}])
 
 (defn error-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

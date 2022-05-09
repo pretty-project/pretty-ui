@@ -27,9 +27,10 @@
   ;
   ; - Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
   ;   {:items-key ...} és {:path-key ...} tulajdonságát.
-  (as-> db % (r body.events/body-did-mount   % browser-id browser-props)
-             (r core.events/set-query-param! % browser-id :items-key items-key)
-             (r core.events/set-query-param! % browser-id :path-key  path-key)))
+  (as-> db % (r body.events/body-did-mount        % browser-id browser-props)
+             (r core.events/use-default-order-by! % browser-id)
+             (r core.events/set-query-param!      % browser-id :items-key items-key)
+             (r core.events/set-query-param!      % browser-id  :path-key  path-key)))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
