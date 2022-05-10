@@ -1299,6 +1299,9 @@ button.x-card:focus,
   height: 12px;
   width: 12px }
 
+.x-ghost[data-size="xxs"] .x-ghost--body {
+  height: 12px }
+
 .x-color-marker[data-size="xxs"] .x-color-marker--body {
   border-radius: 3px;
   height: 12px;
@@ -1330,6 +1333,9 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 18px;
   width: 18px }
+
+.x-ghost[data-size="xs"] .x-ghost--body {
+  height: 18px }
 
 .x-color-marker[data-size="xs"] .x-color-marker--body {
   border-radius: 3px;
@@ -1363,6 +1369,9 @@ button.x-card:focus,
   height: 24px;
   width: 24px }
 
+.x-ghost[data-size="s"] .x-ghost--body {
+  height: 24px }
+
 .x-color-marker[data-size="s"] .x-color-marker--body {
   border-radius: 3px;
   height: 24px;
@@ -1394,6 +1403,9 @@ button.x-card:focus,
   grid-gap: 1px;
   height: 30px;
   width: 30px }
+
+.x-ghost[data-size="m"] .x-ghost--body {
+  height: 30px }
 
 .x-color-marker[data-size="m"] .x-color-marker--body {
   border-radius: 3px;
@@ -1427,6 +1439,9 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
+.x-ghost[data-size="l"] .x-ghost--body {
+  height: 36px }
+
 .x-color-marker[data-size="l"] .x-color-marker--body {
   border-radius: 3px;
   height: 36px;
@@ -1459,6 +1474,9 @@ button.x-card:focus,
   height: 42px;
   width: 42px }
 
+.x-ghost[data-size="xl"] .x-ghost--body {
+  height: 42px }
+
 .x-color-marker[data-size="xl"] .x-color-marker--body {
   border-radius: 3px;
   height: 42px;
@@ -1490,6 +1508,9 @@ button.x-card:focus,
   grid-gap: 2px;
   height: 48px;
   width: 48px }
+
+.x-ghost[data-size="xxl"] .x-ghost--body {
+  height: 48px }  
 
 .x-color-marker[data-size="xxl"] .x-color-marker--body {
   border-radius: 3px;
@@ -2575,6 +2596,16 @@ button.x-card:focus,
 
 /*** File drop area body ***/
 /***** File drop area *****/
+
+
+
+/***** Ghost *****/
+
+.x-ghost {
+  background-color: var( --background-color-highlight );
+  border-radius: var( --border-radius-s ) }
+
+/***** Ghost *****/
 
 
 

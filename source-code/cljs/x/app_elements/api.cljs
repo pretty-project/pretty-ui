@@ -40,6 +40,7 @@
               [x.app-elements.element-components.digit-field          :as element-components.digit-field]
               [x.app-elements.element-components.expandable           :as element-components.expandable]
               [x.app-elements.element-components.file-drop-area       :as element-components.file-drop-area]
+              [x.app-elements.ghost.views                             :as ghost.views]
               [x.app-elements.element-components.horizontal-line      :as element-components.horizontal-line]
               [x.app-elements.element-components.horizontal-polarity  :as element-components.horizontal-polarity]
               [x.app-elements.element-components.horizontal-separator :as element-components.horizontal-separator]
@@ -170,6 +171,7 @@
 (def digit-field          element-components.digit-field/element)
 (def expandable           element-components.expandable/element)
 (def file-drop-area       element-components.file-drop-area/element)
+(def ghost                ghost.views/element)
 (def horizontal-line      element-components.horizontal-line/element)
 (def horizontal-polarity  element-components.horizontal-polarity/element)
 (def horizontal-separator element-components.horizontal-separator/element)

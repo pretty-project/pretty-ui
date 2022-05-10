@@ -4,7 +4,6 @@
 
 (ns extensions.storage.file-uploader.helpers
     (:require [mid-fruits.keyword :as keyword]
-              [mid-fruits.io      :as io]
               [mid-fruits.string  :as string]
               [x.app-media.api    :as media]))
 
@@ -30,14 +29,3 @@
   [{:keys [allowed-extensions]}]
   (let [allowed-extensions (or allowed-extensions (media/allowed-extensions))]
        (str "." (string/join allowed-extensions ", ."))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn file-item->header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [alias filename]}]
-  {:icon :insert_drive_file
-   :thumbnail (if (io/filename->image? alias) filename)})

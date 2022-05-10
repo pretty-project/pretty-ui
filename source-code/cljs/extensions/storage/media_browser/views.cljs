@@ -5,6 +5,8 @@
 (ns extensions.storage.media-browser.views
     (:require [extensions.storage.core.config           :as core.config]
               [extensions.storage.media-browser.helpers :as media-browser.helpers]
+              [layouts.surface-a.api                    :as surface-a]
+              [mid-fruits.format                        :as format]
               [mid-fruits.io                            :as io]
               [plugins.item-browser.api                 :as item-browser]
               [x.app-components.api                     :as components]
@@ -12,6 +14,65 @@
               [x.app-elements.api                       :as elements]
               [x.app-layouts.api                        :as layouts]
               [x.app-ui.api                             :as ui]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn storage-label
+  []
+  (let [directory-alias @(a/subscribe [:item-browser/get-current-item-label :storage.media-browser])]
+       (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
+               [:<> [surface-a/title-sensor {:title directory-alias :offset 36}]
+                    [elements/label ::storage-label
+                                    {:content     directory-alias
+                                     :font-size   :xxl
+                                     :font-weight :extra-bold
+                                     :indent      {:top :xxl}}]]
+               [elements/ghost ::storage-label
+                               {:height :s :style {:width "180px"}
+                                :indent {:top :xxl}}])))
+               ;[:div {:style {:background-color "var( --background-color-highlight)" :border-radius "var( --border-radius-s )"
+                ;              :height "36px" :margin "48px 0 12px 0" :width "180px"])))
+
+(defn directory-description
+  []
+  (let [content-size   @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :content-size]])
+        items          @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :items]])
+        size            (str (-> content-size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
+                             (components/content {:content :n-items :replacements [(count items)]}))]
+       (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
+               [elements/label ::directory-description
+                               {:color     :muted
+                                :content   (if data-received? size)
+                                :font-size :xxs
+                                :indent    {:bottom :s}}]
+               [:div {:style {:background-color "var( --background-color-highlight )" :border-radius "var( --border-radius-s )"
+                              :height "18px" :margin "0 0 24px 0" :width "150px"}}])))
+
+(defn search-items-field
+  []
+  (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? :storage.media-browser])
+        search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
+       [elements/search-field ::search-items-field
+                              {:disabled?     browser-disabled?
+                               :indent        {:top :s}
+                               :on-empty      search-event
+                               :on-type-ended search-event
+                               :placeholder   "Keresés az ügyfelek között"}]))
+
+(defn search-description
+  []
+  (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? :storage.media-browser])
+        all-item-count    @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
+       [elements/label ::client-list-label
+                       {:color            :muted
+                        :content          (str "Találatok ("all-item-count")")
+                        :disabled?        browser-disabled?
+                        :font-size        :xxs
+                        :horizontal-align :right
+                        :indent           {:top :xs}}]))
 
 
 
@@ -191,7 +252,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn storage-label
+(defn storage-label_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
@@ -220,34 +281,53 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn header
+(defn media-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [item-browser/header :storage.media-browser
-                       {:new-item-event   [:storage.media-browser/add-new-item!]
-                        :new-item-options [:create-directory! :upload-files!]}])
+  [item-browser/body :storage.media-browser
+                     {:auto-title?      true
+                      :default-item-id   core.config/ROOT-DIRECTORY-ID
+                      :default-order-by :modified-at/descending
+                      :item-path        [:storage :media-browser/browsed-item]
+                      :items-path       [:storage :media-browser/downloaded-items]
+                      :items-key        :items
+                      :label-key        :alias
+                      :path-key         :path
+                      :list-element     #'media-item}])
 
-(defn body
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn media-browser-header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [])
+  ;[item-browser/header :storage.media-browser
+  ;                     {:new-item-event   [:storage.media-browser/add-new-item!]
+  ;                      :new-item-options [:create-directory! :upload-files!]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:<> [storage-label]
-       [storage-directory-content-label]
+       [directory-description]
+       [search-items-field]
+       [search-description]
        [elements/horizontal-separator {:size :xxl}]
-       [item-browser/body :storage.media-browser
-                          {:auto-title?     true
-                           :default-item-id core.config/ROOT-DIRECTORY-ID
-                           :item-actions    [:delete :duplicate]
-                           :item-path       [:storage :media-browser/browsed-item]
-                           :items-path      [:storage :media-browser/downloaded-items]
-                           :items-key       :items
-                           :label-key       :alias
-                           :path-key        :path
-                           :list-element    #'media-item
-                           :search-keys     [:alias]}]])
+       [:div {:style {:display :flex :flex-direction :column-reverse}}
+             [:div {:style {:width "100%"}}
+                   [media-browser]]
+             [media-browser-header]]
+      [elements/horizontal-separator {:size :xxl}]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [surface-id]
-  [layouts/layout-a ::view
-                    {:body   #'body
-                     :header #'header}])
+  [surface-a/layout surface-id
+                    {:content #'view-structure}])

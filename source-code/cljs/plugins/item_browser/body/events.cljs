@@ -40,8 +40,8 @@
   ; @return (map)
   [db [_ browser-id]]
   ; XXX#6177
-  (as-> db % (r body.events/body-will-unmount      % browser-id)
-             (r core.events/reset-downloaded-item! % browser-id)))
+  (as-> db % (r core.events/reset-downloaded-item! % browser-id)
+             (r body.events/body-will-unmount      % browser-id)))
 
 (defn body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!

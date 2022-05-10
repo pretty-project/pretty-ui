@@ -248,7 +248,9 @@
   ; @return (boolean)
   [db [_ input-id]]
   (or (and (r pre-validate-input-value? db input-id)
-           (not (r input-value-valid?   db input-id)))
+           (not (r input-value-valid?   db input-id))
+           ; HACK#1411
+           (r element/get-element-prop db input-id :initialized?))
       (and (r input-visited?            db input-id)
            (r validate-input-value?     db input-id)
            (not (r input-value-valid?   db input-id)))))
@@ -413,7 +415,15 @@
   [db [_ input-id]]
   (as-> db % (r use-input-initial-value!  % input-id)
              (r store-input-backup-value! % input-id)
-             (r reg-form-input!           % input-id)))
+             (r reg-form-input!           % input-id)
+
+             ; HACK#1411
+             ; Gyors hack, ami azt oldja meg, hogy az input validator ne validáljon addig
+             ; amig az input nem kapta meg az initial-value értékét. Különben ha egy text-field
+             ; validator-ja azt figyeli mondjuk, hogy üres-e a field, akkor egy pillanatra
+             ; megjelenik a warning-message, mielött a field megkapja az initial-value értékét.
+             ; A text-field újraírása után lehet, hogy erre a hack-re már nem is lesz szükség!
+             (r element/set-element-prop! % input-id :initialized? true)))
 
 (a/reg-event-db :elements/init-input! init-input!)
 

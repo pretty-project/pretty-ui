@@ -25,7 +25,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id uploader-props]
   [:input#storage--file-selector {:multiple 1 :type "file"
-                                  :accept (file-uploader.helpers/uploader-props->allowed-extensions-list uploader-props)
+                                  :accept     (file-uploader.helpers/uploader-props->allowed-extensions-list uploader-props)
                                   :on-change #(a/dispatch [:storage.file-uploader/files-selected-to-upload uploader-id])}])
 
 
@@ -198,22 +198,30 @@
 
 (defn file-item-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [])
-
-(defn file-item
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id file-dex]
   (let [file-cancelled? @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :cancelled?])
         filename        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filename])
         filesize        @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :filesize])
-        object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])]
-       [item-browser/list-item :storage.media-browser file-dex
-                               {:description (media-browser.helpers/file-item->size   {:filesize filesize})
-                                :header      (file-uploader.helpers/file-item->header {:alias    filename :filename object-url})
-                                :icon        (if file-cancelled? :radio_button_unchecked :highlight_off)
-                                :label       (str filename)
-                                :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
-                                :style       (if file-cancelled? {:opacity 0.5})}]))
+        object-url      @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :object-url])
+        filesize         (-> filesize io/B->MB format/decimals (str " MB"))]
+       [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
+             (if (io/filename->image? filename)
+                 [elements/thumbnail {:border-radius :s :height :s :indent {:horizontal :xxs :vertical :xs}
+                                      :uri object-url :width :l}]
+                 [elements/icon {:icon :insert_drive_file :indent {:horizontal :m :vertical :xl}}])
+             [:div {:style {:flex-grow 1}}
+                   [elements/label {:content filename                :style {:color "#333" :line-height "18px"}}]
+                   [elements/label {:content filesize :font-size :xs :style {:color "#888" :line-height "18px"}}]]
+             (if file-cancelled? [elements/icon {:icon :radio_button_unchecked :indent {:right :xs} :size :s}]
+                                 [elements/icon {:icon :highlight_off          :indent {:right :xs} :size :s}])]))
+
+(defn file-item
+  [uploader-id file-dex]
+  (let [file-cancelled? @(a/subscribe [:storage.file-uploader/get-file-prop uploader-id file-dex :cancelled?])]
+       [elements/toggle {:content     [file-item-structure uploader-id file-dex]
+                         :hover-color :highlight
+                         :on-click    [:storage.file-uploader/toggle-file-upload! uploader-id file-dex]
+                         :style       (if file-cancelled? {:opacity ".5"})}]))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -224,7 +232,7 @@
                                    [file-item uploader-id file-dex]))]
               (reduce f [:<>] (range file-count)))))
 
-
+ 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

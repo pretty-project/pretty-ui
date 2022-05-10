@@ -20,43 +20,51 @@
 
 (defn clients-label
   []
-  [:<> [surface-a/title-sensor {:title :clients :offset 36}]
-       [elements/label ::clients-label
-                       {:content     :clients
-                        :font-size   :xxl
-                        :font-weight :extra-bold
-                        :indent      {:top :xxl}}]])
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
+       [:<> [surface-a/title-sensor {:title :clients :offset 36}]
+            [elements/label ::clients-label
+                            {:content     :clients
+                             :disabled?   lister-disabled?
+                             :font-size   :xxl
+                             :font-weight :extra-bold
+                             :indent      {:top :xxl}}]]))
 
 (defn search-clients-field
   []
-  (let [search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
+        search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
        [elements/search-field ::search-clients-field
-                              {:indent        {:top :s}
+                              {:disabled?     lister-disabled?
+                               :indent        {:top :s}
                                :on-empty      search-event
                                :on-type-ended search-event
                                :placeholder   "Keresés az ügyfelek között"}]))
 
-(defn client-list-description
+(defn search-description
   []
-  (let [all-item-count @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
+        all-item-count @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
        [elements/label ::client-list-label
                        {:color            :muted
                         :content          (str "Találatok ("all-item-count")")
+                        :disabled?        lister-disabled?
                         :font-size        :xxs
                         :horizontal-align :right
                         :indent           {:top :xs}}]))
 
 (defn create-client-button
   []
-  [:div {:style {:position :fixed :bottom 0 :right 0}}
-        [elements/icon-button ::create-client-button
-                              {:border-color  :muted
-                               :border-radius :xxl
-                               :color         :primary
-                               :hover-color   :highlight
-                               :indent        {:all :m}
-                               :on-click      [:router/go-to! "/@app-home/clients/create"]
-                               :preset        :add}]])
+  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
+       [:div {:style {:position :fixed :bottom 0 :right 0}}
+             [elements/icon-button ::create-client-button
+                                   {:border-color  :muted
+                                    :border-radius :xxl
+                                    :color         :primary
+                                    :disabled?     lister-disabled?
+                                    :hover-color   :highlight
+                                    :indent        {:all :m}
+                                    :on-click      [:router/go-to! "/@app-home/clients/create"]
+                                    :preset        :add}]]))
 
 
 
@@ -130,7 +138,7 @@
   []
   [:<> [clients-label]
        [search-clients-field]
-       [client-list-description]
+       [search-description]
        [elements/horizontal-separator {:size :xxl}]
        [:div {:style {:display :flex :flex-direction :column-reverse}}
              [:div {:style {:width "100%"}}

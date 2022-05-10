@@ -2,15 +2,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns extensions.storage.media-selector.helpers
-    (:require [x.app-core.api :as a]))
+(ns x.app-elements.ghost.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn file-item->selection-icon
-  [media-item]
-  (if-let [file-selected? @(a/subscribe [:storage.media-selector/file-selected? media-item])]
-          :check_circle_outline :radio_button_unchecked))
+(defn ghost-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) ghost-props
+  ;
+  ; @return (map)
+  ;  {:height (keyword)}
+  [ghost-props]
+  (merge {:height :s}
+         (param ghost-props)))

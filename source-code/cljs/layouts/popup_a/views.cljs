@@ -28,10 +28,28 @@
 
 (defn body
   [popup-id {:keys [body header]}]
-  [:div.popup-a--body (if header [:div {:id (a/dom-value popup-id "header-sensor")}])
-                      [:div.popup-a--body-content [components/content popup-id body]]
-                      (if footer [:div {:id (a/dom-value popup-id "footer-sensor")}])])
-
+  ; - A footer-sensor elemet a .popup-a--body-content elemben megjelenített tartalom végén szükséges
+  ;   megjelenítetni!
+  ;
+  ; - A .popup-a--body-content nem lehet alacsonyabb, mint a szülő eleme, hogy a benne megjelenített
+  ;   tartalmat függőlegesen is középre lehessen igazítani!
+  ;
+  ; - Ha a .popup-a--body-content elem {height: 100%} vagy {flex-grow: 1} beállítással jelent meg,
+  ;   akkor az elemben megjelenített túlméretes tartalom (ami magasabb mint a rendelkezésre álló hely)
+  ;   kilógott (overflow) a .popup-a--body-content elemből, és ha a footer-sensor a .popup-a--body-content
+  ;   elem után következett a DOM-fában, akkor nem a kilógó tartalom végén jelent meg, hanem a {height: 100%}
+  ;   magas elem alatt (ami kisebb, mint a kilógó tartalma) és mivel a footer-sensor nem a tartalom
+  ;   végén jelent meg ezért nem működött megfelelően.
+  ;
+  ; - Ha a .popup-a--body-content elem {min-height: 100%} beállítással jelent meg, akkor a benne
+  ;   megjelenített tartalom nem tudta örökölni a magasságát, mivel a min-height tulajdonságból nem
+  ;   örökölhető magasság!
+  ;
+  ; - A megoldás az, hogy a footer-sensor elemet a .popup-a--body-content elemen belül a tartalom
+  ;   után kell elhelyezni!
+  [:div.popup-a--body [:div.popup-a--body-content (if header [:div {:id (a/dom-value popup-id "header-sensor")}])
+                                                  [components/content popup-id body]
+                                                  (if footer [:div {:id (a/dom-value popup-id "footer-sensor")}])]])
 
 (defn header-structure
   [popup-id {:keys [header]}]

@@ -3,18 +3,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns extensions.storage.media-selector.views
-    (:require [extensions.storage.core.config            :as core.config]
-              [extensions.storage.media-browser.helpers  :as media-browser.helpers]
-              [extensions.storage.media-selector.helpers :as media-selector.helpers]
-              [layouts.popup-a.api                       :as popup-a]
-              [mid-fruits.io                             :as io]
-              [mid-fruits.format                         :as format]
-              [plugins.item-browser.api                  :as item-browser]
-              [x.app-components.api                      :as components]
-              [x.app-core.api                            :as a]
-              [x.app-elements.api                        :as elements]
-              [x.app-media.api                           :as media]
-              [x.app-ui.api                              :as ui]))
+    (:require [extensions.storage.core.config :as core.config]
+              [layouts.popup-a.api            :as popup-a]
+              [mid-fruits.io                  :as io]
+              [mid-fruits.format              :as format]
+              [plugins.item-browser.api       :as item-browser]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a]
+              [x.app-elements.api             :as elements]
+              [x.app-media.api                :as media]))
 
 
 
@@ -134,12 +131,23 @@
 ;; -- Footer components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn discard-selection-button
+  []
+  (let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
+       [elements/button ::discard-selection-button
+                        {:disabled?     (< selected-item-count 1)
+                         :font-size     :xs
+                         :icon          :close
+                         :icon-position :right
+                         :indent        {:right :xxs}
+                         :on-click      [:storage.media-selector/discard-selection!]
+                         :label         {:content :n-items-selected :replacements [selected-item-count]}}]))
+
 (defn footer
-  [selector-id])
-  ;(let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]))
-       ;[ui/selection-popup-footer :storage.media-selector/view
-        ;                          {:on-discard [:storage.media-selector/discard-selection!]
-        ;                           :selected-item-count selected-item-count)]))
+  [selector-id]
+  [elements/row ::footer
+                {:content          #'discard-selection-button
+                 :horizontal-align :right}])
 
 
 
@@ -167,7 +175,8 @@
                     :on-click    [:item-browser/browse-item! :storage.media-selector id]}])
 
 (defn file-item-structure
-  [browser-id item-dex {:keys [alias id modified-at filename filesize]}]
+  [browser-id item-dex {:keys [alias id modified-at filename filesize] :as file-item}]
+
   (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
         size       (-> filesize io/B->MB format/decimals (str " MB"))]
        [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
@@ -180,7 +189,9 @@
                    [elements/label {:content alias                    :style {:color "#333" :line-height "18px"}}]
                    [elements/label {:content timestamp :font-size :xs :style {:color "#888" :line-height "18px"}}]
                    [elements/label {:content size      :font-size :xs :style {:color "#888" :line-height "18px"}}]]
-             [elements/icon {:icon :navigate_next :indent {:right :xs} :size :s}]]))
+             (if-let [file-selected? @(a/subscribe [:storage.media-selector/file-selected? file-item])]
+                     [elements/icon {:icon :check_circle_outline :indent {:right :xs} :size :s}]
+                     [elements/icon {:icon :radio_button_unchecked :indent {:right :xs} :size :s}])]))
 
 (defn file-item
   [browser-id item-dex {:keys [alias modified-at] :as file-item}]
