@@ -34,14 +34,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [disabled? icon label on-click]}]
   (if disabled? [:div {:style {:padding "0 12px" :min-width "60px"}}
-                      [:i.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
-                                 (param icon)]
+                      [:div.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
+                                   [:i.x-icon--body icon]]
                       [icon-button-label label true]]
                 [:button {:data-clickable true
                           :on-click #(a/dispatch on-click)
                           :style {:display :block :padding "0 12px" :min-width "60px"}}
-                         [:i.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
-                                    (param icon)]
+                         [:div.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
+                                      [:i.x-icon--body icon]]
                          [icon-button-label label]]))
 
 

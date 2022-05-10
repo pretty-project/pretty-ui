@@ -74,9 +74,10 @@
   (fn [{:keys [db]} [_ event-id {:keys [key-code]}]]
       ; - Az [:environment/listen-to-pressed-key! ...] esemény által regisztrált billentyűk kódjait
       ;   a keypress-handler {:type-mode? true} állapotba léptetve is eltárolja!
+      ;
       ; - Mivel a keypress-handler {:type-mode? true} állapotba léptetve NEM tárolja el a leütött
-      ;   billentyűk kódjait, ezért használható az [:environment/listen-to-pressed-key! ...] esemény
-      ;   arra, hogy egyes billentyűket kivételként kezeljen és {:type-mode? true} állapotban is
+      ;   billentyűk kódjait, ezért létezik az [:environment/listen-to-pressed-key! ...] esemény,
+      ;   hogy egyes billentyűket kivételként kezeljen és {:type-mode? true} állapotban is
       ;   eltárolja az állapotukat.
       (let [on-keydown [:db/set-item!    [:environment :keypress-handler/meta-items :pressed-keys key-code] true]
             on-keyup   [:db/remove-item! [:environment :keypress-handler/meta-items :pressed-keys key-code]]]

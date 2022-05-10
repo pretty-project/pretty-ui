@@ -381,398 +381,453 @@ button.x-card:focus,
 
 /***** Color profiles *****/
 /*** Muted ***/
+/* Background-color */
+
+.x-button[data-background-color="muted"]      .x-button--body,
+.x-card[data-background-color="muted"]        .x-card--body,
+.x-color-marker--color[data-color="muted"],
+.x-chip[data-background-color="muted"]        .x-chip--body,
+.x-icon-button[data-background-color="muted"] .x-icon-button--body {
+  background-color: var( --background-color-muted ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.x-button[data-border-color="muted"]       .x-button--body,
+.x-card[data-border-color="muted"]         .x-card--body,
+.x-checkbox[data-border-color="muted"]     .x-checkbox--button::before,
+.x-counter[data-border-color="muted"]      .x-counter--decrease-button,
+.x-counter[data-border-color="muted"]      .x-counter--increase-button,
+.x-icon-button[data-border-color="muted"]  .x-icon-button--body,
+.x-radio-button[data-border-color="muted"] .x-radio-button--option-button,
+.x-switch[data-border-color="muted"]       .x-switch--track {
+  border-color: var( --border-color-muted ) }
+
+/* Border-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="muted"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="muted"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="muted"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="muted"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
   background-color: var( --hover-color-muted ) }
 
-.x-button[data-background-color="muted"] .x-button--body,
-.x-card[data-background-color="muted"] .x-card--body,
-.x-color-marker--color[data-color="muted"],
-.x-chip[data-background-color="muted"] .x-chip--body,
-.x-icon-button[data-background-color="muted"] .x-icon-button--body {
-  background-color: var( --background-color-muted ) }
+/* Hover-color */
 
-.x-button[data-border-color="muted"] .x-button--body,
-.x-icon-button[data-border-color="muted"] .x-icon-button--body,
-.x-card[data-border-color="muted"] .x-card--body {
-  border-color: var( --border-color-muted ) }
+/* Line-color */
+
+.x-button-separator[data-color="muted"] .x-button-separator--body,
+.x-horizontal-line[data-color="muted"]  .x-horizontal-line--body,
+.x-line-diagram--section[data-color="muted"],
+.x-vertical-line[data-color="muted"]    .x-vertical-line--body {
+  background-color: var( --border-color-muted ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
-.x-checkbox[data-border-color="muted"]
-.x-checkbox--button::before,
-.x-counter[data-border-color="muted"]
-.x-counter--decrease-button,
-.x-counter[data-border-color="muted"]
-.x-counter--increase-button,
-.x-radio-button[data-border-color="muted"]
-.x-radio-button--option-button,
-.x-switch[data-border-color="muted"]
-.x-switch--track {
-  border-color: var( --border-color-muted ) }
+/* Stroke-color */
 
-.x-horizontal-line[data-color="muted"]
-.x-horizontal-line--body,
-.x-line-diagram--section[data-color="muted"],
-.x-vertical-line[data-color="muted"]
-.x-vertical-line--body {
-  background-color: var( --border-color-muted ) }
-
-.x-horizontal-line[data-color="muted"]
-.x-horizontal-line--body[data-fade="in"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-muted )) }
-
-.x-horizontal-line[data-color="muted"]
-.x-horizontal-line--body[data-fade="out"] {
-  background: linear-gradient(90deg, var( --border-color-muted ), transparent) }
-
-.x-horizontal-line[data-color="muted"]
-.x-horizontal-line--body[data-fade="in-out"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-muted ), transparent) }
+/* Text-color */
 
 .x-anchor[data-color="muted"],
-.x-button[data-color="muted"] .x-button--body,
-.x-chip[data-color="muted"] .x-chip--body,
-.x-icon[data-color="muted"] .x-icon--body,
+.x-button[data-color="muted"]      .x-button--body,
+.x-chip[data-color="muted"]        .x-chip--body,
+.x-icon[data-color="muted"]        .x-icon--body,
 .x-icon-button[data-color="muted"] .x-icon-button--body,
 .x-label[data-color="muted"],
 .x-text[data-color="muted"] {
   color: var( --color-muted ) }
 
+/* Text-color */
 /*** Muted ***/
 
 /*** Highlight ***/
+/* Background-color */
+
+.x-button[data-background-color="highlight"]      .x-button--body,
+.x-card[data-background-color="highlight"]        .x-card--body,
+.x-color-marker--color[data-color="highlight"],
+.x-chip[data-background-color="highlight"]        .x-chip--body,
+.x-icon-button[data-background-color="highlight"] .x-icon-button--body {
+  background-color: var( --background-color-highlight ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.x-button[data-border-color="highlight"]      .x-button--body,
+.x-icon-button[data-border-color="highlight"] .x-icon-button--body,
+.x-card[data-border-color="highlight"]        .x-card--body {
+  border-color: var( --border-color-highlight ) }
+
+/* Border-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="highlight"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="highlight"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="highlight"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="highlight"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
   background-color: var( --hover-color-highlight ) }
 
-.x-button[data-background-color="highlight"] .x-button--body,
-.x-card[data-background-color="highlight"] .x-card--body,
-.x-color-marker--color[data-color="highlight"],
-.x-chip[data-background-color="highlight"] .x-chip--body,
-.x-icon-button[data-background-color="highlight"] .x-icon-button--body {
-  background-color: var( --background-color-highlight ) }
+/* Hover-color */
 
-.x-button[data-border-color="highlight"] .x-button--body,
-.x-icon-button[data-border-color="highlight"] .x-icon-button--body,
-.x-card[data-border-color="highlight"] .x-card--body {
-  border-color: var( --border-color-highlight ) }
+/* Line-color */
+
+.x-button-separator[data-color="highlight"] .x-button-separator--body,
+.x-horizontal-line[data-color="highlight"]  .x-horizontal-line--body,
+.x-line-diagram--section[data-color="highlight"],
+.x-vertical-line[data-color="highlight"]    .x-vertical-line--body {
+  background-color: var( --border-color-highlight ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
 
-.x-horizontal-line[data-color="highlight"]
-.x-horizontal-line--body,
-.x-line-diagram--section[data-color="highlight"],
-.x-vertical-line[data-color="highlight"]
-.x-vertical-line--body {
-  background-color: var( --border-color-highlight ) }
+/* Stroke-color */
 
-.x-horizontal-line[data-color="highlight"]
-.x-horizontal-line--body[data-fade="in"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-highlight )) }
+/* Text-color */
 
-.x-horizontal-line[data-color="highlight"]
-.x-horizontal-line--body[data-fade="out"] {
-  background: linear-gradient(90deg, var( --border-color-highlight ), transparent) }
-
-.x-horizontal-line[data-color="highlight"]
-.x-horizontal-line--body[data-fade="in-out"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-highlight ), transparent) }
-
-.x-button[data-color="highlight"] .x-button--body,
-.x-chip[data-color="highlight"] .x-chip--body,
-.x-icon[data-color="highlight"] .x-icon--body,
+.x-button[data-color="highlight"]      .x-button--body,
+.x-chip[data-color="highlight"]        .x-chip--body,
+.x-icon[data-color="highlight"]        .x-icon--body,
 .x-icon-button[data-color="highlight"] .x-icon-button--body,
 .x-label[data-color="highlight"],
 .x-text[data-color="highlight"] {
   color: var( --color-highlight ) }
 
+/* Text-color */
 /*** Highlight ***/
 
 /*** Invert ***/
+/* Text-color */
 
-.x-button[data-color="invert"] .x-button--body,
-.x-icon[data-color="invert"] .x-icon--body,
+.x-button[data-color="invert"]      .x-button--body,
+.x-icon[data-color="invert"]        .x-icon--body,
 .x-icon-button[data-color="invert"] .x-icon-button--body {
   color: var( --color-invert ) }
 
+/* Text-color */
 /*** Invert ***/
 
 /*** Primary ***/
+/* Background-color */
+
+.x-button[data-background-color="primary"]      .x-button--body,
+.x-card[data-background-color="primary"]        .x-card--body,
+.x-color-marker--color[data-color="primary"],
+.x-chip[data-background-color="primary"]        .x-chip--body,
+.x-icon-button[data-background-color="primary"] .x-icon-button--body {
+  background-color: var( --background-color-primary ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.x-element-badge[data-color="primary"] {
+  background-color: var( --border-color-primary ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.x-button[data-border-color="primary"]       .x-button--body,
+.x-card[data-border-color="primary"]         .x-card--body,
+.x-checkbox[data-border-color="primary"]     .x-checkbox--button::before,
+.x-counter[data-border-color="primary"]      .x-counter--decrease-button,
+.x-counter[data-border-color="primary"]      .x-counter--increase-button,
+.x-icon-button[data-border-color="primary"]  .x-icon-button--body,
+.x-radio-button[data-border-color="primary"] .x-radio-button--option-button,
+.x-switch[data-border-color="primary"]       .x-switch--track,
+.x-text-field[data-border-color="primary"]   .x-text-field--input-container {
+  border-color: var( --border-color-primary ) }
+
+/* Border-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="primary"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="primary"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="primary"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="primary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-primary ) }
 
-.x-button[data-background-color="primary"] .x-button--body,
-.x-card[data-background-color="primary"] .x-card--body,
-.x-color-marker--color[data-color="primary"],
-.x-chip[data-background-color="primary"] .x-chip--body,
-.x-icon-button[data-background-color="primary"] .x-icon-button--body {
-  background-color: var( --background-color-primary ) }
+/* Hover-color */
 
-.x-button[data-border-color="primary"] .x-button--body,
-.x-icon-button[data-border-color="primary"] .x-icon-button--body,
-.x-card[data-border-color="primary"] .x-card--body {
-  border-color: var( --border-color-primary ) }
+/* Line-color */
+
+.x-horizontal-line[data-color="primary"] .x-horizontal-line--body,
+.x-line-diagram--section[data-color="primary"],
+.x-vertical-line[data-color="primary"]   .x-vertical-line--body {
+  background-color: var( --border-color-primary ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
-.x-checkbox[data-border-color="primary"]
-.x-checkbox--button::before,
-.x-counter[data-border-color="primary"]
-.x-counter--decrease-button,
-.x-counter[data-border-color="primary"]
-.x-counter--increase-button,
-.x-radio-button[data-border-color="primary"]
-.x-radio-button--option-button,
-.x-switch[data-border-color="primary"]
-.x-switch--track,
-.x-text-field[data-border-color="primary"]
-.x-text-field--input,
-.x-text-field[data-border-color="primary"]
-.x-text-field--textarea {
-  border-color: var( --border-color-primary ) }
+/* Stroke-color */
 
-.x-element-badge[data-color="primary"],
-.x-horizontal-line[data-color="primary"]
-.x-horizontal-line--body,
-.x-line-diagram--section[data-color="primary"],
-.x-vertical-line[data-color="primary"]
-.x-vertical-line--body {
-  background-color: var( --border-color-primary ) }
-
-.x-horizontal-line[data-color="primary"]
-.x-horizontal-line--body[data-fade="in"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-primary )) }
-
-.x-horizontal-line[data-color="primary"]
-.x-horizontal-line--body[data-fade="out"] {
-  background: linear-gradient(90deg, var( --border-color-primary ), transparent) }
-
-.x-horizontal-line[data-color="primary"]
-.x-horizontal-line--body[data-fade="in-out"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-primary ), transparent) }
+/* Text-color */
 
 .x-anchor[data-color="primary"],
-.x-button[data-color="primary"] .x-button--body,
-.x-chip[data-color="primary"] .x-chip--body,
-.x-icon[data-color="primary"] .x-icon--body,
+.x-button[data-color="primary"]      .x-button--body,
+.x-chip[data-color="primary"]        .x-chip--body,
+.x-icon[data-color="primary"]        .x-icon--body,
 .x-icon-button[data-color="primary"] .x-icon-button--body,
 .x-label[data-color="primary"],
 .x-text[data-color="primary"] {
   color: var( --color-primary ) }
 
+/* Text-color */
 /*** Primary ***/
 
 /*** Secondary ***/
+/* Background-color */
+
+.x-button[data-background-color="secondary"]      .x-button--body,
+.x-card[data-background-color="secondary"]        .x-card--body,
+.x-color-marker--color[data-color="secondary"],
+.x-chip[data-background-color="secondary"]        .x-chip--body,
+.x-icon-button[data-background-color="secondary"] .x-icon-button--body {
+  background-color: var( --background-color-secondary ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.x-element-badge[data-color="secondary"] {
+  background-color: var( --border-color-secondary ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.x-button[data-border-color="secondary"]       .x-button--body,
+.x-card[data-border-color="secondary"]         .x-card--body,
+.x-checkbox[data-border-color="secondary"]     .x-checkbox--button::before,
+.x-counter[data-border-color="secondary"]      .x-counter--decrease-button,
+.x-counter[data-border-color="secondary"]      .x-counter--increase-button,
+.x-icon-button[data-border-color="secondary"]  .x-icon-button--body,
+.x-radio-button[data-border-color="secondary"] .x-radio-button--option-button,
+.x-switch[data-border-color="secondary"]       .x-switch--track,
+.x-text-field[data-border-color="secondary"]   .x-text-field--input-container {
+  border-color: var( --border-color-secondary ) }
+
+/* Border-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="secondary"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="secondary"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="secondary"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="secondary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-secondary ) }
 
-.x-button[data-background-color="secondary"] .x-button--body,
-.x-card[data-background-color="secondary"] .x-card--body,
-.x-color-marker--color[data-color="secondary"],
-.x-chip[data-background-color="secondary"] .x-chip--body,
-.x-icon-button[data-background-color="secondary"] .x-icon-button--body {
-  background-color: var( --background-color-secondary ) }
+/* Hover-color */
 
-.x-button[data-border-color="secondary"] .x-button--body,
-.x-icon-button[data-border-color="secondary"] .x-icon-button--body,
-.x-card[data-border-color="secondary"] .x-card--body {
-  border-color: var( --border-color-secondary ) }
+/* Line-color */
+
+.x-horizontal-line[data-color="secondary"] .x-horizontal-line--body,
+.x-line-diagram--section[data-color="secondary"],
+.x-vertical-line[data-color="secondary"]   .x-vertical-line--body {
+  background-color: var( --border-color-secondary ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="secondary"] {
   stroke: var( --border-color-secondary ) }
 
-.x-checkbox[data-border-color="secondary"]
-.x-checkbox--button::before,
-.x-counter[data-border-color="secondary"]
-.x-counter--decrease-button,
-.x-counter[data-border-color="secondary"]
-.x-counter--increase-button,
-.x-radio-button[data-border-color="secondary"]
-.x-radio-button--option-button,
-.x-switch[data-border-color="secondary"]
-.x-switch--track,
-.x-text-field[data-border-color="secondary"]
-.x-text-field--input,
-.x-text-field[data-border-color="secondary"]
-.x-text-field--textarea {
-  border-color: var( --border-color-secondary ) }
+/* Stroke-color */
 
-.x-element-badge[data-color="secondary"],
-.x-horizontal-line[data-color="secondary"]
-.x-horizontal-line--body,
-.x-line-diagram--section[data-color="secondary"],
-.x-vertical-line[data-color="secondary"]
-.x-vertical-line--body {
-  background-color: var( --border-color-secondary ) }
-
-.x-horizontal-line[data-color="secondary"]
-.x-horizontal-line--body[data-fade="in"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-secondary )) }
-
-.x-horizontal-line[data-color="secondary"]
-.x-horizontal-line--body[data-fade="out"] {
-  background: linear-gradient(90deg, var( --border-color-secondary ), transparent) }
-
-.x-horizontal-line[data-color="secondary"]
-.x-horizontal-line--body[data-fade="in-out"] {
-  background: linear-gradient(90deg, transparent, var( --border-color-secondary ), transparent) }
+/* Text-color */
 
 .x-anchor[data-color="secondary"],
-.x-button[data-color="secondary"] .x-button--body,
-.x-chip[data-color="secondary"] .x-chip--body,
-.x-icon[data-color="secondary"] .x-icon--body,
+.x-button[data-color="secondary"]      .x-button--body,
+.x-chip[data-color="secondary"]        .x-chip--body,
+.x-icon[data-color="secondary"]        .x-icon--body,
 .x-icon-button[data-color="secondary"] .x-icon-button--body,
 .x-label[data-color="secondary"],
 .x-text[data-color="secondary"] {
   color: var( --color-secondary ) }
 
+/* Text-color */
 /*** Secondary ***/
 
 /*** Success ***/
+/* Background-color */
+
+.x-button[data-background-color="success"]      .x-button--body,
+.x-card[data-background-color="success"]        .x-card--body,
+.x-color-marker--color[data-color="success"],
+.x-chip[data-background-color="success"]        .x-chip--body,
+.x-icon-button[data-background-color="success"] .x-icon-button--body {
+  background-color: var( --background-color-success ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.x-element-badge[data-color="success"] {
+  background-color: var( --border-color-success ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.x-button[data-border-color="success"]       .x-button--body,
+.x-card[data-border-color="success"]         .x-card--body,
+.x-checkbox[data-border-color="success"]     .x-checkbox--button::before,
+.x-counter[data-border-color="success"]      .x-counter--decrease-button,
+.x-counter[data-border-color="success"]      .x-counter--increase-button,
+.x-icon-button[data-border-color="success"]  .x-icon-button--body,
+.x-radio-button[data-border-color="success"] .x-radio-button--option-button,
+.x-switch[data-border-color="success"]       .x-switch--track,
+.x-text-field[data-border-color="success"]   .x-text-field--input-container {
+  border-color: var( --border-color-success ) }
+
+/* Border-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="success"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="success"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="success"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="success"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
   background-color: var( --hover-color-success ) }
 
-.x-button[data-background-color="success"] .x-button--body,
-.x-card[data-background-color="success"] .x-card--body,
-.x-color-marker--color[data-color="success"],
-.x-chip[data-background-color="success"] .x-chip--body,
-.x-icon-button[data-background-color="success"] .x-icon-button--body {
-  background-color: var( --background-color-success ) }
+/* Hover-color */
 
-.x-button[data-border-color="success"] .x-button--body,
-.x-icon-button[data-border-color="success"] .x-icon-button--body,
-.x-card[data-border-color="success"] .x-card--body {
-  border-color: var( --border-color-success ) }
+/* Line-color */
+
+.x-line-diagram--section[data-color="success"],
+.x-vertical-line[data-color="success"] .x-vertical-line--body {
+  background-color: var( --border-color-success ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="success"] {
   stroke: var( --border-color-success ) }
 
-.x-checkbox[data-border-color="success"]
-.x-checkbox--button::before,
-.x-counter[data-border-color="success"]
-.x-counter--decrease-button,
-.x-counter[data-border-color="success"]
-.x-counter--increase-button,
-.x-radio-button[data-border-color="success"]
-.x-radio-button--option-button,
-.x-switch[data-border-color="success"]
-.x-switch--track,
-.x-text-field[data-border-color="success"]
-.x-text-field--input,
-.x-text-field[data-border-color="success"]
-.x-text-field--textarea {
-  border-color: var( --border-color-success ) }
+/* Stroke-color */
 
-.x-element-badge[data-color="success"],
-.x-line-diagram--section[data-color="success"],
-.x-vertical-line[data-color="success"]
-.x-vertical-line--body {
-  background-color: var( --border-color-success ) }
+/* Text-color */
 
 .x-anchor[data-color="success"],
-.x-button[data-color="success"] .x-button--body,
-.x-chip[data-color="success"] .x-chip--body,
-.x-icon[data-color="success"] .x-icon--body,
+.x-button[data-color="success"]      .x-button--body,
+.x-chip[data-color="success"]        .x-chip--body,
+.x-icon[data-color="success"]        .x-icon--body,
 .x-icon-button[data-color="success"] .x-icon-button--body,
 .x-label[data-color="success"],
 .x-text[data-color="success"] {
   color: var( --color-success ) }
 
+/* Text-color */
 /*** Success ***/
 
 /*** Warning ***/
+/* Background-color */
+
+.x-button[data-background-color="warning"]      .x-button--body,
+.x-card[data-background-color="warning"]        .x-card--body,
+.x-color-marker--color[data-color="warning"],
+.x-chip[data-background-color="warning"]        .x-chip--body,
+.x-icon-button[data-background-color="warning"] .x-icon-button--body {
+  background-color: var( --background-color-warning ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.x-button[data-border-color="warning"]       .x-button--body,
+.x-card[data-border-color="warning"]         .x-card--body,
+.x-checkbox[data-border-color="warning"]     .x-checkbox--button::before,
+.x-counter[data-border-color="warning"]      .x-counter--decrease-button,
+.x-counter[data-border-color="warning"]      .x-counter--increase-button,
+.x-icon-button[data-border-color="warning"]  .x-icon-button--body,
+.x-radio-button[data-border-color="warning"] .x-radio-button--option-button,
+.x-switch[data-border-color="warning"]       .x-switch--track,
+.x-text-field[data-border-color="warning"]   .x-text-field--input-container {
+  border-color: var( --border-color-warning ) }
+
+/* Border-color */
+
+/* Badge-color */
+
+.x-element-badge[data-color="warning"] {
+  background-color: var( --border-color-warning ) }
+
+/* Badge-color */
+
+/* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="warning"][data-disabled="false"] .x-button--body:hover,
-.x-card[data-hover-color="warning"][data-disabled="false"] .x-card--body:hover,
+.x-button[data-hover-color="warning"][data-disabled="false"]      .x-button--body:hover,
+.x-card[data-hover-color="warning"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover,
 .x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
   background-color: var( --hover-color-warning ) }
 
-.x-button[data-background-color="warning"] .x-button--body,
-.x-card[data-background-color="warning"] .x-card--body,
-.x-color-marker--color[data-color="warning"],
-.x-chip[data-background-color="warning"] .x-chip--body,
-.x-icon-button[data-background-color="warning"] .x-icon-button--body {
-  background-color: var( --background-color-warning ) }
+/* Hover-color */
 
-.x-button[data-border-color="warning"] .x-button--body,
-.x-icon-button[data-border-color="warning"] .x-icon-button--body,
-.x-card[data-border-color="warning"] .x-card--body {
-  border-color: var( --border-color-warning ) }
+/* Line-color */
+
+.x-line-diagram--section[data-color="warning"],
+.x-vertical-line[data-color="warning"] .x-vertical-line--body {
+  background-color: var( --border-color-warning ) }
+
+/* Line-color */
+
+/* Stroke-color */
 
 .x-circle-diagram--section[data-color="warning"] {
   stroke: var( --border-color-warning ) }
 
-.x-checkbox[data-border-color="warning"]
-.x-checkbox--button::before,
-.x-counter[data-border-color="warning"]
-.x-counter--decrease-button,
-.x-counter[data-border-color="warning"]
-.x-counter--increase-button,
-.x-radio-button[data-border-color="warning"]
-.x-radio-button--option-button,
-.x-switch[data-border-color="warning"]
-.x-switch--track,
-.x-text-field[data-border-color="warning"]
-.x-text-field--input,
-.x-text-field[data-border-color="warning"]
-.x-text-field--textarea {
-  border-color: var( --border-color-warning ) }
+/* Stroke-color */
 
-.x-element-badge[data-color="warning"],
-.x-line-diagram--section[data-color="warning"],
-.x-vertical-line[data-color="warning"]
-.x-vertical-line--body {
-  background-color: var( --border-color-warning ) }
+/* Text-color */
 
 .x-anchor[data-color="warning"],
-.x-button[data-color="warning"] .x-button--body,
-.x-chip[data-color="warning"] .x-chip--body,
-.x-icon[data-color="warning"] .x-icon--body,
+.x-button[data-color="warning"]      .x-button--body,
+.x-chip[data-color="warning"]        .x-chip--body,
+.x-icon[data-color="warning"]        .x-icon--body,
 .x-icon-button[data-color="warning"] .x-icon-button--body,
 .x-label[data-color="warning"],
 .x-text[data-color="warning"] {
   color: var( --color-warning ) }
 
+/* Text-color */
 /*** Warning ***/
 
 /*** Default ***/
+/* Line-color */
 
-.x-horizontal-line[data-color="default"]
-.x-horizontal-line--body,
+.x-horizontal-line[data-color="default"]  .x-horizontal-line--body,
 .x-line-diagram--section[data-color="default"],
-.x-vertical-line[data-color="default"]
-.x-vertical-line--body {
+.x-vertical-line[data-color="default"]    .x-vertical-line--body {
   background-color: var( --border-color ) }
 
+/* Line-color */
 /*** Default ***/
 /***** Color profiles *****/
 
@@ -1818,6 +1873,20 @@ button.x-card:focus,
 
 /*** Button label ***/
 /***** Button *****/
+
+
+
+/***** Button-separator *****/
+
+.x-button-separator {
+  align-items: center;
+  display: flex }
+
+.x-button-separator--body {
+  height: 18px;
+  width: 1px }
+
+/***** Button-separator *****/
 
 
 

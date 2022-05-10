@@ -74,6 +74,32 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :item-browser/search-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (map) search-props
+  ;  {:search-keys (keywords in vector)}
+  ; @param (string) search-term
+  (fn [_ [_ browser-id search-props search-term]]
+      [:item-lister/search-items! browser-id search-props search-term]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :item-browser/choose-order-by!
+  (fn [_ [_ browser-id order-by-props]]
+      [:item-lister/choose-order-by! browser-id order-by-props]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :item-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

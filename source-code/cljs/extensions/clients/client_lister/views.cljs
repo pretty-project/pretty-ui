@@ -65,37 +65,15 @@
 
 (defn client-item-structure
   [lister-id item-dex {:keys [colors email-address id modified-at phone-number]}]
-  (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])]
-       [:div {:style {:display "flex" :font-weight 500
-                      :height "48px" :align-items "center"
-                      :border-bottom "1px solid #f0f0f0"}}
-             [:div {:style {:width "48px"}}
-                   [elements/color-marker {:colors colors
-                                           :indent {:left :xs}
-                                           :size   :m}]]
-             [:div {:style {:flex-grow 1}}
-                   [elements/label {:color   "#333"
-                                    :content client-name
-                                    :indent  {:horizontal :xs :right :xs}}]]
-             [:div {:style {:width "240px"}}
-                   [elements/label {:content   email-address
-                                    :color     "#555"
-                                    :font-size :xs
-                                    :indent    {:horizontal :xs :right :xs}}]]
-             [:div {:style {:width "240px"}}
-                   [elements/label {:content   phone-number
-                                    :color     "#555"
-                                    :font-size :xs
-                                    :indent    {:horizontal :xs :right :xs}}]]
-             [:div {:style {:width "160px"}}
-                   [elements/label {:content @(a/subscribe [:activities/get-actual-timestamp modified-at])
-                                    :color     "#555"
-                                    :font-size :xs
-                                    :indent    {:horizontal :xs :right :xs}}]]
-             [:div {:style {}}
-                   [elements/icon {:icon   :navigate_next
-                                   :indent {:right :xs}
-                                   :size   :xs}]]]))
+  (let [client-name @(a/subscribe [:clients.client-lister/get-client-name item-dex])
+        timestamp   @(a/subscribe [:activities/get-actual-timestamp modified-at])]
+       [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
+             [elements/color-marker {:colors colors :indent {:left :xs :right :m} :size :m}]
+             [:div {:style {:flex-grow 1}}   [elements/label {:color "#333" :content client-name                  :indent {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "240px"}} [elements/label {:color "#555" :content email-address :font-size :xs :indent {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "240px"}} [elements/label {:color "#555" :content phone-number  :font-size :xs :indent {:horizontal :xs :right :xs}}]]
+             [:div {:style {:width "160px"}} [elements/label {:color "#555" :content timestamp     :font-size :xs :indent {:horizontal :xs :right :xs}}]]
+             [elements/icon {:icon :navigate_next :indent {:right :xs} :size :xs}]]))
 
 (defn client-item
   [lister-id item-dex {:keys [id] :as client-item}]
@@ -135,9 +113,8 @@
 (defn client-list-header
   []
   (if-let [data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
-          [:div {:style {:background-color "white"  :border-bottom "1px solid #ddd" :display "flex"
-                         :position         "sticky" :top           "48px"}}
-                [:div {:style {:width "48px"}}]
+          [:div {:style {:background-color "white" :border-bottom "1px solid #ddd" :display "flex" :position "sticky" :top "48px"}}
+                [:div {:style {:width "42px"}}]
                 [:div {:style {:display "flex" :flex-grow 1}}   [client-list-column-label {:label :name          :order-by-key :name}]]
                 [:div {:style {:display "flex" :width "240px"}} [client-list-column-label {:label :email-address :order-by-key :email-address}]]
                 [:div {:style {:display "flex" :width "240px"}} [client-list-column-label {:label :phone-number  :order-by-key :phone-number}]]

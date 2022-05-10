@@ -5,6 +5,7 @@
 (ns extensions.storage.file-uploader.views
     (:require [extensions.storage.file-uploader.helpers :as file-uploader.helpers]
               [extensions.storage.media-browser.helpers :as media-browser.helpers]
+              [layouts.popup-a.api                      :as popup-a]
               [mid-fruits.css                           :as css]
               [mid-fruits.io                            :as io]
               [mid-fruits.format                        :as format]
@@ -107,10 +108,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/button ::cancel-upload-button
-                   {:indent   {:horizontal :xxs :left :xs}
-                    :keypress {:key-code 27}
-                    :on-click [:storage.file-uploader/cancel-uploader! uploader-id]
-                    :preset   :cancel}])
+                   {:font-size   :xs
+                    :hover-color :highlight
+                    :indent      {:horizontal :xxs :left :xxs}
+                    :keypress    {:key-code 27}
+                    :on-click    [:storage.file-uploader/cancel-uploader! uploader-id]
+                    :preset      :cancel}])
 
 (defn upload-files-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,11 +122,13 @@
         max-upload-size-reached? @(a/subscribe [:storage.file-uploader/max-upload-size-reached? uploader-id])
         capacity-limit-exceeded? @(a/subscribe [:storage.file-uploader/capacity-limit-exceeded? uploader-id])]
        [elements/button ::upload-files-button
-                        {:disabled? (or all-files-cancelled? max-upload-size-reached? capacity-limit-exceeded?)
-                         :keypress  {:key-code 13}
-                         :indent    {:horizontal :xxs :right :xs}
-                         :on-click  [:storage.file-uploader/start-progress! uploader-id]
-                         :preset    :upload}]))
+                        {:disabled?   (or all-files-cancelled? max-upload-size-reached? capacity-limit-exceeded?)
+                         :font-size   :xs
+                         :hover-color :highlight
+                         :keypress    {:key-code 13}
+                         :indent      {:horizontal :xxs :right :xxs}
+                         :on-click    [:storage.file-uploader/start-progress! uploader-id]
+                         :preset      :upload}]))
 
 (defn available-capacity-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -173,7 +178,7 @@
                                   [elements/horizontal-separator {:size :s}]]
                     :horizontal-align :center}])
 
-(defn action-buttons
+(defn header-buttons
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
   [elements/horizontal-polarity ::file-uploader-action-buttons
@@ -183,13 +188,17 @@
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [uploader-id]
-  [:<> [action-buttons      uploader-id]
+  [:<> [header-buttons      uploader-id]
        [file-upload-summary uploader-id]])
 
 
 
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn file-item-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [])
 
 (defn file-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -214,3 +223,16 @@
                   (conj file-list ^{:key (str uploader-id file-dex)}
                                    [file-item uploader-id file-dex]))]
               (reduce f [:<>] (range file-count)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn view
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [uploader-id]
+  [popup-a/layout :storage.file-uploader/view
+                  {:body      [body uploader-id]
+                   :header    [header uploader-id]
+                   :min-width :s}])

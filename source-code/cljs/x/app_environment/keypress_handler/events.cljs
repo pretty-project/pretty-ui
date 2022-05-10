@@ -84,17 +84,22 @@
          (let [keypress-events (get-in db [:environment :keypress-handler/data-items])]
               (reduce-kv f (r empty-cache! db) keypress-events))))
 
-
 (defn reg-keypress-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) event-id
   ; @param (map) event-props
+  ;  {:required? (boolean)(opt)}
   ;
   ; @return (map)
-  [db [_ event-id event-props]]
-  (as-> db % (r store-event-props! % event-id event-props)
-             (r cache-event!       % event-id event-props)))
+  [db [_ event-id {:keys [required?] :as event-props}]]
+  ; Az egyes keypress események regisztrálásakor a reg-keypress-event! függvény ...
+  ; ... eltárolja az esemény tulajdonságait.
+  ; ... hozzáadja az eseményt a cache-hez, ha a kezelő nincs {:type-mode? true} állapotban
+  ;     vagy az esemény {:required? true} beállítással rendelkezik.
+  (let [type-mode? (get-in db [:environment :keypress-handler/meta-items :type-mode?])]
+       (cond-> db :store-event-props!             (as-> % (r store-event-props! % event-id event-props))
+                  (or required? (not type-mode?)) (as-> % (r cache-event!       % event-id event-props)))))
 
 (defn remove-keypress-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!

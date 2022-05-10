@@ -21,6 +21,7 @@
               [x.app-elements.select.events]
               [x.app-elements.element-components.anchor               :as element-components.anchor]
               [x.app-elements.element-components.button               :as element-components.button]
+              [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.element-components.card                 :as element-components.card]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
               [x.app-elements.element-components.checkbox             :as element-components.checkbox]
@@ -150,6 +151,7 @@
 ; x.app-elements.element-components.*
 (def anchor               element-components.anchor/element)
 (def button               element-components.button/element)
+(def button-separator     button-separator.views/element)
 (def card                 element-components.card/element)
 (def card-group           element-components.card-group/element)
 (def checkbox             element-components.checkbox/element)

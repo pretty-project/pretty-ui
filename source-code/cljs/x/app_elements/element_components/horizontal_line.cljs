@@ -18,15 +18,13 @@
   ;
   ; @param (keyword) line-id
   ; @param (map) line-props
-  ;  {:fade (keyword)(opt)
-  ;   :strength (px)}
+  ;  {:strength (px)}
   ;
   ; @return (map)
   ;  {:style (map)
   ;    {:height (string)}}
-  [_ {:keys [fade strength] :as line-props}]
-  (cond-> {:style {:height (css/px strength)}}
-          (some? fade) (assoc :data-fade fade)))
+  [_ {:keys [strength] :as line-props}]
+  (cond-> {:style {:height (css/px strength)}}))
 
 
 
@@ -68,8 +66,6 @@
   ;  {:color (keyword or string)(opt)
   ;    :highlight, :muted, :primary, :secondary
   ;    Default: :muted
-  ;   :fade (keyword)(opt)
-  ;    :in, :out, :in-out
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :fit

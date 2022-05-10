@@ -15,6 +15,12 @@
            :add-file
            {:en "Add file"
             :hu "Fájl hozzáadása"}
+           :by-alias-ascending
+           {:en "By name (ascending)"
+            :hu "Név szerint (növekvő)"}
+           :by-alias-descending
+           {:en "By name (descending)"
+            :hu "Név szerint (csökkenő)"}
            :available-capacity-in-storage-is
            {:en "Available capacity in storage is: % MB"
             :hu "A rendelkezésre álló kapacitás a tárhelyen: % MB"}

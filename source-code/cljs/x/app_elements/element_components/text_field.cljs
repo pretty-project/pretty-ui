@@ -194,7 +194,7 @@
   ; @param (map) field-props
   ;  {:invalid-message (metamorphic-content)(opt)}
   [_ {:keys [invalid-message]}]
-  (if invalid-message [:div.x-text-field--invalid-message [components/content invalid-message]]))
+  (if invalid-message [:div.x-text-field--invalid-message (components/content invalid-message)]))
 
 (defn- text-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -22,7 +22,7 @@
   [stamp-id {:keys [size] :as stamp-props}]
   (merge (engine/element-default-attributes stamp-id stamp-props)
          (engine/element-indent-attributes  stamp-id stamp-props)
-         {:size size}))
+         {:data-size size}))
 
 (defn stamp-color-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

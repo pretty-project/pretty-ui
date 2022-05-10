@@ -236,7 +236,7 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (let [value (r get-input-value db input-id)
+  (let [value     (r get-input-value     db input-id)
         validator (r get-input-validator db input-id)]
        ((:f validator) value)))
 
@@ -247,8 +247,7 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (or (and (r input-nonempty?           db input-id)
-           (r pre-validate-input-value? db input-id)
+  (or (and (r pre-validate-input-value? db input-id)
            (not (r input-value-valid?   db input-id)))
       (and (r input-visited?            db input-id)
            (r validate-input-value?     db input-id)
@@ -280,6 +279,8 @@
            (not (r input-required?       db input-id)))
        (or (not (r validate-input-value? db input-id))
            (r input-value-valid?         db input-id))))
+
+(a/reg-sub :elements/input-passed? input-passed?)
 
 (defn input-required-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!

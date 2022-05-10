@@ -129,8 +129,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ uploader-id]]
       [:ui/render-popup! :storage.file-uploader/view
-                         {:body   [file-uploader.views/body   uploader-id]
-                          :header [file-uploader.views/header uploader-id]}]))
+                         {:content [file-uploader.views/view uploader-id]}]))
 
 
 

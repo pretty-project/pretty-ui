@@ -42,12 +42,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-selector/add-new-item!
+  :storage.media-selector/create-directory!
   (fn [{:keys [db]} [_ selected-option]]
-      (let [destination-id (r item-browser/get-current-item-id db :storage.media-selector)
-            load-props     {:browser-id :storage.media-selector :destination-id destination-id}]
-           (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    load-props]
-                                 :create-directory! [:storage.directory-creator/load-creator! load-props]))))
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-selector)]
+           [:storage.directory-creator/load-creator! {:browser-id :storage.media-selector :destination-id destination-id}])))
+
+(a/reg-event-fx
+  :storage.media-selector/upload-files!
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-selector)]
+           [:storage.file-uploader/load-uploader! {:browser-id :storage.media-selector :destination-id destination-id}])))
 
 
 
