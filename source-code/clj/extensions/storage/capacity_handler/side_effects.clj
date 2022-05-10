@@ -26,7 +26,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [root-directory-document (mongo-db/get-document-by-id "storage" core.config/ROOT-DIRECTORY-ID)]
-          (get root-directory-document :media/content-size)))
+          (get root-directory-document :media/size)))
 
 (defn get-free-capacity
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,5 +54,5 @@
 
 (defn capacity-limit-exceeded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [content-size]
-  (> content-size (get-free-capacity)))
+  [size]
+  (> size (get-free-capacity)))

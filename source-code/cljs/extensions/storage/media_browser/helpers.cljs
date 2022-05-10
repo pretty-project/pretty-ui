@@ -27,14 +27,14 @@
 
 (defn directory-item->size
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [content-size items]}]
-  (str (-> content-size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
+  [{:keys [size items]}]
+  (str (-> size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
        (components/content {:content :n-items :replacements [(count items)]})))
 
 (defn file-item->size
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [filesize]}]
-  (-> filesize io/B->MB format/decimals (str " MB")))
+  [{:keys [size]}]
+  (-> size io/B->MB format/decimals (str " MB")))
 
 
 

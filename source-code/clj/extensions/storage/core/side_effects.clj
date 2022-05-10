@@ -42,9 +42,8 @@
   ;
   ; @param (map) env
   ; @param (namespaced map) media-item
-  ;  {:media/content-size (B)
-  ;   :media/filesize (B)
-  ;   :media/path (namespaced maps in vector)}
+  ;  {:media/path (namespaced maps in vector)
+  ;   :media/size (B)}
   ; @param (function)(opt) operation
   ;  -, +
   ;
@@ -52,14 +51,13 @@
   ([env media-item]
    (update-path-directories! env media-item nil))
 
-  ([{:keys [request]} {:media/keys [content-size filesize path]} operation]
+  ([{:keys [request]} {:media/keys [size path]} operation]
    ; Mappák és fájlok létrehozásakor/feltöltésekor/törlésekor/duplikálásakor szükséges
    ;  a tartalmazó (felmenő) mappák adatait aktualizálni:
    ; - Utolsó módosítás dátuma, és a felhasználó azonosítója {:media/modified-at ... :media/modified-by ...}
-   ; - Tartalom méretének {:media/content-size ...} aktualizálása
+   ; - Tartalom méretének {:media/size ...} aktualizálása
    (letfn [(prototype-f [document] (mongo-db/updated-document-prototype request :media document))
-           (update-f    [document] (cond-> document content-size (update :media/content-size operation content-size)
-                                                    filesize     (update :media/content-size operation filesize)))
+           (update-f    [document] (update document :media/size operation size))
            (f [path] (when-let [{:media/keys [id]} (last path)]
                                (if operation (mongo-db/apply-document! "storage" id update-f {:prototype-f prototype-f})
                                              (mongo-db/apply-document! "storage" id return   {:prototype-f prototype-f}))

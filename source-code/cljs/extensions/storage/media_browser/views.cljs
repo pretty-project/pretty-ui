@@ -7,6 +7,7 @@
               [extensions.storage.media-browser.helpers :as media-browser.helpers]
               [layouts.surface-a.api                    :as surface-a]
               [mid-fruits.format                        :as format]
+              [mid-fruits.keyword                       :as keyword]
               [mid-fruits.io                            :as io]
               [plugins.item-browser.api                 :as item-browser]
               [x.app-components.api                     :as components]
@@ -30,26 +31,21 @@
                                      :font-size   :xxl
                                      :font-weight :extra-bold
                                      :indent      {:top :xxl}}]]
-               [elements/ghost ::storage-label
-                               {:height :s :style {:width "180px"}
-                                :indent {:top :xxl}}])))
-               ;[:div {:style {:background-color "var( --background-color-highlight)" :border-radius "var( --border-radius-s )"
-                ;              :height "36px" :margin "48px 0 12px 0" :width "180px"])))
+               [elements/ghost {:height :l :indent {:bottom :xs :top :xxl} :style {:width "180px"}}])))
 
 (defn directory-description
   []
-  (let [content-size   @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :content-size]])
-        items          @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :items]])
-        size            (str (-> content-size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
-                             (components/content {:content :n-items :replacements [(count items)]}))]
+  (let [size  @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :size]])
+        items @(a/subscribe [:db/get-item [:storage :media-browser/browsed-item :items]])
+        size   (str (-> size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
+                    (components/content {:content :n-items :replacements [(count items)]}))]
        (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
                [elements/label ::directory-description
                                {:color     :muted
                                 :content   (if data-received? size)
                                 :font-size :xxs
                                 :indent    {:bottom :s}}]
-               [:div {:style {:background-color "var( --background-color-highlight )" :border-radius "var( --border-radius-s )"
-                              :height "18px" :margin "0 0 24px 0" :width "150px"}}])))
+               [elements/ghost {:height :s :indent {:bottom :s} :style {:width "150px"}}])))
 
 (defn search-items-field
   []
@@ -219,7 +215,7 @@
 
 (defn directory-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [item-dex {:keys [alias content-size id items modified-at] :as media-item}]
+  [item-dex {:keys [alias size id items modified-at] :as media-item}]
   [item-browser/list-item :storage.media-browser item-dex
                           {:icon           :navigate_next
                            :label          (str alias)
@@ -300,12 +296,32 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn media-browser-column-label
+  [{:keys [label order-by-key]}]
+  (let [current-order-by @(a/subscribe [:item-browser/get-current-order-by :storage.media-browser])
+        current-order-by-key       (keyword/get-namespace current-order-by)
+        current-order-by-direction (keyword/get-name      current-order-by)]
+       [elements/button {:color (if (= order-by-key current-order-by-key) :default :muted)
+                         :icon  (if (= order-by-key current-order-by-key)
+                                    (case current-order-by-direction :descending :arrow_drop_down :ascending :arrow_drop_up))
+                         :on-click (if (= order-by-key current-order-by-key)
+                                       [:item-browser/swap-items!  :storage.media-browser]
+                                       [:item-browser/order-items! :storage.media-browser (keyword/add-namespace order-by-key :descending)])
+                         :label            label
+                         :font-size        :xs
+                         :horizontal-align :left
+                         :icon-position    :right
+                         :indent           {:horizontal :xxs}}]))
+
 (defn media-browser-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [])
-  ;[item-browser/header :storage.media-browser
-  ;                     {:new-item-event   [:storage.media-browser/add-new-item!]
-  ;                      :new-item-options [:create-directory! :upload-files!]])
+  []
+  (if-let [data-received? @(a/subscribe [:item-browser/data-received? :storage.media-browser])]
+          [:div {:style {:background-color "white" :border-bottom "1px solid #ddd" :display "flex" :position "sticky" :top "48px"}}
+                [:div {:style {:width "42px"}}]
+                [:div {:style {:display "flex" :flex-grow 1}}   [media-browser-column-label {:label :name          :order-by-key :name}]]
+                [:div {:style {:display "flex" :width "240px"}} [media-browser-column-label {:label :size          :order-by-key :email-address}]]
+                [:div {:style {:display "flex" :width "160px"}} [media-browser-column-label {:label :last-modified :order-by-key :modified-at}]]
+                [:div {:style {:width "36px"}}]]))
 
 
 

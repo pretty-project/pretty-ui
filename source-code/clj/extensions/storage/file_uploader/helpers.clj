@@ -29,8 +29,8 @@
   (letfn [(f [files-data dex file-data] (assoc files-data dex (update file-data :tempfile str)))]
          (reduce-kv f {} (dissoc params :query))))
 
-(defn request->content-size
+(defn request->total-size
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [params]}]
-  (letfn [(f [content-size _ {:keys [size]}] (+ content-size size))]
+  (letfn [(f [total-size _ {:keys [size]}] (+ total-size size))]
          (reduce-kv f 0 (dissoc params :query))))

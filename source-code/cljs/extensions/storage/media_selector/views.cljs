@@ -155,9 +155,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn directory-item-structure
-  [browser-id item-dex {:keys [alias content-size id items modified-at]}]
+  [browser-id item-dex {:keys [alias size id items modified-at]}]
   (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
-        size       (str (-> content-size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
+        size       (str (-> size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
                         (components/content {:content :n-items :replacements [(count items)]}))]
        [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
              (let [icon-family (if (empty? items) :material-icons-outlined :material-icons-filled)]
@@ -175,10 +175,10 @@
                     :on-click    [:item-browser/browse-item! :storage.media-selector id]}])
 
 (defn file-item-structure
-  [browser-id item-dex {:keys [alias id modified-at filename filesize] :as file-item}]
+  [browser-id item-dex {:keys [alias id modified-at filename size] :as file-item}]
 
   (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
-        size       (-> filesize io/B->MB format/decimals (str " MB"))]
+        size       (-> size io/B->MB format/decimals (str " MB"))]
        [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
              (if (io/filename->image? alias)
                  (let [thumbnail-uri (media/filename->media-thumbnail-uri filename)]

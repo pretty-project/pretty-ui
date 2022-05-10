@@ -43,16 +43,16 @@
 (defn- upload-files-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [request] :as env} {:keys [destination-id] :as mutation-props}]
-  (let [content-size (file-uploader.helpers/request->content-size request)
-        files-data   (file-uploader.helpers/request->files-data   request)]
-       (if (capacity-handler.side-effects/capacity-limit-exceeded? content-size)
+  (let [total-size (file-uploader.helpers/request->total-size request)
+        files-data (file-uploader.helpers/request->files-data request)]
+       (if (capacity-handler.side-effects/capacity-limit-exceeded? total-size)
            (return :capacity-limit-exceeded)
            (when-let [destination-item (mongo-db/get-document-by-id "storage" destination-id)]
                      (let [destination-path (get  destination-item :media/path)
                            item-path        (conj destination-path {:media/id destination-id})]
                           ; A feltöltés véglegesítése előtt lefoglalja a szükséges tárhely-kapacitást,
                           ; így az egyszerre történő feltöltések nem léphetik át a megengedett tárhely-kapacitást ...
-                          (core.side-effects/update-path-directories! env {:media/content-size content-size :media/path item-path} +)
+                          (core.side-effects/update-path-directories! env {:media/size total-size :media/path item-path} +)
                           (letfn [(f [result _ file-data]
                                      (let [file-data (assoc file-data :file-path item-path)]
                                           (conj result (upload-file-f env mutation-props file-data))))]

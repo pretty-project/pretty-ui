@@ -19,6 +19,7 @@
 (def get-items-info       plugins.item-lister.core.subs/get-items-info)
 (def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
+(def get-current-order-by plugins.item-lister.core.subs/get-current-order-by)
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item          core.subs/get-meta-item)
@@ -156,3 +157,9 @@
 ; @usage
 ;  [:item-browser/get-items-info :my-browser]
 (a/reg-sub :item-browser/get-items-info get-items-info)
+
+; @param (keyword) browser-id
+;
+; @usage
+;  [:item-browser/get-current-order-by :my-browser]
+(a/reg-sub :item-browser/get-current-order-by get-current-order-by)

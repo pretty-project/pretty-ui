@@ -21,10 +21,10 @@
   (let [file-id            (mongo-db/generate-id)
         generated-filename (core.helpers/file-id->filename file-id filename)
         mime-type          (io/filename->mime-type filename)]
-       {:media/alias     filename
-        :media/filename  generated-filename
-        :media/filesize  size
-        :media/id        file-id
-        :media/mime-type mime-type
-        :media/path      file-path
-        :media/description ""}))
+       {:media/alias       filename
+        :media/description ""
+        :media/filename    generated-filename
+        :media/id          file-id
+        :media/mime-type   mime-type
+        :media/path        file-path
+        :media/size        size}))

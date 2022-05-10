@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; 1. Törli az elemek hivatkozásait, levonja az elemek méretét a felmenő mappák
-;    {:content-size ...} tulajdonságából, és frissíti a felmenő mappákat.
+;    {:size ...} tulajdonságából, és frissíti a felmenő mappákat.
 ; 2. x mp elteltével, ha NEM történt meg az elemek visszaállítása, akkor véglegesen
 ;    törli az elemeket és azok leszármazott elemeit, illetve törli a fájlokat és bélyegképeket.
 

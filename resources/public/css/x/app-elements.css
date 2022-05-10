@@ -1299,7 +1299,7 @@ button.x-card:focus,
   height: 12px;
   width: 12px }
 
-.x-ghost[data-size="xxs"] .x-ghost--body {
+.x-ghost[data-height="xxs"] .x-ghost--body {
   height: 12px }
 
 .x-color-marker[data-size="xxs"] .x-color-marker--body {
@@ -1334,7 +1334,7 @@ button.x-card:focus,
   height: 18px;
   width: 18px }
 
-.x-ghost[data-size="xs"] .x-ghost--body {
+.x-ghost[data-height="xs"] .x-ghost--body {
   height: 18px }
 
 .x-color-marker[data-size="xs"] .x-color-marker--body {
@@ -1369,7 +1369,7 @@ button.x-card:focus,
   height: 24px;
   width: 24px }
 
-.x-ghost[data-size="s"] .x-ghost--body {
+.x-ghost[data-height="s"] .x-ghost--body {
   height: 24px }
 
 .x-color-marker[data-size="s"] .x-color-marker--body {
@@ -1404,7 +1404,7 @@ button.x-card:focus,
   height: 30px;
   width: 30px }
 
-.x-ghost[data-size="m"] .x-ghost--body {
+.x-ghost[data-height="m"] .x-ghost--body {
   height: 30px }
 
 .x-color-marker[data-size="m"] .x-color-marker--body {
@@ -1439,7 +1439,7 @@ button.x-card:focus,
   height: 36px;
   width: 36px }
 
-.x-ghost[data-size="l"] .x-ghost--body {
+.x-ghost[data-height="l"] .x-ghost--body {
   height: 36px }
 
 .x-color-marker[data-size="l"] .x-color-marker--body {
@@ -1474,7 +1474,7 @@ button.x-card:focus,
   height: 42px;
   width: 42px }
 
-.x-ghost[data-size="xl"] .x-ghost--body {
+.x-ghost[data-height="xl"] .x-ghost--body {
   height: 42px }
 
 .x-color-marker[data-size="xl"] .x-color-marker--body {
@@ -1509,8 +1509,8 @@ button.x-card:focus,
   height: 48px;
   width: 48px }
 
-.x-ghost[data-size="xxl"] .x-ghost--body {
-  height: 48px }  
+.x-ghost[data-height="xxl"] .x-ghost--body {
+  height: 48px }
 
 .x-color-marker[data-size="xxl"] .x-color-marker--body {
   border-radius: 3px;
@@ -2601,7 +2601,7 @@ button.x-card:focus,
 
 /***** Ghost *****/
 
-.x-ghost {
+.x-ghost--body {
   background-color: var( --background-color-highlight );
   border-radius: var( --border-radius-s ) }
 
