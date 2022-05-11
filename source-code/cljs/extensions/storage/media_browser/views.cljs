@@ -13,6 +13,7 @@
               [x.app-components.api                     :as components]
               [x.app-core.api                           :as a :refer [r]]
               [x.app-elements.api                       :as elements]
+              [x.app-media.api                          :as media]
               [x.app-layouts.api                        :as layouts]
               [x.app-ui.api                             :as ui]))
 
@@ -213,7 +214,7 @@
 ;; -- Media-item components ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn directory-item
+(defn directory-item_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias size id items modified-at] :as media-item}]
   [item-browser/list-item :storage.media-browser item-dex
@@ -225,7 +226,7 @@
                            :on-right-click [:storage.media-browser/render-directory-menu! media-item]
                            :timestamp      modified-at}])
 
-(defn file-item
+(defn file-item_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-dex {:keys [alias filename modified-at] :as media-item}]
   [item-browser/list-item :storage.media-browser item-dex
@@ -237,11 +238,11 @@
                            :on-right-click [:storage.media-browser/render-file-menu! media-item]
                            :timestamp      modified-at}])
 
-(defn media-item
+(defn media-item_
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [browser-id item-dex {:keys [mime-type] :as media-item}]
-  (case mime-type "storage/directory" [directory-item item-dex media-item]
-                                      [file-item      item-dex media-item]))
+  [browser-id item-dex {:keys [mime-type] :as media-item}])
+  ;(case mime-type "storage/directory" [directory-item item-dex media-item]
+  ;                                    [file-item      item-dex media-item]}])
 
 
 
@@ -277,6 +278,60 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn directory-item-structure
+  [browser-id item-dex {:keys [alias size id items modified-at]}]
+  (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
+        size       (str (-> size io/B->MB format/decimals (str " MB\u00A0\u00A0\u00A0|\u00A0\u00A0\u00A0"))
+                        (components/content {:content :n-items :replacements [(count items)]}))]
+       [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
+             (let [icon-family (if (empty? items) :material-icons-outlined :material-icons-filled)]
+                  [elements/icon {:icon :folder :icon-family icon-family :indent {:horizontal :m :vertical :xl}}])
+             [:div {:style {:flex-grow 1}}
+                   [elements/label {:content alias                    :style {:color "#333" :line-height "18px"}}]
+                   [elements/label {:content timestamp :font-size :xs :style {:color "#888" :line-height "18px"}}]
+                   [elements/label {:content size      :font-size :xs :style {:color "#888" :line-height "18px"}}]]
+             [elements/icon {:icon :navigate_next :indent {:right :xs} :size :s}]]))
+
+(defn directory-item
+  [browser-id item-dex {:keys [id] :as directory-item}]
+  [elements/toggle {:content     [directory-item-structure browser-id item-dex directory-item]
+                    :hover-color :highlight
+                    :on-click    [:item-browser/browse-item! :storage.media-selector id]}])
+
+(defn file-item-structure
+  [browser-id item-dex {:keys [alias id modified-at filename size] :as file-item}]
+
+  (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
+        size       (-> size io/B->MB format/decimals (str " MB"))]
+       [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
+             (if (io/filename->image? alias)
+                 (let [thumbnail-uri (media/filename->media-thumbnail-uri filename)]
+                      [elements/thumbnail {:border-radius :s :height :s :indent {:horizontal :xxs :vertical :xs}
+                                           :uri thumbnail-uri :width :l}])
+                 [elements/icon {:icon :insert_drive_file :indent {:horizontal :m :vertical :xl}}])
+             [:div {:style {:flex-grow 1}}
+                   [elements/label {:content alias                    :style {:color "#333" :line-height "18px"}}]]
+             [:div {:style {:width "140px"}}
+                   [elements/label {:content timestamp :font-size :xs :style {:color "#888" :line-height "18px"}}]]
+             [:div {:style {:width "140px"}}
+                   [elements/label {:content size      :font-size :xs :style {:color "#888" :line-height "18px"}}]]
+             (if-let [file-selected? @(a/subscribe [:storage.media-selector/file-selected? file-item])]
+                     [elements/icon {:icon :check_circle_outline :indent {:right :xs} :size :s}]
+                     [elements/icon {:icon :radio_button_unchecked :indent {:right :xs} :size :s}])]))
+
+(defn file-item
+  [browser-id item-dex {:keys [alias modified-at] :as file-item}]
+  (let [file-selectable? @(a/subscribe [:storage.media-selector/file-selectable? file-item])]
+       [elements/toggle {:content     [file-item-structure browser-id item-dex file-item]
+                         :disabled?   (not file-selectable?)
+                         :hover-color :highlight
+                         :on-click    [:storage.media-selector/file-clicked file-item]}]))
+
+(defn media-item
+  [browser-id item-dex {:keys [mime-type] :as media-item}]
+  (case mime-type "storage/directory" [directory-item browser-id item-dex media-item]
+                                      [file-item      browser-id item-dex media-item]))
+
 (defn media-browser
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -288,8 +343,8 @@
                       :items-path       [:storage :media-browser/downloaded-items]
                       :items-key        :items
                       :label-key        :alias
-                      :path-key         :path
-                      :list-element     #'media-item}])
+                      :list-element     #'media-item
+                      :path-key         :path}])
 
 
 
@@ -319,7 +374,7 @@
           [:div {:style {:background-color "white" :border-bottom "1px solid #ddd" :display "flex" :position "sticky" :top "48px"}}
                 [:div {:style {:width "42px"}}]
                 [:div {:style {:display "flex" :flex-grow 1}}   [media-browser-column-label {:label :name          :order-by-key :name}]]
-                [:div {:style {:display "flex" :width "240px"}} [media-browser-column-label {:label :size          :order-by-key :email-address}]]
+                [:div {:style {:display "flex" :width "160px"}} [media-browser-column-label {:label :size          :order-by-key :size}]]
                 [:div {:style {:display "flex" :width "160px"}} [media-browser-column-label {:label :last-modified :order-by-key :modified-at}]]
                 [:div {:style {:width "36px"}}]]))
 

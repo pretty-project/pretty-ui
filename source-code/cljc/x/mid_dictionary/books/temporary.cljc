@@ -32,6 +32,9 @@
            {:en "Overview"
             :hu "Áttekintés"}
 
+           :size
+           {:en "Size"
+            :hu "Méret"}
            :size-n
            {:en "Size: %"
             :hu "Méret: %"}
