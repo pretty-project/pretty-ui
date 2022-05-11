@@ -12,7 +12,6 @@
               [x.app-ui.popups.events]
               [x.app-ui.popups.subs]
               [x.app-ui.progress-bar.effects]
-              [x.app-ui.progress-bar.subs]
               [x.app-ui.progress-screen.subs]
               [x.app-ui.sounds.subs]
               [x.app-ui.surface.effects]
@@ -26,6 +25,7 @@
               [x.app-ui.graphics.views         :as graphics.views]
               [x.app-ui.interface.subs         :as interface.subs]
               [x.app-ui.progress-bar.events    :as progress-bar.events]
+              [x.app-ui.progress-bar.subs      :as progress-bar.subs]
               [x.app-ui.progress-screen.events :as progress-screen.events]
               [x.app-ui.renderer               :as renderer]
               [x.app-ui.shield.helpers         :as shield.helpers]
@@ -57,6 +57,9 @@
 (def stop-listening-to-process! progress-bar.events/stop-listening-to-process!)
 (def fake-process!              progress-bar.events/fake-process!)
 (def stop-faking-process!       progress-bar.events/stop-faking-process!)
+
+; x.app-ui.progress-bar.subs
+(def process-faked? progress-bar.subs/process-faked?)
 
 ; x.app-ui.progress-screen.events
 (def lock-screen!   progress-screen.events/lock-screen!)

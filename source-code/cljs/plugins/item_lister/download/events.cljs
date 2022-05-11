@@ -99,11 +99,9 @@
              ; TEMP#4681
              ; A plugin kilép a {:data-received? true} állapotból, amikor a listaelemek törlődnek
              ; (pl. kereséskor, stb.)
-             ; A header komponens ezért nem iratkozhat fel a {:data-received? ...} tulajdonság
-             ; értékére, hogy eldöntse mikor jelenjen meg, mert az első elemek érkezésével egy időben
-             ; a letöltésjelző eltűnésekor jelenik meg a header komponens, de kereséskor amikor
-             ; törlődnek a letöltött elemek és {:data-received? false} állapotba lép vissza a plugin,
-             ; akkor már nem szabad, hogy újra eltűnjön (a header komponens).
+             ; Egyes komponensek ezért nem iratkozhatnak fel a {:data-received? ...} tulajdonság
+             ; értékére, hogy eldöntsék mikor jelenjenek meg, mert kereséskor vagy az elemek újratöltésekor
+             ; eltűnnének az letöltés befejeződéséig.
              (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))
 
 (defn store-reloaded-items!

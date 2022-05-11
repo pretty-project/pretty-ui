@@ -16,6 +16,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.subs
+(def get-all-item-count   plugins.item-lister.core.subs/get-all-item-count)
 (def get-items-info       plugins.item-lister.core.subs/get-items-info)
 (def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
@@ -121,6 +122,12 @@
 ; @usage
 ;  [:item-browser/get-meta-item :my-browser :my-item]
 (a/reg-sub :item-browser/get-meta-item get-meta-item)
+
+; @param (keyword) browser-id
+;
+; @usage
+;  [:item-browser/get-all-item-count :my-browser]
+(a/reg-sub :item-browser/get-all-item-count get-all-item-count)
 
 ; @param (keyword) browser-id
 ;

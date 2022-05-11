@@ -5,13 +5,10 @@
 (ns extensions.storage.media-browser.effects
     (:require [app-fruits.window                      :as window]
               [extensions.storage.media-browser.views :as media-browser.views]
-              [mid-fruits.candy                       :refer [param return]]
-              [mid-fruits.io                          :as io]
               [plugins.item-browser.api               :as item-browser]
               [x.app-core.api                         :as a :refer [r]]
               [x.app-media.api                        :as media]
-              [x.app-router.api                       :as router]
-              [x.app-ui.api                           :as ui]))
+              [x.app-router.api                       :as router]))
 
 
 
@@ -21,20 +18,29 @@
 (a/reg-event-fx
   :storage.media-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      (if-not (r ui/element-rendered? db :surface :storage.media-browser/view)
-              [:storage.media-browser/render-browser!])))
+  [:storage.media-browser/render-browser!])
 
 
 
-;; -- Media-item effect events ------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :storage.media-browser/update-item-alias!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [id]} alias]]
-      [:item-browser/update-item! :storage.media-browser id {:alias alias}]))
+  :storage.media-browser/create-directory!
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-browser)]
+           [:storage.directory-creator/load-creator! {:browser-id :storage.media-browser :destination-id destination-id}])))
+
+(a/reg-event-fx
+  :storage.media-browser/upload-files!
+  (fn [{:keys [db]} [_ selected-option]]
+      (let [destination-id (r item-browser/get-current-item-id db :storage.media-browser)]
+           [:storage.file-uploader/load-uploader! {:browser-id :storage.media-browser :destination-id destination-id}])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :storage.media-browser/add-new-item!
@@ -45,33 +51,37 @@
            (case selected-option :upload-files!     [:storage.file-uploader/load-uploader!    load-props]
                                  :create-directory! [:storage.directory-creator/load-creator! load-props]))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (a/reg-event-fx
   :storage.media-browser/delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [id]}]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                     [:item-browser/delete-item! :storage.media-browser id]]}))
 
 (a/reg-event-fx
   :storage.media-browser/duplicate-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [id]}]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                     [:item-browser/duplicate-item! :storage.media-browser id]]}))
 
 (a/reg-event-fx
   :storage.media-browser/rename-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ media-item]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:storage.media-browser/render-rename-item-dialog! media-item]]}))
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
+                    [:storage.alias-editor/load-editor! media-item]]}))
 
 (a/reg-event-fx
   :storage.media-browser/move-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ media-item]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
-                    [:storage.media-browser/render-target-selector!]]}))
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]]}))
 
 
 
@@ -82,7 +92,7 @@
   :storage.media-browser/open-directory!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ [_ {:keys [id]}]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                     [:item-browser/browse-item! :storage.media-browser id]]}))
 
 (a/reg-event-fx
@@ -92,7 +102,7 @@
       (let [directory-uri (r item-browser/get-item-route db :storage.media-browser id)
             directory-uri (r router/use-app-home         db directory-uri)
             uri-base      (window/get-uri-base)]
-           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+           {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                          [:tools/copy-to-clipboard! (str uri-base directory-uri)]]})))
 
 
@@ -105,14 +115,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ {:keys [filename]}]]
       (let [directory-id (r item-browser/get-current-item-id db :storage)]
-           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+           {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                          [:storage.media-viewer/load-viewer! {:directory-id directory-id :current-item filename}]]})))
 
 (a/reg-event-fx
   :storage.media-browser/download-file!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ {:keys [alias filename]}]]
-      {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+      {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                     [:tools/save-file! {:filename alias :uri (media/filename->media-storage-uri filename)}]]}))
 
 (a/reg-event-fx
@@ -121,7 +131,7 @@
   (fn [_ [_ {:keys [filename]}]]
       (let [file-uri (media/filename->media-storage-uri filename)
             uri-base (window/get-uri-base)]
-           {:dispatch-n [[:ui/close-popup! :storage.media-browser/media-menu]
+           {:dispatch-n [[:ui/close-popup! :storage.media-menu/view]
                          [:tools/copy-to-clipboard! (str uri-base file-uri)]]})))
 
 
@@ -134,34 +144,3 @@
   :storage.media-browser/render-browser!
   [:ui/render-surface! :storage.media-browser/view
                        {:content #'media-browser.views/view}])
-
-(a/reg-event-fx
-  :storage.media-browser/render-rename-item-dialog!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [_ [_ {:keys [alias] :as media-item}]]
-      [:value-editor/load-editor! :storage.item-alias-editor
-                                  {:label :name :save-button-label :rename! :initial-value alias
-                                   :on-save   [:storage.media-browser/update-item-alias! media-item]
-                                   :validator {:f io/filename-valid?
-                                               :invalid-message :invalid-name
-                                               :pre-validate?   true}}]))
-
-(a/reg-event-fx
-  :storage.media-browser/render-directory-menu!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ directory-item]]
-      [:ui/render-popup! :storage.media-browser/media-menu
-                         {:body   [media-browser.views/directory-menu-body directory-item]
-                          :header [media-browser.views/media-menu-header   directory-item]
-                          :horizontal-align :left
-                          :min-width        :xs}]))
-
-(a/reg-event-fx
-  :storage.media-browser/render-file-menu!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ file-item]]
-      [:ui/render-popup! :storage.media-browser/media-menu
-                         {:body   [media-browser.views/file-menu-body    file-item]
-                          :header [media-browser.views/media-menu-header file-item]
-                          :horizontal-align :left
-                          :min-width        :xs}]))

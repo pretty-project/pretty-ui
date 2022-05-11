@@ -11,6 +11,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn process-faked?
+  ; @usage
+  ;  (r ui/process-faked? db)
+  ;
+  ; @return (boolean)
+  [db _]
+  (get-in db [:ui :progress-bar/meta-items :fake-progress]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-process-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -29,6 +42,15 @@
   [db _]
   (if-let [process-id (get-in db [:ui :progress-bar/meta-items :process-id])]
           (r a/process-failured? db process-id)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:ui/process-faked?]
+(a/reg-sub :ui/process-faked? process-faked?)
 
 
 

@@ -20,7 +20,8 @@
                   {:color            :warning
                    :content          :an-error-occured
                    :font-size        :m
-                   :horizontal-align :center}])
+                   :horizontal-align :center
+                   :indent           {:top :xxl}}])
 
 (defn error-description-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

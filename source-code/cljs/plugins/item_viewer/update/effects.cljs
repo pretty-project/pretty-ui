@@ -52,7 +52,7 @@
       ;            15%-ig szimulált folyamat.
       ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id    (r update.subs/get-deleted-item-id db viewer-id server-response)
             base-route (r transfer.subs/get-transfer-item db viewer-id :base-route)]
            (if (and base-route (r core.subs/viewing-item? db viewer-id item-id))
@@ -60,8 +60,9 @@
                {:dispatch-n [[:item-viewer/render-item-deleted-dialog! viewer-id item-id]
                              [:router/go-to! base-route]]}
                ; B)
-               {:dispatch-n [[:item-viewer/render-item-deleted-dialog! viewer-id item-id]
-                             [:ui/end-fake-process!]]}))))
+               {:dispatch    [:item-viewer/render-item-deleted-dialog! viewer-id item-id]
+                :dispatch-if [(r ui/process-faked? db)
+                              [:ui/end-fake-process!]]}))))
 
 (a/reg-event-fx
   :item-viewer/delete-item-failed
@@ -70,22 +71,13 @@
   ; @param (keyword) viewer-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ viewer-id server-response]]
-      ; A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;    ... megjelenít egy értesítést.
-      ;
-      ; B) Ha az "Elem törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; Az "Elem törlése" művelet sikertelen befejeződésekor, ...
+      ; ... megjelenít egy értesítést.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
-           (if (r body.subs/body-did-mount? db viewer-id)
-               ; A)
-               {:dispatch-n [[:ui/end-fake-process!]
-                             [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]]}
-               ; B)
-               {:dispatch-n [[:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]]}))))
+           {:dispatch    [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]
+            :dispatch-if [(r ui/process-faked? db)
+                          [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-viewer/render-item-deleted-dialog!
@@ -145,12 +137,13 @@
 
       ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin NEM rendelkezik
       ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
               ; A)
               [:router/go-to! item-route]
               ; B)
-              [:ui/end-fake-process!])))
+              {:dispatch-if [(r ui/process-faked? db)
+                             [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-viewer/undo-delete-item-failed
@@ -159,22 +152,13 @@
   ; @param (keyword) viewer-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ viewer-id server-response]]
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      ;
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; A "Törölt elem visszaállítása" művelet sikertelen befejeződésekor, ...
+      ; ... megjelenít egy értesítést.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
-           (if (r body.subs/body-did-mount? db viewer-id)
-               ; A)
-               {:dispatch-n [[:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]]}
-               ; B)
-               {:dispatch-n [[:ui/end-fake-process!]
-                             [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]]}))))
+           {:dispatch    [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]
+            :dispatch-if [(r ui/process-faked? db)
+                          [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-viewer/render-undo-delete-item-failed-dialog!

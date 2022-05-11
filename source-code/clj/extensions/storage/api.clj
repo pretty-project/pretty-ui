@@ -12,4 +12,7 @@
               [extensions.storage.media-browser.mutations]
               [extensions.storage.media-browser.resolvers]
               [extensions.storage.media-selector.lifecycles]
-              [extensions.storage.media-viewer.lifecycles]))
+              [extensions.storage.media-viewer.lifecycles]
+
+              ; TEMP
+              [layouts.popup-b.api]))

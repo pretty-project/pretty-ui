@@ -90,6 +90,28 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
+  :item-browser/order-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (namespaced keyword) order-by
+  (fn [{:keys [db]} [_ browser-id order-by]]
+      [:item-lister/order-items! browser-id order-by]))
+
+(a/reg-event-fx
+  :item-browser/swap-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  (fn [{:keys [db]} [_ browser-id]]
+      [:item-lister/swap-items! browser-id]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :item-browser/choose-order-by!
   (fn [_ [_ browser-id order-by-props]]
       [:item-lister/choose-order-by! browser-id order-by-props]))

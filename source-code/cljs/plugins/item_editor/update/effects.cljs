@@ -51,7 +51,7 @@
       ;        15%-ig szimulált folyamat.
       ;
       ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               ; A)
               (let [item-id (r update.subs/get-saved-item-id db editor-id server-response)]
@@ -59,7 +59,8 @@
                            (r core.subs/new-item?     db editor-id))
                        [:item-editor/go-up! editor-id]))
               ; B)
-              [:ui/end-fake-process!])))
+              {:dispatch-if [(r ui/process-faked? db)
+                             [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-editor/save-item-failed
@@ -68,21 +69,12 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      ; A) Ha az "Elem mentése" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;    ... megjelenít egy értesítést.
-      ;
-      ; B) Ha az "Elem mentése" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
-      (if (r body.subs/body-did-mount? db editor-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:ui/render-bubble! {:body :failed-to-save}]]}
-          ; B)
-          [:ui/render-bubble! {:body :failed-to-save}])))
+      ; Az "Elem mentése" művelet sikertelen befejeződésekor, ...
+      ; ... megjelenít egy értesítést.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      {:dispatch    [:ui/render-bubble! {:body :failed-to-save}]
+       :dispatch-if [(r ui/process-faked? db)
+                     [:ui/end-fake-process!]]}))
 
 
 

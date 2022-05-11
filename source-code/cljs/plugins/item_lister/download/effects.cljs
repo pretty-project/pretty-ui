@@ -50,31 +50,31 @@
                                :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
+  :item-lister/receive-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   ; @param (map) reload-props
   ;  {:on-reload (metamorphic-event)(opt)}
   ; @param (map) server-response
-  :item-lister/receive-reloaded-items!
-  ; - Az {:on-reload ...} tulajdonságként átadott esemény használatával megoldható,
-  ;   hogy a listaelemeken végzett műveletek záró-eseményei a listaelemek sikeres újratöltése
-  ;   után történjenek meg.
-  ;
-  ; - Lassú internetkapcsolat esetén zavaró lenne, ha a listaelemeken végzett műveletek végét
-  ;   jelző értesítések, a műveletek után, még a listaelemek újratöltése előtt jelennének meg.
-  ;
-  ; Pl.: Ha a kiválasztott listaelemek sikeres törlése után azonnal jelenne meg
-  ;      a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
-  ;      újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
-  ;      ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
-  ;      van és a plugin egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
-  ;      ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
-  ;
-  ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
-  ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor
-  ;   nem tárolja el a letöltött elemeket.
   (fn [{:keys [db]} [_ lister-id {:keys [on-reload]} server-response]]
+      ; - Az {:on-reload ...} tulajdonságként átadott esemény használatával megoldható,
+      ;   hogy a listaelemeken végzett műveletek záró-eseményei a listaelemek sikeres újratöltése
+      ;   után történjenek meg.
+      ;
+      ; - Lassú internetkapcsolat esetén zavaró lenne, ha a listaelemeken végzett műveletek végét
+      ;   jelző értesítések, a műveletek után, még a listaelemek újratöltése előtt jelennének meg.
+      ;
+      ; Pl.: Ha a kiválasztott listaelemek sikeres törlése után azonnal jelenne meg
+      ;      a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
+      ;      újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
+      ;      ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
+      ;      van és a plugin egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
+      ;      ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
+      ;
+      ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
+      ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor
+      ;   nem tárolja el a letöltött elemeket.
       (if (r body.subs/body-did-mount? db lister-id)
           {:db (r download.events/receive-reloaded-items! db lister-id server-response)
            :dispatch on-reload}

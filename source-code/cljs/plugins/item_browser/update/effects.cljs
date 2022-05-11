@@ -142,20 +142,23 @@
       ; A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
       ;    a megjelenített listaelemek között van, ...
       ;    ... engedélyezi az ideiglenesen letiltott elemet.
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;    ... megjelenít egy értesítést.
+      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;
       ; B) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
       ;    NINCS a megjelenített listaelemek között, ...
       ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r items.subs/item-downloaded? db browser-id item-id)
           ; A)
-          {:db         (r update.events/delete-item-failed db browser-id item-id)
-           :dispatch-n [[:ui/end-fake-process!]
-                        [:item-browser/render-delete-item-failed-dialog! browser-id]]}
+          {:db          (r update.events/delete-item-failed db browser-id item-id)
+           :dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
+           :dispatch-if [(r ui/process-faked? db)
+                         [:ui/end-fake-process!]]}
           ; B)
-          [:item-browser/render-delete-item-failed-dialog! browser-id])))
+          {:dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
+           :dispatch-if [(r ui/process-faked? db)
+                         [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-browser/render-delete-item-failed-dialog!
@@ -212,10 +215,13 @@
       ;
       ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az aktuálisan böngészett
       ;    elem NEM a visszaállított elem szülő-eleme, ...
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r update.subs/parent-item-browsed? db browser-id :undo-delete-item! server-response)
           ; A)
-          [:item-browser/reload-items! browser-id])))
+          [:item-browser/reload-items! browser-id]
+          ; B)
+          {:dispatch-if [(r ui/process-faked? db)
+                         [:ui/end-fake-process!]]})))
 
 (a/reg-event-fx
   :item-browser/undo-delete-item-failed
@@ -226,20 +232,12 @@
   (fn [{:keys [db]} [_ browser-id _]]
       ; XXX#0439
       ;
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;    ... megjelenít egy értesítést.
-      ;
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva ...
-      ;    ... megjelenít egy értesítést.
-      (if (r body.subs/body-did-mount? db browser-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:item-browser/render-undo-delete-item-failed-dialog! browser-id]]}
-          ; B)
-          [:item-browser/render-undo-delete-item-failed-dialog! browser-id])))
+      ; A "Törölt elem visszaállítása" művelet sikertelen befejeződésekor, ...
+      ; ... megjelenít egy értesítést.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      {:dispatch    [:item-browser/render-undo-delete-item-failed-dialog! browser-id]
+       :dispatch-if [(r ui/process-faked? db)
+                     [:ui/end-fake-process!]]}))
 
 (a/reg-event-fx
   :item-browser/render-undo-delete-item-failed-dialog!
@@ -303,20 +301,12 @@
   (fn [{:keys [db]} [_ browser-id]]
       ; XXX#0439
       ;
-      ; A) Ha az "Elem duplikálása" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;    ... megjelenít egy értesítést.
-      ;
-      ; B) Ha az "Elem duplikálása" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva ...
-      ;    ... megjelenít egy értesítést.
-      (if (r body.subs/body-did-mount? db browser-id)
-          ; A)
-          {:dispatch-n [[:ui/end-fake-process!]
-                        [:item-browser/render-duplicate-item-failed-dialog! browser-id]]}
-          ; B)
-          [:item-browser/render-duplicate-item-failed-dialog! browser-id])))
+      ; Az "Elem duplikálása" művelet sikertelen befejeződésekor, ...
+      ; ... megjelenít egy értesítést.
+      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      {:dispatch    [:item-browser/render-duplicate-item-failed-dialog! browser-id]
+       :dispatch-if [(r ui/process-faked? db)
+                     [:ui/end-fake-process!]]}))
 
 (a/reg-event-fx
   :item-browser/render-item-duplicated-dialog!

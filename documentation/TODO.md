@@ -14,6 +14,10 @@
 
 # x4.7.0
 
+- Ha az item-browser-ben kitörölsz egy elemet, kilépsz a pluginból és rákattintasz a törlés
+  visszaálíltása gombra, akkor nem tudja visszaállítani az elemet, mert a meta-item-ek már
+  nincsenek meg (gondolom ez más pluginnál is probléma)
+
 - Amikor keresel pl item-listerben, akkor kereséskor az útvonalba is bele kell irni
   a keresőszot pl.: "/admin/clients/search=xyz"
   Mindenhol igy csinálják és ha ráfrissitesz akkor megmarad a keresőszo

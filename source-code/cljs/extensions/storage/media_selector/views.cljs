@@ -65,15 +65,14 @@
 
 (defn search-items-field
   []
-  (let [browser-disabled? @(a/subscribe [:item-browser/browser-disabled? :storage.media-selector])
-        search-event      [:item-browser/search-items! :storage.media-selector {:search-keys [:alias]}]]
+  (let [search-event [:item-browser/search-items! :storage.media-selector {:search-keys [:alias]}]]
        [elements/search-field ::search-items-field
                               {:autoclear?    true
-                               :disabled?     browser-disabled?
                                :indent        {:vertical :xxs}
+                               :min-width     :s
                                :on-empty      search-event
                                :on-type-ended search-event
-                               :placeholder   "Keresés"}]))
+                               :placeholder   "Keresés a mappában"}]))
 
 (defn control-bar
   []
@@ -81,7 +80,7 @@
                                 {:start-content [:<> [go-up-icon-button]
                                                      [go-home-icon-button]
                                                      [order-by-icon-button]
-                                                     [elements/button-separator {}]
+                                                     [elements/button-separator {:indent {:vertical :xxs}}]
                                                      [create-folder-icon-button]
                                                      [upload-files-icon-button]]
                                  :end-content   [:<> [search-items-field]]}])
@@ -122,7 +121,7 @@
 (defn header
   [selector-id]
   [:<> [label-bar]
-       (if-let [data-received? @(a/subscribe [:item-browser/get-meta-item :storage.media-selector :first-data-received?])]
+       (if-let [first-data-received? @(a/subscribe [:item-browser/first-data-received? :storage.media-selector])]
                [control-bar]
                [elements/horizontal-separator {:size :xxl}])])
 
@@ -176,7 +175,6 @@
 
 (defn file-item-structure
   [browser-id item-dex {:keys [alias id modified-at filename size] :as file-item}]
-
   (let [timestamp @(a/subscribe [:activities/get-actual-timestamp modified-at])
         size       (-> size io/B->MB format/decimals (str " MB"))]
        [:div {:style {:align-items "center" :border-bottom "1px solid #f0f0f0" :display "flex"}}
@@ -194,7 +192,7 @@
                      [elements/icon {:icon :radio_button_unchecked :indent {:right :xs} :size :s}])]))
 
 (defn file-item
-  [browser-id item-dex {:keys [alias modified-at] :as file-item}]
+  [browser-id item-dex file-item]
   (let [file-selectable? @(a/subscribe [:storage.media-selector/file-selectable? file-item])]
        [elements/toggle {:content     [file-item-structure browser-id item-dex file-item]
                          :disabled?   (not file-selectable?)

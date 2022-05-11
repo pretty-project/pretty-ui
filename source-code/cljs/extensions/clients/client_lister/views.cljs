@@ -20,33 +20,38 @@
 
 (defn clients-label
   []
-  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
-       [:<> [surface-a/title-sensor {:title :clients :offset 36}]
-            [elements/label ::clients-label
-                            {:content     :clients
-                             :disabled?   lister-disabled?
-                             :font-size   :xxl
-                             :font-weight :extra-bold
-                             :indent      {:top :xxl}}]]))
+  (if-let [first-data-received? @(a/subscribe [:item-lister/first-data-received? :clients.client-lister])]
+          (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
+               [:<> [surface-a/title-sensor {:title :clients :offset 36}]
+                    [elements/label ::clients-label
+                                    {:content     :clients
+                                     :disabled?   lister-disabled?
+                                     :font-size   :xxl
+                                     :font-weight :extra-bold
+                                     :indent      {:top :xxl}}]])
+          [elements/ghost {:height :l :indent {:bottom :xs :top :xxl} :style {:width "180px"}}]))
 
 (defn search-clients-field
   []
-  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
-        search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
-       [elements/search-field ::search-clients-field
-                              {:disabled?     lister-disabled?
-                               :indent        {:top :s}
-                               :on-empty      search-event
-                               :on-type-ended search-event
-                               :placeholder   "Keresés az ügyfelek között"}]))
+  (if-let [first-data-received? @(a/subscribe [:item-lister/first-data-received? :clients.client-lister])]
+          (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
+                search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
+               [elements/search-field ::search-clients-field
+                                      {:disabled?     lister-disabled?
+                                       :indent        {:top :s}
+                                       :on-empty      search-event
+                                       :on-type-ended search-event
+                                       :placeholder   "Keresés az ügyfelek között"}])
+          [elements/ghost {:height :l :indent {:top :s}}])) ;:style {:width "180px"}}]))
 
 (defn search-description
   []
-  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
-        all-item-count @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
+  (let [first-data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])
+        lister-disabled?     @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
+        all-item-count       @(a/subscribe [:item-lister/get-all-item-count :clients.client-lister])]
        [elements/label ::client-list-label
                        {:color            :muted
-                        :content          (str "Találatok ("all-item-count")")
+                        :content          (if first-data-received? (str "Találatok ("all-item-count")"))
                         :disabled?        lister-disabled?
                         :font-size        :xxs
                         :horizontal-align :right
