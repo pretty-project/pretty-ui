@@ -12,7 +12,9 @@
 
 (defn start-server!
   ; @param (map)(opt) server-props
-  ;  {:join? (boolean)(opt)
+  ;  {:dev-mode? (boolean)(opt)
+  ;    Default: false
+  ;   :join? (boolean)(opt)
   ;    Default: false
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
