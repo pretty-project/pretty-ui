@@ -18,7 +18,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
-  ;  {:join? (boolean)(opt)
+  ;  {:dev-mode? (boolean)(opt)
+  ;    Default: false
+  ;   :join? (boolean)(opt)
   ;   :port (integer)(opt)}
   [server-props]
   (let [server-props (server-handler.prototypes/server-props-prototype server-props)

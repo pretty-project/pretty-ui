@@ -3,20 +3,21 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.server-handler.events
-    (:require [mid-fruits.map              :refer [dissoc-in]]
-              [x.server-core.event-handler :as event-handler]))
+    (:require [x.server-core.event-handler :as event-handler]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reset-server-state!
+(defn store-server-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (map) server-props
+  ;
   ; @return (map)
-  [db _]
-  (dissoc-in db [:core :server-handler/meta-items]))
+  [db [_ server-props]]
+  (assoc-in db [:core :server-handler/server-props] server-props))
 
 (defn store-server-state!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -25,7 +26,7 @@
   ;
   ; @return (map)
   [db [_ server-state]]
-  (assoc-in db [:core :server-handler/meta-items] server-state))
+  (assoc-in db [:core :server-handler/server-state] server-state))
 
 
 
@@ -33,7 +34,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/reset-server-state! reset-server-state!)
+(event-handler/reg-event-db :core/store-server-props! store-server-props!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (event-handler/reg-event-db :core/store-server-state! store-server-state!)

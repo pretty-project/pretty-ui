@@ -34,15 +34,13 @@
 (defn search-clients-field
   []
   (if-let [first-data-received? @(a/subscribe [:item-lister/first-data-received? :clients.client-lister])]
-          (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])
-                search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
+          (let [search-event [:item-lister/search-items! :clients.client-lister {:search-keys [:email-address :name :phone-number]}]]
                [elements/search-field ::search-clients-field
-                                      {:disabled?     lister-disabled?
-                                       :indent        {:top :s}
+                                      {:indent        {:top :s}
                                        :on-empty      search-event
                                        :on-type-ended search-event
                                        :placeholder   "Keresés az ügyfelek között"}])
-          [elements/ghost {:height :l :indent {:top :s}}])) ;:style {:width "180px"}}]))
+          [elements/ghost {:height :l :indent {:top :s}}]))
 
 (defn search-description
   []
@@ -59,17 +57,18 @@
 
 (defn create-client-button
   []
-  (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
-       [:div {:style {:position :fixed :bottom 0 :right 0}}
-             [elements/icon-button ::create-client-button
-                                   {:border-color  :muted
-                                    :border-radius :xxl
-                                    :color         :primary
-                                    :disabled?     lister-disabled?
-                                    :hover-color   :highlight
-                                    :indent        {:all :m}
-                                    :on-click      [:router/go-to! "/@app-home/clients/create"]
-                                    :preset        :add}]]))
+  (if-let [first-data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
+          (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
+               [:div {:style {:position :fixed :bottom 0 :right 0}}
+                     [elements/icon-button ::create-client-button
+                                           {:border-color  :muted
+                                            :border-radius :xxl
+                                            :color         :primary
+                                            :disabled?     lister-disabled?
+                                            :hover-color   :highlight
+                                            :indent        {:all :m}
+                                            :on-click      [:router/go-to! "/@app-home/clients/create"]
+                                            :preset        :add}]])))
 
 
 

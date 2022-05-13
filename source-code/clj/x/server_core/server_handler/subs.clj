@@ -2,14 +2,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-developer.developer-tools.lifecycles
-    (:require [x.server-core.api :as a]))
+(ns x.server-core.server-handler.subs)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:developer/init!]})
+(defn dev-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (boolean)
+  [db _]
+  (get-in db [:core :server-handler/server-props :dev-mode?]))

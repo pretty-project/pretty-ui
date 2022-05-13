@@ -14,6 +14,10 @@
 
 # x4.7.0
 
+- Az item-listerekben a kereso mezo jobb lenne ha disabled true allapotban lenne
+  amig a tobbi elem is abban van, de akkor elvesziti a fokuszt, ha esetleg fokuszalt
+  allapotban volt a request elkuldesekor (pl kereses)
+
 - Ha az item-browser-ben kitörölsz egy elemet, kilépsz a pluginból és rákattintasz a törlés
   visszaálíltása gombra, akkor nem tudja visszaállítani az elemet, mert a meta-item-ek már
   nincsenek meg (gondolom ez más pluginnál is probléma)

@@ -24,6 +24,7 @@
               [x.server-core.event-handler                  :as event-handler]
               [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.server-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
+              [x.server-core.server-handler.subs            :as server-handler.subs]
               [x.server-core.transfer-handler.side-effects  :as transfer-handler.side-effects]))
 
 
@@ -103,6 +104,9 @@
 
 ; x.server-core.lifecycle-handler.subs
 (def get-period-events lifecycle-handler.subs/get-period-events)
+
+; x.server-core.server-handler.subs
+(def dev-mode? server-handler.subs/dev-mode?)
 
 ; x.server-core.transfer-handler.side-effects
 (def reg-transfer! transfer-handler.side-effects/reg-transfer!)

@@ -4,14 +4,3 @@
 
 (ns x.boot-loader.subs)
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-server-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (get-in db [:boot-loader :server-handler/meta-items]))

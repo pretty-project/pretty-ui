@@ -19,17 +19,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn start-targeted-server!
-  ; @param (map)
+(defn start-server!
+  ; @param (map) server-props
   ;  {:port (integer)}
   [{:keys [port] :as server-props}]
-  (println "project-emulator - Starting server on port:" port "...")
+  (println "project-emulator - Starting server on port: " (or port "default") " ...")
   (x.boot-loader.api/start-server! server-props))
-
-(defn start-server!
-  []
-  (println "project-emulator - Starting server ...")
-  (x.boot-loader.api/start-server!))
 
 
 
@@ -46,7 +41,7 @@
   ; @usage
   ;  java -jar {{namespace}}.jar 3000
   ([]     (start-server!))
-  ([port] (start-targeted-server! {:port port})))
+  ([port] (start-server! {:port port})))
 
 (defn dev
   ; @param (map) options
@@ -56,8 +51,7 @@
   ; @usage
   ;  (dev {:shadow-build :my-build})
   [{:keys [port shadow-build]}]
-  (if port (-main port)
-           (-main))
+  (start-server! {:port port :dev-mode? true})
   (server/stop!)
   (server/start!)
   (shadow/watch shadow-build)
