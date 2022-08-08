@@ -26,6 +26,8 @@
   ; @usage
   ;  (core/->app-built)
   []
+  ; Az app-build (az applikáció build-version számának) értékét beolvassa az azt
+  ; tároló fájlból, majd növeli eggyel és a növelt értéket eltárolja a fájlban.
   (letfn [(f [{:keys [app-build]}] (if app-build {:app-build (format/inc-version app-build)}
                                                  {:app-build build-handler.config/INITIAL-APP-BUILD}))]
          (io/swap-edn-file! build-handler.config/APP-BUILD-FILEPATH f)))
@@ -38,11 +40,18 @@
 (defn import-app-build!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (if-let [{:keys [app-build]} (io/read-edn-file build-handler.config/APP-BUILD-FILEPATH)]
-          (event-handler/dispatch [:core/store-app-build! app-build])
-          ; Development környezetben nem szükséges az (a/->app-built) függvényt meghívni,
-          ; ezért nem minden esetben biztosított az app-build értékének létezése!
-          (event-handler/dispatch [:core/store-app-build! build-handler.config/INITIAL-APP-BUILD])))
+  ; - Development környezetben nincs szükség az app-build (az applikáció build-version számának)
+  ;   használatára ezért nem szükséges az (a/->app-built) függvényt meghívni, ami az aktuális
+  ;   app-build értékét eltárolná egy fájlban.
+  ; - Ezért development környezetben nem minden esetben biztosított az app-build értékét tároló
+  ;   fájl létezése.
+  ; - Ha az app-build értékét tároló fájl nem elérhető, akkor az app-build értéke egy alapértelmezett
+  ;   értékkel kerül behelyettesítésre.
+  ;   Pl.: "0.0.1"
+  (if (io/file-exists? build-handler.config/APP-BUILD-FILEPATH)
+      (let [{:keys [app-build]} (io/read-edn-file build-handler.config/APP-BUILD-FILEPATH)]
+           (event-handler/dispatch [:core/store-app-build! app-build]))
+      (event-handler/dispatch [:core/store-app-build! build-handler.config/INITIAL-APP-BUILD])))
 
 
 

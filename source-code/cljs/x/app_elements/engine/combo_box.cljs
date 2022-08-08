@@ -49,70 +49,6 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn key-code->keypress-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (integer) key-code
-  ;
-  ; @example
-  ;  (key-code->keypress-id :my-field 40)
-  ;  =>
-  ;  :my-field--40
-  ;
-  ; @return (keyword)
-  [field-id key-code]
-  (keyword/join field-id "--" key-code))
-
-(defn field-props->render-option?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:get-label-f (function)
-  ;   :value (string)}
-  ;
-  ; @return (boolean)
-  [{:keys [get-label-f value]} option]
-  (and (not (string/pass-with? option value {:case-sensitive? false}))
-       (string/starts-with? (get-label-f option)
-                            (param       value)
-                            {:case-sensitive? false})))
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn field-props->rendered-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:options (vector)}
-  ;
-  ; @return (vector)
-  [{:keys [options] :as field-props}]
-  (letfn [(f [rendered-options option]
-            (if (field-props->render-option? field-props option)
-                (conj   rendered-options option)
-                (return rendered-options)))]
-         (reduce f [] options)))
-; WARNING! DEPRECATED! DO NOT USE!
-
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn field-props->render-options?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;  {:options (* in vector)}
-  ;
-  ; @return (boolean)
-  [{:keys [options] :as field-props}]
-  (and (vector/nonempty? options)
-       (vector/any-item-match? options #(field-props->render-option? field-props %1))))
-; WARNING! DEPRECATED! DO NOT USE!
-
-
-
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -194,9 +130,10 @@
   ; a Re-Frame adatbázisban. És a get-label-f értéke nem lehet nil!
   (if-let [get-label-f (r element/get-element-prop db field-id :get-label-f)]
           (let [value (r get-combo-box-value db field-id)]
-               (string/starts-with? (get-label-f option)
-                                    (param       value)
-                                    {:case-sensitive? false}))))
+               (and (not (string/pass-with? option value {:case-sensitive? false}))
+                    (string/starts-with? (get-label-f option)
+                                         (param       value)
+                                         {:case-sensitive? false})))))
 
 (defn get-combo-box-rendered-option-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -480,13 +417,13 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
+      {:dispatch-n [[:environment/reg-keypress-event! ::on-DOWN-pressed
                                                       {:key-code 40 :on-keydown [:elements/DOWN-combo-box!  field-id] :prevent-default? true}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
+                    [:environment/reg-keypress-event! ::on-UP-pressed
                                                       {:key-code 38 :on-keydown [:elements/UP-combo-box!    field-id] :prevent-default? true}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
+                    [:environment/reg-keypress-event! ::on-ESC-pressed
                                                       {:key-code 27 :on-keydown [:elements/ESC-combo-box!   field-id]}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
+                    [:environment/reg-keypress-event! ::on-ENTER-pressed
                                                       {:key-code 13 :on-keydown [:elements/ENTER-combo-box! field-id]}]]}))
 
 (a/reg-event-fx
@@ -495,16 +432,28 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:environment/reg-keypress-event! (key-code->keypress-id field-id 40)
-                                                      {:key-code 40 :on-keydown [:elements/DOWN-combo-box!        field-id] :prevent-default? true}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 38)
-                                                      {:key-code 38 :on-keydown [:elements/UP-combo-box!          field-id] :prevent-default? true}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 27)
-                                                      {:key-code 27 :on-keydown [:elements/ESC-combo-box!         field-id]}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 13)
-                                                      {:key-code 13 :on-keydown [:elements/ENTER-multi-combo-box! field-id]}]
-                    [:environment/reg-keypress-event! (key-code->keypress-id field-id 188)
-                                                      {:key-code 188 :on-keydown [:elements/COMMA-multi-combo-box! field-id]}]]}))
+      {:dispatch-n [[:environment/reg-keypress-event! ::on-DOWN-pressed
+                                                      {:key-code         40
+                                                       :on-keydown       [:elements/DOWN-combo-box! field-id]
+                                                       :prevent-default? true
+                                                       :required?        true}]
+                    [:environment/reg-keypress-event! ::on-UP-pressed
+                                                      {:key-code         38
+                                                       :on-keydown       [:elements/UP-combo-box! field-id]
+                                                       :prevent-default? true
+                                                       :required?        true}]
+                    [:environment/reg-keypress-event! ::on-ESC-pressed
+                                                      {:key-code   27
+                                                       :on-keydown [:elements/ESC-combo-box! field-id]
+                                                       :required?  true}]
+                    [:environment/reg-keypress-event! ::on-ENTER-pressed
+                                                      {:key-code   13
+                                                       :on-keydown [:elements/ENTER-multi-combo-box! field-id]
+                                                       :required?  true}]
+                    [:environment/reg-keypress-event! ::on-COMMA-pressed
+                                                      {:key-code   188
+                                                       :on-keydown [:elements/COMMA-multi-combo-box! field-id]
+                                                       :required?  true}]]}))
 
 (a/reg-event-fx
   :elements/remove-combo-box-controllers!
@@ -512,10 +461,10 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:environment/remove-keypress-event! (key-code->keypress-id field-id 40)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 38)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 27)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 13)]]}))
+      {:dispatch-n [[:environment/remove-keypress-event! ::on-DOWN-pressed]
+                    [:environment/remove-keypress-event! ::on-UP-pressed]
+                    [:environment/remove-keypress-event! ::on-ESC-pressed]
+                    [:environment/remove-keypress-event! ::on-ENTER-pressed]]}))
 
 (a/reg-event-fx
   :elements/remove-multi-combo-box-controllers!
@@ -523,8 +472,8 @@
   ;
   ; @param (keyword) field-id
   (fn [_ [_ field-id]]
-      {:dispatch-n [[:environment/remove-keypress-event! (key-code->keypress-id field-id 40)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 38)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 27)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 13)]
-                    [:environment/remove-keypress-event! (key-code->keypress-id field-id 188)]]}))
+      {:dispatch-n [[:environment/remove-keypress-event! ::on-DOWN-pressed]
+                    [:environment/remove-keypress-event! ::on-UP-pressed]
+                    [:environment/remove-keypress-event! ::on-ESC-pressed]
+                    [:environment/remove-keypress-event! ::on-ENTER-pressed]
+                    [:environment/remove-keypress-event! ::on-COMMA-pressed]]}))

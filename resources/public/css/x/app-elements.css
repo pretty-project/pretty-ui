@@ -829,6 +829,18 @@ button.x-card:focus,
 
 /* Line-color */
 /*** Default ***/
+
+/*** None ***/
+/* Border-color */
+
+/* Az icon-button elem {:border-color :none} beállítással használva,
+ * az elem {color: ...} tulajdonságának értékét használta a {border-color: ...}
+ * tulajdonság értékeként is! */
+.x-icon-button[data-border-color="none"] .x-icon-button--body {
+  border-color: transparent }
+
+/* Border-color */
+/*** None ***/
 /***** Color profiles *****/
 
 
@@ -1314,7 +1326,7 @@ button.x-card:focus,
   width: 36px }
 
 .x-horizontal-separator[data-size="xxs"] {
-  height: 4px }
+  height: 6px }
 
 .x-vertical-separator[data-size="xxs"] {
   width: 4px }
@@ -1349,7 +1361,7 @@ button.x-card:focus,
   width: 48px }
 
 .x-horizontal-separator[data-size="xs"] {
-  height: 8px }
+  height: 12px }
 
 .x-vertical-separator[data-size="xs"] {
   width: 8px }
@@ -1384,7 +1396,7 @@ button.x-card:focus,
   width: 60px }
 
 .x-horizontal-separator[data-size="s"] {
-  height: 12px }
+  height: 18px }
 
 .x-vertical-separator[data-size="s"] {
   width: 12px }
@@ -1419,7 +1431,7 @@ button.x-card:focus,
   width: 72px }
 
 .x-horizontal-separator[data-size="m"] {
-  height: 18px }
+  height: 24px }
 
 .x-vertical-separator[data-size="m"] {
   width: 18px }
@@ -1454,7 +1466,7 @@ button.x-card:focus,
   width: 84px }
 
 .x-horizontal-separator[data-size="l"] {
-  height: 24px }
+  height: 36px }
 
 .x-vertical-separator[data-size="l"] {
   width: 24px }
@@ -1489,7 +1501,7 @@ button.x-card:focus,
   width: 96px }
 
 .x-horizontal-separator[data-size="xl"] {
-  height: 36px }
+  height: 42px }
 
 .x-vertical-separator[data-size="xl"] {
   width: 36px }

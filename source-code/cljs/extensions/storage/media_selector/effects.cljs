@@ -68,10 +68,11 @@
   :storage.media-selector/file-clicked
   (fn [{:keys [db]} [_ file-item]]
       (let [db (r media-selector.events/toggle-file-selection! db file-item)]
-           (if-not (r media-selector.subs/save-selected-items? db file-item)
+           (if-not (r media-selector.subs/autosave-selected-items? db file-item)
                    {:db db}
-                   {:db db :dispatch-later [{:ms       media-selector.config/AUTOCLOSE-DELAY
-                                             :dispatch [:storage.media-selector/save-selected-items!]}]}))))
+                   (let [db (r media-selector.events/set-autosave-mode! db)]
+                        {:db db :dispatch-later [{:ms       media-selector.config/AUTOCLOSE-DELAY
+                                                  :dispatch [:storage.media-selector/save-selected-items!]}]})))))
 
 
 

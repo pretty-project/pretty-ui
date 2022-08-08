@@ -59,16 +59,15 @@
   []
   (if-let [first-data-received? @(a/subscribe [:item-lister/data-received? :clients.client-lister])]
           (let [lister-disabled? @(a/subscribe [:item-lister/lister-disabled? :clients.client-lister])]
-               [:div {:style {:position :fixed :bottom 0 :right 0}}
-                     [elements/icon-button ::create-client-button
-                                           {:border-color  :muted
-                                            :border-radius :xxl
-                                            :color         :primary
-                                            :disabled?     lister-disabled?
-                                            :hover-color   :highlight
-                                            :indent        {:all :m}
-                                            :on-click      [:router/go-to! "/@app-home/clients/create"]
-                                            :preset        :add}]])))
+               [elements/icon-button ::create-client-button
+                                     {:border-color  :none
+                                      :border-radius :xxl
+                                      :color         :primary
+                                      :disabled?     lister-disabled?
+                                      :hover-color   :highlight
+                                      :indent        {:left :xxs :top :xxl}
+                                      :on-click      [:router/go-to! "/@app-home/clients/create"]
+                                      :preset        :add}])))
 
 
 
@@ -140,7 +139,8 @@
 
 (defn view-structure
   []
-  [:<> [clients-label]
+  [:<> [elements/row {:content [:<> [clients-label]
+                                    [create-client-button]]}]
        [search-clients-field]
        [search-description]
        [elements/horizontal-separator {:size :xxl}]
@@ -148,8 +148,7 @@
              [:div {:style {:width "100%"}}
                    [client-list]]
              [client-list-header]]
-      [elements/horizontal-separator {:size :xxl}]
-      [create-client-button]])
+      [elements/horizontal-separator {:size :xxl}]])
 
 (defn view
   [surface-id]

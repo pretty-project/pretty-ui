@@ -15,11 +15,20 @@
 ;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; A hibaüzenetek kiírásakor a fájlok/mappák neve idézőjelek között legyen kiírva,
+; hogy a nil értékű nevek is egyértelműen olvashatók legyenek!
+
 ; @constant (string)
 ; XXX#5069
-;  Hibaüzenet kiírásakor a fájl neve idézőjelek között legyen kiírva, hogy a nil
-;  értékű fájlnevek is egyértelműek legyenek.
 (def FILE-DOES-NOT-EXIST-ERROR "File does not exist:")
+
+; @constant (string)
+;  Ha a swap-edn-file! függvény egy nem létező fájl tartalmát próbálja beolvasni,
+;  akkor megjelenik a FILE-DOES-NOT-EXIST-ERROR hibaüzenet, majd ezután a tartalom
+;  fájlba írásakor, amikor létrejön az addig nem létező fájl megjelenik a CREATE-FILE-MESSAGE
+;  üzenet, így egyértelmű, hogy a FILE-DOES-NOT-EXIST-ERROR hibaüzenet ignorálható,
+;  mivel az addig hiányzó fájl létrehozása megtörtént.
+(def CREATE-FILE-MESSAGE "Creating file:")
 
 ; @constant (string)
 ; XXX#5069
@@ -125,7 +134,7 @@
   ; @return (?)
   [source-filepath destination-filepath]
   (try (if (file-exists? source-filepath)
-           (clojure.java.io/copy (clojure.java.io/file source-filepath)
+           (clojure.java.io/copy (clojure.java.io/file      source-filepath)
                                  (clojure.java.io/file destination-filepath))
            (throw (Exception. FILE-DOES-NOT-EXIST-ERROR)))
        (catch Exception e (println (str e " \"" source-filepath "\"")))))
@@ -146,6 +155,8 @@
   ;
   ; @return (?)
   [filepath content]
+  (if-not (file-exists? filepath)
+          (println (str CREATE-FILE-MESSAGE " \"" filepath "\"")))
   (spit filepath (str content)))
 
 (defn append-to-file!
@@ -172,6 +183,8 @@
   ;
   ; @return (?)
   [filepath]
+  (if-not (file-exists? filepath)
+          (println (str CREATE-FILE-MESSAGE " \"" filepath "\"")))
   (spit filepath nil))
 
 (defn copy-uri-to-file!

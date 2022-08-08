@@ -50,7 +50,7 @@
                (vector/contains-item? extensions extension))
           (return true)))
 
-(defn save-selected-items?
+(defn autosave-selected-items?
   [db [_ file-item]]
   (let [multiple? (get-in db [:storage :media-selector/selector-props :multiple?])]
        (and (not multiple?)

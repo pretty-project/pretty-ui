@@ -10,8 +10,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-;  A "resources" mappában elhelyezett "x.app-build.edn" fájl minden esetben a lefordított JAR fájl része!
-(def APP-BUILD-FILEPATH "resources/x.app-build.edn")
+;  - A "resources/public" mappában elhelyezett "x.app-build.edn" fájl minden
+;    esetben a lefordított JAR fájl része!
+;  - A ".gitignore" fájlban is aktualizálni kell a fájl elérési útvonalát,
+;    annak esetleges megváltoztatásakor!
+(def APP-BUILD-FILEPATH "resources/public/x.app-build.edn")
 
 ; @constant (string)
 (def INITIAL-APP-BUILD "0.0.1")

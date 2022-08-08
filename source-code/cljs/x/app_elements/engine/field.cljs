@@ -484,8 +484,8 @@
             on-enter   (r element/get-element-prop db field-id :on-enter)
             on-enter-props  {:key-code 13 :required? true :on-keydown on-enter}
             on-escape-props {:key-code 27 :required? true :on-keydown [:elements/empty-field! field-id]}]
-           {:dispatch-cond [emptiable? [:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]
-                            on-enter   [:environment/reg-keypress-event! ::on-enter-pressed  on-enter-props]]})))
+           {:dispatch-cond [emptiable? [:environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props]
+                            on-enter   [:environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
 
 (a/reg-event-fx
   :elements/remove-field-keypress-events!
@@ -495,8 +495,8 @@
   (fn [{:keys [db]} [_ field-id]]
       (let [emptiable? (r element/get-element-prop db field-id :emptiable?)
             on-enter   (r element/get-element-prop db field-id :on-enter)]
-           {:dispatch-cond [emptiable? [:environment/remove-keypress-event! ::on-escape-pressed]
-                            on-enter   [:environment/remove-keypress-event! ::on-enter-pressed]]})))
+           {:dispatch-cond [emptiable? [:environment/remove-keypress-event! ::on-ESC-pressed]
+                            on-enter   [:environment/remove-keypress-event! ::on-ENTER-pressed]]})))
 
 (a/reg-event-fx
   :elements/empty-field!

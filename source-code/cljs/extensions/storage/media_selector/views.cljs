@@ -100,7 +100,7 @@
                     :hover-color :highlight
                     :indent      {:horizontal :xxs :vertical :xxs}
                     :label       :select
-                    :on-click    []}])
+                    :on-click    [:storage.media-selector/save-selected-items!]}])
 
 (defn cancel-button
   []
@@ -120,10 +120,11 @@
 
 (defn header
   [selector-id]
-  [:<> [label-bar]
-       (if-let [first-data-received? @(a/subscribe [:item-browser/first-data-received? :storage.media-selector])]
-               [control-bar]
-               [elements/horizontal-separator {:size :xxl}])])
+  (let [autosaving? @(a/subscribe [:db/get-item [:storage :media-selector/meta-items :autosaving?]])]
+       (if-not autosaving? [:<> [label-bar]
+                                (if-let [first-data-received? @(a/subscribe [:item-browser/first-data-received? :storage.media-selector])]
+                                        [control-bar]
+                                        [elements/horizontal-separator {:size :xxl}])])))
 
 
 
@@ -144,9 +145,10 @@
 
 (defn footer
   [selector-id]
-  [elements/row ::footer
-                {:content          #'discard-selection-button
-                 :horizontal-align :right}])
+  (let [autosaving? @(a/subscribe [:db/get-item [:storage :media-selector/meta-items :autosaving?]])]
+       (if-not autosaving? [elements/row ::footer
+                                         {:content          #'discard-selection-button
+                                          :horizontal-align :right}])))
 
 
 
@@ -204,17 +206,34 @@
   (case mime-type "storage/directory" [directory-item browser-id item-dex media-item]
                                       [file-item      browser-id item-dex media-item]))
 
+(defn autosaving-label
+  []
+  (let [selected-item-count @(a/subscribe [:storage.media-selector/get-selected-item-count])]
+       [elements/label ::autosaving-label
+                       {:color   :muted
+                        :content {:content :n-items-selected :replacements [selected-item-count]}}]))
+
+(defn autosaving-indicator
+  []
+  [elements/column ::autosaving-indicator
+                   {:content             [autosaving-label]
+                    :horizontal-align    :center
+                    :stretch-orientation :vertical
+                    :vertical-align      :center}])
+
 (defn body
   [selector-id]
-  [item-browser/body :storage.media-selector
-                     {:default-item-id  core.config/ROOT-DIRECTORY-ID
-                      :default-order-by :modified-at/descending
-                      :item-path        [:storage :media-selector/browsed-item]
-                      :items-key        :items
-                      :items-path       [:storage :media-selector/downloaded-items]
-                      :label-key        :alias
-                      :list-element     #'media-item
-                      :path-key         :path}])
+  (let [autosaving? @(a/subscribe [:db/get-item [:storage :media-selector/meta-items :autosaving?]])]
+       (if autosaving? [autosaving-indicator]
+                       [item-browser/body :storage.media-selector
+                                          {:default-item-id  core.config/ROOT-DIRECTORY-ID
+                                           :default-order-by :modified-at/descending
+                                           :item-path        [:storage :media-selector/browsed-item]
+                                           :items-key        :items
+                                           :items-path       [:storage :media-selector/downloaded-items]
+                                           :label-key        :alias
+                                           :list-element     #'media-item
+                                           :path-key         :path}])))
 
 
 

@@ -11,7 +11,7 @@ monoset-environment/media/thumbnails/*
 !monoset-environment/media/storage/sample.png
 
 # config files
-monoset-environment/x.app-build.edn
+resources/public/x.app-build.edn
 monoset-environment/x.site-config.edn
 
 # mono-app

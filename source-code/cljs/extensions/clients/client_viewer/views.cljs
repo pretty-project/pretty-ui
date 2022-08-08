@@ -421,7 +421,7 @@
   []
   [:<> [client-header]
        [client-menu-bar]
-       [elements/horizontal-separator {:size :m}]
+       [elements/horizontal-separator {:size :s}]
        [client-name]
        [client-primary-contacts]
        [client-secondary-contacts]

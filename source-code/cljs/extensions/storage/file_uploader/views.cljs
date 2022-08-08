@@ -97,7 +97,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [dialog-id]
   [:<> [progress-list dialog-id]
-       [elements/horizontal-separator {:size :m}]])
+       [elements/horizontal-separator {:size :s}]])
 
 
 
@@ -175,7 +175,7 @@
   [uploader-id]
   [elements/column {:content [:<> [available-capacity-label uploader-id]
                                   [uploading-size-label     uploader-id]
-                                  [elements/horizontal-separator {:size :s}]]
+                                  [elements/horizontal-separator {:size :xs}]]
                     :horizontal-align :center}])
 
 (defn header-buttons
@@ -210,7 +210,7 @@
                                       :uri object-url :width :l}]
                  [elements/icon {:icon :insert_drive_file :indent {:horizontal :m :vertical :xl}}])
              [:div {:style {:flex-grow 1}}
-                   [elements/label {:content filename                :style {:color "#333" :line-height "18px"}}]
+                   [elements/label {:content filename                :style {:color "#333" :line-height "18px"} :indent {:right :xs}}]
                    [elements/label {:content filesize :font-size :xs :style {:color "#888" :line-height "18px"}}]]
              (if file-cancelled? [elements/icon {:icon :radio_button_unchecked :indent {:right :xs} :size :s}]
                                  [elements/icon {:icon :highlight_off          :indent {:right :xs} :size :s}])]))
@@ -232,7 +232,7 @@
                                    [file-item uploader-id file-dex]))]
               (reduce f [:<>] (range file-count)))))
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

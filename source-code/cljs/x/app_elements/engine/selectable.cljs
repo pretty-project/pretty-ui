@@ -274,7 +274,7 @@
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ _]]
       (let [on-escape-props {:key-code 27 :required? true :on-keyup [:ui/close-popup! :elements/select-options]}]
-           {:dispatch-n [[:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]]})))
+           {:dispatch-n [[:environment/reg-keypress-event! ::on-ESC-pressed on-escape-props]]})))
 
 (a/reg-event-fx
   :elements/remove-select-keypress-events!
@@ -282,4 +282,4 @@
   ;
   ; @param (keyword) input-id
   (fn [{:keys [db]} [_ input-id]]
-      {:dispatch-n [[:environment/remove-keypress-event! ::on-escape-pressed]]}))
+      {:dispatch-n [[:environment/remove-keypress-event! ::on-ESC-pressed]]}))

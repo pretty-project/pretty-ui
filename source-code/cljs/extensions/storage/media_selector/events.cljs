@@ -4,6 +4,7 @@
 
 (ns extensions.storage.media-selector.events
     (:require [extensions.storage.media-selector.subs :as media-selector.subs]
+              [mid-fruits.map                         :refer [dissoc-in]]
               [mid-fruits.vector                      :as vector]
               [x.app-core.api                         :as a :refer [r]]
               [x.app-ui.api                           :as ui]
@@ -32,6 +33,10 @@
       (r unselect-file!                     db file-item)
       (r select-file!                       db file-item)))
 
+(defn set-autosave-mode!
+  [db _]
+  (assoc-in db [:storage :media-selector/meta-items :autosaving?] true))
+
 (defn save-selected-items!
   [db _]
   ; XXX#8073
@@ -56,11 +61,14 @@
   ; A load-selector! függvény a {:value-path [...]} tulajdonságként átadott útvonalon található értéket, ...
   ; ... ha szükséges akkor vektor típusra alakítja.
   ; ... eltárolja az aktuálisan kiválasztott elemekként.
+  ;
+  ; A load-selector! függvény kitörli a media-selector meta-adatait (pl. {:autosaving? ...})
   (let [saved-selection (get-in db value-path)]
-       (cond-> db (vector? saved-selection) (assoc-in [:storage :media-selector/selected-items]  saved-selection)
-                  (some?   saved-selection) (assoc-in [:storage :media-selector/selected-items] [saved-selection])
-                  (nil?    saved-selection) (assoc-in [:storage :media-selector/selected-items] [])
-                  :store-selector-props!    (assoc-in [:storage :media-selector/selector-props] selector-props))))
+       (cond-> db (vector? saved-selection) (assoc-in  [:storage :media-selector/selected-items]  saved-selection)
+                  (some?   saved-selection) (assoc-in  [:storage :media-selector/selected-items] [saved-selection])
+                  (nil?    saved-selection) (assoc-in  [:storage :media-selector/selected-items] [])
+                  :store-selector-props!    (assoc-in  [:storage :media-selector/selector-props] selector-props)
+                  :reset-meta-items!        (dissoc-in [:storage :media-selector/meta-items]))))
 
 
 
