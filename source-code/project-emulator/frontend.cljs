@@ -1,10 +1,7 @@
 
 (ns frontend
-    (:require [extensions.clients.api]
-              [extensions.home-screen.api]
-              [extensions.settings.api]
+    (:require [extensions.settings.api]
               [extensions.storage.api]
-              [extensions.trader.api]
              ;[sente.api]
               [x.boot-loader.api]
               ; TEMP

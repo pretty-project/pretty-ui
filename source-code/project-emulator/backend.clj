@@ -1,11 +1,8 @@
 
 (ns backend
     (:require [backend.router.api]
-              [extensions.clients.api]
-              [extensions.home-screen.api]
               [extensions.settings.api]
               [extensions.storage.api]
-              [extensions.trader.api]
               [sente.api]
               [x.boot-loader.api]
               [shadow.cljs.devtools.server :as server]
