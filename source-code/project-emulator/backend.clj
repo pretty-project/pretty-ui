@@ -1,14 +1,10 @@
 
 (ns backend
     (:require [backend.router.api]
-              [extensions.settings.api]
-              [extensions.storage.api]
               [sente.api]
               [x.boot-loader.api]
               [shadow.cljs.devtools.server :as server]
-              [shadow.cljs.devtools.api    :as shadow]
-              ; TEMP
-              [extensions.playground.api])
+              [shadow.cljs.devtools.api    :as shadow])
     (:gen-class))
 
 

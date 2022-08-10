@@ -82,9 +82,9 @@
                    {:hover-color :highlight
                     :indent      {:vertical :xs}
                     :on-click    [:router/go-to! "/@app-home/settings"]
-                    :preset      :settings
+                    :preset      :settings}])
                     ; TEMP
-                    :disabled? true}])
+                    ;:disabled? true}])
 
 (defn- more-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
