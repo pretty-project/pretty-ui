@@ -10,8 +10,7 @@
               [settings.view-selector.helpers       :as view-selector.helpers]
               [plugins.view-selector.api            :as view-selector]
               [x.app-core.api                       :as a]
-              [x.app-elements.api                   :as elements]
-              [x.app-layouts.api                    :as layouts]))
+              [x.app-elements.api                   :as elements]))
 
 
 
@@ -60,7 +59,8 @@
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [surface-id]
-  [layouts/layout-a ::view
-                    {:body   #'body
-                     :header #'header}])
+  [surface-id])
+  ; WARNING! DEPRECATED! DO NOT USE!
+  ;[layouts/layout-a ::view
+  ;                  {:body   #'body
+  ;                   :header #'header])

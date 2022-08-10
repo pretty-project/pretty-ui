@@ -2,5 +2,5 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.api
-    (:require [playground.view-selector.lifecycles]))
+(ns forms.api
+    (:require [forms.lifecycles]))

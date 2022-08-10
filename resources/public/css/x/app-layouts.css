@@ -112,42 +112,6 @@
 
 
 
-/***** Form A *****/
-
-/* - A .x-form-a--form-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
- *   gap távolságok használata nélkül lehetséges.
- *
- *   Update x4.6.9 #17
- *   SE VÍZSZINTES SE FÜGGŐLEGES GAP NEM ALKALMAZHATÓ?
- *   VAGY EZ CSAK A FÜGGŐLEGESRE VONATKOZIK?
- *   A {grid-row-gap: ...} beállítás hozzáadva ...
- *
- * - Az .x-form-a--form-row sorokban felsorolt .x-form-a--form-block elemekben
- *   kell megoldalni az esztétikai távolságok beállítását! */
-
-
-.x-form-a--form-row {
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap }
-
-.x-form-a--form-column {
-  -max-width: 800px;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap }
-
-.x-form-a--form-block {
-  flex-grow: 1;
-  -padding: 12px }
-
-/***** Form A *****/
-
-
 
 /***** Header A *****/
 

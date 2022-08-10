@@ -4,8 +4,7 @@
 
 (ns plugins.item-viewer.sample
     (:require [plugins.item-viewer.api :as item-viewer]
-              [x.app-core.api          :as a]
-              [x.app-layouts.api       :as layouts]))
+              [x.app-core.api          :as a]))
 
 
 
@@ -30,11 +29,12 @@
 ;; -- A plugin használata "Layout A" felületen --------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn your-view
-  [surface-id]
-  [layouts/layout-a ::your-view
-                    {:body   [item-viewer/body   :your-viewer {:item-element [:div "Your item"]}]
-                     :footer [item-viewer/footer :your-viewer {}]}])
+  [surface-id])
+  ;[layouts/layout-a ::your-view
+  ;                  {:body   [item-viewer/body   :your-viewer {:item-element [:div "Your item"]}]
+  ;                   :footer [item-viewer/footer :your-viewer {}]])
 
 
 

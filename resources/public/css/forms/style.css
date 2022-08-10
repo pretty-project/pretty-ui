@@ -1,0 +1,35 @@
+
+
+/***** Forms *****/
+
+/* - A .forms--form-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
+ *   gap távolságok használata nélkül lehetséges.
+ *
+ *   Update x4.6.9 #17
+ *   SE VÍZSZINTES SE FÜGGŐLEGES GAP NEM ALKALMAZHATÓ?
+ *   VAGY EZ CSAK A FÜGGŐLEGESRE VONATKOZIK?
+ *   A {grid-row-gap: ...} beállítás hozzáadva ...
+ *
+ * - Az .forms--form-row sorokban felsorolt .forms--form-block elemekben
+ *   kell megoldalni az esztétikai távolságok beállítását! */
+
+.forms--form-row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap }
+
+.forms--form-column {
+  -max-width: 800px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap }
+
+.forms--form-block {
+  flex-grow: 1;
+  -padding: 12px }
+
+/***** Forms *****/

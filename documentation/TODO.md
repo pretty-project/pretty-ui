@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- css/x/app-layouts.css fájl sorsa
+
 - Az item-listerekben a kereso mezo jobb lenne ha disabled true allapotban lenne
   amig a tobbi elem is abban van, de akkor elvesziti a fokuszt, ha esetleg fokuszalt
   allapotban volt a request elkuldesekor (pl kereses)

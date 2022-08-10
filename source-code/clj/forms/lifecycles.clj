@@ -2,16 +2,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns playground.core.effects
-    (:require [x.app-core.api :as a]))
+(ns forms.lifecycles
+    (:require [x.server-core.api :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :playground/test!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:dispatch [:developer/test!]}))
+(a/reg-lifecycles!
+  ::lifecycles
+  {:on-server-boot [:environment/add-css! {:uri "/css/forms/style.css"}]})

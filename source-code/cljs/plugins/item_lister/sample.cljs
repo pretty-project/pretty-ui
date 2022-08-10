@@ -6,8 +6,7 @@
     (:require [plugins.item-editor.api :as item-editor]
               [plugins.item-lister.api :as item-lister]
               [x.app-core.api          :as a]
-              [x.app-elements.api      :as elements]
-              [x.app-layouts.api       :as layouts]))
+              [x.app-elements.api      :as elements]))
 
 
 
@@ -117,13 +116,14 @@
 ;; -- Plugin használata "Layout A" felületeen ---------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn your-view
-  [surface-id]
-  (let [description @(a/subscribe [:item-lister/get-description :my-lister])]
-       [layouts/layout-a ::your-view
-                         {:header [item-lister/header :my-lister {}]
-                          :body   [item-lister/body   :my-lister {:list-element [:div "My item"]}]
-                          :description description}]))
+  [surface-id])
+  ;(let [description @(a/subscribe [:item-lister/get-description :my-lister])]
+  ;     [layouts/layout-a ::your-view
+  ;                       {:header [item-lister/header :my-lister {}]
+  ;                        :body   [item-lister/body   :my-lister {:list-element [:div "My item"]}]
+  ;                        :description description])
 
 
 

@@ -6,8 +6,7 @@
     (:require [plugins.item-editor.api :as item-editor]
               [x.app-components.api    :as components]
               [x.app-core.api          :as a]
-              [x.app-elements.api      :as elements]
-              [x.app-layouts.api       :as layouts]))
+              [x.app-elements.api      :as elements]))
 
 
 
@@ -32,11 +31,12 @@
 ;; -- A plugin használata "Layout A" felületen --------------------------------
 ;; ----------------------------------------------------------------------------
 
+; WARNING! DEPRECATED! DO NOT USE!
 (defn your-view
-  [surface-id]
-  [layouts/layout-a ::your-view
-                    {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
-                     :footer [item-editor/footer :your-editor {}]}])
+  [surface-id])
+  ;[layouts/layout-a ::your-view
+  ;                  {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
+  ;                   :footer [item-editor/footer :your-editor {}]])
 
 
 
