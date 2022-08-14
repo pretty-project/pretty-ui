@@ -135,7 +135,7 @@
   [element]
   (math/round (+ (-> element     .-offsetWidth (/ 2))
                  (-> element     .getBoundingClientRect .-left)
-                 (-> js/document .-documentElement .-scrollLeft))))
+                 (-> js/document .-documentElement      .-scrollLeft))))
 
 (defn get-element-masspoint-y
   ; @param (DOM-element) element
@@ -147,7 +147,7 @@
   [element]
   (math/round (+ (-> element     .-offsetHeight (/ 2))
                  (-> element     .getBoundingClientRect .-left)
-                 (-> js/document .-documentElement .-scrollTop))))
+                 (-> js/document .-documentElement      .-scrollTop))))
 
 
 
@@ -164,7 +164,7 @@
   [element]
   (<= (+ (-> element     .-offsetWidth (/ 2))
          (-> element     .getBoundingClientRect .-left)
-         (-> js/document .-documentElement .-scrollLeft))
+         (-> js/document .-documentElement      .-scrollLeft))
       (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-right?
@@ -177,7 +177,7 @@
   [element]
   (> (+ (-> element     .-offsetWidth (/ 2))
         (-> element     .getBoundingClientRect .-left)
-        (-> js/document .-documentElement .-scrollLeft))
+        (-> js/document .-documentElement      .-scrollLeft))
      (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-top?
@@ -190,7 +190,7 @@
   [element]
   (<= (+ (-> element     .-offsetHeight (/ 2))
          (-> element     .getBoundingClientRect .-left)
-         (-> js/document .-documentElement .-scrollTop))
+         (-> js/document .-documentElement      .-scrollTop))
       (-> js/window .-innerWidth (/ 2))))
 
 (defn element-on-viewport-bottom?
@@ -203,7 +203,7 @@
   [element]
   (> (+ (-> element     .-offsetHeight (/ 2))
         (-> element     .getBoundingClientRect .-left)
-        (-> js/document .-documentElement .-scrollTop))
+        (-> js/document .-documentElement      .-scrollTop))
      (-> js/window .-innerWidth (/ 2))))
 
 

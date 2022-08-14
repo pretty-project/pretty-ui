@@ -7,6 +7,7 @@
               [plugins.item-viewer.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
+              [x.app-components.api                :as components]
               [x.app-core.api                      :as a]))
 
 
@@ -26,19 +27,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
-  [_]
-  ; TEMP
-  [:div {:style {:width "100%"}}
-;        [:div {:style {:display "flex" :width "100%" :grid-row-gap "24px" :padding "12px 0 48px 0" :flex-direction "column" :align-items :center}}]
-;              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "60px" :width "60px"}}]]
-;              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "200px"}}]]
-        [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content :center}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "100%"}}]]
-        [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content :center}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px" :width "100%"}}]]
-        [:div {:style {:display "flex" :width "100%" :padding "12px 0" :justify-content "center"}}
-              [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "72px" :width "100%"}}]]])
-  ; TEMP
+  [viewer-id]
+  (if-let [ghost-element @(a/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
+          [components/content ghost-element]))
 
 
 
@@ -72,6 +63,7 @@
   ;    Default: false
   ;    Only w/ {:label-key ...}
   ;   :default-item-id (string)
+  ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :item-element (metamorphic-content)

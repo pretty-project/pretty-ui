@@ -263,7 +263,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::close-icon-button
-                        {:on-click [:ui/close-popup! :views.app-menu/view]
+                        {:keypress {:key-code 27}
+                         :on-click [:ui/close-popup! :views.app-menu/view]
                          :preset   :close}])
 
 (defn- header

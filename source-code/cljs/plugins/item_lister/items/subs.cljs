@@ -88,6 +88,20 @@
   (let [disabled-items (r core.subs/get-meta-item db lister-id :disabled-items)]
        (vector/contains-item? disabled-items item-dex)))
 
+(defn item-last?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r items.subs/item-last? db :my-lister 0)
+  ;
+  ; @return (boolean)
+  [db [_ lister-id item-dex]]
+  (let [downloaded-item-count (r core.subs/get-downloaded-item-count db lister-id)]
+       (= downloaded-item-count (inc item-dex))))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -226,6 +240,13 @@
 ; @usage
 ;  [:item-lister/item-disabled? :my-lister 0]
 (a/reg-sub :item-lister/item-disabled? item-disabled?)
+
+; @param (keyword) lister-id
+; @param (integer) item-dex
+;
+; @usage
+;  [:item-lister/item-last? :my-lister 0]
+(a/reg-sub :item-lister/item-last? item-last?)
 
 ; @param (keyword) lister-id
 ; @param (integer) item-dex

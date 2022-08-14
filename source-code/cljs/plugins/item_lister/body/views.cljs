@@ -8,6 +8,7 @@
               [plugins.item-lister.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
+              [x.app-components.api                :as components]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
               [x.app-tools.api                     :as tools]
@@ -36,17 +37,11 @@
   ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
   ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
   ; villanjon fel!
-  (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
-        data-received?        @(a/subscribe [:item-lister/data-received?        lister-id])]
-       ; TEMP
-       (if-not (and all-items-downloaded? data-received?) ; XXX#0499
-               [:div {:style {:width "100%" :grid-row-gap "24px" :display "flex" :flex-direction "column" :padding "24px 12px"}}
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]
-                     [:div {:style {:background "var( --hover-color-highlight )" :border-radius "var(--border-radius-s)" :height "24px"}}]])))
-       ; TEMP
+  (if-let [ghost-element @(a/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
+          (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
+                data-received?        @(a/subscribe [:item-lister/data-received?        lister-id])]
+               (if-not (and all-items-downloaded? data-received?)
+                       [components/content ghost-element]))))
 
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,6 +137,7 @@
   ;  {:default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :items-path (vector)(opt)

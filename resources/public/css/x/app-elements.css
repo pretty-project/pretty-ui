@@ -2845,6 +2845,8 @@ button.x-card:focus,
  *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
  *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
  *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
+/* TODO 
+ * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
 .x-menu-bar--menu-item {
   align-items: center;
   color: var( --color-highlight );
@@ -2859,11 +2861,13 @@ button.x-card:focus,
   padding: 0 12px }
 
 /* WARNING! DEPRECATED! DO NOT USE! */
+/* 2022.08.12 - Visszakapcsoltam ennek az indicatornak a megjelenítését.
+ * Van, ahol tényleg nem jó, de van, ahova szükséges! */
 .x-menu-bar--menu-item[data-active="true"]::after {
   background-color: var( --border-color-primary );
   bottom: 0;
   content: '';
-  content: none;
+  -content: none;
   height: 2px;
   left: 0;
   position: absolute;

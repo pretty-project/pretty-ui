@@ -170,4 +170,4 @@
   ([element offset]
    (-> js/document .-documentElement .-scrollTop
        (set! (+ offset (-> element     .getBoundingClientRect .-top)
-                       (-> js/document .-documentElement .-scrollTop))))))
+                       (-> js/document .-documentElement      .-scrollTop))))))

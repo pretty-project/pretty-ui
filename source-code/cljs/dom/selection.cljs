@@ -38,7 +38,7 @@
   (.-selectionStart element))
 
 
-  
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@
   ; @param (integer) selection-end
   ;
   ; @usage
-  ;  (dom/set-selection-range! my-element 2 10})
+  ;  (dom/set-selection-range! my-element 2 10)
   ;
   ; @return (?)
   [element selection-start selection-end]
