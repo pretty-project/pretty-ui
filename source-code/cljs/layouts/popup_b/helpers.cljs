@@ -2,23 +2,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.ghost.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+(ns layouts.popup-b.helpers)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ghost-props-prototype
+(defn layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) ghost-props
+  ; @param (keyword) popup-id
+  ; @param (map) layout-props
+  ;  {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:border-radius (keyword)
-  ;   :height (keyword)}
-  [ghost-props]
-  (merge {:border-radius :s
-          :height        :s}
-         (param ghost-props)))
+  ;  {:style (map)}
+  [_ {:keys [style]}]
+  {:style style})

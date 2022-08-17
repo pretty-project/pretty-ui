@@ -12,6 +12,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn layout-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) layout-props
+  ;  {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ;  {:style (map)}
+  [_ {:keys [style]}]
+  {:style style})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn title-sensor-did-mount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -46,11 +63,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn header-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-SHADOW-VISIBLE? false)
                                                (reset! state/HEADER-SHADOW-VISIBLE? true)))]
          (environment/setup-intersection-observer! "surface-a--header-sensor" f)))
 
 (defn header-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (environment/remove-intersection-observer! "surface-a--header-sensor"))

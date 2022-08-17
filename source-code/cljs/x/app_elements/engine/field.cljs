@@ -219,12 +219,11 @@
   ;
   ; @param (map) field-props
   ;  {:field-empty? (boolean)
-  ;   :focused? (boolean)
   ;   :placeholder (metamorphic-content)}
   ;
   ; @return (boolean)
-  [{:keys [field-empty? focused? placeholder]}]
-  (and placeholder field-empty? (not focused?)))
+  [{:keys [field-empty? placeholder]}]
+  (and placeholder field-empty?))
 
 (defn on-blur-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -472,7 +471,7 @@
                                 [on-focus-event [:elements/reg-field-keypress-events! field-id]])
                :db         (as-> db % (r input/init-input! % field-id)
                                       (r field-focused     % field-id))}
-              {:db         (r input/init-input! db field-id)})))
+              {:db         (as-> db % (r input/init-input! % field-id))})))
 
 (a/reg-event-fx
   :elements/reg-field-keypress-events!

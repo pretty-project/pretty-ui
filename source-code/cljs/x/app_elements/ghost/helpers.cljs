@@ -15,11 +15,13 @@
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
-  ;  {}
+  ;  {:height (keyword)}
   ;
   ; @return (map)
-  ;  {}
-  [ghost-id {:keys [height] :as ghost-props}]
+  ;  {:data-border-radius (keyword)
+  ;   :data-height (keyword)}
+  [ghost-id {:keys [border-radius height] :as ghost-props}]
   (merge (engine/element-default-attributes ghost-id ghost-props)
          (engine/element-indent-attributes  ghost-id ghost-props)
-         {:data-height height}))
+         {:data-border-radius border-radius
+          :data-height        height}))

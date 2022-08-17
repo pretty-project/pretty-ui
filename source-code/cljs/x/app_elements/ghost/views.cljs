@@ -24,7 +24,10 @@
 (defn element
   ; @param (keyword)(opt) ghost-id
   ; @param (map) ghost-props
-  ;  {:class (keyword or keywords in vector)(opt)
+  ;  {:border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :s
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

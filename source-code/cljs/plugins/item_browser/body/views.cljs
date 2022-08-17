@@ -54,6 +54,7 @@
   ;   :default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-actions (keywords in vector)(opt)
   ;    [:delete, :duplicate]
   ;   :item-path (vector)(opt)

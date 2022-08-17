@@ -21,6 +21,9 @@
   ; @param (map) sensor-props
   ;  {:offset (px)(opt)
   ;   :title (metamorphic-content)}
+  ;
+  ; @usage
+  ;  [surface-a/title-sensor {...}]
   [{:keys [offset] :as sensor-props}]
   (reagent/lifecycles {:component-did-mount    (fn [] (helpers/title-sensor-did-mount-f sensor-props))
                        :component-will-unmount (fn [] (helpers/title-sensor-will-unmount-f))
@@ -34,11 +37,13 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- header-title
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [react/mount-animation {:mounted? @state/HEADER-TITLE-VISIBLE?}
                          [:div#surface-a--header-title (components/content @state/HEADER-TITLE)]])
 
 (defn- header-shadow
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [react/mount-animation {:mounted? @state/HEADER-SHADOW-VISIBLE?}
                          [:div#surface-a--header-shadow]])
@@ -54,10 +59,12 @@
   (if-let [debug-mode-detected? @(a/subscribe [:core/debug-mode-detected?])]
           (let [db-write-count @(a/subscribe [:developer/get-db-write-count])]
                [elements/icon-button ::dev-tools-icon-button
-                                     {:icon   :auto_fix_high
-                                      :preset :default
-                                      :on-click [:developer/render-developer-tools!]
-                                      :keypress {:key-code 77}}])))
+                                     {:border-radius :s
+                                      :hover-color   :highlight
+                                      :icon          :auto_fix_high
+                                      :preset        :default
+                                      :on-click      [:developer/render-developer-tools!]
+                                      :keypress      {:key-code 77}}])))
                                      ;:label db-write-count
 
 
@@ -69,9 +76,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::menu-icon-button
-                        {:border-radius :xxl
-                         ;:hover-color   :highlight
-                         ;:indent        {:all :xxs}
+                        {:border-radius :s
+                         :hover-color   :highlight
                          :on-click      [:views/render-app-menu!]
                          :preset        :user-menu}])
 
@@ -84,9 +90,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::go-home-icon-button
-                        {:border-radius :xxl
-                         ;:hover-color   :highlight
-                         ;:indent        {:all :xxs}
+                        {:border-radius :s
+                         :hover-color   :highlight
                          :on-click      [:router/go-home!]
                          :preset        :apps}])
                         ;:badge-color :secondary
@@ -96,7 +101,10 @@
   []
   (let [parent-route @(a/subscribe [:router/get-current-route-parent])]
        [elements/icon-button ::go-up-icon-button
-                             {:preset :back :on-click [:router/go-to! parent-route]}]))
+                             {:border-radius :s
+                              :hover-color   :highlight
+                              :on-click      [:router/go-to! parent-route]
+                              :preset        :back}]))
 
 (defn at-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -120,6 +128,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- header-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div#surface-a--header [:div#surface-a--header-content [header-shadow]
                                                           [:div.surface-a--header-block [navigation-icon-button]]
@@ -128,18 +137,32 @@
                                                                                              [menu-icon-button]]]]])
 
 (defn- header
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
                        :component-will-unmount (fn [] (helpers/header-will-unmount-f))
                        :reagent-render         (fn [] [header-structure])}))
 
-(defn surface-a
+(defn- surface-a
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) layout-props
+  ;  {:content (metamorphic-content)}
   [surface-id {:keys [content] :as layout-props}]
-  [:div#surface-a [:div#surface-a--header-sensor]
+  [:div#surface-a (helpers/layout-attributes surface-id layout-props)
+                  [:div#surface-a--header-sensor]
                   [:div#surface-a--body [:div#surface-a--body-content [components/content content]]]
                   [header]])
 
 (defn layout
+  ; @param (keyword) surface-id
+  ; @param (map) layout-props
+  ;  {:content (metamorphic-content)
+  ;   :style (map)(opt)}
+  ;
+  ; @usage
+  ;  [surface-a/layout :my-surface {...}]
   [surface-id layout-props]
   (let [] ;layout-props (prototypes/layout-props-prototype layout-props)
        [surface-a surface-id layout-props]))

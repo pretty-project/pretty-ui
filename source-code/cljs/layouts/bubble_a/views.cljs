@@ -2,7 +2,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns layouts.popup-a.views
+(ns layouts.bubble-a.views
     (:require [layouts.popup-a.helpers    :as helpers]
               [layouts.popup-a.prototypes :as prototypes]
               [react.api                  :as react]
@@ -14,27 +14,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- footer-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
-  ; {:footer (metamorphic-content)}
-  [popup-id {:keys [footer]}]
-  [:div.popup-a--footer {:data-shadow-visible @layouts.popup-a.state/FOOTER-SHADOW-VISIBLE?}
-                        [:div.popup-a--footer-content [components/content popup-id footer]]])
-
-(defn- footer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
-  ; {:footer (metamorphic-content)}
-  [popup-id {:keys [footer] :as layout-props}]
-  (if footer (reagent/lifecycles {:component-did-mount    (fn [] (helpers/footer-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [] (helpers/footer-will-unmount-f popup-id))
-                                  :reagent-render         (fn [] [footer-structure popup-id layout-props])})))
 
 (defn- body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,27 +46,6 @@
                                                   [components/content popup-id body]
                                                   (if footer [:div {:id (a/dom-value popup-id "footer-sensor")}])]])
 
-(defn- header-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
-  ; {:header (metamorphic-content)}
-  [popup-id {:keys [header]}]
-  [:div.popup-a--header {:data-shadow-visible @layouts.popup-a.state/HEADER-SHADOW-VISIBLE?}
-                        [:div.popup-a--header-content [components/content popup-id header]]])
-
-(defn- header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
-  ; {:header (metamorphic-content)(opt)}
-  [popup-id {:keys [header] :as layout-props}]
-  (if header (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f    popup-id))
-                                  :component-will-unmount (fn [] (helpers/header-will-unmount-f popup-id))
-                                  :reagent-render         (fn [] [header-structure popup-id layout-props])})))
-
 (defn- layout-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -98,7 +56,7 @@
                                                              [header popup-id layout-props]]
                                   [footer popup-id layout-props]])
 
-(defn- popup-a
+(defn- bubble-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -112,8 +70,8 @@
 (defn layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
+  ; @param (keyword) bubble-id
+  ; @param (map) bubble-props
   ; {:body (metamorphic-content)
   ;  :close-by-cover? (boolean)(opt)
   ;   Default: true

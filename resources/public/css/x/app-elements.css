@@ -411,7 +411,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="muted"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="muted"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
   background-color: var( --hover-color-muted ) }
 
@@ -474,7 +474,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="highlight"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="highlight"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
   background-color: var( --hover-color-highlight ) }
 
@@ -560,7 +560,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="primary"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="primary"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-primary ) }
 
@@ -635,7 +635,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="secondary"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="secondary"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-secondary ) }
 
@@ -710,7 +710,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="success"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="success"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
   background-color: var( --hover-color-success ) }
 
@@ -784,7 +784,7 @@ button.x-card:focus,
 /* XXX#4005 */
 .x-button[data-hover-color="warning"][data-disabled="false"]      .x-button--body:hover,
 .x-card[data-hover-color="warning"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover,
+.x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
   background-color: var( --hover-color-warning ) }
 
@@ -1554,7 +1554,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-xxs ) }
 
 .x-card[data-border-radius="xxs"] .x-card--body,
-.x-icon-button[data-border-radius="xxs"] .x-icon-button--body,
+.x-ghost[data-border-radius="xxs"] .x-ghost--body,
+.x-icon-button[data-border-radius="xxs"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="xxs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxs"] .x-toggle--body {
   border-radius: var( --border-radius-xxs ) }
@@ -1568,7 +1569,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-xs ) }
 
 .x-card[data-border-radius="xs"] .x-card--body,
-.x-icon-button[data-border-radius="xs"] .x-icon-button--body,
+.x-ghost[data-border-radius="xs"] .x-ghost--body,
+.x-icon-button[data-border-radius="xs"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="xs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xs"] .x-toggle--body {
   border-radius: var( --border-radius-xs ) }
@@ -1582,7 +1584,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-s ) }
 
 .x-card[data-border-radius="s"] .x-card--body,
-.x-icon-button[data-border-radius="s"] .x-icon-button--body,
+.x-ghost[data-border-radius="s"] .x-ghost--body,
+.x-icon-button[data-border-radius="s"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="s"] .x-thumbnail--body,
 .x-toggle[data-border-radius="s"] .x-toggle--body {
   border-radius: var( --border-radius-s ) }
@@ -1596,7 +1599,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-m ) }
 
 .x-card[data-border-radius="m"] .x-card--body,
-.x-icon-button[data-border-radius="m"] .x-icon-button--body,
+.x-ghost[data-border-radius="m"] .x-ghost--body,
+.x-icon-button[data-border-radius="m"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="m"] .x-thumbnail--body,
 .x-toggle[data-border-radius="m"] .x-toggle--body {
   border-radius: var( --border-radius-m ) }
@@ -1610,7 +1614,8 @@ button.x-card:focus,
   padding: 0 var( --border-radius-l ) }
 
 .x-card[data-border-radius="l"] .x-card--body,
-.x-icon-button[data-border-radius="l"] .x-icon-button--body,
+.x-ghost[data-border-radius="l"] .x-ghost--body,
+.x-icon-button[data-border-radius="l"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="l"] .x-thumbnail--body,
 .x-toggle[data-border-radius="l"] .x-toggle--body {
   border-radius: var( --border-radius-l ) }
@@ -1623,7 +1628,8 @@ button.x-card:focus,
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
 
 .x-card[data-border-radius="xl"] .x-card--body,
-.x-icon-button[data-border-radius="xl"] .x-icon-button--body,
+.x-ghost[data-border-radius="xl"] .x-ghost--body,
+.x-icon-button[data-border-radius="xl"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="xl"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xl"] .x-toggle--body {
   border-radius: var( --border-radius-xl ) }
@@ -1636,7 +1642,8 @@ button.x-card:focus,
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
 
 .x-card[data-border-radius="xxl"] .x-card--body,
-.x-icon-button[data-border-radius="xxl"] .x-icon-button--body,
+.x-ghost[data-border-radius="xxl"] .x-ghost--body,
+.x-icon-button[data-border-radius="xxl"] .x-icon-button--body::before,
 .x-thumbnail[data-border-radius="xxl"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxl"] .x-toggle--body {
   border-radius: var( --border-radius-xxl ) }
@@ -2614,8 +2621,7 @@ button.x-card:focus,
 /***** Ghost *****/
 
 .x-ghost--body {
-  background-color: var( --background-color-highlight );
-  border-radius: var( --border-radius-s ) }
+  background-color: var( --background-color-highlight ) }
 
 /***** Ghost *****/
 
@@ -2779,6 +2785,21 @@ button.x-card:focus,
 
 /*** Icon-button body ***/
 
+/*** Icon-button hover ***/
+
+.x-icon-button--body::before {
+  /* Azért 36px magas és széles a hover-background az ikon-button elemen,
+   * mert így a 48px magas és széles érzékelési terület szélétől 6px távolságra
+   * van, ami megegyezik a legkisebb indent méretével (XXS indent: 6px) */
+  content: '';
+  height: 36px;
+  left: 6px;
+  position: absolute;
+  top: 6px;
+  width: 36px }
+
+/*** Icon-button hover ***/
+
 /*** Icon-button icon ***/
 
 .x-icon-button--icon {
@@ -2795,6 +2816,13 @@ button.x-card:focus,
    * megváltozását okozná. */
   height: var( --icon-size-default );
   overflow: hidden;
+
+  /* Az .x-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
+   * eltakarná az ikont, mert a pszeudo-elem a {position: absolute} beállítása miatt felette jelenne meg */
+  left: 12px;
+  position: absolute;
+  top: 12px;
+
   width: var( --icon-size-default ) }
 
 /*** Icon-button icon ***/
@@ -2845,7 +2873,7 @@ button.x-card:focus,
  *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
  *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
  *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
-/* TODO 
+/* TODO
  * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
 .x-menu-bar--menu-item {
   align-items: center;
@@ -2869,9 +2897,9 @@ button.x-card:focus,
   content: '';
   -content: none;
   height: 2px;
-  left: 0;
+  left: 25%;
   position: absolute;
-  width: 100% }
+  width: 50% }
 /* WARNING! DEPRECATED! DO NOT USE! */
 
 .x-menu-bar--menu-item[data-active="true"] {

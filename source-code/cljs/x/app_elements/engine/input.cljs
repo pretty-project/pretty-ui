@@ -347,7 +347,7 @@
 ; new version
 (defn use-initial-value!
   [db [_ input-id]]
-  ; - Ha a value-path útvonalon található érték, akkor NEM kerül felülírásra!
+  ; - Ha a value-path útvonalon található bármilyen érték, akkor NEM kerül felülírásra!
   ; - Az initial-value értéke lehet false, ezért szükséges a (some? ...) függvénnyel vizsgálni!
   (let [value-path     (get-in db [:elements/primary :data-items input-id :value-path])
         initial-value  (get-in db [:elements/primary :data-items input-id :initial-value])

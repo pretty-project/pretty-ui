@@ -33,9 +33,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/icon-button ::close-icon-button
-                        {:keypress {:key-code 27 :required? true}
-                         :on-click [:ui/close-popup! :developer.developer-tools/view]
-                         :preset   :close}])
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         :keypress      {:key-code 27 :required? true}
+                         :on-click      [:ui/close-popup! :developer.developer-tools/view]
+                         :preset        :close}])
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
