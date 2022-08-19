@@ -1,4 +1,13 @@
 
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
 /*** Position ***/
 /* A mozgató animációk 100vh és 100vw érték helyett 110vh és 110vw értékekkel
  * mozgatják az elemet, hogy az adott elem esetleges border és más kiegészítő
