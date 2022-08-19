@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- license.txt-t megirni
+
 - css/x/app-layouts.css fájl sorsa
 
 - Az item-listerekben a kereso mezo jobb lenne ha disabled true allapotban lenne

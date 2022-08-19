@@ -1,4 +1,14 @@
 
+/***** User select *****/
+
+#surface-a--header-title {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none }
+
+/***** User select *****/
+
 /* */
 
 #surface-a {
