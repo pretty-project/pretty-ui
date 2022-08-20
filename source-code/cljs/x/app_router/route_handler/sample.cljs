@@ -85,3 +85,19 @@
   :go-my-back!
   ; TODO ...
   [:router/go-back!])
+
+
+
+;; -- Az útvonal lecserélése hatások nélkül -----------------------------------
+;; ----------------------------------------------------------------------------
+
+; - A [:router/change-to! ...] esemény lecseréli az aktuálisan használt útvonalat,
+;   a paraméterként kapott útvonalra, az útvonalhoz rendelt események figyelmen
+;   kívül hagyásával.
+;
+; - A [:router/change-to! ...] esemény az útvonal-kezelőt {:change-mode? true}
+;   állapotba lépteti, amely állapotban az útvonalkezelő felismeri, hogy
+;   az útvonalhoz rendelt események figyelmen kívül hagyhatók.
+(a/reg-event-fx
+  :change-my-route!
+  [:router/change-route! "/@app-home/my-route"])
