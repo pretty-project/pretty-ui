@@ -1,4 +1,17 @@
 
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns mongo-db.api
     (:require [mongo-db.connection]
               [mongo-db.actions    :as actions]
@@ -22,6 +35,7 @@
 (def upsert-document!      actions/upsert-document!)
 (def upsert-documents!     actions/upsert-documents!)
 (def apply-document!       actions/apply-document!)
+(def apply-documents!      actions/apply-documents!)
 (def remove-document!      actions/remove-document!)
 (def remove-documents!     actions/remove-documents!)
 (def remove-all-documents! actions/remove-all-documents!)

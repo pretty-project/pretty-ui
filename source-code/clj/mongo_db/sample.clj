@@ -122,6 +122,17 @@
 
 
 
+;; -- Függvény alkalmazása az összes dokumentumon (applying) ------------------
+;; ----------------------------------------------------------------------------
+
+; A függvény visszatérési értéke sikeres írás esetén a módosított dokumentumok.
+(defn apply-my-documents!
+  []
+  (mongo-db/apply-documents! "my_collection" #(merge % {:namespace/my-keyword :my-value})
+                                             {:prototype-f #(update-prototype %)}))
+
+
+
 ;; -- Dokumentum eltávolítása (removing) --------------------------------------
 ;; ----------------------------------------------------------------------------
 

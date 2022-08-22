@@ -1,4 +1,17 @@
 
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns mongo-db.prototypes
     (:require [mid-fruits.candy   :refer [param]]
               [mid-fruits.time    :as time]

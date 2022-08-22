@@ -1,4 +1,17 @@
 
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns mongo-db.actions
     (:require monger.joda-time
               [mid-fruits.candy    :refer [return]]
@@ -231,8 +244,8 @@
    (save-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (as-> document % (checking/save-input %)
-                                      (preparing/save-input collection-name % options)
+   (if-let [document (as-> document % (checking/save-input   %)
+                                      (preparing/save-input  collection-name % options)
                                       (adaptation/save-input %))]
            (if-let [result (save-and-return! collection-name document)]
                    (adaptation/save-output result)))))
@@ -381,8 +394,8 @@
    (upsert-documents! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (as-> document % (checking/upsert-input %)
-                                               (preparing/upsert-input collection-name % options)
+   (boolean (if-let [document (as-> document % (checking/upsert-input   %)
+                                               (preparing/upsert-input  collection-name % options)
                                                (adaptation/upsert-input %))]
                     (if-let [query (-> query checking/find-query adaptation/find-query)]
                             ; WARNING! DO NOT USE!
@@ -415,6 +428,33 @@
                    (if-let [document (-> document f adaptation/save-input)]
                            (let [result (save-and-return! collection-name document)]
                                 (adaptation/save-output result)))))))
+
+
+
+;; -- Applying documents ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn apply-documents!
+  ; @param (string) collection-name
+  ; @param (function) f
+  ; @param (map)(opt) options
+  ;  {:prototype-f (function)(opt)}
+  ;
+  ; @usage
+  ;  (mongo-db/apply-document! "my_collection" #(assoc % :color "Blue") {...})
+  ;
+  ; @return (namespaced maps in vector)
+  ([collection-name f]
+   (apply-documents! collection-name f {}))
+
+  ([collection-name f options]
+   (if-let [collection (reader/get-collection collection-name)]
+           (letfn [(fi [result document]
+                       (if-let [document (f document)]
+                               (let [document (save-document! collection-name document options)]
+                                    (conj result document))
+                               (return result)))]
+                  (reduce fi [] collection)))))
 
 
 

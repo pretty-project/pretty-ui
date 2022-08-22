@@ -48,11 +48,9 @@
   ;
   ; @return (map)
   ;  {:color (keyword or string)
-  ;   :layout (keyword)
   ;   :strength (px)}
   [line-props]
   (merge {:color    :muted
-          :layout   :fit
           :strength 1}
          (param line-props)))
 
@@ -76,9 +74,6 @@
   ;  {:color (keyword or string)(opt)
   ;    :highlight, :muted, :primary, :secondary
   ;    Default: :muted
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :fit
   ;   :strength (px)(opt)
   ;    Default: 1}
   ;

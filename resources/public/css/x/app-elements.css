@@ -2642,13 +2642,6 @@ button.x-card:focus,
 .x-horizontal-line--body {
   width: 100% }
 
-.x-horizontal-line[data-layout="row"] {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 48px;
-  justify-content: center }
-
 /***** Horizontal line *****/
 
 
@@ -2902,13 +2895,14 @@ button.x-card:focus,
  * Van, ahol tényleg nem jó, de van, ahova szükséges! */
 .x-menu-bar--menu-item[data-active="true"]::after {
   background-color: var( --border-color-primary );
+  -border-radius: 1.5px;
   bottom: 0;
   content: '';
-  -content: none;
-  height: 2px;
-  left: 25%;
+  content: none;
+  height: 1px;
+  left: 30%;
   position: absolute;
-  width: 50% }
+  width: 40% }
 /* WARNING! DEPRECATED! DO NOT USE! */
 
 .x-menu-bar--menu-item[data-active="true"] {
