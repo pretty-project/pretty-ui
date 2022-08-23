@@ -50,22 +50,7 @@
               [x.mid-dictionary.books.units         :as books.units]
               [x.mid-dictionary.books.user          :as books.user]
               [x.mid-dictionary.books.view          :as books.view]
-              [x.mid-dictionary.books.website       :as books.website]
-              [x.mid-dictionary.extension-books.actions      :as extension-books.actions]
-              [x.mid-dictionary.extension-books.calendar     :as extension-books.calendar]
-              [x.mid-dictionary.extension-books.charts       :as extension-books.charts]
-              [x.mid-dictionary.extension-books.clients      :as extension-books.clients]
-              [x.mid-dictionary.extension-books.devices      :as extension-books.devices]
-              [x.mid-dictionary.extension-books.employees    :as extension-books.employees]
-              [x.mid-dictionary.extension-books.inventories  :as extension-books.inventories]
-              [x.mid-dictionary.extension-books.jobs         :as extension-books.jobs]
-              [x.mid-dictionary.extension-books.machines     :as extension-books.machines]
-              [x.mid-dictionary.extension-books.price-quotes :as extension-books.price-quotes]
-              [x.mid-dictionary.extension-books.products     :as extension-books.products]
-              [x.mid-dictionary.extension-books.services     :as extension-books.services]
-              [x.mid-dictionary.extension-books.storage      :as extension-books.storage]
-              [x.mid-dictionary.extension-books.vehicles     :as extension-books.vehicles]
-              [x.mid-dictionary.extension-books.websites     :as extension-books.websites]))
+              [x.mid-dictionary.books.website       :as books.website]))
 
 
 
@@ -110,19 +95,4 @@
                   books.units/BOOK
                   books.user/BOOK
                   books.view/BOOK
-                  books.website/BOOK
-                  extension-books.actions/BOOK
-                  extension-books.calendar/BOOK
-                  extension-books.charts/BOOK
-                  extension-books.clients/BOOK
-                  extension-books.devices/BOOK
-                  extension-books.employees/BOOK
-                  extension-books.inventories/BOOK
-                  extension-books.jobs/BOOK
-                  extension-books.machines/BOOK
-                  extension-books.price-quotes/BOOK
-                  extension-books.products/BOOK
-                  extension-books.services/BOOK
-                  extension-books.storage/BOOK
-                  extension-books.vehicles/BOOK
-                  extension-books.websites/BOOK))
+                  books.website/BOOK))

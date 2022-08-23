@@ -20,14 +20,17 @@
 
 
 
-/* */
+/* Surface A */
 
 #surface-a {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   width: 100% }
 
-/* */
+/* Surface A */
 
-/* */
+/* Header */
 
 #surface-a--header {
   display: flex;
@@ -82,9 +85,9 @@
 #surface-a--title-sensor {
   position: absolute }
 
-/* */
+/* Header */
 
-/* */
+/* Body */
 
 #surface-a--body {
   display: flex;
@@ -102,4 +105,20 @@
   -padding-right: 12px;
   width: 100% }
 
-/* */
+/* Body */
+
+/* Footer */
+
+#surface-a--footer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-end }
+
+#surface-a--footer-content {
+  display: flex;
+  max-width: var( --content-width-l );
+  width: 100% }
+
+/* Footer */

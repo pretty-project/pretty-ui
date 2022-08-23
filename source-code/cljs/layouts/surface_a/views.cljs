@@ -132,6 +132,22 @@
         :far-from-home
          [go-up-icon-button]))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- logout-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::logout-button
+                   {:color     :muted
+                    :font-size :xs
+                    :label     :logout!}])
+
+(defn- footer
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [:div#surface-a--footer [:div#surface-a--footer-content [logout-button]]])
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -153,6 +169,11 @@
                        :component-will-unmount (fn [] (helpers/header-will-unmount-f))
                        :reagent-render         (fn [] [header-structure])}))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- surface-a
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -163,7 +184,8 @@
   [:div#surface-a (helpers/layout-attributes surface-id layout-props)
                   [:div#surface-a--header-sensor]
                   [:div#surface-a--body [:div#surface-a--body-content [components/content content]]]
-                  [header]])
+                  [header]
+                  [footer]])
 
 (defn layout
   ; @param (keyword) surface-id

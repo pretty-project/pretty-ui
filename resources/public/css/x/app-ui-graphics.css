@@ -8,6 +8,20 @@
 
 
 
+ /***** User select *****/
+
+ .x-app-title,
+ .x-loading-animation {
+   /* user-select not supperted properly in all browsers */
+   -ms-user-select: none;
+   -moz-user-select: none;
+   -webkit-user-select: none;
+   user-select: none }
+
+ /***** User select *****/
+
+
+
 /***** App logo *****/
 
 .x-app-logo {

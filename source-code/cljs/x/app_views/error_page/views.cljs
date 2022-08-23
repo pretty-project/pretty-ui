@@ -70,9 +70,21 @@
   ; @param (map) content-props
   [_ _]
   [elements/button ::go-back-button
-                   {:indent   {:top :m}
-                    :label    :back!
-                    :on-click [:router/go-back!]}])
+                   {:border-radius :s
+                    :hover-color   :highlight
+                    :indent        {:top :m}
+                    :label         :back!
+                    :on-click      [:router/go-back!]}])
+
+(defn- go-back
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) content-props
+  [surface-id content-props]
+  [elements/row ::go-back
+                {:content [go-back-button surface-id content-props]
+                 :horizontal-align :center}])
 
 (defn- view-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -81,10 +93,10 @@
   ; @param (map) content-props
   [surface-id content-props]
   [:<> [elements/horizontal-separator {:size :xxl}]
-       [error-icon     surface-id content-props]
-       [error-title    surface-id content-props]
-       [error-helper   surface-id content-props]
-       [go-back-button surface-id content-props]])
+       [error-icon   surface-id content-props]
+       [error-title  surface-id content-props]
+       [error-helper surface-id content-props]
+       [go-back      surface-id content-props]])
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

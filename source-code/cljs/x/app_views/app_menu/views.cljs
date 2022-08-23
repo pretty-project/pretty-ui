@@ -24,14 +24,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- view-id->parent-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [view-id]
+  (case view-id :language-selector :main
+                :more-options      :main
+                :about-app         :more-options))
+
 (defn- back-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/button ::back-button
-                   {:hover-color :highlight
-                    :indent      {:vertical :xs}
-                    :on-click    [:gestures/change-view! :views.app-menu/handler :main]
-                    :preset      :back}])
+  (let [view-id       @(a/subscribe [:gestures/get-current-view-id :views.app-menu/handler])
+        parent-view-id (view-id->parent-view-id view-id)]
+       [elements/button ::back-button
+                        {:hover-color :highlight
+                         :indent      {:vertical :xs}
+                         :on-click    [:gestures/change-view! :views.app-menu/handler parent-view-id]
+                         :preset      :back}]))
 
 
 
@@ -92,9 +101,9 @@
                    {:hover-color :highlight
                     :indent      {:vertical :xs}
                     :on-click    [:router/go-to! "/@app-home/settings"]
-                    :preset      :settings}])
+                    :preset      :settings
                     ; TEMP
-                    ;:disabled? true}])
+                    :disabled? true}])
 
 (defn- more-options-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -290,6 +299,7 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  [popup-a/layout popup-id {:body      #'body
-                            :header    #'header
-                            :min-width :xs}])
+  [popup-a/layout popup-id
+                  {:body      #'body
+                   :header    #'header
+                   :min-width :xs}])

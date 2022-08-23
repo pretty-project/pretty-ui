@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.events
-    (:require [mid-fruits.map                     :refer [dissoc-in]]
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.map                     :refer [dissoc-in]]
               [mid-fruits.uri                     :as uri]
               [mid-fruits.vector                  :as vector]
               [x.app-core.api                     :as a :refer [r]]
@@ -68,11 +69,19 @@
               (assoc-in [:router :route-handler/meta-items :route-path-params]  route-path-params)
               (assoc-in [:router :route-handler/meta-items :route-query-params] route-query-params)
               (assoc-in [:router :route-handler/meta-items :route-string]       route-string)
-              ; Az aktuális :route-parent értéke az útvonal tulajdonságaként hozzáadott {:route-parent "..."}
-              ; érték. Annak hiányában a route-string értékéből származtatott szülő-útvonal.
-              (assoc-in [:router :route-handler/meta-items :route-parent]
-                        (get-in db [:router :route-handler/client-routes route-id :route-parent]
-                                   (uri/uri->parent-uri route-string))))))
+              ; XXX#4981
+              ; Az aktuális útvonalhoz beállított szülő-útvonal értékének forrása...
+              ; 1. ... [:router/go-to! ...] esemény számára átadott route-props térkép {:route-parent "..."} tulajdonsága,
+              ;    amely tulajdonság {:virtual-parent "..."} tulajdonságként kerül ideiglenesen eltárolásra,
+              ;    a [:router/go-to! ...] esemény és a [:router/handle-route! ...] esemény megtörténése között.
+              ; 2. ... az útvonal szerver-oldali hozzáadásakor tulajdonságaként beállított {:route-parent "..."}
+              ;        értéke.
+              ; 3. ... a route-string értékéből származtatott szülő-útvonal.
+              (assoc-in  [:router :route-handler/meta-items :route-parent]
+                         (or (get-in db [:router :route-handler/meta-items :virtual-parent])
+                             (get-in db [:router :route-handler/client-routes route-id :route-parent])
+                             (uri/uri->parent-uri route-string)))
+              (dissoc-in [:router :route-handler/meta-items :virtual-parent]))))
 
 (defn set-default-routes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,6 +118,23 @@
   (as-> db % (r store-current-route! % route-string)
              (r reg-to-history!      % route-id)
              (r quit-change-mode!    % route-id)))
+
+(defn go-to!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-string
+  ; @param (map) route-props
+  ;  {:route-parent (string)(opt)}
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [route-parent]}]]
+  ; XXX#4981
+  ; Ha a [:router/go-to! ...] esemény számára átadott route-props térkép tatalmazza a {:route-parent "..."}
+  ; tulajdonságot, akkor a (r go-to! ...) függvény eltárolja azt {:virtual-parent "..."} tulajdonságként,
+  ; hogy a (r handle-route! ...) függvény az útvonal kezelésekor felülírhassa vele az útvonalhoz tartozó
+  ; {:route-parent "..."} tulajdonság értékét.
+  (if route-parent (assoc-in db [:router :route-handler/meta-items :virtual-parent] route-parent)
+                   (return   db)))
 
 
 

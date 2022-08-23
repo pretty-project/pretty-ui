@@ -54,10 +54,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :go-my-route!
+  :go-to-my-route!
   ; A [:router/go-to! "/..."] esemény meghívásával a kliens-oldali útvonal-kezelő az esemény
   ; számára paraméterként átadott útvonalra irányít át.
   [:router-go-to! "/my-route"])
+
+(a/reg-event-fx
+  :go-to-your-route!
+  ; A {:route-parent "..."} beállítás használatával beállítható, hogy az útvonal
+  ; szülő-útvonala, eltérjen az eredetileg beállított szülő-útvonaltól.
+  [:router-go-to! "/your-route" {:route-parent "/my-route"}])
 
 
 
