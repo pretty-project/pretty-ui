@@ -21,5 +21,5 @@
 
 (def app-codename          "x4")
 (def app-description       "Are we alone in the universe?")
-(def app-version           "4.7.0")
+(def app-version           "4.7.3")
 (def copyright-information "2022 Monotech.hu")
