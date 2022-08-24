@@ -22,8 +22,6 @@
 
 (a/reg-event-fx
   :user/authenticate!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; A) Sikeres bejelentkezés
   ;    A bejelentkező felületen lévő bejelentkezés gombra kattintva, a gomb
   ;    várakozó állapotba lép. Ahhoz, hogy sikeres bejelentkezés után,
@@ -36,18 +34,28 @@
   ;    egy hibaüzenet jelenik meg a bejelentkező felületen.
   ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
   ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
-  [:sync/send-request! :user/authenticate!
-                       {:method       :post
-                        :on-success   [:boot-loader/restart-app!]
-                        :on-failure   [:user/reg-login-attempt!]
-                        :source-path  [:views :login-box/data-items]
-                        :uri          "/user/authenticate"
-                        :idle-timeout 3000}])
+  ;
+  ; @param (map) login-data
+  ;  {:email-address (string)
+  ;   :password (string)}
+  ;
+  ; @usage
+  ;  [:user/authenticate! {:email-address "hello@domain.com" :password "my-password"}]
+  (fn [_ [_ login-data]]
+      [:sync/send-request! :user/authenticate!
+                           {:method       :post
+                            :on-success   [:boot-loader/restart-app!]
+                            :on-failure   [:user/reg-login-attempt!]
+                            :params       login-data
+                            :uri          "/user/authenticate"
+                            :idle-timeout 3000}]))
 
 (a/reg-event-fx
   :user/logout!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; @usage
+  ;  [:user/logout!]
   [:sync/send-request! :user/logout!
-                       {:method :post :uri "/user/logout"
+                       {:method     :post
                         :on-failure [:ui/render-bubble!        {:content :logout-failed}]
-                        :on-success [:boot-loader/restart-app! {:restart-target "/login"}]}])
+                        :on-success [:boot-loader/restart-app! {:restart-target "/login"}]
+                        :uri        "/user/logout"}])

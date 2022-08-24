@@ -13,16 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.api
-    (:require [x.server-user.account-handler.lifecycles]
-              [x.server-user.account-handler.transfer]
+    (:require [x.server-user.account-handler.transfer]
               [x.server-user.install-handler.lifecycles]
               [x.server-user.install-handler.side-effects]
+              [x.server-user.login-handler.lifecycles]
               [x.server-user.profile-handler.transfer]
               [x.server-user.settings-handler.lifecycles]
               [x.server-user.settings-handler.transfer]
               [x.server-user.account-handler.config    :as account-handler.config]
               [x.server-user.account-handler.helpers   :as account-handler.helpers]
               [x.server-user.core.helpers              :as core.helpers]
+              [x.server-user.login-handler.helpers     :as login-handler.helpers]
               [x.server-user.profile-handler.config    :as profile-handler.config]
               [x.server-user.profile-handler.helpers   :as profile-handler.helpers]
               [x.server-user.session-handler.helpers   :as session-handler.helpers]
@@ -41,11 +42,13 @@
 ; x.server-user.account-handler.helpers
 (def request->user-account        account-handler.helpers/request->user-account)
 (def request->user-public-account account-handler.helpers/request->user-public-account)
-(def request->authenticated?      account-handler.helpers/request->authenticated?)
 
 ; x.server-user.core.helpers
 (def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
 (def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)
+
+; x.server-user.login-handler.helpers
+(def request->authenticated? login-handler.helpers/request->authenticated?)
 
 ; x.server-user.profile-handler.config
 (def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)

@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.account-handler.lifecycles
-    (:require [x.server-core.api                    :as a]
-              [x.server-user.account-handler.routes :as account-handler.routes]))
+(ns x.server-user.login-handler.lifecycles
+    (:require [x.server-core.api                  :as a]
+              [x.server-user.login-handler.routes :as login-handler.routes]))
 
 
 
@@ -24,6 +24,8 @@
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-init [:router/add-routes! {:user/authenticate {:route-template "/user/authenticate"
-                                                             :post {:handler account-handler.routes/authenticate}}
+                                                             :post {:handler login-handler.routes/authenticate}}
                                          :user/logout       {:route-template "/user/logout"
-                                                             :post {:handler account-handler.routes/logout}}}]})
+                                                             :post {:handler login-handler.routes/logout}}
+                                         :user/login        {:client-event   [:views/render-login-screen!]
+                                                             :route-template "/login"}}]})

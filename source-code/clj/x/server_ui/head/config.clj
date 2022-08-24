@@ -34,9 +34,7 @@
                        {:uri "/css/x/app-ui-animations.css"}
                        {:uri "/css/x/app-ui-graphics.css"}
                        ; ...
-                       {:uri "/css/x/app-layouts.css"}
                        {:uri "/css/x/app-elements.css"}
-                       {:uri "/css/x/app-views.css"}
                        ; Using self hosted Font Awesome icons
                        {:uri "/icons/fontawesome-free-5.15.1-web/css/all.min.css"}
                        ; XXX#8857

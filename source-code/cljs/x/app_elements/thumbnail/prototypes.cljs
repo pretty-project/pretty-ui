@@ -12,20 +12,23 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-views.app-menu.effects
-    (:require [x.app-core.api             :as a :refer [r]]
-              [x.app-gestures.api         :as gestures]
-              [x.app-views.app-menu.views :as app-menu.views]))
+(ns x.app-elements.thumbnail.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :views/render-app-menu!
+(defn thumbnail-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} _]
-      {:db       (r gestures/init-view-handler! db :views.app-menu/handler {:default-view-id :main})
-       :dispatch [:ui/render-popup! :views.app-menu/view
-                                    {:content #'app-menu.views/view}]}))
+  ;
+  ; @param (map) thumbnail-props
+  ;
+  ; @return (map)
+  ;  {:height (keyword)
+  ;   :width (keyword)}
+  [thumbnail-props]
+  (merge {:height :s
+          :width  :s}
+         (param thumbnail-props)))

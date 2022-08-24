@@ -16,7 +16,7 @@
     (:require [local-db.api                          :as local-db]
               [mid-fruits.keyword                    :as keyword]
               [server-fruits.http                    :as http]
-              [x.server-user.account-handler.helpers :as account-handler.helpers]
+              [x.server-user.login-handler.helpers   :as login-handler.helpers]
               [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
@@ -31,7 +31,7 @@
   ;
   ; @return (map)
   [request]
-  (if (account-handler.helpers/request->authenticated? request)
+  (if (login-handler.helpers/request->authenticated? request)
       ; If user authenticated ...
       (let [user-id    (http/request->session-param request :user-account/id)
             item-key   (http/request->param         request :item-key)

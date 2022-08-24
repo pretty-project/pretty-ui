@@ -13,11 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-views.api
-    (:require [x.app-views.app-menu.effects]
-              [x.app-views.error-page.effects]
-              [x.app-views.login-box.effects]
-              [x.app-views.login-box.subs]
-              [x.app-views.no-internet-notification.effects]
-              [x.app-views.no-internet-notification.lifecycles]
-              [x.app-views.privacy-policy.effects]
-              [x.app-views.terms-of-service.effects]))
+    (:require [x.app-views.view-handler.effects]
+              [x.app-views.view-handler.subs :as view-handler.subs]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.app-views.view-handler.subs
+(def get-error-screen view-handler.subs/get-error-screen)
+(def get-login-screen view-handler.subs/get-login-screen)

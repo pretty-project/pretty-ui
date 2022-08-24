@@ -12,16 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-views.privacy-policy.effects
-    (:require [x.app-core.api                   :as a]
-              [x.app-views.privacy-policy.views :as privacy-policy.views]))
+(ns x.app-views.view-handler.subs
+    (:require [x.mid-views.view-handler.subs :as view-handler.subs]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :views/render-privacy-policy!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [:views/render-error-page! :under-construction])
+; x.mid-views.view-handler.subs
+(def get-error-screen view-handler.subs/get-error-screen)
+(def get-login-screen view-handler.subs/get-login-screen)
+(def get-menu-screen  view-handler.subs/get-menu-screen)

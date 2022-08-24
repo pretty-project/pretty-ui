@@ -12,10 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-views.api
-    (:require [x.server-views.login-box.lifecycles]
-              [x.server-views.privacy-policy.lifecycles]
-              [x.server-views.terms-of-service.lifecycles]
-
-              ; TEMP
-              [layouts.popup-a.api]))
+(ns x.server-views.view-handler.api
+    (:require [x.server-views.view-handler.effects]
+              [x.server-views.view-handler.subs]
+              [x.server-views.view-handler.transfer]))

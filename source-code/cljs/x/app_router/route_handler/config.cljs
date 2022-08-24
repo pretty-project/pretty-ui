@@ -24,7 +24,7 @@
 (def RELOAD-SAME-PATH? true)
 
 ; @constant (map)
-(def DEFAULT-ROUTES {:page-not-found {:client-event   [:views/render-error-page! :page-not-found]
+(def DEFAULT-ROUTES {:page-not-found {:client-event   [:views/render-error-screen! :page-not-found]
                                       :route-template "/page-not-found"}})
 
 ; @constant (map)

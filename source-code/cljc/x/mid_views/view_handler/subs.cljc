@@ -12,24 +12,30 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-views.terms-of-service.views
-    (:require [x.app-core.api     :as a]
-              [x.app-elements.api :as elements]))
+(ns x.mid-views.view-handler.subs)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
+(defn get-error-screen
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) surface-id
-  [surface-id])
-  ; Multilingual content
+  ; @return (metamorphic-event)
+  [db _]
+  (get-in db [:views :view-handler/meta-items :error-screen]))
+
+(defn get-login-screen
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; WARNING!
-  ; Az Felhasználási feltételek tartalmát jelenítsd meg a cookie-consent popup felületen,
-  ; ahelyett, hogy erre az oldalra irányítanád a terms-of-service gombbal a felhasználót!
-  ; Erről az oldalról tovább lehet navigálni az applikáció más részire anélkül, hogy
-  ; elfogadná a cookie-consent tartalmát!
+  ; @return (metamorphic-event)
+  [db _]
+  (get-in db [:views :view-handler/meta-items :login-screen]))
+
+(defn get-menu-screen
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (metamorphic-event)
+  [db _]
+  (get-in db [:views :view-handler/meta-items :menu-screen]))

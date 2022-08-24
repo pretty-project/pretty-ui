@@ -88,7 +88,7 @@
   [elements/icon-button ::menu-icon-button
                         {:border-radius :s
                          :hover-color   :highlight
-                         :on-click      [:views/render-app-menu!]
+                         :on-click      [:views/render-menu-screen!]
                          :preset        :user-menu}])
 
 
