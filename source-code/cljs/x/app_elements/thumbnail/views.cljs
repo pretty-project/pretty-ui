@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-components.thumbnail
+(ns x.app-elements.thumbnail.views
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
               [x.app-core.api            :as a]

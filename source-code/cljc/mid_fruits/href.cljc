@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn email-address->href
-  ; @param (string) n
+  ; @param (string) email-address
   ;
   ; @example
   ;  (href/email-address->href "Hello@my-site.com")
@@ -29,12 +29,20 @@
   ;  "mailto:hello@my-site.com"
   ;
   ; @return (string)
-  [n]
-  (if (string/nonempty? n)
-      (str "mailto:" (string/lowercase n))))
+  ([email-address]
+   (str "mailto:" (string/lowercase email-address)))
+
+  ([email-address subject]
+   (str "mailto:"   (string/lowercase email-address)
+        "?subject=" subject))
+
+  ([email-address subject body]
+   (str "mailto:"   (string/lowercase email-address)
+        "?subject=" subject
+        "&body="    body)))
 
 (defn phone-number->href
-  ; @param (string) n
+  ; @param (string) phone-number
   ;
   ; @example
   ;  (href/phone-number->href "+3630 / 123 - 4567")
@@ -42,6 +50,18 @@
   ;  "tel:+36301234567"
   ;
   ; @return (string)
-  [n]
-  (if (string/nonempty? n)
-      (str "tel:" (string/filter-characters n ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"]))))
+  [phone-number]
+  (if (string/nonempty? phone-number)
+      (str "tel:" (string/filter-characters phone-number ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"]))))
+
+(defn address->href
+  ; @param (string) address
+  ;
+  ; @example
+  ;  (href/address->href "My City, My Address street 42.")
+  ;  =>
+  ;  "https://www.google.com/maps/search/?api=1&query=My%20City,%20My%20Address%20street%2042."
+  ;
+  ; @return (string)
+  [address]
+  (str "https://www.google.com/maps/search/?api=1&query=" (string/replace-part address " " "%20")))

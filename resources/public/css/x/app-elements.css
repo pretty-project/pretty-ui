@@ -524,7 +524,8 @@ button.x-card:focus,
 
 .x-button[data-color="invert"]      .x-button--body,
 .x-icon[data-color="invert"]        .x-icon--body,
-.x-icon-button[data-color="invert"] .x-icon-button--body {
+.x-icon-button[data-color="invert"] .x-icon-button--body,
+.x-label[data-color="invert"] {
   color: var( --color-invert ) }
 
 /* Text-color */

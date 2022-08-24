@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- select-props-prototype
+(defn select-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
