@@ -36,12 +36,13 @@
 ; Pl. az egyes útvonalak kiszolgálása eltérő meta-adatokkal és egyéb beállításokkal történhet
 (defn your-ui
   [request]
-  (ui/html (ui/head request {:app-title "Your title"
-                             :css-paths [{:uri "/css/your-style.css"}]
+  (ui/html (ui/head request {:app-title        "Your title"
+                             :css-paths        [{:uri "/css/your-style.css"}]
                              :meta-description "Your description"
-                             :meta-keywords ["My keyword" "Your keyword"]
-                             :og-preview-path "/your-og-preview.png"})
-           (ui/body request {:plugin-js-paths [{:uri "/js/plugins/your-plugin.js"}]})))
+                             :meta-keywords    ["My keyword" "Your keyword"]
+                             :og-preview-path  "/your-og-preview.png"})
+           (ui/body request {:loading-screen   [:div "My loading screen"]
+                             :plugin-js-paths  [{:uri "/js/plugins/your-plugin.js"}]})))
 
 
 

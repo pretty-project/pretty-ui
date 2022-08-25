@@ -12,15 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.graphics.views
-    (:require [x.mid-ui.graphics.views :as graphics.views]))
+(ns x.server-ui.loading-screen.views)
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-ui.graphics.views
-(def app-logo          graphics.views/app-logo)
-(def app-title         graphics.views/app-title)
-(def loading-animation graphics.views/loading-animation)
+(defn view
+  ; @param (map) request
+  ; @param (hiccup) content
+  [_ content]
+  [:div#x-loading-screen {:data-nosnippet "true"} content])

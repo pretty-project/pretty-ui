@@ -48,5 +48,5 @@
       (let [error-message (r error-handler.subs/get-error-message db error-id error-props)
             catched-event (event-handler/cofx->event-vector cofx)]
            {:db   (r load-handler.events/stop-loading! db)
-            :fx-n [[:core/print-error! error-message catched-event]
-                   [:ui/set-shield!    error-message]]})))
+            :fx-n [[:core/print-error!    error-message catched-event]
+                   [:ui/set-error-shield! error-message]]})))

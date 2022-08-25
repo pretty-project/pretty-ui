@@ -26,7 +26,7 @@
                           {:content [:div "My error screen"]}]))
 
 (a/reg-event-fx
-  :set-my-error-event!
+  :set-my-error-screen!
   [:views/set-error-screen! [:my-error-screen]])
 
 
@@ -40,10 +40,10 @@
                       {:content [:div "My login screen"]}])
 
 (a/reg-event-fx
-  :set-my-login-event!
+  :set-my-login-screen!
   [:views/set-login-screen! [:my-login-screen]])
 
-  
+
 
 ;; -- Menü-képernyő beállítása ------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,5 +54,5 @@
                       {:content [:div "My menu screen"]}])
 
 (a/reg-event-fx
-  :set-my-login-event!
+  :set-my-menu-screen!
   [:views/set-menu-screen! [:my-menu-screen]])

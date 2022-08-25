@@ -32,7 +32,6 @@
                        ; ...
                        {:uri "/css/x/app-ui-structure.css"}
                        {:uri "/css/x/app-ui-animations.css"}
-                       {:uri "/css/x/app-ui-graphics.css"}
                        ; ...
                        {:uri "/css/x/app-elements.css"}
                        ; Using self hosted Font Awesome icons

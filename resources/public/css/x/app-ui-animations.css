@@ -142,20 +142,31 @@
 
 
 
-/***** App shield *****/
+/***** Loading-screen *****/
 
-#x-app-shield {
+#x-loading-screen {
   animation-duration: .3s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out }
 
-#x-app-shield[data-animation="reveal"] {
-  animation-name: opacity-0-1 }
-
-#x-app-shield[data-animation="hide"] {
+#x-loading-screen[data-animation="hide"] {
   animation-name: opacity-1-0 }
 
-/***** App shield *****/
+/***** Loading-screen *****/
+
+
+
+/***** Error-shield *****/
+
+#x-error-shield {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out }
+
+#x-error-shield[data-animation="reveal"] {
+  animation-name: opacity-0-1 }
+
+/***** Error-shield *****/
 
 
 

@@ -12,30 +12,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-ui.shield.helpers
-    (:require [dom.api :as dom]))
+(ns x.app-ui.loading-screen.side-effects
+    (:require [x.app-core.api        :as a]
+              [x.app-environment.api :as environment]
+              [x.app-ui.renderer     :as renderer]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn shield-hidden?
+(defn hide-loading-screen!
   ; @usage
-  ;  (ui/shield-hidden?)
-  ;
-  ; @return (boolean)
+  ;  (ui/hide-loading-screen!)
   []
-  (let [shield-element       (dom/get-element-by-id       "x-app-shield")
-        shield-display-value (dom/get-element-style-value shield-element "display")]
-       (= "none" shield-display-value)))
+  (environment/hide-element-animated! renderer/HIDE-ANIMATION-TIMEOUT "x-loading-screen"))
 
-(defn shield-visible?
-  ; @usage
-  ;  (ui/shield-visible?)
-  ;
-  ; @return (boolean)
-  []
-  (let [shield-element       (dom/get-element-by-id       "x-app-shield")
-        shield-display-value (dom/get-element-style-value shield-element "display")]
-       (not= "none" shield-display-value)))
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:ui/hide-loading-screen!]
+(a/reg-fx :ui/hide-loading-screen! hide-loading-screen!)

@@ -13,15 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body.views
-    (:require [mid-fruits.candy             :refer [param]]
-              [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
-              [x.server-ui.body.helpers     :as body.helpers]
-              [x.server-ui.body.prototypes  :as body.prototypes]
-              [x.server-ui.core.helpers     :refer [include-js]]))
+    (:require [mid-fruits.candy                 :refer [param]]
+              [ring.middleware.anti-forgery     :refer [*anti-forgery-token*]]
+              [x.server-ui.body.helpers         :as body.helpers]
+              [x.server-ui.body.prototypes      :as body.prototypes]
+              [x.server-ui.core.helpers         :refer [include-js]]
+              [x.server-ui.error-shield.views   :as error-shield.views]
+              [x.server-ui.loading-screen.views :as loading-screen.views]))
 
 
 
-;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- body
@@ -29,25 +31,26 @@
   ;
   ; @param (map) request
   ; @param (map) body-props
-  ;  {:selected-theme (string)
-  ;   :shield (hiccup)(opt)}
-  [request {:keys [selected-theme shield]}]
+  ;  {:loading-screen (hiccup)(opt)
+  ;   :selected-theme (string)}
+  [request {:keys [loading-screen selected-theme]}]
   [:body#x-body-container {:data-theme selected-theme}
                           (let [csrf-token (force *anti-forgery-token*)]
                                [:div#sente-csrf-token {:data-csrf-token csrf-token}])
                           [:div#x-app-container]
-                          (param shield)])
+                          (loading-screen.views/view request loading-screen)
+                          (error-shield.views/view   request)])
 
 (defn view
   ; @param (map) request
   ; @param (map)(opt) body-props
-  ;  {:plugin-js-paths (maps in vector)
+  ;  {:loading-screen (hiccup)(opt)
+  ;   :plugin-js-paths (maps in vector)
   ;    [{:core-js (string)(opt)
-  ;      :uri (string)}]
-  ;   :shield (hiccup)(opt)}
+  ;      :uri (string)}]}
   ;
   ; @usage
-  ;  (ui/body {...} {:shield [:div#x-app-shield "My loading screen"]})
+  ;  (ui/body {...} {...})
   ([request]
    (view request {}))
 

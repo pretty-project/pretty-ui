@@ -129,24 +129,6 @@ body[data-theme="high-contrast"] {}
 
 
 
-/***** App logo and MT logo *****/
-
-body[data-theme="dark"] .x-app-logo {
-  background-image: url('/logo/logo-dark.png') }
-
-body[data-theme="dark"] .x-mt-logo {
-  background-image: url('/logo/mt-logo-dark.png') }
-
-body[data-theme="light"] .x-app-logo {
-  background-image: url('/logo/logo-light.png') }
-
-body[data-theme="light"] .x-mt-logo {
-  background-image: url('/logo/mt-logo-light.png') }
-
-/***** App logo and MT logo *****/
-
-
-
 /***** Text *****/
 
 html {

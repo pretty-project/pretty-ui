@@ -16,8 +16,7 @@
     (:require [x.server-ui.body.views   :as body.views]
               [x.server-ui.core.helpers :as core.helpers]
               [x.server-ui.head.views   :as head.views]
-              [x.server-ui.html.views   :as html.views]
-              [x.server-ui.shield.views :as shield.views]))
+              [x.server-ui.html.views   :as html.views]))
 
 
 
@@ -38,6 +37,3 @@
 
 ; x.server-ui.html.views
 (def html html.views/view)
-
-; x.server-ui.shield.views
-(def app-shield shield.views/view)

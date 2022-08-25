@@ -69,14 +69,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r load-handler.events/set-load-status! db :loaded)
-       :fx [:ui/remove-shield!]}))
+       :fx [:ui/hide-loading-screen!]}))
 
 (event-handler/reg-event-fx
   :core/load-timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r load-handler.events/set-load-status! db :load-timeout-reached)
-       :fx [:ui/set-shield! load-handler.config/LOAD-TIMEOUT-ERROR]}))
+       :fx [:ui/set-error-shield! load-handler.config/LOAD-TIMEOUT-ERROR]}))
 
 
 

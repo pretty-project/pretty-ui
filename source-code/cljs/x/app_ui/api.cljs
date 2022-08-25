@@ -31,18 +31,18 @@
               [x.app-ui.themes.lifecycles]
               [x.app-ui.title.subs]
               [x.app-ui.title.effects]
-              [x.app-ui.bubbles.views          :as bubbles.views]
-              [x.app-ui.graphics.views         :as graphics.views]
-              [x.app-ui.interface.subs         :as interface.subs]
-              [x.app-ui.progress-bar.events    :as progress-bar.events]
-              [x.app-ui.progress-bar.subs      :as progress-bar.subs]
-              [x.app-ui.progress-screen.events :as progress-screen.events]
-              [x.app-ui.renderer               :as renderer]
-              [x.app-ui.shield.helpers         :as shield.helpers]
-              [x.app-ui.shield.side-effects    :as shield.side-effects]
-              [x.app-ui.sounds.side-effects    :as sounds.side-effects]
-              [x.app-ui.structure.views        :as structure.views]
-              [x.app-ui.themes.subs            :as themes.subs]))
+              [x.app-ui.bubbles.views               :as bubbles.views]
+              [x.app-ui.error-shield.helpers        :as error-shield.helpers]
+              [x.app-ui.error-shield.side-effects   :as error-shield.side-effects]
+              [x.app-ui.interface.subs              :as interface.subs]
+              [x.app-ui.loading-screen.side-effects :as loading-screen.side-effects]
+              [x.app-ui.progress-bar.events         :as progress-bar.events]
+              [x.app-ui.progress-bar.subs           :as progress-bar.subs]
+              [x.app-ui.progress-screen.events      :as progress-screen.events]
+              [x.app-ui.renderer                    :as renderer]
+              [x.app-ui.sounds.side-effects         :as sounds.side-effects]
+              [x.app-ui.structure.views             :as structure.views]
+              [x.app-ui.themes.subs                 :as themes.subs]))
 
 
 
@@ -52,15 +52,19 @@
 ; x.app-ui.bubbles.views
 (def state-changed-bubble-body bubbles.views/state-changed-bubble-body)
 
-; x.app-ui.graphics.views
-(def app-logo          graphics.views/app-logo)
-(def app-title         graphics.views/app-title)
-(def loading-animation graphics.views/loading-animation)
+; x.app-ui.error-shield.helpers
+(def error-shield-hidden? error-shield.helpers/error-shield-hidden?)
+
+; x.app-ui.error-shield.side-effects
+(def set-error-shield! error-shield.side-effects/set-error-shield!)
 
 ; x.app-ui.interface.subs
 (def get-interface          interface.subs/get-interface)
 (def application-interface? interface.subs/application-interface?)
 (def website-interface?     interface.subs/website-interface?)
+
+; x.app-ui.loading-screen.side-effects
+(def hide-loading-screen! loading-screen.side-effects/hide-loading-screen!)
 
 ; x.app-ui.progress-bar.events
 (def listen-to-process!         progress-bar.events/listen-to-process!)
@@ -84,14 +88,6 @@
 (def any-element-visible?   renderer/any-element-visible?)
 (def no-visible-elements?   renderer/no-visible-elements?)
 (def set-element-prop!      renderer/set-element-prop!)
-
-; x.app-ui.shield.helpers
-(def shield-hidden?  shield.helpers/shield-hidden?)
-(def shield-visible? shield.helpers/shield-visible?)
-
-; x.app-ui.shield.side-effects
-(def set-shield!    shield.side-effects/set-shield!)
-(def remove-shield! shield.side-effects/remove-shield!)
 
 ; x.app-ui.sounds.side-effects
 (def play-sound! sounds.side-effects/play-sound!)

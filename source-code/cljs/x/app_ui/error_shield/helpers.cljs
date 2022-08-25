@@ -12,22 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.shield.views
-    (:require [x.server-ui.graphics.views :as graphics.views]
-              [x.server-core.api          :as a]))
+(ns x.app-ui.error-shield.helpers
+    (:require [dom.api :as dom]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn error-shield-hidden?
+  ; @usage
+  ;  (ui/error-shield-hidden?)
   ;
-  ; @param (*) content
-  [content]
-  (let [title @(a/subscribe [:core/get-app-config-item :app-title])]
-       [:div#x-app-shield {:data-nosnippet "true"}
-                          [:div#x-app-shield--header (graphics.views/app-logo)
-                                                     (graphics.views/app-title title)]
-                          [:div#x-app-shield--content content]]))
+  ; @return (boolean)
+  []
+  (let [shield-element (dom/get-element-by-id       "x-error-shield")
+        display-value  (dom/get-element-style-value shield-element "display")]
+       (= "none" display-value)))

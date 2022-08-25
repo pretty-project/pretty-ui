@@ -12,35 +12,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-ui.graphics.views)
+(ns x.server-ui.error-shield.views)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn app-logo
-  ; @usage
-  ;  [ui/app-logo]
-  []
-  [:div.x-app-logo])
-
-(defn mt-logo
-  ; @usage
-  ;  [ui/mt-logo]
-  []
-  [:div.x-mt-logo])
-
-(defn app-title
-  ; @param (string) title
-  ;
-  ; @usage
-  ;  [ui/app-title]
-  [title]
-  [:div.x-app-title title])
-
-(defn loading-animation
-  ; @usage
-  ;  [ui/loading-animation]
-  []
-  [:div.x-loading-animation "Loading"])
+(defn view
+  ; @param (map) request
+  [request]
+  [:div#x-error-shield {:data-nosnippet "true"}
+                       [:div#x-error-shield--body [:div#x-error-shield--content]
+                                                  [:a#x-error-shield--refresh-button {:href    "#"
+                                                                                      :onClick "location.reload ();"}
+                                                                                     "Refresh"]]])
