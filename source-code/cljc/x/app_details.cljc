@@ -19,7 +19,31 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def app-codename          "x4")
-(def app-description       "Are we alone in the universe?")
-(def app-version           "4.7.3")
-(def copyright-information "2022 Monotech.hu")
+(def app-codename    "x4")
+(def app-description "Are we alone in the universe?")
+(def app-version     "4.7.3")
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn copyright-label
+  ; @param (integer or string) current-year
+  ;
+  ; @usage
+  ;  (time/copyright-label 2022)
+  ;
+  ; @return (string)
+  [current-year]
+  (str current-year " Monotech.hu"))
+
+(defn copyright-information
+  ; @param (integer or string) current-year
+  ;
+  ; @usage
+  ;  (time/copyright-information 2022)
+  ;
+  ; @return (string)
+  [current-year]
+  (str "2019-"current-year " Monotech.hu - All rights reserved"))

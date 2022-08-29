@@ -11,36 +11,16 @@
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+ 
+(ns x.app-elements.anchor.views
+    (:require [x.app-components.api             :as components]
+              [x.app-core.api                   :as a]
+              [x.app-elements.anchor.helpers    :as anchor.helpers]
+              [x.app-elements.anchor.prototypes :as anchor.prototypes]))
 
-(ns x.app-elements.element-components.anchor
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]))
 
 
-
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- anchor-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) anchor-props
-  ;
-  ; @return (map)
-  ;  {:color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :layout (keyword)}
-  [anchor-props]
-  (merge {:color     :primary
-          :font-size :s
-          :layout    :row}
-         (param anchor-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- anchor-body
@@ -50,7 +30,7 @@
   ; @param (map) anchor-props
   ;  {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
-  [:a.x-anchor--body (engine/clickable-body-attributes anchor-id anchor-props)
+  [:a.x-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
                      [components/content content]])
 
 (defn- anchor
@@ -63,8 +43,8 @@
   ; hogy a disabled állapotot megfelelően lehessen alkalmazni.
   ; Az elemet disabled állapotában eltakaró overlay az elem kattintható komponensének
   ; vagy a kattintható komponens valamely ősének szomszédos eleme kell legyen.
-  [:div.x-anchor (engine/element-attributes anchor-id anchor-props)
-                 [anchor-body anchor-id anchor-props]])
+  [:div.x-anchor (anchor.helpers/anchor-attributes anchor-id anchor-props)
+                 [anchor-body                      anchor-id anchor-props]])
 
 (defn element
   ; XXX#9085
@@ -95,9 +75,6 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
   ;   :on-click (metamorphic-event)(constant)
   ;     Only w/o {:href ...}
   ;   :style (map)(opt)}
@@ -111,5 +88,5 @@
    [element (a/id) anchor-props])
 
   ([anchor-id anchor-props]
-   (let [anchor-props (anchor-props-prototype anchor-props)]
+   (let [anchor-props (anchor.prototypes/anchor-props-prototype anchor-props)]
         [anchor anchor-id anchor-props])))

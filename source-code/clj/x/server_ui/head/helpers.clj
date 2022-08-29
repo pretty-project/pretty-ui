@@ -15,6 +15,7 @@
 (ns x.server-ui.head.helpers
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.string        :as string]
+              [mid-fruits.time          :as time]
               [mid-fruits.vector        :as vector]
               [server-fruits.http       :as http]
               [x.app-details            :as details]
@@ -94,10 +95,12 @@
   ;  {:author (string)}
   ;
   ; @return (hiccup)
-  [head request {:keys [author]}]
-  (vector/concat-items head [[:meta {:content author                        :name "author"}]
-                             [:meta {:content details/copyright-information :name "copyright"}]
-                             [:meta {:content details/app-version           :name "version"}]]))
+  [head _ {:keys [author]}]
+  (let [current-year          (time/get-year)
+        copyright-information (details/copyright-information current-year)]
+       (vector/concat-items head [[:meta {:content author                :name "author"}]
+                                  [:meta {:content details/app-version   :name "version"}]
+                                  [:meta {:content copyright-information :name "copyright"}]])))
 
 (defn head<-og-properties
   ; WARNING! NON-PUBLIC! DO NOT USE!

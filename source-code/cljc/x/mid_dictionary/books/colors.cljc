@@ -32,6 +32,12 @@
            :change-colors!
            {:en "Change colors"
             :hu "Színek módosítása"}
+           :choose-color!
+           {:en "Choose color"
+            :hu "Szín kiválasztása"}
+           :choose-colors!
+           {:en "Choose colors"
+            :hu "Színek kiválasztása"}
            :select-color!
            {:en "Select color"
             :hu "Szín kiválasztása"}

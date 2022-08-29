@@ -15,13 +15,14 @@
 (ns x.app-user.api
     (:require [x.app-user.account-handler.effects]
               [x.app-user.account-handler.events]
-              [x.app-user.account-handler.subs    :as account-handler.subs]
-              [x.app-user.core.helpers            :as core.helpers]
-              [x.app-user.profile-handler.config  :as profile-handler.config]
-              [x.app-user.profile-handler.events  :as profile-handler.events]
-              [x.app-user.profile-handler.subs    :as profile-handler.subs]
-              [x.app-user.settings-handler.events :as settings-handler.events]
-              [x.app-user.settings-handler.subs   :as settings-handler.subs]))
+              [x.app-user.settings-handler.effects :as settings-handler.effects]
+              [x.app-user.account-handler.subs     :as account-handler.subs]
+              [x.app-user.core.helpers             :as core.helpers]
+              [x.app-user.profile-handler.config   :as profile-handler.config]
+              [x.app-user.profile-handler.events   :as profile-handler.events]
+              [x.app-user.profile-handler.subs     :as profile-handler.subs]
+              [x.app-user.settings-handler.events  :as settings-handler.events]
+              [x.app-user.settings-handler.subs    :as settings-handler.subs]))
 
 
 
@@ -56,6 +57,7 @@
 (def get-user-profile-item    profile-handler.subs/get-user-profile-item)
 (def get-user-first-name      profile-handler.subs/get-user-first-name)
 (def get-user-last-name       profile-handler.subs/get-user-last-name)
+(def get-user-locale          profile-handler.subs/get-user-locale)
 (def get-user-name            profile-handler.subs/get-user-name)
 (def get-user-phone-number    profile-handler.subs/get-user-phone-number)
 (def get-user-profile-picture profile-handler.subs/get-user-profile-picture)

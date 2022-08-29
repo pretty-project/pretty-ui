@@ -135,18 +135,54 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- privacy-policy-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::privacy-policy-button
+                   {:color     :muted
+                    :font-size :xs
+                    :indent    {:bottom :xs :vertical :xs}
+                    :label     :privacy-policy
+                    :on-click  [:router/go-to! "/@app-home/privacy-policy"]}])
+
+(defn- terms-of-service-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::terms-of-service-button
+                   {:color     :muted
+                    :font-size :xs
+                    :indent    {:bottom :xs :vertical :xs}
+                    :label     :terms-of-service
+                    :on-click  [:router/go-to! "/@app-home/terms-of-service"]}])
+
+(defn- settings-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::settings-button
+                   {:color     :muted
+                    :font-size :xs
+                    :indent    {:bottom :xs :vertical :xs}
+                    :label     :settings
+                    :on-click  [:router/go-to! "/@app-home/settings"]}])
+
 (defn- logout-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/button ::logout-button
                    {:color     :muted
                     :font-size :xs
-                    :label     :logout!}])
+                    :indent    {:bottom :xs :vertical :xs}
+                    :label     :logout!
+                    :on-click  [:user/logout!]}])
 
 (defn- footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div#surface-a--footer [:div#surface-a--footer-content [logout-button]]])
+  (if-let [user-identified? @(a/subscribe [:user/user-identified?])]
+          [:div#surface-a--footer [:div#surface-a--footer-content [privacy-policy-button]
+                                                                  [terms-of-service-button]
+                                                                  [settings-button]
+                                                                  [logout-button]]]))
 
 
 
@@ -165,9 +201,10 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
-                       :component-will-unmount (fn [] (helpers/header-will-unmount-f))
-                       :reagent-render         (fn [] [header-structure])}))
+  (if-let [user-identified? @(a/subscribe [:user/user-identified?])]
+          (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
+                               :component-will-unmount (fn [] (helpers/header-will-unmount-f))
+                               :reagent-render         (fn [] [header-structure])})))
 
 
 

@@ -14,10 +14,35 @@
 
 (ns x.app-elements.select.effects
     (:require [x.app-core.api                   :as a :refer [r]]
+              [x.app-elements.engine.api        :as engine]
               [x.app-elements.select.config     :as select.config]
               [x.app-elements.select.events     :as select.events]
               [x.app-elements.select.prototypes :as select.prototypes]
               [x.app-elements.select.views      :as select.views]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements.select/escape-pressed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  [:ui/close-popup! :elements.select/options])
+
+(a/reg-event-fx
+  :elements.select/enter-pressed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [{:keys [db]} [_ select-id select-props]]
+      (if-let [new-option-field-focused? (r engine/field-focused? db :elements.select/new-option-field)]
+              (if-let [new-option-field-filled? (r engine/field-filled? db :elements.select/new-option-field)]
+                      [:elements.select/add-new-option! select-id select-props]))))
 
 
 
@@ -30,9 +55,11 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  (fn [{:keys [db]} [_ _]]
-      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:ui/close-popup! :elements.select/options]}]
-           {:dispatch-n [[:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]]})))
+  (fn [{:keys [db]} [_ select-id select-props]]
+      (let [on-escape-props {:key-code 27 :required? true :on-keyup [:elements.select/escape-pressed select-id select-props]}
+            on-enter-props  {:key-code 13 :required? true :on-keyup [:elements.select/enter-pressed  select-id select-props]}]
+           {:dispatch-n [[:environment/reg-keypress-event! ::on-escape-pressed on-escape-props]
+                         [:environment/reg-keypress-event! ::on-enter-pressed  on-enter-props]]})))
 
 (a/reg-event-fx
   :elements.select/remove-keypress-events!
@@ -41,7 +68,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id _]]
-      {:dispatch-n [[:environment/remove-keypress-event! ::on-escape-pressed]]}))
+      {:dispatch-n [[:environment/remove-keypress-event! ::on-escape-pressed]
+                    [:environment/remove-keypress-event! ::on-enter-pressed]]}))
 
 
 
@@ -100,3 +128,19 @@
             :dispatch-later [                    {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
                              (if autoclear?      {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
                              (if on-popup-closed {:ms select.config/ON-POPUP-CLOSED-DELAY :dispatch (a/metamorphic-event<-params on-popup-closed option-value)})]})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements.select/add-new-option!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [{:keys [db]} [_ select-id select-props]]
+      (let [new-option (r engine/get-field-value db :elements.select/new-option-field)]
+           {:db (as-> db % (r engine/empty-field-value!     % :elements.select/new-option-field)
+                           (r select.events/add-new-option! % select-id select-props new-option))})))

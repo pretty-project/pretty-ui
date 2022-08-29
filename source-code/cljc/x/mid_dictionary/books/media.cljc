@@ -86,9 +86,18 @@
            :save-file?
            {:en "Are you sure you want to save this file to device?"
             :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}
+           :select-image!
+           {:en "Select image"
+            :hu "Kép kiválasztása"}
+           :select-images!
+           {:en "Select images"
+            :hu "Képek kiválasztása"}
            :select-the-files-you-would-like-to-attach
            {:en "Select the files you would like to attach!"
             :hu "Válaszd ki a csatolni kívánt fájlokat!"}
+           :select-thumbnail!
+           {:en "Select thumbnail"
+            :hu "Bélyegkép kiválasztása"}
            :set-thumbnail!
            {:en "Set thumbnail"
             :hu "Bélyegkép beállítása"}

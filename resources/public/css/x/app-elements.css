@@ -1846,10 +1846,6 @@ button.x-card:focus,
   white-space: nowrap;
   word-wrap: normal }
 
-.x-anchor[data-layout="row"] .x-anchor--body {
-  line-height: 48px;
-  min-height: 48px }
-
 /*** Anchor body ***/
 /***** Anchor *****/
 

@@ -64,6 +64,14 @@
   [db _]
   (get-in db [:user :profile-handler/data-items :last-name]))
 
+(defn get-user-locale
+  ; @usage
+  ;  (r user/get-user-locale db)
+  ;
+  ; @return (string)
+  [db _]
+  (get-in db [:user :profile-handler/data-items :locale]))
+
 (defn get-user-name
   ; @usage
   ;  (r user/get-user-name db)
@@ -109,6 +117,10 @@
 ; @usage
 ;  [:user/get-user-last-name]
 (a/reg-sub :user/get-user-last-name get-user-last-name)
+
+; @usage
+;  [:user/get-user-locale]
+(a/reg-sub :user/get-user-locale get-user-locale)
 
 ; @usage
 ;  [:user/get-user-name]

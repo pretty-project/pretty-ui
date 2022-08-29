@@ -21,7 +21,7 @@
 
 ; @constant (keywords in vector)
 (def SYSTEM-KEYS [:core :developer :dictionary :elements :environment :gestures :locales :plugins
-                  :router :sync :tools :user :ui
+                  :router :sync :tools :user :ui :views
 
                   ; TEMP
                   :components/primary :core/build-handler :elements/primary :environment/keypress-events

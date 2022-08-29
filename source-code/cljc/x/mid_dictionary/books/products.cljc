@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.search)
+(ns x.mid-dictionary.books.products)
 
 
 
@@ -20,15 +20,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:no-items-found
-           {:en ""
-            :hu "Nincs találat"}
-           :search!
-           {:en "Search"
-            :hu "Keresés"}
-           :search
-           {:en "Search"
-            :hu "Keresés"}
-           :search-results-n
-           {:en "Search results (%)"
-            :hu "Keresési találatok (%)"}})
+(def BOOK {:dealer-margin
+           {:en "Dealer margin"
+            :hu "Kereskedői árrés"}
+           :dealer-rebate
+           {:en "Dealer debate"
+            :hu "Kereskedői engedmény"}
+           :manufacturer-price
+           {:en "Manufacturer price"
+            :hu "Gyártói ár"}
+           :price
+           {:en "Price"
+            :hu "Ár"}})

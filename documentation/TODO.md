@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- Ha több popup van megnyitva, akkor az ENTER és ESC billentyűk csak a legfelsőre hassanak!
+
 - LICENSE fájlt átolvasni!! Milyen licenc van a monoset-ben????
 
 - css/x/app-layouts.css fájl sorsa

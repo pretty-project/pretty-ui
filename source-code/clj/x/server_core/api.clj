@@ -23,6 +23,7 @@
               [x.server-core.resource-handler.subs]
               [x.server-core.server-handler.events]
               [x.server-core.server-handler.side-effects]
+              [x.server-core.time-handler.transfer]
               [x.server-core.transfer-handler.lifecycles]
               [x.server-core.build-handler.side-effects     :as build-handler.side-effects]
               [x.server-core.build-handler.subs             :as build-handler.subs]

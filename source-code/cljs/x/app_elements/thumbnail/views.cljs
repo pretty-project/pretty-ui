@@ -16,8 +16,7 @@
     (:require [mid-fruits.css                      :as css]
               [x.app-core.api                      :as a]
               [x.app-elements.thumbnail.helpers    :as thumbnail.helpers]
-              [x.app-elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [x.app-environment.api               :as environment]))
+              [x.app-elements.thumbnail.prototypes :as thumbnail.prototypes]))
 
 
 
@@ -29,12 +28,9 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:on-click (metamorphic-event)(opt)
-  ;   :uri (string)(opt)}
-  [thumbnail-id {:keys [on-click uri] :as thumbnail-props}]
-  [:button.x-thumbnail--body {:data-clickable true
-                              :on-click       #(a/dispatch on-click)
-                              :on-mouse-up    #(environment/blur-element!)}
+  ;  {:uri (string)(opt)}
+  [thumbnail-id {:keys [uri] :as thumbnail-props}]
+  [:button.x-thumbnail--body (thumbnail.helpers/thumbnail-body-attributes thumbnail-id thumbnail-props)
                              [:div.x-thumbnail--icon  :image]
                              [:div.x-thumbnail--image {:background-image (css/url uri)}]])
 

@@ -37,6 +37,7 @@
               [x.app-core.print-handler.side-effects     :as print-handler.side-effects]
               [x.app-core.process-handler.events         :as process-handler.events]
               [x.app-core.process-handler.subs           :as process-handler.subs]
+              [x.app-core.time-handler.subs              :as time-handler.subs]
               [x.app-core.transfer-handler.subs          :as transfer-handler.subs]))
 
 
@@ -136,6 +137,9 @@
 (def start-process?        process-handler.subs/start-process?)
 (def get-process-progress  process-handler.subs/get-process-progress)
 (def process-done?         process-handler.subs/process-done?)
+
+; x.app-core.time-handler.subs
+(def get-server-time time-handler.subs/get-server-time)
 
 ; x.app-core.transfer-handler.subs
 (def get-transfer-data transfer-handler.subs/get-transfer-data)

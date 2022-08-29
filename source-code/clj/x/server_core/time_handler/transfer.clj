@@ -12,23 +12,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.search)
+(ns x.server-core.time-handler.transfer
+    (:require [mid-fruits.time                             :as time]
+              [x.server-core.transfer-handler.side-effects :as transfer-handler.side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def BOOK {:no-items-found
-           {:en ""
-            :hu "Nincs találat"}
-           :search!
-           {:en "Search"
-            :hu "Keresés"}
-           :search
-           {:en "Search"
-            :hu "Keresés"}
-           :search-results-n
-           {:en "Search results (%)"
-            :hu "Keresési találatok (%)"}})
+(transfer-handler.side-effects/reg-transfer!
+  :core/transfer-server-time!
+  {:data-f      (fn [_] (time/timestamp-string))
+   :target-path [:core :time-handler/meta-items :server-time]})

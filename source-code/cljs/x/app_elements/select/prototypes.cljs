@@ -26,19 +26,21 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:value-path (vector)}
   ;
   ; @return (map)
   ;  {:get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
+  ;   :new-option-placeholder (metamorphic-content)
   ;   :no-options-label (metamorphic-content)
   ;   :value-path (vector)}
   [select-id select-props]
-  (merge {:get-label-f      return
-          :get-value-f      return
-          :layout           :select
-          :no-options-label :no-options
-          :options-path     (engine/default-options-path select-id)
-          :value-path       (engine/default-value-path   select-id)}
+  (merge {:get-label-f            return
+          :get-value-f            return
+          :layout                 :select
+          :new-option-f           return
+          :new-option-placeholder :new-option
+          :no-options-label       :no-options
+          :options-path           (engine/default-options-path select-id)
+          :value-path             (engine/default-value-path   select-id)}
          (param select-props)))

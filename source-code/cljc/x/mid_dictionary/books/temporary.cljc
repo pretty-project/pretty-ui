@@ -38,6 +38,9 @@
            {:en "Tags"
             :hu "Címkék"}
 
+           :details
+           {:en "Details"
+            :hu "Adatok"}
            :overview
            {:en "Overview"
             :hu "Áttekintés"}
@@ -163,4 +166,11 @@
 
            :view-copy!
            {:en "View copy"
-            :hu "Másolat megtekintése"}})
+            :hu "Másolat megtekintése"}
+
+           :chart
+           {:en "Chart"
+            :hu "Grafikon"}
+           :total-balance-n
+           {:en "Total balance (%)"
+            :hu "Teljes egyenleg (%)"}})

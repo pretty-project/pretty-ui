@@ -29,7 +29,7 @@
               [x.app-elements.passfield-handler.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
-              [x.app-elements.element-components.anchor               :as element-components.anchor]
+              [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.element-components.button               :as element-components.button]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.element-components.card                 :as element-components.card]
@@ -158,9 +158,9 @@
 (def set-element-prop!      engine/set-element-prop!)
 (def update-element-prop!   engine/update-element-prop!)
 (def remove-element-prop!   engine/remove-element-prop!)
-
+  
 ; x.app-elements.element-components.*
-(def anchor               element-components.anchor/element)
+(def anchor               anchor.views/element)
 (def button               element-components.button/element)
 (def button-separator     button-separator.views/element)
 (def card                 element-components.card/element)

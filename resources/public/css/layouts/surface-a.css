@@ -59,6 +59,7 @@
 
 #surface-a--header-content {
   background-color: var( --app-background-color );
+  border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
   justify-content: space-between;
   max-width: var( --content-width-l );
@@ -118,6 +119,8 @@
 
 #surface-a--footer-content {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
   max-width: var( --content-width-l );
   width: 100% }
 

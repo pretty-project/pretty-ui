@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.thumbnail.helpers
+(ns x.app-elements.anchor.helpers
     (:require [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]
               [x.app-environment.api     :as environment]))
@@ -22,37 +22,34 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn thumbnail-body-attributes
+(defn anchor-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
+  ; @param (keyword) anchor-id
+  ; @param (map) anchor-props
   ;  {}
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [disabled? on-click]}]
+  [anchor-id {:keys [disabled? href on-click]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
+                 :href           href
                  :on-click       #(a/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)}))
 
-(defn thumbnail-attributes
+(defn anchor-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ;  {:border-radius (keyword)
-  ;   :height (keyword)
-  ;   :width (keyword)}
+  ; @param (keyword) anchor-id
+  ; @param (map) anchor-props
+  ;  {:color (keyword or string)
+  ;   :font-size (keyword)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-height (keyword)
-  ;   :data-width (keyword)}
-  [thumbnail-id {:keys [border-radius height width] :as thumbnail-props}]
-  (merge (engine/element-default-attributes thumbnail-id thumbnail-props)
-         (engine/element-indent-attributes  thumbnail-id thumbnail-props)
-         {:data-border-radius border-radius
-          :data-height        height
-          :data-width         width}))
+  ;  {:data-font-size (keyword)}
+  [anchor-id {:keys [color font-size] :as anchor-props}]
+  (merge (engine/element-default-attributes anchor-id anchor-props)
+         (engine/element-indent-attributes  anchor-id anchor-props)
+         (engine/apply-color {} :color :data-color color)
+         {:data-font-size font-size}))

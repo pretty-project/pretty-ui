@@ -37,7 +37,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- apply-color
+(defn apply-color
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) element-props
@@ -60,7 +60,7 @@
   (cond (keyword? color-value) (assoc    element-props color-data-key     color-value)
         (string?  color-value) (assoc-in element-props [:style color-key] color-value)))
 
-(defn- apply-dimension
+(defn apply-dimension
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) element-props

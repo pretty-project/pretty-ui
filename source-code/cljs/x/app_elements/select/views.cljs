@@ -21,8 +21,29 @@
               [x.app-elements.engine.api                     :as engine]
               [x.app-elements.element-components.button      :as button]
               [x.app-elements.element-components.icon-button :as icon-button]
+              [x.app-elements.element-components.text-field  :as text-field]
               [x.app-elements.select.helpers                 :as select.helpers]
               [x.app-elements.select.prototypes              :as select.prototypes]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- new-option-field
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {:extendable? (boolean)(opt)
+  ;   :new-option-placeholder (metamorphic-content)}
+  [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
+  (if extendable? (let [field-empty? @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
+                        adornment-on-click [:elements.select/enter-pressed select-id select-props]]
+                       [text-field/element :elements.select/new-option-field
+                                           {:end-adornments [{:disabled? field-empty? :icon :add :on-click adornment-on-click}]
+                                            :indent         {:bottom :xs :vertical :xs}
+                                            :placeholder    new-option-placeholder}])))
 
 
 
@@ -49,7 +70,7 @@
   [select-id {:keys [options-path] :as select-props}]
   (let [options @(a/subscribe [:db/get-item options-path])]
        (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
-              (reduce f [:<>] options))))
+              (reduce f [:<> [new-option-field select-id select-props]] options))))
 
 (defn- no-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -225,6 +246,8 @@
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :extendable? (boolean)(opt)
+  ;    Default: false
   ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
@@ -248,6 +271,10 @@
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
+  ;   :new-option-f (function)(opt)
+  ;    Default: return
+  ;   :new-option-placeholder (metamorphic-content)(opt)
+  ;    Default: :new-option
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)

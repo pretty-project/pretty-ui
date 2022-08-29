@@ -39,6 +39,7 @@
               [x.mid-dictionary.books.network       :as books.network]
               [x.mid-dictionary.books.notifications :as books.notifications]
               [x.mid-dictionary.books.order-by      :as books.order-by]
+              [x.mid-dictionary.books.products      :as books.products]
               [x.mid-dictionary.books.search        :as books.search]
               [x.mid-dictionary.books.selection     :as books.selection]
               [x.mid-dictionary.books.seo           :as books.seo]
@@ -49,6 +50,7 @@
               [x.mid-dictionary.books.transfer      :as books.transfer]
               [x.mid-dictionary.books.units         :as books.units]
               [x.mid-dictionary.books.user          :as books.user]
+              [x.mid-dictionary.books.vehicles      :as books.vehicles]
               [x.mid-dictionary.books.view          :as books.view]
               [x.mid-dictionary.books.website       :as books.website]))
 
@@ -84,6 +86,7 @@
                   books.network/BOOK
                   books.notifications/BOOK
                   books.order-by/BOOK
+                  books.products/BOOK
                   books.search/BOOK
                   books.selection/BOOK
                   books.seo/BOOK
@@ -94,5 +97,6 @@
                   books.transfer/BOOK
                   books.units/BOOK
                   books.user/BOOK
+                  books.vehicles/BOOK
                   books.view/BOOK
                   books.website/BOOK))

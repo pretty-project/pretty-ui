@@ -43,10 +43,12 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ;  {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-clickable (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click [:elements.select/render-options! select-id select-props]]
        (if-not disabled? {:data-clickable true

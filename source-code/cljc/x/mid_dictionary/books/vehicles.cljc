@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.search)
+(ns x.mid-dictionary.books.vehicles)
 
 
 
@@ -20,15 +20,18 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:no-items-found
-           {:en ""
-            :hu "Nincs találat"}
-           :search!
-           {:en "Search"
-            :hu "Keresés"}
-           :search
-           {:en "Search"
-            :hu "Keresés"}
-           :search-results-n
-           {:en "Search results (%)"
-            :hu "Keresési találatok (%)"}})
+(def BOOK {:axis-no
+           {:en "Number of axis"
+            :hu "Tengelyek száma"}
+           :empty-weight
+           {:en "Empty weight"
+            :hu "Üres súly"}
+           :total-weight
+           {:en "Total weight"
+            :hu "Teljes súly"}
+           :tyre-size
+           {:en "Tyre size"
+            :hu "Gumiabroncs mérete"}
+           :wheel-size
+           {:en "Wheel size"
+            :hu "Kerékméret"}})

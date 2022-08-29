@@ -23,9 +23,24 @@
 (def BOOK {:day
            {:en "Day"
             :hu "Nap"}
+           :height
+           {:en "Height"
+            :hu "Magasság"}
            :hour
            {:en "Hour"
             :hu "Óra"}
+           :inner-height
+           {:en "Inner height"
+            :hu "Belső magasság"}
+           :inner-length
+           {:en "Inner length"
+            :hu "Belső hossz"}
+           :inner-width
+           {:en "Inner width"
+            :hu "Belső szélesség"}
+           :length
+           {:en "Length"
+            :hu "Hossz"}
            :millisecond
            {:en "Millisecond"
             :hu "Milliszekundum"}
@@ -47,6 +62,9 @@
            :tomorrow
            {:en "Tomorrow"
             :hu "Holnap"}
+           :unit
+           {:en "Unit"
+            :hu "Mértékegység"}
            :unit-price
            {:en "Unit price"
             :hu "Egységár"}
@@ -56,6 +74,9 @@
            :weight
            {:en "Weight"
             :hu "Tömeg"}
+           :width
+           {:en "Width"
+            :hu "Szélesség"}
            :year
            {:en "Year"
             :hu "Év"}

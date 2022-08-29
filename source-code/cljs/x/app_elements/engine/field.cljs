@@ -365,6 +365,8 @@
   (let [field-filled? (r field-filled? db field-id)]
        (not field-filled?)))
 
+(a/reg-sub :elements/field-empty? field-empty?)
+
 (defn field-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -373,6 +375,15 @@
   ; @return (boolean)
   [db [_ field-id]]
   (r input/input-value-changed? db field-id))
+
+(defn field-focused?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (boolean)
+  [db [_ field-id]]
+  (r element/get-element-prop db field-id :focused?))
 
 (defn get-field-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

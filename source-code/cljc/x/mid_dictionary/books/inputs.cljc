@@ -23,12 +23,30 @@
 (def BOOK {:add-field!
            {:en "Add field"
             :hu "Mező hozzáadása"}
+           :add-field-group!
+           {:en "Add field group"
+            :hu "Csoport hozzáadása"}
+           :adding-field...
+           {:en "Adding field ..."
+            :hu "Mező hozzáadása ..."}
+           :adding-field-group...
+           {:en "Adding field group..."
+            :hu "Csoport hozzáadása ..."}
            :delete-field!
            {:en "Delete field"
             :hu "Mező törlése"}
            :empty-field!
            {:en "Empty field"
             :hu "Mező ürítése"}
+           :field-group
+           {:en "Field group"
+            :hu "Csoport"}
+           :field-name
+           {:en "Field name"
+            :hu "Mező neve"}
+           :new-option
+           {:en "New option"
+            :hu "Új elem"}
            :no-options
            {:en "No options"
             :hu "Nincs választható elem"}

@@ -67,12 +67,12 @@
 (def apply-dimension            element/apply-dimension)
 (def element-default-attributes element/element-default-attributes)
 (def element-indent-attributes  element/element-indent-attributes)
-(def element-attributes   element/element-attributes)
-(def get-element-prop     element/get-element-prop)
-(def get-element-props    element/get-element-props)
-(def set-element-prop!    element/set-element-prop!)
-(def update-element-prop! element/update-element-prop!)
-(def remove-element-prop! element/remove-element-prop!)
+(def element-attributes         element/element-attributes)
+(def get-element-prop           element/get-element-prop)
+(def get-element-props          element/get-element-props)
+(def set-element-prop!          element/set-element-prop!)
+(def update-element-prop!       element/update-element-prop!)
+(def remove-element-prop!       element/remove-element-prop!)
 
 ; x.app-elements.engine.element-info
 (def element-helper element-info/element-helper)
@@ -90,8 +90,10 @@
 (def field-body-attributes                  field/field-body-attributes)
 (def field-empty?                           field/field-empty?)
 (def field-filled?                          field/field-filled?)
+(def field-focused?                         field/field-focused?)
 (def get-field-value                        field/get-field-value)
 (def get-field-props                        field/get-field-props)
+(def empty-field-value!                     field/empty-field-value!)
 
 ; x.app-elements.engine.form
 (def inputs-passed?  form/inputs-passed?)

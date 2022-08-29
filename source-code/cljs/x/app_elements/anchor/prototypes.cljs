@@ -12,23 +12,23 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.search)
+(ns x.app-elements.anchor.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def BOOK {:no-items-found
-           {:en ""
-            :hu "Nincs találat"}
-           :search!
-           {:en "Search"
-            :hu "Keresés"}
-           :search
-           {:en "Search"
-            :hu "Keresés"}
-           :search-results-n
-           {:en "Search results (%)"
-            :hu "Keresési találatok (%)"}})
+(defn anchor-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) anchor-props
+  ;
+  ; @return (map)
+  ;  {:color (keyword or string)
+  ;   :font-size (keyword)}
+  [anchor-props]
+  (merge {:color     :primary
+          :font-size :s}
+         (param anchor-props)))

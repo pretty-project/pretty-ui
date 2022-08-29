@@ -526,7 +526,10 @@
 
 (defn get-year
   ; @return (integer)
-  [])
+  []
+  #?(:cljs (.getFullYear (js/Date.))
+     :clj  (-> (timestamp-object)
+               (timestamp-object->year))))
 
 (defn get-month
   ; @return (integer)
