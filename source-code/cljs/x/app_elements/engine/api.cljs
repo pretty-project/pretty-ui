@@ -29,11 +29,13 @@
               [x.app-elements.engine.combo-box          :as combo-box]
               [x.app-elements.engine.countable          :as countable]
               [x.app-elements.engine.element            :as element]
+              [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.field              :as field]
               [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
               [x.app-elements.engine.input-group        :as input-group]
+              [x.app-elements.engine.presets            :as presets]
               [x.app-elements.engine.selectable         :as selectable]
               [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]))
@@ -74,6 +76,9 @@
 (def update-element-prop!       element/update-element-prop!)
 (def remove-element-prop!       element/remove-element-prop!)
 
+; x.app-elements.engine.element-badge
+(def element-badge element-badge/element-badge)
+
 ; x.app-elements.engine.element-info
 (def element-helper element-info/element-helper)
 (def element-header element-info/element-header)
@@ -110,6 +115,9 @@
 
 ; x.app-elements.engine.input-group
 (def get-input-group-props input-group/get-input-group-props)
+
+; x.app-elements.engine.presets
+(def apply-preset presets/apply-preset)
 
 ; x.app-elements.engine.selectable
 (def on-select-function             selectable/on-select-function)

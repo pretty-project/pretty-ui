@@ -11,7 +11,7 @@
 
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
- 
+
 (ns x.app-elements.anchor.views
     (:require [x.app-components.api             :as components]
               [x.app-core.api                   :as a]
@@ -65,7 +65,6 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :href (string)(opt)
-  ;     Only w/o {:on-click ...}
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -75,8 +74,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :on-click (metamorphic-event)(constant)
-  ;     Only w/o {:href ...}
+  ;   :on-click (metamorphic-event)(opt)
   ;   :style (map)(opt)}
   ;
   ; @usage

@@ -105,7 +105,7 @@
       ; ... alkalmazza a select-props-prototype függvényt.
       ; ... alkalmazza az init-element! függvényt.
       (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-           {:db       (r select.events/init-element! db select-id select-props)
+           {:db       (r select.events/init-select!  db select-id select-props)
             :dispatch [:elements.select/render-options! select-id select-props]})))
 
 

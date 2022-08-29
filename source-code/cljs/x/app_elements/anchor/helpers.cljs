@@ -31,7 +31,7 @@
   ;
   ; @return (map)
   ;  {}
-  [anchor-id {:keys [disabled? href on-click]}]
+  [_ {:keys [disabled? href on-click]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
                  :href           href

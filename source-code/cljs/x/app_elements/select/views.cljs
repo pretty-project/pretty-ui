@@ -19,7 +19,7 @@
               [x.app-components.api                          :as components]
               [x.app-core.api                                :as a]
               [x.app-elements.engine.api                     :as engine]
-              [x.app-elements.element-components.button      :as button]
+              [x.app-elements.button.views                   :as button.views]
               [x.app-elements.element-components.icon-button :as icon-button]
               [x.app-elements.element-components.text-field  :as text-field]
               [x.app-elements.select.helpers                 :as select.helpers]
@@ -38,10 +38,11 @@
   ;  {:extendable? (boolean)(opt)
   ;   :new-option-placeholder (metamorphic-content)}
   [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
-  (if extendable? (let [field-empty? @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
-                        adornment-on-click [:elements.select/enter-pressed select-id select-props]]
+  (if extendable? (let [field-empty?      @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
+                        adornment-on-click [:elements.select/enter-pressed select-id select-props]
+                        adornment-props    {:disabled? field-empty? :icon :add :on-click adornment-on-click :title :add!}]
                        [text-field/element :elements.select/new-option-field
-                                           {:end-adornments [{:disabled? field-empty? :icon :add :on-click adornment-on-click}]
+                                           {:end-adornments [adornment-props]
                                             :indent         {:bottom :xs :vertical :xs}
                                             :placeholder    new-option-placeholder}])))
 
@@ -70,7 +71,7 @@
   [select-id {:keys [options-path] :as select-props}]
   (let [options @(a/subscribe [:db/get-item options-path])]
        (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
-              (reduce f [:<> [new-option-field select-id select-props]] options))))
+              (reduce f [:<>] options))))
 
 (defn- no-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,15 +96,25 @@
                                        [select-option-list select-id select-props]
                                        [no-options-label   select-id select-props])]))
 
+(defn- select-options-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  [_ {:keys [options-label]}]
+  (if options-label [:div.x-select--options--label (components/content options-label)]
+                    [:div.x-select--options--label {:data-placeholder true}]))
+
 (defn- select-options-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {}
-  [select-id {:keys [options-label] :as select-props}]
-  (if options-label [:div.x-select--options--header (components/content options-label)]
-                    [:div.x-select--options--header {:data-placeholder true}]))
+  [select-id select-props]
+  [:div.x-select--options--header [select-options-label select-id select-props]
+                                  [new-option-field     select-id select-props]])
 
 (defn- select-options-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -188,11 +199,11 @@
   ; @param (map) select-props
   [select-id select-props]
   ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
-  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements/init-select! ...]
+  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/init-select! ...]
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
   (reagent/lifecycles select-id
-                      {:component-did-mount (fn [] (a/dispatch [:elements.select/init-element! select-id select-props]))
-                       :reagent-render      (fn [] [select-layout-structure select-id select-props])}))
+                      {:component-did-mount (fn [] (a/dispatch [:elements.select/init-select! select-id select-props]))
+                       :reagent-render      (fn [_ select-props] [select-layout-structure select-id select-props])}))
 
 
 
@@ -220,7 +231,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [on-click [:elements.select/render-options! select-id select-props]]
-       [button/element select-id (assoc select-props :on-click on-click)]))
+       [button.views/element select-id (assoc select-props :on-click on-click)]))
 
 
 
@@ -249,7 +260,7 @@
   ;   :extendable? (boolean)(opt)
   ;    Default: false
   ;   :form-id (keyword)(opt)
-  ;   :get-label-f (function)(constant)(opt)
+  ;   :get-label-f (function)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
   ;    Default: return
@@ -262,8 +273,8 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :initial-options (vector)(constant)(opt)
-  ;   :initial-value (*)(constant)(opt)
+  ;   :initial-options (vector)(opt)
+  ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :layout (keyword)(opt)
   ;    :button, :icon-button, :select
@@ -278,13 +289,13 @@
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)
-  ;   :on-select (metamorphic-event)(constant)(opt)
-  ;   :options-label (metamorphic-content)(constant)(opt)
-  ;   :options-path (vector)(constant)(opt)
-  ;   :required? (boolean)(constant)(opt)
+  ;   :on-select (metamorphic-event)(opt)
+  ;   :options-label (metamorphic-content)(opt)
+  ;   :options-path (vector)(opt)
+  ;   :required? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :value-path (vector)(constant)(opt)}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/select {...}]

@@ -15,6 +15,7 @@
 (ns layouts.popup-a.views
     (:require [layouts.popup-a.helpers    :as helpers]
               [layouts.popup-a.prototypes :as prototypes]
+              [layouts.popup-a.state      :as state]
               [react.api                  :as react]
               [reagent.api                :as reagent]
               [x.app-components.api       :as components]
@@ -32,7 +33,7 @@
   ; @param (map) layout-props
   ; {:footer (metamorphic-content)}
   [popup-id {:keys [footer]}]
-  [:div.popup-a--footer {:data-shadow-visible @layouts.popup-a.state/FOOTER-SHADOW-VISIBLE?}
+  [:div.popup-a--footer {:data-shadow-visible (popup-id @state/FOOTER-SHADOW-VISIBLE?)}
                         [:div.popup-a--footer-content [components/content popup-id footer]]])
 
 (defn- footer
@@ -84,7 +85,7 @@
   ; @param (map) layout-props
   ; {:header (metamorphic-content)}
   [popup-id {:keys [header]}]
-  [:div.popup-a--header {:data-shadow-visible @layouts.popup-a.state/HEADER-SHADOW-VISIBLE?}
+  [:div.popup-a--header {:data-shadow-visible (popup-id @state/HEADER-SHADOW-VISIBLE?)}
                         [:div.popup-a--header-content [components/content popup-id header]]])
 
 (defn- header

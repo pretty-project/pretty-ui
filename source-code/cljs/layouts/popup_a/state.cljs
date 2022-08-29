@@ -20,8 +20,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (boolean)
-(defonce HEADER-SHADOW-VISIBLE? (ratom false))
+; @atom (map)
+(defonce HEADER-SHADOW-VISIBLE? (ratom {}))
 
-; @atom (boolean)
-(defonce FOOTER-SHADOW-VISIBLE? (ratom false))
+; @atom (map)
+(defonce FOOTER-SHADOW-VISIBLE? (ratom {}))

@@ -208,7 +208,7 @@ button.x-card:focus,
 .x-slideshow--controls--go-bwd,
 .x-slideshow--controls--go-fwd,
 .x-thumbnail--icon,
-.x-button[data-icon-family="material-icons-filled"] .x-button--icon,
+.x-button--icon[data-icon-family="material-icons-filled"],
 .x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
 .x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
 .x-icon[data-icon-family="material-icons-filled"] .x-icon--body,
@@ -225,7 +225,7 @@ button.x-card:focus,
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased }
 
-.x-button[data-icon-family="material-icons-outlined"] .x-button--icon,
+.x-button--icon[data-icon-family="material-icons-outlined"],
 .x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
 .x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
 .x-icon[data-icon-family="material-icons-outlined"] .x-icon--body,
@@ -1878,6 +1878,9 @@ button.x-card:focus,
   border-style: solid;
   border-width: 1px }
 
+.x-button--body[data-pressed="true"] {
+  opacity: .5 }
+
 /*** Button body ***/
 
 /*** Button icon ***/
@@ -1892,11 +1895,11 @@ button.x-card:focus,
 
   width: var( --icon-size-default ) }
 
-.x-button[data-icon-position="left"] .x-button--icon {
+.x-button--icon[data-icon-position="left"] {
   /* XXX#4509 */
   margin-right: 12px }
 
-.x-button[data-icon-position="right"] .x-button--icon {
+.x-button--icon[data-icon-position="right"] {
   margin-left: 12px }
 
 .x-button--icon-placeholder {
@@ -3222,7 +3225,9 @@ button.x-card:focus,
 
 /*** Select options header ***/
 
-.x-select--options--header {
+.x-select--options--header {}
+
+.x-select--options--label {
   display: flex;
   font-size: var( --font-size-s );
   font-weight: 500;
@@ -3230,7 +3235,7 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: 48px }
 
-.x-select--options--header[data-placeholder="true"] {
+.x-select--options--label[data-placeholder="true"] {
   height: 12px }
 
 /*** Select options header ***/

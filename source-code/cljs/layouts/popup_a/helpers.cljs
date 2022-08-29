@@ -50,8 +50,8 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-SHADOW-VISIBLE? false)
-                                               (reset! state/HEADER-SHADOW-VISIBLE? true)))]
+  (letfn [(f [intersecting?] (if intersecting? (swap! state/HEADER-SHADOW-VISIBLE? dissoc popup-id)
+                                               (swap! state/HEADER-SHADOW-VISIBLE? assoc  popup-id true)))]
          (environment/setup-intersection-observer! (a/dom-value popup-id "header-sensor") f)))
 
 (defn header-will-unmount-f
@@ -71,8 +71,8 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (letfn [(f [intersecting?] (if intersecting? (reset! state/FOOTER-SHADOW-VISIBLE? false)
-                                               (reset! state/FOOTER-SHADOW-VISIBLE? true)))]
+  (letfn [(f [intersecting?] (if intersecting? (swap! state/FOOTER-SHADOW-VISIBLE? dissoc popup-id)
+                                               (swap! state/FOOTER-SHADOW-VISIBLE? assoc  popup-id true)))]
          (environment/setup-intersection-observer! (a/dom-value popup-id "footer-sensor") f)))
 
 (defn footer-will-unmount-f

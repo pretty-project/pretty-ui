@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.api
-    (:require [x.app-elements.collect-handler.effects]
+    (:require [x.app-elements.button.effects]
+              [x.app-elements.button.side-effects]
+              [x.app-elements.collect-handler.effects]
               [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]
               [x.app-elements.color-selector.effects]
@@ -30,7 +32,7 @@
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
               [x.app-elements.anchor.views                            :as anchor.views]
-              [x.app-elements.element-components.button               :as element-components.button]
+              [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.element-components.card                 :as element-components.card]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
@@ -158,10 +160,10 @@
 (def set-element-prop!      engine/set-element-prop!)
 (def update-element-prop!   engine/update-element-prop!)
 (def remove-element-prop!   engine/remove-element-prop!)
-  
+
 ; x.app-elements.element-components.*
 (def anchor               anchor.views/element)
-(def button               element-components.button/element)
+(def button               button.views/element)
 (def button-separator     button-separator.views/element)
 (def card                 element-components.card/element)
 (def card-group           element-components.card-group/element)

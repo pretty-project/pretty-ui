@@ -13,10 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.submit-button
-    (:require [mid-fruits.candy                         :refer [param]]
-              [x.app-core.api                           :as a :refer [r]]
-              [x.app-elements.element-components.button :as element-components.button :refer [button]]
-              [x.app-elements.engine.api                :as engine]))
+    (:require [mid-fruits.candy                 :refer [param]]
+              [x.app-core.api                   :as a :refer [r]]
+              [x.app-elements.button.prototypes :as button.prototypes]
+              [x.app-elements.button.views      :as button.views]
+              [x.app-elements.engine.api        :as engine]))
 
 
 
@@ -79,9 +80,9 @@
    [element (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-props (-> button-props button-props-prototype element-components.button/button-props-prototype)]
+   (let [button-props (-> button-props button-props-prototype button.prototypes/button-props-prototype)]
         [engine/stated-element button-id
-                               {:render-f      #'button
+                               {:render-f      #'button.views/element
                                 :element-props button-props
                                 :destructor    [:elements/destruct-clickable!     button-id]
                                 :initializer   [:elements/init-clickable!         button-id]

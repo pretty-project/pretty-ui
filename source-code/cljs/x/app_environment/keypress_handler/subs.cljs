@@ -14,7 +14,7 @@
 
 (ns x.app-environment.keypress-handler.subs
     (:require [mid-fruits.map :as map]
-              [x.app-core.api :refer [r]]))
+              [x.app-core.api :as a :refer [r]]))
 
 
 
@@ -105,3 +105,12 @@
   (letfn [(f [keyup-events event-id] (conj keyup-events (get-in db [:environment :keypress-handler/data-items event-id :on-keyup])))]
          (let [keyup-event-ids (get-in db [:environment :keypress-handler/meta-items :cache key-code :keyup-events])]
               (reduce f [] keyup-event-ids))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:environment/key-pressed? 27]
+(a/reg-sub :environment/key-pressed? key-pressed?)

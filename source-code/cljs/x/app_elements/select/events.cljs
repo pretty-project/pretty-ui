@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-element!
+(defn init-select!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -112,7 +112,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.select/init-element! init-element!)
+(a/reg-event-db :elements.select/init-select! init-select!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :elements.select/clear-value! clear-value!)

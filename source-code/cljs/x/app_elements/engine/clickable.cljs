@@ -72,21 +72,6 @@
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn element-keypress-handled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (boolean)
-  [db [_ element-id]]
-  (let [keypress-props (r element/get-element-prop db element-id :keypress)]
-       (map/nonempty? keypress-props)))
-
-
-
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

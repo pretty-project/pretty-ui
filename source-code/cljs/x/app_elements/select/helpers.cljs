@@ -47,13 +47,15 @@
   ;
   ; @return (map)
   ;  {:data-clickable (boolean)
+  ;   :disabled (boolean)
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click [:elements.select/render-options! select-id select-props]]
-       (if-not disabled? {:data-clickable true
-                          :on-click       #(a/dispatch on-click)
-                          :on-mouse-up    #(environment/blur-element!)})))
+       (if disabled? {:disabled       true}
+                     {:data-clickable true
+                      :on-click       #(a/dispatch on-click)
+                      :on-mouse-up    #(environment/blur-element!)})))
 
 (defn select-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

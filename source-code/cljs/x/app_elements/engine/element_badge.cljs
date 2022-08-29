@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.badge-handler.views
+(ns x.app-elements.engine.element-badge
     (:require [x.app-components.api :as components]
               [x.app-core.api       :as a]))
 
