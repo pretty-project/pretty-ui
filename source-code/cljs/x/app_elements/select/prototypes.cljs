@@ -28,14 +28,16 @@
   ; @param (map) select-props
   ;
   ; @return (map)
-  ;  {:get-label-f (function)
+  ;  {:border-radius (keyword)
+  ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :layout (keyword)
   ;   :new-option-placeholder (metamorphic-content)
   ;   :no-options-label (metamorphic-content)
   ;   :value-path (vector)}
   [select-id select-props]
-  (merge {:get-label-f            return
+  (merge {:border-radius          :s
+          :get-label-f            return
           :get-value-f            return
           :layout                 :select
           :new-option-f           return

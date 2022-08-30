@@ -46,8 +46,8 @@
   ; @return (map)
   [db [_ request-id request-props server-response]]
   ; DEBUG
-  ; A request-id azonosítójú lekérés érkezett szerver-válasz utolsó 256 példányát eltárolja
-  (as-> db % (r target-request-response! % request-id server-response)
+  ; A request-id azonosítójú lekérésre érkezett szerver-válasz utolsó 256 példányát eltárolja
+  (as-> db % (r target-request-response! % request-id request-props server-response)
              (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/conj-item server-response)
              (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/last-items 256)
              (r db/set-item!   % [:sync :response-handler/data-items   request-id] server-response)))

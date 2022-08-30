@@ -32,11 +32,12 @@
   ;
   ; @return (map)
   ;  {}
-  [select-id {:keys [layout min-width] :as select-props}]
+  [select-id {:keys [border-radius layout min-width] :as select-props}]
   (merge (engine/element-default-attributes select-id select-props)
          (engine/element-indent-attributes  select-id select-props)
-         {:data-layout    layout
-          :data-min-width min-width}))
+         {:data-border-radius border-radius
+          :data-layout        layout
+          :data-min-width     min-width}))
 
 (defn select-button-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

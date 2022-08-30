@@ -1566,6 +1566,7 @@ button.x-card:focus,
 .x-card[data-border-radius="xxs"] .x-card--body,
 .x-ghost[data-border-radius="xxs"] .x-ghost--body,
 .x-icon-button[data-border-radius="xxs"] .x-icon-button--body::before,
+.x-select[data-border-radius="xxs"] .x-select--button-body,
 .x-thumbnail[data-border-radius="xxs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxs"] .x-toggle--body {
   border-radius: var( --border-radius-xxs ) }
@@ -1581,6 +1582,7 @@ button.x-card:focus,
 .x-card[data-border-radius="xs"] .x-card--body,
 .x-ghost[data-border-radius="xs"] .x-ghost--body,
 .x-icon-button[data-border-radius="xs"] .x-icon-button--body::before,
+.x-select[data-border-radius="xs"] .x-select--button-body,
 .x-thumbnail[data-border-radius="xs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xs"] .x-toggle--body {
   border-radius: var( --border-radius-xs ) }
@@ -1596,6 +1598,7 @@ button.x-card:focus,
 .x-card[data-border-radius="s"] .x-card--body,
 .x-ghost[data-border-radius="s"] .x-ghost--body,
 .x-icon-button[data-border-radius="s"] .x-icon-button--body::before,
+.x-select[data-border-radius="s"] .x-select--button-body,
 .x-thumbnail[data-border-radius="s"] .x-thumbnail--body,
 .x-toggle[data-border-radius="s"] .x-toggle--body {
   border-radius: var( --border-radius-s ) }
@@ -1611,6 +1614,7 @@ button.x-card:focus,
 .x-card[data-border-radius="m"] .x-card--body,
 .x-ghost[data-border-radius="m"] .x-ghost--body,
 .x-icon-button[data-border-radius="m"] .x-icon-button--body::before,
+.x-select[data-border-radius="m"] .x-select--button-body,
 .x-thumbnail[data-border-radius="m"] .x-thumbnail--body,
 .x-toggle[data-border-radius="m"] .x-toggle--body {
   border-radius: var( --border-radius-m ) }
@@ -1626,6 +1630,7 @@ button.x-card:focus,
 .x-card[data-border-radius="l"] .x-card--body,
 .x-ghost[data-border-radius="l"] .x-ghost--body,
 .x-icon-button[data-border-radius="l"] .x-icon-button--body::before,
+.x-select[data-border-radius="l"] .x-select--button-body,
 .x-thumbnail[data-border-radius="l"] .x-thumbnail--body,
 .x-toggle[data-border-radius="l"] .x-toggle--body {
   border-radius: var( --border-radius-l ) }
@@ -3127,7 +3132,6 @@ button.x-card:focus,
 .x-select--button-body {
   background: var( --fill-color );
   border-color: var( --border-color-highlight );
-  border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
   display: flex;

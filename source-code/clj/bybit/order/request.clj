@@ -12,15 +12,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns bybit.klines.order
-    (:require [bybit.klines.errors    :as klines.errors]
-              [bybit.klines.helpers   :as klines.helpers]
-              [bybit.klines.uri       :as klines.uri]
+(ns bybit.order.request
+    (:require [bybit.order.uri        :as order.uri]
+              [bybit.request.sign     :as request.sign]
               [bybit.response.errors  :as response.errors]
               [bybit.response.helpers :as response.helpers]
-              [clj-http.client        :as clj-http.client]
-              [mid-fruits.vector      :as vector]
-              [mid-fruits.time        :as time]))
+              [clj-http.client        :as clj-http.client]))
 
 
 

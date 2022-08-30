@@ -289,6 +289,20 @@
   [n]
   (str "0 " n))
 
+(defn linear-gradient
+  ; @param (string) direction
+  ; @param (list of strings) color-stops
+  ;
+  ; @example
+  ;  (css/linear-gradient "0deg" "red" "green" "blue")
+  ;  =>
+  ;  "linear-gradient(0deg, red, green, blue)"
+  ;
+  ; @return (string)
+  [direction & color-stops]
+  (let [color-stops (string/join color-stops ", ")]
+       (str "linear-gradient("direction", "color-stops")")))
+
 
 
 ;; ----------------------------------------------------------------------------

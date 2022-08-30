@@ -255,6 +255,9 @@
   ; @param (map) select-props
   ;  {:autoclear? (boolean)(opt)
   ;    Default: false
+  ;   :border-radius (keyword)(opt)
+  ;    :none, :xxs, :xs, :s, :m, :l
+  ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
