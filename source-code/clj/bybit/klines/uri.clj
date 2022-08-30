@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn kline-data-uri
+(defn kline-list-uri
   ; @param (map) uri-props
   ;  {:from (s)(opt)
   ;   :interval (string)
@@ -34,9 +34,14 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (bybit/kline-data-uri {:interval "1" :limit 60 :symbol "ETHUSD"})
+  ;  (bybit/kline-list-uri {:interval "1" :limit 60 :symbol "ETHUSD"})
   ;  =>
   ;  "https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=1&limit=60&from=1646401800"
+  ;
+  ; @example
+  ;  (bybit/kline-list-uri {:interval "1" :limit 60 :symbol "ETHUSD" :use-mainnet? true})
+  ;  =>
+  ;  "https://api.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=1&limit=60&from=1646401800"
   ;
   ; @return (string)
   [{:keys [from interval limit symbol use-mainnet?]}]
@@ -48,7 +53,7 @@
                     "&limit="    limit
                     "&from="     query-from)))
 
-(defn kline-data-uri-list
+(defn kline-list-uri-list
   ; @param (map) uri-props
   ;  {:from (s)(opt)
   ;   :interval (string)
@@ -60,7 +65,7 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (bybit/kline-data-uri-list {:interval "1" :limit 240 :symbol "ETHUSD"})
+  ;  (bybit/kline-list-uri-list {:interval "1" :limit 240 :symbol "ETHUSD"})
   ;  =>
   ;  ["https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=1&limit=40&from=1646401800"
   ;   "https://api-testnet.bybit.com/v2/public/kline/list?symbol=ETHUSD&interval=1&limit=200&from=1646404200"]
@@ -71,11 +76,11 @@
              (if (> limit 200)
                  ; If limit is greater than 200 ...
                  (let [uri-props (merge uri-props {:limit 200 :from (klines.helpers/query-from interval (* lap 200))})]
-                      (f (cons (kline-data-uri uri-props) uri-list)
+                      (f (cons (kline-list-uri uri-props) uri-list)
                          (assoc uri-props :limit (- limit 200))
                          (inc lap)))
                  ; If limit is NOT greater than 200 ...
                  (let [uri-props (merge uri-props {:limit limit :from (klines.helpers/query-from interval (+ limit (* (dec lap) 200)))})]
-                      (cons (kline-data-uri uri-props) uri-list))))]
+                      (cons (kline-list-uri uri-props) uri-list))))]
          ; *
          (vec (f [] uri-props 1))))

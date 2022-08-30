@@ -12,34 +12,30 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns bybit.response.errors)
+(ns bybit.order.uri
+    (:require [bybit.uri.config :as uri.config]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn response-body->error?
-  ; @param (map) response-body
-  ;  {:ret-code (integer)
-  ;   :ret-msg (string)}
+(defn order-create-uri
+  ; @param (map) uri-props
+  ;  {:use-mainnet? (boolean)(opt)
+  ;    Default: false}
   ;
-  ; @usage
-  ;  (bybit/response-body->error? {...})
+  ; @example
+  ;  (bybit/order-create-uri {})
+  ;  =>
+  ;  https://api-testnet.bybit.com/v2/private/order/create
   ;
-  ; @return (boolean)
-  [{:keys [ret-code ret-msg]}]
-  (or (not= ret-code 0)
-      (not= ret-msg "OK")))
-
-(defn response-body->invalid-api-details?
-  ; @param (map) response-body
-  ;  {:ret-code (integer)}
+  ; @example
+  ;  (bybit/order-create-uri {:use-mainnet? true})
+  ;  =>
+  ;  https://api.bybit.com/v2/private/order/create
   ;
-  ; @usage
-  ;  (bybit/response-body->invalid-api-details? {:ret-code 0})
-  ;
-  ; @return (boolean)
-  [{:keys [ret-code]}]
-  (or (= ret-code 10003)
-      (= ret-code 10004)))
+  ; @return (string)
+  [{:keys [use-mainnet?]}]
+  (let [address (if use-mainnet? uri.config/PRIVATE-API-ADDRESS uri.config/PRIVATE-TEST-API-ADDRESS)]
+       (str address "/order/create")))

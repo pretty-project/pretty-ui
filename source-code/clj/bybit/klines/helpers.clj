@@ -13,7 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns bybit.klines.helpers
-    (:require [mid-fruits.time :as time]))
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.reader :as reader]
+              [mid-fruits.time   :as time]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -82,3 +85,77 @@
 
   ([interval limit epoch-s]
    (- epoch-s (query-duration interval limit))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn receive-kline-item
+  ; @param (map) kline-item
+  ;  {:close (string)
+  ;   :high (string)
+  ;   :low (string)
+  ;   :open (string)
+  ;   :open-time (string)
+  ;   :volume (string)}
+  ;
+  ; @usage
+  ;  (bybit/receive-kline-item {...})
+  ;
+  ; @return (map)
+  ;  {:close (float or integer)
+  ;   :close-time (integer)
+  ;   :close-timestamp (string)
+  ;   :high (float or integer)
+  ;   :low (float or integer)
+  ;   :open (float or integer)
+  ;   :open-time (integer)
+  ;   :open-timestamp (string)
+  ;   :volume (float or integer)}
+  [{:keys [close high interval low open open-time volume] :as kline-item}]
+  (let [; WARNING! Az aktuális (éppen történő) periódus close-time értéke egy jövőbeni időpontra mutat!
+        close-time (close-time open-time interval)]
+       (-> kline-item (dissoc :open-time :symbol)
+                      (assoc  :close-time      (param close-time))
+                      (assoc  :open-time       (param  open-time))
+                      (assoc  :open-timestamp  (time/epoch-s->timestamp-string  open-time))
+                      (assoc  :close-timestamp (time/epoch-s->timestamp-string close-time))
+                      (assoc  :close           (reader/read-str close))
+                      (assoc  :open            (reader/read-str open))
+                      (assoc  :high            (reader/read-str high))
+                      (assoc  :low             (reader/read-str low))
+                      (assoc  :volume          (reader/read-str volume)))))
+
+(defn receive-kline-list-data
+  ; @param (map) kline-list-data
+  ;  {:kline-list (maps in vector)}
+  ;
+  ; @usage
+  ;  (bybit/receive-kline-list-data {...})
+  ;
+  ; @return (map)
+  ;  {:kline-list (maps in vector)
+  ;   :total-high (integer)
+  ;   :total-low (integer)}
+  [{:keys [kline-list] :as kline-list-data}]
+  (letfn [(f [{:keys [total-high total-low] :as o} {:keys [close open] :as x}]
+             (let [close (reader/read-str close)
+                   open  (reader/read-str open)]
+                  ; - A total-high és total-low értékek beállításakor az árfolyam nyitóértékét
+                  ;   is figyelembe kell venni!
+                  ; - A kliens-oldali árfolyam-diagram sávjai az egyes periódusok nyitó-
+                  ;   és záró-pontja közötti értékeket rajzolják ki.
+                  (cond-> o ; Set initial total-high ...
+                            (nil? total-high) (assoc :total-high (max open close))
+                            ; Set initial total-low ...
+                            (nil? total-low)  (assoc :total-low  (min open close))
+                            ; If close is higher than total-high ...
+                            (and (some? total-high) (< total-high close))
+                            (assoc :total-high close)
+                            ; If total-low is higher than close ...
+                            (and (some? total-low)  (> total-low  close))
+                            (assoc :total-low close)
+                            ; Update kline-item ...
+                            :update-kline-item (update :kline-list vector/conj-item (receive-kline-item x)))))]
+         (reduce f (dissoc kline-list-data :kline-list) kline-list)))

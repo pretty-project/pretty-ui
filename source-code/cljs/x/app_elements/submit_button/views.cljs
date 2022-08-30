@@ -21,7 +21,7 @@
 
 
 
-;; -- Components --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn element
@@ -31,7 +31,7 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ;  {:input-ids (keywords in vector)(constant)(opt)
+  ;  {:input-ids (keywords in vector)(opt)
   ;    A továbblépéshez validálni és kitölteni szükséges mezők azonosítói
   ;   :label (metamorphic content)(opt)
   ;    Default: :submit!}
