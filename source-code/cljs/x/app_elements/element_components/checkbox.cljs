@@ -66,10 +66,11 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ;  {:label (metamorphic-content)(opt)
-  ;   :required? (boolean)(opt)}
+  ;   :required? (boolean or keyword)(opt)}
   [_ {:keys [label required?]}]
   (if label [:div.x-checkbox--label [components/content label]
-                                    (if required? [:span.x-input--label-asterisk "*"])]))
+                                    (if (true? required?)
+                                        [:span.x-input--label-asterisk "*"])]))
 
 (defn- checkbox-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,7 +104,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -121,7 +121,8 @@
   ;   :layout (keyword)(opt)
   ;    :fit, :row
   ;    Default: :row
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :value-path (vector)(constant)(opt)}

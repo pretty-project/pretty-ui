@@ -68,7 +68,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: true
   ;   :helper (metamorphic-content)(opt)
@@ -125,7 +124,7 @@
                                 :modifier      field-props-modifier
                                 :initializer   [:elements/init-field!          field-id]
                                 :subscriber    [:elements/get-text-field-props field-id]
-                                
+
                                 ; TEMP
                                 :destructor (if (:autoclear? field-props) [:db/remove-item! (:value-path field-props)])}])))
                                 ; TEMP

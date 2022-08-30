@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.27
-; Description:
-; Version: v0.6.4
-; Compatibility: x4.4.8
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -32,7 +21,6 @@
               [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.field              :as field]
-              [x.app-elements.engine.form               :as form]
               [x.app-elements.engine.input              :as input]
               [x.app-elements.engine.input-group        :as input-group]
               [x.app-elements.engine.presets            :as presets]
@@ -100,15 +88,12 @@
 (def get-field-props                        field/get-field-props)
 (def empty-field-value!                     field/empty-field-value!)
 
-; x.app-elements.engine.form
-(def inputs-passed?  form/inputs-passed?)
-(def form-completed? form/form-completed?)
-
 ; x.app-elements.engine.input
 (def default-options-path   input/default-options-path)
 (def default-value-path     input/default-value-path)
 (def get-input-stored-value input/get-input-stored-value)
 (def get-input-value        input/get-input-value)
+(def inputs-passed?         input/inputs-passed?)
 (def get-input-props        input/get-input-props)
 (def reset-input-value!     input/reset-input-value!)
 (def clear-input-value!     input/clear-input-value!)

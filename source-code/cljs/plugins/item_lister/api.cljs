@@ -24,9 +24,6 @@
               [plugins.item-lister.download.effects]
               [plugins.item-lister.download.events]
               [plugins.item-lister.download.subs]
-              [plugins.item-lister.header.effects]
-              [plugins.item-lister.header.events]
-              [plugins.item-lister.header.subs]
               [plugins.item-lister.items.effects]
               [plugins.item-lister.routes.effects]
               [plugins.item-lister.transfer.subs]
@@ -34,7 +31,6 @@
               [plugins.item-lister.update.events]
               [plugins.item-lister.update.subs]
               [plugins.item-lister.body.views   :as body.views]
-              [plugins.item-lister.header.views :as header.views]
               [plugins.item-lister.items.events :as items.events]
               [plugins.item-lister.items.subs   :as items.subs]
               [plugins.item-lister.items.views  :as items.views]))
@@ -46,14 +42,6 @@
 
 ; plugins.item-lister.body.views
 (def body body.views/body)
-
-; plugins.item-lister.header.views
-(def search-block              header.views/search-block)
-(def new-item-block            header.views/new-item-block)
-(def set-actions-mode-block    header.views/set-actions-mode-block)
-(def toggle-reorder-mode-block header.views/toggle-reorder-mode-block)
-(def sort-items-block          header.views/sort-items-block)
-(def header                    header.views/header)
 
 ; plugins.item-lister.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)

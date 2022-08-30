@@ -17,11 +17,7 @@
               [reagent.api               :as reagent]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]
-
-              [x.app-elements.engine.element]
-              [x.app-elements.engine.input]
-              [x.app-elements.engine.form]))
+              [x.app-elements.engine.api :as engine]))
 
 
 
@@ -91,10 +87,11 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ;  {:label (metamorphic-content)
-  ;   :required? (boolean)(opt)}
+  ;   :required? (boolean or keyword)(opt)}
   [_ {:keys [label required?]}]
   [:div.x-switch--primary-label [components/content label]
-                                (if required? [:span.x-input--label-asterisk "*"])])
+                                (if (true? required?)
+                                    [:span.x-input--label-asterisk "*"])])
 
 (defn- switch-primary-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,17 +140,15 @@
 
 (defn switch-did-mount
   [db [_ switch-id switch-props]]
-  (let [switch-props (select-keys switch-props [:form-id :initial-value :value-path])]
+  (let [switch-props (select-keys switch-props [:initial-value :value-path])]
        (as-> db % (r x.app-elements.engine.element/store-element-props! % switch-id switch-props)
-                  (r x.app-elements.engine.input/use-initial-value!     % switch-id)
-                  (r x.app-elements.engine.form/reg-form-input!         % switch-id))))
+                  (r x.app-elements.engine.input/use-initial-value!     % switch-id))))
 
 (a/reg-event-db :elements/switch-did-mount switch-did-mount)
 
 (defn switch-will-unmount
   [db [_ switch-id]]
-  (as-> db % (r x.app-elements.engine.form/remove-form-input!       % switch-id)
-             (r x.app-elements.engine.element/remove-element-props! % switch-id)))
+  (as-> db % (r x.app-elements.engine.element/remove-element-props! % switch-id)))
 
 (a/reg-event-db :elements/switch-will-unmount switch-will-unmount)
 
@@ -172,7 +167,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -191,7 +185,8 @@
   ;    Default: :row
   ;   :on-check (metamorphic-event)(constant)(opt)
   ;   :on-uncheck (metamorphic-event)(constant)(opt)
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :value-path (vector)(constant)(opt)}
@@ -204,14 +199,8 @@
   ([switch-props]
    [element (a/id) switch-props])
 
-  ([switch-id {:keys [form-id initial-value] :as switch-props}]
+  ([switch-id switch-props]
    (let [switch-props (switch-props-prototype switch-id switch-props)]
-        (reagent/lifecycles {:reagent-render         (fn [] [switch switch-id switch-props])
-                             :component-did-mount    (fn [] (if (or form-id initial-value)
-                                                                (a/dispatch [:elements/switch-did-mount switch-id switch-props])))
-                             :component-will-unmount (fn [] (if (or form-id initial-value)
-                                                                (a/dispatch [:elements/switch-will-unmount switch-id])))})
-
         [engine/stated-element switch-id
                                {:render-f      #'switch
                                 :element-props switch-props

@@ -138,13 +138,14 @@
   ; @param (map) field-props
   ;  {:info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)
-  ;   :required? (boolean)(opt)}
+  ;   :required? (boolean or keyword)(opt)}
   [field-id {:keys [info-text label required?] :as field-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   (if label [:label.x-text-field--label {:for (target-handler.helpers/element-id->target-id field-id)}
                                         [components/content label]
-                                        (if required? [:span.x-input--label-asterisk "*"])
+                                        (if (true? required?)
+                                            [:span.x-input--label-asterisk "*"])
                                         (if info-text [engine/info-text-button field-id field-props])]))
 
 (defn- text-field-placeholder
@@ -249,7 +250,6 @@
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :emptiable? (boolean)(constant)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -281,7 +281,8 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :resetable? (boolean)(opt)
   ;    Default: false

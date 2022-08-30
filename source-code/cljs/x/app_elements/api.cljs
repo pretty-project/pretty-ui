@@ -31,6 +31,7 @@
               [x.app-elements.passfield-handler.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
+              [x.app-elements.submit-button.subs]
               [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
@@ -74,7 +75,7 @@
               [x.app-elements.element-components.search-field         :as element-components.search-field]
               [x.app-elements.select.views                            :as select.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
-              [x.app-elements.element-components.submit-button        :as element-components.submit-button]
+              [x.app-elements.submit-button.views                     :as submit-button.views]
               [x.app-elements.element-components.switch               :as element-components.switch]
               [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.element-components.text                 :as element-components.text]
@@ -151,7 +152,6 @@
 (def field-empty?           engine/field-empty?)
 (def field-filled?          engine/field-filled?)
 (def inputs-passed?         engine/inputs-passed?)
-(def form-completed?        engine/form-completed?)
 (def get-input-stored-value engine/get-input-stored-value)
 (def get-input-value        engine/get-input-value)
 (def reset-input-value!     engine/reset-input-value!)
@@ -205,7 +205,7 @@
 (def search-field         element-components.search-field/element)
 (def select               select.views/element)
 (def slideshow            element-components.slideshow/element)
-(def submit-button        element-components.submit-button/element)
+(def submit-button        submit-button.views/element)
 (def switch               element-components.switch/element)
 (def table                element-components.table/element)
 (def text                 element-components.text/element)

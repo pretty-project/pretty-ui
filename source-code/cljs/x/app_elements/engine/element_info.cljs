@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.10.27
-; Description:
-; Version: v0.4.8
-; Compatibility: x4.4.8
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -112,7 +101,17 @@
   ; @param (map) element-props
   ;  {}
   [element-id {:keys [info-text label required?] :as element-props}]
+  ; Ha az elem {:required? ...} tulajdonságának értéke :unmarked, akkor az elem
+  ; {:required? true} állapotban van, tehát többek közt az engine/input-passed?
+  ; függvény kötelező inputnak tekinti, de közben a {:required? true} állapotot jelölő
+  ; piros csillag és az input kitöltésésére figyelmeztető piros szöveg nem jelenik meg.
+  ;
+  ; Pl.: A bejelentkező képernyőn lévő email-address és password mezők {:required? true}
+  ;      állapotban kell, hogy legyenek, hogy a login submit-button {:disabled? true}
+  ;      állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
+  ;      a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.
   [:div.x-element--header (if label [:div.x-element--label (components/content label)
-                                                           (if required? [:span.x-element--label-asterisk "*"])])
+                                                           (if (true? required?)
+                                                               [:span.x-element--label-asterisk "*"])])
                           (if info-text [info-text-button  element-id element-props])
                           (if info-text [info-text-content element-id element-props])])

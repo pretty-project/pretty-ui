@@ -82,7 +82,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -104,7 +103,8 @@
   ;   :on-focus (metamorphic-event)(constant)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :validate? (boolean)(opt)

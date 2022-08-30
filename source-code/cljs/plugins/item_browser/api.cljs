@@ -30,7 +30,6 @@
               [plugins.item-browser.update.subs]
               [plugins.item-browser.body.views   :as body.views]
               [plugins.item-browser.core.subs    :as core.subs]
-              [plugins.item-browser.header.views :as header.views]
               [plugins.item-browser.items.events :as items.events]
               [plugins.item-browser.items.subs   :as items.subs]
               [plugins.item-browser.items.views  :as items.views]
@@ -48,11 +47,6 @@
 (def get-current-item-id core.subs/get-current-item-id)
 (def get-current-item    core.subs/get-current-item)
 (def browsing-item?      core.subs/browsing-item?)
-
-; plugins.item-browser.header.views
-(def go-home-icon-button header.views/go-home-icon-button)
-(def go-up-icon-button   header.views/go-up-icon-button)
-(def header              header.views/header)
 
 ; plugins.item-browser.items.events
 (def toggle-item-selection! items.events/toggle-item-selection!)

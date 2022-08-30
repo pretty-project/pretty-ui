@@ -77,10 +77,11 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {:label (metamorphic-content)(opt)
-  ;   :required? (boolean)(opt)}
+  ;   :required? (boolean or keyword)(opt)}
   [_ {:keys [label required?]}]
   (if label [:div.x-counter--label [components/content label]
-                                   (if required? [:span.x-input--label-asterisk "*"])]))
+                                   (if (true? required?)
+                                       [:span.x-input--label-asterisk "*"])]))
 
 (defn- counter-increase-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -132,7 +133,6 @@
   ;   :default-value (integer)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -152,7 +152,8 @@
   ;   :min-value (integer)(opt)
   ;   :resetable? (boolean)(opt)
   ;    Default: false
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :value-path (vector)(constant)(opt)}

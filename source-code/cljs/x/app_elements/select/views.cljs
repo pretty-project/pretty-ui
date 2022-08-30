@@ -14,6 +14,7 @@
 
 (ns x.app-elements.select.views
     (:require [layouts.popup-a.api                           :as popup-a]
+              [mid-fruits.logical                            :refer [nonfalse?]]
               [mid-fruits.vector                             :as vector]
               [reagent.api                                   :as reagent]
               [x.app-components.api                          :as components]
@@ -292,7 +293,8 @@
   ;   :on-select (metamorphic-event)(opt)
   ;   :options-label (metamorphic-content)(opt)
   ;   :options-path (vector)(opt)
-  ;   :required? (boolean)(opt)
+  ;   :required? (boolean or keyword)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :value-path (vector)(opt)}

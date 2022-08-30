@@ -12,22 +12,33 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-viewer.footer.subs
-    (:require [plugins.plugin-handler.footer.subs :as footer.subs]
-              [x.app-core.api                     :as a]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.footer.subs
-(def get-footer-prop footer.subs/get-footer-prop)
+(ns bybit.uri.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-viewer/get-footer-prop get-footer-prop)
+; @constant (string)
+;
+; @usage
+;  (bybit/PUBLIC-API-ADDRESS)
+(def PUBLIC-API-ADDRESS "https://api.bybit.com/v2/public")
+
+; @constant (string)
+;
+; @usage
+;  (bybit/PUBLIC-TEST-API-ADDRESS)
+(def PUBLIC-TEST-API-ADDRESS "https://api-testnet.bybit.com/v2/public")
+
+; @constant (string)
+;
+; @usage
+;  (bybit/PRIVATE-API-ADDRESS)
+(def PRIVATE-API-ADDRESS "https://api.bybit.com/v2/private")
+
+; @constant (string)
+;
+; @usage
+;  (bybit/PRIVATE-TEST-API-ADDRESS)
+(def PRIVATE-TEST-API-ADDRESS "https://api-testnet.bybit.com/v2/private")

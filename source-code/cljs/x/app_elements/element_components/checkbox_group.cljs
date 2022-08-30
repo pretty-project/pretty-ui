@@ -91,10 +91,11 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   ;  {:label (metamorphic-content)
-  ;   :required? (boolean)(opt)}
+  ;   :required? (boolean or keyword)(opt)}
   [_ {:keys [label required?]}]
   [:div.x-checkbox-group--label [components/content label]
-                                (if required? [:span.x-input--label-asterisk "*"])])
+                                (if (true? required?)
+                                    [:span.x-input--label-asterisk "*"])])
 
 (defn- checkbox-group-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,7 +160,6 @@
   ;   :default-value (*)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
@@ -183,7 +183,8 @@
   ;   :on-check (metamorphic-event)(constant)(opt)
   ;   :on-uncheck (metamorphic-event)(constant)(opt)
   ;   :options-path (vector)(constant)(opt)
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :value-path (vector)(constant)(opt)}

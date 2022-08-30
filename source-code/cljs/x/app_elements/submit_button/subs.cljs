@@ -12,33 +12,30 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.value-editor.core.helpers
-    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; mid.plugins.plugin-handler.core.helpers
-(def component-id      core.helpers/component-id)
-(def default-data-path core.helpers/default-data-path)
+(ns x.app-elements.submit-button.subs
+    (:require [x.app-core.api            :as a :refer [r]]
+              [x.app-elements.engine.api :as engine]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn default-edit-path
+(defn button-disabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) editor-id
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:input-ids (keywords in vector)(opt)}
   ;
-  ; @example
-  ;  (core.helpers/default-edit-path :my-editor)
-  ;  =>
-  ;  [:plugins :plugin-handler/edited-item :my-editor]
-  ;
-  ; @return (vector)
-  [editor-id]
-  (default-data-path editor-id :edited-item))
+  ; @return (boolean)
+  [db [_ _ {:keys [input-ids]}]]
+  (not (r engine/inputs-passed? db input-ids)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :elements.submit-button/button-disabled? button-disabled?)

@@ -110,7 +110,6 @@
   ;    TODO ...
   ;   :disabled? (boolean)(opt)
   ;    TODO ...
-  ;   :form-id (keyword)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

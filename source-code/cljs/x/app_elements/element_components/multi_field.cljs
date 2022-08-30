@@ -239,7 +239,6 @@
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
   ;  {:class (keyword or keywords in vector)(opt)
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :info-text (metamorphic-content)(opt)
   ;   :indent (map)(opt)

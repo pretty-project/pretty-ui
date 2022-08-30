@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.02.27
-; Description:
-; Version: v0.5.4
-; Compatibility: x4.5.4
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -284,15 +273,25 @@
   ; @param (keyword) input-id
   ;
   ; @return (boolean)
-  ;  Az input-value értéke nem NIL, FALSE vagy "" (vagy nem required),
-  ;  és ha az inputot validálni kell, akkor az input-value értéke valid-e
+  ;  Az input-passed? függvény visszatérési értéke TRUE, ha az input-value
+  ;  értéke nem NIL, FALSE vagy "" (vagy nem required), és ha az inputot
+  ;  validálni kell, akkor az input-value értéke valid-e
   [db [_ input-id]]
   (and (or (r input-value-passed?        db input-id)
            (not (r input-required?       db input-id)))
        (or (not (r validate-input-value? db input-id))
            (r input-value-valid?         db input-id))))
 
-(a/reg-sub :elements/input-passed? input-passed?)
+(defn inputs-passed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keywords in vector) input-ids
+  ;
+  ; @return (boolean)
+  ;  Az inputs-passed? függvény visszatérési értéke TRUE, ha az input-ids vektorban
+  ;  felsorolt inputok értékei nem NIL, FALSE vagy "" értékek
+  [db [_ input-ids]]
+  (vector/all-items-match? [(last input-ids)] #(r input-passed? db %)))
 
 (defn input-required-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -301,9 +300,11 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (and (r input-visited?           db input-id)
-       (r input-required?          db input-id)
-       (not (r input-value-passed? db input-id))))
+  (let [required? (r element/get-element-prop db input-id :required?)]
+       (and (r input-visited?           db input-id)
+            (r input-required?          db input-id)
+            (not (r input-value-passed? db input-id))
+            (not= :unmarked required?))))
 
 (defn input-required-success?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -405,17 +406,6 @@
 
 (a/reg-event-db :elements/mark-input-as-visited! mark-input-as-visited!)
 
-(defn reg-form-input!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (if-let [form-id (r element/get-element-prop db input-id :form-id)]
-          (r element/update-element-prop! db form-id :input-ids vector/conj-item input-id)
-          (return db)))
-
 (defn init-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -425,7 +415,6 @@
   [db [_ input-id]]
   (as-> db % (r use-input-initial-value!  % input-id)
              (r store-input-backup-value! % input-id)
-             (r reg-form-input!           % input-id)
 
              ; HACK#1411
              ; Gyors hack, ami azt oldja meg, hogy az input validator ne validáljon addig

@@ -50,29 +50,6 @@
 
 
 
-;; -- A :form-id tulajdonság használata ---------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az item-editor plugin "Mentés" gombja mindaddig {:disabled? true} állapotban marad, amíg
-; a megjelenített inputok közül nincs kitöltve az összes olyan, amelyik ...
-; ... {:required? true} beállítással rendelkezik.
-; ... a {:form-id ...} tulajdonsága megyegyezik az item-editor body komponensének {:form-id ...}
-;     tulajdonságával.
-; (Fejlesztői módban elindítitott applikáció esetén ez a funkció inaktív!)
-(defn our-type-form
-  [editor-id]
-  [elements/text-field ::our-sample-field
-                       {:form-id    :my-form
-                        :required?  true
-                        :value-path [:our-editor :our-field]}])
-
-(defn our-view
-  []
-  [item-editor/view :our-editor {:form-element #'our-type-form
-                                 :form-id :my-form}])
-
-
-
 ;; -- Az {:auto-title? true} beállítás használata -----------------------------
 ;; ----------------------------------------------------------------------------
 

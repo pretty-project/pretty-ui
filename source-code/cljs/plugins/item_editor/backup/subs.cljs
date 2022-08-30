@@ -127,5 +127,5 @@
 ; @param (keywords in vector) change-keys
 ;
 ; @usage
-;  [:item-editor/form-completed? :my-editor [:name :email-address]]
+;  [:item-editor/form-changed? :my-editor [:name :email-address]]
 (a/reg-sub :item-editor/form-changed? form-changed?)

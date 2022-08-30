@@ -120,7 +120,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -155,7 +154,8 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :required? (boolean)(constant)(opt)
+  ;   :required? (boolean or keyword)(constant)(opt)
+  ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
   ;   :unemptiable? (boolean)(opt)

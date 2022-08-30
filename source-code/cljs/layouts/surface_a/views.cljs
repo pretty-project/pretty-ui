@@ -141,7 +141,7 @@
   [elements/button ::privacy-policy-button
                    {:color     :muted
                     :font-size :xs
-                    :indent    {:bottom :xs :vertical :xs}
+                    :indent    {:vertical :xs}
                     :label     :privacy-policy
                     :on-click  [:router/go-to! "/@app-home/privacy-policy"]}])
 
@@ -151,7 +151,7 @@
   [elements/button ::terms-of-service-button
                    {:color     :muted
                     :font-size :xs
-                    :indent    {:bottom :xs :vertical :xs}
+                    :indent    {:vertical :xs}
                     :label     :terms-of-service
                     :on-click  [:router/go-to! "/@app-home/terms-of-service"]}])
 
@@ -161,7 +161,7 @@
   [elements/button ::settings-button
                    {:color     :muted
                     :font-size :xs
-                    :indent    {:bottom :xs :vertical :xs}
+                    :indent    {:vertical :xs}
                     :label     :settings
                     :on-click  [:router/go-to! "/@app-home/settings"]}])
 
@@ -171,7 +171,7 @@
   [elements/button ::logout-button
                    {:color     :muted
                     :font-size :xs
-                    :indent    {:bottom :xs :vertical :xs}
+                    :indent    {:vertical :xs}
                     :label     :logout!
                     :on-click  [:user/logout!]}])
 

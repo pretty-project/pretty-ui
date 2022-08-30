@@ -226,7 +226,6 @@
   ;    Default: false
   ;   :emptiable? (boolean)(opt)
   ;    Default: true
-  ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)

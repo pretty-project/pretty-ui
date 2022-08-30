@@ -70,7 +70,8 @@
   ;  {:data-border-radius (keyword)
   ;   :data-font-size (keyword)
   ;   :data-font-weight (keyword)
-  ;   :data-horizontal-align (keyword)}
+  ;   :data-horizontal-align (keyword)
+  ;   :data-selectable (boolean)}
   [button-id {:keys [background-color border-color border-radius color font-size
                      font-weight horizontal-align hover-color] :as button-props}]
   (merge (engine/element-default-attributes button-id button-props)
@@ -82,4 +83,5 @@
          (if border-radius {:data-border-radius border-radius})
          {:data-font-size        font-size
           :data-font-weight      font-weight
-          :data-horizontal-align horizontal-align}))
+          :data-horizontal-align horizontal-align
+          :data-selectable       false}))
