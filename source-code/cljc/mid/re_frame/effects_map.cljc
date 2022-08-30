@@ -51,3 +51,15 @@
   (-> a (update-some :dispatch-n     vector/conj-item    (:dispatch       b))
         (update-some :dispatch-n     vector/concat-items (:dispatch-n     b))
         (update-some :dispatch-later vector/concat-items (:dispatch-later b))))
+
+(defn effects-map->handler-f
+  ; @param (map) effects-map
+  ;
+  ; @example
+  ;  (re-frame/effects-map->handler-f {:dispatch [...]})
+  ;  =>
+  ;  (fn [_ _] {:dispatch [...]})
+  ;
+  ; @return (function)
+  [effects-map]
+  (fn [_ _] effects-map))

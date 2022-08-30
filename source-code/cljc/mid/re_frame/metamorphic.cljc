@@ -13,72 +13,41 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.re-frame.metamorphic
-    (:require [mid-fruits.candy :refer [return]]))
+    (:require [mid-fruits.candy          :refer [return]]
+              [mid-fruits.map            :as map]
+              [mid-fruits.vector         :as vector]
+              [mid.re-frame.effects-map  :as effects-map]
+              [mid.re-frame.event-vector :as event-vector]
+              [mid.re-frame.types        :as types]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn event-vector->effects-map
-  ; @param (vector) event-vector
-  ;
-  ; @usage
-  ;  (re-frame/event-vector->effects-map [...])
-  ;  =>
-  ;  {:dispatch [...]}
-  ;
-  ; @return (map)
-  [event-vector]
-  {:dispatch event-vector})
-
-(defn event-vector->handler-f
-  ; @param (vector) event-vector
-  ;
-  ; @usage
-  ;  (re-frame/event-vector->handler-f [...])
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @return (function)
-  [event-vector]
-  (fn [_ _] {:dispatch event-vector}))
-
-(defn effects-map->handler-f
-  ; @param (map) effects-map
-  ;
-  ; @usage
-  ;  (re-frame/effects-map->handler-f {:dispatch [...]})
-  ;  =>
-  ;  (fn [_ _] {:dispatch [...]})
-  ;
-  ; @return (function)
-  [effects-map]
-  (fn [_ _] effects-map))
 
 (defn metamorphic-handler->handler-f
   ; @param (metamorphic-event) n
   ;
-  ; @usage
+  ; @example
   ;  (re-frame/metamorphic-handler->handler-f [...])
   ;  =>
   ;  (fn [_ _] {:dispatch [...]})
   ;
-  ; @usage
+  ; @example
   ;  (re-frame/metamorphic-handler->handler-f {:dispatch [...]})
   ;  =>
   ;  (fn [_ _] {:dispatch [...]})
   ;
-  ; @usage
+  ; @example
   ;  (re-frame/metamorphic-handler->handler-f (fn [_ _] ...))
   ;  =>
   ;  (fn [_ _] ...})
   ;
   ; @return (function)
   [n]
-  (cond (map?    n) (effects-map->handler-f  n)
-        (vector? n) (event-vector->handler-f n)
-        :else       (return                  n)))
+  (cond (map?    n) (effects-map/effects-map->handler-f   n)
+        (vector? n) (event-vector/event-vector->handler-f n)
+        :else       (return                               n)))
 
 (defn metamorphic-event->effects-map
   ; @param (metamorphic-effects) n
@@ -95,5 +64,28 @@
   ;
   ; @return (map)
   [n]
-  (cond (vector? n) (event-vector->effects-map n)
-        (map?    n) (return                    n)))
+  (cond (vector? n) (event-vector/event-vector->effects-map n)
+        (map?    n) (return                                 n)))
+
+(defn metamorphic-event<-params
+  ; @param (metamorphic-event) n
+  ; @param (list of *) params
+  ;
+  ; @example
+  ;  (re-frame/metamorphic-event<-params [:my-event] "My param" "Your param")
+  ;  =>
+  ;  [:my-event "My param" "Your param"]
+  ;
+  ; @example
+  ;  (re-frame/metamorphic-event<-params {:dispatch [:my-event]} "My param" "Your param")
+  ;  =>
+  ;  {:dispatch [:my-event "My param" "Your param"]}
+  ;
+  ; @return (metamorphic-event)
+  [n & params]
+  ; Szükséges megkülönböztetni az esemény vektort a dispatch-later és dispatch-tick esemény csoport vektortól!
+  ; [:my-event ...]
+  ; [{:ms 500 :dispatch [:my-event ...]}]
+  (cond (types/event-vector? n) (vector/concat-items n params)
+        (map?                n) (map/->values        n #(apply metamorphic-event<-params % params))
+        :else                   (return              n)))

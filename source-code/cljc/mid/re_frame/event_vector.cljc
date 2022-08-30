@@ -12,7 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.re-frame.event-vector)
+(ns mid.re-frame.event-vector
+    (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -31,57 +33,44 @@
   [event-vector]
   (first event-vector))
 
-(defn cofx->event-vector
-  ; @param (map) cofx
-  ;  {:event (vector)}
+(defn event-vector->effects-map
+  ; @param (vector) event-vector
   ;
   ; @example
-  ;  (re-frame/cofx->event-vector {:event [...]})
+  ;  (re-frame/event-vector->effects-map [...])
   ;  =>
-  ;  [...]
+  ;  {:dispatch [...]}
   ;
-  ; @return (vector)
-  [cofx]
-  (get cofx :event))
+  ; @return (map)
+  [event-vector]
+  {:dispatch event-vector})
 
-(defn cofx->event-id
-  ; @param (map) cofx
-  ;  {:event (vector)
-  ;    [(keyword) event-id]}
+(defn event-vector->handler-f
+  ; @param (vector) event-vector
   ;
   ; @example
-  ;  (re-frame/cofx->event-vector {:event [:my-event ...]})
+  ;  (re-frame/event-vector->handler-f [...])
   ;  =>
-  ;  :my-event
+  ;  (fn [_ _] {:dispatch [...]})
   ;
-  ; @return (keyword)
-  [cofx]
-  (get-in cofx [:event 0]))
+  ; @return (function)
+  [event-vector]
+  (fn [_ _] {:dispatch event-vector}))
 
-(defn context->event-vector
-  ; @param (map) context
-  ;  {:coeffects (map)
-  ;   {:event (vector)}}
-  ;
-  ; @usage
-  ;  (re-frame/context->event-vector {:coeffects {:event [:my-event ...]}})
-  ;  =>
-  ;  [:my-event ...]
-  ;
-  ; @return (vector)
-  [context]
-  (get-in context [:coeffects :event]))
 
-(defn context->event-id
-  ; @param (map) context
-  ;  {:coeffects (map)
-  ;   {:event (vector)}}
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn event-vector<-params
+  ; @param (event-vector) n
+  ; @param (list of *) params
   ;
-  ; @usage
-  ;  (re-frame/context->event-vector {:coeffects {:event [:my-event ...]}})
+  ; @example
+  ;  (re-frame/event-vector<-params [:my-event] "My param" "Your param")
   ;  =>
-  ;  :my-event
+  ;  [:my-event "My param" "Your param"]
   ;
-  ; @return (keyword)
-  [context]
-  (-> context context->event-vector event-vector->event-id))
+  ; @return (event-vector)
+  [n & params]
+  (vector/concat-items n params))

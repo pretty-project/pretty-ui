@@ -12,14 +12,36 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-core.sample
-    (:require [x.mid-core.api :as a]))
+(ns mid.re-frame.cofx)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha a debug! interceptort használod, akkor az esemény megtörténésekor az esemény-vektor
-; kiíródik a console/terminálra.
-(a/reg-event-fx :my-event [a/debug!] (fn [_ _] [:my-event]))
+(defn cofx->event-vector
+  ; @param (map) cofx
+  ;  {:event (vector)}
+  ;
+  ; @example
+  ;  (re-frame/cofx->event-vector {:event [...]})
+  ;  =>
+  ;  [...]
+  ;
+  ; @return (vector)
+  [cofx]
+  (get cofx :event))
+
+(defn cofx->event-id
+  ; @param (map) cofx
+  ;  {:event (vector)
+  ;    [(keyword) event-id]}
+  ;
+  ; @example
+  ;  (re-frame/cofx->event-vector {:event [:my-event ...]})
+  ;  =>
+  ;  :my-event
+  ;
+  ; @return (keyword)
+  [cofx]
+  (get-in cofx [:event 0]))

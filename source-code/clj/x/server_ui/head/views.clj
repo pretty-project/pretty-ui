@@ -14,10 +14,7 @@
 
 (ns x.server-ui.head.views
     (:require [x.server-ui.head.helpers    :as head.helpers]
-              [x.server-ui.head.prototypes :as head.prototypes]
-
-              ; TEMP
-              [bybit.api :as bybit]))
+              [x.server-ui.head.prototypes :as head.prototypes]))
 
 
 
@@ -41,12 +38,6 @@
    (view request {}))
 
   ([request head-props]
-
-   (let []
-        (println (str (bybit/request-wallet-balance! {:api-key "Gv87BXFiNQu3iLT9DP" :api-secret "EvfNHrPxYnSVcowKHqcuw7gm8bBA70IicnkU"
-                                                      :use-mainnet? true}))))
-                                                    
-
    (let [head-props (head.prototypes/head-props-prototype request head-props)]
         (-> [:head#x-head]
             (head.helpers/head<-legal-information request head-props)
