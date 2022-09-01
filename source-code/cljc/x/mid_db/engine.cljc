@@ -144,6 +144,20 @@
   [db [_ item-path]]
   (update-in db item-path not))
 
+(defn toggle-item-value!
+  ; @param (vector) item-path
+  ; @param (*) item-value
+  ;
+  ; @usage
+  ;  (r db/toggle-item-value! [:my-item] :my-value)
+  ;
+  ; @return (map)
+  [db [_ item-path item-value]]
+  (let [stored-value (get-in db item-path)]
+       (if (= stored-value item-value)
+           (dissoc-in db item-path)
+           (assoc-in  db item-path item-value))))
+
 (defn copy-item!
   ; @param (vector) from-item-path
   ; @param (vector) to-item-path

@@ -64,9 +64,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon (keyword)}
-  [_ {:keys [icon]}]
-  [:i.x-icon-button--icon icon])
+  ;  {:icon (keyword)
+  ;   :icon-family (keyword)}
+  [_ {:keys [icon icon-family]}]
+  [:i.x-icon-button--icon {:data-icon-family icon-family} icon])
 
 (defn- icon-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

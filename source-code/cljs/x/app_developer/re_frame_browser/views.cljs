@@ -44,14 +44,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [disabled? icon label on-click]}]
   (if disabled? [:div {:style {:padding "0 12px" :min-width "60px"}}
-                      [:div.x-icon {:style {:opacity ".5" :width "100%"} :data-icon-family "material-icons-filled"}
-                                   [:i.x-icon--body icon]]
+                      [:div.x-icon.x-element {:style {:opacity ".5" :width "100%"}}
+                                             [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
                       [icon-button-label label true]]
                 [:button {:data-clickable true
                           :on-click #(a/dispatch on-click)
                           :style {:display :block :padding "0 12px" :min-width "60px"}}
-                         [:div.x-icon {:style {:width "100%"} :data-icon-family "material-icons-filled"}
-                                      [:i.x-icon--body icon]]
+                         [:div.x-icon.x-element {:style {:width "100%"}}
+                                                [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
                          [icon-button-label label]]))
 
 

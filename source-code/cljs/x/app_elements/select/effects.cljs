@@ -42,7 +42,7 @@
   (fn [{:keys [db]} [_ select-id select-props]]
       (if-let [new-option-field-focused? (r engine/field-focused? db :elements.select/new-option-field)]
               (if-let [new-option-field-filled? (r engine/field-filled? db :elements.select/new-option-field)]
-                      [:elements.select/add-new-option! select-id select-props]))))
+                      [:elements.select/add-option! select-id select-props]))))
 
 
 
@@ -135,12 +135,12 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :elements.select/add-new-option!
+  :elements.select/add-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id select-props]]
-      (let [new-option (r engine/get-field-value db :elements.select/new-option-field)]
-           {:db (as-> db % (r engine/empty-field-value!     % :elements.select/new-option-field)
-                           (r select.events/add-new-option! % select-id select-props new-option))})))
+      (let [option-value (r engine/get-field-value db :elements.select/new-option-field)]
+           {:db (as-> db % (r engine/empty-field-value! % :elements.select/new-option-field)
+                           (r select.events/add-option! % select-id select-props option-value))})))

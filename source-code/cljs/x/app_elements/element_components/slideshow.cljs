@@ -138,10 +138,12 @@
   ; @param (map) slideshow-props
   [slideshow-id slideshow-props]
   [:div.x-slideshow--controls [:button.x-slideshow--controls--go-bwd
-                                {:on-click    #(a/dispatch [:gestures/step-backward! slideshow-id])
+                                {:data-icon-family :material-icons-filled
+                                 :on-click    #(a/dispatch [:gestures/step-backward! slideshow-id])
                                  :on-mouse-up #(environment/blur-element!)}]
                               [:button.x-slideshow--controls--go-fwd
-                                {:on-click    #(a/dispatch [:gestures/step-forward! slideshow-id])
+                                {:data-icon-family :material-icons-filled
+                                 :on-click    #(a/dispatch [:gestures/step-forward! slideshow-id])
                                  :on-mouse-up #(environment/blur-element!)}]])
 
 (defn- slideshow

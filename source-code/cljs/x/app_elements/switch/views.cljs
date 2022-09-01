@@ -12,34 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-components.switch
-    (:require [mid-fruits.candy          :refer [param]]
-              [reagent.api               :as reagent]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- switch-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ;
-  ; @return (map)
-  ;  {:border-color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :layout (keyword)}
-  [switch-id switch-props]
-  (merge {:border-color :primary
-          :font-size    :s
-          :layout       :row
-          :value-path (engine/default-value-path switch-id)}
-         (param switch-props)))
+(ns x.app-elements.switch.views
+    (:require [reagent.api                      :as reagent]
+              [x.app-components.api             :as components]
+              [x.app-core.api                   :as a :refer [r]]
+              [x.app-elements.engine.api        :as engine]
+              [x.app-elements.switch.helpers    :as switch.helpers]
+              [x.app-elements.switch.prototypes :as switch.prototypes]))
 
 
 
@@ -124,35 +103,47 @@
                           [:div.x-switch--track [:div.x-switch--thumb]]
                           [switch-label switch-id switch-props]])
 
+(defn- switch-option
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;  {:get-label-f (function)}
+  ; @param (*) option
+  [switch-id {:keys [get-label-f] :as switch-props} option]
+  (let [option-label (get-label-f option)]
+       [:button.x-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
+                                 [:div.x-switch--option-track]
+                                 [:div.x-switch--option-label (components/content option-label)]]))
+
+(defn- switch-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  [switch-id switch-props]
+  (let [options (engine/input-options switch-id switch-props)]
+       (letfn [(f [option-list option] (conj option-list [switch-option switch-id switch-props option]))]
+              (reduce f [:div.x-switch--options] options))))
+
 (defn- switch
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {:secondary-label (metamorphic-content)(opt)}
-  [switch-id {:keys [secondary-label] :as switch-props}]
-  [:div.x-switch (engine/checkable-attributes switch-id switch-props)
-                 (if secondary-label [:div {:style {:display :flex}}
-                                           [switch-secondary-body switch-id switch-props]
-                                           [switch-primary-body   switch-id switch-props]]
-                                     [switch-body switch-id switch-props])
-                 [engine/element-helper switch-id switch-props]])
+  [switch-id switch-props]
+  [:div.x-switch (switch.helpers/switch-attributes switch-id switch-props)
+                 [engine/element-header switch-id switch-props]
+                 [switch-options        switch-id switch-props]])
 
-(defn switch-did-mount
-  [db [_ switch-id switch-props]]
-  (let [switch-props (select-keys switch-props [:initial-value :value-path])]
-       (as-> db % (r x.app-elements.engine.element/store-element-props! % switch-id switch-props)
-                  (r x.app-elements.engine.input/use-initial-value!     % switch-id))))
-
-(a/reg-event-db :elements/switch-did-mount switch-did-mount)
-
-(defn switch-will-unmount
-  [db [_ switch-id]]
-  (as-> db % (r x.app-elements.engine.element/remove-element-props! % switch-id)))
-
-(a/reg-event-db :elements/switch-will-unmount switch-will-unmount)
-
-
+(defn- stated-switch
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  [switch-id switch-props]
+  (reagent/lifecycles {:component-did-mount (fn [] (a/dispatch [:elements.switch/init-switch! switch-id switch-props]))
+                       :reagent-render      (fn [_ switch-props] [switch switch-id switch-props])}))
 
 (defn element
   ; @param (keyword)(opt) switch-id
@@ -161,12 +152,16 @@
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :class (keyword or keywords in vector)(opt)
-  ;   :default-value (boolean)(constant)(opt)
+  ;   :default-value (boolean)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s
+  ;   :get-label-f (function)(opt)
+  ;    Default: return
+  ;   :get-value-f (function)(opt)
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -177,19 +172,21 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :initial-value (boolean)(constant)(opt)
-  ;   :label (metamorphic-content)
-  ;   :secondary-label (metamorphic-content)(opt)
-  ;   :layout (keyword)(opt)
-  ;    :fit, :row
-  ;    Default: :row
-  ;   :on-check (metamorphic-event)(constant)(opt)
-  ;   :on-uncheck (metamorphic-event)(constant)(opt)
-  ;   :required? (boolean or keyword)(constant)(opt)
+  ;   :initial-options (vector)(opt)
+  ;   :initial-value (boolean)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :on-check (metamorphic-event)(opt)
+  ;   :on-uncheck (metamorphic-event)(opt)
+  ;   :options (vector)(opt)
+  ;   :options-orientation (keyword)(opt)
+  ;    :horizontal, :vertical
+  ;    Default: :vertical
+  ;   :options-path (vector)(opt)
+  ;   :required? (boolean or keyword)(opt)
   ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :value-path (vector)(constant)(opt)}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/switch {...}]
@@ -199,10 +196,8 @@
   ([switch-props]
    [element (a/id) switch-props])
 
-  ([switch-id switch-props]
-   (let [switch-props (switch-props-prototype switch-id switch-props)]
-        [engine/stated-element switch-id
-                               {:render-f      #'switch
-                                :element-props switch-props
-                                :initializer   [:elements/init-input!      switch-id]
-                                :subscriber    [:elements/get-switch-props switch-id]}])))
+  ([switch-id {:keys [initial-options initial-value] :as switch-props}]
+   (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
+        (if (or initial-options initial-value)
+            [stated-switch switch-id switch-props]
+            [switch        switch-id switch-props]))))

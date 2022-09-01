@@ -30,13 +30,28 @@
   ; @param (map) selector-props
   ;  {:value-path (vector)}
   ; @param (string) option
+  ;
+  ; @return (map)
+  ;  {}
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
         selected-options @(a/subscribe [:db/get-item value-path])]
-       {:data-clickable true
-        :data-collected (vector/contains-item? selected-options option)
-        :on-click      #(a/dispatch on-click)
-        :on-mouse-up   #(environment/blur-element!)}))
+       {:data-clickable   true
+        :data-collected   (vector/contains-item? selected-options option)
+        :data-icon-family :material-icons-filled
+        :on-click        #(a/dispatch on-click)
+        :on-mouse-up     #(environment/blur-element!)}))
+
+(defn color-selector-options-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ;
+  ; @return (map)
+  ;  {}
+  [_ _]
+  {:class :x-element})
 
 (defn color-selector-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

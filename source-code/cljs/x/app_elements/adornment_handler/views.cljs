@@ -43,7 +43,7 @@
   ;    False érték esetén az adornment gomb nem indexelődik tabolható elemként.
   ;    Default: true
   ;   :tooltip (metamorphic-content)(opt)}
-  [field-id field-props {:keys [icon label] :as adornment-props}]
+  [field-id field-props {:keys [icon icon-family label] :as adornment-props}]
   (let [adornment-attributes (adornment-handler.helpers/button-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:button.x-field-adornments--button-adornment adornment-attributes icon]
              label [:button.x-field-adornments--button-adornment adornment-attributes label])))

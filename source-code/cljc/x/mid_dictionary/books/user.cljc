@@ -113,6 +113,9 @@
            :show-password!
            {:en "Show password"
             :hu "Jelszó mutatása"}
+           :sign-up!
+           {:en "Sign up"
+            :hu "Regisztráció"}
            :signed-in-as
            {:en "Signed in as "
             :hu "Bejelentkezve, mint "}

@@ -28,10 +28,14 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ;  {:border-radius (keyword)
+  ;   :layout (keyword)
+  ;   :min-width (keyword)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-border-radius (keyword)
+  ;   :data-layout (keyword)
+  ;   :data-min-width (keyword)}
   [select-id {:keys [border-radius layout min-width] :as select-props}]
   (merge (engine/element-default-attributes select-id select-props)
          (engine/element-indent-attributes  select-id select-props)
@@ -57,6 +61,24 @@
                      {:data-clickable true
                       :on-click       #(a/dispatch on-click)
                       :on-mouse-up    #(environment/blur-element!)})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-options-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ _]
+  {:class           :x-element
+   :data-selectable false})
 
 (defn select-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

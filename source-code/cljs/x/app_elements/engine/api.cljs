@@ -38,6 +38,9 @@
 (def checkable-body-attributes           checkable/checkable-body-attributes)
 (def checkable-primary-body-attributes   checkable/checkable-primary-body-attributes)
 (def checkable-secondary-body-attributes checkable/checkable-secondary-body-attributes)
+(def get-checkable-value                 checkable/get-checkable-value)
+(def checkable-checked?                  checkable/checkable-checked?)
+(def checkable-nonchecked?               checkable/checkable-nonchecked?)
 (def get-checkable-props                 checkable/get-checkable-props)
 
 ; x.app-elements.engine.combo-box
@@ -89,14 +92,18 @@
 (def empty-field-value!                     field/empty-field-value!)
 
 ; x.app-elements.engine.input
-(def default-options-path   input/default-options-path)
-(def default-value-path     input/default-value-path)
-(def get-input-stored-value input/get-input-stored-value)
-(def get-input-value        input/get-input-value)
-(def inputs-passed?         input/inputs-passed?)
-(def get-input-props        input/get-input-props)
-(def reset-input-value!     input/reset-input-value!)
-(def clear-input-value!     input/clear-input-value!)
+(def input-options            input/input-options)
+(def default-options-path     input/default-options-path)
+(def default-value-path       input/default-value-path)
+(def get-input-value          input/get-input-value)
+(def get-input-options        input/get-input-options)
+(def inputs-passed?           input/inputs-passed?)
+(def get-input-props          input/get-input-props)
+(def use-input-initial-options! input/use-input-initial-options!)
+(def use-input-initial-value! input/use-input-initial-value!)
+(def mark-input-as-visited!   input/mark-input-as-visited!)
+(def reset-input-value!       input/reset-input-value!)
+(def clear-input-value!       input/clear-input-value!)
 
 ; x.app-elements.engine.input-group
 (def get-input-group-props input-group/get-input-group-props)
@@ -105,12 +112,14 @@
 (def apply-preset presets/apply-preset)
 
 ; x.app-elements.engine.selectable
-(def on-select-function             selectable/on-select-function)
-(def on-unselect-function           selectable/on-unselect-function)
-(def selectable-attributes          selectable/selectable-attributes)
-(def selectable-option-attributes   selectable/selectable-option-attributes)
-(def selectable-unselect-attributes selectable/selectable-unselect-attributes)
-(def get-selectable-props           selectable/get-selectable-props)
+(def on-select-function              selectable/on-select-function)
+(def on-unselect-function            selectable/on-unselect-function)
+(def selectable-attributes           selectable/selectable-attributes)
+(def selectable-option-attributes    selectable/selectable-option-attributes)
+(def selectable-unselect-attributes  selectable/selectable-unselect-attributes)
+(def get-selectable-props            selectable/get-selectable-props)
+(def add-option!                     selectable/add-option!)
+(def select-option!                  selectable/select-option!)
 
 ; x.app-elements.engine.stated-element
 (def stated-element stated-element/element)

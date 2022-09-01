@@ -43,6 +43,7 @@
 (def get-applied-item     engine/get-applied-item)
 (def empty-db!            engine/empty-db!)
 (def toggle-item!         engine/toggle-item!)
+(def toggle-item-value!   engine/toggle-item-value!)
 (def copy-item!           engine/copy-item!)
 (def move-item!           engine/move-item!)
 (def set-item!            engine/set-item!)
@@ -84,6 +85,10 @@
 ; @usage
 ;  [:db/toggle-item! [:my-item]]
 (a/reg-event-db :db/toggle-item! toggle-item!)
+
+; @usage
+;  [:db/toggle-item-value! [:my-item] :my-value]
+(a/reg-event-db :db/toggle-item-value! toggle-item-value!)
 
 ; @usage
 ;  [:db/move-item! [:move-from] [:move-to]]

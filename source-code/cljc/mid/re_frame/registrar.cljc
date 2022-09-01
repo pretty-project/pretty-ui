@@ -17,6 +17,17 @@
 
 
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING!
+; A mid.re-frame.registrar névtér egyedüli feladata a re-frame.registrar névtér
+; egyes függvényeinek átirányítása. A monoset könyvtáron belül CLJS és CLJ oldalon
+; nem lehetséges ennek a névtérnek a re-frame.registrar nevű megfelelőit létrehozni,
+; mivel azok névütközésben lennének az eredeti re-frame.registrar névtérrel!
+
+
+
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

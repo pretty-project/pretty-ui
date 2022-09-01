@@ -197,6 +197,26 @@
   [n x]
   (vec (cons x n)))
 
+(defn cons-item-once
+  ; @param (vector) n
+  ; @param (*) x
+  ;
+  ; @example
+  ;  (vector/cons-item-once [:a :b] :b)
+  ;  =>
+  ;  [:a :b]
+  ;
+  ; @example
+  ;  (vector/cons-item-once [:a :b] :c)
+  ;  =>
+  ;  [:c :a :b]
+  ;
+  ; @return (vector)
+  [n x]
+  (if (contains-item? n x)
+      (return         n)
+      (cons-item      n x)))
+
 (defn conj-item
   ; @param (vector) n
   ; @param (*) x

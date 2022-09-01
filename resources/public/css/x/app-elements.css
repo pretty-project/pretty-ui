@@ -33,8 +33,8 @@
 
 /***** Element debug *****/
 
-/* Az .x-element::after pszeudóelem használatával az egyes elemeken egy animáció jelzi
- * azok újrarenderelődését */
+/* Az .x-element::after pszeudóelem használatával az egyes elemeken
+ * az x-debug animáció jelzi azok újrarenderelődését */
 
 /*
 @keyframes x-debug {
@@ -86,16 +86,8 @@ body {
 .x-element [data-clickable="true"]:active,
 .x-element [data-clickable="true"]:focus,
 
-.x-anchor:active,
-.x-anchor:focus,
-.x-button--body:active,
-.x-button--body:focus,
 button.x-card:active,
 button.x-card:focus,
-.x-checkbox--body:active
-.x-checkbox--label,
-.x-checkbox--body:focus
-.x-checkbox--label,
 .x-chip--delete-button:active,
 .x-chip--delete-button:focus,
 .x-counter--decrease-button:active,
@@ -114,24 +106,17 @@ button.x-card:focus,
 .x-icon-button--body:focus,
 .x-menu-bar--menu-item:active,
 .x-menu-bar--menu-item:focus,
-.x-radio-button--unselect-button:active,
-.x-radio-button--unselect-button:focus,
-.x-radio-button--option:active
-.x-radio-button--option-label,
-.x-radio-button--option:focus
-.x-radio-button--option-label,
-.x-switch--body:active
-.x-switch--label,
-.x-switch--body:focus
-.x-switch--label,
-.x-switch--primary-body:active
-.x-switch--primary-label,
-.x-switch--primary-body:focus
-.x-switch--primary-label,
-.x-switch--secondary-body:active
-.x-switch--secondary-label,
-.x-switch--secondary-body:focus
-.x-switch--secondary-label,
+
+/* A checkbox elemnek csak a felirata változik az elemre való kattintáskor */
+.x-checkbox--option:active .x-checkbox--option-label,
+.x-checkbox--option:focus  .x-checkbox--option-label,
+/* A radio-button elem opcióinak csak a felirata változik az opcióra való kattintáskor */
+.x-radio-button--option:active .x-radio-button--option-label,
+.x-radio-button--option:focus  .x-radio-button--option-label,
+/* A switch elemnek csak a felirata változik az elemre való kattintáskor */
+.x-switch--option:active .x-switch--option-label,
+.x-switch--option:focus  .x-switch--option-label,
+
 .x-toggle:active,
 .x-toggle:focus {
   opacity: .5 }
@@ -197,25 +182,7 @@ button.x-card:focus,
 
 /***** Material icons *****/
 
-.x-checkbox--button::after,
-.x-chip--delete-button-icon,
-.x-color-selector--option::after,
-.x-expandable--expand-icon,
-.x-file-drop-area--icon,
-.x-element--info-text--button,
-.x-menu-bar--menu-item--icon,
-.x-select--button-icon,
-.x-slideshow--controls--go-bwd,
-.x-slideshow--controls--go-fwd,
-.x-thumbnail--icon,
-.x-button--icon[data-icon-family="material-icons-filled"],
-.x-chip[data-icon-family="material-icons-filled"] .x-chip--icon,
-.x-expandable[data-icon-family="material-icons-filled"] .x-expandable--icon,
-.x-icon[data-icon-family="material-icons-filled"] .x-icon--body,
-.x-icon-button[data-icon-family="material-icons-filled"] .x-icon-button--icon,
-.x-label[data-icon-family="material-icons-filled"] .x-label--icon,
-.x-field-adornments--button-adornment[data-icon-family="material-icons-filled"],
-.x-field-adornments--static-adornment[data-icon-family="material-icons-filled"] {
+.x-element [data-icon-family="material-icons-filled"] {
   font-style: normal;
   font-family: 'Material Icons';
   font-weight: normal;
@@ -225,14 +192,7 @@ button.x-card:focus,
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased }
 
-.x-button--icon[data-icon-family="material-icons-outlined"],
-.x-chip[data-icon-family="material-icons-outlined"] .x-chip--icon,
-.x-expandable[data-icon-family="material-icons-outlined"] .x-expandable--icon,
-.x-icon[data-icon-family="material-icons-outlined"] .x-icon--body,
-.x-icon-button[data-icon-family="material-icons-outlined"] .x-icon-button--icon,
-.x-label[data-icon-family="material-icons-outlined"] .x-label--icon,
-.x-field-adornments--button-adornment[data-icon-family="material-icons-outlined"],
-.x-field-adornments--static-adornment[data-icon-family="material-icons-outlined"] {
+.x-element [data-icon-family="material-icons-outlined"] {
   font-style: normal;
   font-family: 'Material Icons Outlined';
   font-weight: normal;
@@ -249,7 +209,7 @@ button.x-card:focus,
 /***** Element header *****/
 
 .x-element--header {
-  -display: flex }
+  display: flex }
 
 .x-element--label {
   font-size: var( --font-size-s );
@@ -405,12 +365,12 @@ button.x-card:focus,
 
 .x-button[data-border-color="muted"]       .x-button--body,
 .x-card[data-border-color="muted"]         .x-card--body,
-.x-checkbox[data-border-color="muted"]     .x-checkbox--button::before,
+.x-checkbox[data-border-color="muted"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="muted"]      .x-counter--decrease-button,
 .x-counter[data-border-color="muted"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="muted"]  .x-icon-button--body,
 .x-radio-button[data-border-color="muted"] .x-radio-button--option-button,
-.x-switch[data-border-color="muted"]       .x-switch--track {
+.x-switch[data-border-color="muted"]       .x-switch--option-track {
   border-color: var( --border-color-muted ) }
 
 /* Border-color */
@@ -554,12 +514,12 @@ button.x-card:focus,
 
 .x-button[data-border-color="primary"]       .x-button--body,
 .x-card[data-border-color="primary"]         .x-card--body,
-.x-checkbox[data-border-color="primary"]     .x-checkbox--button::before,
+.x-checkbox[data-border-color="primary"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="primary"]      .x-counter--decrease-button,
 .x-counter[data-border-color="primary"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="primary"]  .x-icon-button--body,
 .x-radio-button[data-border-color="primary"] .x-radio-button--option-button,
-.x-switch[data-border-color="primary"]       .x-switch--track,
+.x-switch[data-border-color="primary"]       .x-switch--option-track,
 .x-text-field[data-border-color="primary"]   .x-text-field--input-container {
   border-color: var( --border-color-primary ) }
 
@@ -629,12 +589,12 @@ button.x-card:focus,
 
 .x-button[data-border-color="secondary"]       .x-button--body,
 .x-card[data-border-color="secondary"]         .x-card--body,
-.x-checkbox[data-border-color="secondary"]     .x-checkbox--button::before,
+.x-checkbox[data-border-color="secondary"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="secondary"]      .x-counter--decrease-button,
 .x-counter[data-border-color="secondary"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="secondary"]  .x-icon-button--body,
 .x-radio-button[data-border-color="secondary"] .x-radio-button--option-button,
-.x-switch[data-border-color="secondary"]       .x-switch--track,
+.x-switch[data-border-color="secondary"]       .x-switch--option-track,
 .x-text-field[data-border-color="secondary"]   .x-text-field--input-container {
   border-color: var( --border-color-secondary ) }
 
@@ -704,12 +664,12 @@ button.x-card:focus,
 
 .x-button[data-border-color="success"]       .x-button--body,
 .x-card[data-border-color="success"]         .x-card--body,
-.x-checkbox[data-border-color="success"]     .x-checkbox--button::before,
+.x-checkbox[data-border-color="success"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="success"]      .x-counter--decrease-button,
 .x-counter[data-border-color="success"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="success"]  .x-icon-button--body,
 .x-radio-button[data-border-color="success"] .x-radio-button--option-button,
-.x-switch[data-border-color="success"]       .x-switch--track,
+.x-switch[data-border-color="success"]       .x-switch--option-track,
 .x-text-field[data-border-color="success"]   .x-text-field--input-container {
   border-color: var( --border-color-success ) }
 
@@ -771,12 +731,12 @@ button.x-card:focus,
 
 .x-button[data-border-color="warning"]       .x-button--body,
 .x-card[data-border-color="warning"]         .x-card--body,
-.x-checkbox[data-border-color="warning"]     .x-checkbox--button::before,
+.x-checkbox[data-border-color="warning"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="warning"]      .x-counter--decrease-button,
 .x-counter[data-border-color="warning"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="warning"]  .x-icon-button--body,
 .x-radio-button[data-border-color="warning"] .x-radio-button--option-button,
-.x-switch[data-border-color="warning"]       .x-switch--track,
+.x-switch[data-border-color="warning"]       .x-switch--option-track,
 .x-text-field[data-border-color="warning"]   .x-text-field--input-container {
   border-color: var( --border-color-warning ) }
 
@@ -903,10 +863,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs ) }
 
-.x-checkbox[data-font-size="xs"] .x-checkbox--label,
-.x-switch[data-font-size="xs"]   .x-switch--label,
-.x-switch[data-font-size="xs"]   .x-switch--primary-label,
-.x-switch[data-font-size="xs"]   .x-switch--secondary-label {
+.x-checkbox[data-font-size="xs"]     .x-checkbox--option-label,
+.x-radio-button[data-font-size="xs"] .x-radio-button--option-label,
+.x-switch[data-font-size="xs"]       .x-switch--option-label {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
 
@@ -941,10 +900,9 @@ button.x-card:focus,
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
 
-.x-checkbox[data-font-size="s"] .x-checkbox--label,
-.x-switch[data-font-size="s"]   .x-switch--label,
-.x-switch[data-font-size="s"]   .x-switch--primary-label,
-.x-switch[data-font-size="s"]   .x-switch--secondary-label {
+.x-checkbox[data-font-size="s"]     .x-checkbox--option-label,
+.x-radio-button[data-font-size="s"] .x-radio-button--option-label,
+.x-switch[data-font-size="s"]       .x-switch--option-label {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
 
@@ -1700,12 +1658,10 @@ button.x-card:focus,
 /*** Helper ***/
 
 .x-element--helper {
-  color:          var( --color-highlight );
+  color:          var( --color-muted );
   font-size:      var( --font-size-xs );
-  font-weight:    500;
   letter-spacing: var( --letter-spacing-xs );
-  line-height:    var( --line-height-xs );
-  padding-top:    6px }
+  line-height:    24px }
 
 /*** Helper ***/
 
@@ -1715,9 +1671,9 @@ button.x-card:focus,
   font-size: var( --icon-size-xxs );
   line-height: 24px;
   height: 24px;
-  right: 0;
-  position: absolute;
-  top: 0;
+  -right: 0;
+  -position: absolute;
+  -top: 0;
   width: 24px }
 
 .x-element--info-text--content {
@@ -1985,7 +1941,6 @@ button.x-card:focus,
 
 .x-card-group {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   grid-gap: 12px }
 
@@ -1995,40 +1950,27 @@ button.x-card:focus,
 
 
 /***** Checkbox *****/
-/*** Checkbox wrapper ***/
+/*** Checkbox options ***/
 
-.x-checkbox[data-layout="row"] {
-  padding-bottom: 12px;
-  padding-top: 12px }
-
-/*** Checkbox wrapper ***/
-
-/*** Checkbox label ***/
-
-.x-checkbox--label {
-  font-weight: 500;
-  line-height: 24px;
-  margin-left: 12px }
-
-/*** Checkbox label ***/
-
-/*** Checkbox body ***/
-
-.x-checkbox--body {
-  align-items: center;
+.x-checkbox[data-options-orientation="horizontal"] .x-checkbox--options {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start }
+  grid-column-gap: 24px }
 
-/*** Checkbox body ***/
+/*** Checkbox options ***/
 
-/*** Checkbox button ***/
+/*** Checkbox option ***/
 
-.x-checkbox--button {
+.x-checkbox--option {
+  align-items: center;
+  display: flex }
+
+.x-checkbox--option-button {
   height: 24px;
+  margin-right: 6px;
   width: 24px }
 
-.x-checkbox--button::before {
+.x-checkbox--option-button::before {
+  background-color: var( --fill-color );
   border-radius: var( --border-radius-xs );
   border-style: solid;
   border-width: 2px;
@@ -2039,18 +1981,15 @@ button.x-card:focus,
   top: 2px;
   width: 20px }
 
-/*** Checkbox button ***/
+.x-checkbox--option-label {
+  font-weight: 500;
+  line-height: 36px }
 
-/*** Checkbox button body ***/
-
-.x-checkbox--button::before {
-  background-color: var( --fill-color ) }
-
-/*** Checkbox button body ***/
+/*** Checkbox option ***/
 
 /*** Checkbox marker ***/
 
-.x-checkbox--button::after {
+.x-checkbox--option-button::after {
   content: '';
   font-size: 16px;
   height: 16px;
@@ -2060,8 +1999,7 @@ button.x-card:focus,
   top: 4px;
   width: 16px }
 
-.x-checkbox[data-checked="true"]
-.x-checkbox--button::after {
+.x-checkbox--option[data-checked="true"] .x-checkbox--option-button::after {
   content: 'done' }
 
 /*** Checkbox marker ***/
@@ -2150,7 +2088,6 @@ button.x-card:focus,
 
 .x-chip-group--chips {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   grid-gap: 12px;
   padding: 6px 0 }
@@ -2237,7 +2174,7 @@ button.x-card:focus,
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.x-color-selector--options {
+.x-color-selector--option-list {
   display: flex;
   grid-column-gap: 12px;
   padding: 12px }
@@ -2348,7 +2285,6 @@ button.x-card:focus,
   align-items: center;
   color: var( --color-muted );
   display: flex;
-  flex-direction: row;
   font-size: var( --font-size-xs );
   height: 32px;
   letter-spacing: var( --letter-spacing-xs );
@@ -2362,7 +2298,6 @@ button.x-card:focus,
 .x-combo-box--option {
   align-items: center;
   display: flex;
-  flex-direction: row;
   flex-shrink: 0;
   padding: 8px 8px;
   text-align: left;
@@ -2422,8 +2357,7 @@ button.x-card:focus,
 
 .x-counter--body {
   align-items: center;
-  display: flex;
-  flex-direction: row }
+  display: flex }
 
 .x-counter[data-layout="row"] .x-counter--body {
   padding-bottom: 12px;
@@ -2550,7 +2484,6 @@ button.x-card:focus,
 .x-expandable--header {
   align-items: center;
   display: flex;
-  flex-direction: row;
   justify-content: left }
 
 .x-expandable[data-layout="row"] .x-expandable--header {
@@ -2677,7 +2610,6 @@ button.x-card:focus,
 .x-label {
   align-items: center;
   display: flex;
-  flex-direction: row;
 
   /* Egyes esetekben nem működött megfelelően a text-overflow tulajdonság
    * az .x-label--body osztályú elemeken, mivel az .x-label osztályú elem
@@ -2890,7 +2822,6 @@ button.x-card:focus,
    * tulajdonság határozza meg */
   column-gap: 12px;
   display: flex;
-  flex-direction: row;
   /* Ha az .x-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
    * akkor az ikon-gombként jelenik meg (12px + 24px + 12px = 48px szélesség) */
   padding: 0 12px }
@@ -2957,79 +2888,63 @@ button.x-card:focus,
 
 
 /***** Radio button *****/
-/*** Radio button header ***/
+/*** Radio button clear button ***/
 
-.x-radio-button--header {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start }
-
-.x-radio-button[data-layout="row"] .x-radio-button--header {
-  padding-bottom: 6px;
-  padding-top: 6px }
-
-/*** Radio button header ***/
-
-/*** Radio button label, option label ***/
-
-.x-radio-button--label,
-.x-radio-button--option-label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 36px }
-
-/*** Radio button label, option label ***/
-
-/*** Radio button uncheck button ***/
-
-.x-radio-button--unselect-button {
+.x-radio-button--clear-button {
   background-color: var( --fill-color );
   border-color: var( --color );
   border-radius: 50%;
   border-style: solid;
   border-width: 2px;
+  margin-bottom: 6px;
   margin-right: 12px;
+  margin-top: 6px;
   height: 20px;
   width: 20px }
 
-.x-radio-button--unselect-button::before,
-.x-radio-button--unselect-button::after {
+.x-radio-button--clear-button::before,
+.x-radio-button--clear-button::after {
   background-color: var( --color );
   border-radius: 1px;
   content: '';
   position: absolute;
   transform: rotateZ( -45deg ) }
 
-.x-radio-button--unselect-button::before {
+.x-radio-button--clear-button::before {
   height: 2px;
   left: 4px;
   top: 7px;
   width: 8px }
 
-.x-radio-button--unselect-button::after {
+.x-radio-button--clear-button::after {
   height: 8px;
   left: 7px;
   top: 4px;
   width: 2px }
 
-.x-radio-button--unselect-button[data-disabled="true"] {
+.x-radio-button--clear-button[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
-/*** Radio button uncheck button ***/
+/*** Radio button clear button ***/
+
+/*** Radio button options ***/
+
+.x-radio-button[data-options-orientation="horizontal"] .x-radio-button--options {
+  display: flex;
+  grid-column-gap: 24px }
+
+/*** Radio button options ***/
 
 /*** Radio button option ***/
 
 .x-radio-button--option {
   align-items: center;
-  display: flex;
-  flex-direction: row }
+  display: flex }
 
-.x-radio-button[data-layout="row"] .x-radio-button--option {
-  padding-bottom: 6px;
-  padding-top: 6px }
+.x-radio-button--option-label {
+  font-weight: 500;
+  line-height: 36px }
 
 /*** Radio button option ***/
 
@@ -3041,7 +2956,7 @@ button.x-card:focus,
   border-style: solid;
   border-width: 2px;
   height: 20px;
-  margin-right: 12px;
+  margin-right: 6px;
   width: 20px }
 
 /*** Radio button option button ***/
@@ -3051,7 +2966,7 @@ button.x-card:focus,
 .x-radio-button--option[data-selected="true"]
 .x-radio-button--option-button::before {
   animation-name: opacity-0-1;
-  animation-duration: .15s;
+  animation-duration: .1s;
   background-color: var( --color );
   border-radius: 50%;
   content: '';
@@ -3071,7 +2986,6 @@ button.x-card:focus,
 
 .x-row--body {
   display: flex;
-  flex-direction: row;
   /* - Az x-row--body elem ugyanolyan magas kell legyen, mint az x-row elem, hogy minden esetben
    *   megfelelően működjön a vertikális igazítás!
    * - Ha az x-row komponens {:style {...}} tulajdonságával beállítod az x-row elem magasságát,
@@ -3097,15 +3011,13 @@ button.x-card:focus,
   -height: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   width: 100% }
 
 .x-horizontal-polarity--start-content,
 .x-horizontal-polarity--middle-content,
 .x-horizontal-polarity--end-content {
-  display: flex;
-  flex-direction: row }
+  display: flex }
 
 .x-vertical-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
@@ -3135,7 +3047,6 @@ button.x-card:focus,
   border-style: solid;
   border-width: 1px;
   display: flex;
-  flex-direction: row;
   height: 36px;
   justify-content: space-between;
   padding: 0 12px;
@@ -3368,57 +3279,41 @@ button.x-card:focus,
 
 
 /***** Switch *****/
-/***** Switch wrapper *****/
+/*** Switch options ***/
 
-.x-switch[data-layout="row"] {
-  padding-bottom: 12px;
-  padding-top: 12px }
-
-/***** Switch wrapper *****/
-
-/*** Switch body ***/
-
-.x-switch--body,
-.x-switch--primary-body {
-  align-items: center;
+.x-switch[data-options-orientation="horizontal"] .x-switch--options {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start }
+  grid-column-gap: 24px }
 
-/*** Switch body ***/
+/*** Switch options ***/
 
-/***** Switch label *****/
+/*** Switch option ***/
 
-.x-switch--label,
-.x-switch--primary-label {
-  font-weight: 500;
-  margin-left: 12px;
-  line-height: 24px }
+.x-switch--option {
+  align-items: center;
+  display: flex }
 
-.x-switch--secondary-label {
-  font-weight: 500;
-  margin-right: 12px;
-  line-height: 24px }
-
-/***** Switch label *****/
-
-/*** Switch track ***/
-
-.x-switch--track {
+.x-switch--option-track {
   background-color: var( --fill-color );
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
+  margin-right: 6px;
   height: 20px;
   width: 40px }
 
-/*** Switch track ***/
+.x-switch--option-label {
+  font-weight: 500;
+  line-height: 36px }
+
+/*** Switch option ***/
 
 /*** Switch thumb ***/
 
-.x-switch--thumb {
+.x-switch--option-track::before {
   background-color: var( --color );
   border-radius: 50%;
+  content: '';
   height: 12px;
   left: 2px;
   position: absolute;
@@ -3426,8 +3321,7 @@ button.x-card:focus,
   top: 2px;
   width: 12px }
 
-.x-switch[data-checked="true"]
-.x-switch--thumb {
+.x-switch--option[data-switched="true"] .x-switch--option-track::before {
   transform: translateX( 20px ) }
 
 /*** Switch thumb ***/

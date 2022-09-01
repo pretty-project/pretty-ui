@@ -98,9 +98,10 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:icon (keyword)(opt)}
-  [_ _ {:keys [icon]}]
-  (if icon [:div.x-menu-bar--menu-item--icon icon]))
+  ;  {:icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)}
+  [_ _ {:keys [icon icon-family]}]
+  (if icon [:div.x-menu-bar--menu-item--icon {:data-icon-family icon-family} icon]))
 
 (defn- menu-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

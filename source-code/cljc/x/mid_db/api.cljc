@@ -132,6 +132,8 @@
 (def get-item-count       engine/get-item-count)
 (def get-applied-item     engine/get-applied-item)
 (def empty-db!            engine/empty-db!)
+(def toggle-item!         engine/toggle-item!)
+(def toggle-item-value!   engine/toggle-item-value!)
 (def copy-item!           engine/copy-item!)
 (def move-item!           engine/move-item!)
 (def set-item!            engine/set-item!)

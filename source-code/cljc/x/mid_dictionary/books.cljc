@@ -39,6 +39,7 @@
               [x.mid-dictionary.books.network       :as books.network]
               [x.mid-dictionary.books.notifications :as books.notifications]
               [x.mid-dictionary.books.order-by      :as books.order-by]
+              [x.mid-dictionary.books.people        :as books.people]
               [x.mid-dictionary.books.products      :as books.products]
               [x.mid-dictionary.books.search        :as books.search]
               [x.mid-dictionary.books.selection     :as books.selection]
@@ -86,6 +87,7 @@
                   books.network/BOOK
                   books.notifications/BOOK
                   books.order-by/BOOK
+                  books.people/BOOK
                   books.products/BOOK
                   books.search/BOOK
                   books.selection/BOOK

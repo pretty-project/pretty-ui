@@ -220,7 +220,7 @@
              hover-color      (apply-color :hover-color      :data-hover-color      hover-color)
              font-size        (assoc :data-font-size     font-size)
              font-weight      (assoc :data-font-weight   font-weight)
-             icon-family      (assoc :data-icon-family   icon-family)
+            ;icon-family      (assoc :data-icon-family   icon-family)
              icon-family      (assoc :data-icon-position icon-position)
 
              variant          (assoc :data-variant       variant)))

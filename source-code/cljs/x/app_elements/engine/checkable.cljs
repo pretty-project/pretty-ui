@@ -134,33 +134,41 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; XXX#NEW VERSION!
 (defn get-checkable-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [db [_ input-id]]
-  (let [value (r input/get-input-value db input-id)]
+  [db [_ input-id input-props]]
+  (let [value (r input/get-input-value db input-id input-props)]
        (boolean value)))
 
+; XXX#NEW VERSION!
 (defn checkable-checked?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [db [_ input-id]]
-  (r get-checkable-value db input-id))
+  [db [_ input-id input-props]]
+  (r get-checkable-value db input-id input-props))
 
+; XXX#NEW VERSION!
 (defn checkable-nonchecked?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [db [_ input-id]]
-  (not (r checkable-checked? db input-id)))
+  [db [_ input-id input-props]]
+  (not (r checkable-checked? db input-id input-props)))
+
+
 
 (defn get-checkable-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

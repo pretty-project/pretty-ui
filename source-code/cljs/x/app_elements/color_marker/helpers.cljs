@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) marker-id
   ; @param (map) marker-props
-  ;  {}
+  ;  {:size (keyword)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-size (keyword)}
   [marker-id {:keys [size] :as marker-props}]
   (merge (engine/element-default-attributes marker-id marker-props)
          (engine/element-indent-attributes  marker-id marker-props)
@@ -42,7 +42,8 @@
   ; @param (keyword or string) color
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-color (keyword)
+  ;   :style (map)}
   [_ _ color]
   (cond (keyword? color) {:data-color color}
         (string?  color) {:style {:background-color color}}))

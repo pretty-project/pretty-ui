@@ -76,18 +76,20 @@
   ; @param (map) element-props
   ;  {:info-text (metamorphic-content)(opt)}
   [element-id {:keys [info-text]}]
-  (if-let [info-text-visible? @(a/subscribe [:elements/info-text-visible? element-id])]
-          [:div.x-element--info-text--content (components/content info-text)]))
+  (if info-text (if-let [info-text-visible? @(a/subscribe [:elements/info-text-visible? element-id])]
+                        [:div.x-element--info-text--content (components/content info-text)])))
 
 (defn info-text-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  [element-id _]
-  [:button.x-element--info-text--button {:on-click    #(a/dispatch [:elements/toggle-info-text! element-id])
-                                         :on-mouse-up #(environment/blur-element!)}
-                                        (param :info_outline)])
+  ;  {:info-text (metamorphic-content)(opt)}
+  [element-id {:keys [info-text]}]
+  (if info-text [:button.x-element--info-text--button {:data-icon-family :material-icons-filled
+                                                       :on-click    #(a/dispatch [:elements/toggle-info-text! element-id])
+                                                       :on-mouse-up #(environment/blur-element!)}
+                                                      (param :info_outline)]))
 
 
 
@@ -101,6 +103,9 @@
   ; @param (map) element-props
   ;  {}
   [element-id {:keys [info-text label required?] :as element-props}]
+  ; Az element-header komponens jeleníti meg az egyes elemek címkéjét, a {:required? true}
+  ; állapotjelzőt és az info-text-button gombot.
+  ;
   ; Ha az elem {:required? ...} tulajdonságának értéke :unmarked, akkor az elem
   ; {:required? true} állapotban van, tehát többek közt az engine/input-passed?
   ; függvény kötelező inputnak tekinti, de közben a {:required? true} állapotot jelölő
@@ -110,8 +115,9 @@
   ;      állapotban kell, hogy legyenek, hogy a login submit-button {:disabled? true}
   ;      állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
   ;      a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.
-  [:div.x-element--header (if label [:div.x-element--label (components/content label)
-                                                           (if (true? required?)
-                                                               [:span.x-element--label-asterisk "*"])])
-                          (if info-text [info-text-button  element-id element-props])
-                          (if info-text [info-text-content element-id element-props])])
+  [:<> (if label [:div.x-element--header [:div.x-element--label (components/content label)
+                                                                (if (true? required?)
+                                                                    [:span.x-element--label-asterisk "*"])]
+                                    [info-text-button element-id element-props]])
+       [element-helper    element-id element-props]
+       [info-text-content element-id element-props]])

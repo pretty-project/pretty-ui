@@ -45,10 +45,11 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ;  {:icon (keyword)}
-  [icon-id {:keys [icon] :as icon-props}]
+  ;  {:icon (keyword)
+  ;   :icon-family (keyword)}
+  [icon-id {:keys [icon icon-family] :as icon-props}]
   [:div.x-icon (engine/element-attributes icon-id icon-props)
-               [:i.x-icon--body icon]])
+               [:i.x-icon--body {:data-icon-family icon-family} icon]])
 
 (defn element
   ; @param (keyword)(opt) icon-id
@@ -61,7 +62,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;    Only w/ {:icon ...}
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

@@ -30,16 +30,19 @@
   ; @param (map) selector-props
   (fn [{:keys [db]} [_ selector-id selector-props]]
       [:ui/render-popup! :elements.color-selector/options
-                         {:content [color-selector.views/color-selector selector-id selector-props]}]))
+                         {:content [color-selector.views/color-selector-options selector-id selector-props]}]))
 
 (a/reg-event-fx
   :elements.color-selector/render-selector!
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {}
+  ;  {:options (strings in vector)(opt)
+  ;   :options-label (metamorphic-content)(opt)
+  ;   :options-path (vector)(opt)
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  []
+  ;  [:elements.color-selector/render-selector! {...}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ selector-id selector-props]]
       (let [selector-props (r color-selector.prototypes/selector-props-prototype db selector-id selector-props)]

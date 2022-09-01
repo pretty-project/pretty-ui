@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.button.views
-    (:require [reagent.api                      :as reagent]
+    (:require [mid-fruits.candy                 :refer [param]]
+              [reagent.api                      :as reagent]
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a]
               [x.app-elements.button.helpers    :as button.helpers]
@@ -43,7 +44,7 @@
   ;  {:icon (keyword)(opt)}
   [button-id {:keys [icon] :as button-props}]
   [:i.x-button--icon (button.helpers/button-icon-attributes button-id button-props)
-                     icon])
+                     (param icon)])
 
 (defn- button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +70,7 @@
   [:div.x-button (button.helpers/button-attributes button-id button-props)
                  [button-body                      button-id button-props]])
 
-(defn- stated-element
+(defn- stated-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -125,7 +126,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;    Only w/ {:icon ...}
   ;   :icon-position (keyword)(opt)
   ;    :left, :right
   ;    Default: :left
@@ -161,5 +161,5 @@
   ([button-id {:keys [keypress] :as button-props}]
    (let [button-props (engine/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (button.prototypes/button-props-prototype button-props)]
-        (if keypress [stated-element button-id button-props]
-                     [button         button-id button-props]))))
+        (if keypress [stated-button button-id button-props]
+                     [button        button-id button-props]))))

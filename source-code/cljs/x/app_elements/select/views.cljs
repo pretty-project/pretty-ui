@@ -14,7 +14,6 @@
 
 (ns x.app-elements.select.views
     (:require [layouts.popup-a.api                           :as popup-a]
-              [mid-fruits.logical                            :refer [nonfalse?]]
               [mid-fruits.vector                             :as vector]
               [reagent.api                                   :as reagent]
               [x.app-components.api                          :as components]
@@ -68,9 +67,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:options-path (vector)}
-  [select-id {:keys [options-path] :as select-props}]
-  (let [options @(a/subscribe [:db/get-item options-path])]
+  [select-id select-props]
+  (let [options (engine/input-options select-id select-props)]
        (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
               (reduce f [:<>] options))))
 
@@ -88,12 +86,9 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:options-path (vector)}
-  [select-id {:keys [options-path] :as select-props}]
-  (let [options @(a/subscribe [:db/get-item options-path])]
-       [:div.x-select--option-list {:class           :x-element
-                                    :data-selectable false}
-                                   (if (vector/nonempty? options)
+  [select-id select-props]
+  (let [options (engine/input-options select-id select-props)]
+       [:div.x-select--option-list (if (vector/nonempty? options)
                                        [select-option-list select-id select-props]
                                        [no-options-label   select-id select-props])]))
 
@@ -135,9 +130,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select--options {:class           :x-element
-                           :data-selectable false}
-                          [select-options-structure select-id select-props]])
+  [:div.x-select--options (select.helpers/select-options-attributes select-id select-props)
+                          [select-options-structure                 select-id select-props]])
 
 
 
@@ -150,7 +144,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [_ _]
-  [:i.x-select--button-icon :unfold_more])
+  [:i.x-select--button-icon {:data-icon-family :material-icons-filled} :unfold_more])
 
 (defn- select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,7 +176,7 @@
   [select-id select-props]
   [:div.x-select--button [select-button-body select-id select-props]])
 
-(defn- select-layout-structure
+(defn- active-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -193,7 +187,7 @@
                  [select-button                    select-id select-props]
                  [engine/element-helper            select-id select-props]])
 
-(defn- select-layout
+(defn- stated-active-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -204,7 +198,19 @@
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
   (reagent/lifecycles select-id
                       {:component-did-mount (fn [] (a/dispatch [:elements.select/init-select! select-id select-props]))
-                       :reagent-render      (fn [_ select-props] [select-layout-structure select-id select-props])}))
+                       :reagent-render      (fn [_ select-props] [active-button select-id select-props])}))
+
+(defn- active-button-layout
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {:initial-options (vector)(opt)
+  ;   :initial-value (*)(opt)}
+  [select-id {:keys [initial-options initial-value] :as select-props}]
+  (if (or initial-options initial-value)
+      [stated-active-button select-id select-props]
+      [active-button        select-id select-props]))
 
 
 
@@ -246,9 +252,9 @@
   ; @param (map) select-props
   ;  {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
-  (case layout :button      [button-layout      select-id select-props]
-               :icon-button [icon-button-layout select-id select-props]
-               :select      [select-layout      select-id select-props]))
+  (case layout :button      [button-layout        select-id select-props]
+               :icon-button [icon-button-layout   select-id select-props]
+               :select      [active-button-layout select-id select-props]))
 
 (defn element
   ; @param (keyword)(opt) select-id
@@ -263,7 +269,6 @@
   ;    Default: false
   ;   :extendable? (boolean)(opt)
   ;    Default: false
-  ;   :form-id (keyword)(opt)
   ;   :get-label-f (function)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
@@ -294,6 +299,7 @@
   ;    Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(opt)
+  ;   :options (vector)(opt)
   ;   :options-label (metamorphic-content)(opt)
   ;   :options-path (vector)(opt)
   ;   :required? (boolean or keyword)(opt)

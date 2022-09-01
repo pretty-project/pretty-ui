@@ -26,6 +26,26 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; XXX#NEW VERSION!
+(defn input-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:options (vector)(opt)
+  ;   :options-path (vector)(opt)}
+  ;
+  ; @return (vector)
+  [_ {:keys [options options-path]}]
+  ; XXX#2781
+  ; Az egyes elemek opciói elsődlegesen a paraméterkén kapott options vektor
+  ; értékei alapján kerülnek felsorolásra, annak hiányában az options-path útvonalon
+  ; található értékek alapján.
+  (or options @(a/subscribe [:db/get-item options-path])))
+
+
+
+
 (defn on-reset-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -114,44 +134,38 @@
   [db [_ input-id]]
   (boolean (r element/get-element-prop db input-id :listen-to-change?)))
 
-(defn get-input-stored-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (*)
-  [db [_ input-id]]
-  ; BUG#7633 Egy input életciklusában előfordulhat olyan pillanat, amikor
-  ; a value-path értéke MÉG nil. Ilyenkor ha az if-let függvény helyett let
-  ; függvény deklarálná a value-path értékét, akkor abban a pillanatban
-  ; a get-input-value függvény visszatérési értéke az egész adatbázis lenne.
-  (if-let [value-path (r element/get-element-prop db input-id :value-path)]
-          (get-in db value-path)))
-
-(defn get-input-default-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (*)
-  [db [_ input-id]]
-  (r element/get-element-prop db input-id :default-value))
-
+; XXX#NEW VERSION!
 (defn get-input-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:default-value (*)(opt)}
   ;
   ; @return (*)
-  [db [_ input-id]]
-  (let [stored-value  (r get-input-stored-value  db input-id)
-        default-value (r get-input-default-value db input-id)]
+  [db [_ input-id {:keys [default-value value-path] :as input-props}]]
+  (let [stored-value (get-in db value-path)]
        (if (or (= stored-value nil)
                (= stored-value ""))
            (return default-value)
            (return stored-value))))
 
-(a/reg-sub :elements/get-input-value get-input-value)
+; XXX#NEW VERSION!
+(defn get-input-options
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:options (vector)(opt)
+  ;   :options-path (vector)(opt)}
+  ;
+  ; @return (vector)
+  [db [_ _ {:keys [options options-path]}]]
+  ; XXX#2781
+  (or options (get-in db options-path)))
+
+
+
 
 (defn input-empty?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -355,7 +369,7 @@
 
 
 
-; new version
+; new (old) version
 (defn use-initial-value!
   [db [_ input-id]]
   ; - Ha a value-path útvonalon található bármilyen érték, akkor NEM kerül felülírásra!
@@ -372,29 +386,41 @@
 
 
 
+; XXX#NEW VERSION!
+(defn use-input-initial-options!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:initial-options (vector)(opt)
+  ;   :options-path (vector)}
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [initial-options options-path]}]]
+  ; Az use-input-initial-options! függvény csak abban az esetben alkalmazza
+  ; az initial-options értékét, ha az options-path útvonalon tárolt érték még üres!
+  (let [options (get-in db options-path)]
+       (cond-> db (and initial-options (empty? options))
+                  (assoc-in options-path initial-options))))
+
+; XXX#NEW VERSION!
 (defn use-input-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:initial-value (*)(opt)
+  ;   :value-path (vector)}
   ;
   ; @return (map)
-  [db [_ input-id]]
-  ; WARNING
-  ; (if-let [initial-value (r element/get-element-prop db input-id :initial-value)]
-  ; Az if-let függvény hamis ágra tér, ha az initial-value értéke false, ezért
-  ; szükséges let függvényt alkalmazni!
-  (let [initial-value (r element/get-element-prop db input-id :initial-value)]
-       (if (some? initial-value)
-           ; If initial-value is NOT nil ...
-           (let [value-path (r element/get-element-prop db input-id :value-path)]
-                (if (nil? (get-in db value-path))
-                    ; If the stored value is nil ...
-                    (assoc-in db value-path initial-value)
-                    ; If the stored value is NOT nil ...
-                    (return db)))
-           ; If initial-value is nil ...
-           (return db))))
+  [db [_ _ {:keys [initial-value value-path]}]]
+  ; Az use-input-initial-value! függvény csak abban az esetben alkalmazza
+  ; az initial-value értékét, ha a value-path útvonalon tárolt érték még üres!
+  (let [value (get-in db value-path)]
+       (cond-> db (and initial-value (empty? value))
+                  (assoc-in value-path initial-value))))
 
+; XXX#NEW VERSION!
 (defn mark-input-as-visited!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -402,9 +428,7 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-  (r element/set-element-prop! db input-id :visited? true))
-
-(a/reg-event-db :elements/mark-input-as-visited! mark-input-as-visited!)
+  (assoc-in db [:elements :element-handler/meta-items input-id :visited?] true))
 
 (defn init-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -413,7 +437,8 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-  (as-> db % (r use-input-initial-value!  % input-id)
+  (as-> db % ; Már nem igy van használva: lsd. select, radio-button, ...
+             ;(r use-input-initial-value!  % input-id)
              (r store-input-backup-value! % input-id)
 
              ; HACK#1411
@@ -426,36 +451,30 @@
 
 (a/reg-event-db :elements/init-input! init-input!)
 
+; XXX#NEW VERSION!
 (defn reset-input-value!
-  ; @param (keyword) input-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r elements/reset-input-value! db :my-input)
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:value-path (vector)}
   ;
   ; @return (map)
-  [db [_ input-id]]
-  (let [backup-value (r element/get-element-prop db input-id :backup-value)
-        value-path   (r element/get-element-prop db input-id :value-path)]
+  [db [_ input-id {:keys [value-path]}]]
+  (let [backup-value (get-in db [:elements :element-handler/meta-items input-id :backup-value])]
        (assoc-in db value-path backup-value)))
 
-; @usage
-;  [:elements/reset-input-value! :my-input]
-(a/reg-event-db :elements/reset-input-value! reset-input-value!)
-
+; XXX#NEW VERSION!
 (defn clear-input-value!
-  ; @param (keyword) input-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (r elements/clear-input-value! db :my-input)
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:value-path (vector)}
   ;
   ; @return (map)
-  [db [_ input-id]]
-  (let [value-path (r element/get-element-prop db input-id :value-path)]
-       (dissoc-in db value-path)))
-
-; @usage
-;  [:elements/clear-input-value! :my-input]
-(a/reg-event-db :elements/clear-input-value! clear-input-value!)
+  [db [_ _ {:keys [value-path]}]]
+  (dissoc-in db value-path))
 
 (defn set-input-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!

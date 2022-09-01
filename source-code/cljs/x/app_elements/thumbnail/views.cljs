@@ -31,7 +31,7 @@
   ;  {:uri (string)(opt)}
   [thumbnail-id {:keys [uri] :as thumbnail-props}]
   [:button.x-thumbnail--body (thumbnail.helpers/thumbnail-body-attributes thumbnail-id thumbnail-props)
-                             [:div.x-thumbnail--icon  :image]
+                             [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
                              [:div.x-thumbnail--image {:background-image (css/url uri)}]])
 
 (defn- static-thumbnail
@@ -41,7 +41,7 @@
   ; @param (map) thumbnail-props
   ;  {:uri (string)(opt)}
   [thumbnail-id {:keys [uri] :as thumbnail-props}]
-  [:div.x-thumbnail--body [:div.x-thumbnail--icon  :image]
+  [:div.x-thumbnail--body [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
                           [:div.x-thumbnail--image {:style {:background-image (css/url uri)}}]])
 
 (defn- thumbnail

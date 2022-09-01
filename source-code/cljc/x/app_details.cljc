@@ -46,4 +46,4 @@
   ;
   ; @return (string)
   [current-year]
-  (str "2019-"current-year " Monotech.hu - All rights reserved"))
+  (str "2020-"current-year " Monotech.hu - All rights reserved"))

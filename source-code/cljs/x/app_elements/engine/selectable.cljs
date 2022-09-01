@@ -28,6 +28,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+
 (defn on-select-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -172,18 +173,6 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn use-selectable-initial-options!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (if-let [initial-options (r element/get-element-prop db input-id :initial-options)]
-          (let [options-path (r element/get-element-prop db input-id :options-path)]
-               (assoc-in db options-path initial-options))
-          (return db)))
-
 (defn- init-selectable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -191,37 +180,41 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-  (as-> db % (r input/init-input!               % input-id)
-             (r use-selectable-initial-options! % input-id)))
+  (as-> db % (r input/init-input!               % input-id)))
+             ; Már nem igy van használva: lsd. select, radio-button, ...
+             ;(r use-selectable-initial-options! % input-id)))
 
 (a/reg-event-db :elements/init-selectable! init-selectable!)
 
-(defn- add-option!
+; XXX#NEW VERSION!
+(defn add-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
-  ; @param (*) value
+  ; @param (map) input-props
+  ;  {:new-option-f (function)
+  ;   :options-path (vector)}
+  ; @param (*) option-value
   ;
   ; @return (map)
-  [db [_ input-id value]]
-  (let [options-path (r element/get-element-prop db input-id :options-path)]
-       (update-in db options-path vector/conj-item-once value)))
+  [db [_ _ {:keys [new-option-f options-path]} option-value]]
+  (let [option (new-option-f option-value)]
+       (update-in db options-path vector/cons-item-once option)))
 
-(a/reg-event-db :elements/add-option! add-option!)
-
+; XXX#NEW VERSION!
 (defn select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {:get-value-f (function)
+  ;   :value-path (vector)}
   ; @param (*) option
   ;
   ; @return (map)
-  [db [_ input-id option]]
-  (let [value-path  (r element/get-element-prop db input-id :value-path)
-        get-value-f (r element/get-element-prop db input-id :get-value-f)
-        value       (get-value-f option)]
-       (as-> db % (r db/set-item!                 % value-path value)
-                  (r input/mark-input-as-visited! % input-id))))
+  [db [_ input-id {:keys [get-value-f value-path]} option]]
+  (let [option-value (get-value-f option)]
+       (assoc-in db value-path option-value)))
 
 (defn unselect-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!

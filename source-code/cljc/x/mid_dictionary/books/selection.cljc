@@ -47,6 +47,9 @@
            :select-item!
            {:en "Select item"
             :hu "Elem kijelölése"}
+           :uncheck-selected!
+           {:en "Uncheck selected"
+            :hu "Kijelölés megszüntetése"}
            :unselect!
            {:en "Unselect"
             :hu "Kijelölés megszűntetése"}})

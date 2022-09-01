@@ -37,6 +37,12 @@
            :tags
            {:en "Tags"
             :hu "Címkék"}
+           :result
+           {:en "Result"
+            :hu "Eredmény"}
+           :tools
+           {:en "Tools"
+            :hu "Eszközök"}
 
            :details
            {:en "Details"

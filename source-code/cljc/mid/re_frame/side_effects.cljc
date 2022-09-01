@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.re-frame.fx
+(ns mid.re-frame.side-effects
     (:require [mid.re-frame.core      :as core]
               [mid.re-frame.loggers   :refer [console]]
               [mid.re-frame.registrar :as registrar]))

@@ -15,6 +15,8 @@
 (ns x.app-elements.api
     (:require [x.app-elements.button.effects]
               [x.app-elements.button.side-effects]
+              [x.app-elements.checkbox.events]
+              [x.app-elements.checkbox.subs]
               [x.app-elements.collect-handler.effects]
               [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]
@@ -29,16 +31,19 @@
               [x.app-elements.surface-handler.subs]
               [x.app-elements.passfield-handler.events]
               [x.app-elements.passfield-handler.subs]
+              [x.app-elements.radio-button.events]
+              [x.app-elements.radio-button.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
+              [x.app-elements.switch.events]
+              [x.app-elements.switch.subs]
               [x.app-elements.submit-button.subs]
               [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.element-components.card                 :as element-components.card]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
-              [x.app-elements.element-components.checkbox             :as element-components.checkbox]
-              [x.app-elements.element-components.checkbox-group       :as element-components.checkbox-group]
+              [x.app-elements.checkbox.views                          :as checkbox.views]
               [x.app-elements.element-components.chip-group           :as element-components.chip-group]
               [x.app-elements.element-components.chip                 :as element-components.chip]
               [x.app-elements.element-components.circle-diagram       :as element-components.circle-diagram]
@@ -70,13 +75,13 @@
               [x.app-elements.element-components.overlay              :as element-components.overlay]
               [x.app-elements.element-components.password-field       :as element-components.password-field]
               [x.app-elements.element-components.point-diagram        :as element-components.point-diagram]
-              [x.app-elements.element-components.radio-button         :as element-components.radio-button]
+              [x.app-elements.radio-button.views                      :as radio-button.views]
               [x.app-elements.element-components.row                  :as element-components.row]
               [x.app-elements.element-components.search-field         :as element-components.search-field]
               [x.app-elements.select.views                            :as select.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
               [x.app-elements.submit-button.views                     :as submit-button.views]
-              [x.app-elements.element-components.switch               :as element-components.switch]
+              [x.app-elements.switch.views                            :as switch.views]
               [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.element-components.text                 :as element-components.text]
               [x.app-elements.element-components.text-field           :as element-components.text-field]
@@ -84,8 +89,7 @@
               [x.app-elements.element-components.toggle               :as element-components.toggle]
               [x.app-elements.element-components.vertical-line        :as element-components.vertical-line]
               [x.app-elements.element-components.vertical-polarity    :as element-components.vertical-polarity]
-              [x.app-elements.element-components.vertical-separator   :as element-components.vertical-separator]
-              [x.app-elements.engine.api                              :as engine]))
+              [x.app-elements.element-components.vertical-separator   :as element-components.vertical-separator]))
 
 
 
@@ -148,27 +152,13 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.engine.api
-(def field-empty?           engine/field-empty?)
-(def field-filled?          engine/field-filled?)
-(def inputs-passed?         engine/inputs-passed?)
-(def get-input-stored-value engine/get-input-stored-value)
-(def get-input-value        engine/get-input-value)
-(def reset-input-value!     engine/reset-input-value!)
-(def clear-input-value!     engine/clear-input-value!)
-(def get-field-value        engine/get-field-value)
-(def set-element-prop!      engine/set-element-prop!)
-(def update-element-prop!   engine/update-element-prop!)
-(def remove-element-prop!   engine/remove-element-prop!)
-
 ; x.app-elements.element-components.*
 (def anchor               anchor.views/element)
 (def button               button.views/element)
 (def button-separator     button-separator.views/element)
 (def card                 element-components.card/element)
 (def card-group           element-components.card-group/element)
-(def checkbox             element-components.checkbox/element)
-(def checkbox-group       element-components.checkbox-group/element)
+(def checkbox             checkbox.views/element)
 (def chip-group           element-components.chip-group/element)
 (def chip                 element-components.chip/element)
 (def circle-diagram       element-components.circle-diagram/element)
@@ -200,13 +190,13 @@
 (def overlay              element-components.overlay/element)
 (def password-field       element-components.password-field/element)
 (def point-diagram        element-components.point-diagram/element)
-(def radio-button         element-components.radio-button/element)
+(def radio-button         radio-button.views/element)
 (def row                  element-components.row/element)
 (def search-field         element-components.search-field/element)
 (def select               select.views/element)
 (def slideshow            element-components.slideshow/element)
 (def submit-button        submit-button.views/element)
-(def switch               element-components.switch/element)
+(def switch               switch.views/element)
 (def table                element-components.table/element)
 (def text                 element-components.text/element)
 (def text-field           element-components.text-field/element)

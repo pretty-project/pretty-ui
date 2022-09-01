@@ -71,17 +71,18 @@
   ;  {:expanded? (boolean)}
   [expandable-id {:keys [expanded?]}]
   (if (nonfalse? expanded?)
-      [:i.x-expandable--expand-icon :expand_less]
-      [:i.x-expandable--expand-icon :expand_more]))
+      [:i.x-expandable--expand-icon {:data-icon-family :material-icons-filled} :expand_less]
+      [:i.x-expandable--expand-icon {:data-icon-family :material-icons-filled} :expand_more]))
 
 (defn- expandable-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:icon (keyword)(opt)}
-  [_ {:keys [icon]}]
-  (if icon [:i.x-expandable--icon icon]))
+  ;  {:icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)}
+  [_ {:keys [icon icon-family]}]
+  (if icon [:i.x-expandable--icon {:data-icon-family icon-family} icon]))
 
 (defn- expandable-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,7 +135,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;    Only w/ {:icon ...}
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

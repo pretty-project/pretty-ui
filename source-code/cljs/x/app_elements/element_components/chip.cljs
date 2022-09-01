@@ -54,9 +54,10 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:icon (keyword)(opt)}
-  [_ {:keys [icon]}]
-  (if icon [:i.x-chip--icon icon]))
+  ;  {:icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)}
+  [_ {:keys [icon icon-family]}]
+  (if icon [:i.x-chip--icon {:data-icon-family icon-family} icon]))
 
 (defn- chip-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,9 +76,9 @@
   ;  {:delete-button-icon (keyword)
   ;   :on-delete (metamorphic-event)(opt)}
   [chip-id {:keys [delete-button-icon on-delete] :as chip-props}]
-  (if on-delete (let [body-attributes (delete-handler.helpers/deletable-body-attributes chip-id chip-props)]
-                     [:button.x-chip--delete-button body-attributes
-                                                    [:i.x-chip--delete-button-icon delete-button-icon]])))
+  (if on-delete [:button.x-chip--delete-button (delete-handler.helpers/deletable-body-attributes chip-id chip-props)
+                                               [:i.x-chip--delete-button-icon {:data-icon-family :material-icons-filled}
+                                                                              (param delete-button-icon)]]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,7 +118,6 @@
   ;   :icon-family (keyword)(opt)
   ;    :material-icons-filled, :material-icons-outlined
   ;    Default: :material-icons-filled
-  ;    Only w/ {:icon ...}
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

@@ -13,18 +13,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.re-frame.api
-    (:require [mid.re-frame.cofx          :as cofx]
-              [mid.re-frame.core          :as core]
+    (:require [mid.re-frame.coeffects     :as coeffects]
               [mid.re-frame.context       :as context]
+              [mid.re-frame.trans         :as trans]
               [mid.re-frame.debug         :as debug]
               [mid.re-frame.dispatch      :as dispatch]
               [mid.re-frame.effects-map   :as effects-map]
               [mid.re-frame.event-handler :as event-handler]
               [mid.re-frame.event-vector  :as event-vector]
-              [mid.re-frame.fx            :as fx]
               [mid.re-frame.id            :as id]
+              [mid.re-frame.interceptors  :as interceptors]
               [mid.re-frame.metamorphic   :as metamorphic]
               [mid.re-frame.reg           :as reg]
+              [mid.re-frame.side-effects  :as side-effects]
+              [mid.re-frame.sub           :as sub]
               [mid.re-frame.tick          :as tick]
               [mid.re-frame.types         :as types]))
 
@@ -33,16 +35,10 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.re-frame.cofx
-(def cofx->event-vector cofx/cofx->event-vector)
-(def cofx->event-id     cofx/cofx->event-id)
-
-; mid.re-frame.core
-(def subscribe     core/subscribe)
-(def subscribed    core/subscribed)
-(def ->interceptor core/->interceptor)
-(def inject-cofx   core/inject-cofx)
-(def r             core/r)
+; mid.re-frame.coeffects
+(def cofx->event-vector coeffects/cofx->event-vector)
+(def cofx->event-id     coeffects/cofx->event-id)
+(def inject-cofx        coeffects/inject-cofx)
 
 ; mid.re-frame.context
 (def context->event-vector     context/context->event-vector)
@@ -77,13 +73,12 @@
 (def event-vector->handler-f   event-vector/event-vector->handler-f)
 (def event-vector<-params      event-vector/event-vector<-params)
 
-; mid.re-frame.fx
-(def fx   fx/fx)
-(def fx-n fx/fx-n)
-
 ; mid.re-frame.id
 (def event-vector<-id-f id/event-vector<-id-f)
 (def event-vector<-id   id/event-vector<-id)
+
+; mid.re-frame.interceptors
+(def ->interceptor interceptors/->interceptor)
 
 ; mid.re-frame.metamorphic
 (def metamorphic-handler->handler-f metamorphic/metamorphic-handler->handler-f)
@@ -98,8 +93,19 @@
 (def apply-fx-params reg/apply-fx-params)
 (def reg-fx          reg/reg-fx)
 
+; mid.re-frame.side-effects
+(def fx   side-effects/fx)
+(def fx-n side-effects/fx-n)
+
+; mid.re-frame.sub
+(def subscribe  sub/subscribe)
+(def subscribed sub/subscribed)
+
 ; mid.re-frame.tick
 (def dispatch-tick tick/dispatch-tick)
+
+; mid.re-frame.trans
+(def r trans/r)
 
 ; mid.re-frame.types
 (def event-vector?        types/event-vector?)
