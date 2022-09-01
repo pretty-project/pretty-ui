@@ -295,7 +295,8 @@
   ;  (environment/remove-element-animated! 500 "my-element")
   [timeout element-id]
   (set-element-attribute! element-id "data-animation" "hide")
-  (time/set-timeout! timeout (fn [] (remove-element! element-id))))
+  (letfn [(f [] (remove-element! element-id))]
+         (time/set-timeout! f timeout)))
 
 ; @usage
 ;  [:environment/remove-element-animated! 500 "my-element"]
@@ -309,8 +310,9 @@
   ;  (environment/hide-element-animated! 500 "my-element")
   [timeout element-id]
   (set-element-attribute! element-id "data-animation" "hide")
-  (time/set-timeout! timeout (fn [] (set-element-style-value!  element-id "display" "none")
-                                    (remove-element-attribute! element-id "data-animation"))))
+  (letfn [(f [] (set-element-style-value!  element-id "display" "none")
+                (remove-element-attribute! element-id "data-animation"))]
+         (time/set-timeout! f timeout)))
 
 ; @usage
 ;  [:environment/hide-element-animated! 500 "my-element"]
@@ -360,3 +362,91 @@
 ; @usage
 ;  [:environment/unmark-element-masspoint-orientation! "my-element"]
 (a/reg-fx :environment/unmark-element-masspoint-orientation! unmark-element-masspoint-orientation!)
+
+
+
+;; -- Element selection side-effect events ------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-selection-start!
+  ; @param (string) element-id
+  ; @param (integer) selection-start
+  ;
+  ; @usage
+  ;  (environment/set-selection-start! "my-element" 2)
+  [element-id selection-start]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/set-selection-start! element selection-start)))
+
+; @usage
+;  [:environment/set-selection-start! "my-element" 2]
+(a/reg-fx :environment/set-selection-start! set-selection-start!)
+
+(defn set-selection-end!
+  ; @param (string) element-id
+  ; @param (integer) selection-end
+  ;
+  ; @usage
+  ;  (environment/set-selection-end! "my-element" 2)
+  [element-id selection-end]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/set-selection-end! element selection-end)))
+
+; @usage
+;  [:environment/set-selection-end! "my-element" 2]
+(a/reg-fx :environment/set-selection-end! set-selection-end!)
+
+(defn set-selection-range!
+  ; @param (string) element-id
+  ; @param (integer) selection-start
+  ; @param (integer) selection-end
+  ;
+  ; @usage
+  ;  (environment/set-selection-range! "my-element" 2 10)
+  [element-id selection-start selection-end]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/set-selection-range! element selection-start selection-end)))
+
+; @usage
+;  [:environment/set-selection-range! "my-element" 2 10]
+(a/reg-fx :environment/set-selection-range! set-selection-range!)
+
+(defn set-caret-position!
+  ; @param (string) element-id
+  ; @param (integer) caret-position
+  ;
+  ; @usage
+  ;  (environment/set-caret-position! "my-element" 20)
+  [element-id caret-position]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/set-caret-position! element caret-position)))
+
+; @usage
+;  [:environment/set-caret-position! "my-element" 20]
+(a/reg-fx :environment/set-caret-position! set-caret-position!)
+
+(defn move-caret-to-start!
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/move-caret-to-start! "my-element")
+  [element-id]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/move-caret-to-start! element)))
+
+; @usage
+;  [:environment/move-caret-to-start! "my-element"]
+(a/reg-fx :environment/move-caret-to-start! move-caret-to-start!)
+
+(defn move-caret-to-end!
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (environment/move-caret-to-end! "my-element")
+  [element-id]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/move-caret-to-end! element)))
+
+; @usage
+;  [:environment/move-caret-to-end! "my-element"]
+(a/reg-fx :environment/move-caret-to-end! move-caret-to-end!)

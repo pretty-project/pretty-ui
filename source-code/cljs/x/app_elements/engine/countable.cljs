@@ -18,7 +18,8 @@
               [x.app-core.api                :as a :refer [r]]
               [x.app-db.api                  :as db]
               [x.app-elements.engine.element :as element]
-              [x.app-elements.engine.input   :as input]
+              [x.app-elements.input.helpers   :as input.helpers]
+              [x.app-elements.input.subs   :as input.subs]
               [x.app-environment.api         :as environment]))
 
 
@@ -110,7 +111,7 @@
   ;   :on-click (function)
   ;   :title (string)}
   [input-id {:keys [changed?]}]
-  (if changed? {:on-click      (input/on-reset-function input-id)
+  (if changed? {:on-click      (input.helpers/on-reset-function input-id)
                 :on-mouse-up  #(environment/blur-element!)
                 :title         (components/content {:content :reset!})}
                {:data-disabled (param true)
@@ -158,8 +159,8 @@
   ;  {:changed? (boolean)
   ;   :value (integer)}
   [db [_ input-id]]
-  {:changed? (r input/input-value-changed? db input-id)
-   :value    (r input/get-input-value      db input-id)})
+  {:changed? (r input.subs/value-changed? db input-id)})
+   ;:value    (r input.subs/get-value      db input-id)})
 
 
 

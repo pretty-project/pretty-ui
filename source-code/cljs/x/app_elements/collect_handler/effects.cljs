@@ -18,7 +18,7 @@
               [x.app-db.api                        :as db]
               [x.app-elements.collect-handler.subs :as collect-handler.subs]
               [x.app-elements.engine.element       :as element]
-              [x.app-elements.engine.input         :as input]))
+              [x.app-elements.input.events         :as input.events]))
 
 
 
@@ -37,7 +37,7 @@
             value-path       (r element/get-element-prop db input-id :value-path)
             value            (get-value-f option)]
            {:db       (as-> db % (r db/apply-item!               % value-path vector/conj-item-once value)
-                                 (r input/mark-input-as-visited! % input-id))
+                                 (r input.events/mark-as-visited! % input-id))
             :dispatch on-collect-event})))
 
 (a/reg-event-fx

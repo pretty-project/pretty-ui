@@ -22,7 +22,7 @@
               [x.app-elements.surface-handler.subs   :as surface-handler.subs]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.engine.field           :as field]
-              [x.app-elements.engine.input           :as input]
+              [x.app-elements.input.subs           :as input.subs]
               [x.app-elements.engine.input-group     :as input-group]
               [x.app-elements.engine.selectable      :as selectable]))
 
@@ -77,7 +77,7 @@
   ;
   ; @return (string)
   [db [_ field-id]]
-  (if-let [value (r input/get-input-value db field-id)]
+  (if-let [value (r input.subs/get-input-value db field-id)]
           (if (string? value)
               (return  value)
               (let [get-label-f (r element/get-element-prop db field-id :get-label-f)]

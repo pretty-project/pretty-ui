@@ -13,13 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.multi-field
-    (:require [mid-fruits.candy                             :as candy :refer [param return]]
-              [mid-fruits.loop                              :refer [reduce-indexed]]
-              [mid-fruits.vector                            :as vector]
-              [x.app-components.api                         :as components]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :rename {element text-field}]
-              [x.app-elements.engine.api                    :as engine]))
+    (:require [mid-fruits.candy                :as candy :refer [param return]]
+              [mid-fruits.loop                 :refer [reduce-indexed]]
+              [mid-fruits.vector               :as vector]
+              [x.app-components.api            :as components]
+              [x.app-core.api                  :as a :refer [r]]
+              [x.app-elements.engine.api       :as engine]
+              [x.app-elements.input.helpers       :as input.helpers]
+              [x.app-elements.text-field.views :as text-field.views]))
 
 
 
@@ -180,7 +181,7 @@
   ;   :value-path (vector)}
   [group-id group-props]
   (merge {:max-input-count 8
-          :value-path      (engine/default-value-path group-id)}
+          :value-path      (input.helpers/default-value-path group-id)}
          (param group-props)
          {:disallow-empty-input-group? true}))
 
@@ -216,7 +217,8 @@
   [group-id {:keys [placeholder] :as group-props} field-dex]
   [:div.x-multi-field--text-field
     {:key (field-dex->react-key group-id group-props field-dex)}
-    [text-field {:auto-focus?    (field-dex->auto-focus?    group-id group-props field-dex)
+    [text-field.views/element
+                {:auto-focus?    (field-dex->auto-focus?    group-id group-props field-dex)
                  :end-adornments (field-dex->end-adornments group-id group-props field-dex)
                  :label          (field-dex->field-label    group-id group-props field-dex)
                  :layout         (param :fit)

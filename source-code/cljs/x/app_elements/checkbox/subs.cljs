@@ -15,7 +15,7 @@
 (ns x.app-elements.checkbox.subs
     (:require [mid-fruits.vector         :as vector]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.input.subs :as input.subs]))
 
 
 
@@ -33,8 +33,8 @@
   ; @return (boolean)
   [db [_ checkbox-id {:keys [get-value-f] :as checkbox-props} option]]
   ; XXX#7234
-  (let [options      (r engine/get-input-options db checkbox-id checkbox-props)
-        stored-value (r engine/get-input-value   db checkbox-id checkbox-props)
+  (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
+        stored-value (r input.subs/get-input-value   db checkbox-id checkbox-props)
         option-value (get-value-f option)]
        (if (vector/min?           options 2)
            (vector/contains-item? stored-value option-value)

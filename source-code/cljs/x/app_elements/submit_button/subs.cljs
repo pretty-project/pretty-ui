@@ -14,7 +14,7 @@
 
 (ns x.app-elements.submit-button.subs
     (:require [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.input.subs :as input.subs]))
 
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (boolean)
   [db [_ _ {:keys [input-ids]}]]
-  (not (r engine/inputs-passed? db input-ids)))
+  (not (r input.subs/inputs-passed? db input-ids)))
 
 
 

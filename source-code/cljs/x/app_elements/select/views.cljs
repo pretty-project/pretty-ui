@@ -18,10 +18,11 @@
               [reagent.api                                   :as reagent]
               [x.app-components.api                          :as components]
               [x.app-core.api                                :as a]
-              [x.app-elements.engine.api                     :as engine]
               [x.app-elements.button.views                   :as button.views]
               [x.app-elements.element-components.icon-button :as icon-button]
-              [x.app-elements.element-components.text-field  :as text-field]
+              [x.app-elements.engine.api                     :as engine]
+              [x.app-elements.input.helpers                  :as input.helpers]
+              [x.app-elements.text-field.views               :as text-field.views]
               [x.app-elements.select.helpers                 :as select.helpers]
               [x.app-elements.select.prototypes              :as select.prototypes]))
 
@@ -41,10 +42,10 @@
   (if extendable? (let [field-empty?      @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
                         adornment-on-click [:elements.select/enter-pressed select-id select-props]
                         adornment-props    {:disabled? field-empty? :icon :add :on-click adornment-on-click :title :add!}]
-                       [text-field/element :elements.select/new-option-field
-                                           {:end-adornments [adornment-props]
-                                            :indent         {:bottom :xs :vertical :xs}
-                                            :placeholder    new-option-placeholder}])))
+                       [text-field.views/element :elements.select/new-option-field
+                                                 {:end-adornments [adornment-props]
+                                                  :indent         {:bottom :xs :vertical :xs}
+                                                  :placeholder    new-option-placeholder}])))
 
 
 
@@ -68,7 +69,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [options (engine/input-options select-id select-props)]
+  (let [options (input.helpers/input-options select-id select-props)]
        (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
               (reduce f [:<>] options))))
 
@@ -87,7 +88,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [options (engine/input-options select-id select-props)]
+  (let [options (input.helpers/input-options select-id select-props)]
        [:div.x-select--option-list (if (vector/nonempty? options)
                                        [select-option-list select-id select-props]
                                        [no-options-label   select-id select-props])]))
@@ -176,7 +177,7 @@
   [select-id select-props]
   [:div.x-select--button [select-button-body select-id select-props]])
 
-(defn- active-button
+(defn- active-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -184,33 +185,29 @@
   [select-id select-props]
   [:div.x-select (select.helpers/select-attributes select-id select-props)
                  [engine/element-header            select-id select-props]
-                 [select-button                    select-id select-props]
-                 [engine/element-helper            select-id select-props]])
+                 [engine/element-helper            select-id select-props]
+                 [select-button                    select-id select-props]])
 
-(defn- stated-active-button
+(defn- active-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
+  [select-id {:keys [initial-options initial-value] :as select-props}]
   ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
   ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/init-select! ...]
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
-  (reagent/lifecycles select-id
-                      {:component-did-mount (fn [] (a/dispatch [:elements.select/init-select! select-id select-props]))
-                       :reagent-render      (fn [_ select-props] [active-button select-id select-props])}))
+  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
+                                                       (a/dispatch [:elements.select/init-select! select-id select-props])))
+                       :reagent-render      (fn [_ select-props] [active-button-structure select-id select-props])}))
 
 (defn- active-button-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:initial-options (vector)(opt)
-  ;   :initial-value (*)(opt)}
-  [select-id {:keys [initial-options initial-value] :as select-props}]
-  (if (or initial-options initial-value)
-      [stated-active-button select-id select-props]
-      [active-button        select-id select-props]))
+  [select-id select-props]
+  [active-button select-id select-props])
 
 
 

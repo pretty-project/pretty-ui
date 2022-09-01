@@ -18,8 +18,8 @@
               [x.app-core.api                        :as a :refer [r]]
               [x.app-db.api                          :as db]
               [x.app-elements.engine.element         :as element]
-              [x.app-elements.engine.input           :as input]
-              [x.app-elements.target-handler.helpers :as target-handler.helpers]
+              [x.app-elements.input.events           :as input.events]
+              [x.app-elements.input.subs           :as input.subs]
               [x.app-environment.api                 :as environment]))
 
 
@@ -63,27 +63,6 @@
   ; @return (function)
   [input-id]
   #(a/dispatch [:elements/input-unchecked input-id]))
-
-(defn checkable-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ;  {:checked? (boolean)
-  ;   :disabled? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ;  {:disabled (boolean)
-  ;   :id (string)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
-  [input-id {:keys [checked? disabled?]}]
-  (cond-> {:id (target-handler.helpers/element-id->target-id input-id)}
-          (boolean disabled?) (merge {:disabled true})
-          (boolean checked?)  (merge {:on-click     (on-uncheck-function input-id)
-                                      :on-mouse-up #(environment/blur-element!)})
-          (not     checked?)  (merge {:on-click     (on-check-function   input-id)
-                                      :on-mouse-up #(environment/blur-element!)})))
 
 (defn checkable-primary-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,7 +122,7 @@
   ;
   ; @return (boolean)
   [db [_ input-id input-props]]
-  (let [value (r input/get-input-value db input-id input-props)]
+  (let [value (r input.subs/get-input-value db input-id input-props)]
        (boolean value)))
 
 ; XXX#NEW VERSION!
@@ -181,7 +160,7 @@
   ;   :helper (keyword)}
   [db [_ input-id]]
   (merge {:checked? (r checkable-checked? db input-id)}
-         (if (r input/input-required-warning? db input-id)
+         (if (r input.subs/required-warning? db input-id)
              {:border-color :warning
               :helper       :please-check-this-field})))
 
@@ -199,7 +178,7 @@
       (let [on-check-event (r element/get-element-prop db input-id :on-check)
             value-path     (r element/get-element-prop db input-id :value-path)]
            {:db       (as-> db % (r db/set-item!                 % value-path true)
-                                 (r input/mark-input-as-visited! % input-id))
+                                 (r input.events/mark-as-visited! % input-id))
             :dispatch on-check-event})))
 
 (a/reg-event-fx
@@ -211,5 +190,5 @@
       (let [on-uncheck-event (r element/get-element-prop db input-id :on-uncheck)
             value-path       (r element/get-element-prop db input-id :value-path)]
            {:db       (as-> db % (r db/set-item!                 % value-path false)
-                                 (r input/mark-input-as-visited! % input-id))
+                                 (r input.events/mark-as-visited! % input-id))
             :dispatch on-uncheck-event})))

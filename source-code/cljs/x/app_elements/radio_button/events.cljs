@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.events
-    (:require [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [x.app-core.api              :as a :refer [r]]
+              [x.app-elements.engine.api   :as engine]
+              [x.app-elements.input.events :as input.events]))
 
 
 
@@ -29,8 +30,8 @@
   ;
   ; @return (map)
   [db [_ button-id button-props]]
-  (as-> db % (r engine/use-input-initial-value!   % button-id button-props)
-             (r engine/use-input-initial-options! % button-id button-props)))
+  (as-> db % (r input.events/use-initial-value!   % button-id button-props)
+             (r input.events/use-initial-options! % button-id button-props)))
 
 
 
@@ -55,7 +56,7 @@
   ;
   ; @return (map)
   [db [_ button-id button-props]]
-  (r engine/clear-input-value! db button-id button-props))
+  (r input.events/clear-value! db button-id button-props))
 
 
 

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.prototypes
-    (:require [mid-fruits.candy          :refer [param return]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy             :refer [param return]]
+              [x.app-elements.input.helpers :as input.helpers]))
 
 
 
@@ -29,6 +29,7 @@
   ;
   ; @return (map)
   ;  {:border-color (keyword or string)
+  ;   :font-size (keyword)
   ;   :get-label-f (function)
   ;   :get-value-f (function)
   ;   :options-orientation (keyword)
@@ -36,9 +37,10 @@
   ;   :value-path (vector)}
   [button-id button-props]
   (merge {:border-color        :primary
+          :font-size           :s
           :options-orientation :vertical
-          :options-path        (engine/default-options-path button-id)
-          :value-path          (engine/default-value-path   button-id)
+          :options-path        (input.helpers/default-options-path button-id)
+          :value-path          (input.helpers/default-value-path   button-id)
           :get-label-f         return
           :get-value-f         return}
          (param button-props)))

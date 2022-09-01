@@ -107,7 +107,8 @@
   [effects-map-list]
   ; Az eredeti dispatch-later függvény clojure környezetben nem időzíti a dispatch-later eseményeket!
   (doseq [{:keys [ms] :as effects-map} (remove nil? effects-map-list)]
-         (if ms (time/set-timeout! ms #(dispatch (dissoc effects-map :ms))))))
+         (if ms (letfn [(f [] (dispatch (dissoc effects-map :ms)))]
+                       (time/set-timeout! f ms)))))
 
 ; @usage
 ;  {:dispatch-later [{...} {...}]}

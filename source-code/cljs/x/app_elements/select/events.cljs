@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.events
-    (:require [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [x.app-core.api              :as a :refer [r]]
+              [x.app-elements.engine.api   :as engine]
+              [x.app-elements.input.events :as input.events]))
 
 
 
@@ -29,8 +30,8 @@
   ;
   ; @return (map)
   [db [_ select-id select-props]]
-  (as-> db % (r engine/use-input-initial-value!   % select-id select-props)
-             (r engine/use-input-initial-options! % select-id select-props)))
+  (as-> db % (r input.events/use-initial-value!   % select-id select-props)
+             (r input.events/use-initial-options! % select-id select-props)))
 
 
 
@@ -46,7 +47,7 @@
   ;
   ; @return (map)
   [db [_ select-id select-props option]]
-  (as-> db % (r engine/mark-input-as-visited! % select-id)
+  (as-> db % (r input.events/mark-as-visited! % select-id)
              (r engine/select-option!         % select-id select-props option)))
 
 
@@ -62,7 +63,7 @@
   ;
   ; @return (map)
   [db [_ select-id select-props]]
-  (r engine/clear-input-value! db select-id select-props))
+  (r input.events/clear-value! db select-id select-props))
 
 
 

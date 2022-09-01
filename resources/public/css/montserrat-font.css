@@ -1,34 +1,4 @@
 
-/* Legal information
- *
- * Monoset Clojure/ClojureScript Library
- * https://monotech.hu/monoset
- *
- * Copyright Adam Szűcs and other contributors - All rights reserved */
-
-
-
-/***** Material Design icons *****/
-
-/* XXX#8857
- * A Material Icons ikonkészlet .ttf formátumban hosztolva nem minden mobil
- * böngészőben jelent meg, .woff formátumban pedig nem tartalmazta a teljes,
- * legfrissebb készletet (2020.10.11)
- * Emiatt van a Google Fonts szerverről hosztolva. */
-
-/* fallback */
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url('/icons/material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff');
-}
-
-/***** Material Design icons *****/
-
-
-
 /***** Montserrat font *****/
 
 /* latin-ext */

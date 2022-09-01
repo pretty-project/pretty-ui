@@ -21,7 +21,9 @@
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.surface-handler.events :as surface-handler.events]
               [x.app-elements.engine.element         :as element]
-              [x.app-elements.engine.input           :as input]
+              [x.app-elements.input.events           :as input.events]
+              [x.app-elements.input.helpers          :as input.helpers]
+              [x.app-elements.input.subs           :as input.subs]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]
               [x.app-environment.api                 :as environment]
 
@@ -48,47 +50,6 @@
 
 
 
-;; -- Presets -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn empty-field-adornment-preset
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (map)
-  ;  {:icon (keyword)
-  ;   :on-click (vector)
-  ;   :preset (keyword)}
-  [field-id]
-  {:icon :clear :on-click [:elements/empty-field! field-id]
-   ; XXX#8073
-   ; Az adornment a {:preset ...} tulajdonság értékével azonosítható
-   :preset :empty-field-adornment
-   ; A mező kiürítése az ESC billentyű lenyomásával is vezérelhető, ezért nem szükséges indexelni.
-   ; XXX#6054
-   ; Az indexelt adornment gombok a TAB billentyűvel való mezők közötti váltást nehezítik!
-   ; A billentyűvel is vezérelt adornment gombokon ezért célszerű az indexelést kikapcsolni.
-   :tab-indexed? false
-   :tooltip :empty-field!})
-
-(defn reset-field-adornment-preset
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (map)
-  ;  {:icon (keyword)
-  ;   :on-click (vector)
-  ;   :preset (keyword)}
-  [field-id]
-  {:icon :undo :on-click [:elements/reset-input! field-id]
-   ; XXX#8073
-   :preset  :reset-field-adornment
-   :tooltip :reset-field!})
-
-
-
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -112,7 +73,7 @@
          value (if modifier (modifier value)
                             (param    value))]
         ; *
-        (if (input/value-path->vector-item? value-path)
+        (if (input.helpers/value-path->vector-item? value-path)
             (a/dispatch-sync [:db/set-vector-item! value-path value])
             (a/dispatch-sync [:db/set-item!        value-path value]))
         ; Dispatch on-type-ended event if ...
@@ -136,7 +97,7 @@
   ; @return (map)
   [db [_ field-id value]]
   (let [value-path (r element/get-element-prop db field-id :value-path)]
-       (if (input/value-path->vector-item? value-path)
+       (if (input.helpers/value-path->vector-item? value-path)
            (r db/set-vector-item! value-path value)
            (r db/set-item!        value-path value))))
 
@@ -242,83 +203,6 @@
   [field-id]
   #(a/dispatch [:elements/field-focused field-id]))
 
-(defn field-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {:auto-focus? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;   :max-length (integer)(opt)
-  ;   :name (keyword)
-  ;   :type (keyword)(opt)
-  ;    :password, :text
-  ;   :value (string)}
-  ;
-  ; @return (map)
-  ;  {:auto-complete (keyword)
-  ;   :auto-focus (boolean)
-  ;   :disabled (boolean)
-  ;   :id (string)
-  ;   :max-length (integer)
-  ;   :name (keyword)
-  ;   :on-blur (function)
-  ;   :on-focus (function)
-  ;   :on-change (function)
-  ;   :style (map)
-  ;   :value (string)}
-  [field-id {:keys [auto-focus? disabled? max-length name surface type value] :as field-props}]
-          ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
-          ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
-          ; minden esetben elérhető.
-          ; A field típusú elemek target-id azonosítása nem kizárólag a {:targetable? ...}
-          ; tulajdonságuk függvénye volt. A {:disabled? true} állapotban levő field elemek
-          ; nem voltak azonosíthatók target-id használatával. Az x4.4.9 verzióban ez a feltétel
-          ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
-  (cond-> {:id (target-handler.helpers/element-id->target-id field-id)}
-          ; If field is disabled ...
-          (boolean disabled?) (merge {:disabled true
-                                      :type     type
-                                      :value    value
-                                      :style    (field-props->field-style field-props)
-                                      ; BUG#8809
-                                      ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                                      ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
-                                      :on-change #(let [])})
-          ; If field is NOT disabled ...
-          (not disabled?) (merge {:auto-complete name
-                                  :auto-focus    auto-focus?
-                                  :max-length    max-length
-                                  :name          name
-                                  :type          type
-                                  :value         value
-                                  :on-blur  (on-blur-function         field-id)
-                                  :on-focus (on-focus-function        field-id)
-                                  :style    (field-props->field-style field-props)
-                                  ; BUG#8041
-                                  ;  Abban az esetben, ha egy input elem {:value-path [...]}
-                                  ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
-                                  ;  érték megváltozik egy külső esemény hatására, az input elem
-                                  ;  {:on-change #(...)} függvényétől függetlenül, miközben
-                                  ;  az input elemen van a fókusz, akkor az elem fókuszának
-                                  ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
-                                  ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
-                                  ;  aminek hatására nem várt események történhetnek, amik hibás
-                                  ;  működéshez vezethetnek.
-                                  ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
-                                  ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
-                                  ;  felülíródik az input tartalmával, ami minden esetben string
-                                  ;  típus, ellentétben a kiválaszott opcióval.
-                                  ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
-                                  ;  függvény használatával kezeli.
-                                  :on-input (field-props->on-change-function field-id field-props)
-                                  ; BUG#8041
-                                  ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
-                                  ;  függvény nélküli input elemeket.
-                                  :on-change #(let [])})
-          ; If field has surface ...
-          (some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
-
 
 
 ;; -- Subscriptions -----------------------------------------------------------
@@ -331,7 +215,7 @@
   ;
   ; @return (string)
   [db [_ field-id]]
-  (let [input-value (r input/get-input-value db field-id)]
+  (let [input-value (r input.subs/get-input-value db field-id)]
        (str input-value)))
 
 (defn field-filled?
@@ -363,7 +247,7 @@
   ;
   ; @return (boolean)
   [db [_ field-id]]
-  (r input/input-value-changed? db field-id))
+  (r input.subs/value-changed? db field-id))
 
 (defn field-focused?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -384,16 +268,16 @@
   ;   :field-empty? (boolean)
   ;   :invalid-message (metamorphic-content)
   ;   :value (string)}
-  [db [_ field-id]]
-  (merge {:field-empty?   (r field-empty?    db field-id)
-          :field-changed? (r field-changed?  db field-id)
-          :value          (r get-field-value db field-id)}
-         ; 1.
-         (if (r input/input-value-invalid-warning? db field-id)
-             {:border-color :warning :invalid-message (r input/get-input-invalid-message db field-id)})
-         ; 2.
-         (if (r input/input-required-warning? db field-id)
-             {:border-color :warning :invalid-message :please-fill-out-this-field})))
+  [db [_ field-id]])
+  ;(merge {:field-empty?   (r field-empty?    db field-id)
+  ;        :field-changed? (r field-changed?  db field-id)
+  ;        :value          (r get-field-value db field-id)
+  ;       ; 1.
+  ;       (if (r input.subs/value-invalid-warning? db field-id)
+  ;           {:border-color :warning :invalid-message (r input.subs/get-invalid-message db field-id)}
+  ;       ; 2.
+  ;       (if (r input.subs/required-warning? db field-id)
+  ;           {:border-color :warning :invalid-message :please-fill-out-this-field}]])
 
 
 
@@ -441,7 +325,7 @@
   ; @return (map)
   [db [_ field-id value]]
   (let [field-value (str value)]
-       (r input/set-input-value! db field-id field-value)))
+       (r input.events/set-value! db field-id field-value)))
 
 (defn field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -452,7 +336,7 @@
   [db [_ field-id]]
   (as-> db % (r environment/quit-type-mode!          %)
              (r mark-field-as-blurred!               % field-id)
-             (r input/mark-input-as-visited!         % field-id)
+             (r input.events/mark-as-visited!         % field-id)
              (r surface-handler.events/hide-surface! % field-id)))
 
 (defn field-focused
@@ -479,9 +363,9 @@
       (if-let [auto-focus? (r element/get-element-prop db field-id :auto-focus?)]
               {:dispatch-n (let [on-focus-event (r element/get-element-prop db field-id :on-focus)]
                                 [on-focus-event [:elements/reg-field-keypress-events! field-id]])
-               :db         (as-> db % (r input/init-input! % field-id)
+               :db         (as-> db % (r input.events/init-input! % field-id)
                                       (r field-focused     % field-id))}
-              {:db         (as-> db % (r input/init-input! % field-id))})))
+              {:db         (as-> db % (r input.events/init-input! % field-id))})))
 
 (a/reg-event-fx
   :elements/reg-field-keypress-events!
@@ -513,6 +397,9 @@
   ;
   ; @param (keyword) field-id
   (fn [{:keys [db]} [_ field-id]]
+
+      ; WARNING! FELÜLVIZSGÁLNI! NINCS MÁR ON-TYPE-ENDED ESEMÉNY!
+      ;
       ; - Az [:elements/empty-field! ...] esemény kizárólag abban az esetben törli a mező
       ;   tartalmát, ha az input elem nincs disabled="true" állapotban, így elkerülhető
       ;   a következő hiba:

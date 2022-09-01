@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.switch.prototypes
-    (:require [mid-fruits.candy          :refer [param return]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy             :refer [param return]]
+              [x.app-elements.input.helpers :as input.helpers]))
 
 
 
@@ -41,6 +41,6 @@
           :get-label-f         return
           :get-value-f         return
           :options-orientation :vertical
-          :options-path        (engine/default-options-path switch-id)
-          :value-path          (engine/default-value-path   switch-id)}
+          :options-path        (input.helpers/default-options-path switch-id)
+          :value-path          (input.helpers/default-value-path   switch-id)}
          (param switch-props)))

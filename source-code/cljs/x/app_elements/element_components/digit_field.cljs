@@ -21,6 +21,7 @@
               [mid-fruits.vector                     :as vector]
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.api             :as engine]
+              [x.app-elements.input.helpers             :as input.helpers]
               [x.app-elements.passfield-handler.subs :as passfield-handler.subs]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]))
 
@@ -66,7 +67,7 @@
   ;   :value-path (vector)}
   [field-id field-props]
   (merge {:digit-count 4
-          :value-path  (engine/default-value-path field-id)}
+          :value-path  (input.helpers/default-value-path field-id)}
          (param field-props)))
 
 

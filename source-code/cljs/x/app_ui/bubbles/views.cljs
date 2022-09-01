@@ -103,6 +103,8 @@
 ;; -- Renderer components -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; TODO
+; Az #x-app-bubbles elemre feltenni a {:data-hide-scrollbar true} beállítást!
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []

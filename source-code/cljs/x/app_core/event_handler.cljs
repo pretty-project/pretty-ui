@@ -215,7 +215,8 @@
   [timeout event-vector]
   (let [event-id (event-vector->event-id event-vector)]
        (reg-event-lock    timeout event-id)
-       (time/set-timeout! timeout #(dispatch-unlocked?! event-vector))))
+       (letfn [(f [] (dispatch-unlocked?! event-vector))]
+              (time/set-timeout! f timeout))))
 
 (defn dispatch-once
   ; A megadott intervallumonként egy - az utolsó - esemény-meghívást engedélyezi,
@@ -233,4 +234,5 @@
        (if (event-unlocked? event-id)
            (do (re-frame/dispatch event-vector)
                (reg-event-lock    interval event-id))
-           (time/set-timeout! interval #(delayed-try interval event-vector)))))
+           (letfn [(f [] (delayed-try interval event-vector))]
+                  (time/set-timeout! f interval)))))

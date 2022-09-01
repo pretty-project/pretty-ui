@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.prototypes
-    (:require [mid-fruits.candy          :refer [param return]]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy             :refer [param return]]
+              [x.app-elements.input.helpers :as input.helpers]))
 
 
 
@@ -43,6 +43,6 @@
           :new-option-f           return
           :new-option-placeholder :new-option
           :no-options-label       :no-options
-          :options-path           (engine/default-options-path select-id)
-          :value-path             (engine/default-value-path   select-id)}
+          :options-path           (input.helpers/default-options-path select-id)
+          :value-path             (input.helpers/default-value-path   select-id)}
          (param select-props)))

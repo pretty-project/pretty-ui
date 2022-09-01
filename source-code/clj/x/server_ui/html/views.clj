@@ -31,8 +31,9 @@
   ; @usage
   ;  (ui/html [:head] [:body])
   [head body]
-  (html5 {:id    "x-document-element"
-          ; XXX#7659
+  ; XXX#7659
+  (html5 {:data-hide-scrollbar true
+          :id    "x-document-element"
           :style "overflow-y: hidden"}
          (param head)
          (param body)))

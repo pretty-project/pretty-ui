@@ -12,14 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-lister.core.lifecycles
-    (:require [x.server-core.api :as a]))
+(ns x.app-elements.text-field.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:environment/add-css! {:uri "/css/plugins/item-lister.css"}]})
+; @constant (ms)
+;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
+(def TYPE-ENDED-AFTER 350)
+;                 ... 250) <- Nem mindenki programozó! :)

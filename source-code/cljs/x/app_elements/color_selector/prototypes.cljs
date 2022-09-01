@@ -15,7 +15,7 @@
 (ns x.app-elements.color-selector.prototypes
     (:require [mid-fruits.candy                     :refer [param]]
               [x.app-elements.color-selector.config :as color-selector.config]
-              [x.app-elements.engine.api            :as engine]))
+              [x.app-elements.input.helpers         :as input.helpers]))
 
 
 
@@ -46,7 +46,7 @@
   ;
   ; A color-selector elemet bármikor át lehet alakítani, hogy a többi opciós elemhez
   ; hasonlóan valósítsa meg az initial-options, options és options-path kapcsolatát!
-  (merge {:value-path (engine/default-value-path selector-id)}
+  (merge {:value-path (input.helpers/default-value-path selector-id)}
          (param selector-props)
          (if options-path {:options (get-in db options-path)}
                           {:options (or options color-selector.config/DEFAULT-OPTIONS)})))

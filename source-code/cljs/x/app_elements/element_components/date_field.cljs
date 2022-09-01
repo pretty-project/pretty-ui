@@ -13,20 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.date-field
-    (:require [mid-fruits.candy                             :refer [param]]
-              [x.app-components.api                         :as components]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :as element-components.text-field]
-              [x.app-elements.engine.api                    :as engine]
-              [x.app-elements.adornment-handler.views       :as adornment-handler.views]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; x.app-elements.element-components.text-field
-(def text-field-label element-components.text-field/text-field-label)
+    (:require [mid-fruits.candy                  :refer [param]]
+              [x.app-components.api              :as components]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-elements.engine.api         :as engine]
+              [x.app-elements.input.helpers         :as input.helpers]
+              [x.app-elements.text-field.helpers :as text-field.helpers]
+              [x.app-elements.text-field.views   :as text-field.views]))
 
 
 
@@ -45,7 +38,7 @@
   ;   :value-path (vector)}
   [field-id field-props]
   (merge {:type       :date
-          :value-path (engine/default-value-path field-id)}
+          :value-path (input.helpers/default-value-path field-id)}
          (param field-props)
           ; XXX#6782
          {:name (a/id)}))
@@ -62,8 +55,8 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (merge (r engine/get-element-props db field-id)
-         (r engine/get-input-props   db field-id)))
+  (merge (r engine/get-element-props db field-id)))
+         ;(r engine/get-input-props   db field-id)))
 
 (a/reg-sub :elements/get-date-field-props get-date-field-props)
 
@@ -78,7 +71,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:input.x-date-field--input (engine/field-body-attributes field-id field-props)])
+  [:input.x-date-field--input (text-field.helpers/field-body-attributes field-id field-props)])
 
 (defn- date-field-input-container
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,9 +79,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [adornment-handler.views/field-start-adornments field-id field-props]
+  [:div.x-text-field--input-container [text-field.views/field-start-adornments field-id field-props]
                                       [date-field-input                               field-id field-props]
-                                      [adornment-handler.views/field-end-adornments   field-id field-props]])
+                                      [text-field.views/field-end-adornments   field-id field-props]])
 
 (defn- date-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,7 +90,7 @@
   ; @param (map) field-props
   [field-id field-props]
   [:div.x-text-field (engine/element-attributes  field-id field-props)
-                     [text-field-label           field-id field-props]
+                     [engine/element-header      field-id field-props]
                      [date-field-input-container field-id field-props]])
 
 (defn element

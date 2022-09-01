@@ -153,15 +153,16 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:menu-items (maps in vector)}
-  [bar-id {:keys [menu-items] :as bar-props}]
+  ;  {:menu-items (maps in vector)
+  ;   :orientation (keyword)}
+  [bar-id {:keys [menu-items orientation] :as bar-props}]
   ; XXX#5406
   ; A {:orientation :horizontal} menük esetén az overflow-x: scroll tulajdonság
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
   ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
   (reduce #(conj %1 [menu-item bar-id bar-props %2])
-           [:div.x-menu-bar--menu-items]
+           [:div.x-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})]
            (param menu-items)))
 
 (defn menu-bar

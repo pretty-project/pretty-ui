@@ -13,21 +13,22 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.multiline-field
-    (:require [mid-fruits.candy                             :as candy :refer [param]]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :as element-components.text-field]
-              [x.app-elements.engine.api                    :as engine]
-              [x.app-elements.adornment-handler.views       :as adornment-handler.views]))
+    (:require [mid-fruits.candy                  :as candy :refer [param]]
+              [x.app-core.api                    :as a :refer [r]]
+              [x.app-elements.engine.api         :as engine]
+              [x.app-elements.input.helpers         :as input.helpers]
+              [x.app-elements.input.views         :as input.views]
+              [x.app-elements.text-field.helpers :as text-field.helpers]
+              [x.app-elements.text-field.views   :as text-field.views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.element-components.text-field
-(def text-field-placeholder     element-components.text-field/text-field-placeholder)
-(def text-field-label           element-components.text-field/text-field-label)
-(def text-field-invalid-message element-components.text-field/text-field-invalid-message)
+; x.app-elements.text-field.views
+(def text-field-placeholder     text-field.views/text-field-placeholder)
+(def invalid-message input.views/invalid-message)
 
 
 
@@ -48,7 +49,7 @@
   [field-id field-props]
   (merge {:max-height 32
           :min-height 1
-          :value-path (engine/default-value-path field-id)}
+          :value-path (input.helpers/default-value-path field-id)}
          (param field-props)
          {:multiline? true
           ; XXX#6782
@@ -65,7 +66,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:textarea.x-text-field--textarea (engine/field-body-attributes field-id field-props)])
+  [:textarea.x-text-field--textarea (text-field.helpers/field-body-attributes field-id field-props)])
 
 (defn- multiline-field-textarea-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -90,9 +91,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [adornment-handler.views/field-start-adornments field-id field-props]
+  [:div.x-text-field--input-container [text-field.views/field-start-adornments field-id field-props]
                                       [multiline-field-textarea-structure             field-id field-props]
-                                      [adornment-handler.views/field-end-adornments   field-id field-props]])
+                                      [text-field.views/field-end-adornments   field-id field-props]])
 
 (defn- multiline-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,11 +102,9 @@
   ; @param (map) field-props
   [field-id field-props]
   [:div.x-text-field (engine/element-attributes          field-id field-props)
-                     [text-field-label                   field-id field-props]
-                     [engine/info-text-content           field-id field-props]
+                     [engine/element-header              field-id field-props]
                      [multiline-field-textarea-container field-id field-props]
-                     [text-field-invalid-message         field-id field-props]
-                     [engine/element-helper              field-id field-props]])
+                     [invalid-message         field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -148,18 +147,15 @@
   ;    Default: :none
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)
+  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :on-enter (metamorphic-event)(constant)(opt)
   ;   :on-focus (metamorphic-event)(constant)(opt)
-  ;   :on-type-ended (event-vector)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
   ;   :required? (boolean or keyword)(constant)(opt)
   ;    true, false, :unmarked
   ;    Default: false
   ;   :style (map)(opt)
-  ;   :unemptiable? (boolean)(opt)
-  ;    Default: false
   ;   :validator (map)(constant)(opt)
   ;    {:f (function)
   ;     :invalid-message (metamorphic-content)

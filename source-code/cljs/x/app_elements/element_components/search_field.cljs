@@ -13,19 +13,19 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.search-field
-    (:require [mid-fruits.candy                             :as candy :refer [param]]
-              [x.app-components.api                         :as components]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :as element-components.text-field :refer [text-field]]
-              [x.app-elements.engine.api                    :as engine]))
+    (:require [mid-fruits.candy                     :as candy :refer [param]]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.text-field.prototypes :as text-field.prototypes]
+              [x.app-elements.text-field.views      :as text-field.views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.element-components.text-field
-(def field-props-modifier element-components.text-field/field-props-modifier)
+; x.app-elements.text-field.views
 
 
 
@@ -40,10 +40,9 @@
   ;  {:on-enter (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:emptiable? (boolean)
-  ;   :start-adornments (maps in vector)}
+  ;  {:start-adornments (maps in vector)}
   [_ {:keys [on-enter] :as field-props}]
-  (merge {:emptiable? true}
+  (merge {}
          (if on-enter ; XXX#6054
                       {:start-adornments [{:icon :search :on-click on-enter :tab-indexed? false}]}
                       {:start-adornments [{:icon :search}]})
@@ -68,8 +67,6 @@
   ;   :default-value (string)(constant)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :emptiable? (boolean)(constant)(opt)
-  ;    Default: true
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -91,18 +88,12 @@
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(constant)(opt)
   ;   :on-change (metamorphic-event)(constant)(opt)
+  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :on-empty (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:emptiable? true}
   ;   :on-enter (metamorphic-event)(constant)(opt)
   ;   :on-focus (metamorphic-event)(constant)(opt)
-  ;   :on-reset (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:resetable? true}
-  ;   :on-type-ended (event-vector)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;    Only w/o {:label ...}
-  ;   :resetable? (boolean)(opt)
-  ;    Default: false
   ;   :style (map)(opt)
   ;   :surface (metamorphic-content)(opt)
   ;   :value-path (vector)(constant)(opt)}
@@ -117,11 +108,10 @@
 
   ([field-id field-props]
    (let [field-props (as-> field-props % (field-props-prototype                               field-id %)
-                                         (element-components.text-field/field-props-prototype field-id %))]
+                                         (text-field.prototypes/field-props-prototype field-id %))]
         [engine/stated-element field-id
-                               {:render-f      #'text-field
+                               {:render-f      #'text-field.views/element
                                 :element-props field-props
-                                :modifier      field-props-modifier
                                 :initializer   [:elements/init-field!          field-id]
                                 :subscriber    [:elements/get-text-field-props field-id]
 

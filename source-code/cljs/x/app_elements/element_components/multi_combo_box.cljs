@@ -20,7 +20,8 @@
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.chip-group :rename {element chip-group}]
               [x.app-elements.element-components.combo-box  :rename {element combo-box}]
-              [x.app-elements.engine.api                    :as engine]))
+              [x.app-elements.engine.api                    :as engine]
+              [x.app-elements.input.helpers                    :as input.helpers]))
 
 
 
@@ -32,7 +33,7 @@
 (def INHERITED-FIELD-PROPS
      [:auto-focus? :border-color :min-width :get-label-f
       :get-value-f :group-value :max-length :no-options-label :on-blur
-      :on-empty :on-focus :on-reset :on-select :on-type-ended
+      :on-empty :on-focus :on-reset :on-select
       :option-component :options-path :placeholder
       :debug])
 
@@ -114,8 +115,8 @@
   (merge {:get-label-f               return
           :get-value-f               return
           :no-options-selected-label :no-options-selected
-          :options-path              (engine/default-options-path group-id)
-          :value-path                (engine/default-value-path   group-id)}
+          :options-path              (input.helpers/default-options-path group-id)
+          :value-path                (input.helpers/default-value-path   group-id)}
           ;:layout :row}
          (param group-props)))
 
@@ -224,8 +225,6 @@
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :emptiable? (boolean)(opt)
-  ;    Default: true
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
@@ -253,13 +252,10 @@
   ;    Default: :no-options
   ;   :no-options-selected-label (metamorphic-content)(opt)
   ;    Default: :no-options-selected
-  ;   :on-empty (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:emptiable? true}
-  ;   :on-reset (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:resetable? true}
-  ;   :on-select (metamorphic-event)(constant)(opt)
-  ;   :on-type-ended (event-vector)(opt)
+  ;   :on-change (event-vector)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   :on-empty (metamorphic-event)(constant)(opt)
+  ;   :on-select (metamorphic-event)(constant)(opt)
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
   ;   :options-path (vector)(constant)(opt)

@@ -61,7 +61,7 @@
                                                        :right [button-icon button-id button-props]))
                           [engine/element-badge button-id button-props]])
 
-(defn- button
+(defn- button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -70,23 +70,24 @@
   [:div.x-button (button.helpers/button-attributes button-id button-props)
                  [button-body                      button-id button-props]])
 
-(defn- stated-button
+(defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
+  ;  {:keypress (map)(opt)}
+  [button-id {:keys [keypress] :as button-props}]
   ; - A component-did-mount életciklus eltárolja a Re-Frame adatbázisban a button elem billentyűlenyomás-általi
   ;   vezérléséhez szükséges tulajdonságokat, így azok az elem billentyűlenyomás-vezérlője számára elérhetők
   ;   lesznek az adatbázisban.
   ; - A component-will-unmount életciklus törli a Re-Frame adatbázisból a button elem eltárolt tulajdonságait.
   ; - A component-did-update életciklus aktualizálja a Re-Frame adatbázisban a button elem eltárolt tulajdonságait,
   ;   így azok követik a button elem számára paraméterként átadott button-props térkép változásait.
-  (reagent/lifecycles {:component-did-mount    (fn [] (a/dispatch [:elements.button/button-did-mount    button-id button-props]))
-                       :component-will-unmount (fn [] (a/dispatch [:elements.button/button-will-unmount button-id button-props]))
-                       :reagent-render         (fn [_ button-props] [button button-id button-props])
-                       :component-did-update   (fn [this] (let [[_ button-props] (reagent/arguments this)]
-                                                               (a/dispatch [:elements.button/button-did-update button-id button-props])))}))
+  (reagent/lifecycles {:component-did-mount    (fn [] (if keypress (a/dispatch [:elements.button/button-did-mount    button-id button-props])))
+                       :component-will-unmount (fn [] (if keypress (a/dispatch [:elements.button/button-will-unmount button-id button-props])))
+                       :reagent-render         (fn [_ button-props] [button-structure button-id button-props])
+                       :component-did-update   (fn [this] (if keypress (let [[_ button-props] (reagent/arguments this)]
+                                                                            (a/dispatch [:elements.button/button-did-update button-id button-props]))))}))
 
 (defn element
   ; @param (keyword)(opt) button-id
@@ -158,8 +159,7 @@
   ([button-props]
    [element (a/id) button-props])
 
-  ([button-id {:keys [keypress] :as button-props}]
+  ([button-id button-props]
    (let [button-props (engine/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (button.prototypes/button-props-prototype button-props)]
-        (if keypress [stated-button button-id button-props]
-                     [button        button-id button-props]))))
+        [button button-id button-props])))

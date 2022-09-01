@@ -13,13 +13,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.combo-box
-    (:require [mid-fruits.candy                             :as candy :refer [param return]]
-              [mid-fruits.loop                              :refer [reduce-indexed]]
-              [mid-fruits.vector                            :as vector]
-              [x.app-components.api                         :as components]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :as element-components.text-field :refer [text-field]]
-              [x.app-elements.engine.api                    :as engine]))
+    (:require [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.loop                      :refer [reduce-indexed]]
+              [mid-fruits.vector                    :as vector]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.input.helpers            :as input.helpers]
+              [x.app-elements.text-field.prototypes :as text-field.prototypes]
+              [x.app-elements.text-field.views      :as text-field.views]))
 
 
 
@@ -36,9 +38,8 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.element-components.text-field
-(def field-props-modifier element-components.text-field/field-props-modifier)
-(def text-field           element-components.text-field/text-field)
+; x.app-elements.text-field.views
+(def text-field           text-field.views/text-field)
 
 
 
@@ -82,12 +83,11 @@
   ;   :on-change (metamorphic-event)
   ;   :select-option-event (event-vector)}
   [field-id field-props]
-  (merge {:emptiable?          true
-          :get-label-f         return
+  (merge {:get-label-f         return
           :get-value-f         return
           :no-options-label    :no-options
           :select-option-event [:elements/select-option!]
-          :options-path        (engine/default-options-path field-id)
+          :options-path        (input.helpers/default-options-path field-id)
           ; A combo-box elem használatakor nem elérhető az {:on-blur ...}
           ; és {:on-focus ...} tulajdonság, mivel a combo-box elem saját
           ; használatra lefoglalja ezeket. Szükség esetén megoldható
@@ -183,7 +183,7 @@
                       (conj rendered-options
                           ;^{:key (random/generate-react-key)}
                             [combo-box-option field-id field-props option-data option-dex]))
-                  [:div.x-combo-box--options]
+                  [:div.x-combo-box--options {:data-hide-scrollbar true}]
                   (param rendered-options)))
 
 (defn- combo-box-no-options-label
@@ -235,8 +235,6 @@
   ;   :default-value (*)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
-  ;   :emptiable? (boolean)(opt)
-  ;    Default: true
   ;   :get-label-f (function)(constant)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
@@ -262,13 +260,10 @@
   ;   :label (metamorphic-content)(opt)
   ;    Only w/o {:placeholder ...}
   ;   :max-length (integer)(opt)
-  ;   :on-empty (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:emptiable? true}
-  ;   :on-reset (metamorphic-event)(constant)(opt)
-  ;    Only w/ {:resetable? true}
-  ;   :on-select (metamorphic-event)(constant)(opt
-  ;   :on-type-ended (event-vector)(opt)
+  ;   :on-change (event-vector)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   :on-empty (metamorphic-event)(constant)(opt)
+  ;   :on-select (metamorphic-event)(constant)(opt
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
   ;   :options-path (vector)(constant)(opt)
@@ -302,11 +297,10 @@
                                  (if surface (return field-props)
                                              (assoc  field-props :surface [combo-box-surface field-id field-props])))]
           (let [field-props (as-> field-props % (field-props-prototype                               field-id %)
-                                                (element-components.text-field/field-props-prototype field-id %)
+                                                (text-field.prototypes/field-props-prototype field-id %)
                                                 (field-props<-surface                                field-id %))]
                [engine/stated-element field-id
                                       {:element-props field-props
-                                       :modifier      field-props-modifier
-                                       :render-f      #'text-field
+                                       :render-f      #'text-field.views/element
                                        :initializer   [:elements/init-selectable!    field-id]
                                        :subscriber    [:elements/get-combo-box-props field-id]}]))))

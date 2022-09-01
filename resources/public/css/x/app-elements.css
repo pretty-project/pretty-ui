@@ -83,9 +83,6 @@ body {
 
 /***** Active state and focused state *****/
 
-.x-element [data-clickable="true"]:active,
-.x-element [data-clickable="true"]:focus,
-
 button.x-card:active,
 button.x-card:focus,
 .x-chip--delete-button:active,
@@ -96,8 +93,6 @@ button.x-card:focus,
 .x-counter--increase-button:focus,
 .x-field-adornments--button-adornment:active,
 .x-field-adornments--button-adornment:focus,
-.x-element--info-text--button:active,
-.x-element--info-text--button:focus,
 .x-expandable--header:active,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
@@ -125,87 +120,6 @@ button.x-card:focus,
 
 
 
-/***** Disabled state *****/
-
-.x-element[data-disabled="true"]::after {
-  content: '';
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100% }
-
-.x-element[data-disabled="true"] {
-  opacity: .5 }
-
-.x-menu-bar--menu-item[data-disabled="true"] {
-  cursor: default;
-  opacity: .5 }
-
-/***** Disabled state *****/
-
-
-
-/***** Hide scrollbar *****/
-
-.x-combo-box--options,
-.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items {
-  /* Hide scrollbar for IE and Edge */
-  -ms-overflow-style: none;
-  /* Hide scrollbar for Firefox */
-  scrollbar-width: none;
-
-  overflow-x: auto }
-
-.x-combo-box--options::-webkit-scrollbar,
-.x-menu-bar[data-orientation="horizontal"]
-.x-menu-bar--menu-items::-webkit-scrollbar {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  display: none }
-
-/***** Hide scrollbar *****/
-
-
-
-/***** User select *****/
-
-.x-element[data-selectable="false"] {
-  /* user-select not supperted properly in all browsers */
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none }
-
-/***** User select *****/
-
-
-
-/***** Material icons *****/
-
-.x-element [data-icon-family="material-icons-filled"] {
-  font-style: normal;
-  font-family: 'Material Icons';
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased }
-
-.x-element [data-icon-family="material-icons-outlined"] {
-  font-style: normal;
-  font-family: 'Material Icons Outlined';
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased }
-
-/***** Material icons *****/
-
-
-
 /***** Element header *****/
 
 .x-element--header {
@@ -221,23 +135,6 @@ button.x-card:focus,
   color: var( --color-warning );
   font-weight: 600;
   padding-left: 2px }
-
-
-
-/* WARNING! DEPRECATED! DO NOT USE! */
-.x-input--label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
-
-.x-input--label-asterisk {
-  color: var( --color-warning );
-  font-weight: 600;
-  padding-left: 2px }
-/* WARNING! DEPRECATED! DO NOT USE! */
-
-
 
 /***** Element header *****/
 
@@ -3500,16 +3397,16 @@ button.x-card:focus,
 
 /*** Field input ***/
 
-/*** Field invalid-message ***/
+/*** Field warning ***/
 
-.x-text-field--invalid-message {
+.x-text-field--warning {
   color: var( --color-warning );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px;
   text-align: right }
 
-/*** Field invalid-message ***/
+/*** Field warning ***/
 
 /*** Field label ***/
 

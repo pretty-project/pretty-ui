@@ -86,9 +86,10 @@
   ; @param (map) element-props
   ;  {:info-text (metamorphic-content)(opt)}
   [element-id {:keys [info-text]}]
-  (if info-text [:button.x-element--info-text--button {:data-icon-family :material-icons-filled
-                                                       :on-click    #(a/dispatch [:elements/toggle-info-text! element-id])
-                                                       :on-mouse-up #(environment/blur-element!)}
+  (if info-text [:button.x-element--info-text--button {:data-clickable   true
+                                                       :data-icon-family :material-icons-filled
+                                                       :on-click        #(a/dispatch [:elements/toggle-info-text! element-id])
+                                                       :on-mouse-up     #(environment/blur-element!)}
                                                       (param :info_outline)]))
 
 
@@ -96,15 +97,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- element-label-asterisk
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ;  {}
+  [_ {:keys [required?]}]
+  (if (true? required?)
+      [:span.x-element--label-asterisk "*"]))
+
 (defn element-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
   ;  {}
-  [element-id {:keys [info-text label required?] :as element-props}]
-  ; Az element-header komponens jeleníti meg az egyes elemek címkéjét, a {:required? true}
-  ; állapotjelzőt és az info-text-button gombot.
+  [element-id {:keys [info-text label target-id] :as element-props}]
+  ; Az element-header komponens jeleníti meg az egyes input elemek címkéjét,
+  ; a {:required? true} állapotjelzőt és az info-text-button gombot.
   ;
   ; Ha az elem {:required? ...} tulajdonságának értéke :unmarked, akkor az elem
   ; {:required? true} állapotban van, tehát többek közt az engine/input-passed?
@@ -115,9 +126,13 @@
   ;      állapotban kell, hogy legyenek, hogy a login submit-button {:disabled? true}
   ;      állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
   ;      a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.
-  [:<> (if label [:div.x-element--header [:div.x-element--label (components/content label)
-                                                                (if (true? required?)
-                                                                    [:span.x-element--label-asterisk "*"])]
-                                    [info-text-button element-id element-props]])
+  ;
+  ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
+  ; ... it is always the best idea to use an explicit label instead of an implicit label.
+  [:<> (if label [:div.x-element--header {:data-selectable false}
+                                         [:label.x-element--label (if target-id {:for target-id})
+                                                                  (components/content label)
+                                                                  [element-label-asterisk element-id element-props]]
+                                         [info-text-button element-id element-props]])
        [element-helper    element-id element-props]
        [info-text-content element-id element-props]])

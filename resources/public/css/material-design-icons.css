@@ -1,0 +1,48 @@
+
+/***** Material Design icons *****/
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/icons/material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Outlined';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('...') format('woff');
+}
+
+/***** Material Design icons *****/
+
+
+
+/***** ... *****/
+
+[data-icon-family="material-icons-filled"] {
+  font-style: normal;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+[data-icon-family="material-icons-outlined"] {
+  font-style: normal;
+  font-family: 'Material Icons Outlined';
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased }
+
+/***** ... *****/

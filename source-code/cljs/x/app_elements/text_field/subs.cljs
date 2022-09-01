@@ -12,14 +12,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-sorter.core.lifecycles
-    (:require [x.server-core.api :as a]))
+(ns x.app-elements.text-field.subs
+    (:require [x.app-core.api :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-server-boot [:environment/add-css! {:uri "/css/plugins/item-sorter.css"}]})
+(defn surface-visible?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (boolean)
+  [db [_ field-id]]
+  (get-in db [:elements :element-handler/meta-items field-id :surface-visible?]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :elements.text-field/surface-visible? surface-visible?)

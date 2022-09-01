@@ -12,24 +12,23 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.adornment-handler.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+(ns x.app-elements.input.views
+    (:require [mid-fruits.candy      :refer [param]]
+              [x.app-components.api  :as components]
+              [x.app-core.api        :as a]
+              [x.app-environment.api :as environment]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-props-prototype
+(defn invalid-message
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) adornment-props
-  ;  {:icon (keyword)(opt)}
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ;  {}
   ;
-  ; @return (map)
-  ;  {:icon-family (keyword)
-  ;   :tab-indexed? (boolean)}
-  [{:keys [icon] :as adornment-props}]
-  (merge (if icon {:icon-family :material-icons-filled})
-         {:tab-indexed? true}
-         (param adornment-props)))
+  ; @return (metamorphic-content)
+  [input-id {:keys [required? validator] :as input-props}])

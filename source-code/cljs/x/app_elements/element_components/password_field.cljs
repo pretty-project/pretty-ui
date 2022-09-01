@@ -13,12 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.password-field
-    (:require [mid-fruits.candy                             :refer [param]]
-              [mid-fruits.form                              :as form]
-              [x.app-core.api                               :as a :refer [r]]
-              [x.app-elements.element-components.text-field :as element-components.text-field :refer [text-field]]
-              [x.app-elements.engine.api                    :as engine]
-              [x.app-elements.passfield-handler.subs        :as passfield-handler.subs]))
+    (:require [mid-fruits.candy                      :refer [param]]
+              [mid-fruits.form                       :as form]
+              [x.app-core.api                        :as a :refer [r]]
+              [x.app-elements.engine.api             :as engine]
+              [x.app-elements.input.helpers             :as input.helpers]
+              [x.app-elements.passfield-handler.subs :as passfield-handler.subs]
+              [x.app-elements.text-field.prototypes  :as text-field.prototypes]
+              [x.app-elements.text-field.views       :as text-field.views]))
 
 
 
@@ -41,7 +43,7 @@
   [field-id {:keys [validate?] :as field-props}]
   (merge {:label :password
           :type  :password
-          :value-path (engine/default-value-path field-id)}
+          :value-path (input.helpers/default-value-path field-id)}
          (param field-props)
          (if validate? {:tooltip   :valid-password-rules
                         :validator {:f form/password?
@@ -59,7 +61,7 @@
   ;
   ; @param (map)
   [db [_ field-id]]
-  (merge (r element-components.text-field/get-text-field-props db field-id)
+  (merge ;(r text-field.views/get-text-field-props db field-id)
          (r passfield-handler.subs/get-passfield-props         db field-id)))
 
 (a/reg-sub :elements/get-password-field-props get-password-field-props)
@@ -121,9 +123,9 @@
 
   ([field-id field-props]
    (let [field-props (as-> field-props % (field-props-prototype                               field-id %)
-                                         (element-components.text-field/field-props-prototype field-id %))]
+                                         (text-field.prototypes/field-props-prototype field-id %))]
         [engine/stated-element field-id
-                               {:render-f      #'text-field
+                               {:render-f      #'text-field.views/element
                                 :element-props field-props
                                 :initializer   [:elements/init-field!              field-id]
                                 :subscriber    [:elements/get-password-field-props field-id]}])))

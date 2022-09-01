@@ -594,28 +594,28 @@
 ;; ----------------------------------------------------------------------------
 
 (defn set-timeout!
-  ; @param (ms) timeout
   ; @param (function) f
+  ; @param (ms) timeout
   ;
   ; @usage
-  ;  (time/set-timeout! 3000 #(println "3 sec"))
+  ;  (time/set-timeout! #(println "3 sec") 3000)
   ;
   ; @return (tea_time.core.Once object)
   ; @return (integer)
-  [timeout f]
+  [f timeout]
   #?(:clj  (tea-time.core/after! (ms->s timeout) f)
      :cljs (.setTimeout js/window f timeout)))
 
 (defn set-interval!
-  ; @param (ms) interval
   ; @param (function) f
+  ; @param (ms) interval
   ;
   ; @usage
-  ;  (time/set-interval! 3000 #(println "3 sec"))
+  ;  (time/set-interval! #(println "3 sec") 3000)
   ;
   ; @return (tea_time.core.Every object)
   ; @return (integer)
-  [interval f]
+  [f interval]
   #?(:clj  (tea-time.core/every! (ms->s interval) 0 f)
      :cljs (.setInterval js/window f interval)))
 
@@ -641,15 +641,15 @@
   ; @example
   ;  (time/reduce-interval my-function [:a :b :c] 500)
   ;  =>
-  ;  (time/set-timeout!    0 #(my-function :a))
-  ;  (time/set-timeout!  500 #(my-function :b))
-  ;  (time/set-timeout! 1000 #(my-function :c))
+  ;  (time/set-timeout! #(my-function :a)    0)
+  ;  (time/set-timeout! #(my-function :b)  500)
+  ;  (time/set-timeout! #(my-function :c) 1000)
   ;
   ; @return (*)
   [f coll interval]
   (reduce (fn [lap item]
-              (set-timeout! (* lap interval)
-                           #(f item))
+              (set-timeout! #(f item)
+                             (* lap interval))
               (inc lap))
           (param 0)
           (param coll)))

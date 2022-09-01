@@ -18,8 +18,8 @@
               [x.app-core.api                   :as a :refer [r]]
               [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.input      :as input]
               [x.app-elements.engine.selectable :as selectable]
+              [x.app-elements.input.subs      :as input.subs]
               [x.app-environment.api            :as environment]))
 
 
@@ -45,7 +45,7 @@
   ;
   ; @return (vector)
   [db [_ input-id]]
-  (vec (r input/get-input-value db input-id)))
+  (vec (r input.subs/get-input-value db input-id)))
 
 (defn option-collected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,6 +94,6 @@
   (merge {:collected?      (r collectable-collected?  db input-id)
           :collected-value (r get-collected-value     db input-id)
           :options         (r get-collectable-options db input-id)}
-         (if (r input/input-required-warning? db input-id)
+         (if (r input.subs/required-warning? db input-id)
              {:border-color :warning
               :helper       :please-select-an-option})))

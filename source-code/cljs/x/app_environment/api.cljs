@@ -93,6 +93,12 @@
 (def reveal-element-animated!              element-handler.side-effects/reveal-element-animated!)
 (def mark-element-masspoint-orientation!   element-handler.side-effects/mark-element-masspoint-orientation!)
 (def unmark-element-masspoint-orientation! element-handler.side-effects/unmark-element-masspoint-orientation!)
+(def set-selection-start!                  element-handler.side-effects/set-selection-start!)
+(def set-selection-end!                    element-handler.side-effects/set-selection-end!)
+(def set-selection-range!                  element-handler.side-effects/set-selection-range!)
+(def set-caret-position!                   element-handler.side-effects/set-caret-position!)
+(def move-caret-to-start!                  element-handler.side-effects/move-caret-to-start!)
+(def move-caret-to-end!                    element-handler.side-effects/move-caret-to-end!)
 
 ; x.app-environment.event-handler.side-effects
 (def add-event-listener!    event-handler.side-effects/add-event-listener!)

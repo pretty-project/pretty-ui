@@ -17,6 +17,7 @@
               [x.app-components.api                   :as components]
               [x.app-core.api                         :as a]
               [x.app-elements.engine.api              :as engine]
+              [x.app-elements.input.helpers           :as input.helpers]
               [x.app-elements.radio-button.helpers    :as radio-button.helpers]
               [x.app-elements.radio-button.prototypes :as radio-button.prototypes]))
 
@@ -44,7 +45,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (let [options (engine/input-options button-id button-props)]
+  (let [options (input.helpers/input-options button-id button-props)]
        (letfn [(f [option-list option] (conj option-list [radio-button-option button-id button-props option]))]
               (reduce f [:div.x-radio-button--options] options))))
 
@@ -58,7 +59,7 @@
   (if unselectable? [:button.x-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
                                                          ;[:div.x-radio-button--clear-button-label (components/content :delete!)]
 
-(defn- radio-button
+(defn- radio-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -69,14 +70,16 @@
                        [radio-button-unselect-button                 button-id button-props]
                        [radio-button-options                         button-id button-props]])
 
-(defn- stated-radio-button
+(defn- radio-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
-  (reagent/lifecycles {:component-did-mount (fn [] (a/dispatch [:elements.radio-button/init-radio-button! button-id button-props]))
-                       :reagent-render      (fn [_ button-props] [radio-button button-id button-props])}))
+  ;  {}
+  [button-id {:keys [initial-options initial-value] :as button-props}]
+  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
+                                                       (a/dispatch [:elements.radio-button/init-radio-button! button-id button-props])))
+                       :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
 (defn element
   ; @param (keyword) button-id
@@ -132,8 +135,6 @@
   ([button-props]
    [element (a/id) button-props])
 
-  ([button-id {:keys [initial-options initial-value] :as button-props}]
+  ([button-id button-props]
    (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]
-        (if (or initial-options initial-value)
-            [stated-radio-button button-id button-props]
-            [radio-button        button-id button-props]))))
+        [radio-button button-id button-props])))

@@ -38,6 +38,10 @@
               [x.app-elements.switch.events]
               [x.app-elements.switch.subs]
               [x.app-elements.submit-button.subs]
+              [x.app-elements.text-field.effects]
+              [x.app-elements.text-field.events]
+              [x.app-elements.text-field.side-effects]
+              [x.app-elements.text-field.subs]
               [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
@@ -84,7 +88,7 @@
               [x.app-elements.switch.views                            :as switch.views]
               [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.element-components.text                 :as element-components.text]
-              [x.app-elements.element-components.text-field           :as element-components.text-field]
+              [x.app-elements.text-field.views                        :as text-field.views]
               [x.app-elements.thumbnail.views                         :as thumbnail.views]
               [x.app-elements.element-components.toggle               :as element-components.toggle]
               [x.app-elements.element-components.vertical-line        :as element-components.vertical-line]
@@ -199,7 +203,7 @@
 (def switch               switch.views/element)
 (def table                element-components.table/element)
 (def text                 element-components.text/element)
-(def text-field           element-components.text-field/element)
+(def text-field           text-field.views/element)
 (def thumbnail            thumbnail.views/element)
 (def toggle               element-components.toggle/element)
 (def vertical-line        element-components.vertical-line/element)

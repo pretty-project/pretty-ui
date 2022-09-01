@@ -14,6 +14,10 @@
 
 # x4.7.0
 
+- BUG#4506 vizsgálata, mivel a szöveg emliti az on-type-ended eseményt, ami megszünt
+  mivel az on-chane esemény most már az on-type-ended-kor történik meg ezért összevonásra
+  kerültek
+
 - Ha több popup van megnyitva, akkor az ENTER és ESC billentyűk csak a legfelsőre hassanak!
 
 - LICENSE fájlt átolvasni!! Milyen licenc van a monoset-ben????

@@ -70,9 +70,10 @@
   ;                                           :interval 420})
   [interval-id {:keys [interval event] :as interval-props}]
   (fn [[interval-id {:keys [interval event] :as interval-props}]]
-      (let [js-id          (time/set-interval! interval #(a/dispatch event))
-            interval-props (assoc interval-props :js-id js-id)]
-           (swap! window-handler.state/INTERVALS assoc interval-id interval-props))))
+      (letfn [(f [] (a/dispatch event))]
+             (let [js-id          (time/set-interval! f interval)
+                   interval-props (assoc interval-props :js-id js-id)]
+                  (swap! window-handler.state/INTERVALS assoc interval-id interval-props)))))
 
 (defn clear-interval!
   ; @param (keyword) interval-id
@@ -93,9 +94,10 @@
   ;  (environment/set-timeout! :my-timeout {:event [:my-event]
   ;                                         :timeout 420})
   [timeout-id {:keys [timeout event] :as timeout-props}]
-  (let [js-id         (time/set-timeout! timeout #(a/dispatch event))
-        timeout-props (assoc timeout-props :js-id js-id)]
-       (swap! window-handler.state/TIMEOUTS assoc timeout-id timeout-props)))
+  (letfn [(f [] (a/dispatch event))]
+         (let [js-id         (time/set-timeout! f timeout)
+               timeout-props (assoc timeout-props :js-id js-id)]
+              (swap! window-handler.state/TIMEOUTS assoc timeout-id timeout-props))))
 
 (defn clear-timeout!
   ; @param (keyword) timeout-id

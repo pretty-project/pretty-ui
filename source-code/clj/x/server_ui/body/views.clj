@@ -34,7 +34,8 @@
   ;  {:loading-screen (hiccup)(opt)
   ;   :selected-theme (string)}
   [request {:keys [loading-screen selected-theme]}]
-  [:body#x-body-container {:data-theme selected-theme}
+  [:body#x-body-container {:data-hide-scrollbar true
+                           :data-theme          selected-theme}
                           (let [csrf-token (force *anti-forgery-token*)]
                                [:div#sente-csrf-token {:data-csrf-token csrf-token}])
                           [:div#x-app-container]

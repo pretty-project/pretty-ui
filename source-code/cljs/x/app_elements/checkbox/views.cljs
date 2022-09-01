@@ -18,7 +18,8 @@
               [x.app-core.api                     :as a]
               [x.app-elements.checkbox.helpers    :as checkbox.helpers]
               [x.app-elements.checkbox.prototypes :as checkbox.prototypes]
-              [x.app-elements.engine.api          :as engine]))
+              [x.app-elements.engine.api          :as engine]
+              [x.app-elements.input.helpers       :as input.helpers]))
 
 
 
@@ -45,10 +46,10 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   (letfn [(f [option-list option] (conj option-list [checkbox-option checkbox-id checkbox-props option]))]
-         (let [options (engine/input-options checkbox-id checkbox-props)]
+         (let [options (input.helpers/input-options checkbox-id checkbox-props)]
               (reduce f [:div.x-checkbox--options] options))))
 
-(defn- checkbox
+(defn- checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
@@ -58,14 +59,16 @@
                    [engine/element-header                checkbox-id checkbox-props]
                    [checkbox-options                     checkbox-id checkbox-props]])
 
-(defn- stated-checkbox
+(defn- checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  [checkbox-id checkbox-props]
-  (reagent/lifecycles {:component-did-mount (fn [] (a/dispatch [:elements.checkbox/init-checkbox! checkbox-id checkbox-props]))
-                       :reagent-render      (fn [_ checkbox-props] [checkbox checkbox-id checkbox-props])}))
+  ;  {}
+  [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
+  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
+                                                       (a/dispatch [:elements.checkbox/init-checkbox! checkbox-id checkbox-props])))
+                       :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
 (defn element
   ; @param (keyword)(opt) checkbox-id
@@ -121,8 +124,6 @@
   ([checkbox-props]
    [element (a/id) checkbox-props])
 
-  ([checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
+  ([checkbox-id checkbox-props]
    (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]
-        (if (or initial-options initial-value)
-            [stated-checkbox checkbox-id checkbox-props]
-            [checkbox        checkbox-id checkbox-props]))))
+        [checkbox checkbox-id checkbox-props])))

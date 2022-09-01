@@ -98,6 +98,29 @@
   ;
   ; @usage
   ;  (dom/set-caret-position! my-element 20)
+  ;
+  ; @return (?)
   [element caret-position]
   (set-selection-start! element caret-position)
   (set-selection-end!   element caret-position))
+
+(defn move-caret-to-start!
+  ; @param (DOM-element) element
+  ;
+  ; @usage
+  ;  (dom/move-caret-to-start! my-element)
+  ;
+  ; @return (?)
+  [element]
+  (set-selection-range! element 0 0))
+
+(defn move-caret-to-end!
+  ; @param (DOM-element) element
+  ;
+  ; @usage
+  ;  (dom/move-caret-to-end! my-element)
+  ;
+  ; @return (?)
+  [element]
+  (let [length (-> element .-value .-length)]
+       (set-selection-range! element length length)))

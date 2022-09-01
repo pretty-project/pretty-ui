@@ -15,93 +15,16 @@
 (ns x.app-elements.switch.views
     (:require [reagent.api                      :as reagent]
               [x.app-components.api             :as components]
-              [x.app-core.api                   :as a :refer [r]]
+              [x.app-core.api                   :as a]
               [x.app-elements.engine.api        :as engine]
+              [x.app-elements.input.helpers     :as input.helpers]
               [x.app-elements.switch.helpers    :as switch.helpers]
               [x.app-elements.switch.prototypes :as switch.prototypes]))
 
 
 
-;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- get-switch-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ;
-  ; @return (map)
-  [db [_ switch-id]]
-  (merge (r engine/get-element-props   db switch-id)
-         (r engine/get-checkable-props db switch-id)))
-
-(a/reg-sub :elements/get-switch-props get-switch-props)
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- switch-secondary-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ;  {:secondary-label (metamorphic-content)}
-  [_ {:keys [secondary-label]}]
-  [:div.x-switch--secondary-label [components/content secondary-label]])
-
-(defn- switch-secondary-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  [switch-id switch-props]
-  [:button.x-switch--secondary-body (engine/checkable-secondary-body-attributes switch-id switch-props)
-                                    [switch-secondary-label                     switch-id switch-props]])
-
-(defn- switch-primary-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ;  {:label (metamorphic-content)
-  ;   :required? (boolean or keyword)(opt)}
-  [_ {:keys [label required?]}]
-  [:div.x-switch--primary-label [components/content label]
-                                (if (true? required?)
-                                    [:span.x-input--label-asterisk "*"])])
-
-(defn- switch-primary-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  [switch-id switch-props]
-  [:button.x-switch--primary-body (engine/checkable-primary-body-attributes switch-id switch-props)
-                                  [:div.x-switch--track [:div.x-switch--thumb]]
-                                  [switch-primary-label switch-id switch-props]])
-
-(defn- switch-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ;  {:label (metamorphic-content)
-  ;   :required? (boolean)(opt)}
-  [_ {:keys [label required?]}]
-  [:div.x-switch--label [components/content label]
-                        (if required? [:span.x-input--label-asterisk "*"])])
-
-(defn- switch-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; (keyword) switch-id
-  ; @param (map) switch-props
-  [switch-id switch-props]
-  [:button.x-switch--body (engine/checkable-body-attributes switch-id switch-props)
-                          [:div.x-switch--track [:div.x-switch--thumb]]
-                          [switch-label switch-id switch-props]])
 
 (defn- switch-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -122,11 +45,11 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (let [options (engine/input-options switch-id switch-props)]
+  (let [options (input.helpers/input-options switch-id switch-props)]
        (letfn [(f [option-list option] (conj option-list [switch-option switch-id switch-props option]))]
               (reduce f [:div.x-switch--options] options))))
 
-(defn- switch
+(defn- switch-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
@@ -136,14 +59,16 @@
                  [engine/element-header switch-id switch-props]
                  [switch-options        switch-id switch-props]])
 
-(defn- stated-switch
+(defn- switch
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  [switch-id switch-props]
-  (reagent/lifecycles {:component-did-mount (fn [] (a/dispatch [:elements.switch/init-switch! switch-id switch-props]))
-                       :reagent-render      (fn [_ switch-props] [switch switch-id switch-props])}))
+  ;  {}
+  [switch-id {:keys [initial-options initial-value] :as switch-props}]
+  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
+                                                       (a/dispatch [:elements.switch/init-switch! switch-id switch-props])))
+                       :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
 (defn element
   ; @param (keyword)(opt) switch-id
@@ -196,8 +121,6 @@
   ([switch-props]
    [element (a/id) switch-props])
 
-  ([switch-id {:keys [initial-options initial-value] :as switch-props}]
+  ([switch-id switch-props]
    (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]
-        (if (or initial-options initial-value)
-            [stated-switch switch-id switch-props]
-            [switch        switch-id switch-props]))))
+        [switch switch-id switch-props])))

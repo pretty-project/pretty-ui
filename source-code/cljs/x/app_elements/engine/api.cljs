@@ -21,7 +21,6 @@
               [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.field              :as field]
-              [x.app-elements.engine.input              :as input]
               [x.app-elements.engine.input-group        :as input-group]
               [x.app-elements.engine.presets            :as presets]
               [x.app-elements.engine.selectable         :as selectable]
@@ -35,7 +34,6 @@
 
 ; x.app-elements.engine.checkable
 (def checkable-attributes                checkable/checkable-attributes)
-(def checkable-body-attributes           checkable/checkable-body-attributes)
 (def checkable-primary-body-attributes   checkable/checkable-primary-body-attributes)
 (def checkable-secondary-body-attributes checkable/checkable-secondary-body-attributes)
 (def get-checkable-value                 checkable/get-checkable-value)
@@ -80,30 +78,13 @@
 ; TEMP
 
 ; x.app-elements.engine.field
-(def empty-field-adornment-preset           field/empty-field-adornment-preset)
-(def reset-field-adornment-preset           field/reset-field-adornment-preset)
 (def field-props->render-field-placeholder? field/field-props->render-field-placeholder?)
-(def field-body-attributes                  field/field-body-attributes)
 (def field-empty?                           field/field-empty?)
 (def field-filled?                          field/field-filled?)
 (def field-focused?                         field/field-focused?)
 (def get-field-value                        field/get-field-value)
 (def get-field-props                        field/get-field-props)
 (def empty-field-value!                     field/empty-field-value!)
-
-; x.app-elements.engine.input
-(def input-options            input/input-options)
-(def default-options-path     input/default-options-path)
-(def default-value-path       input/default-value-path)
-(def get-input-value          input/get-input-value)
-(def get-input-options        input/get-input-options)
-(def inputs-passed?           input/inputs-passed?)
-(def get-input-props          input/get-input-props)
-(def use-input-initial-options! input/use-input-initial-options!)
-(def use-input-initial-value! input/use-input-initial-value!)
-(def mark-input-as-visited!   input/mark-input-as-visited!)
-(def reset-input-value!       input/reset-input-value!)
-(def clear-input-value!       input/clear-input-value!)
 
 ; x.app-elements.engine.input-group
 (def get-input-group-props input-group/get-input-group-props)

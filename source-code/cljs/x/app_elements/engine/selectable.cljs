@@ -20,7 +20,8 @@
               [x.app-core.api                :as a :refer [r]]
               [x.app-db.api                  :as db]
               [x.app-elements.engine.element :as element]
-              [x.app-elements.engine.input   :as input]
+              [x.app-elements.input.events   :as input.events]
+              [x.app-elements.input.subs   :as input.subs]
               [x.app-environment.api         :as environment]))
 
 
@@ -125,7 +126,7 @@
   ;
   ; @return (boolean)
   [db [_ input-id option]]
-  (let [input-value (r input/get-input-value db input-id)]
+  (let [input-value (r input.subs/get-input-value db input-id)]
        (= input-value option)))
 
 (a/reg-sub :elements/option-selected? option-selected?)
@@ -137,7 +138,7 @@
   ;
   ; @return (boolean)
   [db [_ input-id]]
-  (let [value (r input/get-input-value db input-id)]
+  (let [value (r input.subs/get-input-value db input-id)]
        (not (nil? value))))
 
 (defn selectable-nonselected?
@@ -163,8 +164,8 @@
   [db [_ input-id]]
   (merge {:options   (r get-selectable-options db input-id)
           :selected? (r selectable-selected?   db input-id)
-          :value     (r input/get-input-value  db input-id)}
-         (if (r input/input-required-warning? db input-id)
+          :value     (r input.subs/get-input-value  db input-id)}
+         (if (r input.subs/required-warning? db input-id)
              {:border-color :warning
               :helper       :please-select-an-option})))
 
@@ -180,7 +181,7 @@
   ;
   ; @return (map)
   [db [_ input-id]]
-  (as-> db % (r input/init-input!               % input-id)))
+  (as-> db % (r input.events/init-input!               % input-id)))
              ; Már nem igy van használva: lsd. select, radio-button, ...
              ;(r use-selectable-initial-options! % input-id)))
 
@@ -223,7 +224,7 @@
   [db [_ input-id]]
   (let [value-path (r element/get-element-prop db input-id :value-path)]
        (as-> db % (r db/remove-item!              % value-path)
-                  (r input/mark-input-as-visited! % input-id))))
+                  (r input.events/mark-as-visited! % input-id))))
 
 (a/reg-event-db :elements/unselect-option! unselect-option!)
 

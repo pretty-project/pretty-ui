@@ -176,6 +176,8 @@
 (def set-selection-end!   selection/set-selection-end!)
 (def set-selection-range! selection/set-selection-range!)
 (def set-caret-position!  selection/set-caret-position!)
+(def move-caret-to-start! selection/move-caret-to-start!)
+(def move-caret-to-end!   selection/move-caret-to-end!)
 
 ; dom.style
 (def get-element-style           style/get-element-style)

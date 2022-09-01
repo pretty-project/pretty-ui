@@ -16,7 +16,8 @@
     (:require [mid-fruits.candy          :refer [param]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+              [x.app-elements.engine.api :as engine]
+              [x.app-elements.input.helpers :as input.helpers]))
 
 
 
@@ -37,7 +38,7 @@
   (merge {:border-color :primary
           :font-size    :s
           :layout       :row
-          :value-path (engine/default-value-path counter-id)}
+          :value-path (input.helpers/default-value-path counter-id)}
          (param counter-props)))
 
 
