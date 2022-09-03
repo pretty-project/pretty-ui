@@ -22,7 +22,7 @@
 [data-disabled="true"] {
   opacity: .5 }
 
-button[data-disabled] {
+button[data-disabled="true"] {
   cursor: default }
 
 /***** *****/

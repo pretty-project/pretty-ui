@@ -98,6 +98,7 @@
 (def reg-event-fx               event-handler/reg-event-fx)
 (def reg-fx                     event-handler/reg-fx)
 (def dispatch                   event-handler/dispatch)
+(def dispatch-fx                event-handler/dispatch-fx)
 (def dispatch-sync              event-handler/dispatch-sync)
 (def dispatch-n                 event-handler/dispatch-n)
 (def dispatch-later             event-handler/dispatch-later)

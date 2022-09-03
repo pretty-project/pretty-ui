@@ -81,7 +81,8 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:default-value (*)(opt)}
+  ;  {:default-value (*)(opt)
+  ;   :value-path (vector)}
   ;
   ; @return (*)
   [db [_ input-id {:keys [default-value value-path] :as input-props}]]
@@ -163,51 +164,70 @@
   ;             ; Use {:validator {:invalid-message ...}}
   ;             (get input-validator :invalid-message)]])
 
+; XXX#NEW VERSION!
 (defn validate-input-value?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {}
   ;
   ; @return (boolean)
-  [db [_ input-id]])
-  ;(let [validator (r get-input-validator db input-id)]
-  ;     (some? validator)]])
+  [db [_ input-id {:keys [validator]}]]
+  (some? validator))
 
-(defn pre-validate-input-value?
+; XXX#NEW VERSION!
+(defn prevalidate-input-value?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {}
   ;
   ; @return (boolean)
-  [db [_ input-id]])
-  ;(let [validator (r get-input-validator db input-id)]
-  ;     (boolean (:pre-validate? validator))]])
+  [db [_ input-id {:keys [validator]}]]
+  (:prevalidate? validator))
 
+; XXX#NEW VERSION!
 (defn input-value-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {}
   ;
   ; @return (boolean)
-  [db [_ input-id]])
-  ;(let [value     (r get-input-value     db input-id)
-  ;      validator (r get-input-validator db input-id)
-  ;     ((:f validator) value)]])
+  [db [_ input-id {:keys [validator] :as input-props}]]
+  (let [value (r get-input-value db input-id input-props)]
+       ((:f validator) value)))
 
+; XXX#NEW VERSION!
+(defn input-value-invalid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {}
+  ;
+  ; @return (boolean)
+  [db [_ input-id input-props]]
+  (let [value-valid? (r input-value-valid? db input-id input-props)]
+       (not value-valid?)))
+
+; XXX#NEW VERSION!
 (defn invalid-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
+  ; @param (map) input-props
   ;
   ; @return (boolean)
-  [db [_ input-id]])
-  ;(or (and (r pre-validate-input-value? db input-id)
-  ;         (not (r input-value-valid?   db input-id))
-           ; HACK#1411
-  ;         (r element/get-element-prop db input-id :initialized?)]
-  ;    (and (r input-visited?            db input-id)
-  ;         (r validate-input-value?     db input-id)
-  ;         (not (r input-value-valid?   db input-id))]])
+  [db [_ input-id {:keys [] :as input-props}]]
+  (or (and (r prevalidate-input-value? db input-id input-props)
+           (r input-value-invalid?     db input-id input-props))
+      (and (r input-visited?           db input-id input-props)
+           (r validate-input-value?    db input-id input-props)
+           (r input-value-invalid?     db input-id input-props))))
 
 ; XXX#NEW VERSION!
 (defn input-value-passed?
@@ -268,6 +288,19 @@
        (r input-visited?           db input-id input-props)
        (not (r input-value-passed? db input-id input-props))))
 
+; XXX#NEW VERSION!
+(defn any-warning?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ; @param (map) input-props
+  ;  {}
+  ;
+  ; @return (boolean)
+  [db [_ input-id input-props]]
+  (or (r required-warning? db input-id input-props)
+      (r invalid-warning?  db input-id input-props)))
+
 (defn required-success?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -304,4 +337,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :elements.input/invalid-warning? invalid-warning?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-sub :elements.input/required-warning? required-warning?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-sub :elements.input/any-warning? any-warning?)

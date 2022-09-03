@@ -19,7 +19,7 @@
               [x.app-components.api                         :as components]
               [x.app-core.api                               :as a :refer [r]]
               [x.app-elements.element-components.chip-group :rename {element chip-group}]
-              [x.app-elements.element-components.combo-box  :rename {element combo-box}]
+              [x.app-elements.combo-box.views  :as combo-box.views]
               [x.app-elements.engine.api                    :as engine]
               [x.app-elements.input.helpers                    :as input.helpers]))
 
@@ -31,7 +31,7 @@
 ; @constant (keywords in vector)
 ;  A multi-combo-box elem mely paramétereit örökölje a combo-box elem
 (def INHERITED-FIELD-PROPS
-     [:auto-focus? :border-color :min-width :get-label-f
+     [:autofocus? :border-color :min-width :get-label-f
       :get-value-f :group-value :max-length :no-options-label :on-blur
       :on-empty :on-focus :on-reset :on-select
       :option-component :options-path :placeholder
@@ -114,9 +114,10 @@
   [group-id group-props]
   (merge {:get-label-f               return
           :get-value-f               return
-          :no-options-selected-label :no-options-selected
-          :options-path              (input.helpers/default-options-path group-id)
-          :value-path                (input.helpers/default-value-path   group-id)}
+          :no-options-selected-label :no-options-selected}
+          ; ezek nem is kellekene:
+          ;:options-path              (input.helpers/default-options-path group-id)}
+          ;:value-path                (input.helpers/default-value-path   group-id)}
           ;:layout :row}
          (param group-props)))
 
@@ -199,7 +200,7 @@
   [group-id group-props]
   (let [field-id    (group-id->field-id    group-id)
         field-props (field-props-prototype group-id group-props)]
-       [:div.x-multi-combo-box--field [combo-box field-id field-props]]))
+       [:div.x-multi-combo-box--field [combo-box.views/element field-id field-props]]))
 
 (defn- multi-combo-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -213,56 +214,25 @@
                           [engine/element-helper      group-id group-props]])
 
 (defn element
+  ; XXX#0711
+  ; A multi-combo-box elem alapkomponense a combo-box elem.
+  ; A multi-combo-box elem további paraméterezését a combo-box elem dokumentációjában találod.
+  ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:autoclear? (boolean)(opt)
-  ;    Default: false
-  ;   :auto-focus? (boolean)(constant)(opt)
-  ;    Default: false
-  ;   :border-color (keyword or string)(opt)
-  ;    :default, :primary, :secondary
-  ;    Default: :default
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :get-label-f (function)(constant)(opt)
+  ;  {:get-label-f (function)(opt)
   ;    Default: return
   ;   :get-value-f (function)(opt)
   ;    Default: return
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :initial-options (vector)(constant)(opt)
-  ;   :initial-value (*)(constant)(opt)
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;    Only w/o {:placeholder ...}
-  ;   :max-length (integer)(opt)
-  ;   :min-width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
+  ;   :initial-options (vector)(opt)
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
   ;   :no-options-selected-label (metamorphic-content)(opt)
   ;    Default: :no-options-selected
-  ;   :on-change (event-vector)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
-  ;   :on-empty (metamorphic-event)(constant)(opt)
-  ;   :on-select (metamorphic-event)(constant)(opt)
+  ;   :on-select (metamorphic-event)(opt)
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
-  ;   :options-path (vector)(constant)(opt)
-  ;   :placeholder (metamorphic-content)(opt)
-  ;    Only w/o {:label ...}
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(constant)(opt)}
+  ;   :options-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/multi-combo-box {...}]

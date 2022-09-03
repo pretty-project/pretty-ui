@@ -14,9 +14,10 @@
 
 (ns x.app-elements.text-field.prototypes
     (:require [mid-fruits.candy                      :refer [param]]
+              [mid-fruits.vector       :as vector]
               [x.app-core.api                        :as a]
               [x.app-elements.input.helpers          :as input.helpers]
-              [x.app-elements.target-handler.helpers :as target-handler.helpers]))
+              [x.app-elements.text-field.helpers :as text-field.helpers]))
 
 
 
@@ -28,32 +29,36 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:autofill? (boolean)(opt)}
+  ;  {}
   ;
   ; @return (map)
-  ;  {:name (keyword)
-  ;   :target-id (keyword)
+  ;  {:autofill-name (keyword)
   ;   :type (keyword)
   ;   :value-path (vector)}
-  [field-id {:keys [autofill?] :as field-props}]
-  (merge {:target-id  (target-handler.helpers/element-id->target-id field-id)
-          :type       :text
-          :value-path (input.helpers/default-value-path field-id)}
-          ; BUG#6782 https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
+  [field-id {:keys [emptiable? end-adornments] :as field-props}]
+  (merge {:type       :text
+          :value-path (input.helpers/default-value-path field-id)
+          ; BUG#6782 
+          ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
+          ;
           ; - A Chrome böngésző ...
           ;   ... ignorálja az {:autocomplete "off"} beállítást,
           ;   ... ignorálja az {:autocomplete "new-*"} beállítást,
           ;   ... figyelembe veszi a {:name ...} értékét.
           ;
-          ; - Véletlenszerű {:name ...} érték használatával az autofill nem képes megállapítani,
-          ;   mi alapján ajánljon értékeket a mezőhöz.
-          ;
-          ; - A mező {:name ...} tulajdonságát lehetséges paraméterként is beállítani, mert a
-          ;   a több helyen felhasznált mezők nem kaphatnak egyedi azonosítót, és generált
-          ;   azonosítóval nem műkdödik az autofill!
-         {:name (if autofill? field-id (a/id))}
-         (param field-props)))
-;
+          ; - Generált {:autofill-name ...} érték használatával a böngésző autofill funkciója
+          ;   nem képes megállapítani, mi alapján ajánljon értékeket a mezőhöz, ezért ha nem
+          ;   adsz meg értelmes (pl. :phone-number) értéket az :autofill-name tulajdonságnak,
+          ;   akkor az egy véletlenszerűen generált értéket fog kapni, amihez az autofill
+          ;   funkció nem fog ajánlani értékeket.
+          :autofill-name (a/id)}
+         (param field-props)
+         (if emptiable? (let [field-empty?          (text-field.helpers/field-empty? field-id)
+                              empty-field-adornment {:disabled? field-empty?
+                                                     :icon      :close
+                                                     :on-click  [:elements.text-field/empty-field! field-id field-props]
+                                                     :tooltip   :empty-field!}]
+                             {:end-adornments (vector/conj-item end-adornments empty-field-adornment)}))))
 
 (defn adornment-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

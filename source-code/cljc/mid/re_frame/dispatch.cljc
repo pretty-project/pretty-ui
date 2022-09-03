@@ -69,6 +69,14 @@
 (registrar/clear-handlers :fx      :dispatch)
 (core/reg-fx              :dispatch dispatch)
 
+(defn dispatch-fx
+  ; @param (event-vector) event-handler
+  ;
+  ; @usage
+  ;  (re-frame/dispatch-fx [:my-side-effect-event ...])
+  [event-handler]
+  (dispatch {:fx event-handler}))
+
 (defn dispatch-sync
   ; @param (event-vector) event-handler
   ;

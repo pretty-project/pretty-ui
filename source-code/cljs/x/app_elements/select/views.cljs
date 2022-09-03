@@ -69,7 +69,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [options (input.helpers/input-options select-id select-props)]
+  (let [options (input.helpers/get-input-options select-id select-props)]
        (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
               (reduce f [:<>] options))))
 
@@ -88,7 +88,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (let [options (input.helpers/input-options select-id select-props)]
+  (let [options (input.helpers/get-input-options select-id select-props)]
        [:div.x-select--option-list (if (vector/nonempty? options)
                                        [select-option-list select-id select-props]
                                        [no-options-label   select-id select-props])]))
@@ -193,12 +193,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id {:keys [initial-options initial-value] :as select-props}]
-  ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
-  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/init-select! ...]
-  ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
-  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
-                                                       (a/dispatch [:elements.select/init-select! select-id select-props])))
+  [select-id select-props]
+  (reagent/lifecycles {:component-did-mount (select.helpers/active-button-did-mount-f select-id select-props)
                        :reagent-render      (fn [_ select-props] [active-button-structure select-id select-props])}))
 
 (defn- active-button-layout

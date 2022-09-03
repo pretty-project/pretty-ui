@@ -22,6 +22,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn checkbox-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;  {}
+  ;
+  ; @return (function)
+  [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
+  #(if (or initial-options initial-value)
+       (a/dispatch [:elements.checkbox/init-checkbox! checkbox-id checkbox-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn checkbox-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

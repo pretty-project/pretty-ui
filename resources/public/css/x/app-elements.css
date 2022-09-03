@@ -2208,14 +2208,6 @@ button.x-card:focus,
 
 /*** Combo-box option ***/
 
-/*** Multi combo-box wrapper ***/
-
-.x-multi-combo-box[data-layout="row"] {
-  /* XXX#0376 */
-  padding: 6px 0 }
-
-/*** Multi combo-box wrapper ***/
-
 /*** Multi combo-box field ***/
 
 .x-multi-combo-box--field {
@@ -3341,14 +3333,6 @@ button.x-card:focus,
 
 
 /***** Text field *****/
-/*** Text field wrapper ***/
-
-.x-text-field[data-layout="row"] {
-  /* XXX#0376 */
-  padding: 6px 0 }
-
-/*** Text field wrapper ***/
-
 /*** Field input-container ***/
 
 /* Az .x-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
@@ -3376,23 +3360,19 @@ button.x-card:focus,
   height: 100%;
   width: 100% }
 
-.x-date-field--input {
-  cursor: text }
-
-.x-date-field--input,
-.x-text-field--input,
-.x-text-field--textarea {
+.x-text-field--input {
   color: var( --color );
   font-size: var( --font-size-s );
-  line-height: 24px;
   letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  padding: 4px 0;
   width: 100% }
 
-.x-text-field--textarea {
+.x-text-field--input[type="date"] {
+  cursor: text }
+
+textarea.x-text-field--input {
   overflow: hidden;
-  /* A text-field input eleme középre igazítja a sort az inputban, de a multiline-field textarea
-   * elemének szüksége van a padding-top tulajdonság beállítására */
-  padding-top: 3px;
   resize: none }
 
 /*** Field input ***/
@@ -3407,17 +3387,6 @@ button.x-card:focus,
   text-align: right }
 
 /*** Field warning ***/
-
-/*** Field label ***/
-
-.x-text-field--label {
-  display: flex;
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
-
-/*** Field label ***/
 
 /*** Field placeholder ***/
 

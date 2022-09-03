@@ -23,6 +23,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn active-button-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (function)
+  [select-id {:keys [initial-options initial-value] :as select-props}]
+  ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
+  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/init-select! ...]
+  ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
+  #(if (or initial-options initial-value)
+       (a/dispatch [:elements.select/init-select! select-id select-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn select-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

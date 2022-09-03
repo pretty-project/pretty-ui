@@ -46,7 +46,7 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   (letfn [(f [option-list option] (conj option-list [checkbox-option checkbox-id checkbox-props option]))]
-         (let [options (input.helpers/input-options checkbox-id checkbox-props)]
+         (let [options (input.helpers/get-input-options checkbox-id checkbox-props)]
               (reduce f [:div.x-checkbox--options] options))))
 
 (defn- checkbox-structure
@@ -64,10 +64,8 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
-  [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
-  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
-                                                       (a/dispatch [:elements.checkbox/init-checkbox! checkbox-id checkbox-props])))
+  [checkbox-id checkbox-props]
+  (reagent/lifecycles {:component-did-mount (checkbox.helpers/checkbox-did-mount-f checkbox-id checkbox-props)
                        :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
 (defn element

@@ -23,3 +23,12 @@
 ;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
 (def TYPE-ENDED-AFTER 350)
 ;                 ... 250) <- Nem mindenki programozó! :)
+
+; @constant (px)
+(def FIELD-LINE-HEIGHT 24)
+
+; @constant (px)
+(def FIELD-HORIZONTAL-PADDING 4)
+
+; @constant (px)
+(def FIELD-BORDER-WIDTH 1)

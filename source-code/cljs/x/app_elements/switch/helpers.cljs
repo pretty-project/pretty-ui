@@ -22,6 +22,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;  {}
+  ;
+  ; @return (function)
+  [switch-id {:keys [initial-options initial-value] :as switch-props}]
+  #(if (or initial-options initial-value)
+       (a/dispatch [:elements.switch/init-switch! switch-id switch-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn switch-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

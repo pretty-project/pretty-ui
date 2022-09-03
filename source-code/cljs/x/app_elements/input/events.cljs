@@ -13,12 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.input.events
-    (:require [mid-fruits.candy              :refer [param return]]
+    (:require [mid-fruits.candy              :refer [return]]
               [mid-fruits.map                :refer [dissoc-in]]
-              [mid-fruits.vector             :as vector]
               [x.app-core.api                :as a :refer [r]]
               [x.app-db.api                  :as db]
-              [x.app-locales.api             :as locales]
               [x.app-elements.engine.element :as element]))
 
 
@@ -71,7 +69,7 @@
   ; Az use-initial-options! függvény csak abban az esetben alkalmazza
   ; az initial-options értékét, ha az options-path útvonalon tárolt érték még üres!
   (let [options (get-in db options-path)]
-       (cond-> db (and initial-options (empty? options))
+       (cond-> db (and      initial-options (empty? options))
                   (assoc-in options-path initial-options))))
 
 ; XXX#NEW VERSION!
@@ -88,7 +86,7 @@
   ; Az use-initial-value! függvény csak abban az esetben alkalmazza
   ; az initial-value értékét, ha a value-path útvonalon tárolt érték még üres!
   (let [value (get-in db value-path)]
-       (cond-> db (and initial-value (empty? value))
+       (cond-> db (and      initial-value (empty? value))
                   (assoc-in value-path initial-value))))
 
 

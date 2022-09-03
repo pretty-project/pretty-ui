@@ -50,9 +50,8 @@
   ;  {}
   ;
   ; @return (map)
-  [db [_ field-id {:keys [surface]}]]
-  (if surface (assoc-in db [:elements :element-handler/meta-items field-id :surface-visible?] true)
-              (return   db)))
+  [db [_ field-id _]]
+  (assoc-in db [:elements :element-handler/meta-items field-id :surface-visible?] true))
 
 (defn hide-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,6 +68,16 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn clear-field-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  [db [_ field-id field-props]]
+  (r input.events/clear-value! db field-id field-props))
 
 (defn empty-field!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,7 +109,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-changed
+(defn type-ended
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -139,3 +148,11 @@
   (as-> db % (r input.events/mark-as-focused! % field-id field-props)
              (r show-surface!                 % field-id field-props)
              (r environment/set-type-mode!    %)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :elements.text-field/clear-field-value! clear-field-value!)

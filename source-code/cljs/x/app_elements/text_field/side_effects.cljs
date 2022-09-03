@@ -16,7 +16,6 @@
     (:require [mid-fruits.string                 :as string]
               [x.app-core.api                    :as a]
               [x.app-elements.text-field.helpers :as text-field.helpers]
-              [x.app-elements.text-field.state   :as text-field.state]
               [x.app-environment.api             :as environment]))
 
 

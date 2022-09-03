@@ -65,6 +65,7 @@
 (def debug! mid.re-frame.api/debug!)
 
 (def dispatch       mid.re-frame.api/dispatch)
+(def dispatch-fx    mid.re-frame.api/dispatch-fx)
 (def dispatch-sync  mid.re-frame.api/dispatch-sync)
 (def dispatch-n     mid.re-frame.api/dispatch-n)
 (def dispatch-later mid.re-frame.api/dispatch-later)
@@ -75,7 +76,7 @@
 
 (def fx   mid.re-frame.api/fx)
 (def fx-n mid.re-frame.api/fx-n)
- 
+
 (def dispatch-tick mid.re-frame.api/dispatch-tick)
 
 (def r mid.re-frame.api/r)

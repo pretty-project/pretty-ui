@@ -78,7 +78,6 @@
 ; TEMP
 
 ; x.app-elements.engine.field
-(def field-props->render-field-placeholder? field/field-props->render-field-placeholder?)
 (def field-empty?                           field/field-empty?)
 (def field-filled?                          field/field-filled?)
 (def field-focused?                         field/field-focused?)
@@ -87,7 +86,10 @@
 (def empty-field-value!                     field/empty-field-value!)
 
 ; x.app-elements.engine.input-group
+(def get-input-group-value input-group/get-input-group-value)
 (def get-input-group-props input-group/get-input-group-props)
+(def decrease-input-count! input-group/decrease-input-count!)
+(def increase-input-count! input-group/increase-input-count!)
 
 ; x.app-elements.engine.presets
 (def apply-preset presets/apply-preset)

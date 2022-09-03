@@ -42,7 +42,7 @@
   [db [_ input-id]]
   (r element/get-element-prop db input-id :group-id))
 
-(defn- disallow-empty-input-group?
+(defn disallow-empty-input-group?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Ha egy input-group rendelkezik {:disallow-empty-input-group? true}
@@ -57,7 +57,7 @@
   [db [_ group-id]]
   (boolean (r element/get-element-prop db group-id :disallow-empty-input-group?)))
 
-(defn- allow-empty-input-group?
+(defn allow-empty-input-group?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
@@ -66,45 +66,54 @@
   [db [_ group-id]]
   (not (r disallow-empty-input-group? db group-id)))
 
-(defn- max-input-count-reached?
+
+
+
+
+; XXX#NEW VERSION!
+(defn max-input-count-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {}
   ;
   ; @return (boolean)
-  [db [_ group-id]]
-  (let [group-value-path (r element/get-element-prop db group-id :value-path)
-        group-value      (get-in db group-value-path)
-        input-count      (count group-value)
-        max-input-count  (r element/get-element-prop db group-id :max-input-count)]
+  [db [_ _ {:keys [max-input-count value-path]}]]
+  (let [group-value (get-in db value-path)
+        input-count (count group-value)]
        (>= input-count max-input-count)))
 
-(defn- get-input-group-value
+; XXX#NEW VERSION!
+(defn get-input-group-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {:disallow-empty-input-group? (boolean)(opt)}
   ;
   ; @return (vector)
-  [db [_ group-id]]
-  (if-let [group-value-path (r element/get-element-prop db group-id :value-path)]
-          (let [group-value (get-in db group-value-path)]
-                     ; Group-value is a nonempty vector
-               (cond (vector/nonempty? group-value)
-                     (return           group-value)
-                     ; Group-value is an empty vector & allow empty input-group
-                     (and (vector? group-value)
-                          (r allow-empty-input-group? db group-id))
-                     (return group-value)
-                     ; Group-value is an empty vector & disallow empty input-group
-                     (vector? group-value)
-                     (let [initial-value (r element/get-element-prop db group-id :initial-value)]
-                          (return [initial-value]))
-                     ; Group-value is NOT a vector & allow empty input group
-                     (r allow-empty-input-group? db group-id)
-                     (return [])
-                     ; Group-value is NOT a vector & disallow empty input group
-                     :disallow-empty-input-group?
-                     (return [nil])))))
+  [db [_ _ {:keys [disallow-empty-input-group? initial-value value-path]}]]
+  (let [group-value (get-in db value-path)]
+             ; If group-value is a nonempty vector ...
+       (cond (vector/nonempty? group-value)
+             (return           group-value)
+             ; If group-value is an empty vector & empty input-group are allowed ...
+             (and (vector? group-value)
+                  (not     disallow-empty-input-group?))
+             (return group-value)
+             ; If group-value is an empty vector & empty input-group are NOT allowed ...
+             (vector? group-value)
+             (return [initial-value])
+             ; If group-value is NOT a vector & empty input-group are allowed ...
+             (not disallow-empty-input-group?)
+             (return [])
+             ; If group-value is NOT a vector & empty input-group are NOT allowed ...
+             :disallow-empty-input-group?
+             (return [nil]))))
+
+
+
 
 (defn get-input-group-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,76 +130,81 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- conj-initial-value!
+; XXX#NEW VERSION!
+(defn conj-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) context-props
-  ;  {:initial-value (*)}
+  ; @param (map) group-props
+  ;  {:disallow-empty-input-group? (boolean)(opt)
+  ;   :initial-value (*)
+  ;   :value-path (vector)}
+  ; @param (integer) input-dex
   ;
   ; @return (map)
-  [db [_ group-id {:keys [initial-value]}]]
-  (let [group-value-path (r element/get-element-prop db group-id :value-path)
-        group-value      (get-in db group-value-path)]
-             ; Group value is a nonempty vector & allow empty input-group
-             ; or group value is a nonempty vector & disallow empty input-group
+  [db [_ group-id {:keys [disallow-empty-input-group? initial-value value-path]} _]]
+  (let [group-value (get-in db value-path)]
+             ; If group-value is a nonempty vector & allow empty input-group
+             ; or group-value is a nonempty vector & disallow empty input-group ...
        (cond (vector/nonempty? group-value)
-             (update-in db group-value-path vector/conj-item initial-value)
-             ; Group value is NOT a nonempty vector & disallow empty input-group
+             (update-in db value-path vector/conj-item initial-value)
+             ; If group-value is NOT a nonempty vector & empty input-group are NOT allowed ...
              ;
-             ; Pl. ha egy multi-field group-value értéke nil, akkor EGY field
-             ; jelenik meg, amely esetben a mezők számának növelése után
-             ; kettő darab mezőnek kell megjelenjen, amihez szükséges, hogy group-value
-             ; kettő értéket tartalmazzon.
-             (r disallow-empty-input-group? db group-id)
-             (assoc-in db group-value-path [initial-value initial-value])
-             ; Group value is NOT a nonempty vector & allow empty input-group
-             (r allow-empty-input-group? db group-id)
-             (assoc-in db group-value-path [initial-value]))))
+             ; Pl. Ha egy multi-field group-value értéke nil, akkor EGY field
+             ;     jelenik meg, amely esetben a mezők számának növelése után
+             ;     kettő darab mezőnek kell megjelenjen, amihez szükséges, hogy group-value
+             ;     kettő értéket tartalmazzon.
+             (boolean disallow-empty-input-group?)
+             (assoc-in db value-path [initial-value initial-value])
+             ; If group-value is NOT a nonempty vector & empty input-group are allowed
+             (not disallow-empty-input-group?)
+             (assoc-in db value-path [initial-value]))))
 
+; XXX#NEW VERSION!
 (defn increase-input-count!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
-  ; @param (map) context-props
-
-  ;
-  ; @example
-  ;  (def db {:my-value ["First value" "Second value"]})
-  ;  (r engine/increase-input-count! db :my-group {:initial-value "Apple"})
-  ;  =>
-  ;  {:my-value ["First value" "Second value" "Apple"]}
-  ;
-  ; @return (map)
-  [db [_ group-id context-props]]
-  (let [group-value-path (r element/get-element-prop db group-id :value-path)]
-       (if (r max-input-count-reached? db group-id)
-           (return db)
-           (as-> db % (r conj-initial-value!       % group-id context-props)
-                      (r element/set-element-prop! % group-id :input-count-increased? true)))))
-
-(a/reg-event-db :elements/increase-input-count! increase-input-count!)
-
-(defn decrease-input-count!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
+  ; @param (map) group-props
   ; @param (integer) input-dex
   ;
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
-  ;  (r engine/decrease-input-count! db :my-group 1)
+  ;  (r engine/increase-input-count! db :my-group {:initial-value "Apple"} 1)
+  ;  =>
+  ;  {:my-value ["First value" "Second value" "Apple"]}
+  ;
+  ; @return (map)
+  [db [_ group-id {:keys [value-path] :as group-props} field-dex]]
+  (if (r max-input-count-reached? db group-id group-props)
+      (return                db)
+      (r conj-initial-value! db group-id group-props field-dex)))
+
+; XXX#NEW VERSION!
+(defn decrease-input-count!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {}
+  ; @param (integer) input-dex
+  ;
+  ; @example
+  ;  (def db {:my-value ["First value" "Second value"]})
+  ;  (r engine/decrease-input-count! db :my-group {...} 1)
   ;  =>
   ;  {:my-value ["First value"]}
   ;
   ; @return (map)
-  [db [_ group-id input-dex]]
-  (let [group-value-path    (r element/get-element-prop db group-id :value-path)
-        group-value         (get-in db group-value-path)
+  [db [_ group-id {:keys [value-path]} input-dex]]
+  (let [group-value         (get-in db value-path)
         updated-group-value (vector/remove-nth-item group-value input-dex)]
-       (assoc-in db group-value-path updated-group-value)))
+       (assoc-in db value-path updated-group-value)))
 
-(a/reg-event-db :elements/decrease-input-count! decrease-input-count!)
+
+
+
+
 
 (defn stack-to-group-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!

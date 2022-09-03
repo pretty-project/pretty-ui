@@ -22,19 +22,24 @@
               [x.app-elements.collect-handler.subs]
               [x.app-elements.color-selector.effects]
               [x.app-elements.color-selector.events]
+              [x.app-elements.combo-box.events]
+              [x.app-elements.combo-box.effects]
+              [x.app-elements.combo-box.side-effects]
+              [x.app-elements.combo-box.subs]
               [x.app-elements.content-handler.events]
               [x.app-elements.content-handler.subs]
               [x.app-elements.expand-handler.events]
               [x.app-elements.expand-handler.subs]
               [x.app-elements.focus-handler.side-effects]
-              [x.app-elements.surface-handler.events]
-              [x.app-elements.surface-handler.subs]
-              [x.app-elements.passfield-handler.events]
-              [x.app-elements.passfield-handler.subs]
+              [x.app-elements.multi-field.events]
+              [x.app-elements.multi-field.subs]
+              [x.app-elements.password-field.side-effects]
               [x.app-elements.radio-button.events]
               [x.app-elements.radio-button.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
+              [x.app-elements.surface-handler.events]
+              [x.app-elements.surface-handler.subs]
               [x.app-elements.switch.events]
               [x.app-elements.switch.subs]
               [x.app-elements.submit-button.subs]
@@ -55,10 +60,10 @@
               [x.app-elements.color-marker.views                      :as color-marker.views]
               [x.app-elements.color-stamp.views                       :as color-stamp.views]
               [x.app-elements.element-components.column               :as element-components.column]
-              [x.app-elements.element-components.combo-box            :as element-components.combo-box]
+              [x.app-elements.combo-box.views                         :as combo-box.views]
               [x.app-elements.element-components.counter              :as element-components.counter]
               [x.app-elements.element-components.data-table           :as element-components.data-table]
-              [x.app-elements.element-components.date-field           :as element-components.date-field]
+              [x.app-elements.date-field.views                        :as date-field.views]
               [x.app-elements.element-components.digit-field          :as element-components.digit-field]
               [x.app-elements.element-components.expandable           :as element-components.expandable]
               [x.app-elements.element-components.file-drop-area       :as element-components.file-drop-area]
@@ -73,15 +78,15 @@
               [x.app-elements.element-components.label                :as element-components.label]
               [x.app-elements.element-components.line-diagram         :as element-components.line-diagram]
               [x.app-elements.element-components.menu-bar             :as element-components.menu-bar]
-              [x.app-elements.element-components.multiline-field      :as element-components.multiline-field]
+              [x.app-elements.multiline-field.views                   :as multiline-field.views]
               [x.app-elements.element-components.multi-combo-box      :as element-components.multi-combo-box]
-              [x.app-elements.element-components.multi-field          :as element-components.multi-field]
+              [x.app-elements.multi-field.views                       :as multi-field.views]
               [x.app-elements.element-components.overlay              :as element-components.overlay]
-              [x.app-elements.element-components.password-field       :as element-components.password-field]
+              [x.app-elements.password-field.views                    :as password-field.views]
               [x.app-elements.element-components.point-diagram        :as element-components.point-diagram]
               [x.app-elements.radio-button.views                      :as radio-button.views]
               [x.app-elements.element-components.row                  :as element-components.row]
-              [x.app-elements.element-components.search-field         :as element-components.search-field]
+              [x.app-elements.search-field.views                      :as search-field.views]
               [x.app-elements.select.views                            :as select.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
               [x.app-elements.submit-button.views                     :as submit-button.views]
@@ -170,10 +175,10 @@
 (def color-marker         color-marker.views/element)
 (def color-stamp          color-stamp.views/element)
 (def column               element-components.column/element)
-(def combo-box            element-components.combo-box/element)
+(def combo-box            combo-box.views/element)
 (def counter              element-components.counter/element)
 (def data-table           element-components.data-table/element)
-(def date-field           element-components.date-field/element)
+(def date-field           date-field.views/element)
 (def digit-field          element-components.digit-field/element)
 (def expandable           element-components.expandable/element)
 (def file-drop-area       element-components.file-drop-area/element)
@@ -189,14 +194,14 @@
 (def line-diagram         element-components.line-diagram/element)
 (def menu-bar             element-components.menu-bar/element)
 (def multi-combo-box      element-components.multi-combo-box/element)
-(def multi-field          element-components.multi-field/element)
-(def multiline-field      element-components.multiline-field/element)
+(def multi-field          multi-field.views/element)
+(def multiline-field      multiline-field.views/element)
 (def overlay              element-components.overlay/element)
-(def password-field       element-components.password-field/element)
+(def password-field       password-field.views/element)
 (def point-diagram        element-components.point-diagram/element)
 (def radio-button         radio-button.views/element)
 (def row                  element-components.row/element)
-(def search-field         element-components.search-field/element)
+(def search-field         search-field.views/element)
 (def select               select.views/element)
 (def slideshow            element-components.slideshow/element)
 (def submit-button        submit-button.views/element)

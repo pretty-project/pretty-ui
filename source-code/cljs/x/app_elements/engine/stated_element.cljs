@@ -40,7 +40,7 @@
 ; a Re-Frame adatbázisban tárolni. Az átláthatóság, karbantarthatóság és konzisztencia megtartása
 ; miatt azonban minden :on-* kezdetű tulajdonság konstans tulajdonságként van használva.
 (def CONSTANT-PROPS-KEYS
-     [:autoclear? :auto-focus? :default-value :disallow-empty-input-group? :emptiable?
+     [:autoclear? :autofocus? :default-value :disallow-empty-input-group? :emptiable?
       :keypress :get-label-f :get-value-f :group-id :initial-options
       :initial-value :max-input-count :min-input-count :modifier :listen-to-change?
       :on-blur :on-change :on-check :on-click :on-delete :on-empty :on-enter

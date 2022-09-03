@@ -12,29 +12,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.passfield-handler.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+(ns x.app-elements.date-field.prototypes
+    (:require [mid-fruits.candy :refer [param]]
+              [x.app-core.api   :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn visibility-toggle-props-prototype
+(defn field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) field-id
-  ; @param (map) toggle-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:icon (keyword)
-  ;    Default: :visibility
-  ;   :on-click (metamorphic-event)
-  ;    Default: [...]
-  ;   :tooltip (keyword)
-  ;    Default: :show-password!}
-  [field-id toggle-props]
-  (merge {:icon     :visibility
-          :on-click [:elements/toggle-passphrase-visibility! field-id]
-          :tooltip  :show-password!}
-         (param toggle-props)))
+  ;  {:autofill-name (keyword)
+  ;   :type (keyword)}
+  [_ field-props]
+  (merge {}
+         (param field-props)
+          ; XXX#6782
+         {:autofill-name (a/id)
+          :type          :date}))

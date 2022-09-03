@@ -75,24 +75,17 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
-  [button-id {:keys [keypress] :as button-props}]
-  ; - A component-did-mount életciklus eltárolja a Re-Frame adatbázisban a button elem billentyűlenyomás-általi
-  ;   vezérléséhez szükséges tulajdonságokat, így azok az elem billentyűlenyomás-vezérlője számára elérhetők
-  ;   lesznek az adatbázisban.
-  ; - A component-will-unmount életciklus törli a Re-Frame adatbázisból a button elem eltárolt tulajdonságait.
-  ; - A component-did-update életciklus aktualizálja a Re-Frame adatbázisban a button elem eltárolt tulajdonságait,
-  ;   így azok követik a button elem számára paraméterként átadott button-props térkép változásait.
-  (reagent/lifecycles {:component-did-mount    (fn [] (if keypress (a/dispatch [:elements.button/button-did-mount    button-id button-props])))
-                       :component-will-unmount (fn [] (if keypress (a/dispatch [:elements.button/button-will-unmount button-id button-props])))
+  [button-id button-props]
+  (reagent/lifecycles {:component-did-mount    (button.helpers/button-did-mount-f    button-id button-props)
+                       :component-will-unmount (button.helpers/button-will-unmount-f button-id button-props)
                        :reagent-render         (fn [_ button-props] [button-structure button-id button-props])
-                       :component-did-update   (fn [this] (if keypress (let [[_ button-props] (reagent/arguments this)]
-                                                                            (a/dispatch [:elements.button/button-did-update button-id button-props]))))}))
+                       :component-did-update   (fn [this] (let [[_ button-props] (reagent/arguments this)]
+                                                               (button.helpers/button-did-update-f button-id button-props)))}))
 
 (defn element
+  ; XXX#0714
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ;  XXX#0714
   ;  {:badge-color (keyword or string)(opt)
   ;    :primary, :secondary, :success, :warning
   ;   :badge-content (metamorphic-content)(opt)

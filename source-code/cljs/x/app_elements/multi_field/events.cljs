@@ -12,23 +12,34 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.passfield-handler.events
-    (:require [x.app-core.api                :as a :refer [r]]
-              [x.app-elements.engine.element :as element]))
+(ns x.app-elements.multi-field.events
+    (:require [x.app-core.api            :as a :refer [r]]
+              [x.app-elements.engine.api :as engine]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-passphrase-visibility!
+(defn decrease-field-count!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
+  ; @param (keyword) group-id
+  ; @param (map) group-props
   ;
   ; @return (map)
-  [db [_ field-id]]
-  (r element/update-element-prop! db field-id :passphrase-visible? not))
+  [db [_ group-id group-props field-dex]]
+  (r engine/decrease-input-count! db group-id group-props field-dex))
+
+(defn increase-field-count!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;
+  ; @return (map)
+  [db [_ group-id group-props field-dex]]
+  (r engine/increase-input-count! db group-id group-props field-dex))
 
 
 
@@ -36,4 +47,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements/toggle-passphrase-visibility! toggle-passphrase-visibility!)
+(a/reg-event-db :elements.multi-field/decrease-field-count! decrease-field-count!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :elements.multi-field/increase-field-count! increase-field-count!)

@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; XXX#NEW VERSION!
-(defn input-options
+(defn get-input-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id

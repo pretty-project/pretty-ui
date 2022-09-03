@@ -13,26 +13,60 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.helpers
-    (:require [dom.api :as dom]
-              [mid-fruits.string :as string]
-              [mid-fruits.time :as time]
-
-              [x.app-elements.engine.api :as engine]
-
-              [x.app-components.api :as components]
-              [x.app-core.api :as a]
-              [x.app-environment.api :as environment]
-              [x.app-elements.focus-handler.side-effects :as focus-handler.side-effects]
-
+    (:require [dom.api                          :as dom]
+              [mid-fruits.candy                 :refer [return]]
+              [mid-fruits.css                   :as css]
+              [mid-fruits.string                :as string]
+              [mid-fruits.time                  :as time]
+              [x.app-components.api             :as components]
+              [x.app-core.api                   :as a]
+              [x.app-elements.engine.api        :as engine]
+              [x.app-environment.api            :as environment]
               [x.app-elements.text-field.config :as text-field.config]
-              [x.app-elements.text-field.state :as text-field.state]
-
-              [mid-fruits.candy :refer [param]]))
+              [x.app-elements.text-field.state  :as text-field.state]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn field-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  ;
+  ; @return (function)
+  [field-id {:keys [autofocus? initial-value] :as field-props}]
+  #(if (or autofocus? initial-value)
+       (a/dispatch [:elements.text-field/init-field! field-id field-props])))
+
+(defn field-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  ;
+  ; @return (function)
+  [field-id {:keys [autoclear?] :as field-props}]
+  #(if autoclear? (a/dispatch [:elements.text-field/clear-field-value! field-id field-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-empty?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (boolean)
+  [field-id]
+  (let [field-value (get-in @text-field.state/FIELD-VALUES [field-id :value])]
+       (empty? field-value)))
 
 (defn field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,38 +121,94 @@
   [field-id _ value]
   (swap! text-field.state/FIELD-VALUES assoc-in [field-id :value] value))
 
-(defn store-field-value!
+(defn resolve-field-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; @param (string) value
-  [field-id field-props value]
-  (let [now        (time/elapsed)
-        type-ended (get-in @text-field.state/FIELD-VALUES [field-id :type-ended])]
-       (when (> now (+ type-ended text-field.config/TYPE-ENDED-AFTER))
-             (a/dispatch-sync [:elements.text-field/field-changed field-id field-props value]))))
+  [field-id field-props]
+  ; - A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
+  ;   és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
+  ;   értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
+  ;   Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
+  ;   on-type-ended esemény.
+  ;
+  ; - A resolve-field-change! függvény az on-change-function függvénytől NEM kapja meg
+  ;   paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
+  ;   hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
+  (let [value      (get-field-value field-id)
+        now        (time/elapsed)
+        changed-at (get-in @text-field.state/FIELD-VALUES [field-id :changed-at])]
+       (when (> now (+ changed-at text-field.config/TYPE-ENDED-AFTER))
+             (a/dispatch-sync [:elements.text-field/type-ended field-id field-props value]))))
 
 (defn on-change-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:modifier (function)(opt)}
+  ;  {:modifier (function)(opt)
+  ;   :on-change (metamorphic-event)(opt)}
   ;
   ; @return (function)
-  [field-id {:keys [modifier] :as field-props}]
+  [field-id {:keys [modifier on-change] :as field-props}]
   #(let [now   (time/elapsed)
          value (if modifier (-> % dom/event->value modifier)
                             (-> % dom/event->value))]
-        (swap! text-field.state/FIELD-VALUES assoc field-id {:type-ended now :value value})
-        (letfn [(f [] (store-field-value! field-id field-props value))]
-               (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))))
+        (swap! text-field.state/FIELD-VALUES assoc field-id {:changed-at now :value value})
+        (letfn [(f [] (resolve-field-change! field-id field-props))]
+               (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
+        (if on-change (let [on-change (a/metamorphic-event<-params on-change value)]
+                           (a/dispatch-sync on-change)))))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn field-body-line-count
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:multiline? (boolean)(opt)}
+  ;
+  ; @return (integer)
+  [field-id {:keys [multiline?]}]
+  (let [value (get-field-value field-id)]
+       (if multiline? ; If field is multiline ...
+                      (let [line-count (-> value string/count-newlines inc)]
+                           ; BUG#1481
+                           ; A textarea element magassága minimum 2 sor magasságú kell legyen,
+                           ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
+                           ; szöveg nem törik meg automatikusan
+                           ; Google Chrome Version 89.0.4389.114
+                           (inc line-count))
+                      ; If field is NOT multiline ...
+                      (return 1))))
+
+(defn field-body-height
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (integer)
+  [field-id field-props]
+  (+ (* text-field.config/FIELD-LINE-HEIGHT (field-body-line-count field-id field-props))
+     (* text-field.config/FIELD-HORIZONTAL-PADDING 2)))
+
+(defn field-body-style
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ;  {:height (string)}
+  [field-id field-props]
+  (let [field-body-height (field-body-height field-id field-props)]
+       {:height (css/px field-body-height)}))
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,12 +220,98 @@
   ; @return (map)
   ;  {}
   [field-id {:keys [border-color max-width stretch-orientation] :as field-props}]
-  (merge (engine/element-default-attributes field-id field-props)
-         (engine/element-indent-attributes  field-id field-props)
-         {:data-border-color        border-color
-          :data-max-width           max-width
-          :data-stretch-orientation stretch-orientation}))
-;
+  (let [any-warning? @(a/subscribe [:elements.input/any-warning? field-id field-props])]
+       (merge (engine/element-default-attributes field-id field-props)
+              (engine/element-indent-attributes  field-id field-props)
+              {:data-border-color        (if any-warning? :warning border-color)
+               :data-max-width           max-width
+               :data-stretch-orientation stretch-orientation})))
+
+(defn field-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:autofill-name (keyword)
+  ;   :disabled? (boolean)(opt)
+  ;   :max-length (integer)(opt)
+  ;   :type (keyword)(opt)
+  ;    :password, :text}
+  ;
+  ; @return (map)
+  ;  {:auto-complete (keyword)
+  ;   :disabled (boolean)
+  ;   :id (string)
+  ;   :max-length (integer)
+  ;   :name (keyword)
+  ;   :on-blur (function)
+  ;   :on-change (function)
+  ;   :on-focus (function)
+  ;   :on-input (function)
+  ;   :type (keyword)
+  ;   :value (string)}
+  [field-id {:keys [autofill-name disabled? max-length type] :as field-props}]
+  (if disabled? {:disabled       true
+                 :id             (a/dom-value field-id "input")
+                 :type           type
+                 :value          (get-field-value field-id)
+                 ; BUG#8809
+                 ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+                 ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+                 :on-change #(let [])}
+                {:auto-complete autofill-name
+                 :id            (a/dom-value field-id "input")
+                 :max-length    max-length
+                 :name          autofill-name
+                 :type          type
+                 :style         (field-body-style field-id field-props)
+                 :value         (get-field-value  field-id)
+                 :on-blur      #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
+                 :on-focus     #(a/dispatch [:elements.text-field/field-focused field-id field-props])
+                 ; BUG#8041
+                 ;  Abban az esetben, ha egy input elem {:value-path [...]}
+                 ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
+                 ;  érték megváltozik egy külső esemény hatására, az input elem
+                 ;  {:on-change #(...)} függvényétől függetlenül, miközben
+                 ;  az input elemen van a fókusz, akkor az elem fókuszának
+                 ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
+                 ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
+                 ;  aminek hatására nem várt események történhetnek, amik hibás
+                 ;  működéshez vezethetnek.
+                 ;
+                 ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
+                 ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
+                 ;  felülíródik az input tartalmával, ami minden esetben string
+                 ;  típus, ellentétben a kiválaszott opcióval.
+                 ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
+                 ;  függvény használatával kezeli.
+                 ;
+                 ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
+                 ;  függvény nélküli input elemeket.
+                 :on-input   (on-change-function field-id field-props)
+                 :on-change #(let [])}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn static-adornment-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; @param (map) adornment-props
+  ;  {:icon (keyword)(opt)
+  ;   :icon-family (keyword)(opt)}
+  ;
+  ; @return (map)
+  ;  {:data-selectable (boolean)
+  ;   :data-icon-family (keyword)}
+  [_ _ {:keys [icon icon-family]}]
+  (if icon {:data-selectable  false
+            :data-icon-family icon-family}
+           {:data-selectable  false}))
 
 (defn button-adornment-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -161,7 +337,8 @@
   ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
   ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
   ; felület React-fából történő lecsatolását okozná.
-  (merge {:on-mouse-down #(.preventDefault %)
+  (merge {:data-selectable false
+          :on-mouse-down #(.preventDefault %)
           :title          (components/content tooltip)}
          (if     icon         {:data-icon-family icon-family})
          (if     disabled?    {:disabled   "1" :data-disabled true})
@@ -176,82 +353,7 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {}
-  [field-id _]
-  {:on-mouse-down #(.preventDefault %)
-   :on-mouse-up   #(focus-handler.side-effects/focus-element! field-id)})
-
-(defn field-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :max-length (integer)(opt)
-  ;   :name (keyword)
-  ;   :type (keyword)(opt)
-  ;    :password, :text
-  ;   :value (string)}
-  ;
-  ; @return (map)
-  ;  {:auto-complete (keyword)
-  ;   :disabled (boolean)
-  ;   :id (string)
-  ;   :max-length (integer)
-  ;   :name (keyword)
-  ;   :on-blur (function)
-  ;   :on-focus (function)
-  ;   :on-change (function)
-  ;   :style (map)}
-  [field-id {:keys [disabled? max-length name surface type] :as field-props}]
-          ; Az x4.4.9 verzióig az elemek target-id azonosítása a {:targetable? ...}
-          ; tulajdonságuk értékétől függött. Az x4.4.9 verzió óta a target-id azonosítás
-          ; minden esetben elérhető.
-          ; A field típusú elemek target-id azonosítása nem kizárólag a {:targetable? ...}
-          ; tulajdonságuk függvénye volt. A {:disabled? true} állapotban levő field elemek
-          ; nem voltak azonosíthatók target-id használatával. Az x4.4.9 verzióban ez a feltétel
-          ; (indoklás és ismert felhasználás hiányában) eltávolításra került.
-
-  (cond-> {:id (a/dom-value field-id "input")}
-
-          ; If field is disabled ...
-          (boolean disabled?) (merge {:disabled true
-                                      :type     type
-                                      :value    (get-field-value field-id)
-                                      ;:style    (field-props->field-style field-props)
-                                      ; BUG#8809
-                                      ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                                      ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
-                                      :on-change #(let [])})
-          ; If field is NOT disabled ...
-          (not disabled?) (merge {:auto-complete name
-                                  :max-length    max-length
-                                  :name          name
-                                  :type          type
-                                  :value    (get-field-value field-id)
-                                  :on-blur  #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
-                                  :on-focus #(a/dispatch [:elements.text-field/field-focused field-id field-props])
-                                  ;:style    (field-props->field-style field-props)
-                                  ; BUG#8041
-                                  ;  Abban az esetben, ha egy input elem {:value-path [...]}
-                                  ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
-                                  ;  érték megváltozik egy külső esemény hatására, az input elem
-                                  ;  {:on-change #(...)} függvényétől függetlenül, miközben
-                                  ;  az input elemen van a fókusz, akkor az elem fókuszának
-                                  ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
-                                  ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
-                                  ;  aminek hatására nem várt események történhetnek, amik hibás
-                                  ;  működéshez vezethetnek.
-                                  ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
-                                  ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
-                                  ;  felülíródik az input tartalmával, ami minden esetben string
-                                  ;  típus, ellentétben a kiválaszott opcióval.
-                                  ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
-                                  ;  függvény használatával kezeli.
-                                  :on-input (on-change-function field-id field-props)
-                                  ; BUG#8041
-                                  ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
-                                  ;  függvény nélküli input elemeket.
-                                  :on-change #(let [])})))
-          ; If field has surface ...
-          ;(some? surface) (merge {:on-mouse-down #(a/dispatch [:elements/show-surface! field-id])})))
+  ;  {:on-mouse-down (function)}
+  [field-id field-props]
+  {:on-mouse-down (fn [e] (.preventDefault e)
+                          (a/dispatch-fx [:elements.text-field/focus-field! field-id field-props]))})

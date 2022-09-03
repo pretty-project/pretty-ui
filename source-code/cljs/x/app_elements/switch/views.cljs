@@ -45,7 +45,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (let [options (input.helpers/input-options switch-id switch-props)]
+  (let [options (input.helpers/get-input-options switch-id switch-props)]
        (letfn [(f [option-list option] (conj option-list [switch-option switch-id switch-props option]))]
               (reduce f [:div.x-switch--options] options))))
 
@@ -64,10 +64,8 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {}
-  [switch-id {:keys [initial-options initial-value] :as switch-props}]
-  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
-                                                       (a/dispatch [:elements.switch/init-switch! switch-id switch-props])))
+  [switch-id switch-props]
+  (reagent/lifecycles {:component-did-mount (switch.helpers/switch-did-mount-f switch-id switch-props)
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
 (defn element

@@ -23,6 +23,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn radio-button-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {}
+  ;
+  ; @return (function)
+  [button-id {:keys [initial-options initial-value] :as button-props}]
+  #(if (or initial-options initial-value)
+       (a/dispatch [:elements.radio-button/init-radio-button! button-id button-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn radio-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

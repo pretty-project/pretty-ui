@@ -649,7 +649,7 @@
   ;  =>
   ;  true
   ;
-  ; @return (string)
+  ; @return (boolean)
   ([n x]
    (pass-with? n x {:case-sensitive? true}))
 
@@ -660,6 +660,41 @@
             (nonempty? x)
             (= (string/lower-case n)
                (string/lower-case x))))))
+
+(defn not-pass-with?
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (map)(opt) options
+  ;  {:case-sensitive? (boolean)
+  ;    Default: true}
+  ;
+  ; @example
+  ;  (string/not-pass-with? "abc" "ab")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (string/not-pass-with? "abc" "abc")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (string/not-pass-with? "abc" "Abc")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (string/not-pass-with? "abc" "Abc" {:case-sensitive? false})
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  ([n x]
+   (not-pass-with? n x {:case-sensitive? true}))
+
+  ([n x options]
+   (let [pass-with? (pass-with? n x options)]
+        (not pass-with?))))
 
 (defn contains-part?
   ; @param (string) n

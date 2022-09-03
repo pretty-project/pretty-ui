@@ -100,7 +100,7 @@
             :hu "Jelszó"}
            :password-is-too-weak
            {:en "Password is too weak"
-            :hu "Túl gyenge jelszó"}
+            :hu "A jelszó erőssége nem megfelelő"}
            :permission-denied
            {:en "Permission denied!"
             :hu "Hozzáférés megtagadva!"}

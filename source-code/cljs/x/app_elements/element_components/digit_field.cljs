@@ -22,7 +22,7 @@
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.api             :as engine]
               [x.app-elements.input.helpers             :as input.helpers]
-              [x.app-elements.passfield-handler.subs :as passfield-handler.subs]
+              ;[x.app-elements.passfield-handler.subs :as passfield-handler.subs]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]))
 
 
@@ -83,8 +83,8 @@
   ; @return (map)
   [db [_ field-id]]
   (merge (r engine/get-element-props                   db field-id)
-         (r engine/get-field-props                     db field-id)
-         (r passfield-handler.subs/get-passfield-props db field-id)))
+         (r engine/get-field-props                     db field-id)))
+         ;(r passfield-handler.subs/get-passfield-props db field-id)))
 
 (a/reg-sub :elements/get-digit-field-props get-digit-field-props)
 

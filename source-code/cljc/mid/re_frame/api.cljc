@@ -51,6 +51,7 @@
 
 ; mid.re-frame.dispatch
 (def dispatch       dispatch/dispatch)
+(def dispatch-fx    dispatch/dispatch-fx)
 (def dispatch-sync  dispatch/dispatch-sync)
 (def dispatch-n     dispatch/dispatch-n)
 (def dispatch-later dispatch/dispatch-later)

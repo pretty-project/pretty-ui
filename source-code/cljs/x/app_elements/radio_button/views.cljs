@@ -45,7 +45,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (let [options (input.helpers/input-options button-id button-props)]
+  (let [options (input.helpers/get-input-options button-id button-props)]
        (letfn [(f [option-list option] (conj option-list [radio-button-option button-id button-props option]))]
               (reduce f [:div.x-radio-button--options] options))))
 
@@ -75,10 +75,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
-  [button-id {:keys [initial-options initial-value] :as button-props}]
-  (reagent/lifecycles {:component-did-mount (fn [] (if (or initial-options initial-value)
-                                                       (a/dispatch [:elements.radio-button/init-radio-button! button-id button-props])))
+  [button-id button-props]
+  (reagent/lifecycles {:component-did-mount (radio-button.helpers/radio-button-did-mount-f button-id button-props)
                        :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
 (defn element

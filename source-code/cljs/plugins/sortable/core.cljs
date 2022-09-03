@@ -16,7 +16,7 @@
     (:require ["@dnd-kit/core"      :as core]
               ["@dnd-kit/sortable"  :as sortable]
               ["@dnd-kit/utilities" :as utilities]
-              [mid-fruits.candy     :as candy :refer [param return]]
+              [mid-fruits.candy     :refer [param return]]
               [mid-fruits.json      :as json]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.map       :refer [dissoc-in]]
