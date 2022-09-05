@@ -131,8 +131,8 @@
   ; Google Chrome 98.0.4758.80
   ;
   ; Az input elemek az on-mouse-down esemény hatására kapnak fókuszt
-  (if placeholder (let [field-value (text-field.helpers/get-field-value field-id)]
-                       (if (empty? field-value)
+  (if placeholder (let [field-content (text-field.helpers/get-field-content field-id)]
+                       (if (empty? field-content)
                            [:div.x-text-field--placeholder {:data-selectable false}
                                                            (components/content placeholder)]))))
 
@@ -200,7 +200,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (if-let [required-warning? @(a/subscribe [:elements.input/required-warning? field-id field-props])]
+  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:div.x-text-field--warning {:data-selectable false}
                                       (components/content :please-fill-out-this-field)]))
 
@@ -211,9 +211,9 @@
   ; @param (map) field-props
   ;  {}
   [field-id {:keys [validator] :as field-props}]
-  (if-let [required-warning? @(a/subscribe [:elements.input/required-warning? field-id field-props])]
+  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
-          (if-let [invalid-warning? @(a/subscribe [:elements.input/invalid-warning? field-id field-props])]
+          (if-let [invalid-warning? @(a/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
                   [:div.x-text-field--warning {:data-selectable false}
                                               (-> validator :invalid-message components/content)])))
 
@@ -272,6 +272,8 @@
   ;      :tab-indexed? (boolean)(opt)
   ;       Default: true
   ;      :tooltip (metamorphic-content)(opt)}]
+  ;   :field-content-f (function)(opt)
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -301,6 +303,8 @@
   ;   :required? (boolean or keyword)(opt)
   ;    true, false, :unmarked
   ;    Default: false
+  ;   :set-value-f (function)(opt)
+  ;    Default: return
   ;   :start-adornments (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
@@ -362,5 +366,6 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
+   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)
+         field-props (text-field.prototypes/hack3031              field-id field-props)]
         [text-field field-id field-props])))

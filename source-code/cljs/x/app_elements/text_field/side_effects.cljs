@@ -23,14 +23,27 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-field!
+(defn use-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:initial-value (string)}
-  [field-id {:keys [initial-value] :as field-props}]
-  (text-field.helpers/set-field-value! field-id field-props initial-value))
+  ;  {:initial-value (string)
+  ;   :field-content-f (function)}
+  [field-id {:keys [initial-value field-content-f] :as field-props}]
+  (let [field-content (field-content-f initial-value)]
+       (text-field.helpers/set-field-content! field-id field-props field-content)))
+
+(defn use-stored-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:field-content-f (function)}
+  ; @param (string) stored-value
+  [field-id {:keys [field-content-f] :as field-props} stored-value]
+  (let [field-content (field-content-f stored-value)]
+       (text-field.helpers/set-field-content! field-id field-props field-content)))
 
 
 
@@ -43,7 +56,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (text-field.helpers/set-field-value! field-id field-props string/empty-string))
+  (text-field.helpers/set-field-content! field-id field-props string/empty-string))
 
 
 
@@ -66,7 +79,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.text-field/init-field! init-field!)
+(a/reg-fx :elements.text-field/use-initial-value! use-initial-value!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-fx :elements.text-field/use-stored-value! use-stored-value!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-fx :elements.text-field/empty-field! empty-field!)

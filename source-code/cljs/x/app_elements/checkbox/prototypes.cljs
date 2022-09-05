@@ -30,16 +30,16 @@
   ; @return (map)
   ;  {:border-color (keyword or string)
   ;   :font-size (keyword)
-  ;   :get-label-f (function)
-  ;   :get-value-f (function)
+  ;   :option-label-f (function)
+  ;   :option-value-f (function)
   ;   :options-orientation (keyword)
   ;   :options-path (vector)
   ;   :value-path (vector)}
   [checkbox-id checkbox-props]
   (merge {:border-color        :primary
           :font-size           :s
-          :get-label-f         return
-          :get-value-f         return
+          :option-label-f      return
+          :option-value-f      return
           :options-orientation :vertical
           :options-path        (input.helpers/default-options-path checkbox-id)
           :value-path          (input.helpers/default-value-path   checkbox-id)}

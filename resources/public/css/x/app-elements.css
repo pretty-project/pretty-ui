@@ -2192,6 +2192,7 @@ button.x-card:focus,
 
 /*** Combo-box option ***/
 
+.x-combo-box--field-content-option,
 .x-combo-box--option {
   align-items: center;
   display: flex;
@@ -2205,6 +2206,9 @@ button.x-card:focus,
 
 .x-combo-box--option:hover {
   background-color: var( --hover-color-highlight ) }
+
+.x-combo-box--field-content-option {
+  color: var( --color-muted )}
 
 /*** Combo-box option ***/
 

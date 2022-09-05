@@ -21,4 +21,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce FIELD-VALUES (ratom {}))
+(defonce FIELD-CONTENTS (ratom {}))

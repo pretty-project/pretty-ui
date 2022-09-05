@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- HACK#3031 probléma!
+
 - BUG#4506 vizsgálata, mivel a szöveg emliti az on-type-ended eseményt, ami megszünt
   mivel az on-chane esemény most már az on-type-ended-kor történik meg ezért összevonásra
   kerültek

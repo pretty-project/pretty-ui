@@ -31,10 +31,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:get-label-f (function)}
+  ;  {:option-label-f (function)}
   ; @param (*) option
-  [button-id {:keys [get-label-f] :as button-props} option]
-  (let [option-label (get-label-f option)]
+  [button-id {:keys [option-label-f] :as button-props} option]
+  (let [option-label (option-label-f option)]
        [:button.x-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
                                        [:div.x-radio-button--option-button]
                                        [:div.x-radio-button--option-label (components/content option-label)]]))
@@ -92,10 +92,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s
-  ;   :get-label-f (function)(opt)
-  ;    Default: return
-  ;   :get-value-f (function)(opt)
-  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;    TODO ...
   ;   :indent (map)(opt)
@@ -111,6 +107,10 @@
   ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)
   ;   :on-select (metamorphic-event)(opt)
+  ;   :option-label-f (function)(opt)
+  ;    Default: return
+  ;   :option-value-f (function)(opt)
+  ;    Default: return
   ;   :options (vector)(opt)
   ;   :options-orientation (keyword)(opt)
   ;    :horizontal, :vertical

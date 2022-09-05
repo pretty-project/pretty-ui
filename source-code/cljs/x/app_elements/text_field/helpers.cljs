@@ -35,12 +35,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
   ;
   ; @return (function)
-  [field-id {:keys [autofocus? initial-value] :as field-props}]
-  #(if (or autofocus? initial-value)
-       (a/dispatch [:elements.text-field/init-field! field-id field-props])))
+  [field-id field-props]
+  #(a/dispatch [:elements.text-field/init-field! field-id field-props]))
 
 (defn field-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +49,7 @@
   ;
   ; @return (function)
   [field-id {:keys [autoclear?] :as field-props}]
-  #(if autoclear? (a/dispatch [:elements.text-field/clear-field-value! field-id field-props])))
+  #(if autoclear? (a/dispatch [:elements.text-field/clear-value! field-id field-props])))
 
 
 
@@ -65,8 +63,8 @@
   ;
   ; @return (boolean)
   [field-id]
-  (let [field-value (get-in @text-field.state/FIELD-VALUES [field-id :value])]
-       (empty? field-value)))
+  (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
+       (empty? field-content)))
 
 (defn field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,8 +73,8 @@
   ;
   ; @return (boolean)
   [field-id]
-  (let [field-value (get-in @text-field.state/FIELD-VALUES [field-id :value])]
-       (string/nonempty? field-value)))
+  (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
+       (string/nonempty? field-content)))
 
 (defn field-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,23 +101,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-field-value
+(defn get-field-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ;
   ; @return (string)
   [field-id]
-  (get-in @text-field.state/FIELD-VALUES [field-id :value]))
+  (get-in @text-field.state/FIELD-CONTENTS [field-id :content]))
 
-(defn set-field-value!
+(defn set-field-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; @param (string) value
-  [field-id _ value]
-  (swap! text-field.state/FIELD-VALUES assoc-in [field-id :value] value))
+  ; @param (string) content
+  [field-id _ content]
+  (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] content))
 
 (defn resolve-field-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -136,11 +134,11 @@
   ; - A resolve-field-change! függvény az on-change-function függvénytől NEM kapja meg
   ;   paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
   ;   hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
-  (let [value      (get-field-value field-id)
-        now        (time/elapsed)
-        changed-at (get-in @text-field.state/FIELD-VALUES [field-id :changed-at])]
+  (let [field-content (get-field-content field-id)
+        now           (time/elapsed)
+        changed-at    (get-in @text-field.state/FIELD-CONTENTS [field-id :changed-at])]
        (when (> now (+ changed-at text-field.config/TYPE-ENDED-AFTER))
-             (a/dispatch-sync [:elements.text-field/type-ended field-id field-props value]))))
+             (a/dispatch-sync [:elements.text-field/type-ended field-id field-props field-content]))))
 
 (defn on-change-function
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -152,13 +150,13 @@
   ;
   ; @return (function)
   [field-id {:keys [modifier on-change] :as field-props}]
-  #(let [now   (time/elapsed)
-         value (if modifier (-> % dom/event->value modifier)
-                            (-> % dom/event->value))]
-        (swap! text-field.state/FIELD-VALUES assoc field-id {:changed-at now :value value})
+  #(let [now           (time/elapsed)
+         field-content (if modifier (-> % dom/event->value modifier)
+                                    (-> % dom/event->value))]
+        (swap! text-field.state/FIELD-CONTENTS assoc field-id {:changed-at now :content field-content})
         (letfn [(f [] (resolve-field-change! field-id field-props))]
                (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
-        (if on-change (let [on-change (a/metamorphic-event<-params on-change value)]
+        (if on-change (let [on-change (a/metamorphic-event<-params on-change field-content)]
                            (a/dispatch-sync on-change)))))
 
 
@@ -175,9 +173,9 @@
   ;
   ; @return (integer)
   [field-id {:keys [multiline?]}]
-  (let [value (get-field-value field-id)]
+  (let [field-content (get-field-content field-id)]
        (if multiline? ; If field is multiline ...
-                      (let [line-count (-> value string/count-newlines inc)]
+                      (let [line-count (-> field-content string/count-newlines inc)]
                            ; BUG#1481
                            ; A textarea element magassága minimum 2 sor magasságú kell legyen,
                            ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
@@ -220,7 +218,7 @@
   ; @return (map)
   ;  {}
   [field-id {:keys [border-color max-width stretch-orientation] :as field-props}]
-  (let [any-warning? @(a/subscribe [:elements.input/any-warning? field-id field-props])]
+  (let [any-warning? @(a/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (engine/element-default-attributes field-id field-props)
               (engine/element-indent-attributes  field-id field-props)
               {:data-border-color        (if any-warning? :warning border-color)
@@ -251,23 +249,24 @@
   ;   :type (keyword)
   ;   :value (string)}
   [field-id {:keys [autofill-name disabled? max-length type] :as field-props}]
-  (if disabled? {:disabled       true
-                 :id             (a/dom-value field-id "input")
-                 :type           type
-                 :value          (get-field-value field-id)
+  (if disabled? {:disabled true
+                 :id       (a/dom-value field-id "input")
+                 :type     type
+                 :value    (get-field-content field-id)
                  ; BUG#8809
                  ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
                  ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                  :on-change #(let [])}
-                {:auto-complete autofill-name
-                 :id            (a/dom-value field-id "input")
-                 :max-length    max-length
-                 :name          autofill-name
-                 :type          type
-                 :style         (field-body-style field-id field-props)
-                 :value         (get-field-value  field-id)
-                 :on-blur      #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
-                 :on-focus     #(a/dispatch [:elements.text-field/field-focused field-id field-props])
+                {:auto-complete  autofill-name
+                 :id             (a/dom-value field-id "input")
+                 :max-length     max-length
+                 :name           autofill-name
+                 :type           type
+                 :style          (field-body-style  field-id field-props)
+                 :value          (get-field-content field-id)
+                 :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id field-props])
+                 :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
+                 :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
                  ; BUG#8041
                  ;  Abban az esetben, ha egy input elem {:value-path [...]}
                  ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
@@ -356,4 +355,5 @@
   ;  {:on-mouse-down (function)}
   [field-id field-props]
   {:on-mouse-down (fn [e] (.preventDefault e)
-                          (a/dispatch-fx [:elements.text-field/focus-field! field-id field-props]))})
+                          (a/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
+                          (a/dispatch    [:elements.text-field/show-surface! field-id field-props]))})

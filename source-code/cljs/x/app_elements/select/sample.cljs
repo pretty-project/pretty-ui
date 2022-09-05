@@ -23,15 +23,18 @@
 
 (defn- my-extendable-select
   []
-  ; - Az {:extendable? true} beállítással használt select elem választható
-  ;   elemek listája bővíthető egy a lista felső részén megjelenő szöveges mező
-  ;   használatával
-  ; - A {:new-option-placeholder "..."} tulajdonság értéke jelenik meg a szöveges
-  ;   mező kitöltő szövegeként
-  ; - A {:new-option-f ...} tulajdonságként átadott függvény alkalmazásával kerül
-  ;   hozzáadásra az új választható elem
+  ; Az {:extendable? true} beállítással használt select elem választható
+  ; elemek listája bővíthető egy a lista felső részén megjelenő szöveges mező
+  ; használatával.
+  ;
+  ; A {:new-option-placeholder "..."} tulajdonság értéke jelenik meg a szöveges
+  ; mező kitöltő szövegeként.
+  ;
+  ; Az {:add-option-f ...} tulajdonságként átadott függvény alkalmazásával kerül
+  ; hozzáadásra az új választható opció.
   [elements/select ::my-extendable-select
-                   {:extendable?            true
-                    :get-label-f            :value
-                    :new-option-placeholder "New my item"
-                    :new-option-f           #(return {:value %})}])
+                   {:add-option-f          #(return {:value %})
+                    :extendable?            true
+                    :option-label-f         :value
+                    :option-value-f         return
+                    :new-option-placeholder "New my item"}])

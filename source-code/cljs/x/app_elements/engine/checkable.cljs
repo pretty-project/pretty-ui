@@ -158,11 +158,11 @@
   ;  {:checked? (boolean)
   ;   :color (keyword)
   ;   :helper (keyword)}
-  [db [_ input-id]]
-  (merge {:checked? (r checkable-checked? db input-id)}
-         (if (r input.subs/required-warning? db input-id)
-             {:border-color :warning
-              :helper       :please-check-this-field})))
+  [db [_ input-id]])
+  ;(merge {:checked? (r checkable-checked? db input-id)}))
+         ;(if (r input.subs/required-warning? db input-id)
+          ;   {:border-color :warning
+          ;    :helper       :please-check-this-field}))
 
 
 

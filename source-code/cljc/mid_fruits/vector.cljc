@@ -92,6 +92,19 @@
   [n x]
   (boolean (some #(= x %) n)))
 
+(defn not-contains-item?
+  ; @param (vector) n
+  ; @param (*) x
+  ;
+  ; @example
+  ;  (vector/not-contains-item? [:a :b] :a)
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n x]
+  (not (contains-item? n x)))
+
 (defn min?
   ; @param (vector) n
   ; @param (integer) x

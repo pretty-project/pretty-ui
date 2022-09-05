@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-components.chip-group
+(ns x.app-elements.chip-group.views
     (:require [mid-fruits.candy                       :refer [param return]]
               [mid-fruits.loop                        :refer [reduce-indexed]]
               [mid-fruits.vector                      :as vector]
@@ -117,7 +117,7 @@
                      [chip-group-chips          group-id group-props]])
 
 (defn element
-  ;  XXX#7701
+  ; XXX#7701
   ; A chip-group elem számára :chips tulajdonságként átadott vektor a megjelenített
   ; chip elemek paraméter térképeit tartalmazza.
   ; A chip elemek paraméterézének leírását a chip elem dokumentációjában találod.

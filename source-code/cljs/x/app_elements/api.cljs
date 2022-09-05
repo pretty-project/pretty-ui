@@ -22,15 +22,16 @@
               [x.app-elements.collect-handler.subs]
               [x.app-elements.color-selector.effects]
               [x.app-elements.color-selector.events]
-              [x.app-elements.combo-box.events]
               [x.app-elements.combo-box.effects]
+              [x.app-elements.combo-box.events]
               [x.app-elements.combo-box.side-effects]
-              [x.app-elements.combo-box.subs]
               [x.app-elements.content-handler.events]
               [x.app-elements.content-handler.subs]
               [x.app-elements.expand-handler.events]
               [x.app-elements.expand-handler.subs]
               [x.app-elements.focus-handler.side-effects]
+              [x.app-elements.multi-combo-box.effects]
+              [x.app-elements.multi-combo-box.events]
               [x.app-elements.multi-field.events]
               [x.app-elements.multi-field.subs]
               [x.app-elements.password-field.side-effects]
@@ -53,7 +54,7 @@
               [x.app-elements.element-components.card                 :as element-components.card]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
               [x.app-elements.checkbox.views                          :as checkbox.views]
-              [x.app-elements.element-components.chip-group           :as element-components.chip-group]
+              [x.app-elements.chip-group.views                        :as chip-group.views]
               [x.app-elements.element-components.chip                 :as element-components.chip]
               [x.app-elements.element-components.circle-diagram       :as element-components.circle-diagram]
               [x.app-elements.color-selector.views                    :as color-selector.views]
@@ -79,7 +80,7 @@
               [x.app-elements.element-components.line-diagram         :as element-components.line-diagram]
               [x.app-elements.element-components.menu-bar             :as element-components.menu-bar]
               [x.app-elements.multiline-field.views                   :as multiline-field.views]
-              [x.app-elements.element-components.multi-combo-box      :as element-components.multi-combo-box]
+              [x.app-elements.multi-combo-box.views                   :as multi-combo-box.views]
               [x.app-elements.multi-field.views                       :as multi-field.views]
               [x.app-elements.element-components.overlay              :as element-components.overlay]
               [x.app-elements.password-field.views                    :as password-field.views]
@@ -168,7 +169,7 @@
 (def card                 element-components.card/element)
 (def card-group           element-components.card-group/element)
 (def checkbox             checkbox.views/element)
-(def chip-group           element-components.chip-group/element)
+(def chip-group           chip-group.views/element)
 (def chip                 element-components.chip/element)
 (def circle-diagram       element-components.circle-diagram/element)
 (def color-selector       color-selector.views/element)
@@ -193,7 +194,7 @@
 (def label                element-components.label/element)
 (def line-diagram         element-components.line-diagram/element)
 (def menu-bar             element-components.menu-bar/element)
-(def multi-combo-box      element-components.multi-combo-box/element)
+(def multi-combo-box      multi-combo-box.views/element)
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
 (def overlay              element-components.overlay/element)

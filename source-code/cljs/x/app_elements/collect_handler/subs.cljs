@@ -93,7 +93,7 @@
   [db [_ input-id]]
   (merge {:collected?      (r collectable-collected?  db input-id)
           :collected-value (r get-collected-value     db input-id)
-          :options         (r get-collectable-options db input-id)}
-         (if (r input.subs/required-warning? db input-id)
-             {:border-color :warning
-              :helper       :please-select-an-option})))
+          :options         (r get-collectable-options db input-id)}))
+         ;(if (r input.subs/required-warning? db input-id)
+          ;   {:border-color :warning
+          ;    :helper       :please-select-an-option}))

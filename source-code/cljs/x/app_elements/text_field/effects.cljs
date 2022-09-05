@@ -30,12 +30,41 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value] :as field-props}]]
+  (fn [{:keys [db]} [_ field-id {:keys [initial-value value-path] :as field-props}]]
+      (let [stored-value (get-in db value-path)]
+           (cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
+                 stored-value  [:elements.text-field/use-stored-value!  field-id field-props]))))
+
+(a/reg-event-fx
+  :elements.text-field/use-initial-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  (fn [{:keys [db]} [_ field-id {:keys [autofocus?] :as field-props}]]
       ; Az automatikus fókuszt késleltetve kell alkalmazni az elemen, hogy az initial-value értéknek legyen ideje
       ; az input mezőbe íródnia, különben a kurzor pozícióját nem lehetne a szöveg végére állítani.
-      {:dispatch-later [(if initial-value {:ms   0 :fx [:elements.text-field/init-field!  field-id field-props]})
-                        (if autofocus?    {:ms 150 :fx [:elements.text-field/focus-field! field-id field-props]})]
-       :db   (as-> db % (if initial-value (r text-field.events/init-field! % field-id field-props)))}))
+      {:dispatch-later [               {:ms   0 :fx [:elements.text-field/use-initial-value! field-id field-props]}
+                        (if autofocus? {:ms 150 :fx [:elements.text-field/focus-field!       field-id field-props]})]
+       :db (r text-field.events/use-initial-value! db field-id field-props)}))
+
+(a/reg-event-fx
+  :elements.text-field/use-stored-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  (fn [{:keys [db]} [_ field-id {:keys [autofocus? value-path] :as field-props}]]
+      (let [stored-value (get-in db value-path)]
+           {:dispatch-later [               {:ms   0 :fx [:elements.text-field/use-stored-value! field-id field-props stored-value]}
+                             (if autofocus? {:ms 150 :fx [:elements.text-field/focus-field!      field-id field-props]})]})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
   :elements.text-field/reg-keypress-events!
@@ -43,14 +72,16 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:emptiable? (boolean)(opt)
-  ;   :on-enter (metamorphic-event)(opt)}
-  (fn [{:keys [db]} [_ field-id {:keys [emptiable? on-enter] :as field-props}]]
-      {:dispatch-cond [on-enter   (let [on-enter-props  {:key-code 13 :required? true :on-keydown on-enter}]
-                                       [:environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props])
-                       emptiable? (let [on-escape       [:elements.text-field/empty-field! field-id field-props]
-                                        on-escape-props {:key-code 27 :required? true :on-keydown on-escape}]
-                                       [:environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props])]}))
+  (fn [{:keys [db]} [_ field-id field-props]]
+      ; XXX#4156
+      ; Az :elements.text-field/ENTER és :elements.text-field/ESC azonosítók használatával más
+      ; a text-field elemre épülő elemek felülírhatják a text-field elem ENTER és ESC billentyűlenyomás-figyelőit,
+      ; hogy saját figyelőt állíthassanak be erre a két billentyűre. Ilyen esetben a felülíró eseményeknek
+      ; kell, hogy megvalósítsák a text-field elem eredeti billentyűlenyomás-figyelő eseményeinek működését!
+      (let [on-enter-props {:key-code 13 :on-keydown [:elements.text-field/ENTER-pressed field-id field-props] :required? true}
+            on-esc-props   {:key-code 27 :on-keydown [:elements.combo-box/ESC-pressed    field-id field-props] :required? true}]
+           {:dispatch-n [[:environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
+                         [:environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
 
 (a/reg-event-fx
   :elements.text-field/remove-keypress-events!
@@ -61,8 +92,34 @@
   ;  {:emptiable? (boolean)(opt)
   ;   :on-enter (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [emptiable? on-enter]}]]
-      {:dispatch-cond [on-enter   [:environment/remove-keypress-event! ::on-ENTER-pressed]
-                       emptiable? [:environment/remove-keypress-event! ::on-ESC-pressed]]}))
+      ; XXX#4156
+      {:dispatch-cond [on-enter   [:environment/remove-keypress-event! :elements.text-field/ENTER]
+                       emptiable? [:environment/remove-keypress-event! :elements.text-field/ESC]]}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements.text-field/ENTER-pressed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:on-enter (metamorphic-event)(opt)}
+  (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
+      {:dispatch on-enter}))
+
+(a/reg-event-fx
+  :elements.text-field/ESC-pressed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:emptiable? (boolean)(opt)}
+  (fn [{:keys [db]} [_ field-id {:keys [emptiable?] :as field-props}]]
+      (if emptiable? [:elements.text-field/empty-field! field-id field-props])))
 
 
 
@@ -75,22 +132,24 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ;  {:on-empty (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
-      ; - Az [:elements.text-field/empty-field! ...] esemény kizárólag abban az esetben
-      ;   törli a mező tartalmát, ha az input elem nincs disabled="true" állapotban,
-      ;   így elkerülhető a következő hiba:
-      ;   Pl.: A mező on-changed eseménye által indított request disabled="true" állapotba
-      ;        állítja a mezőt, és a szerver válaszának megérkezéséig disabled="true" állapotban
-      ;        levő (de fókuszált) mezőt lehetséges lenne kiüríteni az ESC billentyő megnyomásával,
-      ;        ami ismételten elindítaná a request-et (az on-empty esemény által)!
+      ; Az [:elements.text-field/empty-field! ...] esemény kizárólag abban az esetben
+      ; törli a mező tartalmát, ha az input elem nincs disabled="true" állapotban,
+      ; így elkerülhető a következő hiba:
+      ; Pl.: A mező on-change eseménye által indított lekérés {:disabled? true} állapotba
+      ;      állítja a mezőt és a szerver válaszának megérkezéséig {:disabled? true} állapotban
+      ;      levő (de fókuszált) mezőt lehetséges lenne kiüríteni az ESC billentyő megnyomásának
+      ;      hatására megtörténő [:elements.text-field/empty-field! ...] eseménnyel, ami miatt
+      ;      megtörténne az on-empty esemény, ami az on-change eseményhez hasonlóan ismételten
+      ;      elindítaná a lekérést!
       ;
-      ; - Ha a mező üres, akkor az [:elements.text-field/empty-field! ...] hatás nélkül történik meg,
-      ;   mert az üres mező esetén nem szabad ismételten megtörténnie az on-empty eseménynek.
-      ;   (Az értékeket pedig felesleges újra felülírni egy üres stringgel)
+      ; Ha a mező üres, akkor az [:elements.text-field/empty-field! ...] hatás nélkül történik meg,
+      ; mert az üres mező esetén nem szabad ismételten megtörténnie az on-empty eseménynek.
+      ; (Az értékeket pedig felesleges újra felülírni egy üres stringgel)
       ;
-      ; - Az on-empty esemény az on-changed eseményhez hasonlóan utolsó paraméterként megkapja
-      ;   a mező aktuális tartalmát ("")
+      ; Az on-empty esemény az on-change eseményhez hasonlóan utolsó paraméterként megkapja
+      ; a mező aktuális tartalmát, ami jelen esetben egy üres string ("").
       (if (text-field.helpers/field-emptiable? field-id)
           {:db       (r text-field.events/empty-field! db field-id field-props)
            :fx       [:elements.text-field/empty-field! field-id field-props]
@@ -108,10 +167,10 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  ; @param (string) value
-  (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props} value]]
-      {:db       (r text-field.events/type-ended db field-id field-props value)
-       :dispatch (if on-type-ended (a/metamorphic-event<-params on-type-ended value))}))
+  ; @param (string) field-content
+  (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props} field-content]]
+      {:db       (r text-field.events/type-ended db field-id field-props field-content)
+       :dispatch (if on-type-ended (a/metamorphic-event<-params on-type-ended field-content))}))
 
 (a/reg-event-fx
   :elements.text-field/field-blurred
@@ -119,7 +178,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ;  {:on-blur (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
       {:db         (r text-field.events/field-blurred db field-id field-props)
        :dispatch-n [on-blur [:elements.text-field/remove-keypress-events! field-id field-props]]}))
@@ -130,7 +189,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ;  {:on-focus (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-focus] :as field-props}]]
       {:db         (r text-field.events/field-focused db field-id field-props)
        :dispatch-n [on-focus [:elements.text-field/reg-keypress-events! field-id field-props]]}))

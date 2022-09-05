@@ -19,8 +19,9 @@
               [mid-fruits.string                       :as string]
               [mid-fruits.vector                       :as vector]
               [x.app-core.api                          :as a]
+              [x.app-developer.re-frame-browser.config :as re-frame-browser.config]
               [x.app-elements.api                      :as elements]
-              [x.app-developer.re-frame-browser.config :as re-frame-browser.config]))
+              [x.app-environment.api                   :as environment]))
 
 
 
@@ -206,7 +207,8 @@
 (defn edit-item
   []
   (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
-          [:<> [elements/multiline-field {:indent     {:top :xxl}
+          [:<> [elements/multiline-field ::edit-item-field
+                                         {:indent     {:top :xxl}
                                           :value-path [:developer :re-frame-browser/meta-items :edited-item]}]]))
 
 (defn map-key
@@ -214,8 +216,9 @@
   [map-key system-key?]
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
        [:button {:data-clickable true :style {:display :block}
-                 :on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])}
-                (if (string? map-key)
+                 :on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])
+                 :on-mouse-up #(environment/blur-element! nil)}
+                (if (string?       map-key)
                     (string/quotes map-key)
                     (str           map-key))]))
 

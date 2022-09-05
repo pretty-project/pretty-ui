@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.prototypes
-    (:require [mid-fruits.candy                      :refer [param]]
-              [mid-fruits.vector       :as vector]
-              [x.app-core.api                        :as a]
-              [x.app-elements.input.helpers          :as input.helpers]
+    (:require [mid-fruits.candy                  :refer [param return]]
+              [mid-fruits.vector                 :as vector]
+              [x.app-core.api                    :as a]
+              [x.app-elements.input.helpers      :as input.helpers]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
 
 
@@ -33,12 +33,16 @@
   ;
   ; @return (map)
   ;  {:autofill-name (keyword)
+  ;   :field-content-f (function)
+  ;   :set-value-f (function)
   ;   :type (keyword)
   ;   :value-path (vector)}
-  [field-id {:keys [emptiable? end-adornments] :as field-props}]
-  (merge {:type       :text
-          :value-path (input.helpers/default-value-path field-id)
-          ; BUG#6782 
+  [field-id field-props]
+  (merge {:field-content-f return
+          :set-value-f     return
+          :type            :text
+          :value-path      (input.helpers/default-value-path field-id)
+          ; BUG#6782
           ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
           ;
           ; - A Chrome böngésző ...
@@ -52,13 +56,30 @@
           ;   akkor az egy véletlenszerűen generált értéket fog kapni, amihez az autofill
           ;   funkció nem fog ajánlani értékeket.
           :autofill-name (a/id)}
+         (param field-props)))
+
+(defn end-adornments-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {:end-adornments (maps in vector)(opt)}
+  ;
+  ; @return (maps in vector)
+  [field-id {:keys [end-adornments] :as field-props}]
+  (let [field-empty?          (text-field.helpers/field-empty? field-id)
+        empty-field-adornment {:disabled? field-empty?
+                               :icon      :close
+                               :on-click  [:elements.text-field/empty-field! field-id field-props]
+                               :tooltip   :empty-field!}]
+       (vector/conj-item end-adornments empty-field-adornment)))
+
+(defn hack3031
+  [field-id {:keys [emptiable?] :as field-props}]
+  ; HACK#3031
+  (merge {}
          (param field-props)
-         (if emptiable? (let [field-empty?          (text-field.helpers/field-empty? field-id)
-                              empty-field-adornment {:disabled? field-empty?
-                                                     :icon      :close
-                                                     :on-click  [:elements.text-field/empty-field! field-id field-props]
-                                                     :tooltip   :empty-field!}]
-                             {:end-adornments (vector/conj-item end-adornments empty-field-adornment)}))))
+         (if emptiable? {:end-adornments (end-adornments-prototype field-id field-props)})))
 
 (defn adornment-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

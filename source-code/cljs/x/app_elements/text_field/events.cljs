@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-field!
+(defn use-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -69,7 +69,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn clear-field-value!
+(defn clear-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -87,8 +87,9 @@
   ;  {}
   ;
   ; @return (map)
-  [db [_ _ {:keys [value-path]}]]
-  (assoc-in db value-path string/empty-string))
+  [db [_ _ {:keys [set-value-f value-path]}]]
+  (let [input-value (set-value-f string/empty-string)]
+       (assoc-in db value-path input-value)))
 
 (defn store-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,13 +97,14 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  ; @param (string) value
+  ; @param (string) field-content
   ;
   ; @return (map)
-  [db [_ _ {:keys [value-path]} value]]
-  (if (input.helpers/value-path->vector-item? value-path)
-      (r db/set-vector-item! db value-path value)
-      (r db/set-item!        db value-path value)))
+  [db [_ _ {:keys [set-value-f value-path]} field-content]]
+  (let [output-value (set-value-f field-content)]
+       (if (input.helpers/value-path->vector-item? value-path)
+           (r db/set-vector-item! db value-path output-value)
+           (r db/set-item!        db value-path output-value))))
 
 
 
@@ -115,12 +117,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  ; @param (string) value
+  ; @param (string) field-content
   ;
   ; @return (map)
-  [db [_ field-id field-props value]]
+  [db [_ field-id field-props field-content]]
   (as-> db % (r show-surface! % field-id field-props)
-             (r store-value!  % field-id field-props value)))
+             (r store-value!  % field-id field-props field-content)))
 
 (defn field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,4 +157,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.text-field/clear-field-value! clear-field-value!)
+(a/reg-event-db :elements.text-field/show-surface! show-surface!)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-event-db :elements.text-field/clear-value! clear-value!)

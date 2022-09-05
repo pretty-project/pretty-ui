@@ -57,11 +57,11 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:get-label-f (function)}
+  ;  {:option-label-f (function)}
   ; @param (*) option
-  [select-id {:keys [get-label-f] :as select-props} option]
+  [select-id {:keys [option-label-f] :as select-props} option]
   [:button.x-select--option (select.helpers/select-option-attributes select-id select-props option)
-                            (-> option get-label-f components/content)])
+                            (-> option option-label-f components/content)])
 
 (defn- select-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,10 +153,10 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {}
-  [_ {:keys [get-label-f value-path]}]
+  [_ {:keys [option-label-f value-path]}]
   (if-let [selected-option @(a/subscribe [:db/get-item value-path])]
-          [:div.x-select--button-label (-> selected-option get-label-f components/content)]
-          [:div.x-select--button-label (-> :select!                    components/content)]))
+          [:div.x-select--button-label (-> selected-option option-label-f components/content)]
+          [:div.x-select--button-label (-> :select!                       components/content)]))
 
 (defn- select-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -252,7 +252,9 @@
 (defn element
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
-  ;  {:autoclear? (boolean)(opt)
+  ;  {:add-option-f (function)(opt)
+  ;    Default: return
+  ;   :autoclear? (boolean)(opt)
   ;    Default: false
   ;   :border-radius (keyword)(opt)
   ;    :none, :xxs, :xs, :s, :m, :l
@@ -262,10 +264,6 @@
   ;    Default: false
   ;   :extendable? (boolean)(opt)
   ;    Default: false
-  ;   :get-label-f (function)(opt)
-  ;    Default: return
-  ;   :get-value-f (function)(opt)
-  ;    Default: return
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -284,14 +282,16 @@
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
-  ;   :new-option-f (function)(opt)
-  ;    Default: return
   ;   :new-option-placeholder (metamorphic-content)(opt)
   ;    Default: :new-option
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
   ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(opt)
+  ;   :option-label-f (function)(opt)
+  ;    Default: return
+  ;   :option-value-f (function)(opt)
+  ;    Default: return
   ;   :options (vector)(opt)
   ;   :options-label (metamorphic-content)(opt)
   ;   :options-path (vector)(opt)

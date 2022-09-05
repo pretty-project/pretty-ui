@@ -27,15 +27,15 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:get-value-f (function)}
+  ;  {:option-value-f (function)}
   ; @param (*) option
   ;
   ; @return (boolean)
-  [db [_ checkbox-id {:keys [get-value-f] :as checkbox-props} option]]
+  [db [_ checkbox-id {:keys [option-value-f] :as checkbox-props} option]]
   ; XXX#7234
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         stored-value (r input.subs/get-input-value   db checkbox-id checkbox-props)
-        option-value (get-value-f option)]
+        option-value (option-value-f option)]
        (if (vector/min?           options 2)
            (vector/contains-item? stored-value option-value)
            (=                     stored-value option-value))))

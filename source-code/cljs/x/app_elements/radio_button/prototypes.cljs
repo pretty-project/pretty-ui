@@ -30,8 +30,8 @@
   ; @return (map)
   ;  {:border-color (keyword or string)
   ;   :font-size (keyword)
-  ;   :get-label-f (function)
-  ;   :get-value-f (function)
+  ;   :option-label-f (function)
+  ;   :option-value-f (function)
   ;   :options-orientation (keyword)
   ;   :options-path (vector)
   ;   :value-path (vector)}
@@ -41,6 +41,6 @@
           :options-orientation :vertical
           :options-path        (input.helpers/default-options-path button-id)
           :value-path          (input.helpers/default-value-path   button-id)
-          :get-label-f         return
-          :get-value-f         return}
+          :option-label-f      return
+          :option-value-f      return}
          (param button-props)))

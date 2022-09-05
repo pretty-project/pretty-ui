@@ -31,10 +31,10 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {:get-label-f (function)}
+  ;  {:option-label-f (function)}
   ; @param (*) option
-  [switch-id {:keys [get-label-f] :as switch-props} option]
-  (let [option-label (get-label-f option)]
+  [switch-id {:keys [option-label-f] :as switch-props} option]
+  (let [option-label (option-label-f option)]
        [:button.x-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
                                  [:div.x-switch--option-track]
                                  [:div.x-switch--option-label (components/content option-label)]]))
@@ -81,10 +81,6 @@
   ;   :font-size (keyword)(opt)
   ;    :xs, :s
   ;    Default: :s
-  ;   :get-label-f (function)(opt)
-  ;    Default: return
-  ;   :get-value-f (function)(opt)
-  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -100,6 +96,10 @@
   ;   :label (metamorphic-content)(opt)
   ;   :on-check (metamorphic-event)(opt)
   ;   :on-uncheck (metamorphic-event)(opt)
+  ;   :option-label-f (function)(opt)
+  ;    Default: return
+  ;   :option-value-f (function)(opt)
+  ;    Default: return
   ;   :options (vector)(opt)
   ;   :options-orientation (keyword)(opt)
   ;    :horizontal, :vertical

@@ -164,10 +164,10 @@
   [db [_ input-id]]
   (merge {:options   (r get-selectable-options db input-id)
           :selected? (r selectable-selected?   db input-id)
-          :value     (r input.subs/get-input-value  db input-id)}
-         (if (r input.subs/required-warning? db input-id)
-             {:border-color :warning
-              :helper       :please-select-an-option})))
+          :value     (r input.subs/get-input-value  db input-id)}))
+         ;(if (r input.subs/required-warning? db input-id)
+          ;   {:border-color :warning
+          ;    :helper       :please-select-an-option}))
 
 
 

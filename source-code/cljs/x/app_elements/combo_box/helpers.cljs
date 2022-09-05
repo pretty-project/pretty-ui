@@ -29,13 +29,13 @@
 (defn component-did-mount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) box-id
+  ; @param (map) box-props
   ;  {}
   ;
   ; @return (function)
-  [field-id {:keys [initial-options] :as field-props}]
-  #(if initial-options (a/dispatch [:elements.combo-box/init-combo-box! field-id field-props])))
+  [box-id {:keys [initial-options] :as box-props}]
+  #(if initial-options (a/dispatch [:elements.combo-box/init-combo-box! box-id box-props])))
 
 
 
@@ -45,47 +45,47 @@
 (defn get-highlighted-option-dex
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
+  ; @param (keyword) box-id
   ;
   ; @return (integer)
-  [field-id]
-  (get @combo-box.state/OPTION-HIGHLIGHTS field-id))
+  [box-id]
+  (get @combo-box.state/OPTION-HIGHLIGHTS box-id))
 
 (defn any-option-highlighted?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
+  ; @param (keyword) box-id
   ;
   ; @return (boolean)
-  [field-id]
-  (let [highlighted-option-dex (get-highlighted-option-dex field-id)]
+  [box-id]
+  (let [highlighted-option-dex (get-highlighted-option-dex box-id)]
        (some? highlighted-option-dex)))
 
 (defn render-option?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) box-id
+  ; @param (map) box-props
   ;  {}
   ; @param (*) option
   ;
   ; @return (boolean)
-  [field-id {:keys [get-label-f] :as field-props} option]
-  (let [field-value  (text-field.helpers/get-field-value field-id)
-        option-label (get-label-f option)]
-       (and (string/not-pass-with? option-label field-value {:case-sensitive? false})
-            (string/starts-with?   option-label field-value {:case-sensitive? false}))))
+  [box-id {:keys [option-label-f] :as box-props} option]
+  (let [field-content (text-field.helpers/get-field-content box-id)
+        option-label  (option-label-f option)]
+       (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
+            (string/starts-with?   option-label field-content {:case-sensitive? false}))))
 
 (defn get-rendered-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) box-id
+  ; @param (map) box-props
   ;
   ; @return (vector)
-  [field-id field-props]
-  (let [options (input.helpers/get-input-options field-id field-props)]
-       (letfn [(f [options option] (if (render-option? field-id field-props option)
+  [box-id box-props]
+  (let [options (input.helpers/get-input-options box-id box-props)]
+       (letfn [(f [options option] (if (render-option? box-id box-props option)
                                        (conj   options option)
                                        (return options)))]
               (reduce f [] options))))
@@ -93,11 +93,11 @@
 (defn get-highlighted-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
+  ; @param (keyword) box-id
+  ; @param (map) box-props
   ;
   ; @return (*)
-  [field-id field-props]
-  (let [highlighted-option-dex (get-highlighted-option-dex field-id)
-        rendered-options       (get-rendered-options       field-id field-props)]
-       (vector/nth-item rendered-options highlighted-option-dex)))
+  [box-id box-props]
+  (if-let [highlighted-option-dex (get-highlighted-option-dex box-id)]
+          (let [rendered-options (get-rendered-options box-id box-props)]
+               (vector/nth-item rendered-options highlighted-option-dex))))

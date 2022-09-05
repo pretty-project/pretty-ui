@@ -17,7 +17,6 @@
               [mid-fruits.map                :refer [dissoc-in]]
               [mid-fruits.vector             :as vector]
               [x.app-core.api                :as a :refer [r]]
-              [x.app-db.api                  :as db]
               [x.app-locales.api             :as locales]
               [x.app-elements.engine.element :as element]))
 
@@ -58,20 +57,20 @@
 (defn default-options-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
+  ; @param (keyword) input-id
   ;
   ; @return (vector)
-  [element-id]
-  (db/path :elements/options element-id))
+  [input-id]
+  [:elements :element-handler/input-options input-id])
 
 (defn default-value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
+  ; @param (keyword) input-id
   ;
   ; @return (vector)
-  [element-id]
-  (db/path :elements/values element-id))
+  [input-id]
+  [:elements :element-handler/input-values input-id])
 
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
