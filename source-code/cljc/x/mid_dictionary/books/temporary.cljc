@@ -179,4 +179,7 @@
             :hu "Grafikon"}
            :total-balance-n
            {:en "Total balance (%)"
-            :hu "Teljes egyenleg (%)"}})
+            :hu "Teljes egyenleg (%)"}
+           :there-is-no-available-settings
+           {:en "There is no available settings"
+            :hu "Nincsenek elérhető beállítások"}})

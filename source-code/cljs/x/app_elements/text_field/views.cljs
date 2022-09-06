@@ -274,6 +274,8 @@
   ;      :tooltip (metamorphic-content)(opt)}]
   ;   :field-content-f (function)(opt)
   ;    Default: return
+  ;   :field-value-f (function)(opt)
+  ;    Default: return
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -303,8 +305,6 @@
   ;   :required? (boolean or keyword)(opt)
   ;    true, false, :unmarked
   ;    Default: false
-  ;   :set-value-f (function)(opt)
-  ;    Default: return
   ;   :start-adornments (maps in vector)(opt)
   ;    [{:disabled? (boolean)(opt)
   ;       Default: false
@@ -366,6 +366,6 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)
-         field-props (text-field.prototypes/hack3031              field-id field-props)]
+   (let [field-props (text-field.prototypes/field-props-prototype    field-id field-props)
+         field-props (text-field.prototypes/end-adornments-prototype field-id field-props)]
         [text-field field-id field-props])))

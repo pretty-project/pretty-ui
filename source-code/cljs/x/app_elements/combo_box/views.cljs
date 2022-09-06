@@ -159,6 +159,8 @@
   ; @param (map) box-props
   ;  {:field-content-f (function)(opt)
   ;    Default: return
+  ;   :field-value-f (function)(opt)
+  ;    Default: return
   ;   :initial-options (vector)(opt)
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
@@ -170,9 +172,7 @@
   ;    Default: return
   ;   :option-value-f (function)(opt)
   ;    Default: return
-  ;   :options-path (vector)(opt)
-  ;   :set-value-f (function)(opt)
-  ;    Default: return}
+  ;   :options-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/combo-box {...}]
@@ -183,7 +183,7 @@
    [element (a/id) box-props])
 
   ([box-id box-props]
-   (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)
-         box-props (combo-box.prototypes/hack3031            box-id box-props)
+   (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)
+         box-props (combo-box.prototypes/box-events-prototype box-id box-props)
          box-props (assoc box-props :surface [combo-box-surface box-id box-props])]
         [combo-box box-id box-props])))

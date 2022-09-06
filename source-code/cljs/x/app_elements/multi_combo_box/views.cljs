@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box.views
-    (:require [mid-fruits.candy                             :refer [param return]]
-              [mid-fruits.keyword                           :as keyword]
+    (:require [mid-fruits.keyword                           :as keyword]
               [mid-fruits.vector                            :as vector]
               [x.app-components.api                         :as components]
               [x.app-core.api                               :as a :refer [r]]
@@ -95,7 +94,7 @@
           ; közötti távolság.
           ; Ezért szükséges a chip-group elem {:no-chips-label ...} tulajdonságának
           ; használatával megjelenített szöveggel megtörni ezt a távolságot.
-          :no-chips-label (param no-options-selected-label)}))
+          :no-chips-label no-options-selected-label}))
 
 
 
@@ -132,8 +131,9 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
-        field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
+  (let [field-id    (multi-combo-box.helpers/box-id->field-id          box-id)
+        field-props (multi-combo-box.prototypes/field-props-prototype  box-id box-props)
+        field-props (multi-combo-box.prototypes/field-events-prototype box-id box-props field-id field-props)]
 
        ; He?
        ;[:div.x-multi-combo-box--field [combo-box.views/element field-id field-props]]
@@ -165,6 +165,8 @@
   ; @param (map) box-props
   ;  {:field-content-f (function)(opt)
   ;    Default: return
+  ;   :field-value-f (function)(opt)
+  ;    Default: return
   ;   :initial-options (vector)(opt)
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
@@ -178,9 +180,7 @@
   ;   :option-component (component)(opt)
   ;    Default: x.app-elements.combo-box/default-option-component
   ;   :options (vector)(opt)
-  ;   :options-path (vector)(opt)
-  ;   :set-value-f (function)(opt)
-  ;    Default: return}
+  ;   :options-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/multi-combo-box {...}]

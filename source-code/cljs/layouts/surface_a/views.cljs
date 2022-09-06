@@ -39,7 +39,7 @@
                        :component-will-unmount (fn [] (helpers/title-sensor-will-unmount-f))
                        :component-did-update   (fn [this] (let [[sensor-props] (reagent/arguments this)]
                                                                (helpers/title-sensor-did-update-f sensor-props)))
-                       :reagent-render         (fn [] [:div#surface-a--title-sensor (if offset {:style {:top (css/px offset)}})])}))
+                       :reagent-render         (fn [] [:div#surface-a--title-sensor (if offset {:style {:transform (-> offset css/px css/translate-y)}})])}))
 
 
 

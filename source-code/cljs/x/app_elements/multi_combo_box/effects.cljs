@@ -27,11 +27,13 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [_ [_ box-id box-props field-id field-props]]
       ; XXX#4156
-      (let [on-down-props  {:key-code  40 :on-keydown [:elements.combo-box/DOWN-pressed        box-id box-props] :required? true :prevent-default? true}
-            on-up-props    {:key-code  38 :on-keydown [:elements.combo-box/UP-pressed          box-id box-props] :required? true :prevent-default? true}
-            on-esc-props   {:key-code  27 :on-keydown [:elements.combo-box/ESC-pressed         box-id box-props] :required? true}
+      (let [on-down-props  {:key-code  40 :on-keydown [:elements.combo-box/DOWN-pressed        field-id field-props] :required? true :prevent-default? true}
+            on-up-props    {:key-code  38 :on-keydown [:elements.combo-box/UP-pressed          field-id field-props] :required? true :prevent-default? true}
+            on-esc-props   {:key-code  27 :on-keydown [:elements.combo-box/ESC-pressed         field-id field-props] :required? true}
             on-enter-props {:key-code  13 :on-keydown [:elements.multi-combo-box/ENTER-pressed box-id box-props] :required? true}
             on-comma-props {:key-code 188 :on-keydown [:elements.multi-combo-box/COMMA-pressed box-id box-props] :required? true :prevent-default? true}]
            {:dispatch-n [[:environment/reg-keypress-event! :elements.text-field/DOWN   on-down-props]
@@ -46,6 +48,8 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
+  ; @param (keyword) field-id
+  ; @param (map) field-props
   {:dispatch-n [[:environment/remove-keypress-event! :elements.text-field/DOWN]
                 [:environment/remove-keypress-event! :elements.text-field/UP]
                 [:environment/remove-keypress-event! :elements.text-field/ESC]
@@ -75,7 +79,7 @@
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
       (let [field-content (text-field.helpers/get-field-content box-id)]
-           (println field-content))))
+           (println box-props))))
 
 
 
@@ -88,8 +92,10 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
-      [:elements.multi-combo-box/reg-keypress-events! box-id box-props]))
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [_ [_ box-id box-props field-id field-props]]
+      [:elements.multi-combo-box/reg-keypress-events! box-id box-props field-id field-props]))
 
 (a/reg-event-fx
   :elements.multi-combo-box/field-blurred
@@ -97,5 +103,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
-      [:elements.multi-combo-box/remove-keypress-events! box-id box-props]))
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [_ [_ box-id box-props field-id field-props]]
+      [:elements.multi-combo-box/remove-keypress-events! box-id box-props field-id field-props]))

@@ -15,11 +15,11 @@
        vizsgálja meg.
 
 
-# set-value-f
-  A mezőbe írt szöveg a set-value-f függvény alkalmazásával kerül az adatbázisba.
+# field-value-f
+  A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül az adatbázisba.
 
-  Pl.: A mezőbe írt szöveg a set-value-f függvény alkalmazásával kerül a value-path
+  Pl.: A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül a value-path
        útvonalra
 
-       A mező kiürítésekor az üres string érték a set-value-f függvény alkalmazásával
+       A mező kiürítésekor az üres string érték a field-value-f függvény alkalmazásával
        kerül a value-path útvonalra

@@ -87,9 +87,9 @@
   ;  {}
   ;
   ; @return (map)
-  [db [_ _ {:keys [set-value-f value-path]}]]
-  (let [input-value (set-value-f string/empty-string)]
-       (assoc-in db value-path input-value)))
+  [db [_ _ {:keys [field-value-f value-path]}]]
+  (let [field-value (field-value-f string/empty-string)]
+       (assoc-in db value-path field-value)))
 
 (defn store-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,11 +100,11 @@
   ; @param (string) field-content
   ;
   ; @return (map)
-  [db [_ _ {:keys [set-value-f value-path]} field-content]]
-  (let [output-value (set-value-f field-content)]
+  [db [_ _ {:keys [field-value-f value-path]} field-content]]
+  (let [field-value (field-value-f field-content)]
        (if (input.helpers/value-path->vector-item? value-path)
-           (r db/set-vector-item! db value-path output-value)
-           (r db/set-item!        db value-path output-value))))
+           (r db/set-vector-item! db value-path field-value)
+           (r db/set-item!        db value-path field-value))))
 
 
 

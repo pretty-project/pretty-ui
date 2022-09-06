@@ -46,6 +46,9 @@
 
   ([button-id button-props]
    (let [button-disabled? @(a/subscribe [:elements.submit-button/button-disabled? button-id button-props])
-         button-props (-> button-props submit-button.prototypes/button-props-prototype button.prototypes/button-props-prototype)
-         button-props (assoc-some button-props :disabled? button-disabled?)]
+         button-props (-> button-props submit-button.prototypes/button-props-prototype button.prototypes/button-props-prototype)]
+
+         ; TEMP kikapcsolva, amig az input.subs névtér fejlesztés alatt...
+         ;button-props (assoc-some button-props :disabled? button-disabled?)]
+
         [button.views/element button-id button-props])))

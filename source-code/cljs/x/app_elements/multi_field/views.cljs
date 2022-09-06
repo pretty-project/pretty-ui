@@ -43,9 +43,8 @@
   ; @param (map) group-props
   [group-id group-props]
   (let [group-value @(a/subscribe [:elements.multi-field/get-group-value group-id group-props])]
-     [:div (str group-value)
        (letfn [(f [field-group field-dex _] (conj field-group [multi-field-text-field group-id group-props field-dex]))]
-              (reduce-indexed f [:<>] group-value))]))
+              (reduce-indexed f [:<>] group-value))))
 
 (defn- multi-field
   ; WARNING! NON-PUBLIC! DO NOT USE!

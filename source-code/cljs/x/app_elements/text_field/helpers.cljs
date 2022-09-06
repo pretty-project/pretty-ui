@@ -357,3 +357,17 @@
   {:on-mouse-down (fn [e] (.preventDefault e)
                           (a/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
                           (a/dispatch    [:elements.text-field/show-surface! field-id field-props]))})
+
+(defn empty-field-adornment-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ;  {}
+  [field-id field-props]
+  {:disabled? (field-empty? field-id)
+   :icon      :close
+   :on-click  [:elements.text-field/empty-field! field-id field-props]
+   :tooltip   :empty-field!})
