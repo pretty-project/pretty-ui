@@ -222,6 +222,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(a/reg-event-fx
+  :elements.text-field/hack5041
+  (fn [{:keys [db]} [_ field-id {:keys [value-path] :as field-props}]]
+      (let [field-content (text-field.helpers/get-field-content field-id)
+            stored-value  (get-in db value-path)]
+           (if (not= field-content stored-value)
+               (text-field.helpers/set-field-content! field-id field-props stored-value))
+           {})))
+
+(defn- hack5041
+  [field-id {:keys [value-path] :as field-props}]
+  (let [stored-value @(a/subscribe [:db/get-item value-path])]
+       (a/dispatch [:elements.text-field/hack5041 field-id field-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn- text-field-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -232,7 +251,10 @@
                      [engine/element-header               field-id field-props]
                      [text-field-input-container          field-id field-props]
                      [text-field-required-warning         field-id field-props]
-                     [text-field-invalid-warning          field-id field-props]])
+                     [text-field-invalid-warning          field-id field-props]
+
+                     ; HACK#5041
+                     [hack5041 field-id field-props]])
 
 (defn- text-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
