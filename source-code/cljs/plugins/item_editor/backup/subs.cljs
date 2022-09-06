@@ -106,11 +106,7 @@
           (let [current-item-id (r core.subs/get-current-item-id db editor-id)
                 current-item    (r core.subs/get-current-item    db editor-id)
                 backup-item     (r get-backup-item               db editor-id current-item-id)]
-               (letfn [(f [change-key] (if (-> current-item change-key empty?)
-                                           (-> backup-item  change-key empty? not)
-                                           (not= (change-key current-item)
-                                                 (change-key backup-item))))]
-                      (some f change-keys)))))
+               (map/items-different? current-item backup-item change-keys))))
 
 
 

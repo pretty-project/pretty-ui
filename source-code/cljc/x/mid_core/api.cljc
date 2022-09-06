@@ -34,12 +34,12 @@
 (def cache-control-uri cache-handler.helpers/cache-control-uri)
 
 ; x.mid-core.config-handler.subs
-(def get-app-config         config-handler.subs/get-app-config)
-(def get-app-config-item    config-handler.subs/get-app-config-item)
-(def get-server-config      config-handler.subs/get-server-config)
-(def get-server-config-item config-handler.subs/get-server-config-item)
-(def get-site-config        config-handler.subs/get-site-config)
-(def get-site-config-item   config-handler.subs/get-site-config-item)
+(def get-app-config          config-handler.subs/get-app-config)
+(def get-app-config-item     config-handler.subs/get-app-config-item)
+(def get-server-config       config-handler.subs/get-server-config)
+(def get-server-config-item  config-handler.subs/get-server-config-item)
+(def get-website-config      config-handler.subs/get-website-config)
+(def get-website-config-item config-handler.subs/get-website-config-item)
 
 ; x.mid-core.engine
 (def dom-value     engine/dom-value)

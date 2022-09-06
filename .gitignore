@@ -12,7 +12,6 @@ monoset-environment/media/thumbnails/*
 
 # config files
 resources/public/x.app-build.edn
-monoset-environment/x.site-config.edn
 
 # mono-app
 mono-app.jar

@@ -26,13 +26,13 @@
   ; @param (map) configs
   ;  {:app-config (map)
   ;   :server-config (map)
-  ;   :site-config (map)}
+  ;   :website-config (map)}
   ;
   ; @return (map)
-  [db [_ {:keys [app-config server-config site-config]}]]
-  (-> db (assoc-in [:core :config-handler/app-config]    app-config)
-         (assoc-in [:core :config-handler/server-config] server-config)
-         (assoc-in [:core :config-handler/site-config]   site-config)))
+  [db [_ {:keys [app-config server-config website-config]}]]
+  (-> db (assoc-in [:core :config-handler/app-config]     app-config)
+         (assoc-in [:core :config-handler/server-config]  server-config)
+         (assoc-in [:core :config-handler/website-config] website-config)))
 
 
 

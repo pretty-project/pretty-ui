@@ -56,23 +56,23 @@
   [db [_ item-key]]
   (get-in db [:core :config-handler/server-config item-key]))
 
-(defn get-site-config
+(defn get-website-config
   ; @usage
-  ;  (r a/get-site-config db)
+  ;  (r a/get-website-config db)
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core :config-handler/site-config]))
+  (get-in db [:core :config-handler/website-config]))
 
-(defn get-site-config-item
+(defn get-website-config-item
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r a/get-site-config-item db :my-item)
+  ;  (r a/get-website-config-item db :my-item)
   ;
   ; @return (*)
   [db [_ item-key]]
-  (get-in db [:core :config-handler/site-config item-key]))
+  (get-in db [:core :config-handler/website-config item-key]))
 
 
 
@@ -96,9 +96,9 @@
 (event-handler/reg-sub :core/get-server-config-item get-server-config-item)
 
 ; @usage
-;  [:core/get-site-config]
-(event-handler/reg-sub :core/get-site-config get-site-config)
+;  [:core/get-website-config]
+(event-handler/reg-sub :core/get-website-config get-website-config)
 
 ; @usage
-;  [:core/get-app-site-item :my-item]
-(event-handler/reg-sub :core/get-site-config-item get-site-config-item)
+;  [:core/get-website-config-item :my-item]
+(event-handler/reg-sub :core/get-website-config-item get-website-config-item)

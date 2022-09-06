@@ -32,7 +32,7 @@
   [thumbnail-id {:keys [uri] :as thumbnail-props}]
   [:button.x-thumbnail--body (thumbnail.helpers/thumbnail-body-attributes thumbnail-id thumbnail-props)
                              [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
-                             [:div.x-thumbnail--image {:background-image (css/url uri)}]])
+                             [:div.x-thumbnail--image {:style {:background-image (css/url uri)}}]])
 
 (defn- static-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!

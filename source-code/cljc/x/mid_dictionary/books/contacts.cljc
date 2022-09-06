@@ -23,6 +23,9 @@
 (def BOOK {:address
            {:en "Address"
             :hu "Cím"}
+           :addresses
+           {:en "Addresses"
+            :hu "Címek"}
            :city
            {:en "City"
             :hu "Város"}
@@ -41,12 +44,18 @@
            :email-address
            {:en "Email address"
             :hu "Email cím"}
+           :email-addresses
+           {:en "Email addresses"
+            :hu "Email címek"}
            :first-name
            {:en "First name"
             :hu "Keresztnév"}
            :google-maps-link
            {:en "Google Maps link"
             :hu "Google Térkép hivatkozás"}
+           :google-maps-links
+           {:en "Google Maps links"
+            :hu "Google Térkép hivatkozások"}
            :last-name
            {:en "Last name"
             :hu "Vezetéknév"}
@@ -59,6 +68,15 @@
            :phone-number
            {:en "Phone number"
             :hu "Telefonszám"}
+           :phone-numbers
+           {:en "Phone numbers"
+            :hu "Telefonszámok"}
+           :site-address
+           {:en "Site address"
+            :hu "Telephely cím"}
+           :site-addresses
+           {:en "Site addresses"
+            :hu "Telephely címek"}
            :vat-no
            {:en "VAT number"
             :hu "Adószám"}

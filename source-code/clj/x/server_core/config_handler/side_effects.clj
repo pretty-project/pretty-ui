@@ -25,12 +25,12 @@
 (defn- config-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [app-config    (io/read-edn-file config-handler.config/APP-CONFIG-FILEPATH)
-        server-config (io/read-edn-file config-handler.config/SERVER-CONFIG-FILEPATH)
-        site-config   (io/read-edn-file config-handler.config/SITE-CONFIG-FILEPATH)]
-       (event-handler/dispatch [:core/store-configs! {:app-config    app-config
-                                                      :server-config server-config
-                                                      :site-config   site-config}])))
+  (let [app-config     (io/read-edn-file config-handler.config/APP-CONFIG-FILEPATH)
+        server-config  (io/read-edn-file config-handler.config/SERVER-CONFIG-FILEPATH)
+        website-config (io/read-edn-file config-handler.config/WEBSITE-CONFIG-FILEPATH)]
+       (event-handler/dispatch [:core/store-configs! {:app-config     app-config
+                                                      :server-config  server-config
+                                                      :website-config website-config}])))
 
 
 

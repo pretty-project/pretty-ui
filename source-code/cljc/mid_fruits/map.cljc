@@ -54,7 +54,7 @@
   ;
   ; @return (vector)
   [n]
-  (vec (keys n)))
+  (-> n keys vec))
 
 (defn get-first-key
   ; @param (map) n
@@ -66,7 +66,7 @@
   ;
   ; @return (*)
   [n]
-  (first (keys n)))
+  (-> n keys first))
 
 (defn get-values
   ; @param (map) n
@@ -76,7 +76,7 @@
   ;
   ; @return (vector)
   [n]
-  (vec (vals n)))
+  (-> n vals vec))
 
 (defn get-first-value
   ; WARNING! Clojure maps are an unordered data structure.
@@ -90,8 +90,7 @@
   ;
   ; @return (*)
   [n]
-  (let [values (vals n)]
-       (first values)))
+  (-> n vals first))
 
 (defn assoc-ns
   ; @param (map) n
@@ -527,6 +526,80 @@
                  (= (count n)
                     (count pattern))
                  (empty? difference))))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn different?
+  [a b]
+  (letfn [(f [key] (if (-> a key empty?)
+                       (-> b key empty? not)
+                       (not= (key a)
+                             (key b))))]
+         (some f keys)))
+
+(defn items-different?
+  ; @param (map) a
+  ; @param (map) b
+  ; @param (vector) keys
+  ;
+  ; @usage
+  ;  (map/items-different? {...} {...})
+  ;
+  ; @usage
+  ;  (map/items-different? {...} {...} [...])
+  ;
+  ; @example
+  ;  (map/items-different? {:color "Red"   :size "XL"}
+  ;                        {:color "Green" :size "XL"})
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (map/items-different? {:color "Red"}
+  ;                        {:color "Red" :size "XL"})
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (map/items-different? {:color "Red"   :size "XL"}
+  ;                        {:color "Green" :size "XL"}
+  ;                        [:color])
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (map/items-different? {:color "Red"   :size "XL"}
+  ;                        {:color "Green" :size "XL"}
+  ;                        [:size])
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  ([a b]
+   ; 2.
+   ; Ha a megvizsgálandó kulcsok nincsenek meghatározva, akkor az a térkép
+   ; kulcsai szerint hasonlítja össze a és b térképet, tehát a térképet tekinti
+   ; a megváltozott elemnek és b térképet az eredeti másolatnak.
+   (let [keys (keys a)]
+        (items-different? a b keys)))
+
+  ([a b keys]
+   ; 1 .
+   ; Összehasonlítja a és b térkép keys vektorban felsorolt kulcsú elemeit.
+   ; Az üres értékeket nem tekinti különbözőnek (pl. nil = "").
+   ;
+   ; Bizonyons esetekben, pl. egy űrlap kitöltésekor szükséges vizsgálni,
+   ; hogy megváltozott-e az űrlap által szerkesztett adat, figyelembe véve,
+   ; hogy egy üres szövegmező által az adatba írt üres string értékét ne
+   ; tekintse különbözőnek a szövegmező használata előtti nil értéktől.
+   (letfn [(f [key] (if (-> a key empty?)
+                        (-> b key empty? not)
+                        (not= (key a)
+                              (key b))))]
+          (some f keys))))
 
 
 

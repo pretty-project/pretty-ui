@@ -26,4 +26,4 @@
 (def SERVER-CONFIG-FILEPATH "monoset-environment/x.server-config.edn")
 
 ; @constant (string)
-(def SITE-CONFIG-FILEPATH "monoset-environment/x.site-config.edn")
+(def WEBSITE-CONFIG-FILEPATH "monoset-environment/x.website-config.edn")

@@ -20,6 +20,18 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:slogan
+(def BOOK {:brand-name
+           {:en "Brand name"
+            :hu "Márkanév"}
+           :company-name
+           {:en "Company name"
+            :hu "Cégnév"}
+           :logo
+           {:en "Logo"
+            :hu "Logó"}
+           :select-logo!
+           {:en "Select logo"
+            :hu "Logo kiválasztása"}
+           :slogan
            {:en "Slogan"
             :hu "Szlogen"}})
