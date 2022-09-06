@@ -31,6 +31,9 @@
            :content
            {:en "Content"
             :hu "Tartalom"}
+           :contents
+           {:en "Contents"
+            :hu "Tartalmak"}
            :tag
            {:en "Tag"
             :hu "Címke"}
@@ -180,4 +183,3 @@
            :total-balance-n
            {:en "Total balance (%)"
             :hu "Teljes egyenleg (%)"}})
-           
