@@ -44,6 +44,7 @@
               [x.mid-dictionary.books.search        :as books.search]
               [x.mid-dictionary.books.selection     :as books.selection]
               [x.mid-dictionary.books.seo           :as books.seo]
+              [x.mid-dictionary.books.settings      :as books.settings]
               [x.mid-dictionary.books.social-media  :as books.social-media]
               [x.mid-dictionary.books.sync          :as books.sync]
               [x.mid-dictionary.books.themes        :as books.themes]
@@ -92,6 +93,7 @@
                   books.search/BOOK
                   books.selection/BOOK
                   books.seo/BOOK
+                  books.settings/BOOK
                   books.social-media/BOOK
                   books.sync/BOOK
                   books.temporary/BOOK

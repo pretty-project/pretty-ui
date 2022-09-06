@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.thumbnail-handler.side-effects
-    (:require [server-fruits.image                     :as image]
+    (:require [mid-fruits.candy                        :refer [return]]
+              [server-fruits.image                     :as image]
               [server-fruits.io                        :as io]
               [x.server-media.core.helpers             :as core.helpers]
               [x.server-media.thumbnail-handler.config :as thumbnail-handler.config]))
@@ -62,4 +63,5 @@
                        "image/jpeg"      (generate-image-thumbnail! filename)
                        "image/png"       (generate-image-thumbnail! filename)
                        "image/webp"      (generate-image-thumbnail! filename)
-                       "application/pdf" (generate-pdf-thumbnail!   filename))))
+                       "application/pdf" (generate-pdf-thumbnail!   filename)
+                                         (return                    filename))))

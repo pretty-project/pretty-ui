@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.website)
+(ns x.mid-dictionary.books.settings)
 
 
 
@@ -20,21 +20,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:home-page
-           {:en "Home"
-            :hu "Kezdőlap"}
-           :logo
-           {:en "Logo"
-            :hu "Logó"}
-           :site-config
-           {:en "Site config"
-            :hu "Oldal beállításai"}
-           :website
-           {:en "Website"
-            :hu "Webhely"}
-           :website-menu
-           {:en "Website menu"
-            :hu "Webhely"}
-           :website-config
-           {:en "Website config"
-            :hu "Webhely beállításai"}})
+(def BOOK {:there-is-no-available-settings
+           {:en "There is no available settings"
+            :hu "Nincsenek elérhető beállítások"}})

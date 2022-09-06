@@ -2460,8 +2460,18 @@ button.x-card:focus,
 
 /***** Ghost *****/
 
+.x-ghost {
+  /* XXX#5577
+   * A {:size ...} tulajdonság nélkül használt ghost elem magassága beállítható
+   * a {:style {:height "..."}} beállítás használatával, ilyenkor az .x-ghost--body
+   * elem magassága alkalmazkodik az .x-ghost elem magasságához */
+  display: flex;
+  flex-direction: column }
+
 .x-ghost--body {
-  background-color: var( --background-color-highlight ) }
+  background-color: var( --background-color-highlight );
+  /* XXX#5577 */
+  flex-grow: 1 }
 
 /***** Ghost *****/
 

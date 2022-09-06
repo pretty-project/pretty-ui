@@ -86,6 +86,9 @@
            :save-file?
            {:en "Are you sure you want to save this file to device?"
             :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}
+           :search-in-the-directory
+           {:en "Search in the directory"
+            :hu "Keresés a mappában"}
            :select-image!
            {:en "Select image"
             :hu "Kép kiválasztása"}

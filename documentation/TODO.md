@@ -13,6 +13,7 @@
 
 
 # x4.7.0
+- Rendet tenni a monoset log fájlokban
 
 - HACK#3031 probléma!
 
