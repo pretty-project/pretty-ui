@@ -26,9 +26,11 @@
   ; @param (map) thumbnail-props
   ;
   ; @return (map)
-  ;  {:height (keyword)
+  ;  {:background-size (keyword)
+  ;   :height (keyword)
   ;   :width (keyword)}
   [thumbnail-props]
-  (merge {:height :s
-          :width  :s}
+  (merge {:background-size :contain
+          :height          :s
+          :width           :s}
          (param thumbnail-props)))

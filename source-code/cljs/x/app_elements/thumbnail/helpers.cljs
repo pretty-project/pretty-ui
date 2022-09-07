@@ -50,9 +50,9 @@
   ;  {:data-border-radius (keyword)
   ;   :data-height (keyword)
   ;   :data-width (keyword)}
-  [thumbnail-id {:keys [border-radius height width] :as thumbnail-props}]
+  [thumbnail-id {:keys [background-size border-radius height width] :as thumbnail-props}]
   (merge (engine/element-default-attributes thumbnail-id thumbnail-props)
          (engine/element-indent-attributes  thumbnail-id thumbnail-props)
-         {:data-border-radius border-radius
-          :data-height        height
-          :data-width         width}))
+         {:data-border-radius   border-radius
+          :data-height          height
+          :data-width           width}))

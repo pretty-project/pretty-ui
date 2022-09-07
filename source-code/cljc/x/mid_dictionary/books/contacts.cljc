@@ -20,7 +20,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:address
+(def BOOK {:add-contacts-data!
+           {:en "Add contacts data"
+            :hu "Kapcsolati adatok hozzáadása"}
+           :address
            {:en "Address"
             :hu "Cím"}
            :addresses

@@ -79,7 +79,7 @@
       ; hogy saját figyelőt állíthassanak be erre a két billentyűre. Ilyen esetben a felülíró eseményeknek
       ; kell, hogy megvalósítsák a text-field elem eredeti billentyűlenyomás-figyelő eseményeinek működését!
       (let [on-enter-props {:key-code 13 :on-keydown [:elements.text-field/ENTER-pressed field-id field-props] :required? true}
-            on-esc-props   {:key-code 27 :on-keydown [:elements.combo-box/ESC-pressed    field-id field-props] :required? true}]
+            on-esc-props   {:key-code 27 :on-keydown [:elements.text-field/ESC-pressed   field-id field-props] :required? true}]
            {:dispatch-n [[:environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
                          [:environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
 

@@ -217,12 +217,12 @@
   ;
   ; @return (map)
   ;  {}
-  [field-id {:keys [border-color max-width stretch-orientation] :as field-props}]
+  [field-id {:keys [border-color min-width stretch-orientation] :as field-props}]
   (let [any-warning? @(a/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (engine/element-default-attributes field-id field-props)
               (engine/element-indent-attributes  field-id field-props)
               {:data-border-color        (if any-warning? :warning border-color)
-               :data-max-width           max-width
+               :data-min-width           min-width
                :data-stretch-orientation stretch-orientation})))
 
 (defn field-body-attributes

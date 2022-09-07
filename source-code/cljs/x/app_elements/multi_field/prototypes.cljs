@@ -14,6 +14,7 @@
 
 (ns x.app-elements.multi-field.prototypes
     (:require [mid-fruits.candy                   :refer [param]]
+              [x.app-elements.input.helpers       :as input.helpers]
               [x.app-elements.multi-field.helpers :as multi-field.helpers]))
 
 
@@ -29,9 +30,11 @@
   ;
   ; @return (map)
   ;  {:disallow-empty-input-group? (boolean)
-  ;   :max-input-count (integer)}
-  [_ group-props]
-  (merge {:max-input-count 8}
+  ;   :max-input-count (integer)
+  ;   :value-path (vector)}
+  [group-id group-props]
+  (merge {:max-input-count 8
+          :value-path (input.helpers/default-value-path group-id)}
          (param group-props)
          {:disallow-empty-input-group? true}))
 

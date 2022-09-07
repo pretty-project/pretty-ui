@@ -2781,6 +2781,19 @@ button.x-card:focus,
 
 
 
+/***** Multi field *****/
+
+.x-multi-field {
+  /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
+   * text-field alkomponensei */
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 8px }
+
+/***** Multi field *****/
+
+
+
 /***** Overlay *****/
 
 .x-overlay[data-disabled="true"] {
@@ -3436,15 +3449,6 @@ textarea.x-text-field--input {
   z-index: 996 }
 
 /*** Field surface ***/
-
-/*** Multi field ***/
-
-.x-multi-field--text-field {
-  /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
-   * text-field alkomponensei */
-  padding: 8px 0 }
-
-/*** Multi field ***/
 /***** Text field *****/
 
 

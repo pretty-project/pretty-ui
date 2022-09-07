@@ -81,10 +81,11 @@
   ; @param (map) field-props
   ;  {:end-adornments (maps in vector)(opt)}
   [field-id {:keys [end-adornments] :as field-props}]
-  (if (vector/nonempty? end-adornments)
-      (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
-             (reduce f [:div.x-field-adornments] end-adornments))
-      [field-adornments-placeholder field-id field-props]))
+  (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
+       (if (vector/nonempty? end-adornments)
+           (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
+                  (reduce f [:div.x-field-adornments] end-adornments))
+           [field-adornments-placeholder field-id field-props])))
 
 (defn field-start-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,6 +234,8 @@
 
 (defn- hack5041
   [field-id {:keys [value-path] :as field-props}]
+  ; HACK#5041
+  ; Yes! This is what it seems like! Sorry for that :(
   (let [stored-value @(a/subscribe [:db/get-item value-path])]
        (a/dispatch [:elements.text-field/hack5041 field-id field-props])))
 
@@ -388,6 +391,5 @@
    [element (a/id) field-props])
 
   ([field-id field-props]
-   (let [field-props (text-field.prototypes/field-props-prototype    field-id field-props)
-         field-props (text-field.prototypes/end-adornments-prototype field-id field-props)]
+   (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]
         [text-field field-id field-props])))

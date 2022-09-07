@@ -28,21 +28,25 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:uri (string)(opt)}
-  [thumbnail-id {:keys [uri] :as thumbnail-props}]
+  ;  {:background-size (keyword)
+  ;   :uri (string)(opt)}
+  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
   [:button.x-thumbnail--body (thumbnail.helpers/thumbnail-body-attributes thumbnail-id thumbnail-props)
                              [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
-                             [:div.x-thumbnail--image {:style {:background-image (css/url uri)}}]])
+                             [:div.x-thumbnail--image {:style {:background-image (css/url uri)
+                                                               :background-size background-size}}]])
 
 (defn- static-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:uri (string)(opt)}
-  [thumbnail-id {:keys [uri] :as thumbnail-props}]
+  ;  {:background-size (keyword)
+  ;   :uri (string)(opt)}
+  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
   [:div.x-thumbnail--body [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
-                          [:div.x-thumbnail--image {:style {:background-image (css/url uri)}}]])
+                          [:div.x-thumbnail--image {:style {:background-image (css/url uri)
+                                                            :background-size background-size}}]])
 
 (defn- thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +62,10 @@
 (defn element
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:border-radius (keyword)(opt)
+  ;  {:background-size (keyword)(opt)
+  ;    :contain, :cover
+  ;    Default: :contain
+  ;   :border-radius (keyword)(opt)
   ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :none
   ;   :class (keyword or keywords in vector)(opt)
