@@ -46,22 +46,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {}
   ;
   ; @return (map)
-  [db [_ field-id _]]
+  [db [_ field-id ]]
   (assoc-in db [:elements :element-handler/meta-items field-id :surface-visible?] true))
 
 (defn hide-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {}
   ;
   ; @return (map)
-  [db [_ field-id _]]
+  [db [_ field-id]]
   (dissoc-in db [:elements :element-handler/meta-items field-id :surface-visible?]))
 
 
@@ -135,7 +131,7 @@
   [db [_ field-id field-props]]
   (as-> db % (r input.events/mark-as-blurred! % field-id field-props)
              (r input.events/mark-as-visited! % field-id field-props)
-             (r hide-surface!                 % field-id field-props)
+             (r hide-surface!                 % field-id)
              (r environment/quit-type-mode!   %)))
 
 (defn field-focused

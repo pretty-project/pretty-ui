@@ -1991,16 +1991,6 @@ button.x-card:focus,
 
 /*** Chip-group chips ***/
 
-/*** Chip-group label ***/
-
-.x-chip-group--label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px }
-
-/*** Chip-group label ***/
-
 /*** Chip-group no-chips label ***/
 
 .x-chip-group--no-chips-label {
@@ -2211,25 +2201,6 @@ button.x-card:focus,
   color: var( --color-muted )}
 
 /*** Combo-box option ***/
-
-/*** Multi combo-box field ***/
-
-.x-multi-combo-box--field {
-
-  /* WARNING! DEPRECATED!
-   * Az .x-multi-combo-box--field osztály {display: flex} tulajdonságához
-   * nem készült leírás. Nem ismert milyen indokból kapta meg ezt a tulajdonságot.
-   * Lehetséges, hogy a multi-combo-box elem így teremt flex környezetet a text-field
-   * elemnek, hogy a többi elemmel konzisztensen működhessen.
-   * Viszont az SSC/admin rendszerben a multi-combo-box elemben lévő text-field elem szélessége
-   * nem egyezett meg a hagyományos text-field elemek szélességével, ezért a {:display flex}
-   * tulajdonság kikapcsolásra került.
-   *
-   * display: flex
-   * WARNING! DEPRECATED! */
-}
-
-/*** Multi combo-box field ***/
 /***** Combo-box *****/
 
 

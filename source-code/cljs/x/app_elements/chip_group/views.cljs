@@ -13,64 +13,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chip-group.views
-    (:require [mid-fruits.candy                       :refer [param return]]
-              [mid-fruits.loop                        :refer [reduce-indexed]]
+    (:require [mid-fruits.loop                        :refer [reduce-indexed]]
               [mid-fruits.vector                      :as vector]
               [x.app-components.api                   :as components]
-              [x.app-core.api                         :as a :refer [r]]
-              [x.app-elements.element-components.chip :rename {element chip}]
+              [x.app-core.api                         :as a]
+              [x.app-elements.chip-group.helpers      :as chip-group.helpers]
+              [x.app-elements.chip-group.prototypes   :as chip-group.prototypes]
+              [x.app-elements.element-components.chip :as chip.views]
               [x.app-elements.engine.api              :as engine]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- group-props->chip-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ;  {:on-delete (event-vector)(opt)}
-  ; @param (map) chip-props
-  ; @param (integer) chip-dex
-  ;
-  ; @return (map)
-  ;  {:on-delete (metamorphic-event)}
-  [group-id {:keys [on-delete] :as group-props} chip-props chip-dex]
-  (if on-delete (let [on-delete (a/metamorphic-event<-params on-delete group-id chip-dex)]
-                     (assoc chip-props :on-delete on-delete))
-                (return chip-props)))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn chip-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) chip-props
-  ;
-  ; @return (map)
-  ;  {:layout (keyword)}
-  [chip-props]
-  (merge {:layout :fit}
-         (param chip-props)))
-
-(defn group-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) group-props
-  ;
-  ; @return (map)
-  [group-props]
-  (merge {}
-         (param group-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- chip-group-no-chips-label
@@ -80,31 +34,31 @@
   ; @param (map) group-props
   ;  {:no-chips-label (metamorphic-content)(opt)}
   [_ {:keys [no-chips-label]}]
-  (if no-chips-label [:div.x-chip-group--no-chips-label [components/content no-chips-label]]))
+  (if no-chips-label [:div.x-chip-group--no-chips-label (components/content no-chips-label)]))
+
+(defn- chip-group-chip
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ; @param (integer) chip-dex
+  ; @param (*) chip
+  [group-id group-props chip-dex chip]
+  (let [chip-props (chip-group.prototypes/chip-props-prototype group-id group-props chip-dex chip)]
+       [chip.views/element chip-props]))
 
 (defn- chip-group-chips
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:chips (* in vector)}
-  [group-id {:keys [chips] :as group-props}]
-  (if (vector/nonempty? chips)
-      (letfn [(f [chips chip-dex chip-props]
-                 (let [chip-props (group-props->chip-props group-id group-props chip-props chip-dex)
-                       chip-props (chip-props-prototype chip-props)]
-                      (conj chips [chip chip-props])))]
-             (reduce-indexed f [:div.x-chip-group--chips] chips))
-      [chip-group-no-chips-label group-id group-props]))
-
-(defn- chip-group-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ;  {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [:div.x-chip-group--label [components/content label]]))
+  ;  {:value-path (vector)}
+  [group-id {:keys [value-path] :as group-props}]
+  (let [chips @(a/subscribe [:db/get-item value-path])]
+       (if (vector/nonempty? chips)
+           (letfn [(f [chip-list chip-dex chip] (conj chip-list [chip-group-chip group-id group-props chip-dex chip]))]
+                  (reduce-indexed f [:div.x-chip-group--chips] chips))
+           [chip-group-no-chips-label group-id group-props])))
 
 (defn- chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,21 +66,18 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.x-chip-group (engine/element-attributes group-id group-props)
-                     [chip-group-label          group-id group-props]
-                     [chip-group-chips          group-id group-props]])
+  [:div.x-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
+                     [engine/element-header                    group-id group-props]
+                     [chip-group-chips                         group-id group-props]])
 
 (defn element
-  ; XXX#7701
-  ; A chip-group elem számára :chips tulajdonságként átadott vektor a megjelenített
-  ; chip elemek paraméter térképeit tartalmazza.
-  ; A chip elemek paraméterézének leírását a chip elem dokumentációjában találod.
-  ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:chips (maps in vector)
-  ;    [{...} {...}]
-  ;   :class (keyword or keywords in vector)(opt)
+  ;  {:class (keyword or keywords in vector)(opt)
+  ;   :chip-label-f (function)(opt)
+  ;    Default: return
+  ;   :deletable? (boolean)(opt)
+  ;    Default: false
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -138,26 +89,17 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :label (metamorphic-content)(opt)
   ;   :no-chips-label (metamorphic-content)(opt)
-  ;   :on-delete (event-vector)(opt)
-  ;   :style (map)(opt)}
+  ;   :style (map)(opt)
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [elements/chip-group {...}]
   ;
   ; @usage
   ;  [elements/chip-group :my-chip-group {...}]
-  ;
-  ; @usage
-  ;  [elements/chip-group {:chip-group [{:label "Chip #1"}]}]
-  ;
-  ; @usage
-  ;  (a/reg-event-db :delete-my-chip! [db [_ my-param group-id chip-dex]])
-  ;  [elements/chip-group {:chips [{:label "Chip #1"}
-  ;                                {:label "Chip #2"}]
-  ;                        :on-delete [:delete-my-chip! :my-param]}]
   ([group-props]
    [element (a/id) group-props])
 
   ([group-id group-props]
-   (let [];group-props (group-props-prototype group-props)
+   (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]
         [chip-group group-id group-props])))

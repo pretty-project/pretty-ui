@@ -12,13 +12,22 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.view-selector.routes.helpers
-    (:require [mid.plugins.view-selector.routes.helpers :as routes.helpers]))
+(ns x.app-elements.chip-group.helpers
+    (:require [x.app-elements.engine.api :as engine]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.view-selector.routes.helpers
-(def route-id routes.helpers/route-id)
+(defn chip-group-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;
+  ; @return (map)
+  [group-id group-props]
+  (merge (engine/element-default-attributes group-id group-props)
+         (engine/element-indent-attributes  group-id group-props)
+         {}))

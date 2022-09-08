@@ -66,7 +66,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
+  ;  {:option-label-f (function)(opt)}
   ; @param (*) option
   ;
   ; @return (boolean)

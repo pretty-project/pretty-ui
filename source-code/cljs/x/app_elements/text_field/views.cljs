@@ -225,11 +225,12 @@
 
 (a/reg-event-fx
   :elements.text-field/hack5041
-  (fn [{:keys [db]} [_ field-id {:keys [value-path] :as field-props}]]
-      (let [field-content (text-field.helpers/get-field-content field-id)
-            stored-value  (get-in db value-path)]
-           (if (not= field-content stored-value)
-               (text-field.helpers/set-field-content! field-id field-props stored-value))
+  (fn [{:keys [db]} [_ field-id {:keys [field-content-f value-path]}]]
+      (let [field-content  (text-field.helpers/get-field-content field-id)
+            stored-value   (get-in db value-path)
+            stored-content (field-content-f stored-value)]
+           (if (not= field-content stored-content)
+               (text-field.helpers/set-field-content! field-id stored-content))
            {})))
 
 (defn- hack5041

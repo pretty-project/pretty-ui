@@ -17,6 +17,7 @@
               [x.app-elements.button.side-effects]
               [x.app-elements.checkbox.events]
               [x.app-elements.checkbox.subs]
+              [x.app-elements.chip-group.events] 
               [x.app-elements.collect-handler.effects]
               [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]

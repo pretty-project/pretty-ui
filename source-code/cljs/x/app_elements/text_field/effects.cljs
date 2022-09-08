@@ -30,10 +30,18 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [initial-value value-path] :as field-props}]]
+  (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value value-path] :as field-props}]]
+      ; Az [:elements.text-field/use-initial-value! ...] esemény beállítja a kezdeti értékét
+      ; az adatbázisban, majd a [:elements.text-field/hack5041 ...] esemény az adatbázisban megváltozott
+      ; tárolt értéket beleírja a mezőbe.
+      ;
+      ; Ha az elem nem rendelkezik {:initial-value ...} tulajdonsággal és az adatbázisban a value-path
+      ; útvonalon található valamilyen érték, akkor az [:elements.text-field/use-stored-value! ...]
+      ; esemény a tárolt értéket beleírja a mezőbe.
       (let [stored-value (get-in db value-path)]
-           (cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
-                 stored-value  [:elements.text-field/use-stored-value!  field-id field-props]))))
+           {:dispatch-n [(cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
+                                stored-value [:elements.text-field/use-stored-value!  field-id field-props])]
+            :fx-n       [(if   autofocus?    [:elements.text-field/focus-field!       field-id field-props])]})))
 
 (a/reg-event-fx
   :elements.text-field/use-initial-value!
@@ -41,13 +49,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [autofocus?] :as field-props}]]
-      ; Az automatikus fókuszt késleltetve kell alkalmazni az elemen, hogy az initial-value értéknek legyen ideje
-      ; az input mezőbe íródnia, különben a kurzor pozícióját nem lehetne a szöveg végére állítani.
-      {:dispatch-later [               {:ms   0 :fx [:elements.text-field/use-initial-value! field-id field-props]}
-                        (if autofocus? {:ms 150 :fx [:elements.text-field/focus-field!       field-id field-props]})]
-       :db (r text-field.events/use-initial-value! db field-id field-props)}))
+  (fn [{:keys [db]} [_ field-id field-props]]
+      {:db (r text-field.events/use-initial-value! db field-id field-props)}))
 
 (a/reg-event-fx
   :elements.text-field/use-stored-value!
@@ -55,11 +58,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [autofocus? value-path] :as field-props}]]
+  ;  {:value-path (vector)}
+  (fn [{:keys [db]} [_ field-id {:keys [value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
-           {:dispatch-later [               {:ms   0 :fx [:elements.text-field/use-stored-value! field-id field-props stored-value]}
-                             (if autofocus? {:ms 150 :fx [:elements.text-field/focus-field!      field-id field-props]})]})))
+           {:fx [:elements.text-field/use-stored-value! field-id field-props stored-value]})))
 
 
 
@@ -152,7 +154,7 @@
       ; a mező aktuális tartalmát, ami jelen esetben egy üres string ("").
       (if (text-field.helpers/field-emptiable? field-id)
           {:db       (r text-field.events/empty-field! db field-id field-props)
-           :fx       [:elements.text-field/empty-field! field-id field-props]
+           :fx       [:elements.text-field/empty-field! field-id]
            :dispatch (if on-empty (a/metamorphic-event<-params on-empty string/empty-string))})))
 
 

@@ -15,7 +15,6 @@
 (ns x.app-elements.engine.api
     (:require [x.app-elements.engine.checkable          :as checkable]
               [x.app-elements.engine.clickable          :as clickable]
-              [x.app-elements.engine.combo-box          :as combo-box]
               [x.app-elements.engine.countable          :as countable]
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-badge      :as element-badge]
@@ -40,9 +39,6 @@
 (def checkable-checked?                  checkable/checkable-checked?)
 (def checkable-nonchecked?               checkable/checkable-nonchecked?)
 (def get-checkable-props                 checkable/get-checkable-props)
-
-; x.app-elements.engine.combo-box
-(def get-combo-box-props combo-box/get-combo-box-props)
 
 ; x.app-elements.engine.countable
 (def countable-decrease-attributes countable/countable-decrease-attributes)

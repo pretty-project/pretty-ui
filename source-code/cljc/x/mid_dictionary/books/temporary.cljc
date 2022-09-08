@@ -157,6 +157,9 @@
            :make-a-copy!
            {:en "Make a copy"
             :hu "Másolat készítése"}
+           :view-copy!
+           {:en "View copy"
+            :hu "Másolat megtekintése"}
 
            :new
            {:en "New"
@@ -173,9 +176,7 @@
            {:en "Save order"
             :hu "Sorrend mentése"}
 
-           :view-copy!
-           {:en "View copy"
-            :hu "Másolat megtekintése"}
+
 
            :chart
            {:en "Chart"

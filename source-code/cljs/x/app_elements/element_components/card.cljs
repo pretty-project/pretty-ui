@@ -60,6 +60,9 @@
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
   [card-id {:keys [on-click] :as card-props}]
+  ; TODO
+  ; Az .x-card--body elem legyen majd button, hogy az indent ne nyuljon bele
+  ; a kattinthato részbe!
   [:button.x-card (engine/element-attributes card-id card-props
                                              {:on-click    #(a/dispatch on-click)
                                               :on-mouse-up #(environment/blur-element!)})

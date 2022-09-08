@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.combo-box.events
-    (:require [mid-fruits.candy            :refer [return]]
-              [x.app-core.api              :as a :refer [r]]
+    (:require [x.app-core.api              :as a :refer [r]]
               [x.app-db.api                :as db]
               [x.app-elements.input.events :as input.events]))
 
@@ -43,11 +42,12 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
+  ;  {:option-value-f (function)
+  ;   :value-path (vector)}
   ; @param (*) selected-option
   ;
   ; @return (map)
-  [db [_ box-id {:keys [option-value-f value-path] :as box-props} selected-option]]
+  [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
        (r db/set-item! db value-path option-value)))
 

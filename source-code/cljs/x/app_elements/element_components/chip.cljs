@@ -102,7 +102,6 @@
 (defn element
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ;  XXX#7701
   ;  {:background-color (keyword or string)(opt)
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary

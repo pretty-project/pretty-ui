@@ -39,9 +39,9 @@
   ;   :options-path (vector)}
   [box-id box-props]
   ; XXX#5067
-  ; A field-content-f, field-value-f, option-label-f és option-value-f függvényeket szükséges a combo-box
-  ; elem tulajdonságainak prototípusában is beállítani! Nem elég, hogy a text-field
-  ; elem tulajdonságainak prototípusában be vannak állítva!
+  ; A field-content-f, field-value-f, option-label-f és option-value-f függvényeket
+  ; szükséges a combo-box elem tulajdonságainak prototípusában is beállítani!
+  ; Nem elég, hogy a text-field elem tulajdonságainak prototípusában be vannak állítva!
   ; Pl. A [:elements.combo-box/field-focused ...] esemény számára átadott box-props
   ;     térképben mindenképpen szerepelnie kell a :field-value-f tulajdonságnak, mivel
   ;     az esemény által regisztrált billentyűlenyomás-figyelő események között
@@ -71,7 +71,7 @@
   ; Azért van két lépésre felosztva a box-props-prototype függvény, hogy ha a prototípusban kerül
   ; beállításra egyes tulajdonságok alapértelmezett értéke, akkor a második függvényben (box-events-prototype)
   ; a box-props térkép már tartalmazni fogja a tulajdonság értékét.
-  ; Pl.: A regisztrált keypress események használják a box-props térkép options-path tulajdonságát.
+  ; Pl. A regisztrált keypress események használják a box-props térkép options-path tulajdonságát.
   ;
   ; HACK#3031
   ; Meg kell oldani azt is, hogy a box-props térkép ne tartalmazza önmagát 3-4-5-... mélység mélyen!

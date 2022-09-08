@@ -80,6 +80,10 @@
            :site-addresses
            {:en "Site addresses"
             :hu "Telephely címek"}
+           ; Egy kapcsolati adathoz (telefonszám, email-cím) tartozó címke leírása
+           :topic-eg-webshop
+           {:en "Topic (e.g. Webshop)"
+            :hu "Témakör (pl. Webáruház)"}
            :vat-no
            {:en "VAT number"
             :hu "Adószám"}

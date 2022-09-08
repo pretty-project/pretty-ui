@@ -139,7 +139,8 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [text-field.views/element box-id box-props])
+  (let [box-props (assoc box-props :surface [combo-box-surface box-id box-props])]
+       [text-field.views/element box-id box-props]))
 
 (defn- combo-box
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -184,6 +185,5 @@
 
   ([box-id box-props]
    (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)
-         box-props (combo-box.prototypes/box-events-prototype box-id box-props)
-         box-props (assoc box-props :surface [combo-box-surface box-id box-props])]
+         box-props (combo-box.prototypes/box-events-prototype box-id box-props)]
         [combo-box box-id box-props])))

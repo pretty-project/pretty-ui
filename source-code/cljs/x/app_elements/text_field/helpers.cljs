@@ -116,7 +116,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (string) content
-  [field-id _ content]
+  [field-id content]
   (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] content))
 
 (defn resolve-field-change!
@@ -264,7 +264,7 @@
                  :type           type
                  :style          (field-body-style  field-id field-props)
                  :value          (get-field-content field-id)
-                 :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id field-props])
+                 :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id])
                  :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
                  :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
                  ; BUG#8041
@@ -356,7 +356,7 @@
   [field-id field-props]
   {:on-mouse-down (fn [e] (.preventDefault e)
                           (a/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
-                          (a/dispatch    [:elements.text-field/show-surface! field-id field-props]))})
+                          (a/dispatch    [:elements.text-field/show-surface! field-id]))})
 
 (defn empty-field-adornment-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

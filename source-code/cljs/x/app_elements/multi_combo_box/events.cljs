@@ -13,9 +13,39 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box.events
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [x.app-db.api      :as db]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn use-option!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  ;  {:option-value-f (function)
+  ;   :value-path (vector)}
+  ; @param (*) selected-option
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [option-value-f value-path]} selected-option]]
+  (let [option-value (option-value-f selected-option)]
+       (r db/apply-item! db value-path vector/conj-item-once option-value)))
+
+(defn use-field-content!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  ;  {:field-value-f (function)
+  ;   :value-path (vector)}
+  ; @param (*) field-content
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [field-value-f value-path]} field-content]]
+  (let [field-value (field-value-f field-content)]
+       (r db/apply-item! db value-path vector/conj-item-once field-value)))

@@ -34,4 +34,13 @@
             :hu "Logo kiválasztása"}
            :slogan
            {:en "Slogan"
-            :hu "Szlogen"}})
+            :hu "Szlogen"}
+           :the-companys-logo
+           {:en "The company's logo"
+            :hu "A cég logója"}
+           :the-companys-name
+           {:en "The company's name"
+            :hu "A cég neve"}
+           :the-companys-slogan
+           {:en "The company's slogan"
+            :hu "A cég szlogenje"}})

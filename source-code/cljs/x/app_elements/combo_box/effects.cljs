@@ -41,7 +41,7 @@
       ;
       ; Az UP és DOWN billentyűlenyomás-figyelők az említett másik két eseményhez hasonlóan
       ; :elements.text-field/... azonosítót kapnak :elements.combo-box/... azonosító helyett,
-      ; így az elnevezések konzisztensek maradhatnak.
+      ; hogy az elnevezések konzisztensek maradjanak.
       (let [on-down-props  {:key-code 40 :on-keydown [:elements.combo-box/DOWN-pressed  box-id box-props] :required? true :prevent-default? true}
             on-up-props    {:key-code 38 :on-keydown [:elements.combo-box/UP-pressed    box-id box-props] :required? true :prevent-default? true}
             on-esc-props   {:key-code 27 :on-keydown [:elements.combo-box/ESC-pressed   box-id box-props] :required? true}
@@ -75,7 +75,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
-      {:db (r text-field.events/show-surface!       db box-id box-props)
+      {:db (r text-field.events/show-surface!       db box-id)
        :fx [:elements.combo-box/highlight-next-option! box-id box-props]}))
 
 (a/reg-event-fx
@@ -85,7 +85,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
-      {:db (r text-field.events/show-surface!       db box-id box-props)
+      {:db (r text-field.events/show-surface!       db box-id)
        :fx [:elements.combo-box/highlight-prev-option! box-id box-props]}))
 
 (a/reg-event-fx
@@ -102,8 +102,8 @@
       ;        működését valósítja meg.
       (if (r text-field.subs/surface-visible? db box-id box-props)
           ; A)
-          {:db (r text-field.events/hide-surface!            db box-id box-props)
-           :fx [:elements.combo-box/discard-option-highlighter! box-id box-props]}
+          {:db (r text-field.events/hide-surface!            db box-id)
+           :fx [:elements.combo-box/discard-option-highlighter! box-id]}
           ; B)
           [:elements.text-field/ESC-pressed box-id box-props])))
 
@@ -114,19 +114,27 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
+      ; XXX#4146
       ; Ha a combo-box elem surface felülete ...
       ; A) ... látható, akkor az ENTER billentyű lenyomása a combo-box elem
       ;        saját működését valósítja meg.
       ; B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
       ;        működését valósítja meg.
+      ;
+      ; Ha a surface felületen ...
+      ; A1) ... valamelyik opció ki van választva, akkor a kiválasztott opciót,
+      ;         eltárolja a value-path útvonalra és a szövegmező értékének is beállítja.
+      ; A2) ... egyik opció sincs kiválasztva, akkor eltünteti a surface felületet.
       (if (r text-field.subs/surface-visible? db box-id box-props)
           ; A)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
+                  ; A1)
                   {:db   (as-> db % (r combo-box.events/select-option! % box-id box-props highlighted-option)
-                                    (r text-field.events/hide-surface! % box-id box-props))
-                   :fx-n [[:elements.combo-box/discard-option-highlighter! box-id box-props]
+                                    (r text-field.events/hide-surface! % box-id))
+                   :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
                           [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]}
-                  {:db   (r text-field.events/hide-surface! db box-id box-props)})
+                  ; A2)
+                  {:db   (r text-field.events/hide-surface! db box-id)})
           ; B)
           [:elements.text-field/ENTER-pressed box-id box-props])))
 
@@ -144,8 +152,8 @@
   ; @param (*) selected-option
   (fn [{:keys [db]} [_ box-id box-props selected-option]]
       {:db (as-> db % (r combo-box.events/select-option! % box-id box-props selected-option)
-                      (r text-field.events/hide-surface! % box-id box-props))
-       :fx-n [[:elements.combo-box/discard-option-highlighter! box-id box-props]
+                      (r text-field.events/hide-surface! % box-id))
+       :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
               [:elements.combo-box/use-selected-option!        box-id box-props selected-option]]}))
 
 
@@ -160,7 +168,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
-      {:fx [:elements.combo-box/discard-option-highlighter! box-id box-props]}))
+      {:fx [:elements.combo-box/discard-option-highlighter! box-id]}))
 
 (a/reg-event-fx
   :elements.combo-box/field-focused

@@ -36,6 +36,7 @@
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
            (let [next-option-dex (vector/next-dex rendered-options highlighted-option-dex)]
+                (println (str box-id))
                 (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
 
 (defn highlight-prev-option!
@@ -53,8 +54,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
-  ; @param (map) box-props
-  [box-id _]
+  [box-id]
   (swap! combo-box.state/OPTION-HIGHLIGHTS dissoc box-id))
 
 (defn use-selected-option!
@@ -62,11 +62,11 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
+  ;  {:option-label-f (function)}
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
   (let [option-label (option-label-f selected-option)]
-       (text-field.helpers/set-field-content! box-id box-props option-label)))
+       (text-field.helpers/set-field-content! box-id option-label)))
 
 
 
