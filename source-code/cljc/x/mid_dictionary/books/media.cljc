@@ -80,9 +80,18 @@
            :new-directory
            {:en "New directory"
             :hu "Új mappa"}
+           :no-file-selected
+           {:en "No file selected"
+            :hu "Nincsen kiválaszott fájl"}
            :no-files-selected
            {:en "No files selected"
             :hu "Nincsenek kiválaszott fájlok"}
+           :no-image-selected
+           {:en "No image selected"
+            :hu "Nincsen kiválasztott kép"}
+           :no-images-selected
+           {:en "No images selected"
+            :hu "Nincsenek kiválasztott képek"}
            :save-file?
            {:en "Are you sure you want to save this file to device?"
             :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}

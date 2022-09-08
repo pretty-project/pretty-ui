@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.helpers
-    (:require [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [x.app-components.api           :as components]
+              [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -50,10 +50,10 @@
   ; @return (map)
   ;  {}
   [button-id {:keys [border-color font-size options-orientation] :as button-props}]
-  (merge (engine/element-default-attributes button-id button-props)
-         (engine/element-indent-attributes  button-id button-props)
-         {:data-border-color        border-color
-          :data-font-size           font-size
+  (merge (element.helpers/element-default-attributes button-id button-props)
+         (element.helpers/element-indent-attributes  button-id button-props)
+         (element.helpers/apply-color {} :color :data-border-color border-color)
+         {:data-font-size           font-size
           :data-options-orientation options-orientation
           :data-selectable          false}))
 

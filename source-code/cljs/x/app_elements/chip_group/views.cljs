@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chip-group.views
-    (:require [mid-fruits.loop                        :refer [reduce-indexed]]
-              [mid-fruits.vector                      :as vector]
-              [x.app-components.api                   :as components]
-              [x.app-core.api                         :as a]
-              [x.app-elements.chip-group.helpers      :as chip-group.helpers]
-              [x.app-elements.chip-group.prototypes   :as chip-group.prototypes]
-              [x.app-elements.element-components.chip :as chip.views]
-              [x.app-elements.engine.api              :as engine]))
+    (:require [mid-fruits.loop                      :refer [reduce-indexed]]
+              [mid-fruits.vector                    :as vector]
+              [x.app-components.api                 :as components]
+              [x.app-core.api                       :as a]
+              [x.app-elements.chip-group.helpers    :as chip-group.helpers]
+              [x.app-elements.chip-group.prototypes :as chip-group.prototypes]
+              [x.app-elements.chip.views            :as chip.views]
+              [x.app-elements.engine.api            :as engine]))
 
 
 

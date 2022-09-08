@@ -36,7 +36,6 @@
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
            (let [next-option-dex (vector/next-dex rendered-options highlighted-option-dex)]
-                (println (str box-id))
                 (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id next-option-dex)))))
 
 (defn highlight-prev-option!

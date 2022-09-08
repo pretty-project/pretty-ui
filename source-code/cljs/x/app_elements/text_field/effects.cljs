@@ -13,8 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.effects
-    (:require [mid-fruits.string                 :as string]
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.string                 :as string]
               [x.app-core.api                    :as a :refer [r]]
+              [x.app-elements.input.events       :as input.events]
               [x.app-elements.text-field.events  :as text-field.events]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
 
@@ -62,6 +64,22 @@
   (fn [{:keys [db]} [_ field-id {:keys [value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
            {:fx [:elements.text-field/use-stored-value! field-id field-props stored-value]})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements.text-field/destruct-field!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  (fn [{:keys [db]} [_ field-id {:keys [autoclear?] :as field-props}]]
+      {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
+                                     (return                           %))
+                      (r input.events/unmark-as-visited! % field-id))}))
 
 
 

@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element-components.card-group
-    (:require [mid-fruits.candy                       :refer [param]]
-              [mid-fruits.vector                      :as vector]
-              [x.app-components.api                   :as components]
-              [x.app-core.api                         :as a :refer [r]]
-              [x.app-elements.element-components.card :rename {element card}]
-              [x.app-elements.engine.api              :as engine]))
+    (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.vector         :as vector]
+              [x.app-components.api      :as components]
+              [x.app-core.api            :as a :refer [r]]
+              [x.app-elements.card.views :as card.views]
+              [x.app-elements.engine.api :as engine]))
 
- 
+
 
 ;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -48,9 +48,9 @@
   ; @param (map) group-props
   ;  {:cards (maps in vector)}
   [group-id {:keys [cards] :as group-props}]
-  (reduce #(conj %1 [card %2])
-           [:div.x-card-group (engine/element-attributes group-id group-props)
-            (param cards)]))
+  (letfn [(f [card-list card-props] (conj card-list [card.views/element card-props]))]
+         [:div.x-card-group (engine/element-attributes group-id group-props)
+                            (reduce f [:<>] cards)]))
 
 (defn element
   ; XXX#3240

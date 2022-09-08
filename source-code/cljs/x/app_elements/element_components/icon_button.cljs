@@ -17,6 +17,7 @@
               [x.app-components.api                      :as components]
               [x.app-core.api                            :as a :refer [r]]
               [x.app-elements.engine.api                 :as engine]
+              [x.app-elements.element.helpers            :as element.helpers]
               [x.app-elements.preset-handler.icon-button :as preset-handler.icon-button]))
 
 
@@ -165,7 +166,7 @@
    [element (a/id) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (engine/apply-preset    preset-handler.icon-button/BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (element.helpers/apply-preset preset-handler.icon-button/BUTTON-PROPS-PRESETS button-props)
          button-props (button-props-prototype button-props)]
         (if keypress [stated-element button-id button-props]
                      [icon-button    button-id button-props]))))

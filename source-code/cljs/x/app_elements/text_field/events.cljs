@@ -48,7 +48,7 @@
   ; @param (keyword) field-id
   ;
   ; @return (map)
-  [db [_ field-id ]]
+  [db [_ field-id]]
   (assoc-in db [:elements :element-handler/meta-items field-id :surface-visible?] true))
 
 (defn hide-surface!

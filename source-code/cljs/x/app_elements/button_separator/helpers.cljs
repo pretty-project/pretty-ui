@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.button-separator.helpers
-    (:require [x.app-elements.engine.api :as engine]))
+    (:require [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -30,6 +30,6 @@
   ; @return (map)
   ;  {}
   [separator-id {:keys [color] :as separator-props}]
-  (merge (engine/element-default-attributes separator-id separator-props)
-         (engine/element-indent-attributes  separator-id separator-props)
-         {:data-color color}))
+  (merge (element.helpers/element-default-attributes separator-id separator-props)
+         (element.helpers/element-indent-attributes  separator-id separator-props)
+         (element.helpers/apply-color {} :color :data-color color)))

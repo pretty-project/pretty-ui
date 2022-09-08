@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chip-group.helpers
-    (:require [x.app-elements.engine.api :as engine]))
+    (:require [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -28,6 +28,6 @@
   ;
   ; @return (map)
   [group-id group-props]
-  (merge (engine/element-default-attributes group-id group-props)
-         (engine/element-indent-attributes  group-id group-props)
+  (merge (element.helpers/element-default-attributes group-id group-props)
+         (element.helpers/element-indent-attributes  group-id group-props)
          {}))

@@ -68,7 +68,6 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id _]
-  (println field-id)
   (let [field-input-id (a/dom-value field-id "input")]
        (environment/move-caret-to-end! field-input-id)
        (environment/focus-element!     field-input-id)))

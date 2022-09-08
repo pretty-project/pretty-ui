@@ -19,12 +19,10 @@
               [mid-fruits.string                     :as string]
               [mid-fruits.vector                     :as vector]
               [x.app-core.api                        :as a :refer [r]]
-              [x.app-elements.surface-handler.events :as surface-handler.events]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.input.events           :as input.events]
               [x.app-elements.input.helpers          :as input.helpers]
               [x.app-elements.input.subs           :as input.subs]
-              [x.app-elements.target-handler.helpers :as target-handler.helpers]
               [x.app-environment.api                 :as environment]
 
               [x.app-db.api :as db]))

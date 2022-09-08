@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.checkbox.helpers
-    (:require [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -49,10 +49,10 @@
   ; @return (map)
   ;  {}
   [checkbox-id {:keys [border-color font-size options-orientation] :as checkbox-props}]
-  (merge (engine/element-default-attributes checkbox-id checkbox-props)
-         (engine/element-indent-attributes  checkbox-id checkbox-props)
-         {:data-border-color        border-color
-          :data-font-size           font-size
+  (merge (element.helpers/element-default-attributes checkbox-id checkbox-props)
+         (element.helpers/element-indent-attributes  checkbox-id checkbox-props)
+         (element.helpers/apply-color {} :color :data-border-color border-color)
+         {:data-font-size           font-size
           :data-options-orientation options-orientation
           :data-selectable          false}))
 

@@ -12,28 +12,25 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.engine.presets
-    (:require [mid-fruits.candy :refer [param return]]))
+(ns x.app-elements.card.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn apply-preset
+(defn card-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) presets
-  ; @param (map) element-props
-  ;  {:on-click (metamorphic-event)(opt)
-  ;   :preset (keyword)(opt)}
-  ;
-  ; @usage
-  ;  (engine/apply-preset {:preset-name {...}}
-  ;                       {:preset :preset-name ...})
+  ; @param (map) card-props
   ;
   ; @return (map)
-  [presets {:keys [preset] :as element-props}]
-  (if preset (let [preset-props (get presets preset)]
-                  (merge preset-props element-props))
-             (return element-props)))
+  ;  {:border-radius (keyword)
+  ;   :horizontal-align (keyword)
+  ;   :min-width (keyword)}
+  [card-props]
+  (merge {:border-radius    :s
+          :horizontal-align :center
+          :min-width        :xxs}
+         (param card-props)))

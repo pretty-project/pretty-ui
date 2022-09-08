@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.color-stamp.helpers
-    (:require [x.app-elements.engine.api :as engine]))
+    (:require [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -30,8 +30,8 @@
   ; @return (map)
   ;  {}
   [stamp-id {:keys [size] :as stamp-props}]
-  (merge (engine/element-default-attributes stamp-id stamp-props)
-         (engine/element-indent-attributes  stamp-id stamp-props)
+  (merge (element.helpers/element-default-attributes stamp-id stamp-props)
+         (element.helpers/element-indent-attributes  stamp-id stamp-props)
          {:data-size size}))
 
 (defn stamp-color-attributes

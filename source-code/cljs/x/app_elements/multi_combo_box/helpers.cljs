@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box.helpers
-    (:require [mid-fruits.keyword        :as keyword]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.keyword             :as keyword]
+              [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -64,6 +64,6 @@
   ; @return (map)
   ;  {}
   [box-id box-props]
-  (merge (engine/element-default-attributes box-id box-props)
-         (engine/element-indent-attributes  box-id box-props)
+  (merge (element.helpers/element-default-attributes box-id box-props)
+         (element.helpers/element-indent-attributes  box-id box-props)
          {}))

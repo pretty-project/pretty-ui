@@ -12,26 +12,28 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.ghost.helpers
-    (:require [x.app-elements.element.helpers :as element.helpers]))
+(ns x.app-elements.chip.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn ghost-attributes
+(defn chip-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) ghost-id
-  ; @param (map) ghost-props
-  ;  {:height (keyword)}
+  ; @param (map) chip-props
+  ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-height (keyword)}
-  [ghost-id {:keys [border-radius height] :as ghost-props}]
-  (merge (element.helpers/element-default-attributes ghost-id ghost-props)
-         (element.helpers/element-indent-attributes  ghost-id ghost-props)
-         {:data-border-radius border-radius
-          :data-height        height}))
+  ;  {:background-color (keyword or string)
+  ;   :color (keyword or string)
+  ;   :icon-family (keyword)
+  ;   :primary-button-icon (keyword)}
+  [{:keys [icon] :as chip-props}]
+  (merge {:background-color    :primary
+          :color               :default
+          :primary-button-icon :close}
+         (if icon {:icon-family :material-icons-filled})
+         (param chip-props)))

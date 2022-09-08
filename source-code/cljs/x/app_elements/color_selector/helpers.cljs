@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.color-selector.helpers
-    (:require [mid-fruits.vector         :as vector]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [mid-fruits.vector              :as vector]
+              [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -63,6 +63,6 @@
   ; @return (map)
   ;  {}
   [selector-id {:keys [size] :as selector-props}]
-  (merge (engine/element-default-attributes selector-id selector-props)
-         (engine/element-indent-attributes  selector-id selector-props)
+  (merge (element.helpers/element-default-attributes selector-id selector-props)
+         (element.helpers/element-indent-attributes  selector-id selector-props)
          {:data-size size}))

@@ -20,6 +20,7 @@
               [x.app-elements.button.helpers    :as button.helpers]
               [x.app-elements.button.presets    :as button.presets]
               [x.app-elements.button.prototypes :as button.prototypes]
+              [x.app-elements.element.helpers   :as element.helpers]
               [x.app-elements.engine.api        :as engine]))
 
 
@@ -153,6 +154,6 @@
    [element (a/id) button-props])
 
   ([button-id button-props]
-   (let [button-props (engine/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (element.helpers/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (button.prototypes/button-props-prototype button-props)]
         [button button-id button-props])))

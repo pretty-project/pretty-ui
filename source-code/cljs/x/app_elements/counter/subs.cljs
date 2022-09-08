@@ -12,41 +12,36 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.surface-handler.subs
-    (:require [x.app-core.api                :as a :refer [r]]
-              [x.app-elements.engine.element :as element]))
+(ns x.app-elements.counter.subs
+    (:require [x.app-core.api :as a :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn surface-visible?
+(defn value-decreasable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
   ;
   ; @return (boolean)
-  [db [_ element-id]]
-  (r element/get-element-prop db element-id :surface-visible?))
+  [db [_ _ {:keys [min-value value-path]}]]
+  (let [value (get-in db value-path)]
+       (or (nil? min-value)
+           (and (some? min-value)
+                (<     min-value value)))))
 
-(defn surface-hidden?
+(defn value-increasable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
   ;
   ; @return (boolean)
-  [db [_ element-id]]
-  (let [surface-visible? (r surface-visible? db element-id)]
-       (not surface-visible?)))
-
-(defn get-surface-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (map)
-  ;  {:surface-visible? (boolean)}
-  [db [_ element-id]]
-  (if-let [surface-visible? (r surface-visible? db element-id)]
-          {:surface-visible? surface-visible?}))
+  [db [_ _ {:keys [max-value value-path]}]]
+  (let [value (get-in db value-path)]
+       (or (nil? max-value)
+           (and (some? max-value)
+                (>     max-value value)))))

@@ -13,15 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.api
-    (:require [x.app-elements.engine.checkable          :as checkable]
-              [x.app-elements.engine.clickable          :as clickable]
-              [x.app-elements.engine.countable          :as countable]
+    (:require [x.app-elements.engine.clickable          :as clickable]
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.field              :as field]
               [x.app-elements.engine.input-group        :as input-group]
-              [x.app-elements.engine.presets            :as presets]
               [x.app-elements.engine.selectable         :as selectable]
               [x.app-elements.engine.stated-element     :as stated-element]
               [x.app-elements.engine.steppable          :as steppable]))
@@ -31,29 +28,10 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.engine.checkable
-(def checkable-attributes                checkable/checkable-attributes)
-(def checkable-primary-body-attributes   checkable/checkable-primary-body-attributes)
-(def checkable-secondary-body-attributes checkable/checkable-secondary-body-attributes)
-(def get-checkable-value                 checkable/get-checkable-value)
-(def checkable-checked?                  checkable/checkable-checked?)
-(def checkable-nonchecked?               checkable/checkable-nonchecked?)
-(def get-checkable-props                 checkable/get-checkable-props)
-
-; x.app-elements.engine.countable
-(def countable-decrease-attributes countable/countable-decrease-attributes)
-(def countable-increase-attributes countable/countable-increase-attributes)
-(def countable-reset-attributes    countable/countable-reset-attributes)
-(def get-countable-props           countable/get-countable-props)
-
 ; x.app-elements.engine.clickable
 (def clickable-body-attributes clickable/clickable-body-attributes)
 
 ; x.app-elements.engine.element
-(def apply-color                element/apply-color)
-(def apply-dimension            element/apply-dimension)
-(def element-default-attributes element/element-default-attributes)
-(def element-indent-attributes  element/element-indent-attributes)
 (def element-attributes         element/element-attributes)
 (def get-element-prop           element/get-element-prop)
 (def get-element-props          element/get-element-props)
@@ -86,9 +64,6 @@
 (def get-input-group-props input-group/get-input-group-props)
 (def decrease-input-count! input-group/decrease-input-count!)
 (def increase-input-count! input-group/increase-input-count!)
-
-; x.app-elements.engine.presets
-(def apply-preset presets/apply-preset)
 
 ; x.app-elements.engine.selectable
 (def on-select-function              selectable/on-select-function)

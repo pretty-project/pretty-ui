@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-field.helpers
-    (:require [mid-fruits.candy          :refer [return]]
-              [mid-fruits.vector         :as vector]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]))
+    (:require [mid-fruits.candy               :refer [return]]
+              [mid-fruits.vector              :as vector]
+              [x.app-components.api           :as components]
+              [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -184,6 +184,6 @@
   ; @return (map)
   ;  {}
   [group-id group-props]
-  (merge (engine/element-default-attributes group-id group-props)
-         (engine/element-indent-attributes  group-id group-props)
+  (merge (element.helpers/element-default-attributes group-id group-props)
+         (element.helpers/element-indent-attributes  group-id group-props)
          {}))

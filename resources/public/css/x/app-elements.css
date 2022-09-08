@@ -85,14 +85,6 @@ body {
 
 button.x-card:active,
 button.x-card:focus,
-.x-chip--delete-button:active,
-.x-chip--delete-button:focus,
-.x-counter--decrease-button:active,
-.x-counter--decrease-button:focus,
-.x-counter--increase-button:active,
-.x-counter--increase-button:focus,
-.x-field-adornments--button-adornment:active,
-.x-field-adornments--button-adornment:focus,
 .x-expandable--header:active,
 .x-expandable--header:focus,
 .x-file-drop-area--body:active,
@@ -1910,19 +1902,13 @@ button.x-card:focus,
 
 
 /***** Chip *****/
-/*** Chip wrapper ***/
-
-.x-chip[data-layout="row"] {
-  padding: 12px 0 }
-
-/*** Chip wrapper ***/
-
 /*** Chip body ***/
 
 .x-chip--body {
   border-radius: 12px;
   display: flex;
-  height: 24px }
+  height: 24px;
+  padding-left: 12px }
 
 /*** Chip body ***/
 
@@ -1935,7 +1921,7 @@ button.x-card:focus,
   font-size: var( --icon-size-xxs );
   height: 24px;
   justify-content: center;
-  padding-left: 12px;
+  padding-right: 6px;
   width: 24px }
 
 /*** Chip icon ***/
@@ -1946,22 +1932,21 @@ button.x-card:focus,
   font-size: var( --font-size-xs );
   font-weight: 500;
   line-height: 24px;
-  padding: 0 12px;
   white-space: nowrap }
 
 /*** Chip label ***/
 
-/*** Chip delete button ***/
+/*** Chip primary button ***/
 
-.x-chip--delete-button {
+.x-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
   border-radius: 10px;
   color: var( --color );
   height: 20px;
-  margin: 2px 2px 0 0;
+  margin: 2px 2px 0 12px;
   width: 20px }
 
-.x-chip--delete-button-icon {
+.x-chip--primary-button-icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -1969,7 +1954,10 @@ button.x-card:focus,
   justify-content: center;
   line-height: 20px }
 
-/*** Chip delete button ***/
+.x-chip--primary-button--placeholder {
+  width: 12px }
+
+/*** Chip primary button ***/
 /***** Chip *****/
 
 
@@ -2206,26 +2194,11 @@ button.x-card:focus,
 
 
 /***** Counter *****/
-/*** Counter label ***/
-
-.x-counter--label {
-  font-size: var( --font-size-s );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px;
-  margin-left: 12px }
-
-/*** Counter label ***/
-
 /*** Counter body ***/
 
 .x-counter--body {
   align-items: center;
   display: flex }
-
-.x-counter[data-layout="row"] .x-counter--body {
-  padding-bottom: 12px;
-  padding-top: 12px }
 
 /*** Counter body ***/
 

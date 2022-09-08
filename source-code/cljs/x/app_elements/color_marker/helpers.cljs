@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.color-marker.helpers
-    (:require [x.app-elements.engine.api :as engine]))
+    (:require [x.app-elements.element.helpers :as element.helpers]))
 
 
 
@@ -30,8 +30,8 @@
   ; @return (map)
   ;  {:data-size (keyword)}
   [marker-id {:keys [size] :as marker-props}]
-  (merge (engine/element-default-attributes marker-id marker-props)
-         (engine/element-indent-attributes  marker-id marker-props)
+  (merge (element.helpers/element-default-attributes marker-id marker-props)
+         (element.helpers/element-indent-attributes  marker-id marker-props)
          {:data-size size}))
 
 (defn marker-color-attributes
@@ -45,5 +45,4 @@
   ;  {:data-color (keyword)
   ;   :style (map)}
   [_ _ color]
-  (cond (keyword? color) {:data-color color}
-        (string?  color) {:style {:background-color color}}))
+  (element.helpers/apply-color {} :background-color :data-background-color color))

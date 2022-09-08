@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.switch.helpers
-    (:require [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -49,10 +49,10 @@
   ; @return (map)
   ;  {}
   [switch-id {:keys [border-color font-size options-orientation] :as switch-props}]
-  (merge (engine/element-default-attributes switch-id switch-props)
-         (engine/element-indent-attributes  switch-id switch-props)
-         {:data-border-color        border-color
-          :data-font-size           font-size
+  (merge (element.helpers/element-default-attributes switch-id switch-props)
+         (element.helpers/element-indent-attributes  switch-id switch-props)
+         (element.helpers/apply-color {} :color :data-border-color border-color)
+         {:data-font-size           font-size
           :data-options-orientation options-orientation
           :data-selectable          false}))
 

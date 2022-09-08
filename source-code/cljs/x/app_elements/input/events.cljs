@@ -120,6 +120,16 @@
   [db [_ input-id]]
   (assoc-in db [:elements :element-handler/meta-items input-id :visited?] true))
 
+; XXX#NEW VERSION!
+(defn unmark-as-visited!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (map)
+  [db [_ input-id]]
+  (dissoc-in db [:elements :element-handler/meta-items input-id :visited?]))
+
 (defn init-input!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

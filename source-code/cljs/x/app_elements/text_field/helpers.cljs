@@ -20,10 +20,10 @@
               [mid-fruits.time                  :as time]
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a]
-              [x.app-elements.engine.api        :as engine]
-              [x.app-environment.api            :as environment]
+              [x.app-elements.element.helpers   :as element.helpers]
               [x.app-elements.text-field.config :as text-field.config]
-              [x.app-elements.text-field.state  :as text-field.state]))
+              [x.app-elements.text-field.state  :as text-field.state]
+              [x.app-environment.api            :as environment]))
 
 
 
@@ -45,11 +45,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
   ;
   ; @return (function)
-  [field-id {:keys [autoclear?] :as field-props}]
-  #(if autoclear? (a/dispatch [:elements.text-field/clear-value! field-id field-props])))
+  [field-id field-props]
+  #(a/dispatch [:elements.text-field/destruct-field! field-id field-props]))
 
 
 
@@ -219,10 +218,10 @@
   ;  {}
   [field-id {:keys [border-color min-width stretch-orientation] :as field-props}]
   (let [any-warning? @(a/subscribe [:elements.text-field/any-warning? field-id field-props])]
-       (merge (engine/element-default-attributes field-id field-props)
-              (engine/element-indent-attributes  field-id field-props)
-              {:data-border-color        (if any-warning? :warning border-color)
-               :data-min-width           min-width
+       (merge (element.helpers/element-default-attributes field-id field-props)
+              (element.helpers/element-indent-attributes  field-id field-props)
+              (element.helpers/apply-color {} :border-color :data-border-color border-color)
+              {:data-min-width           min-width
                :data-stretch-orientation stretch-orientation})))
 
 (defn field-body-attributes
@@ -336,7 +335,8 @@
   ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
   ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
   ; felület React-fából történő lecsatolását okozná.
-  (merge {:data-selectable false
+  (merge {:data-clickable  true
+          :data-selectable false
           :on-mouse-down #(.preventDefault %)
           :title          (components/content tooltip)}
          (if     icon         {:data-icon-family icon-family})

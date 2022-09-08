@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.thumbnail.helpers
-    (:require [x.app-core.api            :as a]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+    (:require [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -51,8 +51,8 @@
   ;   :data-height (keyword)
   ;   :data-width (keyword)}
   [thumbnail-id {:keys [background-size border-radius height width] :as thumbnail-props}]
-  (merge (engine/element-default-attributes thumbnail-id thumbnail-props)
-         (engine/element-indent-attributes  thumbnail-id thumbnail-props)
-         {:data-border-radius   border-radius
-          :data-height          height
-          :data-width           width}))
+  (merge (element.helpers/element-default-attributes thumbnail-id thumbnail-props)
+         (element.helpers/element-indent-attributes  thumbnail-id thumbnail-props)
+         {:data-border-radius border-radius
+          :data-height        height
+          :data-width         width}))

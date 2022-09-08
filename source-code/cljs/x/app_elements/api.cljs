@@ -17,7 +17,7 @@
               [x.app-elements.button.side-effects]
               [x.app-elements.checkbox.events]
               [x.app-elements.checkbox.subs]
-              [x.app-elements.chip-group.events] 
+              [x.app-elements.chip-group.events]
               [x.app-elements.collect-handler.effects]
               [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]
@@ -28,6 +28,8 @@
               [x.app-elements.combo-box.side-effects]
               [x.app-elements.content-handler.events]
               [x.app-elements.content-handler.subs]
+              [x.app-elements.counter.events]
+              [x.app-elements.counter.subs]
               [x.app-elements.expand-handler.events]
               [x.app-elements.expand-handler.subs]
               [x.app-elements.focus-handler.side-effects]
@@ -40,8 +42,6 @@
               [x.app-elements.radio-button.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
-              [x.app-elements.surface-handler.events]
-              [x.app-elements.surface-handler.subs]
               [x.app-elements.switch.events]
               [x.app-elements.switch.subs]
               [x.app-elements.submit-button.subs]
@@ -52,18 +52,18 @@
               [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
-              [x.app-elements.element-components.card                 :as element-components.card]
+              [x.app-elements.card.views                              :as card.views]
               [x.app-elements.element-components.card-group           :as element-components.card-group]
               [x.app-elements.checkbox.views                          :as checkbox.views]
               [x.app-elements.chip-group.views                        :as chip-group.views]
-              [x.app-elements.element-components.chip                 :as element-components.chip]
+              [x.app-elements.chip.views                              :as chip.views]
               [x.app-elements.element-components.circle-diagram       :as element-components.circle-diagram]
               [x.app-elements.color-selector.views                    :as color-selector.views]
               [x.app-elements.color-marker.views                      :as color-marker.views]
               [x.app-elements.color-stamp.views                       :as color-stamp.views]
               [x.app-elements.element-components.column               :as element-components.column]
               [x.app-elements.combo-box.views                         :as combo-box.views]
-              [x.app-elements.element-components.counter              :as element-components.counter]
+              [x.app-elements.counter.views                           :as counter.views]
               [x.app-elements.element-components.data-table           :as element-components.data-table]
               [x.app-elements.date-field.views                        :as date-field.views]
               [x.app-elements.element-components.digit-field          :as element-components.digit-field]
@@ -104,62 +104,6 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @name optional element-id
-;  Az egyes elemeket lehetséges element-id azonosító nélkül használni.
-;  Azonban, ha az elem újra rendererelődik (Pl.: megváltoztatod az element-props térképet),
-;  akkor az elem új azonosítót kap és az elem konstansként megjelelölt
-;  tulajdonságai elérhetetlenné válnak az elem számára.
-;
-; @name constant
-;  - Pl.: {:value-path (vector)(constant)(opt)}
-;    Az elemek azon tulajdonságai konstansak, amelyek a Re-Frame adatbázisba kerülnek az elem
-;    React-fába való csatolásakor, ezért azokat a paraméterezés megváltoztatásával felülírni
-;    nem lehetséges.
-;  - XXX#8099 Az x.app-components.stated/component komponens nem képes :component-did-update
-;             életciklusban az elem megváltozott paramétereit a Re-Frame adatbázisban felülírni!
-;
-; @name default-value
-;  Az egyes input elemek értéke a {:default-value ...} tulajdonságukkal kerül
-;  behelyettesítésre amíg a {:value-path ...} Re-Frame adatbázis útvonalon
-;  található érték nil. A default-value értéke NEM íródik a {:value-path ...}
-;  adatbázis útvonlra.
-;
-; @name initial-value
-;  Az egyes input elemek React-fába csatolásakor az {:initial-value ...}
-;  tulajdonságának értéke az {:value-path ...} Re-Frame adatbázis útvonalra íródik.
-;
-; @name initial-options
-;  TODO ...
-;
-; @name element-height
-;  Egységes element magasságok:
-;  XXS:  6px
-;  XS:  12px
-;  S:   18px
-;  M:   24px
-;  L:   30px
-;  XL:  36px
-;  XXL: 48px
-
-
-
-;; -- Usage -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @usage
-;  Amikor egy elem paraméterei kívülről megváltoznak, akkor az elemen lévő fókusz,
-;  szövegkijelölés és/vagy kurzor-pozíció a paraméterváltozás miatti újrarenderelődés
-;  hatására elveszik.
-;  Ha ez problémát jelent, akkor célszerű a paramétert Re-Frame eseménnyel
-;  változtatni, ami nem okozza az elem konténerének újrarenderelődését.
-;
-;  [:elements/set-element-prop! ...]
-
-
-
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -167,18 +111,18 @@
 (def anchor               anchor.views/element)
 (def button               button.views/element)
 (def button-separator     button-separator.views/element)
-(def card                 element-components.card/element)
+(def card                 card.views/element)
 (def card-group           element-components.card-group/element)
 (def checkbox             checkbox.views/element)
 (def chip-group           chip-group.views/element)
-(def chip                 element-components.chip/element)
+(def chip                 chip.views/element)
 (def circle-diagram       element-components.circle-diagram/element)
 (def color-selector       color-selector.views/element)
 (def color-marker         color-marker.views/element)
 (def color-stamp          color-stamp.views/element)
 (def column               element-components.column/element)
 (def combo-box            combo-box.views/element)
-(def counter              element-components.counter/element)
+(def counter              counter.views/element)
 (def data-table           element-components.data-table/element)
 (def date-field           date-field.views/element)
 (def digit-field          element-components.digit-field/element)

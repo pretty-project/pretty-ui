@@ -12,36 +12,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-components.card
+(ns x.app-elements.card.views
     (:require [mid-fruits.candy          :refer [param]]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
+              [x.app-elements.card.helpers    :as card.helpers]
+              [x.app-elements.card.prototypes :as card.prototypes]
               [x.app-elements.engine.api :as engine]
               [x.app-environment.api     :as environment]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn card-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) card-props
-  ;
-  ; @return (map)
-  ;  {:border-radius (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :min-width (keyword)}
-  [card-props]
-  (merge {:border-radius    :s
-          :horizontal-align :center
-          :min-width        :xxs}
-         (param card-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- card-content
@@ -75,9 +57,9 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   [card-id card-props]
-  [:div.x-card (engine/element-attributes card-id card-props)
-               [card-content              card-id card-props]
-               [engine/element-badge      card-id card-props]])
+  [:div.x-card (card.helpers/card-attributes card-id card-props)
+               [card-content                 card-id card-props]
+               [engine/element-badge         card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,5 +124,5 @@
    [element (a/id) card-props])
 
   ([card-id card-props]
-   (let [card-props (card-props-prototype card-props)]
+   (let [card-props (card.prototypes/card-props-prototype card-props)]
         [card card-id card-props])))
