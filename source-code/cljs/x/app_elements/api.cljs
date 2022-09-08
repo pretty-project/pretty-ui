@@ -30,8 +30,6 @@
               [x.app-elements.content-handler.subs]
               [x.app-elements.counter.events]
               [x.app-elements.counter.subs]
-              [x.app-elements.expand-handler.events]
-              [x.app-elements.expand-handler.subs]
               [x.app-elements.focus-handler.side-effects]
               [x.app-elements.multi-combo-box.effects]
               [x.app-elements.multi-combo-box.events]
@@ -67,8 +65,8 @@
               [x.app-elements.element-components.data-table           :as element-components.data-table]
               [x.app-elements.date-field.views                        :as date-field.views]
               [x.app-elements.element-components.digit-field          :as element-components.digit-field]
-              [x.app-elements.element-components.expandable           :as element-components.expandable]
-              [x.app-elements.element-components.file-drop-area       :as element-components.file-drop-area]
+              [x.app-elements.expandable.views                        :as expandable.views]
+              [x.app-elements.file-drop-area.views                    :as file-drop-area.views]
               [x.app-elements.ghost.views                             :as ghost.views]
               [x.app-elements.element-components.horizontal-line      :as element-components.horizontal-line]
               [x.app-elements.element-components.horizontal-polarity  :as element-components.horizontal-polarity]
@@ -126,8 +124,8 @@
 (def data-table           element-components.data-table/element)
 (def date-field           date-field.views/element)
 (def digit-field          element-components.digit-field/element)
-(def expandable           element-components.expandable/element)
-(def file-drop-area       element-components.file-drop-area/element)
+(def expandable           expandable.views/element)
+(def file-drop-area       file-drop-area.views/element)
 (def ghost                ghost.views/element)
 (def horizontal-line      element-components.horizontal-line/element)
 (def horizontal-polarity  element-components.horizontal-polarity/element)

@@ -13,53 +13,37 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.card.views
-    (:require [mid-fruits.candy          :refer [param]]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
+    (:require [x.app-components.api           :as components]
+              [x.app-core.api                 :as a]
               [x.app-elements.card.helpers    :as card.helpers]
               [x.app-elements.card.prototypes :as card.prototypes]
-              [x.app-elements.engine.api :as engine]
-              [x.app-environment.api     :as environment]))
+              [x.app-elements.engine.api      :as engine]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- card-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ;  {:content (metamorphic-content)}
-  [card-id {:keys [content]}]
-  [:div.x-card--body [components/content card-id content]])
 
 (defn- toggle-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {:on-click (metamorphic-event)(opt)}
-  [card-id {:keys [on-click] :as card-props}]
-  ; TODO
-  ; Az .x-card--body elem legyen majd button, hogy az indent ne nyuljon bele
-  ; a kattinthato részbe!
-  [:button.x-card (engine/element-attributes card-id card-props
-                                             {:on-click    #(a/dispatch on-click)
-                                              :on-mouse-up #(environment/blur-element!)})
-                  [card-content         card-id card-props]
-                  [engine/element-badge card-id card-props]])
+  ;  {:content (metamorphic-content)}
+  [card-id {:keys [content] :as card-props}]
+  [:button.x-card--body (card.helpers/card-body-attributes card-id card-props)
+                        [components/content   card-id content]
+                        [engine/element-badge card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  [card-id card-props]
-  [:div.x-card (card.helpers/card-attributes card-id card-props)
-               [card-content                 card-id card-props]
-               [engine/element-badge         card-id card-props]])
+  ;  {:content (metamorphic-content)}
+  [card-id {:keys [content] :as card-props}]
+  [:div.x-card--body [components/content   card-id content]
+                     [engine/element-badge card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -68,8 +52,9 @@
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
   [card-id {:keys [on-click] :as card-props}]
-  (cond (some? on-click) [toggle-card card-id card-props]
-        (nil?  on-click) [static-card card-id card-props]))
+  [:div.x-card (card.helpers/card-attributes card-id card-props)
+               (cond (some? on-click) [toggle-card card-id card-props]
+                     (nil?  on-click) [static-card card-id card-props])])
 
 (defn element
   ; @param (keyword)(opt) card-id

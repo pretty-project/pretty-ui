@@ -83,12 +83,6 @@ body {
 
 /***** Active state and focused state *****/
 
-button.x-card:active,
-button.x-card:focus,
-.x-expandable--header:active,
-.x-expandable--header:focus,
-.x-file-drop-area--body:active,
-.x-file-drop-area--body:focus,
 .x-icon-button--body:active,
 .x-icon-button--body:focus,
 .x-menu-bar--menu-item:active,
@@ -1793,8 +1787,6 @@ button.x-card:focus,
 /*** Card wrapper ***/
 
 .x-card {
-
-
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
@@ -2323,9 +2315,6 @@ button.x-card:focus,
   display: flex;
   justify-content: left }
 
-.x-expandable[data-layout="row"] .x-expandable--header {
-  min-height: 48px }
-
 /*** Expandable header ***/
 
 /*** Expandable icon ***/
@@ -2334,7 +2323,7 @@ button.x-card:focus,
   font-size: var( --icon-size-m );
   height: 24px;
   line-height: 24px;
-  margin-right: 12px;
+  margin-right: 6px;
   width: 24px }
 
 /*** Expandable icon ***/
@@ -2346,7 +2335,7 @@ button.x-card:focus,
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s );
-  padding-right: 8px }
+  padding-right: 6px }
 
 /*** Expandable header ***/
 
@@ -2367,9 +2356,6 @@ button.x-card:focus,
 
 
 /***** File drop area *****/
-/*** File drop area wrapper ***/
-/*** File drop area wrapper ***/
-
 /*** File drop area body ***/
 
 .x-file-drop-area--body {
@@ -2393,9 +2379,8 @@ button.x-card:focus,
 
 .x-file-drop-area--icon {
   font-size: var( --icon-size-xxl );
-  height: 24px;
-  line-height: 24px;
-  margin-bottom: 18px }
+  height: 36px;
+  line-height: 36px }
 
 /*** File drop area body ***/
 /***** File drop area *****/

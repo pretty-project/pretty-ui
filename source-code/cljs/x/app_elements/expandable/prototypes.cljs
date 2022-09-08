@@ -12,31 +12,24 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.expand-handler.subs
-    (:require [x.app-core.api                :as a :refer [r]]
-              [x.app-elements.engine.element :as element]))
+(ns x.app-elements.expandable.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn element-expanded?
+(defn expandable-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) element-id
-  ;
-  ; @return (boolean)
-  [db [_ element-id]]
-  (let [element-expanded? (r element/get-element-prop db element-id :expanded?)]
-       (boolean element-expanded?)))
-
-(defn get-expandable-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
+  ; @param (map) expandable-props
+  ;  {:icon (keyword)}
   ;
   ; @return (map)
-  ;  {:expanded? (boolean)}
-  [db [_ element-id]]
-  {:expanded? (r element-expanded? db element-id)})
+  ;  {:expanded? (boolean)
+  ;   :icon-family (keyword)}
+  [{:keys [icon] :as expandable-props}]
+  (merge {:expanded? false}
+         (if icon {:icon-family :material-icons-filled})
+         (param expandable-props)))

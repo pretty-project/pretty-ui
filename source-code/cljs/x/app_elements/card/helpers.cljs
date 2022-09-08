@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.card.helpers
-    (:require [x.app-elements.element.helpers :as element.helpers]))
+    (:require [x.app-core.api                 :as a]
+              [x.app-elements.element.helpers :as element.helpers]
+              [x.app-environment.api          :as environment]))
 
 
 
@@ -40,3 +42,18 @@
           :data-horizontal-align    horizontal-align
           :data-min-width           min-width
           :data-stretch-orientation stretch-orientation}))
+
+(defn card-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) card-id
+  ; @param (map) card-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [card-id {:keys [disabled? on-click]}]
+  (if disabled? {:disabled       true}
+                {:data-clickable true
+                 :on-click      #(a/dispatch on-click)
+                 :on-mouse-up   #(environment/blur-element!)}))
