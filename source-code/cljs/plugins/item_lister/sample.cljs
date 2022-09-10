@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.sample
-    (:require [plugins.item-editor.api :as item-editor]
-              [plugins.item-lister.api :as item-lister]
+    (:require [plugins.item-lister.api :as item-lister]
               [x.app-core.api          :as a]
               [x.app-elements.api      :as elements]))
 
@@ -26,31 +25,6 @@
 
 ; A plugin beállításához mindenképpen szükséges a szerver-oldali
 ; [:item-lister/init-lister! ...] eseményt használni!
-
-
-
-;; -- "Új elem létrehozása" esemény használata  -------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az item-lister/header komponens {:new-item-event [...]} tulajdonságának használatával
-; a komponens menü elemei között megjelenik az "Új elem hozzáadása" gomb, aminek megnyomására
-; megtörténik a {:new-item-event [...]} tulajdonságként átadott esemény.
-
-
-
-;; -- "Új elem létrehozása" opciók használata  --------------------------------
-;; ----------------------------------------------------------------------------
-
-; - Az item-lister/header komponens {:new-item-options [...]} tulajdonságának használatával
-;   a komponens menü elemei között megjelenített "Új elem hozzáadása" gomb egy párbeszédablakot
-;   nyit meg a {:new-item-options [...]} tulajdonságként átadott vektor elemeivel
-; - Az egyes elemek kiválasztásakor megtörténik a {:new-item-event [...]} tulajdonságként átadott
-;   esemény, ami utolsó paraméterként megkapja a kiválasztott értéket.
-(a/reg-event-fx
-  :add-my-new-item!
-  (fn [_ [_ selected-option]]
-      (case selected-option :add-my-item!   [:my-event]
-                            :add-your-item! [:your-event])))
 
 
 
@@ -87,8 +61,7 @@
 (defn my-view-with-filters
   []
   [:<> [my-filters]
-       [item-lister/header :my-lister {}]
-       [item-lister/body   :my-lister {}]])
+       [item-lister/body :my-lister {}]])
 
 
 
@@ -118,49 +91,29 @@
 
 (defn my-view
   []
-  [:<> [item-lister/header :my-lister {}]
-       [item-lister/body   :my-lister {:list-element [:div "My item"]}]])
-
-
-
-;; -- Plugin használata "Layout A" felületeen ---------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn your-view
-  [surface-id])
-  ;(let [description @(a/subscribe [:item-lister/get-description :my-lister])]
-  ;     [layouts/layout-a ::your-view
-  ;                       {:header [item-lister/header :my-lister {}]
-  ;                        :body   [item-lister/body   :my-lister {:list-element [:div "My item"]}]
-  ;                        :description description])
-
-
-
-;; -- Egyedi menü használata --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; - A header komponens számára átadott {:menu-element #'...} tulajdonság beállításával lehetséges
-;   egyedi menüt használni.
-; - Az item-lister plugin [:item-lister/set-*-mode! ...] események használatával
-;  tudsz a különbözű menü módok között váltani (több elem kiválasztása mód, rendezés mód, stb.)
-(defn my-menu-element
-  [lister-id]
-  [elements/row {:content [item-lister/new-item-block lister-id]
-                          [item-lister/search-block   lister-id]}])
-
-(defn my-header-with-my-menu
-  []
-  [item-lister/header :my-lister {:menu-element #'my-menu-element}])
+  [:<> [item-lister/body :my-lister {:list-element [:div "My item"]}]])
 
 
 
 ;; -- Kifejezések hozzáadaása a szótárhoz -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az order-by-options beállításban egyedi értékeket is használtál, akkor ne felejtsd el
-; hozzáadni a megfelelő szótári szavakat!
+; Ha az order-by-options beállításban egyedi értékeket is használtál, akkor
+; ne felejtsd el hozzáadni a megfelelő szótári szavakat!
 ; Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (a/reg-lifecycles!
   ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
+
+
+
+;; -- Pathom lekérés használata az elemek első letöltésekor -------------------
+;; ----------------------------------------------------------------------------
+
+; Az item-lister plugin body komponensének {:query [...]} tulajdonságaként
+; átadott Pathom lekérés vektor az elemek első letöltődésekor küldött lekéréssel
+; összefűzve kerül elküldésre.
+(defn my-query
+  []
+  [item-lister/body :my-lister {:list-element [:div "My item"]
+                                :query        [:my-query]}])

@@ -16,8 +16,8 @@
     (:require [reagent.api                            :as reagent]
               [x.app-components.api                   :as components]
               [x.app-core.api                         :as a]
-              [x.app-elements.engine.api              :as engine]
               [x.app-elements.input.helpers           :as input.helpers]
+              [x.app-elements.label.views             :as label.views]
               [x.app-elements.radio-button.helpers    :as radio-button.helpers]
               [x.app-elements.radio-button.prototypes :as radio-button.prototypes]))
 
@@ -59,6 +59,18 @@
   (if unselectable? [:button.x-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
                                                          ;[:div.x-radio-button--clear-button-label (components/content :delete!)]
 
+(defn- radio-button-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {}
+  [_ {:keys [helper info-text label required?]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text
+                                  :required? required?}]))
+
 (defn- radio-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -66,7 +78,7 @@
   ; @param (map) button-props
   [button-id button-props]
   [:div.x-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
-                       [engine/element-header                        button-id button-props]
+                       [radio-button-label                           button-id button-props]
                        [radio-button-unselect-button                 button-id button-props]
                        [radio-button-options                         button-id button-props]])
 
@@ -93,7 +105,6 @@
   ;    :xs, :s
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
-  ;    TODO ...
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -103,6 +114,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-options (vector)(opt)
   ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)

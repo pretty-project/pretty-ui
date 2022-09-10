@@ -12,11 +12,11 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.query-handler.effects
-    (:require [mid-fruits.candy                    :refer [return]]
-              [mid-fruits.vector                   :as vector]
-              [x.app-core.api                      :as a :refer [r]]
-              [x.app-sync.query-handler.prototypes :as query-handler.prototypes]))
+(ns pathom.effects
+    (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.vector :as vector]
+              [x.app-core.api    :as a :refer [r]]
+              [pathom.prototypes :as prototypes]))
 
 
 
@@ -24,18 +24,16 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :sync/send-query!
+  :pathom/send-query!
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
   ;  {:body (map)(opt)
   ;    {:query (vector)}
   ;    Only w/o {:query ...}
-  ;   :debug? (boolean)(opt)
-  ;    Default: false
   ;   :display-progress? (boolean)(opt)
   ;    Default: false
   ;   :idle-timeout (ms)(opt)
-  ;    Default: x.app-sync/request-handler/DEFAULT-IDLE-TIMEOUT
+  ;    Default: pathom.config/DEFAULT-IDLE-TIMEOUT
   ;   :on-failure (metamorphic-event)(opt)
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
@@ -47,24 +45,24 @@
   ;    Only w/o {:body {...}}
   ;   :target-path (vector)(opt)
   ;   :uri (string)
-  ;    Default: DEFAULT-URI
+  ;    Default: pathom.config/DEFAULT-URI
   ;   :validator-f (function)(opt)}
   ;
   ; @usage
-  ;  [:sync/send-query! {...}]
+  ;  [:pathom/send-query! {...}]
   ;
   ; @usage
-  ;  [:sync/send-query! :my-query {...}]
+  ;  [:pathom/send-query! :my-query {...}]
   ;
   ; @usage
-  ;  [:sync/send-query! {:query [:all-users]}]
+  ;  [:pathom/send-query! {:query [:all-users]}]
   ;
   ; @usage
-  ;  [:sync/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
+  ;  [:pathom/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ query-id query-props]]
       (let [debug-mode? (r a/debug-mode-detected? db)
-            query-props (query-handler.prototypes/query-props-prototype query-props)
+            query-props (prototypes/query-props-prototype query-props)
 
             ; A {:query [...]} és a {:body {:query [...]}} tulajdonságok összevonása után ...
             ; ... eltávolítja a query vektorból a nil értékeket mert a query vektorba feltételesen
@@ -75,3 +73,9 @@
                                             debug-mode? (update-in [:params :query] vector/cons-item :debug))]
 
            [:sync/send-request! query-id query-props])))
+
+
+
+; contact-groups-description
+; adress-groups label, address, description
+; rebuild-cache

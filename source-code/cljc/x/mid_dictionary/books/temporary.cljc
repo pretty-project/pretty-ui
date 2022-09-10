@@ -97,6 +97,12 @@
            {:en "More options"
             :hu "További lehetőségek"}
 
+           :more-values
+           {:en "More values"
+            :hu "További értékek"}
+           :more-details
+           {:en "More details"
+            :hu "További részletek"}
            :more-actions
            {:en "More actions"
             :hu "További műveletek"}
@@ -175,6 +181,10 @@
            :save-order!
            {:en "Save order"
             :hu "Sorrend mentése"}
+
+           :dimensions
+           {:en "Dimensions"
+            :hu "Méretek"}
 
 
 

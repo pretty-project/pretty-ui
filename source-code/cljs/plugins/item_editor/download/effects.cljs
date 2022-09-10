@@ -34,14 +34,14 @@
       (let [query        (r download.queries/get-request-item-query          db editor-id)
             validator-f #(r download.validators/request-item-response-valid? db editor-id %)]
            {:db       (r download.events/request-item! db editor-id)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
-                                         {:display-progress? true
-                                          ; XXX#4057
-                                          ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
-                                          ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
-                                          :on-stalled [:item-editor/receive-item!   editor-id]
-                                          :on-failure [:item-editor/set-error-mode! editor-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
+                                           {:display-progress? true
+                                            ; XXX#4057
+                                            ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
+                                            ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
+                                            :on-stalled [:item-editor/receive-item!   editor-id]
+                                            :on-failure [:item-editor/set-error-mode! editor-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-editor/receive-item!

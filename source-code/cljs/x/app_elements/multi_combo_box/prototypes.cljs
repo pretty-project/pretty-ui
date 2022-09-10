@@ -50,7 +50,8 @@
   [box-id {:keys [] :as box-props}]
   (let [group-props (dissoc box-props :helper :label :indent)]
        (merge {:chip-label-f return}
-              (param group-props))))
+              (param group-props)
+              {:deletable? true})))
 
 
 

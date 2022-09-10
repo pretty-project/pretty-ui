@@ -18,8 +18,8 @@
               [x.app-core.api                     :as a]
               [x.app-elements.checkbox.helpers    :as checkbox.helpers]
               [x.app-elements.checkbox.prototypes :as checkbox.prototypes]
-              [x.app-elements.engine.api          :as engine]
-              [x.app-elements.input.helpers       :as input.helpers]))
+              [x.app-elements.input.helpers       :as input.helpers]
+              [x.app-elements.label.views         :as label.views]))
 
 
 
@@ -49,6 +49,18 @@
          (let [options (input.helpers/get-input-options checkbox-id checkbox-props)]
               (reduce f [:div.x-checkbox--options] options))))
 
+(defn- checkbox-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;  {}
+  [_ {:keys [helper info-text label required?]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text
+                                  :required? required?}]))
+
 (defn- checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -56,7 +68,7 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div.x-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
-                   [engine/element-header                checkbox-id checkbox-props]
+                   [checkbox-label                       checkbox-id checkbox-props]
                    [checkbox-options                     checkbox-id checkbox-props]])
 
 (defn- checkbox

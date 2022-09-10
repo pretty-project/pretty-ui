@@ -12,15 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.query-handler.sample
-    (:require [x.app-core.api :as a]))
+(ns pathom.api
+    (:require [pathom.effects]
+              [pathom.subs :as subs]))
 
 
 
-;; -- Pathom query küldése ----------------------------------------------------
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :send-my-query!
-  [:sync/send-query! :my-query
-                     {}])
+; pathom.subs
+(def get-query-response subs/get-query-response)
+(def get-query-answer   subs/get-query-answer)

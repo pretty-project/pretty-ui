@@ -20,7 +20,7 @@
               [x.app-elements.chip-group.helpers    :as chip-group.helpers]
               [x.app-elements.chip-group.prototypes :as chip-group.prototypes]
               [x.app-elements.chip.views            :as chip.views]
-              [x.app-elements.engine.api            :as engine]))
+              [x.app-elements.label.views           :as label.views]))
 
 
 
@@ -60,6 +60,17 @@
                   (reduce-indexed f [:div.x-chip-group--chips] chips))
            [chip-group-no-chips-label group-id group-props])))
 
+(defn- chip-group-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {}
+  [_ {:keys [helper info-text label]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text}]))
+
 (defn- chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -67,7 +78,7 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div.x-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
-                     [engine/element-header                    group-id group-props]
+                     [chip-group-label                         group-id group-props]
                      [chip-group-chips                         group-id group-props]])
 
 (defn element
@@ -78,6 +89,7 @@
   ;    Default: return
   ;   :deletable? (boolean)(opt)
   ;    Default: false
+  ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -87,6 +99,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :no-chips-label (metamorphic-content)(opt)
   ;   :style (map)(opt)

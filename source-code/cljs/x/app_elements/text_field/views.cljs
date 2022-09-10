@@ -18,7 +18,7 @@
               [reagent.api                          :as reagent]
               [x.app-components.api                 :as components]
               [x.app-core.api                       :as a]
-              [x.app-elements.engine.api            :as engine]
+              [x.app-elements.label.views           :as label.views]
               [x.app-elements.text-field.helpers    :as text-field.helpers]
               [x.app-elements.text-field.prototypes :as text-field.prototypes]))
 
@@ -245,6 +245,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- text-field-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  [field-id {:keys [helper info-text label required?]}]
+  (if label (let [input-id (a/dom-value field-id "input")]
+                 [label.views/element {:content   label
+                                       :helper    helper
+                                       :info-text info-text
+                                       :required? required?
+                                       :target-id input-id}])))
+
 (defn- text-field-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -252,7 +266,7 @@
   ; @param (map) field-props
   [field-id field-props]
   [:div.x-text-field (text-field.helpers/field-attributes field-id field-props)
-                     [engine/element-header               field-id field-props]
+                     [text-field-label                    field-id field-props]
                      [text-field-input-container          field-id field-props]
                      [text-field-required-warning         field-id field-props]
                      [text-field-invalid-warning          field-id field-props]

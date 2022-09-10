@@ -92,6 +92,12 @@
            :no-images-selected
            {:en "No images selected"
             :hu "Nincsenek kiválasztott képek"}
+           :preview-image
+           {:en "Preview image"
+            :hu "Előnézeti kép"}
+           :recommended-image-size-n
+           {:en "Recommended image size: %1x%2px"
+            :hu "Ajánlott képméret: %1x%2px"}
            :save-file?
            {:en "Are you sure you want to save this file to device?"
             :hu "Biztos vagy benne, hogy szeretnéd menteni ezt a fájlt az eszközre?"}

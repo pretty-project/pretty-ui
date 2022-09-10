@@ -81,6 +81,7 @@
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
   ;    Only w/ {:auto-title? true}
+  ;   :query (vector)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
   ;    Default: core.helpers/default-suggestions-path}

@@ -13,10 +13,19 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.queries
-    (:require [plugins.item-editor.body.subs     :as body.subs]
-              [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [plugins.item-editor.body.subs           :as body.subs]
+              [plugins.item-editor.core.subs           :as core.subs]
+              [plugins.item-editor.download.subs       :as download.subs]
+              [plugins.plugin-handler.download.queries :as download.queries]
+              [x.app-core.api                          :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.download.queries
+(def use-query-prop download.queries/use-query-prop)
 
 
 
@@ -56,13 +65,14 @@
   ;
   ; @return (vector)
   [db [_ editor-id]]
-  [(if (r core.subs/download-item? db editor-id)
-       ; If download item ...
-       (let [resolver-id    (r download.subs/get-resolver-id   db editor-id :get-item)
-             resolver-props (r get-request-item-resolver-props db editor-id)]
-           `(~resolver-id ~resolver-props)))
-   (if (r core.subs/download-suggestions? db editor-id)
-       ; If download suggestions ...
-       (let [resolver-id :item-editor/get-item-suggestions
-             resolver-props (r get-request-suggestions-resolver-props db editor-id)]
-           `(~resolver-id ~resolver-props)))])
+  (let [query [(if (r core.subs/download-item? db editor-id)
+                   ; If download item ...
+                   (let [resolver-id    (r download.subs/get-resolver-id   db editor-id :get-item)
+                         resolver-props (r get-request-item-resolver-props db editor-id)]
+                       `(~resolver-id ~resolver-props)))
+               (if (r core.subs/download-suggestions? db editor-id)
+                   ; If download suggestions ...
+                   (let [resolver-id    :item-editor/get-item-suggestions
+                         resolver-props (r get-request-suggestions-resolver-props db editor-id)]
+                       `(~resolver-id ~resolver-props)))]]
+       (r use-query-prop db editor-id query)))

@@ -33,20 +33,7 @@
 
 (defn my-view
   []
-  [:<> [item-editor/body   :my-editor {:form-element [:div "My form"]}]
-       [item-editor/footer :my-editor {}]])
-
-
-
-;; -- A plugin használata "Layout A" felületen --------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn your-view
-  [surface-id])
-  ;[layouts/layout-a ::your-view
-  ;                  {:body   [item-editor/body   :your-editor {:form-element [:div "Your form"]}]
-  ;                   :footer [item-editor/footer :your-editor {}]])
+  [item-editor/body :my-editor {:form-element [:div "My form"]}])
 
 
 
@@ -96,3 +83,16 @@
 ; A body komponens {:default-item-id "..."} paraméterének értéke ...
 ; ... az aktuálisan szerkesztett elem azonosítója, amikor az aktuális útvonalból
 ;     nem származtatható az :item-id útvonal-paraméter.
+
+
+
+;; -- Pathom lekérés használata az elem letöltésekor --------------------------
+;; ----------------------------------------------------------------------------
+
+; Az item-viewer plugin body komponensének {:query [...]} tulajdonságaként
+; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
+; összefűzve kerül elküldésre.
+(defn my-query
+  []
+  [item-editor/body :my-editor {:form-element [:div "My form"]
+                                :query        [:my-query]}])

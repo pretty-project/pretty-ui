@@ -31,20 +31,8 @@
 
 (defn my-view
   []
-  [:<> [item-viewer/body   :my-viewer {:item-element [:div "My item"]}]
-       [item-viewer/footer :my-viewer {}]])
+  [item-viewer/body :my-viewer {:item-element [:div "My item"]}])
 
-
-
-;; -- A plugin használata "Layout A" felületen --------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! DEPRECATED! DO NOT USE!
-(defn your-view
-  [surface-id])
-  ;[layouts/layout-a ::your-view
-  ;                  {:body   [item-viewer/body   :your-viewer {:item-element [:div "Your item"]}]
-  ;                   :footer [item-viewer/footer :your-viewer {}]])
 
 
 
@@ -62,3 +50,16 @@
 (a/reg-event-fx
   :view-my-item!
   [:item-viewer/view-item! :my-viewer "my-item"])
+
+
+
+;; -- Pathom lekérés használata az elem letöltésekor --------------------------
+;; ----------------------------------------------------------------------------
+
+; Az item-viewer plugin body komponensének {:query [...]} tulajdonságaként
+; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
+; összefűzve kerül elküldésre.
+(defn my-query
+  []
+  [item-viewer/body :my-viewer {:item-element [:div "My item"]
+                                :query        [:my-query]}])

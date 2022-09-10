@@ -50,11 +50,11 @@
       (let [db           (r update.events/update-item!                    db browser-id item-id item-changes)
             query        (r update.queries/get-update-item-query          db browser-id item-id)
             validator-f #(r update.validators/update-item-response-valid? db browser-id %)]
-           {:db db :dispatch [:sync/send-query! :storage.media-browser/update-item!
-                                                {:display-progress? true
-                                                 :on-success [:item-browser/item-updated       browser-id item-id]
-                                                 :on-failure [:item-browser/update-item-failed browser-id item-id]
-                                                 :query query :validator-f validator-f}]})))
+           {:db db :dispatch [:pathom/send-query! :storage.media-browser/update-item!
+                                                  {:display-progress? true
+                                                   :on-success [:item-browser/item-updated       browser-id item-id]
+                                                   :on-failure [:item-browser/update-item-failed browser-id item-id]
+                                                   :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-browser/item-updated
@@ -110,10 +110,10 @@
       (let [query        (r update.queries/get-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/delete-item-response-valid? db browser-id %)]
            {:db       (r update.events/delete-item! db browser-id item-id)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
-                                         {:on-success [:item-browser/item-deleted       browser-id item-id]
-                                          :on-failure [:item-browser/delete-item-failed browser-id item-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
+                                           {:on-success [:item-browser/item-deleted       browser-id item-id]
+                                            :on-failure [:item-browser/delete-item-failed browser-id item-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-browser/item-deleted
@@ -206,10 +206,10 @@
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:db       (r ui/fake-process! db 15)
             :dispatch-n [[:ui/close-bubble! :plugins.item-browser/item-deleted-dialog]
-                         [:sync/send-query! (r core.subs/get-request-id db browser-id)
-                                            {:on-success [:item-browser/delete-item-undid       browser-id]
-                                             :on-failure [:item-browser/undo-delete-item-failed browser-id]
-                                             :query query :validator-f validator-f}]]})))
+                         [:pathom/send-query! (r core.subs/get-request-id db browser-id)
+                                              {:on-success [:item-browser/delete-item-undid       browser-id]
+                                               :on-failure [:item-browser/undo-delete-item-failed browser-id]
+                                               :query query :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :item-browser/delete-item-undid
@@ -274,10 +274,10 @@
       (let [query        (r update.queries/get-duplicate-item-query          db browser-id item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db browser-id)
-                                         {:on-success [:item-browser/item-duplicated       browser-id]
-                                          :on-failure [:item-browser/duplicate-item-failed browser-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
+                                           {:on-success [:item-browser/item-duplicated       browser-id]
+                                            :on-failure [:item-browser/duplicate-item-failed browser-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-browser/item-duplicated

@@ -48,14 +48,13 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:placeholder (metamorphic-content)(opt)}
   ; @param (integer) field-dex
   ;
   ; @return (map)
   ;  {}
-  [group-id {:keys [placeholder] :as group-props} field-dex]
-  {:placeholder    placeholder
-   :autofocus?     (multi-field.helpers/field-dex->autofocus?     group-id group-props field-dex)
-   :end-adornments (multi-field.helpers/field-dex->end-adornments group-id group-props field-dex)
-   :label          (multi-field.helpers/field-dex->field-label    group-id group-props field-dex)
-   :value-path     (multi-field.helpers/field-dex->value-path     group-id group-props field-dex)})
+  [group-id group-props field-dex]
+  (merge (dissoc group-props :indent)
+         {:autofocus?     (multi-field.helpers/field-dex->autofocus?     group-id group-props field-dex)
+          :end-adornments (multi-field.helpers/field-dex->end-adornments group-id group-props field-dex)
+          :label          (multi-field.helpers/field-dex->field-label    group-id group-props field-dex)
+          :value-path     (multi-field.helpers/field-dex->value-path     group-id group-props field-dex)}))

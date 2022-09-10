@@ -40,10 +40,10 @@
       (let [query        (r update.queries/get-delete-item-query          db viewer-id)
             validator-f #(r update.validators/delete-item-response-valid? db viewer-id %)]
            {:db       (r update.events/delete-item! db viewer-id)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                                         {:on-success [:item-viewer/item-deleted       viewer-id]
-                                          :on-failure [:item-viewer/delete-item-failed viewer-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
+                                           {:on-success [:item-viewer/item-deleted       viewer-id]
+                                            :on-failure [:item-viewer/delete-item-failed viewer-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-viewer/item-deleted
@@ -127,10 +127,10 @@
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
            {:db       (r ui/fake-process! db 15)
             :dispatch-n [[:ui/close-bubble! :plugins.item-viewer/item-deleted-dialog]
-                         [:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                                            {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
-                                             :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
-                                             :query query :validator-f validator-f}]]})))
+                         [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
+                                              {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
+                                               :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
+                                               :query query :validator-f validator-f}]]})))
 
 (a/reg-event-fx
   :item-viewer/delete-item-undid
@@ -194,11 +194,11 @@
   (fn [{:keys [db]} [_ viewer-id]]
       (let [query        (r update.queries/get-duplicate-item-query          db viewer-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db viewer-id %)]
-           [:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                              {:display-progress? true
-                               :on-success [:item-viewer/item-duplicated       viewer-id]
-                               :on-failure [:item-viewer/duplicate-item-failed viewer-id]
-                               :query query :validator-f validator-f}])))
+           [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
+                                {:display-progress? true
+                                 :on-success [:item-viewer/item-duplicated       viewer-id]
+                                 :on-failure [:item-viewer/duplicate-item-failed viewer-id]
+                                 :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-viewer/item-duplicated

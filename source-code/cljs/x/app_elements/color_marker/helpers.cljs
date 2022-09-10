@@ -45,4 +45,4 @@
   ;  {:data-color (keyword)
   ;   :style (map)}
   [_ _ color]
-  (element.helpers/apply-color {} :background-color :data-background-color color))
+  (element.helpers/apply-color {} :background-color :data-color color))

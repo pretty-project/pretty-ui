@@ -12,12 +12,23 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.query-handler.config)
+(ns x.mid-dictionary.books.share)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-(def DEFAULT-URI "/query")
+; @constant (map)
+(def BOOK {:share
+           {:en "Share"
+            :hu "Megosztás"}
+           :share!
+           {:en "Share"
+            :hu "Megosztás"}
+           :share-preview
+           {:en "Share preview"
+            :hu "Megosztási előnézet"}
+           :share-previews
+           {:en "Share previews"
+            :hu "Megosztási előnézetek"}})

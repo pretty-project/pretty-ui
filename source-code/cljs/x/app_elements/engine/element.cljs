@@ -131,14 +131,12 @@
   ;   :data-width (keyword)
   ;   :style (map)
   ;    {:height (string)
-  ;     :min-height (string)
   ;     :min-width (string)
   ;     :width (string)}}
-  [_ {:keys [height min-height min-width size width]}]
-  (cond-> {} height     (element.helpers/apply-dimension :height     :data-height     height)
-             width      (element.helpers/apply-dimension :width      :data-width      width)
-             min-height (element.helpers/apply-dimension :min-height :data-min-height min-height)
-             min-width  (element.helpers/apply-dimension :min-width  :data-min-width  min-width)
+  [_ {:keys [height min-width size width]}]
+  (cond-> {} height     (element.helpers/apply-dimension :height    :data-height    height)
+             width      (element.helpers/apply-dimension :width     :data-width     width)
+             min-width  (element.helpers/apply-dimension :min-width :data-min-width min-width)
              size       (assoc                       :data-size       size)))
 
 (defn element-generic-attributes

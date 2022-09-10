@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.thumbnail.helpers
+(ns x.app-elements.breadcrumbs.helpers
     (:require [x.app-core.api                 :as a]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
@@ -22,38 +22,33 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn thumbnail-body-attributes
+(defn breadcrumbs-item-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
   ;  {}
+  ; @param (map) item-props
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [disabled? on-click]}]
-  (if disabled? {:disabled        true}
-                {:data-clickable  true
+  [_ _ {:keys [disabled? href on-click]}]
+  (if disabled? {:disabled       true}
+                {:data-clickable true
+                 :href           href
                  :on-click       #(a/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)}))
 
-(defn thumbnail-attributes
+(defn breadcrumbs-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ;  {:border-radius (keyword)
-  ;   :height (keyword)
-  ;   :width (keyword)}
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;  {}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-height (keyword)
-  ;   :data-width (keyword)}
-  [thumbnail-id {:keys [background-size border-radius height width] :as thumbnail-props}]
-  (merge (element.helpers/element-default-attributes thumbnail-id thumbnail-props)
-         (element.helpers/element-indent-attributes  thumbnail-id thumbnail-props)
-         {:data-border-radius border-radius
-          :data-height        height
-          :data-selectable    false
-          :data-width         width}))
+  ;  {}
+  [breadcrumbs-id {:keys [] :as breadcrumbs-props}]
+  (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
+         (element.helpers/element-indent-attributes  breadcrumbs-id breadcrumbs-props)
+         {}))

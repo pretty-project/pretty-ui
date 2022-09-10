@@ -12,15 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.config-handler.events
-    (:require [x.mid-core.config-handler.events :as config-handler.events]))
+(ns pathom.config)
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.config-handler.events
-(def store-app-config!     config-handler.events/store-app-config!)
-(def store-server-config!  config-handler.events/store-server-config!)
-(def store-website-config! config-handler.events/store-website-config!)
+; @constant (string)
+(def DEFAULT-URI "/query")
+
+; @constant (ms)
+(def DEFAULT-IDLE-TIMEOUT 250)

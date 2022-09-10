@@ -26,8 +26,6 @@
               [x.app-elements.combo-box.effects]
               [x.app-elements.combo-box.events]
               [x.app-elements.combo-box.side-effects]
-              [x.app-elements.content-handler.events]
-              [x.app-elements.content-handler.subs]
               [x.app-elements.counter.events]
               [x.app-elements.counter.subs]
               [x.app-elements.focus-handler.side-effects]
@@ -48,6 +46,7 @@
               [x.app-elements.text-field.side-effects]
               [x.app-elements.text-field.subs]
               [x.app-elements.anchor.views                            :as anchor.views]
+              [x.app-elements.breadcrumbs.views                       :as breadcrumbs.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.card.views                              :as card.views]
@@ -74,8 +73,7 @@
               [x.app-elements.element-components.icon                 :as element-components.icon]
               [x.app-elements.element-components.icon-button          :as element-components.icon-button]
               [x.app-elements.element-components.image                :as element-components.image]
-              [x.app-elements.element-components.info-text            :as element-components.info-text]
-              [x.app-elements.element-components.label                :as element-components.label]
+              [x.app-elements.label.views                             :as label.views]
               [x.app-elements.element-components.line-diagram         :as element-components.line-diagram]
               [x.app-elements.element-components.menu-bar             :as element-components.menu-bar]
               [x.app-elements.multiline-field.views                   :as multiline-field.views]
@@ -107,6 +105,7 @@
 
 ; x.app-elements.element-components.*
 (def anchor               anchor.views/element)
+(def breadcrumbs          breadcrumbs.views/element)
 (def button               button.views/element)
 (def button-separator     button-separator.views/element)
 (def card                 card.views/element)
@@ -133,8 +132,7 @@
 (def icon                 element-components.icon/element)
 (def icon-button          element-components.icon-button/element)
 (def image                element-components.image/element)
-(def info-text            element-components.info-text/element)
-(def label                element-components.label/element)
+(def label                label.views/element)
 (def line-diagram         element-components.line-diagram/element)
 (def menu-bar             element-components.menu-bar/element)
 (def multi-combo-box      multi-combo-box.views/element)

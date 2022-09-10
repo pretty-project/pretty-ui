@@ -12,24 +12,28 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.content-handler.helpers)
+(ns pathom.prototypes
+    (:require [mid-fruits.candy :refer [param]]
+              [pathom.config    :as config]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn visible-items->first-content-id
+(defn query-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (maps in vector) visible-items
-  ;  [{:content-id (keyword)}]
+  ; @param (map) query-props
   ;
-  ; @example
-  ;  (content-handler.helpers/visible-items->first-content-id [{:foo1 :bar1} {:foo2 :bar2 :content-id :baz2}])
-  ;  =>
-  ;  :baz2
-  ;
-  ; @return (keyword)
-  [visible-items]
-  (some :content-id visible-items))
+  ; @return (map)
+  ;  {:method (keyword)
+  ;   :params (map)
+  ;   :query (vector)
+  ;   :uri (string)}
+  [{:keys [query] :as query-props}]
+  (merge {:idle-timeout config/DEFAULT-IDLE-TIMEOUT
+          :uri          config/DEFAULT-URI}
+         (param query-props)
+         (if query {:params {:query query}})
+         {:method :post}))

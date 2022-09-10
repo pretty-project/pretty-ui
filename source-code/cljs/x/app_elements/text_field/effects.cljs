@@ -43,7 +43,9 @@
       (let [stored-value (get-in db value-path)]
            {:dispatch-n [(cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
                                 stored-value [:elements.text-field/use-stored-value!  field-id field-props])]
-            :fx-n       [(if   autofocus?    [:elements.text-field/focus-field!       field-id field-props])]})))
+            ; Az autofocus használatakor a fókuszt késleltetve teszi rá a szövegmezőre, hogy legyen ideje
+            ; a mező tartalmát beállítani és a kurzor mindenképp a tartalom végén tudjon megjelenni!
+            :dispatch-later [(if autofocus? {:ms 50 :fx [:elements.text-field/focus-field! field-id field-props]})]})))
 
 (a/reg-event-fx
   :elements.text-field/use-initial-value!

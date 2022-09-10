@@ -12,9 +12,17 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-sync.query-handler.subs
-    (:require [x.app-core.api                   :as a :refer [r]]
-              [x.app-sync.response-handler.subs :as response-handler.subs]))
+(ns pathom.subs
+    (:require [x.app-sync.response-handler.subs]
+              [x.app-core.api :as a :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; x.app-sync.response-handler.subs
+(def get-request-response x.app-sync.response-handler.subs/get-request-response)
 
 
 
@@ -25,18 +33,18 @@
   ; @param (keyword) query-id
   ;
   ; @usage
-  ;  (r sync/get-query-response db :my-query)
+  ;  (r pathom/get-query-response db :my-query)
   ;
   ; @return (map)
   [db [_ query-id]]
-  (r response-handler.subs/get-request-response db query-id))
+  (r get-request-response db query-id))
 
 (defn get-query-answer
   ; @param (keyword) query-id
   ; @param (*) query-question
   ;
   ; @example
-  ;  (r sync/get-query-answer db :my-query :all-users)
+  ;  (r pathom/get-query-answer db :my-query :all-users)
   ;  =>
   ;  [{...} {...}]
   ;

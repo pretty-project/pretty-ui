@@ -35,6 +35,9 @@
            :delete-field!
            {:en "Delete field"
             :hu "Mező törlése"}
+           :edit-field!
+           {:en "Edit field"
+            :hu "Mező szerkesztése"}
            :empty-field!
            {:en "Empty field"
             :hu "Mező ürítése"}

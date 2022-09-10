@@ -43,6 +43,11 @@
   [db [_ event-id]]
   (dissoc-in db [:environment :keypress-handler/data-items event-id]))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn empty-cache!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -61,15 +66,23 @@
   ; @param (map) event-props
   ;  {:key-code (integer)
   ;   :on-keydown (metamorphic-event)(opt)
-  ;   :on-keyup (metamorphic-event)(opt)}
+  ;   :on-keyup (metamorphic-event)(opt)
+  ;   :required? (boolean)(opt)}
   ;
   ; @return (map)
-  [db [_ event-id {:keys [key-code on-keydown on-keyup]}]]
+  [db [_ event-id {:keys [key-code on-keydown on-keyup required?]}]]
   ; XXX#1160 A regisztrált keypress események újra regisztrálásakor azok azonosítói nem ismétlődnek a cache vektorban
-  (cond-> db on-keydown (update-in [:environment :keypress-handler/meta-items :cache key-code :keydown-events]
-                                   vector/conj-item-once event-id)
-             on-keyup   (update-in [:environment :keypress-handler/meta-items :cache key-code :keyup-events]
-                                   vector/conj-item-once event-id)))
+  ;
+  ; Csak abban az esetben adja hozzá az eseményt a cache-hez, ha a kezelő nincs {:type-mode? true} állapotban,
+  ; vagy abban van, de az esemény {:required? true} beállítással rendelkezik.
+
+  (let [type-mode? (get-in db [:environment :keypress-handler/meta-items :type-mode?])]
+       (if (or required? (not type-mode?))
+           (cond-> db on-keydown (update-in [:environment :keypress-handler/meta-items :cache key-code :keydown-events]
+                                            vector/conj-item-once event-id)
+                      on-keyup   (update-in [:environment :keypress-handler/meta-items :cache key-code :keyup-events]
+                                            vector/conj-item-once event-id))
+           (return db))))
 
 (defn uncache-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,22 +107,59 @@
          (let [keypress-events (get-in db [:environment :keypress-handler/data-items])]
               (reduce-kv f (r empty-cache! db) keypress-events))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-exclusivity!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) event-id
+  ; @param (map) event-props
+  ;  {}
+  ;
+  ; @return (map)
+  [db [_ event-id {:keys [exclusive? key-code] :as event-props}]]
+  (if exclusive? (-> db (update-in [:environment :keypress-handler/meta-items :exclusivity key-code] vector/conj-item event-id)
+                        (dissoc-in [:environment :keypress-handler/meta-items :cache       key-code]))
+                 (return db))
+  (return db))
+
+(defn unset-exclusivity!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) event-id
+  ;
+  ; @return (map)
+  [db [_ event-id]]
+  (let [key-code (get-in db [:environment :keypress-handler/data-items event-id :key-code])]
+       (-> db (update-in [:environment :keypress-handler/meta-items :exclusivity key-code] vector/remove-item event-id)))
+              ;(as-> % (let [exclusivity (get-in db [:environment :keypress-handler/meta-items key-code])]
+              ;             (if (vector/nonempty? exclusivity)
+              ;                 (let [most-exclusive (last exclusivity)])))))
+  (return db))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn reg-keypress-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) event-id
   ; @param (map) event-props
-  ;  {:required? (boolean)(opt)}
   ;
   ; @return (map)
-  [db [_ event-id {:keys [required?] :as event-props}]]
+  [db [_ event-id event-props]]
   ; Az egyes keypress események regisztrálásakor a reg-keypress-event! függvény ...
   ; ... eltárolja az esemény tulajdonságait.
-  ; ... hozzáadja az eseményt a cache-hez, ha a kezelő nincs {:type-mode? true} állapotban
-  ;     vagy az esemény {:required? true} beállítással rendelkezik.
-  (let [type-mode? (get-in db [:environment :keypress-handler/meta-items :type-mode?])]
-       (cond-> db :store-event-props!             (as-> % (r store-event-props! % event-id event-props))
-                  (or required? (not type-mode?)) (as-> % (r cache-event!       % event-id event-props)))))
+  ; ...
+  ; ... hozzáadja az eseményt a cache-hez.
+  (as-> db % (r store-event-props! % event-id event-props)
+             (r set-exclusivity!   % event-id event-props)
+             (r cache-event!       % event-id event-props)))
 
 (defn remove-keypress-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,6 +169,7 @@
   ; @return (map)
   [db [_ event-id event-props]]
   (as-> db % (r uncache-event!      % event-id)
+             (r unset-exclusivity!  % event-id)
              (r remove-event-props! % event-id)))
 
 

@@ -2,7 +2,7 @@
 
 # Felkiáltójel használata
 
-A cselekvést elvégzésére utaló kifejezések azonosítója felkiáltójellel van megkülönböztetve
+A cselekvés elvégzésére utaló kifejezések azonosítója felkiáltójellel van megkülönböztetve
 Pl.: :copy  => "Másolat"
      :copy! => "Másolás"
 

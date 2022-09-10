@@ -72,20 +72,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) bar-props
-  ;  {:orientation (keyword)(opt)
-  ;    :horizontal, :vertical}
+  ;  {:orientation (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :menu-items (map)
   ;   :orientation (keyword)}
-  [{:keys [orientation] :as bar-props}]
+  [{:keys [icon orientation] :as bar-props}]
   (merge {:layout      :row
           :orientation :horizontal}
          (if-not (= orientation :vertical)
                  {:horizontal-align :left})
          (param bar-props)))
+
+(defn item-props-prototype
+  [{:keys [icon] :as item-props}]
+  (merge {}
+         (if icon {:icon-family :material-icons-filled})
+         (param item-props)))
 
 
 
@@ -111,7 +116,7 @@
   ; @param (map) item-props
   ;  {:label (metamorphic-content)(opt)}
   [_ _ {:keys [label]}]
-  (if label [:div.x-menu-bar--menu-item--label [components/content label]]))
+  (if label [:div.x-menu-bar--menu-item--label (components/content label)]))
 
 (defn- toggle-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,8 +150,9 @@
   ;  {:href (string)(opt)
   ;   :on-click (metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href on-click] :as item-props}]
-  (cond (some? href)     [anchor-item bar-id bar-props item-props]
-        (some? on-click) [toggle-item bar-id bar-props item-props]))
+  (let [item-props (item-props-prototype item-props)]
+       (cond (some? href)     [anchor-item bar-id bar-props item-props]
+             (some? on-click) [toggle-item bar-id bar-props item-props])))
 
 (defn- menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -161,9 +167,9 @@
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
   ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
-  (reduce #(conj %1 [menu-item bar-id bar-props %2])
-           [:div.x-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})]
-           (param menu-items)))
+  (letfn [(f [item-list item-props] (conj item-list [menu-item bar-id bar-props item-props]))]
+         [:div.x-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})
+                                      (reduce f [:<>] menu-items)]))
 
 (defn menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!

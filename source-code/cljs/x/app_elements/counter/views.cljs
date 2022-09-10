@@ -17,7 +17,7 @@
               [x.app-core.api                    :as a]
               [x.app-elements.counter.helpers    :as counter.helpers]
               [x.app-elements.counter.prototypes :as counter.prototypes]
-              [x.app-elements.engine.api         :as engine]))
+              [x.app-elements.label.views        :as label.views]))
 
 
 
@@ -72,6 +72,18 @@
                         [counter-increase-button counter-id counter-props]
                         [counter-reset-button    counter-id counter-props]])
 
+(defn- counter-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
+  ;  {}
+  [_ {:keys [helper info-text label required?]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text
+                                  :required? required?}]))
+
 (defn- counter-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,7 +91,7 @@
   ; @param (map) counter-props
   [counter-id counter-props]
   [:div.x-counter (counter.helpers/counter-attributes counter-id counter-props)
-                  [engine/element-header              counter-id counter-props]
+                  [counter-label                      counter-id counter-props]
                   [counter-body                       counter-id counter-props]])
 
 (defn- counter
@@ -109,6 +121,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-value (integer)(opt)
   ;    Default: 0
   ;   :label (metamorphic-content)(opt)

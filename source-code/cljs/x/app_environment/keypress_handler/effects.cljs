@@ -27,14 +27,18 @@
   :environment/reg-keypress-event!
   ; @param (keyword)(opt) event-id
   ; @param (map) event-props
-  ;  {:key-code (integer)
+  ;  {:exclusive? (boolean)(opt)
+  ;    Az {:exclusive? true} beállítással regisztrált keypress események kikapcsolt
+  ;    állapotban tartják az azonos billentyű-lenyomást figyelő többi eseményt.
+  ;    Default: false
+  ;   :key-code (integer)
   ;   :on-keydown (metamorphic-event)(opt)
   ;   :on-keyup (metamorphic-event)(opt)
   ;   :prevent-default? (boolean)(opt)
   ;    Default: false
   ;   :required? (boolean)(opt)
-  ;    A {:required? true} beállítással regisztrált keypress események a kezelő {:type-mode? true}
-  ;    állapotba lépése után is megtörténnek!
+  ;    A {:required? true} beállítással regisztrált keypress események a kezelő
+  ;    {:type-mode? true} állapotba lépése után is megtörténnek!
   ;    Default: false}
   ;
   ; @usage

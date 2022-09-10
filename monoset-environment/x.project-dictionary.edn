@@ -1,4 +1,7 @@
 
+; A fájl tartalomváltozásainak érvénybe lépéséhez szükséges újraindítani
+; az applikációt!
+
 {:my-project
  {:en "My project"
   :hu "Projektem"}}

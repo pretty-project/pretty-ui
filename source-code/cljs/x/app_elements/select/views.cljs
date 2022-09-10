@@ -20,8 +20,8 @@
               [x.app-core.api                                :as a]
               [x.app-elements.button.views                   :as button.views]
               [x.app-elements.element-components.icon-button :as icon-button]
-              [x.app-elements.engine.api                     :as engine]
               [x.app-elements.input.helpers                  :as input.helpers]
+              [x.app-elements.label.views                    :as label.views]
               [x.app-elements.text-field.views               :as text-field.views]
               [x.app-elements.select.helpers                 :as select.helpers]
               [x.app-elements.select.prototypes              :as select.prototypes]))
@@ -40,7 +40,7 @@
   ;   :new-option-placeholder (metamorphic-content)}
   [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
   (if extendable? (let [field-empty?      @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
-                        adornment-on-click [:elements.select/enter-pressed select-id select-props]
+                        adornment-on-click [:elements.select/ENTER-pressed select-id select-props]
                         adornment-props    {:disabled? field-empty? :icon :add :on-click adornment-on-click :title :add!}]
                        [text-field.views/element :elements.select/new-option-field
                                                  {:end-adornments [adornment-props]
@@ -177,6 +177,18 @@
   [select-id select-props]
   [:div.x-select--button [select-button-body select-id select-props]])
 
+(defn- active-button-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  [_ {:keys [helper info-text label required?]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text
+                                  :required? required?}]))
+
 (defn- active-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -184,8 +196,7 @@
   ; @param (map) select-props
   [select-id select-props]
   [:div.x-select (select.helpers/select-attributes select-id select-props)
-                 [engine/element-header            select-id select-props]
-                 [engine/element-helper            select-id select-props]
+                 [active-button-label              select-id select-props]
                  [select-button                    select-id select-props]])
 
 (defn- active-button
@@ -264,6 +275,7 @@
   ;    Default: false
   ;   :extendable? (boolean)(opt)
   ;    Default: false
+  ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -273,6 +285,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
   ;   :initial-options (vector)(opt)
   ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)(opt)

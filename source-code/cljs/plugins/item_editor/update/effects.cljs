@@ -40,10 +40,10 @@
       (let [query        (r update.queries/get-save-item-query          db editor-id)
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db editor-id)
-                                         {:on-success [:item-editor/item-saved       editor-id]
-                                          :on-failure [:item-editor/save-item-failed editor-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
+                                           {:on-success [:item-editor/item-saved       editor-id]
+                                            :on-failure [:item-editor/save-item-failed editor-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-editor/item-saved

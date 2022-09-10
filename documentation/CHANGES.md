@@ -1,11 +1,25 @@
 
+# 4.7.3
+- Az x.app-elements.api/text-field elem és más text-field elemre épülő elemek
+  (pl. combo-box, multi-combo-box, multi-field, password-field, ...) működése
+  megváltozott!
+  A mező értéke késleltetve íródik a Re-Frame adatbázisba!
+
+- Az x.app-sync.query-handler.* névterek most már pathom.* névtérbe költöztek!
+  A [:sync/send-query! ...] esemény ezentúl [:pathom/send-query! ...] néven
+  használható!
+
+
+
 # 4.7.0
-- [:ui/render-surface! ...] 
+- [:ui/render-surface! ...]
   [:ui/close-surface!  ...]
   [:ui/render-popup!   ...]
   [:ui/close-popup!    ...]
   [:ui/render-bubble!  ...]
   [:ui/close-bubble!   ...]
+
+
 
 # x4.6.9
 

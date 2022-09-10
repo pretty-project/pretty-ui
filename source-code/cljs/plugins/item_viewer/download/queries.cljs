@@ -13,9 +13,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.queries
-    (:require [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [plugins.item-editor.core.subs           :as core.subs]
+              [plugins.item-editor.download.subs       :as download.subs]
+              [plugins.plugin-handler.download.queries :as download.queries]
+              [x.app-core.api                          :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.download.queries
+(def use-query-prop download.queries/use-query-prop)
 
 
 
@@ -42,5 +51,6 @@
   ; @return (vector)
   [db [_ viewer-id]]
   (let [resolver-id    (r download.subs/get-resolver-id   db viewer-id :get-item)
-        resolver-props (r get-request-item-resolver-props db viewer-id)]
-      [`(~resolver-id ~resolver-props)]))
+        resolver-props (r get-request-item-resolver-props db viewer-id)
+        query          [`(~resolver-id ~resolver-props)]]
+       (r use-query-prop db viewer-id query)))

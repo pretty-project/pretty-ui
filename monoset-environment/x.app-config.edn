@@ -1,4 +1,7 @@
 
+; A fájl tartalomváltozásainak érvénybe lépéséhez szükséges újraindítani
+; az applikációt!
+;
 ; @param (map) app-config
 ;  {:author (string)
 ;   :app-home (string)
@@ -15,10 +18,6 @@
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
 ;      :uri (string)}]
-;   :meta-description (string)
-;   :meta-keywords (strings in vector or string)
-;   :og-preview-path (string)
-;    Recommended preview-size: 1200x630px
 ;   :plugin-js-paths (maps in vector)
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
@@ -32,8 +31,6 @@
 ;   :app-home      "/admin"
 ;   :app-themes    [{:id :my-theme :name "My theme"}
 ;                   {:id :light    :name :light-theme}]
-;   :meta-keywords ["a" "b" "c"]
-;   :meta-keywords "a, b, c"
 ;   :plugin-js-paths [{:uri "/js/plugins/external-plugin.js"}
 ;                     {:uri "https://external-plugin.com/plugin.js"}]}
 
@@ -47,11 +44,6 @@
 
  ; Browser details
  :theme-color "#111111"
-
- ; SEO details
- :meta-description "The Matrix is everywhere. It is all around us."
- :meta-keywords    ["Follow the white rabbit!"]
- :og-preview-path  "/og/og-preview-1200x630.png"
 
  ; CSS paths
  :css-paths

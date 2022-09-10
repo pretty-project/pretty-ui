@@ -30,7 +30,9 @@
   ;      :uri (string)}]
   ;   :meta-description (string)(opt)
   ;   :meta-keywords (string or strings in vector)(opt)
-  ;   :og-preview-path (string)(opt)}
+  ;   :meta-name (string)
+  ;   :meta-title (string)
+  ;   :share-preview-uri (string)(opt)}
   ;
   ; @usage
   ;  (ui/head {...} {...})
@@ -40,9 +42,10 @@
   ([request head-props]
    (let [head-props (head.prototypes/head-props-prototype request head-props)]
         (-> [:head#x-head]
-            (head.helpers/head<-legal-information request head-props)
-            (head.helpers/head<-browser-settings  request head-props)
-            (head.helpers/head<-crawler-settings  request head-props)
-            (head.helpers/head<-og-properties     request head-props)
-            (head.helpers/head<-css-includes      request head-props)
-            (head.helpers/head<-favicon-includes  request head-props)))))
+            (head.helpers/head<-legal-information        request head-props)
+            (head.helpers/head<-browser-settings         request head-props)
+            (head.helpers/head<-crawler-settings         request head-props)
+            (head.helpers/head<-og-properties            request head-props)
+            (head.helpers/head<-share-preview-properties request head-props)
+            (head.helpers/head<-css-includes             request head-props)
+            (head.helpers/head<-favicon-includes         request head-props)))))

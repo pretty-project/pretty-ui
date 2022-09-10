@@ -45,5 +45,4 @@
   ; @return (map)
   ;  {}
   [_ element-props color]
-  (cond (keyword? color) {:data-color color}
-        (string?  color) {:style {:background-color color}}))
+  (element.helpers/apply-color {} :background-color :data-color color))

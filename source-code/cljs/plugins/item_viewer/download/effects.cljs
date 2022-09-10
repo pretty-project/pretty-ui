@@ -34,12 +34,12 @@
       (let [query        (r download.queries/get-request-item-query          db viewer-id)
             validator-f #(r download.validators/request-item-response-valid? db viewer-id %)]
            {:db       (r download.events/request-item! db viewer-id)
-            :dispatch [:sync/send-query! (r core.subs/get-request-id db viewer-id)
-                                         {:display-progress? true
-                                          ; XXX#4057
-                                          :on-stalled [:item-viewer/receive-item!   viewer-id]
-                                          :on-failure [:item-viewer/set-error-mode! viewer-id]
-                                          :query query :validator-f validator-f}]})))
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
+                                           {:display-progress? true
+                                            ; XXX#4057
+                                            :on-stalled [:item-viewer/receive-item!   viewer-id]
+                                            :on-failure [:item-viewer/set-error-mode! viewer-id]
+                                            :query query :validator-f validator-f}]})))
 
 (a/reg-event-fx
   :item-viewer/receive-item!

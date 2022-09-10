@@ -20,6 +20,7 @@
               [x.app-db.api                 :as db]
               [x.app-elements.input.events  :as input.events]
               [x.app-elements.input.helpers :as input.helpers]
+              [x.app-elements.input.subs    :as input.subs]
               [x.app-environment.api        :as environment]))
 
 
@@ -142,10 +143,14 @@
   ;  {}
   ;
   ; @return (map)
-  [db [_ field-id field-props]]
-  (as-> db % (r input.events/mark-as-focused! % field-id field-props)
-             (r show-surface!                 % field-id field-props)
-             (r environment/set-type-mode!    %)))
+  [db [_ field-id {:keys [autofocus?] :as field-props}]]
+  (let [visited? (r input.subs/input-visited? db field-id)]
+       (as-> db % (r input.events/mark-as-focused! % field-id field-props)
+                  (r environment/set-type-mode!    %)
+                  ; Az autofocus használatakor nem szükséges lenyitni a surface felületet!
+                  (if (and autofocus? (not visited?))
+                      (return          %)
+                      (r show-surface! % field-id field-props)))))
 
 
 

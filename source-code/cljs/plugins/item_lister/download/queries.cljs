@@ -13,10 +13,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.queries
-    (:require [plugins.item-lister.body.subs     :as body.subs]
-              [plugins.item-lister.core.subs     :as core.subs]
-              [plugins.item-lister.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]))
+    (:require [mid-fruits.candy                        :refer [return]]
+              [plugins.item-lister.body.subs           :as body.subs]
+              [plugins.item-lister.core.subs           :as core.subs]
+              [plugins.item-lister.download.subs       :as download.subs]
+              [plugins.plugin-handler.download.queries :as download.queries]
+              [x.app-core.api                          :refer [r]]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; plugins.plugin-handler.download.queries
+(def use-query-prop download.queries/use-query-prop)
 
 
 
@@ -54,5 +64,13 @@
   ; @return (vector)
   [db [_ lister-id]]
   (let [resolver-id    (r download.subs/get-resolver-id    db lister-id :get-items)
-        resolver-props (r get-request-items-resolver-props db lister-id)]
-       [`(~resolver-id ~resolver-props)]))
+        resolver-props (r get-request-items-resolver-props db lister-id)
+        query          [`(~resolver-id ~resolver-props)]]
+       ; Az item-lister plugin body komponense számára {:query [...]} paraméterként
+       ; átadott Pathom lekérés vektort csak abban az esetben fűzi össze az elemek
+       ; letöltéséhez készített lekérés vektorral, ha még nem töltődött le egyetlen
+       ; elem sem, tehát a {:query [...]} paraméter csak az elemek első letöltésekor
+       ; van elküldve!
+       (if (r download.subs/first-data-received? db lister-id)
+           (return                        query)
+           (r use-query-prop db lister-id query))))

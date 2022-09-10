@@ -119,12 +119,13 @@
   flex-direction: column;
   flex-grow: 1;
   justify-content: flex-end;
-  padding-bottom: 12px }
+  padding-bottom: 12px;
+  padding-top: 48px }
 
 #surface-a--footer-content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: right;
+  justify-content: center;
   max-width: var( --content-width-l );
   width: 100% }
 

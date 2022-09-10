@@ -13,6 +13,9 @@
 
 
 # x4.7.0
+- SEO: https://schema.org/docs/gs.html
+       https://stackoverflow.com/questions/29928974/what-is-the-purpose-of-meta-itemprop
+       
 - Rendet tenni a monoset log fájlokban
 
 - HACK#3031 probléma!

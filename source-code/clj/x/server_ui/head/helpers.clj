@@ -48,6 +48,11 @@
       (return      meta-keywords)
       (string/join meta-keywords ", ")))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn head<-crawler-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -56,14 +61,32 @@
   ; @param (map) head-props
   ;  {:crawler-rules (string)
   ;   :meta-description (string)
-  ;   :meta-keywords (string or strings in vector)}
+  ;   :meta-keywords (string or strings in vector)
+  ;   :meta-name (string)
+  ;   :meta-title (string)}
   ;
   ; @return (hiccup)
-  [head request {:keys [crawler-rules meta-description meta-keywords]}]
+  [head _ {:keys [crawler-rules meta-description meta-keywords meta-name meta-title]}]
   (let [meta-keywords (meta-keywords->formatted-meta-keywords meta-keywords)]
        (vector/concat-items head [[:meta {:content crawler-rules    :name "robots"}]
                                   [:meta {:content meta-description :name "description"}]
-                                  [:meta {:content meta-keywords    :name "keywords"}]])))
+                                  [:meta {:content meta-title       :name "title"}]])))
+
+(defn head<-share-preview-properties
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (hiccup) head
+  ; @param (map) request
+  ; @param (map) head-props
+  ;  {:meta-description (string)
+  ;   :meta-name (string)
+  ;   :share-preview-uri (string)}
+  ;
+  ; @return (hiccup)
+  [head _ {:keys [meta-description meta-name share-preview-uri]}]
+  (vector/concat-items head [[:meta {:content meta-name         :itemprop "name"}]
+                             [:meta {:content meta-description  :itemprop "description"}]
+                             [:meta {:content share-preview-uri :itemprop "image"}]]))
 
 (defn head<-browser-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,7 +99,7 @@
   ;   :theme-color (string)}
   ;
   ; @return (hiccup)
-  [head request {:keys [app-title selected-language theme-color]}]
+  [head _ {:keys [app-title selected-language theme-color]}]
   (vector/concat-items head [[:title app-title]
                              [:meta {:charset "utf-8"}]
                              ; maximum-scale=1
@@ -113,16 +136,16 @@
   ; @param (map) head-props
   ;  {:app-title (string)
   ;   :meta-description (string)
-  ;   :og-preview-path (string)}
+  ;   :share-preview-uri (string)}
   ;
   ; @return (hiccup)
-  [head request {:keys [app-title meta-description og-preview-path]}]
+  [head request {:keys [app-title meta-description share-preview-uri]}]
   (let [og-url (http/request->uri request)]
-       (vector/concat-items head [[:meta {:content "website"        :property "og:type"}]
-                                  [:meta {:content meta-description :property "og:description"}]
-                                  [:meta {:content app-title        :property "og:title"}]
-                                  [:meta {:content og-preview-path  :property "og:image"}]
-                                  [:meta {:content og-url           :property "og:url"}]])))
+       (vector/concat-items head [[:meta {:content "website"         :property "og:type"}]
+                                  [:meta {:content meta-description  :property "og:description"}]
+                                  [:meta {:content app-title         :property "og:title"}]
+                                  [:meta {:content share-preview-uri :property "og:image"}]
+                                  [:meta {:content og-url            :property "og:url"}]])))
 
 (defn head<-css-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,7 +160,7 @@
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build core-js css-paths] :as head-props}]
+  [head _ {:keys [app-build core-js css-paths] :as head-props}]
   (letfn [(include-css? [css-props] (or (-> css-props :core-js nil?)
                                         (-> css-props :core-js (= core-js))))
           (f [head {:keys [uri] :as css-props}]
@@ -162,7 +185,7 @@
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build core-js favicon-paths]}]
+  [head _ {:keys [app-build core-js favicon-paths]}]
   (letfn [(include-favicon? [favicon-props] (or (-> favicon-props :core-js nil?)
                                                 (-> favicon-props :core-js (= core-js))))
           (f [head {:keys [uri] :as favicon-props}]

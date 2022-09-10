@@ -87,7 +87,7 @@
   ;   :style (map)(opt)
   ;   :uri (string)(opt)
   ;   :width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :2xl, :3xl, :4xl
   ;    Default: :s}
   ;
   ; @usage

@@ -38,7 +38,9 @@
        :dispatch      [:core/store-server-props! server-props]
        :fx-n          [[:core/import-lifecycles!]
                        [:core/import-app-build!]
-                       [:core/config-server!]]}))
+                       [:core/import-app-config!]
+                       [:core/import-server-config!]
+                       [:core/import-website-config!]]}))
 
 (a/reg-event-fx
   :boot-loader/init-server!

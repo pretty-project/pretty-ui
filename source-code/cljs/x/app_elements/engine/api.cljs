@@ -16,7 +16,6 @@
     (:require [x.app-elements.engine.clickable          :as clickable]
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-badge      :as element-badge]
-              [x.app-elements.engine.element-info       :as element-info]
               [x.app-elements.engine.field              :as field]
               [x.app-elements.engine.input-group        :as input-group]
               [x.app-elements.engine.selectable         :as selectable]
@@ -41,15 +40,6 @@
 
 ; x.app-elements.engine.element-badge
 (def element-badge element-badge/element-badge)
-
-; x.app-elements.engine.element-info
-(def element-helper element-info/element-helper)
-(def element-header element-info/element-header)
-
-; TEMP
-(def info-text-content element-info/info-text-content)
-(def info-text-button  element-info/info-text-button)
-; TEMP
 
 ; x.app-elements.engine.field
 (def field-empty?                           field/field-empty?)

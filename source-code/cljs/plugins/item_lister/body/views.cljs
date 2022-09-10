@@ -159,6 +159,7 @@
   ;    Default: core.config/DEFAULT-ORDER-BY-OPTIONS
 
   ;   :prefilter (map)(opt)
+  ;   :query (vector)(opt)
   ;   :select-mode? (boolean)(opt)
   ;    Default: false
   ;   :selected-items (strings in vector)(opt)

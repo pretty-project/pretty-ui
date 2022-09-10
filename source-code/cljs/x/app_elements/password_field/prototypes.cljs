@@ -50,7 +50,7 @@
                              :validator {:f form/password?
                                          :invalid-message :password-is-too-weak}})
               ; *
-              (let [show-password-adornment {:disabled? field-empty?
+              (let [show-password-adornment {;:disabled? field-empty?
                                              :icon      (if password-visible? :visibility_off :visibility)
                                              :tooltip   (if password-visible? :hide-password! :show-password!)
                                              :on-click  {:fx [:elements.password-field/toggle-password-visibility! field-id]}}]

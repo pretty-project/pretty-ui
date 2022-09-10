@@ -16,9 +16,9 @@
     (:require [x.app-core.api                            :as a]
               [x.app-elements.chip-group.views           :as chip-group.views]
               [x.app-elements.combo-box.views            :as combo-box.views]
-              [x.app-elements.engine.api                 :as engine]
               [x.app-elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
-              [x.app-elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]))
+              [x.app-elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
+              [x.app-elements.text-field.views           :as text-field.views]))
 
 
 
@@ -62,7 +62,7 @@
   ; @param (map) box-props
   [box-id box-props]
   [:div.x-multi-combo-box (multi-combo-box.helpers/box-attributes box-id box-props)
-                          [engine/element-header                  box-id box-props]
+                          [text-field.views/text-field-label      box-id box-props]
                           [multi-combo-box-chip-group             box-id box-props]
                           [multi-combo-box-field                  box-id box-props]])
 

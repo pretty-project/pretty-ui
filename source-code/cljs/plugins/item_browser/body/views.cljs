@@ -81,6 +81,7 @@
   ;    Default: plugins.item-lister.core.config/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)
   ;   :prefilter (map)(opt)
+  ;   :query (vector)(opt)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
   ;

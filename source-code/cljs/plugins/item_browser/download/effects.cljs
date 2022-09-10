@@ -66,10 +66,10 @@
   (fn [{:keys [db]} [_ browser-id]]
       (let [query        (r download.queries/get-request-item-query          db browser-id)
             validator-f #(r download.validators/request-item-response-valid? db browser-id %)]
-           [:sync/send-query! (r core.subs/get-request-id db browser-id)
-                              {:on-failure [:item-browser/set-error-mode! browser-id]
-                               :on-success [:item-browser/receive-item!   browser-id]
-                               :query query :validator-f validator-f}])))
+           [:pathom/send-query! (r core.subs/get-request-id db browser-id)
+                                {:on-failure [:item-browser/set-error-mode! browser-id]
+                                 :on-success [:item-browser/receive-item!   browser-id]
+                                 :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-browser/receive-item!

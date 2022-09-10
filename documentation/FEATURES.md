@@ -1,4 +1,11 @@
 
+# x4.7.3
+- A [:pathom/send-query! ...] eseménnyel küldött lekérésekre adott szerver-válaszban,
+  ha a válasz egy térkép, akkor bármely elemében elhelyezhető a :pathom/target-path
+  kulcs, ami az adott elem kliens-oldali érkeztetését biztosítja!
+
+
+
 # x4.6.7
 
 - Ezentúl szerver-oldalon is leheséges az [:environment/add-css! ...] eseménnyel,

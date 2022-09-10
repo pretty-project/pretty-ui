@@ -48,16 +48,17 @@
       ;   értéke 20, akkor az esemény az 1. - 60. elemeket kéri le a szerverről.
       ;
       ; - A {:reload-mode? true} beállítás csak a query elkészítéséhez szükséges, utána már nincs
-      ;   szükség rá, hogy érvényben maradjon, ezért a megváltoztatott db értéke nincs eltárolva!
+      ;   szükség rá, hogy érvényben maradjon, ezért a set-reload-mode! függvénnyel megváltoztatott
+      ;   db értéke nem kerül eltárolásra!
       (let [db           (r core.events/set-reload-mode!                      db lister-id)
             query        (r download.queries/get-request-items-query          db lister-id)
             validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
-           [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                              {:display-progress? true
-                               ; XXX#4057
-                               :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
-                               :on-failure [:item-lister/set-error-mode!         lister-id]
-                               :query query :validator-f validator-f}])))
+           [:pathom/send-query! (r core.subs/get-request-id db lister-id)
+                                {:display-progress? true
+                                 ; XXX#4057
+                                 :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
+                                 :on-failure [:item-lister/set-error-mode!         lister-id]
+                                 :query query :validator-f validator-f}])))
 
 (a/reg-event-fx
   :item-lister/receive-reloaded-items!
@@ -112,11 +113,11 @@
       (if (r core.subs/request-items? db lister-id)
           (let [query        (r download.queries/get-request-items-query          db lister-id)
                 validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
-               [:sync/send-query! (r core.subs/get-request-id db lister-id)
-                                  {:display-progress? true
-                                   :on-stalled [:item-lister/receive-items!  lister-id]
-                                   :on-failure [:item-lister/set-error-mode! lister-id]
-                                   :query query :validator-f validator-f}]))))
+               [:pathom/send-query! (r core.subs/get-request-id db lister-id)
+                                    {:display-progress? true
+                                     :on-stalled [:item-lister/receive-items!  lister-id]
+                                     :on-failure [:item-lister/set-error-mode! lister-id]
+                                     :query query :validator-f validator-f}]))))
 
 (a/reg-event-fx
   :item-lister/receive-items!
