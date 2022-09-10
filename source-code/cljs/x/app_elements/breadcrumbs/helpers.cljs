@@ -52,3 +52,32 @@
   (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
          (element.helpers/element-indent-attributes  breadcrumbs-id breadcrumbs-props)
          {}))
+
+(defn static-crumb-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;  {}
+  ; @param (map) crumb
+  ;
+  ; @return (map)
+  ;  {}
+  [_ _ {:keys []}]
+  {:data-selectable false})
+
+(defn button-crumb-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;  {}
+  ; @param (map) crumb
+  ;
+  ; @return (map)
+  ;  {}
+  [_ _ {:keys [route]}]
+  {:data-clickable  true
+   :data-selectable false
+   :on-click    #(a/dispatch [:router/go-to! route])
+   :on-mouse-up #(environment/blur-element!)})

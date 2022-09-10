@@ -1610,6 +1610,42 @@ body {
 
 
 
+/***** Breadcrumbs *****/
+/*** Breadcrumbs body ***/
+
+.x-breadcrumbs--body {
+  display: flex;
+  grid-column-gap: 24px }
+
+/*** Breadcrumbs body ***/
+
+/*** Breadcrumbs crumb ***/
+
+.x-breadcrumbs--crumb {
+  color: var( --color-muted );
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 24px }
+
+.x-breadcrumbs--crumb:not(:last-child):after {
+  background-color: var( --border-color-highlight );
+  border-radius: 3px;
+  content: '';
+  height: 6px;
+  position: absolute;
+  right: -15px;
+  top: 9px;
+  width: 6px;
+}
+
+.x-breadcrumbs--crumb[data-clickable] {
+  font-weight: 500 }
+
+/*** Breadcrumbs crumb ***/
+/***** Breadcrumbs *****/
+
+
+
 /***** Button *****/
 /*** Button wrapper ***/
 

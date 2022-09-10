@@ -1,4 +1,17 @@
 
+
+
+
+
+
+
+; A source-path felesleges (?)
+; A target-path-et leválthatja a {:response-f ...} függvény
+
+
+
+
+
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -40,10 +53,10 @@
 (a/reg-event-fx
   :sync/send-request!
   ; @param (keyword)(opt) request-id
-  ;  A request a saját request-id azonosítójával párhuzamosan elindít egy process
-  ;  folyamatot, ennek köszönhetően a request státuszát, aktivitását
-  ;  és folyamatállapotát lehetséges ellenőrizni a request azonosítójára
-  ;  {:process-id ...} tulajdonságként hivatkozva.
+  ;  A lekéréssel párhuzamosan elindul egy :core/process folyamat is amelynek
+  ;  azonosíja megegyezik a request-id azonosítóval, ennek köszönhetően a lekérés
+  ;  státuszát, aktivitását és folyamatállapotát lehetséges figyelni a :core/process-handler
+  ;  kezelő használatával (a request-id azonosítóra hivatkozva).
   ; @param (map) request-props
   ;  {:body (*)(opt)
   ;   :display-process? (boolean)(opt)

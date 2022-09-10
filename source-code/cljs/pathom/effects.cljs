@@ -73,9 +73,3 @@
                                             debug-mode? (update-in [:params :query] vector/cons-item :debug))]
 
            [:sync/send-request! query-id query-props])))
-
-
-
-; contact-groups-description
-; adress-groups label, address, description
-; rebuild-cache

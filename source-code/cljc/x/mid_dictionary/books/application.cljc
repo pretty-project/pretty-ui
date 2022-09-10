@@ -23,6 +23,9 @@
 (def BOOK {:about-app
            {:en "About app"
             :hu "Az alkalmazás névjegye"}
+           :app-home
+           {:en "Home"
+            :hu "Kezdőlap"}
            :app-menu
            {:en "App menu"
             :hu "Alkalmazás menü"}

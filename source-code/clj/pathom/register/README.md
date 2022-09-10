@@ -1,7 +1,7 @@
 
 # ...
 - A Pathom handlereket lehetséges handler függvényenként illetve handler
-  függvénycsoportonként regisztrálni a reg-handler es reg-handlers függvényekkel.
+  függvénycsoportonként regisztrálni a reg-handler! es reg-handlers! függvényekkel.
   Így az esetlegesen használaton kívüli modulok es névterek handler függvényei
   nem regisztrálódnak a Pathom környezetbe.
 

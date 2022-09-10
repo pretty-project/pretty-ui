@@ -62,3 +62,19 @@
 
 (pathom/reg-handler!  ::handler  [get-my-resolver])
 (pathom/reg-handlers! ::handlers [do-your-mutation!])
+
+
+
+;; -- Szerver-válasz kliens-oldali címzése ------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Az egy HTTP/AJAX lekérésen belüli különböző Pathom resolver és mutation
+; függvények visszatérési értékeiben (amennyiben azok térkép adatok) lehetséges
+; Re-Frame adatbázis címeket elhelyezni, amely címek alapján a kliens-oldal
+; a szervertől kapott adatokat eltárolja a kliens-oldali adatbázisban.
+
+(defresolver target-my-return-data
+             [env resolver-props]
+             {:target-my-return-data {:my-item            "My value"
+                                      :your-item          "Your value"
+                                      :pathom/target-path [:my-path]}})
