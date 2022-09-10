@@ -1,13 +1,17 @@
 
 
-
-
-
-
-
 ; A source-path felesleges (?)
 ; A target-path-et leválthatja a {:response-f ...} függvény
 
+
+; Ez igy nem allapot hogy nem tudom visszamenoleg részletesen megnézni a
+; az eth árfolyamot!!!!
+; fentarthatoalapitvany.hu-ra
+; egy bybit crawler, ami gyüjti a bybit árfolyamot és van egy diagram amin
+; meg tom nézni mondjuk egy héttel ezelőtt is akár perces bontásban is!!!
+
+
+; de most elég ha csak elkezdi gyüjteni az adatot!
 
 
 

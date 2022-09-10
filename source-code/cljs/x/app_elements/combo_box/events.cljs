@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.combo-box.events
-    (:require [x.app-core.api              :as a :refer [r]]
-              [x.app-db.api                :as db]
-              [x.app-elements.input.events :as input.events]))
+    (:require [x.app-core.api               :as a :refer [r]]
+              [x.app-db.api                 :as db]
+              [x.app-elements.input.events  :as input.events]
+              [x.app-elements.input.helpers :as input.helpers]))
 
 
 
@@ -49,7 +50,9 @@
   ; @return (map)
   [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
-       (r db/set-item! db value-path option-value)))
+       (if (input.helpers/value-path->vector-item? value-path)
+           (r db/set-vector-item! db value-path option-value)
+           (r db/set-item!        db value-path option-value))))
 
 
 

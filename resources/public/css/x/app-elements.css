@@ -1639,7 +1639,7 @@ body {
 }
 
 .x-breadcrumbs--crumb[data-clickable] {
-  font-weight: 500 }
+  font-weight: 600 }
 
 /*** Breadcrumbs crumb ***/
 /***** Breadcrumbs *****/
@@ -2391,7 +2391,8 @@ body {
 /*** Label body ***/
 
 .x-label--body {
-  display: flex }
+  align-items: center;
+  display: flex}
 
 /*** Label body ***/
 
