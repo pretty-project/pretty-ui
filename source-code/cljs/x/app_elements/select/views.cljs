@@ -39,9 +39,8 @@
   ;  {:extendable? (boolean)(opt)
   ;   :new-option-placeholder (metamorphic-content)}
   [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
-  (if extendable? (let [field-empty?      @(a/subscribe [:elements/field-empty? :elements.select/new-option-field])
-                        adornment-on-click [:elements.select/ENTER-pressed select-id select-props]
-                        adornment-props    {:disabled? field-empty? :icon :add :on-click adornment-on-click :title :add!}]
+  (if extendable? (let [adornment-on-click [:elements.select/ENTER-pressed select-id select-props]
+                        adornment-props    {:icon :add :on-click adornment-on-click :title :add!}]
                        [text-field.views/element :elements.select/new-option-field
                                                  {:end-adornments [adornment-props]
                                                   :indent         {:bottom :xs :vertical :xs}
@@ -63,7 +62,7 @@
   [:button.x-select--option (select.helpers/select-option-attributes select-id select-props option)
                             (-> option option-label-f components/content)])
 
-(defn- select-option-list
+(defn- select-option-list-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -82,16 +81,17 @@
   [_ {:keys [no-options-label]}]
   [:div.x-select--no-options-label (components/content no-options-label)])
 
-(defn- select-options-body
+(defn- select-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
   (let [options (input.helpers/get-input-options select-id select-props)]
-       [:div.x-select--option-list (if (vector/nonempty? options)
-                                       [select-option-list select-id select-props]
-                                       [no-options-label   select-id select-props])]))
+       [:div.x-select--option-list {:data-selectable false}
+                                   (if (vector/nonempty? options)
+                                       [select-option-list-items select-id select-props]
+                                       [no-options-label         select-id select-props])]))
 
 (defn- select-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,20 +110,19 @@
   ; @param (map) select-props
   ;  {}
   [select-id select-props]
-  [:div.x-select--options--header [select-options-label select-id select-props]
+  [:div.x-select--options--header {:data-selectable false}
+                                  [select-options-label select-id select-props]
                                   [new-option-field     select-id select-props]])
 
-(defn- select-options-structure
+(defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
-  [select-id {:keys [options-label] :as select-props}]
-  [popup-a/layout :elements.select/options
-                  {:body      [select-options-body   select-id select-props]
-                   :header    [select-options-header select-id select-props]
-                   :min-width :xxs}])
+  [select-id select-props]
+  (reagent/lifecycles {:reagent-render         (fn [_ _] [select-option-list select-id select-props])
+                       :component-did-mount    (fn [_ _] (a/dispatch [:elements.select/select-options-did-mount    select-id select-props]))
+                       :component-will-unmount (fn [_ _] (a/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -131,8 +130,25 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select--options (select.helpers/select-options-attributes select-id select-props)
-                          [select-options-structure                 select-id select-props]])
+  [popup-a/layout :elements.select/options
+                  {:body      [select-options-body   select-id select-props]
+                   :header    [select-options-header select-id select-props]
+                   :min-width :xxs}])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- select-required-warning
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  [select-id select-props]
+  (if-let [required-warning? @(a/subscribe [:elements.select/required-warning? select-id select-props])]
+          [:div.x-select--warning {:data-selectable false}
+                                  (components/content :please-select-an-option)]))
 
 
 
@@ -197,7 +213,8 @@
   [select-id select-props]
   [:div.x-select (select.helpers/select-attributes select-id select-props)
                  [active-button-label              select-id select-props]
-                 [select-button                    select-id select-props]])
+                 [select-button                    select-id select-props]
+                 [select-required-warning          select-id select-props]])
 
 (defn- active-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -205,8 +222,9 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:component-did-mount (select.helpers/active-button-did-mount-f select-id select-props)
-                       :reagent-render      (fn [_ select-props] [active-button-structure select-id select-props])}))
+  (reagent/lifecycles {:component-did-mount    (select.helpers/active-button-did-mount-f    select-id select-props)
+                       :component-will-unmount (select.helpers/active-button-will-unmount-f select-id select-props)
+                       :reagent-render         (fn [_ select-props] [active-button-structure select-id select-props])}))
 
 (defn- active-button-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -299,7 +317,6 @@
   ;    Default: :new-option
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
-  ;   :on-popup-closed (metamorphic-event)(opt)
   ;   :on-select (metamorphic-event)(opt)
   ;   :option-label-f (function)(opt)
   ;    Default: return

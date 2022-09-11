@@ -12,8 +12,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.radio-button.events
-    (:require [x.app-core.api              :as a :refer [r]]
+(ns x.app-elements.slider.events
+    (:require [mid-fruits.candy            :refer [return]]
+              [x.app-core.api              :as a :refer [r]]
+              [x.app-db.api                :as db]
               [x.app-elements.input.events :as input.events]))
 
 
@@ -21,45 +23,41 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-box-did-mount
+(defn slider-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
   ;
   ; @return (map)
-  [db [_ button-id button-props]]
-  (as-> db % (r input.events/use-initial-value!   % button-id button-props)
-             (r input.events/use-initial-options! % button-id button-props)))
+  [db [_ slider-id slider-props]]
+  (r input.events/use-initial-value! db slider-id slider-props))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-option!
+(defn decrease-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
   ;  {}
-  ; @param (*) option
   ;
   ; @return (map)
-  [db [_ button-id {:keys [option-value-f value-path]} option]]
-  (let [option-value (option-value-f option)]
-       (as-> db % (r input.events/mark-as-visited! % button-id)
-                  (assoc-in % value-path option-value))))
+  [db [_ slider-id {:keys [value-path] :as slider-props}]])
 
-(defn clear-value!
+(defn increase-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
+  ;  {}
   ;
   ; @return (map)
-  [db [_ button-id button-props]]
-  (r input.events/clear-value! db button-id button-props))
+  [db [_ slider-id {:keys [value-path] :as slider-props}]])
+
 
 
 
@@ -67,10 +65,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/radio-button-box-did-mount radio-button-box-did-mount)
+(a/reg-event-db :elements.slider/decrease-value! decrease-value!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/select-option! select-option!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/clear-value! clear-value!)
+(a/reg-event-db :elements.slider/increase-value! increase-value!)

@@ -81,10 +81,7 @@
   ; @param (keyword) field-id
   ;
   ; @return (map)
-  [db [_ field-id]]
-  (merge (r engine/get-element-props                   db field-id)
-         (r engine/get-field-props                     db field-id)))
-         ;(r passfield-handler.subs/get-passfield-props db field-id)))
+  [db [_ field-id]])
 
 (a/reg-sub :elements/get-digit-field-props get-digit-field-props)
 

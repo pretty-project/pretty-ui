@@ -38,7 +38,7 @@
   ;
   ; @return (function)
   [field-id field-props]
-  #(a/dispatch [:elements.text-field/init-field! field-id field-props]))
+  #(a/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
 
 (defn field-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,7 +48,7 @@
   ;
   ; @return (function)
   [field-id field-props]
-  #(a/dispatch [:elements.text-field/destruct-field! field-id field-props]))
+  #(a/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
 
 
 
@@ -222,7 +222,8 @@
               (element.helpers/element-indent-attributes  field-id field-props)
               (element.helpers/apply-color {} :border-color :data-border-color border-color)
               {:data-min-width           min-width
-               :data-stretch-orientation stretch-orientation})))
+               :data-stretch-orientation stretch-orientation}
+              (if any-warning? {:data-border-color :warning}))))
 
 (defn field-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

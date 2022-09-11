@@ -30,9 +30,8 @@
   ;  {}
   ;
   ; @return (function)
-  [counter-id {:keys [initial-options initial-value] :as counter-props}]
-  #(if (or initial-options initial-value)
-       (a/dispatch [:elements.counter/init-counter! counter-id counter-props])))
+  [counter-id {:keys [initial-value] :as counter-props}]
+  #(if initial-value (a/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
 
 
 
@@ -47,6 +46,7 @@
   ;  {}
   ;
   ; @return (map)
+  ;  {}
   [counter-id {:keys [border-color] :as counter-props}]
   (merge (element.helpers/element-default-attributes counter-id counter-props)
          (element.helpers/element-indent-attributes  counter-id counter-props)
@@ -61,6 +61,7 @@
   ;  {}
   ;
   ; @return (map)
+  ;  {}
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
   (let [value @(a/subscribe [:db/get-item value-path])]
        (if (or disabled? (= max-value value))
@@ -79,6 +80,7 @@
   ;  {}
   ;
   ; @return (map)
+  ;  {}
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
   (let [value @(a/subscribe [:db/get-item value-path])]
        (if (or disabled? (= min-value value))
@@ -96,4 +98,5 @@
   ;  {}
   ;
   ; @return (map)
+  ;  {}
   [counter-id {:keys [] :as counter-props}])

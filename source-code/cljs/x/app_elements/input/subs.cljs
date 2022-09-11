@@ -101,8 +101,6 @@
   [db [_ input-id {:keys [validator]}]]
   (:prevalidate? validator))
 
-
-
 (defn input-empty?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

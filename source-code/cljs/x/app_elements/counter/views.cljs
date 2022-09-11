@@ -109,6 +109,7 @@
   ;  {:border-color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
+  ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :helper (metamorphic-content)(opt)

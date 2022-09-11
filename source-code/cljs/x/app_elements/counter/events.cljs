@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-counter!
+(defn counter-box-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
@@ -32,8 +32,7 @@
   ;
   ; @return (map)
   [db [_ counter-id counter-props]]
-  (as-> db % (r input.events/use-initial-value!   % counter-id counter-props)
-             (r input.events/use-initial-options! % counter-id counter-props)))
+  (r input.events/use-initial-value! db counter-id counter-props))
 
 
 
@@ -72,7 +71,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.counter/init-counter! init-counter!)
+(a/reg-event-db :elements.counter/counter-box-did-mount counter-box-did-mount)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :elements.counter/decrease-value! decrease-value!)

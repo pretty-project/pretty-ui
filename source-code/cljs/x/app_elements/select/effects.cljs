@@ -13,12 +13,62 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.effects
-    (:require [x.app-core.api                   :as a :refer [r]]
-              [x.app-elements.engine.api        :as engine]
-              [x.app-elements.select.config     :as select.config]
-              [x.app-elements.select.events     :as select.events]
-              [x.app-elements.select.prototypes :as select.prototypes]
-              [x.app-elements.select.views      :as select.views]))
+    (:require [mid-fruits.candy                     :refer [return]]
+              [x.app-core.api                       :as a :refer [r]]
+              [x.app-elements.input.events          :as input.events]
+              [x.app-elements.input.subs            :as input.subs]
+              [x.app-elements.select.config         :as select.config]
+              [x.app-elements.select.events         :as select.events]
+              [x.app-elements.select.prototypes     :as select.prototypes]
+              [x.app-elements.select.views          :as select.views]
+              [x.app-elements.text-field.helpers    :as text-field.helpers]
+              [x.app-elements.text-field.prototypes :as text-field.prototypes]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
+  :elements.select/active-button-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [{:keys [db]} [_ select-id select-props]]
+      {:db (r select.events/select-will-mount db select-id select-props)}))
+
+(a/reg-event-fx
+  :elements.select/active-button-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [{:keys [db]} [_ select-id _]]
+      ; XXX#8706
+      {:db (r input.events/unmark-as-visited! db select-id)}))
+
+(a/reg-event-fx
+  :elements.select/select-options-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [_ [_ select-id select-props]]
+      [:elements.select/reg-keypress-events! select-id select-props]))
+
+(a/reg-event-fx
+  :elements.select/select-options-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  (fn [{:keys [db]} [_ select-id {:keys [layout] :as select-props}]]
+      ; XXX#8706
+      {:db (case layout :select (r input.events/mark-as-visited! db select-id)
+                                (return                          db))
+       :dispatch [:elements.select/remove-keypress-events! select-id select-props]}))
 
 
 
@@ -40,8 +90,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id select-props]]
-      (if-let [new-option-field-focused? (r engine/field-focused? db :elements.select/new-option-field)]
-              (if-let [new-option-field-filled? (r engine/field-filled? db :elements.select/new-option-field)]
+      (if-let [new-option-field-focused? (r input.subs/input-focused? db :elements.select/new-option-field)]
+              (if-let [new-option-field-filled? (text-field.helpers/field-filled? :elements.select/new-option-field)]
                       [:elements.select/add-option! select-id select-props]))))
 
 
@@ -84,9 +134,7 @@
   ; @param (map) select-props
   (fn [_ [_ select-id select-props]]
       [:ui/render-popup! :elements.select/options
-                         {:content           [select.views/select-options              select-id select-props]
-                          :on-popup-closed   [:elements.select/remove-keypress-events! select-id select-props]
-                          :on-popup-rendered [:elements.select/reg-keypress-events!    select-id select-props]}]))
+                         {:content [select.views/select-options select-id select-props]}]))
 
 (a/reg-event-fx
   :elements.select/render-select!
@@ -105,7 +153,7 @@
       ; ... alkalmazza a select-props-prototype függvényt.
       ; ... alkalmazza az init-element! függvényt.
       (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-           {:db       (r select.events/init-select!  db select-id select-props)
+           {:db       (r select.events/select-will-mount  db select-id select-props)
             :dispatch [:elements.select/render-options! select-id select-props]})))
 
 
@@ -121,13 +169,12 @@
   ; @param (map) select-props
   ;  {}
   ; @param (*) option
-  (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-popup-closed on-select] :as select-props} option]]
+  (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]
       (let [option-value (option-value-f option)]
            {:db             (r select.events/select-option! db select-id select-props option)
-            :dispatch       (a/metamorphic-event<-params on-select option-value)
-            :dispatch-later [                    {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
-                             (if autoclear?      {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
-                             (if on-popup-closed {:ms select.config/ON-POPUP-CLOSED-DELAY :dispatch (a/metamorphic-event<-params on-popup-closed option-value)})]})))
+            :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
+                             (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
+                             (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (a/metamorphic-event<-params on-select option-value)})]})))
 
 
 
@@ -141,7 +188,9 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
-      (let [option-label (r engine/get-field-value db :elements.select/new-option-field)
-            option       (add-option-f option-label)]
-           {:db (as-> db % (r engine/empty-field-value! % :elements.select/new-option-field)
-                           (r select.events/add-option! % select-id select-props option))})))
+      (let [field-id      :elements.select/new-option-field
+            field-props   (text-field.prototypes/field-props-prototype field-id {})
+            field-content (text-field.helpers/get-field-content        field-id)
+            option        (add-option-f field-content)]
+           {:db       (r select.events/add-option! db select-id select-props option)
+            :dispatch [:elements.text-field/empty-field! field-id field-props]})))

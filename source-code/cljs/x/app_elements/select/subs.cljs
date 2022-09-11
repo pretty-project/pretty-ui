@@ -12,26 +12,40 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.switch.events
-    (:require [x.app-core.api                 :as a :refer [r]]
-              [x.app-elements.checkbox.events :as checkbox.events]
-              [x.app-elements.input.events    :as input.events]))
+(ns x.app-elements.select.subs
+    (:require [x.app-core.api            :as a :refer [r]]
+              [x.app-elements.input.subs :as input.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-did-mount
+(defn stored-value-not-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
   ;
-  ; @return (map)
-  [db [_ switch-id switch-props]]
-  (as-> db % (r input.events/use-initial-value!   % switch-id switch-props)
-             (r input.events/use-initial-options! % switch-id switch-props)))
+  ; @return (boolean)
+  [db [_ select-id {:keys [value-path]}]]
+  (let [stored-value (get-in db value-path)]
+       (empty? stored-value)))
+
+(defn required-warning?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (boolean)
+  [db [_ select-id {:keys [required?] :as select-props}]]
+  ; XXX#7551
+  (and (= required? true)
+       (r input.subs/input-visited? db select-id select-props)
+       (r stored-value-not-passed?  db select-id select-props)))
 
 
 
@@ -39,7 +53,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.switch/switch-did-mount switch-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.switch/toggle-option! checkbox.events/toggle-option!)
+(a/reg-sub :elements.select/required-warning? required-warning?)

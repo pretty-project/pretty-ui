@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
-  :elements.text-field/init-field!
+  :elements.text-field/text-field-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -48,6 +48,23 @@
             :dispatch-later [(if autofocus? {:ms 50 :fx [:elements.text-field/focus-field! field-id field-props]})]})))
 
 (a/reg-event-fx
+  :elements.text-field/text-field-will-unmount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  (fn [{:keys [db]} [_ field-id {:keys [autoclear?] :as field-props}]]
+      {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
+                                     (return                           %))
+                      (r input.events/unmark-as-visited! % field-id))}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(a/reg-event-fx
   :elements.text-field/use-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -67,21 +84,6 @@
       (let [stored-value (get-in db value-path)]
            {:fx [:elements.text-field/use-stored-value! field-id field-props stored-value]})))
 
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-event-fx
-  :elements.text-field/destruct-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  (fn [{:keys [db]} [_ field-id {:keys [autoclear?] :as field-props}]]
-      {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
-                                     (return                           %))
-                      (r input.events/unmark-as-visited! % field-id))}))
 
 
 

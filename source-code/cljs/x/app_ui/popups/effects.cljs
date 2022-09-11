@@ -36,9 +36,7 @@
   :ui/render-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ;  {:content (metamorphic-content)
-  ;   :on-popup-closed (metamorphic-event)(opt)
-  ;   :on-popup-rendered (metamorphic-event)(opt)}
+  ;  {:content (metamorphic-content)}
   ;
   ; @usage
   ;  [:ui/render-popup! {...}]

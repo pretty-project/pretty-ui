@@ -41,7 +41,7 @@
   (let [content @(a/subscribe [:ui/get-popup-prop popup-id :content])]
        [:div.x-app-popups--element--content [components/content popup-id content]]))
 
-(defn popup-element-structure
+(defn popup-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -49,18 +49,6 @@
   [:<> [:div (popups.helpers/popup-attributes popup-id)
              [popup-content                   popup-id]]
        [popup-size-button popup-id]])
-
-(defn popup-element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  [popup-id]
-  (let [on-popup-closed   @(a/subscribe [:ui/get-popup-prop popup-id :on-popup-closed])
-        on-popup-rendered @(a/subscribe [:ui/get-popup-prop popup-id :on-popup-rendered])]
-       (reagent/lifecycles popup-id
-                           {:reagent-render         (fn [] [popup-element-structure popup-id])
-                            :component-will-unmount (fn [] (a/dispatch on-popup-closed))
-                            :component-did-mount    (fn [] (a/dispatch on-popup-rendered))})))
 
 
 

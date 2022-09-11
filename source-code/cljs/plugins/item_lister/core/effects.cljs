@@ -95,8 +95,8 @@
   ;  {:order-by-options (namespaced keywords in vector)}
   (fn [{:keys [db]} [_ lister-id {:keys [order-by-options]}]]
       [:elements.select/render-select! :item-lister/order-by-select
-                                       {:get-label-f     core.helpers/order-by-label-f
+                                       {:option-label-f  core.helpers/order-by-label-f
                                         :initial-options order-by-options
-                                        :on-popup-closed [:item-lister/order-items! lister-id]
+                                        :on-select      [:item-lister/order-items! lister-id]
                                         :options-label   :order-by
                                         :value-path      [:plugins :plugin-handler/meta-items lister-id :order-by]}]))

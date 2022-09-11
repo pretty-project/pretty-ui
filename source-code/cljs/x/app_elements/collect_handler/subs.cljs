@@ -18,8 +18,7 @@
               [x.app-core.api                   :as a :refer [r]]
               [x.app-db.api                     :as db]
               [x.app-elements.engine.element    :as element]
-              [x.app-elements.engine.selectable :as selectable]
-              [x.app-elements.input.subs      :as input.subs]
+              [x.app-elements.input.subs        :as input.subs]
               [x.app-environment.api            :as environment]))
 
 

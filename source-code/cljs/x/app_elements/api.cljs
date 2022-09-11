@@ -19,7 +19,6 @@
               [x.app-elements.checkbox.subs]
               [x.app-elements.chip-group.events]
               [x.app-elements.collect-handler.effects]
-              [x.app-elements.collect-handler.events]
               [x.app-elements.collect-handler.subs]
               [x.app-elements.color-selector.effects]
               [x.app-elements.color-selector.events]
@@ -38,6 +37,10 @@
               [x.app-elements.radio-button.subs]
               [x.app-elements.select.effects]
               [x.app-elements.select.events]
+              [x.app-elements.select.subs]
+              [x.app-elements.slider.effects]
+              [x.app-elements.slider.events]
+              [x.app-elements.slider.subs]
               [x.app-elements.switch.events]
               [x.app-elements.switch.subs]
               [x.app-elements.submit-button.subs]
@@ -86,6 +89,7 @@
               [x.app-elements.element-components.row                  :as element-components.row]
               [x.app-elements.search-field.views                      :as search-field.views]
               [x.app-elements.select.views                            :as select.views]
+              [x.app-elements.slider.views                            :as slider.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
               [x.app-elements.submit-button.views                     :as submit-button.views]
               [x.app-elements.switch.views                            :as switch.views]
@@ -145,6 +149,7 @@
 (def row                  element-components.row/element)
 (def search-field         search-field.views/element)
 (def select               select.views/element)
+(def slider               slider.views/element)
 (def slideshow            element-components.slideshow/element)
 (def submit-button        submit-button.views/element)
 (def switch               switch.views/element)

@@ -66,7 +66,7 @@
   ;  {}
   ;
   ; @return (boolean)
-  [db [_ field-id {:keys [field-content-f value-path] :as field-props}]]
+  [db [_ field-id {:keys [field-content-f value-path]}]]
   (let [stored-value (get-in db value-path)]
        (-> stored-value field-content-f empty?)))
 
@@ -93,6 +93,7 @@
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [required?] :as field-props}]]
+  ; XXX#7551
   ; A required? értéke lehet true, false és :unmarked
   ; A {:required? :unmarked} beállítással használt input elemeken nem jelenik
   ; meg a kitöltésre figyelmeztető felirat

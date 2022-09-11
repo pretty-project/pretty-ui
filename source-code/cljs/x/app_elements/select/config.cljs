@@ -26,4 +26,4 @@
 (def AUTOCLEAR-VALUE-DELAY 500)
 
 ; @constant (ms)
-(def ON-POPUP-CLOSED-DELAY 350)
+(def ON-SELECT-DELAY 350)

@@ -32,7 +32,7 @@
   ; @return (function)
   [switch-id {:keys [initial-options initial-value] :as switch-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.switch/init-switch! switch-id switch-props])))
+       (a/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
 
 
 

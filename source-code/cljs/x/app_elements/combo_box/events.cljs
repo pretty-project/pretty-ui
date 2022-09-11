@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-combo-box!
+(defn combo-box-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -60,4 +60,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.combo-box/init-combo-box! init-combo-box!)
+(a/reg-event-db :elements.combo-box/combo-box-did-mount combo-box-did-mount)

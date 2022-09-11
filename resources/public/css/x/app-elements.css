@@ -296,7 +296,8 @@ body {
 
 .x-button[data-border-color="highlight"]      .x-button--body,
 .x-icon-button[data-border-color="highlight"] .x-icon-button--body,
-.x-card[data-border-color="highlight"]        .x-card--body {
+.x-card[data-border-color="highlight"]        .x-card--body,
+.x-select--button-body[data-border-color="highlight"] {
   border-color: var( --border-color-highlight ) }
 
 /* Border-color */
@@ -599,6 +600,7 @@ body {
 .x-counter[data-border-color="warning"]      .x-counter--increase-button,
 .x-icon-button[data-border-color="warning"]  .x-icon-button--body,
 .x-radio-button[data-border-color="warning"] .x-radio-button--option-button,
+.x-select--button-body[data-border-color="warning"],
 .x-switch[data-border-color="warning"]       .x-switch--option-track,
 .x-text-field[data-border-color="warning"]   .x-text-field--input-container {
   border-color: var( --border-color-warning ) }
@@ -1757,7 +1759,8 @@ body {
 
 .x-card--body {
   display: flex;
-  flex-direction: column }
+  flex-direction: column;
+  width: 100% }
 
 .x-card[data-border-color] .x-card--body {
   border-style: solid;
@@ -2852,7 +2855,6 @@ body {
 
 .x-select--button-body {
   background: var( --fill-color );
-  border-color: var( --border-color-highlight );
   border-style: solid;
   border-width: 1px;
   display: flex;
@@ -2879,6 +2881,17 @@ body {
   padding-left: 6px }
 
 /*** Select button ***/
+
+/*** Select warning ***/
+
+.x-select--warning {
+  color: var( --color-warning );
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px;
+  text-align: right }
+
+/*** Select warning ***/
 
 /*** Select options ***/
 
@@ -2975,6 +2988,63 @@ body {
   width: 100% }
 
 /***** Separator *****/
+
+
+
+/***** Slider *****/
+/*** Slider body ***/
+
+.x-slider--body {
+  height: 20px }
+
+/*** Slider body ***/
+
+/*** Slider track ***/
+
+.x-slider--track {
+  background-color: var( --background-color-highlight );
+  border-radius: 2px;
+  height: 4px;
+  left: 0;
+  position: absolute;
+  top: 8px;
+  width: 100% }
+
+/*** Slider track ***/
+
+/*** Slider line ***/
+
+.x-slider--line {
+  cursor: grab;
+  height: 10px;
+  opacity: .3;
+  position: absolute;
+  top: 5px }
+
+.x-slider--line::after {
+  background-color: var( --border-color-primary );
+  border-radius: 2px;
+  content: '';
+  height: 4px;
+  position: absolute;
+  top: 3px;
+  width: 100% }
+
+/*** Slider line ***/
+
+/*** Slider thumb ***/
+
+.x-slider--thumb {
+  background-color: var( --border-color-primary );
+  border-radius: 6px;
+  cursor: grab;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  width: 12px }
+
+/*** Slider thumb ***/
+/***** Slider *****/
 
 
 

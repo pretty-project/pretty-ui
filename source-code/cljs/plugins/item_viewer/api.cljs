@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.api
-    (:require [plugins.item-viewer.backup.events]
+    (:require [pathom.api]
+              [plugins.item-viewer.backup.events]
               [plugins.item-viewer.backup.subs]
               [plugins.item-viewer.body.effects]
               [plugins.item-viewer.body.events]

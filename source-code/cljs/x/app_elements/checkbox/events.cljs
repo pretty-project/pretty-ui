@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-checkbox!
+(defn checkbox-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
@@ -70,7 +70,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.checkbox/init-checkbox! init-checkbox!)
+(a/reg-event-db :elements.checkbox/checkbox-did-mount checkbox-did-mount)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (a/reg-event-db :elements.checkbox/toggle-option! toggle-option!)

@@ -36,6 +36,7 @@
               [x.mid-dictionary.books.law           :as books.law]
               [x.mid-dictionary.books.layout        :as books.layout]
               [x.mid-dictionary.books.media         :as books.media]
+              [x.mid-dictionary.books.money         :as books.money]
               [x.mid-dictionary.books.network       :as books.network]
               [x.mid-dictionary.books.notifications :as books.notifications]
               [x.mid-dictionary.books.order-by      :as books.order-by]
@@ -86,6 +87,7 @@
                   books.law/BOOK
                   books.layout/BOOK
                   books.media/BOOK
+                  books.money/BOOK
                   books.network/BOOK
                   books.notifications/BOOK
                   books.order-by/BOOK

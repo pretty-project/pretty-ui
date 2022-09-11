@@ -13,16 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.input.helpers
-    (:require [mid-fruits.candy              :refer [param return]]
-              [mid-fruits.map                :refer [dissoc-in]]
-              [mid-fruits.vector             :as vector]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-locales.api             :as locales]
-              [x.app-elements.engine.element :as element]))
+    (:require [x.app-core.api :as a]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; XXX#NEW VERSION!
@@ -42,18 +37,7 @@
   ; található értékek alapján.
   (or options @(a/subscribe [:db/get-item options-path])))
 
-
-
-
-(defn on-reset-function
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (function)
-  [input-id]
-  #(a/dispatch [:elements/reset-input! input-id]))
-
+; XXX#NEW VERSION!
 (defn default-options-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -63,6 +47,7 @@
   [input-id]
   [:elements :element-handler/input-options input-id])
 
+; XXX#NEW VERSION!
 (defn default-value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -72,6 +57,7 @@
   [input-id]
   [:elements :element-handler/input-values input-id])
 
+; XXX#NEW VERSION!
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -83,11 +69,10 @@
   ;  false
   ;
   ; @example
-  ;  (input/value-path->vector-item? [:my-value 2])
+  ;  (input.helpers/value-path->vector-item? [:my-value 2])
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [value-path]
-  (let [item-key (vector/last-item value-path)]
-       (integer? item-key)))
+  (-> value-path last integer?))

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.api
-    (:require [plugins.item-editor.backup.events]
+    (:require [pathom.api]
+              [plugins.item-editor.backup.events]
               [plugins.item-editor.body.effects]
               [plugins.item-editor.body.events]
               [plugins.item-editor.body.subs]

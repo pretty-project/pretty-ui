@@ -35,7 +35,7 @@
   ;
   ; @return (function)
   [box-id {:keys [initial-options] :as box-props}]
-  #(if initial-options (a/dispatch [:elements.combo-box/init-combo-box! box-id box-props])))
+  #(if initial-options (a/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
 
 
 

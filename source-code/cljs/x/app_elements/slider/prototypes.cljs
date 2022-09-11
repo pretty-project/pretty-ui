@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.counter.prototypes
+(ns x.app-elements.slider.prototypes
     (:require [mid-fruits.candy             :refer [param]]
               [x.app-elements.input.helpers :as input.helpers]))
 
@@ -21,20 +21,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-props-prototype
+(defn slider-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :initial-value (integer)
+  ;  {:max-value (integer)
+  ;   :min-value (integer)
+  ;   :initial-value (vector)
   ;   :value-path (vector)}
-  [counter-id counter-props]
-  (merge {:border-color  :primary
-          :font-size     :s
-          :initial-value 0
-          :value-path    (input.helpers/default-value-path counter-id)}
-         (param counter-props)))
+  [slider-id slider-props]
+  (merge {:max-value     100
+          :min-value     0
+          :initial-value [0 100]
+          :value-path    (input.helpers/default-value-path slider-id)}
+         (param slider-props)))

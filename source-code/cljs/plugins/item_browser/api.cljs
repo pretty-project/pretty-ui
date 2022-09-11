@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.api
-    (:require [plugins.item-browser.backup.events]
+    (:require [pathom.api]
+              [plugins.item-browser.backup.events]
               [plugins.item-browser.backup.subs]
               [plugins.item-browser.body.effects]
               [plugins.item-browser.body.events]
@@ -32,7 +33,6 @@
               [plugins.item-browser.core.subs    :as core.subs]
               [plugins.item-browser.items.events :as items.events]
               [plugins.item-browser.items.subs   :as items.subs]
-              [plugins.item-browser.items.views  :as items.views]
               [plugins.item-browser.routes.subs  :as routes.subs]))
 
 
@@ -54,11 +54,6 @@
 ; plugins.item-browser.items.subs
 (def get-selected-item-ids  items.subs/get-selected-item-ids)
 (def toggle-item-selection? items.subs/toggle-item-selection?)
-
-; plugins.item-lister.items.views
-(def list-item      items.views/list-item)
-(def card-item      items.views/card-item)
-(def thumbnail-item items.views/thumbnail-item)
 
 ; plugins.item-browser.routes.subs
 (def get-item-route routes.subs/get-item-route)

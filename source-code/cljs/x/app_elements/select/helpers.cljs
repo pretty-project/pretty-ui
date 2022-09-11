@@ -33,10 +33,21 @@
   ; @return (function)
   [select-id {:keys [initial-options initial-value] :as select-props}]
   ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
-  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/init-select! ...]
+  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/active-button-did-mount ...]
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.select/init-select! select-id select-props])))
+       (a/dispatch [:elements.select/active-button-did-mount select-id select-props])))
+
+(defn active-button-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {}
+  ;
+  ; @return (function)
+  [select-id select-props]
+  #(a/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
 
 
 
@@ -76,29 +87,18 @@
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
   [select-id {:keys [disabled?] :as select-props}]
-  (let [on-click [:elements.select/render-options! select-id select-props]]
-       (if disabled? {:disabled       true}
-                     {:data-clickable true
-                      :on-click       #(a/dispatch on-click)
-                      :on-mouse-up    #(environment/blur-element!)})))
+  (let [on-click          [:elements.select/render-options! select-id select-props]
+        required-warning? @(a/subscribe [:elements.select/required-warning? select-id select-props])]
+       (if disabled? {:disabled          true}
+                     {:data-clickable    true
+                      :on-click          #(a/dispatch on-click)
+                      :on-mouse-up       #(environment/blur-element!)
+                      :data-border-color (if required-warning? :warning :highlight)})))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn select-options-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ;  {}
-  ;
-  ; @return (map)
-  ;  {}
-  [_ _]
-  {:class           :x-element
-   :data-selectable false})
 
 (defn select-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

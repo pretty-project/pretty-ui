@@ -32,7 +32,7 @@
   ; @return (function)
   [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.checkbox/init-checkbox! checkbox-id checkbox-props])))
+       (a/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
 
 
 

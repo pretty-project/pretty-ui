@@ -33,7 +33,7 @@
   ; @return (function)
   [button-id {:keys [initial-options initial-value] :as button-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.radio-button/init-radio-button! button-id button-props])))
+       (a/dispatch [:elements.radio-button/radio-button-box-did-mount button-id button-props])))
 
 
 
