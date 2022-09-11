@@ -159,7 +159,7 @@
       ; Az [:elements.text-field/empty-field! ...] esemény kizárólag abban az esetben
       ; törli a mező tartalmát, ha az input elem nincs disabled="true" állapotban,
       ; így elkerülhető a következő hiba:
-      ; Pl.: A mező on-change eseménye által indított lekérés {:disabled? true} állapotba
+      ; Pl. A mező on-change eseménye által indított lekérés {:disabled? true} állapotba
       ;      állítja a mezőt és a szerver válaszának megérkezéséig {:disabled? true} állapotban
       ;      levő (de fókuszált) mezőt lehetséges lenne kiüríteni az ESC billentyő megnyomásának
       ;      hatására megtörténő [:elements.text-field/empty-field! ...] eseménnyel, ami miatt

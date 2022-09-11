@@ -32,7 +32,7 @@
       ; Ha az [:item-viewer/handle-route! ...] esemény megtörténésekor a body komponens már a React-fába
       ; van csatolva, akkor a body komponens :component-did-mount életciklusa már nem fog újra megtörténni,
       ; ami meghívná az [:item-viewer/load-viewer! ...] eseményt, ezért az útvonal kezelésekor kell meghívni.
-      ; Pl.: Egy elem megtekintése közben az elem duplikálása után a "Másolat megtekintése"
+      ; Pl. Egy elem megtekintése közben az elem duplikálása után a "Másolat megtekintése"
       ;      gombra kattintva megtörténik az [:item-viewer/view-item! ...] esemény,
       ;      ami átirányít a másolathoz tartozó útvonalra de az útvonal kezelésekor
       ;      a body komponens már a React-fába van csatolva ezért szükséges meghívni

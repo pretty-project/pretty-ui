@@ -32,7 +32,7 @@
   [db [_ plugin-id]]
   ; - Az egyes elemek aktuális változatáról készített másolatok az elem azonosítójával vannak
   ;   tárolva. Így egy időben több elemről is lehetséges másolatot tárolni.
-  ;   Pl.: A gyors egymás utánban kitörölt elemek törlésének visszavonhatósága időbeni átfedésbe
+  ;   Pl. A gyors egymás utánban kitörölt elemek törlésének visszavonhatósága időbeni átfedésbe
   ;        kerülhet egymással – egyszerre több értesítés jelenhet meg, különböző elemek törlésének
   ;        visszavonásának lehetőségével – amiért szükséges az egyes elemekről készült másolatokat
   ;        azonosítóval megkülönböztetve kezelni és tárolni.

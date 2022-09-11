@@ -36,7 +36,7 @@
   ; függvény kötelező inputnak tekinti, de közben a {:required? true} állapotot jelölő
   ; piros csillag és az input kitöltésésére figyelmeztető piros szöveg nem jelenik meg.
   ;
-  ; Pl.: A bejelentkező képernyőn lévő email-address és password mezők {:required? true}
+  ; Pl. A bejelentkező képernyőn lévő email-address és password mezők {:required? true}
   ;      állapotban kell, hogy legyenek, hogy a login submit-button {:disabled? true}
   ;      állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
   ;      a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.

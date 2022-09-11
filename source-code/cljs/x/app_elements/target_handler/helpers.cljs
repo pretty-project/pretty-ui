@@ -26,7 +26,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Egyes esetekben az elem DOM struktúrája nem teszi lehetővé, hogy az element-id
-  ; az elem működését biztosító DOM elemet azonosítsa (pl.: input, button, ...)
+  ; az elem működését biztosító DOM elemet azonosítsa (pl. input, button, ...)
   ;
   ; @param (keyword) element-id
   ;

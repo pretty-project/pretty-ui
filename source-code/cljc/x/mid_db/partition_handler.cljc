@@ -39,11 +39,11 @@
 ;  A partíciók a kollekciókkal ellentétben, nem vektorban tárolnak {:id "xyz"}
 ;  tulajdonsággal azonosított adatokat, hanem térképben tárolnak :xyz {...}
 ;  kulccsal azonosított adatokat.
-;  Pl.: {:data-items {:my-data {:my-prop "my-value"} ...}}
+;  Pl. {:data-items {:my-data {:my-prop "my-value"} ...}}
 ;
 ; @name partition-id
 ;  A partíciók azonosítói, névtérrel rendelkező kulcsszavak lehetnek.
-;  Pl.: (def db {:my-partition/primary    {:data-items {...}}
+;  Pl. (def db {:my-partition/primary    {:data-items {...}}
 ;                :user-handler/users      {:data-items {...}}
 ;                :shop-handler/cart-items {:data-items {...}}
 ;                ...})
@@ -52,7 +52,7 @@
 ;  A partíciók a kollekciókkal ellentétben, nem az adatban tárolják annak sorrendjét
 ;  {:id "my-data" :order 7}, hanem a partíció :data-order azonosítójú vektorában.
 ;  A rendezetlen partíciók nem tartalmaznak {:data-order []} vektort.
-;  Pl.: (def db {:my-partition/primary {:data-items {:my-data    {:my-prop    "my-value"}}
+;  Pl. (def db {:my-partition/primary {:data-items {:my-data    {:my-prop    "my-value"}}
 ;                                                    :your-data  {:your-prop  "your value"}
 ;                                                    :their-data {:their-prop "their value"}}
 ;                                       :data-order [:my-data :their-data :your-data]})
@@ -87,7 +87,7 @@
 ; @name meta-item
 ;  A partíciók a működésükkel, valamint a névtér működésével kapcsolatos
 ;  meta adatokat is tárolhatnak.
-;  Pl.: (def db {:app-ui.menu-bar/menu-items {:data-items {:menu-item-1 {...} ...}
+;  Pl. (def db {:app-ui.menu-bar/menu-items {:data-items {:menu-item-1 {...} ...}
 ;                                             :meta-items {:menu-visible? true}}})
 ;
 ; @name meta-item-path

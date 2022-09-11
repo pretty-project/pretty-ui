@@ -45,7 +45,7 @@
          ; Abban az esetben ha a query értéke egy darab kulcsszó egy vektorban, akkor a transit-params
          ; térkép helyett params térképből kiolvasott query hibás lenne, ezért szükséges a query értékét
          ; a transit-params térképből kiolvasni!
-         ; Pl.: [:my-resolver]
+         ; Pl. [:my-resolver]
          ;      =>
          ;      {:transit-params {:query [:my-resolver]}
          ;       :params         {:query :my-resolver}}   <= ebben az esetben a query értéke nem vektor típus

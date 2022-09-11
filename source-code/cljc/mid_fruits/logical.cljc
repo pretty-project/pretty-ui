@@ -141,7 +141,7 @@
   ; @return (boolean)
   [& abc]
   ; WARNING! Az összes paraméter kiértelése minden esetben megtörténik!
-  ; Pl.: (nor (my-f   ...)
+  ; Pl. (nor (my-f   ...)
   ;           (your-f ...))
   ; Az (your-f ...) függvény abban az esetben is lefut, ha az (my-f ...) függvény kimenete igaz!
   (not-any? boolean abc))

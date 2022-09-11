@@ -35,16 +35,16 @@
 
 ; @name sortable-items
 ;  A rendezendő elemek felsorolása egy vektorban.
-;  Pl.: [{:value "My item"} {:value "Your item"}]
+;  Pl. [{:value "My item"} {:value "Your item"}]
 ;
 ; @name sortable-item
 ;  Az egyes rendezendő elemek.
-;  Pl.: {:value "My item"}
+;  Pl. {:value "My item"}
 ;
 ; @name sortable-item-id
 ;  Az egyes rendezendő elemek egyedi azonosítója.
 ;  A rendezendő elemek sorrendjének megváltozása után az azonosítóval nem azonosítható az elem.
-;  Pl.: "a991876d-6887-4f04-8525-328f090cde5"
+;  Pl. "a991876d-6887-4f04-8525-328f090cde5"
 ;
 ; @name sortable-element
 ;  Az egyes rendezendő elemeket megjelenítő komponensek.

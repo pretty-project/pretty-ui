@@ -26,7 +26,7 @@
 ;
 ; Bizonyos esetekben szükséges lehet a kliens-oldalon megállapítani, hogy egy
 ; új útvonalat konfliktus nélkül képes-e hozzáadni a rendszerhez.
-; Pl.: új aloldal létrehozásakor
+; Pl. új aloldal létrehozásakor
 ; Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
 ; hogy az megválaszolja, hogy konfliktus nélkül hozzáadható-e az új útvonal.
 
@@ -145,7 +145,7 @@
 
 ; Az általad megadott route-id azonosítóval rendelkező útvonalakat könnyebb átlátni
 ; hibakereséskor, illetve lehetséges felülírni a rendszer által hozzáadott útvonalakat,
-; ha megegyező azonosítóval adsz hozzá útvonalat (pl.: :page-not-found, ...)
+; ha megegyező azonosítóval adsz hozzá útvonalat (pl. :page-not-found, ...)
 (a/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:router/add-route! :page-not-found {}]})

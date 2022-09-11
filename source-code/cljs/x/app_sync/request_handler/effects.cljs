@@ -1,17 +1,4 @@
 
-
-
-
-
-
-
-; A source-path felesleges (?)
-; A target-path-et leválthatja a {:response-f ...} függvény
-
-
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -85,12 +72,7 @@
   ;   :response-action (keyword)(opt)
   ;    :save (save to file), :store (store to db)
   ;    Default: :store
-  ;   :source-path (vector)(opt)
-  ;    Milyen Re-Frame adatbázis útvonalon tárolt adatot küldjön el paraméterként
-  ;    Only w/ {:method :post}
-  ;   :target-path (vector)(opt)
-  ;    Milyen Re-Frame adatbázis útvonalra mentse el a szerver válaszát
-  ;    Only w/ {:response-action :store}
+  ;   :response-f (function)(opt)
   ;   :timeout (ms)(opt)
   ;    Default: request-handler.config/DEFAULT-REQUEST-TIMEOUT
   ;   :uri (string)
@@ -106,7 +88,7 @@
   (fn [{:keys [db]} [_ request-id request-props]]
       ; A request-props térkép az események láncolata paraméterként adja tovább, így az egyes
       ; lekérésekből egy időben több példányt is tud kezelni.
-      ; Pl.: Az egyes lekérések [:sync/request-successed ...] eseménye és [:sync/request-stalled ...]
+      ; Pl. Az egyes lekérések [:sync/request-successed ...] eseménye és [:sync/request-stalled ...]
       ;      eseménye között újra elküldhetők eltérő beállításokkal, ami miatt szükséges a beállításokat
       ;      tartalmazó request-props térképet paraméterként átadni az eseményeknek és függvényeknek!
       (let [request-props (r request-handler.prototypes/request-props-prototype db request-props)]

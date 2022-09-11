@@ -346,8 +346,8 @@
                            ; hogy az egymásba ágyazott útvonalak kezelésekor a függvény mélységi
                            ; futása esetén az aktuális source-item-key értékéből létrejöjjön
                            ; a source-item-key item-paths térképen belüli útvonala.
-                           ; Pl.: []      + :apple       = [:apple]
-                           ; Pl.: [:item] + :nested-item = [:item :nested-item]
+                           ; Pl. []      + :apple       = [:apple]
+                           ; Pl. [:item] + :nested-item = [:item :nested-item]
                            (let [source-item-path (vector/conj-item base-path source-item-key)]
                                       ; Ha a target-item-path értéke egy vektor, akkor a target-item-path
                                       ; útvonalra tárolja a source-item-path útvonalon talált értéket.

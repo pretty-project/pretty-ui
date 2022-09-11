@@ -37,9 +37,9 @@
 ;  A (metamorphic-value) típust a get-metamorphic-value subscription
 ;  {:value ...} tulajdonsága valósítja meg.
 ;  - Értéke lehet az app-dictionary szótár egy kifejezésére utaló kulcsszó
-;    Pl.: {:value :my-term}
+;    Pl. {:value :my-term}
 ;  - Értéke lehet egy egyszerű string
-;    Pl.: {:value "My value"}
+;    Pl. {:value "My value"}
 ;
 ; @name suffix
 ;  A {:suffix ...} tulajdonságként átadott szöveget toldalékaként használja.

@@ -12,32 +12,24 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns pathom.prototypes
-    (:require [mid-fruits.candy :refer [param]]
-              [pathom.config    :as config]
-              [pathom.events    :as events]
-              [x.app-core.api   :refer [r]]))
+(ns pathom.events
+    (:require [mid-fruits.candy :refer [return]]
+              [x.app-core.api   :as a :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn query-props-prototype
+(defn target-query-answers!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) query-props
+  ; @param (keyword) query-id
+  ; @param (map) server-response
   ;
   ; @return (map)
-  ;  {:method (keyword)
-  ;   :params (map)
-  ;   :query (vector)
-  ;   :response-f (function)
-  ;   :uri (string)}
-  [db [_ {:keys [query] :as query-props}]]
-  (merge {:idle-timeout config/DEFAULT-IDLE-TIMEOUT
-          :uri          config/DEFAULT-URI}
-         (param query-props)
-         (if query {:params {:query query}})
-         {:method     :post
-          :response-f events/target-query-answers!}))
+  [db [_ query-id server-response]]
+  (letfn [(f [db query-key {:pathom/keys [target-path] :as query-answer}]
+             (if target-path (assoc-in db target-path (dissoc query-answer :pathom/target-path))
+                             (return   db)))]
+         (reduce-kv f db server-response)))

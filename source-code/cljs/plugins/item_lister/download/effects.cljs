@@ -76,7 +76,7 @@
       ; - Lassú internetkapcsolat esetén zavaró lenne, ha a listaelemeken végzett műveletek végét
       ;   jelző értesítések, a műveletek után, még a listaelemek újratöltése előtt jelennének meg.
       ;
-      ; Pl.: Ha a kiválasztott listaelemek sikeres törlése után azonnal jelenne meg
+      ; Pl. Ha a kiválasztott listaelemek sikeres törlése után azonnal jelenne meg
       ;      a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
       ;      újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
       ;      ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban

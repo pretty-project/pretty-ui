@@ -82,7 +82,7 @@
 ;  és a renderer {:alternate-renderer ...} tulajdonságaként megadott azonosítóval
 ;  rendelkező helyettesítő renderer, elemeket jelenít meg, akkor a renderer
 ;  React-fából való esetleges lecsatolása nem minősül rendszerhibának.
-;  Pl.: {:alternate-renderer :alternate-partition/elements}
+;  Pl. {:alternate-renderer :alternate-partition/elements}
 ;
 ; @name element-rendered?
 ;  Az elem a React-fába csatolva.

@@ -1,7 +1,7 @@
 
 # x4.7.3
 - A [:pathom/send-query! ...] eseménnyel küldött lekérésekre adott szerver-válaszban,
-  ha a válasz egy térkép, akkor bármely elemében elhelyezhető a :pathom/target-path
+  ha a válasz egy térkép, akkor elhelyezhető benne a :pathom/target-path
   kulcs, ami az adott elem kliens-oldali érkeztetését biztosítja!
 
 

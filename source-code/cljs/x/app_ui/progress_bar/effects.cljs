@@ -53,7 +53,7 @@
       ;
       ; - Ha a [:ui/end-fake-process!] esemény megtörténésekor NINCS szimulálva hamis állapot,
       ;   akkor az ... esemény nem végez műveletet.
-      ;   Pl.: a [:ui/end-fake-process!] esemény megtörténése előtt a felhasználó elindít egy
+      ;   Pl. a [:ui/end-fake-process!] esemény megtörténése előtt a felhasználó elindít egy
       ;        folyamatot, ami befejezi a szimulált hamis állapotot, akkor a [:ui/end-fake-process!]
       ;        eseménynek már nem szabad újra szimulálnia a hamis állapot befejezését!
       (if-let [fake-progress (get-in db [:ui :progress-bar/meta-items :fake-progress])]

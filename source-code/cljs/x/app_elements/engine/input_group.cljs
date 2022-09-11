@@ -48,7 +48,7 @@
   ; Ha egy input-group rendelkezik {:disallow-empty-input-group? true}
   ; tulajdonsággal, akkor az input-group értékére való feliratkozás visszatérési
   ; értéke egy legalább egy elemű vektor.
-  ; Egyes elemek (pl.: multi-field) működéséhez szükséges, hogy az input-group
+  ; Egyes elemek (pl. multi-field) működéséhez szükséges, hogy az input-group
   ; rendelkezzen legalább egy értékkel.
   ;
   ; @param (keyword) group-id

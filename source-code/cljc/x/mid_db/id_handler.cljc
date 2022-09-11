@@ -35,7 +35,7 @@
 
 ; @name document-entity
 ;  Olyan adat, amely egyértelműen azonosít egy dokumentumot.
-;  Pl.: [:account/id "0ce14671-e916-43ab-b057-0939329d4c1b"]
+;  Pl. [:account/id "0ce14671-e916-43ab-b057-0939329d4c1b"]
 ;       [:passenger/passport-id "KI-1993-6503688-FF"]
 ;
 ; @name document-link
@@ -46,7 +46,7 @@
 ;  egy csatolt dokumentumokat egyértelműen azonosíthatjuk és elérhetjük az
 ;  eredeti tárolási helyükön.
 ;
-; Pl.: [{:account/id "0ce14671-e916-43ab-b057-0939329d4c1b"
+; Pl. [{:account/id "0ce14671-e916-43ab-b057-0939329d4c1b"
 ;        :games [{:game/id "9cea3696-56ca-4be5-a5f2-e7477d9f43fb"}
 ;                {...}]}]
 

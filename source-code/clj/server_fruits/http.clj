@@ -110,25 +110,6 @@
   [request param-key]
   (get-in request [:transit-params param-key]))
 
-(defn request->source-params
-  ; @param (map) request
-  ;  {:transit-params (map)
-  ;   {:source (map)}}
-  ;
-  ; @return (map)
-  [{:keys [transit-params]}]
-  (get transit-params :source))
-
-(defn request->source-param
-  ; @param (map) request
-  ;  {:transit-params (map)
-  ;   {:source (map)}}
-  ; @param (keyword) param-key
-  ;
-  ; @return (*)
-  [request param-key]
-  (get-in request [:transit-params :source param-key]))
-
 (defn request->multipart-params
   ; @param (map) request
   ;  {:multipart-params (map)}

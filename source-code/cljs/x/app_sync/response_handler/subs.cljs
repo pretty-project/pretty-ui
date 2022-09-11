@@ -42,7 +42,7 @@
   [db [_ _ {:keys [validator-f]} server-response-body]]
   ; A sikeres HTTP státusz-kódtól függetlenül ha a szerver-válasz a validator-f függvény szerint
   ; nem megfelelő, akkor az on-success esemény helyett az on-failure esemény fog megtörténni ...
-  (boolean (if validator-f (-> server-response-body reader/string->mixed validator-f not))))
+  (if validator-f (-> server-response-body reader/string->mixed validator-f not)))
 
 (defn get-invalid-server-response
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -31,7 +31,7 @@
   (fn [_ [_ server-props]]
       ; A server-props terkepet szukseges eltarolni a folyamat elejen, hogy a szerver
       ; beallitasai elerhetoek legyenek a Re-Frame adatbazisban a teljes inditasi folyamat alatt.
-      ; Pl.: A {:dev-mode? ...} esetleg a {:port ...} tulajdonsagok ertekei elerhetok legyenek
+      ; Pl. A {:dev-mode? ...} esetleg a {:port ...} tulajdonsagok ertekei elerhetok legyenek
       ;      a nevterek szamara.
       (println details/app-codename "starting server ...")
       {:dispatch-tick [{:tick 500 :dispatch [:boot-loader/init-server! server-props]}]

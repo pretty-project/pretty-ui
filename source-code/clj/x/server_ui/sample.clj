@@ -33,7 +33,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; Az x.server-ui.api névtér függvényeit útvanalanként eltérő beállításokkal is lehetséges használni
-; Pl. az egyes útvonalak kiszolgálása eltérő meta-adatokkal és egyéb beállításokkal történhet
+; Pl. Az egyes útvonalak kiszolgálása eltérő meta-adatokkal és egyéb beállításokkal történhet
 (defn your-ui
   [request]
   (ui/html (ui/head request {:app-title        "Your title"

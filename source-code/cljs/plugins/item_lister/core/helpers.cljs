@@ -43,6 +43,6 @@
   [order-by]
   ; Az order-by-label-f függvény az {:order-by ...} tulajdonság értékéből elkészíti,
   ; a hozzá tartozó címke szövegét.
-  ; Pl.: :name/ascending => :by-name-ascending => "Név szerint (növekvő)"
+  ; Pl. :name/ascending => :by-name-ascending => "Név szerint (növekvő)"
   (keyword (str "by-" (namespace order-by)
                 "-"   (name      order-by))))

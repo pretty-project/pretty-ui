@@ -135,7 +135,7 @@
   ;  {:_id (org.bson.types.ObjectId object)}
   [n]
   ; A paraméterként átadott térkép NEM szükséges, hogy rendelkezzen {:namespace/id "..."}
-  ; tulajdonsággal (pl.: query paraméterként átadott térképek, ...)
+  ; tulajdonsággal (pl. query paraméterként átadott térképek, ...)
   (if-let [namespace (db/document->namespace n)]
           (let [id-key (keyword/add-namespace namespace :id)]
                (if-let [document-id (get n id-key)]

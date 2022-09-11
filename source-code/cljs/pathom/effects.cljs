@@ -43,7 +43,6 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)
   ;    Only w/o {:body {...}}
-  ;   :target-path (vector)(opt)
   ;   :uri (string)
   ;    Default: pathom.config/DEFAULT-URI
   ;   :validator-f (function)(opt)}
@@ -61,8 +60,8 @@
   ;  [:pathom/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ query-id query-props]]
-      (let [debug-mode? (r a/debug-mode-detected? db)
-            query-props (prototypes/query-props-prototype query-props)
+      (let [debug-mode? (r a/debug-mode-detected?           db)
+            query-props (r prototypes/query-props-prototype db query-props)
 
             ; A {:query [...]} és a {:body {:query [...]}} tulajdonságok összevonása után ...
             ; ... eltávolítja a query vektorból a nil értékeket mert a query vektorba feltételesen

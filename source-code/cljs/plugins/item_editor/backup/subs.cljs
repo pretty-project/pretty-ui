@@ -100,7 +100,7 @@
   ;
   ; - Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
   ;   veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
-  ;   Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
+  ;   Pl. Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
   ;        üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-item-id (r core.subs/get-current-item-id db editor-id)

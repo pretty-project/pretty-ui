@@ -36,11 +36,8 @@
   ;   :response-action (keyword)
   ;   :sent-time (string)
   ;   :timeout (ms)}
-  [db [_ {:keys [response-action source-path] :as request-props}]]
-  ; Ha a (POST) request tartalmazza a :source-path tulajdonságot, akkor hozzáfűzi a request-hez
-  ; paraméterként a {:source-path [...]} Re-Frame adatbázis útvonalon található adatot.
+  [db [_ {:keys [response-action] :as request-props}]]
   (let [request-props (merge {:idle-timeout    request-handler.config/DEFAULT-IDLE-TIMEOUT
-                              :params          (if source-path {:source (get-in db source-path)})
                               :response-action :store
                               :sent-time       (time/timestamp-string)
                               :timeout         request-handler.config/DEFAULT-REQUEST-TIMEOUT}

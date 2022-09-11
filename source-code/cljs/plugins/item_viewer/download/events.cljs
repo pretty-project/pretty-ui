@@ -44,7 +44,7 @@
   ; Ha az [:item-viewer/request-item! ...] esemény megtörténésekor az item-viewer plugin
   ; már használatban van, akkor az adatok letöltése előtt szükséges visszaléptetni a plugint
   ; {:data-received? false} állapotba, hogy a letöltés idejére újra megjelenjen a letöltésjelző.
-  ; Pl.: Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd a megjelenő
+  ; Pl. Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd a megjelenő
   ;      értesítésen a "Másolat megtekintése" gombra kattint, akkor az item-viewer plugin
   ;      letölti a másolat elemet, és a letöltés idejére szükséges megjeleníteni a letöltésjelzőt!
   (r core.events/reset-downloads! db viewer-id))

@@ -58,7 +58,7 @@
 
 ; - Az item-editor plugin számára átadott form-element komponensben ne használj olyan input mezőt,
 ;   ami {:initial-value ...} tulajdonsággal rendelkezik, mert ...
-;   Pl.: Új elem létrehozásakor az input mezők {:initial-value ...} értékei megváltoztatják a dokumentumot,
+;   Pl. Új elem létrehozásakor az input mezők {:initial-value ...} értékei megváltoztatják a dokumentumot,
 ;        és ha a felhasználó a dokumentum változtatása nélkül elhagyja a szerkesztőt, akkor az tévesen
 ;        úgy érzékelné, hogy a dokumentumot a felhasználó változtatta meg és az elhagyás után felajánlaná
 ;        a "Nem mentett változtatások visszaállítása" lehetőségét!

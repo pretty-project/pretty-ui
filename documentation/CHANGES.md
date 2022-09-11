@@ -1,4 +1,10 @@
 
+# 4.7.4
+- A [:sync/send-request! ...] esemény {:target-path ...} tulajdonsága megszűnt!
+  Használj helyette {:response-f #(...)} függvényt!
+
+
+
 # 4.7.3
 - Az x.app-elements.api/text-field elem és más text-field elemre épülő elemek
   (pl. combo-box, multi-combo-box, multi-field, password-field, ...) működése

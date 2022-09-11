@@ -40,7 +40,7 @@
   The P&L does not become realized until the position is closed.
 
 # Leverage
-  Pl.: 10x leverage: 1 saját + 9 kölcsön
+  Pl. 10x leverage: 1 saját + 9 kölcsön
 
 # Cross / isolated
   Cross:    elérhetővé teszi az account teljes egyenlegét az egyes megbízások számára (NE HASZNÁLD!)

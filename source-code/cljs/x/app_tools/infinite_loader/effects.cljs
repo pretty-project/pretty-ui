@@ -32,6 +32,6 @@
        ; helyezése, majd visszaállítása újra meghívja az infinite-loader komponens
        ; számára callback paraméterként átadott függvényt.
       {:db (r infinite-loader.events/hide-infinite-observer! db loader-id)
-       ; A túlságosan rövid ideig (pl.: 5ms) a viewport-on kívülre helyezett observer
+       ; A túlságosan rövid ideig (pl. 5ms) a viewport-on kívülre helyezett observer
        ; nem minden esetben hívja meg a callback függvényt.
        :dispatch-later [{:ms 50 :dispatch [:tools/show-infinite-observer! loader-id]}]}))

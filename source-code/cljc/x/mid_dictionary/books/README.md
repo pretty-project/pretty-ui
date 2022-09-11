@@ -3,8 +3,8 @@
 # Felkiáltójel használata
 
 A cselekvés elvégzésére utaló kifejezések azonosítója felkiáltójellel van megkülönböztetve
-Pl.: :copy  => "Másolat"
-     :copy! => "Másolás"
+Pl. :copy  => "Másolat"
+    :copy! => "Másolás"
 
 
 

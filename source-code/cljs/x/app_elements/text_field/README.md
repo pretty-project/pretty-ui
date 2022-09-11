@@ -2,7 +2,7 @@
 # field-content-f
   Az adatbázisban tárolt érték a field-content-f függvény alkalmazásával kerül a mezőbe.
 
-  Pl.: A text-field elem React-fába csatolásakor a value-path útvonal tárolt érték a
+  Pl. A text-field elem React-fába csatolásakor a value-path útvonal tárolt érték a
        mezőbe íródik és a tárolt értéket a field-content-f függvény alkalmazásával írja
        a mezőbe.
 
@@ -18,7 +18,7 @@
 # field-value-f
   A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül az adatbázisba.
 
-  Pl.: A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül a value-path
+  Pl. A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül a value-path
        útvonalra
 
        A mező kiürítésekor az üres string érték a field-value-f függvény alkalmazásával

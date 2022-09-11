@@ -76,7 +76,7 @@
   ; - Ha szükséges, akkor a különböző lekéréseket el lehet látni egyedi azonosítókkal.
   ;
   ; - A plugin-key kifejezés használata megkülönbözteti az egyes pluginok lekéréseit egymástól.
-  ;   Pl.: Az item-browser plugin request-item! lekérése és az item-browser plugin által indított
+  ;   Pl. Az item-browser plugin request-item! lekérése és az item-browser plugin által indított
   ;        de az item-lister plugin request-items! lekérése előfordul, hogy egyszerre történik.
   ;        Ha a két plugin lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
   ;        folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister

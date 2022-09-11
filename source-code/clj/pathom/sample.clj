@@ -23,7 +23,7 @@
 
 ; A :debug resolver függvény teljes query vektort kiírja a szerveri-oldali konzolra!
 ;
-; Pl.: [:debug `(:get-my-resolver ~{...})]
+; Pl. [:debug `(:get-my-resolver ~{...})]
 
 
 

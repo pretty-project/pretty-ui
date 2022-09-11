@@ -316,7 +316,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; Egy n szám milyen tulajdonságokkal rendelkezik egy tartományban.
-; Pl.: 5 tartományai: -4–0, 1–5, 6–10, 11–15, ...
+; Pl. 5 tartományai: -4–0, 1–5, 6–10, 11–15, ...
 
 (defn domain-inchoate
   ; @param (integer) n
@@ -440,7 +440,7 @@
 (defn calc
   ; A calc fuggveny kiszamolja egy A valtozo erteketol fuggo B valtozo
   ; pillanatnyi erteket.
-  ; Pl.: Egy elem left position erteke fuggjon a scroll-y kornyezeti valtozotol
+  ; Pl. Egy elem left position erteke fuggjon a scroll-y kornyezeti valtozotol
   ;
   ; A fuggveny mukodese:
   ; Az n erteke amint eleri a domain-from erteket,

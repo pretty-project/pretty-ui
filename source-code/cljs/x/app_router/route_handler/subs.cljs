@@ -270,7 +270,7 @@
   (letfn [; 2. Az f0 függvény az n paraméterként kapott szöveget felbontja (param-key, trail)
           ;    a "/" karakter első előfordulásánál és egy vektorban felsorolva visszatér
           ;    a két felbontott részlettel (az első részletből kulcsszó típust készít)
-          ;    Pl.: n: ":my-param/xxx"
+          ;    Pl. n: ":my-param/xxx"
           ;         =>
           ;         [:my-param "/xxx"]
           (f0 [n] (if-let [pos (string/first-index-of n "/")]
@@ -279,7 +279,7 @@
                           [(keyword (subs n 1)) ""]))
           ; 1. Az f1 függvény az n paraméterként kapott szöveget felbontja (base, end),
           ;    a "/:" részlet első előfordulásánál.
-          ;    Pl.: n:    "/@app-home/my-route/:my-param/xxx"
+          ;    Pl. n:    "/@app-home/my-route/:my-param/xxx"
           ;         =>
           ;         base: "/@app-home/my-route/"
           ;         end:  ":my-param/xxx"

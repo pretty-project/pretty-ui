@@ -19,11 +19,11 @@
 - A pipelines névtér xyz-query függvényei nem rekurzívan járják be az átadott pattern-t.
   Pl a filter-query függvénynek átadott filter-pattern adatot rekurzívan kellene bejárni, hogy
   átadható legyen akár egy ilyen minta is:
-  pl.: {:$or  [{...} {...}]
-        :$and [{:$or [{...} {...}]}]}
+  pl. {:$or  [{...} {...}]
+       :$and [{:$or [{...} {...}]}]}
   A rekurzív bejárás során a problémát az jelenti, hogy egy vektorban felsorolt kulcsszavak,
   json/unkeywordize-value függvénnyel való adaptálása * biztonsági prefixummal látja el
   a string típusra alakított kulcsszavakat. Viszont a pattern-ekben nem csak a dokumentumokból
   származó adatok, hanem a mongo-db utasításai is vannak, és az utasításokban nem kellene
   a biztosági prefixumot használni:
-  pl.: {:namespace/name {:$concat [:$namespace/first-name " " :$namespace/last-name]}
+  pl. {:namespace/name {:$concat [:$namespace/first-name " " :$namespace/last-name]}

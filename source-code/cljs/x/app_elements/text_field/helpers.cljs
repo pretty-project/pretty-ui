@@ -277,7 +277,7 @@
                  ;  aminek hatására nem várt események történhetnek, amik hibás
                  ;  működéshez vezethetnek.
                  ;
-                 ;  Pl.: a combo-box elem opciós listájából kiválasztott opció,
+                 ;  Pl. a combo-box elem opciós listájából kiválasztott opció,
                  ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
                  ;  felülíródik az input tartalmával, ami minden esetben string
                  ;  típus, ellentétben a kiválaszott opcióval.
