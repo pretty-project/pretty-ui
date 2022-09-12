@@ -46,9 +46,15 @@
            :tools
            {:en "Tools"
             :hu "Eszközök"}
+           :unnamed-group
+           {:en "Unnamed group"
+            :hu "Névtelen csoport"}
 
            :details
            {:en "Details"
+            :hu "Részletek"}
+           :data
+           {:en "Data"
             :hu "Adatok"}
            :overview
            {:en "Overview"
@@ -100,6 +106,9 @@
            :more-values
            {:en "More values"
             :hu "További értékek"}
+           :more-data
+           {:en "More data"
+            :hu "További adatok"}
            :more-details
            {:en "More details"
             :hu "További részletek"}

@@ -23,6 +23,9 @@
 (def BOOK {:failed-to-copy
            {:en "Failed to copy"
             :hu "Sikertelen másolás"}
+           :failed-to-create
+           {:en "Failed to create"
+            :hu "Sikertelen létrehozás"}
            :failed-to-delete
            {:en "Failed to delete"
             :hu "Sikertelen törlés"}

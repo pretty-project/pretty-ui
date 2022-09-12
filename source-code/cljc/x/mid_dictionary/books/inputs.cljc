@@ -23,24 +23,36 @@
 (def BOOK {:add-field!
            {:en "Add field"
             :hu "Mező hozzáadása"}
-           :add-field-group!
-           {:en "Add field group"
-            :hu "Csoport hozzáadása"}
            :adding-field...
            {:en "Adding field ..."
             :hu "Mező hozzáadása ..."}
+           :add-field-group!
+           {:en "Add field group"
+            :hu "Csoport hozzáadása"}
            :adding-field-group...
            {:en "Adding field group..."
             :hu "Csoport hozzáadása ..."}
+           :all-data-stored-in-this-field-will-be-lost
+           {:en "All data stored in this field will be lost!"
+            :hu "A mezőben tárolt összes adat el fog veszni!"}
            :delete-field!
            {:en "Delete field"
             :hu "Mező törlése"}
+           :deleting-field...
+           {:en "Deleting field ..."
+            :hu "Mező törlése ..."}
+           :delete-field?
+           {:en "Are you sure you want to delete this field?"
+            :hu "Biztos vagy benne, hogy szeretnéd törölni ezt a mezőt?"}
            :edit-field!
            {:en "Edit field"
             :hu "Mező szerkesztése"}
            :empty-field!
            {:en "Empty field"
             :hu "Mező ürítése"}
+           :field-id-n
+           {:en "Field ID: %"
+            :hu "Mező azonosítója: %"}
            :field-group
            {:en "Field group"
             :hu "Csoport"}
@@ -71,6 +83,15 @@
            :reset-field!
            {:en "Reset field"
             :hu "Mező visszaállítása"}
+           :reseting-field...
+           {:en "Reseting field ..."
+            :hu "Mező visszaállítása ..."}
            :write-something!
            {:en "Write something!"
-            :hu "Írj valamit!"}})
+            :hu "Írj valamit!"}
+           :save-field!
+           {:en "Save field"
+            :hu "Mező mentése"}
+           :saving-field...
+           {:en "Saving field ..."
+            :hu "Mező mentése ..."}})

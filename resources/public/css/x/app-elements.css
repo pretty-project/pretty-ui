@@ -2391,6 +2391,15 @@ body {
 
 
 /***** Label *****/
+/*** Label wrapper ***/
+
+.x-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center }
+
+/*** Label wrapper ***/
+
 /*** Label body ***/
 
 .x-label--body {

@@ -39,7 +39,7 @@
   ;  {:extendable? (boolean)(opt)
   ;   :new-option-placeholder (metamorphic-content)}
   [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
-  (if extendable? (let [adornment-on-click [:elements.select/ENTER-pressed select-id select-props]
+  (if extendable? (let [adornment-on-click [:elements.select/add-option! select-id select-props]
                         adornment-props    {:icon :add :on-click adornment-on-click :title :add!}]
                        [text-field.views/element :elements.select/new-option-field
                                                  {:end-adornments [adornment-props]
