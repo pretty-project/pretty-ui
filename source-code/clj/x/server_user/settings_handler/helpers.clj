@@ -18,7 +18,6 @@
               [mid-fruits.keyword                    :as keyword]
               [mid-fruits.map                        :as map]
               [server-fruits.http                    :as http]
-              [x.server-db.api                       :as db]
               [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
@@ -35,7 +34,7 @@
   ; @return (namespaced map)
   [user-account-id]
   (let [user-settings (local-db/get-document "user_settings" user-account-id)
-        user-settings (db/document->namespaced-document user-settings :user-settings)]
+        user-settings (map/add-namespace user-settings :user-settings)]
        ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
        (merge settings-handler.config/ANONYMOUS-USER-SETTINGS user-settings)))
 

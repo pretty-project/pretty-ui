@@ -859,3 +859,83 @@
                        (vector? n) (reduce    #(conj  %1          (f %2)) [] n)
                        :else       (v-f n)))]
          (f n)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-namespace
+  ; @param (map) n
+  ;
+  ; @example
+  ;  (map/get-namespace {:bar "baz"})
+  ;  =>
+  ;  nil
+  ;
+  ; @example
+  ;  (map/get-namespace {:foo/bar "baz"})
+  ;  =>
+  ;  :foo
+  ;
+  ; @example
+  ;  (map/get-namespace {:foo     "bar"
+  ;                      :baz     "boo"
+  ;                      :bam/box "bok"
+  ;                      :kop/lok "map"})
+  ;  =>
+  ;  :bam
+  ;
+  ; @return (keyword)
+  [n]
+  (letfn [(f [%] (if (keyword? %)
+                     (if-let [namespace (namespace %)]
+                             (keyword namespace))))]
+         (some #(f    %)
+                (keys n))))
+
+(defn namespaced?
+  ; @param (map) n
+  ;
+  ; @example
+  ;  (map/namespaced? {:foo "bar"})
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (map/namespaced? {:foo/bar "baz"})
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (-> n get-namespace some?))
+
+(defn add-namespace
+  ; @param (map) n
+  ; @param (keyword) namespace
+  ;
+  ; @example
+  ;  (map/add-namespace {:foo "bar"} :baz)
+  ;  =>
+  ;  {:baz/foo "bar"}
+  ;
+  ; @return (map)
+  [n namespace]
+  (letfn [(f [n item-key item-value]
+             (assoc n (keyword (name namespace) (name item-key)) item-value))]
+         (reduce-kv f {} n)))
+
+(defn remove-namespace
+  ; @param (map) n
+  ;
+  ; @example
+  ;  (map/remove-namespace {:baz/foo "bar"})
+  ;  =>
+  ;  {:foo "bar"}
+  ;
+  ; @return (map)
+  [n]
+  (letfn [(f [n item-key item-value]
+             (assoc n (-> item-key name keyword) item-value))]
+         (reduce-kv f {} n)))

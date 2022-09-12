@@ -14,11 +14,11 @@
 
 (ns x.server-user.profile-handler.helpers
     (:require [local-db.api                         :as local-db]
-              [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.candy                     :refer [return]]
               [mid-fruits.keyword                   :as keyword]
+              [mid-fruits.map                       :as map]
               [server-fruits.http                   :as http]
               [x.server-core.api                    :as a]
-              [x.server-db.api                      :as db]
               [x.server-user.profile-handler.config :as profile-handler.config]))
 
 
@@ -35,7 +35,7 @@
   ; @return (map)
   [user-account-id]
   (let [user-profile (local-db/get-document "user_profiles" user-account-id)]
-       (db/document->namespaced-document user-profile :user-profile)))
+       (map/add-namespace user-profile :user-profile)))
 
 (defn request->user-profile
   ; @param (map) request

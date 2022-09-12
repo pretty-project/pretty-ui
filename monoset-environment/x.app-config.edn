@@ -35,7 +35,7 @@
 ;                     {:uri "https://external-plugin.com/plugin.js"}]}
 
 {; App details
- :author        "bithandshake"
+ :author        "Bit Handshake"
  :app-home      "/admin"
  :app-languages [:en :hu]
  :app-themes    [{:id :light :name :light-theme}

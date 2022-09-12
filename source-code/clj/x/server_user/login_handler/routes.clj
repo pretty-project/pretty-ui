@@ -16,7 +16,6 @@
     (:require [local-db.api                          :as local-db]
               [mid-fruits.map                        :as map]
               [server-fruits.http                    :as http]
-              [x.server-db.api                       :as db]
               [x.server-user.account-handler.helpers :as account-handler.helpers]
               [x.server-user.login-handler.helpers   :as login-handler.helpers]))
 
@@ -37,7 +36,7 @@
   [request]
   (let [pattern      (login-handler.helpers/request->authenticator-pattern request)
         user-account (local-db/match-document "user_accounts" pattern)
-        user-account (db/document->namespaced-document user-account :user-account)
+        user-account (map/add-namespace user-account :user-account)
         user-public-account (account-handler.helpers/user-account->user-public-account user-account)]
        (if (map/nonempty? user-public-account)
            (http/text-wrap  {:body "Speak, friend, and enter" :session user-public-account})

@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.events
-    (:require [plugins.item-viewer.body.subs          :as body.subs]
+    (:require [mid-fruits.map                         :as map]
+              [plugins.item-viewer.body.subs          :as body.subs]
               [plugins.item-viewer.core.events        :as core.events]
               [plugins.item-viewer.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :as a :refer [r]]
-              [x.app-db.api                           :as db]))
+              [x.app-core.api                         :as a :refer [r]]))
 
 
 
@@ -61,7 +61,7 @@
   ; Az item-lister pluginnal megegyezően az item-viewer plugin is névtér nélkül tárolja a letöltött dokumentumot
   (let [resolver-id (r download.subs/get-resolver-id db viewer-id :get-item)
         item-path   (r body.subs/get-body-prop       db viewer-id :item-path)
-        document    (-> server-response resolver-id db/document->non-namespaced-document)]
+        document    (-> server-response resolver-id map/remove-namespace)]
        (assoc-in db item-path document)))
 
 (defn receive-item!

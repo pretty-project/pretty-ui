@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.items.subs
-    (:require [plugins.plugin-handler.core.subs     :as core.subs]
+    (:require [mid-fruits.map                       :as map]
+              [plugins.plugin-handler.core.subs     :as core.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
-              [x.app-core.api                       :refer [r]]
-              [x.app-db.api                         :as db]))
+              [x.app-core.api                       :refer [r]]))
 
 
 
@@ -45,7 +45,7 @@
   [db [_ plugin-id item-id]]
   (let [item-namespace (r transfer.subs/get-transfer-item db plugin-id :item-namespace)
         item           (r get-item                        db plugin-id item-id)]
-       (db/document->namespaced-document item item-namespace)))
+       (map/add-namespace item item-namespace)))
 
 (defn item-downloaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!

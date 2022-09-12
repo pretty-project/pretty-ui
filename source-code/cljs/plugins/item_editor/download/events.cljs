@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.events
-    (:require [plugins.item-editor.backup.events      :as backup.events]
+    (:require [mid-fruits.map                         :as map]
+              [plugins.item-editor.backup.events      :as backup.events]
               [plugins.item-editor.body.subs          :as body.subs]
               [plugins.item-editor.core.events        :as core.events]
               [plugins.item-editor.core.subs          :as core.subs]
               [plugins.item-editor.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :refer [r]]
-              [x.app-db.api                           :as db]))
+              [x.app-core.api                         :refer [r]]))
 
 
 
@@ -55,7 +55,7 @@
   [db [_ editor-id server-response]]
   ; XXX#3907
   (let [suggestions-path (r body.subs/get-body-prop db editor-id :suggestions-path)
-        suggestions      (-> server-response :item-editor/get-item-suggestions db/document->non-namespaced-document)]
+        suggestions      (-> server-response :item-editor/get-item-suggestions map/remove-namespace)]
        (assoc-in db suggestions-path suggestions)))
 
 (defn store-downloaded-item!
@@ -73,7 +73,7 @@
   ;   az elem letöltéskori állapota visszaállítható legyen.
   (let [resolver-id  (r download.subs/get-resolver-id db editor-id :get-item)
         item-path    (r body.subs/get-body-prop       db editor-id :item-path)
-        document     (-> server-response resolver-id db/document->non-namespaced-document)]
+        document     (-> server-response resolver-id map/remove-namespace)]
        (as-> db % (assoc-in % item-path document)
                   (r backup.events/backup-current-item! % editor-id))))
 

@@ -14,9 +14,9 @@
 
 (ns x.server-user.user-handler.helpers
     (:require [mid-fruits.form                      :as form]
+              [mid-fruits.map                       :as map]
               [mid-fruits.string                    :as string]
               [server-fruits.hash                   :as hash]
-              [x.server-db.api                      :as db]
               [x.server-user.core.helpers           :as core.helpers]
               [x.server-user.profile-handler.config :as profile-handler.config]))
 
@@ -31,7 +31,7 @@
   ; @return (namespaced map)
   [user-props]
   (let [user-account (select-keys user-props [:email-address :password :pin :roles])]
-       (db/document->namespaced-document user-account "user-account")))
+       (map/add-namespace user-account "user-account")))
 
 (defn user-props-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!

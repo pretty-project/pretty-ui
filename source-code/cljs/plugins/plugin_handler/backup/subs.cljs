@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.backup.subs
-    (:require [mid-fruits.vector                    :as vector]
+    (:require [mid-fruits.map                       :as map]
+              [mid-fruits.vector                    :as vector]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
-              [x.app-core.api                       :refer [r]]
-              [x.app-db.api                         :as db]))
+              [x.app-core.api                       :refer [r]]))
 
 
 
@@ -45,7 +45,7 @@
   ; ellátott változatával tér vissza.
   (let [item-namespace (r transfer.subs/get-transfer-item db plugin-id :item-namespace)
         backup-item    (r get-backup-item                 db plugin-id item-id)]
-       (db/document->namespaced-document backup-item item-namespace)))
+       (map/add-namespace backup-item item-namespace)))
 
 
 
@@ -73,4 +73,4 @@
   ; ellátott változatával tér vissza.
   (let [item-namespace (r transfer.subs/get-transfer-item db plugin-id :item-namespace)]
        (vector/->items item-ids #(let [backup-item (r get-backup-item db plugin-id %)]
-                                      (db/document->namespaced-document backup-item item-namespace)))))
+                                      (map/add-namespace backup-item item-namespace)))))

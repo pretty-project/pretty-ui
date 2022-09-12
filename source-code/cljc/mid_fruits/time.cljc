@@ -181,10 +181,10 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (string? n)
-                (or (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}\+\d{2}:\d{2}" n)
-                    (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"             n)
-                    (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}"              n)))))
+  (and (string? n)
+       (or (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}\+\d{2}:\d{2}" n)
+           (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z"             n)
+           (re-matches #"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}"              n))))
 
 (defn timestamp-object?
   ; @param (*) n
@@ -204,8 +204,8 @@
   ;
   ; @return (boolean)
   [n]
-  (boolean (and (string? n)
-                (re-matches #"\d{4}[-|.]\d{2}[-|.]\d{2}" n))))
+  (and (string? n)
+       (re-matches #"\d{4}[-|.]\d{2}[-|.]\d{2}" n)))
 
 
 

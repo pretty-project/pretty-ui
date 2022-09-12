@@ -34,82 +34,6 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn document->namespace
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->namespace {:bar "baz"})
-  ;  =>
-  ;  nil
-  ;
-  ; @example
-  ;  (db/document->namespace {:foo/bar "baz"})
-  ;  =>
-  ;  :foo
-  ;
-  ; @example
-  ;  (db/document->namespace {:foo     "bar"
-  ;                           :baz     "boo"
-  ;                           :bam/box "bok"
-  ;                           :kop/lok "map"})
-  ;  =>
-  ;  :bam
-  ;
-  ; @return (keyword or nil)
-  [document]
-  ; A MongoDB adatbázisban tárolt dokumentumoknál előfordulhat,
-  ; hogy valamelyik elem az :_id kulcs, ami nem rendelkezik névtérrel!
-  ; {:_id "..." :directory/id "..." :directory/alias "..."}
-  ; Szükséges több kulcson is vizsgálni a névteret.
-  (some #(keyword/get-namespace %)
-         (map/get-keys document)))
-
-(defn document->document-namespaced?
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->document-namespaced? {:foo "bar"})
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (db/document->document-namespaced? {:foo/bar "baz"})
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [document]
-  (-> document document->namespace some?))
-
-(defn document->namespaced-document
-  ; @param (map) document
-  ; @param (keyword) namespace
-  ;
-  ; @example
-  ;  (db/document->namespaced-document {:foo "bar"} :baz)
-  ;  =>
-  ;  {:baz/foo "bar"}
-  ;
-  ; @return (map)
-  [document namespace]
-  (letfn [(f [document item-key item-value]
-             (assoc document (keyword/add-namespace namespace item-key) item-value))]
-         (reduce-kv f {} document)))
-
-(defn document->non-namespaced-document
-  ; @param (map) document
-  ;
-  ; @example
-  ;  (db/document->non-namespaced-document {:baz/foo "bar"})
-  ;  =>
-  ;  {:foo "bar"}
-  ;
-  ; @return (map)
-  [document]
-  (letfn [(f [document item-key item-value]
-             (assoc document (keyword/get-name item-key) item-value))]
-         (reduce-kv f {} document)))
-
 (defn assoc-document-value
   ; @param (map) document
   ; @param (keyword) k
@@ -127,7 +51,7 @@
   ;
   ; @return (map)
   [document k v]
-  (if-let [namespace (document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (assoc document (keyword/add-namespace namespace k) v)
           (assoc document k v)))
 
@@ -147,7 +71,7 @@
   ;
   ; @return (map)
   [document k]
-  (if-let [namespace (document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (dissoc document (keyword/add-namespace namespace k))
           (dissoc document (param k))))
 
@@ -167,7 +91,7 @@
   ;
   ; @return (map)
   [document k]
-  (if-let [namespace (document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (get document (keyword/add-namespace namespace k))
           (get document (param k))))
 
@@ -205,8 +129,8 @@
   ;
   ; @return (map)
   [document]
-  (if (document->document-namespaced? document)
-      (let [namespace (document->namespace document)]
+  (if (map/namespaced? document)
+      (let [namespace (map/get-namespace document)]
            (dissoc document (keyword/add-namespace namespace :id)))
       (dissoc document :id)))
 
@@ -220,7 +144,7 @@
   ;
   ; @return (map)
   [document]
-  (-> document document->unidentified-document document->non-namespaced-document))
+  (-> document document->unidentified-document map/remove-namespace))
 
 (defn document->identified-document
   ; @param (map) document
@@ -247,8 +171,8 @@
   ;
   ; @return (map)
   [document]
-  (if (document->document-namespaced? document)
-      (let [namespace (document->namespace document)]
+  (if (map/namespaced? document)
+      (let [namespace (map/get-namespace document)]
            (if (get    document (keyword/add-namespace namespace :id))
                (return document)
                (assoc  document (keyword/add-namespace namespace :id)

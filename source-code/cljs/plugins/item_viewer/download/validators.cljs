@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.validators
-    (:require [plugins.item-viewer.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]
-              [x.app-db.api                      :as db]))
+    (:require [mid-fruits.map                    :as map]
+              [plugins.item-viewer.download.subs :as download.subs]
+              [x.app-core.api                    :refer [r]]))
 
 
 
@@ -32,4 +32,4 @@
   [db [_ viewer-id server-response]]
   (let [resolver-id (r download.subs/get-resolver-id db viewer-id :get-item)
         document    (get server-response resolver-id)]
-       (db/document->document-namespaced? document)))
+       (map/namespaced? document)))

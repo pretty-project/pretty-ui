@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.validators
-    (:require [plugins.item-editor.core.subs     :as core.subs]
+    (:require [mid-fruits.map                    :as map]
+              [plugins.item-editor.core.subs     :as core.subs]
               [plugins.item-editor.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]
-              [x.app-db.api                      :as db]))
+              [x.app-core.api                    :refer [r]]))
 
 
 
@@ -36,5 +36,5 @@
         suggestions (get server-response :item-editor/get-item-suggestions)]
        (and (or (map? suggestions)
                 (not (r core.subs/download-suggestions? db editor-id)))
-            (or (db/document->document-namespaced? document)
+            (or (map/namespaced? document)
                 (not (r core.subs/download-item? db editor-id))))))

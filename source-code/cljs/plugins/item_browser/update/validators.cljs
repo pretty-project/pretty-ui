@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.validators
-    (:require [mid-fruits.string                :as string]
+    (:require [mid-fruits.map                   :as map]
+              [mid-fruits.string                :as string]
               [plugins.item-browser.update.subs :as update.subs]
-              [x.app-core.api                   :refer [r]]
-              [x.app-db.api                     :as db]))
+              [x.app-core.api                   :refer [r]]))
 
 
 
@@ -50,7 +50,7 @@
   [db [_ browser-id server-response]]
   (let [mutation-name (r update.subs/get-mutation-name db browser-id :undo-delete-item!)
         document      (get server-response (symbol mutation-name))]
-       (db/document->document-namespaced? document)))
+       (map/namespaced? document)))
 
 
 
@@ -67,7 +67,7 @@
   [db [_ browser-id server-response]]
   (let [mutation-name (r update.subs/get-mutation-name db browser-id :duplicate-item!)
         document      (get server-response (symbol mutation-name))]
-       (db/document->document-namespaced? document)))
+       (map/namespaced? document)))
 
 
 
@@ -84,4 +84,4 @@
   [db [_ browser-id server-response]]
   (let [mutation-name (r update.subs/get-mutation-name db browser-id :update-item!)
         document      (get server-response (symbol mutation-name))]
-       (db/document->document-namespaced? document)))
+       (map/namespaced? document)))

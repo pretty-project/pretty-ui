@@ -16,10 +16,10 @@
     (:require [mid-fruits.candy    :refer [return]]
               [mid-fruits.gestures :as gestures]
               [mid-fruits.keyword  :as keyword]
+              [mid-fruits.map      :as map]
               [mongo-db.engine     :as engine]
               [mongo-db.errors     :as errors]
-              [mongo-db.reader     :as reader]
-              [x.server-db.api     :as db]))
+              [mongo-db.reader     :as reader]))
 
 
 
@@ -36,7 +36,7 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document _]
-  (if-let [namespace (db/document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (let [order-key  (keyword/add-namespace         namespace :order)
                 last-order (reader/get-all-document-count collection-name)]
                (assoc document order-key last-order))
@@ -179,7 +179,7 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [_ document _]
-  (if-let [namespace (db/document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (let [order-key (keyword/add-namespace namespace :order)]
                (if-let [order (get document order-key)]
                        (update document order-key inc)

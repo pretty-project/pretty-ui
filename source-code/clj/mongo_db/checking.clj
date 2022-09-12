@@ -14,8 +14,8 @@
 
 (ns mongo-db.checking
     (:require [mid-fruits.candy :refer [return]]
-              [mongo-db.errors  :as errors]
-              [x.server-db.api  :as db]))
+              [mid-fruits.map :as map]
+              [mongo-db.errors  :as errors]))
 
 
 
@@ -50,7 +50,7 @@
   ;
   ; @return (*)
   [document]
-  (try (if-let [namespace (db/document->namespace document)]
+  (try (if-let [namespace (map/get-namespace document)]
                (return document)
                (throw (Exception. errors/MISSING-NAMESPACE-ERROR)))
        (catch Exception e (println (str e "\n" {:document document})))))
@@ -67,7 +67,7 @@
   ;
   ; @return (*)
   [document]
-  (try (if-let [namespace (db/document->namespace document)]
+  (try (if-let [namespace (map/get-namespace document)]
                (return document)
                (throw (Exception. errors/MISSING-NAMESPACE-ERROR)))
        (catch Exception e (println (str e "\n" {:document document})))))
@@ -84,7 +84,7 @@
   ;
   ; @return (*)
   [document]
-  (try (if-let [namespace (db/document->namespace document)]
+  (try (if-let [namespace (map/get-namespace document)]
                (return document)
                (throw (Exception. errors/MISSING-NAMESPACE-ERROR)))
        (catch Exception e (println (str e "\n" {:document document})))))
@@ -101,7 +101,7 @@
   ;
   ; @return (*)
   [document]
-  (try (if-let [namespace (db/document->namespace document)]
+  (try (if-let [namespace (map/get-namespace document)]
                (return document)
                (throw (Exception. errors/MISSING-NAMESPACE-ERROR)))
        (catch Exception e (println (str e "\n" {:document document})))))

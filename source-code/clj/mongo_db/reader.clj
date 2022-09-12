@@ -15,6 +15,7 @@
 (ns mongo-db.reader
     (:require monger.joda-time
               [mid-fruits.candy     :refer [return]]
+              [mid-fruits.map       :as map]
               [mid-fruits.vector    :as vector]
               [monger.collection    :as mcl]
               [monger.core          :as mcr]
@@ -23,8 +24,7 @@
               [mongo-db.aggregation :as aggregation]
               [mongo-db.checking    :as checking]
               [mongo-db.engine      :as engine]
-              [x.server-core.api    :as a]
-              [x.server-db.api      :as db]))
+              [x.server-core.api    :as a]))
 
 
 
@@ -118,9 +118,8 @@
   ;
   ; @return (keyword)
   [collection-name]
-  (let [collection     (find-maps collection-name {})
-        first-document (first     collection)]
-       (db/document->namespace first-document)))
+  (let [collection (find-maps collection-name {})]
+       (-> collection first map/get-namespace)))
 
 (defn get-all-document-count
   ; @param (string) collection-name
@@ -262,6 +261,28 @@
   (if-let [document-id (adaptation/document-id-input document-id)]
           (if-let [document (find-map-by-id collection-name document-id)]
                   (adaptation/find-output document))))
+
+(defn get-first-document
+  ; @param (string) collection-name
+  ;
+  ; @usage
+  ;  (mongo-db/get-first-document "my_collection")
+  ;
+  ; @return (namespaced map)
+  [collection-name]
+  (let [collection (get-collection collection-name)]
+       (first collection)))
+
+(defn get-last-document
+  ; @param (string) collection-name
+  ;
+  ; @usage
+  ;  (mongo-db/get-last-document "my_collection")
+  ;
+  ; @return (namespaced map)
+  [collection-name]
+  (let [collection (get-collection collection-name)]
+       (last collection)))
 
 (defn document-exists?
   ; @param (string) collection-name

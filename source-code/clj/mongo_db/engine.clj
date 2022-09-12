@@ -18,8 +18,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [monger.conversion  :as mcv]
-              [mongo-db.errors    :as errors]
-              [x.server-db.api    :as db]))
+              [mongo-db.errors    :as errors]))
 
 
 
@@ -60,8 +59,8 @@
   ; @return (boolean)
   [n]
   (and (-> n map?)
-       (boolean (if-let [namespace (db/document->namespace n)]
-                        (get n (keyword/add-namespace namespace :id))))))
+       (if-let [namespace (map/get-namespace n)]
+               (get n (keyword/add-namespace namespace :id)))))
 
 (defn DBObject->edn
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,7 +97,7 @@
   ;
   ; @return (map)
   [n]
-  (if-let [namespace (db/document->namespace n)]
+  (if-let [namespace (map/get-namespace n)]
           (let [document-id (generate-id)]
                (assoc n (keyword/add-namespace namespace :id) document-id))
           (return n)))
@@ -116,7 +115,7 @@
   ;
   ; @return (map)
   [n]
-  (if-let [namespace (db/document->namespace n)]
+  (if-let [namespace (map/get-namespace n)]
           (dissoc n (keyword/add-namespace namespace :id))
           (return n)))
 
@@ -136,7 +135,7 @@
   [n]
   ; A paraméterként átadott térkép NEM szükséges, hogy rendelkezzen {:namespace/id "..."}
   ; tulajdonsággal (pl. query paraméterként átadott térképek, ...)
-  (if-let [namespace (db/document->namespace n)]
+  (if-let [namespace (map/get-namespace n)]
           (let [id-key (keyword/add-namespace namespace :id)]
                (if-let [document-id (get n id-key)]
                        (let [object-id (ObjectId. document-id)]
@@ -161,7 +160,7 @@
   [n]
   ; A paraméterként átadott térkép NEM szükséges, hogy rendelkezzen {:_id "..."}
   ; tulajdonsággal (hasonlóan az id->_id függvényhez)
-  (if-let [namespace (db/document->namespace n)]
+  (if-let [namespace (map/get-namespace n)]
           (let [id-key (keyword/add-namespace namespace :id)]
                (if-let [object-id (get n :_id)]
                        (let [document-id (str object-id)]
@@ -205,6 +204,6 @@
   ;
   ; @return (integer)
   [document]
-  (if-let [namespace (db/document->namespace document)]
+  (if-let [namespace (map/get-namespace document)]
           (get document (keyword/add-namespace namespace :order))
           (throw (Exception. errors/MISSING-NAMESPACE-ERROR))))

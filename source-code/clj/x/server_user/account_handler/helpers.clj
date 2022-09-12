@@ -14,9 +14,9 @@
 
 (ns x.server-user.account-handler.helpers
     (:require [local-db.api                         :as local-db]
-              [mid-fruits.candy                     :refer [param return]]
+              [mid-fruits.candy                     :refer [return]]
+              [mid-fruits.map                       :as map]
               [server-fruits.http                   :as http]
-              [x.server-db.api                      :as db]
               [x.server-user.account-handler.config :as account-handler.config]))
 
 
@@ -37,7 +37,7 @@
   ; @return (namespaced map)
   [user-account-id]
   (let [user-account (local-db/get-document "user_accounts" user-account-id)]
-       (db/document->namespaced-document user-account :user-account)))
+       (map/add-namespace user-account :user-account)))
 
 (defn user-account->user-public-account
   ; @param (map) user-account

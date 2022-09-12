@@ -70,6 +70,8 @@
 (def get-documents-by-query      reader/get-documents-by-query)
 (def get-document-by-query       reader/get-document-by-query)
 (def get-document-by-id          reader/get-document-by-id)
+(def get-first-document          reader/get-first-document)
+(def get-last-document           reader/get-last-document)
 (def document-exists?            reader/document-exists?)
 (def count-documents-by-pipeline reader/count-documents-by-pipeline)
 (def get-documents-by-pipeline   reader/get-documents-by-pipeline)

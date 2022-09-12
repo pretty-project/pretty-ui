@@ -16,6 +16,7 @@
     (:require monger.joda-time
               [mid-fruits.candy    :refer [return]]
               [mid-fruits.keyword  :as keyword]
+              [mid-fruits.map      :as map]
               [mid-fruits.vector   :as vector]
               [monger.collection   :as mcl]
               [monger.operators    :refer :all]
@@ -26,8 +27,7 @@
               [mongo-db.errors     :as errors]
               [mongo-db.preparing  :as preparing]
               [mongo-db.reader     :as reader]
-              [x.server-core.api   :as a]
-              [x.server-db.api     :as db]))
+              [x.server-core.api   :as a]))
 
 
 
@@ -149,7 +149,7 @@
   ; - Egy rendezett kollekcióba történő dokumentum beszúrása a dokumentum után sorrendben következő
   ;   többi dokumentum pozíciójának növelését teszi szükségessé.
   (if-let [document (reader/get-document-by-id collection-name document-id)]
-          (let [namespace    (db/document->namespace document)
+          (let [namespace    (map/get-namespace document)
                 order-key    (keyword/add-namespace  namespace :order)
                 document-dex (get document order-key)
                 ; A sorrendben a dokumentum után következő dokumentumok sorrendbeli pozíciójának eltolása

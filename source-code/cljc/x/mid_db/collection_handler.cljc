@@ -36,13 +36,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-db.document-handler
-(def document->namespace                document-handler/document->namespace)
-(def document->document-namespaced?     document-handler/document->document-namespaced?)
-(def document->namespaced-document      document-handler/document->namespaced-document)
-(def document->non-namespaced-document  document-handler/document->non-namespaced-document)
-(def get-document-value                 document-handler/get-document-value)
-(def document->document-id              document-handler/document->document-id)
-(def document->identified-document      document-handler/document->identified-document)
+(def get-document-value            document-handler/get-document-value)
+(def document->document-id         document-handler/document->document-id)
+(def document->identified-document document-handler/document->identified-document)
 
 
 
@@ -58,7 +54,7 @@
   ; @return (keyword)
   [collection]
   (if-let [first-document (first collection)]
-          (document->namespace first-document)))
+          (map/get-namespace first-document)))
 
 (defn collection->namespaced-collection
   ; @param (maps in vector) collection
@@ -71,7 +67,7 @@
   ;
   ; @return (maps in  vector)
   [collection namespace]
-  (vector/->items collection #(document->namespaced-document % namespace)))
+  (vector/->items collection #(map/add-namespace % namespace)))
 
 (defn collection->non-namespaced-collection
   ; @param (maps in vector) collection
@@ -83,7 +79,7 @@
   ;
   ; @return (maps in  vector)
   [collection]
-  (vector/->items collection #(document->non-namespaced-document %)))
+  (vector/->items collection #(map/remove-namespace %)))
 
 
 
@@ -289,9 +285,9 @@
   [collection document]
   (let [document (document->identified-document document)]
        (if-let [namespace (collection->namespace collection)]
-               (let [document (document->namespaced-document document namespace)]
+               (let [document (map/add-namespace document namespace)]
                     (vector/conj-item collection document))
-               (let [document (document->non-namespaced-document document)]
+               (let [document (map/remove-namespace document)]
                     (vector/conj-item collection document)))))
 
 (defn remove-document

@@ -26,18 +26,27 @@
            :added
            {:en "Added"
             :hu "Hozzáadva"}
+           :adding...
+           {:en "Adding ..."
+            :hu "Hozzáadás ..."}
            :abort!
            {:en "Abort"
             :hu "Megszakítás"}
            :aborted
            {:en "Aborted"
             :hu "Megszakítva"}
+           :aborting...
+           {:en "Aborting ..."
+            :hu "Megszakítás ..."}
            :accept!
            {:en "Accept"
             :hu "Rendben"}
            :accepted
            {:en "Accepted"
             :hu "Elfogadva"}
+           :accepting...
+           {:en "Accepting ..."
+            :hu "Elfogadás ..."}
            :back!
            {:en "Back"
             :hu "Vissza"}
@@ -47,12 +56,18 @@
            :cancelled
            {:en "Cancelled"
             :hu "Visszavonva"}
+           :cancelling...
+           {:en "Cancelling ..."
+            :hu "Visszavonás ..."}
            :close!
            {:en "Close"
             :hu "Bezárás"}
            :closed
            {:en "Closed"
             :hu "Bezárva"}
+           :closing...
+           {:en "Closing ..."
+            :hu "Bezárás ..."}
            :collapse!
            {:en "Hide"
             :hu "Elrejt"}
@@ -65,18 +80,27 @@
            :copied
            {:en "Copied"
             :hu "Másolva"}
+           :copying...
+           {:en "Copying ..."
+            :hu "Másolás ..."}
            :create!
            {:en "Create"
             :hu "Létrehozás"}
            :created
            {:en "Created"
             :hu "Létrehozva"}
+           :creating...
+           {:en "Creating ..."
+            :hu "Létrehozás ..."}
            :delete!
            {:en "Delete"
             :hu "Törlés"}
            :deleted
            {:en "Deleted"
             :hu "Törölve"}
+           :deleting...
+           {:en "Deleting ..."
+            :hu "Törlés ..."}
            :done!
            {:en "Done"
             :hu "Kész"}
@@ -86,6 +110,9 @@
            :duplicated
            {:en "Duplicated"
             :hu "Duplikálva"}
+           :duplicating...
+           {:en "Duplicating ..."
+            :hu "Duplikálás ..."}
            :exit!
            {:en "Exit"
             :hu "Kilépés"}
@@ -104,74 +131,107 @@
            :loaded
            {:en "Loaded"
             :hu "Betöltve"}
+           :loading...
+           {:en "Loading ..."
+            :hu "Betöltés ..."}
            :move!
            {:en "Move"
             :hu "Áthelyezés"}
            :moved
            {:en "Moved"
             :hu "Áthelyezve"}
+           :moving...
+           {:en "Moving ..."
+            :hu "Áthelyezés ..."}
            :open!
            {:en "Open"
             :hu "Megnyitás"}
            :opened
            {:en "Opened"
             :hu "Megnyitva"}
+           :opening...
+           {:en "Opening ..."
+            :hu "Megnyitás ..."}
            :paste!
            {:en "Paste"
             :hu "Beillesztés"}
            :pasted
            {:en "Pasted"
             :hu "Beillesztve"}
+           :pasting...
+           {:en "Pasting ..."
+            :hu "Beillesztés ..."}
            :recover!
            {:en "Recover"
             :hu "Visszaállítás"}
-           :recovering...
-           {:en "Recovering ..."
-            :hu "Visszaállítás ..."}
            :recovered
            {:en "Recovered"
             :hu "Visszaállítva"}
+           :recovering...
+           {:en "Recovering ..."
+            :hu "Visszaállítás ..."}
            :redo!
            {:en "Redo"
             :hu "Megismétlés"}
            :redid
            {:en "Redid"
             :hu "Megismételve"}
+           :redoing...
+           {:en "Redoing ..."
+            :hu "Megismétlés ..."}
            :refresh!
            {:en "Refresh"
             :hu "Frissítés"}
            :refreshed
            {:en "Refreshed"
             :hu "Frissítve"}
+           :refreshing...
+           {:en "Refreshing ..."
+            :hu "Frissítés ..."}
            :remove!
            {:en "Remove"
             :hu "Eltávolítás"}
            :removed
            {:en "Removed"
             :hu "Eltávolítva"}
+           :removing...
+           {:en "Removing ..."
+            :hu "Eltávolítás ..."}
            :rename!
            {:en "Rename"
             :hu "Átnevezés"}
            :renamed
            {:en "Renamed"
             :hu "Átnevezve"}
+           :renaming...
+           {:en "Renaming ..."
+            :hu "Átnevezés ..."}
            :reset!
            {:en "Reset"
             :hu "Visszaállítás"}
            :reseted
            {:en "Reseted"
             :hu "Visszaállítva"}
+           :reseting...
+           {:en "Reseting ..."
+            :hu "Visszaállítás ..."}
            :restore!
            {:en "Restore"
             :hu "Visszaállítás"}
            :restored
            {:en "Restored"
             :hu "Visszaállítva"}
+           :restoring...
+           {:en "Recovering ..."
+            :hu "Visszaállítás ..."}
            :retry!
            {:en "Retry"
             :hu "Újra"}
            :retried
            {:en ""
+            :hu ""}
+           :retrying...
+           {:en "Retrying ..."
             :hu ""}
            :revert!
            {:en "Revert"
@@ -179,24 +239,39 @@
            :reverted
            {:en "Reverted"
             :hu "Visszaállítva"}
+           :reverting...
+           {:en "Reverting ..."
+            :hu "Visszaállítás ..."}
            :save!
            {:en "Save"
             :hu "Mentés"}
            :saved
            {:en "Saved"
             :hu "Sikeres mentés"}
+           :saving...
+           {:en "Saving ..."
+            :hu "Mentés ..."}
            :search!
            {:en "Search"
             :hu "Keresés"}
+           :searching...
+           {:en "Searching ..."
+            :hu "Keresés ..."}
            :share!
            {:en "Share"
             :hu "Megosztás"}
            :shared
            {:en "Shared"
             :hu "Megosztva"}
+           :sharing...
+           {:en "Sharing ..."
+            :hu "Megosztás ..."}
            :undo!
            {:en "Undo"
             :hu "Visszavonás"}
            :undid
            {:en "Undid"
-            :hu "Visszavonva"}})
+            :hu "Visszavonva"}
+           :undoing...
+           {:en "Undoing ..."
+            :hu "Visszavonás ..."}})
