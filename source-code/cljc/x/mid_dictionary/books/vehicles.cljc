@@ -28,13 +28,13 @@
             :hu ""}
            :empty-weight
            {:en "Empty weight"
-            :hu "Üres súly"}
+            :hu "Üres tömeg"}
            :suspension
            {:en "Suspension"
             :hu "Felfüggesztés"}
            :total-weight
            {:en "Total weight"
-            :hu "Teljes súly"}
+            :hu "Teljes tömeg"}
            :tyre-size
            {:en "Tyre size"
             :hu "Gumiabroncs mérete"}

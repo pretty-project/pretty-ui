@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.title.subs
-    (:require [x.app-components.api :as components]
+    (:require [mid-fruits.candy     :refer [return]]
+              [mid-fruits.string    :as string]
+              [x.app-components.api :as components]
               [x.app-core.api       :as a :refer [r]]))
 
 
@@ -28,7 +30,9 @@
   ;
   ; @return (string)
   [db [_ window-title]]
-  (if-let [window-title (r components/get-metamorphic-value db window-title)]
-          (let [app-title (r a/get-app-config-item db :app-title)]
-               (str window-title " - " app-title))
-          (r a/get-app-config-item db :app-title)))
+  (let [app-title    (r a/get-app-config-item            db :app-title)
+        window-title (r components/get-metamorphic-value db window-title)
+        window-title (string/trim window-title)]
+       (if (empty? window-title)
+           (return app-title)
+           (str    window-title " - " app-title))))

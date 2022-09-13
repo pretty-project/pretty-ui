@@ -89,7 +89,8 @@
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click          [:elements.select/render-options! select-id select-props]
         required-warning? @(a/subscribe [:elements.select/required-warning? select-id select-props])]
-       (if disabled? {:disabled          true}
+       (if disabled? {:disabled          true
+                      :data-border-color (if required-warning? :warning :highlight)}
                      {:data-clickable    true
                       :on-click          #(a/dispatch on-click)
                       :on-mouse-up       #(environment/blur-element!)

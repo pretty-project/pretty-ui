@@ -68,7 +68,7 @@
   ; Az use-initial-value! függvény csak abban az esetben alkalmazza
   ; az initial-value értékét, ha a value-path útvonalon tárolt érték még üres!
   (let [stored-value (get-in db value-path)]
-       (cond-> db (and      initial-value (empty? stored-value))
+       (cond-> db (and      initial-value (nil? stored-value))
                   (assoc-in value-path initial-value))))
 
 ; XXX#NEW VERSION!

@@ -18,6 +18,18 @@
 
 
 
+;; -- BUG#5570 ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; A cljs.reader/read-string függvény nem szereti azokat a névteres kulcsszavakat,
+; amelyekben a név első karaktere egy számjegy (pl. :namespace/0abc).
+; Ezért a generált kulcsszavak nevének első karaktere egy betű kell legyen!
+;
+; @consant (string)
+(def NAME-PREFIX "q")
+
+
+
 ;; -- Untyped generators ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -59,15 +71,18 @@
   ;
   ; @return (keyword)
   ([]
-   (keyword (generate-uuid)))
+   ; BUG#5570
+   (keyword (str NAME-PREFIX (generate-uuid))))
 
   ([namespace]
-   (keyword (str namespace "/" (generate-uuid)))))
+   ; BUG#5570
+   (keyword (str namespace "/" (str NAME-PREFIX (generate-uuid))))))
 
 (defn generate-namespaced-keyword
   ; @return (namespaced keyword)
   []
-  (keyword (str (generate-uuid) "/" (generate-uuid))))
+  ; BUG#5570
+  (keyword (str (generate-uuid) "/" (str NAME-PREFIX (generate-uuid)))))
 
 (defn generate-react-key
   ; @usage

@@ -700,6 +700,17 @@ body {
 .x-button[data-font-size="xxs"] .x-button--label {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
+  /* XXX#6610
+   * Az XXS és XS betűméretű gomboknál fontos, hogy a sormagasság 24px legyen,
+   * különben túl nagy lenne a távolság a felette elhelyezett tartalmilag hozzá
+   * kapcsolódó label elemtől! */
+  line-height: 24px }
+
+.x-button[data-font-size="xs"][data-hover-color] .x-button--label {
+  /* XXX#6610
+   * Az XXS és XS betűméretű gomboknál, ha a hover-color tulajdons is be van állítva,
+   * akkor fontos, hogy a sormagasság 36px legyen, különbön túl vékonynak tűnne
+   * a hover-color, amikor látszódik! */
   line-height: 36px }
 
 .x-label[data-font-size="xxs"] {
@@ -737,6 +748,11 @@ body {
 .x-button[data-font-size="xs"] .x-button--label {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
+  /* XXX#6610 */
+  line-height: 24px }
+
+.x-button[data-font-size="xs"][data-hover-color] .x-button--label {
+  /* XXX#6610 */
   line-height: 36px }
 
 .x-label[data-font-size="xs"] {
@@ -1617,7 +1633,8 @@ body {
 
 .x-breadcrumbs--body {
   display: flex;
-  grid-column-gap: 24px }
+  grid-column-gap: 24px;
+  overflow-x: auto }
 
 /*** Breadcrumbs body ***/
 
@@ -1627,7 +1644,8 @@ body {
   color: var( --color-muted );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 24px }
+  line-height: 24px;
+  white-space: nowrap }
 
 .x-breadcrumbs--crumb:not(:last-child):after {
   background-color: var( --border-color-highlight );
@@ -2419,8 +2437,15 @@ body {
 
 /*** Label placeholder ***/
 
+/* Az elemekben megjelenített, a tartalom hiányát jelző feliratok,
+ * (pl. no-options-label, no-chips-label, ...) mindegyike highlight színnel
+ * van kiírva, ezért a label elem tartalmának hiányát jelző placeholder felirat
+ * is highlight színt kap! */
 .x-label--placeholder {
-  color: var( --color-muted ) }
+  color: var( --color-highlight );
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap }
 
 /*** Label placeholder ***/
 

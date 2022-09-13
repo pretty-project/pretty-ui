@@ -15,6 +15,7 @@
 (ns plugins.item-editor.download.helpers
     (:require [mid-fruits.candy   :refer [return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :as map]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
@@ -67,10 +68,13 @@
                    (let [suggestions (f1 suggestions (nth collection document-dex) 0)]
                         (if (vector/dex-last? collection document-dex)
                             (return suggestions)
-                            (f2     suggestions (inc document-dex)))))]
+                            (f2     suggestions (inc document-dex)))))
+               ; Az f3 függvény végigiterál a suggestions térkép értékein és kitörli belőlük
+               ; az üres értékeket (nil, "").
+               (f3 [suggestions] (map/->values suggestions #(vector/remove-items % [nil ""])))]
               ; Ha a collection vagy a suggestion-keys vektor nem tartalmaz elemeket, akkor
               ; a függvény visszatérési értéke egy üres térkép.
               (if (or (empty? collection)
                       (empty? suggestion-keys))
                   (return {})
-                  (f2     {} 0)))))
+                  (f3 (f2 {} 0))))))

@@ -71,6 +71,15 @@
            :n-items-duplicated
            {:en "% item(s) duplicated"
             :hu "% elem duplikálva"}
+           :n-items-selected
+           {:en "% item(s) selected"
+            :hu "% elem kiválasztva"}
+           :no-item-selected
+           {:en "No item selected"
+            :hu "Nincs kiválasztott elem"}
+           :no-items-selected
+           {:en "No items selected"
+            :hu "Nincsenek kiválasztott elemek"}
            :no-items-to-show
            {:en "No items to show"
             :hu "Nincsenek megjeleníthető elemek"}
@@ -80,6 +89,12 @@
            :remove-item?
            {:en "Are you sure you want to remove this item?"
             :hu "Biztos vagy benne, hogy szeretnéd eltávolítani ezt az elemet?"}
+           :select-all-items!
+           {:en "Select all"
+            :hu "Összes elem kijelölése"}
+           :select-item!
+           {:en "Select item"
+            :hu "Elem kijelölése"}
            :unnamed-item
            {:en "Unnamed item"
             :hu "Névtelen elem"}})

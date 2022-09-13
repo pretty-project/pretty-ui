@@ -29,10 +29,13 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {}
-  [breadcrumbs-id breadcrumbs-props {:keys [label] :as crumb}]
+  ;  {:label (metamorphic-content)(opt)
+  ;   :placeholder (metamorphic-content)(opt)}
+  [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:div.x-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                             (components/content label)])
+                             (if (-> label       components/content empty?)
+                                 (-> placeholder components/content)
+                                 (-> label       components/content))])
 
 (defn- breadcrumbs-button-crumb
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -40,10 +43,13 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {}
-  [breadcrumbs-id breadcrumbs-props {:keys [label] :as crumb}]
+  ;  {:label (metamorphic-content)(opt)
+  ;   :placeholder (metamorphic-content)(opt)}
+  [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:button.x-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                                (components/content label)])
+                                (if (-> label       components/content empty?)
+                                    (-> placeholder components/content)
+                                    (-> label       components/content))])
 
 (defn- breadcrumbs-crumb
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +57,7 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {}
+  ;  {:route (string)(opt)
   [breadcrumbs-id breadcrumbs-props {:keys [route] :as crumb}]
   (if route [breadcrumbs-button-crumb breadcrumbs-id breadcrumbs-props crumb]
             [breadcrumbs-static-crumb breadcrumbs-id breadcrumbs-props crumb]))
@@ -63,7 +69,7 @@
   ; @param (map) breadcrumbs-props
   ;  {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  [:div.x-breadcrumbs--body {}
+  [:div.x-breadcrumbs--body {:data-hide-scrollbar true}
                             (letfn [(f [crumb-list crumb]
                                        (conj crumb-list [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb]))]
                                    (reduce f [:<>] crumbs))])
@@ -82,7 +88,8 @@
   ; @param (map) breadcrumbs-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :crumbs (maps in vector)
-  ;    [{:label (metamorphic-content)
+  ;    [{:label (metamorphic-content)(opt)
+  ;      :placeholder (metamorphic-content)(opt)
   ;      :route (string)(opt)}]
   ;   :disabled? (boolean)(opt)
   ;    Default: false

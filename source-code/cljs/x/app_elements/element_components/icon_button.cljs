@@ -76,7 +76,8 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props)
+  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props
+                                 {:on-mouse-over #(a/dispatch (:on-mouse-over button-props))})
                                [icon-button-icon                 button-id button-props]
                                [icon-button-label                button-id button-props]
                                [engine/element-badge             button-id button-props]])
@@ -149,6 +150,7 @@
   ;    Default: :xxl
   ;   :label (metamorphic-content)(opt)
   ;   :on-click (metamorphic handler)(opt)
+  ;   :on-mouse-over (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)

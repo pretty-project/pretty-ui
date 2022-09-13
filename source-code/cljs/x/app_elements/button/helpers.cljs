@@ -91,12 +91,13 @@
   ;
   ; @return (map)
   ;  {}
-  [button-id {:keys [disabled? on-click]}]
+  [button-id {:keys [disabled? on-click on-mouse-over]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
                  :id              (a/dom-value button-id "body")
                  :on-click       #(a/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)}))
+                 :on-mouse-up    #(environment/blur-element!)
+                 :on-mouse-over  #(a/dispatch on-mouse-over)}))
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

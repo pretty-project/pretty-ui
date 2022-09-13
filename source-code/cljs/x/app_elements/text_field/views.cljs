@@ -117,6 +117,34 @@
 
 
 
+;; -- Field warning components ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- text-field-required-warning
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  [field-id field-props]
+  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
+          [:div.x-text-field--warning {:data-selectable false}
+                                      (components/content :please-fill-out-this-field)]))
+
+(defn- text-field-invalid-warning
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;  {}
+  [field-id {:keys [validator] :as field-props}]
+  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
+          [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
+          (if-let [invalid-warning? @(a/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
+                  [:div.x-text-field--warning {:data-selectable false}
+                                              (-> validator :invalid-message components/content)])))
+
+
+
 ;; -- Field structure components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -189,34 +217,6 @@
                                       [text-field-input-structure field-id field-props]
                                       [field-end-adornments       field-id field-props]
                                       [text-field-surface         field-id field-props]])
-
-
-
-;; -- Field warning components ------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- text-field-required-warning
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
-          [:div.x-text-field--warning {:data-selectable false}
-                                      (components/content :please-fill-out-this-field)]))
-
-(defn- text-field-invalid-warning
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;  {}
-  [field-id {:keys [validator] :as field-props}]
-  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
-          [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
-          (if-let [invalid-warning? @(a/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
-                  [:div.x-text-field--warning {:data-selectable false}
-                                              (-> validator :invalid-message components/content)])))
 
 
 

@@ -191,7 +191,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select--button [select-button-body select-id select-props]])
+  [:div.x-select--button {:data-selectable false}
+                         [select-button-body select-id select-props]])
 
 (defn- active-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -40,6 +40,12 @@
            :tags
            {:en "Tags"
             :hu "Címkék"}
+           :no-tag-selected
+           {:en "No tag selected"
+            :hu "Nincs kiválasztott címke"}
+           :no-tags-selected
+           {:en "No tags selected"
+            :hu "Nincsenek kiválasztott címkék"}
            :result
            {:en "Result"
             :hu "Eredmény"}

@@ -34,9 +34,9 @@
   ;
   ; @return (map)
   [request]
-  (let [pattern      (login-handler.helpers/request->authenticator-pattern request)
-        user-account (local-db/match-document "user_accounts" pattern)
-        user-account (map/add-namespace user-account :user-account)
+  (let [pattern             (login-handler.helpers/request->authenticator-pattern request)
+        user-account        (local-db/match-document "user_accounts" pattern)
+        user-account        (map/add-namespace user-account :user-account)
         user-public-account (account-handler.helpers/user-account->user-public-account user-account)]
        (if (map/nonempty? user-public-account)
            (http/text-wrap  {:body "Speak, friend, and enter" :session user-public-account})

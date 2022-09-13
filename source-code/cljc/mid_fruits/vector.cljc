@@ -704,14 +704,14 @@
   ; @param (*) dex
   ;
   ; @example
-  ;  (vector/remove-item-once [:a :b] :b)
+  ;  (vector/remove-item-once [:a :b :b] :b)
   ;  =>
-  ;  [:a]
+  ;  [:a :b]
   ;
   ; @example
-  ;  (vector/remove-item-once [:b :a] :a)
+  ;  (vector/remove-item-once [:a :b :a] :a)
   ;  =>
-  ;  [:b]
+  ;  [:b :a]
   ;
   ; @return (vector)
   [n x]

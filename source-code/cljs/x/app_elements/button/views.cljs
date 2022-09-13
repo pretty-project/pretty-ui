@@ -139,6 +139,7 @@
   ;      Default: false}
   ;   :label (metamorphic-content)(opt)
   ;   :on-click (metamorphic handler)(opt)
+  ;   :on-mouse-over (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
   ;   :style (map)(opt)}
   ;

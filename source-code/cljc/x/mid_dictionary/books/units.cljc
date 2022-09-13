@@ -92,6 +92,24 @@
            :month-nth
            {:en "% month"
             :hu "% hónap"}
+           :outer-height
+           {:en "Outer height"
+            :hu "Külső magasság"}
+           :outer-height-n
+           {:en "Outer height: %"
+            :hu "Külső magasság: %"}
+           :outer-length
+           {:en "Outer length"
+            :hu "Külső hossz"}
+           :outer-length-n
+           {:en "Outer length: %"
+            :hu "Külső hossz: %"}
+           :outer-width
+           {:en "Outer width"
+            :hu "Külső szélesség"}
+           :outer-width-n
+           {:en "Outer width: %"
+            :hu "Külső szélesség: %"}
            :piece
            {:en "Piece"
             :hu "Darab"}

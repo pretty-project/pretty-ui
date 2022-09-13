@@ -34,7 +34,13 @@
   ;  {:email-address (string)
   ;   :password (string)}
   [request]
-  (get request :transit-params))
+  ; WARNING
+  ; A felhasználó dokumentumának adatbázisból való kikérésekor a megfeleltetési minta
+  ; nem lehet üres térkép, különben az adatbázis visszatérhet az első dokumentummal!
+  ; Szükséges védekezni a kliens-oldalról érkező üres bejelentkezési adatok ellen!
+  (merge {:email-address nil
+          :password      nil}
+         (get request :transit-params)))
 
 (defn request->authenticated?
   ; @param (map) request
