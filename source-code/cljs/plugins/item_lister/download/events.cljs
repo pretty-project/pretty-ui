@@ -144,9 +144,6 @@
   ;   items.events/enable-all-items! függvény szünteti meg a listaelemek {:disabled? true} állapotát!
   ;
   ; - A kijelölt elemeken végzett műveletek sikeres befejezése után a listaelemek újratöltődnek.
-  ;   A listaelemek sikeres újratöltése után szükséges kiléptetni a plugint a {:actions-mode? true}
-  ;   állapotból, mert a listaelemek újratöltése ESETLEGESEN egy a kijelölt listaelemeken végzett
-  ;   művelet befejezése.
   ;
   ; - Az újra letöltött elemek fogadásakor is szükséges {:data-received? true} állapotba léptetni
   ;   a plugint az data-received függvény alkalmazásával!
@@ -164,7 +161,6 @@
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)
-             (r core.events/quit-actions-mode! % lister-id)
              (r data-received                  % lister-id)
 
              ; TEMP#4681

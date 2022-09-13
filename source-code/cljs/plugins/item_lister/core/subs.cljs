@@ -17,7 +17,6 @@
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-components.api              :as components]
               [x.app-core.api                    :as a :refer [r]]))
 
 
@@ -166,19 +165,6 @@
        ; XXX#3219
        (or lister-synchronizing? (not data-received?))))
 
-(defn get-items-info
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (metamorphic-content)
-  [db [_ lister-id]]
-  (let [downloaded-item-count (r get-downloaded-item-count    db lister-id)
-        all-item-count        (r get-all-item-count           db lister-id)
-        data-received?        (r download.subs/data-received? db lister-id)]
-       (if data-received? (components/content {:content      :npn-items-downloaded
-                                               :replacements [downloaded-item-count all-item-count]}))))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -251,12 +237,6 @@
 ; @usage
 ;  [:item-lister/downloading-items? :my-lister]
 (a/reg-sub :item-lister/downloading-items? downloading-items?)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/get-items-info :my-lister]
-(a/reg-sub :item-lister/get-items-info get-items-info)
 
 ; @param (keyword) lister-id
 ;

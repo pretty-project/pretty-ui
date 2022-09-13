@@ -189,24 +189,6 @@
   (let [selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (-> selected-items vector/nonempty? not)))
 
-(defn toggle-item-selection?
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  ;
-  ; @usage
-  ;  (r item-lister/toggle-item-selection? db :my-lister 42)
-  [db [_ lister-id item-dex]]
-  ; A elemre kattintva az elem hozzáadódik a kijelölt elemek listájához, ha ...
-  ; ... az item-lister plugin {:select-mode? true} állapotban van.
-  ; ... és/vagy a kattintás ideje alatt a SHIFT billentyű le van nyomva, és a body
-  ;     komponens megkapja az {:item-actions [...]} paramétert.
-  (and (or (r core.subs/get-meta-item  db lister-id :select-mode?)
-           ; B)
-           (and (r environment/key-pressed? db 16)
-                (let [item-actions (r body.subs/get-body-prop db lister-id :item-actions)]
-                     (vector/nonempty? item-actions))))
-       (not (r core.subs/lister-disabled? db lister-id))))
-
 
 
 ;; ----------------------------------------------------------------------------

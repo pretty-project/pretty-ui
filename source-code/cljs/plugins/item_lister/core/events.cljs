@@ -34,66 +34,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-search-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :search-mode?] true))
-
-(defn quit-search-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :search-mode?]))
-
-(defn set-select-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :select-mode?] true))
-
-(defn quit-select-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :select-mode?])
-             (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :selected-items])))
-
-(defn set-actions-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  ; Az {:actions-mode? true} állapot beállításakor az item-lister plugin {:select-mode? true}
-  ; állapotba is lép, mert a listaelemeken végezhető műveletek használatához szükséges
-  ; a listaelemeket kijelölni.
-  (as-> db % (assoc-in % [:plugins :plugin-handler/meta-items lister-id :actions-mode?] true)
-             (r set-select-mode! % lister-id)))
-
-(defn quit-actions-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id :actions-mode?])
-             (r quit-select-mode! % lister-id)))
-
 (defn set-reload-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -102,24 +42,6 @@
   ; @return (map)
   [db [_ lister-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items lister-id :reload-mode?] true))
-
-(defn set-reorder-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :reorder-mode?] true))
-
-(defn quit-reorder-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :reorder-mode?]))
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -282,54 +204,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/set-search-mode! :my-lister]
-(a/reg-event-db :item-lister/set-search-mode! set-search-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/quit-search-mode! :my-lister]
-(a/reg-event-db :item-lister/quit-search-mode! quit-search-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/set-select-mode! :my-lister]
-(a/reg-event-db :item-lister/set-select-mode! set-select-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/quit-select-mode! :my-lister]
-(a/reg-event-db :item-lister/quit-select-mode! quit-select-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/set-actions-mode! :my-lister]
-(a/reg-event-db :item-lister/set-actions-mode! set-actions-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/quit-actions-mode! :my-lister]
-(a/reg-event-db :item-lister/quit-actions-mode! quit-actions-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/set-reorder-mode! :my-lister]
-(a/reg-event-db :item-lister/set-reorder-mode! set-reorder-mode!)
-
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/quit-reorder-mode! :my-lister]
-(a/reg-event-db :item-lister/quit-reorder-mode! quit-reorder-mode!)
 
 ; @param (keyword) lister-id
 ;

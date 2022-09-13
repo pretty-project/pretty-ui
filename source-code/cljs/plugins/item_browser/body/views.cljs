@@ -65,8 +65,6 @@
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :items-key (keyword)
@@ -75,8 +73,6 @@
   ;   :label-key (keyword)
   ;    Only w/ {:auto-title? true}
   ;   :list-element (metamorphic-content)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
   ;   :order-by-options (namespaced keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)

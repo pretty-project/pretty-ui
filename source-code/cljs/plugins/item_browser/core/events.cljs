@@ -31,8 +31,6 @@
 (def set-meta-item!        plugins.item-lister.core.events/set-meta-item!)
 (def remove-meta-items!    plugins.item-lister.core.events/remove-meta-items!)
 (def set-error-mode!       plugins.item-lister.core.events/set-error-mode!)
-(def quit-search-mode!     plugins.item-lister.core.events/quit-search-mode!)
-(def quit-select-mode!     plugins.item-lister.core.events/quit-select-mode!)
 (def reset-downloads!      plugins.item-lister.core.events/reset-downloads!)
 (def use-default-order-by! plugins.item-lister.core.events/use-default-order-by!)
 (def filter-items!         plugins.item-lister.core.events/filter-items!)
@@ -104,8 +102,6 @@
   ;   {:disabled? true} állapotban lévő listaelemekre.
   (as-> db % (r reset-downloads!               % browser-id)
              (r reset-downloaded-item!         % browser-id)
-             (r quit-search-mode!              % browser-id)
-             (r quit-select-mode!              % browser-id)
              (r items.events/enable-all-items! % browser-id)
              (r update-item-id!                % browser-id)
              (r use-item-id!                   % browser-id)))

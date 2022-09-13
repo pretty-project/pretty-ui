@@ -45,18 +45,7 @@
   ;
   ; @return (map)
   [db [_ lister-id item-dex]]
-  ; A toggle-item-selection! függvény az egyes listaelemek kiválasztásakor ...
-  ; ... ha a body komponens megkapja az :item-actions paramétert, akkor {:actions-mode? true}
-  ;     állapotba lépteti a plugint, így a kiválasztott listaelemeken végrehajtható műveleteket
-  ;     tartalmazó menü jelenik meg header komponensen.
-  ;
-  ; ... minden esetben {:select-mode? true} állapotba lépteti a plugint, mert a listaelemek
-  ;     kiválasztása {:select-mode? true} állapotban történik.
-  (let [item-actions (r body.subs/get-body-prop db lister-id :item-actions)]
-       (cond-> db item-actions            (assoc-in  [:plugins :plugin-handler/meta-items lister-id :actions-mode?] true)
-                  :set-select-mode!       (assoc-in  [:plugins :plugin-handler/meta-items lister-id :select-mode?]  true)
-                  :toggle-item-selection! (update-in [:plugins :plugin-handler/meta-items lister-id :selected-items]
-                                                     vector/toggle-item item-dex))))
+  (update-in [:plugins :plugin-handler/meta-items lister-id :selected-items] vector/toggle-item item-dex))
 
 
 

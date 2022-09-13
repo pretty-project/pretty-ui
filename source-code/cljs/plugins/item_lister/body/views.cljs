@@ -88,13 +88,7 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn offline-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [_])
-
-(defn selectable-item-list
+(defn item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -108,22 +102,6 @@
                                    [list-element lister-id item-dex item]))]
               (reduce-kv f [:div.item-lister--item-list] downloaded-items))))
 
-(defn sortable-item-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [lister-id]
-  [:div "sortable"])
-  ; Ne renderelődjenek újra a listaelemek, amikor átvált {:reorder-mode? true} állapotra!
-
-(defn item-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [lister-id]
-  (if false [sortable-item-list   lister-id]
-            [selectable-item-list lister-id]))
-
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -131,8 +109,6 @@
   [lister-id]
   (cond @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
          [error-body lister-id {:error-description :the-content-you-opened-may-be-broken}]
-        ;@(a/subscribe [:environment/browser-offline?])
-        ; [offline-body lister-id]
         @(a/subscribe [:item-lister/data-received? lister-id])
          [:<> [item-list             lister-id]
               [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
@@ -148,8 +124,6 @@
   ;   :download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
@@ -160,11 +134,7 @@
 
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
-  ;   :select-mode? (boolean)(opt)
-  ;    Default: false
-  ;   :selected-items (strings in vector)(opt)
-  ;   :sortable? (boolean)(opt)
-  ;    Default: false}
+  ;   :selected-items (strings in vector)(opt)}
   ;
   ; @usage
   ;  [item-lister/body :my-lister {...}]

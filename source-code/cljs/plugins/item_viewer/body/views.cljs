@@ -74,8 +74,6 @@
   ;    Only w/ {:label-key ...}
   ;   :default-item-id (string)
   ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-actions (keywords in vector)(opt)
-  ;    [:delete, :duplicate]
   ;   :item-element (metamorphic-content)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path

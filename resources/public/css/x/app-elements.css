@@ -2865,6 +2865,17 @@ body {
 .x-horizontal-polarity--end-content {
   display: flex }
 
+.x-horizontal-polarity--start-content {
+  -position: absolute;
+}
+.x-horizontal-polarity--end-content {
+  -position: absolute;
+}
+.x-horizontal-polarity--middle-content {
+  -justify-content: center;
+  -position: absolute;
+  -width: 100% }
+
 .x-vertical-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
   -width: 100%;

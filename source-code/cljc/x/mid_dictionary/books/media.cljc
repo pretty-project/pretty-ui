@@ -71,6 +71,12 @@
            :free-n-space
            {:en "Free %1 %2 space!"
             :hu "Szabadíts fel %1 %2 szabad helyet!"}
+           :image
+           {:en "Image"
+            :hu "Kép"}
+           :images
+           {:en "Images"
+            :hu "Képek"}
            :image-gallery
            {:en "Image gallery"
             :hu "Képgaléria"}

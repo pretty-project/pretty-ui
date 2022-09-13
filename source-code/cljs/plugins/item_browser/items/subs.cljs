@@ -21,9 +21,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.items.subs
-(def get-item               items.subs/get-item)
-(def get-item-dex           items.subs/get-item-dex)
-(def export-item            items.subs/export-item)
-(def get-selected-item-ids  items.subs/get-selected-item-ids)
-(def item-downloaded?       items.subs/item-downloaded?)
-(def toggle-item-selection? items.subs/toggle-item-selection?)
+(def get-item              items.subs/get-item)
+(def get-item-dex          items.subs/get-item-dex)
+(def export-item           items.subs/export-item)
+(def get-selected-item-ids items.subs/get-selected-item-ids)
+(def item-downloaded?      items.subs/item-downloaded?)

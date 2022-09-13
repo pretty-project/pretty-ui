@@ -16,11 +16,15 @@
 
 
 
+
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {
+(def BOOK {:business
+           {:en "Business"
+            :hu "Üzlet"}
            :last-modified
            {:en "Last modified"
             :hu "Utoljára módosítva"}
@@ -128,6 +132,9 @@
            :basic-info
            {:en "Basic info"
             :hu "Alapvető adatok"}
+           :tutorial
+           {:en "Tutorial"
+            :hu "Bevezető"}
            :browser
            {:en "Browser"
             :hu "Böngésző"}

@@ -38,6 +38,12 @@
            :tyre-size
            {:en "Tyre size"
             :hu "Gumiabroncs mérete"}
+           :vehicle
+           {:en "Vehicle"
+            :hu "Jármű"}
+           :vehicles
+           {:en "Vehicles"
+            :hu "Járművek"}
            :wheel-size
            {:en "Wheel size"
             :hu "Kerékméret"}
