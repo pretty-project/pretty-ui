@@ -52,11 +52,11 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  ; Az aktuálisan böngészett elem azonosítójának eltárolásakor a plugin :query-params
+  ; Az aktuálisan böngészett elem azonosítójának eltárolásakor a plugin query-params
   ; térképében is szükséges eltárolni az elem azonosítóját, mert az item-browser plugin az
   ; item-lister plugin letöltő funkciójával tölti le az elemeket, de az item-lister plugin
   ; nem használ :item-id paramétert az elemek letöltésekor ezért az item-browser plugin
-  ; a :query-params használatával teszi bele az aktuálisan böngészett elem azonosíját
+  ; a query-params használatával teszi bele az aktuálisan böngészett elem azonosíját
   ; a Pathom lekéresekkel elküldött adatok közé.
   (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
        (r set-query-param! db browser-id :item-id current-item-id)))

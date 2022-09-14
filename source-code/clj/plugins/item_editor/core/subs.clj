@@ -32,12 +32,12 @@
 (defn get-editor-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) lister-id
+  ; @param (keyword) editor-id
   ; @param (keyword) item-key
   ;
   ; @return (map)
-  [db [_ lister-id item-key]]
-  (r get-plugin-prop db lister-id item-key))
+  [db [_ editor-id item-key]]
+  (r get-plugin-prop db editor-id item-key))
 
 
 

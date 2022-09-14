@@ -31,8 +31,7 @@
   ;  {:item (namespaced map)}
   [db [_ editor-id]]
   (let [exported-item (r core.subs/export-current-item db editor-id)]
-       (merge (r core.subs/get-query-params db editor-id)
-              {:item exported-item})))
+       (r core.subs/use-query-params db editor-id {:item exported-item})))
 
 (defn get-save-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

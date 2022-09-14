@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.subs
-    (:require [mid-fruits.map                       :as map]
+    (:require [mid-fruits.candy                     :refer [return]]
+              [mid-fruits.map                       :as map]
+              [mid-fruits.vector                    :as vector]
               [plugins.plugin-handler.body.subs     :as body.subs]
               [plugins.plugin-handler.routes.subs   :as routes.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
@@ -35,20 +37,6 @@
   ; @return (*)
   [db [_ plugin-id item-key]]
   (get-in db [:plugins :plugin-handler/meta-items plugin-id item-key]))
-
-
-
-;; -- Query-param subscriptions -----------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-query-params
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ;
-  ; @return (map)
-  [db [_ plugin-id]]
-  (get-in db [:plugins :plugin-handler/meta-items plugin-id :query-params]))
 
 
 
@@ -77,10 +65,10 @@
   ;
   ; - A plugin-key kifejezés használata megkülönbözteti az egyes pluginok lekéréseit egymástól.
   ;   Pl. Az item-browser plugin request-item! lekérése és az item-browser plugin által indított
-  ;        de az item-lister plugin request-items! lekérése előfordul, hogy egyszerre történik.
-  ;        Ha a két plugin lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
-  ;        folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister
-  ;        plugin tévésen úgy érzékelné, hogy az elemek letöltése már folyamatban van.
+  ;       de az item-lister plugin request-items! lekérése előfordul, hogy egyszerre történik.
+  ;       Ha a két plugin lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
+  ;       folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister
+  ;       plugin tévésen úgy érzékelné, hogy az elemek letöltése már folyamatban van.
   (let [handler-key (r transfer.subs/get-transfer-item db plugin-id :handler-key)]
        (keyword (str                (name handler-key))
                 (str "synchronize-" (name plugin-key) "!"))))
@@ -215,3 +203,55 @@
   [db [_ plugin-id]]
   (let [downloaded-items (r get-downloaded-items db plugin-id)]
        (count downloaded-items)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn use-query-prop
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (vector) query
+  ;
+  ; @usage
+  ;  (plugin/body :my-plugin {:query [:my-query]})
+  ;  (r download.subs/use-query-prop db :my-plugin [...])
+  ;
+  ; @return (vector)
+  ;  [:my-query ...]
+  [db [_ plugin-id query]]
+  ; Az egyes pluginok body komponensének {:query [...]} tulajdonságaként esetlegesen
+  ; átadott ...
+  ; ... Pathom lekérés vektort összefűzi a use-query-prop függvény számára
+  ;     query paraméterként átadott Pathom lekérés vektorral.
+  ; ... Pathom lekérés vektort az elem(ek) letöltésekor elküldött Pathom lekéréssel
+  ;     összefűzve elküldi a szervernek, így megoldható, hogy az egyes pluginok
+  ;     használatához szükséges kiegészítő adatokat az elem(ek) letöltésekor
+  ;     töltse le.
+  (if-let [query-prop (r body.subs/get-body-prop db plugin-id :query)]
+          (vector/concat-items query-prop query)
+          (return                         query)))
+
+(defn use-query-params
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (map) query-props
+  ;
+  ; @usage
+  ;  (r download.subs/use-query-params db :my-plugin {...})
+  ;
+  ; @return (map)
+  [db [_ plugin-id query-props]]
+  ; XXX#7061
+  ; Az egyes pluginok {:query-params {...}} meta-adataként beállított térképbe a plugin
+  ; által beleírt adatok, minden a plugin által küldött Pathom resolver és mutation
+  ; lekérés resolver-props és mutation-props térképének alapját képezi.
+  ;
+  ; Ha egy plugin beleír a query-params térképébe, akkor az összes általa küldött
+  ; Pathom lekéréskor a szerver-oldali resolver és mutation függvények megkapják
+  ; a query-params térkép adatait.
+  (let [query-params (get-in db [:plugins :plugin-handler/meta-items plugin-id :query-params])]
+       (merge query-params query-props)))

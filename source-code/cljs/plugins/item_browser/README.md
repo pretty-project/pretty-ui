@@ -10,6 +10,10 @@
 - A {:query-params {...}} térkép bevezetése megoldotta, hogy az item-browser plugin az aktuálisan
   böngészett elem azonosítóját az item-lister plugin által küldött :my-handler/get-items resolver függvény
   paraméterei közé írhatja.
+  Az item-browser plugin alkalmazza a core.events/set-query-param! függvényt, amivel az aktuálisan böngészett
+  elem azonosítóját eltárolja a plugin query-params térképében és az item-browser plugin alapját képező
+  item-lister plugin az elemek letöltésekor alkalmazza a core.subs/use-query-params függvényt, amivel kiolvassa
+  a plugin query-params térképéből az adatokat és hozzáfűzi a szerver számára küldött többi adathoz.
 
 
 

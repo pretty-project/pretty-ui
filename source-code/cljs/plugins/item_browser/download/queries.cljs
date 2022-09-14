@@ -31,8 +31,7 @@
   ;  {:item-id (string)}
   [db [_ browser-id]]
   (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
-       (merge (r core.subs/get-query-params db browser-id)
-              {:item-id current-item-id})))
+       (r core.subs/use-query-params db browser-id {:item-id current-item-id})))
 
 (defn get-request-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,4 +42,8 @@
   [db [_ browser-id]]
   (let [resolver-id    (r download.subs/get-resolver-id   db browser-id :get-item)
         resolver-props (r get-request-item-resolver-props db browser-id)]
+       ; XXX#9981
+       ; A download.subs/use-query-prop függvényt az item-browser komponensben
+       ; nem szükséges alkalmazni, mivel a plugin alapját adó item-lister plugin
+       ; az elemek első letöltésekor alkalmazza a függvényt.
        [`(~resolver-id ~resolver-props)]))

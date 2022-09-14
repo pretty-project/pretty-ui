@@ -57,6 +57,31 @@
 
 
 
+;; -- Mode events -------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) mode-key
+  ;
+  ; @return (map)
+  [db [_ plugin-id mode-key]]
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id mode-key] true))
+
+(defn quit-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) mode-key
+  ;
+  ; @return (map)
+  [db [_ plugin-id mode-key]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id mode-key]))
+
+
+
 ;; -- Query-param events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -69,6 +94,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id param-key param-value]]
+  ; XXX#7061
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :query-params param-key] param-value))
 
 (defn remove-query-param!
@@ -79,6 +105,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id param-key]]
+  ; XXX#7061
   (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :query-params param-key]))
 
 

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.transfer.effects
-    (:require [mid-fruits.candy                       :refer [return]]
-              [plugins.view-selector.transfer.helpers :as transfer.helpers]
-              [x.server-core.api                      :as a]))
+    (:require [mid-fruits.candy                        :refer [return]]
+              [plugins.plugin-handler.transfer.helpers :as transfer.helpers]
+              [x.server-core.api                       :as a]))
 
 
 

@@ -67,9 +67,10 @@
   ; @return (map)
   [db [_ editor-id server-response]]
   ; - XXX#3907
-  ;   Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot
+  ;   Az item-lister pluginnal megegyezően az item-editor plugin is névtér nélkül tárolja a letöltött dokumentumot.
   ;
-  ; - Az elemről letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb használatával
+  ; - XXX#3400
+  ;   Az elemről letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb használatával
   ;   az elem letöltéskori állapota visszaállítható legyen.
   (let [resolver-id  (r download.subs/get-resolver-id db editor-id :get-item)
         item-path    (r body.subs/get-body-prop       db editor-id :item-path)

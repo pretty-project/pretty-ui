@@ -32,8 +32,7 @@
   ;  {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
-       (merge (r core.subs/get-query-params db viewer-id)
-              {:item-id current-item-id})))
+       (r core.subs/use-query-params db viewer-id {:item-id current-item-id})))
 
 (defn get-delete-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,8 +60,7 @@
   ;  {:item (namespaced map)}
   [db [_ viewer-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db viewer-id item-id)]
-       (merge (r core.subs/get-query-params db viewer-id)
-              {:item backup-item})))
+       (r core.subs/use-query-params db viewer-id {:item backup-item})))
 
 (defn get-undo-delete-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,8 +90,7 @@
   ;  {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
-       (merge (r core.subs/get-query-params db viewer-id)
-              {:item-id current-item-id})))
+       (r core.subs/use-query-params db viewer-id {:item-id current-item-id})))
 
 (defn get-duplicate-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

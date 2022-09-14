@@ -14,9 +14,8 @@
 
 (ns plugins.item-lister.sample
     (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [mid-fruits.candy                      :refer [param return]]
+              [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
-              [pathom.api                            :as pathom]
               [plugins.item-lister.api               :as item-lister]
               [x.server-core.api                     :as a]))
 

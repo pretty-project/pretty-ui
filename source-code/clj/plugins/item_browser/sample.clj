@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.sample
-    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [mid-fruits.candy                      :refer [param return]]
+    (:require [plugins.item-browser.api]
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [plugins.item-browser.api              :as item-browser]
               [x.server-core.api                     :as a]))
 
 

@@ -13,19 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.queries
-    (:require [plugins.item-editor.body.subs           :as body.subs]
-              [plugins.item-editor.core.subs           :as core.subs]
-              [plugins.item-editor.download.subs       :as download.subs]
-              [plugins.plugin-handler.download.queries :as download.queries]
-              [x.app-core.api                          :refer [r]]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.download.queries
-(def use-query-prop download.queries/use-query-prop)
+    (:require [plugins.item-editor.body.subs     :as body.subs]
+              [plugins.item-editor.core.subs     :as core.subs]
+              [plugins.item-editor.download.subs :as download.subs]
+              [x.app-core.api                    :refer [r]]))
 
 
 
@@ -42,9 +33,8 @@
   ;   :suggestion-keys (keywords in vector)}
   [db [_ editor-id]]
   (let [suggestion-keys (r body.subs/get-body-prop db editor-id :suggestion-keys)]
-       (merge (r core.subs/get-query-params db editor-id)
-              {:editor-id       editor-id
-               :suggestion-keys suggestion-keys})))
+       (r core.subs/use-query-params db editor-id {:editor-id       editor-id
+                                                   :suggestion-keys suggestion-keys})))
 
 (defn get-request-item-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,8 +45,7 @@
   ;  {:item-id (string)}
   [db [_ editor-id]]
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)]
-       (merge (r core.subs/get-query-params db editor-id)
-              {:item-id current-item-id})))
+       (r core.subs/use-query-params db editor-id {:item-id current-item-id})))
 
 (defn get-request-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,4 +64,4 @@
                    (let [resolver-id    :item-editor/get-item-suggestions
                          resolver-props (r get-request-suggestions-resolver-props db editor-id)]
                        `(~resolver-id ~resolver-props)))]]
-       (r use-query-prop db editor-id query)))
+       (r core.subs/use-query-prop db editor-id query)))

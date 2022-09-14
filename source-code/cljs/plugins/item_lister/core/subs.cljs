@@ -26,10 +26,11 @@
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item             core.subs/get-meta-item)
-(def get-query-params          core.subs/get-query-params)
 (def plugin-synchronizing?     core.subs/plugin-synchronizing?)
 (def get-downloaded-items      core.subs/get-downloaded-items)
 (def get-downloaded-item-count core.subs/get-downloaded-item-count)
+(def use-query-prop            core.subs/use-query-prop)
+(def use-query-params          core.subs/use-query-params)
 
 
 

@@ -245,7 +245,7 @@
   ;   :on-blur (function)
   ;   :on-change (function)
   ;   :on-focus (function)
-  ;   :on-input (function)
+  ;   :style (map)
   ;   :type (keyword)
   ;   :value (string)}
   [field-id {:keys [autofill-name disabled? max-length type] :as field-props}]
@@ -254,8 +254,8 @@
                  :type     type
                  :value    (get-field-content field-id)
                  ; BUG#8809
-                 ;  Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                 ;  akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+                 ; Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+                 ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                  :on-change #(let [])}
                 {:auto-complete  autofill-name
                  :id             (a/dom-value field-id "input")
@@ -267,28 +267,7 @@
                  :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id])
                  :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
                  :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
-                 ; BUG#8041
-                 ;  Abban az esetben, ha egy input elem {:value-path [...]}
-                 ;  tulajdonságaként átadott Re-Frame adatbázis útvonalon tárolt
-                 ;  érték megváltozik egy külső esemény hatására, az input elem
-                 ;  {:on-change #(...)} függvényétől függetlenül, miközben
-                 ;  az input elemen van a fókusz, akkor az elem fókuszának
-                 ;  elvesztésekor megvizsgálja és "észreveszi", hogy megváltozott
-                 ;  az értéke, ezért lefuttatja az {:on-change #(...)} függvényét,
-                 ;  aminek hatására nem várt események történhetnek, amik hibás
-                 ;  működéshez vezethetnek.
-                 ;
-                 ;  Pl. a combo-box elem opciós listájából kiválasztott opció,
-                 ;  ami az elem {:value-path [...]} ... útvonalon tárolódik,
-                 ;  felülíródik az input tartalmával, ami minden esetben string
-                 ;  típus, ellentétben a kiválaszott opcióval.
-                 ;  Ezt elkerülendő, az elem a változásait az {:on-input #(...)}
-                 ;  függvény használatával kezeli.
-                 ;
-                 ;  A React hibás input elemként értelmezi, az {:on-change #(...)}
-                 ;  függvény nélküli input elemeket.
-                 :on-input   (on-change-function field-id field-props)
-                 :on-change #(let [])}))
+                 :on-change      (on-change-function field-id field-props)}))
 
 
 

@@ -32,8 +32,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
-  (merge (r core.subs/get-query-params db lister-id)
-         {:item-ids item-ids}))
+  (r core.subs/use-query-params db lister-id {:item-ids item-ids}))
 
 (defn get-delete-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,8 +61,7 @@
   ;  {:items (namespaced maps in vector)}
   [db [_ lister-id item-ids]]
   (let [exported-items (r backup.subs/export-backup-items db lister-id item-ids)]
-       (merge (r core.subs/get-query-params db lister-id)
-              {:items exported-items})))
+       (r core.subs/use-query-params db lister-id {:items exported-items})))
 
 (defn get-undo-delete-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,8 +89,7 @@
   ; @return (map)
   ;  {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
-  (merge (r core.subs/get-query-params db lister-id)
-         {:item-ids item-ids}))
+  (r core.subs/use-query-params db lister-id {:item-ids item-ids}))
 
 (defn get-duplicate-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

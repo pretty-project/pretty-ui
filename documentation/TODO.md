@@ -13,9 +13,13 @@
 
 
 # x4.7.0
+- Vannak olyan [:ui/render-bubble! ...] események, amik egy metamorphic-content-et
+  adnak át {:content ...} tulajdonságként, ez igy nem maradhat, a bubble layout-ja
+  ki kell kerüljön az x-ből!
+
 - SEO: https://schema.org/docs/gs.html
        https://stackoverflow.com/questions/29928974/what-is-the-purpose-of-meta-itemprop
-       
+
 - Rendet tenni a monoset log fájlokban
 
 - HACK#3031 probléma!

@@ -77,11 +77,11 @@
       ;   jelző értesítések, a műveletek után, még a listaelemek újratöltése előtt jelennének meg.
       ;
       ; Pl. Ha a kiválasztott listaelemek sikeres törlése után azonnal jelenne meg
-      ;      a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
-      ;      újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
-      ;      ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
-      ;      van és a plugin egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
-      ;      ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
+      ;     a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
+      ;     újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
+      ;     ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
+      ;     van és a plugin egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
+      ;     ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
       ;
       ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
       ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor

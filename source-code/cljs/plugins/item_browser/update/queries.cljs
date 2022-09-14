@@ -33,8 +33,7 @@
   ; @return (map)
   ;  {:item-id (string)}
   [db [_ browser-id item-id]]
-  (merge (r core.subs/get-query-params db browser-id)
-         {:item-id item-id}))
+  (r core.subs/use-query-params db browser-id {:item-id item-id}))
 
 (defn get-delete-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -63,8 +62,7 @@
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db browser-id item-id)]
-       (merge (r core.subs/get-query-params db browser-id)
-              {:item backup-item})))
+       (r core.subs/use-query-params db browser-id {:item backup-item})))
 
 (defn get-undo-delete-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -97,8 +95,7 @@
   ; paraméterezéssel működjenek.
   ; (az item-browser plugin működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
-       (merge (r core.subs/get-query-params db browser-id)
-              {:item exported-item})))
+       (r core.subs/use-query-params db browser-id {:item exported-item})))
 
 (defn get-duplicate-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -127,8 +124,7 @@
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
-       (merge (r core.subs/get-query-params db browser-id)
-              {:item exported-item})))
+       (r core.subs/use-query-params db browser-id {:item exported-item})))
 
 (defn get-update-item-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

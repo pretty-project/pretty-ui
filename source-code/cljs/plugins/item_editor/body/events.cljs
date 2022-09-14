@@ -13,11 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.body.events
-    (:require [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.vector                  :as vector]
-              [plugins.item-editor.body.subs      :as body.subs]
-              [plugins.item-editor.core.events    :as core.events]
-              [plugins.item-editor.core.subs      :as core.subs]
+    (:require [plugins.item-editor.core.events    :as core.events]
               [plugins.plugin-handler.body.events :as body.events]
               [x.app-core.api                     :refer [r]]))
 

@@ -28,6 +28,7 @@
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
+(def set-mode!          core.events/set-mode!)
 
 
 
@@ -41,7 +42,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :reload-mode?] true))
+  (r set-mode! db lister-id :reload-mode?))
 
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,7 +51,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :error-mode?] true))
+  (r set-mode! db lister-id :error-mode?))
 
 (defn set-memory-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,7 +63,7 @@
   ; Ha az item-lister plugin elhagyása előtt a set-memory-mode! függvény alkalmazásával
   ; a {:memory-mode? true} állapot beállításra kerül, akkor az item-lister plugin legközelebbi
   ; megnyitásakor a listaelemek a legutóbbi keresési és rendezési beállítások szerint töltődnek majd le.
-  (assoc-in db [:plugins :plugin-handler/meta-items lister-id :memory-mode?] true))
+  (r set-mode! db lister-id :memory-mode?))
 
 
 

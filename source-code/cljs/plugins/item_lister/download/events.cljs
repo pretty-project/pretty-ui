@@ -148,16 +148,16 @@
   ; - Az újra letöltött elemek fogadásakor is szükséges {:data-received? true} állapotba léptetni
   ;   a plugint az data-received függvény alkalmazásával!
   ;   Pl. Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
-  ;        és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
-  ;        plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
-  ;        indított elemek újratöltése még folyamatban van.
-  ;        A plugin nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
-  ;        előfordulhat, hogy a megnyitás után a plugin nem az [:item-lister/request-items! ...]
-  ;        esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
-  ;        követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
-  ;        lekérés tölti le megnyitás után az első elemeket.
-  ;        XXX#5476 HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
-  ;                 SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
+  ;       és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
+  ;       plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
+  ;       indított elemek újratöltése még folyamatban van.
+  ;       A plugin nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
+  ;       előfordulhat, hogy a megnyitás után a plugin nem az [:item-lister/request-items! ...]
+  ;       esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
+  ;       követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
+  ;       lekérés tölti le megnyitás után az első elemeket.
+  ;       XXX#5476 HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
+  ;                SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)

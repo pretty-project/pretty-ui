@@ -1,11 +1,11 @@
 
-# 4.7.4
+# x4.7.4
 - A [:sync/send-request! ...] esemény {:target-path ...} tulajdonsága megszűnt!
   Használj helyette {:response-f #(...)} függvényt!
 
 
 
-# 4.7.3
+# x4.7.3
 - Az x.app-elements.api/text-field elem és más text-field elemre épülő elemek
   (pl. combo-box, multi-combo-box, multi-field, password-field, ...) működése
   megváltozott!
@@ -17,7 +17,7 @@
 
 
 
-# 4.7.0
+# x4.7.0
 - [:ui/render-surface! ...]
   [:ui/close-surface!  ...]
   [:ui/render-popup!   ...]
@@ -35,7 +35,7 @@
 
 
 
-# x.4.6.8
+# x4.6.8
 
 - Az `item-lister`, `item-editor`, `item-browser` és `view-selector` pluginok beállításához,
   ezentúl újra használhatók az egyes pluginok szerver-oldali `[.../init-...! ...]` eseményei!

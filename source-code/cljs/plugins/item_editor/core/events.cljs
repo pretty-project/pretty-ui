@@ -29,6 +29,7 @@
 ; plugins.plugin-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
+(def set-mode!          core.events/set-mode!)
 (def set-item-id!       core.events/set-item-id!)
 (def update-item-id!    core.events/update-item-id!)
 
@@ -44,7 +45,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :error-mode?] true))
+  (r set-mode! db editor-id :error-mode?))
 
 (defn set-recovery-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +56,7 @@
   [db [_ editor-id]]
   ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja
   ; az elemet az utoljára eltárolt másolat alapján.
-  (assoc-in db [:plugins :plugin-handler/meta-items editor-id :recovery-mode?] true))
+  (r set-mode! db editor-id :recovery-mode?))
 
 
 
@@ -69,6 +70,11 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
+  ; A body komponens component-will-unmount életciklusa által alkalmazott
+  ; reset-downloads! függvény nem törli ki az elemről készült backup-item másolatot,
+  ; hogy a plugin elhagyása utáni esetleges "El nem mentett változtatások visszaállítása"
+  ; funkció használatakor a {:recovery-mode? true} állapotban újra elinduló plugin
+  ; számára elérhetők legyenek a visszaállításhoz szükséges adatok.
   (let [item-path        (r body.subs/get-body-prop db editor-id :item-path)
         suggestions-path (r body.subs/get-body-prop db editor-id :suggestions-path)]
        (-> db (dissoc-in [:plugins :plugin-handler/meta-items editor-id :data-received?])
