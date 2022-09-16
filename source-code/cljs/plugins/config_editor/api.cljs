@@ -21,6 +21,7 @@
               [plugins.config-editor.body.subs]
               [plugins.config-editor.core.effects]
               [plugins.config-editor.core.events]
+              [plugins.config-editor.core.subs]
               [plugins.config-editor.download.effects]
               [plugins.config-editor.download.events]
               [plugins.config-editor.download.subs]
@@ -30,8 +31,7 @@
               [plugins.config-editor.update.effects]
               [plugins.config-editor.update.subs]
               [plugins.config-editor.backup.subs :as backup.subs]
-              [plugins.config-editor.body.views  :as body.views]
-              [plugins.config-editor.core.subs   :as core.subs]))
+              [plugins.config-editor.body.views  :as body.views]))
 
 
 
@@ -43,5 +43,3 @@
 
 ; plugins.config-editor.body.views
 (def body body.views/body)
-
-; plugins.config-editor.core.subs

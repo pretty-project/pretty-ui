@@ -46,7 +46,12 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      {:db (r backup.events/backup-current-config! db editor-id)}))
+      ; A config-editor plugin az item-editor pluginnal ellentétben a tartalom
+      ; mentésének befejeződésekor nem lép ki a szerkesztőből, ezért szükséges
+      ; a tartalomról tárolt másolatot frissíteni, hogy a backup.subs/form-changed?
+      ; és a backup.subs/config-changed? függvények kimentei visszaálljanak alaphelyzetbe.
+      {:db       (r backup.events/backup-current-config! db editor-id)
+       :dispatch [:ui/render-bubble! {:body :saved}]}))
 
 (a/reg-event-fx
   :config-editor/save-config-failed

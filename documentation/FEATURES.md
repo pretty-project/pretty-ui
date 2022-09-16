@@ -1,4 +1,9 @@
 
+# x4.7.4
+- Új plugin: plugins.config-editor.api, edn fájlok szerkesztéséhez
+
+
+
 # x4.7.3
 - A [:pathom/send-query! ...] eseménnyel küldött lekérésekre adott szerver-válaszban,
   ha a válasz egy térkép, akkor elhelyezhető benne a :pathom/target-path

@@ -40,5 +40,5 @@
   [db [_ editor-id]]
   (let [resolver-id    (r download.subs/get-resolver-id     db editor-id :get-config)
         resolver-props (r get-request-config-resolver-props db editor-id)
-        query         `(~resolver-id ~resolver-props)]
+        query          [`(~resolver-id ~resolver-props)]]
        (r core.subs/use-query-prop db editor-id query)))
