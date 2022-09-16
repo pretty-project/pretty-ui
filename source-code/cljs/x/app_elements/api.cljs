@@ -50,6 +50,7 @@
               [x.app-elements.text-field.subs]
               [x.app-elements.anchor.views                            :as anchor.views]
               [x.app-elements.breadcrumbs.views                       :as breadcrumbs.views]
+              [x.app-elements.blank.views                             :as blank.views]
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.card.views                              :as card.views]
@@ -110,6 +111,7 @@
 ; x.app-elements.element-components.*
 (def anchor               anchor.views/element)
 (def breadcrumbs          breadcrumbs.views/element)
+(def blank                blank.views/element)
 (def button               button.views/element)
 (def button-separator     button-separator.views/element)
 (def card                 card.views/element)

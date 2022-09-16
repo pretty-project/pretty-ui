@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.button-separator.views
-    (:require [x.app-core.api                             :as a]
+    (:require [mid-fruits.random                          :as random]
               [x.app-elements.button-separator.helpers    :as button-separator.helpers]
               [x.app-elements.button-separator.prototypes :as button-separator.prototypes]))
 
@@ -55,7 +55,7 @@
   ; @usage
   ;  [elements/button-separator :my-separator {...}]
   ([separator-props]
-   [element (a/id) separator-props])
+   [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
    (let [separator-props (button-separator.prototypes/separator-props-prototype separator-props)]

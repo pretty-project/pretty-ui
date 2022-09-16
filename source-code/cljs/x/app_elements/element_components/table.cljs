@@ -16,6 +16,7 @@
     (:require [mid-fruits.candy                     :refer [param return]]
               [mid-fruits.css                       :as css]
               [mid-fruits.loop                      :refer [reduce-indexed]]
+              [mid-fruits.random                    :as random]
               [mid-fruits.vector                    :as vector]
               [x.app-components.api                 :as components]
               [x.app-core.api                       :as a :refer [r]]
@@ -302,7 +303,7 @@
   ;                   :rows [["1.40" "4.20"]
   ;                          ["0.40" "3.20"]]]}]
   ([table-props]
-   [element (a/id) table-props])
+   [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
    (let [table-props (table-props-prototype table-props)]

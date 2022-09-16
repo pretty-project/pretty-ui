@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.hiccup :as hiccup]))
 
 
 
@@ -45,5 +45,5 @@
   {:class          :x-app-bubbles--element
    :data-animation :reveal
    :data-nosnippet true
-   :id             (a/dom-value bubble-id)
-   :key            (a/dom-value bubble-id)})
+   :id             (hiccup/value bubble-id)
+   :key            (hiccup/value bubble-id)})

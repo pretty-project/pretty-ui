@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.anchor.views
-    (:require [x.app-components.api             :as components]
-              [x.app-core.api                   :as a]
+    (:require [mid-fruits.random                :as random]
+              [x.app-components.api             :as components]
               [x.app-elements.anchor.helpers    :as anchor.helpers]
               [x.app-elements.anchor.prototypes :as anchor.prototypes]))
 
@@ -83,7 +83,7 @@
   ; @usage
   ;  [elements/anchor :my-anchor {...}]
   ([anchor-props]
-   [element (a/id) anchor-props])
+   [element (random/generate-keyword) anchor-props])
 
   ([anchor-id anchor-props]
    (let [anchor-props (anchor.prototypes/anchor-props-prototype anchor-props)]

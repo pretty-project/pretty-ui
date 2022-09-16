@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.toggle
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
@@ -91,7 +92,7 @@
   ; @usage
   ;  [elements/toggle :my-toggle {...}]
   ([toggle-props]
-   [element (a/id) toggle-props])
+   [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
    (let [];toggle-props (toggle-props-prototype toggle-props)

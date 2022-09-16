@@ -31,7 +31,6 @@
               [x.server-core.config-handler.config          :as config-handler.config]
               [x.server-core.config-handler.subs            :as config-handler.subs]
               [x.server-core.debug-handler.helpers          :as debug-handler.helpers]
-              [x.server-core.engine                         :as engine]
               [x.server-core.event-handler                  :as event-handler]
               [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.server-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
@@ -69,11 +68,6 @@
 
 ; x.server-core.debug-handler.helpers
 (def request->debug-mode debug-handler.helpers/request->debug-mode)
-
-; x.server-core.engine
-(def dom-value     engine/dom-value)
-(def id            engine/id)
-(def get-namespace engine/get-namespace)
 
 ; x.server-core.event-handler
 (def event-vector?              event-handler/event-vector?)

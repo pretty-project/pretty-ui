@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.counter.views
-    (:require [reagent.api                       :as reagent]
+    (:require [mid-fruits.random                 :as random]
+              [reagent.api                       :as reagent]
               [x.app-core.api                    :as a]
               [x.app-elements.counter.helpers    :as counter.helpers]
               [x.app-elements.counter.prototypes :as counter.prototypes]
@@ -142,7 +143,7 @@
   ; @usage
   ;  [elements/counter :my-counter {...}]
   ([counter-props]
-   [element (a/id) counter-props])
+   [element (random/generate-keyword) counter-props])
 
   ([counter-id counter-props]
    (let [counter-props (counter.prototypes/counter-props-prototype counter-id counter-props)]

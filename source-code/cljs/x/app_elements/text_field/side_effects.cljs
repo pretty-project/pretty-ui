@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.side-effects
-    (:require [mid-fruits.string                 :as string]
+    (:require [mid-fruits.hiccup                 :as hiccup]
+              [mid-fruits.string                 :as string]
               [x.app-core.api                    :as a]
               [x.app-elements.text-field.helpers :as text-field.helpers]
               [x.app-environment.api             :as environment]))
@@ -68,7 +69,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id _]
-  (let [field-input-id (a/dom-value field-id "input")]
+  (let [field-input-id (hiccup/value field-id "input")]
        (environment/move-caret-to-end! field-input-id)
        (environment/focus-element!     field-input-id)))
 

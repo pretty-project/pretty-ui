@@ -25,6 +25,7 @@
 
 (ns x.app-ui.renderer
     (:require [mid-fruits.candy   :refer [param return]]
+              [mid-fruits.hiccup  :as hiccup]
               [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [reagent.api        :as reagent]
@@ -966,11 +967,11 @@
   ; @param (map) element-props
   (fn [{:keys [db]} [_ renderer-id element-id element-props]]
       {:db (r update-element-props! db renderer-id element-id element-props)
-       :fx [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "update"]
+       :fx [:environment/set-element-attribute! (hiccup/value element-id) "data-animation" "update"]
        :dispatch [:ui/rendering-ended renderer-id]
        :dispatch-later
        [{:ms UPDATE-ANIMATION-TIMEOUT
-         :fx [:environment/remove-element-attribute! (a/dom-value element-id) "data-animation"]}]}))
+         :fx [:environment/remove-element-attribute! (hiccup/value element-id) "data-animation"]}]}))
 
 (a/reg-event-fx
   :ui/update-element-static!
@@ -1058,7 +1059,7 @@
       {:db (r mark-element-as-invisible! db renderer-id element-id)
        ; 1.
        ; Hide element ...
-       :fx [:environment/set-element-attribute! (a/dom-value element-id) "data-animation" "hide"]
+       :fx [:environment/set-element-attribute! (hiccup/value element-id) "data-animation" "hide"]
        ; 2.
        :dispatch-later
        [{:ms HIDE-ANIMATION-TIMEOUT
@@ -1139,7 +1140,7 @@
   ;  {:attributes (map)(opt)}
   [renderer-id {:keys [attributes]}]
   (let [dom-id (engine/renderer-id->dom-id renderer-id)
-        wrapper-attributes (assoc attributes :id (a/dom-value dom-id))]
+        wrapper-attributes (assoc attributes :id (hiccup/value dom-id))]
        [:div wrapper-attributes]))
 
 (defn- elements

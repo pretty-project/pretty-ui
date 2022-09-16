@@ -14,6 +14,7 @@
 
 (ns x.app-elements.submit-button.views
     (:require [mid-fruits.map                          :refer [assoc-some]]
+              [mid-fruits.random                       :as random]
               [x.app-core.api                          :as a]
               [x.app-elements.button.prototypes        :as button.prototypes]
               [x.app-elements.button.views             :as button.views]
@@ -42,7 +43,7 @@
   ; @usage
   ;  [elements/submit-button :my-submit-button {...}]
   ([button-props]
-   [element (a/id) button-props])
+   [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
    (let [button-disabled? @(a/subscribe [:elements.submit-button/button-disabled? button-id button-props])

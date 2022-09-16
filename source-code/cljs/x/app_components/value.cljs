@@ -25,6 +25,7 @@
 
 (ns x.app-components.value
     (:require [mid-fruits.candy     :refer [param return]]
+              [mid-fruits.random    :as random]
               [x.app-core.api       :as a :refer [r]]
               [x.app-dictionary.api :as dictionary]))
 
@@ -101,7 +102,7 @@
   ;
   ; @return (string)
   ([value-props]
-   (component (a/id) value-props))
+   (component (random/generate-keyword) value-props))
 
   ([_ value-props]
    @(a/subscribe [:components/get-metamorphic-value value-props])))

@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.overlay
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
@@ -64,7 +65,7 @@
   ; @usage
   ;  [elements/overlay :my-overlay {...}]
   ([overlay-props]
-   [element (a/id) overlay-props])
+   [element (random/generate-keyword) overlay-props])
 
   ([overlay-id overlay-props]
    (let [];overlay-props (overlay-props-prototype overlay-props)

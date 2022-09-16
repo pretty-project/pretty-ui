@@ -14,7 +14,7 @@
 
 (ns x.app-tools.image-loader.views
     (:require [mid-fruits.candy                 :refer [param]]
-              [x.app-core.api                   :as a]
+              [mid-fruits.random                :as random]
               [x.app-tools.image-loader.helpers :as image-loader.helpers]))
 
 
@@ -65,7 +65,7 @@
   ; @usage
   ;  [tools/image-loader :my-loader {...}]
   ([loader-props]
-   [component (a/id) loader-props])
+   [component (random/generate-keyword) loader-props])
 
   ([loader-id loader-props]
    [image-loader loader-id @loader-props]))

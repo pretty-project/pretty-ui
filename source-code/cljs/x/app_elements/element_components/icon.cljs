@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.icon
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 
@@ -84,7 +85,7 @@
   ; @usage
   ;  [elements/icon :my-icon {...}]
   ([icon-props]
-   [element (a/id) icon-props])
+   [element (random/generate-keyword) icon-props])
 
   ([icon-id icon-props]
    (let [icon-props (icon-props-prototype icon-props)]

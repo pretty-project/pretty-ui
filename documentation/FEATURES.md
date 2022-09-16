@@ -1,7 +1,7 @@
 
 # x4.7.4
-- Új plugin: plugins.config-editor.api, edn fájlok szerkesztéséhez
-
+- Új plugin: plugins.config-editor.api (edn fájlok szerkesztéséhez)
+- Új plugin: plugins.text-editor.api
 
 
 # x4.7.3

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.views
-    (:require [reagent.api                            :as reagent]
+    (:require [mid-fruits.random                      :as random]
+              [reagent.api                            :as reagent]
               [x.app-components.api                   :as components]
-              [x.app-core.api                         :as a]
               [x.app-elements.input.helpers           :as input.helpers]
               [x.app-elements.label.views             :as label.views]
               [x.app-elements.radio-button.helpers    :as radio-button.helpers]
@@ -143,7 +143,7 @@
   ; @usage
   ;  [elements/radio-button :my-radio-button {...}]
   ([button-props]
-   [element (a/id) button-props])
+   [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
    (let [button-props (radio-button.prototypes/button-props-prototype button-id button-props)]

@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.element.helpers
-    (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.css   :as css]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.css    :as css]
+              [mid-fruits.hiccup :as hiccup]
+              [x.app-core.api    :as a]))
 
 
 
@@ -134,8 +135,8 @@
   ;   attribútumot alkalmazni!
   {:class         (css/join-class :x-element class)
    :data-disabled (boolean     disabled?)
-   :id            (a/dom-value element-id)
-  ;:key           (a/dom-value element-id)
+   :id            (hiccup/value element-id)
+  ;:key           (hiccup/value element-id)
    :style         style})
 
 (defn element-indent-attributes

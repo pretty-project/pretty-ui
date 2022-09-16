@@ -15,6 +15,7 @@
 (ns x.app-elements.element-components.image
     (:require [dom.api                   :as dom]
               [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [react.api                 :as react]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
@@ -34,7 +35,7 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- on-error-function
+(defn- on-error-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) image-id
@@ -54,7 +55,7 @@
   ;  {:onError (function)
   ;   :ref (function)}
   [image-id _]
-  {:onError (on-error-function    image-id)
+  {:onError (on-error-f           image-id)
    :ref     (react/set-reference! image-id)})
 
 
@@ -117,7 +118,7 @@
   ; @usage
   ;  [elements/image :my-image {...}]
   ([image-props]
-   [element (a/id) image-props])
+   [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
    (let [];image-props (image-props-prototype image-id image-props)

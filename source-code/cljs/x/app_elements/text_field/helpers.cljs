@@ -16,6 +16,7 @@
     (:require [dom.api                          :as dom]
               [mid-fruits.candy                 :refer [return]]
               [mid-fruits.css                   :as css]
+              [mid-fruits.hiccup                :as hiccup]
               [mid-fruits.string                :as string]
               [mid-fruits.time                  :as time]
               [x.app-components.api             :as components]
@@ -82,7 +83,7 @@
   ;
   ; @return (boolean)
   [field-id]
-  (let [field-input-id (a/dom-value field-id "input")]
+  (let [field-input-id (hiccup/value field-id "input")]
        (environment/element-enabled? field-input-id)))
 
 (defn field-emptiable?
@@ -130,7 +131,7 @@
   ;   Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
   ;   on-type-ended esemény.
   ;
-  ; - A resolve-field-change! függvény az on-change-function függvénytől NEM kapja meg
+  ; - A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
   ;   paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
   ;   hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
   (let [field-content (get-field-content field-id)
@@ -139,7 +140,7 @@
        (when (> now (+ changed-at text-field.config/TYPE-ENDED-AFTER))
              (a/dispatch-sync [:elements.text-field/type-ended field-id field-props field-content]))))
 
-(defn on-change-function
+(defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -250,7 +251,7 @@
   ;   :value (string)}
   [field-id {:keys [autofill-name disabled? max-length type] :as field-props}]
   (if disabled? {:disabled true
-                 :id       (a/dom-value field-id "input")
+                 :id       (hiccup/value field-id "input")
                  :type     type
                  :value    (get-field-content field-id)
                  ; BUG#8809
@@ -258,7 +259,7 @@
                  ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                  :on-change #(let [])}
                 {:auto-complete  autofill-name
-                 :id             (a/dom-value field-id "input")
+                 :id             (hiccup/value field-id "input")
                  :max-length     max-length
                  :name           autofill-name
                  :type           type
@@ -267,7 +268,7 @@
                  :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id])
                  :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
                  :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
-                 :on-change      (on-change-function field-id field-props)}))
+                 :on-change      (on-change-f field-id field-props)}))
 
 
 

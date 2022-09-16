@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.color-marker.views
-    (:require [x.app-core.api                         :as a]
+    (:require [mid-fruits.random                      :as random]
               [x.app-elements.color-marker.helpers    :as color-marker.helpers]
               [x.app-elements.color-marker.prototypes :as color-marker.prototypes]))
 
@@ -70,7 +70,7 @@
   ; @usage
   ;  [elements/color-marker :my-color-marker {...}]
   ([marker-props]
-   [element (a/id) marker-props])
+   [element (random/generate-keyword) marker-props])
 
   ([marker-id marker-props]
    (let [marker-props (color-marker.prototypes/marker-props-prototype marker-props)]

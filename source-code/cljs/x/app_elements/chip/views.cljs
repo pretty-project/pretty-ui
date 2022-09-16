@@ -14,8 +14,8 @@
 
 (ns x.app-elements.chip.views
     (:require [mid-fruits.candy               :refer [param]]
+              [mid-fruits.random              :as random]
               [x.app-components.api           :as components]
-              [x.app-core.api                 :as a]
               [x.app-elements.chip.helpers    :as chip.helpers]
               [x.app-elements.chip.prototypes :as chip.prototypes]))
 
@@ -114,7 +114,7 @@
   ; @usage
   ;  [elements/chip :my-chip {...}]
   ([chip-props]
-   [element (a/id) chip-props])
+   [element (random/generate-keyword) chip-props])
 
   ([chip-id chip-props]
    (let [chip-props (chip.prototypes/chip-props-prototype chip-props)]

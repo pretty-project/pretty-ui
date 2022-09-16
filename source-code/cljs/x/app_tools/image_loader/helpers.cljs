@@ -15,7 +15,7 @@
 (ns x.app-tools.image-loader.helpers
     (:require [mid-fruits.candy               :refer [param]]
               [mid-fruits.css                 :as css]
-              [x.app-core.api                 :as a]
+              [mid-fruits.hiccup              :as hiccup]
               [x.app-tools.image-loader.state :as image-loader.state]))
 
 
@@ -37,7 +37,7 @@
   ;
   ; @return (boolean)
   [loader-id]
-  (boolean (get-in @image-loader.state/LOADERS [loader-id :loaded?])))
+  (get-in @image-loader.state/LOADERS [loader-id :loaded?]))
 
 
 
@@ -57,7 +57,7 @@
   ;   :id (keyword)
   ;   :style (map)}
   [loader-id {:keys [class uri]}]
-  {:class (param class)
-   :id    (a/dom-value loader-id)
+  {:class (param        class)
+   :id    (hiccup/value loader-id)
    :style (if-let [image-loaded? (image-loaded? loader-id)]
                   {:backgroundImage (css/url uri)})})

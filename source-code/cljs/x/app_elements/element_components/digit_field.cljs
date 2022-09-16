@@ -18,6 +18,7 @@
     (:require [dom.api                               :as dom]
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.css                        :as css]
+              [mid-fruits.random                     :as random]
               [mid-fruits.vector                     :as vector]
               [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.api             :as engine]
@@ -146,7 +147,7 @@
   ; @usage
   ;  [elements/digit-field :my-digit-field {...}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (field-props-prototype field-id field-props)]

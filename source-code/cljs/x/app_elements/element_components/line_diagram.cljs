@@ -16,6 +16,7 @@
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
               [mid-fruits.math           :as math]
+              [mid-fruits.random         :as random]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
@@ -155,7 +156,7 @@
   ; @usage
   ;  [elements/line-diagram :my-line-diagram {...}]
   ([diagram-props]
-   [element (a/id) diagram-props])
+   [element (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    (let [diagram-props (diagram-props-prototype diagram-props)]

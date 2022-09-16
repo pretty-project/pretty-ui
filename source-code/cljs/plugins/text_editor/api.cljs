@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.01.01
-; Description:
-; Version: v1.1.8
-; Compatibility: x3.9.9
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -23,16 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.engine
-    (:require [server-fruits.http :as http]
-              [x.mid-core.engine  :as engine]))
+(ns plugins.text-editor.api
+    (:require [plugins.text-editor.views :as views]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.engine
-(def dom-value     engine/dom-value)
-(def id            engine/id)
-(def get-namespace engine/get-namespace)
+; plugins.text-editor.views
+(def body views/body)

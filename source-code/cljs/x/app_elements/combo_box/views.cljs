@@ -14,6 +14,7 @@
 
 (ns x.app-elements.combo-box.views
     (:require [mid-fruits.loop                     :refer [reduce-indexed]]
+              [mid-fruits.random                   :as random]
               [reagent.api                         :as reagent]
               [x.app-components.api                :as components]
               [x.app-core.api                      :as a]
@@ -181,7 +182,7 @@
   ; @usage
   ;  [elements/combo-box :my-combo-box {...}]
   ([box-props]
-   [element (a/id) box-props])
+   [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
    (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)

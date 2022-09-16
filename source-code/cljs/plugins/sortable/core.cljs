@@ -18,9 +18,11 @@
               ["@dnd-kit/utilities" :as utilities]
               [mid-fruits.candy     :refer [param return]]
               [mid-fruits.json      :as json]
+              [mid-fruits.hiccup    :as hiccup]
               [mid-fruits.loop      :refer [reduce-indexed]]
               [mid-fruits.map       :refer [dissoc-in]]
               [mid-fruits.mixed     :as mixed]
+              [mid-fruits.random    :as random]
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
               [reagent.api          :as reagent]
@@ -122,7 +124,7 @@
   ;   :id (string)
   ;   :style (map)}
   [sortable-id {:keys [class style]}]
-  (cond-> {:id (a/dom-value sortable-id)}
+  (cond-> {:id (hiccup/value sortable-id)}
           (some? class) (assoc :class class)
           (some? style) (assoc :style style)))
 
@@ -293,7 +295,7 @@
   ;   :tabIndex (integer)}
   [{:keys [attributes listeners setNodeRef]}]
   (let [active-item? (get attributes :aria-pressed)]
-       (merge {:data-position (a/dom-value :right)
+       (merge {:data-position :right
                :ref          #(setNodeRef %)
 
                ; WARNING! DEPRECATED!
@@ -820,7 +822,7 @@
   ;                          :element      #'my-element
   ;                          :value-path   [:my-items]}]
   ([sortable-props]
-   [sortable (a/id) sortable-props])
+   [sortable (random/generate-keyword) sortable-props])
 
   ([sortable-id sortable-props]
    [components/stated sortable-id

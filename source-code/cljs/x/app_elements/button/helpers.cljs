@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.button.helpers
-    (:require [x.app-core.api                 :as a]
+    (:require [mid-fruits.hiccup              :as hiccup]
+              [x.app-core.api                 :as a]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -94,7 +95,7 @@
   [button-id {:keys [disabled? on-click on-mouse-over]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
-                 :id              (a/dom-value button-id "body")
+                 :id              (hiccup/value button-id "body")
                  :on-click       #(a/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)
                  :on-mouse-over  #(a/dispatch on-mouse-over)}))

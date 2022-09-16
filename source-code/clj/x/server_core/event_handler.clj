@@ -1,14 +1,5 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.04.14
-; Description:
-; Version: v1.6.4
-; Compatibility: x4.6.0
-
-
+; WARNING! DEPRECATED! DO NOT USE!
 
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,19 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.event-handler
-    (:require [mid-fruits.candy         :refer [param return]]
-              [mid-fruits.vector        :as vector]
-              [logger.api               :as logger]
-              [re-frame.core            :as re-frame]
-              [x.mid-core.event-handler :as event-handler]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-(def EVENT-LOG-FILENAME "x.server-events.log")
+    (:require [x.mid-core.event-handler :as event-handler]))
 
 
 
@@ -62,6 +41,8 @@
 (def reg-sub                    event-handler/reg-sub)
 (def event-vector<-id           event-handler/event-vector<-id)
 (def debug!                     event-handler/debug!)
+(def reg-event-db               event-handler/reg-event-db)
+(def reg-event-fx               event-handler/reg-event-fx)
 (def get-event-handlers         event-handler/get-event-handlers)
 (def get-event-handler          event-handler/get-event-handler)
 (def event-handler-registrated? event-handler/event-handler-registrated?)
@@ -79,51 +60,3 @@
 (def fx                         event-handler/fx)
 (def fx-n                       event-handler/fx-n)
 (def r                          event-handler/r)
-
-
-
-;; -- System interceptors -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (?)
-(def LOG-EVENT! (re-frame/->interceptor :id :core/log-event!
-                                        :before #(let [event-vector (context->event-vector %1)]
-                                                     ; Szükséges korlátozni a fájl maximális méretét!
-                                                     ;(logger/write! EVENT-LOG-FILENAME event-vector)
-                                                      (return %1))))
-
-(defn- interceptors<-system-interceptors
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (vector) interceptors
-  ;
-  ; @return (vector)
-  [interceptors]
-  (vector/conj-item interceptors LOG-EVENT!))
-
-
-
-;; -- Event registrating ------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reg-event-db
-  ; @param (keyword) event-id
-  ; @param (vector)(opt) interceptors
-  ; @param (metamorphic-event) event-handler
-  ([event-id event-handler]
-   (reg-event-db event-id nil event-handler))
-
-  ([event-id interceptors event-handler]
-   (let [interceptors (interceptors<-system-interceptors interceptors)]
-        (event-handler/reg-event-db event-id interceptors event-handler))))
-
-(defn reg-event-fx
-  ; @param (keyword) event-id
-  ; @param (vector)(opt) interceptors
-  ; @param (metamorphic-event) event-handler
-  ([event-id event-handler]
-   (reg-event-fx event-id nil event-handler))
-
-  ([event-id interceptors event-handler]
-   (let [interceptors (interceptors<-system-interceptors interceptors)]
-        (event-handler/reg-event-fx event-id interceptors event-handler))))

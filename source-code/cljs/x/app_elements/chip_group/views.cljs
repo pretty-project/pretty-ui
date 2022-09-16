@@ -14,6 +14,7 @@
 
 (ns x.app-elements.chip-group.views
     (:require [mid-fruits.loop                      :refer [reduce-indexed]]
+              [mid-fruits.random                    :as random]
               [mid-fruits.vector                    :as vector]
               [x.app-components.api                 :as components]
               [x.app-core.api                       :as a]
@@ -111,7 +112,7 @@
   ; @usage
   ;  [elements/chip-group :my-chip-group {...}]
   ([group-props]
-   [element (a/id) group-props])
+   [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
    (let [group-props (chip-group.prototypes/group-props-prototype group-id group-props)]

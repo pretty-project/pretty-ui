@@ -14,8 +14,8 @@
 
 (ns x.app-elements.label.views
     (:require [mid-fruits.candy                :refer [param]]
+              [mid-fruits.random               :as random]
               [x.app-components.api            :as components]
-              [x.app-core.api                  :as a]
               [x.app-elements.label.helpers    :as label.helpers]
               [x.app-elements.label.prototypes :as label.prototypes]))
 
@@ -200,7 +200,7 @@
   ; @usage
   ;  [elements/label :my-label {...}]
   ([label-props]
-   [element (a/id) label-props])
+   [element (random/generate-keyword) label-props])
 
   ([label-id label-props]
    (let [label-props (label.prototypes/label-props-prototype label-props)]

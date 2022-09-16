@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.hiccup :as hiccup]))
 
 
 
@@ -29,5 +29,5 @@
   ;  {}
   [surface-id]
   {:class :x-app-surface--element
-   :id    (a/dom-value surface-id)
-   :key   (a/dom-value surface-id)})
+   :id    (hiccup/value surface-id)
+   :key   (hiccup/value surface-id)})

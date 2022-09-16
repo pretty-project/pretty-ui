@@ -14,7 +14,7 @@
 
 (ns x.app-elements.color-selector.views
     (:require [layouts.popup-a.api                      :as popup-a]
-              [x.app-core.api                           :as a]
+              [mid-fruits.random                        :as random]
               [x.app-elements.button.views              :as button.views]
               [x.app-elements.color-selector.helpers    :as color-selector.helpers]
               [x.app-elements.color-selector.prototypes :as color-selector.prototypes]))
@@ -87,7 +87,7 @@
   ; @usage
   ;  [elements/color-selector :my-color-selector {...}]
   ([selector-props]
-   [element (a/id) selector-props])
+   [element (random/generate-keyword) selector-props])
 
   ([selector-id selector-props]
    (let [button-props (color-selector.prototypes/button-props-prototype selector-id selector-props)]

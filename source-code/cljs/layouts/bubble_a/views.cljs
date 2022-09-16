@@ -15,6 +15,7 @@
 (ns layouts.bubble-a.views
     (:require [layouts.popup-a.helpers    :as helpers]
               [layouts.popup-a.prototypes :as prototypes]
+              [mid-fruits.hiccup          :as hiccup]
               [react.api                  :as react]
               [reagent.api                :as reagent]
               [x.app-components.api       :as components]
@@ -52,9 +53,9 @@
   ;
   ; - A megoldás az, hogy a footer-sensor elemet a .popup-a--body-content elemen belül a tartalom
   ;   után kell elhelyezni!
-  [:div.popup-a--body [:div.popup-a--body-content (if header [:div {:id (a/dom-value popup-id "header-sensor")}])
+  [:div.popup-a--body [:div.popup-a--body-content (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
                                                   [components/content popup-id body]
-                                                  (if footer [:div {:id (a/dom-value popup-id "footer-sensor")}])]])
+                                                  (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
 (defn- layout-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

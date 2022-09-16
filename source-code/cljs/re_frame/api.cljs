@@ -58,6 +58,8 @@
 (def dispatch-later dispatch/dispatch-later)
 (def dispatch-if    dispatch/dispatch-if)
 (def dispatch-cond  dispatch/dispatch-cond)
+(def dispatch-last  dispatch/dispatch-last)
+(def dispatch-once  dispatch/dispatch-once)
 
 ; re-frame.effects-map
 (def effects-map<-event     effects-map/effects-map<-event)

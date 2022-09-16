@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.breadcrumbs.views
-    (:require [x.app-components.api                  :as components]
-              [x.app-core.api                        :as a]
+    (:require [mid-fruits.random                     :as random]
+              [x.app-components.api                  :as components]
               [x.app-elements.breadcrumbs.helpers    :as breadcrumbs.helpers]
               [x.app-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]))
 
@@ -113,7 +113,7 @@
   ; @usage
   ;  [elements/breadcrumbs :my-breadcrumbs {...}]
   ([breadcrumbs-props]
-   [element (a/id) breadcrumbs-props])
+   [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
    (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]

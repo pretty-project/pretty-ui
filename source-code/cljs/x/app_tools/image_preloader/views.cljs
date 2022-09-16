@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-tools.image-preloader.views
-    (:require [mid-fruits.candy :refer [param]]
-              [reagent.api      :as reagent]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.random :as random]
+              [reagent.api       :as reagent]
+              [x.app-core.api    :as a]))
 
 
 
@@ -36,7 +37,7 @@
   ; @usage
   ;  [tools/image-preloader {:uri "/my-image.png"}]
   ([preloader-props]
-   [component (a/id) preloader-props])
+   [component (random/generate-keyword) preloader-props])
 
   ([preloader-id {:keys [uri]}]
    (reagent/lifecycles {:component-will-mount           #(a/dispatch [:core/start-synchron-signal! preloader-id])

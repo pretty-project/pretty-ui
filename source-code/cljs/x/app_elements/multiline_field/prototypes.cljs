@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multiline-field.prototypes
-    (:require [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.random :as random]))
 
 
 
@@ -38,4 +38,4 @@
          (param field-props)
          {:multiline? true
           ; XXX#6782
-          :autofill-name (a/id)}))
+          :autofill-name (random/generate-keyword)}))

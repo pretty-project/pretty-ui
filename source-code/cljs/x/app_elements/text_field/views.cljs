@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.views
-    (:require [mid-fruits.string                    :as string]
+    (:require [mid-fruits.hiccup                    :as hiccup]
+              [mid-fruits.random                    :as random]
+              [mid-fruits.string                    :as string]
               [mid-fruits.vector                    :as vector]
               [reagent.api                          :as reagent]
               [x.app-components.api                 :as components]
@@ -252,7 +254,7 @@
   ; @param (map) field-props
   ;  {}
   [field-id {:keys [helper info-text label required?]}]
-  (if label (let [input-id (a/dom-value field-id "input")]
+  (if label (let [input-id (hiccup/value field-id "input")]
                  [label.views/element {:content   label
                                        :helper    helper
                                        :info-text info-text
@@ -403,7 +405,7 @@
   ; @usage
   ; [elements/text-field {:modifier #(string/starts-with! % "/")}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (text-field.prototypes/field-props-prototype field-id field-props)]

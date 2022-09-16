@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler.effects
-    (:require [x.app-core.api :as a]))
+    (:require [x.app-core.api                    :as a :refer [r]]
+              [x.app-user.account-handler.events :as account-handler.events]))
 
 
 
@@ -41,14 +42,15 @@
   ;
   ; @usage
   ;  [:user/authenticate! {:email-address "hello@domain.com" :password "my-password"}]
-  (fn [_ [_ login-data]]
-      [:sync/send-request! :user/authenticate!
-                           {:method       :post
-                            :on-success   [:boot-loader/restart-app!]
-                            :on-failure   [:user/reg-login-attempt!]
-                            :params       login-data
-                            :uri          "/user/authenticate"
-                            :idle-timeout 3000}]))
+  (fn [{:keys [db]} [_ login-data]]
+      {:db (r account-handler.events/clear-login-attempt! db)
+       :dispatch [:sync/send-request! :user/authenticate!
+                                      {:method       :post
+                                       :on-success   [:boot-loader/restart-app!]
+                                       :on-failure   [:user/reg-login-attempt!]
+                                       :params       login-data
+                                       :uri          "/user/authenticate"
+                                       :idle-timeout 3000}]}))
 
 (a/reg-event-fx
   :user/logout!

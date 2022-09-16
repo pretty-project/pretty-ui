@@ -14,6 +14,7 @@
 
 (ns x.app-elements.multi-field.helpers
     (:require [mid-fruits.candy               :refer [return]]
+              [mid-fruits.hiccup              :as hiccup]
               [mid-fruits.vector              :as vector]
               [x.app-components.api           :as components]
               [x.app-core.api                 :as a]
@@ -168,7 +169,7 @@
   ;
   ; @return (string)
   [group-id _ field-dex]
-  (a/dom-value group-id field-dex))
+  (hiccup/value group-id field-dex))
 
 
 
@@ -184,6 +185,10 @@
   ; @return (map)
   ;  {}
   [group-id group-props]
-  (merge (element.helpers/element-default-attributes group-id group-props)
-         (element.helpers/element-indent-attributes  group-id group-props)
-         {}))
+  ; Az egyes mezők is reagálnak a {:disabled? true} állapotra, ezért a mezőcsoportnak,
+  ; már nem szükséges reagálni rá, különben a kétszeresen jelenne meg a sötétítő
+  ; hatás (a mezőkön is és a mezőcsoporton is)!
+  (let [group-props (dissoc group-props :disabled?)]
+       (merge (element.helpers/element-default-attributes group-id group-props)
+              (element.helpers/element-indent-attributes  group-id group-props)
+              {})))

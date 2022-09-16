@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.card.views
-    (:require [x.app-components.api           :as components]
-              [x.app-core.api                 :as a]
+    (:require [mid-fruits.random              :as random]
+              [x.app-components.api           :as components]
               [x.app-elements.card.helpers    :as card.helpers]
               [x.app-elements.card.prototypes :as card.prototypes]
               [x.app-elements.engine.api      :as engine]))
@@ -106,7 +106,7 @@
   ; @usage
   ;  [elements/card :my-card {...}]
   ([card-props]
-   [element (a/id) card-props])
+   [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
    (let [card-props (card.prototypes/card-props-prototype card-props)]

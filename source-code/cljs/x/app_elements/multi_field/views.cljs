@@ -14,6 +14,7 @@
 
 (ns x.app-elements.multi-field.views
     (:require [mid-fruits.loop                       :refer [reduce-indexed]]
+              [mid-fruits.random                     :as random]
               [x.app-core.api                        :as a]
               [x.app-elements.combo-box.views        :as combo-box.views]
               [x.app-elements.multi-field.helpers    :as multi-field.helpers]
@@ -78,7 +79,7 @@
   ; @usage
   ;  [elements/multi-field :my-multi-field {...}]
   ([group-props]
-   [element (a/id) group-props])
+   [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
    (let [group-props (multi-field.prototypes/group-props-prototype group-id group-props)]

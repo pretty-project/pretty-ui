@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.vertical-separator
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 
@@ -51,7 +52,7 @@
   ; @usage
   ;  [elements/vertical-separator :my-vertical-separator {...}]
   ([separator-props]
-   [element (a/id) separator-props])
+   [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
    (let [separator-props (separator-props-prototype separator-props)]

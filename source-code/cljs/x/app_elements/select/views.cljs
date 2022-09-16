@@ -14,6 +14,7 @@
 
 (ns x.app-elements.select.views
     (:require [layouts.popup-a.api                           :as popup-a]
+              [mid-fruits.random                             :as random]
               [mid-fruits.vector                             :as vector]
               [reagent.api                                   :as reagent]
               [x.app-components.api                          :as components]
@@ -344,7 +345,7 @@
   ;                    :options-path [:my-options]
   ;                    :value-path   [:my-selected-option]}]
   ([select-props]
-   [element (a/id) select-props])
+   [element (random/generate-keyword) select-props])
 
   ([select-id select-props]
    (let [select-props (select.prototypes/select-props-prototype select-id select-props)]

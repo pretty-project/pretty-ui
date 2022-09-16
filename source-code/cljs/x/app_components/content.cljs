@@ -26,6 +26,7 @@
 (ns x.app-components.content
     (:require [mid-fruits.candy             :refer [param return]]
               [mid-fruits.hiccup            :refer [hiccup?]]
+              [mid-fruits.random            :as random]
               [mid-fruits.string            :as string]
               [reagent.api                  :refer [component?]]
               [x.app-components.transmitter :rename {component transmitter}]
@@ -213,7 +214,7 @@
   ;  [components/content {:content    [my-component :my-component]
   ;                       :subscriber [:get-my-component-props]}]
   ([context-props]
-   (component (a/id) context-props))
+   (component (random/generate-keyword) context-props))
 
   ([component-id context-props]
    (if-not (map? context-props)

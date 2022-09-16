@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.date-field.prototypes
-    (:require [mid-fruits.candy :refer [param]]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy  :refer [param]]
+              [mid-fruits.random :as random]))
 
 
 
@@ -34,5 +34,5 @@
   (merge {}
          (param field-props)
           ; XXX#6782
-         {:autofill-name (a/id)
+         {:autofill-name (random/generate-keyword)
           :type          :date}))

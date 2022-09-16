@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.switch.views
-    (:require [reagent.api                      :as reagent]
+    (:require [mid-fruits.random                :as random]
+              [reagent.api                      :as reagent]
               [x.app-components.api             :as components]
-              [x.app-core.api                   :as a]
               [x.app-elements.input.helpers     :as input.helpers]
               [x.app-elements.label.views       :as label.views]
               [x.app-elements.switch.helpers    :as switch.helpers]
@@ -130,7 +130,7 @@
   ; @usage
   ;  [elements/switch :my-switch {...}]
   ([switch-props]
-   [element (a/id) switch-props])
+   [element (random/generate-keyword) switch-props])
 
   ([switch-id switch-props]
    (let [switch-props (switch.prototypes/switch-props-prototype switch-id switch-props)]

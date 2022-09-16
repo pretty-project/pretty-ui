@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.date-field.views
-    (:require [x.app-core.api                       :as a]
+    (:require [mid-fruits.random                    :as random]
               [x.app-elements.date-field.prototypes :as date-field.prototypes]
               [x.app-elements.text-field.views      :as text-field.views]))
 
@@ -40,7 +40,7 @@
   ; @usage
   ;  [elements/date-field :my-date-field {...}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (date-field.prototypes/field-props-prototype field-id field-props)]

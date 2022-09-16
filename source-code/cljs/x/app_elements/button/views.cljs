@@ -14,9 +14,9 @@
 
 (ns x.app-elements.button.views
     (:require [mid-fruits.candy                 :refer [param]]
+              [mid-fruits.random                :as random]
               [reagent.api                      :as reagent]
               [x.app-components.api             :as components]
-              [x.app-core.api                   :as a]
               [x.app-elements.button.helpers    :as button.helpers]
               [x.app-elements.button.presets    :as button.presets]
               [x.app-elements.button.prototypes :as button.prototypes]
@@ -152,7 +152,7 @@
   ; @usage
   ;  [elements/button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
-   [element (a/id) button-props])
+   [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
    (let [button-props (element.helpers/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)

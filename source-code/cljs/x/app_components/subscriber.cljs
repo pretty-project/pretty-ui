@@ -24,7 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.subscriber
-    (:require [x.app-components.transmitter :rename {component transmitter}]
+    (:require [mid-fruits.random            :as random]
+              [x.app-components.transmitter :rename {component transmitter}]
               [x.app-core.api               :as a]))
 
 
@@ -79,7 +80,7 @@
   ;
   ; @return (*)
   ([context-props]
-   [component (a/id) context-props])
+   [component (random/generate-keyword) context-props])
 
   ([component-id {:keys [subscriber] :as context-props}]
    (let [subscribed-props (a/subscribe subscriber)]

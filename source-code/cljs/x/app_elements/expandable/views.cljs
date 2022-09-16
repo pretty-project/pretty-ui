@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.expandable.views
-    (:require [x.app-components.api                 :as components]
-              [x.app-core.api                       :as a]
+    (:require [mid-fruits.random                    :as random]
+              [x.app-components.api                 :as components]
               [x.app-elements.expandable.helpers    :as expandable.helpers]
               [x.app-elements.expandable.prototypes :as expandable.prototypes]))
 
@@ -113,7 +113,7 @@
   ; @usage
   ;  [elements/expandable :my-expandable {...}]
   ([expandable-props]
-   [element (a/id) expandable-props])
+   [element (random/generate-keyword) expandable-props])
 
   ([expandable-id expandable-props]
    (let [expandable-props (expandable.prototypes/expandable-props-prototype expandable-props)]

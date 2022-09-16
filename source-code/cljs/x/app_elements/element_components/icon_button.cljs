@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.icon-button
     (:require [mid-fruits.candy                          :refer [param return]]
+              [mid-fruits.random                         :as random]
               [x.app-components.api                      :as components]
               [x.app-core.api                            :as a :refer [r]]
               [x.app-elements.engine.api                 :as engine]
@@ -165,7 +166,7 @@
   ; @usage
   ;  [elements/icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
-   [element (a/id) button-props])
+   [element (random/generate-keyword) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
    (let [button-props (element.helpers/apply-preset preset-handler.icon-button/BUTTON-PROPS-PRESETS button-props)

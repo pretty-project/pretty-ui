@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box.views
-    (:require [x.app-core.api                            :as a]
+    (:require [mid-fruits.random                         :as random]
               [x.app-elements.chip-group.views           :as chip-group.views]
               [x.app-elements.combo-box.views            :as combo-box.views]
               [x.app-elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
@@ -96,7 +96,7 @@
   ; @usage
   ;  [elements/multi-combo-box :my-multi-combo-box {...}]
   ([box-props]
-   [element (a/id) box-props])
+   [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
    (let [box-props (multi-combo-box.prototypes/box-props-prototype  box-id box-props)

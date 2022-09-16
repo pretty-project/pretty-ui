@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.button.side-effects
-    (:require [x.app-core.api        :as a]
+    (:require [mid-fruits.hiccup     :as hiccup]
+              [x.app-core.api        :as a]
               [x.app-environment.api :as environment]))
 
 
@@ -26,7 +27,7 @@
   ;
   ; @param (keyword) button-id
   [button-id]
-  (let [button-body-id (a/dom-value button-id "body")]
+  (let [button-body-id (hiccup/value button-id "body")]
        (-> button-body-id environment/focus-element!)))
 
 (defn blur-button!
@@ -34,7 +35,7 @@
   ;
   ; @param (keyword) button-id
   [button-id]
-  (let [button-body-id (a/dom-value button-id "body")]
+  (let [button-body-id (hiccup/value button-id "body")]
        (-> button-body-id environment/blur-element!)))
 
 

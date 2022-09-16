@@ -1,14 +1,5 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.01.20
-; Description:
-; Version: v1.7.0
-; Compatibility: x4.6.0
-
-
+; WARNING! DEPRECATED! DO NOT USE!
 
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,13 +15,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.event-handler
-    (:require [mid-fruits.candy                      :refer [param return]]
-              [mid-fruits.keyword                    :as keyword]
-              [mid-fruits.string                     :as string]
-              [mid-fruits.time                       :as time]
+    (:require [mid-fruits.candy                      :refer [return]]
               [mid-fruits.vector                     :as vector]
-              [re-frame.core                         :as re-frame]
-              [re-frame.registrar                    :as registrar]
+              [re-frame.api                          :as re-frame]
               [x.app-core.print-handler.side-effects :as print-handler.side-effects]
               [x.mid-core.event-handler              :as event-handler]))
 
@@ -70,20 +57,13 @@
 (def dispatch-if                event-handler/dispatch-if)
 (def dispatch-cond              event-handler/dispatch-cond)
 (def dispatch-tick              event-handler/dispatch-tick)
+(def dispatch-last              re-frame/dispatch-last)
+(def dispatch-once              re-frame/dispatch-once)
 (def subscribe                  event-handler/subscribe)
 (def subscribed                 event-handler/subscribed)
 (def fx                         event-handler/fx)
 (def fx-n                       event-handler/fx-n)
 (def r                          event-handler/r)
-
-
-
-;; -- State -------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @atom (map)
-; A letiltott esemény-azonosítók és a tiltásuk feloldásainak idejei
-(def EVENT-LOCKS (atom {}))
 
 
 
@@ -139,101 +119,3 @@
   ([event-id interceptors event-handler]
    (let [interceptors (interceptors<-system-interceptors interceptors)]
         (event-handler/reg-event-fx event-id interceptors event-handler))))
-
-
-
-;; -- Low sample-rate dispatch functions --------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Ritkított futású esemény-indítók: dispatch-last, dispatch-once
-;
-; Az (a/dispatch-last ...) és (a/dispatch-once ...) függvények kizárólag
-; event-vector formátumban átadott eseményeket kezelnek, ugyanis más
-; metamorphic-event formátumok nem rendelkeznek kizárólagos azonosítási
-; lehetősséggel.
-
-(defn- reg-event-lock
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (integer) timeout
-  ; @param (keyword) event-id
-  ;
-  ; @return (?)
-  [timeout event-id]
-  (let [elapsed-time (time/elapsed)
-        unlock-time  (+ timeout elapsed-time)]
-       (swap! EVENT-LOCKS assoc event-id unlock-time)))
-
-(defn- event-unlocked?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) event-id
-  ;
-  ; @return (boolean)
-  [event-id]
-  (let [elapsed-time (time/elapsed)
-        unlock-time  (get @EVENT-LOCKS event-id)]
-       (> elapsed-time unlock-time)))
-
-(defn- dispatch-unlocked?!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; Dispatch event if it is NOT locked
-  ;
-  ; @param (event-vector) event-vector
-  ;
-  ; @return (?)
-  [event-vector]
-  (let [event-id (event-vector->event-id event-vector)]
-       (if (event-unlocked?   event-id)
-           (re-frame/dispatch event-vector))))
-
-(defn- delayed-try
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (integer) timeout
-  ; @param (event-vector) event-vector
-  ;
-  ; @return (?)
-  [timeout event-vector]
-  (let [event-id (event-vector->event-id event-vector)]
-       (if (event-unlocked? event-id)
-           (do (re-frame/dispatch event-vector)
-               (reg-event-lock    timeout event-id)))))
-
-(defn dispatch-last
-  ; Blokkolja az esemény-meghívásokat mindaddig, amíg az utolsó esemény-meghívás
-  ; után letelik a timeout. Ekkor az utolsó esemény-meghívást engedélyezi,
-  ; az utolsó előttieket pedig figyelmen kívül hagyja.
-  ;
-  ; @param (integer) timeout
-  ; @param (event-vector) event-vector
-  ;
-  ; @usage
-  ;  (dispatch-last 500 [:foo-bar-baz])
-  ;
-  ; @return (?)
-  [timeout event-vector]
-  (let [event-id (event-vector->event-id event-vector)]
-       (reg-event-lock    timeout event-id)
-       (letfn [(f [] (dispatch-unlocked?! event-vector))]
-              (time/set-timeout! f timeout))))
-
-(defn dispatch-once
-  ; A megadott intervallumonként egy - az utolsó - esemény-meghívást engedélyezi,
-  ; a többit figyelmen kívül hagyja.
-  ;
-  ; @param (integer) interval
-  ; @param (event-vector) event-vector
-  ;
-  ; @usage
-  ;  (dispatch-once 500 [:foo-bar-baz])
-  ;
-  ; @return (?)
-  [interval event-vector]
-  (let [event-id (event-vector->event-id event-vector)]
-       (if (event-unlocked? event-id)
-           (do (re-frame/dispatch event-vector)
-               (reg-event-lock    interval event-id))
-           (letfn [(f [] (delayed-try interval event-vector))]
-                  (time/set-timeout! f interval)))))

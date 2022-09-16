@@ -14,8 +14,8 @@
 
 (ns x.app-elements.text-field.prototypes
     (:require [mid-fruits.candy                  :refer [param return]]
+              [mid-fruits.random                 :as random]
               [mid-fruits.vector                 :as vector]
-              [x.app-core.api                    :as a]
               [x.app-elements.input.helpers      :as input.helpers]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
 
@@ -65,7 +65,7 @@
   ; adsz meg értelmes (pl. :phone-number) értéket az :autofill-name tulajdonságnak,
   ; akkor az egy véletlenszerűen generált értéket fog kapni, amihez az autofill
   ; funkció nem fog ajánlani értékeket.
-  (merge {:autofill-name   (a/id)
+  (merge {:autofill-name   (random/generate-keyword)
           :field-content-f return
           :field-value-f   return
           :type            :text

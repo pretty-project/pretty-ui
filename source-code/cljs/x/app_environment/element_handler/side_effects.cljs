@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.element-handler.side-effects
-    (:require [dom.api         :as dom]
-              [mid-fruits.time :as time]
-              [x.app-core.api  :as a]))
+    (:require [dom.api           :as dom]
+              [mid-fruits.hiccup :as hiccup]
+              [mid-fruits.time   :as time]
+              [x.app-core.api    :as a]))
 
 
 
@@ -344,7 +345,7 @@
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (let [masspoint-orientation (dom/get-element-masspoint-orientation element)]
-               (set-element-attribute! element-id "data-masspoint-orientation" (a/dom-value masspoint-orientation)))))
+               (set-element-attribute! element-id "data-masspoint-orientation" (hiccup/value masspoint-orientation)))))
 
 ; @usage
 ;  [:environment/mark-element-masspoint-orientation! "my-element"]

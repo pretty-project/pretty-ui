@@ -14,7 +14,7 @@
 
 (ns x.app-elements.thumbnail.views
     (:require [mid-fruits.css                      :as css]
-              [x.app-core.api                      :as a]
+              [mid-fruits.random                   :as random]
               [x.app-elements.thumbnail.helpers    :as thumbnail.helpers]
               [x.app-elements.thumbnail.prototypes :as thumbnail.prototypes]))
 
@@ -96,7 +96,7 @@
   ; @usage
   ;  [elements/thumbnail :my-thumbnail {...}]
   ([thumbnail-props]
-   [element (a/id) thumbnail-props])
+   [element (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
    (let [thumbnail-props (thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)]

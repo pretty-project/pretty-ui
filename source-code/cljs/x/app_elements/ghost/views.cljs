@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.ghost.views
-    (:require [x.app-core.api                  :as a]
+    (:require [mid-fruits.random               :as random]
               [x.app-elements.ghost.helpers    :as ghost.helpers]
               [x.app-elements.ghost.prototypes :as ghost.prototypes]))
 
@@ -58,7 +58,7 @@
   ; @usage
   ;  [elements/ghost :my-ghost {...}]
   ([ghost-props]
-   [element (a/id) ghost-props])
+   [element (random/generate-keyword) ghost-props])
 
   ([ghost-id ghost-props]
    (let [ghost-props (ghost.prototypes/ghost-props-prototype ghost-props)]

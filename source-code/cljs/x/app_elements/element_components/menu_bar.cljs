@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.menu-bar
     (:require [mid-fruits.candy          :refer [param return]]
+              [mid-fruits.random         :as random]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -231,7 +232,7 @@
   ; @usage
   ;  [elements/menu-bar :my-menu-bar {...}]
   ([bar-props]
-   [element (a/id) bar-props])
+   [element (random/generate-keyword) bar-props])
 
   ([bar-id bar-props]
    (let [bar-props (bar-props-prototype bar-props)]

@@ -30,7 +30,6 @@
               [x.app-core.config-handler.subs            :as config-handler.subs]
               [x.app-core.debug-handler.events           :as debug-handler.events]
               [x.app-core.debug-handler.subs             :as debug-handler.subs]
-              [x.app-core.engine                         :as engine]
               [x.app-core.event-handler                  :as event-handler]
               [x.app-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.app-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
@@ -64,11 +63,6 @@
 ; x.app-core.debug-handler.subs
 (def get-debug-mode       debug-handler.subs/get-debug-mode)
 (def debug-mode-detected? debug-handler.subs/debug-mode-detected?)
-
-; x.app-core.engine
-(def dom-value     engine/dom-value)
-(def id            engine/id)
-(def get-namespace engine/get-namespace)
 
 ; x.app-core.event-handler
 (def event-vector?              event-handler/event-vector?)

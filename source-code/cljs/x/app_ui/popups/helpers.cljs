@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [mid-fruits.hiccup :as hiccup]
+              [x.app-core.api    :as a]))
 
 
 
@@ -33,5 +34,5 @@
                :data-animation :reveal
                :data-minimized (boolean minimized?)
                :data-nosnippet true
-               :id             (a/dom-value popup-id)
-               :key            (a/dom-value popup-id)})))
+               :id             (hiccup/value popup-id)
+               :key            (hiccup/value popup-id)})))

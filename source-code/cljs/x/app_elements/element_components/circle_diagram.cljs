@@ -16,6 +16,7 @@
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
               [mid-fruits.math           :as math]
+              [mid-fruits.random         :as random]
               [mid-fruits.svg            :as svg]
               [mid-fruits.vector         :as vector]
               [x.app-core.api            :as a :refer [r]]
@@ -190,7 +191,7 @@
   ; @usage
   ;  [elements/circle-diagram :my-circle-diagram {...}]
   ([diagram-props]
-   [element (a/id) diagram-props])
+   [element (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
    (let [diagram-props (diagram-props-prototype diagram-props)]

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.checkbox.views
-    (:require [reagent.api                        :as reagent]
+    (:require [mid-fruits.random                  :as random]
+              [reagent.api                        :as reagent]
               [x.app-components.api               :as components]
-              [x.app-core.api                     :as a]
               [x.app-elements.checkbox.helpers    :as checkbox.helpers]
               [x.app-elements.checkbox.prototypes :as checkbox.prototypes]
               [x.app-elements.input.helpers       :as input.helpers]
@@ -132,7 +132,7 @@
   ; @usage
   ;  [elements/checkbox :my-checkbox {...}]
   ([checkbox-props]
-   [element (a/id) checkbox-props])
+   [element (random/generate-keyword) checkbox-props])
 
   ([checkbox-id checkbox-props]
    (let [checkbox-props (checkbox.prototypes/checkbox-props-prototype checkbox-id checkbox-props)]

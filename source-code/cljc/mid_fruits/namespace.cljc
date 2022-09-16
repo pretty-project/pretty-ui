@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.10.15
-; Description:
-; Version: v0.1.2
-; Compatibility: x4.4.6
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -23,15 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.engine
-    (:require [x.mid-core.engine :as engine]))
+(ns mid-fruits.namespace
+    (:require [mid-fruits.keyword :as keyword]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.engine
-(def dom-value     engine/dom-value)
-(def id            engine/id)
-(def get-namespace engine/get-namespace)
+(defn detect
+  ; @param (namespaced keyword) sample
+  ;
+  ; @usage
+  ;  (namespace/detect ::this)
+  ;
+  ; @return (keyword)
+  [sample]
+  (keyword/get-namespace sample))

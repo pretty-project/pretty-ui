@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.color-stamp.views
-    (:require [mid-fruits.vector                     :as vector]
-              [x.app-core.api                        :as a]
+    (:require [mid-fruits.random                     :as random]
+              [mid-fruits.vector                     :as vector]
               [x.app-elements.color-stamp.helpers    :as color-stamp.helpers]
               [x.app-elements.color-stamp.prototypes :as color-stamp.prototypes]))
 
@@ -77,7 +77,7 @@
   ; @usage
   ;  [elements/color-stamp :my-color-stamp {:colors ["red" "green" "blue"]}]
   ([stamp-props]
-   [element (a/id) stamp-props])
+   [element (random/generate-keyword) stamp-props])
 
   ([stamp-id stamp-props]
    (let [stamp-props (color-stamp.prototypes/stamp-props-prototype stamp-props)]

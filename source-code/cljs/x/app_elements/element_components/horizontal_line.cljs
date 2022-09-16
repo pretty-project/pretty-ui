@@ -15,6 +15,7 @@
 (ns x.app-elements.element-components.horizontal-line
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
+              [mid-fruits.random         :as random]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 
@@ -83,7 +84,7 @@
   ; @usage
   ;  [elements/horizontal-line :my-horizontal-line {...}]
   ([line-props]
-   [element (a/id) line-props])
+   [element (random/generate-keyword) line-props])
 
   ([line-id line-props]
    (let [line-props (line-props-prototype line-props)]

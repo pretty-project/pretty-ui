@@ -51,7 +51,8 @@
       ; a tartalomról tárolt másolatot frissíteni, hogy a backup.subs/form-changed?
       ; és a backup.subs/config-changed? függvények kimentei visszaálljanak alaphelyzetbe.
       {:db       (r backup.events/backup-current-config! db editor-id)
-       :dispatch [:ui/render-bubble! {:body :saved}]}))
+       :dispatch [:ui/render-bubble! ::config-saved-notification
+                                     {:body :saved}]}))
 
 (a/reg-event-fx
   :config-editor/save-config-failed

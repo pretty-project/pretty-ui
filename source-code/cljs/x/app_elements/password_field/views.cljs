@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.password-field.views
-    (:require [x.app-core.api                           :as a]
+    (:require [mid-fruits.random                        :as random]
               [x.app-elements.password-field.prototypes :as password-field.prototypes]
               [x.app-elements.text-field.views          :as text-field.views]))
 
@@ -38,7 +38,7 @@
   ; @usage
   ;  [elements/password-field :my-password-field {...}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (password-field.prototypes/field-props-prototype field-id field-props)]

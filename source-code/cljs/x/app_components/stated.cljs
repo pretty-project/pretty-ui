@@ -26,6 +26,7 @@
 (ns x.app-components.stated
     (:require [mid-fruits.candy             :refer [param return]]
               [mid-fruits.map               :refer [dissoc-in]]
+              [mid-fruits.random            :as random]
               [reagent.api                  :as reagent]
               [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
@@ -335,7 +336,7 @@
   ; @param (keyword) component-id
   ; @param (map) context-props
   [component-id context-props]
-  (let [mount-id (a/id)]
+  (let [mount-id (random/generate-keyword)]
        (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
                             ;:component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
@@ -385,7 +386,7 @@
   ;  [components/stated {:component  [my-component :my-component]
   ;                      :subscriber [:get-my-component-props]}]
   ([context-props]
-   [component (a/id) context-props])
+   [component (random/generate-keyword) context-props])
 
   ([component-id context-props]
    [lifecycle-controller component-id context-props]))

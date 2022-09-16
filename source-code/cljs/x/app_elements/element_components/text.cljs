@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.text
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
@@ -104,7 +105,7 @@
   ; @usage
   ;  [elements/text :my-text {...}]
   ([text-props]
-   [element (a/id) text-props])
+   [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
    (let [text-props (text-props-prototype text-props)]

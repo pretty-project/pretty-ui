@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.row
     (:require [mid-fruits.candy                    :refer [param]]
+              [mid-fruits.random                   :as random]
               [x.app-components.api                :as components]
               [x.app-core.api                      :as a]
               [x.app-elements.engine.api           :as engine]
@@ -91,7 +92,7 @@
   ; @usage
   ;  [elements/row :my-row {...}]
   ([row-props]
-   [element (a/id) row-props])
+   [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
    (let [row-props (row-props-prototype row-props)]

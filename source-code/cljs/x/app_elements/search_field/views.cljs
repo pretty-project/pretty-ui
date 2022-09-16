@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.search-field.views
-    (:require [x.app-core.api                         :as a]
+    (:require [mid-fruits.random                      :as random]
               [x.app-elements.search-field.prototypes :as search-field.prototypes]
               [x.app-elements.text-field.views        :as text-field.views]))
 
@@ -36,7 +36,7 @@
   ; @usage
   ;  [elements/search-field :my-search-field {...}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (search-field.prototypes/field-props-prototype field-id field-props)]

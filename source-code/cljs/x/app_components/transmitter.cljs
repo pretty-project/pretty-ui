@@ -24,8 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.transmitter
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.random :as random]))
 
 
 
@@ -114,7 +114,7 @@
   ;                           :modifier         my-modifier
   ;                           :subscribed-props {...}}]
   ([context-props]
-   [component (a/id) context-props])
+   [component (random/generate-keyword) context-props])
 
   ([component-id {:keys [component render-f] :as context-props}]
    (if-let [dynamic-props (context-props->dynamic-props component-id context-props)]

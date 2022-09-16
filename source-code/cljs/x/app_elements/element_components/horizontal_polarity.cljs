@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.horizontal-polarity
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
@@ -107,7 +108,7 @@
   ;  [elements/horizontal-polarity {:start-content [:<> [elements/label {:content "My label"}]
   ;                                                     [elements/label {:content "My label"}]]}]
   ([polarity-props]
-   [element (a/id) polarity-props])
+   [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
    (let [];polarity-props (polarity-props-prototype polarity-props)

@@ -17,6 +17,7 @@
 (ns x.app-elements.element-components.slideshow
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.css            :as css]
+              [mid-fruits.random         :as random]
               [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]
               [x.app-environment.api     :as environment]
@@ -193,7 +194,7 @@
   ; @usage
   ;  [elements/slideshow :my-slideshow {...}]
   ([slideshow-props]
-   [element (a/id) slideshow-props])
+   [element (random/generate-keyword) slideshow-props])
 
   ([slideshow-id slideshow-props]
    (let [slideshow-props    (slideshow-props-prototype slideshow-props)]

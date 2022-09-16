@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.slider.views
-    (:require [reagent.api                      :as reagent]
-              [x.app-core.api                   :as a]
+    (:require [mid-fruits.random                :as random]
+              [reagent.api                      :as reagent]
               [x.app-elements.slider.helpers    :as slider.helpers]
               [x.app-elements.slider.prototypes :as slider.prototypes]
               [x.app-elements.label.views       :as label.views]))
@@ -136,7 +136,7 @@
   ; @usage
   ;  [elements/slider :my-slider {...}]
   ([slider-props]
-   [element (a/id) slider-props])
+   [element (random/generate-keyword) slider-props])
 
   ([slider-id slider-props]
    (let [slider-props (slider.prototypes/slider-props-prototype slider-id slider-props)]

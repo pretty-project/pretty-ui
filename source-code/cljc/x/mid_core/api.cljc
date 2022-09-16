@@ -19,7 +19,6 @@
               [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
               [x.mid-core.cache-handler.helpers      :as cache-handler.helpers]
               [x.mid-core.config-handler.subs        :as config-handler.subs]
-              [x.mid-core.engine                     :as engine]
               [x.mid-core.event-handler              :as event-handler]))
 
 
@@ -40,11 +39,6 @@
 (def get-server-config-item  config-handler.subs/get-server-config-item)
 (def get-website-config      config-handler.subs/get-website-config)
 (def get-website-config-item config-handler.subs/get-website-config-item)
-
-; x.mid-core.engine
-(def dom-value     engine/dom-value)
-(def id            engine/id)
-(def get-namespace engine/get-namespace)
 
 ; x.mid-core.event-handler
 (def event-vector?              event-handler/event-vector?)

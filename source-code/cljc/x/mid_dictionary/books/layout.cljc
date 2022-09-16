@@ -23,6 +23,12 @@
 (def BOOK {:footer
            {:en "Footer"
             :hu "Lábléc"}
+           :footer-content
+           {:en "Footer content"
+            :hu "Lábléc tartalma"}
            :header
            {:en "Header"
-            :hu "Fejléc"}})
+            :hu "Fejléc"}
+           :header-content
+           {:en "Header content"
+            :hu "Fejléc tartalma"}})

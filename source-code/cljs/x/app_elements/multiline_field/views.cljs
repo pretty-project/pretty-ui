@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multiline-field.views
-    (:require [x.app-core.api                            :as a]
+    (:require [mid-fruits.random                         :as random]
               [x.app-elements.multiline-field.prototypes :as multiline-field.prototypes]
               [x.app-elements.text-field.views           :as text-field.views]))
 
@@ -44,7 +44,7 @@
   ; @usage
   ;  [elements/multiline-field :my-multiline-field {...}]
   ([field-props]
-   [element (a/id) field-props])
+   [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
    (let [field-props (multiline-field.prototypes/field-props-prototype field-id field-props)]

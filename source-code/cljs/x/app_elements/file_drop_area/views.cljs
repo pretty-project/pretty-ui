@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.file-drop-area.views
-    (:require [x.app-components.api                     :as components]
-              [x.app-core.api                           :as a]
+    (:require [mid-fruits.random                        :as random]
+              [x.app-components.api                     :as components]
               [x.app-elements.file-drop-area.helpers    :as file-drop-area.helpers]
               [x.app-elements.file-drop-area.prototypes :as file-drop-area.prototypes]))
 
@@ -77,7 +77,7 @@
   ; @usage
   ;  [elements/file-drop-area :my-file-drop-area {...}]
   ([area-props]
-   [element (a/id) area-props])
+   [element (random/generate-keyword) area-props])
 
   ([area-id area-props]
    (let [area-props (file-drop-area.prototypes/area-props-prototype area-props)]

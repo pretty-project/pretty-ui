@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.card-group
     (:require [mid-fruits.candy          :refer [param]]
+              [mid-fruits.random         :as random]
               [mid-fruits.vector         :as vector]
               [x.app-components.api      :as components]
               [x.app-core.api            :as a :refer [r]]
@@ -83,7 +84,7 @@
   ; @usage
   ;  [elements/card-group :my-card-group {...}]
   ([group-props]
-   [element (a/id) group-props])
+   [element (random/generate-keyword) group-props])
 
   ([group-id group-props]
    (let [group-props (group-props-prototype group-props)]

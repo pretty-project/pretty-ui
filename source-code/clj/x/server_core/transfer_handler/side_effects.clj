@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.transfer-handler.side-effects
-    (:require [x.server-core.engine                 :as engine]
+    (:require [mid-fruits.random                    :as random]
               [x.server-core.event-handler          :as event-handler]
               [x.server-core.transfer-handler.state :as transfer-handler.state]))
 
@@ -38,7 +38,7 @@
   ;  (defn my-data-f [request] {:my-data ...})
   ;  (a/reg-transfer! {:data-f my-data-f})
   ([transfer-props]
-   (reg-transfer! (engine/id) transfer-props))
+   (reg-transfer! (random/generate-keyword) transfer-props))
 
   ([transfer-id transfer-props]
    (swap! transfer-handler.state/HANDLERS assoc transfer-id transfer-props)))

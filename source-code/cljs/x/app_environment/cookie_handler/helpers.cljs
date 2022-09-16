@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.helpers
-    (:require [mid-fruits.map                          :as map]
+    (:require [mid-fruits.hiccup                       :as hiccup]
+              [mid-fruits.map                          :as map]
               [mid-fruits.string                       :as string]
-              [x.app-core.api                          :as a]
               [x.app-environment.cookie-handler.config :as cookie-handler.config]))
 
 
@@ -56,7 +56,7 @@
   ; @return (string)
   [cookie-id {:keys [cookie-type]}]
   (let [cookie-name-prefix (cookie-type->cookie-name-prefix cookie-type)
-        string-cookie-id   (a/dom-value cookie-id)]
+        string-cookie-id   (hiccup/value cookie-id)]
        (str cookie-name-prefix "-" string-cookie-id)))
 
 (defn cookie-name->cookie-name-prefix

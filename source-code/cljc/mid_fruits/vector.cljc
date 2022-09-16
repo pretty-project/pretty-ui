@@ -850,6 +850,31 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn duplicate-nth-item
+  ; @param (vector) n
+  ; @param (integer) dex
+  ;
+  ; @example
+  ;  (vector/duplicate-nth-item [:a :b :c :d :e] 2)
+  ;  =>
+  ;  [:a :b :c :c :d :e]
+  ;
+  ; @return (vector)
+  [n dex]
+  (letfn [(f [result item-dex item]
+             (if (= item-dex dex)
+                 (concat result [item item])
+                 (conj   result item)))]
+         (vec (reduce-kv f [] n))))
+
+(defn duplicate-nth-items
+  [])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn concat-items-once
   ; @param (vector) a
   ; @param (vector) b

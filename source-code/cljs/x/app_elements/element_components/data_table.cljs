@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.data-table
     (:require [mid-fruits.candy                        :refer [param]]
+              [mid-fruits.random                       :as random]
               [x.app-components.api                    :as components]
               [x.app-core.api                          :as a :refer [r]]
               [x.app-elements.element-components.table :as element-components.table :refer [table]]
@@ -152,7 +153,7 @@
   ;                              ["My data #2" 10 90]
   ;                              ["My data #3" 20 75]]
   ([table-props]
-   [element (a/id) table-props])
+   [element (random/generate-keyword) table-props])
 
   ([table-id table-props]
    (let [table-props (table-props-prototype table-props)]

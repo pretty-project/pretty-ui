@@ -14,6 +14,7 @@
 
 (ns x.app-elements.element-components.column
     (:require [mid-fruits.candy                    :refer [param]]
+              [mid-fruits.random                   :as random]
               [x.app-components.api                :as components]
               [x.app-core.api                      :as a]
               [x.app-elements.engine.api           :as engine]
@@ -88,7 +89,7 @@
   ; @usage
   ;  [elements/column :my-column {...}]
   ([column-props]
-   [element (a/id) column-props])
+   [element (random/generate-keyword) column-props])
 
   ([column-id column-props]
    (let [column-props (column-props-prototype column-props)]
