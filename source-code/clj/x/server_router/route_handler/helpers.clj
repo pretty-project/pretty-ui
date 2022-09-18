@@ -127,4 +127,4 @@
   [handler]
   (fn [request] (if (user/request->authenticated? request)
                     (handler                      request)
-                    (http/error-wrap {:body "Access denied" :status 403}))))
+                    (http/error-wrap {:body :access-denied :status 403}))))

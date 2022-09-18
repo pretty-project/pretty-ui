@@ -67,6 +67,7 @@
   ;
   ; B) Ha a vizsgált érték üres (NIL, "", [], ...), de a tárolt érték NEM üres,
   ;    akkor az elem megváltozott.
+  ;    (Az empty? függvény csak seqable értékeken alkalmazható!)
   ;
   ; C) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
   ;    akkor az elem megváltozott!
@@ -79,7 +80,8 @@
                         (= value (key initial-item))
                         (return false)
                         ; B)
-                        (-> value empty?)
+                        (and (seqable? value)
+                             (empty?   value))
                         (-> backup-item key empty? not)
                         ; C)
                         :else

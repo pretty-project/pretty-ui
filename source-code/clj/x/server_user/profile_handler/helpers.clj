@@ -32,10 +32,28 @@
   ; @usage
   ;  (user/user-account-id->user-profile "my-account")
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [user-account-id]
   (let [user-profile (local-db/get-document "user_profiles" user-account-id)]
        (map/add-namespace user-profile :user-profile)))
+
+(defn user-account-id->user-profile-item
+  ; @param (string) user-account-id
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (user/user-account-id->user-profile "my-account" :first-name)
+  ;
+  ; @return (*)
+  [user-account-id item-key]
+  (let [user-profile        (user-account-id->user-profile user-account-id)
+        namespaced-item-key (keyword/add-namespace :user-profile item-key)]
+       (get user-profile namespaced-item-key)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn request->user-profile
   ; @param (map) request
@@ -43,7 +61,7 @@
   ; @usage
   ;  (r user/request->user-profile-item {...})
   ;
-  ; @return (map)
+  ; @return (namespaced map)
   [request]
   (if-let [account-id (http/request->session-param request :user-account/id)]
           (user-account-id->user-profile account-id)
@@ -54,10 +72,10 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r user/request->user-profile-item {...} :email-address)
+  ;  (r user/request->user-profile-item {...} :first-name)
   ;
   ; @return (*)
   [request item-key]
   (let [user-profile        (request->user-profile request)
-        namespaced-item-key (keyword/add-namespace :user-account item-key)]
+        namespaced-item-key (keyword/add-namespace :user-profile item-key)]
        (get user-profile namespaced-item-key)))

@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.profile-handler.subs
-    (:require [mid-fruits.string                 :as string]
-              [x.app-core.api                    :as a :refer [r]]
+    (:require [x.app-core.api                    :as a :refer [r]]
               [x.app-user.profile-handler.config :as profile-handler.config]))
 
 
@@ -72,15 +71,6 @@
   [db _]
   (get-in db [:user :profile-handler/data-items :locale]))
 
-(defn get-user-name
-  ; @usage
-  ;  (r user/get-user-name db)
-  ;
-  ; @return (string)
-  [db _]
-  (string/trim (str (r get-user-first-name db) " "
-                    (r get-user-last-name  db))))
-
 (defn get-user-phone-number
   ; @usage
   ;  (r user/get-user-phone-number db)
@@ -121,10 +111,6 @@
 ; @usage
 ;  [:user/get-user-locale]
 (a/reg-sub :user/get-user-locale get-user-locale)
-
-; @usage
-;  [:user/get-user-name]
-(a/reg-sub :user/get-user-name get-user-name)
 
 ; @usage
 ;  [:user/get-user-phone-number]

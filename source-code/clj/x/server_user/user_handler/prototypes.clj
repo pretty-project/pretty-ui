@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.user-handler.prototypes
-    (:require [mongo-db.api                         :as mongo-db]
-              [x.server-user.account-handler.config :as account-handler.config]))
+    (:require [x.server-user.account-handler.config   :as account-handler.config]
+              [x.server-user.document-handler.helpers :as document-handler.helpers]))
 
 
 
@@ -28,4 +28,4 @@
   ;
   ; @return (function)
   [namespace]
-  #(mongo-db/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} namespace %))
+  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} namespace %))

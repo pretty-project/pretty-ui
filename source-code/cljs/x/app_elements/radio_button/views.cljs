@@ -26,18 +26,48 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- radio-button-option
+(defn- radio-button-option-helper
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:option-helper-f (function)}
+  ; @param (*) option
+  [_ {:keys [option-helper-f]} option]
+  (if option-helper-f (let [option-helper (option-helper-f option)]
+                           [:div.x-radio-button--option-helper (components/content option-helper)])))
+
+(defn- radio-button-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:option-label-f (function)}
   ; @param (*) option
-  [button-id {:keys [option-label-f] :as button-props} option]
+  [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:button.x-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
-                                       [:div.x-radio-button--option-button]
-                                       [:div.x-radio-button--option-label (components/content option-label)]]))
+       [:div.x-radio-button--option-label (components/content option-label)]))
+
+(defn- radio-button-option-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; @param (*) option
+  [button-id button-props option]
+  [:div.x-radio-button--option-content [radio-button-option-label  button-id button-props option]
+                                       [radio-button-option-helper button-id button-props option]])
+
+(defn- radio-button-option
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; @param (*) option
+  [button-id button-props option]
+  [:button.x-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
+                                  [:div.x-radio-button--option-button]
+                                  [radio-button-option-content button-id button-props option]])
 
 (defn- radio-button-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,6 +149,7 @@
   ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)
   ;   :on-select (metamorphic-event)(opt)
+  ;   :option-helper-f (function)(opt)
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)

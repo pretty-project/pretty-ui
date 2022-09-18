@@ -58,7 +58,6 @@
 (def get-user-first-name      profile-handler.subs/get-user-first-name)
 (def get-user-last-name       profile-handler.subs/get-user-last-name)
 (def get-user-locale          profile-handler.subs/get-user-locale)
-(def get-user-name            profile-handler.subs/get-user-name)
 (def get-user-phone-number    profile-handler.subs/get-user-phone-number)
 (def get-user-profile-picture profile-handler.subs/get-user-profile-picture)
 

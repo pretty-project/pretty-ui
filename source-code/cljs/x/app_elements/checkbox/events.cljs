@@ -62,7 +62,7 @@
        (as-> db % (r input.events/mark-as-visited! % checkbox-id)
                   (if (vector/min? options 2)
                       (r db/apply-item!        % value-path vector/toggle-item option-value)
-                      (r db/toggle-item-value! % value-path option-value)))))
+                      (r db/toggle-item-value! % value-path                    option-value)))))
 
 
 

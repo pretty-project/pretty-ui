@@ -52,24 +52,32 @@
 ;; ----------------------------------------------------------------------------
 
 (defn subscribe-item
-  ; @param (vector)
+  ; @param (vector) item-path
+  ; @param (*)(opt) default-value
   ;
   ; @usage
   ; (db/subscribe-item [:my-item])
   ;
   ; @return (atom)
-  [item-path]
-  (-> [:db/get-item item-path] re-frame.core/subscribe))
+  ([item-path]
+   (-> [:db/get-item item-path] re-frame.core/subscribe))
+
+  ([item-path default-value]
+   (-> [:db/get-item item-path default-value] re-frame.core/subscribe)))
 
 (defn subscribed-item
-  ; @param (vector)
+  ; @param (vector) item-path
+  ; @param (*)(opt) default-value
   ;
   ; @usage
   ; (db/subscribed-item [:my-item])
   ;
   ; @return (*)
-  [item-path]
-  (-> [:db/get-item item-path] re-frame.core/subscribe deref))
+  ([item-path]
+   (-> [:db/get-item item-path] re-frame.core/subscribe deref))
+
+  ([item-path default-value]
+   (-> [:db/get-item item-path default-value] re-frame.core/subscribe deref)))
 
 
 
@@ -83,13 +91,17 @@
 
 (defn get-item
   ; @param (vector) item-path
+  ; @param (*)(opt) default-value
   ;
   ; @usage
   ;  (r db/get-item [:my-item])
   ;
+  ; @usage
+  ;  (r db/get-item [:my-item] "Default value")
+  ;
   ; @return (*)
-  [db [_ item-path]]
-  (get-in db item-path))
+  [db [_ item-path default-value]]
+  (get-in db item-path default-value))
 
 (defn item-exists?
   ; @param (vector) item-path

@@ -63,7 +63,14 @@
   ;
   ; @return (string)
   [editor-id]
-  (get-in @state/EDITOR-CONTENTS editor-id))
+  (get @state/EDITOR-CONTENTS editor-id))
+
+(defn get-editor-change
+  ; @param (keyword) editor-id
+  ;
+  ; @return (string)
+  [editor-id]
+  (get @state/EDITOR-CHANGES editor-id))
 
 (defn set-editor-content!
   ; @param (keyword) editor-id
@@ -72,6 +79,14 @@
   ; @return (string)
   [editor-id editor-content]
   (swap! state/EDITOR-CONTENTS assoc editor-id editor-content))
+
+(defn update-editor-change!
+  ; @param (keyword) editor-id
+  ; @param (string) editor-change
+  ;
+  ; @return (string)
+  [editor-id editor-change]
+  (swap! state/EDITOR-CHANGES assoc editor-id editor-change))
 
 
 
@@ -85,6 +100,7 @@
   ; @param (string) editor-content
   [editor-id {:keys [value-path]} editor-content]
   (let [editor-content (remove-whitespaces editor-content)]
+       (set-editor-content! editor-id editor-content)
        (a/dispatch-last config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content])))
 
 
@@ -98,8 +114,8 @@
   ;
   ; @return (map)
   ;  {}
-  [{:keys [autofocus? buttons disabled? min-height]}]
-  (let [placeholder       @(a/subscribe [:dictionary/look-up :write-something!])
+  [{:keys [autofocus? buttons disabled? min-height placeholder]}]
+  (let [placeholder       @(a/subscribe [:dictionary/look-up placeholder])
         selected-language @(a/subscribe [:locales/get-selected-language])]
        {:autofocus            autofocus?
         :buttons              (parse-buttons buttons)
@@ -118,13 +134,13 @@
 (defn jodit-attributes
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:value-path (vector)}
   ;
   ; @return (map)
   ;  {}
-  [editor-id {:keys [value-path] :as editor-props}]
-  (let [stored-value @(a/subscribe [:db/get-item value-path])]
+  [editor-id editor-props]
+  (let [editor-change (get-editor-change editor-id)
+        stored-value @(a/subscribe [:db/get-item (:value-path editor-props)])]
        {:config    (jodit-config          editor-props)
         :onChange #(on-change-f editor-id editor-props %)
         :tabIndex  1
-        :value     stored-value}))
+        :value     (get @state/EDITOR-CHANGES editor-id)}))

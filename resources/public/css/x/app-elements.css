@@ -83,20 +83,21 @@ body {
 
 /***** Active state and focused state *****/
 
+/* WARNING! DEPRECATED! USE {:data-clickable true} INSTEAD! */
 .x-icon-button--body:active,
 .x-icon-button--body:focus,
 .x-menu-bar--menu-item:active,
 .x-menu-bar--menu-item:focus,
+/* DEPRECATED! */
 
-/* A checkbox elemnek csak a felirata változik az elemre való kattintáskor */
-.x-checkbox--option:active .x-checkbox--option-label,
-.x-checkbox--option:focus  .x-checkbox--option-label,
-/* A radio-button elem opcióinak csak a felirata változik az opcióra való kattintáskor */
-.x-radio-button--option:active .x-radio-button--option-label,
-.x-radio-button--option:focus  .x-radio-button--option-label,
-/* A switch elemnek csak a felirata változik az elemre való kattintáskor */
-.x-switch--option:active .x-switch--option-label,
-.x-switch--option:focus  .x-switch--option-label,
+/* A checkbox, radio-button és switch elemnek csak a felirata és a helper
+ * változik az elemre való kattintáskor */
+.x-checkbox--option:active     .x-checkbox--option-content,
+.x-checkbox--option:focus      .x-checkbox--option-content,
+.x-radio-button--option:active .x-radio-button--option-content,
+.x-radio-button--option:focus  .x-radio-button--option-content,
+.x-switch--option:active       .x-switch--option-content,
+.x-switch--option:focus        .x-switch--option-content,
 
 .x-toggle:active,
 .x-toggle:focus {
@@ -274,7 +275,7 @@ body {
 .x-icon[data-color="muted"]        .x-icon--body,
 .x-icon-button[data-color="muted"] .x-icon-button--body,
 .x-label[data-color="muted"],
-.x-text[data-color="muted"] {
+.x-text[data-color="muted"] .x-text--body {
   color: var( --color-muted ) }
 
 /* Text-color */
@@ -337,7 +338,7 @@ body {
 .x-icon[data-color="highlight"]        .x-icon--body,
 .x-icon-button[data-color="highlight"] .x-icon-button--body,
 .x-label[data-color="highlight"],
-.x-text[data-color="highlight"] {
+.x-text[data-color="highlight"] .x-text--body {
   color: var( --color-highlight ) }
 
 /* Text-color */
@@ -424,7 +425,7 @@ body {
 .x-icon[data-color="primary"]        .x-icon--body,
 .x-icon-button[data-color="primary"] .x-icon-button--body,
 .x-label[data-color="primary"],
-.x-text[data-color="primary"] {
+.x-text[data-color="primary"] .x-text--body {
   color: var( --color-primary ) }
 
 /* Text-color */
@@ -499,7 +500,7 @@ body {
 .x-icon[data-color="secondary"]        .x-icon--body,
 .x-icon-button[data-color="secondary"] .x-icon-button--body,
 .x-label[data-color="secondary"],
-.x-text[data-color="secondary"] {
+.x-text[data-color="secondary"] .x-text--body {
   color: var( --color-secondary ) }
 
 /* Text-color */
@@ -573,7 +574,7 @@ body {
 .x-icon[data-color="success"]        .x-icon--body,
 .x-icon-button[data-color="success"] .x-icon-button--body,
 .x-label[data-color="success"],
-.x-text[data-color="success"] {
+.x-text[data-color="success"] .x-text--body {
   color: var( --color-success ) }
 
 /* Text-color */
@@ -648,7 +649,7 @@ body {
 .x-icon[data-color="warning"]        .x-icon--body,
 .x-icon-button[data-color="warning"] .x-icon-button--body,
 .x-label[data-color="warning"],
-.x-text[data-color="warning"] {
+.x-text[data-color="warning"] .x-text--body {
   color: var( --color-warning ) }
 
 /* Text-color */
@@ -1814,8 +1815,9 @@ body {
 /*** Checkbox option ***/
 
 .x-checkbox--option {
-  align-items: center;
-  display: flex }
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px }
 
 .x-checkbox--option-button {
   height: 24px;
@@ -1835,8 +1837,17 @@ body {
   width: 20px }
 
 .x-checkbox--option-label {
+  /* XXX#5050 */
   font-weight: 500;
-  line-height: 36px }
+  line-height: 24px;
+  text-align: left }
+
+.x-checkbox--option-helper {
+  /* XXX#5050 */
+  color:       var( --color-muted );
+  font-size:   var( --font-size-xs );
+  line-height: var( --line-height-xs );
+  text-align:  left }
 
 /*** Checkbox option ***/
 
@@ -2785,12 +2796,25 @@ body {
 /*** Radio button option ***/
 
 .x-radio-button--option {
-  align-items: center;
-  display: flex }
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px }
 
 .x-radio-button--option-label {
+  /* XXX#5050
+   * A {text-align: left} beállítás biztosítja, hogy a label és a helper
+   * feliratok közül bármelyik lehet hosszabb a másiknál, mind a kettő
+   * balraigazítottan jelenjen meg */
   font-weight: 500;
-  line-height: 36px }
+  line-height: 24px;
+  text-align:  left }
+
+.x-radio-button--option-helper {
+  /* XXX#5050 */
+  color:       var( --color-muted );
+  font-size:   var( --font-size-xs );
+  line-height: var( --line-height-xs );
+  text-align:  left }
 
 /*** Radio button option ***/
 
@@ -2798,12 +2822,14 @@ body {
 
 .x-radio-button--option-button {
   background-color: var( --fill-color );
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 2px;
-  height: 20px;
-  margin-right: 6px;
-  width: 20px }
+  border-radius:    50%;
+  border-style:     solid;
+  border-width:     2px;
+  height:           20px;
+  margin-bottom:    2px;
+  margin-right:     6px;
+  margin-top:       2px;
+  width:            20px }
 
 /*** Radio button option button ***/
 
@@ -3214,21 +3240,33 @@ body {
 /*** Switch option ***/
 
 .x-switch--option {
-  align-items: center;
-  display: flex }
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px }
 
 .x-switch--option-track {
   background-color: var( --fill-color );
   border-radius: 10px;
-  border-style: solid;
-  border-width: 2px;
-  margin-right: 6px;
-  height: 20px;
-  width: 40px }
+  border-style:  solid;
+  border-width:  2px;
+  margin-bottom: 2px;
+  margin-right:  6px;
+  margin-top:    2px;
+  height:        20px;
+  width:         40px }
 
 .x-switch--option-label {
+  /* XXX#5050 */
   font-weight: 500;
-  line-height: 36px }
+  line-height: 24px;
+  text-align:  left }
+
+.x-switch--option-helper {
+  /* XXX#5050 */
+  color:       var( --color-muted );
+  font-size:   var( --font-size-xs );
+  line-height: var( --line-height-xs );
+  text-align:  left }
 
 /*** Switch option ***/
 
@@ -3351,9 +3389,19 @@ body {
   flex-direction: column;
   justify-content: center }
 
-.x-text[data-layout="row"] .x-text--body {
-  min-height: 48px;
-  padding: 6px 0 }
+.x-text--body[data-cropped="true"] {
+  justify-content: flex-start;
+  overflow-y: hidden;
+  text-overflow: ellipsis }
+
+.x-text--body[data-cropped="true"]::after {
+  background-image: linear-gradient(0deg, white, transparent);
+  bottom: 0;
+  content: '';
+  height: 10px;
+  left: 0;
+  position: absolute;
+  width: 100% }
 
 /*** Text body ***/
 

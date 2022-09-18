@@ -14,11 +14,10 @@
 
 (ns mongo-db.api
     (:require [mongo-db.connection]
-              [mongo-db.actions    :as actions]
-              [mongo-db.engine     :as engine]
-              [mongo-db.pipelines  :as pipelines]
-              [mongo-db.prototypes :as prototypes]
-              [mongo-db.reader     :as reader]))
+              [mongo-db.actions   :as actions]
+              [mongo-db.engine    :as engine]
+              [mongo-db.pipelines :as pipelines]
+              [mongo-db.reader    :as reader]))
 
 
 
@@ -54,11 +53,6 @@
 (def unset-query      pipelines/unset-query)
 (def get-pipeline     pipelines/get-pipeline)
 (def count-pipeline   pipelines/count-pipeline)
-
-; mongo-db.prototypes
-(def added-document-prototype      prototypes/added-document-prototype)
-(def updated-document-prototype    prototypes/updated-document-prototype)
-(def duplicated-document-prototype prototypes/duplicated-document-prototype)
 
 ; mongo-db.reader
 (def get-collection-names        reader/get-collection-names)

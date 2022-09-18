@@ -1,4 +1,4 @@
-
+ 
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -20,6 +20,7 @@
               [x.mid-dictionary.books.colors        :as books.colors]
               [x.mid-dictionary.books.company       :as books.company]
               [x.mid-dictionary.books.contacts      :as books.contacts]
+              [x.mid-dictionary.books.content       :as books.content]
               [x.mid-dictionary.books.cookies       :as books.cookies]
               [x.mid-dictionary.books.database      :as books.database]
               [x.mid-dictionary.books.developer     :as books.developer]
@@ -71,6 +72,7 @@
                   books.colors/BOOK
                   books.company/BOOK
                   books.contacts/BOOK
+                  books.content/BOOK
                   books.cookies/BOOK
                   books.database/BOOK
                   books.developer/BOOK

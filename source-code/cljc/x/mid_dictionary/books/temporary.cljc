@@ -25,19 +25,7 @@
 (def BOOK {:business
            {:en "Business"
             :hu "Üzlet"}
-           :last-modified
-           {:en "Last modified"
-            :hu "Utoljára módosítva"}
-           :last-modified-at-n
-           {:en "Last modified at: %"
-            :hu "Utoljára módosítva: %"}
 
-           :content
-           {:en "Content"
-            :hu "Tartalom"}
-           :contents
-           {:en "Contents"
-            :hu "Tartalmak"}
            :tag
            {:en "Tag"
             :hu "Címke"}

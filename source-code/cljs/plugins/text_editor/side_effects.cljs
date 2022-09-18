@@ -12,29 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.layout)
+(ns plugins.text-editor.side-effects
+    (:require [plugins.text-editor.helpers :as helpers]
+              [x.app-core.api              :as a]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def BOOK {:body
-           {:en "Body"
-            :hu "Törzs"}
-           :body-content
-           {:en "Body content"
-            :hu "Törzs tartalma"}
-           :footer
-           {:en "Footer"
-            :hu "Lábléc"}
-           :footer-content
-           {:en "Footer content"
-            :hu "Lábléc tartalma"}
-           :header
-           {:en "Header"
-            :hu "Fejléc"}
-           :header-content
-           {:en "Header content"
-            :hu "Fejléc tartalma"}})
+(a/reg-fx :text-editor/update-editor-change! helpers/update-editor-change!)

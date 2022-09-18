@@ -31,4 +31,10 @@
             :hu "Gyártói ár"}
            :price
            {:en "Price"
-            :hu "Ár"}})
+            :hu "Ár"}
+           :product
+           {:en "Product"
+            :hu "Termék"}
+           :products
+           {:en "Products"
+            :hu "Termékek"}})

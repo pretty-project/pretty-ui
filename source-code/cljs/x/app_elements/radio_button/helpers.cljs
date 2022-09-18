@@ -79,13 +79,13 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ;  {:disabled? (boolean)(opt)}
   ; @param (*) option
   ;
   ; @return (map)
   ;  {}
-  [button-id {:keys [disabled? value-path] :as button-props} option]
-  (let [selected-option @(a/subscribe [:db/get-item value-path])
-        option-selected? (= selected-option option)]
+  [button-id {:keys [disabled?] :as button-props} option]
+  (let [option-selected? @(a/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
        (if disabled? {:data-selected option-selected?
                       :disabled      true}
                      {:data-selected option-selected?

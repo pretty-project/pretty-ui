@@ -95,7 +95,7 @@
               [x.app-elements.submit-button.views                     :as submit-button.views]
               [x.app-elements.switch.views                            :as switch.views]
               [x.app-elements.element-components.table                :as element-components.table]
-              [x.app-elements.element-components.text                 :as element-components.text]
+              [x.app-elements.text.views                              :as text.views]
               [x.app-elements.text-field.views                        :as text-field.views]
               [x.app-elements.thumbnail.views                         :as thumbnail.views]
               [x.app-elements.element-components.toggle               :as element-components.toggle]
@@ -156,7 +156,7 @@
 (def submit-button        submit-button.views/element)
 (def switch               switch.views/element)
 (def table                element-components.table/element)
-(def text                 element-components.text/element)
+(def text                 text.views/element)
 (def text-field           text-field.views/element)
 (def thumbnail            thumbnail.views/element)
 (def toggle               element-components.toggle/element)

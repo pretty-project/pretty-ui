@@ -1,5 +1,8 @@
 
 # x4.7.4
+- A mongo-db/x-document-prototype függvények ezentúl x.server-user/x-document-prototype
+  néven érhetők el!
+
 - A [:sync/send-request! ...] esemény {:target-path ...} tulajdonsága megszűnt!
   Használj helyette {:response-f #(...)} függvényt!
 

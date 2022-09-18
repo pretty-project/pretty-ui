@@ -26,18 +26,48 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- switch-option
+(defn- switch-option-helper
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ;  {:option-helper-f (function)}
+  ; @param (*) option
+  [_ {:keys [option-helper-f]} option]
+  (if option-helper-f (let [option-helper (option-helper-f option)]
+                           [:div.x-switch--option-helper (components/content option-helper)])))
+
+(defn- switch-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ;  {:option-label-f (function)}
   ; @param (*) option
-  [switch-id {:keys [option-label-f] :as switch-props} option]
+  [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:button.x-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                                 [:div.x-switch--option-track]
-                                 [:div.x-switch--option-label (components/content option-label)]]))
+       [:div.x-switch--option-label (components/content option-label)]))
+
+(defn- switch-option-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; @param (*) option
+  [switch-id switch-props option]
+  [:div.x-switch--option-content [switch-option-label  switch-id switch-props option]
+                                 [switch-option-helper switch-id switch-props option]])
+
+(defn- switch-option
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; @param (*) option
+  [switch-id switch-props option]
+  [:button.x-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
+                            [:div.x-switch--option-track]
+                            [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,6 +139,7 @@
   ;   :label (metamorphic-content)(opt)
   ;   :on-check (metamorphic-event)(opt)
   ;   :on-uncheck (metamorphic-event)(opt)
+  ;   :option-helper-f (function)(opt)
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)

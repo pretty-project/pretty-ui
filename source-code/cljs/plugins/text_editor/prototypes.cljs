@@ -27,9 +27,12 @@
   ;
   ; @return (map)
   ;  {:buttons (keywords in vector)
-  ;   :min-height (px)}
+  ;   :min-height (px)
+  ;   :placeholder (metamorphic-content)
+  ;   :value-path (vector)}
   [editor-id editor-props]
-  (merge {:buttons    [:bold :italic :underline]
-          :min-height 400
-          :value-path (helpers/default-value-path editor-id)}
+  (merge {:buttons     [:bold :italic :underline]
+          :min-height  400
+          :placeholder :write-something!
+          :value-path  (helpers/default-value-path editor-id)}
          (param editor-props)))

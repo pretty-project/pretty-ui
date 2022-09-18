@@ -26,18 +26,48 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- checkbox-option
+(defn- checkbox-option-helper
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;  {:option-helper-f (function)}
+  ; @param (*) option
+  [_ {:keys [option-helper-f]} option]
+  (if option-helper-f (let [option-helper (option-helper-f option)]
+                           [:div.x-checkbox--option-helper (components/content option-helper)])))
+
+(defn- checkbox-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ;  {:option-label-f (function)}
   ; @param (*) option
-  [checkbox-id {:keys [option-label-f] :as checkbox-props} option]
+  [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:button.x-checkbox--option (checkbox.helpers/checkbox-option-attributes checkbox-id checkbox-props option)
-                                   [:div.x-checkbox--option-button {:data-icon-family :material-icons-filled}]
-                                   [:div.x-checkbox--option-label (components/content option-label)]]))
+       [:div.x-checkbox--option-label (components/content option-label)]))
+
+(defn- checkbox-option-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ; @param (*) option
+  [checkbox-id checkbox-props option]
+  [:div.x-checkbox--option-content [checkbox-option-label  checkbox-id checkbox-props option]
+                                   [checkbox-option-helper checkbox-id checkbox-props option]])
+
+(defn- checkbox-option
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ; @param (*) option
+  [checkbox-id checkbox-props option]
+  [:button.x-checkbox--option (checkbox.helpers/checkbox-option-attributes checkbox-id checkbox-props option)
+                              [:div.x-checkbox--option-button {:data-icon-family :material-icons-filled}]
+                              [checkbox-option-content checkbox-id checkbox-props option]])
 
 (defn- checkbox-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,6 +140,7 @@
   ;   :initial-value (boolean)(opt)
   ;   :on-check (metamorphic-event)(opt)
   ;   :on-uncheck (metamorphic-event)(opt)
+  ;   :option-helper-f (function)(opt)
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)

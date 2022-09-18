@@ -38,6 +38,24 @@
        ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
        (merge settings-handler.config/ANONYMOUS-USER-SETTINGS user-settings)))
 
+(defn user-account-id->user-settings-item
+  ; @param (string) user-account-id
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (user/user-account-id->user-settings-item "my-account" :selected-language)
+  ;
+  ; @return (*)
+  [user-account-id item-key]
+  (let [user-settings       (user-account-id->user-settings user-account-id)
+        namespaced-item-key (keyword/add-namespace :user-settings item-key)]
+       (get user-settings namespaced-item-key)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn request->user-settings
   ; @param (map) request
   ;

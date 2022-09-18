@@ -12,29 +12,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-dictionary.books.layout)
+(ns x.app-elements.text.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (map)
-(def BOOK {:body
-           {:en "Body"
-            :hu "Törzs"}
-           :body-content
-           {:en "Body content"
-            :hu "Törzs tartalma"}
-           :footer
-           {:en "Footer"
-            :hu "Lábléc"}
-           :footer-content
-           {:en "Footer content"
-            :hu "Lábléc tartalma"}
-           :header
-           {:en "Header"
-            :hu "Fejléc"}
-           :header-content
-           {:en "Header content"
-            :hu "Fejléc tartalma"}})
+(defn text-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) text-props
+  ;
+  ; @return (map)
+  ;  {:font-size (keyword)
+  ;   :font-weight (keyword)
+  ;   :horizontal-align (keyword)
+  ;   :selectable? (boolean)}
+  [text-props]
+  (merge {:font-size        :s
+          :font-weight      :normal
+          :horizontal-align :left
+          :selectable?      true}
+         (param text-props)))

@@ -12,38 +12,28 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.element-components.text
-    (:require [mid-fruits.candy          :refer [param]]
-              [mid-fruits.random         :as random]
-              [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
-              [x.app-elements.engine.api :as engine]))
+(ns x.app-elements.text.views
+    (:require [mid-fruits.random              :as random]
+              [x.app-components.api           :as components]
+              [x.app-elements.label.views     :as label.views]
+              [x.app-elements.text.helpers    :as text.helpers]
+              [x.app-elements.text.prototypes :as text.prototypes]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- text-props-prototype
+(defn- text-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (keyword) text-id
   ; @param (map) text-props
-  ;
-  ; @return (map)
-  ;  {:font-size (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :selectable? (boolean)}
-  [text-props]
-  (merge {:font-size        :s
-          :font-weight      :normal
-          :horizontal-align :left
-          :selectable?      true}
-         (param text-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+  ;  {:info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)}
+  [_ {:keys [info-text label]}]
+  (if label [label.views/element {:info-text info-text
+                                  :content   label}]))
 
 (defn- text
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,11 +45,13 @@
   [text-id {:keys [content placeholder] :as text-props}]
   ; XXX#9811
   (let [content (components/content text-id content)]
-       [:div.x-text (engine/element-attributes text-id text-props)
+       [:div.x-text (text.helpers/text-attributes text-id text-props)
+                    [text-label text-id text-props]
                     (if (empty? content)
                         (if placeholder [:div.x-text--placeholder (components/content text-id content)]
                                         [:div.x-text--placeholder "\u00A0"])
-                        [:div.x-text--body content])]))
+                        [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
+                                           content])]))
 
 (defn element
   ; XXX#0439
@@ -91,6 +83,9 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :max-lines (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
@@ -108,5 +103,5 @@
    [element (random/generate-keyword) text-props])
 
   ([text-id text-props]
-   (let [text-props (text-props-prototype text-props)]
+   (let [text-props (text.prototypes/text-props-prototype text-props)]
         [text text-id text-props])))

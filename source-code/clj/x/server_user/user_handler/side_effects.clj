@@ -41,9 +41,9 @@
                     user-account  (user-handler.helpers/user-props->user-account  user-id user-props)
                     user-profile  (user-handler.helpers/user-props->user-profile  user-id user-props)
                     user-settings (user-handler.helpers/user-props->user-settings user-id user-props)]
-                   (boolean (and (mongo-db/insert-document! "user_accounts" user-account  {:prototype-f (user-handler.prototypes/prototype-f :user-account)})
-                                 (mongo-db/insert-document! "user_profiles" user-profile  {:prototype-f (user-handler.prototypes/prototype-f :user-profile)})
-                                 (mongo-db/insert-document! "user_settings" user-settings {:prototype-f (user-handler.prototypes/prototype-f :user-settings)})))))))
+                   (and (mongo-db/insert-document! "user_accounts" user-account  {:prototype-f (user-handler.prototypes/prototype-f :user-account)})
+                        (mongo-db/insert-document! "user_profiles" user-profile  {:prototype-f (user-handler.prototypes/prototype-f :user-profile)})
+                        (mongo-db/insert-document! "user_settings" user-settings {:prototype-f (user-handler.prototypes/prototype-f :user-settings)}))))))
 
 
 

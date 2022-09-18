@@ -26,11 +26,40 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(a/reg-event-fx
+  :text-editor/hack-9910
+  (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
+      (let [editor-content (helpers/get-editor-content editor-id)
+            stored-value   (get-in db value-path)]
+           (println (str "stored-value: "   stored-value))
+           (println (str "editor-content: " editor-content))
+           (if-not (= editor-content stored-value)
+                   {:fx [:text-editor/update-editor-change! editor-id stored-value]}))))
+
+(defn- hack-9910
+  [editor-id {:keys [value-path] :as editor-props}]
+  (let [stored-value @(a/subscribe [:db/get-item value-path])]
+       (a/dispatch [:text-editor/hack-9910 editor-id editor-props])))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn jodit
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
   [:> JoditEditor (helpers/jodit-attributes editor-id editor-props)])
+
+(defn- text-editor-label
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  ;  {}
+  [_ {:keys [info-text label required?]}]
+  (if label [elements/label {:info-text info-text
+                             :content   label
+                             :required? required?}]))
 
 (defn- text-editor-body
   ; @param (keyword) editor-id
@@ -39,7 +68,9 @@
   [editor-id editor-props]
   [:div [:style {:type "text/css"}
                 ".jodit-wysiwyg {cursor: text}"]
-        [jodit editor-id editor-props]])
+        [text-editor-label editor-id editor-props]
+        [jodit             editor-id editor-props]
+        [hack-9910         editor-id editor-props]])
 
 (defn- text-editor
   ; @param (keyword) editor-id
@@ -66,6 +97,12 @@
   ;    Default: false
   ;   :indent (map)(opt)
   ;    A tulajdonság leírását a x.app-elements.api/blank dokumentációjában találod!
+  ;   :info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :placeholder (metamorphic-content)(opt)
+  ;    Default: :write-something!
+  ;   :required? (boolean)(opt)
+  ;    Default: false
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
@@ -78,4 +115,6 @@
 
   ([editor-id editor-props]
    (let [editor-props (prototypes/editor-props-prototype editor-id editor-props)]
-        [text-editor editor-id editor-props])))
+      [:<>
+        [text-editor editor-id editor-props]
+        [:div (str "ch: " (helpers/get-editor-change editor-id))]])))

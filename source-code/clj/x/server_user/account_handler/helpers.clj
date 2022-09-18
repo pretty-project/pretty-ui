@@ -15,6 +15,7 @@
 (ns x.server-user.account-handler.helpers
     (:require [local-db.api                         :as local-db]
               [mid-fruits.candy                     :refer [return]]
+              [mid-fruits.keyword                   :as keyword]
               [mid-fruits.map                       :as map]
               [server-fruits.http                   :as http]
               [x.server-user.account-handler.config :as account-handler.config]))
@@ -39,12 +40,35 @@
   (let [user-account (local-db/get-document "user_accounts" user-account-id)]
        (map/add-namespace user-account :user-account)))
 
+(defn user-account-id->user-account-item
+  ; @param (string) user-account-id
+  ; @param (keyword) item-key
+  ;
+  ; @usage
+  ;  (user/user-account-id->user-account "my-account" :email-address)
+  ;
+  ; @return (*)
+  [user-account-id item-key]
+  (let [user-account        (user-account-id->user-account user-account-id)
+        namespaced-item-key (keyword/add-namespace :user-account item-key)]
+       (get user-account namespaced-item-key)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn user-account->user-public-account
   ; @param (map) user-account
   ;
   ; @return (namespaced map)
   [user-account]
   (select-keys user-account account-handler.config/USER-PUBLIC-ACCOUNT-PROPS))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn request->user-account
   ; @param (map) request

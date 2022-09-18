@@ -20,7 +20,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:change-password!
+(def BOOK {:access-denied
+           {:en "Access denied"
+            :hu "Hozzáférés megtagadva"}
+           :access-granted
+           {:en "Access granted"
+            :hu "Hozzáférés megadva"}
+           :change-password!
            {:en "Change password"
             :hu "Jelszó megváltoztatása"}
            :change-pin!
@@ -38,6 +44,18 @@
            :continue-as!
            {:en "Continue as "
             :hu "Folytatás, mint "}
+           :created
+           {:en "Created"
+            :hu "Létrehozva"}
+           :created-n
+           {:en "Created: %"
+            :hu "Létrehozva: %"}
+           :created-by-n
+           {:en "Created by: %"
+            :hu "Létrehozta: %"}
+           :created-at-n
+           {:en "Created at: %"
+            :hu "Létrehozva: %"}
            :create-account!
            {:en "Create account"
             :hu "Regisztráció"}
@@ -62,6 +80,18 @@
            :invalid-phone-number
            {:en "Invalid phone number"
             :hu "Érvénytelen telefonszám"}
+           :last-modified
+           {:en "Last modified"
+            :hu "Utoljára módosítva"}
+           :last-modified-n
+           {:en "Last modified: %"
+            :hu "Utoljára módosítva: %"}
+           :last-modified-by-n
+           {:en "Last modified by: %"
+            :hu "Utoljára módosította: %"}
+           :last-modified-at-n
+           {:en "Last modified at: %"
+            :hu "Utoljára módosítva: %"}
            :login!
            {:en "Login"
             :hu "Bejelentkezés"}
@@ -102,8 +132,8 @@
            {:en "Password is too weak"
             :hu "A jelszó erőssége nem megfelelő"}
            :permission-denied
-           {:en "Permission denied!"
-            :hu "Hozzáférés megtagadva!"}
+           {:en "Permission denied"
+            :hu "Hozzáférés megtagadva"}
            :pin
            {:en "PIN"
             :hu "PIN"}
