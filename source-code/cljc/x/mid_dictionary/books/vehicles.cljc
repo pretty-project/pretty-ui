@@ -26,9 +26,18 @@
            :chassis
            {:en "Chassis"
             :hu ""}
+           :construction-year
+           {:en "Construction year"
+            :hu "Gyártási év"}
            :empty-weight
            {:en "Empty weight"
             :hu "Üres tömeg"}
+           :number-of-bunks
+           {:en "Number of bunks"
+            :hu "Fekvőhelyek száma"}
+           :number-of-seats
+           {:en "Number of seats"
+            :hu "Ülések száma"}
            :suspension
            {:en "Suspension"
             :hu "Felfüggesztés"}
