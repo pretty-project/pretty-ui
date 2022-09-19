@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy  :refer [return]]
               [mid-fruits.map    :refer [dissoc-in]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :refer [r]]))
+              [x.app-core.api    :as a :refer [r]]))
 
 
 
@@ -198,3 +198,16 @@
          (let [keypress-events (get-in db [:environment :keypress-handler/data-items])]
               (as-> db % (reduce-kv f (r empty-cache! %) keypress-events)
                          (assoc-in % [:environment :keypress-handler/meta-items :type-mode?] true)))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:environment/quit-type-mode!]
+(a/reg-event-db :environment/quit-type-mode! quit-type-mode!)
+
+; @usage
+;  [:environment/set-type-mode!]
+(a/reg-event-db :environment/set-type-mode!  set-type-mode!)

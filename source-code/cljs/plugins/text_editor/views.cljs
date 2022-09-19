@@ -31,8 +31,8 @@
   (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
       (let [editor-content (helpers/get-editor-content editor-id)
             stored-value   (get-in db value-path)]
-           (println (str "stored-value: "   stored-value))
-           (println (str "editor-content: " editor-content))
+           ;(println (str "stored-value: "   stored-value))
+           ;(println (str "editor-content: " editor-content))
            (if-not (= editor-content stored-value)
                    {:fx [:text-editor/update-editor-change! editor-id stored-value]}))))
 
@@ -68,9 +68,30 @@
   [editor-id editor-props]
   [:div [:style {:type "text/css"}
                 ".jodit-wysiwyg {cursor: text}"]
+
+
+
         [text-editor-label editor-id editor-props]
         [jodit             editor-id editor-props]
-        [hack-9910         editor-id editor-props]])
+        [hack-9910         editor-id editor-props]
+
+
+        [:div [:br]
+              "Local-atom: "
+              [:br]
+              (get    @plugins.text-editor.state/EDITOR-CONTENTS editor-id)]
+        [:div [:br]
+              "Change-atom: "
+              [:br]
+              (get-in @plugins.text-editor.state/EDITOR-CHANGES [editor-id :change])
+              [:br]
+              (get-in @plugins.text-editor.state/EDITOR-CHANGES [editor-id :changed-at])]
+        [:div [:br]
+              "Re-frame:"
+              [:br]
+              @(a/subscribe [:db/get-item (:value-path editor-props)])
+              [:br]
+              [:br]]])
 
 (defn- text-editor
   ; @param (keyword) editor-id
@@ -116,5 +137,6 @@
   ([editor-id editor-props]
    (let [editor-props (prototypes/editor-props-prototype editor-id editor-props)]
       [:<>
-        [text-editor editor-id editor-props]
-        [:div (str "ch: " (helpers/get-editor-change editor-id))]])))
+        [text-editor editor-id editor-props]])))
+
+        ;[:div (str "re-frame: " @(a/subscribe [:db/get-item (:value-path editor-props)]))]])))

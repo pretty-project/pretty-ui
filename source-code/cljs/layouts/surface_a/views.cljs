@@ -73,8 +73,8 @@
                                       :hover-color   :highlight
                                       :icon          :auto_fix_high
                                       :preset        :default
-                                      :on-click      [:developer/render-developer-tools!]
-                                      :keypress      {:key-code 77}}])))
+                                      :on-click      [:developer/render-developer-tools!]}])))
+                                     ;:keypress      {:key-code 77}
                                      ;:label db-write-count
 
 

@@ -149,7 +149,9 @@
 (defn timestamp-string
   ; @return (string)
   []
-  ; Java időbélyegző-objektum string típussá alakításának formátuma: "2020-04-20T16:20:00.123Z"
+  ; A CLJS névterekben az időbélyegző formátuma megegyezik a Java időbélyegző-objektum
+  ; string típussá alakításának formátumával ("2020-04-20T16:20:00.123Z").
+  ; Így a CLJS és a CLJ névterekben az string típusú időbélyegzők formátuma megegyezik.
   #?(:cljs (let [formatter (cljs-time.format/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                  timestamp (cljs-time.core/now)]
                 (cljs-time.format/unparse formatter timestamp))
@@ -401,7 +403,7 @@
   ; @example
   ;  (time/timestamp-string->date "2020-04-20T16:20:00.123Z" :yyyymmdd)
   ;  =>
-  ;  "2020/04/20"
+  ;  "2020-04-20"
   ;
   ; @return (string)
   ([n]
@@ -412,9 +414,9 @@
        (let [year  (timestamp-string->year n)
              month (format/leading-zeros (timestamp-string->month n) 2)
              day   (format/leading-zeros (timestamp-string->day   n) 2)]
-            (case format :yyyymmdd (str year "/" month "/" day)
+            (case format :yyyymmdd (str year "-" month "-" day)
                          :yymmdd   (let [year (string/part year 2 2)]
-                                        (str year "/" month "/" day))
+                                        (str year "-" month "-" day))
                          (return n))))))
 
 (defn timestamp-string->time
@@ -453,7 +455,7 @@
   ; @example
   ;  (time/timestamp->date-time "2020-04-20T16:20:00.123Z" :yyyymmdd :hhmmss)
   ;  =>
-  ;  "2020/04/20 - 16:20:00"
+  ;  "2020-04-20 - 16:20:00"
   ;
   ; @return (string)
   ([n]

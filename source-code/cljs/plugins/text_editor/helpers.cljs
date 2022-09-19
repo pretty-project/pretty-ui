@@ -16,7 +16,10 @@
     (:require [clojure.string]
               [plugins.text-editor.config :as config]
               [plugins.text-editor.state  :as state]
-              [x.app-core.api             :as a]))
+              [x.app-core.api             :as a]
+
+              ; TEMP
+              [react]))
 
 
 
@@ -40,11 +43,18 @@
   ;
   ; @return (string)
   [n]
+  ; TODO
+  ; @Paul – Mi a feladata a remove-whitespaces függvénynek?
   (-> n (clojure.string/replace #"\n" "")
         (clojure.string/replace #"\t" "")))
 
 (defn parse-buttons
   ; @param (keywords in vector) buttons
+  ;
+  ; @example
+  ;  (helpers/parse-buttons [:bold :italic])
+  ;  =>
+  ;  "bold, italic"
   ;
   ; @result (string)
   [buttons]
@@ -86,7 +96,8 @@
   ;
   ; @return (string)
   [editor-id editor-change]
-  (swap! state/EDITOR-CHANGES assoc editor-id editor-change))
+  (swap! state/EDITOR-CHANGES assoc editor-id {:change editor-change
+                                               :changed-at (random-uuid)}))
 
 
 
@@ -99,6 +110,7 @@
   ;  {:value-path (vector)}
   ; @param (string) editor-content
   [editor-id {:keys [value-path]} editor-content]
+  ; Az on-change-f függvény
   (let [editor-content (remove-whitespaces editor-content)]
        (set-editor-content! editor-id editor-content)
        (a/dispatch-last config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content])))
@@ -107,6 +119,14 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+
+
+(defn memofn
+  ([f]
+   (react/useMemo f #js []))
+  ([f deps]
+   (react/useMemo f (to-array deps))))
 
 (defn jodit-config
   ; @param (map) editor-props
@@ -138,9 +158,14 @@
   ; @return (map)
   ;  {}
   [editor-id editor-props]
-  (let [editor-change (get-editor-change editor-id)
-        stored-value @(a/subscribe [:db/get-item (:value-path editor-props)])]
-       {:config    (jodit-config          editor-props)
-        :onChange #(on-change-f editor-id editor-props %)
-        :tabIndex  1
-        :value     (get @state/EDITOR-CHANGES editor-id)}))
+  (let [;editor-change (get-editor-change editor-id)]
+        editor-changed-at (get-in @state/EDITOR-CHANGES [editor-id :changed-at])]
+       (memofn (fn [] {:config    (jodit-config          editor-props)
+                       :onChange #(on-change-f editor-id editor-props %)
+                       ;:key       (get-in @state/EDITOR-CHANGES [editor-id :changed-at])
+                       ;:onFocus  #(a/dispatch [:environment/set-type-mode!])
+                       ;:onBlur   #(a/dispatch [:environment/quit-type-mode!])
+                       :tabIndex  1
+                       ;:value    (get-in @state/EDITOR-CHANGES [editor-id :change])}))
+                       :value     "static-string"})
+               [editor-changed-at])))

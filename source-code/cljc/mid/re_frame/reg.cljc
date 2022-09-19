@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.re-frame.reg
-    (:require [mid-fruits.vector        :as vector]
+    (:require [mid-fruits.candy         :refer [return]]
+              [mid-fruits.vector        :as vector]
               [mid.re-frame.core        :as core]
               [mid.re-frame.log         :as log]
               [mid.re-frame.metamorphic :as metamorphic]))
@@ -39,7 +40,8 @@
   ;
   ; @return (vector)
   [interceptors]
-  #?(:clj (vector/conj-item interceptors log/LOG-EVENT!)))
+  #?(:clj  (vector/conj-item interceptors log/LOG-EVENT!)
+     :cljs (return           interceptors)))
 
 
 

@@ -29,7 +29,7 @@
   ;
   ; @return (map)
   [db [_ query-id server-response]]
-  (letfn [(f [db query-key {:pathom/keys [target-path] :as query-answer}]
-             (if target-path (assoc-in db target-path (dissoc query-answer :pathom/target-path))
+  (letfn [(f [db query-key {:pathom/keys [target-value target-path] :as query-answer}]
+             (if target-path (assoc-in db target-path target-value)
                              (return   db)))]
          (reduce-kv f db server-response)))

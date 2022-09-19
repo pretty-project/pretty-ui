@@ -67,8 +67,8 @@
             ; ... eltávolítja a query vektorból a nil értékeket mert a query vektorba feltételesen
             ;     – if, when, ... függvény használatával – írt query-question elemek helyett a feltétel
             ;     nem teljesülésekor nil érték kerülhet, ami a szerver-oldali Pathom rendszerben hibához vezetne.
-            ; ... {:debug-mode? true} beállítás esetén hozzáadja a :debug resolver-id azonosítót a query vektorhoz.
+            ; ... {:debug-mode? true} beállítás esetén hozzáadja a :pathom/debug resolver-id azonosítót a query vektorhoz.
             query-props (cond-> query-props :remove-nil (update-in [:params :query] vector/remove-item nil)
-                                            debug-mode? (update-in [:params :query] vector/cons-item :debug))]
+                                            debug-mode? (update-in [:params :query] vector/cons-item :pathom/debug))]
 
            [:sync/send-request! query-id query-props])))

@@ -1,15 +1,23 @@
 
-/***** *****/
+/***** Clickable *****/
+
+/* @usage
+ *  [:button {:data-clickable true} "My button"]
+ *
+ * Ne felejtsd el az on-mouse-up eseményre beállítani, hogy az elem elveszítse a fókuszt! */
 
 [data-clickable="true"]:active,
 [data-clickable="true"]:focus {
   opacity: .5 }
 
-/***** *****/
+/***** Clickable *****/
 
 
 
-/***** *****/
+/***** Disabled *****/
+
+/* @usage
+ *  [:button {:data-disabled true} "My button"] */
 
 [data-disabled="true"]::after {
   content: '';
@@ -25,11 +33,14 @@
 button[data-disabled="true"] {
   cursor: default }
 
-/***** *****/
+/***** Disabled *****/
 
 
 
-/***** *****/
+/***** Hide scrollbar *****/
+
+/* @usage
+ *  [:div {:data-hide-scrollbar true} "My scroll-container"] */
 
 [data-hide-scrollbar="true"] {
   /* Hide scrollbar for IE and Edge */
@@ -43,11 +54,14 @@ button[data-disabled="true"] {
   /* Hide scrollbar for Chrome, Safari and Opera */
   display: none }
 
-/***** *****/
+/***** Hide scrollbar *****/
 
 
 
-/***** *****/
+/***** Selectable *****/
+
+/* @usage
+ *  [:p {:data-selectable false} "My unselectable text"] */
 
 [data-selectable="false"] {
   /* user-select not supperted properly in all browsers */
@@ -56,4 +70,4 @@ button[data-disabled="true"] {
   -webkit-user-select: none;
   user-select: none }
 
-/***** *****/
+/***** Selectable *****/

@@ -46,9 +46,9 @@
              [event-vector]
              (if (->     event-vector second keyword?)
                  (return event-vector)
-                 (concat [(first event-vector) (random/generate-keyword)] (rest event-vector))))]
+                 (vec (concat [(first event-vector) (random/generate-keyword)] (rest event-vector)))))]
          (update-in context [:coeffects :event] f)))
 
 ; @constant (?)
-(def event-vector<-id (core/->interceptor :id :core/event-vector<-id
+(def event-vector<-id (core/->interceptor :id :re-frame/event-vector<-id
                                           :before event-vector<-id-f))

@@ -43,7 +43,6 @@
               [x.app-elements.slider.subs]
               [x.app-elements.switch.events]
               [x.app-elements.switch.subs]
-              [x.app-elements.submit-button.subs]
               [x.app-elements.text-field.effects]
               [x.app-elements.text-field.events]
               [x.app-elements.text-field.side-effects]
@@ -92,7 +91,6 @@
               [x.app-elements.select.views                            :as select.views]
               [x.app-elements.slider.views                            :as slider.views]
               [x.app-elements.element-components.slideshow            :as element-components.slideshow]
-              [x.app-elements.submit-button.views                     :as submit-button.views]
               [x.app-elements.switch.views                            :as switch.views]
               [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.text.views                              :as text.views]
@@ -153,7 +151,6 @@
 (def select               select.views/element)
 (def slider               slider.views/element)
 (def slideshow            element-components.slideshow/element)
-(def submit-button        submit-button.views/element)
 (def switch               switch.views/element)
 (def table                element-components.table/element)
 (def text                 text.views/element)
