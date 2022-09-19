@@ -196,6 +196,13 @@
            {:en "Dimensions"
             :hu "Méretek"}
 
+           :type
+           {:en "Type"
+            :hu "Típus"}
+           :types
+           {:en "Types"
+            :hu "Típusok"}
+
 
 
            :chart
