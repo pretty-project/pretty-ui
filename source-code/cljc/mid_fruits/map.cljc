@@ -595,7 +595,11 @@
    ; hogy megváltozott-e az űrlap által szerkesztett adat, figyelembe véve,
    ; hogy egy üres szövegmező által az adatba írt üres string értékét ne
    ; tekintse különbözőnek a szövegmező használata előtti nil értéktől.
-   (letfn [(f [key] (if (-> a key empty?)
+   ;
+   ; Az empty? függvény csak seqable értékeket fogad!
+   (letfn [(f [key] (if (and (-> a key seqable?)
+                             (-> b key seqable?)
+                             (-> a key empty?))
                         (-> b key empty? not)
                         (not= (key a)
                               (key b))))]
