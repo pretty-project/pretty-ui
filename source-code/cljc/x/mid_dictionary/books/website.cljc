@@ -29,6 +29,9 @@
            :site-config
            {:en "Site config"
             :hu "Oldal beállításai"}
+           :site-content
+           {:en "Site content"
+            :hu "Oldal tartalma"}
            :website
            {:en "Website"
             :hu "Webhely"}
@@ -37,4 +40,7 @@
             :hu "Webhely"}
            :website-config
            {:en "Website config"
-            :hu "Webhely beállításai"}})
+            :hu "Webhely beállításai"}
+           :website-content
+           {:en "Website content"
+            :hu "Webhely tartalma"}})
