@@ -38,15 +38,6 @@
   [db [_ server-config]]
   (assoc-in db [:core :config-handler/server-config] server-config))
 
-(defn store-website-config!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) website-config
-  ;
-  ; @return (map)
-  [db [_ website-config]]
-  (assoc-in db [:core :config-handler/website-config] website-config))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -57,6 +48,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (event-handler/reg-event-db :core/store-server-config! store-server-config!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-website-config! store-website-config!)
