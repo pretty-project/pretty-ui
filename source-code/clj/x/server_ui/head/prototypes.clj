@@ -39,17 +39,16 @@
   ;   :selected-language (keyword)}
   [request head-props]
   ; XXX#5061
-  ; A head elemben megjelenített adatok és felsorolt CSS fájlok forrásáról
-  ; bővebben a mappa README.md fájljában olvashatsz!
+  ; A head elemben felsorolt CSS fájlok forrásáról bővebben a mappa README.md
+  ; fájljában olvashatsz!
   (let [app-config           @(a/subscribe [:core/get-app-config])
-        website-config       @(a/subscribe [:core/get-website-config])
         additional-css-paths @(a/subscribe [:environment/get-css-paths])]
-       (merge app-config website-config head-props
+       (merge app-config head-props
               {:app-build         (a/app-build)
                :core-js           (router/request->core-js          request)
                :crawler-rules     (environment/crawler-rules        request)
                :selected-language (user/request->user-settings-item request :selected-language)
-               :css-paths (vector/concat-items head.config/SYSTEM-CSS-PATHS
-                                               (:css-paths app-config)
-                                               (:css-paths head-props)
-                                               additional-css-paths)})))
+               :css-paths         (vector/concat-items head.config/SYSTEM-CSS-PATHS
+                                                       (:css-paths app-config)
+                                                       (:css-paths head-props)
+                                                       additional-css-paths)})))
