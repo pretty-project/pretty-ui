@@ -13,9 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.api
-    (:require [x.server-dictionary.term-handler.effects]
-              [x.server-dictionary.term-handler.lifecycles]
-              [x.server-dictionary.term-handler.transfer]
+    (:require [x.server-dictionary.term-handler.lifecycles]
               [x.server-dictionary.term-handler.events       :as term-handler.events]
               [x.server-dictionary.term-handler.side-effects :as term-handler.side-effects]
               [x.server-dictionary.term-handler.subs         :as term-handler.subs]))

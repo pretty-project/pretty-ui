@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.lifecycles
-    (:require [x.server-core.api :as a]))
+    (:require [x.mid-dictionary.books :refer [BOOKS]]
+              [x.server-core.api      :as a]))
 
 
 
@@ -22,4 +23,4 @@
 
 (a/reg-lifecycles!
   ::lifecycles
-  {:on-server-init [:dictionary/init-dictionary!]})
+  {:on-server-init [:dictionary/add-terms! BOOKS]})
