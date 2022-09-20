@@ -99,7 +99,7 @@
   ; @param (map) label-props
   ;  {:content (metamorphic-content)
   ;   :target-id (keyword)(opt)}
-  [label-id {:keys [content target-id] :as x}]
+  [label-id {:keys [content target-id]}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   [:label.x-label--content {:for target-id}

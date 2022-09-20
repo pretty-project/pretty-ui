@@ -35,23 +35,48 @@
   (if label [label.views/element {:info-text info-text
                                   :content   label}]))
 
-(defn- text
+(defn- text-placeholder
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  ;  {:placeholder (metamorphic-content)(opt)}
+  [_ {:keys [placeholder]}]
+  (if placeholder [:div.x-text--placeholder (components/content placeholder)]
+                  [:div.x-text--placeholder "\u00A0"]))
+
+(defn- text-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  ;  {:content (metamorphic-content)}
+  [label-id {:keys [content]}]
+  [:div.x-text--content (components/content content)])
+
+(defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
   ;  {:content (metamorphic-content)
   ;   :placeholder (metamorphic-content)(opt)}
-  [text-id {:keys [content placeholder] :as text-props}]
+  [text-id {:keys [content selectable?] :as text-props}]
   ; XXX#9811
-  (let [content (components/content text-id content)]
-       [:div.x-text (text.helpers/text-attributes text-id text-props)
-                    [text-label text-id text-props]
-                    (if (empty? content)
-                        (if placeholder [:div.x-text--placeholder (components/content text-id content)]
-                                        [:div.x-text--placeholder "\u00A0"])
-                        [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
-                                           content])]))
+  [:div.x-text--body {:data-selectable selectable?}
+                     (if (-> content components/content empty?)
+                         [text-placeholder text-id text-props]
+                         [text-content     text-id text-props])])
+
+(defn- text
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  [text-id text-props]
+  [:div.x-text (text.helpers/text-attributes text-id text-props)
+               [text-label                   text-id text-props]
+               [text-body                    text-id text-props]])
 
 (defn element
   ; XXX#0439

@@ -39,8 +39,7 @@
        :fx-n          [[:core/import-lifecycles!]
                        [:core/import-app-build!]
                        [:core/import-app-config!]
-                       [:core/import-server-config!]
-                       [:core/import-website-config!]]}))
+                       [:core/import-server-config!]]}))
 
 (a/reg-event-fx
   :boot-loader/init-server!

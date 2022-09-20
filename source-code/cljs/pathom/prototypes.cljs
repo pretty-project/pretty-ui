@@ -40,4 +40,4 @@
          (param query-props)
          (if query {:params {:query query}})
          {:method     :post
-          :response-f events/target-query-answers!}))
+          :response-f #'events/target-query-answers!}))

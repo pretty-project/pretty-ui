@@ -25,4 +25,7 @@
             :hu "Brand"}
            :brands
            {:en "Brands"
-            :hu "Márkák"}})
+            :hu "Márkák"}
+           :more-brands
+           {:en "More brands"
+            :hu "További márkáink"}})
