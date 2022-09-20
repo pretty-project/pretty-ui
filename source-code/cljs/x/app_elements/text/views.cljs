@@ -42,8 +42,9 @@
   ; @param (map) text-props
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
-  (if placeholder [:div.x-text--placeholder (components/content placeholder)]
-                  [:div.x-text--placeholder "\u00A0"]))
+  [:div.x-text--placeholder {:data-selectable false}
+                            (if placeholder (components/content placeholder)
+                                            "\u00A0")])
 
 (defn- text-content
   ; WARNING! NON-PUBLIC! DO NOT USE!

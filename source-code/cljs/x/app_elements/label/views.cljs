@@ -89,8 +89,9 @@
   ; @param (map) label-props
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
-  (if placeholder [:div.x-label--placeholder (components/content placeholder)]
-                  [:div.x-label--placeholder "\u00A0"]))
+  [:div.x-label--placeholder {:data-selectable false}
+                             (if placeholder (components/content placeholder)
+                                             "\u00A0")])
 
 (defn- label-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
