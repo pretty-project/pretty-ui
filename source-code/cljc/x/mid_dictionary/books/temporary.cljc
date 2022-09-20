@@ -25,6 +25,16 @@
 (def BOOK {:business
            {:en "Business"
             :hu "Üzlet"}
+           :other
+           {:en "Other"
+            :hu "Egyéb"}
+
+           :page
+           {:en "Page"
+            :hu "Oldal"}
+           :pages
+           {:en "Pages"
+            :hu "Oldalak"}
 
            :tag
            {:en "Tag"
