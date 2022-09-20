@@ -67,6 +67,9 @@
            :overview
            {:en "Overview"
             :hu "Áttekintés"}
+           :link
+           {:en "Link"
+            :hu "Hivatkozás"}
 
            :size
            {:en "Size"
