@@ -20,9 +20,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:home-page
+(def BOOK {:about-us
+           {:en "About us"
+            :hu "Magunkról"}
+           :home-page
            {:en "Home"
             :hu "Kezdőlap"}
+           :main-page
+           {:en "Main page"
+            :hu "Főoldal"}
            :logo
            {:en "Logo"
             :hu "Logó"}

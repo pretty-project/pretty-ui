@@ -1,4 +1,4 @@
- 
+
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -16,6 +16,7 @@
     (:require [x.mid-dictionary.books.actions       :as books.actions]
               [x.mid-dictionary.books.application   :as books.application]
               [x.mid-dictionary.books.archive       :as books.archive]
+              [x.mid-dictionary.books.brands        :as books.brands]
               [x.mid-dictionary.books.changes       :as books.changes]
               [x.mid-dictionary.books.colors        :as books.colors]
               [x.mid-dictionary.books.company       :as books.company]
@@ -68,6 +69,7 @@
 (def BOOKS (merge books.actions/BOOK
                   books.application/BOOK
                   books.archive/BOOK
+                  books.brands/BOOK
                   books.changes/BOOK
                   books.colors/BOOK
                   books.company/BOOK
