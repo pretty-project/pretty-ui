@@ -21,4 +21,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-fx :text-editor/update-editor-change! helpers/update-editor-change!)
+; WARNING! NON-PUBLIC! DO NOT USE!
+(a/reg-fx :text-editor/update-editor-difference! helpers/update-editor-difference!)

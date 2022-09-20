@@ -28,16 +28,21 @@
 
 (a/reg-event-fx
   :text-editor/hack-9910
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
+      ; XXX#9910
       (let [editor-content (helpers/get-editor-content editor-id)
             stored-value   (get-in db value-path)]
-           ;(println (str "stored-value: "   stored-value))
-           ;(println (str "editor-content: " editor-content))
            (if-not (= editor-content stored-value)
-                   {:fx [:text-editor/update-editor-change! editor-id stored-value]}))))
+                   {:fx [:text-editor/update-editor-difference! editor-id stored-value]}))))
 
 (defn- hack-9910
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   [editor-id {:keys [value-path] :as editor-props}]
+  ; XXX#9910
+  ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozik,
+  ; akkor a hack-9910 Reagent komponens meghívja a [:text-editor/hack-9910 ...]
+  ; eseményt, ami kiértékeli a változást ...
   (let [stored-value @(a/subscribe [:db/get-item value-path])]
        (a/dispatch [:text-editor/hack-9910 editor-id editor-props])))
 
@@ -47,12 +52,16 @@
 ;; ----------------------------------------------------------------------------
 
 (defn jodit
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
   [:> JoditEditor (helpers/jodit-attributes editor-id editor-props)])
 
 (defn- text-editor-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {}
@@ -62,38 +71,21 @@
                              :required? required?}]))
 
 (defn- text-editor-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {}
   [editor-id editor-props]
   [:div [:style {:type "text/css"}
                 ".jodit-wysiwyg {cursor: text}"]
-
-
-
         [text-editor-label editor-id editor-props]
         [jodit             editor-id editor-props]
-        [hack-9910         editor-id editor-props]
-
-
-        [:div [:br]
-              "Local-atom: "
-              [:br]
-              (get    @plugins.text-editor.state/EDITOR-CONTENTS editor-id)]
-        [:div [:br]
-              "Change-atom: "
-              [:br]
-              (get-in @plugins.text-editor.state/EDITOR-CHANGES [editor-id :change])
-              [:br]
-              (get-in @plugins.text-editor.state/EDITOR-CHANGES [editor-id :changed-at])]
-        [:div [:br]
-              "Re-frame:"
-              [:br]
-              @(a/subscribe [:db/get-item (:value-path editor-props)])
-              [:br]
-              [:br]]])
+        [hack-9910         editor-id editor-props]])
 
 (defn- text-editor
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {:disabled? (boolean)(opt)
@@ -136,7 +128,4 @@
 
   ([editor-id editor-props]
    (let [editor-props (prototypes/editor-props-prototype editor-id editor-props)]
-      [:<>
-        [text-editor editor-id editor-props]])))
-
-        ;[:div (str "re-frame: " @(a/subscribe [:db/get-item (:value-path editor-props)]))]])))
+        [text-editor editor-id editor-props])))

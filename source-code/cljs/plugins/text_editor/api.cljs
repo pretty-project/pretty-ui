@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.text-editor.api
-    (:require [plugins.text-editor.side-effects :as side-effects]
-              [plugins.text-editor.views        :as views]))
+    (:require [plugins.text-editor.side-effects]
+              [plugins.text-editor.views :as views]))
 
 
 

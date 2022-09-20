@@ -24,4 +24,4 @@
 (defonce EDITOR-CONTENTS (ratom {}))
 
 ; @atom (map)
-(defonce EDITOR-CHANGES  (ratom {}))
+(defonce EDITOR-DIFFERENCES (ratom {}))

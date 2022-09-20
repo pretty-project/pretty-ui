@@ -22,6 +22,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn editor-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;
