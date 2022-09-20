@@ -26,6 +26,9 @@
            :home-page
            {:en "Home"
             :hu "Kezdőlap"}
+           :informational-content
+           {:en "Informational content"
+            :hu "Információs tartalom"}
            :main-page
            {:en "Main page"
             :hu "Főoldal"}
