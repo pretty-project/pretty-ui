@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.config-editor.sample
-    (:require [plugins.config-editor.api]
+(ns plugins.file-editor.sample
+    (:require [plugins.file-editor.api]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [mid-fruits.candy                      :refer [return]]
               [server-fruits.io                      :as io]
