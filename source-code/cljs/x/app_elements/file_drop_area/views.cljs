@@ -38,7 +38,7 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   [area-id area-props]
-  [:button.x-file-drop-area--body (file-drop-area.helpers/file-drop-area-body-attributes area-id area-props)
+  [:button.x-file-drop-area--body (file-drop-area.helpers/area-body-attributes area-id area-props)
                                   [:i.x-file-drop-area--icon {:data-icon-family :material-icons-filled} :cloud_upload]
                                   [file-drop-area-label area-id area-props]])
 
@@ -48,8 +48,8 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   [area-id area-props]
-  [:div.x-file-drop-area (file-drop-area.helpers/file-drop-area-attributes area-id area-props)
-                         [file-drop-area-body                              area-id area-props]])
+  [:div.x-file-drop-area (file-drop-area.helpers/area-attributes area-id area-props)
+                         [file-drop-area-body                    area-id area-props]])
 
 (defn element
   ; @param (keyword)(opt) area-id

@@ -62,9 +62,9 @@
   ; @param (map) text-props
   ;  {:content (metamorphic-content)
   ;   :placeholder (metamorphic-content)(opt)}
-  [text-id {:keys [content selectable?] :as text-props}]
+  [text-id {:keys [content] :as text-props}]
   ; XXX#9811
-  [:div.x-text--body {:data-selectable selectable?}
+  [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
                      (if (-> content components/content empty?)
                          [text-placeholder text-id text-props]
                          [text-content     text-id text-props])])

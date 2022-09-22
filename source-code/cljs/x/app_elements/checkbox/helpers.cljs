@@ -39,6 +39,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn checkbox-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn checkbox-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

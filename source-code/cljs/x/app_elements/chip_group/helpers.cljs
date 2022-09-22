@@ -20,6 +20,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn chip-group-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ {:keys [style]}]
+  {:style style})
+    
 (defn chip-group-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

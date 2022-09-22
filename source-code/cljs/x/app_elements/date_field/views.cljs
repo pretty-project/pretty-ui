@@ -30,9 +30,7 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ;  {:date-from (string)(opt)
-  ;    TODO ...
-  ;   :date-to (string)(opt)
-  ;    TODO ...}
+  ;   :date-to (string)(opt)}
   ;
   ; @usage
   ;  [elements/date-field {...}]

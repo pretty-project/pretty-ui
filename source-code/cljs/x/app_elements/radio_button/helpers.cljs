@@ -40,6 +40,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn radio-button-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn radio-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -20,6 +20,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn ghost-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) ghost-id
+  ; @param (map) ghost-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn ghost-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

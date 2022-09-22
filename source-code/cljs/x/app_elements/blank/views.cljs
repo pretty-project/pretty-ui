@@ -23,15 +23,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- blank
+(defn- blank-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
   ;  {}
   [blank-id {:keys [content] :as blank-props}]
+  [:div.x-blank--body (blank.helpers/blank-body-attributes blank-id blank-props)
+                      [components/content content]])
+
+(defn- blank
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) blank-id
+  ; @param (map) blank-props
+  [blank-id blank-props]
   [:div.x-blank (blank.helpers/blank-attributes blank-id blank-props)
-                [components/content content]])
+                [blank-body                     blank-id blank-props]])
 
 (defn element
   ; @param (keyword)(opt) blank-id
@@ -48,7 +57,8 @@
   ;     :right (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}:style (map)(opt)}
+  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}:style (map)(opt)
+  ;     :style (map)(opt)}
   ;
   ; @usage
   ;  [elements/blank {...}]

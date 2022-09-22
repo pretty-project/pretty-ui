@@ -69,7 +69,7 @@
   ; @param (map) breadcrumbs-props
   ;  {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  [:div.x-breadcrumbs--body {:data-hide-scrollbar true}
+  [:div.x-breadcrumbs--body (breadcrumbs.helpers/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
                             (letfn [(f [crumb-list crumb]
                                        (conj crumb-list [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb]))]
                                    (reduce f [:<>] crumbs))])

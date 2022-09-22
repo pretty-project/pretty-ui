@@ -22,7 +22,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn file-drop-area-attributes
+(defn area-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) area-id
+  ; @param (map) area-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [card-id {:keys [disabled? on-click style]}]
+  (if disabled? {:disabled        true
+                 :style           style}
+                {:data-clickable  true
+                 :data-selectable false
+                 :on-click       #(a/dispatch on-click)
+                 :on-mouse-up    #(environment/blur-element!)
+                 :style           style}))
+
+(defn area-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) area-id
@@ -34,19 +52,3 @@
   (merge (element.helpers/element-default-attributes area-id area-props)
          (element.helpers/element-indent-attributes  area-id area-props)
          (element.helpers/apply-color {} :color :data-color color)))
-
-(defn file-drop-area-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) area-id
-  ; @param (map) area-props
-  ;  {}
-  ;
-  ; @return (map)
-  ;  {}
-  [card-id {:keys [disabled? on-click]}]
-  (if disabled? {:disabled        true}
-                {:data-clickable  true
-                 :data-selectable false
-                 :on-click       #(a/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)}))

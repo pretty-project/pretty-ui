@@ -61,3 +61,12 @@
   {:failure     :invalid
    :response    server-response-body
    :validator-f validator-f})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:sync/get-request-response :my-request]
+(a/reg-sub :sync/get-request-response get-request-response)

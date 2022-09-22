@@ -43,6 +43,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn label-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [selectable? style]}]
+  {:data-selectable selectable?
+   :style           style})
+
 (defn label-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

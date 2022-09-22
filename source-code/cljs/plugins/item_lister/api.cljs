@@ -46,4 +46,5 @@
 (def toggle-item-selection! items.events/toggle-item-selection!)
 
 ; plugins.item-lister.items.subs
+(def get-item              items.subs/get-item)
 (def get-selected-item-ids items.subs/get-selected-item-ids)

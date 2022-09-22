@@ -20,6 +20,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn separator-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) separator-id
+  ; @param (map) separator-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn separator-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

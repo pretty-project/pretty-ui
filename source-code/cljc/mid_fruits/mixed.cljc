@@ -121,9 +121,79 @@
   ;  =>
   ;  true
   ;
+  ; @example
+  ;  (mixed/str-number? "-12")
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (re-match? n #"^-[\d]*|[\d]*$"))
+
+(defn str-natural-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/str-natural-number? "abCd12")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/str-natural-number? "12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/str-natural-number? "-12")
+  ;  =>
+  ;  false
+  ;
   ; @return (boolean)
   [n]
   (re-match? n #"^[0-9]*$"))
+
+(defn str-positive-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/str-positive-number? "abCd12")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/str-positive-number? "12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/str-positive-number? "0")
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n])
+
+(defn str-negative-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/str-negative-number? "abCd12")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/str-negative-number? "12")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/str-negative-number? "-12")
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (re-match? n #"^-[0-9]*$"))
 
 (defn update-str-number
   ; @param (string) n
@@ -164,6 +234,11 @@
   ;  (mixed/str-contains-number? "abCd12")
   ;  =>
   ;  true
+  ;
+  ; @example
+  ;  (mixed/str-contains-number? "abCd")
+  ;  =>
+  ;  false
   ;
   ; @return (boolean)
   [n]

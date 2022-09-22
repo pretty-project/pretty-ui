@@ -121,7 +121,7 @@
   ; Ilyenkor ha nem lenne minden esetben placeholder alkalmazva, akkor 0px magasságú lenne
   ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
   ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
-  [:div.x-label--body {:data-selectable selectable?}
+  [:div.x-label--body (label.helpers/label-body-attributes label-id label-props)
                       (if (-> content components/content empty?)
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])

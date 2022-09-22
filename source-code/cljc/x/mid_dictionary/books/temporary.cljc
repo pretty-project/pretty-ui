@@ -28,6 +28,9 @@
            :other
            {:en "Other"
             :hu "Egyéb"}
+           :invalid-number
+           {:en "Invalid number"
+            :hu "Érvénytelen szám"}
 
            :page
            {:en "Page"

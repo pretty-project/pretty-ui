@@ -119,12 +119,30 @@
            :expand!
            {:en "Expand"
             :hu "Lenyit"}
+           :export!
+           {:en "Export"
+            :hu "Exportálás"}
+           :exported
+           {:en "Exported"
+            :hu "Exportálva"}
+           :exporting...
+           {:en "Exporting ..."
+            :hu "Exportálás ..."}
            :hide!
            {:en "Hide"
             :hu "Elrejt"}
            :hidden
            {:en "Hidden"
             :hu "Rejtett"}
+           :import!
+           {:en "Import"
+            :hu "Importálás"}
+           :imported
+           {:en "Imported"
+            :hu "Importálva"}
+           :importing...
+           {:en "Importing ..."
+            :hu "Importálás ..."}
            :load!
            {:en "Load"
             :hu "Betöltés"}
@@ -257,6 +275,15 @@
            :searching...
            {:en "Searching ..."
             :hu "Keresés ..."}
+           :select!
+           {:en "Select"
+            :hu "Válassz"}
+           :selected
+           {:en "Selected"
+            :hu "Kiválasztva"}
+           :selecting...
+           {:en "Selecting ..."
+            :hu "Kiválasztás ..."}
            :share!
            {:en "Share"
             :hu "Megosztás"}

@@ -88,48 +88,58 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ;  {:background-color (keyword or string)(opt)
+  ;   :border-color (keyword or string)(opt)
+  ;   :border-radius (keyword)(opt)
+  ;   :color (keyword or string)
+  ;   :disabled? (boolean)(opt)
+  ;   :font-size (keyword)
+  ;   :font-weight (keyword)
+  ;   :horizontal-align (keyword)
+  ;   :hover-color (keyword)(opt)
+  ;   :on-click (metamorphic-event)(opt)
+  ;   :on-mouse-over (metamorphic-event)(opt)
+  ;   :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {}
-  [button-id {:keys [disabled? on-click on-mouse-over]}]
-  (if disabled? {:disabled       true}
-                {:data-clickable true
-                 :id              (hiccup/value button-id "body")
-                 :on-click       #(a/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)
-                 :on-mouse-over  #(a/dispatch on-mouse-over)}))
+  ;  {:data-border-radius (keyword)
+  ;   :data-clickable (boolean)
+  ;   :data-font-size (keyword)
+  ;   :data-font-weight (keyword)
+  ;   :data-horizontal-align (keyword)
+  ;   :data-selectable (boolean)
+  ;   :disabled (boolean)
+  ;   :id (string)
+  ;   :on-click (function)
+  ;   :on-mouse-over (function)
+  ;   :on-mouse-up (function)
+  ;   :style (map)}
+  [button-id {:keys [background-color border-color border-radius color disabled? font-size font-weight
+                     horizontal-align hover-color on-click on-mouse-over style]}]
+  (merge (-> {:style style}
+             (element.helpers/apply-color :background-color :data-background-color background-color)
+             (element.helpers/apply-color :border-color     :data-border-color         border-color)
+             (element.helpers/apply-color :color            :data-color                       color)
+             (element.helpers/apply-color :hover-color      :data-hover-color           hover-color))
+         {:data-border-radius    border-radius
+          :data-font-size        font-size
+          :data-font-weight      font-weight
+          :data-horizontal-align horizontal-align
+          :data-selectable       false}
+         (if disabled? {:disabled       true}
+                       {:data-clickable true
+                        :id              (hiccup/value button-id "body")
+                        :on-click       #(a/dispatch on-click)
+                        :on-mouse-over  #(a/dispatch on-mouse-over)
+                        :on-mouse-up    #(environment/blur-element!)})))
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:background-color (keyword or string)(opt)
-  ;   :border-color (keyword or string)(opt)
-  ;   :border-radius (keyword)(opt)
-  ;   :color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :font-weight (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :hover-color (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-font-size (keyword)
-  ;   :data-font-weight (keyword)
-  ;   :data-horizontal-align (keyword)
-  ;   :data-selectable (boolean)}
-  [button-id {:keys [background-color border-color border-radius color font-size
-                     font-weight horizontal-align hover-color] :as button-props}]
+  [button-id button-props]
   (merge (element.helpers/element-default-attributes button-id button-props)
-         (element.helpers/element-indent-attributes  button-id button-props)
-         (element.helpers/apply-color {} :background-color :data-background-color background-color)
-         (element.helpers/apply-color {} :border-color     :data-border-color         border-color)
-         (element.helpers/apply-color {} :color            :data-color                       color)
-         (element.helpers/apply-color {} :hover-color      :data-hover-color           hover-color)
-         (if border-radius {:data-border-radius border-radius})
-         {:data-font-size        font-size
-          :data-font-weight      font-weight
-          :data-horizontal-align horizontal-align
-          :data-selectable       false}))
+         (element.helpers/element-indent-attributes  button-id button-props)))

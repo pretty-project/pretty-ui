@@ -38,6 +38,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn counter-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn counter-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

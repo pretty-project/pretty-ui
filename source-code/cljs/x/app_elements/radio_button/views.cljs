@@ -77,7 +77,16 @@
   [button-id button-props]
   (let [options (input.helpers/get-input-options button-id button-props)]
        (letfn [(f [option-list option] (conj option-list [radio-button-option button-id button-props option]))]
-              (reduce f [:div.x-radio-button--options] options))))
+              (reduce f [:<>] options))))
+
+(defn- radio-button-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  [button-id button-props]
+  [:div.x-radio-button--body (radio-button.helpers/radio-button-body-attributes button-id button-props)
+                             [radio-button-options                              button-id button-props]])
 
 (defn- radio-button-unselect-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -110,7 +119,7 @@
   [:div.x-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
                        [radio-button-label                           button-id button-props]
                        [radio-button-unselect-button                 button-id button-props]
-                       [radio-button-options                         button-id button-props]])
+                       [radio-button-body                            button-id button-props]])
 
 (defn- radio-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

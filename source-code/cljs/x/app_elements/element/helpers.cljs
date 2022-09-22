@@ -61,7 +61,8 @@
   ; @return (map)
   [element-props color-key color-data-key color-value]
   (cond (keyword? color-value) (assoc    element-props color-data-key     color-value)
-        (string?  color-value) (assoc-in element-props [:style color-key] color-value)))
+        (string?  color-value) (assoc-in element-props [:style color-key] color-value)
+        :else                  (return   element-props)))
 
 (defn apply-dimension
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -135,9 +136,12 @@
   ;   attribútumot alkalmazni!
   {:class         (css/join-class :x-element class)
    :data-disabled (boolean     disabled?)
-   :id            (hiccup/value element-id)
+   :id            (hiccup/value element-id)})
   ;:key           (hiccup/value element-id)
-   :style         style})
+
+   ; WARNING! DEPRECATED! DO NOT USE!
+   ; Az elemek body komponensein lesz ezentúl alkalmazva a style!
+   ;:style style})
 
 (defn element-indent-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

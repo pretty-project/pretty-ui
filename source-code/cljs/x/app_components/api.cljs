@@ -24,11 +24,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.api
-    (:require [x.app-components.content     :as content]
-              [x.app-components.stated      :as stated]
-              [x.app-components.subscriber  :as subscriber]
-              [x.app-components.transmitter :as transmitter]
-              [x.app-components.value       :as value]))
+    (:require [x.app-components.content       :as content]
+              [x.app-components.querier.views :as querier.views]
+              [x.app-components.stated        :as stated]
+              [x.app-components.subscriber    :as subscriber]
+              [x.app-components.transmitter   :as transmitter]
+              [x.app-components.value         :as value]))
 
 
 
@@ -37,6 +38,9 @@
 
 ; x.app-components.content
 (def content content/component)
+
+; x.app-components.querier
+(def querier querier.views/component)
 
 ; x.app-components.stated
 (def stated stated/component)

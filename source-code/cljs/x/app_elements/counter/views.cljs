@@ -68,10 +68,11 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  [:div.x-counter--body [counter-decrease-button counter-id counter-props]
-                        [counter-value           counter-id counter-props]
-                        [counter-increase-button counter-id counter-props]
-                        [counter-reset-button    counter-id counter-props]])
+  [:div.x-counter--body (counter.helpers/counter-body-attributes counter-id counter-props)
+                        [counter-decrease-button                 counter-id counter-props]
+                        [counter-value                           counter-id counter-props]
+                        [counter-increase-button                 counter-id counter-props]
+                        [counter-reset-button                    counter-id counter-props]])
 
 (defn- counter-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

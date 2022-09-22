@@ -49,6 +49,7 @@
   ;  {:autofill-name (keyword)
   ;   :field-content-f (function)
   ;   :field-value-f (function)
+  ;   :min-width (keyword)
   ;   :type (keyword)
   ;   :value-path (vector)}
   [field-id field-props]
@@ -68,6 +69,7 @@
   (merge {:autofill-name   (random/generate-keyword)
           :field-content-f return
           :field-value-f   return
+          :min-width       :xxs
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
          (param field-props)))

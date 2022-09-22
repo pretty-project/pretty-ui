@@ -42,7 +42,16 @@
   ;  {:options (vector)}
   [selector-id {:keys [options] :as selector-props}]
   (letfn [(f [option-list option] (conj option-list [color-selector-option selector-id selector-props option]))]
-         (reduce f [:div.x-color-selector--option-list] options)))
+         (reduce f [:<>] options)))
+
+(defn- color-selector-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  [selector-id selector-props]
+  [:div.x-color-selector--body (color-selector.helpers/color-selector-body-attributes selector-id selector-props)
+                               [color-selector-option-list                            selector-id selector-props]])
 
 (defn- color-selector-options-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +60,7 @@
   ; @param (map) selector-props
   [selector-id selector-props]
   [popup-a/layout :elements.color-selector/options
-                  {:body [color-selector-option-list selector-id selector-props]}])
+                  {:body [color-selector-body selector-id selector-props]}])
 
 (defn color-selector-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

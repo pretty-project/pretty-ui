@@ -31,12 +31,14 @@
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [disabled? href on-click]}]
-  (if disabled? {:disabled       true}
+  [_ {:keys [disabled? href on-click style]}]
+  (if disabled? {:disabled       true
+                 :style          style}
                 {:data-clickable true
                  :href           href
                  :on-click       #(a/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)}))
+                 :on-mouse-up    #(environment/blur-element!)
+                 :style          style}))
 
 (defn anchor-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

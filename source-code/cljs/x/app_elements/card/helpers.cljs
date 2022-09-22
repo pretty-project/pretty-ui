@@ -22,6 +22,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn toggle-card-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) card-id
+  ; @param (map) card-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [disabled? on-click style]}]
+  (if disabled? {:disabled       true
+                 :style          style}
+                {:data-clickable true
+                 :on-click      #(a/dispatch on-click)
+                 :on-mouse-up   #(environment/blur-element!)
+                 :style          style}))
+
+(defn static-card-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) card-id
+  ; @param (map) card-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn card-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -42,18 +71,3 @@
           :data-horizontal-align    horizontal-align
           :data-min-width           min-width
           :data-stretch-orientation stretch-orientation}))
-
-(defn card-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ;  {}
-  ;
-  ; @return (map)
-  ;  {}
-  [card-id {:keys [disabled? on-click]}]
-  (if disabled? {:disabled       true}
-                {:data-clickable true
-                 :on-click      #(a/dispatch on-click)
-                 :on-mouse-up   #(environment/blur-element!)}))

@@ -110,7 +110,7 @@ body {
 /***** Align profiles *****/
 /*** Horizontal align ***/
 
-.x-button[data-horizontal-align="left"] .x-button--body,
+.x-button--body[data-horizontal-align="left"],
 .x-card-group[data-horizontal-align="left"],
 .x-label[data-horizontal-align="left"] .x-label--body,
 .x-menu-bar[data-horizontal-align="left"],
@@ -129,7 +129,7 @@ body {
 .x-table--body-cell[data-horizontal-align="left"] {
   text-align: left }
 
-.x-button[data-horizontal-align="center"] .x-button--body,
+.x-button--body[data-horizontal-align="center"],
 .x-card-group[data-horizontal-align="center"],
 .x-label[data-horizontal-align="center"] .x-label--body,
 .x-menu-bar[data-horizontal-align="center"],
@@ -148,7 +148,7 @@ body {
 .x-table--body-cell[data-horizontal-align="center"] {
   text-align: center }
 
-.x-button[data-horizontal-align="right"] .x-button--body,
+.x-button--body[data-horizontal-align="right"],
 .x-card-group[data-horizontal-align="right"],
 .x-label[data-horizontal-align="right"] .x-label--body,
 .x-menu-bar[data-horizontal-align="right"],
@@ -216,7 +216,7 @@ body {
 /*** Muted ***/
 /* Background-color */
 
-.x-button[data-background-color="muted"]      .x-button--body,
+.x-button--body[data-background-color="muted"],
 .x-card[data-background-color="muted"]        .x-card--body,
 .x-color-marker--color[data-color="muted"],
 .x-chip[data-background-color="muted"]        .x-chip--body,
@@ -227,7 +227,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="muted"]       .x-button--body,
+.x-button--body[data-border-color="muted"],
 .x-card[data-border-color="muted"]         .x-card--body,
 .x-checkbox[data-border-color="muted"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="muted"]      .x-counter--decrease-button,
@@ -242,7 +242,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="muted"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="muted"],
 .x-card[data-hover-color="muted"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
@@ -270,7 +270,7 @@ body {
 /* Text-color */
 
 .x-anchor[data-color="muted"],
-.x-button[data-color="muted"]      .x-button--body,
+.x-button--body[data-color="muted"],
 .x-chip[data-color="muted"]        .x-chip--body,
 .x-icon[data-color="muted"]        .x-icon--body,
 .x-icon-button[data-color="muted"] .x-icon-button--body,
@@ -284,7 +284,7 @@ body {
 /*** Highlight ***/
 /* Background-color */
 
-.x-button[data-background-color="highlight"]      .x-button--body,
+.x-button--body[data-background-color="highlight"],
 .x-card[data-background-color="highlight"]        .x-card--body,
 .x-color-marker--color[data-color="highlight"],
 .x-chip[data-background-color="highlight"]        .x-chip--body,
@@ -295,7 +295,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="highlight"]      .x-button--body,
+.x-button--body[data-border-color="highlight"],
 .x-icon-button[data-border-color="highlight"] .x-icon-button--body,
 .x-card[data-border-color="highlight"]        .x-card--body,
 .x-select--button-body[data-border-color="highlight"] {
@@ -306,7 +306,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="highlight"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="highlight"],
 .x-card[data-hover-color="highlight"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
@@ -333,7 +333,7 @@ body {
 
 /* Text-color */
 
-.x-button[data-color="highlight"]      .x-button--body,
+.x-button--body[data-color="highlight"],
 .x-chip[data-color="highlight"]        .x-chip--body,
 .x-icon[data-color="highlight"]        .x-icon--body,
 .x-icon-button[data-color="highlight"] .x-icon-button--body,
@@ -347,7 +347,7 @@ body {
 /*** Invert ***/
 /* Text-color */
 
-.x-button[data-color="invert"]      .x-button--body,
+.x-button--body[data-color="invert"],
 .x-icon[data-color="invert"]        .x-icon--body,
 .x-icon-button[data-color="invert"] .x-icon-button--body,
 .x-label[data-color="invert"] {
@@ -359,7 +359,7 @@ body {
 /*** Primary ***/
 /* Background-color */
 
-.x-button[data-background-color="primary"]      .x-button--body,
+.x-button--body[data-background-color="primary"],
 .x-card[data-background-color="primary"]        .x-card--body,
 .x-color-marker--color[data-color="primary"],
 .x-chip[data-background-color="primary"]        .x-chip--body,
@@ -377,7 +377,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="primary"]       .x-button--body,
+.x-button--body[data-border-color="primary"],
 .x-card[data-border-color="primary"]         .x-card--body,
 .x-checkbox[data-border-color="primary"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="primary"]      .x-counter--decrease-button,
@@ -393,7 +393,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="primary"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="primary"],
 .x-card[data-hover-color="primary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
@@ -420,7 +420,7 @@ body {
 /* Text-color */
 
 .x-anchor[data-color="primary"],
-.x-button[data-color="primary"]      .x-button--body,
+.x-button--body[data-color="primary"],
 .x-chip[data-color="primary"]        .x-chip--body,
 .x-icon[data-color="primary"]        .x-icon--body,
 .x-icon-button[data-color="primary"] .x-icon-button--body,
@@ -434,7 +434,7 @@ body {
 /*** Secondary ***/
 /* Background-color */
 
-.x-button[data-background-color="secondary"]      .x-button--body,
+.x-button--body[data-background-color="secondary"],
 .x-card[data-background-color="secondary"]        .x-card--body,
 .x-color-marker--color[data-color="secondary"],
 .x-chip[data-background-color="secondary"]        .x-chip--body,
@@ -452,7 +452,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="secondary"]       .x-button--body,
+.x-button--body[data-border-color="secondary"],
 .x-card[data-border-color="secondary"]         .x-card--body,
 .x-checkbox[data-border-color="secondary"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="secondary"]      .x-counter--decrease-button,
@@ -468,7 +468,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="secondary"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="secondary"],
 .x-card[data-hover-color="secondary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
@@ -495,7 +495,7 @@ body {
 /* Text-color */
 
 .x-anchor[data-color="secondary"],
-.x-button[data-color="secondary"]      .x-button--body,
+.x-button--body[data-color="secondary"],
 .x-chip[data-color="secondary"]        .x-chip--body,
 .x-icon[data-color="secondary"]        .x-icon--body,
 .x-icon-button[data-color="secondary"] .x-icon-button--body,
@@ -509,7 +509,7 @@ body {
 /*** Success ***/
 /* Background-color */
 
-.x-button[data-background-color="success"]      .x-button--body,
+.x-button--body[data-background-color="success"],
 .x-card[data-background-color="success"]        .x-card--body,
 .x-color-marker--color[data-color="success"],
 .x-chip[data-background-color="success"]        .x-chip--body,
@@ -527,7 +527,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="success"]       .x-button--body,
+.x-button--body[data-border-color="success"],
 .x-card[data-border-color="success"]         .x-card--body,
 .x-checkbox[data-border-color="success"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="success"]      .x-counter--decrease-button,
@@ -543,7 +543,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="success"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="success"],
 .x-card[data-hover-color="success"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
@@ -569,7 +569,7 @@ body {
 /* Text-color */
 
 .x-anchor[data-color="success"],
-.x-button[data-color="success"]      .x-button--body,
+.x-button--body[data-color="success"],
 .x-chip[data-color="success"]        .x-chip--body,
 .x-icon[data-color="success"]        .x-icon--body,
 .x-icon-button[data-color="success"] .x-icon-button--body,
@@ -583,7 +583,7 @@ body {
 /*** Warning ***/
 /* Background-color */
 
-.x-button[data-background-color="warning"]      .x-button--body,
+.x-button--body[data-background-color="warning"],
 .x-card[data-background-color="warning"]        .x-card--body,
 .x-color-marker--color[data-color="warning"],
 .x-chip[data-background-color="warning"]        .x-chip--body,
@@ -594,7 +594,7 @@ body {
 
 /* Border-color */
 
-.x-button[data-border-color="warning"]       .x-button--body,
+.x-button--body[data-border-color="warning"],
 .x-card[data-border-color="warning"]         .x-card--body,
 .x-checkbox[data-border-color="warning"]     .x-checkbox--option-button::before,
 .x-counter[data-border-color="warning"]      .x-counter--decrease-button,
@@ -618,7 +618,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-hover-color="warning"][data-disabled="false"]      .x-button--body:hover,
+.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="warning"],
 .x-card[data-hover-color="warning"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
@@ -644,7 +644,7 @@ body {
 /* Text-color */
 
 .x-anchor[data-color="warning"],
-.x-button[data-color="warning"]      .x-button--body,
+.x-button--body[data-color="warning"],
 .x-chip[data-color="warning"]        .x-chip--body,
 .x-icon[data-color="warning"]        .x-icon--body,
 .x-icon-button[data-color="warning"] .x-icon-button--body,
@@ -698,7 +698,7 @@ body {
   letter-spacing: var( --letter-spacing-xxs );
   line-height: var( --line-height-xxs ) }
 
-.x-button[data-font-size="xxs"] .x-button--label {
+.x-button--body[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   /* XXX#6610
@@ -707,11 +707,10 @@ body {
    * kapcsolódó label elemtől! */
   line-height: 24px }
 
-.x-button[data-font-size="xs"][data-hover-color] .x-button--label {
-  /* XXX#6610
-   * Az XXS és XS betűméretű gomboknál, ha a hover-color tulajdons is be van állítva,
-   * akkor fontos, hogy a sormagasság 36px legyen, különbön túl vékonynak tűnne
-   * a hover-color, amikor látszódik! */
+.x-button--body[data-font-size="xxs"][data-hover-color] {
+  /* XXX#0404
+   * A hover-color tulajdonsággal rendelkező button elem sormagassága minimum 36px
+   * kell, hogy legyen, különben túl vékonynak néz ki! */
   line-height: 36px }
 
 .x-label[data-font-size="xxs"] {
@@ -746,14 +745,14 @@ body {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
 
-.x-button[data-font-size="xs"] .x-button--label {
+.x-button--body[data-font-size="xs"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   /* XXX#6610 */
   line-height: 24px }
 
-.x-button[data-font-size="xs"][data-hover-color] .x-button--label {
-  /* XXX#6610 */
+.x-button--body[data-font-size="xs"][data-hover-color] {
+  /* XXX#0404 */
   line-height: 36px }
 
 .x-label[data-font-size="xs"] {
@@ -788,7 +787,7 @@ body {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
 
-.x-button[data-font-size="s"] .x-button--label {
+.x-button--body[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: 36px }
@@ -819,7 +818,7 @@ body {
   letter-spacing: var( --letter-spacing-m );
   line-height: var( --line-height-m ) }
 
-.x-button[data-font-size="m"] .x-button--label {
+.x-button--body[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: 36px }
@@ -850,7 +849,7 @@ body {
   letter-spacing: var( --letter-spacing-l );
   line-height: var( --line-height-l ) }
 
-.x-button[data-font-size="l"] .x-button--label {
+.x-button--body[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: 36px }
@@ -881,7 +880,7 @@ body {
   letter-spacing: var( --letter-spacing-xl );
   line-height: var( --line-height-xl ) }
 
-.x-button[data-font-size="xl"] .x-button--label {
+.x-button--body[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: 36px }
@@ -912,7 +911,7 @@ body {
   letter-spacing: var( --letter-spacing-xxl );
   line-height: var( --line-height-xxl ) }
 
-.x-button[data-font-size="xxl"] .x-button--label {
+.x-button--body[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: 36px }
@@ -941,7 +940,7 @@ body {
 
 /*** Bold ***/
 
-.x-button[data-font-weight="bold"] .x-button--label,
+.x-button--body[data-font-weight="bold"],
 .x-label[data-font-weight="bold"],
 .x-text[data-font-weight="bold"] {
   font-weight: 500 }
@@ -950,7 +949,7 @@ body {
 
 /*** Extra bold ***/
 
-.x-button[data-font-weight="extra-bold"] .x-button--label,
+.x-button--body[data-font-weight="extra-bold"],
 .x-label[data-font-weight="extra-bold"],
 .x-text[data-font-weight="extra-bold"] {
   font-weight: 600 }
@@ -1333,6 +1332,9 @@ body {
 
 /*** 2XL ***/
 
+.x-ghost[data-height="2xl"] .x-ghost--body {
+  height: 60px }
+
 .x-thumbnail[data-height="2xl"] .x-thumbnail--body {
   height: 120px }
 
@@ -1343,6 +1345,9 @@ body {
 
 /*** 3XL ***/
 
+.x-ghost[data-height="3xl"] .x-ghost--body {
+  height: 72px }
+
 .x-thumbnail[data-height="3xl"] .x-thumbnail--body {
   height: 132px }
 
@@ -1352,6 +1357,9 @@ body {
 /*** 3XL ***/
 
 /*** 4XL ***/
+
+.x-ghost[data-height="4xl"] .x-ghost--body {
+  height: 84px }
 
 .x-thumbnail[data-height="4xl"] .x-thumbnail--body {
   height: 144px }
@@ -1367,7 +1375,7 @@ body {
 /***** Border-radius profiles *****/
 /*** XXS ***/
 
-.x-button[data-border-radius="xxs"] .x-button--body {
+.x-button--body[data-border-radius="xxs"] {
   border-radius: var( --border-radius-xxs );
   padding: 0 var( --border-radius-xxs ) }
 
@@ -1383,7 +1391,7 @@ body {
 
 /*** XS ***/
 
-.x-button[data-border-radius="xs"] .x-button--body {
+.x-button--body[data-border-radius="xs"] {
   border-radius: var( --border-radius-xs );
   padding: 0 var( --border-radius-xs ) }
 
@@ -1399,7 +1407,7 @@ body {
 
 /*** S ***/
 
-.x-button[data-border-radius="s"] .x-button--body {
+.x-button--body[data-border-radius="s"] {
   border-radius: var( --border-radius-s );
   padding: 0 var( --border-radius-s ) }
 
@@ -1415,7 +1423,7 @@ body {
 
 /*** M ***/
 
-.x-button[data-border-radius="m"] .x-button--body {
+.x-button--body[data-border-radius="m"] {
   border-radius: var( --border-radius-m );
   padding: 0 var( --border-radius-m ) }
 
@@ -1431,7 +1439,7 @@ body {
 
 /*** L ***/
 
-.x-button[data-border-radius="l"] .x-button--body {
+.x-button--body[data-border-radius="l"] {
   border-radius: var( --border-radius-l );
   padding: 0 var( --border-radius-l ) }
 
@@ -1447,7 +1455,7 @@ body {
 
 /*** XL ***/
 
-.x-button[data-border-radius="xl"] .x-button--body {
+.x-button--body[data-border-radius="xl"] {
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
 
 .x-card[data-border-radius="xl"] .x-card--body,
@@ -1461,7 +1469,7 @@ body {
 
 /*** XXL ***/
 
-.x-button[data-border-radius="xxl"] .x-button--body {
+.x-button--body[data-border-radius="xxl"] {
 /* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
 
 .x-card[data-border-radius="xxl"] .x-card--body,
@@ -1668,17 +1676,6 @@ body {
 
 
 /***** Button *****/
-/*** Button wrapper ***/
-
-.x-button {
-  -border-radius: 8px;
-}
-
-/*** Button wrapper ***/
-
-/*** Button badge ***/
-/*** Button badge ***/
-
 /*** Button body ***/
 
 .x-button--body {
@@ -1690,12 +1687,9 @@ body {
   width: 100%;
  }
 
-.x-button[data-border-color] .x-button--body {
+.x-button--body[data-border-color] {
   border-style: solid;
   border-width: 1px }
-
-.x-button--body[data-pressed="true"] {
-  opacity: .5 }
 
 /*** Button body ***/
 
@@ -1708,25 +1702,20 @@ body {
   font-size: var( --icon-size-xs );
   height: var( --icon-size-default );
   justify-content: center;
-
   width: var( --icon-size-default ) }
 
 .x-button--icon[data-icon-position="left"] {
-  /* XXX#4509 */
   margin-right: 6px }
 
 .x-button--icon[data-icon-position="right"] {
   margin-left: 6px }
 
+.x-button--icon-placeholder,
 .x-button--icon-placeholder {
   /* XXX#4509
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
-   * az ikon placeholder alkalmazása.
-   *
-   * WARNING! Ismert use-case hiányában kikapcsolva!
-   *
-   * placeholder-width = icon-width + icon-margin-right */
-  -width: 30px }
+   * az ikon placeholder alkalmazása. */
+  width: 12px }
 
 /*** Button icon ***/
 
@@ -1806,7 +1795,7 @@ body {
 /***** Checkbox *****/
 /*** Checkbox options ***/
 
-.x-checkbox[data-options-orientation="horizontal"] .x-checkbox--options {
+.x-checkbox[data-options-orientation="horizontal"] .x-checkbox--body {
   display: flex;
   grid-column-gap: 24px }
 
@@ -2024,7 +2013,7 @@ body {
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.x-color-selector--option-list {
+.x-color-selector--body {
   display: flex;
   grid-column-gap: 12px;
   padding: 12px }
@@ -2173,7 +2162,9 @@ body {
 
 .x-counter--body {
   align-items: center;
-  display: flex }
+  display: flex;
+  padding-bottom: 6px;
+  padding-top: 6px }
 
 /*** Counter body ***/
 
@@ -2483,7 +2474,7 @@ body {
 
 .x-label--icon-placeholder {
   /* XXX#4509 */
-  -width: 30px }
+  width: 12px }
 
 /*** Label icon ***/
 
@@ -2787,7 +2778,7 @@ body {
 
 /*** Radio button options ***/
 
-.x-radio-button[data-options-orientation="horizontal"] .x-radio-button--options {
+.x-radio-button[data-options-orientation="horizontal"] .x-radio-button--body {
   display: flex;
   grid-column-gap: 24px }
 
@@ -3231,7 +3222,7 @@ body {
 /***** Switch *****/
 /*** Switch options ***/
 
-.x-switch[data-options-orientation="horizontal"] .x-switch--options {
+.x-switch[data-options-orientation="horizontal"] .x-switch--body {
   display: flex;
   grid-column-gap: 24px }
 

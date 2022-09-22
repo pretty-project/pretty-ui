@@ -22,6 +22,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn chip-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) chip-id
+  ; @param (map) chip-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+    
 (defn chip-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

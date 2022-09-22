@@ -23,6 +23,7 @@
 /* Surface A */
 
 #surface-a {
+  background-color: #fdfdfd;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -43,22 +44,26 @@
 #surface-a--header-shadow {
   animation-fill-mode: both;
   animation-duration: .25s;
+  background-color: var( --app-background-color );
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
-  box-shadow: 0 0 12px 0 #e0e1e2;
+  -box-shadow: 0 0 12px 0 #e0e1e2;
+  border-color: var( --border-color-highlight );
+  border-style: none solid solid solid;
+  border-width: 1px;
   height: 100%;
+  opacity: .95;
   left: 0;
   position: absolute;
   top: 0;
   width: 100% }
 
 #surface-a--header-shadow.r-mounting {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-095 }
 
 #surface-a--header-shadow.r-unmounting {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-095-0 }
 
 #surface-a--header-content {
-  background-color: var( --app-background-color );
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
   justify-content: space-between;
@@ -97,11 +102,18 @@
 
 #surface-a--body {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   padding-top: 96px;
   width: 100% }
 
 #surface-a--body-content {
+
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  padding: 12px;
+
   max-width: var( --content-width-l );
   /* x4.7.2#1
    * A surface-a felületen megjelenő tartalom padding-left és padding-right
@@ -119,7 +131,6 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: flex-end;
   padding-bottom: 12px;
   padding-top: 48px }

@@ -53,6 +53,18 @@
   [_ _]
   {:class :x-element})
 
+(defn color-selector-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
+
 (defn color-selector-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

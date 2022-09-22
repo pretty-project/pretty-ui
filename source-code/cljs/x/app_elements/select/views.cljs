@@ -314,7 +314,7 @@
   ;    Default: :select
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
+  ;    Default: :xxs
   ;   :new-option-placeholder (metamorphic-content)(opt)
   ;    Default: :new-option
   ;   :no-options-label (metamorphic-content)(opt)

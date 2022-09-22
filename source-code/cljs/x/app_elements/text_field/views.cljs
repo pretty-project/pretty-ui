@@ -62,7 +62,7 @@
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/static-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:div.x-field-adornments--static-adornment adornment-attributes icon]
-             label [:div.x-field-adornments--static-adornment adornment-attributes label])))
+             label [:div.x-field-adornments--static-adornment adornment-attributes (components/content label)])))
 
 (defn field-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -334,7 +334,7 @@
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
+  ;    Default: :xxs
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(opt)
   ;   :on-change (metamorphic-event)(opt)

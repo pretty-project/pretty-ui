@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn color-marker-color
+(defn- color-marker-color
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) marker-id
@@ -31,7 +31,26 @@
   [marker-id marker-props color]
   [:div.x-color-marker--color (color-marker.helpers/marker-color-attributes marker-id marker-props color)])
 
-(defn color-marker
+(defn- color-marker-colors
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) marker-id
+  ; @param (map) marker-props
+  ;  {}
+  [marker-id {:keys [colors] :as marker-props}]
+  (letfn [(f [body color] (conj body [color-marker-color marker-id marker-props color]))]
+         (reduce f [:<>] colors)))
+
+(defn- color-marker-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) marker-id
+  ; @param (map) marker-props
+  [marker-id marker-props]
+  [:div.x-color-marker--body (color-marker.helpers/marker-body-attributes marker-id marker-props)
+                             [color-marker-colors                         marker-id marker-props]])
+
+(defn- color-marker
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) marker-id
@@ -39,8 +58,7 @@
   ;  {}
   [marker-id {:keys [colors] :as marker-props}]
   [:div.x-color-marker (color-marker.helpers/marker-attributes marker-id marker-props)
-                       (letfn [(f [body color] (conj body [color-marker-color marker-id marker-props color]))]
-                              (reduce f [:div.x-color-marker--body] colors))])
+                       [color-marker-body                      marker-id marker-props]])
 
 (defn element
   ; @param (keyword)(opt) marker-id

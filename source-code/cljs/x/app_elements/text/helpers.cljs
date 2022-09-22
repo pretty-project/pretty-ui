@@ -30,11 +30,14 @@
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [font-size max-lines]}]
+  [_ {:keys [font-size max-lines selectable? style]}]
   (if max-lines (let [line-height-var (css/var  (str "line-height-" (name font-size)))
                       height-calc     (css/calc (str "2 * " line-height-var))]
-                     {:data-cropped true
-                      :style {:max-height height-calc}})))
+                     {:data-cropped    true
+                      :data-selectable selectable?
+                      :style           (assoc style :max-height height-calc)})
+                {:data-selectable selectable?
+                 :style           style}))
 
 (defn text-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

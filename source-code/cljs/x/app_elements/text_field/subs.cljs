@@ -28,7 +28,7 @@
   ;
   ; @return (boolean)
   [db [_ field-id]]
-  (get-in db [:elements :element-handler/meta-items field-id :surface-visible?]))
+  (= field-id (get-in db [:elements :element-handler/field-surface])))
 
 
 

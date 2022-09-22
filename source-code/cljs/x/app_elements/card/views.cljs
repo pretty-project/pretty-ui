@@ -31,9 +31,9 @@
   ; @param (map) card-props
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
-  [:button.x-card--body (card.helpers/card-body-attributes card-id card-props)
-                        [components/content   card-id content]
-                        [engine/element-badge card-id card-props]])
+  [:button.x-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
+                        [components/content                       card-id content]
+                        [engine/element-badge                     card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -42,8 +42,9 @@
   ; @param (map) card-props
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
-  [:div.x-card--body [components/content   card-id content]
-                     [engine/element-badge card-id card-props]])
+  [:div.x-card--body (card.helpers/static-card-body-attributes card-id card-props)
+                     [components/content                       card-id content]
+                     [engine/element-badge                     card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

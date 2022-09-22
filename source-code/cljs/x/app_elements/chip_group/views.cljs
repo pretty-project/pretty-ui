@@ -61,6 +61,15 @@
                   (reduce-indexed f [:div.x-chip-group--chips] chips))
            [chip-group-no-chips-label group-id group-props])))
 
+(defn- chip-group-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  [group-id group-props]
+  [:div.x-chip-group--body (chip-group.helpers/chip-group-body-attributes group-id group-props)
+                           [chip-group-chips                              group-id group-props]])
+
 (defn- chip-group-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -80,7 +89,7 @@
   [group-id group-props]
   [:div.x-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
                      [chip-group-label                         group-id group-props]
-                     [chip-group-chips                         group-id group-props]])
+                     [chip-group-body                          group-id group-props]])
 
 (defn element
   ; @param (keyword)(opt) group-id

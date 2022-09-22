@@ -62,9 +62,10 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   [chip-id chip-props]
-  [:div.x-chip--body [chip-icon           chip-id chip-props]
-                     [chip-label          chip-id chip-props]
-                     [chip-primary-button chip-id chip-props]])
+  [:div.x-chip--body (chip.helpers/chip-body-attributes chip-id chip-props)
+                     [chip-icon                         chip-id chip-props]
+                     [chip-label                        chip-id chip-props]
+                     [chip-primary-button               chip-id chip-props]])
 
 (defn- chip
   ; WARNING! NON-PUBLIC! DO NOT USE!

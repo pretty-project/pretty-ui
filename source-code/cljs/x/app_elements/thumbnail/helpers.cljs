@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn thumbnail-body-attributes
+(defn toggle-thumbnail-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) thumbnail-id
@@ -31,11 +31,25 @@
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [disabled? on-click]}]
-  (if disabled? {:disabled        true}
+  [_ {:keys [disabled? on-click style]}]
+  (if disabled? {:disabled        true
+                 :style           style}
                 {:data-clickable  true
                  :on-click       #(a/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)}))
+                 :on-mouse-up    #(environment/blur-element!)
+                 :style           style}))
+
+(defn static-thumbnail-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) thumbnail-id
+  ; @param (map) thumbnail-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:style style})
 
 (defn thumbnail-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -77,7 +77,17 @@
   [checkbox-id checkbox-props]
   (letfn [(f [option-list option] (conj option-list [checkbox-option checkbox-id checkbox-props option]))]
          (let [options (input.helpers/get-input-options checkbox-id checkbox-props)]
-              (reduce f [:div.x-checkbox--options] options))))
+              (reduce f [:<>] options))))
+
+(defn- checkbox-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ;  {}
+  [checkbox-id {:keys [style] :as checkbox-props}]
+  [:div.x-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
+                         [checkbox-options                          checkbox-id checkbox-props]])
 
 (defn- checkbox-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +109,7 @@
   [checkbox-id checkbox-props]
   [:div.x-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
                    [checkbox-label                       checkbox-id checkbox-props]
-                   [checkbox-options                     checkbox-id checkbox-props]])
+                   [checkbox-body                        checkbox-id checkbox-props]])
 
 (defn- checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!

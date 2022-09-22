@@ -22,6 +22,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- ghost-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) ghost-id
+  ; @param (map) ghost-props
+  [ghost-id ghost-props]
+  [:div.x-ghost--body (ghost.helpers/ghost-body-attributes ghost-id ghost-props)])
+
 (defn ghost
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -29,7 +37,7 @@
   ; @param (map) ghost-props
   [ghost-id ghost-props]
   [:div.x-ghost (ghost.helpers/ghost-attributes ghost-id ghost-props)
-                [:div.x-ghost--body]])
+                [ghost-body                     ghost-id ghost-props]])
 
 (defn element
   ; @param (keyword)(opt) ghost-id

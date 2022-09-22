@@ -201,12 +201,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
+  ;  {}
   ;
   ; @return (map)
   ;  {:height (string)}
-  [field-id field-props]
+  [field-id {:keys [style] :as field-props}]
   (let [field-body-height (field-body-height field-id field-props)]
-       {:height (css/px field-body-height)}))
+       (assoc style :height (css/px field-body-height))))
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -232,6 +233,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:autofill-name (keyword)
+  ;   :date-from (string)(opt)
+  ;   :date-to (string)(opt)
   ;   :disabled? (boolean)(opt)
   ;   :max-length (integer)(opt)
   ;   :type (keyword)(opt)
@@ -242,6 +245,8 @@
   ;   :disabled (boolean)
   ;   :id (string)
   ;   :max-length (integer)
+  ;   :min (string)
+  ;   :max (string)
   ;   :name (keyword)
   ;   :on-blur (function)
   ;   :on-change (function)
@@ -249,7 +254,7 @@
   ;   :style (map)
   ;   :type (keyword)
   ;   :value (string)}
-  [field-id {:keys [autofill-name disabled? max-length type] :as field-props}]
+  [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   (if disabled? {:disabled true
                  :id       (hiccup/value field-id "input")
                  :type     type
@@ -268,7 +273,13 @@
                  :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id])
                  :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
                  :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
-                 :on-change      (on-change-f field-id field-props)}))
+                 :on-change      (on-change-f field-id field-props)
+
+                 ; XXX#4461
+                 ; A {:type :date} típusú mezők min és max dátuma beállítható
+                 ; a date-field date-from és date-field tulajdonságainak használatával.
+                 :min date-from
+                 :max date-to}))
 
 
 

@@ -77,7 +77,16 @@
   [switch-id switch-props]
   (let [options (input.helpers/get-input-options switch-id switch-props)]
        (letfn [(f [option-list option] (conj option-list [switch-option switch-id switch-props option]))]
-              (reduce f [:div.x-switch--options] options))))
+              (reduce f [:<>] options))))
+
+(defn- switch-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  [switch-id switch-props]
+  [:div.x-switch--body (switch.helpers/switch-body-attributes switch-id switch-props)
+                       [switch-options                        switch-id switch-props]])
 
 (defn- switch-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +108,7 @@
   [switch-id switch-props]
   [:div.x-switch (switch.helpers/switch-attributes switch-id switch-props)
                  [switch-label                     switch-id switch-props]
-                 [switch-options                   switch-id switch-props]])
+                 [switch-body                      switch-id switch-props]])
 
 (defn- switch
   ; WARNING! NON-PUBLIC! DO NOT USE!

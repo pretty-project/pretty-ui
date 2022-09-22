@@ -39,6 +39,19 @@
                  :on-click       #(a/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)}))
 
+(defn breadcrumbs-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [_ {:keys [style]}]
+  {:data-hide-scrollbar true
+   :style               style})
+
 (defn breadcrumbs-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

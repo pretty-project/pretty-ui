@@ -31,7 +31,7 @@
   ;  {:background-size (keyword)
   ;   :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
-  [:button.x-thumbnail--body (thumbnail.helpers/thumbnail-body-attributes thumbnail-id thumbnail-props)
+  [:button.x-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
                              [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
                              [:div.x-thumbnail--image {:style {:background-image (css/url uri)
                                                                :background-size background-size}}]])
@@ -44,7 +44,8 @@
   ;  {:background-size (keyword)
   ;   :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
-  [:div.x-thumbnail--body [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
+  [:div.x-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
+                          [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
                           [:div.x-thumbnail--image {:style {:background-image (css/url uri)
                                                             :background-size background-size}}]])
 
