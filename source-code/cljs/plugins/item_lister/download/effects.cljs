@@ -133,4 +133,4 @@
       ;   nincs a React-fába csatolva, akkor az esemény nem végez műveletet!
       (if (r body.subs/body-did-mount? db lister-id)
           {:db       (r download.events/receive-items! db lister-id server-response)
-           :dispatch [:tools/reload-infinite-loader! lister-id]})))
+           :dispatch [:infinite-loader/reload-loader! lister-id]})))

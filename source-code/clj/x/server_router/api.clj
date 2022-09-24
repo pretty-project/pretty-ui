@@ -16,6 +16,7 @@
     (:require [x.server-router.route-handler.transfer]
               [x.server-router.default-handler.events :as default-handler.events]
               [x.server-router.default-handler.subs   :as default-handler.subs]
+              [x.server-router.route-handler.config   :as route-handler.config]
               [x.server-router.route-handler.helpers  :as route-handler.helpers]
               [x.server-router.route-handler.events   :as route-handler.events]
               [x.server-router.route-handler.subs     :as route-handler.subs]))
@@ -32,9 +33,12 @@
 (def get-default-routes default-handler.subs/get-default-routes)
 (def get-default-route  default-handler.subs/get-default-route)
 
+; x.server-router.route-handler.config
+(def DEFAULT-CORE-JS route-handler.config/DEFAULT-CORE-JS)
+
 ; x.server-router.route-handler.helpers
-(def request->route-prop route-handler.helpers/request->route-prop)
-(def request->core-js    route-handler.helpers/request->core-js)
+(def request->route-prop              route-handler.helpers/request->route-prop)
+(def request->route-template-matched? route-handler.helpers/request->route-template-matched?)
 
 ; x.server-router.route-handler.events
 (def add-routes! route-handler.events/add-routes!)

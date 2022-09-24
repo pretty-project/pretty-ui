@@ -13,11 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.update.events
-    (:require [plugins.item-lister.backup.events :as backup.events]
-              [plugins.item-lister.core.events   :as core.events]
-              [plugins.item-lister.items.events  :as items.events]
-              [x.app-core.api                    :refer [r]]
-              [x.app-ui.api                      :as ui]))
+    (:require [plugins.item-lister.backup.events    :as backup.events]
+              [plugins.item-lister.core.events      :as core.events]
+              [plugins.item-lister.items.events     :as items.events]
+              [plugins.item-lister.selection.events :as selection.events]
+              [x.app-core.api                       :refer [r]]
+              [x.app-ui.api                         :as ui]))
 
 
 
@@ -31,9 +32,9 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (as-> db % (r backup.events/backup-selected-items! % lister-id)
-             (r items.events/disable-selected-items! % lister-id)
-             (r ui/fake-process!                     % 15)))
+  (as-> db % (r backup.events/backup-selected-items!     % lister-id)
+             (r selection.events/disable-selected-items! % lister-id)
+             (r ui/fake-process!                         % 15)))
 
 (defn delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

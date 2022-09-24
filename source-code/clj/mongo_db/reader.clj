@@ -248,6 +248,7 @@
   ; @param (string) collection-name
   ; @param (string) document-id
   ;
+  ;
   ; @example
   ;  (mongo-db/get-document-by-id "my_collection" "MyObjectId")
   ;  =>

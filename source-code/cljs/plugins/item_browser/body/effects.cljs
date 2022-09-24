@@ -19,7 +19,7 @@
 
 
 
-;; -- Body lifecycles effects -------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (a/reg-event-fx
@@ -49,4 +49,4 @@
   (fn [{:keys [db]} [_ browser-id %]]
       (let [[_ body-props] (reagent/arguments %)]
            {:db       (r body.events/body-did-update db browser-id body-props)
-            :dispatch [:tools/reload-infinite-loader! browser-id]})))
+            :dispatch [:infinite-loader/reload-loader! browser-id]})))

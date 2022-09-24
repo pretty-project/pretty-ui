@@ -43,11 +43,6 @@
   (as-> db % (r store-body-props!                 % lister-id body-props)
              (r core.events/use-default-order-by! % lister-id)))
 
-
-
-;; -- Body lifecycles events --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

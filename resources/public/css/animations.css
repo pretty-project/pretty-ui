@@ -132,12 +132,12 @@
   from { opacity: 0 }
   to   { opacity: 1 }}
 
-@keyframes opacity-095-0 {
-  from { opacity: .95 }
+@keyframes opacity-09-0 {
+  from { opacity: .98 }
   to   { opacity: 0 }}
 
-@keyframes opacity-0-095 {
+@keyframes opacity-0-098 {
   from { opacity: 0 }
-  to   { opacity: .95 }}
+  to   { opacity: .98 }}
 
 /*** Visibility ***/

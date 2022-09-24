@@ -20,7 +20,9 @@
               [server-fruits.http       :as http]
               [x.app-details            :as details]
               [x.server-core.api        :as a :refer [cache-control-uri]]
-              [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]))
+              [x.server-router.api      :as router]
+              [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]
+              [x.server-ui.head.config  :as head.config]))
 
 
 
@@ -47,6 +49,75 @@
   (if (string?     meta-keywords)
       (return      meta-keywords)
       (string/join meta-keywords ", ")))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn css-paths
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) request
+  ; @param (map) head-props
+  ;  {:css-paths (maps in vector)(opt)}
+  ;
+  ; @return (maps in vector)
+  [request head-props]
+  ; XXX#5061
+  ; A head elemben felsorolt CSS fájlok forrásáról bővebben a modul
+  ; README.md fájljában olvashatsz!
+  (let [app-config            @(a/subscribe [:core/get-app-config])
+        environment-css-paths @(a/subscribe [:environment/get-css-paths])]
+       (vector/concat-items head.config/SYSTEM-CSS-PATHS
+                            environment-css-paths
+                            (:css-paths app-config)
+                            (:css-paths head-props))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn include-css?
+  ; @param (map) request
+  ; @param (map) head-props
+  ;  {:core-js (string)}
+  ; @param (map) css-props
+  ;  {:core-js (string)(opt)
+  ;   :route-template (string)(opt)}
+  ;
+  ; @return (boolean)
+  [request {:keys [core-js]} {:keys [route-template] :as css-props}]
+  ; XXX#1720
+  ; A head komponensben felsorolt CSS fájlok abban az esetben lesznek ténylegesen
+  ; alkalmazva, ha a CSS fájlt leíró css-props térképben ...
+  ; ... nincs meghatározva, hogy a CSS fájl melyik core-js fájl használata esetén
+  ;     legyen alkalmazva, vagy a css-props térképben meghatároztt core-js fájl
+  ;     megegyezik az aktuálisan használatban lévő core-js fájllal.
+  ; ... nincs meghatározva, hogy a CSS fájl milyen útonal használata esetén legyen
+  ;     alkalmazva, vagy az aktuálisan használt útvonal illeszkedik a css-props
+  ;     térképben meghatározott route-template mintával.
+  (and (or (-> css-props :core-js nil?)
+           (-> css-props :core-js (= core-js)))
+       (or (-> css-props :route-template nil?)
+           (router/request->route-template-matched? request route-template))))
+
+(defn include-favicon?
+  ; @param (map) request
+  ; @param (map) head-props
+  ;  {:core-js (string)}
+  ; @param (map) favicon-props
+  ;  {:core-js (string)(opt)
+  ;   :route-template (string)(opt)}
+  ;
+  ; @return (boolean)
+  [request {:keys [core-js]} {:keys [route-template] :as favicon-props}]
+  ; XXX#1720
+  (and (or (-> favicon-props :core-js nil?)
+           (-> favicon-props :core-js (= core-js)))
+       (or (-> favicon-props :route-template nil?)
+           (router/request->route-template-matched? request route-template))))
 
 
 
@@ -153,23 +224,18 @@
   ; @param (hiccup) head
   ; @param (map) request
   ; @param (map) head-props
-  ;  {:app-build (string)(opt)
-  ;   :core-js (string)
-  ;   :css-paths (maps in vector)
-  ;    [{:core-js (string)(opt)
-  ;      :uri (string)}]
+  ;  {:app-build (string)(opt)}
   ;
   ; @return (hiccup)
-  [head _ {:keys [app-build core-js css-paths] :as head-props}]
-  (letfn [(include-css? [css-props] (or (-> css-props :core-js nil?)
-                                        (-> css-props :core-js (= core-js))))
-          (f [head {:keys [uri] :as css-props}]
+  [head request {:keys [app-build] :as head-props}]
+  (letfn [(f [head {:keys [uri] :as css-props}]
              (let [cache-control-uri (cache-control-uri uri app-build)
                    css-props         (assoc css-props :uri cache-control-uri)]
-                  (if (include-css? css-props)
+                  (if (include-css? request head-props css-props)
                       (conj   head (include-css css-props))
                       (return head))))]
-         (reduce f head css-paths)))
+         (let [css-paths (css-paths request head-props)]
+              (reduce f head css-paths))))
 
 (defn head<-favicon-includes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -178,20 +244,17 @@
   ; @param (map) request
   ; @param (map) head-props
   ;  {:app-build (string)(opt)
-  ;   :core-js (string)
   ;   :favicon-paths (maps in vector)
   ;    [{:core-js (string)(opt)
   ;      :size (string)
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head _ {:keys [app-build core-js favicon-paths]}]
-  (letfn [(include-favicon? [favicon-props] (or (-> favicon-props :core-js nil?)
-                                                (-> favicon-props :core-js (= core-js))))
-          (f [head {:keys [uri] :as favicon-props}]
+  [head request {:keys [app-build favicon-paths] :as head-props}]
+  (letfn [(f [head {:keys [uri] :as favicon-props}]
              (let [cache-control-uri (cache-control-uri uri app-build)
                    favicon-props     (assoc favicon-props :uri cache-control-uri)]
-                  (if (include-favicon? favicon-props)
+                  (if (include-favicon? request head-props favicon-props)
                       (conj   head (include-favicon favicon-props))
                       (return head))))]
          (reduce f head favicon-paths)))

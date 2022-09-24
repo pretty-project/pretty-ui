@@ -1,0 +1,42 @@
+
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(ns tools.clipboard.side-effects
+    (:require [tools.clipboard.helpers       :as helpers]
+              [tools.clipboard.views         :as views]
+              [tools.temporary-component.api :as temporary-component]
+              [x.app-core.api                :as a]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn copy-text!
+  ; @usage
+  ;  (clipboard/copy-text! "My text")
+  ;
+  ; @param (string) text
+  [text]
+  (temporary-component/append-component! [views/clipboard text] helpers/copy-text-f)
+  (temporary-component/remove-component!))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:clipboard/copy-text! "My text"]
+(a/reg-fx :clipboard/copy-text! copy-text!)

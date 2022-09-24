@@ -89,34 +89,50 @@
 (defn request->route-prop
   ; @param (map) request
   ; @param (keyword) prop-key
+  ; @param (*)(opt) default-value
   ;
   ; @usage
   ;  (router/request->route-prop {...} :my-prop)
   ;
   ; @return (*)
-  ;  Először az útvonalak szerver-oldali, majd a kliens-oldali tulajdonságain végigiterálva keres
-  ;  a route-path értékével összeilleszthető {:route-template "..."} tulajdonságú útvonalat,
-  ;  ami rendelkezik a prop-key tulajdonságként átadott tulajdonsággal.
-  [request prop-key]
-  (let [route-path (http/request->route-path request)]
-       (letfn [(f [[_ {:keys [route-template] :as route-props}]]
-                  (if (uri/path->match-template? route-path route-template) (get route-props prop-key)))]
-              (or (some f @(a/subscribe [:router/get-server-routes]))
-                  (some f @(a/subscribe [:router/get-client-routes]))))))
+  ([request prop-key]
+   (request->route-prop request prop-key nil))
 
-(defn request->core-js
+  ([request prop-key default-value]
+   ; A request->route-prop függvény a request térképből kiolvassa az aktuális útvonalat,
+   ; majd az útvonalkezelőhöz adott útvonalak közül megkeresi az első olyat, aminek
+   ; a route-template tulajdonságával az aktuális útvonal összeilleszthető ...
+   ; ... és ha talál az útvonalkezelőben ilyen útvonalat, akkor visszatér annak a prop-key
+   ;     kulcshoz tartozó tulajdonságával.
+   ; ... és ha NEM talál az útvonalkezelőben ilyen útvonalat (pl. 404), akkor visszatér
+   ;     az esetlegesen átadott default-value paraméterrel.
+   ;
+   ; A request->route-prop függvény először az útvonalkezelő szerver-oldali, majd a kliens-oldali
+   ; útvonalain végigiterálva keres egyező útvonalat.
+   (let [route-path (http/request->route-path request)]
+        (letfn [(f [[_ {:keys [route-template] :as route-props}]]
+                   (if (uri/path->match-template? route-path route-template)
+                       (prop-key route-props)))]
+               (or (some f @(a/subscribe [:router/get-server-routes]))
+                   (some f @(a/subscribe [:router/get-client-routes]))
+                   (return default-value))))))
+
+(defn request->route-template-matched?
   ; @param (map) request
+  ; @param (string) route-template
   ;
   ; @usage
-  ;  (router/request->core-js {...})
+  ;  (router/request->route-template-matched? {} "/my-route/:item-id")
   ;
-  ; @return (string)
-  ;  Ha a request->route-prop függvény az útvonalak szerver-oldali és kliens-oldali tulajdonságai
-  ;  között sem talált az aktuális útvonallal összeilleszthető {:route-template "..."} tulajdonságú
-  ;  útvonalat, aminek a {:core-js "..."} tulajdonságával visszatérhetne (404, nem található útvonal),
-  ;  akkor a visszatérési érték az útvonalak hozzáadásakor is használt DEFAULT-CORE-JS alapbeállítás.
-  [request]
-  (or (request->route-prop request :core-js) route-handler.config/DEFAULT-CORE-JS))
+  ; @return (boolean)
+  [request route-template]
+  (let [route-path (http/request->route-path request)]
+       (uri/path->match-template? route-path route-template)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn route-authenticator
   ; WARNING! NON-PUBLIC! DO NOT USE!

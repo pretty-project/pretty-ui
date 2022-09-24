@@ -40,12 +40,12 @@
   [db [_ lister-id]]
   ; TEMP#4681 Megfelelőbb nevet kell neki találni!
   ;
-  ; A listaelemek újratöltésekor a letöltött elemek törlődnek és a plugin
-  ; {:data-received? false} állapotba lép, ezért a data-received? feliratkozás
+  ; A listaelemek újratöltésekor a letöltött elemek törlődnek és a plugin kilép
+  ; a {:data-received? true} állapotból, ezért a data-received? feliratkozás
   ; nem mindenre használható.
   ; Az elemek első letöltődése után a plugin {:first-data-received? true}
-  ; állapotba lép, és a listaelemek újratöltésekor és más esetben sem
-  ; lép ki ebből az állapotból.
+  ; állapotba lép és abban is marad, mert a listaelemek újratöltésekor és más
+  ; esetben sem lép ki ebből az állapotból.
   (r core.subs/get-meta-item db lister-id :first-data-received?))
 
 

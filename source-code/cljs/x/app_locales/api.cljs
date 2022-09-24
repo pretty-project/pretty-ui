@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-locales.api
-    (:require [x.app-locales.country-handler.config  :as country-handler.config]
+    (:require [x.app-locales.address-handler.helpers :as address-handler.helpers]
+              [x.app-locales.address-handler.subs    :as address-handler.subs]
+              [x.app-locales.country-handler.config  :as country-handler.config]
               [x.app-locales.country-handler.helpers :as country-handler.helpers]
               [x.app-locales.name-handler.config     :as name-handler.config]
               [x.app-locales.name-handler.helpers    :as name-handler.helpers]
@@ -25,6 +27,12 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.mid-locales.address-handler.helpers
+(def address->ordered-address address-handler.helpers/address->ordered-address)
+
+; x.mid-locales.address-handler.subs
+(def get-ordered-address address-handler.subs/get-ordered-address)
 
 ; x.app-locales.country-handler.config
 (def COUNTRY-NAMES    country-handler.config/COUNTRY-NAMES)

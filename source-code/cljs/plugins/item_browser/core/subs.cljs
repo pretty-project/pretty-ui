@@ -47,11 +47,11 @@
 (defn get-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) lister-id
+  ; @param (keyword) browser-id
   ;
   ; @return (boolean)
-  [db [_ lister-id]]
-  (r core.subs/get-request-id db lister-id :browser))
+  [db [_ browser-id]]
+  (r core.subs/get-request-id db browser-id :browser))
 
 
 

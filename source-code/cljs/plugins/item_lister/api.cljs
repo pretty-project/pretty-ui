@@ -25,14 +25,16 @@
               [plugins.item-lister.download.effects]
               [plugins.item-lister.download.events]
               [plugins.item-lister.download.subs]
+              [plugins.item-lister.items.events]
               [plugins.item-lister.routes.effects]
               [plugins.item-lister.transfer.subs]
               [plugins.item-lister.update.effects]
               [plugins.item-lister.update.events]
               [plugins.item-lister.update.subs]
-              [plugins.item-lister.body.views   :as body.views]
-              [plugins.item-lister.items.events :as items.events]
-              [plugins.item-lister.items.subs   :as items.subs]))
+              [plugins.item-lister.body.views       :as body.views]
+              [plugins.item-lister.items.subs       :as items.subs]
+              [plugins.item-lister.selection.events :as selection.events]
+              [plugins.item-lister.selection.subs   :as selection.subs]))
 
 
 
@@ -42,9 +44,14 @@
 ; plugins.item-lister.body.views
 (def body body.views/body)
 
-; plugins.item-lister.items.events
-(def toggle-item-selection! items.events/toggle-item-selection!)
-
 ; plugins.item-lister.items.subs
-(def get-item              items.subs/get-item)
-(def get-selected-item-ids items.subs/get-selected-item-ids)
+(def get-item items.subs/get-item)
+
+; plugins.item-lister.selection.events
+(def toggle-item-selection! selection.events/toggle-item-selection!)
+(def import-selection!      selection.events/import-selection!)
+
+; plugins.item-lister.selection.subs
+(def export-selection        selection.subs/export-selection)
+(def get-selected-item-count selection.subs/get-selected-item-count)
+(def item-selected?          selection.subs/item-selected?)

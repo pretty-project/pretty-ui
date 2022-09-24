@@ -33,14 +33,12 @@
   ;   :handler-f (function)
   ;   :idle-timeout (ms)
   ;   :progress-handler-f (function)
-  ;   :response-action (keyword)
   ;   :sent-time (string)
   ;   :timeout (ms)}
-  [db [_ {:keys [response-action] :as request-props}]]
-  (let [request-props (merge {:idle-timeout    request-handler.config/DEFAULT-IDLE-TIMEOUT
-                              :response-action :store
-                              :sent-time       (time/timestamp-string)
-                              :timeout         request-handler.config/DEFAULT-REQUEST-TIMEOUT}
+  [db [_ request-props]]
+  (let [request-props (merge {:idle-timeout request-handler.config/DEFAULT-IDLE-TIMEOUT
+                              :sent-time    (time/timestamp-string)
+                              :timeout      request-handler.config/DEFAULT-REQUEST-TIMEOUT}
                              (param request-props))
         error-handler-f    (fn [request-id server-response]  (a/dispatch [:sync/request-failured      request-id request-props server-response]))
         handler-f          (fn [request-id server-response]  (a/dispatch [:sync/request-successed     request-id request-props server-response]))

@@ -24,16 +24,18 @@
               [plugins.item-browser.download.effects]
               [plugins.item-browser.download.events]
               [plugins.item-browser.download.subs]
+              [plugins.item-browser.items.events]
+              [plugins.item-browser.items.subs]
               [plugins.item-browser.routes.effects]
               [plugins.item-browser.transfer.subs]
               [plugins.item-browser.update.effects]
               [plugins.item-browser.update.events]
               [plugins.item-browser.update.subs]
-              [plugins.item-browser.body.views   :as body.views]
-              [plugins.item-browser.core.subs    :as core.subs]
-              [plugins.item-browser.items.events :as items.events]
-              [plugins.item-browser.items.subs   :as items.subs]
-              [plugins.item-browser.routes.subs  :as routes.subs]))
+              [plugins.item-browser.body.views       :as body.views]
+              [plugins.item-browser.core.subs        :as core.subs]
+              [plugins.item-browser.routes.subs      :as routes.subs]
+              [plugins.item-browser.selection.events :as selection.events]
+              [plugins.item-browser.selection.subs   :as selection.subs]))
 
 
 
@@ -48,11 +50,14 @@
 (def get-current-item    core.subs/get-current-item)
 (def browsing-item?      core.subs/browsing-item?)
 
-; plugins.item-browser.items.events
-(def toggle-item-selection! items.events/toggle-item-selection!)
-
-; plugins.item-browser.items.subs
-(def get-selected-item-ids items.subs/get-selected-item-ids)
-
 ; plugins.item-browser.routes.subs
 (def get-item-route routes.subs/get-item-route)
+
+; plugins.item-browser.selection.events
+(def toggle-item-selection! selection.events/toggle-item-selection!)
+(def import-selection!      selection.events/import-selection!)
+
+; plugins.item-browser.selection.subs
+(def export-selection        selection.subs/export-selection)
+(def get-selected-item-count selection.subs/get-selected-item-count)
+(def item-selected?          selection.subs/item-selected?)

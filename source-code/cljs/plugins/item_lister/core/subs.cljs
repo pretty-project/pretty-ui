@@ -212,6 +212,12 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
+;  [:item-lister/get-downloaded-item-count :my-lister]
+(a/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
+
+; @param (keyword) lister-id
+;
+; @usage
 ;  [:item-lister/all-items-downloaded? :my-lister]
 (a/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
 

@@ -82,33 +82,29 @@
   ;
   ; @param (keyword) request-id
   ; @param (map) request-props
-  ;  {:response-action (keyword)}
   ; @param (*) server-response
   ;
   ; @return (map)
-  [db [_ request-id {:keys [response-action] :as request-props} server-response]]
-  (as-> db % (r a/set-process-status!   % request-id :success)
-             (r a/set-process-activity! % request-id :idle)
-             (case response-action :store (r response-handler.events/store-request-response! % request-id request-props server-response)
-                                          (return %))))
+  [db [_ request-id request-props server-response]]
+  (as-> db % (r a/set-process-status!                           % request-id :success)
+             (r a/set-process-activity!                         % request-id :idle)
+             (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ; @param (map) request-props
-  ;  {:response-action (keyword)}
   ; @param (map) server-response
   ;
   ; @return (map)
-  [db [_ request-id {:keys [response-action] :as request-props} server-response]]
+  [db [_ request-id request-props server-response]]
   ; DEBUG
   ; A szerver-válasz hiba vagy nem megfelelő esetén is eltárolásra kerül,
   ; hogy a fejlesztői eszközök hozzáférjenek a szerver-válasz értékéhez ...
-  (as-> db % (r a/set-process-status!   % request-id :failure)
-             (r a/set-process-activity! % request-id :idle)
-             (case response-action :store (r response-handler.events/store-request-response! % request-id request-props server-response)
-                                          (return %))))
+  (as-> db % (r a/set-process-status!                           % request-id :failure)
+             (r a/set-process-activity!                         % request-id :idle)
+             (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-stalled
   ; WARNING! NON-PUBLIC! DO NOT USE!

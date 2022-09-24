@@ -1710,12 +1710,11 @@ body {
 .x-button--icon[data-icon-position="right"] {
   margin-left: 6px }
 
-.x-button--icon-placeholder,
 .x-button--icon-placeholder {
   /* XXX#4509
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása. */
-  width: 12px }
+  -width: 12px }
 
 /*** Button icon ***/
 

@@ -81,8 +81,10 @@
   ;
   ; @return (vector)
   [n]
-  (try (->> (hc/parse-fragment n)
-            (map #(-> % hc/as-hiccup hiccup->sablono))
-            (filter identity)
-            first)
-       (catch :default e (.log js/console e))))
+  (if (and (-> n string?)
+           (-> n  empty? not))
+      (try (->> (hc/parse-fragment n)
+                (map #(-> % hc/as-hiccup hiccup->sablono))
+                (filter identity)
+                first)
+           (catch :default e (.log js/console e)))))

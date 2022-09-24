@@ -194,6 +194,18 @@
   (let [items-path (r body.subs/get-body-prop db plugin-id :items-path)]
        (get-in db items-path)))
 
+(defn get-downloaded-item
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (integer) item-dex
+  ;
+  ; @return (map)
+  [db [_ plugin-id item-dex]]
+  (let [items-path (r body.subs/get-body-prop db plugin-id :items-path)
+        item-path  (conj items-path item-dex)]
+       (get-in db item-path)))
+
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

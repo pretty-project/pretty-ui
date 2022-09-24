@@ -46,10 +46,8 @@
   ;  kezelő használatával (a request-id azonosítóra hivatkozva).
   ; @param (map) request-props
   ;  {:body (*)(opt)
-  ;   :display-process? (boolean)(opt)
+  ;   :display-progress? (boolean)(opt)
   ;    Default: false
-  ;   :filename (string)(opt)
-  ;    Only w/ {:response-action :save}
   ;   :idle-timeout (ms)(opt)
   ;    Default: request-handler.config/DEFAULT-IDLE-TIMEOUT
   ;    A szerver-válasz megérkezése után mennyi ideig maradjon a request-et kezelő process
@@ -69,9 +67,6 @@
   ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :params (map)(opt)
   ;    Only w/ {:method :post}
-  ;   :response-action (keyword)(opt)
-  ;    :save (save to file), :store (store to db)
-  ;    Default: :store
   ;   :response-f (function)(opt)
   ;   :timeout (ms)(opt)
   ;    Default: request-handler.config/DEFAULT-REQUEST-TIMEOUT
@@ -119,11 +114,10 @@
   ;
   ; @param (keyword) request-id
   ; @param (map) request-props
-  ;  {:idle-timeout (ms)
-  ;   :response-action (keyword)}
+  ;  {:idle-timeout (ms)}
   ; @param (string) server-response-body
   ;  "{...}"
-  (fn [{:keys [db]} [_ request-id {:keys [idle-timeout response-action] :as request-props} server-response-body]]
+  (fn [{:keys [db]} [_ request-id {:keys [idle-timeout] :as request-props} server-response-body]]
       (if (r response-handler.subs/request-response-invalid? db request-id request-props server-response-body)
           ; If request-response is invalid ...
           (let [invalid-server-response (r response-handler.subs/get-invalid-server-response db request-id request-props server-response-body)]
@@ -135,8 +129,6 @@
                {:db              (r request-handler.events/request-successed            db request-id request-props server-response)
                 :dispatch-n     [(r request-handler.subs/get-request-on-success-event   db request-id request-props server-response)
                                  (r request-handler.subs/get-request-on-responsed-event db request-id request-props server-response)]
-                :dispatch-if    [(= response-action :save)
-                                 [:sync/save-request-response! request-id request-props server-response-body]]
                 :dispatch-later [{:ms idle-timeout :dispatch [:sync/request-stalled request-id request-props server-response]}]}))))
 
 (a/reg-event-fx

@@ -20,7 +20,6 @@
               [x.app-locales.api]
               [x.app-media.api]
               [x.app-sync.api]
-              [x.app-tools.api]
               [x.app-views.api]
               [x.boot-loader.effects]
               [x.boot-loader.subs]

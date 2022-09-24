@@ -23,7 +23,7 @@
 /* Surface A */
 
 #surface-a {
-  background-color: #fdfdfd;
+  -background-color: #fdfdfd;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -51,17 +51,17 @@
   border-style: none solid solid solid;
   border-width: 1px;
   height: 100%;
-  opacity: .95;
+  opacity: .98;
   left: 0;
   position: absolute;
   top: 0;
   width: 100% }
 
 #surface-a--header-shadow.r-mounting {
-  animation-name: opacity-0-095 }
+  animation-name: opacity-0-098 }
 
 #surface-a--header-shadow.r-unmounting {
-  animation-name: opacity-095-0 }
+  animation-name: opacity-098-0 }
 
 #surface-a--header-content {
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
@@ -109,10 +109,9 @@
 
 #surface-a--body-content {
 
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #f0f0f0;
-  padding: 12px;
+  -background: white;
+  -border-radius: 12px;
+  -border: 1px solid #f0f0f0;
 
   max-width: var( --content-width-l );
   /* x4.7.2#1

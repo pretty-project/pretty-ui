@@ -18,10 +18,10 @@
               [plugins.item-lister.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
+              [tools.infinite-loader.api           :as infinite-loader]
               [x.app-components.api                :as components]
               [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
-              [x.app-tools.api                     :as tools]
 
               ; TEMP
               [plugins.sortable.core               :refer []]))
@@ -110,13 +110,13 @@
   (cond @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
          [error-body lister-id {:error-description :the-content-you-opened-may-be-broken}]
         @(a/subscribe [:item-lister/data-received? lister-id])
-         [:<> [item-list             lister-id]
-              [tools/infinite-loader lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-              [no-items-to-show      lister-id]
-              [downloading-items     lister-id]]
+         [:<> [item-list                 lister-id]
+              [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
+              [no-items-to-show          lister-id]
+              [downloading-items         lister-id]]
         :data-not-received
          [downloading-items lister-id]))
-
+ 
 (defn body
   ; @param (keyword) lister-id
   ; @param (map) body-props

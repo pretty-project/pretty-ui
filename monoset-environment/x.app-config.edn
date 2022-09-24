@@ -13,14 +13,20 @@
 ;   :css-paths (maps in vector)
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
+;      :route-template (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott útvonalhoz.
 ;      :uri (string)}]
 ;   :favicon-paths (maps in vector)
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
+;      :route-template (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott útvonalhoz.
 ;      :uri (string)}]
 ;   :plugin-js-paths (maps in vector)
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
+;      :route-template (string)(opt)
+;       A fájl kiszolgálása hozzárendelhető egy megadott útvonalhoz.
 ;      :uri (string)}]
 ;   :theme-color (string)
 ;    Theme color must be hex!

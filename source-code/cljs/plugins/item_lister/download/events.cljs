@@ -13,12 +13,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.events
-    (:require [mid-fruits.vector                      :as vector]
+    (:require [mid-fruits.candy                       :refer [return]]
+              [mid-fruits.vector                      :as vector]
               [plugins.item-lister.body.subs          :as body.subs]
               [plugins.item-lister.core.events        :as core.events]
               [plugins.item-lister.download.subs      :as download.subs]
               [plugins.item-lister.items.events       :as items.events]
               [plugins.item-lister.items.subs         :as items.subs]
+              [plugins.item-lister.selection.subs     :as selection.subs]
+              [plugins.item-lister.selection.events   :as selection.events]
               [plugins.plugin-handler.download.events :as download.events]
               [x.app-core.api                         :as a :refer [r]]
               [x.app-db.api                           :as db]))
@@ -87,11 +90,10 @@
   ;
   ; @return (map)
   [db [_ lister-id server-response]]
-  ; ...
-  (if-let [selected-item-ids (r body.subs/get-body-prop db lister-id :selected-items)]
-          (let [selected-item-dexes (r items.subs/get-item-dexes db lister-id selected-item-ids)]
-               db)
-          db))
+  ; XXX#8891
+  (if-let [imported-selection (r selection.subs/get-imported-selection db lister-id)]
+          (r selection.events/apply-imported-selection! db lister-id)
+          (return                                       db)))
 
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,11 +109,10 @@
              (r data-received                  % lister-id)
 
              ; TEMP#4681
-             ; A plugin kilép a {:data-received? true} állapotból, amikor a listaelemek törlődnek
-             ; (pl. kereséskor, stb.)
-             ; Egyes komponensek ezért nem iratkozhatnak fel a {:data-received? ...} tulajdonság
-             ; értékére, hogy eldöntsék mikor jelenjenek meg, mert kereséskor vagy az elemek újratöltésekor
-             ; eltűnnének az letöltés befejeződéséig.
+             ; A {:first-data-received? true} állapotot szükséges megkülönböztetni
+             ; a {:data-received? true} állapottól, mert bizonyos esetekben, amikor
+             ; a listaelemek törlődnek (pl. kereséskor), a plugin kilép
+             ; a {:data-received? true} állapotból.
              (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))
 
 (defn store-reloaded-items!

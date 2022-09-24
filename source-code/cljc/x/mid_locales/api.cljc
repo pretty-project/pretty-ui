@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-locales.api
-    (:require [x.mid-locales.country-handler.config  :as country-handler.config]
+    (:require [x.mid-locales.address-handler.helpers :as address-handler.helpers]
+              [x.mid-locales.country-handler.config  :as country-handler.config]
               [x.mid-locales.country-handler.helpers :as country-handler.helpers]
               [x.mid-locales.name-handler.config     :as name-handler.config]
               [x.mid-locales.name-handler.helpers    :as name-handler.helpers]))
@@ -22,6 +23,9 @@
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; x.mid-locales.address-handler.helpers
+(def address->ordered-address address-handler.helpers/address->ordered-address)
 
 ; x.mid-locales.country-handler.config
 (def COUNTRY-NAMES    country-handler.config/COUNTRY-NAMES)

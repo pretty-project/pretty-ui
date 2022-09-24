@@ -13,16 +13,54 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.items.subs
-    (:require [plugins.item-lister.items.subs :as items.subs]))
+    (:require [plugins.plugin-handler.items.subs :as items.subs]
+              [x.app-core.api                    :refer [r]]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.item-lister.items.subs
-(def get-item              items.subs/get-item)
-(def get-item-dex          items.subs/get-item-dex)
-(def export-item           items.subs/export-item)
-(def get-selected-item-ids items.subs/get-selected-item-ids)
-(def item-downloaded?      items.subs/item-downloaded?)
+(defn get-item
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-browser/get-item db :my-browser "my-item")
+  ;
+  ; @return (map)
+  [db [_ browser-id item-id]]
+  (r items.subs/get-item db browser-id item-id))
+
+(defn export-item
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-browser/export-item db :my-browser "my-item")
+  ;
+  ; @return (namespaced map)
+  [db [_ browser-id item-id]]
+  (r items.subs/export-item db browser-id item-id))
+
+(defn item-downloaded?
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-browser/item-downloaded? db :my-browser "my-item")
+  ;
+  ; @return (boolean)
+  [db [_ browser-id item-id]]
+  (r items.subs/item-downloaded? db browser-id item-id))
+
+(defn get-item-dex
+  ; @param (keyword) browser-id
+  ; @param (string) item-id
+  ;
+  ; @usage
+  ;  (r item-browser/get-item-dex db :my-browser "my-item")
+  ;
+  ; @return (integer)
+  [db [_ browser-id item-id]]
+  (r items.subs/get-item-dex db browser-id item-id))

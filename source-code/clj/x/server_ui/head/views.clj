@@ -27,6 +27,7 @@
   ;  {:app-title (string)(opt)
   ;   :css-paths (maps in vector)(opt)
   ;    [{:core-js (string)(opt)
+  ;      :route-template (string)(opt)
   ;      :uri (string)}]
   ;   :meta-description (string)(opt)
   ;   :meta-keywords (string or strings in vector)(opt)

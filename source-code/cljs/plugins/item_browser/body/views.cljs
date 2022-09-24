@@ -17,8 +17,8 @@
               [plugins.item-browser.core.helpers    :as core.helpers]
               [plugins.item-lister.body.views       :as body.views]
               [reagent.api                          :as reagent]
-              [x.app-core.api                       :as a]
-              [x.app-tools.api                      :as tools]))
+              [tools.infinite-loader.api            :as infinite-loader]
+              [x.app-core.api                       :as a]))
 
 
 
@@ -47,10 +47,10 @@
         ;@(a/subscribe [:environment/browser-offline?])
         ; [offline-body browser-id]
         @(a/subscribe [:item-browser/data-received? browser-id])
-         [:<> [item-list             browser-id]
-              [tools/infinite-loader browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
-              [no-items-to-show      browser-id]
-              [downloading-items     browser-id]]
+         [:<> [item-list                 browser-id]
+              [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
+              [no-items-to-show          browser-id]
+              [downloading-items         browser-id]]
         :data-not-received
          [downloading-items browser-id]))
 

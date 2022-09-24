@@ -15,7 +15,7 @@
 (ns plugins.item-lister.update.effects
     (:require [plugins.item-lister.body.subs         :as body.subs]
               [plugins.item-lister.core.subs         :as core.subs]
-              [plugins.item-lister.items.subs        :as items.subs]
+              [plugins.item-lister.selection.subs    :as selection.subs]
               [plugins.item-lister.update.events     :as update.events]
               [plugins.item-lister.update.queries    :as update.queries]
               [plugins.item-lister.update.subs       :as update.subs]
@@ -35,7 +35,7 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      (let [item-ids     (r items.subs/get-selected-item-ids               db lister-id)
+      (let [item-ids     (r selection.subs/export-selection                db lister-id)
             query        (r update.queries/get-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/delete-items-response-valid? db lister-id %)]
            {:db       (r update.events/delete-selected-items! db lister-id)
@@ -179,7 +179,7 @@
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
-      (let [item-ids     (r items.subs/get-selected-item-ids                  db lister-id)
+      (let [item-ids     (r selection.subs/export-selection                   db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
            {:db       (r ui/fake-process! db 15)
