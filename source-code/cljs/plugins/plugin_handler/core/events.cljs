@@ -140,7 +140,7 @@
   ;    eseményei vagy a plugint használó modul eseményei állíthatják be.
   ;    Ha az update-item-id! függvény alkalmazása előtt az aktuális elem azonosítójának
   ;    beállítása nem történt meg, akkor az azonosító forrása a body komponens {:default-item-id "..."}
-  ;    tulajdonságának értéke.
+  ;    tulajdonságának értéke lesz.
   (if-let [route-handled? (r routes.subs/route-handled? db plugin-id)]
           ; A)
           (if-let [derived-item-id (r routes.subs/get-derived-item-id db plugin-id)]

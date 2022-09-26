@@ -20,7 +20,7 @@
 
 
 ;; -- Names -------------------------------------------------------------------
-;; -- XXX#5569 ----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @name query (query-request)
 ;  Az egyes query (query-request) lekérések egy vagy több query-question kérdés
@@ -36,29 +36,40 @@
 ;
 ; @name resolver-id
 ;  Egy paramétert nem fogadó resolver azonosítója.
-;  Sample: :all-users
+;  Pl.: :all-users
+;
+; @name document-link
+;  Egy dokumentumban egy vagy több másik dokumentumot úgy érdemes tárolni (hozzácsatolni),
+;  hogy a csatolt dokumentumoknak csak olyan kivonatát táruljuk ami nem tartalmaz
+;  változó adatot.
+;  Ilyen nem változó adat a csatolt dokumentumok azonosítója, aminek segítségével
+;  egy csatolt dokumentumokat egyértelműen azonosíthatjuk és elérhetjük az
+;  eredeti tárolási helyükön.
+;
+; Pl.: [{:account/id "0ce14671-e916-43ab-b057-0939329d4c1b"
+;        :games [{:game/id "9cea3696-56ca-4be5-a5f2-e7477d9f43fb"}
+;                {...}]}]
 ;
 ; @name document-entity
 ;  Olyan adat, amely egyértelműen azonosít egy dokumentumot.
-;  Sample: [:directory/id "my-directory"]
-;          [:passenger/passport "KI-1993-6503688-FF"]
+;  Pl.: [:directory/id "my-directory"]
+;       [:passenger/passport "KI-1993-6503688-FF"]
 ;
 ; @name joined-query-question
 ;  Egy térképben összekapcsolt entitás és az entitás által azonosított
 ;  dokumentumból kért adatok felsorolása egy vektorban.
-;  Sample: {[:directory/id "my-directory"] [:directory/alias]}
+;  Pl.: {[:directory/id "my-directory"] [:directory/alias]}
 ;
 ; @name query-question
-;  Egy query-question kérdés lehet resolver-id azonosító, document-entity entitás
-;  vagy joined-query-question térkép.
-;  Sample: :all-users
-;          [:directory/id "my-directory"]
-;          {[:directory/id "my-directory"] [:directory/alias]}
+;  Egy query-question kérdés lehet resolver-id azonosító, entity vagy joined-query-question térkép.
+;  Pl.: :all-users
+;       [:directory/id "my-directory"]
+;       {[:directory/id "my-directory"] [:directory/alias]}
 ;
 ; @name query-action
 ;  Egy mutation függvény neve és a függvény számára átadott paraméterek térképe
 ;  egy listában.
-;  Sample: (media/create-directory! {:source-directory-id \"root\"})
+;  Pl.: (media/create-directory! {:source-directory-id \"root\"})
 ;
 ; @name query-response
 ;  A szerver válasza a query vektorban felsorlt kérdésekre és kérésekre.
@@ -70,26 +81,76 @@
 ;
 ; @name query-answer
 ;  A query-response térkép értékei a query-answer válaszok.
-;  Sample: [{...} {...}]
-;          {:directory/alias "My directory"}
+;  Pl.: [{...} {...}]
+;       {:directory/alias "My directory"}
 ;
 ; @name query-key
 ;  A query-response térkép kulcsai a query-key kulcsok. Egy query-key kulcs lehet
 ;  egy query-question kérdés, vagy egy mutation függvény neve.
-;  Sample: :all-users
-;          [:directory/id "my-directory"]
-;          mutation-f-name
+;  Pl.: :all-users
+;       [:directory/id "my-directory"]
+;       mutation-f-name
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn entity?
-  ; @param (vector) n
+(defn document-link?
+  ; @param (*) n
   ;
   ; @example
-  ;  (eql/entity? [:directory/id "my-directory"])
+  ;  (eql/document-link? {:directory/id "my-directory"})
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (and      (map?  n)
+       (= 1 (count n))
+       (-> n keys first keyword?)
+       (-> n vals first string?)))
+
+(defn id->document-link
+  ; @param (string) id
+  ; @param (keyword)(opt) namespace
+  ;
+  ; @example
+  ;  (eql/id->document-link "my-directory")
+  ;  =>
+  ;  {:id "my-directory"}
+  ;
+  ; @example
+  ;  (eql/id->document-link "my-directory" :directory)
+  ;  =>
+  ;  {:directory/id "my-directory"}
+  ;
+  ; @return (map)
+  ([id]           {:id id})
+  ([id namespace] {(keyword (name namespace) "id") id}))
+
+(defn document-link->id
+  ; @param (map) document-link
+  ;
+  ; @example
+  ;  (eql/document-link->id {:directory/id "my-directory"})
+  ;  =>
+  ;  "my-directory"
+  ;
+  ; @return (string)
+  [document-link]
+  (-> document-link vals first))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn document-entity?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (eql/document-entity? [:directory/id "my-directory"])
   ;  =>
   ;  true
   ;
@@ -99,6 +160,58 @@
                 (= 2 (count   n))
                 (keyword? (first  n))
                 (string?  (second n)))))
+
+(defn id->document-entity
+  ; @param (string) id
+  ; @param (keyword)(opt) namespace
+  ;
+  ; @example
+  ;  (eql/id->document-entity "my-directory")
+  ;  =>
+  ;  [:id "my-directory"]
+  ;
+  ; @example
+  ;  (eql/id->document-entity "my-directory" :directory)
+  ;  =>
+  ;  [:directory/id "my-directory"]
+  ;
+  ; @return (vector)
+  ([id]           [:id id])
+  ([id namespace] [(keyword (name namespace) "id") id]))
+
+(defn document-entity->id
+  ; @param (vector) document-entity
+  ;
+  ; @example
+  ;  (eql/document-entity->id [:directory/id "my-directory"])
+  ;  =>
+  ;  "my-directory"
+  ;
+  ; @return (string)
+  [document-entity]
+  (second document-entity))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn id->placeholder
+  ; @param (string) id
+  ;
+  ; @example
+  ;  (eql/id->placeholder "my-id")
+  ;  =>
+  ;  :>/my-id
+  ;
+  ; @return (keyword)
+  [id]
+  (keyword (str ">/" (name id))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn append-to-query
   ; @param (nil vector) query
@@ -125,51 +238,3 @@
   (cond (vector?  query) (vec (concat query   query-parts))
         (nil?     query) (vec (concat []      query-parts))
         :else            (vec (concat [query] query-parts))))
-
-(defn id->placeholder
-  ; @param (keyword or string) id
-  ;
-  ; @example
-  ;  (eql/id->placeholder :my-id)
-  ;  =>
-  ;  :>/my-id
-  ;
-  ; @example
-  ;  (eql/id->placeholder "my-id")
-  ;  =>
-  ;  :>/my-id
-  ;
-  ; @return (keyword)
-  [id]
-  (cond (string?  id) (keyword (str ">/"       id))
-        (keyword? id) (keyword (str ">/" (name id)))))
-
-(defn id->entity
-  ; @param (string) id
-  ; @param (keyword)(opt) namespace
-  ;
-  ; @example
-  ;  (eql/id->entity "my-directory")
-  ;  =>
-  ;  [:id "my-directory"]
-  ;
-  ; @example
-  ;  (eql/id->entity "my-directory" :directory)
-  ;  =>
-  ;  [:directory/id "my-directory"]
-  ;
-  ; @return (vector)
-  ([document-id]           [:id document-id])
-  ([document-id namespace] [(keyword (name namespace) "id") document-id]))
-
-(defn entity->id
-  ; @param (vector) entity
-  ;
-  ; @example
-  ;  (eql/entity->id [:directory/id "my-directory"])
-  ;  =>
-  ;  "my-directory"
-  ;
-  ; @return (string)
-  [document-entity]
-  (second document-entity))

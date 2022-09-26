@@ -31,7 +31,7 @@
   ;
   ; @return (map)
   [db [_ browser-id item-dexes]]
-  (r items.events/disable-items! browser-id item-dexes))
+  (r items.events/disable-items! db browser-id item-dexes))
 
 (defn enable-items!
   ; @param (keyword) browser-id
@@ -42,7 +42,7 @@
   ;
   ; @return (map)
   [db [_ browser-id item-dexes]]
-  (r items.events/enable-items! browser-id item-dexes))
+  (r items.events/enable-items! db browser-id item-dexes))
 
 (defn enable-all-items!
   ; @param (keyword) browser-id
@@ -52,7 +52,7 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  (r items.events/enable-all-items! browser-id))
+  (r items.events/enable-all-items! db browser-id))
 
 
 

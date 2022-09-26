@@ -30,7 +30,6 @@
               [x.mid-db.data-range-handler   :as data-range-handler]
               [x.mid-db.document-handler     :as document-handler]
               [x.mid-db.engine               :as engine]
-              [x.mid-db.id-handler           :as id-handler]
               [x.mid-db.partition-handler    :as partition-handler]))
 
 
@@ -141,20 +140,6 @@
 (def dec-item-n!          engine/dec-item-n!)
 (def apply-item!          engine/apply-item!)
 (def distribute-items!    engine/distribute-items!)
-
-; x.mid-db.id-handler
-(def document-entity?             id-handler/document-entity?)
-(def document-link?               id-handler/document-link?)
-(def document-id->document-link   id-handler/document-id->document-link)
-(def item-id->document-link       id-handler/item-id->document-link)
-(def document-link->document-id   id-handler/document-link->document-id)
-(def document-link->item-id       id-handler/document-link->item-id)
-(def document-link->namespace     id-handler/document-link->namespace)
-(def document-link->namespace?    id-handler/document-link->namespace?)
-(def document-id->document-entity id-handler/document-id->document-entity)
-(def item-id->document-entity     id-handler/item-id->document-entity)
-(def document-entity->document-id id-handler/document-entity->document-id)
-(def document-entity->item-id     id-handler/document-entity->item-id)
 
 ; x.mid-db.partition-handler
 (def data-item-path                 partition-handler/data-item-path)
