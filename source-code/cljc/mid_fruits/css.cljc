@@ -47,11 +47,35 @@
   [n]
   (str "calc(" n ")"))
 
-(defn percent
-  ; @param (string) n
+(defn ms
+  ; @param (ms) n
   ;
   ; @example
-  ;  (css/percent "100")
+  ;  (css/ms 500)
+  ;  =>
+  ;  "500ms"
+  ;
+  ; @return (string)
+  [n]
+  (str n "ms"))
+
+(defn s
+  ; @param (s) n
+  ;
+  ; @example
+  ;  (css/s 3)
+  ;  =>
+  ;  "3s"
+  ;
+  ; @return (string)
+  [n]
+  (str n "s"))
+
+(defn percent
+  ; @param (percent) n
+  ;
+  ; @example
+  ;  (css/percent 100)
   ;  =>
   ;  "100%"
   ;

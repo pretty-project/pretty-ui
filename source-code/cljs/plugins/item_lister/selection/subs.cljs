@@ -89,6 +89,18 @@
   [db [_ lister-id]]
   (r selection.subs/export-selection db lister-id))
 
+(defn export-single-selection
+  ; @param (keyword) lister-id
+  ;
+  ; @example
+  ;  (r item-lister/export-single-selection db :my-lister)
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ lister-id]]
+  (r selection.subs/export-single-selection db lister-id))
+
 (defn get-imported-selection
   ; @param (keyword) lister-id
   ;

@@ -37,18 +37,6 @@
   (if (zero? n) 1
       (* x (power x (dec n)))))
 
-(defn percent->angle
-  ; @param (float or integer) n
-  ;
-  ; @example
-  ;  (math/percent->angle 50)
-  ;  =>
-  ;  180
-  ;
-  ; @return (float or integer)
-  [n]
-  (* 360 (/ n 100)))
-
 (defn floor
   ; @param (float or integer) n
   ;
@@ -281,6 +269,18 @@
   ; @return (float or integer)
   [& xyz]
   (collection-maximum xyz))
+
+(defn percent->angle
+  ; @param (float or integer) n
+  ;
+  ; @example
+  ;  (math/percent->angle 50)
+  ;  =>
+  ;  180
+  ;
+  ; @return (float or integer)
+  [n]
+  (* 360 (/ n 100)))
 
 (defn percent
   ; @param (float or integer) total

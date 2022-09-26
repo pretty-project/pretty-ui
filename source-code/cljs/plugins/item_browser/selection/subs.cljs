@@ -58,3 +58,15 @@
   ; @return (strings in vector)
   [db [_ browser-id]]
   (r selection.subs/export-selection db browser-id))
+
+(defn export-single-selection
+  ; @param (keyword) browser-id
+  ;
+  ; @example
+  ;  (r item-browser/export-single-selection db :my-browser)
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ browser-id]]
+  (r selection.subs/export-single-selection db browser-id))

@@ -57,6 +57,36 @@
   [db [_ plugin-id item-dex]]
   (update-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] vector/toggle-item item-dex))
 
+(defn toggle-single-item-selection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (integer) item-dex
+  ;
+  ; @return (map)
+  [db [_ plugin-id item-dex]]
+  ; Azokban az esetekben, amikor legfeljebb egy elemet lehetséges kiválasztani a listából, ...
+  (let [selected-items (get-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])]
+       (if (= selected-items [item-dex])
+           (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])
+           (assoc-in  db [:plugins :plugin-handler/meta-items plugin-id :selected-items] [item-dex]))))
+
+(defn toggle-limited-item-selection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (integer) item-dex
+  ; @param (integer) selection-limit
+  ;
+  ; @return (map)
+  [db [_ plugin-id item-dex selection-limit]]
+  ; Azokban az esetekben, amikor legfeljebb X elemet lehetséges kiválasztani a listából, ...
+  (let [selected-items      (get-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])
+        selected-item-count (r selection.subs/get-selected-item-count db plugin-id)]
+       (if (< selected-item-count selection-limit)
+           (r toggle-item-selection! db plugin-id item-dex)
+           (return db))))
+
 (defn discard-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -124,3 +154,14 @@
   ; Az import-selected-items függvény eltárolja az ún. importált kijelölést,
   ; ami a kijelölt/letöltés után kijelölendő elemek azonosítóit tartalmazza.
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection] selected-item-ids))
+
+(defn import-single-selection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (string) selected-item-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id selected-item-id]]
+  ; XXX#8891
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection] [selected-item-id]))

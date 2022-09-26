@@ -9,7 +9,8 @@
   az :on-app-boot események megtörténése.
 - Az :on-app-boot események megtörténésének kezdete után 100 ms idő elteltével
   az applikáció felépítése.
-- Azonosított felhasználó esetén a bejelentkezési események megtörténése.
+- Azonosított felhasználó esetén az :on-app-login bejelentkezési események
+  megtörténése.
 - Applikáció tartalmának renderelése.
 - Az applikáció tartalmának renderelése után 100 ms idő elteltével
   az {:on-app-launch ...} események megtörténése.

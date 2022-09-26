@@ -28,7 +28,6 @@
   ;
   ; @return (map)
   [db [_ popup-id]]
-  (println "y")
   (r renderer/set-element-prop! db :popups popup-id :minimized? true))
 
 (defn maximize-popup!
@@ -38,7 +37,6 @@
   ;
   ; @return (map)
   [db [_ popup-id]]
-  (println "x")
   (r renderer/set-element-prop! db :popups popup-id :minimized? false))
 
 

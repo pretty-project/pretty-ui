@@ -20,8 +20,6 @@
               [plugins.file-editor.body.events]
               [plugins.file-editor.body.subs]
               [plugins.file-editor.core.effects]
-              [plugins.file-editor.core.events]
-              [plugins.file-editor.core.subs]
               [plugins.file-editor.download.effects]
               [plugins.file-editor.download.events]
               [plugins.file-editor.download.subs]
@@ -31,7 +29,9 @@
               [plugins.file-editor.update.effects]
               [plugins.file-editor.update.subs]
               [plugins.file-editor.backup.subs :as backup.subs]
-              [plugins.file-editor.body.views  :as body.views]))
+              [plugins.file-editor.body.views  :as body.views]
+              [plugins.item-lister.core.events :as core.events]
+              [plugins.item-lister.core.subs   :as core.subs]))
 
 
 
@@ -43,3 +43,9 @@
 
 ; plugins.file-editor.body.views
 (def body body.views/body)
+
+; plugins.file-editor.core.events
+(def set-meta-item! core.events/set-meta-item!)
+
+; plugins.file-editor.core.subs
+(def get-meta-item core.subs/get-meta-item)

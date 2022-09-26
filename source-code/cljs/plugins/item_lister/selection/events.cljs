@@ -42,6 +42,29 @@
   [db [_ lister-id item-dex]]
   (r selection.events/toggle-item-selection! db lister-id item-dex))
 
+(defn toggle-single-item-selection!
+  ; @param (keyword) lister-id
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-single-item-selection! :my-lister 42)
+  ;
+  ; @return (map)
+  [db [_ lister-id item-dex]]
+  (r selection.events/toggle-single-item-selection! db lister-id item-dex))
+
+(defn toggle-limited-item-selection!
+  ; @param (keyword) lister-id
+  ; @param (integer) item-dex
+  ; @param (integer) selection-limit
+  ;
+  ; @usage
+  ;  (r item-lister/toggle-limited-item-selection! :my-lister 42 8)
+  ;
+  ; @return (map)
+  [db [_ lister-id item-dex selection-limit]]
+  (r selection.events/toggle-limited-item-selection! db lister-id item-dex selection-limit))
+
 (defn discard-selection!
   ; @param (keyword) lister-id
   ;
@@ -90,6 +113,18 @@
   ; XXX#8891
   (r selection.events/import-selection! db lister-id selected-item-ids))
 
+(defn import-single-selection!
+  ; @param (keyword) lister-id
+  ; @param (string) selected-item-id
+  ;
+  ; @usage
+  ;  (r item-lister/import-single-selection! db :my-lister "my-item")
+  ;
+  ; @return (map)
+  [db [_ lister-id selected-item-id]]
+  ; XXX#8891
+  (r selection.events/import-single-selection! db lister-id selected-item-id))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -107,6 +142,22 @@
 ; @usage
 ;  [:item-lister/toggle-item-selection! :my-lister 42]
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
+
+; @param (keyword) lister-id
+; @param (integer) item-dex
+;
+; @usage
+;  [:item-lister/toggle-single-item-selection! :my-lister 42]
+(a/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
+
+
+; @param (keyword) lister-id
+; @param (integer) item-dex
+; @param (integer) selection-limit
+;
+; @usage
+;  [:item-lister/toggle-limited-item-selection! :my-lister 42 8]
+(a/reg-event-db :item-lister/toggle-limited-item-selection! toggle-limited-item-selection!)
 
 ; @param (keyword) lister-id
 ;

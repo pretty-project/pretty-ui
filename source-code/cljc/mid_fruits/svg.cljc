@@ -21,8 +21,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn view-box
-  ; @param (integer) width
-  ; @param (integer) height
+  ; @param (px) width
+  ; @param (px) height
   ;
   ; @example
   ;  (svg/view-box 1024 1024)
@@ -65,7 +65,6 @@
   ;   :xmlns (string)}
   [{:keys [height style width] :as attributes}]
   (merge (dissoc attributes :height :width)
-         (param  attributes)
          {:style    (merge {:height "100%" :width "100%"} style)
           :view-box (view-box width height)
           :xmlns    "http://www.w3.org/2000/svg"}))

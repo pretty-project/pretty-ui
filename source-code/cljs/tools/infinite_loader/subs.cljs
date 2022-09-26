@@ -37,4 +37,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :observer/observer-hidden? observer-hidden?)
+(a/reg-sub :infinite-loader/observer-hidden? observer-hidden?)

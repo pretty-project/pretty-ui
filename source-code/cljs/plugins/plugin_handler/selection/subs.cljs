@@ -98,6 +98,17 @@
                        (conj result item-id)))]
               (reduce f [] selected-items))))
 
+(defn export-single-selection
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (string)
+  [db [_ plugin-id]]
+  ; XXX#8891
+  (let [exported-selection (r export-selection db plugin-id)]
+       (first exported-selection)))
+
 (defn get-imported-selection
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

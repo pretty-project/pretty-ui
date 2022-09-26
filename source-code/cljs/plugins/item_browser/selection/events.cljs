@@ -32,6 +32,29 @@
   [db [_ browser-id item-dex]]
   (r selection.events/toggle-item-selection! db browser-id item-dex))
 
+(defn toggle-single-item-selection!
+  ; @param (keyword) browser-id
+  ; @param (integer) item-dex
+  ;
+  ; @usage
+  ;  (r item-browser/toggle-single-item-selection! :my-browser 42)
+  ;
+  ; @return (map)
+  [db [_ browser-id item-dex]]
+  (r selection.events/toggle-single-item-selection! db browser-id item-dex))
+
+(defn toggle-limited-item-selection!
+  ; @param (keyword) browser-id
+  ; @param (integer) item-dex
+  ; @param (integer) selection-limit
+  ;
+  ; @usage
+  ;  (r item-browser/toggle-limited-item-selection! :my-browser 42 8)
+  ;
+  ; @return (map)
+  [db [_ browser-id item-dex selection-limit]]
+  (r selection.events/toggle-limited-item-selection! db browser-id item-dex selection-limit))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -48,3 +71,15 @@
   [db [_ browser-id selected-item-ids]]
   ; XXX#8891
   (r selection.events/import-selection! db browser-id selected-item-ids))
+
+(defn import-single-selection!
+  ; @param (keyword) browser-id
+  ; @param (string) selected-item-id
+  ;
+  ; @usage
+  ;  (r item-browser/import-single-selection! db :my-browser "my-item")
+  ;
+  ; @return (map)
+  [db [_ browser-id selected-item-id]]
+  ; XXX#8891
+  (r selection.events/import-single-selection! db browser-id selected-item-id))

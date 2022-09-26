@@ -269,6 +269,9 @@
            :saving...
            {:en "Saving ..."
             :hu "Mentés ..."}
+           :saving-n
+           {:en "Saving (%)"
+            :hu "Mentés (%)"}
            :search!
            {:en "Search"
             :hu "Keresés"}
