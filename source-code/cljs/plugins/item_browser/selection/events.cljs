@@ -23,37 +23,37 @@
 
 (defn toggle-item-selection!
   ; @param (keyword) browser-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/toggle-item-selection! :my-browser 42)
+  ;  (r item-browser/toggle-item-selection! :my-browser "my-item")
   ;
   ; @return (map)
-  [db [_ browser-id item-dex]]
-  (r selection.events/toggle-item-selection! db browser-id item-dex))
+  [db [_ browser-id item-id]]
+  (r selection.events/toggle-item-selection! db browser-id item-id))
 
 (defn toggle-single-item-selection!
   ; @param (keyword) browser-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/toggle-single-item-selection! :my-browser 42)
+  ;  (r item-browser/toggle-single-item-selection! :my-browser "my-item")
   ;
   ; @return (map)
-  [db [_ browser-id item-dex]]
-  (r selection.events/toggle-single-item-selection! db browser-id item-dex))
+  [db [_ browser-id item-id]]
+  (r selection.events/toggle-single-item-selection! db browser-id item-id))
 
 (defn toggle-limited-item-selection!
   ; @param (keyword) browser-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ; @param (integer) selection-limit
   ;
   ; @usage
-  ;  (r item-browser/toggle-limited-item-selection! :my-browser 42 8)
+  ;  (r item-browser/toggle-limited-item-selection! :my-browser "my-item" 8)
   ;
   ; @return (map)
-  [db [_ browser-id item-dex selection-limit]]
-  (r selection.events/toggle-limited-item-selection! db browser-id item-dex selection-limit))
+  [db [_ browser-id item-id selection-limit]]
+  (r selection.events/toggle-limited-item-selection! db browser-id item-id selection-limit))
 
 
 

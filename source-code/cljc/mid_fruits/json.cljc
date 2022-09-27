@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.json
-    (:require [mid-fruits.candy   :refer [param return]]
+    (:require [mid-fruits.candy   :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.string  :as string]
               [mid-fruits.map     :as map]
@@ -25,6 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
+; XXX#5914
 (def KEYWORD-PREFIX "*")
 
 
@@ -134,7 +135,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-keyword :my-value)
+  ;  (json/unkeywordize-value :my-value)
   ;  =>
   ;  "*:my-value"
   ;
@@ -143,6 +144,25 @@
   (if (keyword?           n)
       (str KEYWORD-PREFIX n)
       (return             n)))
+
+
+
+;; -- Trim ... value ----------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn trim-value
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/trim-value " My value ")
+  ;  =>
+  ;  "My value"
+  ;
+  ; @return (*)
+  [n]
+  (if (string?     n)
+      (string/trim n)
+      (return      n)))
 
 
 
@@ -251,3 +271,22 @@
         ; A keywordize-value függvény csak string típusokat módosít, ezért nincs szükség további
         ; típus-vizsgálatra!
         :else (keywordize-value n)))
+
+
+
+;; -- Trim ... values ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn trim-values
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/trim-values {:a "b " :c [" d " "e"] :f {:g " h"}})
+  ;  =>
+  ;  {:a "b" :c ["d" "e"] :f {:g "h"}}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>values  n trim-values)
+        (vector? n) (vector/->items n trim-values)
+        :else       (trim-value     n)))

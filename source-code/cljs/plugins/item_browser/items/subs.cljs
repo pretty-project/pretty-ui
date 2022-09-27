@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.items.subs
     (:require [plugins.plugin-handler.items.subs :as items.subs]
-              [x.app-core.api                    :refer [r]]))
+              [x.app-core.api                    :as a :refer [r]]))
 
 
 
@@ -64,3 +64,15 @@
   ; @return (integer)
   [db [_ browser-id item-id]]
   (r items.subs/get-item-dex db browser-id item-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @param (keyword) browser-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-browser/get-item :my-browser "my-item"]
+(a/reg-sub :item-browser/get-item get-item)

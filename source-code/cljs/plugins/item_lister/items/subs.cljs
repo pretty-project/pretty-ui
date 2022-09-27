@@ -114,6 +114,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @param (keyword) lister-id
+; @param (string) item-id
+;
+; @usage
+;  [:item-lister/get-item :my-lister "my-item"]
+(a/reg-sub :item-lister/get-item get-item)
+
+; @param (keyword) lister-id
 ; @param (integer) item-dex
 ;
 ; @usage

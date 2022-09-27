@@ -32,7 +32,7 @@
   ;  {}
   [_ {:keys [font-size max-lines selectable? style]}]
   (if max-lines (let [line-height-var (css/var  (str "line-height-" (name font-size)))
-                      height-calc     (css/calc (str "2 * " line-height-var))]
+                      height-calc     (css/calc (str max-lines" * "line-height-var))]
                      {:data-cropped    true
                       :data-selectable selectable?
                       :style           (assoc style :max-height height-calc)})

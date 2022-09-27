@@ -34,57 +34,57 @@
   ; @return (map)
   [db [_ plugin-id]]
   (let [downloaded-items (r core.subs/get-downloaded-items db plugin-id)
-        item-selections  (vector/dex-range downloaded-items)]
+        item-selections  (vector/->items downloaded-items :id)]
        (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] item-selections)))
 
 (defn select-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ plugin-id item-dex]]
-  (update-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] vector/conj-item-once item-dex))
+  [db [_ plugin-id item-id]]
+  (update-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] vector/conj-item-once item-id))
 
 (defn toggle-item-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ plugin-id item-dex]]
-  (update-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] vector/toggle-item item-dex))
+  [db [_ plugin-id item-id]]
+  (update-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] vector/toggle-item item-id))
 
 (defn toggle-single-item-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @return (map)
-  [db [_ plugin-id item-dex]]
+  [db [_ plugin-id item-id]]
   ; Azokban az esetekben, amikor legfeljebb egy elemet lehetséges kiválasztani a listából, ...
   (let [selected-items (get-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])]
-       (if (= selected-items [item-dex])
+       (if (= selected-items [item-id])
            (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])
-           (assoc-in  db [:plugins :plugin-handler/meta-items plugin-id :selected-items] [item-dex]))))
+           (assoc-in  db [:plugins :plugin-handler/meta-items plugin-id :selected-items] [item-id]))))
 
 (defn toggle-limited-item-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ; @param (integer) selection-limit
   ;
   ; @return (map)
-  [db [_ plugin-id item-dex selection-limit]]
+  [db [_ plugin-id item-id selection-limit]]
   ; Azokban az esetekben, amikor legfeljebb X elemet lehetséges kiválasztani a listából, ...
   (let [selected-items      (get-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items])
         selected-item-count (r selection.subs/get-selected-item-count db plugin-id)]
        (if (< selected-item-count selection-limit)
-           (r toggle-item-selection! db plugin-id item-dex)
+           (r toggle-item-selection! db plugin-id item-id)
            (return db))))
 
 (defn discard-selection!
@@ -130,11 +130,13 @@
        (letfn [(dex-out-of-bounds? [item-dex] (= item-dex downloaded-item-count))
                (select-item?       [item-dex] (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
                                                    (vector/contains-item? imported-selection id)))
+               (select-item-f      [item-dex] (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
+                                                   (r select-item! db plugin-id id)))
                (f [db item-dex]
                   (cond ; If item-dex out of bounds ...
-                        (dex-out-of-bounds? item-dex) (return         db)
+                        (dex-out-of-bounds? item-dex) (return db)
                         ; If the current item has to be selected ...
-                        (select-item?       item-dex) (f (r select-item! db plugin-id item-dex)
+                        (select-item?       item-dex) (f (select-item-f item-dex)
                                                          (inc item-dex))
                         ; If the current item has NOT to be selected ...
                         :else                         (f db (inc item-dex))))]

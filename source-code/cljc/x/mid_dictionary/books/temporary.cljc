@@ -73,6 +73,11 @@
            :link
            {:en "Link"
             :hu "Hivatkozás"}
+           :public-link
+           {:en "Public link"
+            :hu "Nyilvános hivatkozás"}
+
+
 
            :size
            {:en "Size"

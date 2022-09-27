@@ -83,7 +83,7 @@
   (fn [{:keys [db]} [_ request-id request-props]]
       ; A request-props térkép az események láncolata paraméterként adja tovább, így az egyes
       ; lekérésekből egy időben több példányt is tud kezelni.
-      ; Pl. Az egyes lekérések [:sync/request-successed ...] eseménye és [:sync/request-stalled ...]
+      ; Pl.: Az egyes lekérések [:sync/request-successed ...] eseménye és [:sync/request-stalled ...]
       ;      eseménye között újra elküldhetők eltérő beállításokkal, ami miatt szükséges a beállításokat
       ;      tartalmazó request-props térképet paraméterként átadni az eseményeknek és függvényeknek!
       (let [request-props (r request-handler.prototypes/request-props-prototype db request-props)]

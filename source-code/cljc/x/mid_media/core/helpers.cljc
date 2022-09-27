@@ -61,6 +61,18 @@
   [filename]
   (str core.config/STORAGE-URI-BASE filename))
 
+(defn media-storage-uri->filename
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (media/media-storage-uri->filename "/media/storage/ab3450.jpg")
+  ;  =>
+  ;  "ab3450.jpg"
+  ;
+  ; @return (string)
+  [uri]
+  (string/after-first-occurence uri core.config/STORAGE-URI-BASE))
+
 (defn filename->media-thumbnail-uri
   ; @param (string) filename
   ;
@@ -72,6 +84,18 @@
   ; @return (string)
   [filename]
   (str core.config/THUMBNAIL-URI-BASE filename))
+
+(defn media-thumbnail-uri->filename
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (media/media-thumbnail-uri->filename "/media/thumbnails/ab3450.jpg")
+  ;  =>
+  ;  "ab3450.jpg"
+  ;
+  ; @return (string)
+  [uri]
+  (string/after-first-occurence uri core.config/THUMBNAIL-URI-BASE))
 
 (defn filename->media-storage-filepath
   ; @param (string) filename
@@ -85,6 +109,18 @@
   [filename]
   (str core.config/STORAGE-FILEPATH-BASE filename))
 
+(defn media-storage-filepath->filename
+  ; @param (string) filepath
+  ;
+  ; @example
+  ;  (media/media-storage-filepath->filename "monoset-environment/media/storage/ab3450.jpg")
+  ;  =>
+  ;  "ab3450.jpg"
+  ;
+  ; @return (string)
+  [filepath]
+  (string/after-first-occurence filepath core.config/STORAGE-FILEPATH-BASE))
+
 (defn filename->media-thumbnail-filepath
   ; @param (string) filename
   ;
@@ -97,6 +133,18 @@
   [filename]
   (str core.config/THUMBNAIL-FILEPATH-BASE filename))
 
+(defn media-thumbnail-filepath->filename
+  ; @param (string) filepath
+  ;
+  ; @example
+  ;  (media/media-thumbnail-filepath->filename "monoset-environment/media/thumbnails/ab3450.jpg")
+  ;  =>
+  ;  "ab3450.jpg"
+  ;
+  ; @return (string)
+  [filepath]
+  (string/after-first-occurence filepath core.config/THUMBNAIL-FILEPATH-BASE))
+
 (defn filename->temporary-filepath
   ; @param (string) filename
   ;
@@ -108,3 +156,15 @@
   ; @return (string)
   [filename]
   (str core.config/TEMPORARY-FILEPATH-BASE filename))
+
+(defn temporary-filepath->filename
+  ; @param (string) filepath
+  ;
+  ; @example
+  ;  (media/temporary-filepath->filename "monoset-environment/media/temp/ab3450.jpg")
+  ;  =>
+  ;  "ab3450.jpg"
+  ;
+  ; @return (string)
+  [filepath]
+  (string/after-first-occurence filepath core.config/TEMPORARY-FILEPATH-BASE))

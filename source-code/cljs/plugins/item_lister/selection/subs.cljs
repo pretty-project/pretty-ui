@@ -63,14 +63,14 @@
 
 (defn item-selected?
   ; @param (keyword) lister-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/item-selected? db :my-lister 42)
+  ;  (r item-lister/item-selected? db :my-lister "my-item")
   ;
   ; @return (boolean)
-  [db [_ lister-id item-dex]]
-  (r selection.subs/item-selected? db lister-id item-dex))
+  [db [_ lister-id item-id]]
+  (r selection.subs/item-selected? db lister-id item-id))
 
 
 
@@ -143,8 +143,8 @@
 (a/reg-sub :item-lister/no-items-selected? no-items-selected?)
 
 ; @param (keyword) lister-id
-; @param (integer) item-dex
+; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/item-selected? :my-lister 42]
+;  [:item-lister/item-selected? :my-lister "my-item"]
 (a/reg-sub :item-lister/item-selected? item-selected?)

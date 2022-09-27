@@ -3387,7 +3387,7 @@ body {
 .x-text--body[data-cropped="true"]::after {
   background-image: linear-gradient(0deg, white, transparent);
   bottom: 0;
-  content: '';
+  -content: '';
   height: 10px;
   left: 0;
   position: absolute;

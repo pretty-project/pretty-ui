@@ -86,7 +86,7 @@
   ;
   ; @return (string)
   [n]
-  (string/trim (str n)))
+  (-> n str string/trim))
 
 (defn length
   ; @param (string) n

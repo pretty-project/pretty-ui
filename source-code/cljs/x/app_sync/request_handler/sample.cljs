@@ -37,13 +37,14 @@
 ; adatbázist.
 ;
 ; XXX#0451
-; A response-f függvény minden esetben megkapja paraméterként az adatbázist,
+; A response-f függvény minden esetben megkapja paraméterként a Re-Frame adatbázist,
 ; a request-id azonosítót és a szerver-válaszát!
 ; Így biztosítható, hogy az adatbázis a szerver-válasz megérkezésekori állapotában
 ; legyen jelen a függvényben, ne pedig az elküldésekori állapotában.
 
 (defn store-my-response!
-  [db [_ request-id server-response]])
+  [db [_ request-id server-response]]
+  (assoc-in db [:my-response] server-response))
 
 (a/reg-event-fx
   :send-my-request!

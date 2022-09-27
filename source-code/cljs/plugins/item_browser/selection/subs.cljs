@@ -33,14 +33,14 @@
 
 (defn item-selected?
   ; @param (keyword) browser-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/item-selected? db :my-browser 42)
+  ;  (r item-browser/item-selected? db :my-browser "my-item")
   ;
   ; @return (boolean)
-  [db [_ browser-id item-dex]]
-  (r selection.subs/item-selected? db browser-id item-dex))
+  [db [_ browser-id item-id]]
+  (r selection.subs/item-selected? db browser-id item-id))
 
 
 

@@ -33,37 +33,37 @@
 
 (defn toggle-item-selection!
   ; @param (keyword) lister-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/toggle-item-selection! :my-lister 42)
+  ;  (r item-lister/toggle-item-selection! :my-lister "my-item")
   ;
   ; @return (map)
-  [db [_ lister-id item-dex]]
-  (r selection.events/toggle-item-selection! db lister-id item-dex))
+  [db [_ lister-id item-id]]
+  (r selection.events/toggle-item-selection! db lister-id item-id))
 
 (defn toggle-single-item-selection!
   ; @param (keyword) lister-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/toggle-single-item-selection! :my-lister 42)
+  ;  (r item-lister/toggle-single-item-selection! :my-lister "my-item")
   ;
   ; @return (map)
-  [db [_ lister-id item-dex]]
-  (r selection.events/toggle-single-item-selection! db lister-id item-dex))
+  [db [_ lister-id item-id]]
+  (r selection.events/toggle-single-item-selection! db lister-id item-id))
 
 (defn toggle-limited-item-selection!
   ; @param (keyword) lister-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ; @param (integer) selection-limit
   ;
   ; @usage
-  ;  (r item-lister/toggle-limited-item-selection! :my-lister 42 8)
+  ;  (r item-lister/toggle-limited-item-selection! :my-lister "my-item" 8)
   ;
   ; @return (map)
-  [db [_ lister-id item-dex selection-limit]]
-  (r selection.events/toggle-limited-item-selection! db lister-id item-dex selection-limit))
+  [db [_ lister-id item-id selection-limit]]
+  (r selection.events/toggle-limited-item-selection! db lister-id item-id selection-limit))
 
 (defn discard-selection!
   ; @param (keyword) lister-id
@@ -137,26 +137,26 @@
 (a/reg-event-db :item-lister/select-all-items! select-all-items!)
 
 ; @param (keyword) lister-id
-; @param (integer) item-dex
+; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/toggle-item-selection! :my-lister 42]
+;  [:item-lister/toggle-item-selection! :my-lister "my-item"]
 (a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 ; @param (keyword) lister-id
-; @param (integer) item-dex
+; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/toggle-single-item-selection! :my-lister 42]
+;  [:item-lister/toggle-single-item-selection! :my-lister "my-item"]
 (a/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
 
 
 ; @param (keyword) lister-id
-; @param (integer) item-dex
+; @param (string) item-id
 ; @param (integer) selection-limit
 ;
 ; @usage
-;  [:item-lister/toggle-limited-item-selection! :my-lister 42 8]
+;  [:item-lister/toggle-limited-item-selection! :my-lister "my-item" 8]
 (a/reg-event-db :item-lister/toggle-limited-item-selection! toggle-limited-item-selection!)
 
 ; @param (keyword) lister-id

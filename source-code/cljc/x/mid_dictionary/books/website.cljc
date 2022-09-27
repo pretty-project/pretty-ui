@@ -41,6 +41,9 @@
            :site-content
            {:en "Site content"
             :hu "Oldal tartalma"}
+           :visibility-on-the-website
+           {:en "Visibility on the website"
+            :hu "Láthatóság a webhelyen"}
            :website
            {:en "Website"
             :hu "Webhely"}

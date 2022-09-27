@@ -69,12 +69,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id
-  ; @param (integer) item-dex
+  ; @param (string) item-id
   ;
   ; @return (boolean)
-  [db [_ plugin-id item-dex]]
+  [db [_ plugin-id item-id]]
   (let [selected-items (r core.subs/get-meta-item db plugin-id :selected-items)]
-       (vector/contains-item? selected-items item-dex)))
+       (vector/contains-item? selected-items item-id)))
 
 
 
@@ -89,14 +89,9 @@
   ; @return (strings in vector)
   [db [_ plugin-id]]
   ; XXX#8891
-  ; Az export-selected-items függvény visszatérési értéke a kijelölt listaelemek
+  ; Az export-selection függvény visszatérési értéke a kijelölt listaelemek
   ; azonosítói egy vektorban felsorolva.
-  (let [items-path     (r body.subs/get-body-prop db plugin-id :items-path)
-        selected-items (r core.subs/get-meta-item db plugin-id :selected-items)]
-       (letfn [(f [result item-dex]
-                  (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))]
-                       (conj result item-id)))]
-              (reduce f [] selected-items))))
+  (r core.subs/get-meta-item db plugin-id :selected-items))
 
 (defn export-single-selection
   ; WARNING! NON-PUBLIC! DO NOT USE!

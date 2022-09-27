@@ -46,9 +46,9 @@
             :hu "Fekvőhelyek száma"}
            :number-of-seats
            {:en "Number of seats"
-            :hu "Ülések száma"}
+            :hu "Ülőhelyek száma"}
            :semi-integrated-rv
-           {:en "Semi integrated"
+           {:en "Semi integrated RV"
             :hu "Részintegrált lakóautó"}
            :suspension
            {:en "Suspension"
@@ -64,6 +64,9 @@
             :hu "Gumiabroncs mérete"}
            :van
            {:en "Van"
+            :hu "Furgon"}
+           :van-rv
+           {:en "Van RV"
             :hu "Kempingbusz"}
            :vehicle
            {:en "Vehicle"
