@@ -29,7 +29,7 @@
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-view
+(defn my-viewer
   []
   [item-viewer/body :my-viewer {:item-element [:div "My item"]}])
 

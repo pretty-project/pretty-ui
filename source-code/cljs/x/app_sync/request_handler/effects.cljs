@@ -56,15 +56,15 @@
   ;   :method (keyword)
   ;    :post, :get
   ;   :on-failure (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-responsed (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
   ;   :on-stalled (metamorphic-event)(opt)
   ;    A szerver-válasz visszaérkezése utáni idle-timeout időtartam lejárta után megtörténő esemény.
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-success (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :params (map)(opt)
   ;    Only w/ {:method :post}
   ;   :response-f (function)(opt)

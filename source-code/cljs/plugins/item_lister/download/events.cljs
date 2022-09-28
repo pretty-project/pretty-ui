@@ -48,10 +48,8 @@
   ; @return (map)
   [db [_ lister-id server-response]]
   ; XXX#3907
-  ; Az item-lister plugin a dokumentumokat névtér nélkül tárolja, így a lista-elemek
-  ; felsorolásakor és egyes Re-Frame feliratkozásokban a dokumentumok egyes értékeinek
-  ; olvasása kevesebb erőforrást igényel, mivel nem szükséges az értékek kulcsaihoz
-  ; az aktuális névteret hozzáfűzni/eltávolítani.
+  ; A többi pluginnal megegyezően az item-editor plugin is névtér nélkül
+  ; tárolja a letöltött dokumentumokat.
   (let [resolver-id (r download.subs/get-resolver-id db lister-id :get-items)
         items-path  (r body.subs/get-body-prop       db lister-id :items-path)
         documents   (get-in server-response [resolver-id :documents])

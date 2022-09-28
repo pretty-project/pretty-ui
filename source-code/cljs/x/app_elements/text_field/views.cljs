@@ -338,11 +338,11 @@
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(opt)
   ;   :on-change (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
+  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :on-empty (metamorphic-event)(opt)
   ;   :on-focus (metamorphic-event)(opt)
   ;   :on-type-ended (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a mező aktuális értékét.
+  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;   :required? (boolean or keyword)(opt)
   ;    true, false, :unmarked

@@ -26,7 +26,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; A plugin használatához SZÜKSÉGES megadni ...
-; ... a {:collection-name "..."} tulajdonságot.
+; ... a {:collection-name "..."} tulajdonságot, amit a plugin az ajánlott értékek (suggestions)
+;     letöltésekor használ.
 ; ... a {:handler-key ...} tulajdonságot, amit a plugin a mutation és resolver függvények neveiben
 ;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
@@ -42,7 +43,7 @@
   :init-my-editor!
   [:item-editor/init-editor! :my-editor
                              {:base-route      "/@app-home/my-editor"
-                              :collection-name "my-collection"
+                              :collection-name "my_collection"
                               :handler-key     :my-handler
                               :item-namespace  :my-type
                               :on-route        [:my-event]
@@ -60,7 +61,7 @@
   ; @return (namespaced map)
   [env _]
   (let [item-id (pathom/env->param env :item-id)]
-       (mongo-db/get-document-by-id "my-collection" item-id)))
+       (mongo-db/get-document-by-id "my_collection" item-id)))
 
 (defresolver get-item
              ; @param (map) env

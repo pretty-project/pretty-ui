@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; A plugin használatához SZÜKSÉGES megadni ...
-; ... a {:collection-name "..."} tulajdonságot.
+; ... a {:collection-name "..."} tulajdonságot, amit a plugin jelenleg nem használ (x4.7.5).
 ; ... a {:handler-key ...} tulajdonságot, amit a plugin a mutation és resolver függvények neveiben
 ;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
@@ -40,7 +40,7 @@
   :init-my-lister!
   [:item-lister/init-lister! :my-lister
                              {:base-route      "/@app-home/my-lister"
-                              :collection-name "my-collection"
+                              :collection-name "my_collection"
                               :handler-key     :my-handler
                               :item-namespace  :my-type
                               :on-route        [:my-event]
@@ -66,8 +66,8 @@
   [env _]
   (let [get-pipeline   (item-lister/env->get-pipeline   env :my-lister)
         count-pipeline (item-lister/env->count-pipeline env :my-lister)]
-       {:documents      (mongo-db/get-documents-by-pipeline   "my-collection" get-pipeline)
-        :document-count (mongo-db/count-documents-by-pipeline "my-collection" count-pipeline)}))
+       {:documents      (mongo-db/get-documents-by-pipeline   "my_collection" get-pipeline)
+        :document-count (mongo-db/count-documents-by-pipeline "my_collection" count-pipeline)}))
 
 (defresolver get-items
              ; @param (map) env

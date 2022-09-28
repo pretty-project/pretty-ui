@@ -15,6 +15,7 @@
 (ns x.app-elements.thumbnail.views
     (:require [mid-fruits.css                      :as css]
               [mid-fruits.random                   :as random]
+              [x.app-elements.label.views          :as label.views]
               [x.app-elements.thumbnail.helpers    :as thumbnail.helpers]
               [x.app-elements.thumbnail.prototypes :as thumbnail.prototypes]))
 
@@ -22,6 +23,18 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- thumbnail-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) thumbnail-id
+  ; @param (map) thumbnail-props
+  ;  {}
+  [_ {:keys [helper info-text label required?]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text
+                                  :required? required?}]))
 
 (defn- toggle-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,6 +70,7 @@
   ;  {:on-click (metamorphic-event)(opt)}
   [thumbnail-id {:keys [on-click] :as thumbnail-props}]
   [:div.x-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
+                    [thumbnail-label thumbnail-id thumbnail-props]
                     (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
                           (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props])])
 
@@ -75,6 +89,7 @@
   ;   :height (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
+  ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -84,7 +99,11 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)
   ;   :on-click (metamorphic-event)(opt)
+  ;   :required? (boolean)(opt)
+  ;    Default: false
   ;   :style (map)(opt)
   ;   :uri (string)(opt)
   ;   :width (keyword)(opt)

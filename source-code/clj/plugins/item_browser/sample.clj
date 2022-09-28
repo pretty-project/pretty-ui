@@ -33,10 +33,11 @@
 (a/reg-event-fx
   :init-my-browser!
   [:item-browser/init-browser! :my-browser
-                               {:handler-key    :my-handler
-                                :on-route       [:my-event]
-                                :route-template "/@app-home/my-browser"
-                                :route-title    "My browser"}])
+                               {:collection-name "my_collection"
+                                :handler-key     :my-handler
+                                :on-route        [:my-event]
+                                :route-template  "/@app-home/my-browser"
+                                :route-title     "My browser"}])
 
 
 
@@ -64,7 +65,7 @@
   ; @return (namespaced map)
   [env _]
   (let [item-id (pathom/env->param env :item-id)]
-       (mongo-db/get-document-by-id "my-collection" item-id)))
+       (mongo-db/get-document-by-id "my_collection" item-id)))
 
 ; Az item-browser plugin az egyes elemek böngészésekor, a böngészett elem adatait is letölti ...
 (defresolver get-item

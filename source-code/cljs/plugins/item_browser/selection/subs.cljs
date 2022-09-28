@@ -70,3 +70,15 @@
   ; @return (string)
   [db [_ browser-id]]
   (r selection.subs/export-single-selection db browser-id))
+
+(defn get-imported-selection
+  ; @param (keyword) browser-id
+  ;
+  ; @example
+  ;  (r item-browser/get-imported-selection db :my-browser)
+  ;  =>
+  ;  ["my-item" "your-item"]
+  ;
+  ; @return (strings in vector)
+  [db [_ browser-id]]
+  (r selection.subs/get-imported-selection db browser-id))

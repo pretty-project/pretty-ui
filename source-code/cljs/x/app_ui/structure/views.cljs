@@ -14,7 +14,6 @@
 
 (ns x.app-ui.structure.views
     (:require [x.app-core.api                 :as a :refer [r]]
-              [x.app-ui.background.views      :rename {view app-background}]
               [x.app-ui.bubbles.views         :rename {view app-bubbles}]
               [x.app-ui.locker.views          :rename {view app-locker}]
               [x.app-ui.popups.views          :rename {view app-popups}]
@@ -35,8 +34,7 @@
 (defn- unlocked-ui-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div#x-app-ui-structure ;[app-background]
-                           [app-surface]
+  [:div#x-app-ui-structure [app-surface]
                            [app-popups]
                            [app-bubbles]
                            ;[progress-screen]

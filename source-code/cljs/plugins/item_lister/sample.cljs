@@ -58,7 +58,7 @@
   (let [my-filter-event [:item-lister/filter-items! :my-lister {}]]
        [elements/menu-bar {:menu-items [{:label "My filter" :on-click my-filter-event}]}]))
 
-(defn my-view-with-filters
+(defn my-lister-with-filters
   []
   [:<> [my-filters]
        [item-lister/body :my-lister {}]])
@@ -89,9 +89,9 @@
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-view
+(defn my-lister
   []
-  [:<> [item-lister/body :my-lister {:list-element [:div "My item"]}]])
+  [item-lister/body :my-lister {:list-element [:div "My item"]}])
 
 
 

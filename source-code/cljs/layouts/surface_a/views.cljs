@@ -27,6 +27,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn background
+  []
+  [:div#surface-a--background [:svg {:style {:width "100%" :height "100%"}
+                                     :preserve-aspect-ratio "none"
+                                     :view-box              "0 0 100 100"}
+                                    [:polygon {:points "0,10 0,30 5,75 0,100 10,100 10,70 0,10 5,0 0,0"
+                                               :style  {:fill "var( --app-background-pattern-color )"}}]
+                                    [:polygon {:points "100,90 100,50 95,80 90,100 95,100"
+                                               :style  {:fill "var( --app-background-pattern-color )"}}]
+                                    [:polygon {:points "100,0 100,10 95,5 80,0"
+                                               :style  {:fill "var( --app-background-pattern-color )"}}]]])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn title-sensor
   ; @param (map) sensor-props
   ;  {:offset (px)(opt)
@@ -219,6 +236,7 @@
   ;  {:content (metamorphic-content)}
   [surface-id {:keys [content] :as layout-props}]
   [:div#surface-a (helpers/layout-attributes surface-id layout-props)
+                  [background]
                   [:div#surface-a--header-sensor]
                   [:div#surface-a--body [:div#surface-a--body-content [components/content content]]]
                   [header]

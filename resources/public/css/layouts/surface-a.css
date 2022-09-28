@@ -23,13 +23,24 @@
 /* Surface A */
 
 #surface-a {
-  -background-color: #fdfdfd;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100% }
 
 /* Surface A */
+
+/* Background */
+
+#surface-a--background {
+  background-color: #fdfdfd;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100% }
+
+/* Background */
 
 /* Header */
 

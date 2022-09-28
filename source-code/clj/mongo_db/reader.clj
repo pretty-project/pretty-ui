@@ -346,7 +346,7 @@
   ;  Default: some?
   ;
   ; @example
-  ;  (mongo-db/get-specified-values "my-collection" [:my-key :your-key] string?)
+  ;  (mongo-db/get-specified-values "my_collection" [:my-key :your-key] string?)
   ;  =>
   ;  {:my-key   ["..." "..."]
   ;   :your-key ["..." "..."]}

@@ -35,12 +35,12 @@
   ;   :idle-timeout (ms)(opt)
   ;    Default: pathom.config/DEFAULT-IDLE-TIMEOUT
   ;   :on-failure (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-sent (metamorphic-event)(opt)
   ;   :on-stalled (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :on-success (metamorphic-event)(opt)
-  ;    Az esemény-vektor utolsó paraméterként megkapja a szerver-válasz értékét.
+  ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)
   ;    Only w/o {:body {...}}
   ;   :uri (string)

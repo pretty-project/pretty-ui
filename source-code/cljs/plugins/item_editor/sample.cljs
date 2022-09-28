@@ -31,7 +31,7 @@
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-view
+(defn my-editor
   []
   [item-editor/body :my-editor {:form-element [:div "My form"]}])
 
@@ -89,7 +89,7 @@
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-viewer plugin body komponensének {:query [...]} tulajdonságaként
+; Az item-editor plugin body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
 ; összefűzve kerül elküldésre.
 (defn my-query

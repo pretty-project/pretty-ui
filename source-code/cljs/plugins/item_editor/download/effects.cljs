@@ -48,6 +48,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
+  ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; Ha az [:item-editor/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.

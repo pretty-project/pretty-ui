@@ -76,6 +76,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
+  ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id server-response]]
       ; Ha az [:item-browser/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.

@@ -58,7 +58,8 @@
   ; @return (map)
   [db [_ viewer-id server-response]]
   ; XXX#3907
-  ; Az item-lister pluginnal megegyezően az item-viewer plugin is névtér nélkül tárolja a letöltött dokumentumot.
+  ; A többi pluginnal megegyezően az item-viewer plugin is névtér nélkül
+  ; tárolja a letöltött dokumentumot.
   (let [resolver-id (r download.subs/get-resolver-id db viewer-id :get-item)
         item-path   (r body.subs/get-body-prop       db viewer-id :item-path)
         document    (-> server-response resolver-id map/remove-namespace)]

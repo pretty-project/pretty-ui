@@ -53,7 +53,7 @@
   ; @return (map)
   [db [_ editor-id server-response]]
   ; - XXX#3907
-  ;   Az item-lister pluginnal megegyezően az file-editor plugin is névtér nélkül
+  ;   A többi pluginnal megegyezően az file-editor plugin is névtér nélkül
   ;   tárolja a letöltött tartalmat.
   ;
   ; - XXX#3400
