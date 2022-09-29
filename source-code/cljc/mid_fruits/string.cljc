@@ -43,6 +43,25 @@
   (and      (string? n)
        (not (empty?  n))))
 
+(defn use-nil
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (string/use-nil "")
+  ;  =>
+  ;  nil
+  ;
+  ; @example
+  ;  (string/use-nil "abc")
+  ;  =>
+  ;  "abc"
+  ;
+  ; @return (boolean)
+  [n]
+  (if (empty? n)
+      (return nil)
+      (return n)))
+
 (defn get-nth-character
   ; @param (string) n
   ; @param (integer) dex
@@ -141,7 +160,7 @@
 
 (defn min-length?
   ; @param (string) n
-  ; @param (integer) x
+  ; @param (integer) min
   ;
   ; @example
   ;  (string/min-length? "abc" 3)
@@ -154,14 +173,14 @@
   ;  false
   ;
   ; @return (boolean)
-  [n x]
+  [n min]
   (and     (string?  n)
-           (integer? x)
-       (>= (length   n) x)))
+           (integer? min)
+       (>= (length   n) min)))
 
 (defn max-length?
   ; @param (string) n
-  ; @param (integer) x
+  ; @param (integer) max
   ;
   ; @example
   ;  (string/max-length? "abc" 3)
@@ -174,10 +193,10 @@
   ;  false
   ;
   ; @return (boolean)
-  [n x]
+  [n max]
   (and     (string?  n)
-           (integer? x)
-       (<= (length   n) x)))
+           (integer? max)
+       (<= (length   n) max)))
 
 (defn length?
   ; @param (string) n
@@ -437,6 +456,49 @@
   [n x y]
   (-> n (after-first-occurence x)
         (before-last-occurence y)))
+
+(defn count-occurences
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @example
+  ;  (string/count-occurences "abca" "a")
+  ;  =>
+  ;  2
+  ;
+  ; @return (integer)
+  [n x]
+  (if (nonempty? n)
+      (get (frequencies n) x)
+      (return 0)))
+
+(defn min-occurence?
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (integer) min
+  ;
+  ; @example
+  ;  (string/min-occurence? "abca" "a" 2)
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (string/min-occurence? "abca" "b" 2)
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n x min]
+  (let [occurence-count (count-occurences n x)]
+       (<= min occurence-count)))
+
+(defn max-occurence?
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (integer) max
+  ;
+  ; @return (boolean)
+  [n x max])
 
 (defn ends-with?
   ; @param (string) n

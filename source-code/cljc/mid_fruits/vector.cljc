@@ -1533,6 +1533,11 @@
   ;  true
   ;
   ; @example
+  ;  (vector/compared-items-ordered? [] [] <)
+  ;  =>
+  ;  true
+  ;
+  ; @example
   ;  (vector/compared-items-ordered? ["a" "b" "c"] ["d" "a"] string/abc?)
   ;  =>
   ;  true
@@ -1565,7 +1570,9 @@
                                                       (compared-items-ordered-f (inc dex)))
                                                   ; If the compared items are NOT equal ...
                                                   (comparator-f x y))))]
-              (compared-items-ordered-f 0))))
+              ; Ha a max-count értéke 0, akkor mind a két vektor üres.
+              (case max-count 0 (return true)
+                                (compared-items-ordered-f 0)))))
 
 
 

@@ -297,6 +297,9 @@
   ;   :border-color (keyword or string)(opt)
   ;    :default, :primary, :secondary, :success, :warning
   ;    Default: :default
+  ;   :border-radius (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :none
+  ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)
   ;    Default: false

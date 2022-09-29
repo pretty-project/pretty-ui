@@ -97,7 +97,7 @@
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-radius (keyword)(opt)
-  ;    :none, :xxs, :xs, :s, :m, :l
+  ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)

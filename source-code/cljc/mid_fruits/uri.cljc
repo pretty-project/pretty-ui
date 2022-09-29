@@ -19,43 +19,105 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn valid-path
-  ; @param (string) path
+(defn uri->protocol
+  ; @param (string) uri
   ;
   ; @example
-  ;  (uri/valid-path "my-route")
+  ;  (uri/uri->protocol "https://my-domain.com/my-path")
   ;  =>
-  ;  "/my-route"
+  ;  "https"
   ;
   ; @example
-  ;  (uri/valid-path "/my-route")
+  ;  (uri/uri->protocol "my-domain.com/my-path")
   ;  =>
-  ;  "/my-route"
-  ;
-  ; @example
-  ;  (uri/valid-path "/my-route/")
-  ;  =>
-  ;  "/my-route"
+  ;  ""
   ;
   ; @return (string)
-  [path]   ; 1.
-  (-> path (string/not-ends-with! "/")
-           ; 2.
-           (string/starts-with!   "/")))
+  [uri]
+  (string/before-first-occurence uri "://"))
+
+(defn uri->domain
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (uri/uri->tld "https://my-domain.com/my-path")
+  ;  =>
+  ;  "my-domain.com"
+  ;
+  ; @return (string)
+  [uri]
+  (let [protocol (uri->protocol uri)]
+       (if (string/nonempty? protocol)
+           (-> uri (string/after-first-occurence  "://")
+                   (string/before-first-occurence "/"))
+           (-> uri (string/before-first-occurence "/")))))
+
+(defn uri->subdomain
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (uri/uri->tld "https://subdomain.my-domain.com/my-path")
+  ;  =>
+  ;  "subdomain"
+  ;
+  ; @return (string)
+  [uri]
+  (let [domain (uri->domain uri)]
+       (if (and (string/nonempty?      domain)
+                (string/min-occurence? domain "." 2))
+           (string/before-first-occurence domain "."))))
+
+(defn uri->tld
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (uri/uri->tld "https://my-domain.com/my-path")
+  ;  =>
+  ;  "com"
+  ;
+  ; @return (string)
+  [uri]
+  (let [domain (uri->domain uri)]
+       (if (string/nonempty?            domain)
+           (string/after-last-occurence domain "."))))
+
+(defn uri->tail
+  ; @param (string) uri
+  ;
+  ; @example
+  ;  (uri/uri->tail "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
+  ;  =>
+  ;  "my-param=my-value&your-param#my-fragment"
+  ;
+  ; @example
+  ;  (uri/uri->tail "https://my-domain.com/my-path#my-fragment")
+  ;  =>
+  ;  "d"
+  ;
+  ; @example
+  ;  (uri/uri->tail "https://my-domain.com/my-path")
+  ;  =>
+  ;  ""
+  ;
+  ; @return (string)
+  [uri]
+  (if (string/contains-part?        uri "?")
+      (string/after-first-occurence uri "?")
+      (string/after-first-occurence uri "#")))
 
 (defn uri->parent-uri
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->parent-uri "/scooby/doo")
+  ;  (uri/uri->parent-uri "/my-path/your-path")
   ;  =>
-  ;  "/scooby"
+  ;  "/my-path"
   ;
   ; @example
-  ;  (uri/uri->parent-uri "/scooby")
+  ;  (uri/uri->parent-uri "/my-path")
   ;  =>
   ;  "/"
   ;
@@ -69,46 +131,30 @@
   (-> uri (string/before-last-occurence "/")
           (string/starts-with!          "/")))
 
-(defn uri->protocol
+(defn uri->local-uri
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->protocol "https://something.com/scooby-doo")
+  ;  (uri/uri->local-uri "my-domain.com/my-path?my-param#my-fragment")
   ;  =>
-  ;  "https"
+  ;  "/my-path?my-param#my-fragment"
   ;
   ; @example
-  ;  (uri/uri->protocol "something.com/scooby-doo")
+  ;  (uri/uri->local-uri "/my-path")
   ;  =>
-  ;  ""
+  ;  "/my-path"
+  ;
+  ; @example
+  ;  (uri/uri->local-uri "/")
+  ;  =>
+  ;  "/"
   ;
   ; @return (string)
   [uri]
-  (string/before-first-occurence uri "://"))
-
-(defn uri->tail
-  ; @param (string) uri
-  ;
-  ; @example
-  ;  (uri/uri->tail "https://something.com/scooby-doo?a=b&c#d")
-  ;  =>
-  ;  "a=b&c#d"
-  ;
-  ; @example
-  ;  (uri/uri->tail "https://something.com/scooby-doo#d")
-  ;  =>
-  ;  "d"
-  ;
-  ; @example
-  ;  (uri/uri->tail "https://something.com/scooby-doo")
-  ;  =>
-  ;  ""
-  ;
-  ; @return (string)
-  [uri]
-  (if (string/contains-part?        uri "?")
-      (string/after-first-occurence uri "?")
-      (string/after-first-occurence uri "#")))
+  (let [domain (uri->domain uri)]
+       (if (string/nonempty?                domain)
+           (string/after-last-occurence uri domain)
+           (return                      uri))))
 
 (defn- uri->trimmed-uri
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,9 +162,9 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->trimmed-uri "https://something.com/scooby-doo?a=b&c&d")
+  ;  (uri/uri->trimmed-uri "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;  =>
-  ;  "something.com/scooby-doo"
+  ;  "my-domain.com/my-path"
   ;
   ; @return (string)
   [uri]
@@ -131,17 +177,17 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->path "https://something.com/scooby-doo?a=b&c")
+  ;  (uri/uri->path "https://my-domain.com/my-path?my-param=my-value&your-param")
   ;  =>
-  ;  "/scooby-doo"
+  ;  "/my-path"
   ;
   ; @example
-  ;  (uri/uri->path "https://something.com/?a=b&c")
+  ;  (uri/uri->path "https://my-domain.com/?my-param=my-value&your-param")
   ;  =>
   ;  "/"
   ;
   ; @example
-  ;  (uri/uri->path "https://something.com?a=b&c")
+  ;  (uri/uri->path "https://my-domain.com?my-param=my-value&your-param")
   ;  =>
   ;  "/"
   ;
@@ -158,14 +204,14 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->trimmed-path "https://something.com/scooby-doo?a=b&c")
+  ;  (uri/uri->trimmed-path "https://my-domain.com/my-path?my-param=my-value&your-param")
   ;  =>
-  ;  "scooby-doo"
+  ;  "my-path"
   ;
   ; @example
-  ;  (uri/uri->trimmed-path "https://something.com/scooby-doo/")
+  ;  (uri/uri->trimmed-path "https://my-domain.com/my-path/")
   ;  =>
-  ;  "scooby-doo"
+  ;  "my-path"
   ;
   ; @return (string)
   [uri]
@@ -177,17 +223,17 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->path-parts "https://something.com/scooby-doo?a=b&c")
+  ;  (uri/uri->path-parts "https://my-domain.com/my-path?my-param=my-value&your-param")
   ;  =>
-  ;  ["scooby-doo"]
+  ;  ["my-path"]
   ;
   ; @example
-  ;  (uri/uri->path-parts "https://something.com/scooby-doo/where-are-you")
+  ;  (uri/uri->path-parts "https://my-domain.com/my-path/your-path")
   ;  =>
-  ;  ["scooby-doo" "where-are-you"]
+  ;  ["my-path" "your-path"]
   ;
   ; @example
-  ;  (uri/uri->path-parts "https://something.com/")
+  ;  (uri/uri->path-parts "https://my-domain.com/")
   ;  =>
   ;  []
   ;
@@ -201,25 +247,25 @@
   ; @param (string) template
   ;
   ; @example
-  ;  (uri/uri->path-params "https://something.com/scooby-doo/where-are-you"
+  ;  (uri/uri->path-params "https://my-domain.com/my-path/your-path"
   ;                        "/:a/:b")
   ;  =>
-  ;  {:a "scooby-doo" :b "where-are-you"}
+  ;  {:a "my-path" :b "your-path"}
   ;
   ; @example
-  ;  (uri/uri->path-params "https://something.com/scooby-doo/where-are-you"
+  ;  (uri/uri->path-params "https://my-domain.com/my-path/your-path"
   ;                        "/:a/b")
   ;  =>
-  ;  {:a "scooby-doo"}
+  ;  {:a "my-path"}
   ;
   ; @example
-  ;  (uri/uri->path-params "/scooby-doo/where-are-you"
+  ;  (uri/uri->path-params "/my-path/your-path"
   ;                        "/:a/:b")
   ;  =>
-  ;  {:a "scooby-doo" :b "where-are-you"}
+  ;  {:a "my-path" :b "your-path"}
   ;
   ; @example
-  ;  (uri/uri->path-params "/scooby-doo/where-are-you"
+  ;  (uri/uri->path-params "/my-path/your-path"
   ;                        "/a/b")
   ;  =>
   ;  {}
@@ -240,12 +286,12 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->fragment "https://something.com/scooby-doo?a=b&c#d")
+  ;  (uri/uri->fragment "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;  =>
-  ;  "d"
+  ;  "my-fragment"
   ;
   ; @example
-  ;  (uri/uri->fragment "https://something.com/scooby-doo?a=b&c")
+  ;  (uri/uri->fragment "https://my-domain.com/my-path?my-param=my-value&your-param")
   ;  =>
   ;  ""
   ;
@@ -257,14 +303,14 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->uri-before-fragment "https://something.com/scooby-doo?a=b&c#d")
+  ;  (uri/uri->uri-before-fragment "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;  =>
-  ;  "https://something.com/scooby-doo?a=b&c"
+  ;  "https://my-domain.com/my-path?my-param=my-value&your-param"
   ;
   ; @example
-  ;  (uri/uri->uri-before-fragment "https://something.com/scooby-doo?a=b&c")
+  ;  (uri/uri->uri-before-fragment "https://my-domain.com/my-path?my-param=my-value&your-param")
   ;  =>
-  ;  "https://something.com/scooby-doo?a=b&c"
+  ;  "https://my-domain.com/my-path?my-param=my-value&your-param"
   ;
   ; @return (string)
   [uri]
@@ -276,12 +322,12 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->query-string "https://something.com/scooby-doo?a=b&c#d")
+  ;  (uri/uri->query-string "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;  =>
-  ;  "a=b&c"
+  ;  "my-param=my-value&your-param"
   ;
   ; @example
-  ;  (uri/uri->query-string "https://something.com/scooby-doo#d")
+  ;  (uri/uri->query-string "https://my-domain.com/my-path#my-fragment")
   ;  =>
   ;  ""
   ;
@@ -295,12 +341,12 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (uri/uri->query-params "http://something.com/scooby-doo?a=b&c#d")
+  ;  (uri/uri->query-params "http://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;   =>
   ;  {:a "b" :c nil}
   ;
   ; @example
-  ;  (uri/uri->query-params "http://something.com/scooby-doo#d")
+  ;  (uri/uri->query-params "http://my-domain.com/my-path#my-fragment")
   ;   =>
   ;  {}
   ;
@@ -317,9 +363,9 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (uri/string->uri "something.com/scooby doo?where are you")
+  ;  (uri/string->uri "my-domain.com/my path?my param")
   ;  =>
-  ;  "something.com/scooby%20doo?where%20are%20you"
+  ;  "my-domain.com/my%20path?my%20param"
   ;
   ; @return (string)
   [n]
@@ -330,9 +376,9 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (uri/string->uri "something.com/scooby doo?where are you")
+  ;  (uri/string->uri "my-domain.com/my path?my param")
   ;  =>
-  ;  "something.com%2Fscooby%20doo%3Fwhere%20are%20you"
+  ;  "my-domain.com%2Fmy%20path%3Fmy%20param"
   ;
   ; @return (string)
   [n]
@@ -344,24 +390,24 @@
   ; @param (string) query-param
   ;
   ; @example
-  ;  (uri/uri<-query-param "something.com/scooby-doo" "where")
+  ;  (uri/uri<-query-param "my-domain.com/my-path" "my-param")
   ;  =>
-  ;  "something.com/scooby-doo?where"
+  ;  "my-domain.com/my-path?my-param"
   ;
   ; @example
-  ;  (uri/uri<-query-param "something.com/scooby-doo" "where=are")
+  ;  (uri/uri<-query-param "my-domain.com/my-path" "my-param=my-value")
   ;  =>
-  ;  "something.com/scooby-doo?where=are"
+  ;  "my-domain.com/my-path?my-param=my-value"
   ;
   ; @example
-  ;  (uri/uri<-query-param "something.com/scooby-doo#you" "where")
+  ;  (uri/uri<-query-param "my-domain.com/my-path#my-fragment" "my-param")
   ;  =>
-  ;  "something.com/scooby-doo?where#you"
+  ;  "my-domain.com/my-path?my-param#my-fragment"
   ;
   ; @example
-  ;  (uri/uri<-query-param "something.com/scooby-doo?you" "where=are")
+  ;  (uri/uri<-query-param "my-domain.com/my-path?my-param" "your-param=your-value")
   ;  =>
-  ;  "something.com/scooby-doo?you&where=are"
+  ;  "my-domain.com/my-path?my-param&your-param=your-value"
   ;
   ; @return (string)
   [uri query-param]
@@ -392,8 +438,8 @@
   ; @param (string) template
   ;
   ; @example
-  ;  (uri/path->match-template? "/scooby-doo/where-are-you"
-  ;                             "/scooby-doo/:my-param")
+  ;  (uri/path->match-template? "/my-path/my-value"
+  ;                             "/my-path/:my-param")
   ;  =>
   ;  true
   ;
@@ -421,3 +467,62 @@
               (boolean (if ; Ha a path-parts és template-parts vektorok elemeinek száma megegyezik ...
                            (= path-parts-count template-parts-count)
                            (f 0))))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn valid-uri
+  ; @param (string) uri
+  ; @param (string)(opt) protocol
+  ;  Default: "https"
+  ;
+  ; @example
+  ;  (uri/valid-uri "my-domain.com")
+  ;  =>
+  ;  "https://my-domain.com"
+  ;
+  ; @example
+  ;  (uri/valid-uri "my-domain.com/")
+  ;  =>
+  ;  "https://my-domain.com"
+  ;
+  ; @example
+  ;  (uri/valid-uri "http://my-domain.com")
+  ;  =>
+  ;  "http://my-domain.com"
+  ;
+  ; @return (string)
+  ([uri]
+   (valid-uri uri "https://"))
+
+  ([uri protocol]
+   (let [protocol (uri->protocol uri)]
+        (if (string/nonempty? protocol)
+            (string/not-ends-with! uri "/")
+            (str protocol "://" (string/not-ends-with! uri "/"))))))
+
+(defn valid-path
+  ; @param (string) path
+  ;
+  ; @example
+  ;  (uri/valid-path "my-path")
+  ;  =>
+  ;  "/my-path"
+  ;
+  ; @example
+  ;  (uri/valid-path "/my-path")
+  ;  =>
+  ;  "/my-path"
+  ;
+  ; @example
+  ;  (uri/valid-path "/my-path/")
+  ;  =>
+  ;  "/my-path"
+  ;
+  ; @return (string)
+  [path]   ; 1.
+  (-> path (string/not-ends-with! "/")
+           ; 2.
+           (string/starts-with!   "/")))

@@ -26,6 +26,15 @@
            :company-name
            {:en "Company name"
             :hu "Cégnév"}
+           :company-logo-placeholder
+           {:en "The company's logo"
+            :hu "A cég logója"}
+           :company-name-placeholder
+           {:en "The company's name"
+            :hu "A cég neve"}
+           :company-slogan-placeholder
+           {:en "The company's slogan"
+            :hu "A cég szlogenje"}
            :logo
            {:en "Logo"
             :hu "Logó"}
@@ -34,13 +43,4 @@
             :hu "Logo kiválasztása"}
            :slogan
            {:en "Slogan"
-            :hu "Szlogen"}
-           :the-companys-logo
-           {:en "The company's logo"
-            :hu "A cég logója"}
-           :the-companys-name
-           {:en "The company's name"
-            :hu "A cég neve"}
-           :the-companys-slogan
-           {:en "The company's slogan"
-            :hu "A cég szlogenje"}})
+            :hu "Szlogen"}})

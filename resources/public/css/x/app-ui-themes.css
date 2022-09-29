@@ -59,7 +59,7 @@ body[data-theme="dark"] {
 body[data-theme="light"] {
   /* App background */
   --app-background-color:         var( --white );
-  --app-background-pattern-color: var( --white-light );
+  --app-background-pattern-color: var( --white-x-light );
   /* App overlay */
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
@@ -78,7 +78,7 @@ body[data-theme="light"] {
   /* Border color */
   --border-color:               var( --grey-x-light );
   --border-color-muted:         var( --grey-xx-light );
-  --border-color-highlight:     var( --white-xx-dark );
+  --border-color-highlight:     var( --white );
   --border-color-primary:       var( --hard-blue );
   --border-color-secondary:     var( --hard-purple );
   --border-color-success:       var( --soft-green );

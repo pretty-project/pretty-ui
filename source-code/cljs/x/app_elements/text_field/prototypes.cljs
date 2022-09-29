@@ -47,6 +47,7 @@
   ;
   ; @return (map)
   ;  {:autofill-name (keyword)
+  ;   :border-radius (keyword)
   ;   :field-content-f (function)
   ;   :field-value-f (function)
   ;   :min-width (keyword)
@@ -67,6 +68,7 @@
   ; akkor az egy véletlenszerűen generált értéket fog kapni, amihez az autofill
   ; funkció nem fog ajánlani értékeket.
   (merge {:autofill-name   (random/generate-keyword)
+          :border-radius   :s
           :field-content-f return
           :field-value-f   return
           :min-width       :xxs

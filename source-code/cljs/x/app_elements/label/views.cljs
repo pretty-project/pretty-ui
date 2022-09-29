@@ -122,7 +122,8 @@
   ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
   ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
   [:div.x-label--body (label.helpers/label-body-attributes label-id label-props)
-                      (if (-> content components/content empty?)
+                      ; BUG#3400
+                      (if (-> content components/content str empty?)
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]

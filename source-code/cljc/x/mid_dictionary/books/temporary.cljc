@@ -136,11 +136,18 @@
             :hu "További műveletek"}
            :more-info
            {:en "More info"
-            :hu "További adatok"}
-
-           :basic-info
-           {:en "Basic info"
+            :hu "További információ"}
+           :basic-data
+           {:en "Basic data"
             :hu "Alapvető adatok"}
+
+           :billing-data
+           {:en "Billing data"
+            :hu "Számlázási adatok"}
+           :company-data
+           {:en "Company data"
+            :hu "Cég adatok"}
+
            :tutorial
            {:en "Tutorial"
             :hu "Bevezető"}

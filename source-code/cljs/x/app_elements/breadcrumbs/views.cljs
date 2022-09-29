@@ -33,7 +33,8 @@
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:div.x-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                             (if (-> label       components/content empty?)
+                             ; BUG#3400
+                             (if (-> label       components/content str empty?)
                                  (-> placeholder components/content)
                                  (-> label       components/content))])
 
@@ -47,7 +48,8 @@
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:button.x-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                                (if (-> label       components/content empty?)
+                                ; BUG#3400
+                                (if (-> label       components/content str empty?)
                                     (-> placeholder components/content)
                                     (-> label       components/content))])
 

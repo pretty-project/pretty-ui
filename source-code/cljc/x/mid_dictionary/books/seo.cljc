@@ -23,25 +23,25 @@
 (def BOOK {:meta-description
            {:en "Meta description"
             :hu "Meta leírás"}
-           :meta-description-eg
+           :meta-description-placeholder
            {:en "Selling things, making things, doing things ..."
             :hu "Dolgok értékesítése, elkészítése, javítása ..."}
            :meta-keywords
            {:en "Meta keywords"
             :hu "Meta kulcsszavak"}
-           :meta-keywords-eg
+           :meta-keywords-placeholder
            {:en "selling, making, doing"
             :hu "értékesítés, készítés, javítás"}
            :meta-name
            {:en "Meta name"
             :hu "Meta név"}
-           :meta-name-eg
+           :meta-name-placeholder
            {:en "Mysite.com"
             :hu "Oldalam.hu"}
            :meta-title
            {:en "Meta title"
             :hu "Meta cím"}
-           :meta-title-eg
+           :meta-title-placeholder
            {:en "Mysite.com – This is what we do"
             :hu "Oldalam.hu – Ezzel foglalkozunk"}
            :seo

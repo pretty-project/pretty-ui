@@ -35,15 +35,21 @@
            :address-data
            {:en "Address data"
             :hu "Cím adatok"}
-           :address-eg
+           :address-placeholder
+           {:en "537 Paper Street"
+            :hu "Minta utca 123."}
+           :full-address-placeholder
            {:en "537 Paper Street, Bradford, 19806"
             :hu "1025 Budapest, Minta utca 123."}
-           :address-label-eg
+           :address-label-placeholder
            {:en "Office"
             :hu "Iroda"}
            :city
            {:en "City"
             :hu "Város"}
+           :city-placeholder
+           {:en "Bradford"
+            :hu "Budapest"}
            :contacts
            {:en "Contacts"
             :hu "Kapcsolat"}
@@ -51,7 +57,7 @@
            {:en "Contacts data"
             :hu "Kapcsolati adatok"}
            ; Egy kapcsolati adathoz (telefonszám, email-cím) tartozó címke leírása
-           :contacts-label-eg
+           :contacts-label-placeholder
            {:en "Webshop"
             :hu "Webáruház"}
            :country
@@ -66,12 +72,15 @@
            :email-addresses
            {:en "Email addresses"
             :hu "Email címek"}
-           :email-address-eg
+           :email-address-placeholder
            {:en "email@mysite.com"
             :hu "email@oldalam.hu"}
            :first-name
            {:en "First name"
             :hu "Keresztnév"}
+           :first-name-placeholder
+           {:en "Peter"
+            :hu "Péter"}
            :google-maps-link
            {:en "Google Maps link"
             :hu "Google Térkép hivatkozás"}
@@ -81,6 +90,9 @@
            :last-name
            {:en "Last name"
             :hu "Vezetéknév"}
+           :last-name-placeholder
+           {:en "Sample"
+            :hu "Minta"}
            :name
            {:en "Name"
             :hu "Név"}
@@ -99,7 +111,7 @@
            :phone-numbers
            {:en "Phone numbers"
             :hu "Telefonszámok"}
-           :phone-number-eg
+           :phone-number-placeholder
            {:en "+3630 123 4567"
             :hu "+3630 123 4567"}
            :site
@@ -114,6 +126,12 @@
            :vat-no
            {:en "VAT number"
             :hu "Adószám"}
+           :vat-no-placeholder
+           {:en "xx00000000"
+            :hu "00000000-0-00"}
            :zip-code
            {:en "ZIP code"
-            :hu "Irányítószám"}})
+            :hu "Irányítószám"}
+           :zip-code-placeholder
+           {:en "19806"
+            :hu "1025"}})

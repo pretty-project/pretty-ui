@@ -65,7 +65,12 @@
   [text-id {:keys [content] :as text-props}]
   ; XXX#9811
   [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
-                     (if (-> content components/content empty?)
+                     ; BUG#3400
+                     ; Az empty? függvény alkalmazása előtt az str függvényt
+                     ; szükséges használni, különben ha a components/content
+                     ; függvény kimenete integer típusú, akkor az empty?
+                     ; függvény hibát dob!
+                     (if (-> content components/content str empty?)
                          [text-placeholder text-id text-props]
                          [text-content     text-id text-props])])
 

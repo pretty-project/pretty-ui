@@ -1383,6 +1383,7 @@ body {
 .x-ghost[data-border-radius="xxs"] .x-ghost--body,
 .x-icon-button[data-border-radius="xxs"] .x-icon-button--body::before,
 .x-select[data-border-radius="xxs"] .x-select--button-body,
+.x-text-field[data-border-radius="xxs"] .x-text-field--input-container,
 .x-thumbnail[data-border-radius="xxs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xxs"] .x-toggle--body {
   border-radius: var( --border-radius-xxs ) }
@@ -1399,6 +1400,7 @@ body {
 .x-ghost[data-border-radius="xs"] .x-ghost--body,
 .x-icon-button[data-border-radius="xs"] .x-icon-button--body::before,
 .x-select[data-border-radius="xs"] .x-select--button-body,
+.x-text-field[data-border-radius="xs"] .x-text-field--input-container,
 .x-thumbnail[data-border-radius="xs"] .x-thumbnail--body,
 .x-toggle[data-border-radius="xs"] .x-toggle--body {
   border-radius: var( --border-radius-xs ) }
@@ -1415,6 +1417,7 @@ body {
 .x-ghost[data-border-radius="s"] .x-ghost--body,
 .x-icon-button[data-border-radius="s"] .x-icon-button--body::before,
 .x-select[data-border-radius="s"] .x-select--button-body,
+.x-text-field[data-border-radius="s"] .x-text-field--input-container,
 .x-thumbnail[data-border-radius="s"] .x-thumbnail--body,
 .x-toggle[data-border-radius="s"] .x-toggle--body {
   border-radius: var( --border-radius-s ) }
@@ -1431,6 +1434,7 @@ body {
 .x-ghost[data-border-radius="m"] .x-ghost--body,
 .x-icon-button[data-border-radius="m"] .x-icon-button--body::before,
 .x-select[data-border-radius="m"] .x-select--button-body,
+.x-text-field[data-border-radius="m"] .x-text-field--input-container,
 .x-thumbnail[data-border-radius="m"] .x-thumbnail--body,
 .x-toggle[data-border-radius="m"] .x-toggle--body {
   border-radius: var( --border-radius-m ) }
@@ -1447,6 +1451,7 @@ body {
 .x-ghost[data-border-radius="l"] .x-ghost--body,
 .x-icon-button[data-border-radius="l"] .x-icon-button--body::before,
 .x-select[data-border-radius="l"] .x-select--button-body,
+.x-text-field[data-border-radius="l"] .x-text-field--input-container,
 .x-thumbnail[data-border-radius="l"] .x-thumbnail--body,
 .x-toggle[data-border-radius="l"] .x-toggle--body {
   border-radius: var( --border-radius-l ) }
@@ -1456,7 +1461,8 @@ body {
 /*** XL ***/
 
 .x-button--body[data-border-radius="xl"] {
-/* A button elem magassága 36px, ezért nem használható {:border-radius :xl} beállítással! */ }
+  border-radius: var( --border-radius-xl );
+  padding: 0 var( --border-radius-xl ) }
 
 .x-card[data-border-radius="xl"] .x-card--body,
 .x-ghost[data-border-radius="xl"] .x-ghost--body,
@@ -1470,7 +1476,8 @@ body {
 /*** XXL ***/
 
 .x-button--body[data-border-radius="xxl"] {
-/* A button elem magassága 36px, ezért nem használható {:border-radius :xxl} beállítással! */ }
+  border-radius: var( --border-radius-xxl );
+  padding: 0 var( --border-radius-xxl ) }
 
 .x-card[data-border-radius="xxl"] .x-card--body,
 .x-ghost[data-border-radius="xxl"] .x-ghost--body,
@@ -3413,7 +3420,6 @@ body {
 .x-text-field--input-container {
   background-color: var( --fill-color );
   border-color: var( --border-color-highlight );
-  border-radius: var( --border-radius-s );
   border-style: solid;
   border-width: 1px;
   /* A {padding: 1px} beállítás használatával a text-field elem más elemekhez hasonlóan 36px

@@ -3,13 +3,14 @@
 ; az applikációt!
 ;
 ; @param (map) app-config
-;  {:author (string)
+;  {:app-domain (string)
 ;   :app-home (string)
 ;   :app-languages (keywords in vector)
 ;   :app-themes (maps in vector)
 ;    [{:name (metamorphic-content)
 ;      :id (keyword)}]
 ;   :app-title (string)
+;   :author (string)
 ;   :css-paths (maps in vector)
 ;    [{:core-js (string)(opt)
 ;       A fájl kiszolgálása hozzárendelhető egy megadott kliensfájlhoz.
@@ -41,12 +42,13 @@
 ;                     {:uri "https://external-plugin.com/plugin.js"}]}
 
 {; App details
- :author        "Bit Handshake"
+ :app-domain    "https://my-app.com"
  :app-home      "/admin"
  :app-languages [:en :hu]
  :app-themes    [{:id :light :name :light-theme}
                  {:id :dark  :name :dark-theme}]
  :app-title     "x4"
+ :author        "Bit Handshake"
 
  ; Browser details
  :theme-color "#111111"

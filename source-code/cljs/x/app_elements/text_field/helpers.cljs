@@ -218,12 +218,13 @@
   ;
   ; @return (map)
   ;  {}
-  [field-id {:keys [border-color min-width stretch-orientation] :as field-props}]
+  [field-id {:keys [border-color border-radius min-width stretch-orientation] :as field-props}]
   (let [any-warning? @(a/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (element.helpers/element-default-attributes field-id field-props)
               (element.helpers/element-indent-attributes  field-id field-props)
               (element.helpers/apply-color {} :border-color :data-border-color border-color)
-              {:data-min-width           min-width
+              {:data-border-radius       border-radius
+               :data-min-width           min-width
                :data-stretch-orientation stretch-orientation}
               (if any-warning? {:data-border-color :warning}))))
 

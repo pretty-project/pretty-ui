@@ -47,6 +47,8 @@
 ; x.server-router.route-handler.subs
 (def get-app-home       route-handler.subs/get-app-home)
 (def use-app-home       route-handler.subs/use-app-home)
+(def get-app-domain     route-handler.subs/get-app-domain)
+(def use-app-domain     route-handler.subs/use-app-domain)
 (def get-sitemap-routes route-handler.subs/get-sitemap-routes)
 (def get-client-routes  route-handler.subs/get-client-routes)
 (def get-server-routes  route-handler.subs/get-server-routes)

@@ -16,7 +16,8 @@
     (:require [mid-fruits.random                     :as random]
               [mid-fruits.vector                     :as vector]
               [x.app-elements.color-stamp.helpers    :as color-stamp.helpers]
-              [x.app-elements.color-stamp.prototypes :as color-stamp.prototypes]))
+              [x.app-elements.color-stamp.prototypes :as color-stamp.prototypes]
+              [x.app-elements.label.views            :as label.views]))
 
 
 
@@ -46,6 +47,17 @@
   [:div.x-color-stamp--body (color-stamp.helpers/stamp-body-attributes stamp-id stamp-props)
                             [color-stamp-colors                        stamp-id stamp-props]])
 
+(defn- color-stamp-label
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) stamp-id
+  ; @param (map) stamp-props
+  ;  {}
+  [_ {:keys [helper info-text label]}]
+  (if label [label.views/element {:content   label
+                                  :helper    helper
+                                  :info-text info-text}]))
+
 (defn color-stamp
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -53,6 +65,7 @@
   ; @param (map) stamp-props
   [stamp-id stamp-props]
   [:div.x-color-stamp (color-stamp.helpers/stamp-attributes stamp-id stamp-props)
+                      [color-stamp-label                    stamp-id stamp-props]
                       [color-stamp-body                     stamp-id stamp-props]])
 
 (defn element
@@ -63,6 +76,8 @@
   ;    []
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :helper (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -72,6 +87,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;   :label (metamorphic-content)(opt)
   ;   :size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :s
