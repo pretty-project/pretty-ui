@@ -38,12 +38,15 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {}
+  ;  {:size (keyword)
+  ;   :style (map)}
   ;
   ; @return (map)
-  ;  {}
-  [_ {:keys [style]}]
-  {:style style})
+  ;  {:data-size (keyword)
+  ;   :style (map)}
+  [_ {:keys [size style]}]
+  {:data-size size
+   :style     style})
 
 (defn stamp-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,7 +57,6 @@
   ;
   ; @return (map)
   ;  {}
-  [stamp-id {:keys [size] :as stamp-props}]
+  [stamp-id stamp-props]
   (merge (element.helpers/element-default-attributes stamp-id stamp-props)
-         (element.helpers/element-indent-attributes  stamp-id stamp-props)
-         {:data-size size}))
+         (element.helpers/element-indent-attributes  stamp-id stamp-props)))

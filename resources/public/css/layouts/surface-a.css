@@ -55,7 +55,7 @@
 #surface-a--header-shadow {
   animation-fill-mode: both;
   animation-duration: .25s;
-  background-color: var( --app-background-color );
+  background-color: var( --fill-color );
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   -box-shadow: 0 0 12px 0 #e0e1e2;
   border-color: var( --border-color-highlight );
@@ -143,6 +143,7 @@
   flex-direction: column;
   justify-content: flex-end;
   padding-bottom: 12px;
+  padding-bottom: 24px;
   padding-top: 48px }
 
 #surface-a--footer-content {

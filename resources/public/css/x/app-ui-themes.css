@@ -58,14 +58,8 @@ body[data-theme="dark"] {
 
 body[data-theme="light"] {
   /* App background */
-  --app-background-color:         #d7dde8;
-  --app-background-color:         #e7edf8;
-  --app-background-color:         #ebf2fc;
-  --app-background-color:         #ffffff;
-
-  --app-background-pattern-color: #e5e9f6;
-  --app-background-pattern-color: #ffffff;
-  --app-background-pattern-color: #fafafa;
+  --app-background-color:         var( --white );
+  --app-background-pattern-color: var( --white-light );
   /* App overlay */
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */

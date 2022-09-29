@@ -78,7 +78,7 @@
   ;  {}
   [editor-id editor-props]
   [:div [:style {:type "text/css"}
-                ".jodit-wysiwyg {cursor: text}"]
+                ".jodit-wysiwyg {background-color: var( --fill-color ); cursor: text}"]
         [text-editor-label editor-id editor-props]
         [jodit             editor-id editor-props]
         [hack-9910         editor-id editor-props]])

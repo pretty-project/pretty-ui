@@ -205,6 +205,9 @@
         selected-language @(a/subscribe [:locales/get-selected-language])]
        {:autofocus            autofocus?
         :buttons              (parse-buttons buttons)
+        :buttonsXS            (parse-buttons buttons)
+        :buttonsSM            (parse-buttons buttons)
+        :buttonsMD            (parse-buttons buttons)
         :cleanHTML            true
         :cleanWhitespace      true
        ; A {:disabled? true} állapotba léptetett jodit hülyén néz ki (nagyon szürke!),

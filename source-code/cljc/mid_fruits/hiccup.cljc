@@ -62,19 +62,24 @@
 
 (defn to-string
   ; @param (hiccup) n
+  ; @param (string)(opt) delimiter
+  ;  Default: " "
   ;
   ; @example
-  ;  (hiccup/to-string [:div "Hello " [:strong "World!"]])
+  ;  (hiccup/to-string [:div "Hello" [:strong "World!"]])
   ;  =>
   ;  "Hello World!"
   ;
   ; @return (string)
-  [n]
-  (letfn [(to-string-f [o x]
-                       (cond (string? x) (str o x)
-                             (vector? x) (str o (to-string x))
-                             :else o))]
-         (reduce to-string-f "" n)))
+  ([n]
+   (to-string n " "))
+
+  ([n delimiter]
+   (letfn [(to-string-f [o x]
+                        (cond (string? x) (str o delimiter  x)
+                              (vector? x) (str o (to-string x))
+                              :else o))]
+          (reduce to-string-f "" n))))
 
 (defn content-length
   ; @param (hiccup) n
