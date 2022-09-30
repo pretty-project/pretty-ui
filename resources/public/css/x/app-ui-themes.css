@@ -18,6 +18,8 @@ body[data-theme="dark"] {
   --app-overlay-color:          var( --black-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --black-x-light );
+  /* Ghost color */
+  --ghost-color:                var( --black );
   /* Scroll-shadow */
   --scroll-shadow-bottom:       0  6px 6px -6px #5c5c5c;
   --scroll-shadow-top:          0 -6px 6px -6px #5c5c5c;
@@ -64,6 +66,8 @@ body[data-theme="light"] {
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --white-xx-light );
+  /* Ghost color */
+  --ghost-color:                var( --white );
   /* Scroll-shadow */
   --scroll-shadow-bottom:       0  6px 6px -6px #bcbcbc;
   --scroll-shadow-top:          0 -6px 6px -6px #bcbcbc;

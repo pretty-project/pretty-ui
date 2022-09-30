@@ -163,7 +163,8 @@
   ;
   ; Az input elemek az on-mouse-down esemény hatására kapnak fókuszt
   (if placeholder (let [field-content (text-field.helpers/get-field-content field-id)]
-                       (if (empty? field-content)
+                       ; BUG#3400
+                       (if (-> field-content str empty?)
                            [:div.x-text-field--placeholder {:data-selectable false}
                                                            (components/content placeholder)]))))
 

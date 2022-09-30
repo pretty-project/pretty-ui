@@ -29,10 +29,10 @@
 ;  "0ce14671-ef916-43ab-b057-0939329d4c1b.png"
 ;
 ; @name thumbnail-filepath
-;  "monoset-environment/media/thumbnails/0ce14671-e916-43ab-b057-0939329d4c1b.png"
+;  "environment/media/thumbnails/0ce14671-e916-43ab-b057-0939329d4c1b.png"
 ;
 ; @name storage-filepath
-;  "monoset-environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png"
+;  "environment/media/storage/0ce14671-e916-43ab-b057-0939329d4c1b.png"
 
 
 
@@ -103,7 +103,7 @@
   ; @example
   ;  (media/filename->media-storage-filepath "ab3450.jpg")
   ;  =>
-  ;  "monoset-environment/media/storage/ab3450.jpg"
+  ;  "environment/media/storage/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -113,7 +113,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/media-storage-filepath->filename "monoset-environment/media/storage/ab3450.jpg")
+  ;  (media/media-storage-filepath->filename "environment/media/storage/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -127,7 +127,7 @@
   ; @example
   ;  (media/filename->media-thumbnail-filepath "ab3450.jpg")
   ;  =>
-  ;  "monoset-environment/media/thumbnails/ab3450.jpg"
+  ;  "environment/media/thumbnails/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -137,7 +137,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/media-thumbnail-filepath->filename "monoset-environment/media/thumbnails/ab3450.jpg")
+  ;  (media/media-thumbnail-filepath->filename "environment/media/thumbnails/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -151,7 +151,7 @@
   ; @example
   ;  (media/filename->temporary-filepath "ab3450.jpg")
   ;  =>
-  ;  "monoset-environment/media/temp/ab3450.jpg"
+  ;  "environment/media/temp/ab3450.jpg"
   ;
   ; @return (string)
   [filename]
@@ -161,7 +161,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/temporary-filepath->filename "monoset-environment/media/temp/ab3450.jpg")
+  ;  (media/temporary-filepath->filename "environment/media/temp/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;

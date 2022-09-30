@@ -26,10 +26,10 @@
 (def STORAGE-URI-BASE "/media/storage/")
 
 ; @constant (string)
-(def THUMBNAIL-FILEPATH-BASE "monoset-environment/media/thumbnails/")
+(def THUMBNAIL-FILEPATH-BASE "environment/media/thumbnails/")
 
 ; @constant (string)
-(def STORAGE-FILEPATH-BASE "monoset-environment/media/storage/")
+(def STORAGE-FILEPATH-BASE "environment/media/storage/")
 
 ; @constant (string)
-(def TEMPORARY-FILEPATH-BASE "monoset-environment/media/temp/")
+(def TEMPORARY-FILEPATH-BASE "environment/media/temp/")

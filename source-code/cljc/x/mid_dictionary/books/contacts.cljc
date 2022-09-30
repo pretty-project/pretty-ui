@@ -73,8 +73,8 @@
            {:en "Email addresses"
             :hu "Email címek"}
            :email-address-placeholder
-           {:en "email@mysite.com"
-            :hu "email@oldalam.hu"}
+           {:en "email@website.com"
+            :hu "email@webhely.hu"}
            :first-name
            {:en "First name"
             :hu "Keresztnév"}
@@ -87,6 +87,9 @@
            :google-maps-links
            {:en "Google Maps links"
             :hu "Google Térkép hivatkozások"}
+           :google-maps-link-placeholder
+           {:en "goo.gl/maps/xxx"
+            :hu "goo.gl/maps/xxx"}
            :last-name
            {:en "Last name"
             :hu "Vezetéknév"}

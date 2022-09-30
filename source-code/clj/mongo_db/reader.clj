@@ -36,7 +36,7 @@
   ;
   ; @param (string) collection-name
   ; @param (map) query
-  ; @param (map)(opt) projection
+  ; @param (namespaced map)(opt) projection
   ;
   ; @return (namespaced maps in vector)
   ([collection-name query]
@@ -54,24 +54,36 @@
   ;
   ; @param (string) collection-name
   ; @param (map) query
+  ; @param (namespaced map)(opt) projection
   ;
   ; @return (namespaced map)
-  [collection-name query]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
-       (try (mcl/find-one-as-map database collection-name query)
-            (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
+  ([collection-name query]
+   (let [database @(a/subscribe [:mongo-db/get-connection])]
+        (try (mcl/find-one-as-map database collection-name query)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
+
+  ([collection-name query projection]
+   (let [database @(a/subscribe [:mongo-db/get-connection])]
+        (try (mcl/find-one-as-map database collection-name query projection)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :query query :projection projection})))))))
 
 (defn find-map-by-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) collection-name
   ; @param (org.bson.types.ObjectId object) document-id
+  ; @param (namespaced map)(opt) projection
   ;
   ; @return (namespaced map)
-  [collection-name document-id]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
-       (try (mcl/find-map-by-id database collection-name document-id)
-            (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
+  ([collection-name document-id]
+   (let [database @(a/subscribe [:mongo-db/get-connection])]
+        (try (mcl/find-map-by-id database collection-name document-id)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
+
+  ([collection-name document-id projection]
+   (let [database @(a/subscribe [:mongo-db/get-connection])]
+        (try (mcl/find-map-by-id database collection-name document-id projection)
+             (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id :projection projection})))))))
 
 (defn count-documents
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -223,6 +235,7 @@
 (defn get-document-by-query
   ; @param (string) collection-name
   ; @param (map) query
+  ; @param (namespaced map)(opt) projection
   ;
   ; @usage
   ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})
@@ -231,37 +244,50 @@
   ;  (mongo-db/get-document-by-query "my_collection" {:$or [{...} {...}]})
   ;
   ; @example
-  ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value})
+  ;  (mongo-db/get-document-by-query "my_collection" {:namespace/my-keyword :my-value}
+  ;                                                  {:namespace/my-keyword  0
+  ;                                                   :namespace/your-string 1})
   ;  =>
-  ;  {:namespace/my-keyword  :my-value
-  ;   :namespace/your-string "Your value"
+  ;  {:namespace/your-string "Your value"
   ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
-  [collection-name query]
-  (if-let [query (-> query checking/find-query adaptation/find-query)]
-          (if-let [document (find-one-as-map collection-name query)]
-                  (adaptation/find-output document))))
+  ([collection-name query]
+   (if-let [query (-> query checking/find-query adaptation/find-query)]
+           (if-let [document (find-one-as-map collection-name query)]
+                   (adaptation/find-output document))))
+
+  ([collection-name query projection]
+   (if-let [query (-> query checking/find-query adaptation/find-query)]
+           (if-let [projection (adaptation/find-projection projection)]
+                   (if-let [document (find-one-as-map collection-name query projection)]
+                           (adaptation/find-output document))))))
 
 (defn get-document-by-id
   ; @param (string) collection-name
   ; @param (string) document-id
-  ;
+  ; @param (namespaced map)(opt) projection
   ;
   ; @example
-  ;  (mongo-db/get-document-by-id "my_collection" "MyObjectId")
+  ;  (mongo-db/get-document-by-id "my_collection" "MyObjectId" {:namespace/my-keyword  0
+  ;                                                             :namespace/your-string 1})
   ;  =>
-  ;  {:namespace/my-keyword  :my-value
-  ;   :namespace/your-string "Your value"
+  ;  {:namespace/your-string "Your value"
   ;   :namespace/id          "MyObjectId"}
   ;
   ; @return (namespaced map)
   ;  {:namespace/id (string)}
-  [collection-name document-id]
-  (if-let [document-id (adaptation/document-id-input document-id)]
-          (if-let [document (find-map-by-id collection-name document-id)]
-                  (adaptation/find-output document))))
+  ([collection-name document-id]
+   (if-let [document-id (adaptation/document-id-input document-id)]
+           (if-let [document (find-map-by-id collection-name document-id)]
+                   (adaptation/find-output document))))
+
+  ([collection-name document-id projection]
+   (if-let [document-id (adaptation/document-id-input document-id)]
+           (if-let [projection (adaptation/find-projection projection)]
+                   (if-let [document (find-map-by-id collection-name document-id projection)]
+                           (adaptation/find-output document))))))
 
 (defn get-first-document
   ; @param (string) collection-name

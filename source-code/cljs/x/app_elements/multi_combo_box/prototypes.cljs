@@ -30,7 +30,7 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {}
+  ;  {:value-path (vector)}
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
@@ -46,10 +46,13 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {}
-  [box-id {:keys [] :as box-props}]
+  ;  {:chip-label-f (function)
+  ;   :deletable? (boolean)
+  ;   :indent (map)}
+  [box-id box-props]
   (let [group-props (dissoc box-props :helper :label :indent)]
-       (merge {:chip-label-f return}
+       (merge {:chip-label-f return
+               :indent       {:bottom :xxs}}
               (param group-props)
               {:deletable? true})))
 

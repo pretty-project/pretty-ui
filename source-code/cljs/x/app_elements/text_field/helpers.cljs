@@ -64,7 +64,8 @@
   ; @return (boolean)
   [field-id]
   (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
-       (empty? field-content)))
+       ; BUG#3400
+       (-> field-content str empty?)))
 
 (defn field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!

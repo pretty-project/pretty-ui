@@ -1,14 +1,14 @@
 
 # log files
-monoset-environment/log
+environment/log
 
 # uploaded files
-monoset-environment/media/storage/*
-monoset-environment/media/thumbnails/*
+environment/media/storage/*
+environment/media/thumbnails/*
 
 # default thumbnail & sample file
-!monoset-environment/media/thumbnails/default.png
-!monoset-environment/media/storage/sample.png
+!environment/media/thumbnails/default.png
+!environment/media/storage/sample.png
 
 # config files
 resources/public/x.app-build.edn

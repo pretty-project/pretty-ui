@@ -1,7 +1,4 @@
 
-; A fájl tartalomváltozásainak érvénybe lépéséhez szükséges újraindítani
-; az applikációt!
-;
 ; A megjegyzések a fájl első írásakor törlődnek!
 ;
 ; @param (map) website-config

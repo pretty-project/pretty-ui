@@ -31,6 +31,44 @@
            :invalid-number
            {:en "Invalid number"
             :hu "Érvénytelen szám"}
+           :validity
+           {:en "Validity"
+            :hu "Érvényesség"}
+           :index
+           {:en "Index"
+            :hu "Sorszám"}
+
+           :expiration-date
+           {:en "Expiration date"
+            :hu "Lejárat dátuma"}
+           :release-date
+           {:en "Release date"
+            :hu "Kiadás dátuma"}
+           :release-year
+           {:en "Release year"
+            :hu "Kiadás éve"}
+           :issue-year
+           {:en "Issue year"
+            :hu "Kibocsátás éve"}
+           :validity-date
+           {:en "Validity date"
+            :hu "Érvényesség dátuma"}
+           :validity-interval
+           {:en "Validity interval"
+            :hu "Érvényesség időtartama"}
+           :validity-interval-day
+           {:en "Validity interval (day)"
+            :hu "Érvényesség időtartama (nap)"}
+
+           :price-quote
+           {:en "Price quote"
+            :hu "Árajánlat"}
+           :price-quotes
+           {:en "Price quotes"
+            :hu "Árajánlatok"}
+           :price-quote-n
+           {:en "Price quote %"
+            :hu "Árajánlat %"}
 
            :page
            {:en "Page"
@@ -121,7 +159,9 @@
            :more-options
            {:en "More options"
             :hu "További lehetőségek"}
-
+           :more-content
+           {:en "More content"
+            :hu "További tartalom"}
            :more-values
            {:en "More values"
             :hu "További értékek"}

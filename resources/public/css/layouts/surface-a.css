@@ -34,11 +34,15 @@
 
 #surface-a--background {
   background-color: #fdfdfd;
+  background-color: #fafafa;
   height: 100vh;
   left: 0;
   position: fixed;
   top: 0;
   width: 100% }
+
+.surface-a--background-pattern {
+  fill: #f6f3f3 }
 
 /* Background */
 

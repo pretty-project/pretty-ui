@@ -207,7 +207,7 @@
 
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
 
-- Legyen a monoset-environment mappában vagy inkább a project-emulator mappában egy
+- Legyen a environment mappában vagy inkább a project-emulator mappában egy
   project-dictionary.cljc vagy valami fájl, hogy a projekben ne eventekkel kelljen hozzáadogatni
   a dictionary-termeket
 

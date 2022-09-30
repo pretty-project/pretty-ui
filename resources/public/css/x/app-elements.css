@@ -857,7 +857,7 @@ body {
 .x-label[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
-  line-height: 48px }
+  line-height: 36px }
 
 .x-label[data-font-size="l"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -888,7 +888,7 @@ body {
 .x-label[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
-  line-height: 48px }
+  line-height: 36px }
 
 .x-label[data-font-size="xl"] .x-label--icon {
   font-size: var( --icon-size-m ) }
@@ -1945,7 +1945,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 12px;
-  padding: 6px 0 }
+  -padding: 6px 0 }
 
 /*** Chip-group chips ***/
 
@@ -1957,7 +1957,8 @@ body {
   letter-spacing: var( --letter-spacing-xs );
   /* A .x-chip-group--no-chips-label elem magassága megegyzik az .x-chip-group--chips elem
    * magasságával */
-  line-height: 36px }
+  -line-height: 36px;
+  line-height: 24px }
 
 /*** Chip-group no-chips label ***/
 /***** Chip-group *****/
@@ -2378,7 +2379,7 @@ body {
   flex-direction: column }
 
 .x-ghost--body {
-  background-color: var( --background-color-highlight );
+  background-color: var( --ghost-color );
   /* XXX#5577 */
   flex-grow: 1 }
 

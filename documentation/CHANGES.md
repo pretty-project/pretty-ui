@@ -265,7 +265,7 @@
 - Az item-editor plugin példányaiban a pathom handler függvények a megváltozott mongo-db névtér
   függvényeit használják!
 
-- A "monoset-environment/x.project-config.edn" fájl ezentúl fel van bontva
+- A "environment/x.project-config.edn" fájl ezentúl fel van bontva
   "x.app-config.edn" és "x.server-config.edn" fájlokra.
   - Az "x.site-config.edn" fájl tartalma elérhető a kliens oldali Re-Frame adatbázisban!
 
