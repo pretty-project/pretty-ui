@@ -15,6 +15,7 @@
 (ns mid-fruits.json
     (:require [mid-fruits.candy   :refer [return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.mixed   :as mixed]
               [mid-fruits.string  :as string]
               [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]))
@@ -166,6 +167,25 @@
 
 
 
+;; -- Parseint ... value ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn parseint-value
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/parseint-value "420")
+  ;  =>
+  ;  420
+  ;
+  ; @return (*)
+  [n]
+  (if (mixed/str-integer? n)
+      (string/to-integer  n)
+      (return             n)))
+
+
+
 ;; -- Keywordize / unkeywordize / ... keys ------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -290,3 +310,22 @@
   (cond (map?    n) (map/->>values  n trim-values)
         (vector? n) (vector/->items n trim-values)
         :else       (trim-value     n)))
+
+
+
+;; -- Parseint ... values -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn parseint-values
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/parseint-values {:a "0" :c ["1"] :f {:g "2"}})
+  ;  =>
+  ;  {:a 0 :c [1] :f {:g 2}}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>values  n parseint-values)
+        (vector? n) (vector/->items n parseint-values)
+        :else       (parseint-value n)))

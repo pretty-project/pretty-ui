@@ -172,6 +172,6 @@
                  (if-let [separator (string/first-index-of n ".")]
                          (f (string/remove-first-occurence n ".")
                             (update x :separators conj separator))
-                         (f (leading-zeros (mixed/update-str-number n inc) (count n))
+                         (f (leading-zeros (mixed/update-str-integer n inc) (count n))
                             (assoc x :increased? true)))))]
          (f n {:separators []})))

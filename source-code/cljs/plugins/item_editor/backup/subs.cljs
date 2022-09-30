@@ -80,9 +80,11 @@
                         (= value (key initial-item))
                         (return false)
                         ; B)
-                        (and (seqable? value)
-                             (empty?   value))
-                        (-> backup-item key empty? not)
+                        ; Az empty? függvényt csak a seqable értékeken lehetséges alkalmazni!
+                        (and (-> value seqable?)
+                             (-> value empty?))
+                        (and (-> backup-item key seqable?)
+                             (-> backup-item key empty? not))
                         ; C)
                         :else
                         (not= value (key backup-item))))]

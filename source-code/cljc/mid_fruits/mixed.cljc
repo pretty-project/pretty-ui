@@ -108,135 +108,135 @@
         (nil?    n) (return        {})
         :else       (return        {0 n})))
 
-(defn str-number?
+(defn str-integer?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-number? "abCd12")
+  ;  (mixed/str-integer? "abCd12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-number? "12")
+  ;  (mixed/str-integer? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-number? "-12")
+  ;  (mixed/str-integer? "-12")
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^-[\d]*|[\d]*$"))
+  (re-match? n #"^-[\d]{1,}|[\d]{1,}$"))
 
-(defn str-natural-number?
+(defn str-natural-integer?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-natural-number? "abCd12")
+  ;  (mixed/str-natural-integer? "abCd12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-natural-number? "12")
+  ;  (mixed/str-natural-integer? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-natural-number? "-12")
+  ;  (mixed/str-natural-integer? "-12")
   ;  =>
   ;  false
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^[0-9]*$"))
+  (re-match? n #"^[0-9]{1,}$"))
 
-(defn str-positive-number?
+(defn str-positive-integer?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-positive-number? "abCd12")
+  ;  (mixed/str-positive-integer? "abCd12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-positive-number? "12")
+  ;  (mixed/str-positive-integer? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-positive-number? "0")
+  ;  (mixed/str-positive-integer? "0")
   ;  =>
   ;  false
   ;
   ; @return (boolean)
   [n])
 
-(defn str-negative-number?
+(defn str-negative-integer?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-negative-number? "abCd12")
+  ;  (mixed/str-negative-integer? "abCd12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-negative-number? "12")
+  ;  (mixed/str-negative-integer? "12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-negative-number? "-12")
+  ;  (mixed/str-negative-integer? "-12")
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^-[0-9]*$"))
+  (re-match? n #"^-[0-9]{1,}$"))
 
-(defn update-str-number
+(defn update-str-integer
   ; @param (string) n
   ; @param (function) f
   ; @param (*)(opt) x
   ;
   ; @example
-  ;  (mixed/update-str-number "12" inc)
+  ;  (mixed/update-str-integer "12" inc)
   ;  =>
   ;  "13"
   ;
   ; @example
-  ;  (mixed/update-str-number "12" + 3)
+  ;  (mixed/update-str-integer "12" + 3)
   ;  =>
   ;  "15"
   ;
   ; @example
-  ;  (mixed/update-str-number "abCd12" + 3)
+  ;  (mixed/update-str-integer "abCd12" + 3)
   ;  =>
   ;  "abCd12"
   ;
   ; @return (string)
   ([n f]
-   (update-str-number n f nil))
+   (update-str-integer n f nil))
 
   ([n f x]
    (letfn [(update-f [n] (let [integer (string/to-integer n)]
                               (if x (f integer x)
                                     (f integer))))]
-          (if (-> n str-number?)
+          (if (-> n str-integer?)
               (-> n update-f str)
               (-> n return)))))
 
-(defn str-contains-number?
+(defn str-contains-integer?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-contains-number? "abCd12")
+  ;  (mixed/str-contains-integer? "abCd12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-contains-number? "abCd")
+  ;  (mixed/str-contains-integer? "abCd")
   ;  =>
   ;  false
   ;

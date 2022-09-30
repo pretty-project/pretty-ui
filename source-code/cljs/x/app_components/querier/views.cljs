@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.querier.views
-    (:require [mid-fruits.random :as random]
-              [reagent.api       :as reagent]
-              [x.app-core.api    :as a]))
+    (:require [mid-fruits.random        :as random]
+              [reagent.api              :as reagent]
+              [x.app-components.content :as content.views]
+              [x.app-core.api           :as a]))
 
 
 
@@ -28,11 +29,13 @@
   ; @param (keyword) querier-id
   ; @param (map) querier-props
   ;  {:component (component)(opt)
+  ;   :placeholder (metamorphic-content)(opt)
   ;   :render-f (function)(opt)}
-  [querier-id {:keys [component render-f]}]
+  [querier-id {:keys [component placeholder render-f]}]
   (if-let [server-response @(a/subscribe [:sync/get-request-response querier-id])]
-          (cond render-f  [render-f]
-                component component)))
+          (cond render-f  [render-f       server-response]
+                component (conj component server-response))))
+          ;(if placeholder [content.views/component placeholder])))
 
 (defn- querier
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,10 +51,14 @@
   ; @param (keyword)(opt) querier-id
   ; @param (map) querier-props
   ;  {:component (component)(opt)
-  ;    Only w/o {:render-f ...}
   ;   :query (vector)
+
+  ;   ?
+  ;   :placeholder (metamorphic-content)(opt)
+  ;   ?
+
   ;   :render-f (function)(opt)
-  ;    Only w/o {:component ...}}
+  ;   :value-path (vector)(opt)}
   ;
   ; @usage
   ;  [components/querier {...}]
@@ -60,12 +67,12 @@
   ;  [components/querier :my-querier {...}]
   ;
   ; @usage
-  ;  (defn my-component [] ...)
+  ;  (defn my-component [server-response] ...)
   ;  [components/querier :my-querier {:component [my-component]
   ;                                   :query     [:my-query]}]
   ;
   ; @usage
-  ;  (defn my-component [] ...)
+  ;  (defn my-component [server-response] ...)
   ;  [components/querier :my-querier {:query    [:my-query]
   ;                                   :render-f #'my-component}]
   ([querier-props]

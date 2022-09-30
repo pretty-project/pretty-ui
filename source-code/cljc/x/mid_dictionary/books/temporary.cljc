@@ -22,9 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:business
-           {:en "Business"
-            :hu "Üzlet"}
+(def BOOK {
            :other
            {:en "Other"
             :hu "Egyéb"}
@@ -60,15 +58,11 @@
            {:en "Validity interval (day)"
             :hu "Érvényesség időtartama (nap)"}
 
-           :price-quote
-           {:en "Price quote"
-            :hu "Árajánlat"}
-           :price-quotes
-           {:en "Price quotes"
-            :hu "Árajánlatok"}
-           :price-quote-n
-           {:en "Price quote %"
-            :hu "Árajánlat %"}
+
+
+           
+
+
 
            :page
            {:en "Page"

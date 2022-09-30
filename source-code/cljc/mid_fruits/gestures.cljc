@@ -56,7 +56,7 @@
            (f      [n] (if (form/ordered-label? n)
                            (let [copy-dex      (string/after-last-occurence  n "#")
                                  label-base    (string/before-last-occurence n "#")
-                                 next-copy-dex (mixed/update-str-number copy-dex inc)]
+                                 next-copy-dex (mixed/update-str-integer copy-dex inc)]
                                 (str label-base "#" next-copy-dex))
                            (str n " #2")))]
           (do-while f item-label test-f))))

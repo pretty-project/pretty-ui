@@ -34,8 +34,9 @@
   []
   (let [environment-element (get-environment-element)
         temporary-container (dom/create-element! "DIV")]
-       (dom/set-element-id! temporary-container "temporary-component")
-       (dom/append-element! environment-element temporary-container)))
+       (dom/set-element-id!    temporary-container "temporary-component")
+       (dom/set-element-style! temporary-container {:display :none})
+       (dom/append-element!    environment-element temporary-container)))
 
 (defn remove-container!
   ; WARNING! NON-PUBLIC! DO NOT USE!

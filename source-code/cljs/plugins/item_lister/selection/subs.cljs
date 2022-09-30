@@ -41,6 +41,16 @@
   [db [_ lister-id]]
   (r selection.subs/all-items-selected? db lister-id))
 
+(defn all-downloaded-items-selected?
+  ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  (r item-lister/all-downloaded-items-selected? db :my-lister)
+  ;
+  ; @return (boolean)
+  [db [_ lister-id]]
+  (r selection.subs/all-downloaded-items-selected? db lister-id))
+
 (defn any-item-selected?
   ; @param (keyword) lister-id
   ;
@@ -50,6 +60,16 @@
   ; @return (boolean)
   [db [_ lister-id]]
   (r selection.subs/any-item-selected? db lister-id))
+
+(defn any-downloaded-item-selected?
+  ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  (r item-lister/any-downloaded-item-selected? db :my-lister)
+  ;
+  ; @return (boolean)
+  [db [_ lister-id]]
+  (r selection.subs/any-downloaded-item-selected? db lister-id))
 
 (defn no-items-selected?
   ; @param (keyword) lister-id
@@ -133,8 +153,20 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
+;  [:item-lister/all-downloaded-items-selected? :my-lister]
+(a/reg-sub :item-lister/all-downloaded-items-selected? all-downloaded-items-selected?)
+
+; @param (keyword) lister-id
+;
+; @usage
 ;  [:item-lister/any-item-selected? :my-lister]
 (a/reg-sub :item-lister/any-item-selected? any-item-selected?)
+
+; @param (keyword) lister-id
+;
+; @usage
+;  [:item-lister/any-downloaded-item-selected? :my-lister]
+(a/reg-sub :item-lister/any-downloaded-item-selected? any-downloaded-item-selected?)
 
 ; @param (keyword) lister-id
 ;

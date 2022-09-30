@@ -45,6 +45,19 @@
        (and (not= downloaded-item-count 0)
             (= selected-items-count downloaded-item-count))))
 
+(defn all-downloaded-items-selected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  (let [downloaded-items (r core.subs/get-downloaded-items db plugin-id)
+        selected-items   (r core.subs/get-meta-item        db plugin-id :selected-items)]
+       (letfn [(f [{:keys [id]}] (not (vector/contains-item? selected-items id)))]
+              (if (vector/min? downloaded-items 1)
+                  (not (some f downloaded-items))))))
+
 (defn any-item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,6 +67,18 @@
   [db [_ plugin-id]]
   (let [selected-items (r core.subs/get-meta-item db plugin-id :selected-items)]
        (vector/nonempty? selected-items)))
+
+(defn any-downloaded-item-selected?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  (let [downloaded-items (r core.subs/get-downloaded-items db plugin-id)
+        selected-items   (r core.subs/get-meta-item        db plugin-id :selected-items)]
+       (letfn [(f [{:keys [id]}] (vector/contains-item? selected-items id))]
+              (some f downloaded-items))))
 
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!

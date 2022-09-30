@@ -17,6 +17,7 @@
               [x.mid-dictionary.books.application   :as books.application]
               [x.mid-dictionary.books.archive       :as books.archive]
               [x.mid-dictionary.books.brands        :as books.brands]
+              [x.mid-dictionary.books.business      :as books.business]
               [x.mid-dictionary.books.changes       :as books.changes]
               [x.mid-dictionary.books.colors        :as books.colors]
               [x.mid-dictionary.books.company       :as books.company]
@@ -58,7 +59,8 @@
               [x.mid-dictionary.books.user          :as books.user]
               [x.mid-dictionary.books.vehicles      :as books.vehicles]
               [x.mid-dictionary.books.view          :as books.view]
-              [x.mid-dictionary.books.website       :as books.website]))
+              [x.mid-dictionary.books.website       :as books.website]
+              [x.mid-dictionary.books.webshop       :as books.webshop]))
 
 
 
@@ -70,6 +72,7 @@
                   books.application/BOOK
                   books.archive/BOOK
                   books.brands/BOOK
+                  books.business/BOOK
                   books.changes/BOOK
                   books.colors/BOOK
                   books.company/BOOK
@@ -111,4 +114,5 @@
                   books.user/BOOK
                   books.vehicles/BOOK
                   books.view/BOOK
-                  books.website/BOOK))
+                  books.website/BOOK
+                  books.webshop/BOOK))

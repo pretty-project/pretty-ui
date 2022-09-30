@@ -42,7 +42,8 @@
   [elements/label ::error-description-label
                   {:color            :muted
                    :content          error-description
-                   :horizontal-align :center}])
+                   :horizontal-align :center
+                   :indent           {:bottom :xxl}}])
 
 (defn error-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
