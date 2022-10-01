@@ -1,6 +1,6 @@
 
 {; Paths
- :paths ["source-code/clj" "source-code/cljc" "source-code/cljs" "source-code/project-emulator" "resources"]
+ :paths ["source-code" "resources"]
 
  ; Dependecies
  :deps  {buddy/buddy-auth                                {:mvn/version "2.1.0"}
@@ -11,7 +11,7 @@
          clj-time/clj-time                               {:mvn/version "0.15.1"}
          com.andrewmcveigh/cljs-time                     {:mvn/version "0.5.2"}
          com.novemberain/monger                          {:mvn/version "3.5.0"}
-         com.taoensso/sente                              {:mvn/version "1.16.2"}
+         com.taoensso/sente                              {:mvn/version "1.17.0"}
          hiccup/hiccup                                   {:mvn/version "1.0.5"}
          http-kit/http-kit                               {:mvn/version "2.5.3"}
          metosin/reitit                                  {:mvn/version "0.3.10"}

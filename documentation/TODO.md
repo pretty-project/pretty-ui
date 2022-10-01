@@ -13,9 +13,13 @@
 
 
 # x4.7.0
+- Mivel megszünt a monosetben a project-emulátor és a fejlesztése külsö projectben
+  futtatva történik ezért biztos egy csomo minden többé nem fog a monoset-be kelleni
+  pl deps.edn kell ezentúl, és hasonlok...
+
 - OPTIMISATION:
   Felesleges Re-Frame írások:
-  - 
+  -
 
 - Vannak olyan [:ui/render-bubble! ...] események, amik egy metamorphic-content-et
   adnak át {:content ...} tulajdonságként, ez igy nem maradhat, a bubble layout-ja
@@ -73,15 +77,6 @@
   - Értesítés (megint) megjelenik
   - close-bubble folyamat annyira hosszú, hogy most fejeződik be és bezárja
     az azóta újra megjelent értesítést
-
-- A projectek deps.edn fájljában addig kell a forráskód mappáját
-  "monoset/source-code/clj" "monoset/source-code/cljc" "monoset/source-code/cljs"
-  mappákra lebontva megadni, amig létezik a project-emulator mappa!
-  Annak törlése után az egész "monoset/source-code" mappát be lehet majd állítani
-  - Ez igaz a x-be épített wrap-reload {:dirs [...]} tulajdonságára is,
-    hogy nem kell majd odafigyelni, hogy a project-emulator ne legyen behivva a projectekben,
-    ha majd nem fog létezni
-
 
 - A cljs egy alig típusos nyelv, engedd el a sok (boolean ...) függvényt! Felesleges.
 
@@ -210,10 +205,6 @@
 - A view-selector plugin most már nem csak útvonalakkal használható, leváltja a gestures/view-selectort?
 
 ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak levelei akkor valahol vezetni kell hogy az smtp adatok esetleges valtozasakor at kell allitano a projektet is!!!!
-
-- Legyen a environment mappában vagy inkább a project-emulator mappában egy
-  project-dictionary.cljc vagy valami fájl, hogy a projekben ne eventekkel kelljen hozzáadogatni
-  a dictionary-termeket
 
 - Az item-lister pluginban amikor elemeket keresel, akkor ne legyen érzékeny az ékezetekre
 

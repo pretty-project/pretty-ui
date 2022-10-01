@@ -22,10 +22,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx 
+(a/reg-event-fx
   :developer/init!
   (fn [{:keys [db]} _]
-      (println (r a/dev-mode? db))
       (if (r a/dev-mode? db)
           {:dispatch-n [[:router/add-route! :developer.developer-tools/route
                                             {:route-template "/developer-tools"

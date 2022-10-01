@@ -24,6 +24,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; TODO
+; Pathom mutation függvényre cserélni ezt a route-ot!
+
 (defn upload-user-settings-item!
   ; @param (map) request
   ;  {:params {:item-id (keyword)
