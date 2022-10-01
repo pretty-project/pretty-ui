@@ -30,7 +30,7 @@
   ; @param (map) body-props
   (fn [{:keys [db]} [_ picker-id body-props]]
       {:db       (r body.events/body-did-mount db picker-id body-props)
-       :dispatch [:item-picker/load-editor! picker-id]}))
+       :dispatch [:item-picker/load-picker! picker-id]}))
 
 (r/reg-event-fx
   :item-picker/body-will-unmount
@@ -38,10 +38,10 @@
   ;
   ; @param (keyword) picker-id
   (fn [{:keys [db]} [_ picker-id]]
-      {:db (r body.events/body-will-unmount db editor-id)}))
+      {:db (r body.events/body-will-unmount db picker-id)}))
 
 (r/reg-event-fx
-  :item-editor/body-did-update
+  :item-picker/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id

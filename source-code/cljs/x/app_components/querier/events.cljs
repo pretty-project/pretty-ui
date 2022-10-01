@@ -14,7 +14,7 @@
 
 (ns x.app-components.querier.events
     (:require [mid-fruits.candy :refer [return]]
-              [x.app-core.api   :as a :refer [r]]))
+              [re-frame.api     :refer [r]]))
 
 
 

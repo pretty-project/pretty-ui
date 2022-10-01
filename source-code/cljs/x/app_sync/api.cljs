@@ -16,8 +16,9 @@
     (:require [x.app-sync.request-handler.effects]
               [x.app-sync.request-handler.events]
               [x.app-sync.response-handler.events]
-              [x.app-sync.request-handler.subs  :as request-handler.subs]
-              [x.app-sync.response-handler.subs :as response-handler.subs]))
+              [x.app-sync.request-handler.subs    :as request-handler.subs]
+              [x.app-sync.response-handler.events :as response-handler.events]
+              [x.app-sync.response-handler.subs   :as response-handler.subs]))
 
 
 
@@ -36,6 +37,9 @@
 (def request-aborted?      request-handler.subs/request-aborted?)
 (def request-resent?       request-handler.subs/request-resent?)
 (def listening-to-request? request-handler.subs/listening-to-request?)
+
+; x.app-sync.response-handler.events
+(def clear-request-response! response-handler.events/clear-request-response!)
 
 ; x.app-sync.response-handler.subs
 (def get-request-response response-handler.subs/get-request-response)

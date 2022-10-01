@@ -85,7 +85,8 @@
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
   ;    Default: core.helpers/default-suggestions-path
-  ;   :transfer-id (keyword)(opt)}
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @usage
   ;  [item-editor/body :my-editor {...}]

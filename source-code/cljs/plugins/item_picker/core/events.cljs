@@ -14,7 +14,7 @@
 
 (ns plugins.item-picker.core.events
     (:require [mid-fruits.map                     :refer [dissoc-in]]
-              [plugins.item-editor.body.subs      :as body.subs]
+              [plugins.item-picker.body.subs      :as body.subs]
               [plugins.plugin-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 

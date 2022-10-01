@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-picker.core.effects
-    (:require [plugins.item-editor.core.events :as core.events]
+    (:require [plugins.item-picker.core.events :as core.events]
               [re-frame.api                    :as r :refer [r]]))
 
 

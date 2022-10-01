@@ -79,7 +79,9 @@
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
   ;   :search-keys (keywords in vector)(opt)
-  ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS}
+  ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @example
   ;  [item-browser/body :my-browser {...}]

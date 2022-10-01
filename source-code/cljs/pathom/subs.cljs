@@ -14,7 +14,7 @@
 
 (ns pathom.subs
     (:require [x.app-sync.response-handler.subs]
-              [re-frame.api :refer [r]]))
+              [re-frame.api :as r :refer [r]]))
 
 
 
@@ -52,3 +52,16 @@
   [db [_ query-id query-question]]
   (let [query-response (r get-query-response db query-id)]
        (get query-response query-question)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:pathom/get-query-response :my-query]
+(r/reg-sub :pathom/get-query-response get-query-response)
+
+; @usage
+;  [:pathom/get-query-answer :my-query :all-users]
+;(r/reg-sub :pathom/get-query-answer get-query-answer)

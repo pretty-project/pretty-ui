@@ -12,13 +12,30 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.plugin-handler.transfer.helpers
-    (:require [mid.plugins.plugin-handler.transfer.helpers :as transfer.helpers]))
+(ns plugins.plugin-handler.transfer.helpers)
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.plugin-handler.transfer.helpers
-(def transfer-id transfer.helpers/transfer-id)
+(defn transfer-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @example
+  ;  (transfer.helpers/transfer-id :my-plugin)
+  ;  =>
+  ;  :my-plugin/transfer-plugin-props
+  ;
+  ; @example
+  ;  (transfer.helpers/transfer-id :my-namespace/my-plugin)
+  ;  =>
+  ;  :my-namespace.my-plugin/transfer-plugin-props
+  ;
+  ; @return (keyword)
+  [plugin-id]
+  (if-let [namespace (namespace plugin-id)]
+          (keyword (str namespace "." (name plugin-id)) "transfer-plugin-props")
+          (keyword (str               (name plugin-id)) "transfer-plugin-props")))

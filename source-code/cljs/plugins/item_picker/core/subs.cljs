@@ -84,7 +84,7 @@
 ;
 ; @usage
 ;  [:item-picker/get-meta-item :my-picker :my-item]
-(r/reg-sub :item-editor/get-meta-item get-meta-item)
+(r/reg-sub :item-picker/get-meta-item get-meta-item)
 
 ; @param (keyword) picker-id
 ;

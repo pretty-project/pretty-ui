@@ -56,8 +56,8 @@
   ; XXX#3907
   ; A többi pluginnal megegyezően az item-picker plugin is névtér nélkül
   ; tárolja a letöltött dokumentumot.
-  (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
-        item-path   (r body.subs/get-body-prop       db editor-id :item-path)
+  (let [resolver-id (r download.subs/get-resolver-id db picker-id :get-item)
+        item-path   (r body.subs/get-body-prop       db picker-id :item-path)
         document    (-> server-response resolver-id map/remove-namespace)]
        (assoc-in db item-path document)))
 

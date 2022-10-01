@@ -13,9 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.body.prototypes
-    (:require [mid-fruits.candy                     :refer [param]]
-              [plugins.item-editor.core.helpers     :as core.helpers]
-              [plugins.item-editor.transfer.helpers :as transfer.helpers]))
+    (:require [mid-fruits.candy                 :refer [param]]
+              [plugins.item-editor.core.helpers :as core.helpers]))
 
 
 
@@ -35,5 +34,6 @@
   [editor-id body-props]
   (merge {:item-path        (core.helpers/default-item-path        editor-id)
           :suggestions-path (core.helpers/default-suggestions-path editor-id)
-          :transfer-id      (transfer.helpers/transfer-id          editor-id)}
+          ; XXX#8173
+          :transfer-id editor-id}
          (param body-props)))

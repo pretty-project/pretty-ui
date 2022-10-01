@@ -14,8 +14,10 @@
 
 (ns x.app-sync.response-handler.events
     (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.map    :refer [dissoc-in]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
+              [re-frame.api      :as r :refer [r]]
+              [x.app-core.api    :as core]
               [x.app-db.api      :as db]))
 
 
@@ -45,9 +47,30 @@
   ;
   ; @return (map)
   [db [_ request-id request-props server-response]]
-  ; DEBUG
-  ; A request-id azonosítójú lekérésre érkezett szerver-válasz utolsó 256 példányát eltárolja
-  (as-> db % (r use-response-f! % request-id request-props server-response)
-             (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/conj-item server-response)
-             (r db/apply-item! % [:sync :response-handler/data-history request-id] vector/last-items 256)
-             (r db/set-item!   % [:sync :response-handler/data-items   request-id] server-response)))
+  (if (r core/debug-mode-detected? db)
+      (as-> db % (r use-response-f! % request-id request-props server-response)
+                 (r db/set-item!    % [:sync :response-handler/data-items request-id] server-response)
+                 ; DEBUG A request-id azonosítójú lekérésre érkezett szerver-válasz utolsó 256 példányát eltárolja
+                 (r db/apply-item!  % [:sync :response-handler/data-history request-id] vector/conj-item server-response)
+                 (r db/apply-item!  % [:sync :response-handler/data-history request-id] vector/last-items 256))
+      (as-> db % (r use-response-f! % request-id request-props server-response)
+                 (r db/set-item!    % [:sync :response-handler/data-items request-id] server-response))))
+
+(defn clear-request-response!
+  ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r sync/clear-request-response! db :my-request)
+  ;
+  ; @return (map)
+  [db [_ request-id]]
+  (dissoc-in db [:sync :response-handler/data-items request-id]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:sync/clear-request-response! :my-request]
+(r/reg-event-db :sync/clear-request-response! clear-request-response!)

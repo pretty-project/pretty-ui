@@ -58,11 +58,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) picker-id
-  [editor-id]
-  (cond @(r/subscribe [:item-picker/get-meta-item editor-id :error-mode?])
-         ;[error-body editor-id {:error-description :the-item-you-opened-may-be-broken}]
+  [picker-id]
+  (cond @(r/subscribe [:item-picker/get-meta-item picker-id :error-mode?])
+         ;[error-body picker-id {:error-description :the-item-you-opened-may-be-broken}]
          [:div "error"]
-        @(r/subscribe [:item-picker/data-received? editor-id])
+        @(r/subscribe [:item-picker/data-received? picker-id])
          [preview-element picker-id]
         :data-not-received
          [downloading-item picker-id]))
@@ -75,7 +75,8 @@
   ;    Default: core.helpers/default-item-path
   ;   :preview-element (metamorphic-content)
   ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)}
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @usage
   ;  [item-picker/body :my-picker {...}]

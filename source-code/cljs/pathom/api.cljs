@@ -14,12 +14,16 @@
 
 (ns pathom.api
     (:require [pathom.effects]
-              [pathom.subs :as subs]))
+              [pathom.events :as events]
+              [pathom.subs   :as subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; pathom.events
+(def clear-query-response! events/clear-query-response!)
 
 ; pathom.subs
 (def get-query-response subs/get-query-response)

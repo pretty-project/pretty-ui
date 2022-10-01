@@ -134,7 +134,9 @@
 
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
-  ;   :selected-items (strings in vector)(opt)}
+  ;   :selected-items (strings in vector)(opt)
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @usage
   ;  [item-lister/body :my-lister {...}]

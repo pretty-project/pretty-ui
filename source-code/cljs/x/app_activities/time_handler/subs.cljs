@@ -14,7 +14,7 @@
 
 (ns x.app-activities.time-handler.subs
     (:require [mid-fruits.time      :as time]
-              [x.app-core.api       :as a :refer [r]]
+              [re-frame.api         :as r :refer [r]]
               [x.app-dictionary.api :as dictionary]))
 
 
@@ -67,8 +67,8 @@
 
 ; @usage
 ;  [:activities/get-actual-timestamp "2020-04-20T16:20:00.123Z"]
-(a/reg-sub :activities/get-actual-timestamp get-actual-timestamp)
+(r/reg-sub :activities/get-actual-timestamp get-actual-timestamp)
 
 ; @usage
 ;  [:activities/get-actual-elapsed-time "2020-04-20T16:20:00.123Z"]
-(a/reg-sub :activities/get-actual-elapsed-time get-actual-elapsed-time)
+(r/reg-sub :activities/get-actual-elapsed-time get-actual-elapsed-time)

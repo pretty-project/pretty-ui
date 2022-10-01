@@ -28,7 +28,10 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:content-path (vector)}
+  ;  {:content-path (vector)
+  ;   :transfer-id (keyword)}
   [editor-id body-props]
-  (merge {:content-path (core.helpers/default-content-path editor-id)}
+  (merge {:content-path (core.helpers/default-content-path editor-id)
+          ; XXX#8173
+          :transfer-id editor-id}
          (param body-props)))

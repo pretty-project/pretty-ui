@@ -31,9 +31,12 @@
   ; @return (map)
   ;  {:download-limit (integer)
   ;   :items-path (vector)
-  ;   :order-by-options (namespaced keywords in vector)}
+  ;   :order-by-options (namespaced keywords in vector)
+  ;   :transfer-id (keyword)}
   [lister-id body-props]
   (merge {:items-path       (core.helpers/default-items-path lister-id)
-          :download-limit   core.config/DEFAULT-DOWNLOAD-LIMIT}
+          :download-limit   core.config/DEFAULT-DOWNLOAD-LIMIT
           ;:order-by-options core.config/DEFAULT-ORDER-BY-OPTIONS}
+          ; XXX#8173
+          :transfer-id lister-id}
          (param body-props)))

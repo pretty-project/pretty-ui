@@ -14,14 +14,14 @@
 
 (ns x.app-components.querier.effects
     (:require [x.app-components.querier.events :as querier.events]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :components.querier/send-query!
   ; @param (keyword) querier-id
   ; @param (map) querier-props
@@ -30,7 +30,7 @@
                            {:query      query
                             :on-success [:components.querier/receive-query! querier-id querier-props]}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :components.querier/receive-query!
   ; @param (keyword) querier-id
   ; @param (map) querier-props

@@ -73,7 +73,9 @@
   ;    Default: core.helpers/default-content-path
   ;   :form-element (metamorphic-content)
   ;   :ghost-element (metamorphic-content)(opt)
-  ;   :query (vector)(opt)}
+  ;   :query (vector)(opt)
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @usage
   ;  [file-editor/body :my-editor {...}]

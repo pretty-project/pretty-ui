@@ -15,9 +15,9 @@
 (ns x.app-components.querier.views
     (:require [mid-fruits.random        :as random]
               [reagent.api              :as reagent]
-              [x.app-components.content :as content.views]
-              [x.app-core.api           :as a]))
-
+              [re-frame.api             :as r]
+              [x.app-components.content :as content.views]))
+              
 
 
 ;; ----------------------------------------------------------------------------
@@ -29,13 +29,11 @@
   ; @param (keyword) querier-id
   ; @param (map) querier-props
   ;  {:component (component)(opt)
-  ;   :placeholder (metamorphic-content)(opt)
   ;   :render-f (function)(opt)}
-  [querier-id {:keys [component placeholder render-f]}]
-  (if-let [server-response @(a/subscribe [:sync/get-request-response querier-id])]
+  [querier-id {:keys [component render-f]}]
+  (if-let [server-response @(r/subscribe [:pathom/get-query-response querier-id])]
           (cond render-f  [render-f       server-response]
                 component (conj component server-response))))
-          ;(if placeholder [content.views/component placeholder])))
 
 (defn- querier
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,21 +42,16 @@
   ; @param (map) querier-props
   ;  {:query (vector)}
   [querier-id {:keys [query] :as querier-props}]
-  (reagent/lifecycles {:component-did-mount (fn [] (a/dispatch [:pathom/send-query! querier-id {:query query}]))
-                       :reagent-render      (fn [] [querier-content querier-id querier-props])}))
+  (reagent/lifecycles {:component-did-mount    (fn [] (r/dispatch [:pathom/send-query!           querier-id {:query query}]))
+                       :component-will-unmount (fn [] (r/dispatch [:pathom/clear-query-response! querier-id]))
+                       :reagent-render         (fn [] [querier-content querier-id querier-props])}))
 
 (defn component
   ; @param (keyword)(opt) querier-id
   ; @param (map) querier-props
   ;  {:component (component)(opt)
   ;   :query (vector)
-
-  ;   ?
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   ?
-
-  ;   :render-f (function)(opt)
-  ;   :value-path (vector)(opt)}
+  ;   :render-f (function)(opt)}
   ;
   ; @usage
   ;  [components/querier {...}]

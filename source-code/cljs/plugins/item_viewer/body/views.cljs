@@ -79,7 +79,9 @@
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
   ;    Only w/ {:auto-title? true}
-  ;   :query (vector)(opt)}
+  ;   :query (vector)(opt)
+  ;   :transfer-id (keyword)(opt)
+  ;    XXX#8173}
   ;
   ; @usage
   ;  [item-viewer/body :my-viewer {...}]
