@@ -15,18 +15,9 @@
 (ns plugins.item-preview.body.views
     (:require [plugins.item-preview.body.prototypes :as body.prototypes]
               [plugins.item-preview.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views    :as body.views]
               [reagent.api                          :as reagent]
               [re-frame.api                         :as r]
               [x.app-components.api                 :as components]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.body.views
-(def error-body body.views/error-body)
 
 
 
@@ -70,13 +61,14 @@
 (defn body
   ; @param (keyword) preview-id
   ; @param (map) body-props
-  ;  {:ghost-element (metamorphic-content)(opt)
+  ;  {:error-element (metamorphic-content)(opt)
+  ;   :ghost-element (metamorphic-content)(opt)
+  ;   :item-id (string)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :preview-element (metamorphic-content)
   ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-preview/body :my-preview {...}]

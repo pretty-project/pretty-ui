@@ -28,6 +28,7 @@
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-item-id!       core.events/set-item-id!)
+(def update-item-id!    core.events/update-item-id!)
 
 
 
@@ -58,6 +59,20 @@
   (let [item-path (r body.subs/get-body-prop db preview-id :item-path)]
        (-> db (dissoc-in [:plugins :plugin-handler/meta-items preview-id :data-received?])
               (dissoc-in item-path))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn load-preview!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  ;
+  ; @return (map)
+  [db [_ preview-id]]
+  (r update-item-id! db preview-id))
 
 
 

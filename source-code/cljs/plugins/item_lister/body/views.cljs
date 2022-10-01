@@ -16,7 +16,6 @@
     (:require [mid-fruits.logical                  :refer [nor]]
               [plugins.item-lister.body.prototypes :as body.prototypes]
               [plugins.item-lister.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
@@ -25,14 +24,6 @@
 
               ; TEMP
               [plugins.sortable.core               :refer []]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.body.views
-(def error-body body.views/error-body)
 
 
 
@@ -88,6 +79,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  (let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
+       [error-element lister-id]))
+
 (defn item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -108,7 +107,7 @@
   ; @param (keyword) lister-id
   [lister-id]
   (cond @(r/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
-         [error-body lister-id {:error-description :the-content-you-opened-may-be-broken}]
+         [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])
          [:<> [item-list                 lister-id]
               [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
@@ -123,6 +122,7 @@
   ;  {:default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
@@ -135,8 +135,7 @@
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
   ;   :selected-items (strings in vector)(opt)
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-lister/body :my-lister {...}]

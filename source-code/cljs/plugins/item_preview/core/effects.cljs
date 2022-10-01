@@ -27,5 +27,5 @@
   ;
   ; @param (keyword) preview-id
   (fn [{:keys [db]} [_ preview-id]]
-      {;:db       (r core.events/load-preview! db preview-id)
+      {:db       (r core.events/load-preview! db preview-id)
        :dispatch [:item-preview/request-item! preview-id]}))

@@ -35,7 +35,7 @@
             validator-f #(r download.validators/request-item-response-valid? db preview-id %)]
            {:db       (r download.events/request-item! db preview-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
-                                           {:on-success [:item-preview/receive-item!   preview-id]
+                                           {:on-success [:item-preview/set-error-mode! preview-id];[:item-preview/receive-item!   preview-id]
                                             :on-failure [:item-preview/set-error-mode! preview-id]
                                             :query query :validator-f validator-f}]})))
 

@@ -75,12 +75,13 @@
 
 
 
-;; -- Az {:default-item-id "..."} paraméter használata ------------------------
+;; -- Az {:item-id "..."} paraméter használata --------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A body komponens {:default-item-id "..."} paraméterének értéke ...
-; ... az aktuálisan szerkesztett elem azonosítója, amikor az aktuális útvonalból
-;     nem származtatható az :item-id útvonal-paraméter.
+; A body komponens {:item-id "..."} paraméterének értékét használja az aktuálisan
+; szerkesztett elem azonosítójaként, ...
+; ... amikor az aktuális útvonalból nem származtatható az :item-id útvonal-paraméter.
+; ... a plugin NEM útvonal-vezérelt.
 
 
 

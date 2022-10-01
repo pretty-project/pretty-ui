@@ -1515,6 +1515,18 @@ body {
   min-height: 8px;
   min-width: 8px }
 
+.x-element-badge--content {
+  /* TEMP */
+  background-color: #375dd6;
+  color: white;
+
+  border-radius: 50%;
+  font-size: var( --font-size-xxs );
+  font-weight: 600;
+  line-height: 18px;
+  height: 18px;
+  width: 18px }
+
 /***** Element badge *****/
 
 

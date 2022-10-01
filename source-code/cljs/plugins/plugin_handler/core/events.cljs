@@ -131,27 +131,34 @@
   ; @return (map)
   [db [_ plugin-id]]
   ; XXX#9143
+  ; A plugin által aktuálisan megnyitandó elem azonosítójának különböző lehetséges
+  ; forrásaiból, azok prioritása szerint aktualizálja a current-item-id értékét.
   ;
-  ; A) Ha a plugin útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása
-  ;    az aktuális útvonal :item-id útvonal-paramétere, annak hiányában a body komponens
-  ;    {:default-item-id "..."} tulajdonsága.
+  ; A) Ha a plugin útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
+  ;    1. az aktuális útvonal :item-id útvonal-paramétere
+  ;    2. a body komponens {:item-id "..."} tulajdonsága.
+  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
   ;
-  ; B) Ha a plugin NEM útvonal-vezérelt, akkor az aktuális elem azonosítóját a plugin
-  ;    eseményei vagy a plugint használó modul eseményei állíthatják be.
-  ;    Ha az update-item-id! függvény alkalmazása előtt az aktuális elem azonosítójának
-  ;    beállítása nem történt meg, akkor az azonosító forrása a body komponens {:default-item-id "..."}
-  ;    tulajdonságának értéke lesz.
+  ; B) Ha a plugin NEM útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
+  ;    1. a plugin eseményei vagy a plugint használó modul eseményei által előre beállított érték.
+  ;    2. a body komponens {:item-id "..."} tulajdonsága.
+  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
   (if-let [route-handled? (r routes.subs/route-handled? db plugin-id)]
           ; A)
           (if-let [derived-item-id (r routes.subs/get-derived-item-id db plugin-id)]
                   (r set-item-id! db plugin-id derived-item-id)
-                  (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
-                       (r set-item-id! db plugin-id default-item-id)))
+                  (if-let [item-id (r body.subs/get-body-prop db plugin-id :item-id)]
+                          (r set-item-id! db plugin-id item-id)
+                          (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
+                               (r set-item-id! db plugin-id default-item-id))))
           ; B)
+        (let []
           (if-let [current-item-id (r core.subs/get-current-item-id db plugin-id)]
                   (return db)
-                  (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
-                       (r set-item-id! db plugin-id default-item-id)))))
+                  (if-let [item-id (r body.subs/get-body-prop db plugin-id :item-id)]
+                          (r set-item-id! db plugin-id item-id)
+                          (let [default-item-id (r body.subs/get-body-prop db plugin-id :default-item-id)]
+                               (r set-item-id! db plugin-id default-item-id)))))))
 
 
 
@@ -180,10 +187,14 @@
           ; A)
           (if-let [derived-view-id (r routes.subs/get-derived-view-id db plugin-id)]
                   (r set-view-id! db plugin-id derived-view-id)
-                  (let [default-view-id (r body.subs/get-body-prop db plugin-id :default-view-id)]
-                       (r set-view-id! db plugin-id default-view-id)))
+                  (if-let [view-id (r body.subs/get-body-prop db plugin-id :view-id)]
+                          (r set-view-id! db plugin-id view-id)
+                          (let [default-view-id (r body.subs/get-body-prop db plugin-id :default-view-id)]
+                               (r set-view-id! db plugin-id default-view-id))))
           ; B)
           (if-let [current-view-id (r core.subs/get-current-view-id db plugin-id)]
                   (return db)
-                  (let [default-view-id (r body.subs/get-body-prop db plugin-id :default-view-id)]
-                       (r set-view-id! db plugin-id default-view-id)))))
+                  (if-let [view-id (r body.subs/get-body-prop db plugin-id :view-id)]
+                          (r set-view-id! db plugin-id view-id)
+                          (let [default-view-id (r body.subs/get-body-prop db plugin-id :default-view-id)]
+                               (r set-view-id! db plugin-id default-view-id))))))

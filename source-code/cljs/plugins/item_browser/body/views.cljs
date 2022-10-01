@@ -26,7 +26,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.body.views
-(def error-body        body.views/error-body)
 (def item-list         body.views/item-list)
 (def no-items-to-show  body.views/no-items-to-show)
 (def downloading-items body.views/downloading-items)
@@ -36,6 +35,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  [browser-id]
+  (let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
+       [error-element browser-id]))
+
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -43,7 +50,7 @@
   [browser-id]
   ; XXX#6177
   (cond @(r/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
-         [error-body browser-id {:error-description :the-content-you-opened-may-be-broken}]
+         [error-element browser-id]
         ;@(r/subscribe [:environment/browser-offline?])
         ; [offline-body browser-id]
         @(r/subscribe [:item-browser/data-received? browser-id])
@@ -64,6 +71,7 @@
   ;   :default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
@@ -80,8 +88,7 @@
   ;   :query (vector)(opt)
   ;   :search-keys (keywords in vector)(opt)
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @example
   ;  [item-browser/body :my-browser {...}]

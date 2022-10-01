@@ -15,18 +15,9 @@
 (ns plugins.item-editor.body.views
     (:require [plugins.item-editor.body.prototypes :as body.prototypes]
               [plugins.item-editor.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [x.app-components.api                :as components]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.body.views
-(def error-body body.views/error-body)
 
 
 
@@ -46,6 +37,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [editor-id]
+  (let [error-element @(r/subscribe [:item-editor/get-body-prop editor-id :error-element])]
+       [error-element editor-id]))
+
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -60,7 +59,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (cond @(r/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
-         [error-body editor-id {:error-description :the-item-you-opened-may-be-broken}]
+         [error-element editor-id]
         @(r/subscribe [:item-editor/data-received? editor-id])
          [form-element editor-id]
         :data-not-received
@@ -72,10 +71,11 @@
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;    Only w/ {:label-key ...}
-  ;   :default-item-id (string)
   ;   :form-element (metamorphic-content)
+  ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :initial-item (map)(opt)
+  ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
@@ -84,8 +84,7 @@
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
   ;    Default: core.helpers/default-suggestions-path
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-editor/body :my-editor {...}]

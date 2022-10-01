@@ -15,18 +15,9 @@
 (ns plugins.file-editor.body.views
     (:require [plugins.file-editor.body.prototypes :as body.prototypes]
               [plugins.file-editor.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
               [x.app-components.api                :as components]
               [re-frame.api                        :as r]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.body.views
-(def error-body body.views/error-body)
 
 
 
@@ -46,6 +37,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  [editor-id]
+  (let [error-element @(r/subscribe [:file-editor/get-body-prop editor-id :error-element])]
+       [error-element editor-id]))
+
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -60,7 +59,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (cond @(r/subscribe [:file-editor/get-meta-item editor-id :error-mode?])
-         [error-body editor-id {:error-description :the-content-you-opened-may-be-broken}]
+         [error-element editor-id]
         @(r/subscribe [:file-editor/data-received? editor-id])
          [form-element editor-id]
         :data-not-received
@@ -71,11 +70,11 @@
   ; @param (map) body-props
   ;  {:content-path (vector)(opt)
   ;    Default: core.helpers/default-content-path
+  ;   :error-element (metamorphic-content)(opt)
   ;   :form-element (metamorphic-content)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [file-editor/body :my-editor {...}]

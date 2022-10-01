@@ -15,18 +15,9 @@
 (ns plugins.item-viewer.body.views
     (:require [plugins.item-viewer.body.prototypes :as body.prototypes]
               [plugins.item-viewer.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [x.app-components.api                :as components]))
-
-
-
-;; -- Redirects ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; plugins.plugin-handler.body.views
-(def error-body body.views/error-body)
 
 
 
@@ -46,6 +37,14 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  [viewer-id]
+  (let [error-element @(r/subscribe [:item-lister/get-body-prop viewer-id :error-element])]
+       [error-element viewer-id]))
+
 (defn- item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -60,7 +59,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (cond @(r/subscribe [:item-viewer/get-meta-item viewer-id :error-mode?])
-         [error-body viewer-id {:error-description :the-item-you-opened-may-be-broken}]
+         [error-element viewer-id]
         @(r/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]
         :data-not-received
@@ -72,16 +71,15 @@
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;    Only w/ {:label-key ...}
-  ;   :default-item-id (string)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-element (metamorphic-content)
+  ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
   ;    Only w/ {:auto-title? true}
   ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)
-  ;    XXX#8173}
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-viewer/body :my-viewer {...}]

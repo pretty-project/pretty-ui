@@ -49,7 +49,8 @@
                                              [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
                       [icon-button-label label true]]
                 [:button {:data-clickable true
-                          :on-click #(a/dispatch on-click)
+                          :on-click    #(a/dispatch on-click)
+                          :on-mouse-up #(environment/blur-element!)
                           :style {:display :block :padding "0 12px" :min-width "60px"}}
                          [:div.x-icon.x-element {:style {:width "100%"}}
                                                 [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
