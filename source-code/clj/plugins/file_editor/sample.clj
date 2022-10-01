@@ -17,7 +17,7 @@
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [mid-fruits.candy                      :refer [return]]
               [server-fruits.io                      :as io]
-              [x.server-core.api                     :as a]))
+              [re-frame.api                          :as r]))
 
 
 
@@ -35,7 +35,7 @@
 ;     történik meg.
 ; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
 ;     beállítódik az applikáció címkéjének.
-(a/reg-event-fx
+(r/reg-event-fx
   :init-my-editor!
   [:file-editor/init-editor! :my-editor
                              {:base-route  "/@app-home/my-editor"

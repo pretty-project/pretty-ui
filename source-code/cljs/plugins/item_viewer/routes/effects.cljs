@@ -15,14 +15,14 @@
 (ns plugins.item-viewer.routes.effects
     (:require [plugins.item-viewer.body.subs     :as body.subs]
               [plugins.item-viewer.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

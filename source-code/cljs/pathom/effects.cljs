@@ -15,15 +15,16 @@
 (ns pathom.effects
     (:require [mid-fruits.candy  :refer [return]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
-              [pathom.prototypes :as prototypes]))
+              [re-frame.api      :as r :refer [r]]
+              [pathom.prototypes :as prototypes]
+              [x.app-core.api    :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :pathom/send-query!
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
@@ -58,9 +59,9 @@
   ;
   ; @usage
   ;  [:pathom/send-query! {:body {:query [:all-users] :my-body-param "My value"}}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ query-id query-props]]
-      (let [debug-mode? (r a/debug-mode-detected?           db)
+      (let [debug-mode? (r core/debug-mode-detected?        db)
             query-props (r prototypes/query-props-prototype db query-props)
 
             ; A {:query [...]} és a {:body {:query [...]}} tulajdonságok összevonása után ...

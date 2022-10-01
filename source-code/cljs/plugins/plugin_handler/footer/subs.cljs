@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.footer.subs
-    (:require [x.app-core.api :refer [r]]))
+    (:require [re-frame.api :refer [r]]))
 
 
 

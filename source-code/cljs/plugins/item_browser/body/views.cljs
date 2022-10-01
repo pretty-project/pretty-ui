@@ -18,7 +18,7 @@
               [plugins.item-lister.body.views       :as body.views]
               [reagent.api                          :as reagent]
               [tools.infinite-loader.api            :as infinite-loader]
-              [x.app-core.api                       :as a]))
+              [re-frame.api                         :as r]))
 
 
 
@@ -42,11 +42,11 @@
   ; @param (keyword) browser-id
   [browser-id]
   ; XXX#6177
-  (cond @(a/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
+  (cond @(r/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
          [error-body browser-id {:error-description :the-content-you-opened-may-be-broken}]
-        ;@(a/subscribe [:environment/browser-offline?])
+        ;@(r/subscribe [:environment/browser-offline?])
         ; [offline-body browser-id]
-        @(a/subscribe [:item-browser/data-received? browser-id])
+        @(r/subscribe [:item-browser/data-received? browser-id])
          [:<> [item-list                 browser-id]
               [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
               [no-items-to-show          browser-id]
@@ -92,6 +92,6 @@
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
        (reagent/lifecycles (core.helpers/component-id browser-id :body)
                            {:reagent-render         (fn []              [body-structure                  browser-id body-props])
-                            :component-did-mount    (fn []  (a/dispatch [:item-browser/body-did-mount    browser-id body-props]))
-                            :component-will-unmount (fn []  (a/dispatch [:item-browser/body-will-unmount browser-id]))
-                            :component-did-update   (fn [%] (a/dispatch [:item-browser/body-did-update   browser-id %]))})))
+                            :component-did-mount    (fn []  (r/dispatch [:item-browser/body-did-mount    browser-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-browser/body-will-unmount browser-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-browser/body-did-update   browser-id %]))})))

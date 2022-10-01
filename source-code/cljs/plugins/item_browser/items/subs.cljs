@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.items.subs
     (:require [plugins.plugin-handler.items.subs :as items.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -75,4 +75,4 @@
 ;
 ; @usage
 ;  [:item-browser/get-item :my-browser "my-item"]
-(a/reg-sub :item-browser/get-item get-item)
+(r/reg-sub :item-browser/get-item get-item)

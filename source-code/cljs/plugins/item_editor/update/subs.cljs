@@ -17,7 +17,7 @@
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.update.subs :as update.subs]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

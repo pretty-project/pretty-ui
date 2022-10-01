@@ -15,14 +15,14 @@
 (ns plugins.item-editor.routes.effects
     (:require [mid-fruits.uri                     :as uri]
               [plugins.item-editor.routes.helpers :as routes.helpers]
-              [x.server-core.api                  :as a]))
+              [re-frame.api                       :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -38,7 +38,7 @@
                                 ;:route-parent   base-route
                                 :route-template extended-route}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/add-creator-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

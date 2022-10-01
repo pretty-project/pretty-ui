@@ -16,7 +16,7 @@
     (:require [mid-fruits.map                       :as map]
               [mid-fruits.vector                    :as vector]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
-              [x.app-core.api                       :refer [r]]))
+              [re-frame.api                         :refer [r]]))
 
 
 

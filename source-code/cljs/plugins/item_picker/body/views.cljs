@@ -17,8 +17,8 @@
               [plugins.item-picker.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]))
+              [re-frame.api                        :as r]
+              [x.app-components.api                :as components]))
 
 
 
@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) picker-id
   [picker-id]
-  (if-let [ghost-element @(a/subscribe [:item-picker/get-body-prop picker-id :ghost-element])]
+  (if-let [ghost-element @(r/subscribe [:item-picker/get-body-prop picker-id :ghost-element])]
           [components/content ghost-element]))
 
 
@@ -51,7 +51,7 @@
   ;
   ; @param (keyword) picker-id
   [picker-id]
-  (let [preview-element @(a/subscribe [:item-picker/get-body-prop picker-id :preview-element])]
+  (let [preview-element @(r/subscribe [:item-picker/get-body-prop picker-id :preview-element])]
        [preview-element picker-id]))
 
 (defn body-structure
@@ -59,10 +59,10 @@
   ;
   ; @param (keyword) picker-id
   [editor-id]
-  (cond @(a/subscribe [:item-picker/get-meta-item editor-id :error-mode?])
+  (cond @(r/subscribe [:item-picker/get-meta-item editor-id :error-mode?])
          ;[error-body editor-id {:error-description :the-item-you-opened-may-be-broken}]
          [:div "error"]
-        @(a/subscribe [:item-picker/data-received? editor-id])
+        @(r/subscribe [:item-picker/data-received? editor-id])
          [preview-element picker-id]
         :data-not-received
          [downloading-item picker-id]))
@@ -74,7 +74,8 @@
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :preview-element (metamorphic-content)
-  ;   :query (vector)(opt)}
+  ;   :query (vector)(opt)
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-picker/body :my-picker {...}]
@@ -86,6 +87,6 @@
   (let [body-props (body.prototypes/body-props-prototype picker-id body-props)]
        (reagent/lifecycles (core.helpers/component-id picker-id :body)
                            {:reagent-render         (fn []              [body-structure                 picker-id])
-                            :component-did-mount    (fn []  (a/dispatch [:item-picker/body-did-mount    picker-id body-props]))
-                            :component-will-unmount (fn []  (a/dispatch [:item-picker/body-will-unmount picker-id]))
-                            :component-did-update   (fn [%] (a/dispatch [:item-picker/body-did-update   picker-id %]))})))
+                            :component-did-mount    (fn []  (r/dispatch [:item-picker/body-did-mount    picker-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-picker/body-will-unmount picker-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-picker/body-did-update   picker-id %]))})))

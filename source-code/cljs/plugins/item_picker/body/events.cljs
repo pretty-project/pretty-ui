@@ -15,7 +15,7 @@
 (ns plugins.item-picker.body.events
     (:require [plugins.item-editor.core.events    :as core.events]
               [plugins.plugin-handler.body.events :as body.events]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

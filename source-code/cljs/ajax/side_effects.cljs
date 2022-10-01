@@ -16,7 +16,7 @@
     (:require [ajax.core       :as core]
               [ajax.prototypes :as prototypes]
               [ajax.state      :as state]
-              [x.app-core.api  :as a]))
+              [re-frame.api    :as r]))
 
 
 
@@ -63,8 +63,8 @@
 
 ; @usage
 ;  [:ajax/send-request! :my-request {...}]
-(a/reg-fx :ajax/send-request! send-request!)
+(r/reg-fx :ajax/send-request! send-request!)
 
 ; @usage
 ;  [:ajax/abort-request! :my-request]
-(a/reg-fx :ajax/abort-request! abort-request!)
+(r/reg-fx :ajax/abort-request! abort-request!)

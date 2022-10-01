@@ -12,7 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.plugin-handler.transfer.subs)
+(ns plugins.plugin-handler.transfer.subs
+    (:require [plugins.plugin-handler.body.subs :as body.subs]
+              [re-frame.api                     :refer [r]]))
 
 
 
@@ -27,4 +29,5 @@
   ;
   ; @return (*)
   [db [_ plugin-id item-key]]
-  (get-in db [:plugins :plugin-handler/transfer-items plugin-id item-key]))
+  (let [transfer-id (r body.subs/get-body-prop db plugin-id :transfer-id)]
+       (get-in db [:plugins :plugin-handler/transfer-items plugin-id item-key])))

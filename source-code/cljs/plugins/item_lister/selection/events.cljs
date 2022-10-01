@@ -14,7 +14,7 @@
 
 (ns plugins.item-lister.selection.events
     (:require [plugins.plugin-handler.selection.events :as selection.events]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
@@ -134,21 +134,21 @@
 ;
 ; @usage
 ;  [:item-lister/select-all-items! :my-lister]
-(a/reg-event-db :item-lister/select-all-items! select-all-items!)
+(r/reg-event-db :item-lister/select-all-items! select-all-items!)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-lister/toggle-item-selection! :my-lister "my-item"]
-(a/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
+(r/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-lister/toggle-single-item-selection! :my-lister "my-item"]
-(a/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
+(r/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
 
 
 ; @param (keyword) lister-id
@@ -157,10 +157,10 @@
 ;
 ; @usage
 ;  [:item-lister/toggle-limited-item-selection! :my-lister "my-item" 8]
-(a/reg-event-db :item-lister/toggle-limited-item-selection! toggle-limited-item-selection!)
+(r/reg-event-db :item-lister/toggle-limited-item-selection! toggle-limited-item-selection!)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/discard-selection! :my-lister]
-(a/reg-event-db :item-lister/discard-selection! discard-selection!)
+(r/reg-event-db :item-lister/discard-selection! discard-selection!)

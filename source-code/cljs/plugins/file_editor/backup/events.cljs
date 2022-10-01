@@ -16,7 +16,7 @@
     (:require [plugins.file-editor.backup.subs :as backup.subs]
               [plugins.file-editor.body.subs   :as body.subs]
               [plugins.file-editor.core.subs   :as core.subs]
-              [x.app-core.api                   :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
@@ -57,4 +57,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :file-editor/revert-content! revert-content!)
+(r/reg-event-db :file-editor/revert-content! revert-content!)

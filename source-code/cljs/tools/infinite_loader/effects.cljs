@@ -13,15 +13,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.infinite-loader.effects
-    (:require [tools.infinite-loader.events :as events]
-              [x.app-core.api               :as a :refer [r]]))
+    (:require [re-frame.api                 :as r :refer [r]]
+              [tools.infinite-loader.events :as events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :infinite-loader/reload-loader!
   ; @param (keyword) loader-id
   ;

@@ -24,7 +24,7 @@
               [mongo-db.aggregation :as aggregation]
               [mongo-db.checking    :as checking]
               [mongo-db.engine      :as engine]
-              [x.server-core.api    :as a]))
+              [re-frame.api         :as r]))
 
 
 
@@ -40,12 +40,12 @@
   ;
   ; @return (namespaced maps in vector)
   ([collection-name query]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (vec (mcl/find-maps database collection-name query))
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
 
   ([collection-name query projection]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (vec (mcl/find-maps database collection-name query projection))
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query query :projection projection})))))))
 
@@ -58,12 +58,12 @@
   ;
   ; @return (namespaced map)
   ([collection-name query]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/find-one-as-map database collection-name query)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
 
   ([collection-name query projection]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/find-one-as-map database collection-name query projection)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query query :projection projection})))))))
 
@@ -76,12 +76,12 @@
   ;
   ; @return (namespaced map)
   ([collection-name document-id]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/find-map-by-id database collection-name document-id)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
 
   ([collection-name document-id projection]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/find-map-by-id database collection-name document-id projection)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id :projection projection})))))))
 
@@ -92,7 +92,7 @@
   ;
   ; @return (integer)
   [collection-name]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/count database collection-name)
             (catch Exception e (println (str e "\n" {:collection-name collection-name}))))))
 
@@ -104,7 +104,7 @@
   ;
   ; @return (integer)
   [collection-name query]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/count database collection-name query)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :query query}))))))
 
@@ -119,7 +119,7 @@
   ;
   ; @return (strings in vector)
   []
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (-> database mdb/get-collection-names vec)))
 
 (defn get-collection-namespace

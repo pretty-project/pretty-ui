@@ -19,7 +19,7 @@
               [plugins.item-editor.body.subs        :as body.subs]
               [plugins.item-editor.core.subs        :as core.subs]
               [plugins.plugin-handler.backup.events :as backup.events]
-              [x.app-core.api                       :as a :refer [r]]))
+              [re-frame.api                         :as r :refer [r]]))
 
 
 
@@ -117,7 +117,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
+(r/reg-event-db :item-editor/clean-recovery-data! clean-recovery-data!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-editor/revert-item! revert-item!)
+(r/reg-event-db :item-editor/revert-item! revert-item!)

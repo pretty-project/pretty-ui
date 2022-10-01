@@ -18,7 +18,7 @@
               [plugins.item-picker.core.events        :as core.events]
               [plugins.item-picker.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :refer [r]]))
+              [re-frame.api                           :refer [r]]))
 
 
 

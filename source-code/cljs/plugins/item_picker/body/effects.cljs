@@ -15,14 +15,14 @@
 (ns plugins.item-picker.body.effects
     (:require [plugins.item-picker.body.events :as body.events]
               [reagent.api                     :as reagent]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -32,7 +32,7 @@
       {:db       (r body.events/body-did-mount db picker-id body-props)
        :dispatch [:item-picker/load-editor! picker-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -40,7 +40,7 @@
   (fn [{:keys [db]} [_ picker-id]]
       {:db (r body.events/body-will-unmount db editor-id)}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

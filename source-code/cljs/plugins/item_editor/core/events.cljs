@@ -19,7 +19,7 @@
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.plugin-handler.core.events :as core.events]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -154,4 +154,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-editor/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-editor/set-error-mode! set-error-mode!)

@@ -18,7 +18,7 @@
               [plugins.text-editor.prototypes :as prototypes]
               [plugins.text-editor.state      :as state]
               [jodit-react                    :default JoditEditor]
-              [x.app-core.api                 :as a]
+              [re-frame.api                   :as r]
               [x.app-elements.api             :as elements]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :text-editor/hack-9910
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
@@ -43,8 +43,8 @@
   ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozik,
   ; akkor a hack-9910 Reagent komponens meghívja a [:text-editor/hack-9910 ...]
   ; eseményt, ami kiértékeli a változást ...
-  (let [stored-value @(a/subscribe [:db/get-item value-path])]
-       (a/dispatch [:text-editor/hack-9910 editor-id editor-props])))
+  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+       (r/dispatch [:text-editor/hack-9910 editor-id editor-props])))
 
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.infinite-loader.events
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
@@ -69,15 +69,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :infinite-loader/hide-observer! hide-observer!)
+(r/reg-event-db :infinite-loader/hide-observer! hide-observer!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :infinite-loader/show-observer! show-observer!)
+(r/reg-event-db :infinite-loader/show-observer! show-observer!)
 
 ; @usage
 ;  [:infinite-loader/pause-loader! :my-loader]
-(a/reg-event-db :infinite-loader/pause-loader! pause-loader!)
+(r/reg-event-db :infinite-loader/pause-loader! pause-loader!)
 
 ; @usage
 ;  [:infinite-loader/restart-loader! :my-loader]
-(a/reg-event-db :infinite-loader/restart-loader! restart-loader!)
+(r/reg-event-db :infinite-loader/restart-loader! restart-loader!)

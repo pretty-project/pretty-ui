@@ -23,7 +23,7 @@
               [plugins.item-lister.selection.subs     :as selection.subs]
               [plugins.item-lister.selection.events   :as selection.events]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :as a :refer [r]]
+              [re-frame.api                           :as r :refer [r]]
               [x.app-db.api                           :as db]))
 
 

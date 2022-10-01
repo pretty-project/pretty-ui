@@ -19,7 +19,7 @@
               [plugins.plugin-handler.core.subs      :as core.subs]
               [plugins.plugin-handler.items.events   :as items.events]
               [plugins.plugin-handler.selection.subs :as selection.subs]
-              [x.app-core.api                        :refer [r]]))
+              [re-frame.api                          :refer [r]]))
 
 
 

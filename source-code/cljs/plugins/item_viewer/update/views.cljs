@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.update.views
-    (:require [x.app-core.api :as a]
-              [x.app-ui.api   :as ui]))
+    (:require [re-frame.api :as r]
+              [x.app-ui.api :as ui]))
 
 
 

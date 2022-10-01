@@ -18,8 +18,8 @@
               [mid-fruits.css            :as css]
               [react.api                 :as react]
               [reagent.api               :as reagent]
+              [re-frame.api              :as r]
               [x.app-components.api      :as components]
-              [x.app-core.api            :as a]
               [x.app-elements.api        :as elements]))
 
 
@@ -80,8 +80,8 @@
 (defn- dev-tools-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [debug-mode-detected? @(a/subscribe [:core/debug-mode-detected?])]
-          (let [db-write-count @(a/subscribe [:developer/get-db-write-count])]
+  (if-let [debug-mode-detected? @(r/subscribe [:core/debug-mode-detected?])]
+          (let [db-write-count @(r/subscribe [:developer/get-db-write-count])]
                [elements/icon-button ::dev-tools-icon-button
                                      {:border-radius :s
                                       :hover-color   :highlight
@@ -123,7 +123,7 @@
 (defn go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [parent-route @(a/subscribe [:router/get-current-route-parent])]
+  (let [parent-route @(r/subscribe [:router/get-current-route-parent])]
        [elements/icon-button ::go-up-icon-button
                              {:border-radius :s
                               :hover-color   :highlight
@@ -139,9 +139,9 @@
 (defn- navigation-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (cond @(a/subscribe [:router/at-home?])
+  (cond @(r/subscribe [:router/at-home?])
          [at-home-icon-button]
-        @(a/subscribe [:router/home-next-door?])
+        @(r/subscribe [:router/home-next-door?])
          [go-home-icon-button]
         :far-from-home
          [go-up-icon-button]))
@@ -192,7 +192,7 @@
 (defn- footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [user-identified? @(a/subscribe [:user/user-identified?])]
+  (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
           [:div#surface-a--footer [:div#surface-a--footer-content [privacy-policy-button]
                                                                   [terms-of-service-button]
                                                                   [settings-button]
@@ -215,7 +215,7 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [user-identified? @(a/subscribe [:user/user-identified?])]
+  (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
           (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
                                :component-will-unmount (fn [] (helpers/header-will-unmount-f))
                                :reagent-render         (fn [] [header-structure])})))

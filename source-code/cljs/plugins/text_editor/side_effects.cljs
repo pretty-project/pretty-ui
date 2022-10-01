@@ -14,7 +14,7 @@
 
 (ns plugins.text-editor.side-effects
     (:require [plugins.text-editor.helpers :as helpers]
-              [x.app-core.api              :as a]))
+              [re-frame.api                :as r]))
 
 
 
@@ -22,4 +22,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :text-editor/update-editor-difference! helpers/update-editor-difference!)
+(r/reg-fx :text-editor/update-editor-difference! helpers/update-editor-difference!)

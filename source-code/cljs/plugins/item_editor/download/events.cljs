@@ -20,7 +20,7 @@
               [plugins.item-editor.core.subs          :as core.subs]
               [plugins.item-editor.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :refer [r]]))
+              [re-frame.api                           :refer [r]]))
 
 
 

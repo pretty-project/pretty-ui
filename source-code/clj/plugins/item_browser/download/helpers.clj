@@ -18,7 +18,7 @@
               [mongo-db.api            :as mongo-db]
               [pathom.api              :as pathom]
               [plugins.item-lister.api :as item-lister]
-              [x.server-core.api       :as a]))
+              [re-frame.api            :as r]))
 
 
 
@@ -34,8 +34,8 @@
   ;
   ; @return (maps in vector)
   [env browser-id]
-  (let [collection-name @(a/subscribe [:item-browser/get-browser-prop browser-id :collection-name])
-        item-namespace  @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
+  (let [collection-name @(r/subscribe [:item-browser/get-browser-prop browser-id :collection-name])
+        item-namespace  @(r/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
         items-key        (pathom/env->param env :items-key)
         item-id          (pathom/env->param env :item-id)]
        (if-let [document (mongo-db/get-document-by-id collection-name item-id)]

@@ -14,14 +14,14 @@
 
 (ns pathom.sample
     (:require [pathom.api]
-              [x.app-core.api :as a]))
+              [re-frame.api :as r]))
 
 
 
 ;; -- Pathom query küldése ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :send-my-query!
   [:pathom/send-query! :my-query
                        {:query [:my-resolver]}])

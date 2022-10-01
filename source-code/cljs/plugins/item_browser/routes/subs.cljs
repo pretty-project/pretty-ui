@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.routes.subs
     (:require [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -44,7 +44,7 @@
   [db [_ browser-id item-id]]
   (r get-extended-route db browser-id item-id))
 
-  
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,4 +54,4 @@
 ;
 ; @usage
 ;  [:item-browser/get-item-route db :my-browser "my-item"]
-(a/reg-sub :item-browser/get-item-route get-item-route)
+(r/reg-sub :item-browser/get-item-route get-item-route)

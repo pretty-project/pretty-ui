@@ -15,14 +15,14 @@
 (ns plugins.file-editor.core.effects
     (:require [plugins.file-editor.core.events     :as core.events]
               [plugins.file-editor.core.prototypes :as core.prototypes]
-              [x.server-core.api                   :as a :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/init-editor!
   ; @param (keyword) editor-id
   ; @param (map) editor-props

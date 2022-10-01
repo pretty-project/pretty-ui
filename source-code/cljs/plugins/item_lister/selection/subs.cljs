@@ -14,7 +14,7 @@
 
 (ns plugins.item-lister.selection.subs
     (:require [plugins.plugin-handler.selection.subs :as selection.subs]
-              [x.app-core.api                        :as a :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]))
 
 
 
@@ -142,41 +142,41 @@
 ;
 ; @usage
 ;  [:item-lister/get-selected-item-count :my-lister]
-(a/reg-sub :item-lister/get-selected-item-count get-selected-item-count)
+(r/reg-sub :item-lister/get-selected-item-count get-selected-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/all-items-selected? :my-lister]
-(a/reg-sub :item-lister/all-items-selected? all-items-selected?)
+(r/reg-sub :item-lister/all-items-selected? all-items-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/all-downloaded-items-selected? :my-lister]
-(a/reg-sub :item-lister/all-downloaded-items-selected? all-downloaded-items-selected?)
+(r/reg-sub :item-lister/all-downloaded-items-selected? all-downloaded-items-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/any-item-selected? :my-lister]
-(a/reg-sub :item-lister/any-item-selected? any-item-selected?)
+(r/reg-sub :item-lister/any-item-selected? any-item-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/any-downloaded-item-selected? :my-lister]
-(a/reg-sub :item-lister/any-downloaded-item-selected? any-downloaded-item-selected?)
+(r/reg-sub :item-lister/any-downloaded-item-selected? any-downloaded-item-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/no-items-selected? :my-lister]
-(a/reg-sub :item-lister/no-items-selected? no-items-selected?)
+(r/reg-sub :item-lister/no-items-selected? no-items-selected?)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-lister/item-selected? :my-lister "my-item"]
-(a/reg-sub :item-lister/item-selected? item-selected?)
+(r/reg-sub :item-lister/item-selected? item-selected?)

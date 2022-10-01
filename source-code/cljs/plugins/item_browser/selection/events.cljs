@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.selection.events
     (:require [plugins.plugin-handler.selection.events :as selection.events]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
@@ -113,21 +113,21 @@
 ;
 ; @usage
 ;  [:item-browser/select-all-items! :my-browser]
-(a/reg-event-db :item-browser/select-all-items! select-all-items!)
+(r/reg-event-db :item-browser/select-all-items! select-all-items!)
 
 ; @param (keyword) browser-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-browser/toggle-item-selection! :my-browser "my-item"]
-(a/reg-event-db :item-browser/toggle-item-selection! toggle-item-selection!)
+(r/reg-event-db :item-browser/toggle-item-selection! toggle-item-selection!)
 
 ; @param (keyword) browser-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-browser/toggle-single-item-selection! :my-browser "my-item"]
-(a/reg-event-db :item-browser/toggle-single-item-selection! toggle-single-item-selection!)
+(r/reg-event-db :item-browser/toggle-single-item-selection! toggle-single-item-selection!)
 
 
 ; @param (keyword) browser-id
@@ -136,10 +136,10 @@
 ;
 ; @usage
 ;  [:item-browser/toggle-limited-item-selection! :my-browser "my-item" 8]
-(a/reg-event-db :item-browser/toggle-limited-item-selection! toggle-limited-item-selection!)
+(r/reg-event-db :item-browser/toggle-limited-item-selection! toggle-limited-item-selection!)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/discard-selection! :my-browser]
-(a/reg-event-db :item-browser/discard-selection! discard-selection!)
+(r/reg-event-db :item-browser/discard-selection! discard-selection!)

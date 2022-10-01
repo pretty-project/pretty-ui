@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.routes.subs
     (:require [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -54,4 +54,4 @@
 ;
 ; @usage
 ;  [:item-viewer/get-item-route db :my-viewer "my-item"]
-(a/reg-sub :item-viewer/get-item-route get-item-route)
+(r/reg-sub :item-viewer/get-item-route get-item-route)

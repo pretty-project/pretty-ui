@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.transfer.subs
     (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
-              [x.app-core.api                       :as a]))
+              [re-frame.api                         :as r]))
 
 
 
@@ -30,4 +30,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-viewer/get-transfer-item get-transfer-item)
+(r/reg-sub :item-viewer/get-transfer-item get-transfer-item)

@@ -18,14 +18,14 @@
               [plugins.item-picker.download.events     :as download.events]
               [plugins.item-picker.download.queries    :as download.queries]
               [plugins.item-picker.download.validators :as download.validators]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -39,7 +39,7 @@
                                             :on-failure [:item-picker/set-error-mode! picker-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -52,7 +52,7 @@
           {:db       (r download.events/receive-item! db picker-id server-response)
            :dispatch [:item-picker/item-received picker-id]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

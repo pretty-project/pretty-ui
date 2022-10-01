@@ -26,8 +26,8 @@
               [mid-fruits.string    :as string]
               [mid-fruits.vector    :as vector]
               [reagent.api          :as reagent]
+              [re-frame.api         :as r :refer [r]]
               [x.app-components.api :as components]
-              [x.app-core.api       :as a :refer [r]]
               [x.app-db.api         :as db]))
 
 
@@ -406,7 +406,7 @@
   ;   :sensors (function)}
   [sortable-id _]
   {:collisionDetection  (param closest-center)
-   :onDragEnd          #(a/dispatch-sync [::handle-drag-end! sortable-id %])
+   :onDragEnd          #(r/dispatch-sync [::handle-drag-end! sortable-id %])
    :sensors             (make-sensors)})
 
 
@@ -427,7 +427,7 @@
 
 ; @usage
 ;  [:sortable/get-sortable-prop :my-sortable :value-path]
-(a/reg-sub :sortable/get-sortable-prop get-sortable-prop)
+(r/reg-sub :sortable/get-sortable-prop get-sortable-prop)
 
 (defn get-sortable-items
   ; @param (keyword) sortable-id
@@ -523,7 +523,7 @@
   {:sortable-items      (r get-sortable-items      db sortable-id)
    :sortable-item-order (r get-sortable-item-order db sortable-id)})
 
-(a/reg-sub :sortable/get-view-props get-view-props)
+(r/reg-sub :sortable/get-view-props get-view-props)
 
 
 
@@ -550,7 +550,7 @@
   [db [_ sortable-id sortable-props]]
   (r store-sortable-props! db sortable-id sortable-props))
 
-(a/reg-event-db :sortable/init-sortable! init-sortable!)
+(r/reg-event-db :sortable/init-sortable! init-sortable!)
 
 (defn- destruct-sortable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -561,7 +561,7 @@
   [db [_ sortable-id]]
   (dissoc-in db [:plugins :item-sorter/meta-items sortable-id]))
 
-(a/reg-event-db :sortable/destruct-sortable! destruct-sortable!)
+(r/reg-event-db :sortable/destruct-sortable! destruct-sortable!)
 
 (defn- update-sortable-item-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -605,7 +605,7 @@
 
 ; @usage
 ;  [:sortable/add-sortable-item! :my-sortable "My item"]
-(a/reg-event-db :sortable/add-sortable-item! add-sortable-item!)
+(r/reg-event-db :sortable/add-sortable-item! add-sortable-item!)
 
 (defn add-sortable-items!
   ; @param (keyword) sortable-id
@@ -619,7 +619,7 @@
   ; TODO ...
   (return db))
 
-(a/reg-event-db :sortable/add-sortable-items! add-sortable-items!)
+(r/reg-event-db :sortable/add-sortable-items! add-sortable-items!)
 
 (defn inject-sortable-item!
   ; @param (keyword) sortable-id
@@ -642,7 +642,7 @@
 
 ; @usage
 ;  [:sortable/inject-sortable-item! :my-sortable "My item" 5]
-(a/reg-event-db :sortable/inject-sortable-item! inject-sortable-item!)
+(r/reg-event-db :sortable/inject-sortable-item! inject-sortable-item!)
 
 (defn remove-sortable-item!
   ; @param (keyword) sortable-id
@@ -662,7 +662,7 @@
 
 ; @usage
 ;  [:sortable/remove-sortable-item! :my-sortable 3]
-(a/reg-event-db :sortable/remove-sortable-item! remove-sortable-item!)
+(r/reg-event-db :sortable/remove-sortable-item! remove-sortable-item!)
 
 (defn remove-sortable-items!
   ; @param (keyword) sortable-id
@@ -678,14 +678,14 @@
 
 ; @usage
 ;  [:sortable/remove-sortable-items! :my-sortable [0 3]]
-(a/reg-event-db :sortable/remove-sortable-items! remove-sortable-items!)
+(r/reg-event-db :sortable/remove-sortable-items! remove-sortable-items!)
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   ::handle-drag-end!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

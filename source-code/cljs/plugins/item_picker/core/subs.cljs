@@ -14,7 +14,7 @@
 
 (ns plugins.item-picker.core.subs
     (:require [plugins.plugin-handler.core.subs :as core.subs]
-              [x.app-core.api                   :as a :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
@@ -84,16 +84,16 @@
 ;
 ; @usage
 ;  [:item-picker/get-meta-item :my-picker :my-item]
-(a/reg-sub :item-editor/get-meta-item get-meta-item)
+(r/reg-sub :item-editor/get-meta-item get-meta-item)
 
 ; @param (keyword) picker-id
 ;
 ; @usage
 ;  [:item-picker/get-current-item-id :my-picker]
-(a/reg-sub :item-picker/get-current-item-id get-current-item-id)
+(r/reg-sub :item-picker/get-current-item-id get-current-item-id)
 
 ; @param (keyword) picker-id
 ;
 ; @usage
 ;  [:item-picker/get-current-item :my-picker]
-(a/reg-sub :item-picker/get-current-item get-current-item)
+(r/reg-sub :item-picker/get-current-item get-current-item)

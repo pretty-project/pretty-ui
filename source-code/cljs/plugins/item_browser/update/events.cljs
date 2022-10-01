@@ -18,7 +18,7 @@
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-browser.items.subs    :as items.subs]
-              [x.app-core.api                     :refer [r]]
+              [re-frame.api                       :refer [r]]
               [x.app-ui.api                       :as ui]))
 
 

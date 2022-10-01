@@ -17,7 +17,7 @@
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -207,52 +207,52 @@
 ;
 ; @usage
 ;  [:item-lister/get-meta-item :my-lister :my-item]
-(a/reg-sub :item-lister/get-meta-item get-meta-item)
+(r/reg-sub :item-lister/get-meta-item get-meta-item)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/get-downloaded-item-count :my-lister]
-(a/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
+(r/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/all-items-downloaded? :my-lister]
-(a/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
+(r/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/get-downloaded-items :my-lister]
-(a/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
+(r/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/get-all-item-count :my-lister]
-(a/reg-sub :item-lister/get-all-item-count get-all-item-count)
+(r/reg-sub :item-lister/get-all-item-count get-all-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/no-items-to-show? :my-lister]
-(a/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
+(r/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/downloading-items? :my-lister]
-(a/reg-sub :item-lister/downloading-items? downloading-items?)
+(r/reg-sub :item-lister/downloading-items? downloading-items?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/lister-disabled? :my-lister]
-(a/reg-sub :item-lister/lister-disabled? lister-disabled?)
+(r/reg-sub :item-lister/lister-disabled? lister-disabled?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/get-current-order-by :my-lister]
-(a/reg-sub :item-lister/get-current-order-by get-current-order-by)
+(r/reg-sub :item-lister/get-current-order-by get-current-order-by)

@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.sample
     (:require [plugins.item-viewer.api :as item-viewer]
-              [x.app-core.api          :as a]))
+              [re-frame.api            :as r]))
 
 
 
@@ -47,7 +47,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; ...
-(a/reg-event-fx
+(r/reg-event-fx
   :view-my-item!
   [:item-viewer/view-item! :my-viewer "my-item"])
 

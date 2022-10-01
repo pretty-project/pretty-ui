@@ -16,7 +16,7 @@
     (:require [plugins.file-editor.body.subs     :as body.subs]
               [plugins.file-editor.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -94,10 +94,10 @@
 ;
 ; @usage
 ;  [:file-editor/get-meta-item :my-editor :my-item]
-(a/reg-sub :file-editor/get-meta-item get-meta-item)
+(r/reg-sub :file-editor/get-meta-item get-meta-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:file-editor/editor-disabled? :my-editor]
-(a/reg-sub :file-editor/editor-disabled? editor-disabled?)
+(r/reg-sub :file-editor/editor-disabled? editor-disabled?)

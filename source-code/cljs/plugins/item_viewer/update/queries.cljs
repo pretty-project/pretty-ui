@@ -16,7 +16,7 @@
     (:require [plugins.item-viewer.backup.subs :as backup.subs]
               [plugins.item-viewer.core.subs   :as core.subs]
               [plugins.item-viewer.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

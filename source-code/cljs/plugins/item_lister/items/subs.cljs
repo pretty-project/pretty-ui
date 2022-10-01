@@ -14,7 +14,7 @@
 
 (ns plugins.item-lister.items.subs
     (:require [plugins.plugin-handler.items.subs :as items.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -118,11 +118,11 @@
 ;
 ; @usage
 ;  [:item-lister/get-item :my-lister "my-item"]
-(a/reg-sub :item-lister/get-item get-item)
+(r/reg-sub :item-lister/get-item get-item)
 
 ; @param (keyword) lister-id
 ; @param (integer) item-dex
 ;
 ; @usage
 ;  [:item-lister/item-last? :my-lister 42]
-(a/reg-sub :item-lister/item-last? item-last?)
+(r/reg-sub :item-lister/item-last? item-last?)

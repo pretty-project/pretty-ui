@@ -18,14 +18,14 @@
               [plugins.item-browser.download.events     :as download.events]
               [plugins.item-browser.download.queries    :as download.queries]
               [plugins.item-browser.download.validators :as download.validators]
-              [x.app-core.api                           :as a :refer [r]]))
+              [re-frame.api                             :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/reload-items!
   ; @param (keyword) browser-id
   ; @param (map)(opt) reload-props
@@ -45,7 +45,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/request-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -58,7 +58,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -71,7 +71,7 @@
                                  :on-success [:item-browser/receive-item!   browser-id]
                                  :query query :validator-f validator-f}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -84,7 +84,7 @@
           {:db       (r download.events/receive-item! db browser-id server-response)
            :dispatch [:item-browser/item-received browser-id]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -17,7 +17,7 @@
               [mid-fruits.random          :as random]
               [plugins.text-editor.config :as config]
               [plugins.text-editor.state  :as state]
-              [x.app-core.api             :as a]))
+              [re-frame.api               :as r]))
 
 
 
@@ -171,7 +171,7 @@
   ;     ha a felhasználó már befejezte a gépelést.
   (let [editor-content (remove-whitespaces editor-content)]
        (set-editor-content! editor-id editor-content)
-       (a/dispatch-last     config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content])))
+       (r/dispatch-last     config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content])))
 
 
 
@@ -201,8 +201,8 @@
   ;   :showWordsCounter (boolean)
   ;   :showXPathInStatusbar (boolean)}
   [{:keys [autofocus? buttons disabled? min-height placeholder]}]
-  (let [placeholder       @(a/subscribe [:dictionary/look-up placeholder])
-        selected-language @(a/subscribe [:locales/get-selected-language])]
+  (let [placeholder       @(r/subscribe [:dictionary/look-up placeholder])
+        selected-language @(r/subscribe [:locales/get-selected-language])]
        {:autofocus            autofocus?
         :buttons              (parse-buttons buttons)
         :buttonsXS            (parse-buttons buttons)
@@ -238,8 +238,8 @@
   ; XXX#9910
   ; A key paraméter esetleges változtatása a text-editor villanását okozza.
   ; A difference-key változtatása helyett más megoldás is alkalmazható!
-  {:onBlur   #(a/dispatch [:environment/quit-type-mode!])
-   :onFocus  #(a/dispatch [:environment/set-type-mode!])
+  {:onBlur   #(r/dispatch [:environment/quit-type-mode!])
+   :onFocus  #(r/dispatch [:environment/set-type-mode!])
    :onChange #(on-change-f editor-id editor-props %)
    :config    (jodit-config              editor-props)
    :key       (get-editor-difference-key editor-id)

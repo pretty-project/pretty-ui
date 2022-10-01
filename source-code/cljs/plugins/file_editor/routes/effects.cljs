@@ -15,14 +15,14 @@
 (ns plugins.file-editor.routes.effects
     (:require [plugins.file-editor.body.subs     :as body.subs]
               [plugins.file-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

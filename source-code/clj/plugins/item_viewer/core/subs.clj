@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.core.subs
     (:require [plugins.plugin-handler.core.subs :as core.subs]
-              [x.server-core.api                :as a :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
@@ -45,4 +45,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :item-viewer/get-viewer-prop get-viewer-prop)
+(r/reg-sub :item-viewer/get-viewer-prop get-viewer-prop)

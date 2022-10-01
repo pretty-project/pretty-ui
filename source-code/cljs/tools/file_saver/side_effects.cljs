@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.file-saver.side-effects
-    (:require [tools.file-saver.helpers      :as helpers]
+    (:require [re-frame.api                  :as r]
+              [tools.file-saver.helpers      :as helpers]
               [tools.file-saver.views        :as views]
-              [tools.temporary-component.api :as temporary-component]
-              [x.app-core.api                :as a]))
+              [tools.temporary-component.api :as temporary-component]))
 
 
 
@@ -38,4 +38,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :file-saver/save-accepted save-accepted)
+(r/reg-fx :file-saver/save-accepted save-accepted)

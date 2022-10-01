@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.clipboard.sample
-    (:require [clipboard.api  :as clipboard]
-              [x.app-core.api :as a]))
+    (:require [re-frame.api        :as r]
+              [tools.clipboard.api :as clipboard]))
 
 
 
@@ -22,7 +22,7 @@
 ;; -- Szöveg másolása vágólapra mellékhatás eseménnyel ------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :copy-my-text-to-clipboard!
   {:fx [:clipboard/copy-text! "My text"]})
 
@@ -31,7 +31,7 @@
 ;; -- Szöveg másolása vágólapra (felugró értesítéssel) ------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :copy-my-text-to-clipboard!
   [:clipboard/copy-text! "My text"])
 

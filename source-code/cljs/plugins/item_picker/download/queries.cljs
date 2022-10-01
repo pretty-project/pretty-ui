@@ -15,7 +15,7 @@
 (ns plugins.item-picker.download.queries
     (:require [plugins.item-picker.core.subs     :as core.subs]
               [plugins.item-picker.download.subs :as download.subs]
-              [x.app-core.api                    :refer [r]]))
+              [re-frame.api                      :refer [r]]))
 
 
 

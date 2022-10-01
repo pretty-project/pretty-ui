@@ -14,17 +14,17 @@
 
 (ns tools.scheduler.effects
     (:require [mid-fruits.time         :as time]
+              [re-frame.api            :as r :refer [r]]
               [tools.scheduler.events  :as events]
               [tools.scheduler.helpers :as helpers]
-              [tools.scheduler.subs    :as subs]
-              [x.app-core.api          :as a :refer [r]]))
+              [tools.scheduler.subs    :as subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/reg-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
@@ -32,7 +32,7 @@
                          :fx [:environment/set-interval! :scheduler/interval
                                                          {:event [:scheduler/watch-time!] :interval 60000}]}]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/init-scheduler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
@@ -44,14 +44,14 @@
                :dispatch-n [[:scheduler/watch-time!]
                             [:scheduler/reg-interval!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/watch-time!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [schedules (get-in db [:tools :scheduler/data-items])]
            {:dispatch-n (helpers/schedules->actual-events schedules)})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/reg-schedule!
   ; @param (keyword)(opt) schedule-id
   ; @param (map) schedule-props
@@ -69,14 +69,14 @@
       {:db       (r events/store-schedule-props! db schedule-id schedule-props)
        :dispatch [:scheduler/init-scheduler!]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/remove-schedule!
   ; @param (keyword) schedule-id
   (fn [{:keys [db]} [_ schedule-id]]
       {:db       (r events/remove-schedule-props! db schedule-id)
        :dispatch [:scheduler/schedule-removed]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :scheduler/schedule-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]

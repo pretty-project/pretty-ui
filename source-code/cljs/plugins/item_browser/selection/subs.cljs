@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.selection.subs
     (:require [plugins.plugin-handler.selection.subs :as selection.subs]
-              [x.app-core.api                        :as a :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]))
 
 
 
@@ -142,41 +142,41 @@
 ;
 ; @usage
 ;  [:item-browser/get-selected-item-count :my-browser]
-(a/reg-sub :item-browser/get-selected-item-count get-selected-item-count)
+(r/reg-sub :item-browser/get-selected-item-count get-selected-item-count)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/all-items-selected? :my-browser]
-(a/reg-sub :item-browser/all-items-selected? all-items-selected?)
+(r/reg-sub :item-browser/all-items-selected? all-items-selected?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/all-downloaded-items-selected? :my-browser]
-(a/reg-sub :item-browser/all-downloaded-items-selected? all-downloaded-items-selected?)
+(r/reg-sub :item-browser/all-downloaded-items-selected? all-downloaded-items-selected?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/any-item-selected? :my-browser]
-(a/reg-sub :item-browser/any-item-selected? any-item-selected?)
+(r/reg-sub :item-browser/any-item-selected? any-item-selected?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/any-downloaded-item-selected? :my-browser]
-(a/reg-sub :item-browser/any-downloaded-item-selected? any-downloaded-item-selected?)
+(r/reg-sub :item-browser/any-downloaded-item-selected? any-downloaded-item-selected?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/no-items-selected? :my-browser]
-(a/reg-sub :item-browser/no-items-selected? no-items-selected?)
+(r/reg-sub :item-browser/no-items-selected? no-items-selected?)
 
 ; @param (keyword) browser-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-browser/item-selected? :my-browser "my-item"]
-(a/reg-sub :item-browser/item-selected? item-selected?)
+(r/reg-sub :item-browser/item-selected? item-selected?)

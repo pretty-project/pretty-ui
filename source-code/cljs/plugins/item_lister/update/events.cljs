@@ -17,7 +17,7 @@
               [plugins.item-lister.core.events      :as core.events]
               [plugins.item-lister.items.events     :as items.events]
               [plugins.item-lister.selection.events :as selection.events]
-              [x.app-core.api                       :refer [r]]
+              [re-frame.api                         :refer [r]]
               [x.app-ui.api                         :as ui]))
 
 

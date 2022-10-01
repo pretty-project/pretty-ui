@@ -15,7 +15,7 @@
 (ns plugins.file-editor.update.queries
     (:require [plugins.file-editor.core.subs   :as core.subs]
               [plugins.file-editor.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

@@ -14,14 +14,14 @@
 
 (ns plugins.item-lister.routes.effects
     (:require [plugins.item-lister.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

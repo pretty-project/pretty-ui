@@ -15,7 +15,7 @@
 (ns plugins.item-lister.update.validators
     (:require [mid-fruits.vector               :as vector]
               [plugins.item-lister.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

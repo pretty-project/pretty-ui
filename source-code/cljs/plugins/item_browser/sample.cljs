@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.sample
     (:require [plugins.item-browser.api :as item-browser]
-              [x.app-core.api           :as a :refer [r]]))
+              [re-frame.api             :as r :refer [r]]))
 
 
 

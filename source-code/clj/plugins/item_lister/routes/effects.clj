@@ -15,14 +15,14 @@
 (ns plugins.item-lister.routes.effects
     (:require [mid-fruits.uri                     :as uri]
               [plugins.item-lister.routes.helpers :as routes.helpers]
-              [x.server-core.api                  :as a]))
+              [re-frame.api                       :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

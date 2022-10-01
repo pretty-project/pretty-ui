@@ -15,14 +15,14 @@
 (ns plugins.item-browser.body.effects
     (:require [plugins.item-browser.body.events :as body.events]
               [reagent.api                      :as reagent]
-              [x.app-core.api                   :as a :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -32,7 +32,7 @@
       {:db       (r body.events/body-did-mount db browser-id body-props)
        :dispatch [:item-browser/load-browser! browser-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -40,7 +40,7 @@
   (fn [{:keys [db]} [_ browser-id]]
       {:db (r body.events/body-will-unmount db browser-id)}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -16,7 +16,7 @@
     (:require [mid-fruits.keyword :as keyword]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [x.server-core.api  :as a]))
+              [re-frame.api       :as r]))
 
 
 
@@ -35,7 +35,7 @@
   ;
   ; @return (maps in vector)
   [env browser-id item]
-  (let [item-namespace @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
+  (let [item-namespace @(r/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
         path-key        (pathom/env->param env :path-key)]
        (get item (keyword/add-namespace item-namespace path-key))))
 
@@ -67,7 +67,7 @@
   ; @return (string)
   [env browser-id item]
   (if-let [parent-link (item->parent-link env browser-id item)]
-          (let [item-namespace @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])]
+          (let [item-namespace @(r/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])]
                (get parent-link (keyword/add-namespace item-namespace :id)))))
 
 
@@ -87,8 +87,8 @@
   ;
   ; @return (namespaced maps in vector)
   [env browser-id item-id]
-  (let [collection-name @(a/subscribe [:item-browser/get-browser-prop browser-id :collection-name])
-        item-namespace  @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
+  (let [collection-name @(r/subscribe [:item-browser/get-browser-prop browser-id :collection-name])
+        item-namespace  @(r/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])
         path-key         (pathom/env->param env :path-key)]
        (if-let [item (mongo-db/get-document-by-id collection-name item-id)]
                (get item (keyword/add-namespace item-namespace path-key)))))
@@ -121,5 +121,5 @@
   ; @return (string)
   [env browser-id item-id]
   (if-let [parent-link (item-id->parent-link env browser-id item-id)]
-          (let [item-namespace @(a/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])]
+          (let [item-namespace @(r/subscribe [:item-browser/get-browser-prop browser-id :item-namespace])]
                (get parent-link (keyword/add-namespace item-namespace :id)))))

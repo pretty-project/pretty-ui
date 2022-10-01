@@ -18,7 +18,7 @@
               [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [x.server-core.api                     :as a]))
+              [re-frame.api                          :as r]))
 
 
 
@@ -39,7 +39,7 @@
 ;     történik meg.
 ; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
 ;     beállítódik az applikáció címkéjének.
-(a/reg-event-fx
+(r/reg-event-fx
   :init-my-editor!
   [:item-editor/init-editor! :my-editor
                              {:base-route      "/@app-home/my-editor"

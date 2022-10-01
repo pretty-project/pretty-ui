@@ -21,7 +21,7 @@
               [plugins.item-lister.update.subs       :as update.subs]
               [plugins.item-lister.update.validators :as update.validators]
               [plugins.item-lister.update.views      :as update.views]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-ui.api                          :as ui]))
 
 
@@ -29,7 +29,7 @@
 ;; -- Delete items effects ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/delete-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -44,7 +44,7 @@
                                             :on-failure [:item-lister/delete-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/items-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -68,7 +68,7 @@
                ; B)
                [:item-lister/render-items-deleted-dialog! lister-id item-ids]))))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -98,7 +98,7 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/render-items-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -114,7 +114,7 @@
 ;; -- Undo delete items effects -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/undo-delete-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -130,7 +130,7 @@
                                                :on-failure [:item-lister/undo-delete-items-failed lister-id]
                                                :query query :validator-f validator-f}]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/delete-items-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -152,7 +152,7 @@
           {:dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/undo-delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -173,7 +173,7 @@
 ;; -- Duplicate items effects -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/duplicate-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -188,7 +188,7 @@
                                             :on-failure [:item-lister/duplicate-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/items-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -213,7 +213,7 @@
                ; B)
                [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]))))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/duplicate-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -242,7 +242,7 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

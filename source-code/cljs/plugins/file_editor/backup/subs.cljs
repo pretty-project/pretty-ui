@@ -16,7 +16,7 @@
     (:require [mid-fruits.map                    :as map]
               [plugins.file-editor.core.subs     :as core.subs]
               [plugins.file-editor.download.subs :as download.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -92,11 +92,11 @@
 ;
 ; @usage
 ;  [:file-editor/content-changed? :my-editor]
-(a/reg-sub :file-editor/content-changed? content-changed?)
+(r/reg-sub :file-editor/content-changed? content-changed?)
 
 ; @param (keyword) editor-id
 ; @param (keywords in vector) change-keys
 ;
 ; @usage
 ;  [:file-editor/form-changed? :my-editor [:name :email-address]]
-(a/reg-sub :file-editor/form-changed? form-changed?)
+(r/reg-sub :file-editor/form-changed? form-changed?)

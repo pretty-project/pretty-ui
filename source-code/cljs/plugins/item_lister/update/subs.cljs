@@ -17,7 +17,7 @@
               [plugins.plugin-handler.update.subs :as update.subs]
               [mid-fruits.keyword                 :as keyword]
               [mid-fruits.vector                  :as vector]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

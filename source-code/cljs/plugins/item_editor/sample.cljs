@@ -14,8 +14,7 @@
 
 (ns plugins.item-editor.sample
     (:require [plugins.item-editor.api :as item-editor]
-              [x.app-components.api    :as components]
-              [x.app-core.api          :as a]
+              [re-frame.api            :as r]
               [x.app-elements.api      :as elements]))
 
 
@@ -71,7 +70,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; ...
-(a/reg-event-fx
+(r/reg-event-fx
   :edit-my-item!
   [:item-editor/edit-item! :my-editor "my-item"])
 

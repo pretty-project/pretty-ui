@@ -18,14 +18,14 @@
               [plugins.item-editor.backup.events :as backup.events]
               [plugins.item-editor.backup.subs   :as backup.subs]
               [reagent.api                       :as reagent]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -35,7 +35,7 @@
       {:db       (r body.events/body-did-mount db editor-id body-props)
        :dispatch [:item-editor/load-editor! editor-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,7 +62,7 @@
       ;                         (r body.events/body-will-unmount             % editor-id))
       ;          :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

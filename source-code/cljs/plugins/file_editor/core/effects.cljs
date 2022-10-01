@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.file-editor.core.effects
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

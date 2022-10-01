@@ -14,7 +14,7 @@
 
 (ns plugins.file-editor.update.validators
     (:require [plugins.item-editor.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

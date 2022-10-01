@@ -20,7 +20,7 @@
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [x.server-core.api  :as a]))
+              [re-frame.api       :as r]))
 
 
 
@@ -40,7 +40,7 @@
   ;
   ; @return (map)
   [lister-id order-by]
-  (let [item-namespace @(a/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
+  (let [item-namespace @(r/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
         order-key       (namespace order-by)
         direction       (name      order-by)]
        {(keyword/add-namespace item-namespace order-key)
@@ -129,7 +129,7 @@
   ; @return (map)
   ;  {:$or (maps in vector)}
   [env lister-id]
-  (let [item-namespace @(a/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
+  (let [item-namespace @(r/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
         search-keys     (pathom/env->param env :search-keys)
         search-term     (pathom/env->param env :search-term)]
        (if (string/nonempty? search-term)

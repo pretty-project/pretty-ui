@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.infinite-loader.sample
-    (:require [tools.infinite-loader.api :as infinite-loader]
-              [x.app-core.api            :as a]))
+    (:require [re-frame.api              :as r]
+              [tools.infinite-loader.api :as infinite-loader]))
 
 
 
@@ -30,7 +30,7 @@
 ;; -- Újratöltés esemény használata -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :reload-my-loader!
   [:infinite-loader/reload-loader! :my-loader])
 
@@ -39,7 +39,7 @@
 ;; -- Leállítás esemény használata --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :pause-my-loader!
   [:infinite-loader/pause-loader! :my-loader])
 
@@ -48,6 +48,6 @@
 ;; -- Újraindítás esemény használata ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :restart-my-loader!
   [:infinite-loader/restart-loader! :my-loader])

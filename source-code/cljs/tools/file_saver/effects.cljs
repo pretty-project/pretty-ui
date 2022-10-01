@@ -13,16 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.file-saver.effects
-    (:require [tools.file-saver.prototypes :as prototypes]
+    (:require [re-frame.api                :as r]))
+              [tools.file-saver.prototypes :as prototypes]
               [tools.file-saver.views      :as views]
-              [x.app-core.api              :as a]))
+
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-saver/save-file!
   ; @param (keyword)(opt) saver-id
   ; @param (map) saver-props
@@ -56,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-saver/render-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

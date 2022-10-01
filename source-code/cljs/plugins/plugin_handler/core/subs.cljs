@@ -19,8 +19,8 @@
               [plugins.plugin-handler.body.subs     :as body.subs]
               [plugins.plugin-handler.routes.subs   :as routes.subs]
               [plugins.plugin-handler.transfer.subs :as transfer.subs]
+              [re-frame.api                         :refer [r]]
               [x.app-activities.api                 :as activities]
-              [x.app-core.api                       :refer [r]]
               [x.app-sync.api                       :as sync]))
 
 

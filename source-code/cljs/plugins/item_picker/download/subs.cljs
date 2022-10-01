@@ -14,7 +14,7 @@
 
 (ns plugins.item-picker.download.subs
     (:require [plugins.plugin-handler.download.subs :as download.subs]
-              [x.app-core.api                       :as a]))
+              [re-frame.api                         :as r]))
 
 
 
@@ -34,4 +34,4 @@
 ;
 ; @usage
 ;  [:item-picker/data-received? :my-picker]
-(a/reg-sub :item-picker/data-received? data-received?)
+(r/reg-sub :item-picker/data-received? data-received?)

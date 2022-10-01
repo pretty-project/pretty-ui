@@ -14,14 +14,14 @@
 
 (ns plugins.item-picker.core.effects
     (:require [plugins.item-editor.core.events :as core.events]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/load-picker!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

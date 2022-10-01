@@ -15,14 +15,14 @@
 (ns plugins.item-viewer.routes.effects
     (:require [mid-fruits.uri                     :as uri]
               [plugins.item-viewer.routes.helpers :as routes.helpers]
-              [x.server-core.api                  :as a]))
+              [re-frame.api                       :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

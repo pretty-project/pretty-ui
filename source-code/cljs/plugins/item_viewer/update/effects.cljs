@@ -22,7 +22,7 @@
               [plugins.item-viewer.update.subs       :as update.subs]
               [plugins.item-viewer.update.validators :as update.validators]
               [plugins.item-viewer.update.views      :as update.views]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-ui.api                          :as ui]))
 
 
@@ -30,7 +30,7 @@
 ;; -- Delete item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/delete-item!
   ; @param (keyword) viewer-id
   ;
@@ -45,7 +45,7 @@
                                             :on-failure [:item-viewer/delete-item-failed viewer-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -74,7 +74,7 @@
                 :dispatch-if [(r ui/process-faked? db)
                               [:ui/end-fake-process!]]}))))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -89,7 +89,7 @@
             :dispatch-if [(r ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -99,7 +99,7 @@
       [:ui/render-bubble! :plugins.item-viewer/item-deleted-dialog
                           {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -114,7 +114,7 @@
 ;; -- Undo delete item effects ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -132,7 +132,7 @@
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
                                                :query query :validator-f validator-f}]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/delete-item-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -155,7 +155,7 @@
               {:dispatch-if [(r ui/process-faked? db)
                              [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -170,7 +170,7 @@
             :dispatch-if [(r ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -185,7 +185,7 @@
 ;; -- Duplicate item effects --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/duplicate-item!
   ; @param (keyword) viewer-id
   ;
@@ -200,7 +200,7 @@
                                  :on-failure [:item-viewer/duplicate-item-failed viewer-id]
                                  :query query :validator-f validator-f}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/item-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -212,7 +212,7 @@
       (let [copy-id (r update.subs/get-duplicated-item-id db viewer-id server-response)]
            [:item-viewer/render-item-duplicated-dialog! viewer-id copy-id])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/duplicate-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -224,7 +224,7 @@
       [:ui/render-bubble! :plugins.item-viewer/duplicate-item-failed-dialog
                           {:body :failed-to-duplicate}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -234,7 +234,7 @@
       [:ui/render-bubble! :plugins.item-viewer/item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/view-duplicated-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

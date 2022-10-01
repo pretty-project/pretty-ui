@@ -15,14 +15,14 @@
 (ns plugins.plugin-handler.transfer.effects
     (:require [mid-fruits.candy                        :refer [return]]
               [plugins.plugin-handler.transfer.helpers :as transfer.helpers]
-              [x.server-core.api                       :as a]))
+              [re-frame.api                            :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :plugin-handler/reg-transfer-plugin-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

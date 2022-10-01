@@ -17,8 +17,8 @@
               [mid-fruits.hiccup             :as hiccup]
               [mid-fruits.random             :as random]
               [reagent.api                   :as reagent]
+              [re-frame.api                  :as r]
               [tools.infinite-loader.helpers :as helpers]
-              [x.app-core.api                :as a]
               [x.app-environment.api         :as environment]))
 
 
@@ -31,7 +31,7 @@
   ; @param (boolean) hidden?
   [loader-id]
   (let [observer-id (helpers/loader-id->observer-id loader-id)
-        hidden?     (a/subscribe [:infinite-loader/observer-hidden? loader-id])]
+        hidden?     (r/subscribe [:infinite-loader/observer-hidden? loader-id])]
        (fn [] [:div {:id    (hiccup/value observer-id)
                      :style (if (deref hidden?)
                                 {:position :fixed :bottom "-100px"})}])))
@@ -55,7 +55,7 @@
   ([loader-id {:keys [on-viewport] :as loader-props}]
    (let [observer-id (helpers/loader-id->observer-id loader-id)
          element-id  (hiccup/value observer-id)
-         callback-f #(if % (a/dispatch on-viewport))]
+         callback-f #(if % (r/dispatch on-viewport))]
         (reagent/lifecycles {:component-did-mount    (fn [] (environment/setup-intersection-observer!  element-id callback-f))
                              :component-will-unmount (fn [] (environment/remove-intersection-observer! element-id))
                              :reagent-render         (fn [] [infinite-loader loader-id])}))))

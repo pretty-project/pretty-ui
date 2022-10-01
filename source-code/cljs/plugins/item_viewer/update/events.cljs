@@ -15,7 +15,7 @@
 (ns plugins.item-viewer.update.events
     (:require [plugins.item-viewer.backup.events :as backup.events]
               [plugins.item-viewer.core.subs     :as core.subs]
-              [x.app-core.api                    :refer [r]]
+              [re-frame.api                      :refer [r]]
               [x.app-ui.api                      :as ui]))
 
 

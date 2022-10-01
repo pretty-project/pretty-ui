@@ -14,14 +14,14 @@
 
 (ns plugins.item-lister.transfer.effects
     (:require [plugins.plugin-handler.transfer.effects]
-              [x.server-core.api :as a]))
+              [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/reg-transfer-lister-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

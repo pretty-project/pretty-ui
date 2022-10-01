@@ -13,6 +13,10 @@
 
 
 # x4.7.0
+- OPTIMISATION:
+  Felesleges Re-Frame írások:
+  - 
+
 - Vannak olyan [:ui/render-bubble! ...] események, amik egy metamorphic-content-et
   adnak át {:content ...} tulajdonságként, ez igy nem maradhat, a bubble layout-ja
   ki kell kerüljön az x-ből!

@@ -17,8 +17,9 @@
               [plugins.item-editor.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]))
+              [re-frame.api                        :as r]
+              [x.app-components.api                :as components]))
+
 
 
 
@@ -38,7 +39,7 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (if-let [ghost-element @(a/subscribe [:item-editor/get-body-prop editor-id :ghost-element])]
+  (if-let [ghost-element @(r/subscribe [:item-editor/get-body-prop editor-id :ghost-element])]
           [components/content ghost-element]))
 
 
@@ -51,7 +52,7 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [form-element @(a/subscribe [:item-editor/get-body-prop editor-id :form-element])]
+  (let [form-element @(r/subscribe [:item-editor/get-body-prop editor-id :form-element])]
        [form-element editor-id]))
 
 (defn body-structure
@@ -59,9 +60,9 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (cond @(a/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
+  (cond @(r/subscribe [:item-editor/get-meta-item editor-id :error-mode?])
          [error-body editor-id {:error-description :the-item-you-opened-may-be-broken}]
-        @(a/subscribe [:item-editor/data-received? editor-id])
+        @(r/subscribe [:item-editor/data-received? editor-id])
          [form-element editor-id]
         :data-not-received
          [downloading-item editor-id]))
@@ -83,7 +84,8 @@
   ;   :query (vector)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
-  ;    Default: core.helpers/default-suggestions-path}
+  ;    Default: core.helpers/default-suggestions-path
+  ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
   ;  [item-editor/body :my-editor {...}]
@@ -95,6 +97,6 @@
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)
                            {:reagent-render         (fn []              [body-structure                 editor-id])
-                            :component-did-mount    (fn []  (a/dispatch [:item-editor/body-did-mount    editor-id body-props]))
-                            :component-will-unmount (fn []  (a/dispatch [:item-editor/body-will-unmount editor-id]))
-                            :component-did-update   (fn [%] (a/dispatch [:item-editor/body-did-update   editor-id %]))})))
+                            :component-did-mount    (fn []  (r/dispatch [:item-editor/body-did-mount    editor-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-editor/body-will-unmount editor-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-editor/body-did-update   editor-id %]))})))

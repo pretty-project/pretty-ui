@@ -17,7 +17,7 @@
               [plugins.item-lister.body.subs        :as body.subs]
               [plugins.item-lister.core.subs        :as core.subs]
               [plugins.plugin-handler.backup.events :as backup.events]
-              [x.app-core.api                       :as a :refer [r]]))
+              [re-frame.api                         :as r :refer [r]]))
 
 
 
@@ -58,4 +58,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)
+(r/reg-event-db :item-lister/clean-backup-items! clean-backup-items!)

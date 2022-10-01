@@ -15,14 +15,14 @@
 (ns plugins.item-browser.core.effects
     (:require [plugins.item-browser.core.events     :as core.events]
               [plugins.item-browser.core.prototypes :as core.prototypes]
-              [x.server-core.api                    :as a :refer [r]]))
+              [re-frame.api                         :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/init-browser!
   ; @param (keyword) browser-id
   ; @param (map) browser-props

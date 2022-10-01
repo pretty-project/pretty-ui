@@ -18,9 +18,9 @@
               [plugins.item-lister.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
+              [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
               [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]
               [x.app-elements.api                  :as elements]
 
               ; TEMP
@@ -47,9 +47,9 @@
   ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
   ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
   ; villanjon fel!
-  (if-let [ghost-element @(a/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
-          (let [all-items-downloaded? @(a/subscribe [:item-lister/all-items-downloaded? lister-id])
-                data-received?        @(a/subscribe [:item-lister/data-received?        lister-id])]
+  (if-let [ghost-element @(r/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
+          (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
+                data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
                (if-not (and all-items-downloaded? data-received?)
                        [components/content ghost-element]))))
 
@@ -63,9 +63,9 @@
   ;
   ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
   ;   ne jelenjen meg a no-items-to-show-label felirat!
-  (let [downloading-items? @(a/subscribe [:item-lister/downloading-items? lister-id])
-        data-received?     @(a/subscribe [:item-lister/data-received?     lister-id])
-        no-items-to-show?  @(a/subscribe [:item-lister/no-items-to-show?  lister-id])]
+  (let [downloading-items? @(r/subscribe [:item-lister/downloading-items? lister-id])
+        data-received?     @(r/subscribe [:item-lister/data-received?     lister-id])
+        no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])]
        (if (and no-items-to-show? data-received? (not downloading-items?))
            [elements/label ::no-items-to-show-label
                            {:color       :highlight
@@ -95,8 +95,8 @@
   [lister-id]
   ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét, hogy a lista-elemek
   ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
-  (let [downloaded-items @(a/subscribe [:item-lister/get-downloaded-items lister-id])
-        list-element     @(a/subscribe [:item-lister/get-body-prop        lister-id :list-element])]
+  (let [downloaded-items @(r/subscribe [:item-lister/get-downloaded-items lister-id])
+        list-element     @(r/subscribe [:item-lister/get-body-prop        lister-id :list-element])]
        (letfn [(f [item-list item-dex {:keys [id] :as item}]
                   (conj item-list ^{:key (str id item-dex)}
                                    [list-element lister-id item-dex item]))]
@@ -107,16 +107,16 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (cond @(a/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
+  (cond @(r/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
          [error-body lister-id {:error-description :the-content-you-opened-may-be-broken}]
-        @(a/subscribe [:item-lister/data-received? lister-id])
+        @(r/subscribe [:item-lister/data-received? lister-id])
          [:<> [item-list                 lister-id]
               [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
               [no-items-to-show          lister-id]
               [downloading-items         lister-id]]
         :data-not-received
          [downloading-items lister-id]))
- 
+
 (defn body
   ; @param (keyword) lister-id
   ; @param (map) body-props
@@ -147,6 +147,6 @@
   (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)
                            {:reagent-render         (fn []              [body-structure                 lister-id])
-                            :component-did-mount    (fn []  (a/dispatch [:item-lister/body-did-mount    lister-id body-props]))
-                            :component-will-unmount (fn []  (a/dispatch [:item-lister/body-will-unmount lister-id]))
-                            :component-did-update   (fn [%] (a/dispatch [:item-lister/body-did-update   lister-id %]))})))
+                            :component-did-mount    (fn []  (r/dispatch [:item-lister/body-did-mount    lister-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-lister/body-will-unmount lister-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-lister/body-did-update   lister-id %]))})))

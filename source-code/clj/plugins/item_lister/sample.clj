@@ -17,7 +17,7 @@
               [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [plugins.item-lister.api               :as item-lister]
-              [x.server-core.api                     :as a]))
+              [re-frame.api                          :as r]))
 
 
 
@@ -36,7 +36,7 @@
 ; ... a {:base-route "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti útvonalat.
 ; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált útvonalak
 ;     használatakor beállítódik az applikáció címkéjének.
-(a/reg-event-fx
+(r/reg-event-fx
   :init-my-lister!
   [:item-lister/init-lister! :my-lister
                              {:base-route      "/@app-home/my-lister"

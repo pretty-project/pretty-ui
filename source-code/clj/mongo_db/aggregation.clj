@@ -16,7 +16,7 @@
     (:require [monger.core         :as mcr]
               [mongo-db.adaptation :as adaptation]
               [mongo-db.config     :as config]
-              [x.server-core.api   :as a]))
+              [re-frame.api        :as r]))
 
 
 
@@ -30,7 +30,7 @@
   ;
   ; @return (DBObject)
   [options]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcr/command database options)
             (catch Exception e (println (str e "\n" {:options options}))))))
 

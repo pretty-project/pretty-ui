@@ -15,14 +15,14 @@
 (ns plugins.item-browser.routes.effects
     (:require [mid-fruits.uri                      :as uri]
               [plugins.item-browser.routes.helpers :as routes.helpers]
-              [x.server-core.api                   :as a]))
+              [re-frame.api                        :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -38,7 +38,7 @@
                                 :restricted?    true
                                 :route-template base-route}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

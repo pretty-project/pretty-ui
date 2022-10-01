@@ -15,8 +15,8 @@
 (ns layouts.popup-b.views
     (:require [layouts.popup-b.helpers    :as helpers]
               [layouts.popup-b.prototypes :as prototypes]
-              [x.app-components.api       :as components]
-              [x.app-core.api             :as a]))
+              [re-frame.api               :as r]
+              [x.app-components.api       :as components]))
 
 
 
@@ -40,7 +40,7 @@
   ;  {:close-by-cover? (boolean)(opt)}
   [popup-id {:keys [close-by-cover?] :as layout-props}]
   [:div.popup-b (helpers/layout-attributes popup-id layout-props)
-                [:div.popup-b--cover (if close-by-cover? {:on-click #(a/dispatch [:ui/close-popup! popup-id])})]
+                [:div.popup-b--cover (if close-by-cover? {:on-click #(r/dispatch [:ui/close-popup! popup-id])})]
                 [layout-structure popup-id layout-props]])
 
 (defn layout

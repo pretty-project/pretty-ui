@@ -18,7 +18,7 @@
               [plugins.plugin-handler.body.subs   :as body.subs]
               [plugins.plugin-handler.core.subs   :as core.subs]
               [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

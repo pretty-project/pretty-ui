@@ -14,7 +14,7 @@
 
 (ns plugins.plugin-handler.update.subs
     (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
-              [x.app-core.api                       :refer [r]]))
+              [re-frame.api                         :refer [r]]))
 
 
 

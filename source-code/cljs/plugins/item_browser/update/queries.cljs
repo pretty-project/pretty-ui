@@ -17,7 +17,7 @@
               [plugins.item-browser.core.subs   :as core.subs]
               [plugins.item-browser.items.subs  :as items.subs]
               [plugins.item-browser.update.subs :as update.subs]
-              [x.app-core.api                   :refer [r]]))
+              [re-frame.api                     :refer [r]]))
 
 
 

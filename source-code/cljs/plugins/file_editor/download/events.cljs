@@ -19,7 +19,7 @@
               [plugins.file-editor.core.events        :as core.events]
               [plugins.file-editor.download.subs      :as download.subs]
               [plugins.plugin-handler.download.events :as download.events]
-              [x.app-core.api                         :refer [r]]))
+              [re-frame.api                           :refer [r]]))
 
 
 

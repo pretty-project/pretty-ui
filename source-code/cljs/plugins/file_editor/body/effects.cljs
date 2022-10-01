@@ -15,14 +15,14 @@
 (ns plugins.file-editor.body.effects
     (:require [plugins.file-editor.body.events :as body.events]
               [reagent.api                     :as reagent]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; -- Body lifecycles effects -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -32,7 +32,7 @@
       {:db       (r body.events/body-did-mount db editor-id body-props)
        :dispatch [:file-editor/load-editor! editor-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -40,7 +40,7 @@
   (fn [{:keys [db]} [_ editor-id]]
       {:db (r body.events/body-will-unmount db editor-id)}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

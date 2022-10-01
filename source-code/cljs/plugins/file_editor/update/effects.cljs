@@ -17,14 +17,14 @@
               [plugins.file-editor.core.subs         :as core.subs]
               [plugins.file-editor.update.queries    :as update.queries]
               [plugins.file-editor.update.validators :as update.validators]
-              [x.app-core.api                        :as a :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]))
 
 
 
 ;; -- Save content effects ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/save-content!
   ; @param (keyword) editor-id
   ;
@@ -39,7 +39,7 @@
                                  :on-failure [:file-editor/save-content-failed editor-id]
                                  :query query :validator-f validator-f}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/content-saved
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,7 +54,7 @@
        :dispatch [:ui/render-bubble! ::content-saved-notification
                                      {:body :saved}]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/save-content-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

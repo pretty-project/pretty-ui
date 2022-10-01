@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.effects
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :plugin-handler/init-plugin!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

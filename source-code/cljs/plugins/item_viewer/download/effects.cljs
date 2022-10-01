@@ -18,14 +18,14 @@
               [plugins.item-viewer.download.events     :as download.events]
               [plugins.item-viewer.download.queries    :as download.queries]
               [plugins.item-viewer.download.validators :as download.validators]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -41,7 +41,7 @@
                                             :on-failure [:item-viewer/set-error-mode! viewer-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -53,7 +53,7 @@
           {:db       (r download.events/receive-item! db viewer-id server-response)
            :dispatch [:item-viewer/item-received viewer-id]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

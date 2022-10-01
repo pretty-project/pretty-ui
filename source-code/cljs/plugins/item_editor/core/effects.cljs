@@ -18,14 +18,14 @@
               [plugins.item-editor.core.events   :as core.events]
               [plugins.item-editor.routes.subs   :as routes.subs]
               [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/edit-item!
   ; @param (keyword) editor-id
   ; @param (string) item-id
@@ -46,7 +46,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/cancel-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -66,7 +66,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -80,7 +80,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/go-up!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

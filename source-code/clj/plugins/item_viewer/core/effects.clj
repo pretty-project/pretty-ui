@@ -15,14 +15,14 @@
 (ns plugins.item-viewer.core.effects
     (:require [plugins.item-viewer.core.events     :as core.events]
               [plugins.item-viewer.core.prototypes :as core.prototypes]
-              [x.server-core.api                   :as a :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/init-viewer!
   ; @param (keyword) viewer-id
   ; @param (map) viewer-props

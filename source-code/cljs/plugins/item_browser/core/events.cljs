@@ -20,7 +20,7 @@
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
               [plugins.plugin-handler.core.events :as core.events]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -112,4 +112,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :item-browser/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-browser/set-error-mode! set-error-mode!)

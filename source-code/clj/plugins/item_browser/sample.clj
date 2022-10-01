@@ -18,7 +18,7 @@
               [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [x.server-core.api                     :as a]))
+              [re-frame.api                          :as r]))
 
 
 
@@ -30,7 +30,7 @@
 ;
 ; A plugin használatához OPCIONÁLISAN megadható ...
 ; ...
-(a/reg-event-fx
+(r/reg-event-fx
   :init-my-browser!
   [:item-browser/init-browser! :my-browser
                                {:collection-name "my_collection"

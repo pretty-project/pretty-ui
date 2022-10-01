@@ -13,12 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.lifecycle-handler.helpers
-    (:require [mid-fruits.candy  :refer [return]]
-              [mid-fruits.random :as random]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.random                  :as random]
+              [x.mid-core.lifecycle-handler.state :as lifecycle-handler.state]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn generate-life-id
@@ -38,3 +39,27 @@
   (if-let [namespace (namespace life-id)]
           (return namespace)
           (random/generate-string)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-lifes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  []
+  @lifecycle-handler.state/LIFES)
+
+(defn get-period-events
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) period-id
+  ;
+  ; @return (vector)
+  [period-id]
+  (letfn [(f [period-events dex life] (if-let [period (get life period-id)]
+                                              (conj   period-events period)
+                                              (return period-events)))]
+         (reduce-kv f [] (get-lifes))))

@@ -15,7 +15,7 @@
 (ns plugins.plugin-handler.routes.subs
     (:require [mid-fruits.candy                  :refer [return]]
               [plugins.item-editor.transfer.subs :as transfer.subs]
-              [x.app-core.api                    :refer [r]]
+              [re-frame.api                      :refer [r]]
               [x.app-router.api                  :as router]))
 
 

@@ -26,7 +26,7 @@
   ; @param (keyword)(opt) transfer-id
   ; @param (map) transfer-props
   ;  {:data-f (function)
-  ;   :target-path (vector)(opt)}
+  ;   :target-path (vector)}
   ;
   ; @usage
   ;  (a/reg-transfer! {...})
@@ -36,7 +36,8 @@
   ;
   ; @usage
   ;  (defn my-data-f [request] {:my-data ...})
-  ;  (a/reg-transfer! {:data-f my-data-f})
+  ;  (a/reg-transfer! {:data-f      my-data-f
+  ;                    :target-path [:my-data]})
   ([transfer-props]
    (reg-transfer! (random/generate-keyword) transfer-props))
 

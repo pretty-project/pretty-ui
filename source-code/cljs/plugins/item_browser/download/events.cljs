@@ -16,7 +16,7 @@
     (:require [mid-fruits.map                     :as map]
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.download.subs :as download.subs]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

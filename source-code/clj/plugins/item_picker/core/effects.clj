@@ -15,14 +15,14 @@
 (ns plugins.item-picker.core.effects
     (:require [plugins.item-picker.core.events     :as core.events]
               [plugins.item-picker.core.prototypes :as core.prototypes]
-              [x.server-core.api                   :as a :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/init-picker!
   ; @param (keyword) picker-id
   ; @param (map) picker-props

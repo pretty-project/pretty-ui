@@ -15,7 +15,7 @@
 (ns plugins.plugin-handler.items.events
     (:require [mid-fruits.map    :refer [dissoc-in]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :refer [r]]))
+              [re-frame.api      :refer [r]]))
 
 
 

@@ -17,7 +17,7 @@
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
-              [x.server-core.api                     :as a]))
+              [re-frame.api                          :as r]))
 
 
 
@@ -29,7 +29,7 @@
 ; ... a {:handler-key ...} tulajdonságot, amit a plugin a resolver függvények neveiben
 ;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
-(a/reg-event-fx
+(r/reg-event-fx
   :init-my-picker!
   [:item-picker/init-picker! :my-picker
                              {:collection-name "my_collection"

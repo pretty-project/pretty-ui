@@ -15,7 +15,7 @@
 (ns plugins.item-editor.update.queries
     (:require [plugins.item-editor.core.subs   :as core.subs]
               [plugins.item-editor.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

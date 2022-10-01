@@ -15,14 +15,14 @@
 (ns plugins.item-editor.core.effects
     (:require [plugins.item-editor.core.events     :as core.events]
               [plugins.item-editor.core.prototypes :as core.prototypes]
-              [x.server-core.api                   :as a :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/init-editor!
   ; @param (keyword) editor-id
   ; @param (map) editor-props

@@ -21,7 +21,7 @@
               [plugins.item-browser.update.subs       :as update.subs]
               [plugins.item-browser.update.validators :as update.validators]
               [plugins.item-browser.update.views      :as update.views]
-              [x.app-core.api                         :as a :refer [r]]
+              [re-frame.api                           :as r :refer [r]]
               [x.app-ui.api                           :as ui]))
 
 
@@ -29,7 +29,7 @@
 ;; -- Update item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/update-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
@@ -56,7 +56,7 @@
                                                    :on-failure [:item-browser/update-item-failed browser-id item-id]
                                                    :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/item-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -70,7 +70,7 @@
       (if (r items.subs/item-downloaded? db browser-id item-id)
           {:db (r update.events/item-updated db browser-id item-id)})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/update-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -99,7 +99,7 @@
 ;; -- Delete item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/delete-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
@@ -115,7 +115,7 @@
                                             :on-failure [:item-browser/delete-item-failed browser-id item-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -139,7 +139,7 @@
           ; B)
           [:item-browser/render-item-deleted-dialog! browser-id item-id])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -170,7 +170,7 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -179,7 +179,7 @@
       [:ui/render-bubble! :plugins.item-browser/delete-item-failed-dialog
                           {:body :failed-to-delete}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -195,7 +195,7 @@
 ;; -- Undo delete item effects ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -211,7 +211,7 @@
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]
                                                :query query :validator-f validator-f}]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/delete-item-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -233,7 +233,7 @@
           {:dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -249,7 +249,7 @@
        :dispatch-if [(r ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -263,7 +263,7 @@
 ;; -- Duplicate item effects --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/duplicate-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
@@ -279,7 +279,7 @@
                                             :on-failure [:item-browser/duplicate-item-failed browser-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/item-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -303,7 +303,7 @@
                ; B)
                [:item-browser/render-item-duplicated-dialog! browser-id copy-id]))))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/duplicate-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -318,7 +318,7 @@
        :dispatch-if [(r ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -328,7 +328,7 @@
       [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/render-duplicate-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -342,7 +342,7 @@
 ;; -- Move item effects -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/move-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id

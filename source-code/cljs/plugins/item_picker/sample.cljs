@@ -14,8 +14,7 @@
 
 (ns plugins.item-picker.sample
     (:require [plugins.item-picker.api :as item-picker]
-              [x.app-components.api    :as components]
-              [x.app-core.api          :as a]
+              [re-frame.api            :as r]
               [x.app-elements.api      :as elements]))
 
 

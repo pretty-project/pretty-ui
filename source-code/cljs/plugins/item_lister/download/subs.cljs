@@ -15,7 +15,7 @@
 (ns plugins.item-lister.download.subs
     (:require [plugins.plugin-handler.core.subs     :as core.subs]
               [plugins.plugin-handler.download.subs :as download.subs]
-              [x.app-core.api                       :as a :refer [r]]))
+              [re-frame.api                         :as r :refer [r]]))
 
 
 
@@ -57,10 +57,10 @@
 ;
 ; @usage
 ;  [:item-lister/data-received? :my-lister]
-(a/reg-sub :item-lister/data-received? data-received?)
+(r/reg-sub :item-lister/data-received? data-received?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/first-data-received? :my-lister]
-(a/reg-sub :item-lister/first-data-received? first-data-received?)
+(r/reg-sub :item-lister/first-data-received? first-data-received?)

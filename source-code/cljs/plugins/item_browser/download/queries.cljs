@@ -15,7 +15,7 @@
 (ns plugins.item-browser.download.queries
     (:require [plugins.item-browser.core.subs     :as core.subs]
               [plugins.item-browser.download.subs :as download.subs]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

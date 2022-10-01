@@ -20,7 +20,7 @@
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [x.server-core.api  :as a]))
+              [re-frame.api       :as r]))
 
 
 
@@ -39,8 +39,8 @@
   ;
   ; @return (map)
   [env editor-id]
-  (let [item-namespace  @(a/subscribe [:item-editor/get-editor-prop editor-id :item-namespace])
-        collection-name @(a/subscribe [:item-editor/get-editor-prop editor-id :collection-name])
+  (let [item-namespace  @(r/subscribe [:item-editor/get-editor-prop editor-id :item-namespace])
+        collection-name @(r/subscribe [:item-editor/get-editor-prop editor-id :collection-name])
         suggestion-keys  (pathom/env->param env :suggestion-keys)
         collection       (mongo-db/get-collection collection-name)]
        (letfn [; Az f0 függvény kiolvassa a dokumentumból a suggestion-key kulcshoz tartozó értékét.

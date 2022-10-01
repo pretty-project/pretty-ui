@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.infinite-loader.subs
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -37,4 +37,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :infinite-loader/observer-hidden? observer-hidden?)
+(r/reg-sub :infinite-loader/observer-hidden? observer-hidden?)

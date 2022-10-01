@@ -16,7 +16,7 @@
     (:require [mid-fruits.map                    :as map :refer [dissoc-in]]
               [plugins.plugin-handler.core.subs  :as core.subs]
               [plugins.plugin-handler.items.subs :as items.subs]
-              [x.app-core.api                    :refer [r]]))
+              [re-frame.api                      :refer [r]]))
 
 
 

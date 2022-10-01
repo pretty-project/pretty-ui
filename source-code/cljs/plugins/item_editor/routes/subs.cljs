@@ -15,7 +15,7 @@
 (ns plugins.item-editor.routes.subs
     (:require [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -70,11 +70,11 @@
 ;
 ; @usage
 ;  [:item-editor/get-item-route db :my-editor "my-item"]
-(a/reg-sub :item-editor/get-item-route get-item-route)
+(r/reg-sub :item-editor/get-item-route get-item-route)
 
 ; @param (keyword) editor-id
 ; @param (string) item-id
 ;
 ; @usage
 ;  [:item-editor/get-edit-route db :my-editor "my-item"]
-(a/reg-sub :item-editor/get-edit-route get-edit-route)
+(r/reg-sub :item-editor/get-edit-route get-edit-route)

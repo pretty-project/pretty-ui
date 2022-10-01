@@ -15,7 +15,7 @@
 (ns plugins.file-editor.routes.subs
     (:require [plugins.file-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.routes.subs :as routes.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 

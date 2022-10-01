@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns pathom.events
-    (:require [mid-fruits.candy :refer [return]]
-              [x.app-core.api   :as a]))
+    (:require [mid-fruits.candy :refer [return]]))
 
 
 

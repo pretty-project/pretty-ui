@@ -15,7 +15,7 @@
 (ns plugins.item-viewer.core.subs
     (:require [plugins.item-viewer.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-core.api                    :as a :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]))
 
 
 
@@ -103,28 +103,28 @@
 ;
 ; @usage
 ;  [:item-viewer/get-meta-item :my-viewer :my-item]
-(a/reg-sub :item-viewer/get-meta-item get-meta-item)
+(r/reg-sub :item-viewer/get-meta-item get-meta-item)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
 ;  [:item-viewer/get-current-item-id :my-viewer]
-(a/reg-sub :item-viewer/get-current-item-id get-current-item-id)
+(r/reg-sub :item-viewer/get-current-item-id get-current-item-id)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
 ;  [:item-viewer/get-current-item :my-viewer]
-(a/reg-sub :item-viewer/get-current-item get-current-item)
+(r/reg-sub :item-viewer/get-current-item get-current-item)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
 ;  [:item-viewer/get-current-item-modified-at :my-viewer]
-(a/reg-sub :item-viewer/get-current-item-modified-at get-current-item-modified-at)
+(r/reg-sub :item-viewer/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
 ;  [:item-viewer/viewer-disabled? :my-viewer]
-(a/reg-sub :item-viewer/viewer-disabled? viewer-disabled?)
+(r/reg-sub :item-viewer/viewer-disabled? viewer-disabled?)

@@ -19,7 +19,7 @@
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.download.subs  :as download.subs]
               [plugins.plugin-handler.backup.subs :as backup.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -121,11 +121,11 @@
 ;
 ; @usage
 ;  [:item-editor/item-changed? :my-editor]
-(a/reg-sub :item-editor/item-changed? item-changed?)
+(r/reg-sub :item-editor/item-changed? item-changed?)
 
 ; @param (keyword) editor-id
 ; @param (keywords in vector) change-keys
 ;
 ; @usage
 ;  [:item-editor/form-changed? :my-editor [:name :email-address]]
-(a/reg-sub :item-editor/form-changed? form-changed?)
+(r/reg-sub :item-editor/form-changed? form-changed?)

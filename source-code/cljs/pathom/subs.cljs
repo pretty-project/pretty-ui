@@ -14,7 +14,7 @@
 
 (ns pathom.subs
     (:require [x.app-sync.response-handler.subs]
-              [x.app-core.api :as a :refer [r]]))
+              [re-frame.api :refer [r]]))
 
 
 

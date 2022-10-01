@@ -18,14 +18,14 @@
               [plugins.file-editor.download.events     :as download.events]
               [plugins.file-editor.download.queries    :as download.queries]
               [plugins.file-editor.download.validators :as download.validators]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/request-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -43,7 +43,7 @@
                                             :on-failure [:file-editor/set-error-mode!  editor-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/receive-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -55,7 +55,7 @@
           {:db       (r download.events/receive-content! db editor-id server-response)
            :dispatch [:file-editor/content-received editor-id]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :file-editor/content-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

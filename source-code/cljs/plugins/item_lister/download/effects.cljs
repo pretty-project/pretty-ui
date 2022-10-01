@@ -20,14 +20,14 @@
               [plugins.item-lister.download.queries    :as download.queries]
               [plugins.item-lister.download.subs       :as download.subs]
               [plugins.item-lister.download.validators :as download.validators]
-              [x.app-core.api                          :as a :refer [r]]))
+              [re-frame.api                            :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/reload-items!
   ; @param (keyword) lister-id
   ; @param (map)(opt) reload-props
@@ -60,7 +60,7 @@
                                  :on-failure [:item-lister/set-error-mode!         lister-id]
                                  :query query :validator-f validator-f}])))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/receive-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -96,7 +96,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/request-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -119,7 +119,7 @@
                                      :on-failure [:item-lister/set-error-mode! lister-id]
                                      :query query :validator-f validator-f}]))))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -16,14 +16,14 @@
     (:require [plugins.item-viewer.body.subs   :as body.subs]
               [plugins.item-viewer.core.events :as core.events]
               [plugins.item-viewer.routes.subs :as routes.subs]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/view-item!
   ; @param (keyword) viewer-id
   ; @param (string) item-id
@@ -55,7 +55,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-viewer/load-viewer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

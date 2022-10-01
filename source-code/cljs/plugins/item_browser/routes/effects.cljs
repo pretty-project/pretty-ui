@@ -15,14 +15,14 @@
 (ns plugins.item-browser.routes.effects
     (:require [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-browser/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

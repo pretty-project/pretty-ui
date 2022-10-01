@@ -17,14 +17,14 @@
               [plugins.item-lister.core.events  :as core.events]
               [plugins.item-lister.core.helpers :as core.helpers]
               [plugins.item-lister.core.subs    :as core.subs]
-              [x.app-core.api                   :as a :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/filter-items!
   ; @param (keyword) lister-id
   ; @param (map) filter-pattern
@@ -40,7 +40,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/search-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,7 +57,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/order-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -67,7 +67,7 @@
       {:db       (r core.events/order-items! db lister-id order-by)
        :dispatch [:item-lister/request-items! lister-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/swap-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -86,7 +86,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/choose-order-by!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -18,7 +18,7 @@
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
               [plugins.plugin-handler.core.subs   :as core.subs]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -129,46 +129,46 @@
 ;
 ; @usage
 ;  [:item-browser/get-meta-item :my-browser :my-item]
-(a/reg-sub :item-browser/get-meta-item get-meta-item)
+(r/reg-sub :item-browser/get-meta-item get-meta-item)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/get-all-item-count :my-browser]
-(a/reg-sub :item-browser/get-all-item-count get-all-item-count)
+(r/reg-sub :item-browser/get-all-item-count get-all-item-count)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/get-current-item-id :my-browser]
-(a/reg-sub :item-browser/get-current-item-id get-current-item-id)
+(r/reg-sub :item-browser/get-current-item-id get-current-item-id)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/get-current-item :my-browser]
-(a/reg-sub :item-browser/get-current-item get-current-item)
+(r/reg-sub :item-browser/get-current-item get-current-item)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/get-current-item-label :my-browser]
-(a/reg-sub :item-browser/get-current-item-label get-current-item-label)
+(r/reg-sub :item-browser/get-current-item-label get-current-item-label)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/browser-disabled? :my-browser]
-(a/reg-sub :item-browser/browser-disabled? browser-disabled?)
+(r/reg-sub :item-browser/browser-disabled? browser-disabled?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/at-home? :my-browser]
-(a/reg-sub :item-browser/at-home? at-home?)
+(r/reg-sub :item-browser/at-home? at-home?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
 ;  [:item-browser/get-current-order-by :my-browser]
-(a/reg-sub :item-browser/get-current-order-by get-current-order-by)
+(r/reg-sub :item-browser/get-current-order-by get-current-order-by)

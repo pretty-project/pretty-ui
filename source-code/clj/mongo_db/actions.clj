@@ -27,7 +27,7 @@
               [mongo-db.errors     :as errors]
               [mongo-db.preparing  :as preparing]
               [mongo-db.reader     :as reader]
-              [x.server-core.api   :as a]))
+              [re-frame.api        :as r]))
 
 
 
@@ -41,7 +41,7 @@
   ;
   ; @return (?)
   [collection-name]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/drop database collection-name)
             (catch Exception e (println e (str e "\n" {:collection-name collection-name}))))))
 
@@ -54,7 +54,7 @@
   ;
   ; @return (namespaced map)
   [collection-name document]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/insert-and-return database collection-name document)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :document document}))))))
 
@@ -67,7 +67,7 @@
   ;
   ; @return (namespaced map)
   [collection-name document]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/save-and-return database collection-name document)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :document document}))))))
 
@@ -79,7 +79,7 @@
   ;
   ; @return (?)
   [collection-name document-id]
-  (let [database @(a/subscribe [:mongo-db/get-connection])]
+  (let [database @(r/subscribe [:mongo-db/get-connection])]
        (try (mcl/remove-by-id database collection-name document-id)
             (catch Exception e (println (str e "\n" {:collection-name collection-name :document-id document-id}))))))
 
@@ -101,7 +101,7 @@
    (update! collection-name query document {}))
 
   ([collection-name query document options]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/update database collection-name query document options)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query   query
                                                       :document        document        :options options})))))))
@@ -122,7 +122,7 @@
    (upsert! collection-name query document {}))
 
   ([collection-name query document options]
-   (let [database @(a/subscribe [:mongo-db/get-connection])]
+   (let [database @(r/subscribe [:mongo-db/get-connection])]
         (try (mcl/upsert database collection-name query document options)
              (catch Exception e (println (str e "\n" {:collection-name collection-name :query   query
                                                       :document        document        :options options})))))))

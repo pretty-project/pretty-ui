@@ -15,8 +15,7 @@
 (ns pathom.prototypes
     (:require [mid-fruits.candy :refer [param]]
               [pathom.config    :as config]
-              [pathom.events    :as events]
-              [x.app-core.api   :refer [r]]))
+              [pathom.events    :as events]))
 
 
 

@@ -16,7 +16,7 @@
     (:require [mid-fruits.keyword                 :as keyword]
               [plugins.item-viewer.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.update.subs :as update.subs]
-              [x.app-core.api                     :refer [r]]))
+              [re-frame.api                       :refer [r]]))
 
 
 

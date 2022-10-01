@@ -18,7 +18,7 @@
               [plugins.item-editor.body.subs     :as body.subs]
               [plugins.item-editor.download.subs :as download.subs]
               [plugins.plugin-handler.core.subs  :as core.subs]
-              [x.app-core.api                    :as a :refer [r]]
+              [re-frame.api                      :as r :refer [r]]
               [x.app-router.api                  :as router]))
 
 
@@ -151,40 +151,40 @@
 ;
 ; @usage
 ;  [:item-editor/get-meta-item :my-editor :my-item]
-(a/reg-sub :item-editor/get-meta-item get-meta-item)
+(r/reg-sub :item-editor/get-meta-item get-meta-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/get-current-item-id :my-editor]
-(a/reg-sub :item-editor/get-current-item-id get-current-item-id)
+(r/reg-sub :item-editor/get-current-item-id get-current-item-id)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/get-current-item :my-editor]
-(a/reg-sub :item-editor/get-current-item get-current-item)
+(r/reg-sub :item-editor/get-current-item get-current-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/get-current-item-label :my-editor]
-(a/reg-sub :item-editor/get-current-item-label get-current-item-label)
+(r/reg-sub :item-editor/get-current-item-label get-current-item-label)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/get-current-item-modified-at :my-editor]
-(a/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
+(r/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/new-item? :my-editor]
-(a/reg-sub :item-editor/new-item? new-item?)
+(r/reg-sub :item-editor/new-item? new-item?)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
 ;  [:item-editor/editor-disabled? :my-editor]
-(a/reg-sub :item-editor/editor-disabled? editor-disabled?)
+(r/reg-sub :item-editor/editor-disabled? editor-disabled?)

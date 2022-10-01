@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns forms.lifecycles
-    (:require [x.server-core.api :as a]))
+    (:require [x.server-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
+(core/reg-lifecycles!
   ::lifecycles
   {:on-server-boot [:environment/add-css! {:uri "/css/forms/style.css"}]})

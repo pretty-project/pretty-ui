@@ -14,14 +14,14 @@
 
 (ns plugins.item-picker.transfer.effects
     (:require [plugins.plugin-handler.transfer.effects]
-              [x.server-core.api :as a]))
+              [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-picker/reg-transfer-picker-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -17,8 +17,8 @@
               [plugins.item-viewer.core.helpers    :as core.helpers]
               [plugins.plugin-handler.body.views   :as body.views]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]))
+              [re-frame.api                        :as r]
+              [x.app-components.api                :as components]))
 
 
 
@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (if-let [ghost-element @(a/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
+  (if-let [ghost-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
           [components/content ghost-element]))
 
 
@@ -51,7 +51,7 @@
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (let [item-element @(a/subscribe [:item-viewer/get-body-prop viewer-id :item-element])]
+  (let [item-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :item-element])]
        [item-element viewer-id]))
 
 (defn- body-structure
@@ -59,9 +59,9 @@
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (cond @(a/subscribe [:item-viewer/get-meta-item viewer-id :error-mode?])
+  (cond @(r/subscribe [:item-viewer/get-meta-item viewer-id :error-mode?])
          [error-body viewer-id {:error-description :the-item-you-opened-may-be-broken}]
-        @(a/subscribe [:item-viewer/data-received? viewer-id])
+        @(r/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]
         :data-not-received
          [downloading-item viewer-id]))
@@ -91,6 +91,6 @@
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]
        (reagent/lifecycles (core.helpers/component-id viewer-id :body)
                            {:reagent-render         (fn []              [body-structure                 viewer-id])
-                            :component-did-mount    (fn []  (a/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
-                            :component-will-unmount (fn []  (a/dispatch [:item-viewer/body-will-unmount viewer-id]))
-                            :component-did-update   (fn [%] (a/dispatch [:item-viewer/body-did-update   viewer-id %]))})))
+                            :component-did-mount    (fn []  (r/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-viewer/body-will-unmount viewer-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-viewer/body-did-update   viewer-id %]))})))

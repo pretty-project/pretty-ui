@@ -18,7 +18,7 @@
               [plugins.item-lister.body.subs      :as body.subs]
               [plugins.item-lister.core.subs      :as core.subs]
               [plugins.plugin-handler.core.events :as core.events]
-              [x.app-core.api                     :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -210,16 +210,16 @@
 ;
 ; @usage
 ;  [:item-lister/set-error-mode! :my-lister]
-(a/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-lister/set-error-mode! set-error-mode!)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/set-memory-mode! :my-lister]
-(a/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
+(r/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
 ;  [:item-lister/reset-selections! :my-lister]
-(a/reg-event-db :item-lister/reset-selections! reset-selections!)
+(r/reg-event-db :item-lister/reset-selections! reset-selections!)

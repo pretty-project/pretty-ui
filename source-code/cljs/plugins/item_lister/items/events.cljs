@@ -14,7 +14,7 @@
 
 (ns plugins.item-lister.items.events
     (:require [plugins.plugin-handler.items.events :as items.events]
-              [x.app-core.api                      :refer [r]]))
+              [re-frame.api                        :refer [r]]))
 
 
 

@@ -16,7 +16,7 @@
     (:require [mid-fruits.map                  :as map]
               [mid-fruits.string               :as string]
               [plugins.item-viewer.update.subs :as update.subs]
-              [x.app-core.api                  :refer [r]]))
+              [re-frame.api                    :refer [r]]))
 
 
 

@@ -13,9 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.time-handler.subs
-    (:require [mid-fruits.time                  :as time]
-              [x.app-core.event-handler         :as event-handler :refer [r]]
-              [x.app-core.transfer-handler.subs :as transfer-handler.subs]))
+    (:require [mid-fruits.time          :as time]
+              [x.app-core.event-handler :as event-handler :refer [r]]))
 
 
 

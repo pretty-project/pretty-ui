@@ -14,7 +14,7 @@
 
 (ns plugins.file-editor.body.subs
     (:require [plugins.plugin-handler.body.subs :as body.subs]
-              [x.app-core.api                   :as a]))
+              [re-frame.api                     :as r]))
 
 
 
@@ -31,4 +31,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :file-editor/get-body-prop get-body-prop)
+(r/reg-sub :file-editor/get-body-prop get-body-prop)

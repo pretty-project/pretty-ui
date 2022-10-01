@@ -27,6 +27,5 @@
   ; @return (map)
   [db [_ server-response]]
   (letfn [(f [db transfer-id {:keys [data target-path]}]
-             (cond-> db target-path (assoc-in target-path data)
-                        :store-data (assoc-in [:core :transfer-handler/data-items transfer-id] data)))]
+             (cond-> db target-path (assoc-in target-path data)))]
          (reduce-kv f db server-response)))

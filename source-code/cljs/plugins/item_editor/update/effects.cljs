@@ -22,7 +22,7 @@
               [plugins.item-editor.update.subs       :as update.subs]
               [plugins.item-editor.update.validators :as update.validators]
               [plugins.item-editor.update.views      :as update.views]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-ui.api                          :as ui]))
 
 
@@ -30,7 +30,7 @@
 ;; -- Save item effects -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/save-item!
   ; @param (keyword) editor-id
   ;
@@ -45,7 +45,7 @@
                                             :on-failure [:item-editor/save-item-failed editor-id]
                                             :query query :validator-f validator-f}]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/item-saved
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -72,7 +72,7 @@
               {:dispatch-if [(r ui/process-faked? db)
                              [:ui/end-fake-process!]]})))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/save-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -91,7 +91,7 @@
 ;; -- Restore discarded changes effects ---------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/undo-discard-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -102,7 +102,7 @@
        :dispatch-n [[:ui/close-bubble! :plugins.item-editor/changes-discarded-dialog]
                     [:item-editor/edit-item! editor-id item-id]]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-editor/render-changes-discarded-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

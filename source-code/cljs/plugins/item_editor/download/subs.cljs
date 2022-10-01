@@ -14,7 +14,7 @@
 
 (ns plugins.item-editor.download.subs
     (:require [plugins.plugin-handler.download.subs :as download.subs]
-              [x.app-core.api                       :as a]))
+              [re-frame.api                         :as r]))
 
 
 
@@ -34,4 +34,4 @@
 ;
 ; @usage
 ;  [:item-editor/data-received? :my-editor]
-(a/reg-sub :item-editor/data-received? data-received?)
+(r/reg-sub :item-editor/data-received? data-received?)

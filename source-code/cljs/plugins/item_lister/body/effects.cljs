@@ -15,14 +15,14 @@
 (ns plugins.item-lister.body.effects
     (:require [plugins.item-lister.body.events :as body.events]
               [reagent.api                     :as reagent]
-              [x.app-core.api                  :as a :refer [r]]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -32,7 +32,7 @@
       {:db       (r body.events/body-did-mount db lister-id body-props)
        :dispatch [:item-lister/request-items! lister-id]}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -40,7 +40,7 @@
   (fn [{:keys [db]} [_ lister-id]]
       {:db (r body.events/body-will-unmount db lister-id)}))
 
-(a/reg-event-fx
+(r/reg-event-fx
   :item-lister/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

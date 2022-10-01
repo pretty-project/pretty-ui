@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.clipboard.side-effects
-    (:require [tools.clipboard.helpers       :as helpers]
+    (:require [re-frame.api                  :as r]
+              [tools.clipboard.helpers       :as helpers]
               [tools.clipboard.views         :as views]
-              [tools.temporary-component.api :as temporary-component]
-              [x.app-core.api                :as a]))
+              [tools.temporary-component.api :as temporary-component]))
 
 
 
@@ -39,4 +39,4 @@
 
 ; @usage
 ;  [:clipboard/copy-text! "My text"]
-(a/reg-fx :clipboard/copy-text! copy-text!)
+(r/reg-fx :clipboard/copy-text! copy-text!)
