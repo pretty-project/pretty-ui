@@ -29,6 +29,9 @@
            :failed-to-delete
            {:en "Failed to delete"
             :hu "Sikertelen törlés"}
+           :failed-to-download
+           {:en "Failed to download"
+            :hu "Sikertelen letöltés"}
            :failed-to-duplicate
            {:en "Failed to duplicate"
             :hu "Sikertelen duplikálás"}
@@ -49,4 +52,7 @@
             :hu "A duplikálás visszavonása sikertelen"}
            :failed-to-update
            {:en "Failed to update"
-            :hu "Sikertelen változtatás"}})
+            :hu "Sikertelen változtatás"}
+           :failed-to-upload
+           {:en "Failed to upload"
+            :hu "Sikertelen feltöltés"}})

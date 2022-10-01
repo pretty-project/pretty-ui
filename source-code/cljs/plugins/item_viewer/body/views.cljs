@@ -21,10 +21,10 @@
 
 
 
-;; -- Indicator components ----------------------------------------------------
+;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-item
+(defn ghost-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -32,18 +32,13 @@
   (if-let [ghost-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
           [components/content ghost-element]))
 
-
-
-;; -- Body components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (let [error-element @(r/subscribe [:item-lister/get-body-prop viewer-id :error-element])]
-       [error-element viewer-id]))
+  (if-let [error-element @(r/subscribe [:item-lister/get-body-prop viewer-id :error-element])]
+          [components/content error-element]))
 
 (defn- item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +46,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (let [item-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :item-element])]
-       [item-element viewer-id]))
+       [components/content item-element]))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -63,7 +58,7 @@
         @(r/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]
         :data-not-received
-         [downloading-item viewer-id]))
+         [ghost-element viewer-id]))
 
 (defn body
   ; @param (keyword) viewer-id
@@ -85,7 +80,7 @@
   ;  [item-viewer/body :my-viewer {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [viewer-id] [:div ...])
+  ;  (defn my-item-element [] [:div ...])
   ;  [item-viewer/body :my-viewer {:item-element #'my-item-element}]
   [viewer-id body-props]
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]

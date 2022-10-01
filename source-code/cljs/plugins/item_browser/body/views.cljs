@@ -28,7 +28,7 @@
 ; plugins.item-lister.body.views
 (def item-list         body.views/item-list)
 (def no-items-to-show  body.views/no-items-to-show)
-(def downloading-items body.views/downloading-items)
+(def ghost-element     body.views/ghost-element)
 
 
 
@@ -40,8 +40,8 @@
   ;
   ; @param (keyword) browser-id
   [browser-id]
-  (let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
-       [error-element browser-id]))
+  (if-let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
+          [error-element browser-id]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,9 +57,9 @@
          [:<> [item-list                 browser-id]
               [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
               [no-items-to-show          browser-id]
-              [downloading-items         browser-id]]
+              [ghost-element             browser-id]]
         :data-not-received
-         [downloading-items browser-id]))
+         [ghost-element browser-id]))
 
 (defn body
   ; @param (keyword) browser-id

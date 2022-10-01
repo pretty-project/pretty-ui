@@ -30,20 +30,6 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  [lister-id]
-  ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
-  ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
-  ; villanjon fel!
-  (if-let [ghost-element @(r/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
-          (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
-                data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
-               (if-not (and all-items-downloaded? data-received?)
-                       [components/content ghost-element]))))
-
 (defn no-items-to-show-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,13 +65,27 @@
 ;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn ghost-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
+  ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
+  ; villanjon fel!
+  (if-let [ghost-element @(r/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
+          (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
+                data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
+               (if-not (and all-items-downloaded? data-received?)
+                       [components/content ghost-element]))))
+
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
-       [error-element lister-id]))
+  (if-let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
+          [components/content error-element]))
 
 (defn item-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,9 +112,9 @@
          [:<> [item-list                 lister-id]
               [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
               [no-items-to-show          lister-id]
-              [downloading-items         lister-id]]
+              [ghost-element             lister-id]]
         :data-not-received
-         [downloading-items lister-id]))
+         [ghost-element lister-id]))
 
 (defn body
   ; @param (keyword) lister-id

@@ -24,7 +24,12 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-item
+
+
+;; -- Body components ---------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ghost-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
@@ -32,10 +37,13 @@
   (if-let [ghost-element @(r/subscribe [:item-preview/get-body-prop preview-id :ghost-element])]
           [components/content ghost-element]))
 
-
-
-;; -- Body components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
+(defn error-element
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  [preview-id]
+  (if-let [error-element @(r/subscribe [:item-preview/get-body-prop preview-id :error-element])]
+          [components/content error-element]))
 
 (defn preview-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,7 +51,7 @@
   ; @param (keyword) preview-id
   [preview-id]
   (let [preview-element @(r/subscribe [:item-preview/get-body-prop preview-id :preview-element])]
-       [preview-element preview-id]))
+       [components/content preview-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,12 +59,11 @@
   ; @param (keyword) preview-id
   [preview-id]
   (cond @(r/subscribe [:item-preview/get-meta-item preview-id :error-mode?])
-         ;[error-body preview-id {:error-description :the-item-you-opened-may-be-broken}]
-         [:div "error"]
+         [error-element preview-id]
         @(r/subscribe [:item-preview/data-received? preview-id])
          [preview-element preview-id]
         :data-not-received
-         [downloading-item preview-id]))
+         [ghost-element preview-id]))
 
 (defn body
   ; @param (keyword) preview-id
@@ -74,7 +81,7 @@
   ;  [item-preview/body :my-preview {...}]
   ;
   ; @usage
-  ;  (defn my-preview-element [preview-id] [:div ...])
+  ;  (defn my-preview-element [] [:div ...])
   ;  [item-preview/body :my-preview {:preview-element #'my-preview-element}]
   [preview-id body-props]
   (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]

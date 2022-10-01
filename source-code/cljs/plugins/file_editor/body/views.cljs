@@ -21,10 +21,10 @@
 
 
 
-;; -- Indicator components ----------------------------------------------------
+;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn downloading-content
+(defn ghost-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -32,18 +32,13 @@
   (if-let [ghost-element @(r/subscribe [:file-editor/get-body-prop editor-id :ghost-element])]
           [components/content ghost-element]))
 
-
-
-;; -- Body components ---------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (let [error-element @(r/subscribe [:file-editor/get-body-prop editor-id :error-element])]
-       [error-element editor-id]))
+  (if-let [error-element @(r/subscribe [:file-editor/get-body-prop editor-id :error-element])]
+          [components/content error-element]))
 
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +46,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (let [form-element @(r/subscribe [:file-editor/get-body-prop editor-id :form-element])]
-       [form-element editor-id]))
+       [components/content form-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -63,7 +58,7 @@
         @(r/subscribe [:file-editor/data-received? editor-id])
          [form-element editor-id]
         :data-not-received
-         [downloading-content editor-id]))
+         [ghost-element editor-id]))
 
 (defn body
   ; @param (keyword) editor-id
@@ -80,7 +75,7 @@
   ;  [file-editor/body :my-editor {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [editor-id] [:div ...])
+  ;  (defn my-form-element [] [:div ...])
   ;  [file-editor/body :my-editor {:form-element #'my-form-element}]
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
