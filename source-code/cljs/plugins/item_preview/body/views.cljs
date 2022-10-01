@@ -21,12 +21,7 @@
 
 
 
-;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-
-
-;; -- Body components ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn ghost-element
@@ -62,6 +57,8 @@
          [error-element preview-id]
         @(r/subscribe [:item-preview/data-received? preview-id])
          [preview-element preview-id]
+        @(r/subscribe [:item-preview/no-item-id-passed? preview-id])
+         [:<>]
         :data-not-received
          [ghost-element preview-id]))
 
@@ -82,7 +79,8 @@
   ;
   ; @usage
   ;  (defn my-preview-element [] [:div ...])
-  ;  [item-preview/body :my-preview {:preview-element #'my-preview-element}]
+  ;  [item-preview/body :my-preview {:item-id "my-item"
+  ;                                  :preview-element #'my-preview-element}]
   [preview-id body-props]
   (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]
        (reagent/lifecycles (core.helpers/component-id preview-id :body)

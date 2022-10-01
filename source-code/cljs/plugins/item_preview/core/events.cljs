@@ -28,6 +28,7 @@
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-item-id!       core.events/set-item-id!)
+(def clear-item-id!     core.events/clear-item-id!)
 (def update-item-id!    core.events/update-item-id!)
 
 
@@ -73,6 +74,17 @@
   ; @return (map)
   [db [_ preview-id]]
   (r update-item-id! db preview-id))
+
+(defn reload-preview!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  ;
+  ; @return (map)
+  [db [_ preview-id]]
+  (as-> db % (r clear-item-id!   % preview-id)
+             (r update-item-id!  % preview-id)
+             (r reset-downloads! % preview-id)))
 
 
 

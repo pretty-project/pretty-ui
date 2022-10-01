@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-preview.download.subs
-    (:require [plugins.plugin-handler.download.subs :as download.subs]
-              [re-frame.api                         :as r]))
+    (:require [plugins.item-preview.core.subs       :as core.subs]
+              [plugins.plugin-handler.download.subs :as download.subs]
+              [re-frame.api                         :as r :refer [r]]))
 
 
 
@@ -24,6 +25,23 @@
 ; plugins.plugin-handler.download.subs
 (def get-resolver-id download.subs/get-resolver-id)
 (def data-received?  download.subs/data-received?)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn request-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  ;
+  ; @return (boolean)
+  [db [_ preview-id]]
+  ; A body komponens a React-fába csatolódásakor vagy a paramétereinek
+  ; megváltozásakor item-id tulajdonságként kaphat NIL értéket is!
+  (let [current-item-id (r core.subs/get-current-item-id db preview-id)]
+       (some? current-item-id)))
 
 
 

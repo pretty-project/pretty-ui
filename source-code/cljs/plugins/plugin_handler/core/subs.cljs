@@ -102,6 +102,16 @@
   [db [_ plugin-id]]
   (r get-meta-item db plugin-id :item-id))
 
+(defn no-item-id-passed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  (let [current-item-id (r get-meta-item db plugin-id :item-id)]
+       (nil? current-item-id)))
+
 (defn current-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -178,6 +188,16 @@
   ; @return (keyword)
   [db [_ plugin-id]]
   (r get-meta-item db plugin-id :view-id))
+
+(defn no-view-id-passed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (boolean)
+  [db [_ plugin-id]]
+  (let [current-view-id (r get-meta-item db plugin-id :view-id)]
+       (nil? current-view-id)))
 
 
 

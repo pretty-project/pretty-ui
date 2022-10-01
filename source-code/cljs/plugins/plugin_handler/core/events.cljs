@@ -123,6 +123,15 @@
   [db [_ plugin-id item-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :item-id] item-id))
 
+(defn clear-item-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :item-id]))
+
 (defn update-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -174,6 +183,15 @@
   ; @return (map)
   [db [_ plugin-id view-id]]
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id] view-id))
+
+(defn clear-view-id!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (map)
+  [db [_ plugin-id]]
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :view-id]))
 
 (defn update-view-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!

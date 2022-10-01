@@ -48,4 +48,5 @@
   ; @param (?) %
   (fn [{:keys [db]} [_ preview-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           {:db (r body.events/body-did-update db preview-id body-props)})))
+           {:db       (r body.events/body-did-update db preview-id body-props)
+            :dispatch [:item-preview/reload-preview! preview-id]})))

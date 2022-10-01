@@ -37,8 +37,9 @@
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
                                            {:display-progress? true
                                             ; XXX#4057
-                                            ; Az on-stalled időzítéssel a UI változásai egyszerre történnek
-                                            ; meg a lekérés okozta {:editor-disabled? true} állapot megszűnésével
+                                            ; Az on-success helyett on-stalled időzítéssel a UI változásai
+                                            ; egyszerre történnek meg a lekérés okozta {:editor-disabled? true}
+                                            ; állapot megszűnésével.
                                             :on-stalled [:item-editor/receive-item!   editor-id]
                                             :on-failure [:item-editor/set-error-mode! editor-id]
                                             :query query :validator-f validator-f}]})))

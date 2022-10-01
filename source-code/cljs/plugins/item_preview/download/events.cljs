@@ -41,10 +41,7 @@
   ;
   ; @return (map)
   [db [_ preview-id]]
-  ; XXX#5051
-  (let [current-item-id (r core.subs/get-current-item-id db preview-id)]
-       (as-> db % (r core.events/reset-downloads! % preview-id)
-                  (r core.events/set-meta-item!   % preview-id :requested-item current-item-id))))
+  (r core.events/reset-downloads! db preview-id))
 
 (defn store-downloaded-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

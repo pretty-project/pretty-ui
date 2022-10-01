@@ -17,6 +17,7 @@
               [plugins.item-preview.core.subs           :as core.subs]
               [plugins.item-preview.download.events     :as download.events]
               [plugins.item-preview.download.queries    :as download.queries]
+              [plugins.item-preview.download.subs       :as download.subs]
               [plugins.item-preview.download.validators :as download.validators]
               [re-frame.api                             :as r :refer [r]]))
 
@@ -31,13 +32,15 @@
   ;
   ; @param (keyword) preview-id
   (fn [{:keys [db]} [_ preview-id]]
-      (let [query        (r download.queries/get-request-item-query          db preview-id)
-            validator-f #(r download.validators/request-item-response-valid? db preview-id %)]
-           {:db       (r download.events/request-item! db preview-id)
-            :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
-                                           {:on-success [:item-preview/set-error-mode! preview-id];[:item-preview/receive-item!   preview-id]
-                                            :on-failure [:item-preview/set-error-mode! preview-id]
-                                            :query query :validator-f validator-f}]})))
+      (if (r download.subs/request-item? db preview-id)
+          (let [query        (r download.queries/get-request-item-query          db preview-id)
+                validator-f #(r download.validators/request-item-response-valid? db preview-id %)]
+               {:db       (r download.events/request-item! db preview-id)
+                :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
+                                               ; XXX#4057
+                                               {:on-stalled [:item-preview/receive-item!   preview-id]
+                                                :on-failure [:item-preview/set-error-mode! preview-id]
+                                                :query query :validator-f validator-f}]}))))
 
 (r/reg-event-fx
   :item-preview/receive-item!
@@ -49,12 +52,4 @@
       ; Ha az [:item-preview/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.
       (if (r body.subs/body-did-mount? db preview-id)
-          {:db       (r download.events/receive-item! db preview-id server-response)
-           :dispatch [:item-preview/item-received preview-id]})))
-
-(r/reg-event-fx
-  :item-preview/item-received
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) preview-id
-  (fn [{:keys [db]} [_ preview-id]]))
+          {:db (r download.events/receive-item! db preview-id server-response)})))

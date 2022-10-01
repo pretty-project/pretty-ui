@@ -32,7 +32,8 @@
 
 (defn my-preview
   []
-  [item-preview/body :my-preview {:preview-element [:div "My preview"]}])
+  [item-preview/body :my-preview {:item-id         "my-item"
+                                  :preview-element [:div "My preview"]}])
 
 
 
@@ -44,5 +45,6 @@
 ; összefűzve elküldésre kerül.
 (defn my-query
   []
-  [item-preview/body :my-preview {:preview-element [:div "My preview"]
+  [item-preview/body :my-preview {:item-id         "my-item"
+                                  :preview-element [:div "My preview"]
                                   :query           [:my-query]}])
