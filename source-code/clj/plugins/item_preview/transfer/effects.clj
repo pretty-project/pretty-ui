@@ -12,14 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.helpers
-    (:require [mid.plugins.item-picker.core.helpers :as core.helpers]))
+(ns plugins.item-preview.transfer.effects
+    (:require [plugins.plugin-handler.transfer.effects]
+              [re-frame.api :as r]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.item-picker.core.helpers
-(def component-id      core.helpers/component-id)
-(def default-item-path core.helpers/default-item-path)
+(r/reg-event-fx
+  :item-preview/reg-transfer-preview-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  ; @param (map) preview-props
+  (fn [_ [_ preview-id preview-props]]
+      [:plugin-handler/reg-transfer-plugin-props! preview-id preview-props]))

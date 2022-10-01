@@ -12,20 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.transfer.effects
-    (:require [plugins.plugin-handler.transfer.effects]
-              [re-frame.api :as r]))
+(ns plugins.item-preview.transfer.helpers
+    (:require [plugins.plugin-handler.transfer.helpers :as transfer.helpers]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-picker/reg-transfer-picker-props!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
-  (fn [_ [_ picker-id picker-props]]
-      [:plugin-handler/reg-transfer-plugin-props! picker-id picker-props]))
+; plugins.plugin-handler.transfer.helpers
+(def transfer-id transfer.helpers/transfer-id)

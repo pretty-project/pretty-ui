@@ -12,33 +12,37 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.plugins.item-picker.core.helpers
-    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
+(ns plugins.item-preview.core.subs
+    (:require [plugins.plugin-handler.core.subs :as core.subs]
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.plugin-handler.core.helpers
-(def component-id      core.helpers/component-id)
-(def default-data-path core.helpers/default-data-path)
+; plugins.plugin-handler.core.subs
+(def get-plugin-prop core.subs/get-plugin-prop)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn default-item-path
+(defn get-preview-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
+  ; @param (keyword) item-key
   ;
-  ; @example
-  ;  (core.helpers/default-item-path :my-picker)
-  ;  =>
-  ;  [:plugins :plugin-handler/downloaded-items :my-picker]
-  ;
-  ; @return (vector)
-  [picker-id]
-  (default-data-path picker-id :downloaded-items))
+  ; @return (map)
+  [db [_ preview-id item-key]]
+  (r get-plugin-prop db preview-id item-key))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-sub :item-preview/get-preview-prop get-preview-prop)

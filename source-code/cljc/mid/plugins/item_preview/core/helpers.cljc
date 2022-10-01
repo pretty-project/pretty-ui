@@ -12,29 +12,33 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.events
-    (:require [plugins.plugin-handler.core.events :as core.events]
-              [re-frame.api                       :refer [r]]))
+(ns mid.plugins.item-preview.core.helpers
+    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.events
-(def store-plugin-props! core.events/store-plugin-props!)
+; mid.plugins.plugin-handler.core.helpers
+(def component-id      core.helpers/component-id)
+(def default-data-path core.helpers/default-data-path)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn init-picker!
+(defn default-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
+  ; @param (keyword) preview-id
   ;
-  ; @return (map)
-  [db [_ picker-id picker-props]]
-  (r store-plugin-props! db picker-id picker-props))
+  ; @example
+  ;  (core.helpers/default-item-path :my-preview)
+  ;  =>
+  ;  [:plugins :plugin-handler/downloaded-items :my-preview]
+  ;
+  ; @return (vector)
+  [preview-id]
+  (default-data-path preview-id :downloaded-items))

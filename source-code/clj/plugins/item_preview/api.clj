@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.api
-    (:require [plugins.item-picker.core.effects]
-              [plugins.item-picker.core.events]
-              [plugins.item-picker.core.subs]
-              [plugins.item-picker.transfer.effects]))
+(ns plugins.item-preview.api
+    (:require [plugins.item-preview.core.effects]
+              [plugins.item-preview.core.events]
+              [plugins.item-preview.core.subs]
+              [plugins.item-preview.transfer.effects]))

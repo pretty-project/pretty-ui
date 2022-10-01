@@ -12,13 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.transfer.helpers
-    (:require [plugins.plugin-handler.transfer.helpers :as transfer.helpers]))
+(ns plugins.item-preview.core.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.transfer.helpers
-(def transfer-id transfer.helpers/transfer-id)
+(defn preview-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) preview-id
+  ; @param (map) preview-props
+  ;
+  ; @return (map)
+  [preview-id preview-props]
+  (merge {}
+         (param preview-props)))

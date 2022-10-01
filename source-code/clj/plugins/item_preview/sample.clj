@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.sample
+(ns plugins.item-preview.sample
     (:require [plugins.item-editor.api]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver]]
               [mongo-db.api                          :as mongo-db]
@@ -30,11 +30,11 @@
 ;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
 (r/reg-event-fx
-  :init-my-picker!
-  [:item-picker/init-picker! :my-picker
-                             {:collection-name "my_collection"
-                              :handler-key     :my-handler
-                              :item-namespace  :my-type}])
+  :init-my-preview!
+  [:item-preview/init-preview! :my-preview
+                               {:collection-name "my_collection"
+                                :handler-key     :my-handler
+                                :item-namespace  :my-type}])
 
 
 

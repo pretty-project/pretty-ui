@@ -12,37 +12,29 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.subs
-    (:require [plugins.plugin-handler.core.subs :as core.subs]
-              [re-frame.api                     :as r :refer [r]]))
+(ns plugins.item-preview.core.events
+    (:require [plugins.plugin-handler.core.events :as core.events]
+              [re-frame.api                       :refer [r]]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.subs
-(def get-plugin-prop core.subs/get-plugin-prop)
+; plugins.plugin-handler.core.events
+(def store-plugin-props! core.events/store-plugin-props!)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-picker-prop
+(defn init-preview!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  ; @param (keyword) item-key
+  ; @param (keyword) preview-id
+  ; @param (map) preview-props
   ;
   ; @return (map)
-  [db [_ picker-id item-key]]
-  (r get-plugin-prop db picker-id item-key))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-sub :item-picker/get-picker-prop get-picker-prop)
+  [db [_ preview-id preview-props]]
+  (r store-plugin-props! db preview-id preview-props))

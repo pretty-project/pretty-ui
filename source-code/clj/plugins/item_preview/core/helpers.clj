@@ -12,21 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+(ns plugins.item-preview.core.helpers
+    (:require [mid.plugins.item-preview.core.helpers :as core.helpers]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-(defn picker-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
-  ;
-  ; @return (map)
-  [picker-id picker-props]
-  (merge {}
-         (param picker-props)))
+; mid.plugins.item-preview.core.helpers
+(def component-id      core.helpers/component-id)
+(def default-item-path core.helpers/default-item-path)
