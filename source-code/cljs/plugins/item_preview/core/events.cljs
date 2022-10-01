@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.events
+(ns plugins.item-preview.core.events
     (:require [mid-fruits.map                     :refer [dissoc-in]]
-              [plugins.item-picker.body.subs      :as body.subs]
+              [plugins.item-preview.body.subs     :as body.subs]
               [plugins.plugin-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
@@ -37,11 +37,11 @@
 (defn set-error-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (map)
-  [db [_ picker-id]]
-  (r set-mode! db picker-id :error-mode?))
+  [db [_ preview-id]]
+  (r set-mode! db preview-id :error-mode?))
 
 
 
@@ -51,12 +51,12 @@
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (map)
-  [db [_ picker-id]]
-  (let [item-path (r body.subs/get-body-prop db picker-id :item-path)]
-       (-> db (dissoc-in [:plugins :plugin-handler/meta-items picker-id :data-received?])
+  [db [_ preview-id]]
+  (let [item-path (r body.subs/get-body-prop db preview-id :item-path)]
+       (-> db (dissoc-in [:plugins :plugin-handler/meta-items preview-id :data-received?])
               (dissoc-in item-path))))
 
 
@@ -65,4 +65,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :item-picker/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-preview/set-error-mode! set-error-mode!)

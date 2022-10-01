@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-viewer.sample
-    (:require [plugins.item-viewer.api :as item-viewer]
+(ns plugins.file-editor.sample
+    (:require [plugins.file-editor.api :as item-editor]
               [re-frame.api            :as r]))
 
 
@@ -22,44 +22,26 @@
 ;; ----------------------------------------------------------------------------
 
 ; A plugin beállításához mindenképpen szükséges a szerver-oldali
-; [:item-viewer/init-viewer! ...] eseményt használni!
+; [:file-editor/init-editor! ...] eseményt használni!
 
 
 
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn my-viewer
+(defn my-editor
   []
-  [item-viewer/body :my-viewer {:item-element [:div "My item"]}])
-
-
-
-
-;; -- Az {:auto-title? true} beállítás használata -----------------------------
-;; ----------------------------------------------------------------------------
-
-; ...
-
-
-
-;; -- Az [:item-viewer/view-item! "..."] esemény hanszálata -------------------
-;; ----------------------------------------------------------------------------
-
-; ...
-(r/reg-event-fx
-  :view-my-item!
-  [:item-viewer/view-item! :my-viewer "my-item"])
+  [file-editor/body :my-editor {:form-element [:div "My form"]}])
 
 
 
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-viewer plugin body komponensének {:query [...]} tulajdonságaként
+; A file-editor plugin body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
 ; összefűzve elküldésre kerül.
 (defn my-query
   []
-  [item-viewer/body :my-viewer {:item-element [:div "My item"]
+  [file-editor/body :my-editor {:form-element [:div "My form"]
                                 :query        [:my-query]}])

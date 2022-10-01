@@ -12,10 +12,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.body.effects
-    (:require [plugins.item-picker.body.events :as body.events]
-              [reagent.api                     :as reagent]
-              [re-frame.api                    :as r :refer [r]]))
+(ns plugins.item-preview.body.effects
+    (:require [plugins.item-preview.body.events :as body.events]
+              [reagent.api                      :as reagent]
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
@@ -23,29 +23,29 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx
-  :item-picker/body-did-mount
+  :item-preview/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) body-props
-  (fn [{:keys [db]} [_ picker-id body-props]]
-      {:db       (r body.events/body-did-mount db picker-id body-props)
-       :dispatch [:item-picker/load-picker! picker-id]}))
+  (fn [{:keys [db]} [_ preview-id body-props]]
+      {:db       (r body.events/body-did-mount db preview-id body-props)
+       :dispatch [:item-preview/load-preview! preview-id]}))
 
 (r/reg-event-fx
-  :item-picker/body-will-unmount
+  :item-preview/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  (fn [{:keys [db]} [_ picker-id]]
-      {:db (r body.events/body-will-unmount db picker-id)}))
+  ; @param (keyword) preview-id
+  (fn [{:keys [db]} [_ preview-id]]
+      {:db (r body.events/body-will-unmount db preview-id)}))
 
 (r/reg-event-fx
-  :item-picker/body-did-update
+  :item-preview/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (?) %
-  (fn [{:keys [db]} [_ picker-id %]]
+  (fn [{:keys [db]} [_ preview-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           {:db (r body.events/body-did-update db picker-id body-props)})))
+           {:db (r body.events/body-did-update db preview-id body-props)})))

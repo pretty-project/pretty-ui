@@ -1,10 +1,10 @@
 
 # XXX#1467
 # Milyen adatokat fogad a plugin transfer modulja?
-# clj/plugins.plugin-handler/transfer/README.md
+  clj/plugins.plugin-handler/transfer/README.md
 
 # XXX#8173
-# Mire való a plugin transfer-id tulajdonsága?
+# Mire való a plugin body komponensének transfer-id tulajdonsága?
   A plugin body komponensének transfer-id tulajdonságának használatával, lehetséges
   az egyes pluginokat egy időben, több példányban is megjeleníteni, úgy,
   hogy mindössze egy darab szerver-oldali kezelőt szükséges inicializálni

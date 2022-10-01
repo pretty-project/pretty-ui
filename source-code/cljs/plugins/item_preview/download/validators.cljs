@@ -12,10 +12,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.download.validators
-    (:require [mid-fruits.map                    :as map]
-              [plugins.item-picker.download.subs :as download.subs]
-              [re-frame.api                      :refer [r]]))
+(ns plugins.item-preview.download.validators
+    (:require [mid-fruits.map                     :as map]
+              [plugins.item-preview.download.subs :as download.subs]
+              [re-frame.api                       :refer [r]]))
 
 
 
@@ -25,11 +25,11 @@
 (defn request-item-response-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) server-response
   ;
   ; @return (boolean)
-  [db [_ picker-id server-response]]
-  (let [resolver-id (r download.subs/get-resolver-id db picker-id :get-item)
+  [db [_ preview-id server-response]]
+  (let [resolver-id (r download.subs/get-resolver-id db preview-id :get-item)
         document    (get server-response resolver-id)]
        (map/namespaced? document)))

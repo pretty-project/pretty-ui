@@ -12,13 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.download.effects
-    (:require [plugins.item-picker.body.subs           :as body.subs]
-              [plugins.item-picker.core.subs           :as core.subs]
-              [plugins.item-picker.download.events     :as download.events]
-              [plugins.item-picker.download.queries    :as download.queries]
-              [plugins.item-picker.download.validators :as download.validators]
-              [re-frame.api                            :as r :refer [r]]))
+(ns plugins.item-preview.download.effects
+    (:require [plugins.item-preview.body.subs           :as body.subs]
+              [plugins.item-preview.core.subs           :as core.subs]
+              [plugins.item-preview.download.events     :as download.events]
+              [plugins.item-preview.download.queries    :as download.queries]
+              [plugins.item-preview.download.validators :as download.validators]
+              [re-frame.api                             :as r :refer [r]]))
 
 
 
@@ -26,35 +26,35 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx
-  :item-picker/request-item!
+  :item-preview/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  (fn [{:keys [db]} [_ picker-id]]
-      (let [query        (r download.queries/get-request-item-query          db picker-id)
-            validator-f #(r download.validators/request-item-response-valid? db picker-id %)]
-           {:db       (r download.events/request-item! db picker-id)
-            :dispatch [:pathom/send-query! (r core.subs/get-request-id db picker-id)
-                                           {:on-success [:item-picker/receive-item!   picker-id]
-                                            :on-failure [:item-picker/set-error-mode! picker-id]
+  ; @param (keyword) preview-id
+  (fn [{:keys [db]} [_ preview-id]]
+      (let [query        (r download.queries/get-request-item-query          db preview-id)
+            validator-f #(r download.validators/request-item-response-valid? db preview-id %)]
+           {:db       (r download.events/request-item! db preview-id)
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
+                                           {:on-success [:item-preview/receive-item!   preview-id]
+                                            :on-failure [:item-preview/set-error-mode! preview-id]
                                             :query query :validator-f validator-f}]})))
 
 (r/reg-event-fx
-  :item-picker/receive-item!
+  :item-preview/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ picker-id server-response]]
-      ; Ha az [:item-picker/receive-item! ...] esemény megtörténésekor a body komponens már
+  (fn [{:keys [db]} [_ preview-id server-response]]
+      ; Ha az [:item-preview/receive-item! ...] esemény megtörténésekor a body komponens már
       ; nincs a React-fába csatolva, akkor az esemény nem végez műveletet.
-      (if (r body.subs/body-did-mount? db picker-id)
-          {:db       (r download.events/receive-item! db picker-id server-response)
-           :dispatch [:item-picker/item-received picker-id]})))
+      (if (r body.subs/body-did-mount? db preview-id)
+          {:db       (r download.events/receive-item! db preview-id server-response)
+           :dispatch [:item-preview/item-received preview-id]})))
 
 (r/reg-event-fx
-  :item-picker/item-received
+  :item-preview/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  (fn [{:keys [db]} [_ picker-id]]))
+  ; @param (keyword) preview-id
+  (fn [{:keys [db]} [_ preview-id]]))

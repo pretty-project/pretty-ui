@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.subs
+(ns plugins.item-preview.core.subs
     (:require [plugins.plugin-handler.core.subs :as core.subs]
               [re-frame.api                     :as r :refer [r]]))
 
@@ -37,20 +37,20 @@
 (defn get-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (boolean)
-  [db [_ picker-id]]
-  (r core.subs/get-request-id db picker-id :picker))
+  [db [_ preview-id]]
+  (r core.subs/get-request-id db preview-id :preview))
 
-(defn picker-synchronizing?
+(defn preview-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (boolean)
-  [db [_ picker-id]]
-  (r plugin-synchronizing? db picker-id :picker))
+  [db [_ preview-id]]
+  (r plugin-synchronizing? db preview-id :preview))
 
 
 
@@ -60,18 +60,18 @@
 (defn download-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (boolean)
-  [db [_ picker-id]]
+  [db [_ preview-id]]
   ; XXX#5051
-  ; Ha a body komponens picker-props paramétere megváltozik, akkor
+  ; Ha a body komponens preview-props paramétere megváltozik, akkor
   ; a ** komponens component-did-update életciklusa
   ; megtörténik viszont ebben az esetben nem szükséges újra letölteni az elemet,
   ; ezért kell vizsgálni, hogy a current-item értéke változott-e meg, vagy csak
-  ; a picker-props térkép változása indította el a component-did-update életciklust!
-  (let [requested-item-id (r get-meta-item       db picker-id :requested-item)
-        current-item-id   (r get-current-item-id db picker-id)]
+  ; a preview-props térkép változása indította el a component-did-update életciklust!
+  (let [requested-item-id (r get-meta-item       db preview-id :requested-item)
+        current-item-id   (r get-current-item-id db preview-id)]
        (not= current-item-id requested-item-id)))
 
 
@@ -79,21 +79,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) picker-id
+; @param (keyword) preview-id
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-picker/get-meta-item :my-picker :my-item]
-(r/reg-sub :item-picker/get-meta-item get-meta-item)
+;  [:item-preview/get-meta-item :my-preview :my-item]
+(r/reg-sub :item-preview/get-meta-item get-meta-item)
 
-; @param (keyword) picker-id
+; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-picker/get-current-item-id :my-picker]
-(r/reg-sub :item-picker/get-current-item-id get-current-item-id)
+;  [:item-preview/get-current-item-id :my-preview]
+(r/reg-sub :item-preview/get-current-item-id get-current-item-id)
 
-; @param (keyword) picker-id
+; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-picker/get-current-item :my-picker]
-(r/reg-sub :item-picker/get-current-item get-current-item)
+;  [:item-preview/get-current-item :my-preview]
+(r/reg-sub :item-preview/get-current-item get-current-item)

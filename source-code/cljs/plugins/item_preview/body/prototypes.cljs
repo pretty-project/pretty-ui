@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.body.prototypes
-    (:require [mid-fruits.candy                 :refer [param]]
-              [plugins.item-picker.core.helpers :as core.helpers]))
+(ns plugins.item-preview.body.prototypes
+    (:require [mid-fruits.candy                  :refer [param]]
+              [plugins.item-preview.core.helpers :as core.helpers]))
 
 
 
@@ -24,14 +24,14 @@
 (defn body-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) body-props
   ;
   ; @return (map)
   ;  {:item-path (vector)
   ;   :transfer-id (keyword)}
-  [picker-id body-props]
-  (merge {:item-path (core.helpers/default-item-path picker-id)
+  [preview-id body-props]
+  (merge {:item-path (core.helpers/default-item-path preview-id)
           ; XXX#8173
-          :transfer-id picker-id}
+          :transfer-id preview-id}
          (param body-props)))

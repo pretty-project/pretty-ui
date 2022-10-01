@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.core.effects
-    (:require [plugins.item-picker.core.events :as core.events]
-              [re-frame.api                    :as r :refer [r]]))
+(ns plugins.item-preview.core.effects
+    (:require [plugins.item-preview.core.events :as core.events]
+              [re-frame.api                     :as r :refer [r]]))
 
 
 
@@ -22,10 +22,10 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx
-  :item-picker/load-picker!
+  :item-preview/load-preview!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  (fn [{:keys [db]} [_ picker-id]]
-      {;:db       (r core.events/load-picker! db picker-id)
-       :dispatch [:item-picker/request-item! picker-id]}))
+  ; @param (keyword) preview-id
+  (fn [{:keys [db]} [_ preview-id]]
+      {;:db       (r core.events/load-preview! db preview-id)
+       :dispatch [:item-preview/request-item! preview-id]}))

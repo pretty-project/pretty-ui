@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.transfer.subs
+(ns plugins.item-preview.transfer.subs
     (:require [plugins.plugin-handler.transfer.subs :as transfer.subs]
               [re-frame.api                         :as r]))
 
@@ -30,4 +30,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-sub :item-picker/get-transfer-item get-transfer-item)
+(r/reg-sub :item-preview/get-transfer-item get-transfer-item)

@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.download.subs
+(ns plugins.item-preview.download.subs
     (:require [plugins.plugin-handler.download.subs :as download.subs]
               [re-frame.api                         :as r]))
 
@@ -30,8 +30,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) picker-id
+; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-picker/data-received? :my-picker]
-(r/reg-sub :item-picker/data-received? data-received?)
+;  [:item-preview/data-received? :my-preview]
+(r/reg-sub :item-preview/data-received? data-received?)

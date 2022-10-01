@@ -14,8 +14,7 @@
 
 (ns plugins.item-editor.sample
     (:require [plugins.item-editor.api :as item-editor]
-              [re-frame.api            :as r]
-              [x.app-elements.api      :as elements]))
+              [re-frame.api            :as r]))
 
 
 
@@ -90,7 +89,7 @@
 
 ; Az item-editor plugin body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
-; összefűzve kerül elküldésre.
+; összefűzve elküldésre kerül.
 (defn my-query
   []
   [item-editor/body :my-editor {:form-element [:div "My form"]

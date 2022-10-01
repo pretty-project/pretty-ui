@@ -22,7 +22,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {
+(def BOOK {:information
+           {:en "Information"
+            :hu "Információ"}
+           :informations
+           {:en "Informations"
+            :hu "Információk"}
            :other
            {:en "Other"
             :hu "Egyéb"}
@@ -60,7 +65,7 @@
 
 
 
-           
+
 
 
 

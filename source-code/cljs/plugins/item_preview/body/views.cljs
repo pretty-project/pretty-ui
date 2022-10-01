@@ -12,13 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.body.views
-    (:require [plugins.item-picker.body.prototypes :as body.prototypes]
-              [plugins.item-picker.core.helpers    :as core.helpers]
-              [plugins.plugin-handler.body.views   :as body.views]
-              [reagent.api                         :as reagent]
-              [re-frame.api                        :as r]
-              [x.app-components.api                :as components]))
+(ns plugins.item-preview.body.views
+    (:require [plugins.item-preview.body.prototypes :as body.prototypes]
+              [plugins.item-preview.core.helpers    :as core.helpers]
+              [plugins.plugin-handler.body.views    :as body.views]
+              [reagent.api                          :as reagent]
+              [re-frame.api                         :as r]
+              [x.app-components.api                 :as components]))
 
 
 
@@ -36,9 +36,9 @@
 (defn downloading-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  [picker-id]
-  (if-let [ghost-element @(r/subscribe [:item-picker/get-body-prop picker-id :ghost-element])]
+  ; @param (keyword) preview-id
+  [preview-id]
+  (if-let [ghost-element @(r/subscribe [:item-preview/get-body-prop preview-id :ghost-element])]
           [components/content ghost-element]))
 
 
@@ -49,26 +49,26 @@
 (defn preview-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  [picker-id]
-  (let [preview-element @(r/subscribe [:item-picker/get-body-prop picker-id :preview-element])]
-       [preview-element picker-id]))
+  ; @param (keyword) preview-id
+  [preview-id]
+  (let [preview-element @(r/subscribe [:item-preview/get-body-prop preview-id :preview-element])]
+       [preview-element preview-id]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
-  [picker-id]
-  (cond @(r/subscribe [:item-picker/get-meta-item picker-id :error-mode?])
-         ;[error-body picker-id {:error-description :the-item-you-opened-may-be-broken}]
+  ; @param (keyword) preview-id
+  [preview-id]
+  (cond @(r/subscribe [:item-preview/get-meta-item preview-id :error-mode?])
+         ;[error-body preview-id {:error-description :the-item-you-opened-may-be-broken}]
          [:div "error"]
-        @(r/subscribe [:item-picker/data-received? picker-id])
-         [preview-element picker-id]
+        @(r/subscribe [:item-preview/data-received? preview-id])
+         [preview-element preview-id]
         :data-not-received
-         [downloading-item picker-id]))
+         [downloading-item preview-id]))
 
 (defn body
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) body-props
   ;  {:ghost-element (metamorphic-content)(opt)
   ;   :item-path (vector)(opt)
@@ -79,15 +79,15 @@
   ;    XXX#8173}
   ;
   ; @usage
-  ;  [item-picker/body :my-picker {...}]
+  ;  [item-preview/body :my-preview {...}]
   ;
   ; @usage
-  ;  (defn my-preview-element [picker-id] [:div ...])
-  ;  [item-picker/body :my-picker {:preview-element #'my-preview-element}]
-  [picker-id body-props]
-  (let [body-props (body.prototypes/body-props-prototype picker-id body-props)]
-       (reagent/lifecycles (core.helpers/component-id picker-id :body)
-                           {:reagent-render         (fn []              [body-structure                 picker-id])
-                            :component-did-mount    (fn []  (r/dispatch [:item-picker/body-did-mount    picker-id body-props]))
-                            :component-will-unmount (fn []  (r/dispatch [:item-picker/body-will-unmount picker-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-picker/body-did-update   picker-id %]))})))
+  ;  (defn my-preview-element [preview-id] [:div ...])
+  ;  [item-preview/body :my-preview {:preview-element #'my-preview-element}]
+  [preview-id body-props]
+  (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]
+       (reagent/lifecycles (core.helpers/component-id preview-id :body)
+                           {:reagent-render         (fn []              [body-structure                  preview-id])
+                            :component-did-mount    (fn []  (r/dispatch [:item-preview/body-did-mount    preview-id body-props]))
+                            :component-will-unmount (fn []  (r/dispatch [:item-preview/body-will-unmount preview-id]))
+                            :component-did-update   (fn [%] (r/dispatch [:item-preview/body-did-update   preview-id %]))})))

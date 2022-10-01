@@ -112,7 +112,7 @@
 
 ; Az item-lister plugin body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elemek első letöltődésekor küldött lekéréssel
-; összefűzve kerül elküldésre.
+; összefűzve elküldésre kerül.
 (defn my-query
   []
   [item-lister/body :my-lister {:list-element [:div "My item"]

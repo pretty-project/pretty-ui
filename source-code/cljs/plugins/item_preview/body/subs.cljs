@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.body.subs
+(ns plugins.item-preview.body.subs
     (:require [plugins.plugin-handler.body.subs :as body.subs]
               [re-frame.api                     :as r]))
 
@@ -31,4 +31,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-sub :item-picker/get-body-prop get-body-prop)
+(r/reg-sub :item-preview/get-body-prop get-body-prop)

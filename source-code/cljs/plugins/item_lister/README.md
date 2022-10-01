@@ -1,3 +1,4 @@
 
+# XXX#7061
 # A {:query-params {...}} térkép
-  XXX#7061
+  cljs/plugins/plugin-handler/README.md

@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.item-picker.body.events
-    (:require [plugins.item-picker.core.events    :as core.events]
+(ns plugins.item-preview.body.events
+    (:require [plugins.item-preview.core.events   :as core.events]
               [plugins.plugin-handler.body.events :as body.events]
               [re-frame.api                       :refer [r]]))
 
@@ -35,30 +35,30 @@
 (defn body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) body-props
   ;
   ; @return (map)
-  [db [_ picker-id body-props]]
-  (r store-body-props! db picker-id body-props))
+  [db [_ preview-id body-props]]
+  (r store-body-props! db preview-id body-props))
 
 (defn body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ;
   ; @return (map)
-  [db [_ picker-id]]
-  (as-> db % (r core.events/remove-meta-items! % picker-id)
-             (r core.events/reset-downloads!   % picker-id)
-             (r remove-body-props!             % picker-id)))
+  [db [_ preview-id]]
+  (as-> db % (r core.events/remove-meta-items! % preview-id)
+             (r core.events/reset-downloads!   % preview-id)
+             (r remove-body-props!             % preview-id)))
 
 (defn body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) picker-id
+  ; @param (keyword) preview-id
   ; @param (map) body-props
   ;
   ; @return (map)
-  [db [_ picker-id body-props]]
-  (r update-body-props! db picker-id body-props))
+  [db [_ preview-id body-props]]
+  (r update-body-props! db preview-id body-props))
