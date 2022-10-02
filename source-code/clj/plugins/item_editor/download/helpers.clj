@@ -16,6 +16,7 @@
     (:require [mid-fruits.candy   :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
+              [mid-fruits.seqable :refer [nonseqable?]]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]
@@ -53,10 +54,12 @@
                    (let [suggestion-key (nth suggestion-keys suggestion-key-dex)
                          k              (keyword (name item-namespace) (name suggestion-key))
                          v              (get document k)]
-                        (cond (empty?  v) (return suggestions)
-                              (string? v) (update suggestions suggestion-key vector/conj-item-once    v)
-                              (vector? v) (update suggestions suggestion-key vector/concat-items-once v)
-                              :else       (return suggestions))))
+                        ; Az empty? függvény kizárólag seqable értékeken alkalmazható!
+                        (cond (nonseqable? v) (return suggestions)
+                              (empty?      v) (return suggestions)
+                              (string?     v) (update suggestions suggestion-key vector/conj-item-once    v)
+                              (vector?     v) (update suggestions suggestion-key vector/concat-items-once v)
+                              :else           (return suggestions))))
                ; Az f1 függvény végigiterál a suggestion-keys vektor elemein.
                (f1 [suggestions document suggestion-key-dex]
                    (let [suggestions (f0 suggestions document suggestion-key-dex)]

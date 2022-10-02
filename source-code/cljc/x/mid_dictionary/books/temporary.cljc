@@ -262,6 +262,21 @@
            :dimensions
            {:en "Dimensions"
             :hu "Méretek"}
+           :dimensions-wlh
+           {:en "Dimensions [WxLxH]"
+            :hu "Méretek [Sz, H, M]"}
+           :outer-dimensions
+           {:en "Outer dimensions"
+            :hu "Külső méretek"}
+           :outer-dimensions-wlh
+           {:en "Outer dimensions [WxLxH]"
+            :hu "Külső méretek [Sz, H, M]"}
+           :inner-dimensions
+           {:en "Inner dimensions"
+            :hu "Belső méretek"}
+           :inner-dimensions-wlh
+           {:en "Inner dimensions [WxLxH]"
+            :hu "Belső méretek [Sz, H, M]"}
 
            :type
            {:en "Type"

@@ -88,16 +88,19 @@
             :hu "Új mappa"}
            :no-file-selected
            {:en "No file selected"
-            :hu "Nincsen kiválaszott fájl"}
+            :hu "Nincs fájl kiválasztva"}
            :no-files-selected
            {:en "No files selected"
-            :hu "Nincsenek kiválaszott fájlok"}
+            :hu "Nincsenek fájlok kiválasztva"}
            :no-image-selected
            {:en "No image selected"
-            :hu "Nincsen kiválasztott kép"}
+            :hu "Nincs kép kiválasztva"}
            :no-images-selected
            {:en "No images selected"
-            :hu "Nincsenek kiválasztott képek"}
+            :hu "Nincsenek képek kiválasztva"}
+           :no-thumbnail-selected
+           {:en "No thumbnail selected"
+            :hu "Nincs bélyegkép kiválasztva"}
            :preview-image
            {:en "Preview image"
             :hu "Előnézeti kép"}

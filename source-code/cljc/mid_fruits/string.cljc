@@ -146,23 +146,18 @@
    (join coll separator {}))
 
   ([coll separator {:keys [join-empty?]}]
-   (if (false? join-empty?)
-       ; {:join-empty? false}
-       (let [last-dex (-> coll count dec)]
-            (letfn [(dex-in-bounds? [dex] (not= dex last-dex))
-                    (separate? [dex] (and (dex-in-bounds? dex)
-                                          (nonempty? (nth coll (inc dex)))))
-                    (f [result dex part]
-                       (if (separate? dex)
-                           (str result part separator)
-                           (str result part)))]
-                   (reduce-kv f "" coll)))
-
-       ; {:join-empty? true}
-       (when (and (coll? coll)
-                  (or (nil?    separator)
-                      (string? separator)))
-             (string/join separator coll)))))
+   (let [last-dex (-> coll count dec)]
+        (letfn [(separate?      [dex]  (and (not= dex last-dex)
+                                            (-> (nth coll (inc dex))
+                                                str empty? not)))
+                (join?          [part] (or (-> join-empty? false? not)
+                                           (-> part str empty? not)))
+                (f [result dex part] (if (join? part)
+                                         (if (separate? dex)
+                                             (str result part separator)
+                                             (str result part))
+                                         (return result)))]
+               (reduce-kv f "" coll)))))
 
 (defn max-length
   ; @param (*) n
