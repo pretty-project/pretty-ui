@@ -108,138 +108,145 @@
         (nil?    n) (return        {})
         :else       (return        {0 n})))
 
-(defn str-integer?
+(defn whole-number?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-integer? "abCd12")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (mixed/str-integer? "12")
+  ;  (mixed/whole-number? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-integer? "-12")
+  ;  (mixed/whole-number? "-12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/whole-number? 12)
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^-[\d]{1,}|[\d]{1,}$"))
+  (or (integer? n)
+      (re-match? n #"^-[\d]{1,}|[\d]{1,}$")))
 
-(defn str-natural-integer?
+(defn natural-whole-number?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-natural-integer? "abCd12")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (mixed/str-natural-integer? "12")
+  ;  (mixed/natural-whole-number? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-natural-integer? "-12")
+  ;  (mixed/natural-whole-number? "-12")
   ;  =>
   ;  false
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^[0-9]{1,}$"))
+  (or (and (integer? n)
+           (<= 0     n))
+      (re-match? n #"^[0-9]{1,}$")))
 
-(defn str-positive-integer?
+(defn positive-whole-number?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-positive-integer? "abCd12")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (mixed/str-positive-integer? "12")
+  ;  (mixed/positive-whole-number? "12")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/str-positive-integer? "0")
+  ;  (mixed/positive-whole-number? "0")
   ;  =>
   ;  false
   ;
   ; @return (boolean)
   [n])
 
-(defn str-negative-integer?
+(defn negative-whole-number?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-negative-integer? "abCd12")
+  ;  (mixed/negative-whole-number? "12")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (mixed/str-negative-integer? "12")
+  ;  (mixed/negative-whole-number? "-12")
   ;  =>
-  ;  false
+  ;  true
   ;
   ; @example
-  ;  (mixed/str-negative-integer? "-12")
+  ;  (mixed/negative-whole-number? -12)
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [n]
-  (re-match? n #"^-[0-9]{1,}$"))
+  (or (and (integer? n)
+           (> 0      n))
+      (re-match? n #"^-[0-9]{1,}$")))
 
-(defn update-str-integer
-  ; @param (string) n
+(defn update-whole-number
+  ; @param (integer or string) n
   ; @param (function) f
   ; @param (*)(opt) x
   ;
   ; @example
-  ;  (mixed/update-str-integer "12" inc)
+  ;  (mixed/update-whole-number "12" inc)
   ;  =>
   ;  "13"
   ;
   ; @example
-  ;  (mixed/update-str-integer "12" + 3)
+  ;  (mixed/update-whole-number "12" + 3)
   ;  =>
   ;  "15"
   ;
   ; @example
-  ;  (mixed/update-str-integer "abCd12" + 3)
+  ;  (mixed/update-whole-number 12 + 3)
+  ;  =>
+  ;  15
+  ;
+  ; @example
+  ;  (mixed/update-whole-number "abCd12" + 3)
   ;  =>
   ;  "abCd12"
   ;
-  ; @return (string)
+  ; @return (integer or string)
   ([n f]
-   (update-str-integer n f nil))
+   (update-whole-number n f nil))
 
   ([n f x]
-   (letfn [(update-f [n] (let [integer (string/to-integer n)]
-                              (if x (f integer x)
-                                    (f integer))))]
-          (if (-> n str-integer?)
-              (-> n update-f str)
-              (-> n return)))))
+   (letfn [(update-f [n] (if x (f n x)
+                               (f n)))]
+          (cond (-> n      integer?)      (update-f n)
+                (-> n whole-number?) (let [integer (string/to-integer n)]
+                                          (update-f integer))
+                (-> n         some?)      (return n)))))
 
-(defn str-contains-integer?
+(defn parse-whole-number
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/str-contains-integer? "abCd12")
+  ;  (mixed/parse-whole-number "12")
   ;  =>
-  ;  true
+  ;  12
   ;
   ; @example
-  ;  (mixed/str-contains-integer? "abCd")
+  ;  (mixed/parse-whole-number 12)
   ;  =>
-  ;  false
+  ;  12
   ;
-  ; @return (boolean)
+  ; @example
+  ;  (mixed/update-whole-number "abCd12")
+  ;  =>
+  ;  "abCd12"
+  ;
+  ; @return (*)
   [n]
-  (re-match? n #""))
+  (cond (integer?      n) (return            n)
+        (whole-number? n) (string/to-integer n)
+        (some?         n) (return            n)))

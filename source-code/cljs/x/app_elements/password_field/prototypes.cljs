@@ -47,7 +47,7 @@
               (param field-props)
               ; *
               (if validate? {:helper    {:content :valid-password-rules :replacements ["8"]}
-                             :validator {:f form/password?
+                             :validator {:f               form/password?
                                          :invalid-message :password-is-too-weak}})
               ; *
               (let [show-password-adornment {;:disabled? field-empty?

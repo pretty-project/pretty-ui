@@ -1683,8 +1683,7 @@ body {
   position: absolute;
   right: -15px;
   top: 9px;
-  width: 6px;
-}
+  width: 6px }
 
 .x-breadcrumbs--crumb[data-clickable] {
   font-weight: 600 }

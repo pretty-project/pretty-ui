@@ -180,9 +180,7 @@
   ;
   ; @return (*)
   [n]
-  (if (mixed/str-integer? n)
-      (string/to-integer  n)
-      (return             n)))
+  (mixed/parse-whole-number n))
 
 
 

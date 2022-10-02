@@ -68,7 +68,7 @@
   ; @return (boolean)
   [db [_ field-id {:keys [field-content-f value-path]}]]
   (let [stored-value (get-in db value-path)]
-       (-> stored-value field-content-f empty?)))
+       (-> stored-value field-content-f str empty?)))
 
 (defn invalid-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!

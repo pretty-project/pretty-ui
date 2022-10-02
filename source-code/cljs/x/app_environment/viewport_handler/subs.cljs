@@ -15,7 +15,7 @@
 (ns x.app-environment.viewport-handler.subs
     (:require [dom.api           :as dom]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]))
+              [re-frame.api      :as r :refer [r]]))
 
 
 
@@ -109,36 +109,36 @@
 
 ; @usage
 ;  [:environment/get-viewport-height]
-;(a/reg-sub :environment/get-viewport-height get-viewport-height)
+;(r/reg-sub :environment/get-viewport-height get-viewport-height)
 
 ; @usage
 ;  [:environment/get-viewport-width]
-;(a/reg-sub :environment/get-viewport-width get-viewport-width)
+;(r/reg-sub :environment/get-viewport-width get-viewport-width)
 
 ; @usage
 ;  [:environment/get-viewport-profile]
-;(a/reg-sub :environment/get-viewport-profile get-viewport-profile)
+(r/reg-sub :environment/get-viewport-profile get-viewport-profile)
 
 ; @usage
 ;  [:environment/viewport-profile-match?]
-;(a/reg-sub :environment/viewport-profile-match? viewport-profile-match?)
+;(r/reg-sub :environment/viewport-profile-match? viewport-profile-match?)
 
 ; @usage
 ;  [:environment/viewport-profiles-match?]
-;(a/reg-sub :environment/viewport-profiles-match? viewport-profiles-match?)
+;(r/reg-sub :environment/viewport-profiles-match? viewport-profiles-match?)
 
 ; @usage
 ;  [:environment/viewport-small?]
-(a/reg-sub :environment/viewport-small? viewport-small?)
+(r/reg-sub :environment/viewport-small? viewport-small?)
 
 ; @usage
 ;  [:environment/viewport-medium?]
-(a/reg-sub :environment/viewport-medium? viewport-medium?)
+(r/reg-sub :environment/viewport-medium? viewport-medium?)
 
 ; @usage
 ;  [:environment/viewport-large?]
-(a/reg-sub :environment/viewport-large? viewport-large?)
+(r/reg-sub :environment/viewport-large? viewport-large?)
 
 ; @usage
 ;  [:environment/get-viewport-orientation]
-;(a/reg-sub :environment/get-viewport-orientation get-viewport-orientation)
+;(r/reg-sub :environment/get-viewport-orientation get-viewport-orientation)
