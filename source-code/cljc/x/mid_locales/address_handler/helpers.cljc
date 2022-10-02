@@ -36,6 +36,7 @@
   ; @return (string)
   [zip-code country city address locale-id]
   (case locale-id ; US, 537 Paper Street, Bradford, 19806
-                  :en (string/join [country address city zip-code]           ", " {:join-empty? false})
+                  :en (string/join [country address city zip-code] ", " {:join-empty? false})
                   ; HU, 1025 Budapest, Minta utca 123.
-                  :hu (string/join [country (str zip-code " " city) address] ", " {:join-empty? false})))
+                  :hu (let [area (string/trim (str zip-code " " city))]
+                           (string/join [country area address] ", " {:join-empty? false}))))
