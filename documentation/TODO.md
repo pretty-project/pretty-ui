@@ -13,6 +13,8 @@
 
 
 # x4.7.0
+- Read this bible: https://developer.mozilla.org/en-US/docs/Web/Performance
+
 - Mivel megszünt a monosetben a project-emulátor és a fejlesztése külsö projectben
   futtatva történik ezért biztos egy csomo minden többé nem fog a monoset-be kelleni
   pl deps.edn kell ezentúl, és hasonlok...

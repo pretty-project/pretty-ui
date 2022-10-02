@@ -22,4 +22,4 @@
 ; @constant (map)
 (def BOOK {:webshop
            {:en "Webshop"
-            :hu "Webshop"}})
+            :hu "Webáruház"}})

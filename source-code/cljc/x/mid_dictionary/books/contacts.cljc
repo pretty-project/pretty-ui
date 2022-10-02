@@ -132,6 +132,18 @@
            :vat-no-placeholder
            {:en "xx00000000"
             :hu "00000000-0-00"}
+           :website-link
+           {:en "Website link"
+            :hu "Webhely hivatkozás"}
+           :website-link-placeholder
+           {:en "https://mysite.com"
+            :hu "https://oldalam.hu"}
+           :webshop-link
+           {:en "Webshop link"
+            :hu "Webáruház hivatkozás"}
+           :webshop-link-placeholder
+           {:en "https://myshop.com"
+            :hu "https://aruhazam.hu"}
            :zip-code
            {:en "ZIP code"
             :hu "Irányítószám"}

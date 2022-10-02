@@ -114,30 +114,35 @@
   ;   :key (string)
   ;   :style (map)}
   [element-id {:keys [class disabled? style]}]
-  ; - BUG#4044
-  ;   Ha egy listában a listaelemek toggle elemet tartalmaznak és ...
-  ;   ... a toggle elem nem kap egyedi azonosítót, mert ugyanaz az azonosító ismétlődne
-  ;       az összes listaelem toggle elemében,
-  ;   ... a toggle elem {:hover-color ...} tulajdonsággal rendelkezik,
-  ;   ... az element-default-attributes függvény React kulcsként alkalmazza az elemek
-  ;       azonosítóját,
-  ;   ... az egyes listaelemekre kattintva olyan változás történik (pl. kijelölés),
-  ;       ami miatt az adott listaelem paraméterezése megváltozik,
-  ;   akkor az egyes listaelemekre kattintva ...
-  ;   ... a megváltozó paraméterek miatt a listaelem újrarenderelődik,
-  ;   ... a listaelem toggle eleme is újrarenderelődik, ami miatt új azonosítót kap,
-  ;   ... a toggle elem az új azonosítója miatt úja React kulcsot kap,
-  ;   ... a toggle elem az új React kulcs beállításának pillanatában másik React-elemmé
-  ;       változik és a váltás közben Ca. 15ms ideig nem látszódik a {:hover-color ...}
-  ;       tulajdonság színe (rövid villanásnak tűnik)
+  ; BUG#4044
+  ; Ha egy listában a listaelemek toggle elemet tartalmaznak és ...
+  ; ... a toggle elem nem kap egyedi azonosítót, mert ugyanaz az azonosító ismétlődne
+  ;     az összes listaelem toggle elemében,
+  ; ... a toggle elem {:hover-color ...} tulajdonsággal rendelkezik,
+  ; ... az element-default-attributes függvény React kulcsként alkalmazza az elemek
+  ;     azonosítóját,
+  ; ... az egyes listaelemekre kattintva olyan változás történik (pl. kijelölés),
+  ;     ami miatt az adott listaelem paraméterezése megváltozik,
+  ; akkor az egyes listaelemekre kattintva ...
+  ; ... a megváltozó paraméterek miatt a listaelem újrarenderelődik,
+  ; ... a listaelem toggle eleme is újrarenderelődik, ami miatt új azonosítót kap,
+  ; ... a toggle elem az új azonosítója miatt úja React kulcsot kap,
+  ; ... a toggle elem az új React kulcs beállításának pillanatában másik React-elemmé
+  ;     változik és a váltás közben Ca. 15ms ideig nem látszódik a {:hover-color ...}
+  ;     tulajdonság színe (rövid villanásnak tűnik)
   ;
-  ; - XXX#4005
-  ;   A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
-  ;   attribútumot alkalmazni!
+  ; XXX#4004
+  ; Az x4.7.6 verzióig egyetlen esetben sem volt rá szükség, hogy egy element rendelkezzen
+  ; DOM azonosítóval.
+  ; (+ Talán könnyebb a böngészőnek, ha kevesebb az azonosítóval rendelkező elem ...)
+  ;
+  ; XXX#4005
+  ; A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
+  ; attribútumot alkalmazni!
   {:class         (css/join-class :x-element class)
-   :data-disabled (boolean     disabled?)
-   :id            (hiccup/value element-id)})
-  ;:key           (hiccup/value element-id)
+   :data-disabled (boolean        disabled?)})
+  ;:id            (hiccup/value   element-id)
+  ;:key           (hiccup/value   element-id)
 
    ; WARNING! DEPRECATED! DO NOT USE!
    ; Az elemek body komponensein lesz ezentúl alkalmazva a style!

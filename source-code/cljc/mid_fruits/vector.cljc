@@ -596,7 +596,8 @@
   ;
   ; @return (vector)
   [n length]
-  (if (<= (count n) length)
+  (if (and (integer?     length)
+           (<= (count n) length))
       (return n)
       (subvec n 0 length)))
 
@@ -863,9 +864,9 @@
   [n dex]
   (letfn [(f [result item-dex item]
              (if (= item-dex dex)
-                 (concat result [item item])
-                 (conj   result item)))]
-         (vec (reduce-kv f [] n))))
+                 (conj result item item)
+                 (conj result item)))]
+         (reduce-kv f [] n)))
 
 (defn duplicate-nth-items
   [])
