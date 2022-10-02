@@ -13,6 +13,8 @@
 
 
 # x4.7.0
+- Az elementeknél inább element-structure sok helyen, mint element-body a proper elnevezés
+
 - Read this bible: https://developer.mozilla.org/en-US/docs/Web/Performance
 
 - Mivel megszünt a monosetben a project-emulátor és a fejlesztése külsö projectben

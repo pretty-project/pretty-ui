@@ -122,18 +122,47 @@
 (defn join
   ; @param (collection) coll
   ; @param (nil or string) separator
+  ; @param (map)(opt) options
+  ;  {:join-empty? (boolean)(opt)
+  ;    Default: true}
   ;
   ; @example
   ;  (string/join ["filename" "extension"] ".")
   ;  =>
   ;  "filename.extension"
   ;
+  ; @example
+  ;  (string/join ["a" "b" ""] ".")
+  ;  =>
+  ;  "a.b."
+  ;
+  ; @example
+  ;  (string/join ["a" "b" ""] "." {:join-empty? false})
+  ;  =>
+  ;  "a.b"
+  ;
   ; @return (string)
-  [coll separator]
-  (when (and (coll? coll)
-             (or (nil?    separator)
-                 (string? separator)))
-        (string/join separator coll)))
+  ([coll separator]
+   (join coll separator {}))
+
+  ([coll separator {:keys [join-empty?]}]
+   (if (false? join-empty?)
+       ; {:join-empty? false}
+       (let [last-dex (-> coll count dec)]
+            (letfn [(dex-in-bounds? [dex] (not= dex last-dex))
+                    (separate? [dex] (and (dex-in-bounds? dex)
+                                          (nonempty? (nth coll (inc dex)))))
+                    (f [result dex part]
+                       (if (separate? dex)
+                           (str result part separator)
+                           (str result part)))]
+                   (reduce-kv f "" coll)))
+
+       ; {:join-empty? true}
+       (when (and (coll? coll)
+                  (or (nil?    separator)
+                      (string? separator)))
+             (string/join separator coll)))))
 
 (defn max-length
   ; @param (*) n

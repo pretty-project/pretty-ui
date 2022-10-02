@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.address-handler.helpers)
+(ns x.mid-locales.address-handler.helpers
+    (:require [mid-fruits.string :as string]))
 
 
 
@@ -27,9 +28,14 @@
   ; @param (keyword) locale-id
   ;
   ; @usage
-  ;  (locales/address->ordered-address "537" "US" "Bradford" "537 Paper Street" :en)
+  ;  (locales/address->ordered-address "19806" "US" "Bradford" "537 Paper Street" :en)
+  ;
+  ; @usage
+  ;  (locales/address->ordered-address "1025" "HU" "Budapest" "Minta utca 123." :hu)
   ;
   ; @return (string)
   [zip-code country city address locale-id]
-  (case locale-id :en (str country ", " address  ", " city ", " zip-code)
-                  :hu (str country ", " zip-code " "  city ", " address)))
+  (case locale-id ; US, 537 Paper Street, Bradford, 19806
+                  :en (string/join [country address city zip-code]           ", " {:join-empty? false})
+                  ; HU, 1025 Budapest, Minta utca 123.
+                  :hu (string/join [country (str zip-code " " city) address] ", " {:join-empty? false})))
