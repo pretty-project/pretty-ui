@@ -77,25 +77,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- dev-tools-icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
-  (if-let [debug-mode-detected? @(r/subscribe [:core/debug-mode-detected?])]
-          (let [db-write-count @(r/subscribe [:developer/get-db-write-count])]
-               [elements/icon-button ::dev-tools-icon-button
-                                     {:border-radius :s
-                                      :hover-color   :highlight
-                                      :icon          :auto_fix_high
-                                      :preset        :default
-                                      :on-click      [:developer/render-developer-tools!]}])))
-                                     ;:keypress      {:key-code 77}
-                                     ;:badge-content db-write-count
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- menu-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -209,8 +190,7 @@
   [:div#surface-a--header [:div#surface-a--header-content [header-shadow]
                                                           [:div.surface-a--header-block [navigation-icon-button]]
                                                           [:div.surface-a--header-block [header-title]]
-                                                          [:div.surface-a--header-block [:<> [dev-tools-icon-button]
-                                                                                             [menu-icon-button]]]]])
+                                                          [:div.surface-a--header-block [menu-icon-button]]]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
