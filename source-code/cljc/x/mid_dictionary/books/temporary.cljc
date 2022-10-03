@@ -186,6 +186,9 @@
            :billing-data
            {:en "Billing data"
             :hu "Számlázási adatok"}
+           :technical-data
+           {:en "Technical data"
+            :hu "Technikai adatok"}
            :company-data
            {:en "Company data"
             :hu "Cég adatok"}
