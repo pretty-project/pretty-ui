@@ -5,8 +5,8 @@
 
 # Mono-template
 - Compile-kor kitörli a /public/js/plugins mappát? @Paul
-- Mono-template project-name.css -> site.css és admin.css
-- Mono-template-ből hiányzik, hogy a /login route az admin.js -t inditsa
+- Mono-template project-name.css -> site.css és app.css
+- Mono-template-ből hiányzik, hogy a /login route az app.js -t inditsa
 - MONOTEMPLATE-bol kivenni az mt-logo-.png fileokat
 - demo user tenni a monotemplate be is!
 
@@ -55,7 +55,7 @@
   nincsenek meg (gondolom ez más pluginnál is probléma)
 
 - Amikor keresel pl item-listerben, akkor kereséskor az útvonalba is bele kell irni
-  a keresőszot pl.: "/admin/clients/search=xyz"
+  a keresőszot pl.: "/app/clients/search=xyz"
   Mindenhol igy csinálják és ha ráfrissitesz akkor megmarad a keresőszo
 
 - item-editor/header DEPRECATED

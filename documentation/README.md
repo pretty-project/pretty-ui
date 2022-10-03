@@ -19,13 +19,14 @@ java -jar mono-app.jar
 
 
 
-# app-, mid- és server- prefixumok
+# A mid- prefixum
 
 Nem lehetséges ugyanazzal az elnevezéssel létrehozni egy névteret a clj/cljc vagy cljs/cljc oldalon
-ÉS meghívni az azonos elnevezésű névteret, ezért szükséges a prefixumok alkalmazása a modulok neveiben.
-Pl.:
-my-namespace.clj nem hívhatja meg a my-namespace.cljc névteret mert a fordító nem tudja megkülönböztetni
-a kettőt egymástól ezért "self-referential dependency" hibának minősül.
+ÉS meghívni az azonos elnevezésű névteret, ezért szükséges a cljc névterekben a mid prefixum használata
+a modulok neveiben.
+Pl.: my-namespace.clj nem hívhatja meg a my-namespace.cljc névteret mert a fordító nem tudja megkülönböztetni
+     a kettőt egymástól ezért "self-referential dependency" hibának minősülne.
+     my-namespace.clj és mid.my-namespace.cljc formula szerint kell őket elnevezni!
 
 
 

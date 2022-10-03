@@ -1,34 +1,10 @@
 
-[{:birthday "1989-11-28"
-  :first-name "Ádám"
-  :last-name "Szűcs"
-  :locale :hu
-  :id "0939329d-b057-ki88-e916-0ce146714c1b"
-  :phone-number "+36302004077"
-  :permissions {"super" "ro" "0939329d-b057-ki88-e916-0ce146714c1b" "rw"}
+[{:birthday "2020-04-20"
+  :first-name "Monoset"
+  :last-name "#System"
+  :locale :en
+  :id "q1c9e4fc8-db6e-4efc-9d17-76fbf46f1476"
+  :phone-number ""
+  :permissions {"super" "ro" "q1c9e4fc8-db6e-4efc-9d17-76fbf46f1476" "rw"}
   :registered-at "2020-04-20T16:20:00.000Z"
-  :website-address "monotech.hu"}
-
- {:birthday "1993-12-24"
-  :first-name "Paul Cristian"
-  :last-name "Martin"
-  :locale :hu
-  :id "1259400a-x012-lw84-o987-1fg654713a3a"
-  :permissions {"super" "ro" "1259400a-x012-lw84-o987-1fg654713a3a" "rw"}
-  :registered-at ""}
-
- {:birthday "1995-11-10"
-  :first-name "Péter"
-  :last-name "Szaniszló"
-  :locale :hu
-  :id "2345011e-t112-wa50-o357-1rh344440a0w"
-  :permissions {"super" "ro" "2345011e-t112-wa50-o357-1rh344440a0w" "rw"}
-  :registered-at "2020-04-20T16:20:00.000Z"}
-
- {:birthday "2020-04-20"
-  :first-name "Tech"
-  :last-name "Mono"
-  :locale :hu
-  :id "506bb1e5-eecd-48ee-a30c-7b66ee2bb973"
-  :permissions {"super" "ro" "506bb1e5-eecd-48ee-a30c-7b66ee2bb973" "rw"}
-  :registered-at "2020-04-20T16:20:00.000Z"}]
+  :website-address "monotech.hu"}]

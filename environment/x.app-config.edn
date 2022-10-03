@@ -35,7 +35,7 @@
 ;
 ; @usage
 ;  {:app-home      "/"
-;   :app-home      "/admin"
+;   :app-home      "/app"
 ;   :app-themes    [{:id :my-theme :name "My theme"}
 ;                   {:id :light    :name :light-theme}]
 ;   :plugin-js-paths [{:uri "/js/plugins/external-plugin.js"}
@@ -43,7 +43,7 @@
 
 {; App details
  :app-domain    "https://my-app.com"
- :app-home      "/admin"
+ :app-home      "/app"
  :app-languages [:en :hu]
  :app-themes    [{:id :light :name :light-theme}
                  {:id :dark  :name :dark-theme}]
