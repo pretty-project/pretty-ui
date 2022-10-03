@@ -15,6 +15,7 @@
 (ns plugins.item-editor.backup.subs
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :as map]
+              [mid-fruits.mixed                   :as mixed]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.download.subs  :as download.subs]
@@ -57,10 +58,10 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  ; - Az item-changed? függvény összehasonlítja az elem (letöltéskor eltárolt!)
-  ;   másolatát az elem jelenlegi állapotával.
+  ; Az item-changed? függvény összehasonlítja az elem (letöltéskor eltárolt!)
+  ; másolatát az elem jelenlegi állapotával.
   ;
-  ; - Az initial-item alkalmazása befolyásolja az elem változásának vizsgálhatóságát!
+  ; Az initial-item alkalmazása befolyásolja az elem változásának vizsgálhatóságát!
   ;
   ; A) Ha a vizsgált érték az initial-item térkép azonos kulcsú értékével megegyezik,
   ;    akkor nem vizsgálja a változást.
@@ -71,6 +72,8 @@
   ;
   ; C) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
   ;    akkor az elem megváltozott!
+  ;
+  ; XXX#5671
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)
         current-item    (r core.subs/get-current-item    db editor-id)
         backup-item     (r get-backup-item               db editor-id current-item-id)
@@ -80,11 +83,8 @@
                         (= value (key initial-item))
                         (return false)
                         ; B)
-                        ; Az empty? függvényt csak a seqable értékeken lehetséges alkalmazni!
-                        (and (-> value seqable?)
-                             (-> value empty?))
-                        (and (-> backup-item key seqable?)
-                             (-> backup-item key empty? not))
+                        (-> value           mixed/=empty?)
+                        (-> backup-item key mixed/nonempty?)
                         ; C)
                         :else
                         (not= value (key backup-item))))]
@@ -99,13 +99,13 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  ; - A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
-  ;   átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
+  ; A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
+  ; átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
   ;
-  ; - Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
-  ;   veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
-  ;   Pl. Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
-  ;       üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
+  ; Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
+  ; veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
+  ; Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
+  ;      üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-item-id (r core.subs/get-current-item-id db editor-id)
                 current-item    (r core.subs/get-current-item    db editor-id)

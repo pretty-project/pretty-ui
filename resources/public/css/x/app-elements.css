@@ -1330,44 +1330,44 @@ body {
 
 /*** XXL ***/
 
-/*** 2XL ***/
-
-.x-ghost[data-height="2xl"] .x-ghost--body {
-  height: 60px }
-
-.x-thumbnail[data-height="2xl"] .x-thumbnail--body {
-  height: 120px }
-
-.x-thumbnail[data-width="2xl"] .x-thumbnail--body {
-  width: 120px }
-
-/*** 2XL ***/
-
 /*** 3XL ***/
 
 .x-ghost[data-height="3xl"] .x-ghost--body {
-  height: 72px }
+  height: 60px }
 
 .x-thumbnail[data-height="3xl"] .x-thumbnail--body {
-  height: 132px }
+  height: 120px }
 
 .x-thumbnail[data-width="3xl"] .x-thumbnail--body {
-  width: 132px }
+  width: 120px }
 
 /*** 3XL ***/
 
 /*** 4XL ***/
 
 .x-ghost[data-height="4xl"] .x-ghost--body {
-  height: 84px }
+  height: 72px }
 
 .x-thumbnail[data-height="4xl"] .x-thumbnail--body {
-  height: 144px }
+  height: 132px }
 
 .x-thumbnail[data-width="4xl"] .x-thumbnail--body {
-  width: 144px }
+  width: 132px }
 
 /*** 4XL ***/
+
+/*** 5XL ***/
+
+.x-ghost[data-height="5xl"] .x-ghost--body {
+  height: 84px }
+
+.x-thumbnail[data-height="5xl"] .x-thumbnail--body {
+  height: 144px }
+
+.x-thumbnail[data-width="5xl"] .x-thumbnail--body {
+  width: 144px }
+
+/*** 5XL ***/
 /***** Size profiles *****/
 
 

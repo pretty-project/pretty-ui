@@ -65,6 +65,7 @@
   ; @param (map) body-props
   ;  {:content-path (vector)(opt)
   ;    Default: core.helpers/default-content-path
+  ;   :default-content (map)(opt)
   ;   :error-element (metamorphic-content)(opt)
   ;   :form-element (metamorphic-content)
   ;   :ghost-element (metamorphic-content)(opt)

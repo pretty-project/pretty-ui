@@ -13,16 +13,78 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.mixed
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.map    :as map]
+    (:require [mid-fruits.candy  :refer [return]]
               [mid-fruits.regex  :refer [re-match?]]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]))
+              [mid-fruits.string :as string]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn nonempty?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/nonempty? nil)
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/nonempty? "")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/nonempty? [])
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/nonempty? {})
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n]
+  ; Az empty? függvényt csak a seqable értékeken lehetséges alkalmazni!
+  ;
+  ; A) Ha az n értéke nem seqable, akkor igaz rá, hogy nonempty (keyword, integer, ...)
+  ;
+  ; B) Ha az n értéke seqable, akkor megvizsgálja, hogy üres-e (nil, map, string, vector, ...)
+  (or ; A)
+      (-> n seqable? not)
+      ; B)
+      (-> n empty?   not)))
+
+(defn =empty?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/=empty? nil)
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/=empty? "")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/=empty? [])
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/=empty? {})
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  ; Az empty? függvényt csak a seqable értékeken lehetséges alkalmazni!
+  (and (-> n seqable?)
+       (-> n   empty?)))
 
 (defn to-string
   ; @param (*) n
@@ -73,7 +135,7 @@
   ;
   ; @return (vector)
   [n]
-  (cond (map?    n) (map/to-vector n)
+  (cond (map?    n) (reduce-kv #(conj %1 %3) [] n)
         (vector? n) (return        n)
         (nil?    n) (return        [])
         :else       (return        [n])))
@@ -103,7 +165,7 @@
   ;
   ; @return (map)
   [n]
-  (cond (vector? n) (vector/to-map n)
+  (cond (vector? n) (reduce-kv #(assoc %1 (keyword (str %2)) %3) {} n)
         (map?    n) (return        n)
         (nil?    n) (return        {})
         :else       (return        {0 n})))

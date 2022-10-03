@@ -79,10 +79,9 @@
        (if (or disabled? (= max-value value))
            {:disabled       true
             :data-disabled  true}
-           {:data-clickable false
+           {:data-clickable true
             :on-click    #(a/dispatch [:elements.counter/increase-value! counter-id counter-props])
             :on-mouse-up #(environment/blur-element!)})))
-
 
 (defn decrease-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,7 +97,7 @@
        (if (or disabled? (= min-value value))
            {:disabled       true
             :data-disabled  true}
-           {:data-clickable false
+           {:data-clickable true
             :on-click    #(a/dispatch [:elements.counter/decrease-value! counter-id counter-props])
             :on-mouse-up #(environment/blur-element!)})))
 

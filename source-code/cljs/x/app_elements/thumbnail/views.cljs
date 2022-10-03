@@ -87,7 +87,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
@@ -107,7 +107,7 @@
   ;   :style (map)(opt)
   ;   :uri (string)(opt)
   ;   :width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :2xl, :3xl, :4xl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;    Default: :s}
   ;
   ; @usage

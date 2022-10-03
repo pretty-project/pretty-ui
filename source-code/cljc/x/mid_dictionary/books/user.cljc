@@ -152,6 +152,9 @@
            :username
            {:en "Username"
             :hu "Felhasználónév"}
+           :user-profile
+           {:en "User profile"
+            :hu "Felhasználói fiók"}
            :valid-password-rules
            {:en "Password must contain at least % characters, both uppercase and lowercase letters, and a number!"
             :hu "A jelszó legyen legalább % karakter hosszú, tartalmazzon kis- és nagybetűket és legalább egy számot!"}})

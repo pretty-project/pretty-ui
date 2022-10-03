@@ -14,7 +14,8 @@
 
 (ns mid-fruits.map
     (:require [clojure.data     :as data]
-              [mid-fruits.candy :refer [param return]]))
+              [mid-fruits.candy :refer [return]]
+              [mid-fruits.mixed :as mixed]))
 
 
 
@@ -136,16 +137,16 @@
              (reduce deep-merge-f n xyz)
              (return n))))
 
-(defn reverse-merge
+(defn reversed-merge
   ; @param (list of maps) xyz
   ;
   ; @example
-  ;  (map/reverse-merge {:a "1"} {:a "2"})
+  ;  (map/reversed-merge {:a "1"} {:a "2"})
   ;  =>
   ;  {:a "1"}
   ;
   ; @example
-  ;  (map/reverse-merge {:a "1"} {:a "2"} {:a "3"})
+  ;  (map/reversed-merge {:a "1"} {:a "2"} {:a "3"})
   ;  =>
   ;  {:a "1"}
   ;
@@ -597,10 +598,8 @@
    ; tekintse különbözőnek a szövegmező használata előtti nil értéktől.
    ;
    ; Az empty? függvény csak seqable értékeket fogad!
-   (letfn [(f [key] (if (and (-> a key seqable?)
-                             (-> b key seqable?)
-                             (-> a key empty?))
-                        (-> b key empty? not)
+   (letfn [(f [key] (if (-> a key mixed/=empty?)
+                        (-> b key mixed/nonempty?)
                         (not= (key a)
                               (key b))))]
           (some f keys))))

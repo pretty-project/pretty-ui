@@ -40,6 +40,9 @@
            :index
            {:en "Index"
             :hu "Sorszám"}
+           :count
+           {:en "Count"
+            :hu "Darabszám"}
 
            :expiration-date
            {:en "Expiration date"

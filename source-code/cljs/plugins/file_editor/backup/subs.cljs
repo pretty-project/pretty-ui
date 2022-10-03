@@ -13,7 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.file-editor.backup.subs
-    (:require [mid-fruits.map                    :as map]
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.map                    :as map]
+              [mid-fruits.mixed                  :as mixed]
+              [plugins.file-editor.body.subs     :as body.subs]
               [plugins.file-editor.core.subs     :as core.subs]
               [plugins.file-editor.download.subs :as download.subs]
               [re-frame.api                      :as r :refer [r]]))
@@ -44,22 +47,34 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  ; - Az content-changed? függvény összehasonlítja a tartalom (letöltéskor eltárolt!)
-  ;   másolatát a tartalom jelenlegi állapotával.
+  ; A content-changed? függvény összehasonlítja a tartalom (letöltéskor eltárolt!)
+  ; másolatát a tartalom jelenlegi állapotával.
   ;
-  ; A) Ha a vizsgált érték üres (NIL, "", [], ...), de a tárolt érték NEM üres,
+  ; A default-item alkalmazása befolyásolja a tartalom változásának vizsgálhatóságát!
+  ;
+  ; A) Ha a vizsgált érték a default-item térkép azonos kulcsú értékével megegyezik,
+  ;    akkor nem vizsgálja a változást.
+  ;
+  ; B) Ha a vizsgált érték üres (NIL, "", [], ...), de a tárolt érték NEM üres,
   ;    akkor az elem megváltozott.
   ;
-  ; B) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
-  ;    akkor az elem megváltozott!
+  ; C) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
+  ;    akkor az elem megváltozott.
+  ;
+  ; XXX#5671
   (let [current-content (r core.subs/get-current-content db editor-id)
-        backup-content  (r get-backup-content            db editor-id)]
+        backup-content  (r get-backup-content            db editor-id)
+        default-content (r body.subs/get-body-prop       db editor-id :default-content)]
        (letfn [(f [[key value]]
-                  (if (-> value empty?)
-                      ; A)
-                      (-> backup-content key empty? not)
-                      ; B)
-                      (not= value (key backup-content))))]
+                  (cond ; A)
+                        (= value (key default-content))
+                        (return false)
+                        ; B)
+                        (-> value              mixed/=empty?)
+                        (-> backup-content key mixed/nonempty?)
+                        ; C)
+                        :else
+                        (not= value (key backup-content))))]
               (some f current-content))))
 
 (defn form-changed?
@@ -71,13 +86,13 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  ; - A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
-  ;   átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
+  ; A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
+  ; átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
   ;
-  ; - Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
-  ;   veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
-  ;   Pl. Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
-  ;       üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
+  ; Az egyes értékek vizsgálatakor, ha az adott érték üres (pl. NIL, "", []), akkor figyelembe
+  ; veszi a NIL és a különböző üres típusokat és egyenlőnek tekinti őket!
+  ; Pl.: Az egyes input mezők használatakor ha a felhasználó kiüríti a mezőt, akkor a visszamaradó
+  ;      üres string értéket egyenlőnek tekinti a mező használata előtti NIL értékkel!
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-content (r core.subs/get-current-content db editor-id)
                 backup-content  (r get-backup-content            db editor-id)]

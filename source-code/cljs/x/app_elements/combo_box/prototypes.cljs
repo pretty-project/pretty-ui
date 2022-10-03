@@ -47,6 +47,8 @@
   ;     az esemény által regisztrált billentyűlenyomás-figyelő események között
   ;     szerepel az ESC billentyű lenyomására megtörténő [:elements.text-field/empty-field! ...]
   ;     esemény, ami az adatbázisba íráskor használja a field-value-f függvényt.
+
+  ; WARNING! DEPRECATED! DO NOT USE!
   (merge {:field-content-f  return
           :field-value-f    return
           :option-label-f   return
@@ -54,8 +56,24 @@
           :no-options-label :no-options
           :options-path     (input.helpers/default-options-path box-id)
           :value-path       (input.helpers/default-value-path   box-id)}
-         (param box-props)))
+         (param box-props))
+  ; WARNING! DEPRECATED! DO NOT USE!
 
+  (as-> {} % (merge % {:field-content-f  return
+                       :field-value-f    return
+                       :option-label-f   return
+                       :option-value-f   return
+                       :no-options-label :no-options
+                       :options-path     (input.helpers/default-options-path box-id)
+                       :value-path       (input.helpers/default-value-path   box-id)})
+             (merge % box-props)
+             (merge {:on-blur   [:elements.combo-box/field-blurred box-id %]
+                     :on-change [:elements.combo-box/field-changed box-id %]
+                     :on-focus  [:elements.combo-box/field-focused box-id %]}
+                    (param %))))
+
+
+; WARNING! DEPRECATED! DO NOT USE!
 (defn box-events-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -65,6 +83,12 @@
   ; @return (map)
   ;  {}
   [box-id box-props]
+
+  ; WARNING! DEPRECATED! DO NOT USE!
+  ; A box-props-prototype függvényben alkalmazott as-> függvény ELMÉLETILEG megoldotta a 3031 problémát!
+  ; Tesztelni szükséges!
+  ; WARNING! DEPRECATED! DO NOT USE!
+
   ; HACK#3031
   ; A box-events-prototype függvényben lévő eseményeknek szükségük van a box-props-prototype
   ; függvényben beállított tulajdonságokra!
@@ -84,3 +108,4 @@
           :on-change [:elements.combo-box/field-changed box-id box-props]
           :on-focus  [:elements.combo-box/field-focused box-id box-props]}
          (param box-props)))
+; WARNING! DEPRECATED! DO NOT USE!

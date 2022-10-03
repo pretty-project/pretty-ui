@@ -185,6 +185,7 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)
-         box-props (combo-box.prototypes/box-events-prototype box-id box-props)]
+   (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)]
+        ; WARNING! DEPRECATED! DO NOT USE!
+        ;box-props (combo-box.prototypes/box-events-prototype box-id box-props)
         [combo-box box-id box-props])))

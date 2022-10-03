@@ -113,6 +113,9 @@
            :piece
            {:en "Piece"
             :hu "Darab"}
+           :piece-n
+           {:en "% piece(s)"
+            :hu "% darab"}
            :second
            {:en "Second"
             :hu "Másodperc"}

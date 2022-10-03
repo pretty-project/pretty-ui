@@ -73,5 +73,7 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  (as-> db % (r data-received             % editor-id)
-             (r store-downloaded-content! % editor-id server-response)))
+  (as-> db % (r data-received                    % editor-id)
+             (r store-downloaded-content!        % editor-id server-response)
+             (r store-downloaded-content!        % editor-id server-response)
+             (r core.events/use-default-content! % editor-id)))
