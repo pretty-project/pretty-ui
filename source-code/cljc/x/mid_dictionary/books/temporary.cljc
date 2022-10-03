@@ -116,6 +116,15 @@
            :public-link
            {:en "Public link"
             :hu "Nyilvános hivatkozás"}
+           :open-link!
+           {:en "Open link"
+            :hu "Hivatkozás megnyitása"}
+           :open-in-new-page!
+           {:en "Open in new page"
+            :hu "Megnyitás új oldalon"}
+           :open-in-new-tab!
+           {:en "Open in new tab"
+            :hu "Megnyitás új lapon"}
 
 
 
