@@ -157,7 +157,8 @@
                                              (str result part separator)
                                              (str result part))
                                          (return result)))]
-               (reduce-kv f "" coll)))))
+               ; A reduce-kv csak vektor vagy térkép típust fogad, listát nem!
+               (reduce-kv f "" (vec coll))))))
 
 (defn max-length
   ; @param (*) n
