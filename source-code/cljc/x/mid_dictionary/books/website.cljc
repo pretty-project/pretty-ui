@@ -23,6 +23,15 @@
 (def BOOK {:about-us
            {:en "About us"
             :hu "Magunkról"}
+           :about-us-content
+           {:en "About us content"
+            :hu "Bemutatkozó tartalom"}
+           :about-us-section
+           {:en "About us section"
+            :hu "Bemutatkozó szekció"}
+           :about-us-page
+           {:en "About us page"
+            :hu "Bemutatkozó oldal"}
            :home-page
            {:en "Home"
             :hu "Kezdőlap"}
