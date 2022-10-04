@@ -113,6 +113,9 @@
            :link
            {:en "Link"
             :hu "Hivatkozás"}
+           :link-label
+           {:en "Link label"
+            :hu "Hivatkozás címke"}
            :public-link
            {:en "Public link"
             :hu "Nyilvános hivatkozás"}

@@ -44,6 +44,15 @@
            :logo
            {:en "Logo"
             :hu "Logó"}
+           :section
+           {:en "Section"
+            :hu "Szekció"}
+           :section-title
+           {:en "Section title"
+            :hu "Szekció cím"}
+           :section-title-placeholder
+           {:en "Section title"
+            :hu "Szekció címe"}
            :site-config
            {:en "Site config"
             :hu "Oldal beállításai"}
