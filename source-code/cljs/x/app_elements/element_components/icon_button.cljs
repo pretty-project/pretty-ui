@@ -77,8 +77,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props
-                                 {:on-mouse-over #(a/dispatch (:on-mouse-over button-props))})
+  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(a/dispatch (:on-mouse-over button-props))})
                                [icon-button-icon                 button-id button-props]
                                [icon-button-label                button-id button-props]
                                [engine/element-badge             button-id button-props]])
@@ -89,9 +88,8 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id {:keys [tooltip] :as button-props}]
-  [:div.x-icon-button (engine/element-attributes   button-id button-props
-                        (if tooltip {:data-tooltip (components/content {:content tooltip})}))
-                      [icon-button-body            button-id button-props]])
+  [:div.x-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (components/content {:content tooltip})}))
+                      [icon-button-body          button-id button-props]])
 
 (defn- stated-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -153,6 +151,8 @@
   ;   :on-click (metamorphic handler)(opt)
   ;   :on-mouse-over (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
+  ;   :stop-propagation? (boolean)(opt)
+  ;    Default: false
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)
   ;    :placeholder}

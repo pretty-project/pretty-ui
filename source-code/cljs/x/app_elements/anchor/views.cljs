@@ -75,6 +75,8 @@
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :on-click (metamorphic-event)(opt)
+  ;   :stop-propagation? (boolean)(opt)
+  ;    Default: false
   ;   :style (map)(opt)}
   ;
   ; @usage

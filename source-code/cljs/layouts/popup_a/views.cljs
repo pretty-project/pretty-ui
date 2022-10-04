@@ -126,21 +126,25 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) layout-props
-  ; {:body (metamorphic-content)
-  ;  :close-by-cover? (boolean)(opt)
-  ;   Default: true
-  ;  :footer (metamorphic-content)(opt)
-  ;  :header (metamorphic-content)(opt)
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;   Default: :none
-  ;  :stretch-orientation (keyword)(opt)
+  ;  {:body (metamorphic-content)
+  ;   :close-by-cover? (boolean)(opt)
+  ;    Default: true
+  ;   :footer (metamorphic-content)(opt)
+  ;   :header (metamorphic-content)(opt)
+  ;   :min-width (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    Default: :none
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)
+  ;   :stretch-orientation (keyword)(opt)
   ;   :horizontal, :vertical, :both, :none,
-  ;   Default: :none
-  ;  :style (map)(opt)}
+  ;    Default: :none
+  ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [popup-a/layout :my-popup {...}]
-  [popup-id layout-props]
+  [popup-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [layout-props (prototypes/layout-props-prototype layout-props)]
-       [popup-a popup-id layout-props]))
+       (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                            :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                            :reagent-render         (fn [_ _] [popup-a popup-id layout-props])})))

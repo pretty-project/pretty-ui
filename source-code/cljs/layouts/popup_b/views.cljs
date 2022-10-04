@@ -16,6 +16,7 @@
     (:require [layouts.popup-b.helpers    :as helpers]
               [layouts.popup-b.prototypes :as prototypes]
               [re-frame.api               :as r]
+              [reagent.api                :as reagent]
               [x.app-components.api       :as components]))
 
 
@@ -50,7 +51,11 @@
   ; @param (map) layout-props
   ;  {:close-by-cover? (boolean)(opt)
   ;   :content (metamorphic-content)
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)
   ;   :style (map)(opt)}
-  [popup-id layout-props]
+  [popup-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [layout-props (prototypes/layout-props-prototype layout-props)]
-       [popup-b popup-id layout-props]))
+       (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                            :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                            :reagent-render         (fn [_ _] [popup-b popup-id layout-props])})))

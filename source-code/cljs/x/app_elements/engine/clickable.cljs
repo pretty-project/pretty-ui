@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.clickable
-    (:require [mid-fruits.candy                      :refer [param]]
+    (:require [dom.api                               :as dom]
+              [mid-fruits.candy                      :refer [param]]
               [mid-fruits.map                        :as map]
               [x.app-components.api                  :as components]
               [x.app-core.api                        :as a :refer [r]]
@@ -43,7 +44,7 @@
   ;   :on-click (function)
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
-  [element-id {:keys [disabled? href on-click on-right-click]}]
+  [element-id {:keys [disabled? href on-click on-right-click stop-propagation?]}]
   (cond-> {:id (target-handler.helpers/element-id->target-id element-id)}
           (boolean disabled?) (merge {:disabled true})
           (not     disabled?) (merge {:href         (param href)
@@ -53,7 +54,8 @@
                                       ; elemeket.
                                       ; A static & clickable elemek on-click esemény kizárólag függvényként
                                       ; hívható meg.
-                                      :on-click    #(a/dispatch on-click)
+                                      :on-click    #(do (if stop-propagation? (dom/stop-propagation! %))
+                                                        (a/dispatch on-click))
                                       :on-mouse-up #(environment/blur-element!)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
                                                                                (a/dispatch on-right-click)

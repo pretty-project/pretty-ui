@@ -223,10 +223,14 @@
   ; @param (keyword) surface-id
   ; @param (map) layout-props
   ;  {:content (metamorphic-content)
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)
   ;   :style (map)(opt)}
   ;
   ; @usage
   ;  [surface-a/layout :my-surface {...}]
-  [surface-id layout-props]
+  [surface-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [] ;layout-props (prototypes/layout-props-prototype layout-props)
-       [surface-a surface-id layout-props]))
+       (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
+                            :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
+                            :reagent-render         (fn [_ _] [surface-a surface-id layout-props])})))

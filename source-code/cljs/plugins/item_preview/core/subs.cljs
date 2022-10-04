@@ -43,7 +43,13 @@
   ;
   ; @return (boolean)
   [db [_ preview-id]]
-  (r core.subs/get-request-id db preview-id :preview))
+  ; XXX#5476
+  ; Ha az item-preview plugin több példányban jelenik meg, akkor szükséges
+  ; a különböző példányok lekéréseinek azonosítóit megkülönböztetni egymástól!
+  ; Amíg a core.subs/get-request-id függvény a lekérés azonosítójának névtereként
+  ; a handler-key kulcsot használja (ami az eltérő azonosítójú példányoknál is megegyezhet!),
+  ; addig biztosítani szükséges, hogy a request-key kulcs példányonként eltérő legyen!
+  (r core.subs/get-request-id db preview-id preview-id))
 
 (defn preview-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,7 +58,8 @@
   ;
   ; @return (boolean)
   [db [_ preview-id]]
-  (r plugin-synchronizing? db preview-id :preview))
+  ; XXX#0771
+  (r plugin-synchronizing? db preview-id preview-id))
 
 
 

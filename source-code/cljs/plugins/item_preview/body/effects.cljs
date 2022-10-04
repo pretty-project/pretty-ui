@@ -14,6 +14,7 @@
 
 (ns plugins.item-preview.body.effects
     (:require [plugins.item-preview.body.events :as body.events]
+              [plugins.item-preview.body.subs   :as body.subs]
               [reagent.api                      :as reagent]
               [re-frame.api                     :as r :refer [r]]))
 

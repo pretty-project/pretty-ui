@@ -130,18 +130,17 @@
        (letfn [(dex-out-of-bounds? [item-dex] (= item-dex downloaded-item-count))
                (select-item?       [item-dex] (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
                                                    (vector/contains-item? imported-selection id)))
-               (select-item-f      [item-dex] (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
-                                                   (r select-item! db plugin-id id)))
                (f [db item-dex]
                   (cond ; If item-dex out of bounds ...
                         (dex-out-of-bounds? item-dex) (return db)
                         ; If the current item has to be selected ...
-                        (select-item?       item-dex) (f (select-item-f item-dex)
-                                                         (inc item-dex))
+                        (select-item?       item-dex) (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
+                                                           (f (r select-item! db plugin-id id)
+                                                              (inc item-dex)))
                         ; If the current item has NOT to be selected ...
                         :else                         (f db (inc item-dex))))]
               ; ...
-              (as-> db % (r discard-selection! db plugin-id)
+              (as-> db % (r discard-selection! % plugin-id)
                          (f % 0)))))
 
 (defn import-selection!
@@ -153,7 +152,7 @@
   ; @return (map)
   [db [_ plugin-id selected-item-ids]]
   ; XXX#8891
-  ; Az import-selected-items függvény eltárolja az ún. importált kijelölést,
+  ; Az import-selection! függvény eltárolja az ún. importált kijelölést,
   ; ami a kijelölt/letöltés után kijelölendő elemek azonosítóit tartalmazza.
   (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection] selected-item-ids))
 

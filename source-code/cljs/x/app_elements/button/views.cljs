@@ -141,6 +141,8 @@
   ;   :on-click (metamorphic handler)(opt)
   ;   :on-mouse-over (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
+  ;   :stop-propagation? (boolean)(opt)
+  ;    Default: false
   ;   :style (map)(opt)}
   ;
   ; @usage
