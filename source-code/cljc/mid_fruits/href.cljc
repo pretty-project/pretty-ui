@@ -20,11 +20,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn email-address->href
+(defn email-address
   ; @param (string) email-address
   ;
   ; @example
-  ;  (href/email-address->href "Hello@my-site.com")
+  ;  (href/email-address "Hello@my-site.com")
   ;  =>
   ;  "mailto:hello@my-site.com"
   ;
@@ -41,11 +41,11 @@
         "?subject=" subject
         "&body="    body)))
 
-(defn phone-number->href
+(defn phone-number
   ; @param (string) phone-number
   ;
   ; @example
-  ;  (href/phone-number->href "+3630 / 123 - 4567")
+  ;  (href/phone-number "+3630 / 123 - 4567")
   ;  =>
   ;  "tel:+36301234567"
   ;
@@ -54,11 +54,11 @@
   (if (string/nonempty? phone-number)
       (str "tel:" (string/filter-characters phone-number ["+" "1" "2" "3" "4" "5" "6" "7" "8" "9" "0"]))))
 
-(defn address->href
+(defn address
   ; @param (string) address
   ;
   ; @example
-  ;  (href/address->href "My City, My Address street 42.")
+  ;  (href/address "My City, My Address street 42.")
   ;  =>
   ;  "https://www.google.com/maps/search/?api=1&query=My%20City,%20My%20Address%20street%2042."
   ;

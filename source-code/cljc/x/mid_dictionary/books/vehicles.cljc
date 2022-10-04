@@ -47,6 +47,12 @@
            :number-of-seats
            {:en "Number of seats"
             :hu "Ülőhelyek száma"}
+           :rental-vehicle
+           {:en "Rental vehicle"
+            :hu "Bérelhető jármű"}
+           :rental-vehicles
+           {:en "Rental vehicles"
+            :hu "Bérelhető járművek"}
            :semi-integrated-rv
            {:en "Semi integrated RV"
             :hu "Részintegrált lakóautó"}
