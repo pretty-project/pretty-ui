@@ -1732,7 +1732,7 @@ body {
   /* XXX#4509
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása. */
-  -width: 12px }
+ -width: 12px }
 
 /*** Button icon ***/
 
@@ -1768,7 +1768,7 @@ body {
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
-  -height: calc(100% - 24px) }
+ -height: calc(100% - 24px) }
 
 /*** Card wrapper ***/
 
@@ -1956,7 +1956,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 12px;
-  -padding: 6px 0 }
+ -padding: 6px 0 }
 
 /*** Chip-group chips ***/
 
@@ -1968,7 +1968,7 @@ body {
   letter-spacing: var( --letter-spacing-xs );
   /* A .x-chip-group--no-chips-label elem magassága megegyzik az .x-chip-group--chips elem
    * magasságával */
-  -line-height: 36px;
+ -line-height: 36px;
   line-height: 24px }
 
 /*** Chip-group no-chips label ***/
@@ -2001,7 +2001,7 @@ body {
 .x-circle-diagram--section {
   /* A transition tulajdonság használatával a szekciók darabosan
      animálva változtatták a méretüket!
-  -transition: stroke-dasharray .5s ease-out; */
+ -transition: stroke-dasharray .5s ease-out; */
 
   fill: transparent;
   transform-origin: center }
@@ -2637,7 +2637,7 @@ body {
   /* XXX#6610
    * Mi az kalkulált top érték, ami különböző data-height értékek mellett is működik?
    *  */
-  -top: calc()}
+ -top: calc()}
 
 /*** Icon-button icon ***/
 
@@ -2691,7 +2691,7 @@ body {
 
 .x-menu-bar--menu-item[data-active="true"]::after {
   background-color: var( --border-color-primary );
-  -border-radius: 1.5px;
+ -border-radius: 1.5px;
   bottom: 0;
 
   /* Az indicator megjelenítése ki van kapcsolva ... */
@@ -2898,7 +2898,7 @@ body {
 
 .x-horizontal-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
-  -height: 100%;
+ -height: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
   display: flex;
   justify-content: space-between;
@@ -2910,19 +2910,19 @@ body {
   display: flex }
 
 .x-horizontal-polarity--start-content {
-  -position: absolute;
+ -position: absolute;
 }
 .x-horizontal-polarity--end-content {
-  -position: absolute;
+ -position: absolute;
 }
 .x-horizontal-polarity--middle-content {
-  -justify-content: center;
-  -position: absolute;
-  -width: 100% }
+ -justify-content: center;
+ -position: absolute;
+ -width: 100% }
 
 .x-vertical-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
-  -width: 100%;
+ -width: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
   display: flex;
   flex-direction: column;
@@ -3415,7 +3415,7 @@ body {
 .x-text--body[data-cropped="true"]::after {
   background-image: linear-gradient(0deg, white, transparent);
   bottom: 0;
-  -content: '';
+ -content: '';
   height: 10px;
   left: 0;
   position: absolute;

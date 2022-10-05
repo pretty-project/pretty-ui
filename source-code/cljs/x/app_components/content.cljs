@@ -86,8 +86,19 @@
   ;
   ; @return (string)
   [_ {:keys [content prefix replacements suffix]}]
-  (if replacements (string/use-replacements (str prefix content suffix) replacements)
-                   (str prefix content suffix)))
+  (if-not (empty? content)
+          (if replacements (string/use-replacements (str prefix content suffix) replacements)
+                           (str prefix content suffix))))
+
+(defn- number-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) component-id
+  ; @param (map) context-props
+  ;
+  ; @return (string)
+  [component-id context-props]
+  (string-content component-id (update context-props :content str)))
 
 (defn- dictionary-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -141,10 +152,11 @@
   ;
   ; @param (keyword) component-id
   ; @param (map) context-props
-  ;  {:content (component, keyword or string)}
+  ;  {:content (component, keyword, integer or string)}
   [component-id {:keys [content] :as context-props}]
   (cond (keyword? content) (dictionary-content component-id context-props)
         (string?  content) (string-content     component-id context-props)
+        (number?  content) (number-content     component-id context-props)
       ; #' The symbol must resolve to a var, and the Var object itself (not its value) is returned.
       ;
       ; (var? #'my-component) => true
@@ -164,7 +176,7 @@
   ; @param (map) component-props
   ;  {:base-props (map)(opt)
   ;    Only w/ {:content (component)}
-  ;   :content (component, function, keyword, hiccup or string)(opt)
+  ;   :content (component, function, keyword, hiccup, integer or string)(opt)
   ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
   ;    Only w/ {:content (keyword or string)}

@@ -73,7 +73,7 @@
   /* A bubble elemeken lehetséges egyszerű szöveget megjeleníteni (ami nem képes távolságot
    * beállítani a bubble elem szélétől), ezért rendelkezik az .x-app-bubbles--element--body
    * elem {padding: ...} tulajdonsággal. */
-  -padding: 0 12px }
+ -padding: 0 12px }
 
 /*** App bubbles element ***/
 /***** App bubbles *****/

@@ -14,6 +14,7 @@
 
 (ns x.server-user.document-handler.helpers
     (:require [mid-fruits.candy                      :refer [param]]
+              [mid-fruits.map                        :as map]
               [mid-fruits.time                       :as time]
               [server-fruits.http                    :as http]
               [x.server-user.profile-handler.helpers :as profile-handler.helpers]))
@@ -39,11 +40,10 @@
 
 (defn added-document-prototype
   ; @param (map) request
-  ; @param (keyword) document-namespace
-  ; @param (namespaced map) updated-item
+  ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/added-document-prototype {} :my-namespace {...})
+  ;  (user/added-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -52,23 +52,21 @@
   ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)
   ;    {:user/account-id (string)}}
-  [request document-namespace updated-item]
-  (let [namespace (name document-namespace)
-        timestamp (time/timestamp-string)
-        user-link (request->user-link request)]
-       (merge (param updated-item)
-              {(keyword namespace "added-at")    timestamp
-               (keyword namespace "added-by")    user-link
-               (keyword namespace "modified-at") timestamp
-               (keyword namespace "modified-by") user-link})))
+  [request document]
+  (if-let [namespace (-> document map/get-namespace name)]
+          (let [timestamp (time/timestamp-string)
+                user-link (request->user-link request)]
+               (merge document {(keyword namespace "added-at")    timestamp
+                                (keyword namespace "added-by")    user-link
+                                (keyword namespace "modified-at") timestamp
+                                (keyword namespace "modified-by") user-link}))))
 
 (defn updated-document-prototype
   ; @param (map) request
-  ; @param (keyword) document-namespace
-  ; @param (namespaced map) updated-item
+  ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/updated-document-prototype {} :my-namespace {...})
+  ;  (user/updated-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -77,23 +75,22 @@
   ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)
   ;    {:user/account-id (string)}}
-  [request document-namespace updated-item]
-  (let [namespace (name document-namespace)
-        timestamp (time/timestamp-string)
-        user-link (request->user-link request)]
-       (merge {(keyword namespace "added-at") timestamp
-               (keyword namespace "added-by") user-link}
-              (param updated-item)
-              {(keyword namespace "modified-at") timestamp
-               (keyword namespace "modified-by") user-link})))
+  [request document]
+  (if-let [namespace (-> document map/get-namespace name)]
+          (let [timestamp (time/timestamp-string)
+                user-link (request->user-link request)]
+               (merge {(keyword namespace "added-at") timestamp
+                       (keyword namespace "added-by") user-link}
+                      (param document)
+                      {(keyword namespace "modified-at") timestamp
+                       (keyword namespace "modified-by") user-link}))))
 
 (defn duplicated-document-prototype
   ; @param (map) request
-  ; @param (keyword) document-namespace
-  ; @param (namespaced map) duplicated-item
+  ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/updated-document-prototype {} :my-namespace {...})
+  ;  (user/updated-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -102,15 +99,14 @@
   ;   :namespace/modified-at (string)
   ;   :namespace/modified-by (map)
   ;    {:user/account-id (string)}}
-  [request document-namespace duplicated-item]
-  (let [namespace (name document-namespace)
-        timestamp (time/timestamp-string)
-        user-link (request->user-link request)]
-       (merge (param duplicated-item)
-              {(keyword namespace "added-at")    timestamp
-               (keyword namespace "added-by")    user-link
-               (keyword namespace "modified-at") timestamp
-               (keyword namespace "modified-by") user-link})))
+  [request document]
+  (if-let [namespace (-> document map/get-namespace name)]
+          (let [timestamp (time/timestamp-string)
+                user-link (request->user-link request)]
+               (merge document {(keyword namespace "added-at")    timestamp
+                                (keyword namespace "added-by")    user-link
+                                (keyword namespace "modified-at") timestamp
+                                (keyword namespace "modified-by") user-link}))))
 
 
 
@@ -119,11 +115,10 @@
 
 (defn fill-document
   ; @param (map) request
-  ; @param (keyword) document-namespace
-  ; @param (namespaced map) item
+  ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/fill-document {} :my-namespace {...})
+  ;  (user/fill-document {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-by (map)
@@ -134,15 +129,15 @@
   ;    {:user/account-id (string)}
   ;     :user/first-name (string)
   ;     :user/last-name (string)}}
-  [_ document-namespace item]
-  (let [namespace   (name document-namespace)
-        added-by    (get item (keyword namespace "added-by"))
-        modified-by (get item (keyword namespace "modified-by"))]
-       (-> item (update (keyword namespace "added-by") merge
-                        (let [user-account-id (get added-by :user-account/id)]
-                             {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
-                              :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)}))
-                (update (keyword namespace "modified-by") merge
-                        (let [user-account-id (get modified-by :user-account/id)]
-                             {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
-                              :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)})))))
+  [_ document]
+  (if-let [namespace (-> document map/get-namespace name)]
+          (let [added-by    (get document (keyword namespace "added-by"))
+                modified-by (get document (keyword namespace "modified-by"))]
+               (-> document (update (keyword namespace "added-by") merge
+                                    (let [user-account-id (get added-by :user-account/id)]
+                                         {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
+                                          :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)}))
+                            (update (keyword namespace "modified-by") merge
+                                    (let [user-account-id (get modified-by :user-account/id)]
+                                         {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
+                                          :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)}))))))

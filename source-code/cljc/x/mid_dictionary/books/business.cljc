@@ -20,24 +20,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:automatic-price
-           {:en "Automatic price"
-            :hu "Automatikus ár"}
-           :automatic-pricing
-           {:en "Automatic pricing"
-            :hu "Automatikus árazás"}
-           :business
+(def BOOK {:business
            {:en "Business"
             :hu "Üzlet"}
            :buying
            {:en "Buying"
             :hu "Felvásárlás"}
-           :manual-price
-           {:en "Manual price"
-            :hu "Egyedi ár"}
-           :manual-pricing
-           {:en "Manual pricing"
-            :hu "Egyedi árazás"}
+           :item-product-description-placeholder
+           {:en "Item description"
+            :hu "Tétel megnevezése"}
            :price-quote
            {:en "Price quote"
             :hu "Árajánlat"}
@@ -47,9 +38,6 @@
            :price-quote-n
            {:en "Price quote %"
             :hu "Árajánlat %"}
-           :pricing
-           {:en "Pricing"
-            :hu "Árazás"}
            :renting
            {:en "Renting"
             :hu "Bérbeadás"}

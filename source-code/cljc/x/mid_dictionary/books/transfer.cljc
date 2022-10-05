@@ -20,7 +20,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:download!
+(def BOOK {:download
+           {:en "Download"
+            :hu "Letöltés"}
+           :downloads
+           {:en "Downloads"
+            :hu "Letöltések"}
+           :download!
            {:en "Download"
             :hu "Letöltés"}
            :download-selected-items!
@@ -38,9 +44,6 @@
            :downloaded-items
            {:en "Downloaded items"
             :hu "Letöltött elemek"}
-           :downloads
-           {:en "Downloads"
-            :hu "Letöltések"}
            :n-items-downloaded
            {:en "% item(s) downloaded"
             :hu "% elem letöltve"}

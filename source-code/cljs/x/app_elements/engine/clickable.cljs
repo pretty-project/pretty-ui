@@ -46,7 +46,8 @@
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click on-right-click stop-propagation?]}]
   (cond-> {:id (target-handler.helpers/element-id->target-id element-id)}
-          (boolean disabled?) (merge {:disabled true})
+          (boolean disabled?) (merge {:disabled true
+                                      :on-click #(if stop-propagation? (dom/stop-propagation! %))})
           (not     disabled?) (merge {:href         (param href)
                                       ; A stated & clickable elemek on-click eseménye elérhető a Re-Frame
                                       ; adatbázisból is, ezért esemény alapon is meghívhatók, így lehetséges
@@ -54,8 +55,8 @@
                                       ; elemeket.
                                       ; A static & clickable elemek on-click esemény kizárólag függvényként
                                       ; hívható meg.
-                                      :on-click    #(do (if stop-propagation? (dom/stop-propagation! %))
-                                                        (a/dispatch on-click))
+                                      :on-click #(do (if stop-propagation? (dom/stop-propagation! %))
+                                                     (a/dispatch on-click))
                                       :on-mouse-up #(environment/blur-element!)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
                                                                                (a/dispatch on-right-click)

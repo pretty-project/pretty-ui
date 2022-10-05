@@ -43,6 +43,9 @@
            :count
            {:en "Count"
             :hu "Darabszám"}
+           :quantity
+           {:en "Quantity"
+            :hu "Mennyiség"}
 
            :expiration-date
            {:en "Expiration date"
@@ -140,7 +143,7 @@
 
            :appearance
            {:en "Appearance"
-            :hu "Kinézet"}
+            :hu "Megjelenés"}
 
            :active
            {:en "Active"
@@ -167,6 +170,9 @@
            {:en "Extensions"
             :hu "Eszközök"}
 
+           :more-items
+           {:en "More items"
+            :hu "További tételek"}
            :less-options
            {:en "Less options"
             :hu "Kevesebb lehetőség"}

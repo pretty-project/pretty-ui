@@ -29,11 +29,13 @@
   ;
   ; @return (map)
   ;  {:buttons (keywords in vector)
+  ;   :insert-as (keyword)
   ;   :min-height (px)
   ;   :placeholder (metamorphic-content)
   ;   :value-path (vector)}
   [editor-id editor-props]
   (merge {:buttons     [:bold :italic :underline]
+          :insert-as   :cleared-html
           :min-height  400
           :placeholder :write-something!
           :value-path  (helpers/default-value-path editor-id)}

@@ -111,6 +111,9 @@
   ;   :indent (map)(opt)
   ;    A tulajdonság leírását a x.app-elements.api/blank dokumentációjában találod!
   ;   :info-text (metamorphic-content)(opt)
+  ;   :insert-as (keyword)(opt)
+  ;    :cleared-html, :html, :only-text, :plain-text
+  ;    Default: :cleared-html
   ;   :label (metamorphic-content)(opt)
   ;   :placeholder (metamorphic-content)(opt)
   ;    Default: :write-something!

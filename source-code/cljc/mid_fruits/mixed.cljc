@@ -86,6 +86,93 @@
   (and (-> n seqable?)
        (-> n   empty?)))
 
+(defn whole-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/whole-number? "12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/whole-number? "-12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/whole-number? 12)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (or (integer? n)
+      (re-match? n #"^-[\d]{1,}|[\d]{1,}$")))
+
+(defn natural-whole-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/natural-whole-number? "12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/natural-whole-number? "-12")
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n]
+  (or (and (integer? n)
+           (<= 0     n))
+      (re-match? n #"^[0-9]{1,}$")))
+
+(defn positive-whole-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/positive-whole-number? "12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/positive-whole-number? "0")
+  ;  =>
+  ;  false
+  ;
+  ; @return (boolean)
+  [n])
+
+(defn negative-whole-number?
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (mixed/negative-whole-number? "12")
+  ;  =>
+  ;  false
+  ;
+  ; @example
+  ;  (mixed/negative-whole-number? "-12")
+  ;  =>
+  ;  true
+  ;
+  ; @example
+  ;  (mixed/negative-whole-number? -12)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (or (and (integer? n)
+           (> 0      n))
+      (re-match? n #"^-[0-9]{1,}$")))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn to-string
   ; @param (*) n
   ;
@@ -170,87 +257,39 @@
         (nil?    n) (return        {})
         :else       (return        {0 n})))
 
-(defn whole-number?
+(defn to-number
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/whole-number? "12")
+  ;  (mixed/to-number 3)
   ;  =>
-  ;  true
+  ;  3
   ;
   ; @example
-  ;  (mixed/whole-number? "-12")
+  ;  (mixed/to-number nil)
   ;  =>
-  ;  true
+  ;  0
   ;
   ; @example
-  ;  (mixed/whole-number? 12)
+  ;  (mixed/to-number "-3")
   ;  =>
-  ;  true
+  ;  -3
   ;
-  ; @return (boolean)
+  ; @example
+  ;  (mixed/to-number "1.1")
+  ;  =>
+  ;  TODO
+  ;
+  ; @return (number)
   [n]
-  (or (integer? n)
-      (re-match? n #"^-[\d]{1,}|[\d]{1,}$")))
+  (cond (nil?          n) (return            0)
+        (number?       n) (return            n)
+        (whole-number? n) (string/to-integer n)))
 
-(defn natural-whole-number?
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (mixed/natural-whole-number? "12")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (mixed/natural-whole-number? "-12")
-  ;  =>
-  ;  false
-  ;
-  ; @return (boolean)
-  [n]
-  (or (and (integer? n)
-           (<= 0     n))
-      (re-match? n #"^[0-9]{1,}$")))
 
-(defn positive-whole-number?
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (mixed/positive-whole-number? "12")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (mixed/positive-whole-number? "0")
-  ;  =>
-  ;  false
-  ;
-  ; @return (boolean)
-  [n])
 
-(defn negative-whole-number?
-  ; @param (*) n
-  ;
-  ; @example
-  ;  (mixed/negative-whole-number? "12")
-  ;  =>
-  ;  false
-  ;
-  ; @example
-  ;  (mixed/negative-whole-number? "-12")
-  ;  =>
-  ;  true
-  ;
-  ; @example
-  ;  (mixed/negative-whole-number? -12)
-  ;  =>
-  ;  true
-  ;
-  ; @return (boolean)
-  [n]
-  (or (and (integer? n)
-           (> 0      n))
-      (re-match? n #"^-[0-9]{1,}$")))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn update-whole-number
   ; @param (integer or string) n

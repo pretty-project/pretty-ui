@@ -194,31 +194,46 @@
   ;   :cleanHTML (boolean)
   ;   :cleanWhitespace (boolean)
   ;   :disabled (boolean)
+  ;   :insert-as (keyword)
   ;   :language (string)
   ;   :minHeight (string)
   ;   :placeholder (string)
   ;   :showCharsCounter (boolean)
   ;   :showWordsCounter (boolean)
   ;   :showXPathInStatusbar (boolean)}
-  [{:keys [autofocus? buttons disabled? min-height placeholder]}]
+  [{:keys [autofocus? buttons disabled? insert-as min-height placeholder]}]
   (let [placeholder       @(r/subscribe [:dictionary/look-up placeholder])
         selected-language @(r/subscribe [:locales/get-selected-language])]
-       {:autofocus            autofocus?
-        :buttons              (parse-buttons buttons)
-        :buttonsXS            (parse-buttons buttons)
-        :buttonsSM            (parse-buttons buttons)
-        :buttonsMD            (parse-buttons buttons)
-        :cleanHTML            true
-        :cleanWhitespace      true
+       {:autofocus              autofocus?
+        :buttons                (parse-buttons buttons)
+        :buttonsXS              (parse-buttons buttons)
+        :buttonsSM              (parse-buttons buttons)
+        :buttonsMD              (parse-buttons buttons)
+        :cleanHTML              true
+        :cleanWhitespace        true
+
        ; A {:disabled? true} állapotba léptetett jodit hülyén néz ki (nagyon szürke!),
        ; ezért, amíg kifejezetten nem szükséges, addig ez a funkció ki lesz kapcsolva!
-       ;:disabled             disabled?
-        :language             (name selected-language)
-        :minHeight            (str min-height)
-        :placeholder          placeholder
-        :showCharsCounter     false
-        :showWordsCounter     false
-        :showXPathInStatusbar false}))
+       ;:disabled               disabled?
+        :language               (name selected-language)
+        :minHeight              (str min-height)
+        :placeholder            placeholder
+        :showCharsCounter       false
+        :showWordsCounter       false
+        :showXPathInStatusbar   false
+
+        ; A külső helyről származó beillesztett szöveg formázásának megtartására
+        ; a legtöbb esetben nincs szükség, sőt egy weboldal megjelenését negatívan
+        ; befolyásolja, ha a szerkesztő egy szöveg beillesztésekor megtartaja
+        ; a külső forrás formázását (pl. betűtípus, színek, ...).
+        ;
+        ; Előfordulhat, hogy a tisztított html (cleared html) formátumban beillesztett
+        ; szöveg a nem tisztított html (as html) formátumhoz képest bizonyos esetekben
+        ; egyes sortöréseket is elveszíthet! Ez a forrás-szöveg nem megfelelő
+        ; formázásból adódhat!
+        :defaultActionOnPaste   "insert_clear_html"
+        :askBeforePasteFromWord false
+        :askBeforePasteHTML     false}))
 
 (defn jodit-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

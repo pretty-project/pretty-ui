@@ -38,7 +38,7 @@
       (* x (power x (dec n)))))
 
 (defn floor
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/floor 4.20)
@@ -54,8 +54,26 @@
   [n]
   (Math/floor n))
 
+(defn ceil
+  ; @param (number) n
+  ;
+  ; @example
+  ;  (math/ceil 4.20)
+  ;  5
+  ;  4
+  ;
+  ; @example
+  ;  (math/ceil 4.80)
+  ;  =>
+  ;  5
+  ;
+  ; @return (integer)
+  [n]
+  (Math/ceil n))
+
 (defn round
-  ; @param (float or integer) n
+  ; @param (number) n
+  ; @param (integer) precision
   ;
   ; @example
   ;  (math/round 4.20)
@@ -67,77 +85,88 @@
   ;  =>
   ;  5
   ;
+  ; @example
+  ;  (math/round 420 100)
+  ;  =>
+  ;  400
+  ;
   ; @return (integer)
-  [n]
-  (Math/round n))
+  ([n]
+   (if (> 0.5 (rem n 1)) (quot n 1)
+                    (inc (quot n 1))))
+
+  ([n precision]
+   (-> n (/ precision)
+         (round)
+         (* precision))))
 
 (defn absolute
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/absolute -4.20)
   ;  =>
   ;  4.20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n]
   (max n (- n)))
 
 (defn negative
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/negative 4.20)
   ;  =>
   ;  -4.20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n]
   (if (>= 0 n)
       (return n)
       (- 0 n)))
 
 (defn positive
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/positive -4.20)
   ;  =>
   ;  4.20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n]
   (if (<= 0 n)
       (return n)
       (- 0 n)))
 
 (defn absolute-difference
-  ; @param (float or integer) a
-  ; @param (float or integer) b
+  ; @param (number) a
+  ; @param (number) b
   ;
   ; @usage
   ;  (math/absolute-difference 4.20 42)
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [a b]
   (absolute (- a b)))
 
 (defn opposite
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/opposite 4.20)
   ;  =>
   ;  -4.20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n]
   (- 0 n))
 
 (defn between?
-  ; @param (float or integer) n
-  ; @param (float or integer) min
-  ; @param (float or integer) max
+  ; @param (number) n
+  ; @param (number) min
+  ; @param (number) max
   ;
   ; @example
   ;  (math/between? 4.20 0 42)
@@ -150,23 +179,23 @@
        (>= n min)))
 
 (defn between!
-  ; @param (float or integer) n
-  ; @param (float or integer) min
-  ; @param (float or integer) max
+  ; @param (number) n
+  ; @param (number) min
+  ; @param (number) max
   ;
   ; @example
   ;  (math/between! 4.20 0 42)
   ;  =>
   ;  4.20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n min max]
   (cond (< n min) min
         (> n max) max
         :else     n))
 
 (defn negative?
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/negative? -4.20)
@@ -178,7 +207,7 @@
   (> 0 n))
 
 (defn positive?
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/positive? 4.20)
@@ -190,7 +219,7 @@
   (< 0 n))
 
 (defn nonnegative?
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/nonnegative? 4.20)
@@ -247,68 +276,94 @@
   (apply max n))
 
 (defn minimum
-  ; @param (list of float or integer) xyz
+  ; @param (list of number) xyz
   ;
   ; @example
   ;  (math/minimum -4.20 2 0)
   ;  =>
   ;  2
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [& xyz]
   (collection-minimum xyz))
 
 (defn maximum
-  ; @param (list of float or integer) xyz
+  ; @param (list of numbers) xyz
   ;
   ; @example
   ;  (math/maximum -4.20 2 0)
   ;  =>
   ;  2
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [& xyz]
   (collection-maximum xyz))
 
 (defn percent->angle
-  ; @param (float or integer) n
+  ; @param (number) n
   ;
   ; @example
   ;  (math/percent->angle 50)
   ;  =>
   ;  180
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [n]
   (* 360 (/ n 100)))
 
 (defn percent
-  ; @param (float or integer) total
-  ; @param (float or integer) value
+  ; @param (number) total
+  ; @param (number) value
   ;
   ; @example
   ;  (math/percent 50 20)
   ;  =>
   ;  40
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [total value]
   (/ value (/ total 100)))
 
 ; TEMP
 ; Ennek mi az igazi neve?
 (defn percent-result
-  ; @param (float or integer) total
-  ; @param (float or integer) percentage
+  ; @param (number) total
+  ; @param (number) percentage
   ;
   ; @example
   ;  (math/percent 50 40)
   ;  =>
   ;  20
   ;
-  ; @return (float or integer)
+  ; @return (number)
   [total percentage]
   (/ (* total percentage) 100))
+
+(defn percent-rest
+  ; @param (number) total
+  ; @param (number) percentage
+  ;
+  ; @example
+  ;  (math/percent-rest 50 40)
+  ;  =>
+  ;  30
+  ;
+  ; @return (number)
+  [total percentage]
+  (- total (percent-result total percentage)))
+
+(defn percent-add
+  ; @param (number) total
+  ; @param (number) percentage
+  ;
+  ; @example
+  ;  (math/percent-add 50 40)
+  ;  =>
+  ;  70
+  ;
+  ; @return (number)
+  [total percentage]
+  (+ total (percent-result total percentage)))
 
 
 

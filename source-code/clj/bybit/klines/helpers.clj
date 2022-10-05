@@ -104,15 +104,15 @@
   ;  (bybit/receive-kline-item {...})
   ;
   ; @return (map)
-  ;  {:close (float or integer)
+  ;  {:close (number)
   ;   :close-time (integer)
   ;   :close-timestamp (string)
-  ;   :high (float or integer)
-  ;   :low (float or integer)
-  ;   :open (float or integer)
+  ;   :high (number)
+  ;   :low (number)
+  ;   :open (number)
   ;   :open-time (integer)
   ;   :open-timestamp (string)
-  ;   :volume (float or integer)}
+  ;   :volume (number)}
   [{:keys [close high interval low open open-time volume] :as kline-item}]
   (let [; WARNING! Az aktuális (éppen történő) periódus close-time értéke egy jövőbeni időpontra mutat!
         close-time (close-time open-time interval)]

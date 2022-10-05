@@ -24,8 +24,6 @@
 (defn prototype-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (namespace) keyword
-  ;
   ; @return (function)
-  [namespace]
-  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} namespace %))
+  []
+  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} %))
