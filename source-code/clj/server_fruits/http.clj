@@ -323,9 +323,9 @@
   ; @return (map)
   [{:keys [body filename] :as response-props}]
   (response-wrap (merge {:body (param body)
-                       ; Az attachment beállítás használatával a böngésző akkor is felkínálja mentésre,
-                       ; a szerver válaszát, ha azt különben képes lenne megjeleníteni.
-                       ; :headers (if filename {"Content-Disposition" "attachment; filename=\""filename"\""})
+                         ; Az attachment beállítás használatával a böngésző akkor is felkínálja mentésre,
+                         ; a szerver válaszát, ha azt különben képes lenne megjeleníteni.
+                         ; :headers (if filename {"Content-Disposition" "attachment; filename=\""filename"\""})
                          :headers (if filename {"Content-Disposition" "inline; filename=\""filename"\""})}
                         (select-keys response-props [:mime-type :session :status]))))
 

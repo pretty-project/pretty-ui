@@ -50,7 +50,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; clojure.java.io
-(def file clojure.java.io/file)
+(def file          clojure.java.io/file)
+(def input-stream  clojure.java.io/input-stream)
+(def output-stream clojure.java.io/output-stream)
 
 ; x.mid-utils.io
 (def MIME-TYPES              io/MIME-TYPES)

@@ -14,8 +14,10 @@
 
 (ns mid-fruits.hiccup
     (:require [mid-fruits.candy   :refer [return]]
+              [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
-              [mid-fruits.random  :as random]))
+              [mid-fruits.random  :as random]
+              [mid-fruits.vector  :as vector]))
 
 
 
@@ -29,6 +31,41 @@
   [n]
   (and (-> n vector?)
        (-> n first keyword?)))
+
+(defn tag-name?
+  ; @param (hiccup) n
+  ; @param (keyword) tag-name
+  ;
+  ; @example
+  ;  (hiccup/tag-name? [:div "Hello World!"] :div)
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n tag-name]
+  (= (first n) tag-name))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn walk
+  ; @param (hiccup) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (hiccup/walk [:td [:p {:style {:color "red"}}]]
+  ;              #(conj % "420"))
+  ;  =>
+  ;  [:td [:p {:style {:color "red"}} "420"] "420"]
+  ;
+  ; @return (hiccup)
+  [n f]
+  (if (hiccup? n)
+      (letfn [(walk-f [%1 %2] (conj %1 (walk %2 f)))]
+             (reduce walk-f [] (f n)))
+      (return n)))
 
 (defn explode
   ; @param (string) n
@@ -44,21 +81,61 @@
   [n container]
   (if (and (string? n)
            (hiccup? container))
-      (reduce #(conj %1 ^{:key (random/generate-uuid)} [:span %2])
-               container n)))
+      (letfn [(f [%1 %2] (conj %1 ^{:key (random/generate-uuid)} [:span %2]))]
+             (reduce f container n))))
 
-(defn tag-name?
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-attributes
   ; @param (hiccup) n
-  ; @param (keyword) tag-name
   ;
   ; @example
-  ;  (hiccup/tag-name? [:div "Hello World!"] :div)
+  ;  (hiccup/to-string [:div {:style {:color "red"}} "Hello World!"])
   ;  =>
-  ;  true
+  ;  {:style {:color "red"}}
   ;
-  ; @return (boolean)
-  [n tag-name]
-  (= (first n) tag-name))
+  ; @return (map)
+  [n]
+  (if (vector? n)
+      (if-let [attributes (vector/nth-item n 1)]
+              (if (map?   attributes)
+                  (return attributes)))))
+
+(defn get-style
+  ; @param (hiccup) n
+  ;
+  ; @example
+  ;  (hiccup/to-style [:div {:style {:color "red"}} "Hello World!"])
+  ;  =>
+  ;  {:color "red"}
+  ;
+  ; @return (map)
+  [n]
+  (if-let [attributes (get-attributes n)]
+          (:style attributes)))
+
+(defn set-style
+  ; @param (hiccup) n
+  ;
+  ; @example
+  ;  (hiccup/to-string [:div {:style {:color "red"}} "Hello World!"])
+  ;  =>
+  ;  {:style {:color "red"}}
+  ;
+  ; @return (map)
+  [n style]
+  (if (vector? n)
+      (if-let [attributes (get-attributes n)]
+              (assoc-in n [1 :style] style)
+              (vector/inject-item n 1 {:style style}))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn to-string
   ; @param (hiccup) n
@@ -131,3 +208,29 @@
                                              (str result tag)))]
               (str (reduce f nil x)
                    (if flag (str "--" flag))))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn parse-css
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (hiccup/parse-css [:td [:p {:style {:color "red"}}]])
+  ;  =>
+  ;  [:td [:p {:style "color: red;"}]]
+  ;
+  ; @example
+  ;  (hiccup/parse-css [:td [:p {:style "color: red;"}]])
+  ;  =>
+  ;  [:td [:p {:style "color: red;"}]]
+  ;
+  ; @return (*)
+  [n]
+  (letfn [(f [n] (let [style (get-style n)]
+                      (if (map? style)
+                          (set-style n (css/parse style))
+                          (return    n))))]
+         (walk n f)))

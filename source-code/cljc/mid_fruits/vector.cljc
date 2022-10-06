@@ -988,18 +988,18 @@
                              (conj-item o x)))]
          (reduce change-item-f [] n)))
 
-(defn change-nth-item
+(defn replace-nth-item
   ; @param (vector) n
   ; @param (integer) dex
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/change-nth-item [:a :b :c :d] 1 :x)
+  ;  (vector/replace-nth-item [:a :b :c :d] 1 :x)
   ;  =>
   ;  [:a :x :c :d]
   ;
   ; @example
-  ;  (vector/change-nth-item [:a :b :c :d] 999 :x)
+  ;  (vector/replace-nth-item [:a :b :c :d] 999 :x)
   ;  =>
   ;  [:a :b :c :d]
   ;

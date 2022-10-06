@@ -17,7 +17,6 @@ resources/public/x.app-build.edn
 mono-app.jar
 
 # system files
-.DS_Store
 node_modules
 resources/public/js/core
 Procfile
@@ -27,3 +26,6 @@ log
 .shadow-cljs
 .idea
 monoset.iml
+
+# MacOS files
+.DS_Store

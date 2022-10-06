@@ -13,6 +13,11 @@
 
 
 # x4.7.0
+- (defn f [{:keys [] {:keys [name]} :customer}])
+  (f {:customer {:name "Peti" :address "Valahol"}})
+  =>
+  "Peti"
+
 - Az elementeknél inább element-structure sok helyen, mint element-body a proper elnevezés
 
 - Read this bible: https://developer.mozilla.org/en-US/docs/Web/Performance

@@ -55,8 +55,7 @@
 
  ; CSS paths
  :css-paths
- [{:uri "/css/playground.css"}
-  {:uri "/css/site.css" :core-js "site.js"}]
+ []
 
  ; Favicon paths
  :favicon-paths

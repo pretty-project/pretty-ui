@@ -35,10 +35,10 @@
                        {:uri "/css/x/app-elements.css"}
 
                        ; Montserrat font
-                       {:uri "/css/montserrat-font.css"}
+                       {:uri "/fonts/montserrat-font.css"}
 
                        ; Font Awesome icons
-                       {:uri "/css/fontawesome-icons.css"}
+                       {:uri "/icons/fontawesome-icons.css"}
                        {:uri "/icons/fontawesome-free-5.15.1-web/css/all.min.css"}
 
                        ; Material Icons
@@ -46,6 +46,6 @@
                        ; böngészőben jelent meg, .woff formátumban pedig nem tartalmazta a teljes,
                        ; legfrissebb készletet (2020.10.11)
                        ; Emiatt van a Google Fonts szerverről hosztolva.
-                       {:uri "/css/material-design-icons.css"}
+                       {:uri "/icons/material-design-icons.css"}
                        {:uri "https://fonts.googleapis.com/icon?family=Material+Icons"}
                        {:uri "https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"}])

@@ -253,7 +253,7 @@
         item-dex         (vector/last-item     item-path)
         item-parent      (get-in db item-parent-path)]
        (if (vector/nonempty? item-parent)
-           (let [updated-item-parent (vector/change-nth-item item-parent item-dex item)]
+           (let [updated-item-parent (vector/replace-nth-item item-parent item-dex item)]
                 (assoc-in db item-parent-path updated-item-parent))
            (let [updated-item-parent [item]]
                 (assoc-in db item-parent-path updated-item-parent)))))
