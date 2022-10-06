@@ -46,8 +46,8 @@
 
                  :styles {:fonts  [;{:font-family "Montserrat" :src "file:/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}
                                    ;{:font-family "Montserrat" :src "http://localhost:3000/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
-                                   ;{:font-family "Montserrat" :src "file:///Users/bithandshake/Montserrat-Regular.ttf"}
-                                   {:font-family "Montserrat" :src "file://Montserrat-Regular.ttf"}]
+                                   {:font-family "Montserrat" :src "file:///Users/bithandshake/Montserrat-Regular.ttf"}]
+                                   ;{:font-family "Montserrat" :src "/Montserrat-Regular.ttf"}]
                                    ;{:font-family "Montserrat" :src "file:///pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
                                    ;{:font-family "Montserrat" :src "http://localhost:3000/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
 
