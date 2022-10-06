@@ -31,7 +31,7 @@
   ;
   ; @usage
   ;  [:ui/simulate-process! {...}]
-  (fn [{:keys [db]} [_ {:keys [on-process-ended] :as x}]]
+  (fn [{:keys [db]} [_ {:keys [on-process-ended]}]]
       ; A [:ui/simulate-process!] esemény megjelenít az állapotjelzőn egy hamis folyamatot.
       {:db             (r progress-bar.events/fake-process! db 100)
        :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}

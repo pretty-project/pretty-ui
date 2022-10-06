@@ -74,6 +74,9 @@
            :price
            {:en "Price"
             :hu "Ár"}
+           :price-margin
+           {:en "Price margin"
+            :hu "Árrés"}
            :prices
            {:en "Prices"
             :hu "Árak"}

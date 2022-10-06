@@ -94,7 +94,11 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items]))
+  ; XXX#8891
+  ; A "Kijelölés elvetése" funkció törli az imported-selection vektor elemeit is,
+  ; hogy az azokhoz tartozó elemek a letöltődésük után, már ne kerüljenek kijelölésre.
+  (-> db (dissoc-in [:plugins :plugin-handler/meta-items plugin-id :selected-items])
+         (dissoc-in [:plugins :plugin-handler/meta-items plugin-id :imported-selection])))
 
 (defn disable-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!

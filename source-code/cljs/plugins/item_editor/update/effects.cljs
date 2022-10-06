@@ -65,9 +65,11 @@
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               ; A)
               (let [item-id (r update.subs/get-saved-item-id db editor-id server-response)]
-                   (if (or (r core.subs/editing-item? db editor-id item-id)
-                           (r core.subs/new-item?     db editor-id))
-                       [:item-editor/go-up! editor-id]))
+                   ; Új elem mentésekor szükséges eltárolni a szerver által visszaküldött elem-azonosítót,
+                   ; az [:item-editor/go-to! ...] esemény számára!
+                   (cond (r core.subs/editing-item? db editor-id item-id) {:dispatch [:item-editor/go-up! editor-id]}
+                         (r core.subs/new-item?     db editor-id)         {:db       (r core.events/set-item-id! db editor-id item-id)
+                                                                           :dispatch [:item-editor/go-up! editor-id]}))
               ; B)
               {:dispatch-if [(r ui/process-faked? db)
                              [:ui/end-fake-process!]]})))

@@ -28,7 +28,6 @@
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-item-id!       core.events/set-item-id!)
-(def clear-item-id!     core.events/clear-item-id!)
 (def update-item-id!    core.events/update-item-id!)
 
 
@@ -82,9 +81,16 @@
   ;
   ; @return (map)
   [db [_ preview-id]]
-  (as-> db % (r clear-item-id!   % preview-id)
-             (r update-item-id!  % preview-id)
-             (r reset-downloads! % preview-id)))
+  ; A tartalom újratöltésekor ...
+  ; ... az update-item-id! függvény alkalmazása előtt szükséges törölni a
+  ;     current-item-id értéket, különben az update-item-id! függvény nem
+  ;     használná a body komponens item-id paraméterét a current-item-id
+  ;     új értékeként!
+  ; ... szükséges kiléptetni a plugint az esetlegesen beállított {:error-mode? true}
+  ;     állapotból!
+  (as-> db % (r remove-meta-items! % preview-id)
+             (r update-item-id!    % preview-id)
+             (r reset-downloads!   % preview-id)))
 
 
 

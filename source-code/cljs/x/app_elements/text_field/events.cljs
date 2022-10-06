@@ -50,7 +50,13 @@
   ;
   ; @return (map)
   [db [_ field-id]]
-  (assoc-in db [:elements :element-handler/field-surface] field-id))
+  ; BUG#6071
+  ; Ha az on-type-ended megörténésekor alkalmazott show-surface! függvény
+  ; alkalmazásának idején már egy másik mező van fókuszált állapotban, akkor
+  ; az elhagyott mező surface felületét nem szabad megjeleníteni!
+  (if (r input.subs/input-focused? db field-id)
+      (assoc-in db [:elements :element-handler/field-surface] field-id)
+      (return   db)))
 
 (defn hide-surface!
   ; WARNING! NON-PUBLIC! DO NOT USE!

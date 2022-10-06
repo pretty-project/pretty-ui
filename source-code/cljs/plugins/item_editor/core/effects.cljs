@@ -86,9 +86,13 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      (if (r core.subs/new-item? db editor-id)
-          (let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-               [:router/go-to! base-route])
-          (let [current-item-id (r core.subs/get-current-item-id db editor-id)
-                item-route      (r routes.subs/get-item-route    db editor-id current-item-id)]
-               [:router/go-to! item-route]))))
+      ; Nem minden esetben érhető el a current-item-id azonosító!
+      ; Pl.: Új elem szerkesztése közben az [:item-editor/cancel-item! ...]
+      ;      esemény hatására megtörténő [:item-editor/go-up! ...] esemény
+      ;      számára nem elérhető az elem azonosítója, mivel az csak az új elem
+      ;      mentésekor jön létre!
+      (if-let [current-item-id (r core.subs/get-current-item-id db editor-id)]
+              (let [item-route (r routes.subs/get-item-route db editor-id current-item-id)]
+                   [:router/go-to! item-route])
+              (let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
+                   [:router/go-to! base-route]))))

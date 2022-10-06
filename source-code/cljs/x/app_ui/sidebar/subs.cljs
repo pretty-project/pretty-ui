@@ -12,38 +12,44 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-details)
+(ns x.app-ui.sidebar.subs
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(def app-codename    "x4")
-(def app-description "Are we alone in the universe?")
-(def app-version     "4.7.7")
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn copyright-label
-  ; @param (integer or string) current-year
-  ;
+(defn get-sidebar-content
   ; @usage
-  ;  (time/copyright-label 2022)
+  ;  (r ui/get-sidebar-content db)
   ;
-  ; @return (string)
-  [current-year]
-  (str current-year " Monotech.hu"))
+  ; @return (metamorphic-content)
+  [db _]
+  (get-in db [:ui :sidebar/content]))
 
-(defn copyright-information
-  ; @param (integer or string) current-year
-  ;
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn sidebar-hidden?
   ; @usage
-  ;  (time/copyright-information 2022)
+  ;  (r ui/sidebar-hidden? db)
   ;
-  ; @return (string)
-  [current-year]
-  (str "2020-"current-year " Monotech.hu - All rights reserved"))
+  ; @return (boolean)
+  [db _]
+  (get-in db [:ui :sidebar/meta-items :hidden?]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:ui.sidebar/get-content]
+(r/reg-sub :ui.sidebar/get-content get-sidebar-content)
+
+; @usage
+;  [:ui.sidebar/hidden?]
+(r/reg-sub :ui.sidebar/hidden? sidebar-hidden?)
