@@ -237,4 +237,4 @@
   [query & query-parts]
   (cond (vector?  query) (vec (concat query   query-parts))
         (nil?     query) (vec (concat []      query-parts))
-        :else            (vec (concat [query] query-parts))))
+        :return          (vec (concat [query] query-parts))))

@@ -65,7 +65,7 @@
                   (<  mouse-y half-viewport-height))
              :tr
              (< mouse-x half-viewport-width)
-             :bl :else :br)))
+             :bl :return :br)))
 
 
 

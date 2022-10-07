@@ -15,7 +15,7 @@
 (ns x.app-environment.element-handler.side-effects
     (:require [dom.api           :as dom]
               [mid-fruits.hiccup :as hiccup]
-              [mid-fruits.time   :as time]
+              [time.api          :as time]
               [x.app-core.api    :as a]))
 
 

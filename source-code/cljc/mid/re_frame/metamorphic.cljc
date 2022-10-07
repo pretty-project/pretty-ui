@@ -47,7 +47,7 @@
   [n]
   (cond (map?    n) (effects-map/effects-map->handler-f   n)
         (vector? n) (event-vector/event-vector->handler-f n)
-        :else       (return                               n)))
+        :return  n))
 
 (defn metamorphic-event->effects-map
   ; @param (metamorphic-effects) n
@@ -88,4 +88,4 @@
   ; [{:ms 500 :dispatch [:my-event ...]}]
   (cond (types/event-vector? n) (vector/concat-items n params)
         (map?                n) (map/->values        n #(apply metamorphic-event<-params % params))
-        :else                   (return              n)))
+        :return              n))

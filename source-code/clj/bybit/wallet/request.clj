@@ -18,7 +18,7 @@
               [bybit.wallet.uri       :as wallet.uri]
               [clj-http.client        :as clj-http.client]
               [mid-fruits.map         :as map]
-              [mid-fruits.time        :as time]))
+              [time.api               :as time]))
 
 
 

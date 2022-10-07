@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.re-frame.dispatch
-    (:require [mid-fruits.time            :as time]
-              [mid.re-frame.core          :as core]
+    (:require [mid.re-frame.core          :as core]
               [mid.re-frame.event-handler :as event-handler]
               [mid.re-frame.event-vector  :as event-vector]
               [mid.re-frame.metamorphic   :as metamorphic]
-              [mid.re-frame.registrar     :as registrar]))
+              [mid.re-frame.registrar     :as registrar]
+              [time.api                   :as time]))
 
 
 

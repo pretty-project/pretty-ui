@@ -373,7 +373,7 @@
                                            (r distribute-items! db items item-paths base-path))
                                       ; Ha a target-item-path értéke nem vektor vagy térkép, akkor
                                       ; az kezeletlen hibának minősül.
-                                      :else (return db))))
+                                      :return db)))
                        (param db)
                        (param item-paths)))]
 

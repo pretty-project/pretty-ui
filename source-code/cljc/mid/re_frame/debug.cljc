@@ -15,9 +15,9 @@
 (ns mid.re-frame.debug
     (:require [mid-fruits.candy     :refer [return]]
               [mid-fruits.format    :as format]
-              [mid-fruits.time      :as time]
               [mid.re-frame.context :as context]
-              [mid.re-frame.core    :as core]))
+              [mid.re-frame.core    :as core]
+              [time.api             :as time]))
 
 
 

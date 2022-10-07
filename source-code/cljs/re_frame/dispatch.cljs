@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns re-frame.dispatch
-    (:require [mid-fruits.time       :as time]
-              [mid.re-frame.dispatch :as dispatch]
+    (:require [mid.re-frame.dispatch :as dispatch]
               [re-frame.core         :as core]
               [re-frame.event-vector :as event-vector]
-              [re-frame.state        :as state]))
+              [re-frame.state        :as state]
+              [time.api              :as time]))
 
 
 

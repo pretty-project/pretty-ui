@@ -13,9 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns time.epoch
-    (:require [time.converters :as converters]
-              #?(:clj [clj-time.coerce :as clj-time.coerce])
-              #?(:clj [clj-time.core   :as clj-time.core])))
+    (:require [time.converters :as converters]))
 
 
 
@@ -24,16 +22,13 @@
 
 (defn epoch-ms
   ; @return (ms)
-  []
-  #?(:clj (-> (clj-time.core/now)
-              (clj-time.coerce/to-long))))
+  [])
+  ; TODO
 
 (defn epoch-s
   ; @return (s)
-  []
-  #?(:clj (-> (clj-time.core/now)
-              (clj-time.coerce/to-long)
-              (quot 1000))))
+  [])
+  ; TODO
 
 (defn epoch-ms->timestamp-string
   ; @param (ms) n
@@ -44,8 +39,8 @@
   ;  "2021-12-29T18:01:00.000Z"
   ;
   ; @return (string)
-  [n]
-  #?(:clj (if n (-> n clj-time.coerce/from-long str))))
+  [n])
+  ; TODO
 
 (defn epoch-s->timestamp-string
   ; @param (s) n
@@ -56,5 +51,5 @@
   ;  "2021-12-29T18:01:00.000Z"
   ;
   ; @return (string)
-  [n]
-  #?(:clj (if n (-> n converters/s->ms clj-time.coerce/from-long str))))
+  [n])
+  ; TODO

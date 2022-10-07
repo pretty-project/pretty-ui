@@ -14,7 +14,7 @@
 
 (ns tools.scheduler.helpers
     (:require [mid-fruits.candy :refer [param return]]
-              [mid-fruits.time  :as time]))
+              [time.api         :as time]))
 
 
 

@@ -16,9 +16,9 @@
     (:require [mid-fruits.json    :as json]
               [mid-fruits.loop    :refer [reduce-indexed]]
               [mid-fruits.map     :as map]
-              [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
-              [server-fruits.hash :as hash]))
+              [server-fruits.hash :as hash]
+              [time.api           :as time]))
 
 
 

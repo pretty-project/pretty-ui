@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns time.converters
+(ns mid.time.converters
     (:require [mid-fruits.format :as format]
               [mid-fruits.math   :as math]))
 

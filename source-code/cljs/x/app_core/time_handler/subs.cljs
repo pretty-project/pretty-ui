@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.time-handler.subs
-    (:require [mid-fruits.time          :as time]
+    (:require [time.api                 :as time]
               [x.app-core.event-handler :as event-handler :refer [r]]))
 
 

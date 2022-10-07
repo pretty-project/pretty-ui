@@ -32,7 +32,7 @@
   [& xyz]
   (letfn [(join-class-f [o x] (cond (vector?  x) (concat o x)
                                     (keyword? x) (conj   o x)
-                                    :else o))]
+                                    :return   o))]
          (reduce join-class-f [] xyz)))
 
 (defn calc

@@ -99,5 +99,5 @@
   (if-let [x (string->mixed n)]
           (cond (map? x) x
                 (nil? n) {}
-                :else    {:0 (str n)})
+                :return  {:0 (str n)})
           (return {})))

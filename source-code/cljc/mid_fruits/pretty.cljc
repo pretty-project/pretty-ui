@@ -137,7 +137,7 @@
   [o v {:keys [depth first-item? wrap-items?]}]
   (let [v (if (and wrap-items? (not first-item?)) (break v (inc depth)) v)]
        (cond first-item? (str o v)
-             :else (str o string/tab v))))
+             :return     (str o string/tab v))))
 
 (defn- append-map-kv
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -158,7 +158,7 @@
   (let [k (if (and wrap-items? (not first-item?)) (break k (inc depth)) k)
         v (if (string->wrap? v) (break v (inc depth)) v)]
        (cond first-item? (str o k string/tab v)
-             :else  (str o string/tab k string/tab v))))
+             :return     (str o string/tab k string/tab v))))
 
 (defn fn->string
   ; @param (function) n
@@ -303,7 +303,7 @@
                    (nil?     n)        (nil->string         n)
                    (string?  n)        (string->string      n)
                    (var?     n)        (var->string         n)
-                   :else               (str                 n)))]
+                   :return             (str                 n)))]
 
          ; mixed->string
          (remove-unnecessary-breaks (mixed->string n {:depth       (param 0)

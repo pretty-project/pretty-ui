@@ -26,9 +26,9 @@
 (ns x.app-ui.renderer
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.hiccup  :as hiccup]
-              [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
               [reagent.api        :as reagent]
+              [time.api           :as time]
               [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-ui.engine    :as engine]))
@@ -1022,7 +1022,7 @@
             ; Ha a renderer {:queue-behavior :wait :rerender-same? false} beállítással
             ; renderelne egy már kirenderelt element, akkor egyik render esemény sem
             ; történik meg, ezért szükséges a renderert felszabadítani.
-            :else [:ui/rendering-ended renderer-id])))
+            :return [:ui/rendering-ended renderer-id])))
 
 (a/reg-event-fx
   :ui/request-rendering-element!

@@ -82,7 +82,7 @@
   [n]
   (cond (string?  n) (string/replace-part n "-" "_")
         (keyword? n) (-> n name underscore-key keyword)
-        :else     n))
+        :return   n))
 
 (defn hyphenize-key
   ; @param (*) n
@@ -96,7 +96,7 @@
   [n]
   (cond (string?  n) (string/replace-part n "_" "-")
         (keyword? n) (-> n name hyphenize-key keyword)
-        :else     n))
+        :return   n))
 
 
 
@@ -197,11 +197,11 @@
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->>keys    n unkeywordize-keys)
-        (vector? n) (vector/->items n unkeywordize-keys)
-        ; Az unkeywordize-key függvény csak keyword típusokat módosít, ezért nincs szükség további
-        ; típus-vizsgálatra!
-        :else (unkeywordize-key n)))
+  ; Az unkeywordize-key függvény csak keyword típusokat módosít, ezért nincs szükség további
+  ; típus-vizsgálatra!
+  (cond (map?    n) (map/->>keys      n unkeywordize-keys)
+        (vector? n) (vector/->items   n unkeywordize-keys)
+        :return     (unkeywordize-key n)))
 
 (defn keywordize-keys
   ; @param (*) n
@@ -215,7 +215,7 @@
   [n]
   (cond (map?    n) (map/->>keys    n keywordize-keys)
         (vector? n) (vector/->items n keywordize-keys)
-        :else       (keywordize-key n)))
+        :return     (keywordize-key n)))
 
 (defn underscore-keys
   ; @param (*) n
@@ -229,7 +229,7 @@
   [n]
   (cond (map?    n) (map/->>keys    n underscore-keys)
         (vector? n) (vector/->items n underscore-keys)
-        :else       (underscore-key n)))
+        :return     (underscore-key n)))
 
 (defn hyphenize-keys
   ; @param (*) n
@@ -243,7 +243,7 @@
   [n]
   (cond (map?    n) (map/->>keys    n hyphenize-keys)
         (vector? n) (vector/->items n hyphenize-keys)
-        :else       (hyphenize-key  n)))
+        :return     (hyphenize-key  n)))
 
 
 
@@ -266,11 +266,11 @@
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->>values  n unkeywordize-values)
-        (vector? n) (vector/->items n unkeywordize-values)
-        ; Az unkeywordize- függvény csak keyword típusokat módosít, ezért nincs szükség további
-        ; típus-vizsgálatra!
-        :else (unkeywordize-value n)))
+  ; Az unkeywordize- függvény csak keyword típusokat módosít, ezért nincs szükség további
+  ; típus-vizsgálatra!
+  (cond (map?    n) (map/->>values      n unkeywordize-values)
+        (vector? n) (vector/->items     n unkeywordize-values)
+        :return     (unkeywordize-value n)))
 
 (defn keywordize-values
   ; XXX#5914
@@ -284,11 +284,11 @@
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->>values  n keywordize-values)
-        (vector? n) (vector/->items n keywordize-values)
-        ; A keywordize-value függvény csak string típusokat módosít, ezért nincs szükség további
-        ; típus-vizsgálatra!
-        :else (keywordize-value n)))
+  ; A keywordize-value függvény csak string típusokat módosít, ezért nincs szükség további
+  ; típus-vizsgálatra!
+  (cond (map?    n) (map/->>values    n keywordize-values)
+        (vector? n) (vector/->items   n keywordize-values)
+        :return     (keywordize-value n)))
 
 
 
@@ -307,7 +307,7 @@
   [n]
   (cond (map?    n) (map/->>values  n trim-values)
         (vector? n) (vector/->items n trim-values)
-        :else       (trim-value     n)))
+        :return     (trim-value     n)))
 
 
 
@@ -326,4 +326,4 @@
   [n]
   (cond (map?    n) (map/->>values  n parseint-values)
         (vector? n) (vector/->items n parseint-values)
-        :else       (parseint-value n)))
+        :return     (parseint-value n)))

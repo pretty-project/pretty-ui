@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.time-handler.transfer
-    (:require [mid-fruits.time                             :as time]
+    (:require [time.api                                    :as time]
               [x.server-core.transfer-handler.side-effects :as transfer-handler.side-effects]))
 
 

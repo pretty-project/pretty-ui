@@ -106,7 +106,7 @@
         ; Ha a last-scroll-y és scroll-y értékének különbségének abszolút értéke
         ; nem nagyobb, mint a SCROLL-DIRECTION-SENSITIVITY és nem igaz az XXX#0061
         ; kivétel, akkor a scroll-direction nem megállapítható
-        :else nil))
+        :return nil))
 
 (defn get-scroll-progress
   ; @usage

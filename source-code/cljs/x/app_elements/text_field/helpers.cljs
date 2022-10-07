@@ -18,7 +18,7 @@
               [mid-fruits.css                   :as css]
               [mid-fruits.hiccup                :as hiccup]
               [mid-fruits.string                :as string]
-              [mid-fruits.time                  :as time]
+              [time.api                         :as time]
               [x.app-components.api             :as components]
               [x.app-core.api                   :as a]
               [x.app-elements.element.helpers   :as element.helpers]

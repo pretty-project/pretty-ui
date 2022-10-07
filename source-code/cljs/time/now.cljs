@@ -12,16 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-core.print-handler.config
-    (:require [time.api :as time]))
+(ns time.now)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (ms)
-(def APP-STARTED-AT (time/elapsed))
-
-; @constant (ms)
-(def SEPARATOR-DELAY 2000)
+(defn elapsed
+  ; @return (ms)
+  []
+  (.now js/performance))

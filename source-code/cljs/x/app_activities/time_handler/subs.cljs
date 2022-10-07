@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-activities.time-handler.subs
-    (:require [mid-fruits.time      :as time]
-              [re-frame.api         :as r :refer [r]]
+    (:require [re-frame.api         :as r :refer [r]]
+              [time.api             :as time]
               [x.app-dictionary.api :as dictionary]))
 
 

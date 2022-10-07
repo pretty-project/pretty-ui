@@ -142,7 +142,7 @@
                                                            (f (r select-item! db plugin-id id)
                                                               (inc item-dex)))
                         ; If the current item has NOT to be selected ...
-                        :else                         (f db (inc item-dex))))]
+                        :return                       (f db (inc item-dex))))]
               ; ...
               (as-> db % (r discard-selection! % plugin-id)
                          (f % 0)))))

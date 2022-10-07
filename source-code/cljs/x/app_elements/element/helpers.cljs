@@ -62,7 +62,7 @@
   [element-props color-key color-data-key color-value]
   (cond (keyword? color-value) (assoc    element-props color-data-key     color-value)
         (string?  color-value) (assoc-in element-props [:style color-key] color-value)
-        :else                  (return   element-props)))
+        :return element-props))
 
 (defn apply-dimension
   ; WARNING! NON-PUBLIC! DO NOT USE!

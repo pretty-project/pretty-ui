@@ -529,7 +529,7 @@
   `app-fruits.dom/file-selector->form-data`
 
 - NEW FUNCTIONS
-  `mid-fruits.time/unix-timestamp->*`
+  `time.api/unix-timestamp->*`
   UNIX timestamp pretty-print segédfüggvények
 
 

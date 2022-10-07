@@ -105,7 +105,7 @@
                                 (inc dex))
                              ; Ha a vizsgált indexű elem azonosítója NEM szerepel az item-ids vektorban, ...
                              ; ... akkor folytaja a keresést.
-                             :else (f item-dexes item-ids (inc dex)))))]
+                             :return (f item-dexes item-ids (inc dex)))))]
               (f [] item-ids 0))))
 
 

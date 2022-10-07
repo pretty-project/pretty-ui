@@ -15,7 +15,7 @@
 (ns bybit.wallet.uri
     (:require [bybit.request.sign :as request.sign]
               [bybit.uri.config   :as uri.config]
-              [mid-fruits.time    :as time]))
+              [time.api           :as time]))
 
 
 

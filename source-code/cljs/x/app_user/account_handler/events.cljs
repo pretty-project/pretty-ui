@@ -14,7 +14,7 @@
 
 (ns x.app-user.account-handler.events
     (:require [mid-fruits.map  :refer [dissoc-in]]
-              [mid-fruits.time :as time]
+              [time.api        :as time]
               [x.app-core.api  :as a :refer [r]]))
 
 

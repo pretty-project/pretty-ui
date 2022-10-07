@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.scheduler.effects
-    (:require [mid-fruits.time         :as time]
-              [re-frame.api            :as r :refer [r]]
+    (:require [re-frame.api            :as r :refer [r]]
+              [time.api                :as time]
               [tools.scheduler.events  :as events]
               [tools.scheduler.helpers :as helpers]
               [tools.scheduler.subs    :as subs]))

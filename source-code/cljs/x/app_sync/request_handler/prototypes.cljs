@@ -14,7 +14,7 @@
 
 (ns x.app-sync.request-handler.prototypes
     (:require [mid-fruits.candy                  :refer [param]]
-              [mid-fruits.time                   :as time]
+              [time.api                          :as time]
               [x.app-core.api                    :as a :refer [r]]
               [x.app-sync.request-handler.config :as request-handler.config]))
 

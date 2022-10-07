@@ -166,10 +166,10 @@
       ;
       ; (var?       content) [render-fn-content component-id context-props]
         (fn?        content) [render-fn-content component-id context-props]
-      ; A cond feltétel-listájának :else ága kielégíti a (component? ...) és (hiccup? ...) feltételeket!
+      ; A cond feltétel-listájának :return ága kielégíti a (component? ...) és (hiccup? ...) feltételeket!
       ; (component? content) (return      content)
       ; (hiccup?    content) (return      content)
-        :else                (return      content)))
+        :return     content))
 
 (defn component
   ; @param (keyword)(opt) component-id

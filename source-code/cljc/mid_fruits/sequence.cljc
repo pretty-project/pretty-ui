@@ -40,7 +40,7 @@
   [dex min max]
   (cond (>= dex max) min
         (<  dex min) min
-        :else (inc dex)))
+        :return (inc dex)))
 
 (defn prev-dex
   ; @param (integer) dex
@@ -63,7 +63,7 @@
   [dex min max]
   (cond (<= dex min) max
         (>  dex max) max
-        :else (dec dex)))
+        :return (dec dex)))
 
 (defn prev-prev-dex
   ; @param (integer) dex
@@ -88,4 +88,4 @@
         (>  dex max) (dec max) ; Ha dex nagyobb, mint max, akkor max-1
         (<= dex min) (dec max) ; Ha dex kisebb-egyenlo, mint min, akkor max-1
         (= dex (inc min)) max  ; Ha dex eggyel tobb, mint min, akkor max
-        :else (- dex 2)))      ; Kulonben dex-2
+        :return (- dex 2)))    ; Kulonben dex-2

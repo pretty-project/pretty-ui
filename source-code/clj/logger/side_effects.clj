@@ -14,8 +14,8 @@
 
 (ns logger.side-effects
     (:require [logger.config    :as config]
-              [mid-fruits.time  :as time]
-              [server-fruits.io :as io]))
+              [server-fruits.io :as io]
+              [time.api         :as time]))
 
 
 

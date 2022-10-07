@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns time.current)
+(ns time.current
+    (:require [time.timestamp :as timestamp]))
 
 
 
@@ -22,28 +23,29 @@
 (defn get-year
   ; @return (integer)
   []
-  #?(:cljs (.getFullYear (js/Date.))
-     :clj  (-> (timestamp-object)
-               (timestamp-object->year))))
+  (-> (timestamp/timestamp-object)
+      (timestamp/timestamp-object->year)))
 
 (defn get-month
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-day
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-date
   ; @return (string)
   []
-  #?(:cljs ()
-     :clj  (-> (timestamp-string)
-               (timestamp-string->date))))
+  (-> (timestamp/timestamp-string)
+      (timestamp/timestamp-string->date)))
 
 (defn get-hours
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-hours-left-from-this-day
   ; @return (integer)
@@ -54,6 +56,7 @@
 (defn get-minutes
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-minutes-left-from-this-hour
   ; @return (integer)
@@ -64,6 +67,7 @@
 (defn get-seconds
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-seconds-left-from-this-minute
   ; @return (integer)
@@ -74,11 +78,12 @@
 (defn get-milliseconds
   ; @return (integer)
   [])
+  ; TODO
 
 (defn get-milliseconds-left-from-this-second
   ; @return (integer)
   [])
-  ; TODO ...
+  ; TODO
 
 (defn get-milliseconds-left-from-this-minute
   ; @return (integer)

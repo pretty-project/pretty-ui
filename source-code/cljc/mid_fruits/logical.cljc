@@ -193,4 +193,4 @@
   [x a b]
   (cond (= x a) b
         (= x b) a
-        :else   x))
+        :return x))

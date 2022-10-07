@@ -12,15 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.time.api
-    (:require [mid.time.converters :as converters]
-              [mid.time.current    :as current]
-              [mid.time.epoch      :as epoch]
-              [mid.time.loop       :as loop]
-              [mid.time.now        :as now]
-              [mid.time.parse      :as parse]
-              [mid.time.schedule   :as schedule]
-              [mid.time.timestamp  :as timestamp]))
+(ns time.api
+    (:require [time.converters :as converters]
+              [time.current    :as current]
+              [time.epoch      :as epoch]
+              [time.loop       :as loop]
+              [time.now        :as now]
+              [time.schedule   :as schedule]
+              [time.timestamp  :as timestamp]))
 
 
 
@@ -76,13 +75,6 @@
 
 ; time.now
 (def elapsed now/elapsed)
-
-; time.parse
-(def parse-date        parse/parse-date)
-(def parse-timestamp   parse/parse-timestamp)
-(def unparse-timestamp parse/unparse-timestamp)
-(def parse-date-time   parse/parse-date-time)
-(def unparse-date-time parse/unparse-date-time)
 
 ; time.schedule
 (def set-timeout!    schedule/set-timeout!)

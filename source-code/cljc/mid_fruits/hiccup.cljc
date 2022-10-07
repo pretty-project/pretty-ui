@@ -156,7 +156,7 @@
    (letfn [(to-string-f [o x]
                         (cond (string? x) (str o delimiter  x)
                               (vector? x) (str o (to-string x))
-                              :else o))]
+                              :return  o))]
           (reduce to-string-f "" n))))
 
 (defn content-length

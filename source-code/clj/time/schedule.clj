@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns time.schedule
-    (:require #?(:clj [tea-time.core :as tea-time.core])))
+    (:require [tea-time.core   :as tea-time.core]
+              [time.converters :as converters]))
 
 
 
@@ -21,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 
 ;https://github.com/aphyr/tea-time
-#?(:clj (tea-time.core/start!))
+(tea-time.core/start!)
 
 
 
@@ -36,10 +37,8 @@
   ;  (time/set-timeout! #(println "3 sec") 3000)
   ;
   ; @return (tea_time.core.Once object)
-  ; @return (integer)
   [f timeout]
-  #?(:clj  (tea-time.core/after! (ms->s timeout) f)
-     :cljs (.setTimeout js/window f timeout)))
+  (tea-time.core/after! (converters/ms->s timeout) f))
 
 (defn set-interval!
   ; @param (function) f
@@ -49,16 +48,12 @@
   ;  (time/set-interval! #(println "3 sec") 3000)
   ;
   ; @return (tea_time.core.Every object)
-  ; @return (integer)
   [f interval]
-  #?(:clj  (tea-time.core/every! (ms->s interval) 0 f)
-     :cljs (.setInterval js/window f interval)))
+  (tea-time.core/every! (converters/ms->s interval) 0 f))
 
 (defn clear-interval!
   ; @param (integer) interval-id
   ;
   ; @return (nil)
-  ; @return (nil)
-  [interval-id]
-  #?(:clj  (return nil)
-     :cljs (.clearInterval js/window interval-id)))
+  [interval-id])
+  ; TODO

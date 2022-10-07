@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mongo-db.sample
-    (:require [mid-fruits.time :as time]
-              [mongo-db.api    :as mongo-db]))
+    (:require [mongo-db.api :as mongo-db]
+              [time.api     :as time]))
 
 
 

@@ -13,14 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns time.timestamp
-    (:import #?(:clj org.joda.time.DateTime)
-             #?(:clj org.bson.types.BSONTimestamp))
-    (:require [mid-fruits.candy  :refer [return]]
+    (:require [cljs-time.core    :as cljs-time.core]
+              [cljs-time.format  :as cljs-time.format]
+              [mid-fruits.candy  :refer [return]]
               [mid-fruits.format :as format]
-              [mid-fruits.string :as string]
-              #?(:clj  [clj-time.core    :as clj-time.core])
-              #?(:cljs [cljs-time.core   :as cljs-time.core])
-              #?(:cljs [cljs-time.format :as cljs-time.format])))
+              [mid-fruits.string :as string]))
 
 
 
@@ -41,25 +38,22 @@
   ;  #<DateTime 2020-04-20T16:20:00.123+02:00>
   ;
   ; @return (object)
-  ([]
-   #?(:clj (clj-time.core/now)))
+  ([])
+   ; TODO
 
-  ([time-zone]
-   #?(:clj (let [timestamp (clj-time.core/now)
-                 time-zone (clj-time.core/time-zone-for-id time-zone)]
-                (clj-time.core/to-time-zone timestamp time-zone)))))
+  ([time-zone]))
+   ; TODO
 
 (defn timestamp-string
   ; @return (string)
   []
+  ; XXX#0081
   ; A CLJS névterekben az időbélyegző formátuma megegyezik a Java időbélyegző-objektum
   ; string típussá alakításának formátumával ("2020-04-20T16:20:00.123Z").
   ; Így a CLJS és a CLJ névterekben az string típusú időbélyegzők formátuma megegyezik.
-  #?(:cljs (let [formatter (cljs-time.format/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-                 timestamp (cljs-time.core/now)]
-                (cljs-time.format/unparse formatter timestamp))
-     :clj  (let [timestamp-object (timestamp-object)]
-                (str timestamp-object))))
+  (let [formatter (cljs-time.format/formatter "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        timestamp (cljs-time.core/now)]
+       (cljs-time.format/unparse formatter timestamp)))
 
 
 
@@ -95,9 +89,8 @@
   ; @param (*) n
   ;
   ; @return (boolean)
-  [n]
-  (let [type (type n)]
-       #?(:clj (= type org.joda.time.DateTime))))
+  [n])
+  ; TODO
 
 (defn date-string?
   ; @param (*) n
@@ -139,8 +132,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/year  n)
-     :cljs (cljs-time.core/year n)))
+  (cljs-time.core/year n))
 
 (defn timestamp-string->month
   ; @param (string) n
@@ -164,8 +156,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/month  n)
-     :cljs (cljs-time.core/month n)))
+  (cljs-time.core/month n))
 
 (defn timestamp-string->day
   ; @param (string) n
@@ -189,8 +180,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/day  n)
-     :cljs (cljs-time.core/day n)))
+  (cljs-time.core/day n))
 
 (defn timestamp-string->hours
   ; @param (string) n
@@ -214,8 +204,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/hours  n)
-     :cljs (cljs-time.core/hours n)))
+  (cljs-time.core/hours n))
 
 (defn timestamp-string->minutes
   ; @param (string) n
@@ -239,8 +228,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/minutes  n)
-     :cljs (cljs-time.core/minutes n)))
+  (cljs-time.core/minutes n))
 
 (defn timestamp-string->seconds
   ; @param (string) n
@@ -264,8 +252,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/seconds  n)
-     :cljs (cljs-time.core/seconds n)))
+  (cljs-time.core/seconds n))
 
 (defn timestamp-string->milliseconds
   ; @param (string) n
@@ -289,8 +276,7 @@
   ;
   ; @return (integer)
   [n]
-  #?(:clj  (clj-time.core/milli  n)
-     :cljs (cljs-time.core/milli n)))
+  (cljs-time.core/milli n))
 
 
 
@@ -383,6 +369,6 @@
   ;
   ; @return (boolean)
   [n]
-  #?(:cljs (let [x (timestamp-string)]
-                (= (string/part n 0 10)
-                   (string/part x 0 10)))))
+  (let [x (timestamp-string)]
+       (= (string/part n 0 10)
+          (string/part x 0 10))))

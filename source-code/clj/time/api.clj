@@ -12,15 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.time.api
-    (:require [mid.time.converters :as converters]
-              [mid.time.current    :as current]
-              [mid.time.epoch      :as epoch]
-              [mid.time.loop       :as loop]
-              [mid.time.now        :as now]
-              [mid.time.parse      :as parse]
-              [mid.time.schedule   :as schedule]
-              [mid.time.timestamp  :as timestamp]))
+(ns time.api
+    (:require [time.converters :as converters]
+              [time.current    :as current]
+              [time.epoch      :as epoch]
+              [time.loop       :as loop]
+              [time.now        :as now]
+              [time.parse      :as parse]
+              [time.schedule   :as schedule]
+              [time.timestamp  :as timestamp]))
 
 
 

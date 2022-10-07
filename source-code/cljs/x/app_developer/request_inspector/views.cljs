@@ -14,8 +14,8 @@
 
 (ns x.app-developer.request-inspector.views
     (:require [mid-fruits.pretty  :as pretty]
-              [mid-fruits.time    :as time]
               [mid-fruits.vector  :as vector]
+              [time.api           :as time]
               [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]))
 

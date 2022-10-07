@@ -151,7 +151,7 @@
   [n]
   (cond (>= n 1000000) (str (Math/round (/ n 1000000)) "M")
         (>= n 1000)    (str (Math/round (/ n 1000))    "K")
-        :else          (str (Math/round n))))
+        :return        (str (Math/round n))))
 
 (defn inc-version
   ; @param (string) n

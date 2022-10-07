@@ -185,7 +185,7 @@
   [n]
   (cond (map?    n) (reduce-kv #(assoc %1 %2 (id->>_id %3)) {} (id->_id n))
         (vector? n) (reduce    #(conj  %1    (id->>_id %2)) []          n)
-        :else    n))
+        :return  n))
 
 
 

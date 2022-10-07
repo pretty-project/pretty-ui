@@ -14,8 +14,8 @@
 
 (ns x.app-sync.request-handler.events
     (:require [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.time                    :as time]
               [mid-fruits.vector                  :as vector]
+              [time.api                           :as time]
               [x.app-core.api                     :as a :refer [r]]
               [x.app-db.api                       :as db]
               [x.app-ui.api                       :as ui]

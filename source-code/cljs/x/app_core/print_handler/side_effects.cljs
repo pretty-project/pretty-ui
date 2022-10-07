@@ -14,7 +14,7 @@
 
 (ns x.app-core.print-handler.side-effects
     (:require [mid-fruits.string               :as string]
-              [mid-fruits.time                 :as time]
+              [time.api                        :as time]
               [x.app-core.print-handler.config :as print-handler.config]
               [x.app-core.print-handler.state  :as print-handler.state]))
 

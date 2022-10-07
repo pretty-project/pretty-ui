@@ -229,7 +229,7 @@
   (cond (map?    n) (reduce-kv #(conj %1 %3) [] n)
         (vector? n) (return        n)
         (nil?    n) (return        [])
-        :else       (return        [n])))
+        :return                    [n]))
 
 (defn to-map
   ; @param (*) n
@@ -259,7 +259,7 @@
   (cond (vector? n) (reduce-kv #(assoc %1 (keyword (str %2)) %3) {} n)
         (map?    n) (return        n)
         (nil?    n) (return        {})
-        :else       (return        {0 n})))
+        :return                    {0 n}))
 
 (defn to-number
   ; @param (*) n

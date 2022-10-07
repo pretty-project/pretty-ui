@@ -724,7 +724,7 @@
                             (concat (subvec n 0 dex)
                                     (subvec n (dec dex) count)))
                         (dex-last? n dex) (return n)
-                        :else (f o (inc dex))))]
+                        :return (f o (inc dex))))]
               (if (nonempty? n)
                   (f [] 0)
                   (return n)))))
@@ -1046,7 +1046,7 @@
                           [x]
                           (subvec n dex)))
         (nil? n) (return [x])
-        :else    (return n)))
+        :return n))
 
 (defn toggle-item
   ; @param (vector) n
@@ -1363,7 +1363,7 @@
   [n]
   (letfn [(sort-item-f [o x] (cond (string?  x) (update o :string-items     conj x)
                                    (keyword? x) (update o :keyword-items    conj x)
-                                   :else        (update o :unsortable-items conj x)))
+                                   :return      (update o :unsortable-items conj x)))
           (sort-items-f [n] (reduce sort-item-f {} n))]
          (let [{:keys [string-items keyword-items unsortable-items]} (sort-items-f n)]
               ; (sort) cannot compare string to keyword!
@@ -1607,5 +1607,5 @@
   ; A rekurzió a térképek értékein is végrehajtja az update-f függvényt, mivel azok a vektorok elemeinek megfelelői!
   (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1    (f %2)) [] n)
                        (map?    n) (reduce-kv #(assoc %1 %2 (f %3)) {} n)
-                       :else       (update-f n)))]
+                       :return     (update-f n)))]
          (f n)))

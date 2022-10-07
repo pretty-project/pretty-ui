@@ -14,7 +14,7 @@
 
 (ns x.app-environment.window-handler.side-effects
     (:require [app-fruits.window                      :as window]
-              [mid-fruits.time                        :as time]
+              [time.api                               :as time]
               [x.app-core.api                         :as a]
               [x.app-environment.window-handler.state :as window-handler.state]))
 

@@ -252,7 +252,7 @@
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [:div (cond (nil?    %2) (str "nil")
                                                      (string? %2) (string/quotes %2)
-                                                     :else        (str           %2))]))]
+                                                     :return      (str           %2))]))]
                     (reduce f [:div] current-item))
              [show-data]
              [edit-item]]))
@@ -369,7 +369,7 @@
              (keyword?               current-item) [keyword-item]
              (var?                   current-item) [component-item]
              (nil?                   current-item) [nil-item]
-             :else                                 [unknown-item])))
+             :return                               [unknown-item])))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!

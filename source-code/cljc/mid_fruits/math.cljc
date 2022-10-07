@@ -192,7 +192,7 @@
   [n min max]
   (cond (< n min) min
         (> n max) max
-        :else     n))
+        :return   n))
 
 (defn negative?
   ; @param (number) n

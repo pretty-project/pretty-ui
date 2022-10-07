@@ -15,8 +15,8 @@
 (ns bybit.klines.helpers
     (:require [mid-fruits.candy  :refer [param]]
               [mid-fruits.reader :as reader]
-              [mid-fruits.time   :as time]
-              [mid-fruits.vector :as vector]))
+              [mid-fruits.vector :as vector]
+              [time.api          :as time]))
 
 
 

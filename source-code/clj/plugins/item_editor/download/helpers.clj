@@ -59,7 +59,7 @@
                               (empty?      v) (return suggestions)
                               (string?     v) (update suggestions suggestion-key vector/conj-item-once    v)
                               (vector?     v) (update suggestions suggestion-key vector/concat-items-once v)
-                              :else           (return suggestions))))
+                              :return suggestions)))
                ; Az f1 függvény végigiterál a suggestion-keys vektor elemein.
                (f1 [suggestions document suggestion-key-dex]
                    (let [suggestions (f0 suggestions document suggestion-key-dex)]

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.error-shield.side-effects
-    (:require [mid-fruits.time               :as time]
+    (:require [time.api                      :as time]
               [x.app-core.api                :as a]
               [x.app-environment.api         :as environment]
               [x.app-ui.error-shield.helpers :as error-shield.helpers]

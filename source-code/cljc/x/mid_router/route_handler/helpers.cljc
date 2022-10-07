@@ -80,7 +80,7 @@
         (string/starts-with? b ":")
         (return true)
         ; Both a and b are generic strings.
-        :else
+        :return
         (string/abc? a b)))
 
 (defn route-templates-ordered?

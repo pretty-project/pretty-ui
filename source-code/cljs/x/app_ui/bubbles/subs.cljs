@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.subs
-    (:require [mid-fruits.time         :as time]
+    (:require [time.api                :as time]
               [x.app-core.api          :as a :refer [r]]
               [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.renderer       :as renderer]

@@ -93,7 +93,7 @@
                         (= (str value) (str (key backup-item)))
                         (return false)
                         ; D)
-                        :else
+                        :return
                         (not= value (key backup-item))))]
               (some f current-item))))
 

@@ -81,7 +81,7 @@
                         (= (str value) (str (key backup-content)))
                         (return false)
                         ; D)
-                        :else
+                        :return
                         (not= value (key backup-content))))]
               (some f current-content))))
 

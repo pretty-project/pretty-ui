@@ -78,7 +78,7 @@
             (cond (map?    current-item) (map-items browser-props)
                   (nil?    current-item) (str "<div style=\"padding: 8px\">nil</div>")
                   (string? current-item) (str "<div style=\"padding: 8px\">\"" current-item "\"</div>")
-                  :else                  (str "<div style=\"padding: 8px\">"   current-item "</div>"))
+                  :return                (str "<div style=\"padding: 8px\">"   current-item "</div>"))
             "</div>"
             "<div style\"width: 50%;\">"
             "<pre style=\""item-preview-style"\">"(pretty/mixed->string current-item {:abc? true})"</pre>"
