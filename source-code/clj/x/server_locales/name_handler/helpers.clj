@@ -38,3 +38,16 @@
   [request]
   (let [selected-language (user/request->user-settings-item request :selected-language)]
        (get name-handler.config/NAME-ORDERS selected-language)))
+
+(defn request->ordered-user-name
+  ; @param (map) request
+  ;
+  ; @usage
+  ;  (locales/request->ordered-user-name {...})
+  ;
+  ; @return (string)
+  [request]
+  (let [first-name        (user/request->user-profile-item  request :first-name)
+        last-name         (user/request->user-profile-item  request :last-name)
+        selected-language (user/request->user-settings-item request :selected-language)]
+       (name->ordered-name first-name last-name selected-language)))

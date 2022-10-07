@@ -17,6 +17,7 @@
               [mid-fruits.css     :as css]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.random  :as random]
+              [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]))
 
 
@@ -215,7 +216,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn parse-css
-  ; @param (*) n
+  ; @param (hiccup) n
   ;
   ; @example
   ;  (hiccup/parse-css [:td [:p {:style {:color "red"}}]])
@@ -227,7 +228,7 @@
   ;  =>
   ;  [:td [:p {:style "color: red;"}]]
   ;
-  ; @return (*)
+  ; @return (hiccup)
   [n]
   (letfn [(f [n] (let [style (get-style n)]
                       (if (map? style)

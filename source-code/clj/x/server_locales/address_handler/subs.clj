@@ -12,15 +12,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.mid-locales.address-handler.helpers
-    (:require [mid-fruits.string :as string]))
+(ns x.server-locales.address-handler.subs
+    (:require [re-frame.api                             :as r]
+              [x.server-locales.address-handler.helpers :as address-handler.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn address->ordered-address
+(defn get-ordered-address
   ; @param (string) zip-code
   ; @param (string) country
   ; @param (string) city
@@ -28,17 +29,19 @@
   ; @param (keyword) locale-id
   ;
   ; @example
-  ;  (locales/address->ordered-address "19806" "US" "Bradford" "537 Paper Street" :en)
+  ;  (r locales/address->ordered-address db "537" "US" "Bradford" "537 Paper Street" :en)
   ;  =>
   ;  "US, 537 Paper Street, Bradford, 19806"
   ;
-  ; @example
-  ;  (locales/address->ordered-address "1025" "HU" "Budapest" "Minta utca 123." :hu)
-  ;  =>
-  ;  "HU, 1025 Budapest, Minta utca 123."
-  ;
   ; @return (string)
-  [zip-code country city address locale-id]
-  (case locale-id :en (string/join [country address city zip-code] ", " {:join-empty? false})
-                  :hu (let [area (string/trim (str zip-code " " city))]
-                           (string/join [country area address] ", " {:join-empty? false}))))
+  [db [_ zip-code country city address locale-id]]
+  (address-handler.helpers/address->ordered-address zip-code country city address locale-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:locales/get-ordered-address "537" "US" "Bradford" "537 Paper Street" :en]
+(r/reg-sub :locales/get-ordered-address get-ordered-address)

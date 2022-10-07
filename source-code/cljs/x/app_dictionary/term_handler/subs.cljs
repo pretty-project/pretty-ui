@@ -52,8 +52,8 @@
   ;
   ; @return (string)
   [db [_ term-id {:keys [prefix replacements suffix]}]]
-  (let [language-id     (r locales/get-selected-language db)
-        translated-term (r get-term db term-id language-id)]
+  (let [language        (r locales/get-selected-language db)
+        translated-term (r get-term db term-id language)]
        (if replacements (string/use-replacements (str prefix translated-term suffix) replacements)
                         (str prefix translated-term suffix))))
 

@@ -14,18 +14,23 @@
 
 (ns x.server-locales.api
     (:require [x.server-locales.address-handler.helpers :as address-handler.helpers]
+              [x.server-locales.address-handler.subs    :as address-handler.subs]
               [x.server-locales.country-handler.config  :as country-handler.config]
               [x.server-locales.country-handler.helpers :as country-handler.helpers]
               [x.server-locales.name-handler.config     :as name-handler.config]
-              [x.server-locales.name-handler.helpers    :as name-handler.helpers]))
+              [x.server-locales.name-handler.helpers    :as name-handler.helpers]
+              [x.server-locales.name-handler.subs       :as name-handler.subs]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-locales.address-handler.helpers
+; x.server-locales.address-handler.helpers
 (def address->ordered-address address-handler.helpers/address->ordered-address)
+
+; x.server-locales.address-handler.subs
+(def get-ordered-address address-handler.subs/get-ordered-address)
 
 ; x.server-locales.country-handler.config
 (def COUNTRY-NAMES    country-handler.config/COUNTRY-NAMES)
@@ -41,9 +46,14 @@
 (def country-name         country-handler.helpers/country-name)
 (def country-native-name  country-handler.helpers/country-native-name)
 
-; x.mid-locales.name-handler.config
+; x.server-locales.name-handler.config
 (def NAME-ORDERS name-handler.config/NAME-ORDERS)
 
-; x.mid-locales.name-handler.helpers
-(def name->ordered-name  name-handler.helpers/name->ordered-name)
-(def request->name-order name-handler.helpers/request->name-order)
+; x.server-locales.name-handler.helpers
+(def name->ordered-name         name-handler.helpers/name->ordered-name)
+(def request->name-order        name-handler.helpers/request->name-order)
+(def request->ordered-user-name name-handler.helpers/request->ordered-user-name)
+
+; x.server-locales.name-handler.subs
+(def get-name-order   name-handler.subs/get-name-order)
+(def get-ordered-name name-handler.subs/get-ordered-name)

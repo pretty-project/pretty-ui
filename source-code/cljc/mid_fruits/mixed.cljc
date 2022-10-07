@@ -57,26 +57,26 @@
       ; B)
       (-> n empty?   not)))
 
-(defn =empty?
+(defn blank?
   ; @param (*) n
   ;
   ; @example
-  ;  (mixed/=empty? nil)
+  ;  (mixed/blank? nil)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/=empty? "")
+  ;  (mixed/blank? "")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/=empty? [])
+  ;  (mixed/blank? [])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (mixed/=empty? {})
+  ;  (mixed/=blank? {})
   ;  =>
   ;  true
   ;
@@ -142,7 +142,11 @@
   ;  false
   ;
   ; @return (boolean)
-  [n])
+  [n]
+  (or (and (integer?  n)
+           (<    0    n))
+      (and (not= 0    n)
+           (re-match? n #"^[0-9]{1,}$"))))
 
 (defn negative-whole-number?
   ; @param (*) n

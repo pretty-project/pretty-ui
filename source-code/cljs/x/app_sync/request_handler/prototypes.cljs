@@ -30,9 +30,9 @@
   ;
   ; @return (map)
   ;  {:error-handler-f (function)
-  ;   :handler-f (function)
   ;   :idle-timeout (ms)
   ;   :progress-handler-f (function)
+  ;   :response-handler-f (function)
   ;   :sent-time (string)
   ;   :timeout (ms)}
   [db [_ request-props]]
@@ -41,6 +41,6 @@
                               :timeout      request-handler.config/DEFAULT-REQUEST-TIMEOUT}
                              (param request-props))
         error-handler-f    (fn [request-id server-response]  (a/dispatch [:sync/request-failured      request-id request-props server-response]))
-        handler-f          (fn [request-id server-response]  (a/dispatch [:sync/request-successed     request-id request-props server-response]))
+        response-handler-f (fn [request-id server-response]  (a/dispatch [:sync/request-successed     request-id request-props server-response]))
         progress-handler-f (fn [request-id process-progress] (a/dispatch [:core/set-process-progress! request-id process-progress]))]
-       (merge request-props {:error-handler-f error-handler-f :handler-f handler-f :progress-handler-f progress-handler-f})))
+       (merge request-props {:error-handler-f error-handler-f :progress-handler-f progress-handler-f :response-handler-f response-handler-f})))

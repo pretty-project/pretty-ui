@@ -58,7 +58,12 @@
   ; B) Ha a vizsgált érték üres (NIL, "", [], ...), de a tárolt érték NEM üres,
   ;    akkor az elem megváltozott.
   ;
-  ; C) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
+  ; C) Ha a vizsgált és a tárolt érték string típusra alakítva megegyeznek,
+  ;    akkor a vizsgált érték nem változott.
+  ;    Pl.: A szövegmezőkben megadott számokat a szerver sok esetben integer
+  ;         típusra alakítja!
+  ;
+  ; D) Ha a vizsgált érték a backup-item azonos kulcsú elemével NEM egyezik meg,
   ;    akkor az elem megváltozott.
   ;
   ; XXX#5671
@@ -70,9 +75,12 @@
                         (= value (key default-content))
                         (return false)
                         ; B)
-                        (-> value              mixed/=empty?)
+                        (-> value              mixed/blank?)
                         (-> backup-content key mixed/nonempty?)
                         ; C)
+                        (= (str value) (str (key backup-content)))
+                        (return false)
+                        ; D)
                         :else
                         (not= value (key backup-content))))]
               (some f current-content))))

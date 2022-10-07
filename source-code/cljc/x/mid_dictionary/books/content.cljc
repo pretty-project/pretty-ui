@@ -20,7 +20,19 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:content
+(def BOOK {:body
+           {:en "Body"
+            :hu "Törzs"}
+           :body-content
+           {:en "Body content"
+            :hu "Törzs tartalma"}
+           :body-subtitle
+           {:en "Body subtitle"
+            :hu "Törzs alcíme"}
+           :body-title
+           {:en "Body title"
+            :hu "Törzs címe"}
+           :content
            {:en "Content"
             :hu "Tartalom"}
            :contents
@@ -32,6 +44,30 @@
            :content-visibility
            {:en "Content visibility"
             :hu "Tartalom láthatósága"}
+           :footer
+           {:en "Footer"
+            :hu "Lábléc"}
+           :footer-content
+           {:en "Footer content"
+            :hu "Lábléc tartalma"}
+           :footer-subtitle
+           {:en "Footer subtitle"
+            :hu "Lábléc alcíme"}
+           :footer-title
+           {:en "Footer title"
+            :hu "Lábléc címe"}
+           :header
+           {:en "Header"
+            :hu "Fejléc"}
+           :header-content
+           {:en "Header content"
+            :hu "Fejléc tartalma"}
+           :header-subtitle
+           {:en "Header subtitle"
+            :hu "Fejléc alcíme"}
+           :header-title
+           {:en "Header title"
+            :hu "Fejléc címe"}
            :only-visible-to-editors
            {:en "Only visible to editors"
             :hu "Csak a szerkesztők számára látható"}
@@ -47,6 +83,12 @@
            :select-contents!
            {:en "Select contents"
             :hu "Tartalmak kiválasztása"}
+           :subtitle
+           {:en "Subtitle"
+            :hu "Alcím"}
+           :title
+           {:en "Title"
+            :hu "Cím"}
            :visible-to-everyone
            {:en "Visible to everyone"
             :hu "Mindenki számára látható"}})

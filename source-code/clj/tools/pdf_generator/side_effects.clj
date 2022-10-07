@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.pdf-generator.side-effects
-    (:require [clojure.data.codec.base64  :as b64]
-              [server-fruits.io           :as io]
+    (:require [server-fruits.base64       :as base64]
               [tools.pdf-generator.config :as config]
 
               ; TEMP
@@ -22,54 +21,65 @@
               ; @Peti
               [clj-htmltopdf.core :refer [->pdf]]))
 
+
+
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 
 (defn generate-pdf!
   ; @param (hiccup) n
   ; @param (map)(opt) options
-  ;  {}
+  ;  {:author (string)(opt)
+  ;   :css-paths (strings in vector)(opt)
+  ;    [(string) css-path]
+  ;   :font-paths (maps in vector)(opt)
+  ;    [{:font-family (string)
+  ;      :src (string)}]
+  ;   :orientation (keyword)(opt)
+  ;    :landscape, :portrait
+  ;    Default: :portrait
+  ;   :subject (string)(opt)
+  ;   :title (string)(opt)}
   ;
   ; @usage
-  ;  (pdf-generator/generate-pdf! [:html [:head ...] [:body ...]])
+  ;  (pdf-generator/generate-pdf! [:html ...])
+  ;
+  ; @usage
+  ;  (pdf-generator/generate-pdf! [:html ...] {...})
+  ;
+  ; @usage
+  ;  (pdf-generator/generate-pdf! [:html ...] {:base-uri   "http://localhost:3000//"
+  ;                                            :css-paths  ["public/css/my-style.css"]
+  ;                                            :font-paths [{:font-family "Montserrat"
+  ;                                                          :src "public/fonts/Montserrat/.../Montserrat-Regular.ttf"}]})
   ;
   ; @return (?)
   ([n]
    (generate-pdf! n {}))
 
-  ([n {}]
-   (let [
-         config {;:logging? true
-                 ;:debug {:display-html? true
-                 ;        :display-options? true
-                 :base-uri "http://localhost:3000"
-
-                 :styles {:fonts  [;{:font-family "Montserrat" :src "file:/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}
-                                   ;{:font-family "Montserrat" :src "http://localhost:3000/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
-                                   {:font-family "Montserrat" :src "file:///Users/bithandshake/Montserrat-Regular.ttf"}]
-                                   ;{:font-family "Montserrat" :src "/Montserrat-Regular.ttf"}]
-                                   ;{:font-family "Montserrat" :src "file:///pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
-                                   ;{:font-family "Montserrat" :src "http://localhost:3000/pdf/fonts/Montserrat/fonts/ttf/Montserrat-Regular.ttf"}]
-
-                          :styles [
-                                   ;"http://localhost:3000/pdf/css/pdf-fonts.css"
-                                   "http://localhost:3000/css/templates/pdf/blank.css"]}
-                 :doc {:title   "Árajánlat"
-                       :author  "Woermann - Karaváncentrum"
-                       :subject "Paul Cristian"}
-                 :page {:margin "0in"
-                        :size   "A4"
-                        :orientation :portrait}}]
+  ([n {:keys [author base-uri css-paths font-paths orientation subject title]}]
+   (let [config {; DEBUG
+                 ;:logging? true
+                 ;:debug    {:display-html?    true
+                 ;           :display-options? true}
+                 :styles {:fonts       font-paths
+                          :styles      css-paths}
+                 :doc    {:author      author
+                          :subject     subject
+                          :title       title}
+                 :page   {:margin      "0in"
+                          :size        "A4"
+                          :orientation orientation}}]
         ; https://github.com/gered/clj-htmltopdf#usage
         (->pdf n config/GENERATOR-FILEPATH config))))
 
 (defn generate-base64-pdf!
   ; @param (hiccup) n
   ; @param (map)(opt) options
-  ;  {}
+  ;  {...}
   ;
   ; @usage
-  ;  (pdf-generator/generate-base64-pdf! [:html [:head ...] [:body ...]])
+  ;  (pdf-generator/generate-base64-pdf! [:html ...])
   ;
   ; @return (string)
   ([n]
@@ -77,7 +87,5 @@
 
   ([n options]
    (generate-pdf! n options)
-   (with-open [i (io/input-stream  config/GENERATOR-FILEPATH)
-               o (io/output-stream config/BASE64-FILEPATH)]
-              (b64/encoding-transfer i o))
-   (slurp config/BASE64-FILEPATH)))
+   (base64/encode config/GENERATOR-FILEPATH
+                  config/BASE64-FILEPATH)))

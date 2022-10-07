@@ -598,7 +598,7 @@
    ; tekintse különbözőnek a szövegmező használata előtti nil értéktől.
    ;
    ; Az empty? függvény csak seqable értékeket fogad!
-   (letfn [(f [key] (if (-> a key mixed/=empty?)
+   (letfn [(f [key] (if (-> a key mixed/blank?)
                         (-> b key mixed/nonempty?)
                         (not= (key a)
                               (key b))))]

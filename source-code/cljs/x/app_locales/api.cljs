@@ -28,10 +28,10 @@
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-locales.address-handler.helpers
+; x.app-locales.address-handler.helpers
 (def address->ordered-address address-handler.helpers/address->ordered-address)
 
-; x.mid-locales.address-handler.subs
+; x.app-locales.address-handler.subs
 (def get-ordered-address address-handler.subs/get-ordered-address)
 
 ; x.app-locales.country-handler.config

@@ -34,18 +34,18 @@
                           (swap! state/REQUESTS dissoc request-id)
                           (error-handler-f request-id server-response))))
 
-(defn handler-f
+(defn response-handler-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
   ; @param (map) request-props
-  ;  {:handler-f (function)(opt)}
+  ;  {:response-handler-f (function)(opt)}
   ;
   ; @return (function)
-  [request-id {:keys [handler-f]}]
-  (if handler-f (fn [server-response]
-                    (swap! state/REQUESTS dissoc request-id)
-                    (handler-f request-id server-response))))
+  [request-id {:keys [response-handler-f]}]
+  (if response-handler-f (fn [server-response]
+                             (swap! state/REQUESTS dissoc request-id)
+                             (response-handler-f request-id server-response))))
 
 (defn progress-handler-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,7 +77,7 @@
   ;   :progress-handler (function)}
   [request-id request-props]
   {:error-handler    (error-handler-f    request-id request-props)
-   :handler          (handler-f          request-id request-props)
+   :handler          (response-handler-f request-id request-props)
    :progress-handler (progress-handler-f request-id request-props)})
 
 (defn GET-request-props-prototype

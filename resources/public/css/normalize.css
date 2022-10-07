@@ -8,15 +8,22 @@ button, input, optgroup, select, textarea {
   padding: 0 }
 
 
+/* */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 }
+
+
 /* Remove the gray background on active links in IE 10. */
 a {
   background-color: transparent;
   outline-style: none }
 
 
+
 /* */
 iframe {
   border: none }
+
 
 
 /* 1. Remove the border on images inside links in IE 10.
@@ -27,10 +34,13 @@ img {
   /* 2. */ box-sizing: content-box;
   /* 3. */ display: block }
 
+
+
 /* ... */
 button {
   color: inherit;
   cursor: pointer }
+
 
 
 /* Show the overflow in IE.
@@ -38,6 +48,7 @@ button {
 button,
 input { /* 1. */
   overflow: visible }
+
 
 
 button,
@@ -52,9 +63,11 @@ textarea {
   outline-style: none }
 
 
+
 /* Remove the border of focused content-editable elements */
 div[contenteditable="true"] {
   outline-style: none }
+
 
 
 /* Remove the inheritence of text transforms in Edge, Firefox, and IE.
@@ -64,12 +77,14 @@ select { /* 1. */
   text-transform: none }
 
 
+
 /* Correct the inability to style clickable types in iOS and Safari. */
 button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button }
+
 
 
 /* Remove the inner border and padding in Firefox. */
@@ -81,6 +96,7 @@ button::-moz-focus-inner,
   padding: 0 }
 
 
+
 /* Restore the focus styles unset by the previous rule. */
 button:-moz-focusring,
 [type="button"]:-moz-focusring,
@@ -89,13 +105,16 @@ button:-moz-focusring,
   outline: 1px dotted ButtonText }
 
 
+
 /* Remove the default vertical scrollbar in IE 10+.
  * textarea { overflow: auto } */
+
 
 
 /* */
 pre {
   margin: 0 }
+
 
 
 html {
@@ -119,6 +138,7 @@ html {
  -scroll-behavior: smooth }
 
 
+
 /* 1. All elements inherit the cursor property from the body element.
  * 2. Use custom cursor.
  * 3. All elements inherit the box-sizing property from the body element.
@@ -129,9 +149,12 @@ body {
   /* 3. */ box-sizing: border-box;
   /* 4. */ -webkit-font-smoothing: antialiased }
 
+
+
 /* ... */
 footer, header, div, label, p, span {
   cursor: inherit }
+
 
 
 /* Everything is {position: relative}. */
@@ -139,15 +162,18 @@ a, button, footer, header, section, div, p, span, label, img {
   position: relative }
 
 
+
 /* Hide scrollbar in Webkit browsers. */
 html::-webkit-scrollbar {
   display: none }
+
 
 
 /* Inherit the box-sizing property of the body element. */
 *,
 *::before,
 *::after { box-sizing: inherit }
+
 
 
 /* ... */
@@ -160,11 +186,13 @@ a:hover {
   text-decoration: underline }
 
 
+
 /* ... */
 progress {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none }
+
 
 
 /* Table */

@@ -12,27 +12,25 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-dictionary.term-handler.side-effects
-    (:require [x.server-core.api :as a]))
+(ns server-fruits.base64
+    (:require [clojure.data.codec.base64 :as base64]
+              [server-fruits.io          :as io]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn looked-up
-  ; @param (keyword) term-id
-  ; @param (map) options
-  ;  {:language (keyword)
-  ;   :replacements (vector)(opt)
-  ;    XXX#4509
-  ;   :suffix (string)(opt)}
+(defn encode
+  ; @param (string) source-filepath
+  ; @param (string) destination-filepath
   ;
-  ; @example
-  ;  (dictionary/looked-up :my-term {:language :en})
-  ;  =>
-  ;  "My term"
+  ; @usage
+  ;  (base64/encode "my-document.pdf" "my-document.b64")
   ;
   ; @return (string)
-  [term-id options]
- @(a/subscribe [:dictionary/look-up term-id options]))
+  [source-filepath destination-filepath]
+  (with-open [i (io/input-stream  source-filepath)
+              o (io/output-stream destination-filepath)]
+             (base64/encoding-transfer i o))
+  (slurp destination-filepath))

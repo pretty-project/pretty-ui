@@ -32,6 +32,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn blank?
+  ; @param (*) n
+  ;
+  ; @usage
+  ;  (string/blank? "")
+  ;
+  ; @return (boolean)
+  [n]
+  (string/blank? n))
+
 (defn nonempty?
   ; @param (*) n
   ;
@@ -278,18 +288,46 @@
       (string/split n delimiter)
       (return [])))
 
+(defn prefix
+  ; @param (string) n
+  ; @param (*) prefix
+  ;
+  ; @example
+  ;  (string/prefix "color" "@")
+  ;  =>
+  ;  "@color"
+  ;
+  ; @example
+  ;  (string/prefix "" "@")
+  ;  =>
+  ;  ""
+  ;
+  ; @return (string)
+  [n prefix]
+  (if (and (nonempty? n)
+           (nonempty? prefix))
+      (str    prefix n)
+      (return n)))
+
 (defn suffix
   ; @param (string) n
   ; @param (*) suffix
   ;
-  ; @usage
+  ; @example
   ;  (string/suffix "420" "px")
+  ;  =>
+  ;  "420px"
+  ;
+  ; @example
+  ;  (string/suffix "" "px")
+  ;  =>
+  ;  ""
   ;
   ; @return (string)
   [n suffix]
   (if (and (nonempty? n)
            (nonempty? suffix))
-      (str    n tab suffix)
+      (str    n suffix)
       (return n)))
 
 (defn insert-part
@@ -799,7 +837,7 @@
 (defn replace-part
   ; @param (string) n
   ; @param (function or string) x
-  ; @param (function or string) y
+  ; @param (string) y
   ;
   ; @example
   ;  (string/replace-part "ABC" #"B" "X")
@@ -813,8 +851,7 @@
   ;
   ; @return (string)
   [n x y]
-  (str (when (and x y (nonempty? n))
-             (string/replace n x y))))
+  (string/replace (str n) x (str y)))
 
 (defn use-replacements
   ; XXX#4509

@@ -22,7 +22,7 @@
 
 (defn get-term
   ; @param (keyword) term-id
-  ; @param (keyword)(opt) language-id
+  ; @param (keyword)(opt) language
   ;
   ; @example
   ;  (r dictionary/get-term db :my-term)
@@ -35,13 +35,13 @@
   ;  "My term"
   ;
   ; @return (map or string)
-  [db [_ term-id language-id]]
-  (if language-id (get-in db [:dictionary :term-handler/data-items term-id language-id])
-                  (get-in db [:dictionary :term-handler/data-items term-id])))
+  [db [_ term-id language]]
+  (if language (get-in db [:dictionary :term-handler/data-items term-id language])
+               (get-in db [:dictionary :term-handler/data-items term-id])))
 
 (defn term-exists?
   ; @param (keyword) term-id
-  ; @param (keyword)(opt) language-id
+  ; @param (keyword)(opt) language
   ;
   ; @usage
   ;  (r dictionary/term-exists? db :my-term)
@@ -50,6 +50,6 @@
   ;  (r dictionary/term-exists? db :my-term :en)
   ;
   ; @return (boolean)
-  [db [_ term-id language-id]]
-  (if language-id (map/contains-key? (get-in db [:dictionary :term-handler/data-items term-id]) language-id)
-                  (map/contains-key? (get-in db [:dictionary :term-handler/data-items])         term-id)))
+  [db [_ term-id language]]
+  (if language (map/contains-key? (get-in db [:dictionary :term-handler/data-items term-id]) language)
+               (map/contains-key? (get-in db [:dictionary :term-handler/data-items])         term-id)))

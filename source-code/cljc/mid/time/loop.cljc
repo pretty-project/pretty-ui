@@ -12,27 +12,29 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-dictionary.term-handler.side-effects
-    (:require [x.server-core.api :as a]))
+(ns time.loop)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn looked-up
-  ; @param (keyword) term-id
-  ; @param (map) options
-  ;  {:language (keyword)
-  ;   :replacements (vector)(opt)
-  ;    XXX#4509
-  ;   :suffix (string)(opt)}
+(defn reduce-interval
+  ; @param (function) f
+  ; @param (collection) coll
+  ; @param (integer) interval
   ;
   ; @example
-  ;  (dictionary/looked-up :my-term {:language :en})
+  ;  (time/reduce-interval my-function [:a :b :c] 500)
   ;  =>
-  ;  "My term"
+  ;  (time/set-timeout! #(my-function :a)    0)
+  ;  (time/set-timeout! #(my-function :b)  500)
+  ;  (time/set-timeout! #(my-function :c) 1000)
   ;
-  ; @return (string)
-  [term-id options]
- @(a/subscribe [:dictionary/look-up term-id options]))
+  ; @return (*)
+  [f coll interval]
+  (letfn [(reduce-interval-f [lap item]
+                             (set-timeout! #(f item)
+                                            (* lap interval))
+                             (inc lap))]
+         (reduce reduce-interval-f 0 coll)))

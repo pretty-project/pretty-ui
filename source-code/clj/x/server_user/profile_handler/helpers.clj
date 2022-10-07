@@ -18,7 +18,6 @@
               [mid-fruits.keyword                   :as keyword]
               [mid-fruits.map                       :as map]
               [server-fruits.http                   :as http]
-              [x.server-core.api                    :as a]
               [x.server-user.profile-handler.config :as profile-handler.config]))
 
 
@@ -59,7 +58,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (r user/request->user-profile-item {...})
+  ;  (user/request->user-profile-item {...})
   ;
   ; @return (namespaced map)
   [request]
@@ -72,7 +71,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r user/request->user-profile-item {...} :first-name)
+  ;  (user/request->user-profile-item {...} :first-name)
   ;
   ; @return (*)
   [request item-key]

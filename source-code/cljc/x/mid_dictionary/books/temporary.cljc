@@ -56,9 +56,15 @@
            :release-year
            {:en "Release year"
             :hu "Kiadás éve"}
+           :released
+           {:en "Released"
+            :hu "Kiadva"}
            :issue-year
            {:en "Issue year"
             :hu "Kibocsátás éve"}
+           :valid-until
+           {:en "Valid until"
+            :hu "Érvényesség"}
            :validity-date
            {:en "Validity date"
             :hu "Érvényesség dátuma"}
@@ -170,6 +176,9 @@
            {:en "Extensions"
             :hu "Eszközök"}
 
+           :more-settings
+           {:en "More settings"
+            :hu "További beállítások"}
            :more-items
            {:en "More items"
             :hu "További tételek"}
@@ -226,9 +235,11 @@
            :copy
            {:en "Copy"
             :hu "Másolat"}
+
            :description
            {:en "Description"
             :hu "Leírás"}
+
            :draft
            {:en "Draft"
             :hu "Vázlat"}
@@ -247,9 +258,9 @@
            :subcategories
            {:en "Subcategories"
             :hu "Alkategóriák"}
-           :title
-           {:en "Title"
-            :hu "Cím"}
+
+
+
            :unkown
            {:en "Unkown"
             :hu "Ismeretlen"}
@@ -257,9 +268,11 @@
            :add-new!
            {:en "Add new"
             :hu "Hozzáadás"}
+
+           
            :add-title!
            {:en "Add title"
-            :hu "Címke hozzáadása"}
+            :hu "Cím hozzáadása"}
 
            :make-a-copy!
            {:en "Make a copy"

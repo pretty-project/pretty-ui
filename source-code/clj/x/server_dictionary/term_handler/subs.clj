@@ -35,24 +35,24 @@
 (defn look-up
   ; @param (keyword) term-id
   ; @param (map) options
-  ;  {:language-id (keyword)
+  ;  {:language (keyword)
   ;   :replacements (vector)(opt)
   ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
   ; @example
-  ;  (r dictionary/look-up :my-term! {:language-id :en})
+  ;  (r dictionary/look-up :my-term! {:language :en})
   ;  =>
   ;  "My term"
   ;
   ; @example
-  ;  (r dictionary/look-up :my-name-is-n {:language-id :en :replacements ["John"]})
+  ;  (r dictionary/look-up :my-name-is-n {:language :en :replacements ["John"]})
   ;  =>
   ;  "My name is John"
   ;
   ; @return (string)
-  [db [_ term-id {:keys [language-id replacements suffix]}]]
-  (let [translated-term (r get-term db term-id language-id)
+  [db [_ term-id {:keys [language replacements suffix]}]]
+  (let [translated-term (r get-term db term-id language)
         suffixed-term   (str translated-term suffix)]
        (if replacements (string/use-replacements suffixed-term replacements)
                         (return                  suffixed-term))))
@@ -63,5 +63,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:dictionary/look-up :my-term {:language-id :en}]
+;  [:dictionary/look-up :my-term {:language :en}]
 (a/reg-sub :dictionary/look-up look-up)

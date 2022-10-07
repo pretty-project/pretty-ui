@@ -14,13 +14,16 @@
 
 (ns x.mid-dictionary.books.languages)
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:language
+(def BOOK {:default-language
+           {:en "Default language"
+            :hu "Alapértelmezett nyelv"}
+           :language
            {:en "Language"
             :hu "Nyelv"}
            :languages

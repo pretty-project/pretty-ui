@@ -168,6 +168,12 @@
 ; @param (keyword) editor-id
 ;
 ; @usage
+;  [:item-editor/export-current-item :my-editor]
+(r/reg-sub :item-editor/export-current-item export-current-item)
+
+; @param (keyword) editor-id
+;
+; @usage
 ;  [:item-editor/get-current-item-label :my-editor]
 (r/reg-sub :item-editor/get-current-item-label get-current-item-label)
 

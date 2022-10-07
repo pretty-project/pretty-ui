@@ -257,10 +257,12 @@
   ;   :type (keyword)
   ;   :value (string)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
-  (if disabled? {:disabled true
-                 :id       (hiccup/value field-id "input")
-                 :type     type
-                 :value    (get-field-content field-id)
+  (if disabled? {:disabled   true
+                 :id         (hiccup/value field-id "input")
+                 :max-length max-length
+                 :type       type
+                 :style      (field-body-style  field-id field-props)
+                 :value      (get-field-content field-id)
                  ; BUG#8809
                  ; Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
                  ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!

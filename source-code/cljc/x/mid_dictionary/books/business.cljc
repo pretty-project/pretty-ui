@@ -29,6 +29,18 @@
            :item-product-description-placeholder
            {:en "Item description"
             :hu "Tétel megnevezése"}
+           :issuer-data
+           {:en "Issuer data"
+            :hu "Kibocsátó adatok"}
+           :issuer-description
+           {:en "Issuer's description"
+            :hu "Kibocsátó leírása"}
+           :issuer-logo
+           {:en "Issuer's logo"
+            :hu "Kibocsátó logója"}
+           :issuer-name
+           {:en "Issuer's name"
+            :hu "Kibocsátó neve"}
            :price-quote
            {:en "Price quote"
             :hu "Árajánlat"}

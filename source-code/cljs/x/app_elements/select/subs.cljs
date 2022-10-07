@@ -31,7 +31,9 @@
   ; @return (boolean)
   [db [_ select-id {:keys [value-path]}]]
   (let [stored-value (get-in db value-path)]
-       (empty? stored-value)))
+       (or (and (seqable? stored-value)
+                (empty?   stored-value))
+           (nil? stored-value))))
 
 (defn required-warning?
   ; WARNING! NON-PUBLIC! DO NOT USE!

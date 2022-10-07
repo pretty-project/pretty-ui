@@ -137,6 +137,9 @@
            :thumbnails
            {:en "Thumbnails"
             :hu "Bélyegképek"}
+           :unique-filename
+           {:en "Unique filename"
+            :hu "Egyedi fájlnév"}
            :upload-file!
            {:en "Upload file"
             :hu "Fájl feltöltése"}
