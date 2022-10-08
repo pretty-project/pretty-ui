@@ -37,6 +37,11 @@
   ; TODO
 
 (defn get-date
+  ; @example
+  ;  (time/get-date)
+  ;  =>
+  ;  "2020-04-20"
+  ;
   ; @return (string)
   []
   (-> (timestamp/timestamp-string)

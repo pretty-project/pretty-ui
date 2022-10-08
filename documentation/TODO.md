@@ -13,6 +13,9 @@
 
 
 # x4.7.0
+- Az xxx-ek tartalmazzák a névtereket is
+  XXX#0551 (mid-fruits.map)
+
 - (defn f [{:keys [] {:keys [name]} :customer}])
   (f {:customer {:name "Peti" :address "Valahol"}})
   =>

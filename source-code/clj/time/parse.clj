@@ -34,8 +34,9 @@
   ;
   ; @return (object)
   [n]
-  (let [formatter (clj-time.format/formatter "yyyy-MM-dd")]
-       (clj-time.format/parse formatter n)))
+  (try (let [formatter (clj-time.format/formatter "yyyy-MM-dd")]
+            (clj-time.format/parse formatter n))
+       (catch Exception e (println e))))
 
 (defn parse-timestamp
   ; @param (string) n
@@ -47,8 +48,9 @@
   ;
   ; @return (object)
   [n]
-  (let [formatter (clj-time.format/formatters :date-time)]
-       (clj-time.format/parse formatter n)))
+  (try (let [formatter (clj-time.format/formatters :date-time)]
+            (clj-time.format/parse formatter n))
+       (catch Exception e (println e))))
 
 (defn unparse-timestamp
   ; @param (object) n

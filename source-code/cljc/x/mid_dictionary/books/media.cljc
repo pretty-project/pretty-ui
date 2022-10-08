@@ -44,6 +44,9 @@
            :download-image!
            {:en "Download image"
             :hu "Kép letöltése"}
+           :download-preview!
+           {:en "Download preview"
+            :hu "Előnézet letöltése"}
            :drop-files-here-to-upload
            {:en "Drop files here to upload!"
             :hu "Húzd ide a fájlokat, amiket fel szeretnél tölteni!"}

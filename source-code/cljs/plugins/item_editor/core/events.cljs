@@ -14,7 +14,7 @@
 
 (ns plugins.item-editor.core.events
     (:require [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.map                     :refer [dissoc-in]]
+              [mid-fruits.map                     :as map :refer [dissoc-in]]
               [plugins.item-editor.backup.events  :as backup.events]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
@@ -86,6 +86,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn use-default-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ;
+  ; @return (map)
+  [db [_ editor-id]]
+  ; XXX#5067 (plugins.item-editor.core.events)
+  (let [default-item (r body.subs/get-body-prop db editor-id :default-item)
+        item-path    (r body.subs/get-body-prop db editor-id :item-path)]
+       (update-in db item-path map/reversed-merge default-item)))
+
 (defn use-initial-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -93,45 +105,10 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; - A body komponens {:initial-item {...}} tulajdonsága új elem hozzáadásakor
-  ;   van használva. Létező elemek szerkesztésekor már nem szükséges az elem
-  ;   kezdeti értékét beállítani.
-  ;
-  ; - XXX#3005
-  ;   Az adatok letöltésekor a request-item! függvény alkalmazza a reset-downloads! függvényt,
-  ;   ezért az elem kezdeti állapota ha a body komponens React-fába csatolásakor lenne beállítva,
-  ;   akkor törlődne az adatok letöltésekor, ezért az elem kezdeti állapota az adatok letöltésének
-  ;   befejezésekor állítódik be.
-  ;
-  ; - A body komponens {:initial-item {...}} tulajdonsága alapján beállított kezdeti állapot
-  ;   használatával ...
-  ;   ... elkerülthető, hogy a szerkesztőben megjelenített input mezők {:initial-value ...}
-  ;       tulajdonságát kelljen használni, ami miatt a szerkesztő egy változatlan elemen is
-  ;       tévesen azt érzékelné, hogy az megváltozott, ha a mező {:initial-value ...} tulajdonsága
-  ;       a szerkesztett elemre hatással lenne. Kilépéskor a "Nem mentett változatások visszaállítása"
-  ;       értesítés jelenne meg abban az esetben is, amikor az elemen nem történt változtatás
-  ;       a felhasználó részéről, csak az input mezők {:initial-value ...} tulajdonsága
-  ;       változtattta meg az elemet.
-  ;   ... beállíthatók a dokumentum felhasználó által nem szerkeszthető tulajdonságai.
   (if (r core.subs/new-item? db editor-id)
       (let [initial-item (r body.subs/get-body-prop db editor-id :initial-item)
             item-path    (r body.subs/get-body-prop db editor-id :item-path)]
-           ; x4.7.3 #15 verzióban a use-initial-item! függvény része lett (újra?)
-           ; a backup-current-item! lépés.
-           ;
-           ; Az elem letöltése után eddig is készült másolat az elemről, viszont abban
-           ; az esetben, amikor a szerkesztő "Új elem szerkesztése" módban nyílt meg,
-           ; tehát nem volt szükség az elem letöltésére és a body-props térkép
-           ; {:initial-item ...} tulajdonságával az elemnek kezdeti érték lett beállítva,
-           ; akkor hiányzott a kezdeti érték beállítása után a másolat készítése.
-           ;
-           ; Emiatt backup.subs/form-changed? függvénye {:initial-item ...} tulajdonsággal
-           ; használt szerkesztő esetén, mindjárt a megnyitást követően azt jelezte, hogy
-           ; az elem megváltozott. Ezért szükséges a kezdeti érték beállítása után elkészíteni
-           ; a másolatot az elemről, hogy a másolat és az elem a szerkesztő indulásakor
-           ; megegyezzenek és a form-changed? függvény ne jelezzen különbséget.
-           (as-> db % (assoc-in % item-path initial-item)
-                      (r backup.events/backup-current-item! % editor-id)))
+           (assoc-in db item-path initial-item))
       (return db)))
 
 

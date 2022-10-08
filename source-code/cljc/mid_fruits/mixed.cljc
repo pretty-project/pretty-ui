@@ -14,8 +14,10 @@
 
 (ns mid-fruits.mixed
     (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.map    :as map]
               [mid-fruits.regex  :refer [re-match?]]
-              [mid-fruits.string :as string]))
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]))
 
 
 
@@ -226,7 +228,7 @@
   ;
   ; @return (vector)
   [n]
-  (cond (map?    n) (reduce-kv #(conj %1 %3) [] n)
+  (cond (map?    n) (map/to-vector n)
         (vector? n) (return        n)
         (nil?    n) (return        [])
         :return                    [n]))
@@ -256,7 +258,7 @@
   ;
   ; @return (map)
   [n]
-  (cond (vector? n) (reduce-kv #(assoc %1 (keyword (str %2)) %3) {} n)
+  (cond (vector? n) (vector/to-map n)
         (map?    n) (return        n)
         (nil?    n) (return        {})
         :return                    {0 n}))

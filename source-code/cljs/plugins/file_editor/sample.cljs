@@ -38,7 +38,7 @@
 ;; -- A {:default-content {...}} tulajdonság használata -----------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin megnyitásakor / a tartalom letöltésekor
+; ...
 
 
 

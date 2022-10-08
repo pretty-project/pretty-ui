@@ -42,7 +42,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; XXX#3005
+  ; XXX#3005 (plugins.item-viewer.download.events)
   (r core.events/reset-downloads! db editor-id))
 
 (defn store-downloaded-suggestions!
@@ -66,18 +66,17 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  ; - XXX#3907
-  ;   A többi pluginnal megegyezően az item-editor plugin is névtér nélkül
-  ;   tárolja a letöltött dokumentumot.
+  ; XXX#3907
+  ; A többi pluginnal megegyezően az item-editor plugin is névtér nélkül
+  ; tárolja a letöltött dokumentumot.
   ;
-  ; - XXX#3400
-  ;   Az elemről letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb használatával
-  ;   az elem letöltéskori állapota visszaállítható legyen.
+  ; XXX#3400
+  ; Az elemről letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb használatával
+  ; az elem letöltéskori állapota visszaállítható legyen.
   (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
         item-path   (r body.subs/get-body-prop       db editor-id :item-path)
         document    (-> server-response resolver-id map/remove-namespace)]
-       (as-> db % (assoc-in % item-path document)
-                  (r backup.events/backup-current-item! % editor-id))))
+       (assoc-in db item-path document)))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,6 +97,6 @@
           ; If editor in recovery-mode ...
           (r core.subs/get-meta-item db editor-id :recovery-mode?)
           (as-> % (r backup.events/recover-item! % editor-id))
-          ; If use initial-item ...
-          (r body.subs/get-body-prop db editor-id :initial-item)
-          (as-> % (r core.events/use-initial-item! % editor-id))))
+          :use-initial-item!    (as-> % (r core.events/use-initial-item!      % editor-id))
+          :use-default-item!    (as-> % (r core.events/use-default-item!      % editor-id))
+          :backup-current-item! (as-> % (r backup.events/backup-current-item! % editor-id))))

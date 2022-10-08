@@ -857,7 +857,7 @@
   ; XXX#4509
   ;
   ; @param (string) n
-  ; @param (vector) replacements
+  ; @param (numbers or strings in vector) replacements
   ;
   ; @example
   ;  (string/use-replacements "Hi, my name is %" ["John"])
@@ -870,19 +870,40 @@
   ;  "My favorite colors are: red, green and blue"
   ;
   ; @example
-  ;  (string/use-replacements "%1 / %2 items downloaded" [nil nil])
+  ;  (string/use-replacements "%1 / %2 items downloaded" [nil 3])
   ;  =>
   ;  ""
   ;
   ; @return (string)
   [n replacements]
+  ; A behelyettesíthetőséget jelző karakter abban az esetben van számmal jelölve,
+  ; (pl. %1, %2, ...) ha a szöveg több behelyettesítést fogad.
+  ;
+  ; Hasonlóan az anoním függvények paramétereinek elnevezéséhez, ahol az EGY
+  ; paramétert fogadó függvények egyetlen paraméterének neve egy számmal NEM
+  ; megkülönböztett % karakter és a TÖBB paramétert fogadó függvények paramétereinek
+  ; nevei pedig számokkal megkülönböztetett %1, %2, ... elnevezések!
+  ;
+  ; Abban az esetben, ha valamelyik behelyettesítő kifejezés értéke üres (nil, "")
+  ; a függvény visszatérési értéke egy üres string ("")!
+  ; Emiatt nem szükséges máshol kezelni, hogy ne jelenjenek meg a hiányos feliratok,
+  ; mert ez a use-replacements függvényben kezelve van!
   (when (and (nonempty? n)
              (vector?   replacements))
-        (if (= 1 (count replacements))
-            ; Use one replacement ...
-            (replace-part n "%" (first replacements))
-            ; Use more replacements ...
-            (reduce-kv #(string/replace %1 (str "%" (inc %2)) %3) n replacements))))
+        (letfn [; ...
+                (f? [] (= 1 (count replacements)))
+                ; ...
+                (f1 [n marker replacement]
+                    ; A replacement értéke number és string típus is lehet!
+                    (if-not (-> replacement str empty?)
+                            (string/replace n marker replacement)))
+                ; ...
+                (f2 [n dex replacement]
+                    (let [marker (str "%" (inc dex))]
+                         (f1 n marker replacement)))]
+               ; ...
+               (if (f?) (f1 n "%" (first replacements))
+                        (reduce f2 n replacements)))))
 
 (defn use-replacement
   ; @param (string) n

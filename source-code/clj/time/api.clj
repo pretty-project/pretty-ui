@@ -14,6 +14,7 @@
 
 (ns time.api
     (:require [time.converters :as converters]
+              [time.core       :as core]
               [time.current    :as current]
               [time.epoch      :as epoch]
               [time.loop       :as loop]
@@ -49,6 +50,11 @@
 (def h->D     converters/h->D)
 (def h->W     converters/h->W)
 (def ms->time converters/ms->time)
+
+; time.core
+(def days  core/days)
+(def minus core/minus)
+(def plus  core/plus)
 
 ; time.current
 (def get-year                               current/get-year)

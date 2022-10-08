@@ -41,7 +41,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; XXX#3005
+  ; XXX#3005 (plugins.item-viewer.download.events)
   (r core.events/reset-downloads! db editor-id))
 
 (defn store-downloaded-content!
@@ -52,18 +52,17 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  ; - XXX#3907
-  ;   A többi pluginnal megegyezően az file-editor plugin is névtér nélkül
-  ;   tárolja a letöltött tartalmat.
+  ; XXX#3907
+  ; A többi pluginnal megegyezően az file-editor plugin is névtér nélkül
+  ; tárolja a letöltött tartalmat.
   ;
-  ; - XXX#3400
-  ;   A tartalomról letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb
-  ;   használatával a tartalom letöltéskori állapota visszaállítható legyen.
+  ; XXX#3400
+  ; A tartalomról letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb
+  ; használatával a tartalom letöltéskori állapota visszaállítható legyen.
   (let [resolver-id  (r download.subs/get-resolver-id db editor-id :get-content)
         content-path (r body.subs/get-body-prop       db editor-id :content-path)
         content      (-> server-response resolver-id map/remove-namespace)]
-       (as-> db % (assoc-in % content-path content)
-                  (r backup.events/backup-current-content! % editor-id))))
+       (assoc-in db content-path content)))
 
 (defn receive-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,7 +72,7 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  (as-> db % (r data-received                    % editor-id)
-             (r store-downloaded-content!        % editor-id server-response)
-             (r store-downloaded-content!        % editor-id server-response)
-             (r core.events/use-default-content! % editor-id)))
+  (as-> db % (r data-received                         % editor-id)
+             (r store-downloaded-content!             % editor-id server-response)
+             (r core.events/use-default-content!      % editor-id)
+             (r backup.events/backup-current-content! % editor-id)))

@@ -12,25 +12,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns server-fruits.base64
-    (:require [clojure.data.codec.base64 :as base64]
-              [server-fruits.io          :as io]))
+(ns app-fruits.blob)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn encode
-  ; @param (string) source-filepath
-  ; @param (string) destination-filepath
+(defn to-object-url
+  ; @param (object) blob
   ;
   ; @usage
-  ;  (base64/encode "my-document.pdf" "my-document.b64")
+  ;  (blob/to-object-url ...) 
   ;
-  ; @return (string)
-  [source-filepath destination-filepath]
-  (if source-filepath (with-open [i (io/input-stream       source-filepath)
-                                  o (io/output-stream destination-filepath)]
-                                 (base64/encoding-transfer i o)))
-  (if source-filepath (slurp destination-filepath)))
+  ; @return (object)
+  [blob]
+  (.createObjectURL js/URL blob))

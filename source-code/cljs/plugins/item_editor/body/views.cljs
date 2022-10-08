@@ -66,6 +66,7 @@
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;    Only w/ {:label-key ...}
+  ;   :default-item (map)(opt)
   ;   :form-element (metamorphic-content)
   ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)

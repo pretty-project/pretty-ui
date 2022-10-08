@@ -218,10 +218,10 @@
   (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
        [:button {:data-clickable true :style {:display :block}
                  :on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])
-                 :on-mouse-up #(environment/blur-element! nil)}
-                (if (string?       map-key)
-                    (string/quotes map-key)
-                    (str           map-key))]))
+                 :on-mouse-up #(environment/blur-element!)}
+                (cond (string? map-key) (string/quotes map-key)
+                      (nil?    map-key) (str           "nil")
+                      :return           (str           map-key))]))
 
 (defn map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,13 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.pdf-generator.side-effects
-    (:require [server-fruits.base64       :as base64]
-              [tools.pdf-generator.config :as config]
-
-              ; TEMP
-              ; Ismeretlen hiba miatt hosztolva!
-              ; @Peti
-              [clj-htmltopdf.core :refer [->pdf]]))
+    (:require [clj-htmltopdf.core         :refer [->pdf]]
+              [server-fruits.base64       :as base64]
+              [tools.pdf-generator.config :as config]))
 
 
 
@@ -30,6 +26,7 @@
   ; @param (hiccup) n
   ; @param (map)(opt) options
   ;  {:author (string)(opt)
+  ;   :base-uri (string)(opt)
   ;   :css-paths (strings in vector)(opt)
   ;    [(string) css-path]
   ;   :font-paths (maps in vector)(opt)
@@ -38,6 +35,8 @@
   ;   :orientation (keyword)(opt)
   ;    :landscape, :portrait
   ;    Default: :portrait
+  ;   :page-size (keyword)(opt)
+  ;    Default: :A4
   ;   :subject (string)(opt)
   ;   :title (string)(opt)}
   ;
@@ -48,7 +47,7 @@
   ;  (pdf-generator/generate-pdf! [:html ...] {...})
   ;
   ; @usage
-  ;  (pdf-generator/generate-pdf! [:html ...] {:base-uri   "http://localhost:3000//"
+  ;  (pdf-generator/generate-pdf! [:html ...] {:base-uri   "http://localhost:3000/"
   ;                                            :css-paths  ["public/css/my-style.css"]
   ;                                            :font-paths [{:font-family "Montserrat"
   ;                                                          :src "public/fonts/Montserrat/.../Montserrat-Regular.ttf"}]})
@@ -57,7 +56,7 @@
   ([n]
    (generate-pdf! n {}))
 
-  ([n {:keys [author base-uri css-paths font-paths orientation subject title]}]
+  ([n {:keys [author base-uri css-paths font-paths orientation page-size subject title]}]
    (let [config {; DEBUG
                  ;:logging? true
                  ;:debug    {:display-html?    true
@@ -68,8 +67,8 @@
                           :subject     subject
                           :title       title}
                  :page   {:margin      "0in"
-                          :size        "A4"
-                          :orientation orientation}}]
+                          :size        (or page-size   :A4)
+                          :orientation (or orientation :portrait)}}]
         ; https://github.com/gered/clj-htmltopdf#usage
         (->pdf n config/GENERATOR-FILEPATH config))))
 

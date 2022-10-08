@@ -44,6 +44,7 @@
 ; plugins.item-viewer.core.subs
 (def get-current-item-id core.subs/get-current-item-id)
 (def get-current-item    core.subs/get-current-item)
+(def export-current-item core.subs/export-current-item)
 (def viewing-item?       core.subs/viewing-item?)
 
 ; plugins.item-viewer.routes.subs

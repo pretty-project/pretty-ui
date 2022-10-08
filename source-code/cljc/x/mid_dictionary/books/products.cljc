@@ -92,6 +92,9 @@
            ; Angol nyelvű árajánlatokon a "Megnevezés" kifejezés "Description"
            ; kifejezésként szerepel.
            :product-description
+           {:en "Product description"
+            :hu "Termék megnevezés"}
+           :product-description-short
            {:en "Description"
             :hu "Megnevezés"}
            :total-price

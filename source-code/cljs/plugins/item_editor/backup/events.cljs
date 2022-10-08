@@ -43,11 +43,11 @@
   [db [_ plugin-id]]
   ; A store-current-item-changes! eltárolja az elem aktuális állapota és az elemről utoljára
   ; készült másolat közötti különbséget.
-  ; Pl. Ha az el nem mentett változtatásokat tartalmazó szerkesztő elhagyásakor megjelenő
+  ; Pl.: Ha az el nem mentett változtatásokat tartalmazó szerkesztő elhagyásakor megjelenő
   ;      értesítésen, a felhasználó a "Visszaállítás (restore)" gombra kattint, akkor szükséges
   ;      a szerkesztő elindulása után az elem állapotát visszaállítani úgy, hogy
-  ;      a szerkesztő láblécében megjelenő "Visszaállítás (revert)" gomb használatával
-  ;      az elem az előző szerkesztés megnyitáskori állapotára is visszaállítható legyen.
+  ;      a "Visszaállítás (revert)" gomb használatával az elem az előző szerkesztés megnyitáskori
+  ;      állapotára is visszaállítható legyen.
   ;      Ehhez szükséges az elemről a letöltéskor készült másolatot megőrizni és kilépéskor
   ;      eltárolni a másolat és az aktuális állapot közötti különbséget.
   (let [current-item-id (r core.subs/get-current-item-id db plugin-id)
@@ -71,11 +71,11 @@
   [db [_ editor-id item-id]]
   ; Ha a clean-recovery-data! függvény alkalmazásakor ismételten ugyanaz az elem van megnyitva
   ; szerkesztésre, akkor a clean-recovery-data! függvény nem végez műveletet.
-  ; Pl. A felhasználó a :plugins.item-editor/changes-discarded-dialog értesítésen
+  ; Pl.: A felhasználó a :plugins.item-editor/changes-discarded-dialog értesítésen
   ;      a "Visszaállítás" lehetőséget választja és a szerkesztő {:recovery-mode? true}
   ;      beállítással megnyitja ugyanazt az elemet szerkesztésre, mielőtt
   ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
-  ; Pl. A felhasználó újra megnyitja ugyanazt az elemet szerkesztésre, mielőtt
+  ; Pl.: A felhasználó újra megnyitja ugyanazt az elemet szerkesztésre, mielőtt
   ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
   (if-let [editing-item? (r core.subs/editing-item? db editor-id item-id)]
           (return db)
