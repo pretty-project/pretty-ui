@@ -26,6 +26,9 @@
            :error-occured
            {:en "Error occured"
             :hu "Hiba történt"}
+           :download-error
+           {:en "Download error"
+            :hu "Letöltési hiba"}
            :downloading-error
            {:en "Downloading error"
             :hu "Letöltési hiba"}

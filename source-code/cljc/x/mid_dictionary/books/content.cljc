@@ -26,6 +26,9 @@
            :body-content
            {:en "Body content"
             :hu "Törzs tartalma"}
+           :body-description
+           {:en "Body description"
+            :hu "Törzs megjegyzés"}
            :body-subtitle
            {:en "Body subtitle"
             :hu "Törzs alcíme"}
@@ -50,6 +53,9 @@
            :footer-content
            {:en "Footer content"
             :hu "Lábléc tartalma"}
+           :footer-description
+           {:en "Footer description"
+            :hu "Lábléc megjegyzés"}
            :footer-subtitle
            {:en "Footer subtitle"
             :hu "Lábléc alcíme"}
@@ -62,6 +68,9 @@
            :header-content
            {:en "Header content"
             :hu "Fejléc tartalma"}
+           :header-description
+           {:en "Header description"
+            :hu "Fejléc megjegyzés"}
            :header-subtitle
            {:en "Header subtitle"
             :hu "Fejléc alcíme"}

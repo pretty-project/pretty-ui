@@ -107,6 +107,9 @@
            :preview-image
            {:en "Preview image"
             :hu "Előnézeti kép"}
+           :refresh-preview!
+           {:en "Refresh preview"
+            :hu "Előnézet frissítése"}
            :recommended-image-size-n
            {:en "Recommended image size: %1x%2px"
             :hu "Ajánlott képméret: %1x%2px"}

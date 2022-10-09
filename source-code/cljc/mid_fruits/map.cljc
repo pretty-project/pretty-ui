@@ -194,7 +194,7 @@
           (keys n)))
 
 (defn dissoc-in
-  ; Original: re-frame.utils/dissoc-in
+  ; Origin: re-frame.utils/dissoc-in
   ;
   ; Dissociates an entry from a nested associative structure returning a new
   ; nested structure. keys is a sequence of keys. Any empty maps that result
@@ -215,7 +215,7 @@
   [n [key & keys :as value-path]]
   (if keys (if-let [next-n (get n key)]
                    (let [new-n (dissoc-in next-n keys)]
-                        (if (seq new-n)
+                        (if (seq          new-n)
                             (assoc  n key new-n)
                             (dissoc n key)))
                    (return n))
@@ -718,7 +718,8 @@
   ;
   ; @return (map)
   [n update-f]
-  ; A rekurzió a vektorok elemein NEM hajtja végre az update-f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein NEM hajtja végre az update-f függvényt,
+  ; mivel azok a térképek értékeinek megfelelői!
   (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1               (f %2)) [] n)
                        (map?    n) (reduce-kv #(assoc %1 (update-f %2) (f %3)) {} n)
                        :return  n))]
@@ -748,9 +749,10 @@
   ;
   ; @return (map)
   [n update-f]
-  ; A rekurzió a vektorok elemein is végrehajtja az update-f függvényt, mivel azok a térképek értékeinek megfelelői!
-  (letfn [(f [n] (cond (vector? n) (reduce    #(conj  %1    (f %2)) [] n)
-                       (map?    n) (reduce-kv #(assoc %1 %2 (f %3)) {} n)
+  ; A rekurzió a vektorok elemein is végrehajtja az update-f függvényt,
+  ; mivel azok a térképek értékeinek megfelelői!
+  (letfn [(f [n] (cond (map?    n) (reduce-kv #(assoc %1 %2 (f %3)) {} n)
+                       (vector? n) (reduce    #(conj  %1    (f %2)) [] n)
                        :return     (update-f n)))]
          (f n)))
 
@@ -780,10 +782,71 @@
   ;
   ; @return (map)
   [n k-f v-f]
-  ; A rekurzió a vektorok elemein is végrehajtja az v-f függvényt, mivel azok a térképek értékeinek megfelelői!
+  ; A rekurzió a vektorok elemein is végrehajtja az v-f függvényt,
+  ; mivel azok a térképek értékeinek megfelelői!
   (letfn [(f [n] (cond (map?    n) (reduce-kv #(assoc %1 (k-f %2) (f %3)) {} n)
                        (vector? n) (reduce    #(conj  %1          (f %2)) [] n)
                        :return     (v-f n)))]
+         (f n)))
+
+(defn ->remove-keys
+  ; @param (map) n
+  ; @param (function) r-f
+  ;
+  ; @example
+  ;  (map/->remove-keys {:a "A" :b "B"}
+  ;                     #(= % :a))
+  ;  =>
+  ;  {:b "B"}
+  ;
+  ; @return (map)
+  [n r-f])
+
+(defn ->>remove-keys
+  ; @param (map) n
+  ; @param (function) r-f
+  ;
+  ; @example
+  ;  (map/->>remove-keys {:a "A" :b "B" :c {:a "A" :b "B"}}
+  ;                      #(= % :a))
+  ;  =>
+  ;  {:b "B" :c {:b "B"}}
+  ;
+  ; @return (map)
+  [n r-f])
+
+(defn ->remove-values
+  ; @param (map) n
+  ; @param (function) r-f
+  ;
+  ; @example
+  ;  (map/->remove-values {:a "A" :b "B"}
+  ;                       #(= % "A"))
+  ;  =>
+  ;  {:b "B"}
+  ;
+  ; @return (map)
+  [n r-f])
+
+(defn ->>remove-values
+  ; @param (map) n
+  ; @param (function) r-f
+  ;
+  ; @example
+  ;  (map/->>remove-values {:a "A" :b "B" :c {:a "A" :b "B" :c [{:a "A"}]}}
+  ;                        #(= % "A"))
+  ;  =>
+  ;  {:b "B" :c {:b "B" :c [{}]}}
+  ;
+  ; @return (map)
+  [n r-f]
+  ; A rekurzió a vektorok elemein is végrehajtja az f függvényt,
+  ; mivel azok a térképek értékeinek megfelelői!
+  (letfn [(m-f [n k x] (if   (r-f     x) n (assoc n k (f x))))
+          (v-f [n   x] (if   (r-f     x) n (conj  n   (f x))))
+          (f   [n]     (cond (map?    n)   (reduce-kv m-f {} n)
+                             (vector? n)   (reduce    v-f [] n)
+                             :return  n))]
          (f n)))
 
 

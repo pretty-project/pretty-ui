@@ -327,3 +327,31 @@
   (cond (map?    n) (map/->>values  n parseint-values)
         (vector? n) (vector/->items n parseint-values)
         :return     (parseint-value n)))
+
+
+
+;; -- Remove blank ... values -------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn remove-blank-values
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/remove-blank-values {:a "" :c [] :f {:g nil}})
+  ;  =>
+  ;  {}
+  ;
+  ; @return (*)
+  [n]
+  ; A remove-blank-values függvény az üres értékek eltávolítása után rekurzívan
+  ; meghívja önmagát addig, amíg már nem okoz újabb változást az n értékében,
+  ; így biztosítva, hogy ne hagyjon maga után üres értékeket.
+  ; Pl.: Ha az n térkép egyik értéke egy vektor, amiben egy üres térkép van,
+  ;      akkor a rekurzió első iterációjakor a vektor még nem üres,
+  ;      de az üres térkép eltávolítása után az azt tartalmazó vektor is üressé
+  ;      válik és ezért a következő iterációban már eltávolítható.
+  (letfn [(r-f [x] (vector/contains-item? [{} [] () nil ""] x))]
+         (let [result (map/->>remove-values n r-f)]
+              (if (=                 n result)
+                  (return              result)
+                  (remove-blank-values result)))))
