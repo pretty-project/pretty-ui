@@ -14,6 +14,7 @@
 
 (ns x.app-elements.text.views
     (:require [mid-fruits.random              :as random]
+              [mid-fruits.string              :as string]
               [x.app-components.api           :as components]
               [x.app-elements.label.views     :as label.views]
               [x.app-elements.text.helpers    :as text.helpers]
@@ -53,7 +54,11 @@
   ; @param (map) text-props
   ;  {:content (metamorphic-content)}
   [label-id {:keys [content]}]
-  [:div.x-text--content (components/content content)])
+  (let [content      (components/content content)
+        content-rows (string/split       content "\n")]
+       (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
+                                          (conj %1 [:br] %3)))]
+              (reduce-kv f [:div.x-text--content] content-rows))))
 
 (defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

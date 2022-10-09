@@ -282,11 +282,11 @@
   ;  =>
   ;  []
   ;
-  ; @return (vector)
+  ; @return (strings in vector)
   [n delimiter]
   (if (and delimiter (nonempty? n))
       (string/split n delimiter)
-      (return [])))
+      (return      [n])))
 
 (defn prefix
   ; @param (string) n

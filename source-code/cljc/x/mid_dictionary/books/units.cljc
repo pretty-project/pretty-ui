@@ -32,6 +32,9 @@
            :day-nth
            {:en "Day %"
             :hu "% nap"}
+           :day-unit
+           {:en "day(s)"
+            :hu "nap"}
            :height
            {:en "Height"
             :hu "Magasság"}
@@ -44,6 +47,9 @@
            :hour-nth
            {:en "% hour"
             :hu "% óra"}
+           :hour-unit
+           {:en "hour(s)"
+            :hu "óra"}
            :inner-height
            {:en "Inner height"
             :hu "Belső magasság"}
@@ -86,12 +92,18 @@
            :minute-nth
            {:en "% minute"
             :hu "% perc"}
+           :minute-unit
+           {:en "minute(s)"
+            :hu "perc"}
            :month
            {:en "Month"
             :hu "Hónap"}
            :month-nth
            {:en "% month"
             :hu "% hónap"}
+           :month-unit
+           {:en "month(s)"
+            :hu "hónap"}
            :outer-height
            {:en "Outer height"
             :hu "Külső magasság"}
@@ -116,12 +128,21 @@
            :piece-n
            {:en "% piece(s)"
             :hu "% darab"}
+           :sec
+           {:en "sec"
+            :hu "mp"}
            :second
            {:en "Second"
             :hu "Másodperc"}
            :second-nth
            {:en "% second"
             :hu "% másodperc"}
+           :second-unit
+           {:en "second(s)"
+            :hu "másodperc"}
+           :sec-unit
+           {:en "sec(s)"
+            :hu "mp"}
            :today
            {:en "Today"
             :hu "Ma"}
@@ -161,6 +182,9 @@
            :year-nth
            {:en "% year"
             :hu "% év"}
+           :year-unit
+           {:en "year(s)"
+            :hu "év"}
            :yesterday
            {:en "Yesterday"
             :hu "Tegnap"}})

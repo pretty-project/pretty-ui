@@ -23,12 +23,15 @@
 (def BOOK {:brand-name
            {:en "Brand name"
             :hu "Márkanév"}
-           :company-name
-           {:en "Company name"
-            :hu "Cégnév"}
+           :company-logo
+           {:en "Company logo"
+            :hu "Céglogó"}
            :company-logo-placeholder
            {:en "The company's logo"
             :hu "A cég logója"}
+           :company-name
+           {:en "Company name"
+            :hu "Cégnév"}
            :company-name-placeholder
            {:en "The company's name"
             :hu "A cég neve"}
