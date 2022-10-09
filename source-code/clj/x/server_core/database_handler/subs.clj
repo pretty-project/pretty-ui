@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.database-handler.subs
-    (:require [x.mid-core.config-handler.subs :as config-handler.subs]
-              [x.server-core.event-handler    :as event-handler :refer [r]]))
+    (:require [re-frame.api                   :as r :refer [r]]
+              [x.mid-core.config-handler.subs :as config-handler.subs]))
 
 
 

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.view-handler.subs
-    (:require [x.mid-views.view-handler.subs :as view-handler.subs]
-              [x.server-core.api             :as a :refer [r]]))
+    (:require [re-frame.api                  :as r :refer [r]]
+              [x.mid-views.view-handler.subs :as view-handler.subs]))
 
 
 
@@ -52,4 +52,4 @@
 ;
 ; @usage
 ;  [:views/get-views]
-(a/reg-sub :views/get-view-screens get-view-screens)
+(r/reg-sub :views/get-view-screens get-view-screens)

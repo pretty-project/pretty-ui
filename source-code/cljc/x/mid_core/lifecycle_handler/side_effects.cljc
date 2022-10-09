@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.lifecycle-handler.side-effects
-    (:require [x.mid-core.event-handler             :as event-handler :refer [r]]
+    (:require [re-frame.api                         :as r]
               [x.mid-core.lifecycle-handler.helpers :as lifecycle-handler.helpers]
               [x.mid-core.lifecycle-handler.state   :as lifecycle-handler.state]))
 
@@ -25,10 +25,11 @@
 (defn import-lifecycles!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  ; - A reg-lifecycles! függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
-  ; - Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
-  ;   meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
-  (event-handler/dispatch [:db/set-item! [:core :lifecycle-handler/data-items] @lifecycle-handler.state/LIFES]))
+  ; A reg-lifecycles! függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
+  ;
+  ; Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
+  ; meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
+  (r/dispatch [:db/set-item! [:core :lifecycle-handler/data-items] @lifecycle-handler.state/LIFES]))
 
 
 
@@ -49,9 +50,8 @@
   ;   :on-server-launch   (metamorphic-event)(opt)}
   ;
   ; @usage
-  ;  (reg-lifecycles!
-  ;   :namespace/lifecycles
-  ;   {...}
+  ;  (core/reg-lifecycles! :namespace/lifecycles
+  ;                        {...})
   ([lifecycles]
    (reg-lifecycles! (lifecycle-handler.helpers/generate-life-id) lifecycles))
 
@@ -72,7 +72,7 @@
    (let [namespace (lifecycle-handler.helpers/life-id->namespace life-id)]
         (letfn [(f [lifecycles period-id event]
                    (let [event-id (keyword namespace (name period-id))]
-                        (event-handler/reg-event-fx event-id event)
+                        (r/reg-event-fx event-id event)
                         (assoc lifecycles period-id [event-id])))]
                (swap! lifecycle-handler.state/LIFES assoc life-id (reduce-kv f {} lifecycles))))))
 
@@ -82,4 +82,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/import-lifecycles! import-lifecycles!)
+(r/reg-fx :core/import-lifecycles! import-lifecycles!)

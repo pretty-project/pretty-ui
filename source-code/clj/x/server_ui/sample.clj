@@ -14,7 +14,7 @@
 
 (ns x.server-ui.sample
     (:require [server-fruits.http :as http]
-              [x.server-core.api  :as a]
+              [x.server-core.api  :as core]
               [x.server-ui.api    :as ui]))
 
 
@@ -49,7 +49,6 @@
 ;; -- UI hozzáadása útvonalakhoz ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
- ::lifecycles
- {:on-server-init [:router/add-routes! {:my-ui   {:route-template "/my-ui"   :get #(http/html-wrap {:body (my-ui %)})}
-                                        :your-ui {:route-template "/your-ui" :get #(http/html-wrap {:body (your-ui %)})}}]})
+(core/reg-lifecycles! ::lifecycles
+  {:on-server-init [:router/add-routes! {:my-ui   {:route-template "/my-ui"   :get #(http/html-wrap {:body (my-ui %)})}
+                                         :your-ui {:route-template "/your-ui" :get #(http/html-wrap {:body (your-ui %)})}}]})

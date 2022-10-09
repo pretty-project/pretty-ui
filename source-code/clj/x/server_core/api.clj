@@ -18,8 +18,6 @@
               [x.server-core.config-handler.transfer]
               [x.server-core.database-handler.effects]
               [x.server-core.error-handler.side-effects]
-              [x.server-core.resource-handler.events]
-              [x.server-core.resource-handler.lifecycles]
               [x.server-core.resource-handler.subs]
               [x.server-core.server-handler.events]
               [x.server-core.server-handler.side-effects]

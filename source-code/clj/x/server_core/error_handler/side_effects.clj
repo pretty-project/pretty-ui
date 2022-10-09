@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler.side-effects
-    (:require [x.app-details               :as details]
-              [x.server-core.event-handler :as event-handler]))
+    (:require [re-frame.api  :as r]
+              [x.app-details :as details]))
 
 
 
@@ -41,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/print-warning! print-warning!)
+(r/reg-fx :core/print-warning! print-warning!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/print-error! print-error!)
+(r/reg-fx :core/print-error! print-error!)

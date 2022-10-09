@@ -12,27 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.resource-handler.events
-    (:require [x.server-core.event-handler :as event-handler]))
+(ns x.server-core.resource-handler.helpers
+    (:require [re-frame.api :as r]
+              [reitit.ring  :as reitit-ring]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-resource-handler-options!
+(defn create-resource-handlers
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) resource-handler-options
-  ;
-  ; @return (map)
-  [db [_ resource-handler-options]]
-  (assoc-in db [:core :resource-handler/options] resource-handler-options))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-resource-handler-options! store-resource-handler-options!)
+  ; @param (? in vector)
+  []
+  (let [resource-handlers @(r/subscribe [:core/get-resource-handlers])]
+       (letfn [(f [resource-handlers handler-props]
+                  (conj resource-handlers (reitit-ring/create-resource-handler handler-props)))]
+              (reduce f [] resource-handlers))))

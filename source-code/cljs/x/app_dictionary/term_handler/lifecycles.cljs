@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.term-handler.lifecycles
-    (:require [x.app-core.api         :as a]
+    (:require [x.app-core.api         :as core]
               [x.mid-dictionary.books :refer [BOOKS]]))
 
 
@@ -21,6 +21,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-app-init [:dictionary/add-terms! BOOKS]})

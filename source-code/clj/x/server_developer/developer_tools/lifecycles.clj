@@ -13,13 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-developer.developer-tools.lifecycles
-    (:require [x.server-core.api :as a]))
+    (:require [x.server-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-server-boot [:developer/init!]})

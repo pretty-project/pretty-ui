@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.cache-handler.helpers
-    (:require [server-fruits.http               :as http]
-              [x.mid-core.cache-handler.helpers :as cache-handler.helpers]
-              [x.server-core.event-handler      :as event-handler :refer [r]]))
+    (:require [re-frame.api                     :as r :refer [r]]
+              [server-fruits.http               :as http]
+              [x.mid-core.cache-handler.helpers :as cache-handler.helpers]))
 
 
 
@@ -36,5 +36,5 @@
   ; @return (boolean)
   [request]
   (let [cached-version   (http/request->cookie request "x-app-build")
-        current-version @(event-handler/subscribe [:core/get-app-config-item :app-build])]
+        current-version @(r/subscribe [:core/get-app-config-item :app-build])]
        (= cached-version current-version)))

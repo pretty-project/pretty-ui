@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.router-handler.helpers
-    (:require [reitit.ring                              :as reitit-ring]
-              [x.server-core.event-handler              :as event-handler]
-              [x.server-core.middleware-handler.helpers :refer [middleware]]))
+    (:require [re-frame.api                             :as r]
+              [reitit.ring                              :as reitit-ring]
+              [x.server-core.middleware-handler.helpers :refer [middleware]]
+              [x.server-core.resource-handler.helpers   :as resource-handler.helpers]))
 
 
 
@@ -25,15 +26,14 @@
 (defn options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [default-routes           @(event-handler/subscribe [:router/get-default-routes])
-        resource-handler-options @(event-handler/subscribe [:core/get-resource-handler-options])]
-       (reitit-ring/routes (reitit-ring/create-resource-handler resource-handler-options)
-                           (reitit-ring/create-default-handler  default-routes))))
+  (let [default-routes @(r/subscribe [:router/get-default-routes])]
+       (apply reitit-ring/routes (conj (resource-handler.helpers/create-resource-handlers)
+                                       (reitit-ring/create-default-handler default-routes)))))
 
 (defn router
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [ordered-routes @(event-handler/subscribe [:router/get-ordered-routes])]
+  (let [ordered-routes @(r/subscribe [:router/get-ordered-routes])]
        ; Disable route conflicts handling:
        ;(reitit-ring/router ordered-routes)
 

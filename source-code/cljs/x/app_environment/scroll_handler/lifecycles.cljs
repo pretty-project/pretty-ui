@@ -13,15 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-handler.lifecycles
-    (:require [x.app-core.api :as a]))
+    (:require [x.app-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {})
   ;:on-app-boot {:fx-n [[:environment/listen-to-scroll!]
   ;                    [:environment/initialize-scroll-handler!]}

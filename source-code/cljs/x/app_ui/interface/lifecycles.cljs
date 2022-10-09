@@ -13,14 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.interface.lifecycles
-    (:require [x.app-core.api :as a]))
+    (:require [x.app-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-app-init [:ui/set-interface! :website-ui]
    :on-login    [:ui/set-interface! :application-ui]})

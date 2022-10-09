@@ -20,6 +20,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler.side-effects/reg-lifecycles!
-  ::lifecycles
+(lifecycle-handler.side-effects/reg-lifecycles! ::lifecycles
   {:on-app-init [:core/initialize-load-handler!]})

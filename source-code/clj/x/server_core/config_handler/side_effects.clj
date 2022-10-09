@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.config-handler.side-effects
-    (:require [server-fruits.io                    :as io]
-              [x.server-core.config-handler.config :as config-handler.config]
-              [x.server-core.event-handler         :as event-handler :refer [r]]))
+    (:require [re-frame.api                        :as r :refer [r]]
+              [server-fruits.io                    :as io]
+              [x.server-core.config-handler.config :as config-handler.config]))
+
 
 
 
@@ -26,13 +27,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [app-config (io/read-edn-file config-handler.config/APP-CONFIG-FILEPATH)]
-       (event-handler/dispatch [:core/store-app-config! app-config])))
+       (r/dispatch [:core/store-app-config! app-config])))
 
 (defn- import-server-config!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [server-config (io/read-edn-file config-handler.config/SERVER-CONFIG-FILEPATH)]
-       (event-handler/dispatch [:core/store-server-config! server-config])))
+       (r/dispatch [:core/store-server-config! server-config])))
 
 
 
@@ -40,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/import-app-config! import-app-config!)
+(r/reg-fx :core/import-app-config! import-app-config!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/import-server-config! import-server-config!)
+(r/reg-fx :core/import-server-config! import-server-config!)

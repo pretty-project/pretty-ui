@@ -18,6 +18,7 @@
               [x.app-environment.connection-handler.side-effects]
               [x.app-environment.cookie-handler.effects]
               [x.app-environment.cookie-handler.events]
+              [x.app-environment.cookie-handler.lifecycles]
               [x.app-environment.cookie-handler.side-effects]
               [x.app-environment.keypress-handler.effects]
               [x.app-environment.keypress-handler.lifecycles]

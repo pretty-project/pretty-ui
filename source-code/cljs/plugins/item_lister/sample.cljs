@@ -15,6 +15,7 @@
 (ns plugins.item-lister.sample
     (:require [plugins.item-lister.api :as item-lister]
               [re-frame.api            :as r]
+              [x.app-core.api          :as core]
               [x.app-elements.api      :as elements]))
 
 
@@ -44,8 +45,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; Az [:item-lister/filter-items! ...] esemény használatával lehetséges szűrési feltételeket beállítani
-(r/reg-event-fx
-  :use-my-filter!
+(r/reg-event-fx :use-my-filter!
   [:item-lister/filter-items! :my-lister {:$or [{:my-type/id "my-item"} {:your-type/id "your-item"}]}])
 
 
@@ -80,8 +80,7 @@
 ; Az [:item-lister/reload-items! ...] esemény újra letölti az összes elemet az aktuális
 ; beállításokkal. Így lehetséges az adatok kliens-oldalon megjelenített változatát aktualizálni
 ; a szerver-oldali változathoz.
-(r/reg-event-fx
-  :reload-my-items!
+(r/reg-event-fx :reload-my-items!
   [:item-lister/reload-items! :my-lister])
 
 
@@ -101,8 +100,7 @@
 ; Ha az order-by-options beállításban egyedi értékeket is használtál, akkor
 ; ne felejtsd el hozzáadni a megfelelő szótári szavakat!
 ; Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
-(r/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
 
 

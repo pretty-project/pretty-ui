@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(lifecycle-handler.side-effects/reg-lifecycles!
-  ::lifecycles
+(lifecycle-handler.side-effects/reg-lifecycles! ::lifecycles
   {:on-server-init [:router/add-route! :core/transfer-data
                                        {:route-template "/synchronize-app"
                                         :get {:handler transfer-handler.routes/download-transfer-data}}]})

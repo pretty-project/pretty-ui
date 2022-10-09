@@ -13,14 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.connection-handler.lifecycles
-    (:require [x.app-core.api :as a]))
+    (:require [x.app-core.api :as core]))
 
-  
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-app-init {:fx       [:environment/listen-to-connection-change!]
                  :dispatch [:environment/connection-changed]}})

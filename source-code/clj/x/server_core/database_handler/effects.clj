@@ -13,16 +13,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.database-handler.effects
-    (:require [x.app-details                       :as details]
-              [x.server-core.database-handler.subs :as database-handler.subs]
-              [x.server-core.event-handler         :as event-handler :refer [r]]))
+    (:require [re-frame.api                        :as r :refer [r]]
+              [x.app-details                       :as details]
+              [x.server-core.database-handler.subs :as database-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
+(r/reg-event-fx
   :core/connect-to-database!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]

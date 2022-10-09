@@ -13,6 +13,10 @@
 
 
 # x4.7.0
+- A reg-lifecycles! is ugy legyen tabolva mint a reg-event-fx
+  (core/reg-lifecycles ::lifecycles
+    {...})
+
 - Az xxx-ek tartalmazzák a névtereket is
   XXX#0551 (mid-fruits.map)
 
@@ -354,9 +358,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - DRAG-OVERLAY-t berakni!
 
 - Sortable mozgatás picit laggos iOS Chrome-on
-
-- A template resources/public/logo mappábol ki lehet venni az mt-logo- logókat
-  elég ha a monosetben van benne. Ugyis ott van használva
 
 - Adatkezelés és ÁSZF
   https://policies.google.com/terms?hl=hu (ez is kell!, ?ezt fogadod el a cookie-val?)

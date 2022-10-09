@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.effects
-    (:require [x.app-core.api                              :as a :refer [r]]
+    (:require [re-frame.api                                :as r :refer [r]]
               [x.app-environment.cookie-handler.prototypes :as cookie-handler.prototypes]
               [x.app-environment.cookie-handler.subs       :as cookie-handler.subs]))
 
@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/set-cookie!
+(r/reg-event-fx :environment/set-cookie!
   ; @param (keyword)(opt) cookie-id
   ; @param (map) cookie-props
   ;  {:cookie-type (keyword)(opt)
@@ -39,14 +38,13 @@
   ;
   ; @usage
   ;  [:environment/set-cookie! :my-cookie {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ cookie-id cookie-props]]
       (let [cookie-props (cookie-handler.prototypes/cookie-props-prototype cookie-props)]
            (if (r cookie-handler.subs/set-cookie? db cookie-id cookie-props)
                {:fx [:environment/store-browser-cookie! cookie-id cookie-props]}))))
 
-(a/reg-event-fx
-  :environment/remove-cookie!
+(r/reg-event-fx :environment/remove-cookie!
   ; @param (keyword) cookie-id
   ; @param (map) cookie-props
   ;  {:cookie-type (keyword)(opt)
@@ -62,22 +60,19 @@
       (let [cookie-props (cookie-handler.prototypes/cookie-props-prototype cookie-props)]
            {:fx [:environment/remove-browser-cookie! cookie-id cookie-props]})))
 
-(a/reg-event-fx
-  :environment/remove-cookies!
+(r/reg-event-fx :environment/remove-cookies!
   ; @usage
   ;  [:environment/remove-cookies!]
   {:fx [:environment/remove-browser-cookies!]})
 
-(a/reg-event-fx
-  :environment/read-system-cookies!
+(r/reg-event-fx :environment/read-system-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [(a/inject-cofx :environment/inject-system-cookies!)]
+  [(r/inject-cofx :environment/inject-system-cookies!)]
   (fn [{:keys [db]}]
       ; Store injected cookies w/ interceptor ...
       {:db db}))
 
-(a/reg-event-fx
-  :environment/store-cookie-settings!
+(r/reg-event-fx :environment/store-cookie-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if (r cookie-handler.subs/necessary-cookies-enabled? db)
@@ -85,16 +80,6 @@
                {:fx [:environment/store-browser-cookie! :cookie-settings
                                                         {:cookie-type :necessary :value cookie-settings}]}))))
 
-(a/reg-event-fx
-  :environment/cookie-settings-changed
+(r/reg-event-fx :environment/cookie-settings-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [:environment/store-cookie-settings!])
-
-
-
-;; -- Lifecycle events --------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(a/reg-lifecycles!
-  ::lifecycles
-  {:on-app-init [:environment/read-system-cookies!]})

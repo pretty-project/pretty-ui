@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.view-handler.effects
-    (:require [x.server-core.api                  :as a :refer [r]]
+    (:require [re-frame.api                       :as r :refer [r]]
               [x.server-views.view-handler.events :as view-handler.events]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :views/set-error-screen!
+(r/reg-event-fx :views/set-error-screen!
   ; @param (metamorphic-event) error-screen
   ;
   ; @usage
@@ -30,8 +29,7 @@
   (fn [{:keys [db]} [_ error-screen]]
       {:db (r view-handler.events/set-error-screen! db error-screen)}))
 
-(a/reg-event-fx
-  :views/set-login-screen!
+(r/reg-event-fx :views/set-login-screen!
   ; @param (metamorphic-event) login-screen
   ;
   ; @usage
@@ -39,8 +37,7 @@
   (fn [{:keys [db]} [_ login-screen]]
       {:db (r view-handler.events/set-login-screen! db login-screen)}))
 
-(a/reg-event-fx
-  :views/set-menu-screen!
+(r/reg-event-fx :views/set-menu-screen!
   ; @param (metamorphic-event) menu-screen
   ;
   ; @usage

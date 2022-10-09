@@ -14,7 +14,7 @@
 
 (ns x.server-user.account-handler.transfer
     (:require [mid-fruits.map                        :as map]
-              [x.server-core.api                     :as a]
+              [x.server-core.api                     :as core]
               [x.server-user.account-handler.helpers :as account-handler.helpers]))
 
 
@@ -22,6 +22,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-transfer! :user/transfer-user-account!
-                 {:data-f      #(-> % account-handler.helpers/request->user-public-account map/remove-namespace)
-                  :target-path [:user :account-handler/data-items]})
+(core/reg-transfer! :user/transfer-user-account!
+  {:data-f      #(-> % account-handler.helpers/request->user-public-account map/remove-namespace)
+   :target-path [:user :account-handler/data-items]})

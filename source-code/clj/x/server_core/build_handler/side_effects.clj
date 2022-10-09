@@ -14,10 +14,10 @@
 
 (ns x.server-core.build-handler.side-effects
     (:require [mid-fruits.format                     :as format]
+              [re-frame.api                          :as r]
               [server-fruits.io                      :as io]
               [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
-              [x.server-core.build-handler.config    :as build-handler.config]
-              [x.server-core.event-handler           :as event-handler]))
+              [x.server-core.build-handler.config    :as build-handler.config]))
 
 
 
@@ -50,18 +50,20 @@
 (defn import-app-build!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  ; - Development környezetben nincs szükség az app-build (az applikáció build-version számának)
-  ;   használatára ezért nem szükséges az (a/->app-built) függvényt meghívni, ami az aktuális
-  ;   app-build értékét eltárolná egy fájlban.
-  ; - Ezért development környezetben nem minden esetben biztosított az app-build értékét tároló
-  ;   fájl létezése.
-  ; - Ha az app-build értékét tároló fájl nem elérhető, akkor az app-build értéke egy alapértelmezett
-  ;   értékkel kerül behelyettesítésre.
-  ;   Pl. "0.0.1"
+  ; Development környezetben nincs szükség az app-build (az applikáció build-version számának)
+  ; használatára ezért nem szükséges az (a/->app-built) függvényt meghívni, ami az aktuális
+  ; app-build értékét eltárolná egy fájlban.
+  ;
+  ; Ezért development környezetben nem minden esetben biztosított az app-build értékét tároló
+  ;  fájl létezése.
+  ;
+  ; Ha az app-build értékét tároló fájl nem elérhető, akkor az app-build értéke egy alapértelmezett
+  ; értékkel kerül behelyettesítésre.
+  ; Pl. "0.0.1"
   (if (io/file-exists? build-handler.config/APP-BUILD-FILEPATH)
       (let [{:keys [app-build]} (io/read-edn-file build-handler.config/APP-BUILD-FILEPATH)]
-           (event-handler/dispatch [:core/store-app-build! app-build]))
-      (event-handler/dispatch [:core/store-app-build! build-handler.config/INITIAL-APP-BUILD])))
+           (r/dispatch [:core/store-app-build! app-build]))
+      (r/dispatch [:core/store-app-build! build-handler.config/INITIAL-APP-BUILD])))
 
 
 
@@ -69,4 +71,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/import-app-build! import-app-build!)
+(r/reg-fx :core/import-app-build! import-app-build!)

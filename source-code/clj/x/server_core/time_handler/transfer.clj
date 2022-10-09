@@ -21,7 +21,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(transfer-handler.side-effects/reg-transfer!
-  :core/transfer-server-time!
+(transfer-handler.side-effects/reg-transfer! :core/transfer-server-time!
   {:data-f      (fn [_] (time/timestamp-string))
    :target-path [:core :time-handler/meta-items :server-time]})

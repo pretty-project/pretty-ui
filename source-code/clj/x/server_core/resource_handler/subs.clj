@@ -13,19 +13,22 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.resource-handler.subs
-    (:require [x.server-core.event-handler :as event-handler]))
+    (:require [re-frame.api                      :as r :refer [r]]
+              [x.server-core.config-handler.subs :as config-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-resource-handler-options
+(defn get-resource-handlers
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (map)
+  ; @return (maps in vector)
+  ;  [{:path (string)
+  ;    :root (string)}]
   [db _]
-  (get-in db [:core :resource-handler/options]))
+  (r config-handler.subs/get-server-config-item db :resources))
 
 
 
@@ -33,4 +36,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-sub :core/get-resource-handler-options get-resource-handler-options)
+(r/reg-sub :core/get-resource-handlers get-resource-handlers)

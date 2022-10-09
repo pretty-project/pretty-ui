@@ -13,13 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.install-handler.lifecycles
-    (:require [x.server-core.api :as a]))
+    (:require [x.server-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-lifecycles!
-  ::lifecycles
+(core/reg-lifecycles! ::lifecycles
   {:on-server-launch {:fx [:user/check-install!]}})

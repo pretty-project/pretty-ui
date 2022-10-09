@@ -1,21 +1,4 @@
 
-# log files
-environment/log
-
-# uploaded files
-environment/media/storage/*
-environment/media/thumbnails/*
-
-# default thumbnail & sample file
-!environment/media/thumbnails/default.png
-!environment/media/storage/sample.png
-
-# config files
-resources/public/x.app-build.edn
-
-# mono-app
-mono-app.jar
-
 # system files
 node_modules
 resources/public/js/core

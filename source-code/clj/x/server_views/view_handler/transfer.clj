@@ -13,13 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.view-handler.transfer
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api      :as r]
+              [x.server-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-transfer! :views/transfer-views!
-                 {:data-f      (fn [_] (a/subscribed [:views/get-view-screens]))
-                  :target-path [:views :view-handler/meta-items]})
+(core/reg-transfer! :views/transfer-views!
+  {:data-f      (fn [_] (r/subscribed [:views/get-view-screens]))
+   :target-path [:views :view-handler/meta-items]})

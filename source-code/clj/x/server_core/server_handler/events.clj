@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.server-handler.events
-    (:require [x.server-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -44,7 +44,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-server-props! store-server-props!)
+(r/reg-event-db :core/store-server-props! store-server-props!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-server-state! store-server-state!)
+(r/reg-event-db :core/store-server-state! store-server-state!)
