@@ -14,7 +14,7 @@
 
 (ns x.server-environment.css-handler.events
     (:require [mid-fruits.vector :as vector]
-              [x.server-core.api :as a]))
+              [re-frame.api      :as r]))
 
 
 
@@ -40,4 +40,4 @@
 
 ; @usage
 ;  [:environment/add-css! {...}]
-(a/reg-event-db :environment/add-css! add-css!)
+(r/reg-event-db :environment/add-css! add-css!)

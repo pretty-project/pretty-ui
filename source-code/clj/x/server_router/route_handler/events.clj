@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                         :refer [param return]]
               [mid-fruits.map                           :as map]
               [mid-fruits.vector                        :as vector]
-              [x.server-core.api                        :as a :refer [r]]
+              [re-frame.api                             :as r :refer [r]]
               [x.server-router.route-handler.config     :as route-handler.config]
               [x.server-router.route-handler.helpers    :as route-handler.helpers]
               [x.server-router.route-handler.prototypes :as route-handler.prototypes]
@@ -150,10 +150,10 @@
 ;
 ; @usage
 ;  [:router/add-route! :my-route {...}]
-(a/reg-event-db :router/add-route! [a/event-vector<-id] add-route!)
+(r/reg-event-db :router/add-route! [r/event-vector<-id] add-route!)
 
 ; @usage
 ;  [:router/add-routes! {:my-route {:route-template "/my-route"
 ;                                   :get {:handler my-handler}}
 ;                        :your-route {...}}]
-(a/reg-event-db :router/add-routes! add-routes!)
+(r/reg-event-db :router/add-routes! add-routes!)

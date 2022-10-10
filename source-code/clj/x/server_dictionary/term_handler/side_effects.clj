@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.side-effects
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -35,4 +35,4 @@
   ;
   ; @return (string)
   [term-id options]
- @(a/subscribe [:dictionary/look-up term-id options]))
+ @(r/subscribe [:dictionary/look-up term-id options]))

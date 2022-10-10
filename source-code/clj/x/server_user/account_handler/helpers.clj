@@ -70,12 +70,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn request->user-account-id
+  ; @param (map) request
+  ;
+  ; @return (string)
+  [request]
+  (http/request->session-param request :user-account/id))
+
 (defn request->user-account
   ; @param (map) request
   ;
   ; @return (namespaced map)
   [request]
-  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+  (if-let [user-account-id (request->user-account-id request )]
           (user-account-id->user-account user-account-id)
           (return account-handler.config/ANONYMOUS-USER-ACCOUNT)))
 

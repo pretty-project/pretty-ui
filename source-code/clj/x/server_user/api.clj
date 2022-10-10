@@ -43,6 +43,7 @@
 ; x.server-user.account-handler.helpers
 (def user-account-id->user-account      account-handler.helpers/user-account-id->user-account)
 (def user-account-id->user-account-item account-handler.helpers/user-account-id->user-account-item)
+(def request->user-account-id           account-handler.helpers/request->user-account-id)
 (def request->user-account              account-handler.helpers/request->user-account)
 (def request->user-public-account       account-handler.helpers/request->user-public-account)
 

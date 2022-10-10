@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.default-handler.subs
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -47,8 +47,8 @@
 
 ; @usage
 ;  [:router/get-default-routes]
-(a/reg-sub :router/get-default-routes get-default-routes)
+(r/reg-sub :router/get-default-routes get-default-routes)
 
 ; @usage
 ;  [:router/get-default-route :my-default-route]
-(a/reg-sub :router/get-default-route get-default-route)
+(r/reg-sub :router/get-default-route get-default-route)

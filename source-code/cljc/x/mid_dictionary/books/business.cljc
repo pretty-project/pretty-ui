@@ -53,6 +53,9 @@
            :renting
            {:en "Renting"
             :hu "Bérbeadás"}
+           :sales
+           {:en "Sales"
+            :hu "Értékesítés"}
            :selling
            {:en "Selling"
             :hu "Értékesítés"}})

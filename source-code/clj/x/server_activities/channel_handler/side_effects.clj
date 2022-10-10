@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-activities.channel-handler.side-effects
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -31,4 +31,4 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-fx :activities/notifiy-client! notifiy-client!)
+(r/reg-fx :activities/notifiy-client! notifiy-client!)

@@ -150,6 +150,16 @@
                     :label     :terms-of-service
                     :on-click  [:router/go-to! "/@app-home/terms-of-service"]}])
 
+(defn- user-profile-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/button ::settings-button
+                   {:color     :muted
+                    :font-size :xs
+                    :indent    {:vertical :xs}
+                    :label     :user-profile
+                    :on-click  [:router/go-to! "/@app-home/user-profile"]}])
+
 (defn- settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -176,6 +186,7 @@
   (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
           [:div#surface-a--footer [:div#surface-a--footer-content [privacy-policy-button]
                                                                   [terms-of-service-button]
+                                                                  [user-profile-button]
                                                                   [settings-button]
                                                                   [logout-button]]]))
 

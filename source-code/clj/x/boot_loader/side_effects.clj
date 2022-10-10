@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.side-effects
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -29,4 +29,4 @@
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
   ([]             (start-server! {}))
-  ([server-props] (a/dispatch [:boot-loader/start-server! server-props])))
+  ([server-props] (r/dispatch [:boot-loader/start-server! server-props])))

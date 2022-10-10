@@ -13,6 +13,11 @@
 
 
 # x4.7.0
+
+- Használj set-eket! #(1 2 3)
+  + (set ...) set függvény!
+  - Egy elem egyszer fordulhat elő benne
+  
 - A reg-lifecycles! is ugy legyen tabolva mint a reg-event-fx
   (core/reg-lifecycles ::lifecycles
     {...})

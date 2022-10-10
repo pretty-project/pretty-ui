@@ -17,8 +17,8 @@
               [mid-fruits.pretty                          :as pretty]
               [mid-fruits.reader                          :as reader]
               [mid-fruits.vector                          :as vector]
+              [re-frame.api                               :as r]
               [server-fruits.http                         :as http]
-              [x.server-core.api                          :as a]
               [x.server-developer.re-frame-browser.styles :as re-frame-browser.styles]))
 
 
@@ -88,7 +88,7 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [query-params]}]
-  (let [db          @(a/subscribe [:db/get-db])
+  (let [db          @(r/subscribe [:db/get-db])
         path         (reader/string->mixed (get query-params "path" "[]"))
         current-item (get-in db path)]
        (re-frame-browser {:current-item current-item :path path})))

@@ -15,7 +15,8 @@
 (ns x.server-ui.body.helpers
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.vector        :as vector]
-              [x.server-core.api        :as a :refer [cache-control-uri]]
+              [re-frame.api             :as r]
+              [x.server-core.api        :refer [cache-control-uri]]
               [x.server-router.api      :as router]
               [x.server-ui.body.config  :as body.config]
               [x.server-ui.core.helpers :refer [include-js]]))
@@ -39,7 +40,7 @@
   ; XXX#5062
   ; A body elemben felsorolt JS fájlok forrásáról bővebben a modul
   ; README.md fájljában olvashatsz!
-  (let [app-config @(a/subscribe [:core/get-app-config])
+  (let [app-config @(r/subscribe [:core/get-app-config])
         core-js-uri (str body.config/CORE-JS-DIR "/" core-js)]
        (vector/concat-items [{:uri core-js-uri}]
                             (:plugin-js-paths app-config)

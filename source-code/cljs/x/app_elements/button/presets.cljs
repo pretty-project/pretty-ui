@@ -82,6 +82,10 @@
       :settings     {:horizontal-align :left
                      :icon             :settings
                      :label            :settings}
+      :user-profile {:horizontal-align :left
+                     :icon             :badge
+                     :icon-family      :material-icons-outlined
+                     :label            :user-profile}
       :upload       {:color            :primary
                      :horizontal-align :left
                      :label            :upload!}})

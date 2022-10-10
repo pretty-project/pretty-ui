@@ -15,8 +15,8 @@
 (ns x.server-dictionary.term-handler.subs
     (:require [mid-fruits.candy                   :refer [param return]]
               [mid-fruits.string                  :as string]
-              [x.mid-dictionary.term-handler.subs :as term-handler.subs]
-              [x.server-core.api                  :as a :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]
+              [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
 
 
 
@@ -64,4 +64,4 @@
 
 ; @usage
 ;  [:dictionary/look-up :my-term {:language :en}]
-(a/reg-sub :dictionary/look-up look-up)
+(r/reg-sub :dictionary/look-up look-up)

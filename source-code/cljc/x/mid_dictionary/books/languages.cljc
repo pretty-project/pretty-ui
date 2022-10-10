@@ -41,16 +41,16 @@
            :en-us
            {:en "English - US"
             :hu "English - US"}
-           :fr-fr
+           :fr
            {:en "Français"
             :hu "Français"}
-           :de-de
+           :de
            {:en "Deutsch"
             :hu "Deutsch"}
            :hu
            {:en "Magyar"
             :hu "Magyar"}
-           :it-it
+           :it
            {:en "Italiano"
             :hu "Italiano"}
            :ro

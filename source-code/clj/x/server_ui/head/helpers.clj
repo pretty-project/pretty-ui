@@ -16,10 +16,11 @@
     (:require [mid-fruits.candy         :refer [param return]]
               [mid-fruits.string        :as string]
               [mid-fruits.vector        :as vector]
+              [re-frame.api             :as r]
               [server-fruits.http       :as http]
               [time.api                 :as time]
               [x.app-details            :as details]
-              [x.server-core.api        :as a :refer [cache-control-uri]]
+              [x.server-core.api        :refer [cache-control-uri]]
               [x.server-router.api      :as router]
               [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]
               [x.server-ui.head.config  :as head.config]))
@@ -67,8 +68,8 @@
   ; XXX#5061
   ; A head elemben felsorolt CSS fájlok forrásáról bővebben a modul
   ; README.md fájljában olvashatsz!
-  (let [app-config            @(a/subscribe [:core/get-app-config])
-        environment-css-paths @(a/subscribe [:environment/get-css-paths])]
+  (let [app-config            @(r/subscribe [:core/get-app-config])
+        environment-css-paths @(r/subscribe [:environment/get-css-paths])]
        (vector/concat-items head.config/SYSTEM-CSS-PATHS
                             environment-css-paths
                             (:css-paths app-config)

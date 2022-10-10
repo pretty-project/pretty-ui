@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.default-handler.events
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -43,4 +43,4 @@
 
 ; @usage
 ;  [:router/set-default-route! :my-default-route {...}]
-(a/reg-event-db :router/set-default-route! set-default-route!)
+(r/reg-event-db :router/set-default-route! set-default-route!)

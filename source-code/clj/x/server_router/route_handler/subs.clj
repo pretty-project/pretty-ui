@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.subs
-    (:require [x.mid-router.route-handler.subs       :as route-handler.subs]
-              [x.server-core.api                     :as a :refer [r]]
+    (:require [re-frame.api                          :as r :refer [r]]
+              [x.mid-router.route-handler.subs       :as route-handler.subs]
               [x.server-router.route-handler.helpers :as route-handler.helpers]
               [x.server-user.api                     :as user]))
 
@@ -105,16 +105,16 @@
 
 ; @usage
 ;  [:router/get-sitemap-routes]
-(a/reg-sub :router/get-sitemap-routes get-sitemap-routes)
+(r/reg-sub :router/get-sitemap-routes get-sitemap-routes)
 
 ; @usage
 ;  [:router/get-server-routes]
-(a/reg-sub :router/get-server-routes get-server-routes)
+(r/reg-sub :router/get-server-routes get-server-routes)
 
 ; @usage
 ;  [:router/get-client-routes]
-(a/reg-sub :router/get-client-routes get-client-routes)
+(r/reg-sub :router/get-client-routes get-client-routes)
 
 ; @usage
 ;  [:router/get-ordered-routes]
-(a/reg-sub :router/get-ordered-routes get-ordered-routes)
+(r/reg-sub :router/get-ordered-routes get-ordered-routes)

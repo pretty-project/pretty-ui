@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-environment.css-handler.subs
-    (:require [x.server-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -37,4 +37,4 @@
 
 ; @usage
 ;  [:environment/get-css-paths]
-(a/reg-sub :environment/get-css-paths get-css-paths)
+(r/reg-sub :environment/get-css-paths get-css-paths)
