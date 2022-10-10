@@ -475,8 +475,6 @@
 
 (defn valid-uri
   ; @param (string) uri
-  ; @param (string)(opt) protocol
-  ;  Default: "https"
   ;
   ; @example
   ;  (uri/valid-uri "my-domain.com")
@@ -494,14 +492,11 @@
   ;  "http://my-domain.com"
   ;
   ; @return (string)
-  ([uri]
-   (valid-uri uri "https://"))
-
-  ([uri protocol]
-   (let [protocol (uri->protocol uri)]
-        (if (string/nonempty? protocol)
-            (string/not-ends-with! uri "/")
-            (str protocol "://" (string/not-ends-with! uri "/"))))))
+  [uri]
+  (let [protocol (uri->protocol uri)]
+       (if (string/nonempty? protocol)
+           (string/not-ends-with! uri "/")
+           (str protocol "https://" (string/not-ends-with! uri "/")))))
 
 (defn valid-path
   ; @param (string) path
