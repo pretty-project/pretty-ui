@@ -18,8 +18,8 @@
               [mid-fruits.string                    :as string]
               [mid-fruits.vector                    :as vector]
               [reagent.api                          :as reagent]
+              [re-frame.api                         :as r]
               [x.app-components.api                 :as components]
-              [x.app-core.api                       :as a]
               [x.app-elements.label.views           :as label.views]
               [x.app-elements.text-field.helpers    :as text-field.helpers]
               [x.app-elements.text-field.prototypes :as text-field.prototypes]))
@@ -113,7 +113,7 @@
   ; @param (map) field-props
   ;  {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface]}]
-  (if surface (if-let [surface-visible? @(a/subscribe [:elements.text-field/surface-visible? field-id])]
+  (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
                       [:div.x-text-field--surface {:on-mouse-down #(.preventDefault %)}
                                                   [components/content field-id surface]])))
 
@@ -128,7 +128,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
+  (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:div.x-text-field--warning {:data-selectable false}
                                       (components/content :please-fill-out-this-field)]))
 
@@ -139,9 +139,9 @@
   ; @param (map) field-props
   ;  {}
   [field-id {:keys [validator] :as field-props}]
-  (if-let [required-warning? @(a/subscribe [:elements.text-field/required-warning? field-id field-props])]
+  (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
-          (if-let [invalid-warning? @(a/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
+          (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
                   [:div.x-text-field--warning {:data-selectable false}
                                               (-> validator :invalid-message components/content)])))
 
@@ -226,8 +226,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/hack5041
+(r/reg-event-fx :elements.text-field/hack5041
   (fn [{:keys [db]} [_ field-id {:keys [field-content-f value-path]}]]
       (let [field-content  (text-field.helpers/get-field-content field-id)
             stored-value   (get-in db value-path)
@@ -240,8 +239,8 @@
   [field-id {:keys [value-path] :as field-props}]
   ; HACK#5041
   ; Yes! This is what it seems like! Sorry for that :(
-  (let [stored-value @(a/subscribe [:db/get-item value-path])]
-       (a/dispatch [:elements.text-field/hack5041 field-id field-props])))
+  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+       (r/dispatch [:elements.text-field/hack5041 field-id field-props])))
 
 
 
@@ -273,7 +272,6 @@
                      [text-field-input-container          field-id field-props]
                      [text-field-required-warning         field-id field-props]
                      [text-field-invalid-warning          field-id field-props]
-
                      ; HACK#5041
                      [hack5041 field-id field-props]])
 

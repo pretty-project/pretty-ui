@@ -77,7 +77,7 @@
   ;
   ; @return (string)
   [editor-id]
-  ; XXX#9910
+  ; HACK#9910
   ; A text-editor a state/EDITOR-CONTENTS atomban is eltárolja az aktuális értékét,
   ; amit arra használ, hogy ha a value-path Re-Frame adatbázis útvonalon tárolt
   ; érték megváltozik, akkor a [:text-editor/hack-9910 ...] esemény összehasonlítja
@@ -92,7 +92,7 @@
   ;
   ; @return (string)
   [editor-id]
-  ; XXX#9910
+  ; HACK#9910
   ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozásakor
   ; a [:text-editor/hack-9910 ...] esemény azt állapítja meg, hogy az adatbázisban
   ; tárolt érték és a text-editor aktuális értéke nem egyezik meg, akkor úgy
@@ -108,7 +108,7 @@
   ;
   ; @return (string)
   [editor-id]
-  ; XXX#9910
+  ; HACK#9910
   ; A text-editor számára key paraméterként átadott difference-key kulcs
   ; megváltoztatásával a text-editor minden esetben aktualizálja az értékét
   ; a value paraméterként kapott értékkel (akkor is ha az nem változott meg).
@@ -120,7 +120,7 @@
   ; @param (keyword) editor-id
   ; @param (string) editor-content
   [editor-id editor-content]
-  ; XXX#9910
+  ; HACK#9910
   (swap! state/EDITOR-CONTENTS assoc editor-id editor-content))
 
 (defn update-editor-difference!
@@ -129,7 +129,7 @@
   ; @param (keyword) editor-id
   ; @param (string) editor-difference
   [editor-id editor-difference]
-  ; XXX#9910
+  ; HACK#9910
   ; Ha a state/EDITOR-DIFFERENCES atomban tárolt érték megváltozik, amit
   ; a text-editor value paraméterként kap meg, akkor a text-editor tartalma
   ; aktualizálódik. Ha a text-editor értéke ugyanarra az értékre aktualizálódna,
@@ -250,7 +250,7 @@
   ;   :tabIndex (integer)
   ;   :value (string)}
   [editor-id editor-props]
-  ; XXX#9910
+  ; HACK#9910
   ; A key paraméter esetleges változtatása a text-editor villanását okozza.
   ; A difference-key változtatása helyett más megoldás is alkalmazható!
   {:onBlur   #(r/dispatch [:environment/quit-type-mode!])

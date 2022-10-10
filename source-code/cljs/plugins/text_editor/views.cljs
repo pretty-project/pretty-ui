@@ -30,7 +30,7 @@
   :text-editor/hack-9910
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
-      ; XXX#9910
+      ; HACK#9910
       (let [editor-content (helpers/get-editor-content editor-id)
             stored-value   (get-in db value-path)]
            (if-not (= editor-content stored-value)
@@ -39,7 +39,7 @@
 (defn- hack-9910
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [editor-id {:keys [value-path] :as editor-props}]
-  ; XXX#9910
+  ; HACK#9910
   ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozik,
   ; akkor a hack-9910 Reagent komponens meghívja a [:text-editor/hack-9910 ...]
   ; eseményt, ami kiértékeli a változást ...
@@ -57,7 +57,7 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
-  [:> JoditEditor (helpers/jodit-attributes editor-id editor-props)])
+  [:> JoditEditor]) ;(helpers/jodit-attributes editor-id editor-props)])
 
 (defn- text-editor-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,9 +79,9 @@
   [editor-id editor-props]
   [:div [:style {:type "text/css"}
                 ".jodit-wysiwyg {background-color: var( --fill-color ); cursor: text}"]
-        [text-editor-label editor-id editor-props]
-        [jodit             editor-id editor-props]
-        [hack-9910         editor-id editor-props]])
+        ;[text-editor-label editor-id editor-props]
+        [jodit             editor-id editor-props]])
+        ;[hack-9910         editor-id editor-props]])
 
 (defn- text-editor
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -104,8 +104,8 @@
   ;    Default: false
   ;   :buttons (keywords in vector)(opt)
   ;    [:bold, :italic, :underline, :font, :font-size, :cut, :copy, :paste
-  ;     :link, :undo, :redo]
-  ;    Default: [:bold :italic :underline]
+  ;     :link, :undo, :redo, :brush]
+  ;    Default: [:bold :italic :underline :brush]
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :indent (map)(opt)

@@ -34,7 +34,7 @@
   ;   :placeholder (metamorphic-content)
   ;   :value-path (vector)}
   [editor-id editor-props]
-  (merge {:buttons     [:bold :italic :underline]
+  (merge {:buttons     [:bold :italic :underline :brush]
           :insert-as   :cleared-html
           :min-height  400
           :placeholder :write-something!

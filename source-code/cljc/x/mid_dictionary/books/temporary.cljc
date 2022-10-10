@@ -31,6 +31,10 @@
            :other
            {:en "Other"
             :hu "Egyéb"}
+
+           :icon
+           {:en "Icon"
+            :hu "Ikon"}
            :invalid-number
            {:en "Invalid number"
             :hu "Érvénytelen szám"}
@@ -269,7 +273,7 @@
            {:en "Add new"
             :hu "Hozzáadás"}
 
-           
+
            :add-title!
            {:en "Add title"
             :hu "Cím hozzáadása"}
