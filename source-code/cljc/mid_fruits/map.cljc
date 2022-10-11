@@ -880,8 +880,7 @@
   (letfn [(f [%] (if (keyword? %)
                      (if-let [namespace (namespace %)]
                              (keyword namespace))))]
-         (some #(f    %)
-                (keys n))))
+         (some f (keys n))))
 
 (defn namespaced?
   ; @param (map) n

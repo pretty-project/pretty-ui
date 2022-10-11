@@ -15,7 +15,6 @@
 (ns x.app-user.api
     (:require [x.app-user.account-handler.effects]
               [x.app-user.account-handler.events]
-              [x.app-user.settings-handler.effects :as settings-handler.effects]
               [x.app-user.account-handler.subs     :as account-handler.subs]
               [x.app-user.core.helpers             :as core.helpers]
               [x.app-user.profile-handler.config   :as profile-handler.config]
@@ -63,6 +62,7 @@
 
 ; x.app-user.settings-handler.events
 (def set-user-settings-item! settings-handler.events/set-user-settings-item!)
+(def set-user-settings!      settings-handler.events/set-user-settings!)
 
 ; x.app-user.settings-handler.subs
 (def get-user-settings       settings-handler.subs/get-user-settings)

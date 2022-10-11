@@ -14,7 +14,8 @@
 
 (ns x.app-developer.developer-tools.subs
     (:require [mid-fruits.candy                      :refer [param return]]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
+              [x.app-core.api                        :as core]
               [x.app-developer.developer-tools.state :as developer-tools.state]))
 
 
@@ -31,7 +32,7 @@
 (defn print-events?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (let [debug-mode (r a/get-debug-mode db)]
+  (let [debug-mode (r core/get-debug-mode db)]
        (= debug-mode "pineapple-juice")))
 
 
@@ -40,7 +41,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-db-write-count get-db-write-count)
+(r/reg-sub :developer/get-db-write-count get-db-write-count)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer-tools/print-events? print-events?)
+(r/reg-sub :developer-tools/print-events? print-events?)

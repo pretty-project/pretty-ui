@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.profile-handler.subs
-    (:require [x.app-core.api                    :as a :refer [r]]
+    (:require [re-frame.api                      :as r :refer [r]]
               [x.app-user.profile-handler.config :as profile-handler.config]))
 
 
@@ -27,7 +27,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [:user :profile-handler/data-items]))
+  (get-in db [:user :profile-handler/user-profile]))
 
 (defn get-user-profile-item
   ; @param (keyword) item-key
@@ -37,7 +37,7 @@
   ;
   ; @return (map)
   [db [_ item-key]]
-  (get-in db [:user :profile-handler/data-items item-key]))
+  (get-in db [:user :profile-handler/user-profile item-key]))
 
 (defn get-user-email-address
   ; @usage
@@ -53,7 +53,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :profile-handler/data-items :first-name]))
+  (get-in db [:user :profile-handler/user-profile :first-name]))
 
 (defn get-user-last-name
   ; @usage
@@ -61,7 +61,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :profile-handler/data-items :last-name]))
+  (get-in db [:user :profile-handler/user-profile :last-name]))
 
 (defn get-user-locale
   ; @usage
@@ -69,7 +69,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :profile-handler/data-items :locale]))
+  (get-in db [:user :profile-handler/user-profile :locale]))
 
 (defn get-user-phone-number
   ; @usage
@@ -77,7 +77,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :profile-handler/data-items :phone-number]))
+  (get-in db [:user :profile-handler/user-profile :phone-number]))
 
 (defn get-user-profile-picture
   ; @usage
@@ -94,28 +94,28 @@
 
 ; @usage
 ;  [:user/get-user-profile]
-(a/reg-sub :user/get-user-profile get-user-profile)
+(r/reg-sub :user/get-user-profile get-user-profile)
 
 ; @usage
 ;  [:user/get-user-profile-item :email-address]
-(a/reg-sub :user/get-user-profile-item get-user-profile-item)
+(r/reg-sub :user/get-user-profile-item get-user-profile-item)
 
 ; @usage
 ;  [:user/get-user-first-name]
-(a/reg-sub :user/get-user-first-name get-user-first-name)
+(r/reg-sub :user/get-user-first-name get-user-first-name)
 
 ; @usage
 ;  [:user/get-user-last-name]
-(a/reg-sub :user/get-user-last-name get-user-last-name)
+(r/reg-sub :user/get-user-last-name get-user-last-name)
 
 ; @usage
 ;  [:user/get-user-locale]
-(a/reg-sub :user/get-user-locale get-user-locale)
+(r/reg-sub :user/get-user-locale get-user-locale)
 
 ; @usage
 ;  [:user/get-user-phone-number]
-(a/reg-sub :user/get-user-phone-number get-user-phone-number)
+(r/reg-sub :user/get-user-phone-number get-user-phone-number)
 
 ; @usage
 ;  [:user/get-user-profile-picture]
-(a/reg-sub :user/get-user-profile-picture get-user-profile-picture)
+(r/reg-sub :user/get-user-profile-picture get-user-profile-picture)

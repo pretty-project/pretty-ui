@@ -23,5 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 (core/reg-transfer! :user/transfer-user-account!
-  {:data-f      #(-> % account-handler.helpers/request->user-public-account map/remove-namespace)
-   :target-path [:user :account-handler/data-items]})
+  {:data-f      #(-> % account-handler.helpers/request->public-user-account map/remove-namespace)
+   :target-path [:user :account-handler/user-account]})

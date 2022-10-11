@@ -14,7 +14,7 @@
 
 (ns x.app-environment.keypress-handler.effects
     (:require [mid-fruits.map                            :refer [dissoc-in]]
-              [x.app-core.api                            :as a :refer [r]]
+              [re-frame.api                              :as r :refer [r]]
               [x.app-environment.keypress-handler.events :as keypress-handler.events]
               [x.app-environment.keypress-handler.subs   :as keypress-handler.subs]))
 
@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/reg-keypress-event!
+(r/reg-event-fx :environment/reg-keypress-event!
   ; @param (keyword)(opt) event-id
   ; @param (map) event-props
   ;  {:exclusive? (boolean)(opt)
@@ -49,14 +48,13 @@
   ;
   ; @usage
   ;  [:environment/reg-keypress-event {:key-code 65 :on-keydown [:my-event]}
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ event-id {:keys [key-code prevent-default?] :as event-props}]]
       (if prevent-default? {:fx [:environment/prevent-keypress-default! key-code]
                             :db (r keypress-handler.events/reg-keypress-event! db event-id event-props)}
                            {:db (r keypress-handler.events/reg-keypress-event! db event-id event-props)})))
 
-(a/reg-event-fx
-  :environment/remove-keypress-event!
+(r/reg-event-fx :environment/remove-keypress-event!
   ; @param (keyword) event-id
   ;
   ; @usage
@@ -73,8 +71,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/listen-to-pressed-key!
+(r/reg-event-fx :environment/listen-to-pressed-key!
   ; @param (keyword)(opt) event-id
   ; @param (map) event-props
   ;  {:key-code (integer)}
@@ -84,7 +81,7 @@
   ;
   ; @usage
   ;  [:environment/listen-to-pressed-key! :my-event {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ event-id {:keys [key-code]}]]
       ; - Az [:environment/listen-to-pressed-key! ...] esemény által regisztrált billentyűk kódjait
       ;   a keypress-handler {:type-mode? true} állapotba léptetve is eltárolja!
@@ -100,8 +97,7 @@
                                                                             :on-keyup   on-keyup
                                                                             :required?  true})})))
 
-(a/reg-event-fx
-  :environment/stop-listening-to-pressed-key!
+(r/reg-event-fx :environment/stop-listening-to-pressed-key!
   ; @param (keyword) event-id
   ;
   ; @usage
@@ -114,8 +110,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/key-pressed
+(r/reg-event-fx :environment/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code
@@ -128,8 +123,7 @@
                :dispatch-n (r keypress-handler.subs/get-on-keydown-events db key-code)}
               {:dispatch-n (r keypress-handler.subs/get-on-keydown-events db key-code)})))
 
-(a/reg-event-fx
-  :environment/key-released
+(r/reg-event-fx :environment/key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (integer) key-code

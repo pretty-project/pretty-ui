@@ -14,8 +14,8 @@
 
 (ns x.app-sync.request-handler.prototypes
     (:require [mid-fruits.candy                  :refer [param]]
+              [re-frame.api                      :as r]
               [time.api                          :as time]
-              [x.app-core.api                    :as a :refer [r]]
               [x.app-sync.request-handler.config :as request-handler.config]))
 
 
@@ -40,7 +40,7 @@
                               :sent-time    (time/timestamp-string)
                               :timeout      request-handler.config/DEFAULT-REQUEST-TIMEOUT}
                              (param request-props))
-        error-handler-f    (fn [request-id server-response]  (a/dispatch [:sync/request-failured      request-id request-props server-response]))
-        response-handler-f (fn [request-id server-response]  (a/dispatch [:sync/request-successed     request-id request-props server-response]))
-        progress-handler-f (fn [request-id process-progress] (a/dispatch [:core/set-process-progress! request-id process-progress]))]
+        error-handler-f    (fn [request-id server-response]  (r/dispatch [:sync/request-failured      request-id request-props server-response]))
+        response-handler-f (fn [request-id server-response]  (r/dispatch [:sync/request-successed     request-id request-props server-response]))
+        progress-handler-f (fn [request-id process-progress] (r/dispatch [:core/set-process-progress! request-id process-progress]))]
        (merge request-props {:error-handler-f error-handler-f :progress-handler-f progress-handler-f :response-handler-f response-handler-f})))

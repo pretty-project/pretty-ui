@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.events
-    (:require [x.app-core.api    :as a :refer [r]]
+    (:require [re-frame.api      :as r :refer [r]]
               [x.app-ui.renderer :as renderer]))
 
 
@@ -45,7 +45,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :ui/minimize-popup! minimize-popup!)
+(r/reg-event-db :ui/minimize-popup! minimize-popup!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :ui/maximize-popup! maximize-popup!)
+(r/reg-event-db :ui/maximize-popup! maximize-popup!)

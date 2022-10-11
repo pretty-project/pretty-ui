@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.transfer
-    (:require [x.server-core.api                      :as core]
-              [x.server-db.api                        :as db]
+    (:require [mid-fruits.map                         :as map]
+              [x.server-core.api                      :as core]
               [x.server-user.settings-handler.helpers :as settings-handler.helpers]))
 
 
@@ -23,5 +23,5 @@
 ;; ----------------------------------------------------------------------------
 
 (core/reg-transfer! :user/transfer-user-settings!
-  {:data-f      #(-> % settings-handler.helpers/request->user-settings db/document->pure-document)
-   :target-path [:user :settings-handler/data-items]})
+  {:data-f      #(-> % settings-handler.helpers/request->public-user-settings map/remove-namespace)
+   :target-path [:user :settings-handler/user-settings]})

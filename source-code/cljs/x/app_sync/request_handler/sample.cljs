@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.sample
-    (:require [mid-fruits.candy :refer [param return]]
-              [x.app-core.api   :as a :refer [r]]
+    (:require [mid-fruits.candy :refer [return]]
+              [re-frame.api     :as r :refer [r]]
               [x.app-sync.api   :as sync]))
 
 
@@ -22,8 +22,7 @@
 ;; -- Lekérés küldése ---------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :send-my-request!
+(r/reg-event-fx :send-my-request!
   [:sync/send-request! :my-request
                        {}])
 
@@ -46,8 +45,7 @@
   [db [_ request-id server-response]]
   (assoc-in db [:my-response] server-response))
 
-(a/reg-event-fx
-  :send-my-request!
+(r/reg-event-fx :send-my-request!
   (fn [{:keys [db]} _]
       [:sync/send-request! :my-request
                            {:uri "/my-uri"
@@ -71,8 +69,7 @@
 ; Így biztosítható, hogy egyszerű függvények is alkalmazhatók legyenek validator-f
 ; függvényként (pl. string?, map? ...)
 
-(a/reg-event-fx
-  :send-my-validated-request!
+(r/reg-event-fx :send-my-validated-request!
   [:sync/send-request! :my-request
                        {:uri "/my-uri"
                         :on-success []
@@ -83,8 +80,7 @@
   [db [_ request-id server-response]]
   (return true))
 
-(a/reg-event-fx
-  :send-my-request!
+(r/reg-event-fx :send-my-request!
   (fn [{:keys [db]} _]
       [:sync/send-request! :my-request
                            {:uri "/my-uri"

@@ -416,7 +416,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :color "Blue") {...})
+  ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :namespace/color "Blue") {...})
   ;
   ; @return (namespaced map)
   ([collection-name document-id f]
@@ -441,7 +441,7 @@
   ;  {:prototype-f (function)(opt)}
   ;
   ; @usage
-  ;  (mongo-db/apply-document! "my_collection" #(assoc % :color "Blue") {...})
+  ;  (mongo-db/apply-document! "my_collection" #(assoc % :namespace/color "Blue") {...})
   ;
   ; @return (namespaced maps in vector)
   ([collection-name f]

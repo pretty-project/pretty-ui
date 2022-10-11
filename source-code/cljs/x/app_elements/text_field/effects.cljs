@@ -15,7 +15,7 @@
 (ns x.app-elements.text-field.effects
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.string                 :as string]
-              [x.app-core.api                    :as a :refer [r]]
+              [re-frame.api                      :as r :refer [r]]
               [x.app-elements.input.events       :as input.events]
               [x.app-elements.text-field.events  :as text-field.events]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/text-field-did-mount
+(r/reg-event-fx :elements.text-field/text-field-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -47,8 +46,7 @@
             ; a mező tartalmát beállítani és a kurzor mindenképp a tartalom végén tudjon megjelenni!
             :dispatch-later [(if autofocus? {:ms 50 :fx [:elements.text-field/focus-field! field-id field-props]})]})))
 
-(a/reg-event-fx
-  :elements.text-field/text-field-will-unmount
+(r/reg-event-fx :elements.text-field/text-field-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -64,8 +62,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/use-initial-value!
+(r/reg-event-fx :elements.text-field/use-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -73,8 +70,7 @@
   (fn [{:keys [db]} [_ field-id field-props]]
       {:db (r text-field.events/use-initial-value! db field-id field-props)}))
 
-(a/reg-event-fx
-  :elements.text-field/use-stored-value!
+(r/reg-event-fx :elements.text-field/use-stored-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -90,8 +86,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/reg-keypress-events!
+(r/reg-event-fx :elements.text-field/reg-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -107,8 +102,7 @@
            {:dispatch-n [[:environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
                          [:environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
 
-(a/reg-event-fx
-  :elements.text-field/remove-keypress-events!
+(r/reg-event-fx :elements.text-field/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -125,8 +119,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/ENTER-pressed
+(r/reg-event-fx :elements.text-field/ENTER-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -135,8 +128,7 @@
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
       {:dispatch on-enter}))
 
-(a/reg-event-fx
-  :elements.text-field/ESC-pressed
+(r/reg-event-fx :elements.text-field/ESC-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -150,8 +142,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/empty-field!
+(r/reg-event-fx :elements.text-field/empty-field!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -177,15 +168,14 @@
       (if (text-field.helpers/field-emptiable? field-id)
           {:db       (r text-field.events/empty-field! db field-id field-props)
            :fx       [:elements.text-field/empty-field! field-id]
-           :dispatch (if on-empty (a/metamorphic-event<-params on-empty string/empty-string))})))
+           :dispatch (if on-empty (r/metamorphic-event<-params on-empty string/empty-string))})))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.text-field/type-ended
+(r/reg-event-fx :elements.text-field/type-ended
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -194,10 +184,9 @@
   ; @param (string) field-content
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props} field-content]]
       {:db       (r text-field.events/type-ended db field-id field-props field-content)
-       :dispatch (if on-type-ended (a/metamorphic-event<-params on-type-ended field-content))}))
+       :dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}))
 
-(a/reg-event-fx
-  :elements.text-field/field-blurred
+(r/reg-event-fx :elements.text-field/field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -207,8 +196,7 @@
       {:db         (r text-field.events/field-blurred db field-id field-props)
        :dispatch-n [on-blur [:elements.text-field/remove-keypress-events! field-id field-props]]}))
 
-(a/reg-event-fx
-  :elements.text-field/field-focused
+(r/reg-event-fx :elements.text-field/field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id

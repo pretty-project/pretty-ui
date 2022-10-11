@@ -29,8 +29,8 @@
               [mid-fruits.random            :as random]
               [mid-fruits.string            :as string]
               [reagent.api                  :refer [component?]]
+              [re-frame.api                 :as r]
               [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-core.api               :as a :refer [r]]
               [x.app-dictionary.api         :as dictionary]))
 
 
@@ -131,7 +131,7 @@
   ;   :content (function)
   ;   :subscriber (subscription-vector)}
   [component-id {:keys [subscriber] :as context-props}]
-  (let [subscribed-props (a/subscribe subscriber)]
+  (let [subscribed-props (r/subscribe subscriber)]
        (fn [_ {:keys [base-props content]}]
            [transmitter component-id {:base-props       base-props
                                       :render-f         content

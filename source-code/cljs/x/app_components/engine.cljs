@@ -25,7 +25,7 @@
 
 (ns x.app-components.engine
     (:require [mid-fruits.map :refer [dissoc-in]]
-              [x.app-core.api :as a :refer [r]]
+              [re-frame.api   :as r]
               [x.app-db.api   :as db]))
 
 
@@ -43,7 +43,7 @@
   [db [_ component-id prop-key]]
   (get-in db (db/path :components/primary component-id prop-key)))
 
-(a/reg-sub :components/get-component-prop get-component-prop)
+(r/reg-sub :components/get-component-prop get-component-prop)
 
 
 

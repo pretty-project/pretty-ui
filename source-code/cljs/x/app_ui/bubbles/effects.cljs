@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.effects
-    (:require [x.app-core.api              :as a :refer [r]]
+    (:require [re-frame.api                :as r :refer [r]]
               [x.app-ui.bubbles.config     :as bubbles.config]
               [x.app-ui.bubbles.prototypes :as bubbles.prototypes]
               [x.app-ui.bubbles.subs       :as bubbles.subs]))
@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/initialize-bubble!
+(r/reg-event-fx :ui/initialize-bubble!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -32,8 +31,7 @@
       {:dispatch-later [(if (r bubbles.subs/autoclose-bubble? db bubble-id)
                             {:ms bubbles.config/BUBBLE-LIFETIME :dispatch [:ui/autoclose-bubble?! bubble-id]})]}))
 
-(a/reg-event-fx
-  :ui/autoclose-bubble?!
+(r/reg-event-fx :ui/autoclose-bubble?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) bubble-id
@@ -51,8 +49,7 @@
             {:dispatch-later [{:ms (r bubbles.subs/get-bubble-lifetime-left db bubble-id)
                                :dispatch [:ui/autoclose-bubble?! bubble-id]}]})))
 
-(a/reg-event-fx
-  :ui/close-bubble!
+(r/reg-event-fx :ui/close-bubble!
   ; @param (keyword) bubble-id
   ; @param (map)(opt) action-props
   ;  {:timeout (ms)(opt)
@@ -64,8 +61,7 @@
       (if timeout {:dispatch-later [{:ms timeout :dispatch [:ui/destroy-element! :bubbles bubble-id]}]}
                   [:ui/destroy-element! :bubbles bubble-id])))
 
-(a/reg-event-fx
-  :ui/render-bubble!
+(r/reg-event-fx :ui/render-bubble!
   ; @param (keyword)(opt) bubble-id
   ; @param (map) bubble-props
   ;  {:autoclose? (boolean)(opt)
@@ -81,7 +77,7 @@
   ;
   ; @usage
   ;  [:ui/render-bubble! :my-bubble {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ bubble-id bubble-props]]
       (let [bubble-props (bubbles.prototypes/bubble-props-prototype bubble-id bubble-props)]
            {:dispatch-if [(r bubbles.subs/bubbles-enabled-by-user? db)

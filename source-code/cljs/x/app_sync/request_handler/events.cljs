@@ -15,8 +15,9 @@
 (ns x.app-sync.request-handler.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.vector                  :as vector]
+              [re-frame.api                       :refer [r]]
               [time.api                           :as time]
-              [x.app-core.api                     :as a :refer [r]]
+              [x.app-core.api                     :as core]
               [x.app-db.api                       :as db]
               [x.app-ui.api                       :as ui]
               [x.app-sync.request-handler.subs    :as request-handler.subs]
@@ -86,8 +87,8 @@
   ;
   ; @return (map)
   [db [_ request-id request-props server-response]]
-  (as-> db % (r a/set-process-status!                           % request-id :success)
-             (r a/set-process-activity!                         % request-id :idle)
+  (as-> db % (r core/set-process-status!                        % request-id :success)
+             (r core/set-process-activity!                      % request-id :idle)
              (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-failured
@@ -102,8 +103,8 @@
   ; DEBUG
   ; A szerver-válasz hiba vagy nem megfelelő esetén is eltárolásra kerül,
   ; hogy a fejlesztői eszközök hozzáférjenek a szerver-válasz értékéhez ...
-  (as-> db % (r a/set-process-status!                           % request-id :failure)
-             (r a/set-process-activity!                         % request-id :idle)
+  (as-> db % (r core/set-process-status!                        % request-id :failure)
+             (r core/set-process-activity!                      % request-id :idle)
              (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-stalled
@@ -122,11 +123,11 @@
       ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request újra el lett küldve ...
       (let [display-progress? (get-in db [:sync :request-handler/data-items request-id :display-progress?])
             lock-screen?      (get-in db [:sync :request-handler/data-items request-id :lock-screen?])]
-           (cond-> (r a/set-process-activity! db request-id :stalled)
+           (cond-> (r core/set-process-activity! db request-id :stalled)
                    (not display-progress?) (as-> % (r ui/stop-listening-to-process! db request-id))
                    (not lock-screen?)      (as-> % (r ui/unlock-screen!             db request-id))))
       ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request NEM lett újra elküldve ...
-      (cond-> (r a/set-process-activity! db request-id :stalled)
+      (cond-> (r core/set-process-activity! db request-id :stalled)
               display-progress? (as-> % (r ui/stop-listening-to-process! % request-id))
               lock-screen?      (as-> % (r ui/unlock-screen!             % request-id)))))
 
@@ -139,13 +140,13 @@
   ; @return (map)
   [db [_ request-id _]]
   (as-> db % ; Set request status
-             (r a/set-process-status!   % request-id :progress)
+             (r core/set-process-status!   % request-id :progress)
              ; Set request activity
-             (r a/set-process-activity! % request-id :active)
+             (r core/set-process-activity! % request-id :active)
              ; Set request progress
              ; Szükséges a process-progress értékét nullázni!
              ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
-             (r a/set-process-progress! % request-id 0)))
+             (r core/set-process-progress! % request-id 0)))
 
 (defn send-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!

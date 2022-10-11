@@ -18,7 +18,8 @@
               [mid-fruits.uri                    :as uri]
               [mid-fruits.vector                 :as vector]
               [reitit.frontend                   :as reitit.frontend]
-              [x.app-core.api                    :as a :refer [r]]
+              [re-frame.api                      :as r :refer [r]]
+              [x.app-core.api                    :as core]
               [x.app-router.route-handler.config :as route-handler.config]
               [x.app-user.api                    :as user]
               [x.mid-router.route-handler.subs   :as route-handler.subs]))
@@ -46,7 +47,7 @@
   ;
   ; @return (string)
   [db [_ route-string]]
-  (if-let [debug-mode (r a/get-debug-mode db)]
+  (if-let [debug-mode (r core/get-debug-mode db)]
           (uri/uri<-query-param route-string debug-mode)
           (return               route-string)))
 
@@ -368,63 +369,63 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :router/get-client-routes get-client-routes)
+(r/reg-sub :router/get-client-routes get-client-routes)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :router/route-template-exists? route-template-exists?)
+(r/reg-sub :router/route-template-exists? route-template-exists?)
 
 ; @usage
 ;  [:router/get-current-route-string]
-(a/reg-sub :router/get-current-route-string get-current-route-string)
+(r/reg-sub :router/get-current-route-string get-current-route-string)
 
 ; @usage
 ;  [:router/get-current-route-id]
-(a/reg-sub :router/get-current-route-id get-current-route-id)
+(r/reg-sub :router/get-current-route-id get-current-route-id)
 
 ; @usage
 ;  [:router/get-current-route-path]
-(a/reg-sub :router/get-current-route-path get-current-route-path)
+(r/reg-sub :router/get-current-route-path get-current-route-path)
 
 ; @usage
 ;  [:router/get-current-route-template]
-(a/reg-sub :router/get-current-route-template get-current-route-template)
+(r/reg-sub :router/get-current-route-template get-current-route-template)
 
 ; @usage
 ;  [:router/get-current-route-path-params]
-(a/reg-sub :router/get-current-route-path-params get-current-route-path-params)
+(r/reg-sub :router/get-current-route-path-params get-current-route-path-params)
 
 ; @usage
 ;  [:router/get-current-route-path-param :my-param]
-(a/reg-sub :router/get-current-route-path-param get-current-route-path-param)
+(r/reg-sub :router/get-current-route-path-param get-current-route-path-param)
 
 ; @usage
 ;  [:router/current-route-path-param? :my-param "My value"]
-(a/reg-sub :router/current-route-path-param? current-route-path-param?)
+(r/reg-sub :router/current-route-path-param? current-route-path-param?)
 
 ; @usage
 ;  [:router/get-current-route-query-param]
-(a/reg-sub :router/get-current-route-query-params get-current-route-query-params)
+(r/reg-sub :router/get-current-route-query-params get-current-route-query-params)
 
 ; @usage
 ;  [:router/get-current-route-query-param :my-param]
-(a/reg-sub :router/get-current-route-query-param get-current-route-query-param)
+(r/reg-sub :router/get-current-route-query-param get-current-route-query-param)
 
 ; @usage
 ;  [:router/current-route-query-param? :my-param "My value"]
-(a/reg-sub :router/current-route-query-param? current-route-query-param?)
+(r/reg-sub :router/current-route-query-param? current-route-query-param?)
 
 ; @usage
 ;  [:router/get-current-route-fragment]
-(a/reg-sub :router/get-current-route-fragment get-current-route-fragment)
+(r/reg-sub :router/get-current-route-fragment get-current-route-fragment)
 
 ; @usage
 ;  [:router/get-current-route-parent]
-(a/reg-sub :router/get-current-route-parent get-current-route-parent)
+(r/reg-sub :router/get-current-route-parent get-current-route-parent)
 
 ; @usage
 ;  [:router/at-home?]
-(a/reg-sub :router/at-home? at-home?)
+(r/reg-sub :router/at-home? at-home?)
 
 ; @usage
 ;  [:router/home-next-door?]
-(a/reg-sub :router/home-next-door? home-next-door?)
+(r/reg-sub :router/home-next-door? home-next-door?)

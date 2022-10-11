@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-bar.effects
-    (:require [x.app-core.api               :as a :refer [r]]
+    (:require [re-frame.api                 :as r :refer [r]]
               [x.app-ui.progress-bar.events :as progress-bar.events]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/simulate-process!
+(r/reg-event-fx :ui/simulate-process!
   ; @param (map)(opt) process-props
   ;  {:on-process-ended (metamorphic-event)(opt)}
   ;
@@ -37,8 +36,7 @@
        :dispatch-later [{:ms 500 :dispatch [:ui/stop-faking-process!]}
                         {:ms 500 :dispatch on-process-ended}]}))
 
-(a/reg-event-fx
-  :ui/end-fake-process!
+(r/reg-event-fx :ui/end-fake-process!
   ; @usage
   ;  [:ui/end-fake-process!]
   (fn [{:keys [db]} _]

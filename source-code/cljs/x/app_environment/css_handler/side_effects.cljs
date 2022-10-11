@@ -15,7 +15,8 @@
 (ns x.app-environment.css-handler.side-effects
     (:require [dom.api                               :as dom]
               [mid-fruits.string                     :as string]
-              [x.app-core.api                        :as a :refer [cache-control-uri]]
+              [re-frame.api                          :as r]
+              [x.app-core.api                        :as core :refer [cache-control-uri]]
               [x.app-environment.css-handler.helpers :as css-handler.helpers]))
 
 
@@ -32,7 +33,7 @@
   ;  (environment/add-css! "/css/filename.css")
   [uri options]
   (let [head-element (dom/get-head-element)
-        app-build    (a/app-build)
+        app-build    (core/app-build)
         filepath     (cache-control-uri (string/starts-with! uri "/") app-build)
         link-element (css-handler.helpers/create-link-element! uri)]
        (if-not (css-handler.helpers/source-exists?       head-element uri)
@@ -53,8 +54,8 @@
 
 ; @usage
 ;  [:environment/add-css! "/css/filename.css"]
-(a/reg-fx :environment/add-css! add-css!)
+(r/reg-fx :environment/add-css! add-css!)
 
 ; @usage
 ;  [:environment/remove-css! "/filename.css"]
-(a/reg-fx :environment/remove-css! remove-css!)
+(r/reg-fx :environment/remove-css! remove-css!)

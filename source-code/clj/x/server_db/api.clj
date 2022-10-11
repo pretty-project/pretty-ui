@@ -118,7 +118,6 @@
 (def document->identified-document   document-handler/document->identified-document)
 
 ; x.server-db.engine
-(def item-path->cofx-path engine/item-path->cofx-path)
 (def subscribe-item       engine/subscribe-item)
 (def subscribed-item      engine/subscribed-item)
 (def get-db               engine/get-db)
@@ -144,12 +143,7 @@
 ; x.server-db.partition-handler
 (def data-item-path                 partition-handler/data-item-path)
 (def path                           partition-handler/path)
-(def data-item-cofx-path            partition-handler/data-item-cofx-path)
-(def cofx-path                      partition-handler/cofx-path)
 (def meta-item-path                 partition-handler/meta-item-path)
-(def meta-item-cofx-path            partition-handler/meta-item-cofx-path)
-(def data-history-path              partition-handler/data-history-path)
-(def data-history-cofx-path         partition-handler/data-history-cofx-path)
 (def get-partition                  partition-handler/get-partition)
 (def get-data-items                 partition-handler/get-data-items)
 (def get-data-item                  partition-handler/get-data-item)

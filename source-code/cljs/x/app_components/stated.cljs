@@ -28,10 +28,10 @@
               [mid-fruits.map               :refer [dissoc-in]]
               [mid-fruits.random            :as random]
               [reagent.api                  :as reagent]
+              [re-frame.api                 :as r :refer [r]]
               [x.app-components.engine      :as engine]
               [x.app-components.subscriber  :rename {component subscriber}]
-              [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-core.api               :as a :refer [r]]))
+              [x.app-components.transmitter :rename {component transmitter}]))
 
 
 
@@ -227,8 +227,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :components/initialize-component!
+(r/reg-event-fx :components/initialize-component!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -239,8 +238,7 @@
   ; eseményben történt, amely esemény a komponensek gyorsabb felépülése érdekében összevonásra
   ; került a [:components/component-mounted ...] eseménnyel.
 
-(a/reg-event-fx
-  :components/destruct-component!
+(r/reg-event-fx :components/destruct-component!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -254,12 +252,11 @@
                                 (r remove-component-initial-props! % component-id context-props))
            :dispatch (if-let [current-props (r get-component-current-props db component-id context-props)]
                              ; If current-props is NOT nil ...
-                             (a/metamorphic-event<-params destructor current-props)
+                             (r/metamorphic-event<-params destructor current-props)
                              ; If current-props is nil ...
                              (param destructor))})))
 
-(a/reg-event-fx
-  :components/component-mounted
+(r/reg-event-fx :components/component-mounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -277,8 +274,7 @@
               ; If component is initialized ...
               {:db (r engine/set-component-prop! db component-id :mount-id mount-id)})))
 
-(a/reg-event-fx
-  :components/component-updated
+(r/reg-event-fx :components/component-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -295,8 +291,7 @@
       {;:db (r engine/set-component-prop! db component-id :status :updated)
        :dispatch updater}))
 
-(a/reg-event-fx
-  :components/component-unmounted
+(r/reg-event-fx :components/component-unmounted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) component-id
@@ -337,16 +332,16 @@
   ; @param (map) context-props
   [component-id context-props]
   (let [mount-id (random/generate-keyword)]
-       (reagent/lifecycles {:component-did-mount    #(a/dispatch [:components/component-mounted   component-id context-props mount-id])
+       (reagent/lifecycles {:component-did-mount    #(r/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
-                            ;:component-did-update   #(a/dispatch [:components/component-updated   component-id context-props mount-id])
+                            ;:component-did-update   #(r/dispatch [:components/component-updated   component-id context-props mount-id])
                             ;:component-did-update (fn [this _] ;(println (str "dd")))
                             ;                          (let [new  (reagent.core/argv this)]
                             ;                               (println (str new)))
                             ;          (fn [this old-argv]        ;; reagent provides you the entire "argv", not just the "props"
                             ;            (let [new-argv (rest (reagent/argv this))]
                             ;              (do-something new-argv old-argv)]))
-                            :component-will-unmount #(a/dispatch [:components/component-unmounted component-id context-props mount-id])
+                            :component-will-unmount #(r/dispatch [:components/component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 
 (defn component

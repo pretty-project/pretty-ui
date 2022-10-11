@@ -14,7 +14,7 @@
 
 (ns x.app-environment.keypress-handler.subs
     (:require [mid-fruits.map :as map]
-              [x.app-core.api :as a :refer [r]]))
+              [re-frame.api   :as r :refer [r]]))
 
 
 
@@ -113,4 +113,4 @@
 
 ; @usage
 ;  [:environment/key-pressed? 27]
-(a/reg-sub :environment/key-pressed? key-pressed?)
+(r/reg-sub :environment/key-pressed? key-pressed?)

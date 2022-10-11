@@ -17,7 +17,7 @@
               [mid-fruits.pretty                     :as pretty]
               [mid-fruits.reader                     :as reader]
               [mid-fruits.vector                     :as vector]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-developer.re-frame-browser.subs :as re-frame-browser.subs]))
 
 
@@ -72,16 +72,16 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/go-to! go-to!)
+(r/reg-event-db :re-frame-browser/go-to! go-to!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/go-up! go-up!)
+(r/reg-event-db :re-frame-browser/go-up! go-up!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/toggle-subscription! toggle-subscription!)
+(r/reg-event-db :re-frame-browser/toggle-subscription! toggle-subscription!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/toggle-data-view! toggle-data-view!)
+(r/reg-event-db :re-frame-browser/toggle-data-view! toggle-data-view!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :re-frame-browser/toggle-edit-item-mode! toggle-edit-item-mode!)
+(r/reg-event-db :re-frame-browser/toggle-edit-item-mode! toggle-edit-item-mode!)

@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy             :refer [return]]
               [mid-fruits.map               :refer [dissoc-in]]
               [mid-fruits.string            :as string]
-              [x.app-core.api               :as a :refer [r]]
+              [re-frame.api                 :as r :refer [r]]
               [x.app-db.api                 :as db]
               [x.app-elements.input.events  :as input.events]
               [x.app-elements.input.helpers :as input.helpers]
@@ -164,7 +164,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.text-field/show-surface! show-surface!)
+(r/reg-event-db :elements.text-field/show-surface! show-surface!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.text-field/clear-value! clear-value!)
+(r/reg-event-db :elements.text-field/clear-value! clear-value!)

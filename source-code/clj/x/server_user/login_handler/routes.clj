@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.login-handler.routes
-    (:require [local-db.api                          :as local-db]
-              [mid-fruits.map                        :as map]
+    (:require [mid-fruits.map                        :as map]
+              [mongo-db.api                          :as mongo-db]
               [server-fruits.http                    :as http]
+              [x.server-user.account-handler.config  :as account-handler.config]
               [x.server-user.account-handler.helpers :as account-handler.helpers]
               [x.server-user.login-handler.helpers   :as login-handler.helpers]))
 
@@ -35,11 +36,9 @@
   ; @return (map)
   [request]
   (let [pattern             (login-handler.helpers/request->authenticator-pattern request)
-        user-account        (local-db/match-document "user_accounts" pattern)
-        user-account        (map/add-namespace user-account :user-account)
-        user-public-account (account-handler.helpers/user-account->user-public-account user-account)]
-       (if (map/nonempty? user-public-account)
-           (http/text-wrap  {:body "Speak, friend, and enter" :session user-public-account})
+        public-user-account (mongo-db/get-document-by-query "user_accounts" pattern account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION)]
+       (if (map/nonempty? public-user-account)
+           (http/text-wrap  {:body "Speak, friend, and enter" :session public-user-account})
            (http/error-wrap {:error-message :permission-denied :status 401}))))
 
 (defn logout

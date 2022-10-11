@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.map    :as map]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]))
+              [re-frame.api      :as r :refer [r]]))
 
 
 
@@ -76,22 +76,22 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-ids get-request-ids)
+(r/reg-sub :developer/get-request-ids get-request-ids)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-inspected-request-id get-inspected-request-id)
+(r/reg-sub :developer/get-inspected-request-id get-inspected-request-id)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-history-count get-request-history-count)
+(r/reg-sub :developer/get-request-history-count get-request-history-count)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-history-dex get-request-history-dex)
+(r/reg-sub :developer/get-request-history-dex get-request-history-dex)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-props get-request-props)
+(r/reg-sub :developer/get-request-props get-request-props)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-response get-request-response)
+(r/reg-sub :developer/get-request-response get-request-response)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :developer/get-request-prop get-request-prop)
+(r/reg-sub :developer/get-request-prop get-request-prop)

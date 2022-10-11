@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-prohibitor.effects
-    (:require [x.app-core.api :as a :refer [r]]
-              [x.app-db.api   :as db]
+    (:require [re-frame.api                               :as r :refer [r]]
+              [x.app-db.api                               :as db]
               [x.app-environment.scroll-prohibitor.events :as scroll-prohibitor.events]
               [x.app-environment.scroll-prohibitor.subs   :as scroll-prohibitor.subs]))
 
@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/remove-scroll-prohibition!
+(r/reg-event-fx :environment/remove-scroll-prohibition!
   ; @param (keyword) prohibition-id
   ;
   ; @usage
@@ -37,8 +36,7 @@
                ; Ha a tiltás eltávolítása után nincs hozzáadva másik tiltás ...
                {:db db :fx [:environment/enable-dom-scroll!]}))))
 
-(a/reg-event-fx
-  :environment/add-scroll-prohibition!
+(r/reg-event-fx :environment/add-scroll-prohibition!
   ; @param (keyword) prohibition-id
   ;
   ; @usage
@@ -51,8 +49,7 @@
           {:db (r db/set-item! db [:environment :sroll-prohibitor/data-items prohibition-id] {})
            :fx [:environment/disable-dom-scroll!]})))
 
-(a/reg-event-fx
-  :environment/enable-scroll!
+(r/reg-event-fx :environment/enable-scroll!
   ; @usage
   ;  [:environment/enable-scroll!]
   (fn [{:keys [db]} _]

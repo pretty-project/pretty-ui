@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.backup-handler
-    (:require [x.app-core.api          :as a :refer [r]]
+    (:require [re-frame.api            :as r :refer [r]]
               [x.mid-db.backup-handler :as backup-handler]))
 
 
@@ -46,25 +46,24 @@
 ;; -- Subscriptions -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-sub :db/item-changed?   item-changed?)
-(a/reg-sub :db/item-unchanged? item-unchanged?)
+(r/reg-sub :db/item-changed?   item-changed?)
+(r/reg-sub :db/item-unchanged? item-unchanged?)
 
 
 
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :db/store-backup-item!   store-backup-item!)
-(a/reg-event-db :db/restore-backup-item! restore-backup-item!)
-(a/reg-event-db :db/remove-backup-item!  remove-backup-item!)
+(r/reg-event-db :db/store-backup-item!   store-backup-item!)
+(r/reg-event-db :db/restore-backup-item! restore-backup-item!)
+(r/reg-event-db :db/remove-backup-item!  remove-backup-item!)
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :db/resolve-backup-item!
+(r/reg-event-fx :db/resolve-backup-item!
   ; @param (vector) item-path
   ; @param (map) events
   ;  {:on-changed   (metamorphic-event)

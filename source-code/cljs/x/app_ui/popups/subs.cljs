@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.subs
-    (:require [x.app-core.api    :as a :refer [r]]
+    (:require [re-frame.api      :as r :refer [r]]
               [x.app-ui.renderer :as renderer]))
 
 
@@ -37,4 +37,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/get-popup-prop get-popup-prop)
+(r/reg-sub :ui/get-popup-prop get-popup-prop)

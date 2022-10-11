@@ -14,7 +14,7 @@
 
 (ns x.app-developer.request-inspector.events
     (:require [mid-fruits.map                         :refer [dissoc-in]]
-              [x.app-core.api                         :as a :refer [r]]
+              [re-frame.api                           :as r :refer [r]]
               [x.app-developer.request-inspector.subs :as request-inspector.subs]))
 
 
@@ -53,13 +53,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :request-inspector/show-requests! show-requests!)
+(r/reg-event-db :request-inspector/show-requests! show-requests!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :request-inspector/inspect-request! inspect-request!)
+(r/reg-event-db :request-inspector/inspect-request! inspect-request!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :request-inspector/inspect-prev-request! inspect-prev-request!)
+(r/reg-event-db :request-inspector/inspect-prev-request! inspect-prev-request!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :request-inspector/inspect-next-request! inspect-next-request!)
+(r/reg-event-db :request-inspector/inspect-next-request! inspect-next-request!)

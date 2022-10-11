@@ -14,7 +14,6 @@
 
 (ns layouts.surface-a.helpers
     (:require [layouts.surface-a.state :as state]
-              [x.app-core.api          :as a]
               [x.app-environment.api   :as environment]))
 
 

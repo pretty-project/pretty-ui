@@ -25,7 +25,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [:user :settings-handler/data-items]))
+  (get-in db [:user :settings-handler/user-settings]))
 
 (defn get-user-settings-item
   ; @param (keyword) item-key
@@ -35,4 +35,4 @@
   ;
   ; @return (*)
   [db [_ item-key]]
-  (get-in db [:user :settings-handler/data-items item-key]))
+  (get-in db [:user :settings-handler/user-settings item-key]))

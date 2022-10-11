@@ -15,7 +15,8 @@
 (ns x.app-sync.request-handler.effects
     (:require [ajax.api]
               [mid-fruits.reader                     :as reader]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
+              [x.app-core.api                        :as core]
               [x.app-sync.request-handler.config     :as request-handler.config]
               [x.app-sync.request-handler.events     :as request-handler.events]
               [x.app-sync.request-handler.prototypes :as request-handler.prototypes]
@@ -27,8 +28,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :sync/abort-request!
+(r/reg-event-fx :sync/abort-request!
   ; @param (keyword) request-id
   ;
   ; @usage
@@ -37,8 +37,7 @@
       {:db (r request-handler.events/request-aborted db request-id)
        :fx [:ajax/abort-request! request-id]}))
 
-(a/reg-event-fx
-  :sync/send-request!
+(r/reg-event-fx :sync/send-request!
   ; @param (keyword)(opt) request-id
   ;  A lekéréssel párhuzamosan elindul egy :core/process folyamat is amelynek
   ;  azonosíja megegyezik a request-id azonosítóval, ennek köszönhetően a lekérés
@@ -79,7 +78,7 @@
   ;
   ; @usage
   ;  [:sync/send-request! :my-request {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ request-id request-props]]
       ; A request-props térkép az események láncolata paraméterként adja tovább, így az egyes
       ; lekérésekből egy időben több példányt is tud kezelni.
@@ -87,7 +86,7 @@
       ;      eseménye között újra elküldhetők eltérő beállításokkal, ami miatt szükséges a beállításokat
       ;      tartalmazó request-props térképet paraméterként átadni az eseményeknek és függvényeknek!
       (let [request-props (r request-handler.prototypes/request-props-prototype db request-props)]
-           (if (r a/start-process? db request-id)
+           (if (r core/start-process? db request-id)
                {:db       (r request-handler.events/send-request! db request-id request-props)
                 :fx       [:ajax/send-request! request-id request-props]
                 :dispatch [:sync/request-sent  request-id request-props]}))))
@@ -97,8 +96,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :sync/request-sent
+(r/reg-event-fx :sync/request-sent
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -108,8 +106,7 @@
       ; Dispatch request on-sent event
       {:dispatch on-sent}))
 
-(a/reg-event-fx
-  :sync/request-successed
+(r/reg-event-fx :sync/request-successed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -131,8 +128,7 @@
                                  (r request-handler.subs/get-request-on-responsed-event db request-id request-props server-response)]
                 :dispatch-later [{:ms idle-timeout :dispatch [:sync/request-stalled request-id request-props server-response]}]}))))
 
-(a/reg-event-fx
-  :sync/request-failured
+(r/reg-event-fx :sync/request-failured
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id
@@ -152,8 +148,7 @@
                              (r request-handler.subs/get-request-on-responsed-event db request-id request-props server-response)]
             :dispatch-later [{:ms idle-timeout :dispatch [:sync/request-stalled request-id request-props server-response]}]})))
 
-(a/reg-event-fx
-  :sync/request-stalled
+(r/reg-event-fx :sync/request-stalled
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) request-id

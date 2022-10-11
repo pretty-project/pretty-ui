@@ -14,8 +14,8 @@
 
 (ns x.app-user.account-handler.events
     (:require [mid-fruits.map  :refer [dissoc-in]]
-              [time.api        :as time]
-              [x.app-core.api  :as a :refer [r]]))
+              [re-frame.api    :as r]
+              [time.api        :as time]))
 
 
 
@@ -43,7 +43,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :user/reg-login-attempt! reg-login-attempt!)
+(r/reg-event-db :user/reg-login-attempt! reg-login-attempt!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :user/clear-login-attempt! clear-login-attempt!)
+(r/reg-event-db :user/clear-login-attempt! clear-login-attempt!)

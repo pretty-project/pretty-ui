@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.data-range-handler
-    (:require [x.app-core.api              :as a]
+    (:require [re-frame.api                :as r]
               [x.mid-db.data-range-handler :as data-range-handler]))
 
 
@@ -63,8 +63,8 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :db/step-data-cursor-high-bwd! step-data-cursor-high-bwd!)
-(a/reg-event-db :db/step-data-cursor-high-fwd! step-data-cursor-high-fwd!)
-(a/reg-event-db :db/step-data-cursor-low-bwd!  step-data-cursor-low-bwd!)
-(a/reg-event-db :db/step-data-cursor-low-fwd!  step-data-cursor-low-fwd!)
-(a/reg-event-db :db/trim-partition!            trim-partition!)
+(r/reg-event-db :db/step-data-cursor-high-bwd! step-data-cursor-high-bwd!)
+(r/reg-event-db :db/step-data-cursor-high-fwd! step-data-cursor-high-fwd!)
+(r/reg-event-db :db/step-data-cursor-low-bwd!  step-data-cursor-low-bwd!)
+(r/reg-event-db :db/step-data-cursor-low-fwd!  step-data-cursor-low-fwd!)
+(r/reg-event-db :db/trim-partition!            trim-partition!)

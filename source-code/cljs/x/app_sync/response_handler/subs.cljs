@@ -15,7 +15,7 @@
 (ns x.app-sync.response-handler.subs
     (:require [mid-fruits.mixed  :as mixed]
               [mid-fruits.reader :as reader]
-              [x.app-core.api    :as a :refer [r]]))
+              [re-frame.api      :as r]))
 
 
 
@@ -71,4 +71,4 @@
 
 ; @usage
 ;  [:sync/get-request-response :my-request]
-(a/reg-sub :sync/get-request-response get-request-response)
+(r/reg-sub :sync/get-request-response get-request-response)

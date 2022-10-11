@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.subs
-    (:require [time.api                :as time]
-              [x.app-core.api          :as a :refer [r]]
+    (:require [re-frame.api            :as r :refer [r]]
+              [time.api                :as time]
               [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.renderer       :as renderer]
               [x.app-user.api          :as user]))
@@ -78,4 +78,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/get-bubble-prop get-bubble-prop)
+(r/reg-sub :ui/get-bubble-prop get-bubble-prop)

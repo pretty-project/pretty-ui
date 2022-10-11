@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.step-handler.effects
-    (:require [x.app-core.api                         :as a :refer [r]]
+    (:require [re-frame.api                           :as r :refer [r]]
               [x.app-gestures.step-handler.prototypes :as step-handler.prototypes]
               [x.app-gestures.step-handler.subs       :as step-handler.subs]))
 
@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :gestures/step-backward!
+(r/reg-event-fx :gestures/step-backward!
   ; @param (keyword) handler-id
   ;
   ; @usage
@@ -46,8 +45,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :gestures/step-forward!
+(r/reg-event-fx :gestures/step-forward!
   ; @param (keyword) handler-id
   ;
   ; @usage
@@ -70,8 +68,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :gestures/init-step-handler!
+(r/reg-event-fx :gestures/init-step-handler!
   ; @param (keyword)(opt) handler-id
   ; @param (map) handler-props
   ;  {:autostep? (boolean)(opt)
@@ -94,7 +91,7 @@
   ;
   ; @usage
   ;  [:gestures/init-step-handler! :my-handler {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ handler-id handler-props]]
       (let [handler-props (step-handler.prototypes/handler-props-prototype handler-props)]
            (if-not (r step-handler.subs/step-handler-inited? db handler-id)
@@ -106,8 +103,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :gestures/check-autostep!
+(r/reg-event-fx :gestures/check-autostep!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id

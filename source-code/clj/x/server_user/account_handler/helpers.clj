@@ -13,10 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.account-handler.helpers
-    (:require [local-db.api                         :as local-db]
-              [mid-fruits.candy                     :refer [return]]
+    (:require [mid-fruits.candy                     :refer [return]]
               [mid-fruits.keyword                   :as keyword]
-              [mid-fruits.map                       :as map]
+              [mongo-db.api                         :as mongo-db]
               [server-fruits.http                   :as http]
               [x.server-user.account-handler.config :as account-handler.config]))
 
@@ -37,8 +36,7 @@
   ;
   ; @return (namespaced map)
   [user-account-id]
-  (let [user-account (local-db/get-document "user_accounts" user-account-id)]
-       (map/add-namespace user-account :user-account)))
+  (mongo-db/get-document-by-id "user_accounts" user-account-id))
 
 (defn user-account-id->user-account-item
   ; @param (string) user-account-id
@@ -58,18 +56,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn user-account->user-public-account
-  ; @param (map) user-account
-  ;
-  ; @return (namespaced map)
-  [user-account]
-  (select-keys user-account account-handler.config/USER-PUBLIC-ACCOUNT-PROPS))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn request->user-account-id
   ; @param (map) request
   ;
@@ -82,14 +68,15 @@
   ;
   ; @return (namespaced map)
   [request]
-  (if-let [user-account-id (request->user-account-id request )]
-          (user-account-id->user-account user-account-id)
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_accounts" user-account-id)
           (return account-handler.config/ANONYMOUS-USER-ACCOUNT)))
 
-(defn request->user-public-account
+(defn request->public-user-account
   ; @param (map) request
   ;
   ; @return (namespaced map)
   [request]
-  (let [user-account (request->user-account request)]
-       (user-account->user-public-account user-account)))
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_accounts" user-account-id account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION)
+          (return account-handler.config/ANONYMOUS-USER-ACCOUNT)))

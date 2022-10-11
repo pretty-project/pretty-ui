@@ -13,12 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.user-handler.helpers
-    (:require [mid-fruits.form                      :as form]
-              [mid-fruits.map                       :as map]
-              [mid-fruits.string                    :as string]
-              [server-fruits.hash                   :as hash]
-              [x.server-user.core.helpers           :as core.helpers]
-              [x.server-user.profile-handler.config :as profile-handler.config]))
+    (:require [mid-fruits.form                       :as form]
+              [mid-fruits.map                        :as map]
+              [mid-fruits.string                     :as string]
+              [server-fruits.hash                    :as hash]
+              [x.server-user.core.helpers            :as core.helpers]
+              [x.server-user.profile-handler.config  :as profile-handler.config]
+              [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
 
@@ -31,7 +32,7 @@
   ; @return (namespaced map)
   [user-props]
   (let [user-account (select-keys user-props [:email-address :password :pin :roles])]
-       (map/add-namespace user-account "user-account")))
+       (map/add-namespace user-account :user-account)))
 
 (defn user-props-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +48,7 @@
   (and (form/password?      password)
        (form/email-address? email-address)
        (string/length?      first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
-       (string/length?      last-name  1 profile-handler.config/MAX-FIRST-NAME-LENGTH)))
+       (string/length?      last-name  1 profile-handler.config/MAX-LAST-NAME-LENGTH)))
 
 (defn user-props->user-account
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,12 +76,18 @@
   ;
   ; @param (string) user-id
   ; @param (map) user-props
+  ;  {:first-name (string)(opt)
+  ;   :last-name (string)(opt)}
   ;
   ; @return (namespaced map)
-  ;  {:user-profile/id (string)
+  ;  {:user-profile/first-name (string)
+  ;   :user-profile/id (string)
+  ;   :user-profile/last-name (string)
   ;   :user-profile/permissions (map)}
-  [user-id _]
-  {:user-profile/id           user-id
+  [user-id {:keys [first-name last-name]}]
+  {:user-profile/first-name   first-name
+   :user-profile/id           user-id
+   :user-profile/last-name    last-name
    :user-profile/permissions {user-id "rw"}})
 
 (defn user-props->user-settings
@@ -93,5 +100,6 @@
   ;  {:user-settings/id (string)
   ;   :user-settings/permissions (map)}
   [user-id _]
-  {:user-settings/id           user-id
-   :user-settings/permissions {user-id "rw"}})
+  (merge settings-handler.config/DEFAULT-USER-SETTINGS
+         {:user-settings/id           user-id
+          :user-settings/permissions {user-id "rw"}}))

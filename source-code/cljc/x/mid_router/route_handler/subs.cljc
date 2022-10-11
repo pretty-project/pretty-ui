@@ -15,7 +15,8 @@
 (ns x.mid-router.route-handler.subs
     (:require [mid-fruits.string :as string]
               [mid-fruits.uri    :as uri]
-              [x.mid-core.api    :as a :refer [r]]))
+              [re-frame.api      :as r :refer [r]]
+              [x.mid-core.api    :as core]))
 
 
 
@@ -30,7 +31,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-home (r a/get-app-config-item db :app-home)]
+  (let [app-home (r core/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))
 
 (defn use-app-home
@@ -64,7 +65,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-domain (r a/get-app-config-item db :app-domain)]
+  (let [app-domain (r core/get-app-config-item db :app-domain)]
        (uri/valid-uri app-domain)))
 
 (defn use-app-domain
@@ -93,16 +94,16 @@
 
 ; @usage
 ;  [:router/get-app-home]
-(a/reg-sub :router/get-app-home get-app-home)
+(r/reg-sub :router/get-app-home get-app-home)
 
 ; @usage
 ;  [:router/use-app-home "/@app-home/my-route"]
-(a/reg-sub :router/use-app-home use-app-home)
+(r/reg-sub :router/use-app-home use-app-home)
 
 ; @usage
 ;  [:router/get-app-domain]
-(a/reg-sub :router/get-app-domain get-app-domain)
+(r/reg-sub :router/get-app-domain get-app-domain)
 
 ; @usage
 ;  [:router/use-app-domain "/my-route"]
-(a/reg-sub :router/use-app-domain use-app-domain)
+(r/reg-sub :router/use-app-domain use-app-domain)

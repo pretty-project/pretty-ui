@@ -31,8 +31,8 @@
   ;
   ; @return (*)
   [n]
-  #?(:cljs (try (reader/read-string n) (catch :default  e (str e)))
-     :clj  (try (edn/read-string    n) (catch Exception e (str e)))))
+  #?(:cljs (try (reader/read-string n) (catch :default  e (println e)))
+     :clj  (try (edn/read-string    n) (catch Exception e (println e)))))
 
 (defn mixed->string
   ; @param (*) n

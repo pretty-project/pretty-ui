@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.effects
-    (:require [x.app-core.api                     :as a :refer [r]]
+    (:require [re-frame.api                       :as r :refer [r]]
               [x.app-db.api                       :as db]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.events  :as route-handler.events]
@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :router/change-to!
+(r/reg-event-fx :router/change-to!
   ; @param (string) route-string
   ; @param (map)(opt) router-props
   ;  {:route-parent (string)(opt)}
@@ -45,30 +44,26 @@
       {:db       (r route-handler.events/set-change-mode! db)
        :dispatch [:router/go-to! route-string route-props]}))
 
-(a/reg-event-fx
-  :router/go-home!
+(r/reg-event-fx :router/go-home!
   ; @usage
   ;  [:router/go-home!]
   (fn [{:keys [db]} _]
       (let [app-home (r route-handler.subs/get-app-home db)]
            [:router/go-to! app-home])))
 
-(a/reg-event-fx
-  :router/go-back!
+(r/reg-event-fx :router/go-back!
   ; @usage
   ;  [:router/go-back!]
   {:fx [:router/navigate-back!]})
 
-(a/reg-event-fx
-  :router/go-up!
+(r/reg-event-fx :router/go-up!
   ; @usage
   ;  [:router/go-up!]
   (fn [{:keys [db]} _]
       (let [parent-route (r route-handler.subs/get-current-route-parent db)]
            [:router/go-to! parent-route])))
 
-(a/reg-event-fx
-  :router/go-to!
+(r/reg-event-fx :router/go-to!
   ; @param (string) route-string
   ; @param (map)(opt) route-props
   ;  {:route-parent (string)(opt)}
@@ -106,8 +101,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :router/handle-events!
+(r/reg-event-fx :router/handle-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -119,8 +113,7 @@
                          (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
                                  client-event)]})))
 
-(a/reg-event-fx
-  :router/handle-login!
+(r/reg-event-fx :router/handle-login!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) route-id
@@ -130,8 +123,7 @@
            {:dispatch-n [[:boot-loader/set-restart-target! route-string]
                          login-screen]})))
 
-(a/reg-event-fx
-  :router/handle-route!
+(r/reg-event-fx :router/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) route-string
@@ -149,8 +141,7 @@
                        {:db       (r route-handler.events/handle-route! db route-id route-string)
                         :dispatch [:router/handle-events! route-id route-string]})))))
 
-(a/reg-event-fx
-  :router/init-router!
+(r/reg-event-fx :router/init-router!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r route-handler.events/init-router! db)

@@ -26,4 +26,4 @@
   ;
   ; @return (function)
   []
-  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-ACCOUNT} %))
+  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-USER-ACCOUNT} %))

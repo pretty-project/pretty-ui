@@ -13,10 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.profile-handler.helpers
-    (:require [local-db.api                         :as local-db]
-              [mid-fruits.candy                     :refer [return]]
+    (:require [mid-fruits.candy                     :refer [return]]
               [mid-fruits.keyword                   :as keyword]
-              [mid-fruits.map                       :as map]
+              [mongo-db.api                         :as mongo-db]
               [server-fruits.http                   :as http]
               [x.server-user.profile-handler.config :as profile-handler.config]))
 
@@ -33,8 +32,7 @@
   ;
   ; @return (namespaced map)
   [user-account-id]
-  (let [user-profile (local-db/get-document "user_profiles" user-account-id)]
-       (map/add-namespace user-profile :user-profile)))
+  (mongo-db/get-document-by-id "user_profiles" user-account-id))
 
 (defn user-account-id->user-profile-item
   ; @param (string) user-account-id
@@ -62,8 +60,20 @@
   ;
   ; @return (namespaced map)
   [request]
-  (if-let [account-id (http/request->session-param request :user-account/id)]
-          (user-account-id->user-profile account-id)
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_profiles" user-account-id)
+          (return profile-handler.config/ANONYMOUS-USER-PROFILE)))
+
+(defn request->public-user-profile
+  ; @param (map) request
+  ;
+  ; @usage
+  ;  (user/request->user-profile-item {...})
+  ;
+  ; @return (namespaced map)
+  [request]
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_profiles" user-account-id profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION)
           (return profile-handler.config/ANONYMOUS-USER-PROFILE)))
 
 (defn request->user-profile-item

@@ -13,11 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.events
-    (:require [mid-fruits.candy                         :refer [param return]]
+    (:require [mid-fruits.candy                         :refer [return]]
               [mid-fruits.map                           :refer [dissoc-in]]
               [mid-fruits.reader                        :as reader]
-              [x.app-core.api                           :as a :refer [r]]
-              [x.app-db.api                             :as db]
+              [re-frame.api                             :as r :refer [r]]
               [x.app-environment.cookie-handler.helpers :as cookie-handler.helpers]))
 
 
@@ -34,7 +33,7 @@
   ;
   ; return (map)
   [db [_ cookie-id {:keys [value]}]]
-  (assoc-in db (db/path :environment/cookie-handler cookie-id) value))
+  (assoc-in db [:environment :cookie-handler/stored-cookies cookie-id] value))
 
 (defn remove-cookie-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,7 +42,7 @@
   ;
   ; return (map)
   [db [_ cookie-id]]
-  (dissoc-in db (db/path :environment/cookie-handler cookie-id)))
+  (dissoc-in db [:environment :cookie-handler/stored-cookies cookie-id]))
 
 (defn cookie-set
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -63,7 +62,7 @@
 (defn cookies-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (r db/empty-partition! db :environment/cookie-handler))
+  (dissoc-in db [:environment :cookie-handler/stored-cookies]))
 
 
 
@@ -76,8 +75,7 @@
   ; return (map)
   [cofx _]
   (let [enabled-by-browser? (.isEnabled goog.net.cookies)]
-       (assoc-in cofx (db/meta-item-cofx-path :environment/cookie-handler :enabled-by-browser?)
-                      (param enabled-by-browser?))))
+       (assoc-in cofx [:db :environment :cookie-handler/meta-items :enabled-by-browser?] enabled-by-browser?)))
 
 (defn inject-system-cookie-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,8 +87,7 @@
   ;
   ; @return (map)
   [cofx [_ cookie-name {:keys [cookie-id value]}]]
-  (assoc-in cofx (db/cofx-path :environment/cookie-handler cookie-id)
-                 (param value)))
+  (assoc-in cofx [:environment :cookie-handler/stored-cookies cookie-id] value))
 
 (defn inject-system-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,16 +118,16 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :environment/cookie-set cookie-set)
+(r/reg-event-db :environment/cookie-set cookie-set)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :environment/cookie-removed cookie-removed)
+(r/reg-event-db :environment/cookie-removed cookie-removed)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :environment/cookies-removed cookies-removed)
+(r/reg-event-db :environment/cookies-removed cookies-removed)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-cofx :environment/inject-cookie-browser-settings! inject-cookie-browser-settings!)
+(r/reg-cofx :environment/inject-cookie-browser-settings! inject-cookie-browser-settings!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-cofx :environment/inject-system-cookies! inject-system-cookies!)
+(r/reg-cofx :environment/inject-system-cookies! inject-system-cookies!)

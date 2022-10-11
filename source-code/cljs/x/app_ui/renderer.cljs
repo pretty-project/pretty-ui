@@ -27,9 +27,9 @@
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.hiccup  :as hiccup]
               [mid-fruits.vector  :as vector]
+              [re-frame.api       :as r :refer [r]]
               [reagent.api        :as reagent]
               [time.api           :as time]
-              [x.app-core.api     :as a :refer [r]]
               [x.app-db.api       :as db]
               [x.app-ui.engine    :as engine]))
 
@@ -212,7 +212,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (r db/get-data-order db partition-id)))
 
-(a/reg-sub :ui/get-element-order get-element-order)
+(r/reg-sub :ui/get-element-order get-element-order)
 
 (defn get-rendered-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -402,7 +402,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (get-in db (db/path partition-id element-id))))
 
-(a/reg-sub :ui/get-element-props get-element-props)
+(r/reg-sub :ui/get-element-props get-element-props)
 
 (defn get-element-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -748,7 +748,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (assoc-in db (db/meta-item-path partition-id :reserved?) true)))
 
-(a/reg-event-db :ui/reserve-renderer! reserve-renderer!)
+(r/reg-event-db :ui/reserve-renderer! reserve-renderer!)
 
 (defn- free-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -785,7 +785,7 @@
        (as-> db % (r update-render-log!   % renderer-id  element-id :props-removed-at)
                   (r db/remove-data-item! % partition-id element-id))))
 
-(a/reg-event-db :ui/remove-element! remove-element!)
+(r/reg-event-db :ui/remove-element! remove-element!)
 
 (defn- update-element-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -813,7 +813,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (assoc-in db (db/path partition-id element-id prop-key) prop-value)))
 
-(a/reg-event-db :ui/set-element-prop! set-element-prop!)
+(r/reg-event-db :ui/set-element-prop! set-element-prop!)
 
 (defn- stop-element-rendering!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -828,7 +828,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (update-in db [partition-id :data-order] vector/remove-item element-id)))
 
-(a/reg-event-db :ui/stop-element-rendering! stop-element-rendering!)
+(r/reg-event-db :ui/stop-element-rendering! stop-element-rendering!)
 
 (defn- render-element-later!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -843,7 +843,7 @@
        (update-in db (db/meta-item-path partition-id :rendering-queue)
                   vector/conj-item [element-id element-props])))
 
-(a/reg-event-db :ui/render-element-later! render-element-later!)
+(r/reg-event-db :ui/render-element-later! render-element-later!)
 
 (defn- trim-rendering-queue!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -856,7 +856,7 @@
        (update-in db (db/meta-item-path partition-id :rendering-queue)
                   vector/remove-nth-item 0)))
 
-(a/reg-event-db :ui/trim-rendering-queue! trim-rendering-queue!)
+(r/reg-event-db :ui/trim-rendering-queue! trim-rendering-queue!)
 
 (defn- empty-rendering-queue!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -868,7 +868,7 @@
   (let [partition-id (engine/renderer-id->partition-id renderer-id)]
        (assoc-in db (db/meta-item-path partition-id :rendering-queue) [])))
 
-(a/reg-event-db :ui/empty-rendering-queue! empty-rendering-queue!)
+(r/reg-event-db :ui/empty-rendering-queue! empty-rendering-queue!)
 
 (defn- mark-element-as-invisible!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -882,7 +882,7 @@
        (update-in db (db/meta-item-path partition-id :invisible-elements)
                   vector/conj-item element-id)))
 
-(a/reg-event-db :ui/mark-element-as-invisible! mark-element-as-invisible!)
+(r/reg-event-db :ui/mark-element-as-invisible! mark-element-as-invisible!)
 
 (defn- unmark-element-as-invisible!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -896,15 +896,14 @@
        (update-in db (db/meta-item-path partition-id :invisible-elements)
                   vector/remove-item element-id)))
 
-(a/reg-event-db :ui/unmark-element-as-invisible! unmark-element-as-invisible!)
+(r/reg-event-db :ui/unmark-element-as-invisible! unmark-element-as-invisible!)
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/init-renderer!
+(r/reg-event-fx :ui/init-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -913,8 +912,7 @@
       (let [partition-id (engine/renderer-id->partition-id renderer-id)]
            {:db (r db/reg-partition! db partition-id {:ordered? true :meta-items renderer-props})})))
 
-(a/reg-event-fx
-  :ui/destruct-renderer!
+(r/reg-event-fx :ui/destruct-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -923,8 +921,7 @@
       {:dispatch-if [(r renderer-require-error?   db renderer-id)
                      [:ui/renderer-unmounted-illegal renderer-id]]}))
 
-(a/reg-event-fx
-  :ui/render-element-animated!
+(r/reg-event-fx :ui/render-element-animated!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -934,8 +931,7 @@
       {:db             (r store-element! db renderer-id element-id element-props)
        :dispatch-later [{:ms REVEAL-ANIMATION-TIMEOUT :dispatch [:ui/rendering-ended renderer-id]}]}))
 
-(a/reg-event-fx
-  :ui/render-element-static!
+(r/reg-event-fx :ui/render-element-static!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -945,8 +941,7 @@
       {:db       (r store-element!   db renderer-id element-id element-props)
        :dispatch [:ui/rendering-ended renderer-id]}))
 
-(a/reg-event-fx
-  :ui/rerender-element!
+(r/reg-event-fx :ui/rerender-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -958,8 +953,7 @@
             :dispatch-later
             [{:ms rerender-delay :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}]})))
 
-(a/reg-event-fx
-  :ui/update-element-animated!
+(r/reg-event-fx :ui/update-element-animated!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -973,8 +967,7 @@
        [{:ms UPDATE-ANIMATION-TIMEOUT
          :fx [:environment/remove-element-attribute! (hiccup/value element-id) "data-animation"]}]}))
 
-(a/reg-event-fx
-  :ui/update-element-static!
+(r/reg-event-fx :ui/update-element-static!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -984,8 +977,7 @@
       {:db       (r update-element-props! db renderer-id element-id element-props)
        :dispatch [:ui/rendering-ended renderer-id]}))
 
-(a/reg-event-fx
-  :ui/push-element!
+(r/reg-event-fx :ui/push-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -998,8 +990,7 @@
             :dispatch-later
             [{:ms pushing-delay :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}]})))
 
-(a/reg-event-fx
-  :ui/select-rendering-mode!
+(r/reg-event-fx :ui/select-rendering-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1024,8 +1015,7 @@
             ; történik meg, ezért szükséges a renderert felszabadítani.
             :return [:ui/rendering-ended renderer-id])))
 
-(a/reg-event-fx
-  :ui/request-rendering-element!
+(r/reg-event-fx :ui/request-rendering-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1038,8 +1028,7 @@
            :dispatch [:ui/select-rendering-mode! renderer-id element-id element-props]}
           {:dispatch [:ui/render-element-later!  renderer-id element-id element-props]})))
 
-(a/reg-event-fx
-  :ui/render-element-from-queue?!
+(r/reg-event-fx :ui/render-element-from-queue?!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1049,8 +1038,7 @@
                :dispatch-later [{:ms       RENDER-DELAY-OFFSET
                                  :dispatch [:ui/request-rendering-element! renderer-id element-id element-props]}]})))
 
-(a/reg-event-fx
-  :ui/destroy-element-animated!
+(r/reg-event-fx :ui/destroy-element-animated!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1068,8 +1056,7 @@
                       [:ui/unmark-element-as-invisible! renderer-id element-id]
                       [:ui/render-element-from-queue?!  renderer-id]]}]}))
 
-(a/reg-event-fx
-  :ui/destroy-element-static!
+(r/reg-event-fx :ui/destroy-element-static!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1079,8 +1066,7 @@
                             (r remove-element!         % renderer-id element-id))
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
-(a/reg-event-fx
-  :ui/destroy-element!
+(r/reg-event-fx :ui/destroy-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1092,8 +1078,7 @@
                        (r destroy-element-static?   db renderer-id element-id)
                        [:ui/destroy-element-static!    renderer-id element-id])}))
 
-(a/reg-event-fx
-  :ui/destroy-all-elements!
+(r/reg-event-fx :ui/destroy-all-elements!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1102,16 +1087,14 @@
            {:db             (r empty-rendering-queue! db renderer-id)
             :dispatch-later (param destroying-event-list)})))
 
-(a/reg-event-fx
-  :ui/empty-renderer!
+(r/reg-event-fx :ui/empty-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
   (fn [{:keys [db]} [_ renderer-id]]
       [:ui/destroy-all-elements! renderer-id]))
 
-(a/reg-event-fx
-  :ui/rendering-ended
+(r/reg-event-fx :ui/rendering-ended
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1119,8 +1102,7 @@
       {:db       (r free-renderer!             db renderer-id)
        :dispatch [:ui/render-element-from-queue?! renderer-id]}))
 
-(a/reg-event-fx
-  :ui/renderer-unmounted-illegal
+(r/reg-event-fx :ui/renderer-unmounted-illegal
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
@@ -1152,7 +1134,7 @@
   [renderer-id {:keys [element] :as renderer-props}]
   (letfn [(f [wrapper element-id]
              (conj wrapper ^{:key element-id} [element element-id]))]
-         (let [element-order @(a/subscribe [:ui/get-element-order renderer-id])]
+         (let [element-order @(r/subscribe [:ui/get-element-order renderer-id])]
               (reduce f (wrapper renderer-id renderer-props) element-order))))
 
 (defn renderer
@@ -1161,7 +1143,7 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   [renderer-id renderer-props]
-  (let [element-order @(a/subscribe [:ui/get-element-order renderer-id])]
+  (let [element-order @(r/subscribe [:ui/get-element-order renderer-id])]
        (if (vector/nonempty? element-order)
            [elements renderer-id renderer-props])))
 
@@ -1186,5 +1168,5 @@
   (let [renderer-props (renderer-props-prototype renderer-props)]
        (reagent/lifecycles (engine/renderer-id->dom-id renderer-id)
                            {:reagent-render         (fn []             [renderer               renderer-id renderer-props])
-                            :component-will-unmount (fn [] (a/dispatch [:ui/destruct-renderer! renderer-id renderer-props]))
-                            :component-did-mount    (fn [] (a/dispatch [:ui/init-renderer!     renderer-id renderer-props]))})))
+                            :component-will-unmount (fn [] (r/dispatch [:ui/destruct-renderer! renderer-id renderer-props]))
+                            :component-did-mount    (fn [] (r/dispatch [:ui/init-renderer!     renderer-id renderer-props]))})))

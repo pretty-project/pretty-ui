@@ -14,7 +14,7 @@
 
 (ns x.server-user.user-handler.side-effects
     (:require [mongo-db.api                          :as mongo-db]
-              [x.server-core.api                     :as a]
+              [re-frame.api                          :as r]
               [x.server-user.user-handler.helpers    :as user-handler.helpers]
               [x.server-user.user-handler.prototypes :as user-handler.prototypes]))
 
@@ -41,9 +41,9 @@
                     user-account  (user-handler.helpers/user-props->user-account  user-id user-props)
                     user-profile  (user-handler.helpers/user-props->user-profile  user-id user-props)
                     user-settings (user-handler.helpers/user-props->user-settings user-id user-props)]
-                   (and (mongo-db/insert-document! "user_accounts" user-account  {:prototype-f user-handler.prototypes/prototype-f})
-                        (mongo-db/insert-document! "user_profiles" user-profile  {:prototype-f user-handler.prototypes/prototype-f})
-                        (mongo-db/insert-document! "user_settings" user-settings {:prototype-f user-handler.prototypes/prototype-f}))))))
+                   (and (mongo-db/insert-document! "user_accounts" user-account  {:prototype-f (user-handler.prototypes/prototype-f)})
+                        (mongo-db/insert-document! "user_profiles" user-profile  {:prototype-f (user-handler.prototypes/prototype-f)})
+                        (mongo-db/insert-document! "user_settings" user-settings {:prototype-f (user-handler.prototypes/prototype-f)}))))))
 
 
 
@@ -52,4 +52,4 @@
 
 ; @usage
 ;  [:user/add-user! {...}]
-(a/reg-fx :user/add-user! add-user!)
+(r/reg-fx :user/add-user! add-user!)

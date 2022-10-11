@@ -14,7 +14,7 @@
 
 (ns x.app-developer.re-frame-browser.subs
     (:require [mid-fruits.mixed :as mixed]
-              [x.app-core.api   :as a :refer [r]]))
+              [re-frame.api     :as r :refer [r]]))
 
 
 
@@ -50,13 +50,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :re-frame-browser/get-meta-item get-meta-item)
+(r/reg-sub :re-frame-browser/get-meta-item get-meta-item)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :re-frame-browser/get-current-path get-current-path)
+(r/reg-sub :re-frame-browser/get-current-path get-current-path)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :re-frame-browser/get-current-item get-current-item)
+(r/reg-sub :re-frame-browser/get-current-item get-current-item)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :re-frame-browser/root-level? root-level?)
+(r/reg-sub :re-frame-browser/root-level? root-level?)

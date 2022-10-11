@@ -31,6 +31,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (namespaced map)
+(def PUBLIC-USER-PROFILE-PROJECTION {:user-profile/added-at    0 :user-profile/added-by    0
+                                     :user-profile/modified-at 0 :user-profile/modified-by 0
+                                     :user-profile/permissions 0})
+
+; @constant (namespaced map)
 ;  {:user-profile/birthday (string)
 ;   :user-profile/first-name (string)
 ;   :user-profile/last-name (string)}

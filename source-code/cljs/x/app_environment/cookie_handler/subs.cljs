@@ -14,8 +14,7 @@
 
 (ns x.app-environment.cookie-handler.subs
     (:require [mid-fruits.map                           :as map]
-              [x.app-core.api                           :as a :refer [r]]
-              [x.app-db.api                             :as db]
+              [re-frame.api                             :as r :refer [r]]
               [x.app-environment.cookie-handler.helpers :as cookie-handler.helpers]))
 
 
@@ -29,7 +28,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db (db/path :environment/cookie-handler)))
+  (get-in db [:environment :cookie-handler/stored-cookies]))
 
 (defn any-cookies-stored?
   ; @usage
@@ -48,7 +47,7 @@
   ;
   ; @return (*)
   [db [_ cookie-id]]
-  (get-in db (db/path :environment/cookie-handler cookie-id)))
+  (get-in db [:environment :cookie-handler/stored-cookies cookie-id]))
 
 (defn cookies-enabled-by-browser?
   ; @usage
@@ -56,7 +55,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (boolean (get-in db (db/meta-item-path :environment/cookie-handler :enabled-by-browser?))))
+  (boolean (get-in db [:environment :cookie-handler/meta-items :enabled-by-browser?])))
 
 (defn analytics-cookies-enabled?
   ; @usage
@@ -113,4 +112,4 @@
 
 ; @usage
 ;  [:environment/any-cookies-stored?]
-(a/reg-sub :environment/any-cookies-stored? any-cookies-stored?)
+(r/reg-sub :environment/any-cookies-stored? any-cookies-stored?)

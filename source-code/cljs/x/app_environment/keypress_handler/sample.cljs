@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler.sample
-    (:require [x.app-core.api        :as a :refer [r]]
+    (:require [re-frame.api          :as r :refer [r]]
               [x.app-environment.api :as environment]))
 
 
@@ -23,8 +23,7 @@
 
 ; Az [:environment/reg-keypress-event! ...] esemény meghívásával tudsz billentyű-lenyomásra
 ; vagy -felengedésre reagáló eseményeket regisztrálni.
-(a/reg-event-fx
-  :reg-my-keypress-event!
+(r/reg-event-fx :reg-my-keypress-event!
   [:environment/reg-keypress-event! :my-event {}])
 
 
@@ -34,8 +33,7 @@
 
 ; Az [:environment/remove-keypress-event! ...] esemény meghívásával tudod eltávolítani az egyes
 ; regisztrált eseményeket, amennyiben az esemény regisztrálásakor használtál egyedi azonosítót.
-(a/reg-event-fx
-  :remove-my-keypress-event!
+(r/reg-event-fx :remove-my-keypress-event!
   [:environment/remove-keypress-event! :my-event])
 
 

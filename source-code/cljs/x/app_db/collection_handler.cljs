@@ -24,8 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.collection-handler
-    (:require [x.app-core.api              :as a :refer [r]]
-              [x.mid-db.collection-handler :as collection-handler]))
+    (:require [x.mid-db.collection-handler :as collection-handler]))
 
 
 

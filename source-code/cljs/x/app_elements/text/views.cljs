@@ -102,7 +102,7 @@
   ;    Default: :default
   ;   :content (metamorphic-content)(opt)
   ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :font-weight (keyword)(opt)
   ;    :bold, :extra-bold, :normal

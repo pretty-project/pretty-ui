@@ -127,21 +127,6 @@
 
 (def path data-item-path)
 
-(defn data-item-cofx-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) xyz
-  ;
-  ; @example
-  ;  (db/data-item-path ::my-partition :a :b :c)
-  ;  =>
-  ;  [:db ::my-partition :data-items :a :b :c]
-  ;
-  ; @return (data-item-path vector)
-  [partition-id & xyz]
-  (vector/concat-items [:db partition-id :data-items] xyz))
-
-(def cofx-path data-item-cofx-path)
-
 (defn meta-item-path
   ; @param (namespaced keyword) partition-id
   ; @param (list of keywords) xyz
@@ -154,45 +139,6 @@
   ; @return (meta-item-path vector)
   [partition-id & xyz]
   (vector/concat-items [partition-id :meta-items] xyz))
-
-(defn meta-item-cofx-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) xyz
-  ;
-  ; @example
-  ;  (db/meta-item-path ::my-partition :a :b :c)
-  ;  =>
-  ;  [:db ::my-partition :meta-items :a :b :c]
-  ;
-  ; @return (meta-item-path vector)
-  [partition-id & xyz]
-  (vector/concat-items [:db partition-id :meta-items] xyz))
-
-(defn data-history-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) xyz
-  ;
-  ; @example
-  ;  (db/data-history-path ::my-partition :a :b :c)
-  ;  =>
-  ;  [::my-partition :data-history :a :b :c]
-  ;
-  ; @return (meta-item-path vector)
-  [partition-id & xyz]
-  (vector/concat-items [partition-id :data-history] xyz))
-
-(defn data-history-cofx-path
-  ; @param (namespaced keyword) partition-id
-  ; @param (list of keywords) xyz
-  ;
-  ; @example
-  ;  (db/data-history-cofx-path ::my-partition :a :b :c)
-  ;  =>
-  ;  [:db ::my-partition :data-history :a :b :c]
-  ;
-  ; @return (meta-item-path vector)
-  [partition-id & xyz]
-  (vector/concat-items [:db partition-id :data-history] xyz))
 
 
 

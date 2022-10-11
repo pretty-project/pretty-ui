@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler.effects
-    (:require [x.app-core.api                    :as a :refer [r]]
+    (:require [re-frame.api                      :as r :refer [r]]
               [x.app-user.account-handler.events :as account-handler.events]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :user/authenticate!
+(r/reg-event-fx :user/authenticate!
   ; A) Sikeres bejelentkezés
   ;    A bejelentkező felületen lévő bejelentkezés gombra kattintva, a gomb
   ;    várakozó állapotba lép. Ahhoz, hogy sikeres bejelentkezés után,
@@ -52,8 +51,7 @@
                                        :uri          "/user/authenticate"
                                        :idle-timeout 3000}]}))
 
-(a/reg-event-fx
-  :user/logout!
+(r/reg-event-fx :user/logout!
   ; @usage
   ;  [:user/logout!]
   [:sync/send-request! :user/logout!

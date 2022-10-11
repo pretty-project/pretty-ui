@@ -25,7 +25,7 @@
 
 (ns x.app-db.data-order-handler
     (:require [mid-fruits.vector           :as vector]
-              [x.app-core.api              :as a :refer [r]]
+              [re-frame.api                :as r :refer [r]]
               [x.app-db.engine             :as engine]
               [x.mid-db.data-order-handler :as data-order-handler]))
 
@@ -55,14 +55,14 @@
 ;; -- DB events ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-db :db/move-data-item-to-last!  move-data-item-to-last!)
-(a/reg-event-db :db/move-data-item-to-first! move-data-item-to-first!)
-(a/reg-event-db :db/move-data-item!          move-data-item!)
-(a/reg-event-db :db/remove-data-item!        remove-data-item!)
-(a/reg-event-db :db/add-data-item!           add-data-item!)
-(a/reg-event-db :db/update-data-item!        update-data-item!)
-(a/reg-event-db :db/apply-data-item!         apply-data-item!)
-(a/reg-event-db :db/empty-partition!         empty-partition!)
+(r/reg-event-db :db/move-data-item-to-last!  move-data-item-to-last!)
+(r/reg-event-db :db/move-data-item-to-first! move-data-item-to-first!)
+(r/reg-event-db :db/move-data-item!          move-data-item!)
+(r/reg-event-db :db/remove-data-item!        remove-data-item!)
+(r/reg-event-db :db/add-data-item!           add-data-item!)
+(r/reg-event-db :db/update-data-item!        update-data-item!)
+(r/reg-event-db :db/apply-data-item!         apply-data-item!)
+(r/reg-event-db :db/empty-partition!         empty-partition!)
 
 
 
@@ -80,7 +80,7 @@
 
 ; @usage
 ;  [:db/remove-data-item-id! db :my-partition :my-item-id]
-(a/reg-event-db :db/remove-data-item-id! remove-data-item-id!)
+(r/reg-event-db :db/remove-data-item-id! remove-data-item-id!)
 
 (defn remove-data-item-props!
   ; @param (namespaced keyword) partition-id
@@ -93,15 +93,14 @@
 
 ; @usage
 ;  [:db/remove-data-item-props! db :my-partition :my-item-id]
-(a/reg-event-db :db/remove-data-item-props! remove-data-item-props!)
+(r/reg-event-db :db/remove-data-item-props! remove-data-item-props!)
 
 
 
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :db/remove-data-item-later!
+(r/reg-event-fx :db/remove-data-item-later!
   ; Bizonyos esetekben szükséges a data-item azonosítóját hamarabb eltávolítani,
   ; mint a data-item által tárolt adatokat.
   ;

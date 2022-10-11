@@ -14,7 +14,7 @@
 
 (ns x.app-core.transfer-handler.effects
     (:require [mid-fruits.map                     :as map]
-              [x.app-core.event-handler           :as event-handler :refer [r]]
+              [re-frame.api                       :as r :refer [r]]
               [x.app-core.transfer-handler.events :as transfer-handler.events]))
 
 
@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/synchronize-app!
+(r/reg-event-fx :core/synchronize-app!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app
@@ -37,8 +36,7 @@
                             :on-success [:core/app-synchronized app]
                             :uri        "/synchronize-app"}]))
 
-(event-handler/reg-event-fx
-  :core/app-synchronized
+(r/reg-event-fx :core/app-synchronized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (component) app

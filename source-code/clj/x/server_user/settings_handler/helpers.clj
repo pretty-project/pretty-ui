@@ -13,10 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.helpers
-    (:require [local-db.api                          :as local-db]
-              [mid-fruits.candy                      :refer [param return]]
+    (:require [mongo-db.api                          :as mongo-db]
+              [mid-fruits.candy                      :refer [return]]
               [mid-fruits.keyword                    :as keyword]
-              [mid-fruits.map                        :as map]
               [server-fruits.http                    :as http]
               [x.server-user.settings-handler.config :as settings-handler.config]))
 
@@ -33,10 +32,9 @@
   ;
   ; @return (namespaced map)
   [user-account-id]
-  (let [user-settings (local-db/get-document "user_settings" user-account-id)
-        user-settings (map/add-namespace user-settings :user-settings)]
-       ; Minden felhasználó alapbeállításai megegyeznek az anonymous felhasználó beállításaival
-       (merge settings-handler.config/ANONYMOUS-USER-SETTINGS user-settings)))
+  ; Az anonymous felhasználó beállításai ...
+  (let [user-settings (mongo-db/get-document-by-id "user_settings" user-account-id)]
+       (merge settings-handler.config/DEFAULT-USER-SETTINGS user-settings)))
 
 (defn user-account-id->user-settings-item
   ; @param (string) user-account-id
@@ -64,9 +62,21 @@
   ;
   ; @return (namespaced map)
   [request]
-  (if-let [account-id (http/request->session-param request :user-account/id)]
-          (user-account-id->user-settings account-id)
-          (return settings-handler.config/ANONYMOUS-USER-SETTINGS)))
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_settings" user-account-id)
+          (return settings-handler.config/DEFAULT-USER-SETTINGS)))
+
+(defn request->public-user-settings
+  ; @param (map) request
+  ;
+  ; @usage
+  ;  (user/request->user-settings {...})
+  ;
+  ; @return (namespaced map)
+  [request]
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          (mongo-db/get-document-by-id "user_settings" user-account-id settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION)
+          (return settings-handler.config/DEFAULT-USER-SETTINGS)))
 
 (defn request->user-settings-item
   ; @param (map) request
@@ -80,26 +90,3 @@
   (let [user-settings       (request->user-settings request)
         namespaced-item-key (keyword/add-namespace :user-settings item-key)]
        (get user-settings namespaced-item-key)))
-
-(defn request->extracted-user-settings
-  ; @param (map) request
-  ;
-  ; @usage
-  ;  (user/request->extracted-user-settings {...})
-  ;
-  ; @return (map)
-  [request]
-  (let [account-id            (http/request->session-param request :user-account/id)
-        ; Alapértelmezett beállítások
-        default-user-settings (param settings-handler.config/ANONYMOUS-USER-SETTINGS)
-        ; A felhasználó szerveren tárolt beállításai
-        stored-user-settings  (local-db/get-document "user_settings" account-id)
-        ; A felhasználó eszközéről érkezett beállítások
-        posted-user-settings  (http/request->transit-param :abcd)
-        ; A felhasználó szerveren tárolt beállításai a felhasználó eszközéről
-        ; érkezett beállításokkal aktualizálva
-        updated-user-settings (merge stored-user-settings posted-user-settings)]
-       ; Az aktualizált beállításokból, kivonja az alapbeállításokat,
-       ; hogy azok az elemek, amelyek megegyeznek a saját alapbeállításukkal,
-       ; ne legyenek feleslegesen tárolva
-       (map/difference updated-user-settings default-user-settings)))

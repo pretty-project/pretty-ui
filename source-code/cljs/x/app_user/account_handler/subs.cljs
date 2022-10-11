@@ -14,7 +14,7 @@
 
 (ns x.app-user.account-handler.subs
     (:require [mid-fruits.vector       :as vector]
-              [x.app-core.api          :as a :refer [r]]
+              [re-frame.api            :as r :refer [r]]
               [x.app-user.core.helpers :as core.helpers]))
 
 
@@ -28,7 +28,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :account-handler/data-items :id]))
+  (get-in db [:user :account-handler/user-account :id]))
 
 (defn get-user-email-address
   ; @usage
@@ -36,7 +36,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:user :account-handler/data-items :email-address]))
+  (get-in db [:user :account-handler/user-account :email-address]))
 
 (defn get-user-roles
   ; @usage
@@ -44,7 +44,7 @@
   ;
   ; @return (strings in vector)
   [db _]
-  (get-in db [:user :account-handler/data-items :roles]))
+  (get-in db [:user :account-handler/user-account :roles]))
 
 (defn user-has-role?
   ; @param (string) user-role
@@ -134,16 +134,16 @@
 
 ; @usage
 ;  [:user/get-user-email-address]
-(a/reg-sub :user/get-user-email-address get-user-email-address)
+(r/reg-sub :user/get-user-email-address get-user-email-address)
 
 ; @usage
 ;  [:user/user-identified?]
-(a/reg-sub :user/user-identified? user-identified?)
+(r/reg-sub :user/user-identified? user-identified?)
 
 ; @usage
 ;  [:user/login-attempted?]
-(a/reg-sub :user/login-attempted? login-attempted?)
+(r/reg-sub :user/login-attempted? login-attempted?)
 
 ; @usage
 ;  [:user/client-locked?]
-(a/reg-sub :user/client-locked? client-locked?)
+(r/reg-sub :user/client-locked? client-locked?)

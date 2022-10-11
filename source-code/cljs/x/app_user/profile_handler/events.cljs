@@ -12,8 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.profile-handler.events
-    (:require [x.app-core.api :as a]))
+(ns x.app-user.profile-handler.events)
 
 
 
@@ -29,4 +28,4 @@
   ;
   ; @return (map)
   [db [_ item-key item-value]]
-  (assoc-in db [:user :profile-handler/data-items item-key] item-value))
+  (assoc-in db [:user :profile-handler/user-profile item-key] item-value))

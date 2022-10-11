@@ -15,8 +15,8 @@
 (ns x.app-developer.request-inspector.views
     (:require [mid-fruits.pretty  :as pretty]
               [mid-fruits.vector  :as vector]
+              [re-frame.api       :as r]
               [time.api           :as time]
-              [x.app-core.api     :as a :refer [r]]
               [x.app-elements.api :as elements]))
 
 
@@ -27,7 +27,7 @@
 (defn- request-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-props @(a/subscribe [:developer/get-request-props])]
+  (let [request-props @(r/subscribe [:developer/get-request-props])]
        [:div {:style {:margin-bottom "48px"}}
              [:div {:style {:font-weight "600" :line-height "32px"}}
                    (str "Request details:")]
@@ -37,7 +37,7 @@
 (defn- response-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-response @(a/subscribe [:developer/get-request-response])]
+  (let [request-response @(r/subscribe [:developer/get-request-response])]
        [:div {}
              [:div {:style {:font-weight "600" :line-height "32px"}}
                    (str "Server response:")]
@@ -53,7 +53,7 @@
 (defn- go-bwd-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ {:keys [history-dex request-history selected-view]}]
-  (let [request-history-dex @(a/subscribe [:developer/get-request-history-dex])]
+  (let [request-history-dex @(r/subscribe [:developer/get-request-history-dex])]
        [elements/icon-button {:disabled? (= request-history-dex 0)
                               :on-click  [:request-inspector/inspect-prev-request!]
                               :preset    :back}]))
@@ -61,8 +61,8 @@
 (defn- go-fwd-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-history-count @(a/subscribe [:developer/get-request-history-count])
-        request-history-dex   @(a/subscribe [:developer/get-request-history-dex])]
+  (let [request-history-count @(r/subscribe [:developer/get-request-history-count])
+        request-history-dex   @(r/subscribe [:developer/get-request-history-dex])]
        [elements/icon-button {:disabled? (= request-history-count (inc request-history-dex))
                               :on-click  [:request-inspector/inspect-next-request!]
                               :preset    :forward}]))
@@ -70,7 +70,7 @@
 (defn- request-data-control-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-sent-time @(a/subscribe [:developer/get-request-prop :sent-time])]
+  (let [request-sent-time @(r/subscribe [:developer/get-request-prop :sent-time])]
        [:div {:style {:display "flex" :align-items "center" :justify-content "flex-start"}}
              [go-bwd-button]
              [:pre {:style {:font-weight "600" :color "var( --soft-blue-xx-dark )" :font-size "14px"}}
@@ -80,7 +80,7 @@
 (defn- request-data-label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-id @(a/subscribe [:developer/get-inspected-request-id])]
+  (let [request-id @(r/subscribe [:developer/get-inspected-request-id])]
        [:div {:style {:display "flex" :align-items "center" :justify-content "flex-start"}}
              [go-up-button]
              [:div {:style {:font-weight "500"}}
@@ -104,13 +104,13 @@
 (defn- request-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request-id]
-  (let [request-failured?  @(a/subscribe [:sync/request-failured?     request-id])
-        request-successed? @(a/subscribe [:sync/request-successed?    request-id])
-        request-sent-time  @(a/subscribe [:sync/get-request-sent-time request-id])]
+  (let [request-failured?  @(r/subscribe [:sync/request-failured?     request-id])
+        request-successed? @(r/subscribe [:sync/request-successed?    request-id])
+        request-sent-time  @(r/subscribe [:sync/get-request-sent-time request-id])]
        [:div {:data-clickable true
               :style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                       :margin "4px 0"}
-              :on-click #(a/dispatch [:request-inspector/inspect-request! request-id])}
+              :on-click #(r/dispatch [:request-inspector/inspect-request! request-id])}
              [:div {:style {:font-weight "500" :font-size "14px" :display "flex"}}
                    [:div {:style {:width "6px" :margin-right "12px" :border-radius "3px"
                                   :background-color (cond request-failured?  "var( --color-warning )"
@@ -122,7 +122,7 @@
 (defn- request-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-ids @(a/subscribe [:developer/get-request-ids])]
+  (let [request-ids @(r/subscribe [:developer/get-request-ids])]
        (reduce #(conj %1 [request-list-item %2])
                 [:div {:style {:padding "12px"}}]
                 request-ids)))
@@ -130,6 +130,6 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [request-id @(a/subscribe [:developer/get-inspected-request-id])]
+  (if-let [request-id @(r/subscribe [:developer/get-inspected-request-id])]
           [request-view]
           [request-list]))
