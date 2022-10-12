@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.view-handler.subs
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as a]))
 
 
 

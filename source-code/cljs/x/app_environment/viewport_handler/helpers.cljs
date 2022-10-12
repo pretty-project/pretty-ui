@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -25,4 +25,4 @@
   ;
   ; @return (function)
   []
-  (a/dispatch-once 250 [:environment/viewport-resized]))
+  (r/dispatch-once 250 [:environment/viewport-resized]))

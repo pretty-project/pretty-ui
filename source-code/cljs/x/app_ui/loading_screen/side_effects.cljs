@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.loading-screen.side-effects
-    (:require [x.app-core.api        :as a]
+    (:require [re-frame.api          :as a]
               [x.app-environment.api :as environment]
               [x.app-ui.renderer     :as renderer]))
 

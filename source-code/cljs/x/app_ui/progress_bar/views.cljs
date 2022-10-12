@@ -14,7 +14,7 @@
 
 (ns x.app-ui.progress-bar.views
     (:require [mid-fruits.css :as css]
-              [x.app-core.api :as a]))
+              [re-frame.api   :as a]))
 
 
 

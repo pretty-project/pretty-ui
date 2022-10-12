@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.engine
-    (:require [x.app-core.api  :as a]
+    (:require [re-frame.api    :as r]
               [x.mid-db.engine :as engine]))
 
 
@@ -62,15 +62,15 @@
 
 ; @usage
 ;  [:db/get-db]
-(a/reg-sub :db/get-db get-db)
+(r/reg-sub :db/get-db get-db)
 
 ; @usage
 ;  [:db/get-item [:my-item]]
-(a/reg-sub :db/get-item get-item)
+(r/reg-sub :db/get-item get-item)
 
 ; @usage
 ;  [:db/item-exists? [:my-item]]
-(a/reg-sub :db/item-exists? item-exists?)
+(r/reg-sub :db/item-exists? item-exists?)
 
 
 
@@ -79,55 +79,55 @@
 
 ; @usage
 ;  [:db/empty-db!]
-(a/reg-event-db :db/empty-db! empty-db!)
+(r/reg-event-db :db/empty-db! empty-db!)
 
 ; @usage
 ;  [:db/toggle-item! [:my-item]]
-(a/reg-event-db :db/toggle-item! toggle-item!)
+(r/reg-event-db :db/toggle-item! toggle-item!)
 
 ; @usage
 ;  [:db/toggle-item-value! [:my-item] :my-value]
-(a/reg-event-db :db/toggle-item-value! toggle-item-value!)
+(r/reg-event-db :db/toggle-item-value! toggle-item-value!)
 
 ; @usage
 ;  [:db/move-item! [:move-from] [:move-to]]
-(a/reg-event-db :db/move-item! move-item!)
+(r/reg-event-db :db/move-item! move-item!)
 
 ; @usage
 ;  [:db/set-item! [:my-item] "My value"]
-(a/reg-event-db :db/set-item! set-item!)
+(r/reg-event-db :db/set-item! set-item!)
 
 ; @usage
 ;  [:db/set-vector-item! [:my-item :0] "My value"]
-(a/reg-event-db :db/set-vector-item! set-vector-item!)
+(r/reg-event-db :db/set-vector-item! set-vector-item!)
 
 ; @usage
 ;  [:db/remove-item! [:my-item]]
-(a/reg-event-db :db/remove-item! remove-item!)
+(r/reg-event-db :db/remove-item! remove-item!)
 
 ; @usage
 ;  [:db/remove-vector-item! [:my-item 0]]
-(a/reg-event-db :db/remove-vector-item! remove-vector-item!)
+(r/reg-event-db :db/remove-vector-item! remove-vector-item!)
 
 ; @usage
 ;  [:db/remove-item-n! [[:my-item] [...]]]
-(a/reg-event-db :db/remove-item-n! remove-item-n!)
+(r/reg-event-db :db/remove-item-n! remove-item-n!)
 
 ; @usage
 ;  [:db/inc-item-n! [[:my-item] [...]]]
-(a/reg-event-db :db/inc-item-n! inc-item-n!)
+(r/reg-event-db :db/inc-item-n! inc-item-n!)
 
 ; @usage
 ;  [:db/dec-item-n! [[:my-item] [...]]]
-(a/reg-event-db :db/dec-item-n! dec-item-n!)
+(r/reg-event-db :db/dec-item-n! dec-item-n!)
 
 ; @usage
 ;  [:db/apply-item! [:my-item] merge {}]
-(a/reg-event-db :db/apply-item! apply-item!)
+(r/reg-event-db :db/apply-item! apply-item!)
 
 ; @usage
 ;  [:db/distribute-items! {:apple "red" :banana "yellow" :item {:nested-item "Nested value"}}
 ;                         {:apple  [:apple-color]
 ;                          :banana [:banana-color]
 ;                          :item   {:nested-item [:nested-value]}}]
-(a/reg-event-db :db/distribute-items! distribute-items!)
+(r/reg-event-db :db/distribute-items! distribute-items!)

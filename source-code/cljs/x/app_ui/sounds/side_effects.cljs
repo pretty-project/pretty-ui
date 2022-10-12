@@ -14,7 +14,7 @@
 
 (ns x.app-ui.sounds.side-effects
     (:require [dom.api                 :as dom]
-              [x.app-core.api          :as a]
+              [re-frame.api            :as a]
               [x.app-ui.sounds.helpers :as sounds.helpers]))
 
 

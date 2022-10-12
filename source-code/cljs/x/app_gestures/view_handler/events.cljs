@@ -14,7 +14,7 @@
 
 (ns x.app-gestures.view-handler.events
     (:require [mid-fruits.logical :refer [nonfalse?]]
-              [x.app-core.api     :as a]))
+              [re-frame.api       :as a]))
 
 
 

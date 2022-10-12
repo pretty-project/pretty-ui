@@ -14,7 +14,7 @@
 
 (ns x.app-environment.viewport-handler.side-effects
     (:require [dom.api                                        :as dom]
-              [x.app-core.api                                 :as a]
+              [re-frame.api                                   :as r]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.viewport-handler.helpers     :as viewport-handler.helpers]))
 
@@ -31,7 +31,7 @@
 (defn update-viewport-data!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (a/dispatch [:db/set-item! [:environment :viewport-handler/meta-items]
+  (r/dispatch [:db/set-item! [:environment :viewport-handler/meta-items]
                              {:viewport-height      (dom/get-viewport-height)
                               :viewport-orientation (dom/get-viewport-orientation)
                               :viewport-profile     (dom/get-viewport-profile)
@@ -49,10 +49,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
+(r/reg-fx :environment/listen-to-viewport-resize! listen-to-viewport-resize!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/update-viewport-data! update-viewport-data!)
+(r/reg-fx :environment/update-viewport-data! update-viewport-data!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/detect-viewport-profile! detect-viewport-profile!)
+(r/reg-fx :environment/detect-viewport-profile! detect-viewport-profile!)

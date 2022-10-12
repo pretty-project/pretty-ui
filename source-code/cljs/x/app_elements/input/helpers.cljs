@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.input.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -35,7 +35,7 @@
   ; Az egyes elemek opciói elsődlegesen a paraméterkén kapott options vektor
   ; értékei alapján kerülnek felsorolásra, annak hiányában az options-path útvonalon
   ; található értékek alapján.
-  (or options @(a/subscribe [:db/get-item options-path])))
+  (or options @(r/subscribe [:db/get-item options-path])))
 
 ; XXX#NEW VERSION!
 (defn default-options-path

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.title.effects
-    (:require [x.app-core.api      :as a :refer [r]]
+    (:require [re-frame.api        :as r :refer [r]]
+              [x.app-core.api      :as core]
               [x.app-ui.title.subs :as title.subs]))
 
 
@@ -21,16 +22,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/restore-default-window-title!
+(r/reg-event-fx :ui/restore-default-window-title!
   ; @usage
   ;  [:ui/restore-default-window-title!]
   (fn [{:keys [db]} _]
-      (let [window-title (r a/get-app-config-item db :app-title)]
+      (let [window-title (r core/get-app-config-item db :app-title)]
            {:fx [:environment/set-window-title! window-title]})))
 
-(a/reg-event-fx
-  :ui/set-window-title!
+(r/reg-event-fx :ui/set-window-title!
   ; @param (metamorphic-content) window-title
   ;
   ; @usage

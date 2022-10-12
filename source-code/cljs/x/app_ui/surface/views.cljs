@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.views
-    (:require [reagent.api              :as reagent]
+    (:require [re-frame.api             :as a]
+              [reagent.api              :as reagent]
               [x.app-components.api     :as components]
-              [x.app-core.api           :as a]
               [x.app-ui.renderer        :rename {component renderer}]
               [x.app-ui.surface.helpers :as surface.helpers]))
 

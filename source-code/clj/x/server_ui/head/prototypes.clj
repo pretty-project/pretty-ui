@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.head.prototypes
-    (:require [x.server-core.api        :as a]
+    (:require [re-frame.api             :as r]
+              [x.server-core.api        :as core]
               [x.server-environment.api :as environment]
               [x.server-router.api      :as router]
               [x.server-user.api        :as user]))
@@ -35,9 +36,9 @@
   ;   :crawler-rules (string)
   ;   :selected-language (keyword)}
   [request head-props]
-  (let [app-config @(a/subscribe [:core/get-app-config])]
+  (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config head-props
-              {:app-build         (a/app-build)
+              {:app-build         (core/app-build)
                :core-js           (router/request->route-prop       request :core-js router/DEFAULT-CORE-JS)
                :crawler-rules     (environment/crawler-rules        request)
                :selected-language (user/request->user-settings-item request :selected-language)})))

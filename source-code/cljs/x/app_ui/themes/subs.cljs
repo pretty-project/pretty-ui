@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.themes.subs
-    (:require [x.app-core.api :as a :refer [r]]
+    (:require [re-frame.api   :refer [r]]
               [x.app-user.api :as user]))
 
 

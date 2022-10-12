@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler.config
-    (:require [x.app-core.api                           :as a]
+    (:require [re-frame.api                             :as r]
               [x.app-environment.keypress-handler.state :as keypress-handler.state]))
 
 
@@ -25,10 +25,10 @@
 (def KEYDOWN-LISTENER #(let [key-code (.-keyCode %)]
                             (if (get @keypress-handler.state/PREVENTED-KEYS key-code)
                                 (.preventDefault %))
-                            (a/dispatch [:environment/key-pressed key-code])))
+                            (r/dispatch [:environment/key-pressed key-code])))
 
 ; @constant (function)
 (def KEYUP-LISTENER #(let [key-code (.-keyCode %)]
                           (if (get @keypress-handler.state/PREVENTED-KEYS key-code)
                               (.preventDefault %))
-                          (a/dispatch [:environment/key-released key-code])))
+                          (r/dispatch [:environment/key-released key-code])))

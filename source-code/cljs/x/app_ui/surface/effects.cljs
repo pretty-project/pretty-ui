@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.effects
-    (:require [x.app-core.api              :as a :refer [r]]
+    (:require [re-frame.api                :as r :refer [r]]
               [x.app-ui.renderer           :as renderer]
               [x.app-ui.surface.prototypes :as surface.prototypes]))
 
@@ -22,14 +22,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/close-surface!
+(r/reg-event-fx :ui/close-surface!
   ; @param (keyword) surface-id
   (fn [{:keys [db]} [_ surface-id]]
       [:ui/destroy-element! :surface surface-id]))
 
-(a/reg-event-fx
-  :ui/render-surface-element!
+(r/reg-event-fx :ui/render-surface-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
@@ -42,8 +40,7 @@
              {:ms close-popups-duration :dispatch [:environment/enable-scroll!]}
              {:ms close-popups-duration :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
 
-(a/reg-event-fx
-  :ui/render-surface!
+(r/reg-event-fx :ui/render-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
   ;  {:content (metamorphic-content)
@@ -59,7 +56,7 @@
   ; @usage
   ;  (defn my-view [surface-id] [:div "My surface"])
   ;  [:ui/render-surface! {:content #'my-view}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ surface-id surface-props]]
       (let [surface-props (surface.prototypes/surface-props-prototype surface-props)]
            [:ui/render-surface-element! surface-id surface-props])))

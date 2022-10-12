@@ -83,13 +83,13 @@
   ;  [:environment/listen-to-pressed-key! :my-event {...}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ event-id {:keys [key-code]}]]
-      ; - Az [:environment/listen-to-pressed-key! ...] esemény által regisztrált billentyűk kódjait
-      ;   a keypress-handler {:type-mode? true} állapotba léptetve is eltárolja!
+      ; Az [:environment/listen-to-pressed-key! ...] esemény által regisztrált billentyűk kódjait
+      ; a keypress-handler {:type-mode? true} állapotba léptetve is eltárolja!
       ;
-      ; - Mivel a keypress-handler {:type-mode? true} állapotba léptetve NEM tárolja el a leütött
-      ;   billentyűk kódjait, ezért létezik az [:environment/listen-to-pressed-key! ...] esemény,
-      ;   hogy egyes billentyűket kivételként kezeljen és {:type-mode? true} állapotban is
-      ;   eltárolja az állapotukat.
+      ; Mivel a keypress-handler {:type-mode? true} állapotba léptetve NEM tárolja el a leütött
+      ; billentyűk kódjait, ezért létezik az [:environment/listen-to-pressed-key! ...] esemény,
+      ; hogy egyes billentyűket kivételként kezeljen és {:type-mode? true} állapotban is
+      ; eltárolja az állapotukat.
       (let [on-keydown [:db/set-item!    [:environment :keypress-handler/meta-items :pressed-keys key-code] true]
             on-keyup   [:db/remove-item! [:environment :keypress-handler/meta-items :pressed-keys key-code]]]
            {:db (r keypress-handler.events/reg-keypress-event! db event-id {:key-code   key-code
@@ -128,6 +128,8 @@
   ;
   ; @param (integer) key-code
   (fn [{:keys [db]} [_ key-code]]
+      ; BUG#5050
+      ; https://stackoverflow.com/questions/25438608/javascript-keyup-isnt-called-when-command-and-another-is-pressed
       (if-not (r keypress-handler.subs/type-mode-enabled? db)
               {:db         (dissoc-in db [:environment :keypress-handler/meta-items :pressed-keys key-code])
                :dispatch-n (r keypress-handler.subs/get-on-keyup-events db key-code)}

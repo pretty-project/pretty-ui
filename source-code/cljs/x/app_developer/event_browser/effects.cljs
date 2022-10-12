@@ -14,7 +14,7 @@
 
 (ns x.app-developer.event-browser.effects
     (:require [mid-fruits.reader :as reader]
-              [x.app-core.api    :as a]))
+              [re-frame.api      :as a]))
 
 
 

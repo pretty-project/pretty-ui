@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.element-badge
-    (:require [x.app-components.api :as components]
-              [x.app-core.api       :as a]))
+    (:require [x.app-components.api :as components]))
 
 
 

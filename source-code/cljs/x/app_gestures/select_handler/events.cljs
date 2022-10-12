@@ -14,7 +14,7 @@
 
 (ns x.app-gestures.select-handler.events
     (:require [mid-fruits.vector                        :as vector]
-              [x.app-core.api                           :as a]
+              [re-frame.api                             :as a]
               [x.app-gestures.select-handler.prototypes :as select-handler.prototypes]))
 
 

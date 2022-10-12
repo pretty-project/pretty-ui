@@ -67,7 +67,7 @@
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
           (merge @(r/subscribe [:user/get-default-user-settings])
                   (mongo-db/get-document-by-id "user_settings" user-account-id))
-         @(r/subscribe [:user/get-default-user-settings])))
+          (merge @(r/subscribe [:user/get-default-user-settings]))))
 
 (defn request->public-user-settings
   ; @param (map) request
@@ -78,8 +78,9 @@
   ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          (mongo-db/get-document-by-id "user_settings" user-account-id settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION)
-         @(r/subscribe [:user/get-default-user-settings])))
+          (merge @(r/subscribe [:user/get-default-user-settings])
+                  (mongo-db/get-document-by-id "user_settings" user-account-id settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION))
+          (merge @(r/subscribe [:user/get-default-user-settings]))))
 
 (defn request->user-settings-item
   ; @param (map) request

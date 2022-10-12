@@ -21,7 +21,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce EDITOR-CONTENTS (ratom {}))
+(defonce EDITOR-INPUT (ratom {}))
 
 ; @atom (map)
-(defonce EDITOR-DIFFERENCES (ratom {}))
+(defonce EDITOR-OUTPUT (ratom {}))
+
+; @atom (map)
+(defonce EDITOR-TRIGGER (ratom {}))

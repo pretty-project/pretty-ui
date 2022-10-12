@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.themes.effects
-    (:require [x.app-core.api         :as a :refer [r]]
+    (:require [re-frame.api           :as r :refer [r]]
               [x.app-ui.themes.events :as themes.events]
               [x.app-ui.themes.subs   :as themes.subs]))
 
@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/change-theme!
+(r/reg-event-fx :ui/change-theme!
   ; @param (keyword) theme-id
   ;
   ; @usage
@@ -32,8 +31,7 @@
       {:db       (r themes.events/store-selected-theme! db theme-id)
        :dispatch [:ui/theme-changed]}))
 
-(a/reg-event-fx
-  :ui/theme-changed
+(r/reg-event-fx :ui/theme-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [theme-id (r themes.subs/get-selected-theme db)]

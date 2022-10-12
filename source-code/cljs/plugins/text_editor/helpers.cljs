@@ -14,10 +14,12 @@
 
 (ns plugins.text-editor.helpers
     (:require [clojure.string]
-              [mid-fruits.random          :as random]
-              [plugins.text-editor.config :as config]
-              [plugins.text-editor.state  :as state]
-              [re-frame.api               :as r]))
+              ["@ckeditor/ckeditor5-build-classic" :as ckeditor5-build-classic]
+              ;["@ckeditor/ckeditor5-font"          :as ckeditor5-font]
+              [mid-fruits.random                   :as random]
+              [plugins.text-editor.config          :as config]
+              [plugins.text-editor.state           :as state]
+              [re-frame.api                        :as r]))
 
 
 
@@ -52,6 +54,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keywords in vector) buttons
+  ;  [:bold, :italic, :underline, :font, :font-size, :cut, :copy, :paste
+  ;   :link, :undo, :redo, :brush]
   ;
   ; @example
   ;  (helpers/parse-buttons [:bold :italic])
@@ -70,7 +74,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-editor-content
+(defn get-editor-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -78,14 +82,9 @@
   ; @return (string)
   [editor-id]
   ; HACK#9910
-  ; A text-editor a state/EDITOR-CONTENTS atomban is eltárolja az aktuális értékét,
-  ; amit arra használ, hogy ha a value-path Re-Frame adatbázis útvonalon tárolt
-  ; érték megváltozik, akkor a [:text-editor/hack-9910 ...] esemény összehasonlítja
-  ; az adatbázisban tárolt értéket az atomban tárolt értékkel és megállapítja,
-  ; hogy az adatbázisban tárolt érték megegyezik-e a text-editorba írt szöveggel.
-  (get @state/EDITOR-CONTENTS editor-id))
+  (get @state/EDITOR-INPUT editor-id))
 
-(defn get-editor-difference
+(defn get-editor-output
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -93,15 +92,9 @@
   ; @return (string)
   [editor-id]
   ; HACK#9910
-  ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozásakor
-  ; a [:text-editor/hack-9910 ...] esemény azt állapítja meg, hogy az adatbázisban
-  ; tárolt érték és a text-editor aktuális értéke nem egyezik meg, akkor úgy
-  ; értelmezi, hogy az adatbázisban tárolt érték külső hatásra változott meg,
-  ; ezért szükséges a text-editor tartalmát aktualizálni, amit a state/EDITOR-DIFFERENCES
-  ; atomban tárolt érték megváltoztatásával ér el.
-  (get-in @state/EDITOR-DIFFERENCES [editor-id :difference]))
+  (get @state/EDITOR-OUTPUT editor-id))
 
-(defn get-editor-difference-key
+(defn get-editor-trigger
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -109,53 +102,52 @@
   ; @return (string)
   [editor-id]
   ; HACK#9910
-  ; A text-editor számára key paraméterként átadott difference-key kulcs
-  ; megváltoztatásával a text-editor minden esetben aktualizálja az értékét
-  ; a value paraméterként kapott értékkel (akkor is ha az nem változott meg).
-  (get-in @state/EDITOR-DIFFERENCES [editor-id :difference-key]))
+  (get @state/EDITOR-TRIGGER editor-id))
 
-(defn set-editor-content!
+(defn set-editor-output!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   ; @param (string) editor-content
   [editor-id editor-content]
   ; HACK#9910
-  (swap! state/EDITOR-CONTENTS assoc editor-id editor-content))
+  (swap! state/EDITOR-OUTPUT assoc editor-id editor-content))
 
-(defn update-editor-difference!
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn synchronizer-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  ; @param (string) editor-difference
-  [editor-id editor-difference]
-  ; HACK#9910
-  ; Ha a state/EDITOR-DIFFERENCES atomban tárolt érték megváltozik, amit
-  ; a text-editor value paraméterként kap meg, akkor a text-editor tartalma
-  ; aktualizálódik. Ha a text-editor értéke ugyanarra az értékre aktualizálódna,
-  ; mint az utoljára a state/EDITOR-DIFFERENCES atomba eltárolt érték, akkor
-  ; szükséges a difference-key kulcsot megváltoztatni, ellenkező esetben
-  ; a text-editor nem aktualizálná az értékét a value paraméterként átadott
-  ; értékkel (mivel az nem változik ilyen esetben).
-  ; Pl.: A text-editor React-fába csatolásakor a state/EDITOR-DIFFERENCES
-  ;      atom értéke a [:text-editor/hack-9910 ...] esemény hatására megkapja
-  ;      a value-path Re-Frame adatbázis útvonalon tárolt értéket,
-  ;      így az a text-editor kezdeti értékeként a szövegmezőbe íródik.
-  ;      Ha a felhasználó átírja a text-editor tartalmát, majd rákattint egy az
-  ;      eredeti kezdeti értéket visszaállító gombra, akkor a text-editor értékét
-  ;      újból a state/EDITOR-DIFFERENCES atom értékével szükséges aktualizálni,
-  ;      viszont mivel az az atom utoljára is a kezdeti értéket tárolta és a
-  ;      visszaállítás hatására is, ezért ilyenkor szükséges a difference-key
-  ;      értékét módosítani, hogy a text-editor reagáljon egy változásra.
-  (if (= editor-difference (get-editor-difference editor-id))
-      (swap! state/EDITOR-DIFFERENCES merge {editor-id {:difference-key (random/generate-string)
-                                                        :difference editor-difference}})
-      (swap! state/EDITOR-DIFFERENCES merge {editor-id {:difference editor-difference}})))
+  ; @param (map) editor-props
+  ;  {:value-path (vector)}
+  ; @param (string) stored-value
+  [editor-id editor-props stored-value]
+  (when (not= stored-value (get @state/EDITOR-INPUT editor-id))
+        (swap! state/EDITOR-INPUT assoc editor-id stored-value)))
 
+(defn synchronizer-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  ;  {:value-path (vector)}
+  [editor-id {:keys [value-path]}]
+  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+       (swap! state/EDITOR-INPUT assoc editor-id stored-value)))
 
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+(defn synchronizer-will-unmount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  [editor-id _]
+  (swap! state/EDITOR-INPUT   dissoc editor-id)
+  (swap! state/EDITOR-OUTPUT  dissoc editor-id)
+  (swap! state/EDITOR-TRIGGER dissoc editor-id))
 
 (defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -169,9 +161,8 @@
   ; ... a set-editor-content! függvénnyel az EDITOR-CONTENTS atomba írja.
   ; ... a dispatch-last függvénnyel a value-path Re-Frame adatbázis útvonalra írja,
   ;     ha a felhasználó már befejezte a gépelést.
-  (let [editor-content (remove-whitespaces editor-content)]
-       (set-editor-content! editor-id editor-content)
-       (r/dispatch-last     config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content])))
+  (set-editor-output! editor-id editor-content)
+  (r/dispatch-last    config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content]))
 
 
 
@@ -253,10 +244,54 @@
   ; HACK#9910
   ; A key paraméter esetleges változtatása a text-editor villanását okozza.
   ; A difference-key változtatása helyett más megoldás is alkalmazható!
-  {:onBlur   #(r/dispatch [:environment/quit-type-mode!])
-   :onFocus  #(r/dispatch [:environment/set-type-mode!])
-   :onChange #(on-change-f editor-id editor-props %)
-   :config    (jodit-config              editor-props)
-   :key       (get-editor-difference-key editor-id)
-   :value     (get-editor-difference     editor-id)
-   :tabIndex  1})
+  {:config     (jodit-config          editor-props)
+   :on-change #(on-change-f editor-id editor-props %)
+   :on-blur   #(r/dispatch [:environment/quit-type-mode!])
+   :on-focus  #(r/dispatch [:environment/set-type-mode!])
+   :key        (get-editor-trigger editor-id)
+   :value      (get-editor-input   editor-id)
+   :tabIndex   1})
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ckeditor-config
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  ;
+  ; @return (map)
+  ;  {}
+  [editor-id editor-props]
+  {:toolbar [:bold :italic "underline" "fontFamily"]
+  ; :plugins [ckeditor5-font]
+
+  ;:toolbar [:heading]
+   :heading {:options [{:model "paragraph"           :title "Paragraph" :class "ck-heading_paragraph"}
+                       {:model "heading1" :view "h1" :title "Custom #1" :class "ck-heading_heading1"}]}})
+
+(defn ckeditor-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  ;
+  ; @return (map)
+  ;  {:config (map)
+  ;   :onBlur (function)
+  ;   :onChange (function)
+  ;   :onFocus (function)
+  ;   :key (string)
+  ;   :tabIndex (integer)
+  ;   :value (string)}
+  [editor-id editor-props]
+  {:editor    ckeditor5-build-classic
+   :config    (ckeditor-config    editor-id editor-props)
+   :data      (get-editor-input   editor-id)
+   :key       (get-editor-trigger editor-id)
+   :on-blur  #(r/dispatch [:environment/quit-type-mode!])
+   :on-focus #(r/dispatch [:environment/set-type-mode!])
+   :on-change (fn [event editor] (on-change-f editor-id editor-props (-> editor .getData)))})

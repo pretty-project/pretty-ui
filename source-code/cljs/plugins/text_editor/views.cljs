@@ -13,12 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.text-editor.views
-    (:require [mid-fruits.random              :as random]
+    (:require ["@ckeditor/ckeditor5-react"    :refer [CKEditor]]
+             ;[jodit-react                    :default JoditEditor]
+              [mid-fruits.random              :as random]
               [plugins.text-editor.helpers    :as helpers]
               [plugins.text-editor.prototypes :as prototypes]
               [plugins.text-editor.state      :as state]
-              [jodit-react                    :default JoditEditor]
               [re-frame.api                   :as r]
+              [reagent.api                    :as reagent]
               [x.app-elements.api             :as elements]))
 
 
@@ -26,25 +28,33 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :text-editor/hack-9910
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  (fn [{:keys [db]} [_ editor-id {:keys [value-path]}]]
-      ; HACK#9910
-      (let [editor-content (helpers/get-editor-content editor-id)
-            stored-value   (get-in db value-path)]
-           (if-not (= editor-content stored-value)
-                   {:fx [:text-editor/update-editor-difference! editor-id stored-value]}))))
+(def debug-synchronizer? false)
 
-(defn- hack-9910
+(defn synchronizer-debug
+  [editor-id {:keys [value-path]}]
+  ; HACK#9910
+  (if debug-synchronizer? (let [stored-value @(r/subscribe [:db/get-item value-path])]
+                               [:div [:br] "output:  " (get @plugins.text-editor.state/EDITOR-OUTPUT  editor-id)
+                                     [:br] "input:   " (get @plugins.text-editor.state/EDITOR-INPUT   editor-id)
+                                     [:br] "trigger: " (get @plugins.text-editor.state/EDITOR-TRIGGER editor-id)
+                                     [:br] "stored:  " stored-value])))
+
+(defn synchronizer-sensor
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [editor-id editor-props stored-value]
+  ; HACK#9910
+  (reagent/lifecycles {:reagent-render         (fn [_ _ _])
+                       :component-will-unmount (fn [_ _ _] (helpers/synchronizer-will-unmount-f editor-id editor-props))
+                       :component-did-mount    (fn [_ _ _] (helpers/synchronizer-did-mount-f    editor-id editor-props))
+                       :component-did-update   (fn [this]  (let [[_ _ stored-value] (reagent/arguments this)]
+                                                                (helpers/synchronizer-did-update-f editor-id editor-props stored-value)))}))
+
+(defn- synchronizer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [editor-id {:keys [value-path] :as editor-props}]
   ; HACK#9910
-  ; Ha a value-path Re-Frame adatbázis útvonalon tárolt érték megváltozik,
-  ; akkor a hack-9910 Reagent komponens meghívja a [:text-editor/hack-9910 ...]
-  ; eseményt, ami kiértékeli a változást ...
   (let [stored-value @(r/subscribe [:db/get-item value-path])]
-       (r/dispatch [:text-editor/hack-9910 editor-id editor-props])))
+       [synchronizer-sensor editor-id editor-props stored-value]))
 
 
 
@@ -57,7 +67,16 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
-  [:> JoditEditor]) ;(helpers/jodit-attributes editor-id editor-props)])
+  [:div [:style {:type "text/css"} ".jodit-wysiwyg {background-color: var( --fill-color ); cursor: text}"]])
+       ;[:> JoditEditor (helpers/jodit-attributes editor-id editor-props)]
+
+(defn- ckeditor
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  [editor-id editor-props]
+  [:> CKEditor (helpers/ckeditor-attributes editor-id editor-props)])
 
 (defn- text-editor-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -66,8 +85,8 @@
   ; @param (map) editor-props
   ;  {}
   [_ {:keys [info-text label required?]}]
-  (if label [elements/label {:info-text info-text
-                             :content   label
+  (if label [elements/label {:content   label
+                             :info-text info-text
                              :required? required?}]))
 
 (defn- text-editor-body
@@ -77,11 +96,11 @@
   ; @param (map) editor-props
   ;  {}
   [editor-id editor-props]
-  [:div [:style {:type "text/css"}
-                ".jodit-wysiwyg {background-color: var( --fill-color ); cursor: text}"]
-        ;[text-editor-label editor-id editor-props]
-        [jodit             editor-id editor-props]])
-        ;[hack-9910         editor-id editor-props]])
+  [:<> [text-editor-label  editor-id editor-props]
+      ;[jodit              editor-id editor-props]
+       [ckeditor           editor-id editor-props]
+       [synchronizer       editor-id editor-props]
+       [synchronizer-debug editor-id editor-props]])
 
 (defn- text-editor
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,7 +112,6 @@
   [editor-id {:keys [disabled? indent] :as editor-props}]
   [elements/blank editor-id
                   {:content   [text-editor-body editor-id editor-props]
-                   :class     :plugins--text-editor
                    :disabled? disabled?
                    :indent    indent}])
 

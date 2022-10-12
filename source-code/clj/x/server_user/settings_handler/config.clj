@@ -26,3 +26,12 @@
 
 ; @constant (string)
 (def DEFAULT-USER-SETTINGS-FILEPATH "environment/x.default-user-settings.edn")
+
+; @constant (map)
+; XXX#5890 (x.server-user.settings-handler.side-effects)
+(def REQUIRED-USER-SETTINGS {:notification-bubbles-enabled? true
+                             :notification-sounds-enabled?  false
+                             :sending-error-reports?        true
+                             :selected-language             :en
+                             :selected-theme                :light
+                             :timezone-offset               0})

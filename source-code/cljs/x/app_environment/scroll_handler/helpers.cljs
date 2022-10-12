@@ -14,7 +14,7 @@
 
 (ns x.app-environment.scroll-handler.helpers
     (:require [dom.api                                        :as dom]
-              [x.app-core.api                                 :as a]
+              [re-frame.api                                   :as r]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.scroll-handler.config        :as scroll-handler.config]
               [x.app-environment.scroll-handler.state         :as scroll-handler.state]))
@@ -34,4 +34,4 @@
            ; If scrolled-to-top? changed ...
            (do (element-handler.side-effects/set-element-attribute! "x-body-container" "data-scrolled-to-top" scrolled-to-top?)
                (reset! scroll-handler.state/SCROLLED-TO-TOP? scrolled-to-top?)))))
-              ;(a/dispatch-sync [:db/set-item! [:environment :sroll-handler/meta-items :scrolled-to-top?] scrolled-to-top?])
+              ;(r/dispatch-sync [:db/set-item! [:environment :sroll-handler/meta-items :scrolled-to-top?] scrolled-to-top?])

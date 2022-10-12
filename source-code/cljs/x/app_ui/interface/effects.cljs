@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.interface.effects
-    (:require [x.app-core.api            :as a :refer [r]]
+    (:require [re-frame.api              :as r :refer [r]]
               [x.app-ui.interface.events :as interface.events]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/set-interface!
+(r/reg-event-fx :ui/set-interface!
   ; @param (keyword) interface
   ;  :application-ui, :website-ui
   ;

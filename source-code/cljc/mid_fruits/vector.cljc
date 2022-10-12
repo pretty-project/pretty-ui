@@ -1237,6 +1237,62 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn prev-item
+  ; A vektor elemei alapjan meghatarozza, az x-et megelozo elemet
+  ;
+  ; @param (vector) n
+  ; @param (*) x
+  ;
+  ; @example
+  ;  (vector/prev-item [:a :b :c :d] :b)
+  ;  =>
+  ;  :a
+  ;
+  ; @example
+  ;  (vector/prev-item [:a :b :c :d] nil)
+  ;  =>
+  ;  :d
+  ;
+  ; @example
+  ;  (vector/prev-item [] :a)
+  ;  =>
+  ;  ?
+  ;
+  ; @return (*)
+  [n x])
+
+(defn next-item
+  ; A vektor elemei alapjan meghatarozza, az x utan kovetkezo elemet
+  ;
+  ; @param (vector) n
+  ; @param (*) x
+  ;
+  ; @example
+  ;  (vector/next-item [:a :b :c :d] :a)
+  ;  =>
+  ;  :b
+  ;
+  ; @example
+  ;  (vector/next-item [:a :b :c :d] nil)
+  ;  =>
+  ;  :a
+  ;
+  ; @example
+  ;  (vector/next-item [] :a)
+  ;  =>
+  ;  ?
+  ;
+  ; @return (*)
+  [n x])
+  ;(let [item-first-dex (item-first-dex n x)
+  ;      next-item-dex  (next-dex       n item-first-dex)
+  ;     (nth-item n next-item-dex)])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn filter-items
   ; @param (vector) n
   ; @param (function) test-f

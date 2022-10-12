@@ -14,7 +14,6 @@
 
 (ns x.app-elements.multi-combo-box.prototypes
     (:require [mid-fruits.candy                       :refer [param return]]
-              [x.app-core.api                         :as a]
               [x.app-elements.input.helpers           :as input.helpers]
               [x.app-elements.multi-combo-box.helpers :as multi-combo-box.helpers]))
 

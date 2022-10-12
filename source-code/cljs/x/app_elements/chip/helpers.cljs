@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chip.helpers
-    (:require [x.app-core.api                 :as a]
+    (:require [re-frame.api                   :as a]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -33,7 +33,7 @@
   ;  {}
   [_ {:keys [style]}]
   {:style style})
-    
+
 (defn chip-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

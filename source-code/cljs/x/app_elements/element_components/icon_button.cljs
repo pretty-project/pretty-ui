@@ -77,7 +77,9 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
+  [:button.x-icon-button--body (merge
+                                (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
+                                {:style (:style button-props)})
                                [icon-button-icon                 button-id button-props]
                                [icon-button-label                button-id button-props]
                                [engine/element-badge             button-id button-props]])

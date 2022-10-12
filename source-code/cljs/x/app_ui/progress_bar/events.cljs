@@ -15,7 +15,7 @@
 (ns x.app-ui.progress-bar.events
     (:require [mid-fruits.candy :refer [param return]]
               [mid-fruits.map   :refer [dissoc-in]]
-              [x.app-core.api   :as a]))
+              [re-frame.api     :as a]))
 
 
 

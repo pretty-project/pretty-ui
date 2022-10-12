@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.developer-tools.views
-    (:require [layouts.popup-a.api                     :as popup-a]
-              [x.app-core.api                          :as a]
+    (:require [mid-fruits.css                          :as css]
+              [mid-fruits.vector                       :as vector]
+              [re-frame.api                            :as r]
               [x.app-developer.developer-tools.helpers :as developer-tools.helpers]
               [x.app-developer.event-browser.views     :rename {body event-browser}]
               [x.app-developer.re-frame-browser.views  :rename {body re-frame-browser}]
@@ -27,17 +28,33 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn toggle-print-events-button
+(defn toggle-popup-position-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [print-events? @(a/subscribe [:developer-tools/print-events?])]
-       [elements/button ::toggle-event-print-button
-                        {:hover-color :highlight
-                         :label       "Print events"
-                         :font-size   :xs
-                         :indent      {:horizontal :xxs}
-                         :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
-                         :preset      (if print-events? :primary :muted)}]))
+  (let [popup-positions [:tr :br :bl :tl]
+        popup-position @(r/subscribe [:db/get-item [:developer :developer-tools/popup-position]])]
+       [elements/icon-button ::toggle-popup-position-icon-button
+                             {:hover-color :highlight
+                              :icon        :tab
+                              :on-click    []
+                              :style       (case popup-position :br {:transform "rotateX(180deg)"}
+                                                                :bl {:transform "rotateX(180deg) rotateY(180deg)"}
+                                                                :tl {:transform "rotateY(180deg)"}
+                                                                :tr {} {})
+
+                              :disabled? true
+                              :color :muted}]))
+
+(defn toggle-print-events-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [print-events? @(r/subscribe [:developer-tools/print-events?])]
+       [elements/icon-button ::toggle-print-events-icon-button
+                             {:hover-color :highlight
+                              :icon        :terminal
+                              :indent      {:left :xxl}
+                              :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
+                              :preset      (if print-events? :primary :muted)}]))
 
 (defn close-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,7 +71,8 @@
   []
   [elements/horizontal-polarity ::header
                                 {:start-content [elements/menu-bar {:menu-items (developer-tools.helpers/menu-items)}]
-                                 :end-content   [:<> [toggle-print-events-button]
+                                 :end-content   [:<> [toggle-print-events-icon-button]
+                                                     [toggle-popup-position-icon-button]
                                                      [close-icon-button]]}])
 
 
@@ -65,7 +83,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(a/subscribe [:gestures/get-current-view-id :developer.developer-tools/handler])]
+  (let [view-id @(r/subscribe [:gestures/get-current-view-id :developer.developer-tools/handler])]
        (case view-id :re-frame-browser  [re-frame-browser]
                      :request-inspector [request-inspector]
                      :route-browser     [route-browser]
@@ -78,7 +96,10 @@
 
 (defn view
   [popup-id]
-  [popup-a/layout popup-id {:body                #'body
-                            :header              #'header
-                            :min-width           :m
-                            :stretch-orientation :vertical}])
+  [:div {:style {:position "fixed" :top "0" :right "0" :max-height "100vh"
+                 :background "rgba(255, 255, 255, .95)" :box-shadow "0 0 5px 1px rgba(0, 0, 0, .15)"
+                 :display "flex" :flex-direction "column"
+                 :border-radius "0 0 0 10px"}}
+        [header]
+        [:div {:style {:overflow-y "scroll"}}
+              [body]]])

@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-db.partition-handler
-    (:require [x.app-core.api             :as a]
+    (:require [re-frame.api               :as r]
               [x.mid-db.partition-handler :as partition-handler]))
 
 
@@ -55,8 +55,8 @@
 
 ; @usage
 ;  [:db/get-partition :my-partition/primary]
-(a/reg-sub :db/get-partition get-partition)
+(r/reg-sub :db/get-partition get-partition)
 
 ; @usage
 ;  [:db/partition-empty? :my-partition/primary]
-(a/reg-sub :db/partition-empty? partition-empty?)
+(r/reg-sub :db/partition-empty? partition-empty?)

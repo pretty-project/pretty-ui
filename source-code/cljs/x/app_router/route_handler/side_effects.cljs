@@ -14,7 +14,7 @@
 
 (ns x.app-router.route-handler.side-effects
     (:require [accountant.core                   :as accountant.core]
-              [x.app-core.api                    :as a]
+              [re-frame.api                      :as a]
               [x.app-router.route-handler.config :as route-handler.config]))
 
 

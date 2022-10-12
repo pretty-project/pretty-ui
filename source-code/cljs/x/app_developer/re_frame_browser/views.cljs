@@ -18,7 +18,7 @@
               [mid-fruits.pretty                       :as pretty]
               [mid-fruits.string                       :as string]
               [mid-fruits.vector                       :as vector]
-              [x.app-core.api                          :as a]
+              [re-frame.api                            :as a]
               [x.app-developer.re-frame-browser.config :as re-frame-browser.config]
               [x.app-elements.api                      :as elements]
               [x.app-environment.api                   :as environment]))

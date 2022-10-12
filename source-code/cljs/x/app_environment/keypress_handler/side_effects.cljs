@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler.side-effects
-    (:require [x.app-core.api                               :as a]
+    (:require [re-frame.api                                 :as r]
               [x.app-environment.event-handler.side-effects :as event-handler.side-effects]
               [x.app-environment.keypress-handler.config    :as keypress-handler.config]
               [x.app-environment.keypress-handler.state     :as keypress-handler.state]))
@@ -55,13 +55,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/prevent-keypress-default! prevent-keypress-default!)
+(r/reg-fx :environment/prevent-keypress-default! prevent-keypress-default!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/enable-keypress-default! enable-keypress-default!)
+(r/reg-fx :environment/enable-keypress-default! enable-keypress-default!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/add-keypress-listeners! add-keypress-listeners!)
+(r/reg-fx :environment/add-keypress-listeners! add-keypress-listeners!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/remove-keypress-listeners! remove-keypress-listeners!)
+(r/reg-fx :environment/remove-keypress-listeners! remove-keypress-listeners!)

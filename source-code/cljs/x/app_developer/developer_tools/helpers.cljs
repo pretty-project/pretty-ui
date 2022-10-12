@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-developer.developer-tools.helpers
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -23,7 +23,7 @@
 (defn menu-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(a/subscribe [:gestures/get-current-view-id :developer.developer-tools/handler])]
+  (let [view-id @(r/subscribe [:gestures/get-current-view-id :developer.developer-tools/handler])]
        [{:label    "DB"
          :on-click [:gestures/change-view! :developer.developer-tools/handler :re-frame-browser]
          :active?  (= view-id :re-frame-browser)}

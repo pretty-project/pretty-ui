@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.mouse-handler.side-effects
-    (:require [dom.api        :as dom]
-              [x.app-core.api :as a]))
+    (:require [dom.api      :as dom]
+              [re-frame.api :as r]))
 
 
 
@@ -44,8 +44,8 @@
 
 ; @usage
 ;  [:environment/prevent-selecting!]
-(a/reg-fx :environment/prevent-selecting! prevent-selecting!)
+(r/reg-fx :environment/prevent-selecting! prevent-selecting!)
 
 ; @usage
 ;  [:environment/enable-selecting!]
-(a/reg-fx :environment/enable-selecting! enable-selecting!)
+(r/reg-fx :environment/enable-selecting! enable-selecting!)

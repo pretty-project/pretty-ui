@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body.prototypes
-    (:require [x.server-core.api   :as a]
+    (:require [re-frame.api        :as r]
+              [x.server-core.api   :as core]
               [x.server-router.api :as router]
               [x.server-user.api   :as user]))
 
@@ -33,8 +34,8 @@
   ;   :core-js (string)
   ;   :selected-theme (string)}
   [request body-props]
-  (let [app-config @(a/subscribe [:core/get-app-config])]
+  (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config body-props
-              {:app-build      (a/app-build)
+              {:app-build      (core/app-build)
                :core-js        (router/request->route-prop       request :core-js router/DEFAULT-CORE-JS)
                :selected-theme (user/request->user-settings-item request :selected-theme)})))

@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.keypress-handler.subs
-    (:require [mid-fruits.map :as map]
-              [re-frame.api   :as r :refer [r]]))
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
@@ -69,9 +68,13 @@
   ;
   ; @return (boolean)
   [db [_ event-id]]
-  (let [keypress-events (get-in db [:environment :keypress-handler/data-items])
+  (let [key-code        (get-in db [:environment :keypress-handler/data-items event-id :key-code])
+        keypress-events (get-in db [:environment :keypress-handler/data-items])
         other-events    (dissoc keypress-events event-id)]
-       (map/any-key-match? other-events #(r keypress-prevented-by-event? db %))))
+       (letfn [(f [[_ event-props]]
+                  (and             (:prevent-default? event-props)
+                       (= key-code (:key-code         event-props))))]
+              (some f other-events))))
 
 (defn enable-default?
   ; WARNING! NON-PUBLIC! DO NOT USE!

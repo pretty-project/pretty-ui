@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.views
-    (:require [reagent.api                 :as reagent]
+    (:require [re-frame.api                :as a]
+              [reagent.api                 :as reagent]
               [x.app-components.api        :as components]
-              [x.app-core.api              :as a]
               [x.app-elements.api          :as elements]
               [x.app-ui.renderer           :rename {component renderer}]
               [x.app-ui.bubbles.config     :as bubbles.config]

@@ -18,7 +18,7 @@
               [mid-fruits.css    :as css]
               [mid-fruits.math   :as math]
               [mid-fruits.string :as string]
-              [x.app-core.api    :as a]))
+              [re-frame.api      :as r]))
 
 
 
@@ -69,7 +69,7 @@
 ; Re-Frame esemény alapon megvalósítani, mert fontos, hogy a scroll érték
 ; beállítása Ca. 0ms különbséggel a body elem {:position "..."}
 ; tulajdonságának átállítása után történjen!
-(a/reg-fx :environment/enable-dom-scroll! enable-dom-scroll!)
+(r/reg-fx :environment/enable-dom-scroll! enable-dom-scroll!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/disable-dom-scroll! disable-dom-scroll!)
+(r/reg-fx :environment/disable-dom-scroll! disable-dom-scroll!)

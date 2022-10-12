@@ -13,15 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler.effects
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/viewport-resized
+(r/reg-event-fx :environment/viewport-resized
   ; WARNING! NON-PUBLIC! DO NOT USE!
   {:fx-n [[:environment/detect-viewport-profile!]
           [:environment/update-viewport-data!]]})

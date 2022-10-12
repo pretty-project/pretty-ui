@@ -14,7 +14,7 @@
 
 (ns x.app-developer.event-browser.views
     (:require [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a]
+              [re-frame.api       :as a]
               [x.app-elements.api :as elements]))
 
 

@@ -17,9 +17,9 @@
               [mid-fruits.string                    :as string]
               [mid-fruits.vector                    :as vector]
               [mid-fruits.uri                       :as uri]
+              [re-frame.api                         :as r]
               [server-fruits.http                   :as http]
               [x.mid-router.route-handler.helpers   :as route-handler.helpers]
-              [x.server-core.api                    :as a]
               [x.server-router.route-handler.config :as route-handler.config]
               [x.server-user.api                    :as user]))
 
@@ -113,8 +113,8 @@
         (letfn [(f [[_ {:keys [route-template] :as route-props}]]
                    (if (uri/path->match-template? route-path route-template)
                        (prop-key route-props)))]
-               (or (some f @(a/subscribe [:router/get-server-routes]))
-                   (some f @(a/subscribe [:router/get-client-routes]))
+               (or (some f @(r/subscribe [:router/get-server-routes]))
+                   (some f @(r/subscribe [:router/get-client-routes]))
                    (return default-value))))))
 
 (defn request->route-template-matched?

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.term-handler.side-effects
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as a]))
 
 
 

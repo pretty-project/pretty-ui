@@ -25,8 +25,12 @@
 (defn import-default-user-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (r/dispatch [:db/set-item! [:user :settings-handler/default-user-settings]
-                             (io/read-edn-file settings-handler.config/DEFAULT-USER-SETTINGS-FILEPATH)]))
+  ; XXX#5890
+  ; Az alapértelmezett felhasználói beállítások ...
+  ; ... részét képezi a rendszer működéséhez nélkülözhetetlen beállítások (pl. :selected-theme, ...)
+  (let [default-user-settings (io/read-edn-file settings-handler.config/DEFAULT-USER-SETTINGS-FILEPATH)]
+       (r/dispatch [:db/set-item! [:user :settings-handler/default-user-settings]
+                                  (merge settings-handler.config/REQUIRED-USER-SETTINGS default-user-settings)])))
 
 
 

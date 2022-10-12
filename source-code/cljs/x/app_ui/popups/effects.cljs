@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.effects
-    (:require [x.app-core.api             :as a]
+    (:require [re-frame.api               :as a]
               [x.app-ui.popups.prototypes :as popups.prototypes]))
 
 

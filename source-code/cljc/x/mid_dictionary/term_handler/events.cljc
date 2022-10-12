@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-dictionary.term-handler.events
-    (:require [x.mid-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -51,10 +51,10 @@
 ;
 ; @usage
 ;  [:dictionary/add-term! :my-term {:en "My term"}]
-(a/reg-event-db :dictionary/add-term! add-term!)
+(r/reg-event-db :dictionary/add-term! add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
 ;  [:dictionary/add-terms! {:my-term {:en "My term"}}]
-(a/reg-event-db :dictionary/add-terms! add-terms!)
+(r/reg-event-db :dictionary/add-terms! add-terms!)

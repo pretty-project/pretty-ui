@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.structure.views
-    (:require [x.app-core.api                 :as a :refer [r]]
+    (:require [re-frame.api                   :as r]
               [x.app-ui.bubbles.views         :rename {view app-bubbles}]
               [x.app-ui.locker.views          :rename {view app-locker}]
               [x.app-ui.popups.views          :rename {view app-popups}]
@@ -46,6 +46,6 @@
 (defn- view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [client-locked? @(a/subscribe [:user/client-locked?])]
+  (if-let [client-locked? @(r/subscribe [:user/client-locked?])]
           [locked-ui-structure]
           [unlocked-ui-structure]))

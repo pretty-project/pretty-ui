@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.string                 :as string]
               [mid-fruits.vector                 :as vector]
-              [x.app-core.api                    :as a]
+              [re-frame.api                      :as a]
               [x.app-elements.combo-box.state    :as combo-box.state]
               [x.app-elements.input.helpers      :as input.helpers]
               [x.app-elements.text-field.helpers :as text-field.helpers]))

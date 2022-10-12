@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.config
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as a]))
 
 
 
