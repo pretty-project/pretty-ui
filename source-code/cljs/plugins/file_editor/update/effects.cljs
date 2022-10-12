@@ -51,8 +51,7 @@
       ; a tartalomról tárolt másolatot frissíteni, hogy a backup.subs/form-changed?
       ; és a backup.subs/content-changed? függvények kimentei visszaálljanak alaphelyzetbe.
       {:db       (r backup.events/backup-current-content! db editor-id)
-       :dispatch [:ui/render-bubble! ::content-saved-notification
-                                     {:body :saved}]}))
+       :dispatch [:ui/render-bubble! ::content-saved-dialog {:body :saved}]}))
 
 (r/reg-event-fx
   :file-editor/save-content-failed
@@ -61,4 +60,4 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id _]]
-      [:ui/render-bubble! {:body :failed-to-save}]))
+      [:ui/render-bubble! ::save-content-failed-notification {:body :failed-to-save}]))

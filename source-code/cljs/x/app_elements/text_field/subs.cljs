@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text-field.subs
-    (:require [x.app-core.api            :as a :refer [r]]
+    (:require [re-frame.api              :as r :refer [r]]
               [x.app-elements.input.subs :as input.subs]))
 
 
@@ -119,13 +119,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.text-field/surface-visible? surface-visible?)
+(r/reg-sub :elements.text-field/surface-visible? surface-visible?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.text-field/invalid-warning? invalid-warning?)
+(r/reg-sub :elements.text-field/invalid-warning? invalid-warning?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.text-field/required-warning? required-warning?)
+(r/reg-sub :elements.text-field/required-warning? required-warning?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.text-field/any-warning? any-warning?)
+(r/reg-sub :elements.text-field/any-warning? any-warning?)

@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy              :refer [param return]]
               [mid-fruits.mixed              :as mixed]
               [mid-fruits.vector             :as vector]
-              [x.app-core.api                :as a :refer [r]]
+              [re-frame.api                  :as r :refer [r]]
               [x.app-elements.engine.element :as element]))
 
 
@@ -230,7 +230,7 @@
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (update-in db group-value-path vector/conj-item-once value)))
 
-(a/reg-event-db :elements/stack-to-group-value! stack-to-group-value!)
+(r/reg-event-db :elements/stack-to-group-value! stack-to-group-value!)
 
 (defn unstack-from-group-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -250,4 +250,4 @@
   (let [group-value-path (r element/get-element-prop db group-id :value-path)]
        (update-in db group-value-path vector/remove-nth-item value-dex)))
 
-(a/reg-event-db :elements/unstack-from-group-value! unstack-from-group-value!)
+(r/reg-event-db :elements/unstack-from-group-value! unstack-from-group-value!)

@@ -176,8 +176,7 @@
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! :plugins.item-browser/delete-item-failed-dialog
-                          {:body :failed-to-delete}]))
+      [:ui/render-bubble! ::delete-item-failed-dialog {:body :failed-to-delete}]))
 
 (r/reg-event-fx
   :item-browser/render-item-deleted-dialog!
@@ -186,7 +185,7 @@
   ; @param (keyword) browser-id
   ; @param (string) item-id
   (fn [_ [_ browser-id item-id]]
-      [:ui/render-bubble! :plugins.item-browser/item-deleted-dialog
+      [:ui/render-bubble! ::item-deleted-dialog
                           {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
                            ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
 
@@ -205,7 +204,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch-n [[:ui/close-bubble! :plugins.item-browser/item-deleted-dialog]
+            :dispatch-n [[:ui/close-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
                                               {:on-success [:item-browser/delete-item-undid       browser-id]
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]
@@ -255,7 +254,7 @@
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! :plugins.item-browser/undo-delete-item-failed-dialog
+      [:ui/render-bubble! ::undo-delete-item-failed-dialog
                           {:body :failed-to-undo-delete}]))
 
 
@@ -325,7 +324,7 @@
   ; @param (keyword) browser-id
   ; @param (string) copy-id
   (fn [_ [_ browser-id copy-id]]
-      [:ui/render-bubble! :plugins.item-browser/item-duplicated-dialog
+      [:ui/render-bubble! ::item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
 (r/reg-event-fx
@@ -334,7 +333,7 @@
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! :plugins.item-browser/duplicate-item-failed-dialog
+      [:ui/render-bubble! ::duplicate-item-failed-dialog
                           {:body :failed-to-duplicate}]))
 
 

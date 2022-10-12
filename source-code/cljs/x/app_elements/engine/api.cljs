@@ -17,8 +17,7 @@
               [x.app-elements.engine.element            :as element]
               [x.app-elements.engine.element-badge      :as element-badge]
               [x.app-elements.engine.input-group        :as input-group]
-              [x.app-elements.engine.stated-element     :as stated-element]
-              [x.app-elements.engine.steppable          :as steppable]))
+              [x.app-elements.engine.stated-element     :as stated-element]))
 
 
 
@@ -47,7 +46,3 @@
 
 ; x.app-elements.engine.stated-element
 (def stated-element stated-element/element)
-
-; x.app-elements.engine.steppable
-(def steppable-attributes steppable/steppable-attributes)
-(def get-steppable-props  steppable/get-steppable-props)

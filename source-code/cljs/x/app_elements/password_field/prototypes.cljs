@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.password-field.prototypes
-    (:require [mid-fruits.candy                      :refer [param]]
-              [mid-fruits.form                       :as form]
+    (:require [forms.api                             :as forms]
+              [mid-fruits.candy                      :refer [param]]
               [mid-fruits.vector                     :as vector]
               [x.app-elements.password-field.helpers :as password-field.helpers]
               [x.app-elements.text-field.helpers     :as text-field.helpers]))
@@ -47,7 +47,7 @@
               (param field-props)
               ; *
               (if validate? {:helper    {:content :valid-password-rules :replacements ["8"]}
-                             :validator {:f               form/password?
+                             :validator {:f               forms/password?
                                          :invalid-message :password-is-too-weak}})
               ; *
               (let [show-password-adornment {;:disabled? field-empty?

@@ -16,7 +16,9 @@
     (:require [mongo-db.api                          :as mongo-db]
               [mid-fruits.candy                      :refer [return]]
               [mid-fruits.keyword                    :as keyword]
+              [re-frame.api                          :as r]
               [server-fruits.http                    :as http]
+              [server-fruits.io                      :as io]
               [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
@@ -33,8 +35,8 @@
   ; @return (namespaced map)
   [user-account-id]
   ; Az anonymous felhasználó beállításai ...
-  (let [user-settings (mongo-db/get-document-by-id "user_settings" user-account-id)]
-       (merge settings-handler.config/DEFAULT-USER-SETTINGS user-settings)))
+  (merge @(r/subscribe [:user/get-default-user-settings])
+          (mongo-db/get-document-by-id "user_settings" user-account-id)))
 
 (defn user-account-id->user-settings-item
   ; @param (string) user-account-id
@@ -63,8 +65,9 @@
   ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          (mongo-db/get-document-by-id "user_settings" user-account-id)
-          (return settings-handler.config/DEFAULT-USER-SETTINGS)))
+          (merge @(r/subscribe [:user/get-default-user-settings])
+                  (mongo-db/get-document-by-id "user_settings" user-account-id))
+         @(r/subscribe [:user/get-default-user-settings])))
 
 (defn request->public-user-settings
   ; @param (map) request
@@ -76,7 +79,7 @@
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
           (mongo-db/get-document-by-id "user_settings" user-account-id settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION)
-          (return settings-handler.config/DEFAULT-USER-SETTINGS)))
+         @(r/subscribe [:user/get-default-user-settings])))
 
 (defn request->user-settings-item
   ; @param (map) request

@@ -14,7 +14,7 @@
 
 (ns x.app-elements.multi-combo-box.events
     (:require [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]
+              [re-frame.api      :refer [r]]
               [x.app-db.api      :as db]))
 
 

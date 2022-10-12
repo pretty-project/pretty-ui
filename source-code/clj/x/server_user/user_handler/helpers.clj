@@ -13,13 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.user-handler.helpers
-    (:require [mid-fruits.form                       :as form]
-              [mid-fruits.map                        :as map]
-              [mid-fruits.string                     :as string]
-              [server-fruits.hash                    :as hash]
-              [x.server-user.core.helpers            :as core.helpers]
-              [x.server-user.profile-handler.config  :as profile-handler.config]
-              [x.server-user.settings-handler.config :as settings-handler.config]))
+    (:require [forms.api                              :as forms]
+              [mid-fruits.map                         :as map]
+              [mid-fruits.string                      :as string]
+              [re-frame.api                           :as r]
+              [server-fruits.hash                     :as hash]
+              [x.server-user.core.helpers             :as core.helpers]
+              [x.server-user.profile-handler.config   :as profile-handler.config]
+              [x.server-user.settings-handler.helpers :as settings-handler.helpers]))
 
 
 
@@ -45,10 +46,10 @@
   ;
   ; @return (boolean)
   [{:keys [email-address first-name last-name password]}]
-  (and (form/password?      password)
-       (form/email-address? email-address)
-       (string/length?      first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
-       (string/length?      last-name  1 profile-handler.config/MAX-LAST-NAME-LENGTH)))
+  (and (forms/password?      password)
+       (forms/email-address? email-address)
+       (string/length?       first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
+       (string/length?       last-name  1 profile-handler.config/MAX-LAST-NAME-LENGTH)))
 
 (defn user-props->user-account
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,6 +101,6 @@
   ;  {:user-settings/id (string)
   ;   :user-settings/permissions (map)}
   [user-id _]
-  (merge settings-handler.config/DEFAULT-USER-SETTINGS
-         {:user-settings/id           user-id
-          :user-settings/permissions {user-id "rw"}}))
+  (merge @(r/subscribe [:user/get-default-user-settings])
+          {:user-settings/id           user-id
+           :user-settings/permissions {user-id "rw"}}))

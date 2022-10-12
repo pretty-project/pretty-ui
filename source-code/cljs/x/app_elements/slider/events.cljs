@@ -14,7 +14,7 @@
 
 (ns x.app-elements.slider.events
     (:require [mid-fruits.candy            :refer [return]]
-              [x.app-core.api              :as a :refer [r]]
+              [re-frame.api                :as r :refer [r]]
               [x.app-db.api                :as db]
               [x.app-elements.input.events :as input.events]))
 
@@ -65,7 +65,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.slider/decrease-value! decrease-value!)
+(r/reg-event-db :elements.slider/decrease-value! decrease-value!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.slider/increase-value! increase-value!)
+(r/reg-event-db :elements.slider/increase-value! increase-value!)

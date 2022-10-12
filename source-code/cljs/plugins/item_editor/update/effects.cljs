@@ -52,27 +52,34 @@
   ; @param (keyword) editor-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
-      ; A) Ha az "Elem mentése" művelet sikeres befejeződésekor a body komponens
-      ;    a React-fába van csatolva, a mentett elem van megnyitva szerkesztésre
-      ;    vagy új elem mentése történt és a plugin útvonal-vezérelt, ...
-      ;    ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
-      ;        útvonalra.
-      ;    ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;        15%-ig szimulált folyamat.
+      ; Ha az "Elem mentése" művelet sikeres befejeződésekor ...
+      ; A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
+      ;        szerkesztésre VAGY új elem mentése történt és a plugin útvonal-vezérelt, ...
+      ;        ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
+      ;            útvonalra.
+      ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;            15%-ig szimulált folyamat.
       ;
-      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; B) a body komponens már nincs a React-fába csatolva és a plugin útvonal-vezérelt, ...
+      ;        ... megjelenít egy értesítést.
+      ;
+      ; C) ... az A) kimenetel feltételei nem teljesülnek ...
+      ;        ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;        ... megjelenít egy értesítést.
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
-              ; A)
               (let [item-id (r update.subs/get-saved-item-id db editor-id server-response)]
                    ; Új elem mentésekor szükséges eltárolni a szerver által visszaküldött elem-azonosítót,
                    ; az [:item-editor/go-to! ...] esemény számára!
-                   (cond (r core.subs/editing-item? db editor-id item-id) {:dispatch [:item-editor/go-up! editor-id]}
+                   (cond ; A)
+                         (r core.subs/editing-item? db editor-id item-id) {:dispatch [:item-editor/go-up! editor-id]}
                          (r core.subs/new-item?     db editor-id)         {:db       (r core.events/set-item-id! db editor-id item-id)
-                                                                           :dispatch [:item-editor/go-up! editor-id]}))
-              ; B)
+                                                                           :dispatch [:item-editor/go-up! editor-id]}
+                         ; B)
+                         :editor-leaved                                   {:dispatch [:ui/render-bubble! ::item-saved-dialog {:body :saved}]}))
+              ; C)
               {:dispatch-if [(r ui/process-faked? db)
-                             [:ui/end-fake-process!]]})))
+                             [:ui/end-fake-process!]]
+               :dispatch     [:ui/render-bubble! ::item-saved-dialog {:body :saved}]})))
 
 (r/reg-event-fx
   :item-editor/save-item-failed
@@ -84,7 +91,7 @@
       ; Az "Elem mentése" művelet sikertelen befejeződésekor, ...
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:dispatch    [:ui/render-bubble! {:body :failed-to-save}]
+      {:dispatch    [:ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
        :dispatch-if [(r ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
@@ -101,7 +108,7 @@
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
       {:db         (r core.events/set-recovery-mode! db editor-id)
-       :dispatch-n [[:ui/close-bubble! :plugins.item-editor/changes-discarded-dialog]
+       :dispatch-n [[:ui/close-bubble! ::changes-discarded-dialog]
                     [:item-editor/edit-item! editor-id item-id]]}))
 
 (r/reg-event-fx
@@ -114,6 +121,6 @@
       ; Az [:item-editor/render-changes-discarded-dialog! ...] esemény paraméterként kapja az item-editor
       ; plugin elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
       ; már nem elérhető a Re-Frame adatbázisban.
-      [:ui/render-bubble! :plugins.item-editor/changes-discarded-dialog
+      [:ui/render-bubble! ::changes-discarded-dialog
                           {:body             [update.views/changes-discarded-dialog-body editor-id item-id]
                            :on-bubble-closed [:item-editor/clean-recovery-data!          editor-id item-id]}]))

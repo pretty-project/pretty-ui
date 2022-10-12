@@ -16,8 +16,8 @@
     (:require [dom.api                               :as dom]
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.map                        :as map]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-components.api                  :as components]
-              [x.app-core.api                        :as a :refer [r]]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]
               [x.app-environment.api                 :as environment]))
@@ -56,10 +56,10 @@
                                       ; A static & clickable elemek on-click esemény kizárólag függvényként
                                       ; hívható meg.
                                       :on-click #(do (if stop-propagation? (dom/stop-propagation! %))
-                                                     (a/dispatch on-click))
+                                                     (r/dispatch on-click))
                                       :on-mouse-up #(environment/blur-element!)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
-                                                                               (a/dispatch on-right-click)
+                                                                               (r/dispatch on-right-click)
                                                                                (environment/blur-element!))}))))
 
 
@@ -67,8 +67,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements/init-clickable!
+(r/reg-event-fx :elements/init-clickable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -80,8 +79,7 @@
                                                  :on-keyup   [:elements/key-released element-id]
                                                  :required?  (:required? keypress)}])))
 
-(a/reg-event-fx
-  :elements/destruct-clickable!
+(r/reg-event-fx :elements/destruct-clickable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -89,8 +87,7 @@
   (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
       (if keypress [:environment/remove-keypress-event! element-id])))
 
-(a/reg-event-fx
-  :elements/key-pressed
+(r/reg-event-fx :elements/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
@@ -98,8 +95,7 @@
       (if (target-handler.helpers/element-id->target-enabled? element-id)
           {:fx [:elements/focus-element! element-id]})))
 
-(a/reg-event-fx
-  :elements/key-released
+(r/reg-event-fx :elements/key-released
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id

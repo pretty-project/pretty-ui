@@ -15,8 +15,8 @@
 (ns x.app-elements.element-components.icon-button
     (:require [mid-fruits.candy                          :refer [param return]]
               [mid-fruits.random                         :as random]
+              [re-frame.api                              :as r]
               [x.app-components.api                      :as components]
-              [x.app-core.api                            :as a :refer [r]]
               [x.app-elements.engine.api                 :as engine]
               [x.app-elements.element.helpers            :as element.helpers]
               [x.app-elements.preset-handler.icon-button :as preset-handler.icon-button]))
@@ -77,7 +77,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(a/dispatch (:on-mouse-over button-props))})
+  [:button.x-icon-button--body (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
                                [icon-button-icon                 button-id button-props]
                                [icon-button-label                button-id button-props]
                                [engine/element-badge             button-id button-props]])

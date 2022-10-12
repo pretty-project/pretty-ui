@@ -14,7 +14,7 @@
 
 (ns x.app-elements.color-selector.events
     (:require [mid-fruits.vector                        :as vector]
-              [x.app-core.api                           :as a :refer [r]]
+              [re-frame.api                             :as r]
               [x.app-elements.color-selector.prototypes :as color-selector.prototypes]
               [x.app-elements.color-selector.views      :as color-selector.views]))
 
@@ -39,4 +39,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements/toggle-color-selector-option! toggle-color-selector-option!)
+(r/reg-event-db :elements/toggle-color-selector-option! toggle-color-selector-option!)

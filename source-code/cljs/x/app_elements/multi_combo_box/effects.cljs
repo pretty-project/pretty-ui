@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-combo-box.effects
-    (:require [x.app-core.api                            :as a :refer [r]]
+    (:require [re-frame.api                              :as r :refer [r]]
               [x.app-elements.combo-box.helpers          :as combo-box.helpers]
               [x.app-elements.multi-combo-box.events     :as multi-combo-box.events]
               [x.app-elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
@@ -27,8 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.multi-combo-box/reg-keypress-events!
+(r/reg-event-fx :elements.multi-combo-box/reg-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -48,8 +47,7 @@
                          [:environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
                          [:environment/reg-keypress-event! :elements.text-field/COMMA on-comma-props]]})))
 
-(a/reg-event-fx
-  :elements.multi-combo-box/remove-keypress-events!
+(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -65,8 +63,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.multi-combo-box/ENTER-pressed
+(r/reg-event-fx :elements.multi-combo-box/ENTER-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -109,8 +106,7 @@
                                       [:elements.text-field/empty-field!  field-id field-props]]
                          :db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)}))))))
 
-(a/reg-event-fx
-  :elements.multi-combo-box/COMMA-pressed
+(r/reg-event-fx :elements.multi-combo-box/COMMA-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -128,8 +124,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.multi-combo-box/field-changed
+(r/reg-event-fx :elements.multi-combo-box/field-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -138,8 +133,7 @@
       (let [field-id (multi-combo-box.helpers/box-id->field-id box-id)]
            {:fx [:elements.combo-box/discard-option-highlighter! field-id]})))
 
-(a/reg-event-fx
-  :elements.multi-combo-box/field-focused
+(r/reg-event-fx :elements.multi-combo-box/field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -147,8 +141,7 @@
   (fn [_ [_ box-id box-props]]
       [:elements.multi-combo-box/reg-keypress-events! box-id box-props]))
 
-(a/reg-event-fx
-  :elements.multi-combo-box/field-blurred
+(r/reg-event-fx :elements.multi-combo-box/field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id

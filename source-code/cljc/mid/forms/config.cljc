@@ -12,17 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.settings-handler.config)
+(ns mid.forms.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; @constant (namespaced map)
-(def PUBLIC-USER-SETTINGS-PROJECTION {:user-settings/added-at    0 :user-settings/added-by    0
-                                      :user-settings/modified-at 0 :user-settings/modified-by 0
-                                      :user-settings/permissions 0})
 
 ; @constant (string)
-(def DEFAULT-USER-SETTINGS-FILEPATH "environment/x.default-user-settings.edn")
+;  Minimum 8 characters, maximum 32 characters, at least one uppercase letter,
+;  one lowercase letter and one number
+(def PASSWORD-PATTERN #"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,32}$")
+
+; @constant (string)
+(def EMAIL-PATTERN #"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?")
+
+; @constant (string)
+(def PHONE-NUMBER-PATTERN #"\+\d{10,20}")

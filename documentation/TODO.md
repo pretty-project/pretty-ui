@@ -14,10 +14,14 @@
 
 # x4.7.0
 
+- x.server-user.api :as user
+  =>
+  x.user.api :as x.user
+
 - Használj set-eket! #(1 2 3)
   + (set ...) set függvény!
   - Egy elem egyszer fordulhat elő benne
-  
+
 - A reg-lifecycles! is ugy legyen tabolva mint a reg-event-fx
   (core/reg-lifecycles ::lifecycles
     {...})

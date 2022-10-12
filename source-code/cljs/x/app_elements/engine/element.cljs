@@ -18,7 +18,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :refer [dissoc-in]]
               [mid-fruits.vector  :as vector]
-              [x.app-core.api     :as a :refer [r]]
+              [re-frame.api       :as r :refer [r]]
               [x.app-db.api       :as db]
               [x.app-elements.element.helpers :as element.helpers]))
 
@@ -187,7 +187,7 @@
   ;
   ; @return (map)
   [db [_ element-id]]
-  (get-in db (db/path :elements/primary element-id)))
+  (get-in db [:elements/primary :data-items element-id]))
 
 (defn get-element-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -202,20 +202,6 @@
   [db [_ element-id prop-key]]
   (let [element-props (r get-element-props db element-id)]
        (get element-props prop-key)))
-
-(defn get-element-subprop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (vector) prop-path
-  ;
-  ; @usage
-  ;  (r element/get-element-subprop db :my-element [:my-prop :my-subprop])
-  ;
-  ; @return (*)
-  [db [_ element-id prop-path]]
-  (let [element-props (r get-element-props db element-id)]
-       (get-in element-props prop-path)))
 
 
 
@@ -248,7 +234,7 @@
 
 ; @usage
 ;  [:elements/set-element-prop! :my-element :my-prop "My value"]
-(a/reg-event-db :elements/set-element-prop! set-element-prop!)
+(r/reg-event-db :elements/set-element-prop! set-element-prop!)
 
 (defn update-element-prop!
   ; @param (keyword) element-id
@@ -280,7 +266,7 @@
 
 ; @usage
 ;  [:elements/set-element-subprop! :my-element [:my-prop :my-subprop] "My value"]
-(a/reg-event-db :elements/set-element-subprop! set-element-subprop!)
+(r/reg-event-db :elements/set-element-subprop! set-element-subprop!)
 
 (defn remove-element-prop!
   ; @param (keyword) element-id
@@ -295,7 +281,7 @@
 
 ; @usage
 ;  [:elements/remove-element-prop! :my-element :my-prop]
-(a/reg-event-db :elements/remove-element-prop! remove-element-prop!)
+(r/reg-event-db :elements/remove-element-prop! remove-element-prop!)
 
 (defn remove-element-subprop!
   ; @param (keyword) element-id
@@ -312,4 +298,4 @@
 
 ; @usage
 ;  [:elements/remove-element-subprop! :my-element [:my-prop :my-subprop]]
-(a/reg-event-db :elements/remove-element-subprop! remove-element-subprop!)
+(r/reg-event-db :elements/remove-element-subprop! remove-element-subprop!)

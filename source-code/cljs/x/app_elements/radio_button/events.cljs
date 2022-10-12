@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.events
-    (:require [x.app-core.api              :as a :refer [r]]
+    (:require [re-frame.api                :as r :refer [r]]
               [x.app-elements.input.events :as input.events]))
 
 
@@ -67,10 +67,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/radio-button-box-did-mount radio-button-box-did-mount)
+(r/reg-event-db :elements.radio-button/radio-button-box-did-mount radio-button-box-did-mount)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/select-option! select-option!)
+(r/reg-event-db :elements.radio-button/select-option! select-option!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.radio-button/clear-value! clear-value!)
+(r/reg-event-db :elements.radio-button/clear-value! clear-value!)

@@ -34,7 +34,8 @@
   ;
   ; @return (map)
   [n]
-  (reduce-kv #(assoc %1 (keyword (str %2)) %3) {} n))
+  (letfn [(f [%1 %2 %3] (assoc %1 (keyword (str %2)) %3))]
+         (reduce-kv f {} n)))
 
 
 
@@ -50,8 +51,8 @@
   ; @return (boolean)
   ;  Is n a nonempty vector?
   [n]
-  (and (vector? n)
-       (->      n empty? not)))
+  (and (-> n vector?)
+       (-> n  empty? not)))
 
 (defn dex-out-of-bounds?
   ; @param (vector) n

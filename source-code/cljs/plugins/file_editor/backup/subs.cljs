@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.file-editor.backup.subs
-    (:require [mid-fruits.candy                  :refer [return]]
-              [mid-fruits.form                   :as form]
+    (:require [forms.api                         :as forms]
+              [mid-fruits.candy                  :refer [return]]
               [mid-fruits.mixed                  :as mixed]
               [plugins.file-editor.body.subs     :as body.subs]
               [plugins.file-editor.core.subs     :as core.subs]
@@ -47,13 +47,13 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  ; XXX#6000 (mid-fruits.form)
-  ; XXX#6001 (mid-fruits.form)
+  ; XXX#6000 (mid.forms.helpers)
+  ; XXX#6001 (mid.forms.helpers)
   ; XXX#5671 (plugins.item-editor.backup.subs)
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-content (r core.subs/get-current-content db editor-id)
                 backup-content  (r get-backup-content            db editor-id)]
-               (form/items-different? current-content backup-content))))
+               (forms/items-different? current-content backup-content))))
 
 (defn form-changed?
   ; @param (keyword) editor-id
@@ -64,13 +64,13 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  ; XXX#6000 (mid-fruits.form)
-  ; XXX#6001 (mid-fruits.form)
+  ; XXX#6000 (mid.forms.helpers)
+  ; XXX#6001 (mid.forms.helpers)
   ; XXX#5672 (plugins.item-editor.backup.subs)
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-content (r core.subs/get-current-content db editor-id)
                 backup-content  (r get-backup-content            db editor-id)]
-               (form/items-different? current-content backup-content change-keys))))
+               (forms/items-different? current-content backup-content change-keys))))
 
 
 

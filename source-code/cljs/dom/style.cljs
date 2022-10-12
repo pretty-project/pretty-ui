@@ -35,7 +35,7 @@
   ; @usage
   ;  (dom/set-element-style! my-element {:position "fixed" :top "0"})
   [element style]
-  (let [parsed-style (css/parse style)]
+  (let [parsed-style (css/unparse style)]
        (.setAttribute element "style" parsed-style)))
 
 (defn remove-element-style!
@@ -46,7 +46,7 @@
   [element]
   (.removeAttribute element "style"))
 
-  
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

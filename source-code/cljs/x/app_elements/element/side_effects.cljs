@@ -12,26 +12,29 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.switch.events
-    (:require [re-frame.api                   :as r :refer [r]]
-              [x.app-elements.checkbox.events :as checkbox.events]
-              [x.app-elements.input.events    :as input.events]))
+(ns x.app-elements.element.side-effects
+    (:require [re-frame.api                          :as r]
+              [x.app-environment.api                 :as environment]
+              [x.app-elements.target-handler.helpers :as target-handler.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-did-mount
+(defn focus-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
+  ; @param (keyword) element-id
+  [element-id]
+  (-> element-id target-handler.helpers/element-id->target-id environment/focus-element!))
+
+(defn blur-element!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (map)
-  [db [_ switch-id switch-props]]
-  (as-> db % (r input.events/use-initial-value!   % switch-id switch-props)
-             (r input.events/use-initial-options! % switch-id switch-props)))
+  ; @param (keyword) element-id
+  [element-id]
+  (-> element-id target-handler.helpers/element-id->target-id environment/blur-element!))
 
 
 
@@ -39,7 +42,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.switch/switch-did-mount switch-did-mount)
+(r/reg-fx :elements/focus-element! focus-element!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.switch/toggle-option! checkbox.events/toggle-option!)
+(r/reg-fx :elements/blur-element! blur-element!)

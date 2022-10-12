@@ -13,4 +13,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns forms.api
-    (:require [forms.lifecycles]))
+    (:require [forms.lifecycles]
+              [forms.helpers :as helpers]))
+
+
+
+;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; forms.helpers
+(def valid-string     helpers/valid-string)
+(def pin?             helpers/pin?)
+(def password?        helpers/password?)
+(def email-address?   helpers/email-address?)
+(def phone-number?    helpers/phone-number?)
+(def items-different? helpers/items-different?)

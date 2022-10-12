@@ -16,6 +16,7 @@
     (:require [x.mid-locales.address-handler.helpers :as address-handler.helpers]
               [x.mid-locales.country-handler.config  :as country-handler.config]
               [x.mid-locales.country-handler.helpers :as country-handler.helpers]
+              [x.mid-locales.currency-handler.config :as currency-handler.config]
               [x.mid-locales.name-handler.config     :as name-handler.config]
               [x.mid-locales.name-handler.helpers    :as name-handler.helpers]))
 
@@ -40,6 +41,10 @@
 (def country-language     country-handler.helpers/country-language)
 (def country-name         country-handler.helpers/country-name)
 (def country-native-name  country-handler.helpers/country-native-name)
+
+; x.mid-locales.currency-handler.config
+(def CURRENCY-SYMBOLS currency-handler.config/CURRENCY-SYMBOLS)
+(def CURRENCY-LIST    currency-handler.config/CURRENCY-LIST)
 
 ; x.mid-locales.name-handler.config
 (def NAME-ORDERS name-handler.config/NAME-ORDERS)

@@ -14,7 +14,7 @@
 
 (ns x.app-elements.checkbox.events
     (:require [mid-fruits.vector           :as vector]
-              [x.app-core.api              :as a :refer [r]]
+              [re-frame.api                :as r :refer [r]]
               [x.app-db.api                :as db]
               [x.app-elements.input.events :as input.events]
               [x.app-elements.input.subs   :as input.subs]))
@@ -70,7 +70,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.checkbox/checkbox-did-mount checkbox-did-mount)
+(r/reg-event-db :elements.checkbox/checkbox-did-mount checkbox-did-mount)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.checkbox/toggle-option! toggle-option!)
+(r/reg-event-db :elements.checkbox/toggle-option! toggle-option!)

@@ -15,8 +15,6 @@
 (ns x.app-elements.input.events
     (:require [mid-fruits.candy              :refer [return]]
               [mid-fruits.map                :refer [dissoc-in]]
-              [x.app-core.api                :as a :refer [r]]
-              [x.app-db.api                  :as db]
               [x.app-elements.engine.element :as element]))
 
 
@@ -34,7 +32,7 @@
   ;
   ; @return (map)
   [db [_ input-id {:keys [value-path]}]]
-  (assoc-in db (db/path :elements :element-handler/backup-values input-id)
+  (assoc-in db [:elements :element-handler/backup-values input-id]
                (get-in db value-path)))
 
 ; XXX#NEW VERSION!

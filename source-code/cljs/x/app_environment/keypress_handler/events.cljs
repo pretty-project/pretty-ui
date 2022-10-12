@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy  :refer [return]]
               [mid-fruits.map    :refer [dissoc-in]]
               [mid-fruits.vector :as vector]
-              [x.app-core.api    :as a :refer [r]]))
+              [re-frame.api      :as r :refer [r]]))
 
 
 
@@ -206,8 +206,8 @@
 
 ; @usage
 ;  [:environment/quit-type-mode!]
-(a/reg-event-db :environment/quit-type-mode! quit-type-mode!)
+(r/reg-event-db :environment/quit-type-mode! quit-type-mode!)
 
 ; @usage
 ;  [:environment/set-type-mode!]
-(a/reg-event-db :environment/set-type-mode!  set-type-mode!)
+(r/reg-event-db :environment/set-type-mode!  set-type-mode!)

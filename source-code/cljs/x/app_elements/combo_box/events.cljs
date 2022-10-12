@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.combo-box.events
-    (:require [x.app-core.api               :as a :refer [r]]
+    (:require [re-frame.api                 :as r :refer [r]]
               [x.app-db.api                 :as db]
               [x.app-elements.input.events  :as input.events]
               [x.app-elements.input.helpers :as input.helpers]))
@@ -60,4 +60,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.combo-box/combo-box-did-mount combo-box-did-mount)
+(r/reg-event-db :elements.combo-box/combo-box-did-mount combo-box-did-mount)

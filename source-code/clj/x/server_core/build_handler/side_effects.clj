@@ -55,11 +55,10 @@
   ; app-build értékét eltárolná egy fájlban.
   ;
   ; Ezért development környezetben nem minden esetben biztosított az app-build értékét tároló
-  ;  fájl létezése.
+  ; fájl létezése.
   ;
   ; Ha az app-build értékét tároló fájl nem elérhető, akkor az app-build értéke egy alapértelmezett
-  ; értékkel kerül behelyettesítésre.
-  ; Pl. "0.0.1"
+  ; értékkel kerül behelyettesítésre (pl. "0.0.1").
   (if (io/file-exists? build-handler.config/APP-BUILD-FILEPATH)
       (let [{:keys [app-build]} (io/read-edn-file build-handler.config/APP-BUILD-FILEPATH)]
            (r/dispatch [:core/store-app-build! app-build]))

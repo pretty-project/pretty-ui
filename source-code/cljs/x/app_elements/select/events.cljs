@@ -15,7 +15,7 @@
 (ns x.app-elements.select.events
     (:require [mid-fruits.candy            :refer [return]]
               [mid-fruits.vector           :as vector]
-              [x.app-core.api              :as a :refer [r]]
+              [re-frame.api                :as r :refer [r]]
               [x.app-elements.input.events :as input.events]))
 
 
@@ -95,7 +95,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.select/select-will-mount select-will-mount)
+(r/reg-event-db :elements.select/select-will-mount select-will-mount)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.select/clear-value! clear-value!)
+(r/reg-event-db :elements.select/clear-value! clear-value!)

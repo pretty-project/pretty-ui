@@ -13,12 +13,26 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.gestures
-    (:require [mid-fruits.candy  :refer [param return]]
-              [mid-fruits.form   :as form]
-              [mid-fruits.loop   :refer [do-while]]
+    (:require [mid-fruits.loop   :refer [do-while]]
               [mid-fruits.mixed  :as mixed]
+              [mid-fruits.regex  :refer [re-match?]]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn ordered-label?
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (gestures/ordered-label? "My item #3")
+  ;
+  ; @return (boolean)
+  [n]
+  (re-match? n #".*\#\d$"))
 
 
 
@@ -53,7 +67,7 @@
 
   ([item-label concurent-labels]
    (letfn [(test-f [n] (not (vector/contains-item? concurent-labels n)))
-           (f      [n] (if (form/ordered-label? n)
+           (f      [n] (if (ordered-label? n)
                            (let [copy-dex      (string/after-last-occurence  n "#")
                                  label-base    (string/before-last-occurence n "#")
                                  next-copy-dex (mixed/update-whole-number copy-dex inc)]

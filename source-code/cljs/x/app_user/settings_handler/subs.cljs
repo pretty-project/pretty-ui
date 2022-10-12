@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.settings-handler.subs)
+(ns x.app-user.settings-handler.subs
+    (:require [re-frame.api :as r]))
 
 
 
@@ -36,3 +37,16 @@
   ; @return (*)
   [db [_ item-key]]
   (get-in db [:user :settings-handler/user-settings item-key]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:user/get-user-settings]
+(r/reg-sub :user/get-user-settings get-user-settings)
+
+; @usage
+;  [:user/get-user-settings-item]
+(r/reg-sub :user/get-user-settings-item get-user-settings-item)

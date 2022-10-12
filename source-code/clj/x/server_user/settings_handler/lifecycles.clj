@@ -12,18 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns forms.helpers
-    (:require [mid.forms.helpers :as helpers]))
+(ns x.server-user.settings-handler.lifecycles
+    (:require [x.server-core.api :as core]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.forms.helpers
-(def valid-string     helpers/valid-string)
-(def pin?             helpers/pin?)
-(def password?        helpers/password?)
-(def email-address?   helpers/email-address?)
-(def phone-number?    helpers/phone-number?)
-(def items-different? helpers/items-different?)
+(core/reg-lifecycles! ::lifecycles
+  {:on-server-boot {:fx [:user/import-default-user-settings!]}})

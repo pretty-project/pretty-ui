@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.subs
-    (:require [x.app-core.api :as a :refer [r]]))
+    (:require [re-frame.api   :as r :refer [r]]
+              [x.app-core.api :as core]))
 
 
 
@@ -28,7 +29,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r a/get-process-status db request-id))
+  (r core/get-process-status db request-id))
 
 (defn get-request-sent-time
   ; @param (keyword) request-id
@@ -48,7 +49,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r a/get-process-activity db request-id))
+  (r core/get-process-activity db request-id))
 
 (defn get-request-progress
   ; @param (keyword) request-id
@@ -58,7 +59,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r a/get-process-progress db request-id))
+  (r core/get-process-progress db request-id))
 
 (defn request-active?
   ; @param (keyword) request-id
@@ -68,7 +69,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (r a/process-active? db request-id))
+  (r core/process-active? db request-id))
 
 (defn request-sent?
   ; @param (keyword) request-id
@@ -89,7 +90,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-status (r a/get-process-status db request-id)]
+  (let [request-status (r core/get-process-status db request-id)]
        (= request-status :success)))
 
 (defn request-failured?
@@ -100,7 +101,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-status (r a/get-process-status db request-id)]
+  (let [request-status (r core/get-process-status db request-id)]
        (= request-status :failure)))
 
 (defn request-aborted?
@@ -133,7 +134,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-activity (r a/get-process-activity db request-id)]
+  (let [request-activity (r core/get-process-activity db request-id)]
        (or (= request-activity :active)
            (= request-activity :idle))))
 
@@ -147,7 +148,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ _ {:keys [on-failure]} server-response]]
-  (if on-failure (a/metamorphic-event<-params on-failure server-response)))
+  (if on-failure (r/metamorphic-event<-params on-failure server-response)))
 
 (defn get-request-on-success-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -159,7 +160,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ _ {:keys [on-success]} server-response]]
-  (if on-success (a/metamorphic-event<-params on-success server-response)))
+  (if on-success (r/metamorphic-event<-params on-success server-response)))
 
 (defn get-request-on-responsed-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -171,7 +172,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ _ {:keys [on-responsed]} server-response]]
-  (if on-responsed (a/metamorphic-event<-params on-responsed server-response)))
+  (if on-responsed (r/metamorphic-event<-params on-responsed server-response)))
 
 (defn get-request-on-stalled-event
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,7 +188,7 @@
   ; Az {:on-stalled ...} tulajdonságként átadott esemény használható az {:on-success ...}
   ; tulajdonságként átadott esemény alternatívájaként, mert hibás teljesítés esetén nem történik meg.
   (if (and on-stalled request-successed?)
-      (a/metamorphic-event<-params on-stalled server-response)))
+      (r/metamorphic-event<-params on-stalled server-response)))
 
 
 
@@ -196,43 +197,44 @@
 
 ; @usage
 ;  [:sync/get-request-status :my-request]
-(a/reg-sub :sync/get-request-status get-request-status)
+(r/reg-sub :sync/get-request-status get-request-status)
 
 ; @usage
 ;  [:sync/get-request-sent-time :my-request]
-(a/reg-sub :sync/get-request-sent-time get-request-sent-time)
+(r/reg-sub :sync/get-request-sent-time get-request-sent-time)
 
 ; @usage
 ;  [:sync/get-request-activity :my-request]
-(a/reg-sub :sync/get-request-activity get-request-activity)
+(r/reg-sub :sync/get-request-activity get-request-activity)
 
 ; @usage
 ;  [:sync/get-request-progress :my-request]
-(a/reg-sub :sync/get-request-progress get-request-progress)
+(r/reg-sub :sync/get-request-progress get-request-progress)
 
 ; @usage
 ;  [:sync/request-active? :my-request]
-(a/reg-sub :sync/request-active? request-active?)
+(r/reg-sub :sync/request-active? request-active?)
 
 ; @usage
 ;  [:sync/request-sent? :my-request]
-(a/reg-sub :sync/request-sent? request-sent?)
+(r/reg-sub :sync/request-sent? request-sent?)
 
 ; @usage
 ;  [:sync/request-successed? :my-request]
-(a/reg-sub :sync/request-successed? request-successed?)
+(r/reg-sub :sync/request-successed? request-successed?)
+
 ; @usage
 ;  [:sync/request-failured? :my-request]
-(a/reg-sub :sync/request-failured? request-failured?)
+(r/reg-sub :sync/request-failured? request-failured?)
 
 ; @usage
 ;  [:sync/request-aborted? :my-request]
-(a/reg-sub :sync/request-aborted? request-aborted?)
+(r/reg-sub :sync/request-aborted? request-aborted?)
 
 ; @usage
 ;  [:sync/request-resent? :my-request]
-(a/reg-sub :sync/request-resent? request-resent?)
+(r/reg-sub :sync/request-resent? request-resent?)
 
 ; @usage
 ;  [:sync/listening-to-request? :my-request]
-(a/reg-sub :sync/listening-to-request? listening-to-request?)
+(r/reg-sub :sync/listening-to-request? listening-to-request?)

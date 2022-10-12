@@ -31,6 +31,9 @@
            :other
            {:en "Other"
             :hu "Egyéb"}
+           :template
+           {:en "Template"
+            :hu "Sablon"}
 
            :icon
            {:en "Icon"

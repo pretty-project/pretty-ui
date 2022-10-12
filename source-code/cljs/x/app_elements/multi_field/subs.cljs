@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-field.subs
-    (:require [x.app-core.api            :as a :refer [r]]
+    (:require [re-frame.api              :as r :refer [r]]
               [x.app-elements.engine.api :as engine]))
 
- 
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,4 +37,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.multi-field/get-group-value get-group-value)
+(r/reg-sub :elements.multi-field/get-group-value get-group-value)

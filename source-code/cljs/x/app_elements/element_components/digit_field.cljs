@@ -20,7 +20,7 @@
               [mid-fruits.css                        :as css]
               [mid-fruits.random                     :as random]
               [mid-fruits.vector                     :as vector]
-              [x.app-core.api                        :as a :refer [r]]
+              [re-frame.api                          :as r :refer [r]]
               [x.app-elements.engine.api             :as engine]
               [x.app-elements.input.helpers             :as input.helpers]
               ;[x.app-elements.passfield-handler.subs :as passfield-handler.subs]
@@ -84,7 +84,7 @@
   ; @return (map)
   [db [_ field-id]])
 
-(a/reg-sub :elements/get-digit-field-props get-digit-field-props)
+(r/reg-sub :elements/get-digit-field-props get-digit-field-props)
 
 
 
@@ -100,7 +100,7 @@
   [:input.x-digit-field--input {:type "text"
                                 :id (target-handler.helpers/element-id->target-id field-id)
                                 :on-change #(let [v (dom/event->value %)]
-                                                 (a/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
+                                                 (r/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
 
 (defn- digit-field-cover
   ; WARNING! NON-PUBLIC! DO NOT USE!

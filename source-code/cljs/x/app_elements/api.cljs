@@ -18,8 +18,6 @@
               [x.app-elements.checkbox.events]
               [x.app-elements.checkbox.subs]
               [x.app-elements.chip-group.events]
-              [x.app-elements.collect-handler.effects]
-              [x.app-elements.collect-handler.subs]
               [x.app-elements.color-selector.effects]
               [x.app-elements.color-selector.events]
               [x.app-elements.combo-box.effects]
@@ -27,7 +25,7 @@
               [x.app-elements.combo-box.side-effects]
               [x.app-elements.counter.events]
               [x.app-elements.counter.subs]
-              [x.app-elements.focus-handler.side-effects]
+              [x.app-elements.element.side-effects]
               [x.app-elements.multi-combo-box.effects]
               [x.app-elements.multi-combo-box.events]
               [x.app-elements.multi-field.events]
@@ -53,7 +51,6 @@
               [x.app-elements.button.views                            :as button.views]
               [x.app-elements.button-separator.views                  :as button-separator.views]
               [x.app-elements.card.views                              :as card.views]
-              [x.app-elements.element-components.card-group           :as element-components.card-group]
               [x.app-elements.checkbox.views                          :as checkbox.views]
               [x.app-elements.chip-group.views                        :as chip-group.views]
               [x.app-elements.chip.views                              :as chip.views]
@@ -64,7 +61,6 @@
               [x.app-elements.element-components.column               :as element-components.column]
               [x.app-elements.combo-box.views                         :as combo-box.views]
               [x.app-elements.counter.views                           :as counter.views]
-              [x.app-elements.element-components.data-table           :as element-components.data-table]
               [x.app-elements.date-field.views                        :as date-field.views]
               [x.app-elements.element-components.digit-field          :as element-components.digit-field]
               [x.app-elements.expandable.views                        :as expandable.views]
@@ -90,9 +86,7 @@
               [x.app-elements.search-field.views                      :as search-field.views]
               [x.app-elements.select.views                            :as select.views]
               [x.app-elements.slider.views                            :as slider.views]
-              [x.app-elements.element-components.slideshow            :as element-components.slideshow]
               [x.app-elements.switch.views                            :as switch.views]
-              [x.app-elements.element-components.table                :as element-components.table]
               [x.app-elements.text.views                              :as text.views]
               [x.app-elements.text-field.views                        :as text-field.views]
               [x.app-elements.thumbnail.views                         :as thumbnail.views]
@@ -113,7 +107,6 @@
 (def button               button.views/element)
 (def button-separator     button-separator.views/element)
 (def card                 card.views/element)
-(def card-group           element-components.card-group/element)
 (def checkbox             checkbox.views/element)
 (def chip-group           chip-group.views/element)
 (def chip                 chip.views/element)
@@ -124,7 +117,6 @@
 (def column               element-components.column/element)
 (def combo-box            combo-box.views/element)
 (def counter              counter.views/element)
-(def data-table           element-components.data-table/element)
 (def date-field           date-field.views/element)
 (def digit-field          element-components.digit-field/element)
 (def expandable           expandable.views/element)
@@ -150,9 +142,7 @@
 (def search-field         search-field.views/element)
 (def select               select.views/element)
 (def slider               slider.views/element)
-(def slideshow            element-components.slideshow/element)
 (def switch               switch.views/element)
-(def table                element-components.table/element)
 (def text                 text.views/element)
 (def text-field           text-field.views/element)
 (def thumbnail            thumbnail.views/element)

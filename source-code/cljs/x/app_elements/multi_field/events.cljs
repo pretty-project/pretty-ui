@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.multi-field.events
-    (:require [x.app-core.api            :as a :refer [r]]
+    (:require [re-frame.api              :as r :refer [r]]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -47,7 +47,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.multi-field/decrease-field-count! decrease-field-count!)
+(r/reg-event-db :elements.multi-field/decrease-field-count! decrease-field-count!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.multi-field/increase-field-count! increase-field-count!)
+(r/reg-event-db :elements.multi-field/increase-field-count! increase-field-count!)

@@ -14,7 +14,7 @@
 
 (ns x.app-elements.chip-group.events
     (:require [mid-fruits.vector         :as vector]
-              [x.app-core.api            :as a :refer [r]]
+              [re-frame.api              :as r :refer [r]]
               [x.app-db.api              :as db]
               [x.app-elements.engine.api :as engine]))
 
@@ -41,4 +41,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-event-db :elements.chip-group/delete-chip! delete-chip!)
+(r/reg-event-db :elements.chip-group/delete-chip! delete-chip!)

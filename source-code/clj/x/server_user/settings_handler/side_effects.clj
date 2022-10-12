@@ -12,29 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.focus-handler.side-effects
-    (:require [x.app-core.api                        :as a]
-              [x.app-environment.api                 :as environment]
-              [x.app-elements.target-handler.helpers :as target-handler.helpers]))
+(ns x.server-user.settings-handler.side-effects
+    (:require [re-frame.api                          :as r]
+              [server-fruits.io                      :as io]
+              [x.server-user.settings-handler.config :as settings-handler.config]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn focus-element!
+(defn import-default-user-settings!
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  [element-id]
-  (-> element-id target-handler.helpers/element-id->target-id environment/focus-element!))
-
-(defn blur-element!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  [element-id]
-  (-> element-id target-handler.helpers/element-id->target-id environment/blur-element!))
+  [_]
+  (r/dispatch [:db/set-item! [:user :settings-handler/default-user-settings]
+                             (io/read-edn-file settings-handler.config/DEFAULT-USER-SETTINGS-FILEPATH)]))
 
 
 
@@ -42,7 +34,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements/focus-element! focus-element!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements/blur-element! blur-element!)
+(r/reg-fx :user/import-default-user-settings! import-default-user-settings!)

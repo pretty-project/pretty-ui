@@ -215,16 +215,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn parse-css
+(defn unparse-css
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/parse-css [:td [:p {:style {:color "red"}}]])
+  ;  (hiccup/unparse-css [:td [:p {:style {:color "red"}}]])
   ;  =>
   ;  [:td [:p {:style "color: red;"}]]
   ;
   ; @example
-  ;  (hiccup/parse-css [:td [:p {:style "color: red;"}]])
+  ;  (hiccup/unparse-css [:td [:p {:style "color: red;"}]])
   ;  =>
   ;  [:td [:p {:style "color: red;"}]]
   ;
@@ -232,6 +232,6 @@
   [n]
   (letfn [(f [n] (let [style (get-style n)]
                       (if (map? style)
-                          (set-style n (css/parse style))
+                          (set-style n (css/unparse style))
                           (return    n))))]
          (walk n f)))

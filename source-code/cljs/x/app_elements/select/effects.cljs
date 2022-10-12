@@ -14,7 +14,7 @@
 
 (ns x.app-elements.select.effects
     (:require [mid-fruits.candy                     :refer [return]]
-              [x.app-core.api                       :as a :refer [r]]
+              [re-frame.api                         :as r :refer [r]]
               [x.app-elements.input.events          :as input.events]
               [x.app-elements.input.subs            :as input.subs]
               [x.app-elements.select.config         :as select.config]
@@ -29,8 +29,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/active-button-did-mount
+(r/reg-event-fx :elements.select/active-button-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -38,8 +37,7 @@
   (fn [{:keys [db]} [_ select-id select-props]]
       {:db (r select.events/select-will-mount db select-id select-props)}))
 
-(a/reg-event-fx
-  :elements.select/active-button-will-unmount
+(r/reg-event-fx :elements.select/active-button-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -48,8 +46,7 @@
       ; XXX#8706
       {:db (r input.events/unmark-as-visited! db select-id)}))
 
-(a/reg-event-fx
-  :elements.select/select-options-did-mount
+(r/reg-event-fx :elements.select/select-options-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -57,8 +54,7 @@
   (fn [_ [_ select-id select-props]]
       [:elements.select/reg-keypress-events! select-id select-props]))
 
-(a/reg-event-fx
-  :elements.select/select-options-will-unmount
+(r/reg-event-fx :elements.select/select-options-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -75,16 +71,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/ESC-pressed
+(r/reg-event-fx :elements.select/ESC-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [:ui/close-popup! :elements.select/options])
 
-(a/reg-event-fx
-  :elements.select/ENTER-pressed
+(r/reg-event-fx :elements.select/ENTER-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -98,8 +92,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/reg-keypress-events!
+(r/reg-event-fx :elements.select/reg-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -110,8 +103,7 @@
            {:dispatch-n [[:environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props]
                          [:environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
 
-(a/reg-event-fx
-  :elements.select/remove-keypress-events!
+(r/reg-event-fx :elements.select/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -125,8 +117,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/render-options!
+(r/reg-event-fx :elements.select/render-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -135,8 +126,7 @@
       [:ui/render-popup! :elements.select/options
                          {:content [select.views/select-options select-id select-props]}]))
 
-(a/reg-event-fx
-  :elements.select/render-select!
+(r/reg-event-fx :elements.select/render-select!
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ;
@@ -145,7 +135,7 @@
   ;
   ; @usage
   ;  [:elements.select/render-select! :my-select {...}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ select-id select-props]]
       ; Az [:elements.select/render-select! ...] eseményt önállóan is lehet használni
       ; a select komponens használata nélkül, ezért ...
@@ -160,8 +150,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/select-option!
+(r/reg-event-fx :elements.select/select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -173,15 +162,14 @@
            {:db             (r select.events/select-option! db select-id select-props option)
             :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/close-popup! :elements.select/options]}
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
-                             (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (a/metamorphic-event<-params on-select option-value)})]})))
+                             (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.select/add-option!
+(r/reg-event-fx :elements.select/add-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id

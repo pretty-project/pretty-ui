@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.backup.subs
-    (:require [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.form                    :as form]
+    (:require [forms.api                          :as forms]
+              [mid-fruits.candy                   :refer [return]]
               [mid-fruits.mixed                   :as mixed]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
@@ -58,8 +58,8 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  ; XXX#6000 (mid-fruits.form)
-  ; XXX#6001 (mid-fruits.form)
+  ; XXX#6000 (mid.forms.helpers)
+  ; XXX#6001 (mid.forms.helpers)
   ; XXX#5671 (plugins.item-editor.backup.subs)
   ; Az item-changed? függvény összehasonlítja az elem kezdeti értékéről készült
   ; másolatot az elem jelenlegi állapotával.
@@ -67,7 +67,7 @@
           (let [current-item-id (r core.subs/get-current-item-id db editor-id)
                 current-item    (r core.subs/get-current-item    db editor-id)
                 backup-item     (r get-backup-item               db editor-id current-item-id)]
-               (form/items-different? current-item backup-item))))
+               (forms/items-different? current-item backup-item))))
 
 (defn form-changed?
   ; @param (keyword) editor-id
@@ -78,8 +78,8 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  ; XXX#6000 (mid-fruits.form)
-  ; XXX#6001 (mid-fruits.form)
+  ; XXX#6000 (mid.forms.helpers)
+  ; XXX#6001 (mid.forms.helpers)
   ; XXX#5672 (plugins.item-editor.backup.subs)
   ; A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
   ; átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
@@ -87,7 +87,7 @@
           (let [current-item-id (r core.subs/get-current-item-id db editor-id)
                 current-item    (r core.subs/get-current-item    db editor-id)
                 backup-item     (r get-backup-item               db editor-id current-item-id)]
-               (form/items-different? current-item backup-item change-keys))))
+               (forms/items-different? current-item backup-item change-keys))))
 
 
 

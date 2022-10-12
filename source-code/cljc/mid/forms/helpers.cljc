@@ -12,29 +12,11 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-fruits.form
+(ns mid.forms.helpers
     (:require [mid-fruits.mixed  :as mixed]
               [mid-fruits.regex  :refer [re-match?]]
-              [mid-fruits.string :as string]))
-
-
-
-;; -- Configuration -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; @constant (string)
-;  Minimum 8 characters, maximum 32 characters, at least one uppercase letter,
-;  one lowercase letter and one number
-(def PASSWORD-PATTERN #"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,32}$")
-
-; @constant (string)
-(def EMAIL-PATTERN #"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?")
-
-; @constant (string)
-(def PHONE-NUMBER-PATTERN #"\+\d{10,20}")
-
-; @constant (string)
-(def ORDERED-LABEL-PATTERN #".*\#\d$")
+              [mid-fruits.string :as string]
+              [mid.forms.config  :as config]))
 
 
 
@@ -47,7 +29,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/valid-string " abCd12 ")
+  ;  (forms/valid-string " abCd12 ")
   ;  =>
   ;  "abCd12"
   ;
@@ -60,11 +42,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn pin-valid?
+(defn pin?
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/pin? "0000")
+  ;  (forms/pin? "0000")
   ;
   ; @return (boolean)
   [n]
@@ -74,7 +56,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/password? "Abcde1")
+  ;  (forms/password? "Abcde1")
   ;
   ; @return (boolean)
   [n]
@@ -85,31 +67,21 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/email-address? "foo@bar.baz")
+  ;  (forms/email-address? "foo@bar.baz")
   ;
   ; @return (boolean)
   [n]
-  (re-match? n EMAIL-PATTERN))
+  (re-match? n config/EMAIL-PATTERN))
 
 (defn phone-number?
   ; @param (string) n
   ;
   ; @usage
-  ;  (form/phone-number? "+36301234567")
+  ;  (forms/phone-number? "+36301234567")
   ;
   ; @return (boolean)
   [n]
-  (re-match? n PHONE-NUMBER-PATTERN))
-
-(defn ordered-label?
-  ; @param (string) n
-  ;
-  ; @usage
-  ;  (form/ordered-label? "My item #3")
-  ;
-  ; @return (boolean)
-  [n]
-  (re-match? n ORDERED-LABEL-PATTERN))
+  (re-match? n config/PHONE-NUMBER-PATTERN))
 
 
 
@@ -122,34 +94,34 @@
   ; @param (vector) keys
   ;
   ; @usage
-  ;  (form/items-different? {...} {...})
+  ;  (forms/items-different? {...} {...})
   ;
   ; @usage
-  ;  (form/items-different? {...} {...} [...])
+  ;  (forms/items-different? {...} {...} [...])
   ;
   ; @example
-  ;  (form/items-different? {:color "Red"   :size "XL"}
-  ;                         {:color "Green" :size "XL"})
+  ;  (forms/items-different? {:color "Red"   :size "XL"}
+  ;                          {:color "Green" :size "XL"})
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (form/items-different? {:color "Red"}
-  ;                         {:color "Red" :size "XL"})
+  ;  (forms/items-different? {:color "Red"}
+  ;                          {:color "Red" :size "XL"})
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (form/items-different? {:color "Red"   :size "XL"}
-  ;                         {:color "Green" :size "XL"}
-  ;                         [:color])
+  ;  (forms/items-different? {:color "Red"   :size "XL"}
+  ;                          {:color "Green" :size "XL"}
+  ;                          [:color])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (form/items-different? {:color "Red"   :size "XL"}
-  ;                         {:color "Green" :size "XL"}
-  ;                         [:size])
+  ;  (forms/items-different? {:color "Red"   :size "XL"}
+  ;                          {:color "Green" :size "XL"}
+  ;                          [:size])
   ;  =>
   ;  false
   ;

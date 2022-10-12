@@ -18,6 +18,8 @@
               [x.server-user.install-handler.side-effects]
               [x.server-user.login-handler.lifecycles]
               [x.server-user.profile-handler.transfer]
+              [x.server-user.settings-handler.lifecycles]
+              [x.server-user.settings-handler.side-effects]
               [x.server-user.settings-handler.transfer]
               [x.server-user.account-handler.config    :as account-handler.config]
               [x.server-user.account-handler.helpers   :as account-handler.helpers]
@@ -27,8 +29,8 @@
               [x.server-user.profile-handler.config    :as profile-handler.config]
               [x.server-user.profile-handler.helpers   :as profile-handler.helpers]
               [x.server-user.session-handler.helpers   :as session-handler.helpers]
-              [x.server-user.settings-handler.config   :as settings-handler.config]
               [x.server-user.settings-handler.helpers  :as settings-handler.helpers]
+              [x.server-user.settings-handler.subs     :as settings-handler.subs]
               [x.server-user.user-handler.side-effects :as user-handler.side-effects]))
 
 
@@ -73,15 +75,15 @@
 ; x.server-user.session-handler.helpers
 (def session->session-valid? session-handler.helpers/session->session-valid?)
 
-; x.server-user.settings-handler.config
-(def DEFAULT-USER-SETTINGS settings-handler.config/DEFAULT-USER-SETTINGS)
-
 ; x.server-user.settings-handler.helpers
 (def user-account-id->user-settings      settings-handler.helpers/user-account-id->user-settings)
 (def user-account-id->user-settings-item settings-handler.helpers/user-account-id->user-settings-item)
 (def request->user-settings              settings-handler.helpers/request->user-settings)
 (def request->public-user-settings       settings-handler.helpers/request->public-user-settings)
 (def request->user-settings-item         settings-handler.helpers/request->user-settings-item)
+
+; x.server-user.settings-handler.subs
+(def get-default-user-settings settings-handler.subs/get-default-user-settings)
 
 ; x.server-user.user-handler.side-effects
 (def add-user! user-handler.side-effects/add-user!)

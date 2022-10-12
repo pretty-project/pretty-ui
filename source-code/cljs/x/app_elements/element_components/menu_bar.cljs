@@ -16,8 +16,8 @@
     (:require [mid-fruits.candy          :refer [param return]]
               [mid-fruits.random         :as random]
               [mid-fruits.vector         :as vector]
+              [re-frame.api              :as r]
               [x.app-components.api      :as components]
-              [x.app-core.api            :as a :refer [r]]
               [x.app-environment.api     :as environment]
               [x.app-elements.engine.api :as engine]))
 
@@ -61,7 +61,7 @@
                 ; If menu-item is NOT disabled ...
                 (cond-> {:on-mouse-up   #(environment/blur-element!)}
                         (some? href)     (assoc :href        (str        href))
-                        (some? on-click) (assoc :on-click   #(a/dispatch on-click))
+                        (some? on-click) (assoc :on-click   #(r/dispatch on-click))
                         (some? active?)  (assoc :data-active (boolean    active?)))))
 
 

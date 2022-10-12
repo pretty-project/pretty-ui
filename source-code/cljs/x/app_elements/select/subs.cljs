@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.subs
-    (:require [x.app-core.api            :as a :refer [r]]
+    (:require [re-frame.api              :as r :refer [r]]
               [x.app-elements.input.subs :as input.subs]))
 
 
@@ -55,4 +55,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.select/required-warning? required-warning?)
+(r/reg-sub :elements.select/required-warning? required-warning?)

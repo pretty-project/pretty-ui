@@ -41,6 +41,12 @@
            :market-price-history
            {:en "Market price history"
             :hu "Árfolyamtörténet"}
+           :primary-currency
+           {:en "Primary currency"
+            :hu "Elsődleges pénznem"}
+           :secondary-currency
+           {:en "Secondary currency"
+            :hu "Másodlagos pénznem"}
            :vat
            {:en "VAT"
             :hu "ÁFA"}

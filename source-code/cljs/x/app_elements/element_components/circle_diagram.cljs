@@ -19,7 +19,6 @@
               [mid-fruits.random         :as random]
               [mid-fruits.svg            :as svg]
               [mid-fruits.vector         :as vector]
-              [x.app-core.api            :as a :refer [r]]
               [x.app-elements.engine.api :as engine]))
 
 

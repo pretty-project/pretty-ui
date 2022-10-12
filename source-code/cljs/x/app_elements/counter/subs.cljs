@@ -12,8 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.counter.subs
-    (:require [x.app-core.api :as a :refer [r]]))
+(ns x.app-elements.counter.subs)
 
 
 

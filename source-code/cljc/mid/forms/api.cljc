@@ -12,21 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns forms.api
-    (:require [forms.attributes :as attributes]
-              [forms.helpers    :as helpers]))
+(ns mid.forms.api
+    (:require [mid.forms.helpers :as helpers]))
 
 
 
 ;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; forms.attributes
-(def form-block-attributes  attributes/form-block-attributes)
-(def form-row-attributes    attributes/form-row-attributes)
-(def form-column-attributes attributes/form-column-attributes)
-
-; forms.helpers
+; mid.forms.helpers
 (def valid-string     helpers/valid-string)
 (def pin?             helpers/pin?)
 (def password?        helpers/password?)

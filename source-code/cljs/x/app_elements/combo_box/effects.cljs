@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.combo-box.effects
-    (:require [x.app-core.api                   :as a :refer [r]]
+    (:require [re-frame.api                     :as r :refer [r]]
               [x.app-elements.combo-box.events  :as combo-box.events]
               [x.app-elements.combo-box.helpers :as combo-box.helpers]
               [x.app-elements.text-field.events :as text-field.events]
@@ -24,8 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.combo-box/reg-keypress-events!
+(r/reg-event-fx :elements.combo-box/reg-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -51,8 +50,7 @@
                          [:environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]
                          [:environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]]})))
 
-(a/reg-event-fx
-  :elements.combo-box/remove-keypress-events!
+(r/reg-event-fx :elements.combo-box/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -68,8 +66,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.combo-box/DOWN-pressed
+(r/reg-event-fx :elements.combo-box/DOWN-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -78,8 +75,7 @@
       {:db (r text-field.events/show-surface!       db box-id)
        :fx [:elements.combo-box/highlight-next-option! box-id box-props]}))
 
-(a/reg-event-fx
-  :elements.combo-box/UP-pressed
+(r/reg-event-fx :elements.combo-box/UP-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -88,8 +84,7 @@
       {:db (r text-field.events/show-surface!       db box-id)
        :fx [:elements.combo-box/highlight-prev-option! box-id box-props]}))
 
-(a/reg-event-fx
-  :elements.combo-box/ESC-pressed
+(r/reg-event-fx :elements.combo-box/ESC-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -107,8 +102,7 @@
           ; B)
           [:elements.text-field/ESC-pressed box-id box-props])))
 
-(a/reg-event-fx
-  :elements.combo-box/ENTER-pressed
+(r/reg-event-fx :elements.combo-box/ENTER-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -143,8 +137,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.combo-box/select-option!
+(r/reg-event-fx :elements.combo-box/select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -161,8 +154,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :elements.combo-box/field-changed
+(r/reg-event-fx :elements.combo-box/field-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -170,8 +162,7 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       {:fx [:elements.combo-box/discard-option-highlighter! box-id]}))
 
-(a/reg-event-fx
-  :elements.combo-box/field-focused
+(r/reg-event-fx :elements.combo-box/field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -179,8 +170,7 @@
   (fn [_ [_ box-id box-props]]
       [:elements.combo-box/reg-keypress-events! box-id box-props]))
 
-(a/reg-event-fx
-  :elements.combo-box/field-blurred
+(r/reg-event-fx :elements.combo-box/field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id

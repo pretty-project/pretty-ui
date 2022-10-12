@@ -14,7 +14,7 @@
 
 (ns x.app-elements.checkbox.subs
     (:require [mid-fruits.vector         :as vector]
-              [x.app-core.api            :as a :refer [r]]
+              [re-frame.api              :as r :refer [r]]
               [x.app-elements.input.subs :as input.subs]))
 
 
@@ -46,4 +46,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.checkbox/option-checked? option-checked?)
+(r/reg-sub :elements.checkbox/option-checked? option-checked?)

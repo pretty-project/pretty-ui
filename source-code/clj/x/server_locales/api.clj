@@ -17,6 +17,7 @@
               [x.server-locales.address-handler.subs    :as address-handler.subs]
               [x.server-locales.country-handler.config  :as country-handler.config]
               [x.server-locales.country-handler.helpers :as country-handler.helpers]
+              [x.server-locales.currency-handler.config :as currency-handler.config]
               [x.server-locales.name-handler.config     :as name-handler.config]
               [x.server-locales.name-handler.helpers    :as name-handler.helpers]
               [x.server-locales.name-handler.subs       :as name-handler.subs]))
@@ -45,6 +46,10 @@
 (def country-language     country-handler.helpers/country-language)
 (def country-name         country-handler.helpers/country-name)
 (def country-native-name  country-handler.helpers/country-native-name)
+
+; x.server-locales.currency-handler.config
+(def CURRENCY-SYMBOLS currency-handler.config/CURRENCY-SYMBOLS)
+(def CURRENCY-LIST    currency-handler.config/CURRENCY-LIST)
 
 ; x.server-locales.name-handler.config
 (def NAME-ORDERS name-handler.config/NAME-ORDERS)

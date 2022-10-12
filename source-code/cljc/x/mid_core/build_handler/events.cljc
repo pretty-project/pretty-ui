@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.build-handler.events
-    (:require [x.mid-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -35,4 +35,4 @@
 ;; ---------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-app-build! store-app-build!)
+(r/reg-event-db :core/store-app-build! store-app-build!)

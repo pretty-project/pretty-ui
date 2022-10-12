@@ -14,7 +14,7 @@
 
 (ns x.app-dictionary.term-handler.subs
     (:require [mid-fruits.string                  :as string]
-              [x.app-core.api                     :as a :refer [r]]
+              [re-frame.api                       :as r :refer [r]]
               [x.app-locales.api                  :as locales]
               [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
 
@@ -64,4 +64,4 @@
 
 ; @usage
 ;  [:dictionary/look-up! :my-term]
-(a/reg-sub :dictionary/look-up look-up)
+(r/reg-sub :dictionary/look-up look-up)

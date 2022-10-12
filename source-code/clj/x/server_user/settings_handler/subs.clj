@@ -12,34 +12,29 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-elements.switch.events
-    (:require [re-frame.api                   :as r :refer [r]]
-              [x.app-elements.checkbox.events :as checkbox.events]
-              [x.app-elements.input.events    :as input.events]))
+(ns x.server-user.settings-handler.subs
+    (:require [mid-fruits.map :as map]
+              [re-frame.api   :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+(defn get-default-user-settings
+  ; @usage
+  ;  (r user/get-default-user-settings db)
   ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ;
-  ; @return (map)
-  [db [_ switch-id switch-props]]
-  (as-> db % (r input.events/use-initial-value!   % switch-id switch-props)
-             (r input.events/use-initial-options! % switch-id switch-props)))
+  ; @return (namespaced map)
+  [db _]
+  (map/add-namespace (get-in db [:user :settings-handler/default-user-settings])
+                     :user-settings))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.switch/switch-did-mount switch-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.switch/toggle-option! checkbox.events/toggle-option!)
+; @usage
+;  [:user/get-default-user-settings]
+(r/reg-sub :user/get-default-user-settings get-default-user-settings)

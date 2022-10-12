@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.slider.effects
-    (:require [x.app-core.api               :as a :refer [r]]
+    (:require [re-frame.api                 :as r :refer [r]]
               [x.app-elements.slider.events :as slider.events]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-   :elements.slider/slider-did-mount
+(r/reg-event-fx :elements.slider/slider-did-mount
    ; WARNING! NON-PUBLIC! DO NOT USE!
    ;
    ; @param (keyword) slider-id

@@ -96,7 +96,7 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      [:ui/render-bubble! :plugins.item-viewer/item-deleted-dialog
+      [:ui/render-bubble! ::item-deleted-dialog
                           {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
 
 (r/reg-event-fx
@@ -106,7 +106,7 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      [:ui/render-bubble! :plugins.item-viewer/delete-item-failed-dialog
+      [:ui/render-bubble! ::delete-item-failed-dialog
                           {:body :failed-to-delete}]))
 
 
@@ -126,7 +126,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch-n [[:ui/close-bubble! :plugins.item-viewer/item-deleted-dialog]
+            :dispatch-n [[:ui/close-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                               {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
@@ -177,7 +177,7 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [_ [_ viewer-id item-id]]
-      [:ui/render-bubble! :plugins.item-viewer/undo-delete-item-failed-dialog
+      [:ui/render-bubble! ::undo-delete-item-failed-dialog
                           {:body [update.views/undo-delete-item-failed-dialog-body viewer-id item-id]}]))
 
 
@@ -221,7 +221,7 @@
   (fn [_ [_ _ _]]
       ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
       ; ... megjelenít egy értesítést.
-      [:ui/render-bubble! :plugins.item-viewer/duplicate-item-failed-dialog
+      [:ui/render-bubble! ::duplicate-item-failed-dialog
                           {:body :failed-to-duplicate}]))
 
 (r/reg-event-fx
@@ -231,7 +231,7 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   (fn [_ [_ viewer-id copy-id]]
-      [:ui/render-bubble! :plugins.item-viewer/item-duplicated-dialog
+      [:ui/render-bubble! ::item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
 
 (r/reg-event-fx
@@ -241,5 +241,5 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   (fn [_ [_ viewer-id copy-id]]
-      {:dispatch-n [[:ui/close-bubble! :plugins.item-viewer/item-duplicated-dialog]
+      {:dispatch-n [[:ui/close-bubble! ::item-duplicated-dialog]
                     [:item-viewer/view-item! viewer-id copy-id]]}))
