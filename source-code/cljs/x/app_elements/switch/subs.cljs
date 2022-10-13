@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.switch.subs
-    (:require [x.app-core.api               :as a]
+    (:require [re-frame.api                 :as r]
               [x.app-elements.checkbox.subs :as checkbox.subs]))
 
 
@@ -22,4 +22,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.switch/option-switched? checkbox.subs/option-checked?)
+(r/reg-sub :elements.switch/option-switched? checkbox.subs/option-checked?)

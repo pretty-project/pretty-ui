@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.switch.helpers
-    (:require [x.app-core.api                 :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -32,7 +32,7 @@
   ; @return (function)
   [switch-id {:keys [initial-options initial-value] :as switch-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
+       (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
 
 
 
@@ -79,9 +79,9 @@
   ; @return (map)
   ;  {}
   [switch-id {:keys [disabled?] :as switch-props} option]
-  (let [option-switched? @(a/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
+  (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
        (if disabled? {:data-switched option-switched?
                       :disabled      true}
                      {:data-switched option-switched?
-                      :on-click     #(a/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
+                      :on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
                       :on-mouse-up  #(environment/blur-element!)})))

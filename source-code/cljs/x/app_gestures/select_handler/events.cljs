@@ -14,7 +14,7 @@
 
 (ns x.app-gestures.select-handler.events
     (:require [mid-fruits.vector                        :as vector]
-              [re-frame.api                             :as a]
+              [re-frame.api                             :as r]
               [x.app-gestures.select-handler.prototypes :as select-handler.prototypes]))
 
 
@@ -88,20 +88,20 @@
 
 ; @usage
 ;  [:gestures/init-select-handler! :my-handler {...}]
-(a/reg-event-db :gestures/init-select-handler! init-select-handler!)
+(r/reg-event-db :gestures/init-select-handler! init-select-handler!)
 
 ; @usage
 ;  [:gestures/empty-select-handler! :my-handler]
-(a/reg-event-db :gestures/empty-select-handler! empty-select-handler!)
+(r/reg-event-db :gestures/empty-select-handler! empty-select-handler!)
 
 ; @usage
 ;  [:gestures/enable-select-handler! :my-handler]
-(a/reg-event-db :gestures/enable-select-handler! enable-select-handler!)
+(r/reg-event-db :gestures/enable-select-handler! enable-select-handler!)
 
 ; @usage
 ;  [:gestures/disable-select-handler! :my-handler]
-(a/reg-event-db :gestures/disable-select-handler! disable-select-handler!)
+(r/reg-event-db :gestures/disable-select-handler! disable-select-handler!)
 
 ; @usage
 ;  [:gestures/select-item! :my-handler :my-item]
-(a/reg-event-db :gestures/select-item! select-item!)
+(r/reg-event-db :gestures/select-item! select-item!)

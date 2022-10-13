@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.connection-handler.subs
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -45,8 +45,8 @@
 
 ; @usage
 ;  [:environment/browser-online?]
-(a/reg-sub :environment/browser-online? browser-online?)
+(r/reg-sub :environment/browser-online? browser-online?)
 
 ; @usage
 ;  [:environment/browser-offline?]
-(a/reg-sub :environment/browser-offline? browser-offline?)
+(r/reg-sub :environment/browser-offline? browser-offline?)

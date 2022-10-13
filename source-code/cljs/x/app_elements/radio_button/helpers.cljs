@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.helpers
-    (:require [x.app-components.api           :as components]
-              [x.app-core.api                 :as a]
+    (:require [re-frame.api                   :as r]  
+              [x.app-components.api           :as components]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -33,7 +33,7 @@
   ; @return (function)
   [button-id {:keys [initial-options initial-value] :as button-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.radio-button/radio-button-box-did-mount button-id button-props])))
+       (r/dispatch [:elements.radio-button/radio-button-box-did-mount button-id button-props])))
 
 
 
@@ -78,9 +78,9 @@
   ; @return (map)
   ;  {}
   [button-id button-props]
-  (if-let [any-option-selected? @(a/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
+  (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
           {:data-clickable true
-           :on-click      #(a/dispatch [:elements.radio-button/clear-value! button-id button-props])
+           :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
            :on-mouse-up   #(environment/blur-element!)
            :title          (components/content :uncheck-selected!)}
           {:data-disabled  true
@@ -97,9 +97,9 @@
   ; @return (map)
   ;  {}
   [button-id {:keys [disabled?] :as button-props} option]
-  (let [option-selected? @(a/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
+  (let [option-selected? @(r/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
        (if disabled? {:data-selected option-selected?
                       :disabled      true}
                      {:data-selected option-selected?
-                      :on-click     #(a/dispatch [:elements.radio-button/select-option! button-id button-props option])
+                      :on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
                       :on-mouse-up  #(environment/blur-element!)})))

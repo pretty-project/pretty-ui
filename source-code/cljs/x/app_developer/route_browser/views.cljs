@@ -15,7 +15,7 @@
 (ns x.app-developer.route-browser.views
     (:require [mid-fruits.pretty :as pretty]
               [mid-fruits.vector :as vector]
-              [re-frame.api      :as a]))
+              [re-frame.api      :as r]))
 
 
 
@@ -34,7 +34,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [client-routes @(a/subscribe [:router/get-client-routes])]
+  (let [client-routes @(r/subscribe [:router/get-client-routes])]
        (letfn [(f [route-list route-id]
                   (let [route-props (get client-routes route-id)]
                        (conj route-list [route-list-item route-id route-props])))]

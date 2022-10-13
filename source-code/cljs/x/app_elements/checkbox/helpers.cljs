@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.checkbox.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -32,7 +32,7 @@
   ; @return (function)
   [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
+       (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
 
 
 
@@ -81,9 +81,9 @@
   ;   :on-click (function)
   ;   :on-mouse-up (function)}
   [checkbox-id {:keys [disabled? value-path] :as checkbox-props} option]
-  (let [option-checked? @(a/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
+  (let [option-checked? @(r/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
        (if disabled? {:data-checked option-checked?
                       :disabled     true}
                      {:data-checked option-checked?
-                      :on-click     #(a/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
+                      :on-click     #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
                       :on-mouse-up  #(environment/blur-element!)})))

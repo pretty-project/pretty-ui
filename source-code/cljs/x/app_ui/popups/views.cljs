@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.views
-    (:require [re-frame.api            :as a]
+    (:require [re-frame.api            :as r]
               [reagent.api             :as reagent]
               [x.app-components.api    :as components]
               [x.app-ui.popups.helpers :as popups.helpers]
@@ -26,11 +26,11 @@
 
 (defn popup-size-button
   [popup-id]
-  (if-let [debug-mode-detected? @(a/subscribe [:core/debug-mode-detected?])]
-          (if-let [popup-minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
-                  [:div.x-app-popups--element--maximize-button {:on-click #(a/dispatch [:ui/maximize-popup! popup-id])}
+  (if-let [debug-mode-detected? @(r/subscribe [:core/debug-mode-detected?])]
+          (if-let [popup-minimized? @(r/subscribe [:ui/get-popup-prop popup-id :minimized?])]
+                  [:div.x-app-popups--element--maximize-button {:on-click #(r/dispatch [:ui/maximize-popup! popup-id])}
                                                                "Maximize"]
-                  [:div.x-app-popups--element--minimize-button {:on-click #(a/dispatch [:ui/minimize-popup! popup-id])}
+                  [:div.x-app-popups--element--minimize-button {:on-click #(r/dispatch [:ui/minimize-popup! popup-id])}
                                                                "Minimize"])))
 
 (defn popup-content
@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (let [content @(a/subscribe [:ui/get-popup-prop popup-id :content])]
+  (let [content @(r/subscribe [:ui/get-popup-prop popup-id :content])]
        [:div.x-app-popups--element--content [components/content popup-id content]]))
 
 (defn popup-element

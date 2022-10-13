@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.views
-    (:require [re-frame.api             :as a]
+    (:require [re-frame.api             :as r]
               [reagent.api              :as reagent]
               [x.app-components.api     :as components]
               [x.app-ui.renderer        :rename {component renderer}]
@@ -29,7 +29,7 @@
   ;
   ; @param (keyword) surface-id
   [surface-id]
-  (let [content @(a/subscribe [:ui/get-surface-prop surface-id :content])]
+  (let [content @(r/subscribe [:ui/get-surface-prop surface-id :content])]
        [:div.x-app-surface--element--content [components/content surface-id content]]))
 
 (defn surface-element-structure
@@ -45,12 +45,12 @@
   ;
   ; @param (keyword) surface-id
   [surface-id]
-  (let [on-surface-closed   @(a/subscribe [:ui/get-surface-prop surface-id :on-surface-closed])
-        on-surface-rendered @(a/subscribe [:ui/get-surface-prop surface-id :on-surface-rendered])]
+  (let [on-surface-closed   @(r/subscribe [:ui/get-surface-prop surface-id :on-surface-closed])
+        on-surface-rendered @(r/subscribe [:ui/get-surface-prop surface-id :on-surface-rendered])]
        (reagent/lifecycles surface-id
                            {:reagent-render         (fn [] [surface-element-structure surface-id])
-                            :component-will-unmount (fn [] (a/dispatch on-surface-closed))
-                            :component-did-mount    (fn [] (a/dispatch on-surface-rendered))})))
+                            :component-will-unmount (fn [] (r/dispatch on-surface-closed))
+                            :component-did-mount    (fn [] (r/dispatch on-surface-rendered))})))
 
 
 

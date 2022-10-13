@@ -14,7 +14,7 @@
 
 (ns x.app-ui.popups.helpers
     (:require [mid-fruits.hiccup :as hiccup]
-              [re-frame.api      :as a]))
+              [re-frame.api      :as r]))
 
 
 
@@ -29,7 +29,7 @@
   ; @return (map)
   ;  {}
   [popup-id]
-  (let [minimized? @(a/subscribe [:ui/get-popup-prop popup-id :minimized?])]
+  (let [minimized? @(r/subscribe [:ui/get-popup-prop popup-id :minimized?])]
        (merge {:class          :x-app-popups--element
                :data-animation :reveal
                :data-minimized (boolean minimized?)

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.effects
-    (:require [re-frame.api               :as a]
+    (:require [re-frame.api               :as r]
               [x.app-ui.popups.prototypes :as popups.prototypes]))
 
 
@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :ui/render-popup-element!
+(r/reg-event-fx :ui/render-popup-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
@@ -32,8 +31,7 @@
                     ; A popup-id azonosítójú popup felület által elhelyez egy scroll-tiltást
                     [:environment/add-scroll-prohibition! popup-id]]}))
 
-(a/reg-event-fx
-  :ui/render-popup!
+(r/reg-event-fx :ui/render-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
   ;  {:content (metamorphic-content)}
@@ -47,13 +45,12 @@
   ; @usage
   ;  (defn my-content [popup-id] [:div "My content"])
   ;  [:ui/render-popup! {:content #'my-content}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [_ [_ popup-id popup-props]]
       (let [popup-props (popups.prototypes/popup-props-prototype popup-props)]
            [:ui/render-popup-element! popup-id popup-props])))
 
-(a/reg-event-fx
-  :ui/close-popup!
+(r/reg-event-fx :ui/close-popup!
   ; @param (keyword) popup-id
   ;
   ; @usage

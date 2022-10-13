@@ -14,7 +14,7 @@
 
 (ns x.app-environment.connection-handler.side-effects
     (:require [dom.api                                      :as dom]
-              [x.app-core.api                               :as a]
+              [re-frame.api                                 :as r]
               [x.app-environment.connection-handler.helpers :as connection-handler.helpers]))
 
 
@@ -34,4 +34,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/listen-to-connection-change! listen-to-connection-change!)
+(r/reg-fx :environment/listen-to-connection-change! listen-to-connection-change!)

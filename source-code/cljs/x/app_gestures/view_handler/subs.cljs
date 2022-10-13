@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.view-handler.subs
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -37,4 +37,4 @@
 
 ; @usage
 ;  [:gestures/get-current-view-id]
-(a/reg-sub :gestures/get-current-view-id get-current-view-id)
+(r/reg-sub :gestures/get-current-view-id get-current-view-id)

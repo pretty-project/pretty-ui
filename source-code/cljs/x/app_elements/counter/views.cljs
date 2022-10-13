@@ -14,7 +14,7 @@
 
 (ns x.app-elements.counter.views
     (:require [mid-fruits.random                 :as random]
-              [re-frame.api                      :as a]
+              [re-frame.api                      :as r]
               [reagent.api                       :as reagent]
               [x.app-elements.counter.helpers    :as counter.helpers]
               [x.app-elements.counter.prototypes :as counter.prototypes]
@@ -48,7 +48,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;  {:disabled? (boolean)(opt)}
+  ;  {:disabled? (boolean)(opt)}r/
   [counter-id counter-props]
   [:button.x-counter--decrease-button (counter.helpers/decrease-button-attributes counter-id counter-props)])
 
@@ -59,7 +59,7 @@
   ; @param (map) counter-props
   ;  {:value-path (vector)}
   [_ {:keys [value-path]}]
-  (let [value @(a/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:db/get-item value-path])]
        [:div.x-counter--value value]))
 
 (defn- counter-body

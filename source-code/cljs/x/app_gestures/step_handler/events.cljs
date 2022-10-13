@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.step-handler.events
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -47,8 +47,8 @@
 
 ; @usage
 ;  [:gestures/pause-stepping! :my-handler]
-(a/reg-event-db :gestures/pause-stepping! pause-stepping!)
+(r/reg-event-db :gestures/pause-stepping! pause-stepping!)
 
 ; @usage
 ;  [:gestures/run-stepping! :my-handler]
-(a/reg-event-db :gestures/run-stepping! run-stepping!)
+(r/reg-event-db :gestures/run-stepping! run-stepping!)

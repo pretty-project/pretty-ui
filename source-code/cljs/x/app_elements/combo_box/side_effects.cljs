@@ -14,7 +14,7 @@
 
 (ns x.app-elements.combo-box.side-effects
     (:require [mid-fruits.vector                 :as vector]
-              [re-frame.api                      :as a]
+              [re-frame.api                      :as r]
               [x.app-elements.combo-box.helpers  :as combo-box.helpers]
               [x.app-elements.combo-box.state    :as combo-box.state]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
@@ -73,13 +73,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.combo-box/highlight-next-option! highlight-next-option!)
+(r/reg-fx :elements.combo-box/highlight-next-option! highlight-next-option!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.combo-box/highlight-prev-option! highlight-prev-option!)
+(r/reg-fx :elements.combo-box/highlight-prev-option! highlight-prev-option!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
+(r/reg-fx :elements.combo-box/discard-option-highlighter! discard-option-highlighter!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.combo-box/use-selected-option! use-selected-option!)
+(r/reg-fx :elements.combo-box/use-selected-option! use-selected-option!)

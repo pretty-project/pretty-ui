@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.subs
-    (:require [x.app-core.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -53,7 +53,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.radio-button/option-selected? option-selected?)
+(r/reg-sub :elements.radio-button/option-selected? option-selected?)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :elements.radio-button/any-option-selected? any-option-selected?)
+(r/reg-sub :elements.radio-button/any-option-selected? any-option-selected?)

@@ -14,7 +14,7 @@
 
 (ns x.app-elements.button.helpers
     (:require [mid-fruits.hiccup              :as hiccup]
-              [re-frame.api                   :as a]
+              [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -35,7 +35,7 @@
   ; A component-did-mount életciklus eltárolja a Re-Frame adatbázisban a button elem
   ; billentyűlenyomás-általi vezérléséhez szükséges tulajdonságokat, így azok az elem
   ; billentyűlenyomás-vezérlője számára elérhetők lesznek az adatbázisban.
-  #(if keypress (a/dispatch [:elements.button/button-did-mount button-id button-props])))
+  #(if keypress (r/dispatch [:elements.button/button-did-mount button-id button-props])))
 
 (defn button-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,7 +49,7 @@
   ; A component-did-update életciklus aktualizálja a Re-Frame adatbázisban a button
   ; elem eltárolt tulajdonságait, így azok követik a button elem számára paraméterként
   ; átadott button-props térkép változásait.
-  #(if keypress (a/dispatch [:elements.button/button-did-update button-id button-props])))
+  #(if keypress (r/dispatch [:elements.button/button-did-update button-id button-props])))
 
 (defn button-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,7 +62,7 @@
   [button-id {:keys [keypress] :as button-props}]
   ; A component-will-unmount életciklus törli a Re-Frame adatbázisból a button elem
   ; eltárolt tulajdonságait.
-  #(if keypress (a/dispatch [:elements.button/button-will-unmount button-id button-props])))
+  #(if keypress (r/dispatch [:elements.button/button-will-unmount button-id button-props])))
 
 
 
@@ -129,8 +129,8 @@
          (if disabled? {:disabled       true}
                        {:data-clickable true
                         :id              (hiccup/value button-id "body")
-                        :on-click       #(a/dispatch on-click)
-                        :on-mouse-over  #(a/dispatch on-mouse-over)
+                        :on-click       #(r/dispatch on-click)
+                        :on-mouse-over  #(r/dispatch on-mouse-over)
                         :on-mouse-up    #(environment/blur-element!)})))
 
 (defn button-attributes

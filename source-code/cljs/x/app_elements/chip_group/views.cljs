@@ -16,7 +16,7 @@
     (:require [mid-fruits.loop                      :refer [reduce-indexed]]
               [mid-fruits.random                    :as random]
               [mid-fruits.vector                    :as vector]
-              [re-frame.api                         :as a]
+              [re-frame.api                         :as r]
               [x.app-components.api                 :as components]
               [x.app-elements.chip-group.helpers    :as chip-group.helpers]
               [x.app-elements.chip-group.prototypes :as chip-group.prototypes]
@@ -55,7 +55,7 @@
   ; @param (map) group-props
   ;  {:value-path (vector)}
   [group-id {:keys [value-path] :as group-props}]
-  (let [chips @(a/subscribe [:db/get-item value-path])]
+  (let [chips @(r/subscribe [:db/get-item value-path])]
        (if (vector/nonempty? chips)
            (letfn [(f [chip-list chip-dex chip] (conj chip-list [chip-group-chip group-id group-props chip-dex chip]))]
                   (reduce-indexed f [:div.x-chip-group--chips] chips))

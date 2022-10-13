@@ -15,7 +15,7 @@
 (ns x.app-elements.slider.helpers
     (:require [dom.api                        :as dom]
               [mid-fruits.css                 :as css]
-              [x.app-core.api                 :as a]
+              [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-elements.slider.state    :as slider.state]
               [x.app-environment.api          :as environment]))
@@ -34,7 +34,7 @@
   ;
   ; @return (function)
   [slider-id {:keys [initial-value] :as slider-props}]
-  #(if initial-value (a/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
+  #(if initial-value (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
 
 
 

@@ -15,8 +15,8 @@
 (ns x.app-environment.element-handler.side-effects
     (:require [dom.api           :as dom]
               [mid-fruits.hiccup :as hiccup]
-              [time.api          :as time]
-              [x.app-core.api    :as a]))
+              [re-frame.api      :as r]
+              [time.api          :as time]))
 
 
 
@@ -61,7 +61,7 @@
 
 ; @usage
 ;  [:environment/focus-element! "my-element"]
-(a/reg-fx :environment/focus-element! focus-element!)
+(r/reg-fx :environment/focus-element! focus-element!)
 
 (defn blur-element!
   ; @param (string)(opt) element-id
@@ -74,7 +74,7 @@
 
 ; @usage
 ;  [:environment/blur-element!]
-(a/reg-fx :environment/blur-element! blur-element!)
+(r/reg-fx :environment/blur-element! blur-element!)
 
 
 
@@ -93,7 +93,7 @@
 
 ; @usage
 ;  [:environment/add-element-class! "my-element" "my-class"]
-(a/reg-fx :environment/add-element-class! add-element-class!)
+(r/reg-fx :environment/add-element-class! add-element-class!)
 
 (defn remove-element-class!
   ; @param (string) element-id
@@ -107,7 +107,7 @@
 
 ; @usage
 ;  [:environment/remove-element-class! "my-element" "my-class"]
-(a/reg-fx :environment/remove-element-class! remove-element-class!)
+(r/reg-fx :environment/remove-element-class! remove-element-class!)
 
 
 
@@ -126,7 +126,7 @@
 
 ; @usage
 ;  [:environment/set-element-style! "my-element" {:opacity "1"}]
-(a/reg-fx :environment/set-element-style! set-element-style!)
+(r/reg-fx :environment/set-element-style! set-element-style!)
 
 (defn remove-element-style!
   ; @param (string) element-id
@@ -139,7 +139,7 @@
 
 ; @usage
 ;  [:environment/remove-element-style! "my-element"]
-(a/reg-fx :environment/remove-element-style! remove-element-style!)
+(r/reg-fx :environment/remove-element-style! remove-element-style!)
 
 (defn set-element-style-value!
   ; @param (string) element-id
@@ -154,7 +154,7 @@
 
 ; @usage
 ;  [:environment/set-element-style-value! "my-element" "opacity" "1"]
-(a/reg-fx :environment/set-element-style-value! set-element-style-value!)
+(r/reg-fx :environment/set-element-style-value! set-element-style-value!)
 
 (defn remove-element-style-value!
   ; @param (string) element-id
@@ -168,7 +168,7 @@
 
 ; @usage
 ;  [:environment/remove-element-style-value! "my-element" "opacity"]
-(a/reg-fx :environment/remove-element-style-value! remove-element-style-value!)
+(r/reg-fx :environment/remove-element-style-value! remove-element-style-value!)
 
 
 
@@ -188,7 +188,7 @@
 
 ; @usage
 ;  [:environment/set-element-attribute! "my-element" "my-attribute" "my-value"]
-(a/reg-fx :environment/set-element-attribute! set-element-attribute!)
+(r/reg-fx :environment/set-element-attribute! set-element-attribute!)
 
 (defn remove-element-attribute!
   ; @param (string) element-id
@@ -202,7 +202,7 @@
 
 ; @usage
 ;  [:environment/remove-element-attribute! "my-element" "my-attribute"]
-(a/reg-fx :environment/remove-element-attribute! remove-element-attribute!)
+(r/reg-fx :environment/remove-element-attribute! remove-element-attribute!)
 
 
 
@@ -221,7 +221,7 @@
 
 ; @usage
 ;  [:environment/set-element-content! "my-element" "My content"]
-(a/reg-fx :environment/set-element-content! set-element-content!)
+(r/reg-fx :environment/set-element-content! set-element-content!)
 
 (defn empty-element!
   ; @param (string) element-id
@@ -234,7 +234,7 @@
 
 ; @usage
 ;  [:environment/empty-element! "my-element"]
-(a/reg-fx :environment/empty-element! empty-element!)
+(r/reg-fx :environment/empty-element! empty-element!)
 
 
 
@@ -252,7 +252,7 @@
 
 ; @usage
 ;  [:environment/remove-element! "my-element"]
-(a/reg-fx :environment/remove-element! remove-element!)
+(r/reg-fx :environment/remove-element! remove-element!)
 
 
 
@@ -269,7 +269,7 @@
 
 ; @usage
 ;  [:environment/reveal-element! "my-element"]
-(a/reg-fx :environment/reveal-element! reveal-element!)
+(r/reg-fx :environment/reveal-element! reveal-element!)
 
 (defn hide-element!
   ; @param (string) element-id
@@ -281,7 +281,7 @@
 
 ; @usage
 ;  [:environment/hide-element! "my-element"]
-(a/reg-fx :environment/hide-element! hide-element!)
+(r/reg-fx :environment/hide-element! hide-element!)
 
 
 
@@ -301,7 +301,7 @@
 
 ; @usage
 ;  [:environment/remove-element-animated! 500 "my-element"]
-(a/reg-fx :environment/remove-element-animated! remove-element-animated!)
+(r/reg-fx :environment/remove-element-animated! remove-element-animated!)
 
 (defn hide-element-animated!
   ; @param (integer) timeout
@@ -317,7 +317,7 @@
 
 ; @usage
 ;  [:environment/hide-element-animated! 500 "my-element"]
-(a/reg-fx :environment/hide-element-animated! hide-element-animated!)
+(r/reg-fx :environment/hide-element-animated! hide-element-animated!)
 
 (defn reveal-element-animated!
   ; @param (string) element-id
@@ -330,7 +330,7 @@
 
 ; @usage
 ;  [:environment/reveal-element-animated! "my-element"]
-(a/reg-fx :environment/reveal-element-animated! reveal-element-animated!)
+(r/reg-fx :environment/reveal-element-animated! reveal-element-animated!)
 
 
 
@@ -349,7 +349,7 @@
 
 ; @usage
 ;  [:environment/mark-element-masspoint-orientation! "my-element"]
-(a/reg-fx :environment/mark-element-masspoint-orientation! mark-element-masspoint-orientation!)
+(r/reg-fx :environment/mark-element-masspoint-orientation! mark-element-masspoint-orientation!)
 
 (defn unmark-element-masspoint-orientation!
   ; @param (string) element-id
@@ -362,7 +362,7 @@
 
 ; @usage
 ;  [:environment/unmark-element-masspoint-orientation! "my-element"]
-(a/reg-fx :environment/unmark-element-masspoint-orientation! unmark-element-masspoint-orientation!)
+(r/reg-fx :environment/unmark-element-masspoint-orientation! unmark-element-masspoint-orientation!)
 
 
 
@@ -381,7 +381,7 @@
 
 ; @usage
 ;  [:environment/set-selection-start! "my-element" 2]
-(a/reg-fx :environment/set-selection-start! set-selection-start!)
+(r/reg-fx :environment/set-selection-start! set-selection-start!)
 
 (defn set-selection-end!
   ; @param (string) element-id
@@ -395,7 +395,7 @@
 
 ; @usage
 ;  [:environment/set-selection-end! "my-element" 2]
-(a/reg-fx :environment/set-selection-end! set-selection-end!)
+(r/reg-fx :environment/set-selection-end! set-selection-end!)
 
 (defn set-selection-range!
   ; @param (string) element-id
@@ -410,7 +410,7 @@
 
 ; @usage
 ;  [:environment/set-selection-range! "my-element" 2 10]
-(a/reg-fx :environment/set-selection-range! set-selection-range!)
+(r/reg-fx :environment/set-selection-range! set-selection-range!)
 
 (defn set-caret-position!
   ; @param (string) element-id
@@ -424,7 +424,7 @@
 
 ; @usage
 ;  [:environment/set-caret-position! "my-element" 20]
-(a/reg-fx :environment/set-caret-position! set-caret-position!)
+(r/reg-fx :environment/set-caret-position! set-caret-position!)
 
 (defn move-caret-to-start!
   ; @param (string) element-id
@@ -437,7 +437,7 @@
 
 ; @usage
 ;  [:environment/move-caret-to-start! "my-element"]
-(a/reg-fx :environment/move-caret-to-start! move-caret-to-start!)
+(r/reg-fx :environment/move-caret-to-start! move-caret-to-start!)
 
 (defn move-caret-to-end!
   ; @param (string) element-id
@@ -450,4 +450,4 @@
 
 ; @usage
 ;  [:environment/move-caret-to-end! "my-element"]
-(a/reg-fx :environment/move-caret-to-end! move-caret-to-end!)
+(r/reg-fx :environment/move-caret-to-end! move-caret-to-end!)

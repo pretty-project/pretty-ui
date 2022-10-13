@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.anchor.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -36,7 +36,7 @@
                  :style          style}
                 {:data-clickable true
                  :href           href
-                 :on-click       #(a/dispatch on-click)
+                 :on-click       #(r/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)
                  :style          style}))
 

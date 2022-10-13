@@ -16,9 +16,9 @@
     (:require [layouts.popup-a.api                           :as popup-a]
               [mid-fruits.random                             :as random]
               [mid-fruits.vector                             :as vector]
+              [re-frame.api                                  :as r]
               [reagent.api                                   :as reagent]
               [x.app-components.api                          :as components]
-              [x.app-core.api                                :as a]
               [x.app-elements.button.views                   :as button.views]
               [x.app-elements.element-components.icon-button :as icon-button]
               [x.app-elements.input.helpers                  :as input.helpers]
@@ -122,8 +122,8 @@
   ; @param (map) select-props
   [select-id select-props]
   (reagent/lifecycles {:reagent-render         (fn [_ _] [select-option-list select-id select-props])
-                       :component-did-mount    (fn [_ _] (a/dispatch [:elements.select/select-options-did-mount    select-id select-props]))
-                       :component-will-unmount (fn [_ _] (a/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
+                       :component-did-mount    (fn [_ _] (r/dispatch [:elements.select/select-options-did-mount    select-id select-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
 (defn- select-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -147,7 +147,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (if-let [required-warning? @(a/subscribe [:elements.select/required-warning? select-id select-props])]
+  (if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
           [:div.x-select--warning {:data-selectable false}
                                   (components/content :please-select-an-option)]))
 
@@ -171,7 +171,7 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [option-label-f value-path]}]
-  (if-let [selected-option @(a/subscribe [:db/get-item value-path])]
+  (if-let [selected-option @(r/subscribe [:db/get-item value-path])]
           [:div.x-select--button-label (-> selected-option option-label-f components/content)]
           [:div.x-select--button-label (-> :select!                       components/content)]))
 

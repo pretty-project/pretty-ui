@@ -14,7 +14,7 @@
 
 (ns x.app-router.route-handler.side-effects
     (:require [accountant.core                   :as accountant.core]
-              [re-frame.api                      :as a]
+              [re-frame.api                      :as r]
               [x.app-router.route-handler.config :as route-handler.config]))
 
 
@@ -51,13 +51,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :router/configure-navigation! configure-navigation!)
+(r/reg-fx :router/configure-navigation! configure-navigation!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :router/navigate! navigate!)
+(r/reg-fx :router/navigate! navigate!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :router/navigate-back! navigate-back!)
+(r/reg-fx :router/navigate-back! navigate-back!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :router/dispatch-current-route! dispatch-current-route!)
+(r/reg-fx :router/dispatch-current-route! dispatch-current-route!)

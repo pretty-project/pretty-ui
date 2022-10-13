@@ -123,12 +123,11 @@
   width: 100% }
 
 #surface-a--body-content {
-
  -background: white;
  -border-radius: 12px;
  -border: 1px solid #f0f0f0;
-
   max-width: var( --content-width-l );
+
   /* x4.7.2#1
    * A surface-a felületen megjelenő tartalom padding-left és padding-right
    * tulajdonságai kikapcsolásra kerültek, hogy a felület széléhez igazított

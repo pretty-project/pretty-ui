@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-screen.views
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -23,5 +23,5 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [screen-locked? @(a/subscribe [:ui/screen-locked?])]
+  (if-let [screen-locked? @(r/subscribe [:ui/screen-locked?])]
           [:div#x-app-progress-screen]))

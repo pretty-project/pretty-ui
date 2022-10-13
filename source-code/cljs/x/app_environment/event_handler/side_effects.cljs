@@ -14,7 +14,7 @@
 
 (ns x.app-environment.event-handler.side-effects
     (:require [dom.api                                 :as dom]
-              [x.app-core.api                          :as a]
+              [re-frame.api                            :as r]
               [x.app-environment.event-handler.helpers :as event-handler.helpers]))
 
 
@@ -57,7 +57,7 @@
   ; @usage
   ;  (environment/add-event! "mousemove" [:my-event])
   [type event & [element-id]]
-  (let [listener #(a/dispatch event)
+  (let [listener #(r/dispatch event)
         target    (event-handler.helpers/element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
 
@@ -69,13 +69,13 @@
 ; @usage
 ;  (defn my-handler-f [e] ...)
 ;  [:environment/add-event-listener! "mousemove" my-handler-f]
-(a/reg-fx :environment/add-event-listener! add-event-listener!)
+(r/reg-fx :environment/add-event-listener! add-event-listener!)
 
 ; @usage
 ;  (defn my-handler-f [e] ...
 ;  [:environment/remove-event-listener! "mousemove" my-handler-f]
-(a/reg-fx :environment/remove-event-listener! remove-event-listener!)
+(r/reg-fx :environment/remove-event-listener! remove-event-listener!)
 
 ; @usage
 ;  [:environment/add-event! "mousemove" [:my-event]]
-(a/reg-fx :environment/add-event! add-event!)
+(r/reg-fx :environment/add-event! add-event!)

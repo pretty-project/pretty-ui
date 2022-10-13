@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.password-field.side-effects
-    (:require [x.app-core.api                      :as a]
+    (:require [re-frame.api                        :as r]
               [x.app-elements.password-field.state :as password-field.state]))
 
 
@@ -34,4 +34,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.password-field/toggle-password-visibility! toggle-password-visibility!)
+(r/reg-fx :elements.password-field/toggle-password-visibility! toggle-password-visibility!)

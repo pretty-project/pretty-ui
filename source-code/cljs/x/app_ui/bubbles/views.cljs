@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.views
-    (:require [re-frame.api                :as a]
+    (:require [re-frame.api                :as r]
               [reagent.api                 :as reagent]
               [x.app-components.api        :as components]
               [x.app-elements.api          :as elements]
@@ -51,7 +51,7 @@
   ;
   ; @param (keyword) bubble-id
   [bubble-id]
-  (if-let [user-close? @(a/subscribe [:ui/get-bubble-prop bubble-id :user-close?])]
+  (if-let [user-close? @(r/subscribe [:ui/get-bubble-prop bubble-id :user-close?])]
           [elements/icon-button {:on-click [:ui/close-bubble! bubble-id]
                                  :preset   :close}]))
 
@@ -71,7 +71,7 @@
   ;   szélétől megjeleníteni, hogy a komponensben megjelenített (és a komponens jobb szélére igazított)
   ;   ikon-gombok a bubble elem saját bubble-close-icon-button komponensével megegyezően a bubble elem
   ;   széléhez igazítva jelenjenek meg.
-  (let [body @(a/subscribe [:ui/get-bubble-prop bubble-id :body])]
+  (let [body @(r/subscribe [:ui/get-bubble-prop bubble-id :body])]
        [:div.x-app-bubbles--element--body
          (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
                (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
@@ -91,12 +91,12 @@
   ;
   ; @param (keyword) bubble-id
   [bubble-id]
-  (let [on-bubble-closed   @(a/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-closed])
-        on-bubble-rendered @(a/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-rendered])]
+  (let [on-bubble-closed   @(r/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-closed])
+        on-bubble-rendered @(r/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-rendered])]
        (reagent/lifecycles bubble-id
                            {:reagent-render         (fn [] [bubble-element-structure bubble-id])
-                            :component-will-unmount (fn [] (a/dispatch on-bubble-closed))
-                            :component-did-mount    (fn [] (a/dispatch on-bubble-rendered))})))
+                            :component-will-unmount (fn [] (r/dispatch on-bubble-closed))
+                            :component-did-mount    (fn [] (r/dispatch on-bubble-rendered))})))
 
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.breadcrumbs.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -36,7 +36,7 @@
   (if disabled? {:disabled       true}
                 {:data-clickable true
                  :href           href
-                 :on-click       #(a/dispatch on-click)
+                 :on-click       #(r/dispatch on-click)
                  :on-mouse-up    #(environment/blur-element!)}))
 
 (defn breadcrumbs-body-attributes
@@ -92,5 +92,5 @@
   [_ _ {:keys [route]}]
   {:data-clickable  true
    :data-selectable false
-   :on-click    #(a/dispatch [:router/go-to! route])
+   :on-click    #(r/dispatch [:router/go-to! route])
    :on-mouse-up #(environment/blur-element!)})

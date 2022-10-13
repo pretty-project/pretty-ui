@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.helpers
-    (:require [x.app-core.api                 :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-elements.select.config   :as select.config]
               [x.app-environment.api          :as environment]))
@@ -36,7 +36,7 @@
   ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/active-button-did-mount ...]
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
   #(if (or initial-options initial-value)
-       (a/dispatch [:elements.select/active-button-did-mount select-id select-props])))
+       (r/dispatch [:elements.select/active-button-did-mount select-id select-props])))
 
 (defn active-button-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +47,7 @@
   ;
   ; @return (function)
   [select-id select-props]
-  #(a/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
+  #(r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
 
 
 
@@ -88,11 +88,11 @@
   ;   :on-mouse-up (function)}
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click          [:elements.select/render-options! select-id select-props]
-        required-warning? @(a/subscribe [:elements.select/required-warning? select-id select-props])]
+        required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
        (if disabled? {:disabled          true
                       :data-border-color (if required-warning? :warning :highlight)}
                      {:data-clickable    true
-                      :on-click          #(a/dispatch on-click)
+                      :on-click          #(r/dispatch on-click)
                       :on-mouse-up       #(environment/blur-element!)
                       :data-border-color (if required-warning? :warning :highlight)})))
 
@@ -112,9 +112,9 @@
   ; @return (map)
   ;  {}
   [select-id {:keys [value-path] :as select-props} option]
-  (let [selected-value  @(a/subscribe [:db/get-item value-path])
+  (let [selected-value  @(r/subscribe [:db/get-item value-path])
         option-selected? (= selected-value option)
         on-click         [:elements.select/select-option! select-id select-props option]]
        {:data-selected option-selected?
-        :on-click     #(a/dispatch on-click)
+        :on-click     #(r/dispatch on-click)
         :on-mouse-up  #(environment/blur-element!)}))

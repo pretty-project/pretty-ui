@@ -14,7 +14,7 @@
 
 (ns x.app-ui.progress-bar.views
     (:require [mid-fruits.css :as css]
-              [re-frame.api   :as a]))
+              [re-frame.api   :as r]))
 
 
 
@@ -24,8 +24,8 @@
 (defn- progress-bar-process-progress
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [process-failured? @(a/subscribe [:ui/process-failured?])
-        process-progress  @(a/subscribe [:ui/get-process-progress])]
+  (let [process-failured? @(r/subscribe [:ui/process-failured?])
+        process-progress  @(r/subscribe [:ui/get-process-progress])]
        [:div#x-app-progress-bar--process-progress {:style {:height (case process-progress 0 "0" "6px")
                                                            :width  (css/percent process-progress)}
                                                    :data-failured  (boolean     process-failured?)}]))

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.error-shield.side-effects
-    (:require [time.api                      :as time]
-              [x.app-core.api                :as a]
+    (:require [re-frame.api                  :as r]
+              [time.api                      :as time]
               [x.app-environment.api         :as environment]
               [x.app-ui.error-shield.helpers :as error-shield.helpers]
               [x.app-ui.renderer             :as renderer]))
@@ -41,4 +41,4 @@
 
 ; @usage
 ;  [:ui/set-error-shield! "My content"]
-(a/reg-fx :ui/set-error-shield! set-error-shield!)
+(r/reg-fx :ui/set-error-shield! set-error-shield!)

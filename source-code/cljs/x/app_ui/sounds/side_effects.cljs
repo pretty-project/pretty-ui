@@ -14,7 +14,7 @@
 
 (ns x.app-ui.sounds.side-effects
     (:require [dom.api                 :as dom]
-              [re-frame.api            :as a]
+              [re-frame.api            :as r]
               [x.app-ui.sounds.helpers :as sounds.helpers]))
 
 
@@ -39,4 +39,4 @@
 
 ; @usage
 ;  [:ui/play-sound! :my-sound]
-(a/reg-fx :ui/play-sound! play-sound!)
+(r/reg-fx :ui/play-sound! play-sound!)

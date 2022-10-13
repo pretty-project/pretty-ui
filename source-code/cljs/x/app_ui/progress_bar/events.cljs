@@ -15,7 +15,7 @@
 (ns x.app-ui.progress-bar.events
     (:require [mid-fruits.candy :refer [param return]]
               [mid-fruits.map   :refer [dissoc-in]]
-              [re-frame.api     :as a]))
+              [re-frame.api     :as r]))
 
 
 
@@ -72,16 +72,16 @@
 
 ; @usage
 ;  [:ui/listen-to-process! :my-request]
-(a/reg-event-db :ui/listen-to-process! listen-to-process!)
+(r/reg-event-db :ui/listen-to-process! listen-to-process!)
 
 ; @usage
 ;  [:ui/stop-listening-to-process! :my-request]
-(a/reg-event-db :ui/stop-listening-to-process! stop-listening-to-process!)
+(r/reg-event-db :ui/stop-listening-to-process! stop-listening-to-process!)
 
 ; @usage
 ;  [:ui/fake-process! 40]
-(a/reg-event-db :ui/fake-process! fake-process!)
+(r/reg-event-db :ui/fake-process! fake-process!)
 
 ; @usage
 ;  [:ui/stop-faking-process!]
-(a/reg-event-db :ui/stop-faking-process! stop-faking-process!)
+(r/reg-event-db :ui/stop-faking-process! stop-faking-process!)

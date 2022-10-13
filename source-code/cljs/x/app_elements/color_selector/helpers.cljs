@@ -14,7 +14,7 @@
 
 (ns x.app-elements.color-selector.helpers
     (:require [mid-fruits.vector              :as vector]
-              [re-frame.api                   :as a]
+              [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -35,11 +35,11 @@
   ;  {}
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
-        selected-options @(a/subscribe [:db/get-item value-path])]
+        selected-options @(r/subscribe [:db/get-item value-path])]
        {:data-clickable   true
         :data-collected   (vector/contains-item? selected-options option)
         :data-icon-family :material-icons-filled
-        :on-click        #(a/dispatch on-click)
+        :on-click        #(r/dispatch on-click)
         :on-mouse-up     #(environment/blur-element!)}))
 
 (defn color-selector-options-attributes

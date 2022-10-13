@@ -14,7 +14,7 @@
 
 (ns x.app-elements.button.side-effects
     (:require [mid-fruits.hiccup     :as hiccup]
-              [re-frame.api          :as a]
+              [re-frame.api          :as r]
               [x.app-environment.api :as environment]))
 
 
@@ -44,7 +44,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.button/focus-button! focus-button!)
+(r/reg-fx :elements.button/focus-button! focus-button!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.button/blur-button! blur-button!)
+(r/reg-fx :elements.button/blur-button! blur-button!)

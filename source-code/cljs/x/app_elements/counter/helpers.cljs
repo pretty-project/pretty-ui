@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.counter.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -31,7 +31,7 @@
   ;
   ; @return (function)
   [counter-id {:keys [initial-value] :as counter-props}]
-  #(if initial-value (a/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
+  #(if initial-value (r/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
 
 
 
@@ -75,12 +75,12 @@
   ; @return (map)
   ;  {}
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
-  (let [value @(a/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:db/get-item value-path])]
        (if (or disabled? (= max-value value))
            {:disabled       true
             :data-disabled  true}
            {:data-clickable true
-            :on-click    #(a/dispatch [:elements.counter/increase-value! counter-id counter-props])
+            :on-click    #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
             :on-mouse-up #(environment/blur-element!)})))
 
 (defn decrease-button-attributes
@@ -93,12 +93,12 @@
   ; @return (map)
   ;  {}
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
-  (let [value @(a/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:db/get-item value-path])]
        (if (or disabled? (= min-value value))
            {:disabled       true
             :data-disabled  true}
            {:data-clickable true
-            :on-click    #(a/dispatch [:elements.counter/decrease-value! counter-id counter-props])
+            :on-click    #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
             :on-mouse-up #(environment/blur-element!)})))
 
 (defn reset-button-attributes

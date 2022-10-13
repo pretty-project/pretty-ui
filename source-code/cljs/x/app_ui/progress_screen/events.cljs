@@ -14,7 +14,7 @@
 
 (ns x.app-ui.progress-screen.events
     (:require [mid-fruits.map :refer [dissoc-in]]
-              [re-frame.api   :as a]))
+              [re-frame.api   :as r]))
 
 
 
@@ -48,8 +48,8 @@
 
 ; @usage
 ;  [:ui/lock-screen! :my-process]
-(a/reg-event-db :ui/lock-screen! lock-screen!)
+(r/reg-event-db :ui/lock-screen! lock-screen!)
 
 ; @usage
 ;  [:ui/unlock-screen! :my-process]
-(a/reg-event-db :ui/unlock-screen! unlock-screen!)
+(r/reg-event-db :ui/unlock-screen! unlock-screen!)

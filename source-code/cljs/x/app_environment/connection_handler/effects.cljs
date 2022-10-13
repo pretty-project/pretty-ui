@@ -14,15 +14,14 @@
 
 (ns x.app-environment.connection-handler.effects
     (:require [app-fruits.window :as window]
-              [x.app-core.api    :as a]))
+              [re-frame.api      :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :environment/connection-changed
+(r/reg-event-fx :environment/connection-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [browser-online? (window/browser-online?)]

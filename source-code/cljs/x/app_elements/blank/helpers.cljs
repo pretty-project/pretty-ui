@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.blank.helpers
-    (:require [re-frame.api                   :as a]
-              [x.app-elements.element.helpers :as element.helpers]
+    (:require [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
 

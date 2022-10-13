@@ -18,9 +18,9 @@
               [mid-fruits.css                   :as css]
               [mid-fruits.hiccup                :as hiccup]
               [mid-fruits.string                :as string]
+              [re-frame.api                     :as r]
               [time.api                         :as time]
               [x.app-components.api             :as components]
-              [x.app-core.api                   :as a]
               [x.app-elements.element.helpers   :as element.helpers]
               [x.app-elements.text-field.config :as text-field.config]
               [x.app-elements.text-field.state  :as text-field.state]
@@ -39,7 +39,7 @@
   ;
   ; @return (function)
   [field-id field-props]
-  #(a/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
+  #(r/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
 
 (defn field-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,7 +49,7 @@
   ;
   ; @return (function)
   [field-id field-props]
-  #(a/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
+  #(r/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
 
 
 
@@ -139,7 +139,7 @@
         now           (time/elapsed)
         changed-at    (get-in @text-field.state/FIELD-CONTENTS [field-id :changed-at])]
        (when (> now (+ changed-at text-field.config/TYPE-ENDED-AFTER))
-             (a/dispatch-sync [:elements.text-field/type-ended field-id field-props field-content]))))
+             (r/dispatch-sync [:elements.text-field/type-ended field-id field-props field-content]))))
 
 (defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -157,8 +157,8 @@
         (swap! text-field.state/FIELD-CONTENTS assoc field-id {:changed-at now :content field-content})
         (letfn [(f [] (resolve-field-change! field-id field-props))]
                (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
-        (if on-change (let [on-change (a/metamorphic-event<-params on-change field-content)]
-                           (a/dispatch-sync on-change)))))
+        (if on-change (let [on-change (r/metamorphic-event<-params on-change field-content)]
+                           (r/dispatch-sync on-change)))))
 
 
 
@@ -220,7 +220,7 @@
   ; @return (map)
   ;  {}
   [field-id {:keys [border-color border-radius min-width stretch-orientation] :as field-props}]
-  (let [any-warning? @(a/subscribe [:elements.text-field/any-warning? field-id field-props])]
+  (let [any-warning? @(r/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (element.helpers/element-default-attributes field-id field-props)
               (element.helpers/element-indent-attributes  field-id field-props)
               (element.helpers/apply-color {} :border-color :data-border-color border-color)
@@ -274,9 +274,9 @@
                  :type           type
                  :style          (field-body-style  field-id field-props)
                  :value          (get-field-content field-id)
-                 :on-mouse-down #(a/dispatch [:elements.text-field/show-surface! field-id])
-                 :on-blur       #(a/dispatch [:elements.text-field/field-blurred field-id field-props])
-                 :on-focus      #(a/dispatch [:elements.text-field/field-focused field-id field-props])
+                 :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
+                 :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
+                 :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
                  :on-change      (on-change-f field-id field-props)
 
                  ; XXX#4461
@@ -338,7 +338,7 @@
          (if     icon         {:data-icon-family icon-family})
          (if     disabled?    {:disabled   "1" :data-disabled true})
          (if-not tab-indexed? {:tab-index "-1"})
-         (if-not disabled?    {:on-mouse-up #(do (a/dispatch on-click)
+         (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
                                                  (environment/blur-element!))})))
 
 (defn adornment-placeholder-attributes
@@ -351,8 +351,8 @@
   ;  {:on-mouse-down (function)}
   [field-id field-props]
   {:on-mouse-down (fn [e] (.preventDefault e)
-                          (a/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
-                          (a/dispatch    [:elements.text-field/show-surface! field-id]))})
+                          (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
+                          (r/dispatch    [:elements.text-field/show-surface! field-id]))})
 
 (defn empty-field-adornment-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

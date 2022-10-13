@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-screen.subs
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -34,4 +34,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-sub :ui/screen-locked? screen-locked?)
+(r/reg-sub :ui/screen-locked? screen-locked?)

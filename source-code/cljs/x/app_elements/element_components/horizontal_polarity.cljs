@@ -15,7 +15,6 @@
 (ns x.app-elements.element-components.horizontal-polarity
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
-              [re-frame.api              :as a]
               [x.app-components.api      :as components]
               [x.app-elements.engine.api :as engine]))
 

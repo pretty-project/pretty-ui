@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.config
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -28,6 +28,6 @@
                                       :route-template "/page-not-found"}})
 
 ; @constant (map)
-(def ACCOUNTANT-CONFIG {:nav-handler  #(a/dispatch   [:router/handle-route!          %])
-                        :path-exists? #(a/subscribed [:router/route-template-exists? %])
+(def ACCOUNTANT-CONFIG {:nav-handler  #(r/dispatch   [:router/handle-route!          %])
+                        :path-exists? #(r/subscribed [:router/route-template-exists? %])
                         :reload-same-path? false})

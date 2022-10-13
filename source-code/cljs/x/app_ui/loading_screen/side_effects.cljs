@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.loading-screen.side-effects
-    (:require [re-frame.api          :as a]
+    (:require [re-frame.api          :as r]
               [x.app-environment.api :as environment]
               [x.app-ui.renderer     :as renderer]))
 
@@ -35,4 +35,4 @@
 
 ; @usage
 ;  [:ui/hide-loading-screen!]
-(a/reg-fx :ui/hide-loading-screen! hide-loading-screen!)
+(r/reg-fx :ui/hide-loading-screen! hide-loading-screen!)

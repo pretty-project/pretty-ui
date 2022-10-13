@@ -15,7 +15,7 @@
 (ns x.app-elements.text-field.side-effects
     (:require [mid-fruits.hiccup                 :as hiccup]
               [mid-fruits.string                 :as string]
-              [x.app-core.api                    :as a]
+              [re-frame.api                      :as r]
               [x.app-elements.text-field.helpers :as text-field.helpers]
               [x.app-environment.api             :as environment]))
 
@@ -79,13 +79,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.text-field/use-initial-value! use-initial-value!)
+(r/reg-fx :elements.text-field/use-initial-value! use-initial-value!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.text-field/use-stored-value! use-stored-value!)
+(r/reg-fx :elements.text-field/use-stored-value! use-stored-value!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.text-field/empty-field! empty-field!)
+(r/reg-fx :elements.text-field/empty-field! empty-field!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :elements.text-field/focus-field! focus-field!)
+(r/reg-fx :elements.text-field/focus-field! focus-field!)

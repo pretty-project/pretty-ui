@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.events
-    (:require [re-frame.api :as a]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -37,4 +37,4 @@
 
 ; @usage
 ;  [:boot-loader/set-restart-target! "/my-route?var=value"]
-(a/reg-event-db :boot-loader/set-restart-target! set-restart-target!)
+(r/reg-event-db :boot-loader/set-restart-target! set-restart-target!)

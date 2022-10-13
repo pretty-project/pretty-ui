@@ -14,7 +14,7 @@
 
 (ns x.app-environment.cookie-handler.side-effects
     (:require [goog.net.cookies                         :as goog.net.cookies]
-              [x.app-core.api                           :as a]
+              [re-frame.api                             :as r]
               [x.app-environment.cookie-handler.config  :as cookie-handler.config]
               [x.app-environment.cookie-handler.helpers :as cookie-handler.helpers]))
 
@@ -41,7 +41,7 @@
                                                                :maxAge   max-age
                                                                :sameSite same-site
                                                                :secure   secure})
-            (a/dispatch [:environment/cookie-set cookie-id cookie-props]))))
+            (r/dispatch [:environment/cookie-set cookie-id cookie-props]))))
 
 (defn remove-browser-cookie!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,13 +51,13 @@
   [cookie-id cookie-props]
   (let [cookie-name (cookie-handler.helpers/cookie-id->cookie-name cookie-id cookie-props)]
        (try (.remove goog.net.cookies cookie-name cookie-handler.config/COOKIE-PATH cookie-handler.config/COOKIE-DOMAIN)
-            (a/dispatch [:environment/cookie-removed cookie-id]))))
+            (r/dispatch [:environment/cookie-removed cookie-id]))))
 
 (defn remove-browser-cookies!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (try (.clear goog.net.cookies)
-       (a/dispatch [:environment/cookies-removed])))
+       (r/dispatch [:environment/cookies-removed])))
 
 
 
@@ -65,10 +65,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/store-browser-cookie! store-browser-cookie!)
+(r/reg-fx :environment/store-browser-cookie! store-browser-cookie!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/remove-browser-cookie! remove-browser-cookie!)
+(r/reg-fx :environment/remove-browser-cookie! remove-browser-cookie!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(a/reg-fx :environment/remove-browser-cookies! remove-browser-cookies!)
+(r/reg-fx :environment/remove-browser-cookies! remove-browser-cookies!)

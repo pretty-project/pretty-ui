@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.card.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -35,7 +35,7 @@
   (if disabled? {:disabled       true
                  :style          style}
                 {:data-clickable true
-                 :on-click      #(a/dispatch on-click)
+                 :on-click      #(r/dispatch on-click)
                  :on-mouse-up   #(environment/blur-element!)
                  :style          style}))
 

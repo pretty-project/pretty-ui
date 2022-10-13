@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.string                 :as string]
               [mid-fruits.vector                 :as vector]
-              [re-frame.api                      :as a]
+              [re-frame.api                      :as r]
               [x.app-elements.combo-box.state    :as combo-box.state]
               [x.app-elements.input.helpers      :as input.helpers]
               [x.app-elements.text-field.helpers :as text-field.helpers]))
@@ -35,7 +35,7 @@
   ;
   ; @return (function)
   [box-id {:keys [initial-options] :as box-props}]
-  #(if initial-options (a/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
+  #(if initial-options (r/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
 
 
 

@@ -14,15 +14,14 @@
 
 (ns x.app-developer.event-browser.effects
     (:require [mid-fruits.reader :as reader]
-              [re-frame.api      :as a]))
+              [re-frame.api      :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(a/reg-event-fx
-  :developer/dispatch-current-event!
+(r/reg-event-fx :developer/dispatch-current-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [event-id   (get-in db [:developer :event-browser/meta-items :current-event])

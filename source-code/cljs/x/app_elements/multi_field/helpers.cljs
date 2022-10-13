@@ -16,8 +16,8 @@
     (:require [mid-fruits.candy               :refer [return]]
               [mid-fruits.hiccup              :as hiccup]
               [mid-fruits.vector              :as vector]
+              [re-frame.api                   :as r]
               [x.app-components.api           :as components]
-              [x.app-core.api                 :as a]
               [x.app-elements.element.helpers :as element.helpers]))
 
 
@@ -34,7 +34,7 @@
   ;
   ; @return (boolean)
   [group-id group-props _]
-  (let [group-value @(a/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
        (vector/count? group-value 1)))
 
 (defn group-props->multi-field?
@@ -59,7 +59,7 @@
   ;
   ; @return (boolean)
   [group-id {:keys [max-input-count] :as group-props} _]
-  (let [group-value @(a/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
        (vector/count? group-value max-input-count)))
 
 (defn field-dex->last-field?
@@ -71,7 +71,7 @@
   ;
   ; @return (boolean)
   [group-id group-props field-dex]
-  (let [group-value @(a/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
        (vector/dex-last? group-value field-dex)))
 
 (defn field-dex->field-label

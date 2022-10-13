@@ -15,7 +15,7 @@
 (ns x.app-elements.combo-box.views
     (:require [mid-fruits.loop                     :refer [reduce-indexed]]
               [mid-fruits.random                   :as random]
-              [re-frame.api                        :as a]
+              [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
               [x.app-components.api                :as components]
               [x.app-elements.combo-box.helpers    :as combo-box.helpers]
@@ -52,7 +52,7 @@
   ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
   ;  React-fából történő lecsatolását okozná.
   [:button.x-combo-box--option {:on-mouse-down #(do (.preventDefault %))
-                                :on-mouse-up   #(do (a/dispatch [:elements.combo-box/select-option! box-id box-props option]))
+                                :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
                                ;:data-selected ...
                                 :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
                                (if option-component [option-component         box-id box-props option]
@@ -120,7 +120,7 @@
   [box-id {:keys [no-options-label]}]
   [:div.x-combo-box--no-options-label ; BUG#2105
                                       {:on-mouse-down #(.preventDefault %)
-                                       :on-mouse-up   #(a/dispatch [:elements.text-field/hide-surface! box-id])}
+                                       :on-mouse-up   #(r/dispatch [:elements.text-field/hide-surface! box-id])}
                                       (components/content no-options-label)])
 
 (defn- combo-box-surface

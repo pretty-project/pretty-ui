@@ -15,7 +15,7 @@
 (ns x.app-elements.multi-field.views
     (:require [mid-fruits.loop                       :refer [reduce-indexed]]
               [mid-fruits.random                     :as random]
-              [x.app-core.api                        :as a]
+              [re-frame.api                          :as r]
               [x.app-elements.combo-box.views        :as combo-box.views]
               [x.app-elements.multi-field.helpers    :as multi-field.helpers]
               [x.app-elements.multi-field.prototypes :as multi-field.prototypes]
@@ -46,7 +46,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  (let [group-value @(a/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
        (letfn [(f [field-group field-dex _] (conj field-group [multi-field-text-field group-id group-props field-dex]))]
               (reduce-indexed f [:<>] group-value))))
 

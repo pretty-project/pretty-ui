@@ -15,7 +15,6 @@
 (ns x.app-elements.element-components.icon
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
-              [x.app-core.api            :as a]
               [x.app-elements.engine.api :as engine]))
 
 

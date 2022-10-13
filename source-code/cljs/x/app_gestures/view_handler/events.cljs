@@ -14,7 +14,7 @@
 
 (ns x.app-gestures.view-handler.events
     (:require [mid-fruits.logical :refer [nonfalse?]]
-              [re-frame.api       :as a]))
+              [re-frame.api       :as r]))
 
 
 
@@ -60,8 +60,8 @@
 
 ; @usage
 ;  [:gestures/init-view-handler! :my-view-handler {...}]
-(a/reg-event-db :gestures/init-view-handler! init-view-handler!)
+(r/reg-event-db :gestures/init-view-handler! init-view-handler!)
 
 ; @usage
 ;  [:gestures/change-view! :my-view-handler :my-view]
-(a/reg-event-db :gestures/change-view! change-view!)
+(r/reg-event-db :gestures/change-view! change-view!)

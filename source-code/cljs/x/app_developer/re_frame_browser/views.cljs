@@ -18,7 +18,7 @@
               [mid-fruits.pretty                       :as pretty]
               [mid-fruits.string                       :as string]
               [mid-fruits.vector                       :as vector]
-              [re-frame.api                            :as a]
+              [re-frame.api                            :as r]
               [x.app-developer.re-frame-browser.config :as re-frame-browser.config]
               [x.app-elements.api                      :as elements]
               [x.app-environment.api                   :as environment]))
@@ -49,7 +49,7 @@
                                              [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
                       [icon-button-label label true]]
                 [:button {:data-clickable true
-                          :on-click    #(a/dispatch on-click)
+                          :on-click    #(r/dispatch on-click)
                           :on-mouse-up #(environment/blur-element!)
                           :style {:display :block :padding "0 12px" :min-width "60px"}}
                          [:div.x-icon.x-element {:style {:width "100%"}}
@@ -70,8 +70,8 @@
 (defn item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])
-        root-level?  @(a/subscribe [:re-frame-browser/root-level?])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])
+        root-level?  @(r/subscribe [:re-frame-browser/root-level?])]
        [:div {:style {:font-weight "500" :font-size "16px"}}
              (if root-level? (str "Re-Frame DB")
                              (last current-path))]))
@@ -86,7 +86,7 @@
 (defn breadcrumbs
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
        [:div {:style {:font-weight "500" :font-size "12px" :opacity ".5" :min-height "24px"}}
              (string/join current-path " / ")]))
 
@@ -105,80 +105,80 @@
 (defn decrease-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
        [icon-button {:icon "remove" :label "Dec" :on-click [:db/apply-item! current-path dec]}]))
 
 (defn increase-integer-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
        [icon-button {:icon "add" :label "Inc" :on-click [:db/apply-item! current-path inc]}]))
 
 (defn swap-boolean-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-       (if-let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
+       (if-let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
                [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/toggle-item! current-path]}]
                [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/toggle-item! current-path]}])))
 
 (defn toggle-data-view-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
+  (if-let [show-data? @(r/subscribe [:re-frame-browser/get-meta-item :show-data?])]
           [icon-button {:icon "code_off" :label "Hide data" :on-click [:re-frame-browser/toggle-data-view!]}]
           [icon-button {:icon "code"     :label "Show data" :on-click [:re-frame-browser/toggle-data-view!]}]))
 
 (defn go-home-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [root-level? @(a/subscribe [:re-frame-browser/root-level?])]
+  (if-let [root-level? @(r/subscribe [:re-frame-browser/root-level?])]
           [icon-button {:icon "home" :label "Root" :disabled? true}]
           [icon-button {:icon "home" :label "Root" :on-click [:re-frame-browser/go-to! []]}]))
 
 (defn go-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [root-level? @(a/subscribe [:re-frame-browser/root-level?])]
+  (if-let [root-level? @(r/subscribe [:re-frame-browser/root-level?])]
           [icon-button {:icon "chevron_left" :label "Go up" :disabled? true}]
           [icon-button {:icon "chevron_left" :label "Go up" :on-click [:re-frame-browser/go-up!]}]))
 
 (defn remove-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [root-level? @(a/subscribe [:re-frame-browser/root-level?])]
+  (if-let [root-level? @(r/subscribe [:re-frame-browser/root-level?])]
           [icon-button {:icon "delete" :label "Remove" :disabled? true}]
-          (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])
+          (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])
                 remove-event [:db/move-item! current-path [:developer :re-frame-browser/meta-items :bin]]]
                [icon-button {:icon "delete" :label "Remove" :on-click remove-event}])))
 
 (defn edit-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [root-level? @(a/subscribe [:re-frame-browser/root-level?])]
+  (if-let [root-level? @(r/subscribe [:re-frame-browser/root-level?])]
           [icon-button {:icon "edit" :label "Edit" :disabled? true}]
-          (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
+          (if-let [edit-item? @(r/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
                   [icon-button {:icon "edit_off" :label "Save" :on-click [:re-frame-browser/toggle-edit-item-mode!]}]
                   [icon-button {:icon "edit"     :label "Edit" :on-click [:re-frame-browser/toggle-edit-item-mode!]}])))
 
 (defn recycle-item-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
-       (if-let [bin @(a/subscribe [:re-frame-browser/get-meta-item :bin])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
+       (if-let [bin @(r/subscribe [:re-frame-browser/get-meta-item :bin])]
                (let [revert-event [:db/move-item! [:developer :re-frame-browser/meta-items :bin] current-path]]
                     [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}]))))
 
 (defn dispatch-event-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
        [icon-button {:icon "local_fire_department" :label "Dispatch" :on-click current-item}]))
 
 (defn toggle-subscription-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [subscribe? @(a/subscribe [:re-frame-browser/get-meta-item :subscribe?])]
+  (if-let [subscribe? @(r/subscribe [:re-frame-browser/get-meta-item :subscribe?])]
           [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:re-frame-browser/toggle-subscription!]}]
           [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:re-frame-browser/toggle-subscription!]}]))
 
@@ -200,14 +200,14 @@
 
 (defn show-data
   []
-  (if-let [show-data? @(a/subscribe [:re-frame-browser/get-meta-item :show-data?])]
-          (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (if-let [show-data? @(r/subscribe [:re-frame-browser/get-meta-item :show-data?])]
+          (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
                [:<> [elements/horizontal-separator {:size :xxl}]
                     [:pre {:style {:font-size "12px"}}
                           (pretty/mixed->string current-item)]])))
 (defn edit-item
   []
-  (if-let [edit-item? @(a/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
+  (if-let [edit-item? @(r/subscribe [:re-frame-browser/get-meta-item :edit-item?])]
           [:<> [elements/multiline-field ::edit-item-field
                                          {:indent     {:top :xxl}
                                           :value-path [:developer :re-frame-browser/meta-items :edited-item]}]]))
@@ -215,9 +215,9 @@
 (defn map-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [map-key system-key?]
-  (let [current-path @(a/subscribe [:re-frame-browser/get-current-path])]
+  (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
        [:button {:data-clickable true :style {:display :block}
-                 :on-click #(a/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])
+                 :on-click #(r/dispatch [:re-frame-browser/go-to! (vector/conj-item current-path map-key)])
                  :on-mouse-up #(environment/blur-element!)}
                 (cond (string? map-key) (string/quotes map-key)
                       (nil?    map-key) (str           "nil")
@@ -226,8 +226,8 @@
 (defn map-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])
-        root-level?  @(a/subscribe [:re-frame-browser/root-level?])
+  (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])
+        root-level?  @(r/subscribe [:re-frame-browser/root-level?])
         map-keys      (-> current-item map/get-keys vector/abc-items)
         system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
         app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
@@ -245,7 +245,7 @@
 (defn vector-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
        [:div [header (str "vector, " (count current-item) " items")]
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
@@ -263,7 +263,7 @@
   [:div [header "boolean"]
         [toolbar go-home-button go-up-button remove-item-button swap-boolean-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])])
 
 (defn integer-item
@@ -272,13 +272,13 @@
   [:div [header "integer"]
         [toolbar go-home-button go-up-button remove-item-button decrease-integer-button increase-integer-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])])
 
 (defn string-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
        [:div [header (str "string, "(count current-item) " char.")]
              [toolbar go-home-button go-up-button remove-item-button edit-item-button]
              [horizontal-line]
@@ -291,7 +291,7 @@
   [:div [header "keyword"]
         [toolbar go-home-button go-up-button remove-item-button edit-item-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])
         [edit-item]])
 
@@ -301,7 +301,7 @@
   [:div [header "component"]
         [toolbar go-home-button go-up-button remove-item-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])])
 
 (defn nil-item
@@ -318,14 +318,14 @@
   [:div [header "event-vector"]
         [toolbar go-home-button go-up-button remove-item-button dispatch-event-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])])
 
 (defn subscribed-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item     @(a/subscribe [:re-frame-browser/get-current-item])
-        subscribed-value @(a/subscribe current-item)]
+  (let [current-item     @(r/subscribe [:re-frame-browser/get-current-item])
+        subscribed-value @(r/subscribe current-item)]
        [:div {:style {:color "var( --color-highlight )" :margin-top "24px"}}
              [:pre {:style {:white-space :break-spaces :width "100%"}}
                    (pretty/mixed->string subscribed-value)]]))
@@ -336,9 +336,9 @@
   [:div [header "subscription-vector"]
         [toolbar go-home-button go-up-button remove-item-button toggle-subscription-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])
-        (if-let [subscribe? @(a/subscribe [:re-frame-browser/get-meta-item :subscribe?])]
+        (if-let [subscribe? @(r/subscribe [:re-frame-browser/get-meta-item :subscribe?])]
                 [subscribed-value])])
 
 (defn unknown-item
@@ -347,7 +347,7 @@
   [:div [header "unknown"]
         [toolbar go-home-button go-up-button remove-item-button]
         [horizontal-line]
-        (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+        (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
              [:div (str current-item)])])
 
 
@@ -358,10 +358,10 @@
 (defn database-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [current-item @(a/subscribe [:re-frame-browser/get-current-item])]
+  (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
        (cond (map? current-item)                   [map-item]
-             ;(a/event-vector?        current-item) [event-vector-item]
-             ;(a/subscription-vector? current-item) [subscription-vector-item]
+             ;(r/event-vector?        current-item) [event-vector-item]
+             ;(r/subscription-vector? current-item) [subscription-vector-item]
              (vector?                current-item) [vector-item]
              (boolean?               current-item) [boolean-item]
              (integer?               current-item) [integer-item]

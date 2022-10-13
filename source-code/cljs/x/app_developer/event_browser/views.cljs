@@ -14,7 +14,7 @@
 
 (ns x.app-developer.event-browser.views
     (:require [mid-fruits.vector  :as vector]
-              [re-frame.api       :as a]
+              [re-frame.api       :as r]
               [x.app-elements.api :as elements]))
 
 
@@ -25,8 +25,8 @@
 (defn event-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [event-id   @(a/subscribe [:db/get-item [:developer :event-browser/meta-items :current-event]])
-        parameters @(a/subscribe [:db/get-item [:developer :event-browser/meta-items :parameters]])]
+  (let [event-id   @(r/subscribe [:db/get-item [:developer :event-browser/meta-items :current-event]])
+        parameters @(r/subscribe [:db/get-item [:developer :event-browser/meta-items :parameters]])]
        [:div {:style {:width "100%"}}
             [:div {:style {:display :flex}}
                   [elements/icon-button ::back-button
@@ -57,7 +57,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [event-id event-props]
   [:button {:style {:display :block :text-align :left :padding "0px 48px" :width "100%"}
-            :on-click #(a/dispatch [:db/set-item! [:developer :event-browser/meta-items :current-event] event-id])}
+            :on-click #(r/dispatch [:db/set-item! [:developer :event-browser/meta-items :current-event] event-id])}
            [:div {:style {:font-size "14px" :font-weight "500"}}
                  (str "[" event-id " ...]")]])
 
@@ -80,6 +80,6 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [current-event @(a/subscribe [:db/get-item [:developer :event-browser/meta-items :current-event]])]
+  (if-let [current-event @(r/subscribe [:db/get-item [:developer :event-browser/meta-items :current-event]])]
           [event-view]
           [event-list]))

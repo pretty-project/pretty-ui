@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.chip.helpers
-    (:require [re-frame.api                   :as a]
+    (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
               [x.app-environment.api          :as environment]))
 
@@ -64,5 +64,5 @@
   [chip-id {:keys [disabled? primary-button-event] :as chip-props}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
-                 :on-click       #(a/dispatch primary-button-event)
+                 :on-click       #(r/dispatch primary-button-event)
                  :on-mouse-up    #(environment/blur-element!)}))
