@@ -41,10 +41,11 @@
 
 
 
-;; -- Példa dokumentum --------------------------------------------------------
+;; -- Példa dokumentum(ok) ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; A böngészhető dokumentoknak tartalmazniuk kell ...
+; ... a :my-type/id kulcsot!
 ; ... a  {:label-key ...} tulajdonságként átadott kulcsot!
 ; ... a  {:path-key  ...} tulajdonságként átadott kulcsot!
 ; ... az {:items-key ...} tulajdonságként átadott kulcsot!

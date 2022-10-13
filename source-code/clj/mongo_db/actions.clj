@@ -132,7 +132,6 @@
 ;; -- Reordering following documents ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NEM TÖRTÉNIK MEG A DOKUMENTUMOK POZÍCIÓJÁNAK ELTOLÁSA!
 (defn- reorder-following-documents!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -144,21 +143,24 @@
   ;
   ; @return (namespaced map)
   [collection-name document-id {:keys [operation]}]
-  ; - Egy rendezett kollekcióból történő dokumentum eltávolítása a dokumentum után sorrendben
-  ;   következő többi dokumentum pozíciójának csökkentését teszi szükségessé.
-  ; - Egy rendezett kollekcióba történő dokumentum beszúrása a dokumentum után sorrendben következő
-  ;   többi dokumentum pozíciójának növelését teszi szükségessé.
+  ; Egy rendezett kollekcióból történő dokumentum eltávolítása a dokumentum után sorrendben
+  ; következő többi dokumentum pozíciójának csökkentését teszi szükségessé.
+  ;
+  ; Egy rendezett kollekcióba történő dokumentum beszúrása a dokumentum után sorrendben következő
+  ; többi dokumentum pozíciójának növelését teszi szükségessé.
   (if-let [document (reader/get-document-by-id collection-name document-id)]
-          (let [namespace    (map/get-namespace document)
-                order-key    (keyword/add-namespace  namespace :order)
+          (let [namespace    (map/get-namespace     document)
+                order-key    (keyword/add-namespace namespace :order)
                 document-dex (get document order-key)
-                ; A sorrendben a dokumentum után következő dokumentumok sorrendbeli pozíciójának eltolása
-                result (update! collection-name {order-key {"$gt" document-dex}}
-                                                (case operation :increase {"$inc" {order-key 1}}
-                                                                :decrease {"$dec" {order-key 1}})
-                                                {:multi true})]
-               (if-not (mrt/acknowledged? result)
-                       (throw (Exception. errors/REORDER-DOCUMENTS-FAILED))))
+                query        {order-key {:$gt document-dex}}
+                document     (case operation :increase {:$inc {order-key  1}}
+                                             :decrease {:$inc {order-key -1}})]
+               (if-let [query (-> query checking/update-query adaptation/update-query)]
+                       (if-let [document (-> document checking/update-input adaptation/update-input)]
+                               ; A sorrendben a dokumentum után következő dokumentumok sorrendbeli pozíciójának eltolása
+                               (let [result (update! collection-name query document {:multi true})]
+                                    (if-not (mrt/acknowledged? result)
+                                            (throw (Exception. errors/REORDER-DOCUMENTS-FAILED)))))))
           (throw (Exception. errors/DOCUMENT-DOES-NOT-EXISTS-ERROR))))
 
 
@@ -186,8 +188,8 @@
    (insert-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (as-> document % (checking/insert-input   %)
-                                      (preparing/insert-input  collection-name % options)
+   (if-let [document (as-> document % (checking/insert-input %)
+                                      (preparing/insert-input collection-name % options)
                                       (adaptation/insert-input %))]
            (if-let [result (insert-and-return! collection-name document)]
                    (adaptation/insert-output result)))))
@@ -244,11 +246,12 @@
    (save-document! collection-name document {}))
 
   ([collection-name document options]
-   (if-let [document (as-> document % (checking/save-input   %)
-                                      (preparing/save-input  collection-name % options)
+   (if-let [document (as-> document % (checking/save-input %)
+                                      (preparing/save-input collection-name % options)
                                       (adaptation/save-input %))]
+          (do (println (str "doc: " document))
            (if-let [result (save-and-return! collection-name document)]
-                   (adaptation/save-output result)))))
+                   (adaptation/save-output result))))))
 
 
 
@@ -286,7 +289,7 @@
   ; @param (string) collection-name
   ; @param (map) query
   ;  {:namespace/id (string)(opt)}
-  ; @param (namespaced map) document
+  ; @param (map or namespaced map) document
   ; @param (map)(opt) options
   ;  {:prototype-f (function)(opt)}
   ;
@@ -295,6 +298,9 @@
   ;
   ; @usage
   ;  (mongo-db/update-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
+  ;
+  ; @usage
+  ;  (mongo-db/update-document! "my_collection" {:$or [{...} {...}]} {:$inc {:namespace/score 0}} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -310,7 +316,7 @@
 
 
 
-;; -- Updating document -------------------------------------------------------
+;; -- Updating documents ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn update-documents!
@@ -326,6 +332,9 @@
   ;
   ; @usage
   ;  (mongo-db/update-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
+  ;
+  ; @usage
+  ;  (mongo-db/update-documents! "my_collection" {:$or [{...} {...}]} {:$inc {:namespace/score 0}} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -349,15 +358,20 @@
 (defn upsert-document!
   ; @param (string) collection-name
   ; @param (map) query
-  ; @param (namespaced map) document
+  ; @param (map or namespaced map) document
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:ordered? (boolean)(opt)
+  ;    Default: false
+  ;   :prototype-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
   ;
   ; @usage
   ;  (mongo-db/upsert-document! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
+  ;
+  ; @usage
+  ;  (mongo-db/upsert-document! "my_collection" {:$or [{...} {...}]} {:$inc {:namespace/score 0}} {...})
   ;
   ; @return (boolean)
   ([collection-name query document]
@@ -381,7 +395,8 @@
   ; @param (map) query
   ; @param (namespaced map) document
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:ordered? (boolean)(opt)
+  ;   :prototype-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
@@ -389,13 +404,16 @@
   ; @usage
   ;  (mongo-db/upsert-documents! "my_collection" {:$or [{...} {...}]} {:namespace/score 0} {...})
   ;
+  ; @usage
+  ;  (mongo-db/upsert-documents! "my_collection" {:$or [{...} {...}]} {:$inc {:namespace/score 0}} {...})
+  ;
   ; @return (boolean)
   ([collection-name query document]
    (upsert-documents! collection-name query document {}))
 
   ([collection-name query document options]
-   (boolean (if-let [document (as-> document % (checking/upsert-input   %)
-                                               (preparing/upsert-input  collection-name % options)
+   (boolean (if-let [document (as-> document % (checking/upsert-input %)
+                                               (preparing/upsert-input collection-name % options)
                                                (adaptation/upsert-input %))]
                     (if-let [query (-> query checking/find-query adaptation/find-query)]
                             ; WARNING! DO NOT USE!
@@ -485,7 +503,8 @@
   ; @return (string)
   [collection-name document-id _]
   (if-let [document-id (adaptation/document-id-input document-id)]
-          (do (reorder-following-documents! collection-name document-id {:operation :decrease})
+          (do (let [document-id (adaptation/document-id-output document-id)]
+                   (reorder-following-documents! collection-name document-id {:operation :decrease}))
               (let [result (remove-by-id! collection-name document-id)]
                    (if (mrt/acknowledged? result)
                        (adaptation/document-id-output document-id))))))

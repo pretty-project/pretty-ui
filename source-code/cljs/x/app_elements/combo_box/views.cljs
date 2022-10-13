@@ -15,9 +15,9 @@
 (ns x.app-elements.combo-box.views
     (:require [mid-fruits.loop                     :refer [reduce-indexed]]
               [mid-fruits.random                   :as random]
+              [re-frame.api                        :as a]
               [reagent.api                         :as reagent]
               [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]
               [x.app-elements.combo-box.helpers    :as combo-box.helpers]
               [x.app-elements.combo-box.prototypes :as combo-box.prototypes]
               [x.app-elements.text-field.helpers   :as text-field.helpers]
@@ -94,7 +94,7 @@
   ; pedig előnézetben mutatná a highlighted opció értékét, ami csak íródna a value-path
   ; útvonalra, amikor ténylegesen ki lett választva az adott opció.
   (let [field-content (text-field.helpers/get-field-content box-id)]
-       (if-not (empty? field-content)
+       (if-not (-> field-content str empty?)
                [:div.x-combo-box--field-content-option field-content])))
 
 (defn- combo-box-options

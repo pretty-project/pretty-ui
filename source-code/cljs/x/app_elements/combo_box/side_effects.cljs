@@ -14,7 +14,7 @@
 
 (ns x.app-elements.combo-box.side-effects
     (:require [mid-fruits.vector                 :as vector]
-              [x.app-core.api                    :as a]
+              [re-frame.api                      :as a]
               [x.app-elements.combo-box.helpers  :as combo-box.helpers]
               [x.app-elements.combo-box.state    :as combo-box.state]
               [x.app-elements.text-field.helpers :as text-field.helpers]))

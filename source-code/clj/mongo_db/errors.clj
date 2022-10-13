@@ -23,6 +23,9 @@
 (def QUERY-MUST-BE-MAP-ERROR "Query must be map")
 
 ; @constant (string)
+(def INPUT-MUST-BE-MAP-ERROR "Input must be map")
+
+; @constant (string)
 (def MISSING-NAMESPACE-ERROR "Document must be a namespaced map with keyword type keys")
 
 ; @constant (string)

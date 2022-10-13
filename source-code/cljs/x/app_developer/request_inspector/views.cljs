@@ -109,7 +109,7 @@
         request-sent-time  @(r/subscribe [:sync/get-request-sent-time request-id])]
        [:div {:data-clickable true
               :style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
-                      :margin "4px 0"}
+                      :margin "4px 0" :grid-column-gap "24px"}
               :on-click #(r/dispatch [:request-inspector/inspect-request! request-id])}
              [:div {:style {:font-weight "500" :font-size "14px" :display "flex"}}
                    [:div {:style {:width "6px" :margin-right "12px" :border-radius "3px"

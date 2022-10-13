@@ -48,9 +48,9 @@
   ; @param (map) icon-props
   ;  {:icon (keyword)
   ;   :icon-family (keyword)}
-  [icon-id {:keys [icon icon-family] :as icon-props}]
+  [icon-id {:keys [icon icon-family style] :as icon-props}]
   [:div.x-icon (engine/element-attributes icon-id icon-props)
-               [:i.x-icon--body {:data-icon-family icon-family} icon]])
+               [:i.x-icon--body {:data-icon-family icon-family :style style} icon]])
 
 (defn element
   ; @param (keyword)(opt) icon-id

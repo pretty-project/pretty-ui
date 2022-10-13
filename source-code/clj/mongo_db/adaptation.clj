@@ -40,11 +40,11 @@
   ; @return (org.bson.types.ObjectId object)
   [document-id]
   (try (ObjectId. document-id)
-      ; - A document-id azonosító forrása egyes esetekben a böngésző címsorába írt url lehet,
-      ;   ami lehetővé teszi, hogy ObjectId objektummá nem alakítható érték is átadódhat
-      ;   a document-id-input függvénynek, ami feleslegesen jelenítene meg hibaüzeneteket.
+      ; A document-id azonosító forrása egyes esetekben a böngésző címsorába írt url lehet,
+      ; ami lehetővé teszi, hogy ObjectId objektummá nem alakítható érték is átadódhat
+      ; a document-id-input függvénynek, ami feleslegesen jelenítene meg hibaüzeneteket.
       ;(catch Exception e (println (str e "\n" {:document-id document-id})))
-       (catch Exception e (return nil))))
+       (catch Exception e nil)))
 
 (defn document-id-output
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -267,6 +267,15 @@
   (try (-> document json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
        (catch Exception e (println (str e "\n" {:document document})))))
 
+(defn update-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) query
+  ;
+  ; @return (map)
+  [query]
+  (find-query query))
+
 
 
 ;; -- Upserting document ------------------------------------------------------
@@ -288,10 +297,7 @@
   ;
   ; @return (namespaced map)
   [document]
-  ; 1. A dokumentumban használt kulcsszó típusú kulcsok és értékek átalakítása string típusra
-  ; 2. A dokumentumban string típusként tárolt dátumok és idők átalakítása objektum típusra
-  (try (-> document json/unkeywordize-keys json/unkeywordize-values time/parse-date-time)
-       (catch Exception e (println (str e "\n" {:document document})))))
+  (update-input document))
 
 
 
@@ -357,7 +363,7 @@
   ; @param (namespaced map) query
   ;
   ; @example
-  ;  (mongo-db/search-query {:namespace/my-key "Xyz"}
+  ;  (adaptation/search-query {:namespace/my-key "Xyz"}
   ;  =>
   ;  {"namespace/my-key" {"$regex" "Xyz" "$options" "i"}}
   ;

@@ -15,8 +15,8 @@
 (ns x.app-elements.element-components.column
     (:require [mid-fruits.candy                    :refer [param]]
               [mid-fruits.random                   :as random]
+              [re-frame.api                        :as a]
               [x.app-components.api                :as components]
-              [x.app-core.api                      :as a]
               [x.app-elements.engine.api           :as engine]
               [x.app-elements.flex-handler.helpers :as flex-handler.helpers]))
 

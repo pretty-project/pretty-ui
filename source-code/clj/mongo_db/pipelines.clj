@@ -18,7 +18,8 @@
               [mid-fruits.keyword  :as keyword]
               [mid-fruits.map      :as map]
               [mid-fruits.vector   :as vector]
-              [mongo-db.adaptation :as adaptation]))
+              [mongo-db.adaptation :as adaptation]
+              [mongo-db.checking   :as checking]))
 
 
 
@@ -91,8 +92,8 @@
   ;  {"$and" (maps in vector)
   ;   "$or" (maps in vector)}
   [{:keys [$and $or]}]
-  (cond-> {} $and (assoc "$and" (vector/->items $and adaptation/search-query))
-             $or  (assoc "$or"  (vector/->items $or  adaptation/search-query))))
+  (cond-> {} $and (assoc "$and" (vector/->items $and #(-> % checking/search-query adaptation/search-query)))
+             $or  (assoc "$or"  (vector/->items $or  #(-> % checking/search-query adaptation/search-query)))))
 
 (defn sort-query
   ; @param (map) sort-pattern

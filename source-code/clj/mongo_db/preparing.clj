@@ -31,15 +31,19 @@
   ;
   ; @param (string) collection-name
   ; @param (namespaced map) document
+  ;  {:namespace/order (integer)(opt)}
   ; @param (map) options
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document _]
+  ; Az upsert-input, save-input, ... függvények is az insert-input függvényt használják
+  ; a dokumentum előkészítésére ezért ha a dokumentum már rendelkezik namespace/order
+  ; értékkel, akkor nem változtat rajta.
   (if-let [namespace (map/get-namespace document)]
           (let [order-key  (keyword/add-namespace         namespace :order)
                 last-order (reader/get-all-document-count collection-name)]
-               (assoc document order-key last-order))
+               (merge {order-key last-order} document))
           (throw (Exception. errors/MISSING-NAMESPACE-ERROR))))
 
 (defn insert-input
@@ -114,7 +118,7 @@
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
   [collection-name document options]
-  (update-input collection-name document options))
+  (insert-input collection-name document options))
 
 
 
@@ -175,6 +179,7 @@
   ;
   ; @param (string) collection-name
   ; @param (namespaced map) document
+  ; @param (map) options
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
@@ -203,7 +208,7 @@
   [collection-name document {:keys [changes label-key ordered? prototype-f] :as options}]
   (try (as-> document % (if-not changes   % (changed-duplicate-input collection-name % options))
                         (if-not label-key % (labeled-duplicate-input collection-name % options))
-                        (if-not ordered?  % (ordered-duplicate-input collection-name %))
+                        (if-not ordered?  % (ordered-duplicate-input collection-name % options))
                         ; - A dokumentum a changes térképpel való összefésülés után kapja meg a másolat azonosítóját,
                         ;   így nem okoz hibát, ha a changes térkép tartalmazza az eredeti azonosítót
                         ; - A dokumentum a prototípus függvény alkalmazása előtt megkapja a másolat azonosítóját,

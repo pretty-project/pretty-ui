@@ -14,8 +14,8 @@
 
 (ns x.app-elements.counter.views
     (:require [mid-fruits.random                 :as random]
+              [re-frame.api                      :as a]
               [reagent.api                       :as reagent]
-              [x.app-core.api                    :as a]
               [x.app-elements.counter.helpers    :as counter.helpers]
               [x.app-elements.counter.prototypes :as counter.prototypes]
               [x.app-elements.label.views        :as label.views]))
