@@ -28,12 +28,10 @@
 ; de nem ms-ban méri az időt, hanem a re-frame szerinti ütemekben (tick).
 ;
 ; @usage
-;  (reg-event-fx
-;   :my-event
-;   (fn [_ _]
-;       {:dispatch-tick
-;        [{:tick 10
-;          :dispatch [:my-event]}]}))
+;  (reg-event-fx :my-event
+;    (fn [_ _]
+;        {:dispatch-tick [{:dispatch [:my-event]
+;                          :tick     10}]}))
 
 (defn dispatch-tick
   ; @param (maps in vector) effects-maps-vector
@@ -47,16 +45,13 @@
   (core/dispatch [:dispatch-tick effects-maps-vector]))
 
 ; @usage
-;  (reg-event-fx
-;   :my-event
-;   (fn [_ _]
-;       {:dispatch-tick
-;        [{:tick 10
-;          :dispatch [:my-event]}]}))
+;  (reg-event-fx :my-event
+;    (fn [_ _]
+;        {:dispatch-tick [{:dispatch [:my-event]
+;                          :tick     10}]}))
 (core/reg-fx :dispatch-tick dispatch-tick)
 
-(core/reg-event-fx
-  :dispatch-tick
+(core/reg-event-fx :dispatch-tick
   ; @param (maps in vector) effects-maps-vector
   ;  [{ ... }
   ;   {:tick 10

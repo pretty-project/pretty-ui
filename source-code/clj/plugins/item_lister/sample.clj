@@ -36,8 +36,7 @@
 ; ... a {:base-route "..."} tulajdonságot, ami alapján a plugin regisztrálja a példa szerinti útvonalat.
 ; ... a {:route-title ...} tulajdonságot, ami a plugin által a példában regisztrált útvonalak
 ;     használatakor beállítódik az applikáció címkéjének.
-(r/reg-event-fx
-  :init-my-lister!
+(r/reg-event-fx :init-my-lister!
   [:item-lister/init-lister! :my-lister
                              {:base-route      "/@app-home/my-lister"
                               :collection-name "my_collection"

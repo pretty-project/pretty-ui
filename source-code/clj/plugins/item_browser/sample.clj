@@ -30,8 +30,7 @@
 ;
 ; A plugin használatához OPCIONÁLISAN megadható ...
 ; ...
-(r/reg-event-fx
-  :init-my-browser!
+(r/reg-event-fx :init-my-browser!
   [:item-browser/init-browser! :my-browser
                                {:collection-name "my_collection"
                                 :handler-key     :my-handler

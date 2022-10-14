@@ -21,6 +21,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn export-selection
+  ; @param (keyword) browser-id
+  ;
+  ; @usage
+  ;  (r item-browser/export-selection db :my-browser)
+  ;  =>
+  ;  ["my-item" "your-item"]
+  ;
+  ; @return (strings in vector)
+  [db [_ browser-id]]
+  (r selection.subs/export-selection db browser-id))
+
+(defn export-single-selection
+  ; @param (keyword) browser-id
+  ;
+  ; @example
+  ;  (r item-browser/export-single-selection db :my-browser)
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ browser-id]]
+  (r selection.subs/export-single-selection db browser-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-selected-item-count
   ; @param (keyword) browser-id
   ;
@@ -91,47 +120,6 @@
   ; @return (boolean)
   [db [_ browser-id item-id]]
   (r selection.subs/item-selected? db browser-id item-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn export-selection
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ;  (r item-browser/export-selection db :my-browser)
-  ;  =>
-  ;  ["my-item" "your-item"]
-  ;
-  ; @return (strings in vector)
-  [db [_ browser-id]]
-  (r selection.subs/export-selection db browser-id))
-
-(defn export-single-selection
-  ; @param (keyword) browser-id
-  ;
-  ; @example
-  ;  (r item-browser/export-single-selection db :my-browser)
-  ;  =>
-  ;  "my-item"
-  ;
-  ; @return (string)
-  [db [_ browser-id]]
-  (r selection.subs/export-single-selection db browser-id))
-
-(defn get-imported-selection
-  ; @param (keyword) browser-id
-  ;
-  ; @example
-  ;  (r item-browser/get-imported-selection db :my-browser)
-  ;  =>
-  ;  ["my-item" "your-item"]
-  ;
-  ; @return (strings in vector)
-  [db [_ browser-id]]
-  (r selection.subs/get-imported-selection db browser-id))
 
 
 

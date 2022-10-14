@@ -878,8 +878,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn concat-items-once
-  ; @param (vector) a
-  ; @param (vector) b
+  ; @param (list of vectors) abc
   ;
   ; @example
   ;  (vector/concat-items-once [:a :b :c] [:c :d :e :a])
@@ -887,10 +886,8 @@
   ;  [:b :c :d :e :a]
   ;
   ; @return (vector)
-  [a b]
-  (-> a (remove-items b)
-        (concat       b)
-        (vec)))
+  [& abc]
+  (-> (apply concat abc) set vec))
 
 
 

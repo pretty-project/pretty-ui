@@ -20,8 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :core/error-catched
+(r/reg-event-fx :core/error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) error-id

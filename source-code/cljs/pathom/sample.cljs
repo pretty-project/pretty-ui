@@ -21,8 +21,7 @@
 ;; -- Pathom query küldése ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :send-my-query!
+(r/reg-event-fx :send-my-query!
   [:pathom/send-query! :my-query
                        {:query [:my-resolver]}])
 

@@ -45,31 +45,28 @@
  -webkit-font-feature-settings: 'liga';
  -webkit-font-smoothing: antialiased }
 
+/* [data-icon-family="material-icons-filled"], */
 [data-icon-family="material-symbols-filled"] {
   direction: ltr;
   font-family: 'Material Symbols Outlined';
   font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
-  font-size: 24px;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
-  line-height: 1;
   text-transform: none;
   white-space: nowrap;
   word-wrap: normal;
  -webkit-font-feature-settings: 'liga';
  -webkit-font-smoothing: antialiased }
 
+/* [data-icon-family="material-icons-outlined"], */
 [data-icon-family="material-symbols-outlined"] {
   direction: ltr;
- -display: inline-block;
   font-family: 'Material Symbols Outlined';
   font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
-  font-size: 24px;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
-  line-height: 1;
   text-transform: none;
   white-space: nowrap;
   word-wrap: normal;

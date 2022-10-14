@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/reg-transfer-viewer-props!
+(r/reg-event-fx :item-viewer/reg-transfer-viewer-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

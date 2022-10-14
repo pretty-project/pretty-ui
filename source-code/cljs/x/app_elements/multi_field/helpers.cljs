@@ -111,7 +111,7 @@
         (and (field-dex->last-field?    group-id group-props field-dex)
              (group-props->multi-field? group-id group-props field-dex))
         [{:icon     :add
-          :on-click [:elements.multi-field/increase-field-count! group-id group-props {:initial-value ""}]
+          :on-click [:elements.multi-field/increase-field-count! group-id group-props field-dex]
           :tooltip  :add-field!}
          {:icon     :close
           :on-click [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
@@ -119,7 +119,7 @@
         ; Single field
         (group-props->single-field? group-id group-props field-dex)
         [{:icon     :add
-          :on-click [:elements.multi-field/increase-field-count! group-id group-props {:initial-value ""}]
+          :on-click [:elements.multi-field/increase-field-count! group-id group-props field-dex]
           :tooltip  :add-field!}]
         ; Single field & not the last field
         (group-props->multi-field? group-id group-props field-dex)
@@ -138,10 +138,14 @@
   ; @return (vector)
   [_ {:keys [autofocus?]} field-dex]
   ; Az első mezőre a group-props térképben átadott autofocus? tulajdonság érvényes,
-  ; minden további mező {:autofocus? true} beállítással jelenik meg.
+  ; minden további mező a hozzáadódása utáni mellékhatás esemény által kapja meg a fókuszt!
+  ;
+  ; BUG#9111
+  ; Az x4.7.7 verzióig a további mezők {:autofocus? true} beállítással jelentek meg,
+  ; ezért ha egy multi-field elem a React-fába csatolódásakor már több értékkel rendelkezett,
+  ; akkor az első mezőt leszámítva az összes többi mező {:autofocus? true} beállítással jelent meg!
   (if (=      field-dex 0)
-      (return autofocus?)
-      (return true)))
+      (return autofocus?)))
 
 (defn field-dex->value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -163,13 +167,30 @@
   ; @param (integer) field-dex
   ;
   ; @example
-  ;  (field-dex->react-key :my-group {} 3)
+  ;  (field-dex->react-key :my-group {...} 3)
   ;  =>
   ;  "my-group--3"
   ;
   ; @return (string)
   [group-id _ field-dex]
   (hiccup/value group-id field-dex))
+
+(defn field-dex->field-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ; @param (integer) field-dex
+  ;
+  ; @example
+  ;  (field-dex->field-id :my-group {...} 3)
+  ;  =>
+  ;  :my-group--3
+  ;
+  ; @return (string)
+  [group-id _ field-dex]
+  (keyword      (namespace group-id)
+           (str (name      group-id) "--" field-dex)))
 
 
 

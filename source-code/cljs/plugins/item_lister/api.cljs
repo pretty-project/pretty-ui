@@ -67,4 +67,3 @@
 (def item-selected?          selection.subs/item-selected?)
 (def export-selection        selection.subs/export-selection)
 (def export-single-selection selection.subs/export-single-selection)
-(def get-imported-selection  selection.subs/get-imported-selection)

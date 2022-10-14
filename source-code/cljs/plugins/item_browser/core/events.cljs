@@ -88,18 +88,18 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  ; - XXX#1329
-  ;   Ha az aktuálisan böngészett elem megváltozásakor az item-browser plugin {:disabled? true} állapotban
-  ;   tart egyes listaelemeket (pl. folyamatban lévő törlés miatt), akkor a load-browser! függvény feloldja
-  ;   az összes listaelem {:disabled? true} állapotát, mert a listaelemek az indexük és nem pedig az azonosítójuk
-  ;   alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,
-  ;   akkor a letöltött listaelemek lecserélődése után az egyes indexekhez más listaelemek fognak tartozni.
+  ; XXX#1329
+  ; Ha az aktuálisan böngészett elem megváltozásakor az item-browser plugin {:disabled? true} állapotban
+  ; tart egyes listaelemeket (pl. folyamatban lévő törlés miatt), akkor a load-browser! függvény feloldja
+  ; az összes listaelem {:disabled? true} állapotát, mert a listaelemek az indexük és nem pedig az azonosítójuk
+  ; alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,
+  ; akkor a letöltött listaelemek lecserélődése után az egyes indexekhez más listaelemek fognak tartozni.
   ;
-  ; - BUG#1329
-  ;   Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor nem valószínű,
-  ;   hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,
-  ;   hogy az ismételten böngészett elemben a {:disabled? true} állapot nem kerül vissza az elhagyás előtt
-  ;   {:disabled? true} állapotban lévő listaelemekre.
+  ; BUG#1329
+  ; Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor nem valószínű,
+  ; hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,
+  ; hogy az ismételten böngészett elemben a {:disabled? true} állapot nem kerül vissza az elhagyás előtt
+  ; {:disabled? true} állapotban lévő listaelemekre.
   (as-> db % (r reset-downloads!               % browser-id)
              (r reset-downloaded-item!         % browser-id)
              (r items.events/enable-all-items! % browser-id)

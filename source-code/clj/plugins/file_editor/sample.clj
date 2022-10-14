@@ -35,8 +35,7 @@
 ;     történik meg.
 ; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
 ;     beállítódik az applikáció címkéjének.
-(r/reg-event-fx
-  :init-my-editor!
+(r/reg-event-fx :init-my-editor!
   [:file-editor/init-editor! :my-editor
                              {:base-route  "/@app-home/my-editor"
                               :handler-key :my-handler

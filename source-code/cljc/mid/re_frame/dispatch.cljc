@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-event-fx
+(core/reg-event-fx :dispatch-metamorphic-event
   ; @param (metamorphic-event) n
   ;
   ; @usage
@@ -33,7 +33,6 @@
   ;
   ; @usage
   ;  [:dispatch-metamorphic-event {:dispatch [...]}]
-  :dispatch-metamorphic-event
   (fn [_ [_ n]] (metamorphic/metamorphic-event->effects-map n)))
 
 

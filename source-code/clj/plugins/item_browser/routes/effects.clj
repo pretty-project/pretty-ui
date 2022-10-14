@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/add-base-route!
+(r/reg-event-fx :item-browser/add-base-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -38,8 +37,7 @@
                                 :restricted?    true
                                 :route-template base-route}])))
 
-(r/reg-event-fx
-  :item-browser/add-extended-route!
+(r/reg-event-fx :item-browser/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id

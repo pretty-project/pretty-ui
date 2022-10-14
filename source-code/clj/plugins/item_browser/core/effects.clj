@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/init-browser!
+(r/reg-event-fx :item-browser/init-browser!
   ; @param (keyword) browser-id
   ; @param (map) browser-props
   ;  {:base-route (string)(opt)

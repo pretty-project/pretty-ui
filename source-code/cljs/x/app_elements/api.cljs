@@ -28,6 +28,7 @@
               [x.app-elements.element.side-effects]
               [x.app-elements.multi-combo-box.effects]
               [x.app-elements.multi-combo-box.events]
+              [x.app-elements.multi-field.effects]
               [x.app-elements.multi-field.events]
               [x.app-elements.multi-field.subs]
               [x.app-elements.password-field.side-effects]

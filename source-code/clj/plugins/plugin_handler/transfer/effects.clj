@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :plugin-handler/reg-transfer-plugin-props!
+(r/reg-event-fx :plugin-handler/reg-transfer-plugin-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id

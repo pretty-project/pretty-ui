@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/init-viewer!
+(r/reg-event-fx :item-viewer/init-viewer!
   ; @param (keyword) viewer-id
   ; @param (map) viewer-props
   ;  {:base-route (string)(opt)

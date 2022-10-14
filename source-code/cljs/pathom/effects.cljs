@@ -24,8 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :pathom/send-query!
+(r/reg-event-fx :pathom/send-query!
   ; @param (keyword)(opt) query-id
   ; @param (map) query-props
   ;  {:body (map)(opt)

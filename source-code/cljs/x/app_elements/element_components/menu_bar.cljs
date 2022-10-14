@@ -76,12 +76,14 @@
   ;  {:orientation (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:horizontal-align (keyword)
+  ;  {:font-size (keyword)
+  ;   :horizontal-align (keyword)
   ;   :layout (keyword)
   ;   :menu-items (map)
   ;   :orientation (keyword)}
   [{:keys [icon orientation] :as bar-props}]
-  (merge {:layout      :row
+  (merge {:font-size   :s
+          :layout      :row
           :orientation :horizontal}
          (if-not (= orientation :vertical)
                  {:horizontal-align :left})
@@ -190,6 +192,9 @@
   ;    Default: :left
   ;    (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   ;    W/ {:orientation :horizontal}
+  ;   :font-size (keyword)(opt)
+  ;    :xs, :s
+  ;    Default: :s
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

@@ -24,14 +24,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn popup-size-button
+(defn popup-debug-tools
   [popup-id]
   (if-let [debug-mode-detected? @(r/subscribe [:core/debug-mode-detected?])]
-          (if-let [popup-minimized? @(r/subscribe [:ui/get-popup-prop popup-id :minimized?])]
-                  [:div.x-app-popups--element--maximize-button {:on-click #(r/dispatch [:ui/maximize-popup! popup-id])}
-                                                               "Maximize"]
-                  [:div.x-app-popups--element--minimize-button {:on-click #(r/dispatch [:ui/minimize-popup! popup-id])}
-                                                               "Minimize"])))
+          (let [popup-minimized?    @(r/subscribe [:ui/get-popup-prop popup-id :minimized?])
+                popup-stick-to-top? @(r/subscribe [:ui/get-popup-prop popup-id :stick-to-top?])]
+               [:div {:class :x-app-popups--element--debug-tools}
+                     (if popup-minimized? [:div {:class :x-app-popups--element--debug-button :on-click #(r/dispatch [:ui/maximize-popup! popup-id])}
+                                                "Maximize"]
+                                          [:div {:class :x-app-popups--element--debug-button :on-click #(r/dispatch [:ui/minimize-popup! popup-id])}
+                                                "Minimize"])
+                     (if popup-stick-to-top? [:div {:class :x-app-popups--element--debug-button :on-click #(r/dispatch [:ui/stick-popup-to-top! popup-id])}
+                                                   "Stick to top"]
+                                             [:div {:class :x-app-popups--element--debug-button :on-click #(r/dispatch [:ui/stick-popup-to-top! popup-id])}
+                                                   "Stick to top"])])))
 
 (defn popup-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,7 +54,7 @@
   [popup-id]
   [:<> [:div (popups.helpers/popup-attributes popup-id)
              [popup-content                   popup-id]]
-       [popup-size-button popup-id]])
+       [popup-debug-tools popup-id]])
 
 
 

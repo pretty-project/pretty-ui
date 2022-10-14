@@ -18,8 +18,17 @@
 
 
 
+;; -- Debug tools -------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+
+(defn stick-popup-to-top!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ;
+  ; @return (map)
+  [db [_ popup-id]]
+  (r renderer/set-element-prop! db :popups popup-id :stick-to-top? true))
 
 (defn minimize-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,6 +52,9 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-event-db :ui/stick-popup-to-top! stick-popup-to-top!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :ui/minimize-popup! minimize-popup!)

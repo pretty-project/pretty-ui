@@ -23,6 +23,34 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn export-selection
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (strings in vector)
+  [db [_ plugin-id]]
+  ; XXX#8891 (cljs/plugins/plugin-handler/selection/README.md)
+  ; Az export-selection függvény visszatérési értéke a kijelölt listaelemek
+  ; azonosítói egy vektorban felsorolva.
+  (r core.subs/get-meta-item db plugin-id :selected-items))
+
+(defn export-single-selection
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (string)
+  [db [_ plugin-id]]
+  ; XXX#8891 (cljs/plugins/plugin-handler/selection/README.md)
+  (let [exported-selection (r export-selection db plugin-id)]
+       (first exported-selection)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-selected-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,41 +128,3 @@
   [db [_ plugin-id item-id]]
   (let [selected-items (r core.subs/get-meta-item db plugin-id :selected-items)]
        (vector/contains-item? selected-items item-id)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn export-selection
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ;
-  ; @return (strings in vector)
-  [db [_ plugin-id]]
-  ; XXX#8891
-  ; Az export-selection függvény visszatérési értéke a kijelölt listaelemek
-  ; azonosítói egy vektorban felsorolva.
-  (r core.subs/get-meta-item db plugin-id :selected-items))
-
-(defn export-single-selection
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ;
-  ; @return (string)
-  [db [_ plugin-id]]
-  ; XXX#8891
-  (let [exported-selection (r export-selection db plugin-id)]
-       (first exported-selection)))
-
-(defn get-imported-selection
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ;
-  ; @return (strings in vector)
-  [db [_ plugin-id]]
-  ; XXX#8891
-  (get-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection]))

@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-preview/init-preview!
+(r/reg-event-fx :item-preview/init-preview!
   ; @param (keyword) preview-id
   ; @param (map) preview-props
   ;  {:collection-name (string)

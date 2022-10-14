@@ -90,17 +90,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn apply-imported-selection!
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ;  (r item-lister/apply-imported-selection! db :my-lister)
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  ; XXX#8891
-  (r selection.events/apply-imported-selection! db lister-id))
-
 (defn import-selection!
   ; @param (keyword) lister-id
   ; @param (strings in vector) selected-item-ids
@@ -110,7 +99,6 @@
   ;
   ; @return (map)
   [db [_ lister-id selected-item-ids]]
-  ; XXX#8891
   (r selection.events/import-selection! db lister-id selected-item-ids))
 
 (defn import-single-selection!
@@ -122,7 +110,6 @@
   ;
   ; @return (map)
   [db [_ lister-id selected-item-id]]
-  ; XXX#8891
   (r selection.events/import-single-selection! db lister-id selected-item-id))
 
 

@@ -80,19 +80,6 @@
       (-> db (assoc-in [:plugins :plugin-handler/meta-items lister-id :document-count] document-count)
              (assoc-in [:plugins :plugin-handler/meta-items lister-id :received-count] received-count))))
 
-(defn select-received-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ; @param (map) server-response
-  ;
-  ; @return (map)
-  [db [_ lister-id server-response]]
-  ; XXX#8891
-  (if-let [imported-selection (r selection.subs/get-imported-selection db lister-id)]
-          (r selection.events/apply-imported-selection! db lister-id)
-          (return                                       db)))
-
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -103,7 +90,6 @@
   [db [_ lister-id server-response]]
   (as-> db % (r store-received-items!          % lister-id server-response)
              (r store-received-document-count! % lister-id server-response)
-             (r select-received-items!         % lister-id)
              (r data-received                  % lister-id)
 
              ; TEMP#4681

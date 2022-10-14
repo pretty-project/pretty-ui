@@ -29,8 +29,7 @@
 ; ... a {:handler-key ...} tulajdonságot, amit a plugin a resolver függvények neveiben
 ;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
-(r/reg-event-fx
-  :init-my-preview!
+(r/reg-event-fx :init-my-preview!
   [:item-preview/init-preview! :my-preview
                                {:collection-name "my_collection"
                                 :handler-key     :my-handler

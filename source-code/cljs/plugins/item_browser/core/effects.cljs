@@ -26,8 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/browse-item!
+(r/reg-event-fx :item-browser/browse-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ;
@@ -42,8 +41,7 @@
                   {:db       (r core.events/set-item-id! db browser-id item-id)
                    :dispatch [:item-browser/load-browser! browser-id]}))))
 
-(r/reg-event-fx
-  :item-browser/go-home!
+(r/reg-event-fx :item-browser/go-home!
   ; @param (keyword) browser-id
   ;
   ; @usage
@@ -52,8 +50,7 @@
       (let [default-item-id (r body.subs/get-body-prop db browser-id :default-item-id)]
            [:item-browser/browse-item! browser-id default-item-id])))
 
-(r/reg-event-fx
-  :item-browser/go-up!
+(r/reg-event-fx :item-browser/go-up!
   ; @param (keyword) browser-id
   ;
   ; @usage
@@ -67,8 +64,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/filter-items!
+(r/reg-event-fx :item-browser/filter-items!
   ; @param (keyword) browser-id
   ; @param (map) filter-pattern
   ;
@@ -83,8 +79,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/search-items!
+(r/reg-event-fx :item-browser/search-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -99,8 +94,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/order-items!
+(r/reg-event-fx :item-browser/order-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -108,8 +102,7 @@
   (fn [{:keys [db]} [_ browser-id order-by]]
       [:item-lister/order-items! browser-id order-by]))
 
-(r/reg-event-fx
-  :item-browser/swap-items!
+(r/reg-event-fx :item-browser/swap-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -121,8 +114,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/choose-order-by!
+(r/reg-event-fx :item-browser/choose-order-by!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  ; @param (map) order-by-props
+  ;  {:order-by-options (namespaced keywords in vector)}
   (fn [_ [_ browser-id order-by-props]]
       [:item-lister/choose-order-by! browser-id order-by-props]))
 
@@ -131,8 +128,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/load-browser!
+(r/reg-event-fx :item-browser/load-browser!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id

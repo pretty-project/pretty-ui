@@ -20,8 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :plugin-handler/init-plugin!
+(r/reg-event-fx :plugin-handler/init-plugin!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) plugin-id

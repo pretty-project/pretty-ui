@@ -64,8 +64,9 @@
 (defn item-type-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div {:style {:opacity ".5" :padding-right "12px"}}
-        (str "(" item-type ")")])
+  [:div {:style {:opacity ".5" :padding-right "12px" :font-size "var(--font-size-xs)" :font-weight "500"
+                 :line-height "18px"}}
+        item-type])
 
 (defn item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,16 +80,16 @@
 (defn label-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div {:style {:display "flex"}}
-        [item-type-label item-type]
-        [item-label]])
+  [:div {}
+        [item-label]
+        [item-type-label item-type]])
 
 (defn breadcrumbs
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(r/subscribe [:re-frame-browser/get-current-path])]
        [:div {:style {:font-weight "500" :font-size "12px" :opacity ".5" :min-height "24px"}}
-             (string/join current-path " / ")]))
+             (string/join current-path " • ")]))
 
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -231,7 +232,7 @@
         map-keys      (-> current-item map/get-keys vector/abc-items)
         system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
         app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
-       [:div [header (str "map, "(count map-keys)" items")]
+       [:div [header (str "map, "(count map-keys)" item(s)")]
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
@@ -246,7 +247,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-item @(r/subscribe [:re-frame-browser/get-current-item])]
-       [:div [header (str "vector, " (count current-item) " items")]
+       [:div [header (str "vector, " (count current-item) " item(s)")]
              [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
@@ -374,5 +375,5 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div {:style {:color "var( --color-muted )" :overflow-x "auto" :padding "12px" :width "100%"}}
+  [:div {:style {:color "var( --color-muted )" :overflow-x "auto" :padding "0 12px 12px 12px" :width "100%"}}
         [database-item]])

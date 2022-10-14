@@ -33,12 +33,13 @@
   ; @param (map) group-props
   ; @param (integer) field-dex
   [group-id {:keys [initial-options options options-path] :as group-props} field-dex]
-  (let [field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)
-        field-key   (multi-field.helpers/field-dex->react-key     group-id group-props field-dex)]
+  (let [field-key   (multi-field.helpers/field-dex->react-key     group-id group-props field-dex)
+        field-id    (multi-field.helpers/field-dex->field-id      group-id group-props field-dex)
+        field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
        [:div.x-multi-field--text-field {:key field-key}
                                        (if (or initial-options options options-path)
-                                           [combo-box.views/element  field-props]
-                                           [text-field.views/element field-props])]))
+                                           [combo-box.views/element  field-id field-props]
+                                           [text-field.views/element field-id field-props])]))
 
 (defn- multi-field-field-group
   ; WARNING! NON-PUBLIC! DO NOT USE!

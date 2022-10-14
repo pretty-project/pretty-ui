@@ -94,11 +94,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id]]
-  ; XXX#8891
-  ; A "Kijelölés elvetése" funkció törli az imported-selection vektor elemeit is,
-  ; hogy az azokhoz tartozó elemek a letöltődésük után, már ne kerüljenek kijelölésre.
-  (-> db (dissoc-in [:plugins :plugin-handler/meta-items plugin-id :selected-items])
-         (dissoc-in [:plugins :plugin-handler/meta-items plugin-id :imported-selection])))
+  (dissoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items]))
 
 (defn disable-selected-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,38 +111,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn apply-imported-selection!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) plugin-id
-  ;
-  ; @return (map)
-  [db [_ plugin-id]]
-  ; XXX#8891
-  ; Az apply-imported-selection! függvény ...
-  ; ... elveti az eddigi elem-kijelöléseket (r discard-selection! ...)
-  ; ... az imported-selection vektorban tárolt elem-azonosítók alapján kijelöli
-  ;     azokat a letöltött elemeket, amelyek azonosítói az importált kijelölésben
-  ;     szerepelnek (r select-item! ...)
-  (let [downloaded-items      (r core.subs/get-downloaded-items        db plugin-id)
-        downloaded-item-count (r core.subs/get-downloaded-item-count   db plugin-id)
-        imported-selection    (r selection.subs/get-imported-selection db plugin-id)]
-       (letfn [(dex-out-of-bounds? [item-dex] (= item-dex downloaded-item-count))
-               (select-item?       [item-dex] (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
-                                                   (vector/contains-item? imported-selection id)))
-               (f [db item-dex]
-                  (cond ; If item-dex out of bounds ...
-                        (dex-out-of-bounds? item-dex) (return db)
-                        ; If the current item has to be selected ...
-                        (select-item?       item-dex) (let [{:keys [id]} (r core.subs/get-downloaded-item db plugin-id item-dex)]
-                                                           (f (r select-item! db plugin-id id)
-                                                              (inc item-dex)))
-                        ; If the current item has NOT to be selected ...
-                        :return                       (f db (inc item-dex))))]
-              ; ...
-              (as-> db % (r discard-selection! % plugin-id)
-                         (f % 0)))))
-
 (defn import-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -155,10 +119,7 @@
   ;
   ; @return (map)
   [db [_ plugin-id selected-item-ids]]
-  ; XXX#8891
-  ; Az import-selection! függvény eltárolja az ún. importált kijelölést,
-  ; ami a kijelölt/letöltés után kijelölendő elemek azonosítóit tartalmazza.
-  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection] selected-item-ids))
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] selected-item-ids))
 
 (defn import-single-selection!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,5 +129,4 @@
   ;
   ; @return (map)
   [db [_ plugin-id selected-item-id]]
-  ; XXX#8891
-  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :imported-selection] [selected-item-id]))
+  (assoc-in db [:plugins :plugin-handler/meta-items plugin-id :selected-items] [selected-item-id]))

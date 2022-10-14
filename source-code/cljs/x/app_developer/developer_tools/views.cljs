@@ -52,7 +52,7 @@
        [elements/icon-button ::toggle-print-events-icon-button
                              {:hover-color :highlight
                               :icon        :terminal
-                              :indent      {:left :xxl}
+                              ;:indent      {:left :s}
                               :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
                               :preset      (if print-events? :primary :muted)}]))
 
@@ -70,7 +70,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [elements/horizontal-polarity ::header
-                                {:start-content [elements/menu-bar {:menu-items (developer-tools.helpers/menu-items)}]
+                                {:start-content [elements/menu-bar {:menu-items (developer-tools.helpers/menu-items)
+                                                                    :font-size :xs}]
                                  :end-content   [:<> [toggle-print-events-icon-button]
                                                      [toggle-popup-position-icon-button]
                                                      [close-icon-button]]}])

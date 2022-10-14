@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/init-lister!
+(r/reg-event-fx :item-lister/init-lister!
   ; @param (keyword) lister-id
   ; @param (map) lister-props
   ;  {:base-route (string)(opt)

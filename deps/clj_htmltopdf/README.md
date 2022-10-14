@@ -1,4 +1,10 @@
 
+# Miért self-hosted dependecy a clj_htmltopdf könyvtár?
+# XXX#0506
+  ...
+
+
+
 # XXX#5006
   A pdf-generator a pdf fájlban felhasznált forrásfájlok (pl. css fájlok, képek, ...)
   elérési útvonalait kiírja a terminálra. Ez egyrészt zavaró, másrészt, amikor

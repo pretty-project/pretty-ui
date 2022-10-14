@@ -89,7 +89,6 @@
   ;
   ; @return (map)
   [db [_ browser-id selected-item-ids]]
-  ; XXX#8891
   (r selection.events/import-selection! db browser-id selected-item-ids))
 
 (defn import-single-selection!
@@ -101,7 +100,6 @@
   ;
   ; @return (map)
   [db [_ browser-id selected-item-id]]
-  ; XXX#8891
   (r selection.events/import-single-selection! db browser-id selected-item-id))
 
 

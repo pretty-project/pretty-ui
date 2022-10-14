@@ -21,6 +21,35 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn export-selection
+  ; @param (keyword) lister-id
+  ;
+  ; @example
+  ;  (r item-lister/export-selection db :my-lister)
+  ;  =>
+  ;  ["my-item" "your-item"]
+  ;
+  ; @return (strings in vector)
+  [db [_ lister-id]]
+  (r selection.subs/export-selection db lister-id))
+
+(defn export-single-selection
+  ; @param (keyword) lister-id
+  ;
+  ; @example
+  ;  (r item-lister/export-single-selection db :my-lister)
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ lister-id]]
+  (r selection.subs/export-single-selection db lister-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-selected-item-count
   ; @param (keyword) lister-id
   ;
@@ -91,47 +120,6 @@
   ; @return (boolean)
   [db [_ lister-id item-id]]
   (r selection.subs/item-selected? db lister-id item-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn export-selection
-  ; @param (keyword) lister-id
-  ;
-  ; @example
-  ;  (r item-lister/export-selection db :my-lister)
-  ;  =>
-  ;  ["my-item" "your-item"]
-  ;
-  ; @return (strings in vector)
-  [db [_ lister-id]]
-  (r selection.subs/export-selection db lister-id))
-
-(defn export-single-selection
-  ; @param (keyword) lister-id
-  ;
-  ; @example
-  ;  (r item-lister/export-single-selection db :my-lister)
-  ;  =>
-  ;  "my-item"
-  ;
-  ; @return (string)
-  [db [_ lister-id]]
-  (r selection.subs/export-single-selection db lister-id))
-
-(defn get-imported-selection
-  ; @param (keyword) lister-id
-  ;
-  ; @example
-  ;  (r item-lister/get-imported-selection db :my-lister)
-  ;  =>
-  ;  ["my-item" "your-item"]
-  ;
-  ; @return (strings in vector)
-  [db [_ lister-id]]
-  (r selection.subs/get-imported-selection db lister-id))
 
 
 

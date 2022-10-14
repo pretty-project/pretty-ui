@@ -38,8 +38,7 @@
 ;     történik meg.
 ; ... a {:route-title ...} tulajdonság, ami a plugin által a példában regisztrált útvonalak használatakor
 ;     beállítódik az applikáció címkéjének.
-(r/reg-event-fx
-  :init-my-viewer!
+(r/reg-event-fx :init-my-viewer!
   [:item-viewer/init-viewer! :my-viewer
                              {:base-route      "/@app-home/my-viewer"
                               :collection-name "my_collection"

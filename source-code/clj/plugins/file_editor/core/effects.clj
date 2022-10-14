@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-editor/init-editor!
+(r/reg-event-fx :file-editor/init-editor!
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ;  {:base-route (string)(opt)

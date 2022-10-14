@@ -39,16 +39,19 @@
                                    :font-weight :extra-bold}]
                   [elements/icon-button {:variant :placeholder}]]
             [:div {:style {:padding "0 48px"}}
-                  [elements/label ::event-vector
-                                  {:color   :muted
-                                   :content (str "["event-id (if parameters (str " " parameters)) "]")}]
                   [elements/text-field ::event-vector
-                                       {:indent     {:bottom :xxl}
+                                       {:indent     {:bottom :s}
                                         :label      "Parameters"
                                         :value-path [:developer :event-browser/meta-items :parameters]}]
+                  [elements/label ::event-vector
+                                  {:color   :muted
+                                   :content (str "["event-id (if parameters (str " " parameters)) "]")
+                                   :font-size :xs
+                                   :indent     {:bottom :s}}]
                   [elements/button ::dispatch-button
-                                   {:background-color :primary
-                                    :border-radius    :l
+                                   {:background-color :highlight
+                                    :border-radius    :xs
+                                    :indent {:bottom :m}
                                     :label            "Dispatch"
                                     :on-click         [:developer/dispatch-current-event!]
                                     :style            {:width "240px"}}]]]))
@@ -56,7 +59,7 @@
 (defn event-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [event-id event-props]
-  [:button {:style {:display :block :text-align :left :padding "0px 48px" :width "100%"}
+  [:button {:style {:display :block :text-align :left :padding "0px 12px" :width "100%"}
             :on-click #(r/dispatch [:db/set-item! [:developer :event-browser/meta-items :current-event] event-id])}
            [:div {:style {:font-size "14px" :font-weight "500"}}
                  (str "[" event-id " ...]")]])
