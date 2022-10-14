@@ -22,11 +22,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
+(r/reg-event-fx :item-editor/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  :item-editor/handle-route!
   (fn [{:keys [db]} [_ editor-id]]
       ; XXX#5068
       (let [body-did-mount? (r body.subs/body-did-mount?       db editor-id)

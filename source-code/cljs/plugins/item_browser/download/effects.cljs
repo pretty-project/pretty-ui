@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/reload-items!
+(r/reg-event-fx :item-browser/reload-items!
   ; @param (keyword) browser-id
   ; @param (map)(opt) reload-props
   ;  {:on-reload (metamorphic-event)(opt)}
@@ -45,8 +44,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/request-items!
+(r/reg-event-fx :item-browser/request-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -58,8 +56,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/request-item!
+(r/reg-event-fx :item-browser/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -71,8 +68,7 @@
                                  :on-success [:item-browser/receive-item!   browser-id]
                                  :query query :validator-f validator-f}])))
 
-(r/reg-event-fx
-  :item-browser/receive-item!
+(r/reg-event-fx :item-browser/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -84,8 +80,7 @@
           {:db       (r download.events/receive-item! db browser-id server-response)
            :dispatch [:item-browser/item-received browser-id]})))
 
-(r/reg-event-fx
-  :item-browser/item-received
+(r/reg-event-fx :item-browser/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id

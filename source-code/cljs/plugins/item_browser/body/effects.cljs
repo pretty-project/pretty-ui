@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/body-did-mount
+(r/reg-event-fx :item-browser/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -32,16 +31,14 @@
       {:db       (r body.events/body-did-mount db browser-id body-props)
        :dispatch [:item-browser/load-browser! browser-id]}))
 
-(r/reg-event-fx
-  :item-browser/body-will-unmount
+(r/reg-event-fx :item-browser/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   (fn [{:keys [db]} [_ browser-id]]
       {:db (r body.events/body-will-unmount db browser-id)}))
 
-(r/reg-event-fx
-  :item-browser/body-did-update
+(r/reg-event-fx :item-browser/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id

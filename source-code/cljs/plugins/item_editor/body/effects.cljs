@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/body-did-mount
+(r/reg-event-fx :item-editor/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -35,8 +34,7 @@
       {:db       (r body.events/body-did-mount db editor-id body-props)
        :dispatch [:item-editor/load-editor! editor-id]}))
 
-(r/reg-event-fx
-  :item-editor/body-will-unmount
+(r/reg-event-fx :item-editor/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -62,8 +60,7 @@
       ;                         (r body.events/body-will-unmount             % editor-id))
       ;          :dispatch [:item-editor/render-changes-discarded-dialog! editor-id current-item-id]])))
 
-(r/reg-event-fx
-  :item-editor/body-did-update
+(r/reg-event-fx :item-editor/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

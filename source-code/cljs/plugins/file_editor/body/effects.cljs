@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-editor/body-did-mount
+(r/reg-event-fx :file-editor/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -32,16 +31,14 @@
       {:db       (r body.events/body-did-mount db editor-id body-props)
        :dispatch [:file-editor/load-editor! editor-id]}))
 
-(r/reg-event-fx
-  :file-editor/body-will-unmount
+(r/reg-event-fx :file-editor/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
       {:db (r body.events/body-will-unmount db editor-id)}))
 
-(r/reg-event-fx
-  :file-editor/body-did-update
+(r/reg-event-fx :file-editor/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

@@ -24,8 +24,7 @@
 ;; -- Save content effects ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-editor/save-content!
+(r/reg-event-fx :file-editor/save-content!
   ; @param (keyword) editor-id
   ;
   ; @usage
@@ -39,8 +38,7 @@
                                  :on-failure [:file-editor/save-content-failed editor-id]
                                  :query query :validator-f validator-f}])))
 
-(r/reg-event-fx
-  :file-editor/content-saved
+(r/reg-event-fx :file-editor/content-saved
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -53,8 +51,7 @@
       {:db       (r backup.events/backup-current-content! db editor-id)
        :dispatch [:ui/render-bubble! ::content-saved-dialog {:body :saved}]}))
 
-(r/reg-event-fx
-  :file-editor/save-content-failed
+(r/reg-event-fx :file-editor/save-content-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/edit-item!
+(r/reg-event-fx :item-editor/edit-item!
   ; @param (keyword) editor-id
   ; @param (string) item-id
   ;
@@ -46,8 +45,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/cancel-item!
+(r/reg-event-fx :item-editor/cancel-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -66,8 +64,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/load-editor!
+(r/reg-event-fx :item-editor/load-editor!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -80,8 +77,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/go-up!
+(r/reg-event-fx :item-editor/go-up!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

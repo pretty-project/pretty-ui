@@ -68,8 +68,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; ...
-(r/reg-event-fx
-  :edit-my-item!
+(r/reg-event-fx :edit-my-item!
   [:item-editor/edit-item! :my-editor "my-item"])
 
 

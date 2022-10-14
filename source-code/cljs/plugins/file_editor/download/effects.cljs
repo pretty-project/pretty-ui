@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-editor/request-content!
+(r/reg-event-fx :file-editor/request-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -41,8 +40,7 @@
                                             :on-failure [:file-editor/set-error-mode!  editor-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :file-editor/receive-content!
+(r/reg-event-fx :file-editor/receive-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -53,8 +51,7 @@
           {:db       (r download.events/receive-content! db editor-id server-response)
            :dispatch [:file-editor/content-received editor-id]})))
 
-(r/reg-event-fx
-  :file-editor/content-received
+(r/reg-event-fx :file-editor/content-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

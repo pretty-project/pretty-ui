@@ -22,8 +22,7 @@
 ;; -- Szöveg másolása vágólapra mellékhatás eseménnyel ------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :copy-my-text-to-clipboard!
+(r/reg-event-fx :copy-my-text-to-clipboard!
   {:fx [:clipboard/copy-text! "My text"]})
 
 
@@ -31,8 +30,7 @@
 ;; -- Szöveg másolása vágólapra (felugró értesítéssel) ------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :copy-my-text-to-clipboard!
+(r/reg-event-fx :copy-my-text-to-clipboard!
   [:clipboard/copy-text! "My text"])
 
 

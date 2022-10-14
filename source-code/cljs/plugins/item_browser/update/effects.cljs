@@ -29,8 +29,7 @@
 ;; -- Update item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/update-item!
+(r/reg-event-fx :item-browser/update-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ; @param (map) item-changes
@@ -56,8 +55,7 @@
                                                    :on-failure [:item-browser/update-item-failed browser-id item-id]
                                                    :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-browser/item-updated
+(r/reg-event-fx :item-browser/item-updated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -70,8 +68,7 @@
       (if (r items.subs/item-downloaded? db browser-id item-id)
           {:db (r update.events/item-updated db browser-id item-id)})))
 
-(r/reg-event-fx
-  :item-browser/update-item-failed
+(r/reg-event-fx :item-browser/update-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -99,8 +96,7 @@
 ;; -- Delete item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/delete-item!
+(r/reg-event-fx :item-browser/delete-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ;
@@ -115,8 +111,7 @@
                                             :on-failure [:item-browser/delete-item-failed browser-id item-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-browser/item-deleted
+(r/reg-event-fx :item-browser/item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -139,8 +134,7 @@
           ; B)
           [:item-browser/render-item-deleted-dialog! browser-id item-id])))
 
-(r/reg-event-fx
-  :item-browser/delete-item-failed
+(r/reg-event-fx :item-browser/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -170,16 +164,14 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-browser/render-delete-item-failed-dialog!
+(r/reg-event-fx :item-browser/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
       [:ui/render-bubble! ::delete-item-failed-dialog {:body :failed-to-delete}]))
 
-(r/reg-event-fx
-  :item-browser/render-item-deleted-dialog!
+(r/reg-event-fx :item-browser/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -194,8 +186,7 @@
 ;; -- Undo delete item effects ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/undo-delete-item!
+(r/reg-event-fx :item-browser/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -210,8 +201,7 @@
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]
                                                :query query :validator-f validator-f}]]})))
 
-(r/reg-event-fx
-  :item-browser/delete-item-undid
+(r/reg-event-fx :item-browser/delete-item-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -232,8 +222,7 @@
           {:dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-browser/undo-delete-item-failed
+(r/reg-event-fx :item-browser/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -248,8 +237,7 @@
        :dispatch-if [(r ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
-(r/reg-event-fx
-  :item-browser/render-undo-delete-item-failed-dialog!
+(r/reg-event-fx :item-browser/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -262,8 +250,7 @@
 ;; -- Duplicate item effects --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/duplicate-item!
+(r/reg-event-fx :item-browser/duplicate-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ;
@@ -278,8 +265,7 @@
                                             :on-failure [:item-browser/duplicate-item-failed browser-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-browser/item-duplicated
+(r/reg-event-fx :item-browser/item-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -302,8 +288,7 @@
                ; B)
                [:item-browser/render-item-duplicated-dialog! browser-id copy-id]))))
 
-(r/reg-event-fx
-  :item-browser/duplicate-item-failed
+(r/reg-event-fx :item-browser/duplicate-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -317,8 +302,7 @@
        :dispatch-if [(r ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
-(r/reg-event-fx
-  :item-browser/render-item-duplicated-dialog!
+(r/reg-event-fx :item-browser/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -327,8 +311,7 @@
       [:ui/render-bubble! ::item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
-(r/reg-event-fx
-  :item-browser/render-duplicate-item-failed-dialog!
+(r/reg-event-fx :item-browser/render-duplicate-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -341,8 +324,7 @@
 ;; -- Move item effects -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-browser/move-item!
+(r/reg-event-fx :item-browser/move-item!
   ; @param (keyword) browser-id
   ; @param (string) item-id
   ; @param (string) destination-id
