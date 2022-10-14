@@ -65,7 +65,7 @@
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :params (map)(opt)
-  ;    Only w/ {:method :post}
+  ;    W/ {:method :post}
   ;   :response-f (function)(opt)
   ;   :timeout (ms)(opt)
   ;    Default: request-handler.config/DEFAULT-REQUEST-TIMEOUT

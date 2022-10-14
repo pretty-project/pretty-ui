@@ -128,27 +128,6 @@
   (let [default-order-by (r body.subs/get-body-prop db lister-id :default-order-by)]
        (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] default-order-by)))
 
-; WARNING! DEPRECATED! DO NOT USE!
-(defn set-default-order-by!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  ; - Ha az item-lister plugin betöltésekor az {:order-by ...} beállítás nem elérhető,
-  ;   akkor a body-did-mount függvény által alkalmazott set-default-order-by! függvény beállítja
-  ;   az order-by-options vektor első elemét aktuális order-by beállításként.
-  ;
-  ; - Ha az item-lister plugin betöltésekor nem lenne beállítva az {:order-by ...} tulajdonság, akkor ...
-  ; ... a sort-items-select kirenderelésekor nem lenne a select-options felsorolásban aktív listaelem!
-  ; ... a listaelemek letöltésekor a szerver nem kapná meg az {:order-by ...} tulajdonság értékét!
-  (if-let [order-by (r core.subs/get-meta-item db lister-id :order-by)]
-          (return db)
-          (let [order-by-options (r body.subs/get-body-prop db lister-id :order-by-options)]
-               (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] (first order-by-options)))))
-  ; WARNING! DEPRECATED! DO NOT USE!
-
 
 
 ;; ----------------------------------------------------------------------------

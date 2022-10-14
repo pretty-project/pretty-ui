@@ -77,14 +77,14 @@
   ;    Default: true
   ;   :paused? (boolean)(opt)
   ;    Default: false
-  ;    Only w/ {:autostep? true}
+  ;    W/ {:autostep? true}
   ;   :steps (* in vector)
   ;    [{:you "can"} :use #'any-kind-of types]
   ;   :step-duration (ms)(opt)
   ;    Default: DEFAULT-STEP-DURATION
   ;   :step-interval (ms)(opt)
   ;    Default: DEFAULT-STEP-INTERVAL
-  ;    Only w/ {:autostep? true}}
+  ;    W/ {:autostep? true}}
   ;
   ; @usage
   ;  [:gestures/init-step-handler! {...}]

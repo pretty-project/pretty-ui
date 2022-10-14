@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.file-saver.effects
-    (:require [re-frame.api                :as r]))
+    (:require [re-frame.api                :as r]
               [tools.file-saver.prototypes :as prototypes]
-              [tools.file-saver.views      :as views]
+              [tools.file-saver.views      :as views]))
 
 
 
@@ -23,16 +23,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-saver/save-file!
+(r/reg-event-fx :file-saver/save-file!
   ; @param (keyword)(opt) saver-id
   ; @param (map) saver-props
   ;  {:data-url (string)(opt)
-  ;    Only w/o {:uri ...}
+  ;    W/O {:uri ...}
   ;   :filename (string)(opt)
   ;    Default: DEFAULT-FILENAME
   ;   :uri (string)(opt)
-  ;    Only w/o {:data-url ...}}
+  ;    W/O {:data-url ...}}
   ;
   ; @usage
   ;  [:file-saver/save-file! {...}]
@@ -57,8 +56,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :file-saver/render-dialog!
+(r/reg-event-fx :file-saver/render-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; Párbeszédablakot nyit meg a fájl mentésével kapcsolatban.

@@ -20,6 +20,33 @@
 
 
 
+;; -- Reorder items queries ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-reorder-items-mutation-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (map)
+  ;  {:items (maps in vector)}
+  [db [_ lister-id]]
+  (let [reordered-items (r core.subs/export-downloaded-items db lister-id)]
+       (r core.subs/use-query-params db lister-id {:items reordered-items})))
+
+(defn get-reorder-items-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ;
+  ; @return (vector)
+  [db [_ lister-id]]
+  (let [mutation-name  (r update.subs/get-mutation-name    db lister-id :reorder-items!)
+        mutation-props (r get-reorder-items-mutation-props db lister-id)]
+       [`(~(symbol mutation-name) ~mutation-props)]))
+
+
+
 ;; -- Delete items queries ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

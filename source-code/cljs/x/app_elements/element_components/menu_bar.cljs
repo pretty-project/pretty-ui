@@ -189,7 +189,7 @@
   ;    :center, :left, :right
   ;    Default: :left
   ;    (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
-  ;    Only w/ {:orientation :horizontal}
+  ;    W/ {:orientation :horizontal}
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

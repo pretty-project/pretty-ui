@@ -214,6 +214,17 @@
   (let [items-path (r body.subs/get-body-prop db plugin-id :items-path)]
        (get-in db items-path)))
 
+(defn export-downloaded-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ;
+  ; @return (namespaced maps in vector)
+  [db [_ plugin-id]]
+  (let [item-namespace   (r transfer.subs/get-transfer-item db plugin-id :item-namespace)
+        downloaded-items (r get-downloaded-items            db plugin-id)]
+       (vector/->items downloaded-items #(map/add-namespace % item-namespace))))
+
 (defn get-downloaded-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

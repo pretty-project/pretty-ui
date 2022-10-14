@@ -335,12 +335,6 @@
        (reagent/lifecycles {:component-did-mount    #(r/dispatch [:components/component-mounted   component-id context-props mount-id])
                            ; WARNING! DEPRECATED! DO NOT USE!
                             ;:component-did-update   #(r/dispatch [:components/component-updated   component-id context-props mount-id])
-                            ;:component-did-update (fn [this _] ;(println (str "dd")))
-                            ;                          (let [new  (reagent.core/argv this)]
-                            ;                               (println (str new)))
-                            ;          (fn [this old-argv]        ;; reagent provides you the entire "argv", not just the "props"
-                            ;            (let [new-argv (rest (reagent/argv this))]
-                            ;              (do-something new-argv old-argv)]))
                             :component-will-unmount #(r/dispatch [:components/component-unmounted component-id context-props mount-id])
                             :reagent-render          (fn [_ context-props] [subscribe-controller component-id context-props])})))
 
@@ -350,7 +344,7 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;   :component (component)(opt)
-  ;    Only w/o {:render-f ...}
+  ;    W/O {:render-f ...}
   ;   :destructor (metamorphic-event)(opt)
   ;    Az esemény utolsó paraméterként megkapja az initial-props-path Re-Frame adatbázis
   ;    útvonalon tárolt értéket.
@@ -359,7 +353,7 @@
   ;   :initial-props-path (vector)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)(opt)
-  ;    Only w/o {:component ...}
+  ;    W/O {:component ...}
   ;   :subscriber (subscription-vector)(opt)
   ;    A visszatérési értéknek térkép típusnak kell lennie!
   ;   :updater (metamorphic-event)(opt)}

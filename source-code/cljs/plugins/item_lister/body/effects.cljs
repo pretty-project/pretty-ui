@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/body-did-mount
+(r/reg-event-fx :item-lister/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -32,16 +31,14 @@
       {:db       (r body.events/body-did-mount db lister-id body-props)
        :dispatch [:item-lister/request-items! lister-id]}))
 
-(r/reg-event-fx
-  :item-lister/body-will-unmount
+(r/reg-event-fx :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   (fn [{:keys [db]} [_ lister-id]]
       {:db (r body.events/body-will-unmount db lister-id)}))
 
-(r/reg-event-fx
-  :item-lister/body-did-update
+(r/reg-event-fx :item-lister/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id

@@ -59,7 +59,7 @@
          [preview-element preview-id]
         @(r/subscribe [:item-preview/no-item-id-passed? preview-id])
          [:<>]
-        :data-not-received
+         :data-not-received
          [ghost-element preview-id]))
 
 (defn body
@@ -84,7 +84,7 @@
   [preview-id body-props]
   (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]
        (reagent/lifecycles (core.helpers/component-id preview-id :body)
-                           {:reagent-render         (fn []              [body-structure                  preview-id])
-                            :component-did-mount    (fn []  (r/dispatch [:item-preview/body-did-mount    preview-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:item-preview/body-did-mount    preview-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-preview/body-will-unmount preview-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-preview/body-did-update   preview-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:item-preview/body-did-update   preview-id %]))
+                            :reagent-render         (fn []              [body-structure                  preview-id])})))

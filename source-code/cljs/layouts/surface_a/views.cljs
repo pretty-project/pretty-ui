@@ -49,11 +49,10 @@
   ; @usage
   ;  [surface-a/title-sensor {...}]
   [{:keys [offset] :as sensor-props}]
-  (reagent/lifecycles {:component-did-mount    (fn [] (helpers/title-sensor-did-mount-f sensor-props))
-                       :component-will-unmount (fn [] (helpers/title-sensor-will-unmount-f))
-                       :component-did-update   (fn [this] (let [[sensor-props] (reagent/arguments this)]
-                                                               (helpers/title-sensor-did-update-f sensor-props)))
-                       :reagent-render         (fn [] [:div#surface-a--title-sensor (if offset {:style {:transform (-> offset css/px css/translate-y)}})])}))
+  (reagent/lifecycles {:component-did-mount    (fn []  (helpers/title-sensor-did-mount-f sensor-props))
+                       :component-will-unmount (fn []  (helpers/title-sensor-will-unmount-f))
+                       :component-did-update   (fn [%] (helpers/title-sensor-did-update-f %))
+                       :reagent-render         (fn []  [:div#surface-a--title-sensor (if offset {:style {:transform (-> offset css/px css/translate-y)}})])}))
 
 
 

@@ -51,11 +51,11 @@
 ;; -- A plugin használatához szükséges resolver függvények --------------------
 ;; ----------------------------------------------------------------------------
 
-; - :documents
-;   A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
+; :documents
+; A keresési feltételeknek megfelelő dokumentumok rendezve, skip-elve és limit-elve
 ;
-; - :document-count
-;   A keresési feltételeknek megfelelő dokumentumok száma
+; :document-count
+; A keresési feltételeknek megfelelő dokumentumok száma
 (defn- get-items-f
   ; @param (map) env
   ; @param (map) resolver-props
@@ -84,6 +84,17 @@
 
 ;; -- A plugin használatához szükséges mutation függvények --------------------
 ;; ----------------------------------------------------------------------------
+
+; Sikeres átrendezés esetén az átrendezett dokumentumokkal szükséges visszatérni!
+(defmutation reorder-items!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ;  {:items (namespaced maps in vector)}
+             ;
+             ; @return (namespaced maps in vector)
+             [env mutation-props]
+             {::pathom.co/op-name 'my-handler/reorder-items!}
+             (return []))
 
 ; Sikeres törlés esetén a kitörölt elemek azonosítóival szükséges visszatérni!
 (defmutation delete-items!

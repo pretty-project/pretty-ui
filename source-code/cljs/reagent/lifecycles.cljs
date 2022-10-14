@@ -65,10 +65,10 @@
    ; ... megakadályozza, hogy a {:component-will-unmount ...} életciklus a komponens újracsatolásakor
    ;     megtörténjen.
    (let [mount-id (random-uuid)]
-        (reagent.core/create-class {:reagent-render reagent-render
-                                    :component-did-mount    (fn [] (if-let [mounted-as (get @state/MOUNTED-COMPONENTS component-id)]
-                                                                           :component-already-mounted
-                                                                           (if component-did-mount (component-did-mount)))
-                                                                   (swap! state/MOUNTED-COMPONENTS assoc component-id mount-id))
-                                    :component-did-update   (fn [this] (if component-did-update (component-did-update this)))
-                                    :component-will-unmount (fn [] (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))}))))
+        (reagent.core/create-class {:component-did-mount    (fn []  (if-let [mounted-as (get @state/MOUNTED-COMPONENTS component-id)]
+                                                                            :component-already-mounted
+                                                                            (if component-did-mount (component-did-mount)))
+                                                                    (swap! state/MOUNTED-COMPONENTS assoc component-id mount-id))
+                                    :component-will-unmount (fn []  (.setTimeout js/window (fn [] (unmount-f component-id lifecycles mount-id)) 10))
+                                    :component-did-update   (fn [%] (if component-did-update (component-did-update %)))
+                                    :reagent-render         reagent-render}))))

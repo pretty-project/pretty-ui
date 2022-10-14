@@ -26,14 +26,35 @@
 
 
 
+;; -- Reorder items effects ---------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(r/reg-event-fx :item-lister/reorder-items!
+  ; @param (keyword) lister-id
+  ; @param (maps in vector) reordered-items
+  ;
+  ; @usage
+  ;  [:item-lister/reorder-items! :my-lister [{...} {...}]]
+  (fn [{:keys [db]} [_ lister-id reordered-items]]
+      (let [db           (r update.events/reorder-items!                    db lister-id reordered-items)
+            query        (r update.queries/get-reorder-items-query          db lister-id)
+            validator-f #(r update.validators/reorder-items-response-valid? db lister-id %)]
+           {:db db :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
+                                                  {:display-progress? true
+                                                   :on-success [:item-lister/items-reordered      lister-id]
+                                                   :on-failure [:item-lister/reorder-items-failed lister-id]
+                                                   :query query :validator-f validator-f}]})))
+
+
+
 ;; -- Delete items effects ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/delete-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(r/reg-event-fx :item-lister/delete-selected-items!
   ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  [:item-lister/delete-selected-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       (let [item-ids     (r selection.subs/export-selection                db lister-id)
             query        (r update.queries/get-delete-items-query          db lister-id item-ids)
@@ -44,8 +65,7 @@
                                             :on-failure [:item-lister/delete-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-lister/items-deleted
+(r/reg-event-fx :item-lister/items-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -68,8 +88,7 @@
                ; B)
                [:item-lister/render-items-deleted-dialog! lister-id item-ids]))))
 
-(r/reg-event-fx
-  :item-lister/delete-items-failed
+(r/reg-event-fx :item-lister/delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -98,8 +117,7 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-lister/render-items-deleted-dialog!
+(r/reg-event-fx :item-lister/render-items-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -114,12 +132,12 @@
 ;; -- Undo delete items effects -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/undo-delete-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(r/reg-event-fx :item-lister/undo-delete-items!
   ; @param (keyword) lister-id
   ; @param (strings in vector) item-ids
+  ;
+  ; @usage
+  ;  [:item-lister/undo-delete-items! :my-lister ["my-item" "your-item"]]
   (fn [{:keys [db]} [_ lister-id item-ids]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
@@ -130,8 +148,7 @@
                                                :on-failure [:item-lister/undo-delete-items-failed lister-id]
                                                :query query :validator-f validator-f}]]})))
 
-(r/reg-event-fx
-  :item-lister/delete-items-undid
+(r/reg-event-fx :item-lister/delete-items-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -152,8 +169,7 @@
           {:dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-lister/undo-delete-items-failed
+(r/reg-event-fx :item-lister/undo-delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -173,11 +189,11 @@
 ;; -- Duplicate items effects -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/duplicate-selected-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(r/reg-event-fx :item-lister/duplicate-selected-items!
   ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  [:item-lister/duplicate-selected-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       (let [item-ids     (r selection.subs/export-selection                   db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
@@ -188,8 +204,7 @@
                                             :on-failure [:item-lister/duplicate-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-lister/items-duplicated
+(r/reg-event-fx :item-lister/items-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -213,8 +228,7 @@
                ; B)
                [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]))))
 
-(r/reg-event-fx
-  :item-lister/duplicate-items-failed
+(r/reg-event-fx :item-lister/duplicate-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -242,8 +256,7 @@
            :dispatch-if [(r ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-lister/render-items-duplicated-dialog!
+(r/reg-event-fx :item-lister/render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id

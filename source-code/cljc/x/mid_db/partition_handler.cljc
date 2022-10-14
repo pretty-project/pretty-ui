@@ -327,15 +327,15 @@
   ; @param (map)(opt) partition-props
   ;  {:data-cursor-high (integer)(opt)
   ;    Default: 0
-  ;    Only w/ {:ranged? true}
+  ;    W/ {:ranged? true}
   ;   :data-cursor-low (integer)(opt)
   ;    Default: 0
-  ;    Only w/ {:ranged? true}
+  ;    W/ {:ranged? true}
   ;   :data-items (map)(opt)
   ;    Initial data items
   ;   :data-order (vector)(opt)
   ;    Initial data order
-  ;    Only w/ {:ordered? true}
+  ;    W/ {:ordered? true}
   ;   :meta-items (map)(opt)
   ;   :ordered? (boolean)(opt)
   ;   :ranged? (boolean)(opt)}

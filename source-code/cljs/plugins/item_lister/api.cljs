@@ -48,7 +48,9 @@
 (def set-meta-item! core.events/set-meta-item!)
 
 ; plugins.item-lister.core.subs
-(def get-meta-item core.subs/get-meta-item)
+(def get-meta-item           core.subs/get-meta-item)
+(def get-downloaded-items    core.subs/get-downloaded-items)
+(def export-downloaded-items core.subs/export-downloaded-items)
 
 ; plugins.item-lister.items.subs
 (def get-item items.subs/get-item)

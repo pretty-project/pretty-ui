@@ -14,6 +14,7 @@
 
 (ns layouts.surface-a.helpers
     (:require [layouts.surface-a.state :as state]
+              [reagent.api             :as reagent]
               [x.app-environment.api   :as environment]))
 
 
@@ -57,14 +58,15 @@
 (defn title-sensor-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) sensor-props
-  [sensor-props]
+  ; @param (?) %
+  [%]
   ; Ha a title-sensor komponens {:title ...} paramétere megváltozik, akkor szükséges az intersection-observer
   ; figyelőt újra létrehozni a megváltozott {:title ...} paraméter átadásával.
   ; Pl. Ha a title-sensor komponens egy Re-Frame feliratkozás kimenetét kapja meg {:title ...} paraméterként,
   ;      ami a komponens React-fába csatolása után megváltozik.
-  (title-sensor-will-unmount-f)
-  (title-sensor-did-mount-f sensor-props))
+  (let [[sensor-props] (reagent/arguments %)]
+       (title-sensor-will-unmount-f)
+       (title-sensor-did-mount-f sensor-props)))
 
 
 

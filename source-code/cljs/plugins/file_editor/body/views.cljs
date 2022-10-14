@@ -57,7 +57,7 @@
          [error-element editor-id]
         @(r/subscribe [:file-editor/data-received? editor-id])
          [form-element editor-id]
-        :data-not-received
+         :data-not-received
          [ghost-element editor-id]))
 
 (defn body
@@ -81,7 +81,7 @@
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)
-                           {:reagent-render         (fn []              [body-structure                 editor-id])
-                            :component-did-mount    (fn []  (r/dispatch [:file-editor/body-did-mount    editor-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:file-editor/body-did-mount    editor-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:file-editor/body-will-unmount editor-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:file-editor/body-did-update   editor-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:file-editor/body-did-update   editor-id %]))
+                            :reagent-render         (fn []              [body-structure                 editor-id])})))

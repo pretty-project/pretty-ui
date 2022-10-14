@@ -26,9 +26,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.body.views
-(def item-list         body.views/item-list)
-(def no-items-to-show  body.views/no-items-to-show)
-(def ghost-element     body.views/ghost-element)
+(def list-element     body.views/list-element)
+(def no-items-to-show body.views/no-items-to-show)
+(def ghost-element    body.views/ghost-element)
 
 
 
@@ -51,14 +51,14 @@
   ; XXX#6177
   (cond @(r/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
          [error-element browser-id]
-        ;@(r/subscribe [:environment/browser-offline?])
-        ; [offline-body browser-id]
+       ;@(r/subscribe [:environment/browser-offline?])
+       ; [offline-body browser-id]
         @(r/subscribe [:item-browser/data-received? browser-id])
-         [:<> [item-list                 browser-id]
+         [:<> [list-element              browser-id]
               [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
               [no-items-to-show          browser-id]
               [ghost-element             browser-id]]
-        :data-not-received
+         :data-not-received
          [ghost-element browser-id]))
 
 (defn body
@@ -66,7 +66,7 @@
   ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
-  ;    Only w/ {:label-key ...}
+  ;    W/ {:label-key ...}
   ;   :default-item-id (string)
   ;   :default-order-by (namespaced keyword)
   ;   :download-limit (integer)(opt)
@@ -79,10 +79,8 @@
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :label-key (keyword)
-  ;    Only w/ {:auto-title? true}
+  ;    W/ {:auto-title? true}
   ;   :list-element (metamorphic-content)
-  ;   :order-by-options (namespaced keywords in vector)(opt)
-  ;    Default: plugins.item-lister.core.config/DEFAULT-ORDER-BY-OPTIONS
   ;   :path-key (keyword)
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
@@ -94,13 +92,13 @@
   ;  [item-browser/body :my-browser {...}]
   ;
   ; @example
-  ;  (defn my-list-element [browser-id item-dex item] [:div ...])
+  ;  (defn my-list-element [browser-id items] [:div ...])
   ;  [item-browser/body :my-browser {:list-element #'my-list-element
   ;                                  :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
        (reagent/lifecycles (core.helpers/component-id browser-id :body)
-                           {:reagent-render         (fn []              [body-structure                  browser-id body-props])
-                            :component-did-mount    (fn []  (r/dispatch [:item-browser/body-did-mount    browser-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:item-browser/body-did-mount    browser-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-browser/body-will-unmount browser-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-browser/body-did-update   browser-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:item-browser/body-did-update   browser-id %]))
+                            :reagent-render         (fn []              [body-structure                  browser-id body-props])})))

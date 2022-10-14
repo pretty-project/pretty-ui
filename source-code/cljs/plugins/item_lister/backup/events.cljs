@@ -39,11 +39,11 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; - A kijelölt elemeken végzett műveletek előtt (pl. törlés) szükséges lehet azokról biztonsági
-  ;   másolatot készíteni, amiből esetlegesen visszaállíthatók az elemek, ha a felhasználó
-  ;   a művelet visszavonása lehetőséget választja.
+  ; A kijelölt elemeken végzett műveletek előtt (pl. törlés) szükséges lehet azokról biztonsági
+  ; másolatot készíteni, amiből esetlegesen visszaállíthatók az elemek, ha a felhasználó
+  ; a művelet visszavonása lehetőséget választja.
   ;
-  ; - A (kijelölt) elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
+  ; A (kijelölt) elemekről készült biztonsági másolatok az elemek azonosítójával kerülnek eltárolásra.
   (let [items-path     (r body.subs/get-body-prop db lister-id :items-path)
         selected-items (r core.subs/get-meta-item db lister-id :selected-items)]
        (letfn [(f [db item-dex]

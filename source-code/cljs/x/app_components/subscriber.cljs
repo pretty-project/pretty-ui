@@ -58,11 +58,11 @@
   ; @param (map) context-props
   ;  {:base-props (map)(opt)
   ;   :component (component)(opt)
-  ;    Only w/o {:render-f ...}
+  ;    W/O {:render-f ...}
   ;   :initial-props (map)(opt)
   ;   :modifier (function)(opt)
   ;   :render-f (function)(opt)
-  ;    Only w/o {:component ...}
+  ;    W/O {:component ...}
   ;   :subscriber (subscription-vector)
   ;    A visszatérési értéknek térkép típusnak kell lennie!}
   ;

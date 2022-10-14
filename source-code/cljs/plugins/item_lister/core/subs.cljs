@@ -28,6 +28,7 @@
 (def get-meta-item             core.subs/get-meta-item)
 (def plugin-synchronizing?     core.subs/plugin-synchronizing?)
 (def get-downloaded-items      core.subs/get-downloaded-items)
+(def export-downloaded-items   core.subs/export-downloaded-items)
 (def get-downloaded-item-count core.subs/get-downloaded-item-count)
 (def use-query-prop            core.subs/use-query-prop)
 (def use-query-params          core.subs/use-query-params)

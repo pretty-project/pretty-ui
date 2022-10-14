@@ -26,10 +26,11 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.core.subs
-(def get-all-item-count   plugins.item-lister.core.subs/get-all-item-count)
-(def lister-disabled?     plugins.item-lister.core.subs/lister-disabled?)
-(def get-downloaded-items plugins.item-lister.core.subs/get-downloaded-items)
-(def get-current-order-by plugins.item-lister.core.subs/get-current-order-by)
+(def get-all-item-count      plugins.item-lister.core.subs/get-all-item-count)
+(def lister-disabled?        plugins.item-lister.core.subs/lister-disabled?)
+(def get-downloaded-items    plugins.item-lister.core.subs/get-downloaded-items)
+(def export-downloaded-items plugins.item-lister.core.subs/export-downloaded-items)
+(def get-current-order-by    plugins.item-lister.core.subs/get-current-order-by)
 
 ; plugins.plugin-handler.core.subs
 (def get-meta-item          core.subs/get-meta-item)

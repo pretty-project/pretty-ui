@@ -97,9 +97,10 @@
 ;; -- Kifejezések hozzáadaása a szótárhoz -------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Ha az order-by-options beállításban egyedi értékeket is használtál, akkor
-; ne felejtsd el hozzáadni a megfelelő szótári szavakat!
-; Pl. a :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
+; Ha a body komponens default-order-by tulajdonságánál vagy az [:item-lister/choose-order-by! ...]
+; esemény order-by-options tulajdonságánal egyedi értékeket is használtál, akkor
+; ne felejtsd el a szótárhoz adni a megfelelő kifejezéseket!
+; Pl.: A :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (core/reg-lifecycles! ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
 

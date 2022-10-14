@@ -19,6 +19,23 @@
 
 
 
+;; -- Reorder items validators ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn reorder-items-response-valid?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  ;
+  ; @return (boolean)
+  [db [_ lister-id server-response]]
+  (let [mutation-name   (r update.subs/get-mutation-name db lister-id :reorder-items!)
+        reordered-items (get server-response (symbol mutation-name))]
+       (vector/nonempty? reordered-items)))
+
+
+
 ;; -- Delete items validators -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

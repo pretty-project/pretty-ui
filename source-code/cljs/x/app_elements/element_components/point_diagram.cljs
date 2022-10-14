@@ -65,7 +65,7 @@
   ;  {:color (keyword or string)(opt)
   ;    :default, :muted, :primary, :secondary
   ;    Default: :default
-  ;    Only w/ {:label ...}
+  ;    W/ {:label ...}
   ;   :points (integers in vector)
   ;   :strength (px)(opt)
   ;     Default: 2

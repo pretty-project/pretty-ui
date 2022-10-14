@@ -30,8 +30,7 @@
 ;; -- Save item effects -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/save-item!
+(r/reg-event-fx :item-editor/save-item!
   ; @param (keyword) editor-id
   ;
   ; @usage
@@ -45,8 +44,7 @@
                                             :on-failure [:item-editor/save-item-failed editor-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-editor/item-saved
+(r/reg-event-fx :item-editor/item-saved
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -81,8 +79,7 @@
                              [:ui/end-fake-process!]]
                :dispatch     [:ui/render-bubble! ::item-saved-dialog {:body :saved}]})))
 
-(r/reg-event-fx
-  :item-editor/save-item-failed
+(r/reg-event-fx :item-editor/save-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -100,8 +97,7 @@
 ;; -- Restore discarded changes effects ---------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-editor/undo-discard-changes!
+(r/reg-event-fx :item-editor/undo-discard-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -111,8 +107,7 @@
        :dispatch-n [[:ui/close-bubble! ::changes-discarded-dialog]
                     [:item-editor/edit-item! editor-id item-id]]}))
 
-(r/reg-event-fx
-  :item-editor/render-changes-discarded-dialog!
+(r/reg-event-fx :item-editor/render-changes-discarded-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id

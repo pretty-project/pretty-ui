@@ -26,7 +26,7 @@
   ; @param (component) component
   ; @param (function)(opt) render-callback
   ;
-  ; @usage W/o callback
+  ; @usage W/O callback
   ;  (defn my-component [])
   ;  (temporary-component/append-component! [my-component])
   ;

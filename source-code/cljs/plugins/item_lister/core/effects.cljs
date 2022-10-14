@@ -24,8 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/filter-items!
+(r/reg-event-fx :item-lister/filter-items!
   ; @param (keyword) lister-id
   ; @param (map) filter-pattern
   ;
@@ -40,8 +39,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/search-items!
+(r/reg-event-fx :item-lister/search-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -57,8 +55,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/order-items!
+(r/reg-event-fx :item-lister/order-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -67,8 +64,7 @@
       {:db       (r core.events/order-items! db lister-id order-by)
        :dispatch [:item-lister/request-items! lister-id]}))
 
-(r/reg-event-fx
-  :item-lister/swap-items!
+(r/reg-event-fx :item-lister/swap-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -86,8 +82,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/choose-order-by!
+(r/reg-event-fx :item-lister/choose-order-by!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id

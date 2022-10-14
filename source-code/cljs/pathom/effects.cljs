@@ -30,7 +30,7 @@
   ; @param (map) query-props
   ;  {:body (map)(opt)
   ;    {:query (vector)}
-  ;    Only w/o {:query ...}
+  ;    W/O {:query ...}
   ;   :display-progress? (boolean)(opt)
   ;    Default: false
   ;   :idle-timeout (ms)(opt)
@@ -43,7 +43,7 @@
   ;   :on-success (metamorphic-event)(opt)
   ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :query (string or vector)(opt)
-  ;    Only w/o {:body {...}}
+  ;    W/O {:body {...}}
   ;   :uri (string)
   ;    Default: pathom.config/DEFAULT-URI
   ;   :validator-f (function)(opt)}

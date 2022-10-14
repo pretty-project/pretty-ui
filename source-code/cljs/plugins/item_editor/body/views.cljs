@@ -57,7 +57,7 @@
          [error-element editor-id]
         @(r/subscribe [:item-editor/data-received? editor-id])
          [form-element editor-id]
-        :data-not-received
+         :data-not-received
          [ghost-element editor-id]))
 
 (defn body
@@ -65,7 +65,7 @@
   ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
-  ;    Only w/ {:label-key ...}
+  ;    W/ {:label-key ...}
   ;   :default-item (map)(opt)
   ;   :form-element (metamorphic-content)
   ;   :error-element (metamorphic-content)(opt)
@@ -75,7 +75,7 @@
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
-  ;    Only w/ {:auto-title? true}
+  ;    W/ {:auto-title? true}
   ;   :query (vector)(opt)
   ;   :suggestion-keys (keywords in vector)(opt)
   ;   :suggestions-path (vector)(opt)
@@ -91,7 +91,7 @@
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)
-                           {:reagent-render         (fn []              [body-structure                 editor-id])
-                            :component-did-mount    (fn []  (r/dispatch [:item-editor/body-did-mount    editor-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:item-editor/body-did-mount    editor-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-editor/body-will-unmount editor-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-editor/body-did-update   editor-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:item-editor/body-did-update   editor-id %]))
+                            :reagent-render         (fn []              [body-structure                 editor-id])})))

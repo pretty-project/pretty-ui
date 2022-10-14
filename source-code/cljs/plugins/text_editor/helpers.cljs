@@ -19,7 +19,8 @@
               [mid-fruits.random                   :as random]
               [plugins.text-editor.config          :as config]
               [plugins.text-editor.state           :as state]
-              [re-frame.api                        :as r]))
+              [re-frame.api                        :as r]
+              [reagent.api                         :as reagent]))
 
 
 
@@ -122,12 +123,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  ; @param (map) editor-props
-  ;  {:value-path (vector)}
-  ; @param (string) stored-value
-  [editor-id editor-props stored-value]
-  (when (not= stored-value (get @state/EDITOR-INPUT editor-id))
-        (swap! state/EDITOR-INPUT assoc editor-id stored-value)))
+  ; @param (?) %
+  [editor-id %]
+  (let [[_ editor-props stored-value] (reagent/arguments %)]
+       (when (not= stored-value (get @state/EDITOR-INPUT editor-id))
+             (swap! state/EDITOR-INPUT assoc editor-id stored-value))))
 
 (defn synchronizer-did-mount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!

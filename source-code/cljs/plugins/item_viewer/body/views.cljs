@@ -57,7 +57,7 @@
          [error-element viewer-id]
         @(r/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]
-        :data-not-received
+         :data-not-received
          [ghost-element viewer-id]))
 
 (defn body
@@ -65,14 +65,14 @@
   ; @param (map) body-props
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
-  ;    Only w/ {:label-key ...}
+  ;    W/ {:label-key ...}
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-element (metamorphic-content)
   ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
   ;   :label-key (keyword)(opt)
-  ;    Only w/ {:auto-title? true}
+  ;    W/ {:auto-title? true}
   ;   :query (vector)(opt)
   ;   :transfer-id (keyword)(opt)}
   ;
@@ -85,7 +85,7 @@
   [viewer-id body-props]
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]
        (reagent/lifecycles (core.helpers/component-id viewer-id :body)
-                           {:reagent-render         (fn []              [body-structure                 viewer-id])
-                            :component-did-mount    (fn []  (r/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:item-viewer/body-did-mount    viewer-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-viewer/body-will-unmount viewer-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-viewer/body-did-update   viewer-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:item-viewer/body-did-update   viewer-id %]))
+                            :reagent-render         (fn []              [body-structure                 viewer-id])})))

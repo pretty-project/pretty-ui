@@ -175,15 +175,15 @@
   ; @param (keyword)(opt) component-id
   ; @param (map) component-props
   ;  {:base-props (map)(opt)
-  ;    Only w/ {:content (component)}
+  ;    W/ {:content (component)}
   ;   :content (component, function, keyword, hiccup, integer or string)(opt)
   ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
-  ;    Only w/ {:content (keyword or string)}
+  ;    W/ {:content (keyword or string)}
   ;   :subscriber (subscription-vector)(opt)
   ;    A visszatérési értéknek térkép típusnak kell lennie!
   ;   :suffix (string)(opt)
-  ;    Only w/ {:content (keyword or string)}}
+  ;    W/ {:content (keyword or string)}}
   ;
   ; @usage
   ;  [components/content {...}]

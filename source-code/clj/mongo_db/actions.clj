@@ -249,9 +249,8 @@
    (if-let [document (as-> document % (checking/save-input %)
                                       (preparing/save-input collection-name % options)
                                       (adaptation/save-input %))]
-          (do (println (str "doc: " document))
            (if-let [result (save-and-return! collection-name document)]
-                   (adaptation/save-output result))))))
+                   (adaptation/save-output result)))))
 
 
 

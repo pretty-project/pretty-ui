@@ -20,10 +20,7 @@
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
               [x.app-components.api                :as components]
-              [x.app-elements.api                  :as elements]
-
-              ; TEMP
-              [plugins.sortable.core               :refer []]))
+              [x.app-elements.api                  :as elements]))
 
 
 
@@ -87,7 +84,7 @@
   (if-let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
           [components/content error-element]))
 
-(defn item-list
+(defn list-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -99,7 +96,7 @@
        (letfn [(f [item-list item-dex {:keys [id] :as item}]
                   (conj item-list ^{:key (str id item-dex)}
                                    [list-element lister-id item-dex item]))]
-              (reduce-kv f [:div.item-lister--item-list] downloaded-items))))
+              (reduce-kv f [:<>] downloaded-items))))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,11 +106,11 @@
   (cond @(r/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
          [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])
-         [:<> [item-list                 lister-id]
+         [:<> [list-element              lister-id]
               [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
               [no-items-to-show          lister-id]
               [ghost-element             lister-id]]
-        :data-not-received
+         :data-not-received
          [ghost-element lister-id]))
 
 (defn body
@@ -127,11 +124,7 @@
   ;   :items-path (vector)(opt)
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
-
-  ;   WARNING! DEPRECATED! DO NOT USE!
-  ;   :order-by-options (namespaced keywords in vector)(opt)
-  ;    Default: core.config/DEFAULT-ORDER-BY-OPTIONS
-
+  ;   :order-key (keyword)(opt)
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
   ;   :selected-items (strings in vector)(opt)
@@ -141,13 +134,13 @@
   ;  [item-lister/body :my-lister {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [lister-id item-dex item] [:div ...])
+  ;  (defn my-list-element [lister-id items] [:div ...])
   ;  [item-lister/body :my-lister {:list-element #'my-list-element
   ;                                :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
   (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)
-                           {:reagent-render         (fn []              [body-structure                 lister-id])
-                            :component-did-mount    (fn []  (r/dispatch [:item-lister/body-did-mount    lister-id body-props]))
+                           {:component-did-mount    (fn []  (r/dispatch [:item-lister/body-did-mount    lister-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-lister/body-will-unmount lister-id]))
-                            :component-did-update   (fn [%] (r/dispatch [:item-lister/body-did-update   lister-id %]))})))
+                            :component-did-update   (fn [%] (r/dispatch [:item-lister/body-did-update   lister-id %]))
+                            :reagent-render         (fn []              [body-structure                 lister-id])})))

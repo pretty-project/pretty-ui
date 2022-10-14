@@ -43,11 +43,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [editor-id editor-props stored-value]
   ; HACK#9910
-  (reagent/lifecycles {:reagent-render         (fn [_ _ _])
-                       :component-will-unmount (fn [_ _ _] (helpers/synchronizer-will-unmount-f editor-id editor-props))
+  (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (helpers/synchronizer-will-unmount-f editor-id editor-props))
                        :component-did-mount    (fn [_ _ _] (helpers/synchronizer-did-mount-f    editor-id editor-props))
-                       :component-did-update   (fn [this]  (let [[_ _ stored-value] (reagent/arguments this)]
-                                                                (helpers/synchronizer-did-update-f editor-id editor-props stored-value)))}))
+                       :component-did-update   (fn [%]     (helpers/synchronizer-did-update-f   editor-id %))
+                       :reagent-render         (fn [_ _ _])}))
 
 (defn- synchronizer
   ; WARNING! NON-PUBLIC! DO NOT USE!

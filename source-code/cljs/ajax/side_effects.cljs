@@ -30,9 +30,9 @@
   ;   :method (keyword)
   ;    :get, :post
   ;   :params (map)(opt)
-  ;    Only w/ {:method :post}
+  ;    W/ {:method :post}
   ;   :progress-handler-f (function)(opt)
-  ;    Only w/ {:method :post}
+  ;    W/ {:method :post}
   ;   :response-handler-f (function)(opt)
   ;   :timeout (ms)(opt)
   ;   :uri (string)}

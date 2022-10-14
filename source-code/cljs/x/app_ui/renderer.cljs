@@ -1153,7 +1153,7 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   ;  {:alternate-renderer (keyword)(opt)
-  ;    Only w/ {:required? true}
+  ;    W/ {:required? true}
   ;   :element (component)
   ;   :max-elements-rendered (integer)(opt)
   ;    Default: DEFAULT-MAX-ELEMENTS-RENDERED
