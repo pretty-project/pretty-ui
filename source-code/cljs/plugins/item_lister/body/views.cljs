@@ -93,10 +93,7 @@
   ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
   (let [downloaded-items @(r/subscribe [:item-lister/get-downloaded-items lister-id])
         list-element     @(r/subscribe [:item-lister/get-body-prop        lister-id :list-element])]
-       (letfn [(f [item-list item-dex {:keys [id] :as item}]
-                  (conj item-list ^{:key (str id item-dex)}
-                                   [list-element lister-id item-dex item]))]
-              (reduce-kv f [:<>] downloaded-items))))
+       [list-element lister-id downloaded-items]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -127,7 +124,6 @@
   ;   :order-key (keyword)(opt)
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
-  ;   :selected-items (strings in vector)(opt)
   ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage

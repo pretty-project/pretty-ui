@@ -92,29 +92,6 @@
   [n]
   (-> n vals first))
 
-(defn assoc-ns
-  ; @param (map) n
-  ; @param (keyword) k
-  ; @param (*) v
-  ;
-  ; @example
-  ;  (map/assoc-ns {:fruit/apple "red"} :banana "yellow")
-  ;  =>
-  ;  {:fruit/apple "red" :fruit/banana "yellow"}
-  ;
-  ; @return (map)
-  [n k v])
-  ; TODO ...
-
-(defn assoc-in-ns
-  ; @param (map) n
-  ; @param (vector) ks
-  ; @param (*) v
-  ;
-  ; @return (map)
-  [n ks v])
-  ; TODO ...
-
 (defn deep-merge
   ; @param (map) n
   ; @param (list of maps) xyz
@@ -249,6 +226,58 @@
   [n parent-path key value]
   (assoc-in n (conj parent-path key) value))
 
+(defn toggle
+  ; @param (map) n
+  ; @param (*) key
+  ; @param (*) value
+  ;
+  ; @example
+  ;  (map/toggle {} :a "A")
+  ;  =>
+  ;  {:a "A"}
+  ;
+  ; @example
+  ;  (map/toggle {:a "A"} :a "A")
+  ;  =>
+  ;  {}
+  ;
+  ; @example
+  ;  (map/toggle {:a "B"} :a "A")
+  ;  =>
+  ;  {}
+  ;
+  ; @return (*)
+  [n key value]
+  (if-let [_ (key n)]
+          (dissoc n key)
+          (assoc  n key value)))
+
+(defn toggle-in
+  ; @param (map) n
+  ; @param (vector) path
+  ; @param (*) value
+  ;
+  ; @example
+  ;  (map/toggle {} [:x :a] "A")
+  ;  =>
+  ;  {:x {:a "A"}}
+  ;
+  ; @example
+  ;  (map/toggle {:a "A"} [:x :a] "A")
+  ;  =>
+  ;  {:x {}}
+  ;
+  ; @example
+  ;  (map/toggle {:a "B"} [:x :a] "A")
+  ;  =>
+  ;  {:x {}}
+  ;
+  ; @return (*)
+  [n path value]
+  (if-let [_ (key n)]
+          (dissoc-in n path)
+          (assoc-in  n path value)))
+          
 (defn contains-key?
   ; @param (map) n
   ; @param (*) x
@@ -352,12 +381,12 @@
          (reduce-kv f n (vec ks))))
 
 (defn update-some
-  ; Update n map if v is something
+  ; Update n map if value is something
   ;
   ; @param (map) n
   ; @param (*) x
   ; @param (function) f
-  ; @param (*) v
+  ; @param (*) value
   ;
   ; @example
   ;  (map/update-some {:a [:x :y]} :a vector/conj-item :z)
@@ -370,12 +399,12 @@
   ;  {:a [:x :y]}
   ;
   ; @return (map)
-  [n x f v]
-  (if v (update n x f v)
-        (return n)))
+  [n x f value]
+  (if value (update n x f value)
+            (return n)))
 
 (defn update-in-some
-  ; Update-in n map if v is something
+  ; Update-in n map if value is something
   ;
   ; @param (map) n
   ; @param (vector) value-path
@@ -853,6 +882,29 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn assoc-ns
+  ; @param (map) n
+  ; @param (keyword) key
+  ; @param (*) value
+  ;
+  ; @example
+  ;  (map/assoc-ns {:fruit/apple "red"} :banana "yellow")
+  ;  =>
+  ;  {:fruit/apple "red" :fruit/banana "yellow"}
+  ;
+  ; @return (map)
+  [n key value])
+  ; TODO ...
+
+(defn assoc-in-ns
+  ; @param (map) n
+  ; @param (vector) keys
+  ; @param (*) value
+  ;
+  ; @return (map)
+  [n keys value])
+  ; TODO ...
 
 (defn get-namespace
   ; @param (map) n

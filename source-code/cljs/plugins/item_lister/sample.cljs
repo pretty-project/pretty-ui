@@ -20,7 +20,6 @@
 
 
 
-
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -36,8 +35,7 @@
 ; csak az előszűrésnek megfelelő elemek jelenjenek meg.
 (defn my-filtered-body
   []
-  [item-lister/body :my-lister {:list-element [:div "My item"]
-                                :prefilter    {:my-type/color "red"}}])
+  [item-lister/body :my-lister {:prefilter {:my-type/color "red"}}])
 
 
 
@@ -65,15 +63,6 @@
 
 
 
-;; -- Előre kijelölt elemek ---------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Az item-lister/body komponensének {:selected-items [...]} paraméterként lehetséges
-; azon elemek azonosítóit átadni, amely elemeket szeretnéd, ha a letöltődésük után
-; ki lennének jelölve.
-
-
-
 ;; -- Listaelemek frissítése a kollekció változása után -----------------------
 ;; ----------------------------------------------------------------------------
 
@@ -88,9 +77,17 @@
 ;; -- A plugin használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn my-list-element
+  [lister-id items]
+  ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét, hogy a lista-elemek
+  ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
+  (letfn [(f [item-list item-dex {:keys [id] :as item}]
+             (conj item-list ^{:key (str id item-dex)} [:div "My item"]))]
+         (reduce-kv f [:<>] items)))
+
 (defn my-lister
   []
-  [item-lister/body :my-lister {:list-element [:div "My item"]}])
+  [item-lister/body :my-lister {:list-element #'my-list-element}])
 
 
 
@@ -114,5 +111,4 @@
 ; összefűzve elküldésre kerül.
 (defn my-query
   []
-  [item-lister/body :my-lister {:list-element [:div "My item"]
-                                :query        [:my-query]}])
+  [item-lister/body :my-lister {:query [:my-query]}])

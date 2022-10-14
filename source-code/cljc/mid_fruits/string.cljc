@@ -903,7 +903,7 @@
                          (f1 n marker replacement)))]
                ; ...
                (if (f?) (f1 n "%" (first replacements))
-                        (reduce f2 n replacements)))))
+                        (reduce-kv f2 n replacements)))))
 
 (defn use-replacement
   ; @param (string) n

@@ -220,7 +220,8 @@ body {
 .x-card[data-background-color="muted"]        .x-card--body,
 .x-color-marker--color[data-color="muted"],
 .x-chip[data-background-color="muted"]        .x-chip--body,
-.x-icon-button[data-background-color="muted"] .x-icon-button--body {
+.x-icon-button[data-background-color="muted"] .x-icon-button--body,
+.x-toggle[data-background-color="muted"] {
   background-color: var( --background-color-muted ) }
 
 /* Background-color */
@@ -288,7 +289,8 @@ body {
 .x-card[data-background-color="highlight"]        .x-card--body,
 .x-color-marker--color[data-color="highlight"],
 .x-chip[data-background-color="highlight"]        .x-chip--body,
-.x-icon-button[data-background-color="highlight"] .x-icon-button--body {
+.x-icon-button[data-background-color="highlight"] .x-icon-button--body,
+.x-toggle[data-background-color="highlight"] {
   background-color: var( --background-color-highlight ) }
 
 /* Background-color */
@@ -363,7 +365,8 @@ body {
 .x-card[data-background-color="primary"]        .x-card--body,
 .x-color-marker--color[data-color="primary"],
 .x-chip[data-background-color="primary"]        .x-chip--body,
-.x-icon-button[data-background-color="primary"] .x-icon-button--body {
+.x-icon-button[data-background-color="primary"] .x-icon-button--body,
+.x-toggle[data-background-color="primary"] {
   background-color: var( --background-color-primary ) }
 
 /* Background-color */
@@ -438,7 +441,8 @@ body {
 .x-card[data-background-color="secondary"]        .x-card--body,
 .x-color-marker--color[data-color="secondary"],
 .x-chip[data-background-color="secondary"]        .x-chip--body,
-.x-icon-button[data-background-color="secondary"] .x-icon-button--body {
+.x-icon-button[data-background-color="secondary"] .x-icon-button--body,
+.x-toggle[data-background-color="secondary"] {
   background-color: var( --background-color-secondary ) }
 
 /* Background-color */
@@ -513,7 +517,8 @@ body {
 .x-card[data-background-color="success"]        .x-card--body,
 .x-color-marker--color[data-color="success"],
 .x-chip[data-background-color="success"]        .x-chip--body,
-.x-icon-button[data-background-color="success"] .x-icon-button--body {
+.x-icon-button[data-background-color="success"] .x-icon-button--body,
+.x-toggle[data-background-color="success"] {
   background-color: var( --background-color-success ) }
 
 /* Background-color */
@@ -587,7 +592,8 @@ body {
 .x-card[data-background-color="warning"]        .x-card--body,
 .x-color-marker--color[data-color="warning"],
 .x-chip[data-background-color="warning"]        .x-chip--body,
-.x-icon-button[data-background-color="warning"] .x-icon-button--body {
+.x-icon-button[data-background-color="warning"] .x-icon-button--body,
+.x-toggle[data-background-color="warning"] {
   background-color: var( --background-color-warning ) }
 
 /* Background-color */

@@ -24,7 +24,6 @@
               [plugins.item-browser.download.events]
               [plugins.item-browser.download.subs]
               [plugins.item-browser.items.events]
-              [plugins.item-browser.items.subs]
               [plugins.item-browser.routes.effects]
               [plugins.item-browser.transfer.subs]
               [plugins.item-browser.update.effects]
@@ -33,6 +32,7 @@
               [plugins.item-browser.body.views       :as body.views]
               [plugins.item-lister.core.events       :as core.events]
               [plugins.item-browser.core.subs        :as core.subs]
+              [plugins.item-browser.items.subs       :as items.subs]
               [plugins.item-browser.routes.subs      :as routes.subs]
               [plugins.item-browser.selection.events :as selection.events]
               [plugins.item-browser.selection.subs   :as selection.subs]))
@@ -53,6 +53,9 @@
 (def get-current-item-id core.subs/get-current-item-id)
 (def get-current-item    core.subs/get-current-item)
 (def browsing-item?      core.subs/browsing-item?)
+
+; plugins.item-browser.items.subs
+(def get-item items.subs/get-item)
 
 ; plugins.item-browser.routes.subs
 (def get-item-route routes.subs/get-item-route)

@@ -47,6 +47,7 @@
   ; @param (map) toggle-props
   ;  {:content (metamorphic-content)(opt)}
   [toggle-id {:keys [content] :as toggle-props}]
+  ; Majd a toggle-body kapja a background-color-t és hover-color-t
   [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
                           [components/content               toggle-id content]])
 
@@ -62,7 +63,10 @@
 (defn element
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ;  {:border-radius (keyword)(opt)
+  ;  {:background-color (keyword)(opt)
+  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    Default: :none
+  ;   :border-radius (keyword)(opt)
   ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    Default: :none
   ;   :class (keyword or keywords in vector)(opt)
