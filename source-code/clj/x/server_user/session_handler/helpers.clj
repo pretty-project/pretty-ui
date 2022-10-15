@@ -17,7 +17,6 @@
               [mid-fruits.vector          :as vector]
               [mongo-db.api               :as mongo-db]
               [server-fruits.http         :as http]
-              [x.server-user.core.config  :as core.config]
               [x.server-user.core.helpers :as core.helpers]))
 
 

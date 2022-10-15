@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.error-handler.effects
-    (:require [x.app-core.error-handler.subs  :as error-handler.subs]
-              [x.app-core.event-handler       :as event-handler :refer [r]]
+    (:require [re-frame.api                   :as r :refer [r]]
+              [x.app-core.error-handler.subs  :as error-handler.subs]
               [x.app-core.load-handler.events :as load-handler.events]))
 
 
@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/error-catched
+(r/reg-event-fx :core/error-catched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword)(opt) error-id
@@ -43,10 +42,10 @@
   ; @usage
   ;  [:core/error-catched {:error "An error occured ..."
   ;                        :cofx  {...}}]
-  [event-handler/event-vector<-id]
+  [r/event-vector<-id]
   (fn [{:keys [db]} [_ error-id {:keys [cofx] :as error-props}]]
       (let [error-message (r error-handler.subs/get-error-message db error-id error-props)
-            catched-event (event-handler/cofx->event-vector cofx)]
+            catched-event (r/cofx->event-vector cofx)]
            {:db   (r load-handler.events/stop-loading! db)
             :fx-n [[:core/print-error!    error-message catched-event]
                    [:ui/set-error-shield! error-message]]})))

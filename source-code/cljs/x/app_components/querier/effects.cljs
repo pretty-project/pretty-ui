@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :components.querier/send-query!
+(r/reg-event-fx :components.querier/send-query!
   ; @param (keyword) querier-id
   ; @param (map) querier-props
   (fn [_ [_ querier-id {:keys [query] :as querier-props}]]
@@ -30,8 +29,7 @@
                            {:query      query
                             :on-success [:components.querier/receive-query! querier-id querier-props]}]))
 
-(r/reg-event-fx
-  :components.querier/receive-query!
+(r/reg-event-fx :components.querier/receive-query!
   ; @param (keyword) querier-id
   ; @param (map) querier-props
   ; @param (map) server-response

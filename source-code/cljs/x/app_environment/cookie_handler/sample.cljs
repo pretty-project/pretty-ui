@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.sample
-    (:require [x.app-environment.api :as environment]))
+    (:require [re-frame.api          :as r :refer [r]]
+              [x.app-environment.api :as environment]))
 
 
 
@@ -26,15 +27,12 @@
    :stored-cookies      (r environment/get-stored-cookies  db)
    :my-cookie-value     (r environment/get-cookie-value    db :my-cookie)})
 
-(a/reg-event-fx
-  :set-my-cookies!
+(r/reg-event-fx :set-my-cookies!
   {:dispatch-n [[:environment/set-cookie! {}]
                 [:environment/set-cookie! :my-cookie {}]]})
 
-(a/reg-event-fx
-  :remove-my-cookie!
+(r/reg-event-fx :remove-my-cookie!
   [:environment/remove-cookie! :my-cookie])
 
-(a/reg-event-fx
-  :remove-all-cookies!
+(r/reg-event-fx :remove-all-cookies!
   [:environment/remove-cookies!])

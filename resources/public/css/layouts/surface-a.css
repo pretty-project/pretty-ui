@@ -120,7 +120,11 @@
   flex-grow: 1;
   justify-content: center;
   padding-top: 96px;
+  -padding-top: 72px;
   width: 100% }
+
+@media only screen and (max-width: 719px) {
+#surface-a--body { padding-top: 60px }}
 
 #surface-a--body-content {
  -background: white;

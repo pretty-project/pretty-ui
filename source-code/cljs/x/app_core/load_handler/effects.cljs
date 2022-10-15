@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.load-handler.effects
-    (:require [x.app-core.event-handler       :as event-handler :refer [r]]
+    (:require [re-frame.api                   :as r :refer [r]]
               [x.app-core.load-handler.config :as load-handler.config]
               [x.app-core.load-handler.events :as load-handler.events]
               [x.app-core.load-handler.subs   :as load-handler.subs]))
@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/start-synchron-signal!
+(r/reg-event-fx :core/start-synchron-signal!
   ; @param (keyword) signal-id
   ;
   ; @usage
@@ -32,8 +31,7 @@
   (fn [{:keys [db]} [_ signal-id]]
       {:db (r load-handler.events/start-synchron-signal! db signal-id)}))
 
-(event-handler/reg-event-fx
-  :core/end-synchron-signal!
+(r/reg-event-fx :core/end-synchron-signal!
   ; @param (keyword) signal-id
   ;
   ; @usage
@@ -48,8 +46,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/load-test!
+(r/reg-event-fx :core/load-test!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (cond ; Ha a load-handler már nincs {:load-status :loading} állapotban ...
@@ -64,15 +61,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/app-loaded
+(r/reg-event-fx :core/app-loaded
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r load-handler.events/set-load-status! db :loaded)
        :fx [:ui/hide-loading-screen!]}))
 
-(event-handler/reg-event-fx
-  :core/load-timeout-reached
+(r/reg-event-fx :core/load-timeout-reached
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db (r load-handler.events/set-load-status! db :load-timeout-reached)
@@ -83,8 +78,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(event-handler/reg-event-fx
-  :core/initialize-load-handler!
+(r/reg-event-fx :core/initialize-load-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {:db             (as-> db % (r load-handler.events/set-load-status!  % :loading)
