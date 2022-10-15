@@ -25,8 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/request-item!
+(r/reg-event-fx :item-viewer/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -41,8 +40,7 @@
                                             :on-failure [:item-viewer/set-error-mode! viewer-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-viewer/receive-item!
+(r/reg-event-fx :item-viewer/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -53,8 +51,7 @@
           {:db       (r download.events/receive-item! db viewer-id server-response)
            :dispatch [:item-viewer/item-received viewer-id]})))
 
-(r/reg-event-fx
-  :item-viewer/item-received
+(r/reg-event-fx :item-viewer/item-received
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

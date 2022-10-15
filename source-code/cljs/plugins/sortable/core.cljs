@@ -685,8 +685,7 @@
 ;; -- Effect events -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  ::handle-drag-end!
+(r/reg-event-fx ::handle-drag-end!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) sortable-id

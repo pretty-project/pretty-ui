@@ -16,6 +16,7 @@
     (:require [forms.api                              :as forms]
               [mid-fruits.map                         :as map]
               [mid-fruits.string                      :as string]
+              [mid-fruits.vector                      :as vector]
               [re-frame.api                           :as r]
               [server-fruits.hash                     :as hash]
               [x.server-user.core.helpers             :as core.helpers]
@@ -26,14 +27,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn user-props->user-account
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (namespaced map)
-  [user-props]
-  (let [user-account (select-keys user-props [:email-address :password :pin :roles])]
-       (map/add-namespace user-account :user-account)))
 
 (defn user-props-valid?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,14 +41,15 @@
   [{:keys [email-address first-name last-name password]}]
   (and (forms/password?      password)
        (forms/email-address? email-address)
-       (string/length?       first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
-       (string/length?       last-name  1 profile-handler.config/MAX-LAST-NAME-LENGTH)))
+       (or (string/length? first-name 1 profile-handler.config/MAX-FIRST-NAME-LENGTH)
+           (string/length? last-name  1 profile-handler.config/MAX-LAST-NAME-LENGTH))))
 
 (defn user-props->user-account
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (string) user-id
   ; @param (map) user-props
+  ;  {}
   ;
   ; @return (namespaced map)
   ;  {:user-account/email-address (string)
@@ -64,13 +58,14 @@
   ;   :user-account/permissions (map)
   ;   :user-account/pin (string)
   ;   :user-account/roles (strings vector)}
-  [user-id {:keys [email-address password] :as user-props}]
-  {:user-account/email-address email-address
-   :user-account/id            user-id
-   :user-account/permissions  {user-id "rw"}
-   :user-account/roles        [user-id]
-   :user-account/password     (hash/hmac-sha256 password email-address)
-   :user-account/pin          (core.helpers/generate-pin)})
+  [user-id {:keys [email-address password pin roles] :as user-props}]
+  (let [pin (or pin (core.helpers/generate-pin))]
+       {:user-account/email-address email-address
+        :user-account/id            user-id
+        :user-account/permissions  {user-id "rw"}
+        :user-account/roles        (vector/cons-item roles user-id)
+        :user-account/password     (hash/hmac-sha256 password email-address)
+        :user-account/pin          (hash/hmac-sha256 pin      email-address)}))
 
 (defn user-props->user-profile
   ; WARNING! NON-PUBLIC! DO NOT USE!

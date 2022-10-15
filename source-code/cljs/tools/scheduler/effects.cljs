@@ -24,16 +24,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :scheduler/reg-interval!
+(r/reg-event-fx :scheduler/reg-interval!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute)
                          :fx [:environment/set-interval! :scheduler/interval
                                                          {:event [:scheduler/watch-time!] :interval 60000}]}]}))
 
-(r/reg-event-fx
-  :scheduler/init-scheduler!
+(r/reg-event-fx :scheduler/init-scheduler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r subs/inited? db)
@@ -44,15 +42,13 @@
                :dispatch-n [[:scheduler/watch-time!]
                             [:scheduler/reg-interval!]]})))
 
-(r/reg-event-fx
-  :scheduler/watch-time!
+(r/reg-event-fx :scheduler/watch-time!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [schedules (get-in db [:tools :scheduler/data-items])]
            {:dispatch-n (helpers/schedules->actual-events schedules)})))
 
-(r/reg-event-fx
-  :scheduler/reg-schedule!
+(r/reg-event-fx :scheduler/reg-schedule!
   ; @param (keyword)(opt) schedule-id
   ; @param (map) schedule-props
   ;  {:hour (integer)(opt)
@@ -69,15 +65,13 @@
       {:db       (r events/store-schedule-props! db schedule-id schedule-props)
        :dispatch [:scheduler/init-scheduler!]}))
 
-(r/reg-event-fx
-  :scheduler/remove-schedule!
+(r/reg-event-fx :scheduler/remove-schedule!
   ; @param (keyword) schedule-id
   (fn [{:keys [db]} [_ schedule-id]]
       {:db       (r events/remove-schedule-props! db schedule-id)
        :dispatch [:scheduler/schedule-removed]}))
 
-(r/reg-event-fx
-  :scheduler/schedule-removed
+(r/reg-event-fx :scheduler/schedule-removed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r subs/any-schedule-registered? db)

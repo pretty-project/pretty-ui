@@ -41,6 +41,9 @@
            :the-content-has-been-broken
            {:en "The content has been broken or removed"
             :hu "A tartalom sérült vagy már nem elérhető"}
+           :the-content-is-not-available
+           {:en "The content is not available"
+            :hu "A tartalom nem elérhető"}
            :the-link-you-followed-may-be-broken
            ; Always place a comma before or when it begins an independent clause!
            {:en "The link you followed may be broken, or the page may have been removed"

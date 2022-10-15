@@ -26,8 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-preview/request-item!
+(r/reg-event-fx :item-preview/request-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
@@ -42,8 +41,7 @@
                                                 :on-failure [:item-preview/set-error-mode! preview-id]
                                                 :query query :validator-f validator-f}]}))))
 
-(r/reg-event-fx
-  :item-preview/receive-item!
+(r/reg-event-fx :item-preview/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id

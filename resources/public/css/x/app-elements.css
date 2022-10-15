@@ -2601,20 +2601,28 @@ body {
 /*** Icon-button hover ***/
 
 .x-icon-button--body::before {
+  content: '';
   left: 6px;
   position: absolute;
   top: 6px;
-  width: 36px;
 
-  /* Azért calc(100% - 12px) magas és széles a hover-background az ikon-button elemen,
+  /* Azért calc(100% - 12px) magas és 36px széles a hover-background az ikon-button elemen,
    * mert így az érzékelési terület szélétől 6px távolságra van, ami megegyezik
    * a legkisebb indent méretével (XXS indent: 6px) */
-  content: '';
+  width: 36px;
 
   /* XXX#6610
    * Az ikon-gomb magassága a data-height attributtummal változik ezért szükséges
    * a calc függvénnyel számítani a pszeudo-elem magasságát! */
   height: calc(100% - 12px) }
+
+.x-icon-button--body[data-labeled="true"]::before {
+  /* TEMP
+   * Teszt: hover-color & label együtt */
+  left: 10px;
+  top: 10px;
+  height: calc(100% - 20px);
+  width: 28px }
 
 /*** Icon-button hover ***/
 
@@ -2626,7 +2634,6 @@ body {
   flex-direction: column;
   font-size: var( --icon-size-s );
   justify-content: center;
-  left: 12px;
   width: var( --icon-size-default );
 
   /* BUG#0983
@@ -2637,9 +2644,11 @@ body {
   height: var( --icon-size-default );
   overflow: hidden;
 
-  /* Az .x-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
+  /* BUG#0984
+   * Az .x-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
    * eltakarná az ikont, ha az nem abszolút pozícionálással jellene meg, mert a pszeudo-elem
    * a {position: absolute} beállítása miatt az ikon felett jelenne meg! */
+  left: 12px;
   position: absolute;
 
   /* XXX#6610
@@ -2654,15 +2663,20 @@ body {
 .x-icon-button--label {
   font-size: 9px;
   font-weight: 600;
-  height: 15px;
+  height: 12px;
   letter-spacing: var( --letter-spacing-xxs );
-  line-height: 15px;
+  line-height: 12px;
   opacity: .75;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100% }
+  width: 100%;
+
+  /* BUG#0984 */
+  bottom: 0;
+  left: 0;
+  position: absolute }
 
 /*** Icon-button label ***/
 /***** Icon-button *****/

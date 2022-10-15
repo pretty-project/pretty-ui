@@ -25,7 +25,6 @@
               [x.server-user.account-handler.helpers   :as account-handler.helpers]
               [x.server-user.core.helpers              :as core.helpers]
               [x.server-user.document-handler.helpers  :as document-handler.helpers]
-              [x.server-user.login-handler.helpers     :as login-handler.helpers]
               [x.server-user.profile-handler.config    :as profile-handler.config]
               [x.server-user.profile-handler.helpers   :as profile-handler.helpers]
               [x.server-user.session-handler.helpers   :as session-handler.helpers]
@@ -59,9 +58,6 @@
 (def duplicated-document-prototype document-handler.helpers/duplicated-document-prototype)
 (def fill-document                 document-handler.helpers/fill-document)
 
-; x.server-user.login-handler.helpers
-(def request->authenticated? login-handler.helpers/request->authenticated?)
-
 ; x.server-user.profile-handler.config
 (def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)
 
@@ -74,6 +70,8 @@
 
 ; x.server-user.session-handler.helpers
 (def session->session-valid? session-handler.helpers/session->session-valid?)
+(def request->authenticated? session-handler.helpers/request->authenticated?)
+(def request->root-user?     session-handler.helpers/request->root-user?)
 
 ; x.server-user.settings-handler.helpers
 (def user-account-id->user-settings      settings-handler.helpers/user-account-id->user-settings)

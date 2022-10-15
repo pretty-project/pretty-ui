@@ -14,7 +14,6 @@
 
 (ns x.boot-loader.api
     (:require [x.app-components.api]
-              [x.app-developer.api]
               [x.app-dictionary.api]
               [x.app-environment.api]
               [x.app-locales.api]

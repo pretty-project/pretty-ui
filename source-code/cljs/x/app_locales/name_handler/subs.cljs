@@ -42,8 +42,8 @@
   ;
   ; @return (string)
   [db [_ first-name last-name]]
-  (let [name-order (r get-name-order db)]
-       (name-handler.helpers/name->ordered-name first-name last-name name-order)))
+  (let [selected-language (r language-handler.subs/get-selected-language db)]
+       (name-handler.helpers/name->ordered-name first-name last-name selected-language)))
 
 
 

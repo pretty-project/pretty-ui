@@ -27,8 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/reload-items!
+(r/reg-event-fx :item-lister/reload-items!
   ; @param (keyword) lister-id
   ; @param (map)(opt) reload-props
   ;  {:on-reload (metamorphic-event)(opt)}
@@ -60,8 +59,7 @@
                                  :on-failure [:item-lister/set-error-mode!         lister-id]
                                  :query query :validator-f validator-f}])))
 
-(r/reg-event-fx
-  :item-lister/receive-reloaded-items!
+(r/reg-event-fx :item-lister/receive-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -96,8 +94,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-lister/request-items!
+(r/reg-event-fx :item-lister/request-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -119,8 +116,7 @@
                                      :on-failure [:item-lister/set-error-mode! lister-id]
                                      :query query :validator-f validator-f}]))))
 
-(r/reg-event-fx
-  :item-lister/receive-items!
+(r/reg-event-fx :item-lister/receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id

@@ -47,8 +47,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; ...
-(r/reg-event-fx
-  :view-my-item!
+(r/reg-event-fx :view-my-item!
   [:item-viewer/view-item! :my-viewer "my-item"])
 
 

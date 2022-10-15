@@ -30,8 +30,7 @@
 ;; -- Újratöltés esemény használata -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :reload-my-loader!
+(r/reg-event-fx :reload-my-loader!
   [:infinite-loader/reload-loader! :my-loader])
 
 
@@ -39,8 +38,7 @@
 ;; -- Leállítás esemény használata --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :pause-my-loader!
+(r/reg-event-fx :pause-my-loader!
   [:infinite-loader/pause-loader! :my-loader])
 
 
@@ -48,6 +46,5 @@
 ;; -- Újraindítás esemény használata ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :restart-my-loader!
+(r/reg-event-fx :restart-my-loader!
   [:infinite-loader/restart-loader! :my-loader])

@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-preview/body-did-mount
+(r/reg-event-fx :item-preview/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
@@ -33,16 +32,14 @@
       {:db       (r body.events/body-did-mount db preview-id body-props)
        :dispatch [:item-preview/load-preview! preview-id]}))
 
-(r/reg-event-fx
-  :item-preview/body-will-unmount
+(r/reg-event-fx :item-preview/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
   (fn [{:keys [db]} [_ preview-id]]
       {:db (r body.events/body-will-unmount db preview-id)}))
 
-(r/reg-event-fx
-  :item-preview/body-did-update
+(r/reg-event-fx :item-preview/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id

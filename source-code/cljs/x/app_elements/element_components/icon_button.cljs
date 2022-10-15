@@ -59,7 +59,7 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-icon-button--label [components/content label]]))
+  (if label [:div.x-icon-button--label (components/content label)]))
 
 (defn- icon-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,10 +76,11 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
+  [button-id {:keys [label] :as button-props}]
   [:button.x-icon-button--body (merge
                                 (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
-                                {:style (:style button-props)})
+                                {:style (:style button-props)
+                                 :data-labeled (some? label)})
                                [icon-button-icon                 button-id button-props]
                                [icon-button-label                button-id button-props]
                                [engine/element-badge             button-id button-props]])

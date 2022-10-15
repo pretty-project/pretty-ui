@@ -23,8 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/view-item!
+(r/reg-event-fx :item-viewer/view-item!
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   ;
@@ -55,8 +54,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/load-viewer!
+(r/reg-event-fx :item-viewer/load-viewer!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

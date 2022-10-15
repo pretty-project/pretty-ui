@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/body-did-mount
+(r/reg-event-fx :item-viewer/body-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -32,16 +31,14 @@
       {:db       (r body.events/body-did-mount db viewer-id body-props)
        :dispatch [:item-viewer/load-viewer! viewer-id]}))
 
-(r/reg-event-fx
-  :item-viewer/body-will-unmount
+(r/reg-event-fx :item-viewer/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
   (fn [{:keys [db]} [_ viewer-id]]
       {:db (r body.events/body-will-unmount db viewer-id)}))
 
-(r/reg-event-fx
-  :item-viewer/body-did-update
+(r/reg-event-fx :item-viewer/body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

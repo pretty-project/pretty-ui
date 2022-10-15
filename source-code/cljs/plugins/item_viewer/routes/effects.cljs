@@ -22,11 +22,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
+(r/reg-event-fx :item-viewer/handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
-  :item-viewer/handle-route!
   (fn [{:keys [db]} [_ viewer-id]]
       ; XXX#5068
       ; Ha az [:item-viewer/handle-route! ...] esemény megtörténésekor a body komponens már a React-fába

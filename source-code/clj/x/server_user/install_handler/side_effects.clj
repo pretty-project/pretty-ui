@@ -26,10 +26,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (when (mongo-db/collection-empty? "user_accounts")
-        (user-handler.side-effects/add-user! {:email-address "demo@monotech.hu"
+        (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
                                               :password      "Monotech.420"
                                               :first-name    "Tech"
-                                              :last-name     "Mono"})))
+                                              :last-name     "Mono"
+                                              :pin           0000
+                                              :roles         ["root"]})))
 
 
 

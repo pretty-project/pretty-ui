@@ -30,8 +30,7 @@
 ;; -- Delete item effects -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/delete-item!
+(r/reg-event-fx :item-viewer/delete-item!
   ; @param (keyword) viewer-id
   ;
   ; @usage
@@ -45,8 +44,7 @@
                                             :on-failure [:item-viewer/delete-item-failed viewer-id]
                                             :query query :validator-f validator-f}]})))
 
-(r/reg-event-fx
-  :item-viewer/item-deleted
+(r/reg-event-fx :item-viewer/item-deleted
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -74,8 +72,7 @@
                 :dispatch-if [(r ui/process-faked? db)
                               [:ui/end-fake-process!]]}))))
 
-(r/reg-event-fx
-  :item-viewer/delete-item-failed
+(r/reg-event-fx :item-viewer/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -89,8 +86,7 @@
             :dispatch-if [(r ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-viewer/render-item-deleted-dialog!
+(r/reg-event-fx :item-viewer/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -99,8 +95,7 @@
       [:ui/render-bubble! ::item-deleted-dialog
                           {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
 
-(r/reg-event-fx
-  :item-viewer/render-delete-item-failed-dialog!
+(r/reg-event-fx :item-viewer/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -114,8 +109,7 @@
 ;; -- Undo delete item effects ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/undo-delete-item!
+(r/reg-event-fx :item-viewer/undo-delete-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -132,8 +126,7 @@
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
                                                :query query :validator-f validator-f}]]})))
 
-(r/reg-event-fx
-  :item-viewer/delete-item-undid
+(r/reg-event-fx :item-viewer/delete-item-undid
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -155,8 +148,7 @@
               {:dispatch-if [(r ui/process-faked? db)
                              [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-viewer/undo-delete-item-failed
+(r/reg-event-fx :item-viewer/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -170,8 +162,7 @@
             :dispatch-if [(r ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
-(r/reg-event-fx
-  :item-viewer/render-undo-delete-item-failed-dialog!
+(r/reg-event-fx :item-viewer/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -185,8 +176,7 @@
 ;; -- Duplicate item effects --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-viewer/duplicate-item!
+(r/reg-event-fx :item-viewer/duplicate-item!
   ; @param (keyword) viewer-id
   ;
   ; @usage
@@ -200,8 +190,7 @@
                                  :on-failure [:item-viewer/duplicate-item-failed viewer-id]
                                  :query query :validator-f validator-f}])))
 
-(r/reg-event-fx
-  :item-viewer/item-duplicated
+(r/reg-event-fx :item-viewer/item-duplicated
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -212,8 +201,7 @@
       (let [copy-id (r update.subs/get-duplicated-item-id db viewer-id server-response)]
            [:item-viewer/render-item-duplicated-dialog! viewer-id copy-id])))
 
-(r/reg-event-fx
-  :item-viewer/duplicate-item-failed
+(r/reg-event-fx :item-viewer/duplicate-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -224,8 +212,7 @@
       [:ui/render-bubble! ::duplicate-item-failed-dialog
                           {:body :failed-to-duplicate}]))
 
-(r/reg-event-fx
-  :item-viewer/render-item-duplicated-dialog!
+(r/reg-event-fx :item-viewer/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -234,8 +221,7 @@
       [:ui/render-bubble! ::item-duplicated-dialog
                           {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
 
-(r/reg-event-fx
-  :item-viewer/view-duplicated-item!
+(r/reg-event-fx :item-viewer/view-duplicated-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id

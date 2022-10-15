@@ -21,8 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :infinite-loader/reload-loader!
+(r/reg-event-fx :infinite-loader/reload-loader!
   ; @param (keyword) loader-id
   ;
   ; @usage

@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-core.server-handler.subs)
+(ns x.server-core.server-handler.subs
+    (:require [re-frame.api :as r]))
 
 
 
@@ -25,3 +26,11 @@
   ; @return (boolean)
   [db _]
   (get-in db [:core :server-handler/server-props :dev-mode?]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-sub :core/dev-mode? dev-mode?)

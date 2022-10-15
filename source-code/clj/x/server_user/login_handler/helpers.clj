@@ -13,10 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.login-handler.helpers
-    (:require [mongo-db.api               :as mongo-db]
-              [server-fruits.hash         :as hash]
-              [server-fruits.http         :as http]
-              [x.server-user.core.helpers :as core.helpers]))
+    (:require [server-fruits.hash :as hash]))
 
 
 
@@ -40,13 +37,3 @@
   ; nem lehet üres térkép, különben az adatbázis visszatérhet az első dokumentummal!
   ; Szükséges védekezni a kliens-oldalról érkező üres bejelentkezési adatok ellen!
   {:user-account/email-address email-address :user-account/password (hash/hmac-sha256 password email-address)})
-
-(defn request->authenticated?
-  ; @param (map) request
-  ;
-  ; @return (boolean)
-  [request]
-  (let [account-id (http/request->session-param request :user-account/id)
-        user-roles (http/request->session-param request :user-account/roles)]
-       (and (core.helpers/user-roles->user-identified? user-roles)
-            (mongo-db/document-exists? "user_accounts" account-id))))

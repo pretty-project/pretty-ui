@@ -22,8 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx
-  :item-preview/load-preview!
+(r/reg-event-fx :item-preview/load-preview!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
@@ -31,8 +30,7 @@
       {:db       (r core.events/load-preview! db preview-id)
        :dispatch [:item-preview/request-item! preview-id]}))
 
-(r/reg-event-fx
-  :item-preview/reload-preview!
+(r/reg-event-fx :item-preview/reload-preview!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
