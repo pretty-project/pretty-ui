@@ -18,8 +18,7 @@
     (:require [mid-fruits.candy                      :refer [return]]
               [mid-fruits.vector                     :as vector]
               [re-frame.api                          :as re-frame]
-              [x.app-core.print-handler.side-effects :as print-handler.side-effects]
-              [x.mid-core.event-handler              :as event-handler]))
+              [x.app-core.print-handler.side-effects :as print-handler.side-effects]))
 
 
 
@@ -27,43 +26,43 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.mid-core.event-handler
-(def event-vector?              event-handler/event-vector?)
-(def subscription-vector?       event-handler/subscription-vector?)
-(def event-vector->event-id     event-handler/event-vector->event-id)
-(def cofx->event-vector         event-handler/cofx->event-vector)
-(def cofx->event-id             event-handler/cofx->event-id)
-(def context->event-vector      event-handler/context->event-vector)
-(def context->event-id          event-handler/context->event-id)
-(def context->db-before-effect  event-handler/context->db-before-effect)
-(def context->db-after-effect   event-handler/context->db-after-effect)
-(def event-vector<-params       event-handler/event-vector<-params)
-(def metamorphic-event<-params  event-handler/metamorphic-event<-params)
-(def merge-effects-maps         event-handler/merge-effects-maps)
-(def ->interceptor              event-handler/->interceptor)
-(def inject-cofx                event-handler/inject-cofx)
-(def reg-cofx                   event-handler/reg-cofx)
-(def reg-sub                    event-handler/reg-sub)
-(def event-vector<-id           event-handler/event-vector<-id)
-(def debug!                     event-handler/debug!)
-(def get-event-handlers         event-handler/get-event-handlers)
-(def get-event-handler          event-handler/get-event-handler)
-(def event-handler-registrated  event-handler/event-handler-registrated?)
-(def reg-fx                     event-handler/reg-fx)
-(def dispatch                   event-handler/dispatch)
-(def dispatch-fx                event-handler/dispatch-fx)
-(def dispatch-sync              event-handler/dispatch-sync)
-(def dispatch-n                 event-handler/dispatch-n)
-(def dispatch-later             event-handler/dispatch-later)
-(def dispatch-if                event-handler/dispatch-if)
-(def dispatch-cond              event-handler/dispatch-cond)
-(def dispatch-tick              event-handler/dispatch-tick)
+(def event-vector?              re-frame/event-vector?)
+(def subscription-vector?       re-frame/subscription-vector?)
+(def event-vector->event-id     re-frame/event-vector->event-id)
+(def cofx->event-vector         re-frame/cofx->event-vector)
+(def cofx->event-id             re-frame/cofx->event-id)
+(def context->event-vector      re-frame/context->event-vector)
+(def context->event-id          re-frame/context->event-id)
+(def context->db-before-effect  re-frame/context->db-before-effect)
+(def context->db-after-effect   re-frame/context->db-after-effect)
+(def event-vector<-params       re-frame/event-vector<-params)
+(def metamorphic-event<-params  re-frame/metamorphic-event<-params)
+(def merge-effects-maps         re-frame/merge-effects-maps)
+(def ->interceptor              re-frame/->interceptor)
+(def inject-cofx                re-frame/inject-cofx)
+(def reg-cofx                   re-frame/reg-cofx)
+(def reg-sub                    re-frame/reg-sub)
+(def event-vector<-id           re-frame/event-vector<-id)
+(def debug!                     re-frame/debug!)
+(def get-event-handlers         re-frame/get-event-handlers)
+(def get-event-handler          re-frame/get-event-handler)
+(def event-handler-registrated  re-frame/event-handler-registrated?)
+(def reg-fx                     re-frame/reg-fx)
+(def dispatch                   re-frame/dispatch)
+(def dispatch-fx                re-frame/dispatch-fx)
+(def dispatch-sync              re-frame/dispatch-sync)
+(def dispatch-n                 re-frame/dispatch-n)
+(def dispatch-later             re-frame/dispatch-later)
+(def dispatch-if                re-frame/dispatch-if)
+(def dispatch-cond              re-frame/dispatch-cond)
+(def dispatch-tick              re-frame/dispatch-tick)
 (def dispatch-last              re-frame/dispatch-last)
 (def dispatch-once              re-frame/dispatch-once)
-(def subscribe                  event-handler/subscribe)
-(def subscribed                 event-handler/subscribed)
-(def fx                         event-handler/fx)
-(def fx-n                       event-handler/fx-n)
-(def r                          event-handler/r)
+(def subscribe                  re-frame/subscribe)
+(def subscribed                 re-frame/subscribed)
+(def fx                         re-frame/fx)
+(def fx-n                       re-frame/fx-n)
+(def r                          re-frame/r)
 
 
 
@@ -107,7 +106,7 @@
 
   ([event-id interceptors event-handler]
    (let [interceptors (interceptors<-system-interceptors interceptors)]
-        (event-handler/reg-event-db event-id interceptors event-handler))))
+        (re-frame/reg-event-db event-id interceptors event-handler))))
 
 (defn reg-event-fx
   ; @param (keyword) event-id
@@ -118,4 +117,4 @@
 
   ([event-id interceptors event-handler]
    (let [interceptors (interceptors<-system-interceptors interceptors)]
-        (event-handler/reg-event-fx event-id interceptors event-handler))))
+        (re-frame/reg-event-fx event-id interceptors event-handler))))

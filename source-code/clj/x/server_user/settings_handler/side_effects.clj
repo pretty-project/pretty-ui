@@ -28,9 +28,13 @@
   ; XXX#5890
   ; Az alapértelmezett felhasználói beállítások ...
   ; ... részét képezi a rendszer működéséhez nélkülözhetetlen beállítások (pl. :selected-theme, ...)
-  (let [default-user-settings (io/read-edn-file settings-handler.config/DEFAULT-USER-SETTINGS-FILEPATH)]
+  ;
+  ; Az alapértelmezetten kiválasztott nyelv értékének forrása az applikáció alapértelmezett nyelve.
+  (let [default-user-settings (io/read-edn-file settings-handler.config/DEFAULT-USER-SETTINGS-FILEPATH)
+        app-locale           @(r/subscribe [:core/get-app-config-item :app-locale])]
        (r/dispatch [:db/set-item! [:user :settings-handler/default-user-settings]
-                                  (merge settings-handler.config/REQUIRED-USER-SETTINGS default-user-settings)])))
+                                  (merge settings-handler.config/REQUIRED-USER-SETTINGS default-user-settings
+                                         {:selected-language app-locale})])))
 
 
 

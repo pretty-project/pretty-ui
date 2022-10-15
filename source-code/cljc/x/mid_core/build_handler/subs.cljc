@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.build-handler.subs
-    (:require [x.mid-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -35,4 +35,4 @@
 
 ; @usage
 ;  [:core/get-app-build]
-(event-handler/reg-sub :core/get-app-build get-app-build)
+(r/reg-sub :core/get-app-build get-app-build)

@@ -15,8 +15,8 @@
 (ns x.server-core.config-handler.side-effects
     (:require [re-frame.api                        :as r :refer [r]]
               [server-fruits.io                    :as io]
+              [x.server-core.config-handler.checks :as config-handler.checks]
               [x.server-core.config-handler.config :as config-handler.config]))
-
 
 
 
@@ -27,13 +27,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [app-config (io/read-edn-file config-handler.config/APP-CONFIG-FILEPATH)]
-       (r/dispatch [:core/store-app-config! app-config])))
+       (try (config-handler.checks/check-app-config app-config)
+            (r/dispatch [:core/store-app-config! app-config])
+            (catch Exception e (println e)))))
 
 (defn- import-server-config!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [server-config (io/read-edn-file config-handler.config/SERVER-CONFIG-FILEPATH)]
-       (r/dispatch [:core/store-server-config! server-config])))
+       (try (config-handler.checks/check-server-config server-config)
+            (r/dispatch [:core/store-server-config! server-config])
+            (catch Exception e (println e)))))
 
 
 

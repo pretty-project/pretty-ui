@@ -28,7 +28,7 @@
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mid-fruits.vector  :as vector]
-              [x.mid-core.api     :refer [r]]))
+              [re-frame.api       :refer [r]]))
 
 
 

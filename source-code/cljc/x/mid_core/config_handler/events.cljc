@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.config-handler.events
-    (:require [x.mid-core.event-handler :as event-handler :refer [r]]))
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
@@ -44,7 +44,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-app-config! store-app-config!)
+(r/reg-event-db :core/store-app-config! store-app-config!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/store-server-config! store-server-config!)
+(r/reg-event-db :core/store-server-config! store-server-config!)

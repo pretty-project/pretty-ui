@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.lifecycle-handler.subs
-    (:require [mid-fruits.candy         :refer [param return]]
-              [x.mid-core.event-handler :as event-handler :refer [r]]))
+    (:require [mid-fruits.candy :refer [return]]
+              [re-frame.api     :refer [r]]))
 
 
 

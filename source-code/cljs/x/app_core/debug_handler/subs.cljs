@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.debug-handler.subs
-    (:require [x.app-core.event-handler :as event-handler :refer [r]]))
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
@@ -44,8 +44,8 @@
 
 ; @usage
 ;  [:core/get-debug-mode]
-(event-handler/reg-sub :core/get-debug-mode get-debug-mode)
+(r/reg-sub :core/get-debug-mode get-debug-mode)
 
 ; @usage
 ;  [:core/debug-mode-detected?]
-(event-handler/reg-sub :core/debug-mode-detected? debug-mode-detected?)
+(r/reg-sub :core/debug-mode-detected? debug-mode-detected?)

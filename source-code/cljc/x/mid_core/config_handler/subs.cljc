@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.config-handler.subs
-    (:require [x.mid-core.event-handler :as event-handler :refer [r]]))
+    (:require [re-frame.api :as r :refer [r]]))
 
 
 
@@ -63,16 +63,16 @@
 
 ; @usage
 ;  [:core/get-app-config]
-(event-handler/reg-sub :core/get-app-config get-app-config)
+(r/reg-sub :core/get-app-config get-app-config)
 
 ; @usage
 ;  [:core/get-app-config-item :my-item]
-(event-handler/reg-sub :core/get-app-config-item get-app-config-item)
+(r/reg-sub :core/get-app-config-item get-app-config-item)
 
 ; @usage
 ;  [:core/get-server-config]
-(event-handler/reg-sub :core/get-server-config get-server-config)
+(r/reg-sub :core/get-server-config get-server-config)
 
 ; @usage
 ;  [:core/get-server-config-item :my-item]
-(event-handler/reg-sub :core/get-server-config-item get-server-config-item)
+(r/reg-sub :core/get-server-config-item get-server-config-item)

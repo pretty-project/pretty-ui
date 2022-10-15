@@ -47,7 +47,7 @@
 (defn- go-up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [elements/icon-button {:on-click [:request-inspector/show-requests!]
+  [elements/icon-button {:on-click [:developer-tools.request-inspector/show-requests!]
                          :preset   :back}])
 
 (defn- go-bwd-button
@@ -55,7 +55,7 @@
   [_ {:keys [history-dex request-history selected-view]}]
   (let [request-history-dex @(r/subscribe [:developer-tools.request-inspector/get-request-history-dex])]
        [elements/icon-button {:disabled? (= request-history-dex 0)
-                              :on-click  [:request-inspector/inspect-prev-request!]
+                              :on-click  [:developer-tools.request-inspector/inspect-prev-request!]
                               :preset    :back}]))
 
 (defn- go-fwd-button
@@ -64,7 +64,7 @@
   (let [request-history-count @(r/subscribe [:developer-tools.request-inspector/get-request-history-count])
         request-history-dex   @(r/subscribe [:developer-tools.request-inspector/get-request-history-dex])]
        [elements/icon-button {:disabled? (= request-history-count (inc request-history-dex))
-                              :on-click  [:request-inspector/inspect-next-request!]
+                              :on-click  [:developer-tools.request-inspector/inspect-next-request!]
                               :preset    :forward}]))
 
 (defn- request-data-control-bar
@@ -110,7 +110,7 @@
        [:div {:data-clickable true
               :style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                       :margin "4px 0" :grid-column-gap "24px"}
-              :on-click #(r/dispatch [:request-inspector/inspect-request! request-id])}
+              :on-click #(r/dispatch [:developer-tools.request-inspector/inspect-request! request-id])}
              [:div {:style {:font-weight "500" :font-size "14px" :display "flex"}}
                    [:div {:style {:width "6px" :margin-right "12px" :border-radius "3px"
                                   :background-color (cond request-failured?  "var( --color-warning )"

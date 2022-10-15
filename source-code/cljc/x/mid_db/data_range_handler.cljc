@@ -26,7 +26,7 @@
 (ns x.mid-db.data-range-handler
     (:require [mid-fruits.math            :as math]
               [mid-fruits.vector          :as vector]
-              [x.mid-core.api             :refer [r]]
+              [re-frame.api               :refer [r]]
               [x.mid-db.partition-handler :as partition-handler]))
 
 

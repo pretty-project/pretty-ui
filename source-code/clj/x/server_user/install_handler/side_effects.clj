@@ -25,13 +25,14 @@
 (defn- check-install!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (when (mongo-db/collection-empty? "user_accounts")
-        (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
-                                              :password      "Monotech.420"
-                                              :first-name    "Tech"
-                                              :last-name     "Mono"
-                                              :pin           0000
-                                              :roles         ["root"]})))
+  (if-let [_ (mongo-db/get-document-by-query "user_accounts" {:user-account/email-address "root@monotech.hu"})]
+          ()
+          (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
+                                                :password      "Monotech.420"
+                                                :first-name    "Tech"
+                                                :last-name     "Mono"
+                                                :pin           0000
+                                                :roles         ["root"]})))
 
 
 

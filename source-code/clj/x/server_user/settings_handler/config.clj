@@ -29,6 +29,9 @@
 
 ; @constant (map)
 ; XXX#5890 (x.server-user.settings-handler.side-effects)
+;
+; A REQUIRED-USER-SETTINGS térkép tartalmazza az rendszer működéséhez
+; nélkülözhetetlen beállításokat.
 (def REQUIRED-USER-SETTINGS {:notification-bubbles-enabled? true
                              :notification-sounds-enabled?  false
                              :sending-error-reports?        true

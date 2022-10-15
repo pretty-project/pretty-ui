@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy             :refer [return]]
               [mid-fruits.vector            :as vector]
               [time.api                     :as time]
-              [x.app-core.event-handler     :as event-handler :refer [r]]
+              [re-frame.api                 :as r :refer [r]]
               [x.app-core.load-handler.subs :as load-handler.subs]))
 
 
@@ -79,7 +79,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/set-load-status! set-load-status!)
+(r/reg-event-db :core/set-load-status! set-load-status!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/stop-loading! stop-loading!)
+(r/reg-event-db :core/stop-loading! stop-loading!)

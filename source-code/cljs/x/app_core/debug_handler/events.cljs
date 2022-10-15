@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.debug-handler.events
-    (:require [x.app-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -35,4 +35,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-event-db :core/set-debug-mode! set-debug-mode!)
+(r/reg-event-db :core/set-debug-mode! set-debug-mode!)

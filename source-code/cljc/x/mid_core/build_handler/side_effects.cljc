@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.build-handler.side-effects
-    (:require [x.mid-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -28,4 +28,4 @@
   ;
   ; @return (string)
   []
-  @(event-handler/subscribe [:core/get-app-build]))
+ @(r/subscribe [:core/get-app-build]))

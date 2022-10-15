@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.process-handler.events
-    (:require [x.app-core.event-handler :as event-handler]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -62,12 +62,12 @@
 
 ; @usage
 ;  [:core/set-process-progress! :my-process 100]
-(event-handler/reg-event-db :core/set-process-progress! set-process-progress!)
+(r/reg-event-db :core/set-process-progress! set-process-progress!)
 
 ; @usage
 ;  [:core/set-process-status! :my-process :success]
-(event-handler/reg-event-db :core/set-process-status! set-process-status!)
+(r/reg-event-db :core/set-process-status! set-process-status!)
 
 ; @usage
 ;  [:core/set-process-activity! :my-process :active]
-(event-handler/reg-event-db :core/set-process-activity! set-process-activity!)
+(r/reg-event-db :core/set-process-activity! set-process-activity!)

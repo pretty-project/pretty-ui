@@ -27,7 +27,7 @@
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.map    :as map :refer [dissoc-in]]
               [mid-fruits.vector :as vector]
-              [x.mid-core.api    :refer [r]]))
+              [re-frame.api      :refer [r]]))
 
 
 

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.time-handler.subs
-    (:require [time.api                 :as time]
-              [x.app-core.event-handler :as event-handler :refer [r]]))
+    (:require [time.api     :as time]
+              [re-frame.api :as r :refer [r]]))
 
 
 
@@ -71,32 +71,32 @@
 
 ; @usage
 ;  [:core/get-server-time]
-(event-handler/reg-sub :core/get-server-time get-server-time)
+(r/reg-sub :core/get-server-time get-server-time)
 
 ; @usage
 ;  [:core/get-server-year]
-(event-handler/reg-sub :core/get-server-year get-server-year)
+(r/reg-sub :core/get-server-year get-server-year)
 
 ; @usage
 ;  [:core/get-server-month]
-(event-handler/reg-sub :core/get-server-month get-server-month)
+(r/reg-sub :core/get-server-month get-server-month)
 
 ; @usage
 ;  [:core/get-server-week]
-(event-handler/reg-sub :core/get-server-week get-server-week)
+(r/reg-sub :core/get-server-week get-server-week)
 
 ; @usage
 ;  [:core/get-server-day]
-(event-handler/reg-sub :core/get-server-day get-server-day)
+(r/reg-sub :core/get-server-day get-server-day)
 
 ; @usage
 ;  [:core/get-server-hour]
-(event-handler/reg-sub :core/get-server-hour get-server-hour)
+(r/reg-sub :core/get-server-hour get-server-hour)
 
 ; @usage
 ;  [:core/get-server-seconds]
-(event-handler/reg-sub :core/get-server-seconds get-server-seconds)
+(r/reg-sub :core/get-server-seconds get-server-seconds)
 
 ; @usage
 ;  [:core/get-server-milliseconds]
-(event-handler/reg-sub :core/get-server-milliseconds get-server-milliseconds)
+(r/reg-sub :core/get-server-milliseconds get-server-milliseconds)

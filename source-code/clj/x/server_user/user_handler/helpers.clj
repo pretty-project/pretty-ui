@@ -59,7 +59,7 @@
   ;   :user-account/pin (string)
   ;   :user-account/roles (strings vector)}
   [user-id {:keys [email-address password pin roles] :as user-props}]
-  (let [pin (or pin (core.helpers/generate-pin))]
+  (let [pin (str (or pin (core.helpers/generate-pin)))]
        {:user-account/email-address email-address
         :user-account/id            user-id
         :user-account/permissions  {user-id "rw"}
@@ -79,12 +79,15 @@
   ;  {:user-profile/first-name (string)
   ;   :user-profile/id (string)
   ;   :user-profile/last-name (string)
+  ;   :user-profile/locale (keyword)
   ;   :user-profile/permissions (map)}
   [user-id {:keys [first-name last-name]}]
-  {:user-profile/first-name   first-name
-   :user-profile/id           user-id
-   :user-profile/last-name    last-name
-   :user-profile/permissions {user-id "rw"}})
+  (let [app-locale @(r/subscribe [:core/get-app-config-item :app-locale])]
+       {:user-profile/first-name   first-name
+        :user-profile/id           user-id
+        :user-profile/last-name    last-name
+        :user-profile/locale       app-locale
+        :user-profile/permissions {user-id "rw"}}))
 
 (defn user-props->user-settings
   ; WARNING! NON-PUBLIC! DO NOT USE!

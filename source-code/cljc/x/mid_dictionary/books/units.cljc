@@ -104,6 +104,54 @@
            :month-unit
            {:en "month(s)"
             :hu "hónap"}
+           :n-cm
+           {:en "% cm"
+            :hu "% cm"}
+           :n-days
+           {:en "% day(s)"
+            :hu "% nap"}
+           :n-dm
+           {:en "% dm"
+            :hu "% dm"}
+           :n-hours
+           {:en "% hour(s)"
+            :hu "% óra"}
+           :n-km
+           {:en "% km"
+            :hu "% km"}
+           :n-miles
+           {:en "% mile(s)"
+            :hu "% mérföld"}
+           :n-milliseconds
+           {:en "% millisecond(s)"
+            :hu "% milliszekundum"}
+           :n-minutes
+           {:en "% minute(s)"
+            :hu "% perc"}
+           :n-mm
+           {:en "% mm"
+            :hu "% mm"}
+           :n-months
+           {:en "% month(s)"
+            :hu "% hónap"}
+           :n-m
+           {:en "% m"
+            :hu "% m"}
+           :n-pieces
+           {:en "% piece(s)"
+            :hu "% darab"}
+           :n-seconds
+           {:en "% second(s)"
+            :hu "% másodperc"}
+           :n-secs
+           {:en "% sec(s)"
+            :hu "% mp"}
+           :n-weeks
+           {:en "% week(s)"
+            :hu "% hét"}
+           :n-years
+           {:en "% year(s)"
+            :hu "% év"}
            :outer-height
            {:en "Outer height"
             :hu "Külső magasság"}
@@ -125,9 +173,6 @@
            :piece
            {:en "Piece"
             :hu "Darab"}
-           :piece-n
-           {:en "% piece(s)"
-            :hu "% darab"}
            :sec
            {:en "sec"
             :hu "mp"}

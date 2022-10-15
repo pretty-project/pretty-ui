@@ -15,8 +15,8 @@
 (ns x.app-core.debug-handler.side-effects
     (:require [app-fruits.window                :as window]
               [mid-fruits.uri                   :as uri]
-              [x.app-core.debug-handler.helpers :as debug-handler.helpers]
-              [x.app-core.event-handler         :as event-handler :refer [r]]))
+              [re-frame.api                     :as r]
+              [x.app-core.debug-handler.helpers :as debug-handler.helpers]))
 
 
 
@@ -28,8 +28,8 @@
   [_]
   (let [uri          (window/get-uri)
         query-string (uri/uri->query-string uri)]
-       (event-handler/dispatch [:db/set-item! [:core :debug-handler/meta-items :debug-mode]
-                                              (debug-handler.helpers/query-string->debug-mode query-string)])))
+       (r/dispatch [:db/set-item! [:core :debug-handler/meta-items :debug-mode]
+                                  (debug-handler.helpers/query-string->debug-mode query-string)])))
 
 
 
@@ -37,4 +37,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(event-handler/reg-fx :core/detect-debug-mode! detect-debug-mode!)
+(r/reg-fx :core/detect-debug-mode! detect-debug-mode!)

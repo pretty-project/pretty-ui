@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.transfer-handler.sample
-    (:require [x.server-core.api :as core]))
+    (:require [re-frame.api      :as r]
+              [x.server-core.api :as core]))
 
 
 
@@ -41,6 +42,6 @@
   [request]
   {:our-data "..."})
 
-(core/reg-event-fx :reg-your-transfer!
+(r/reg-event-fx :reg-your-transfer!
   {:core/reg-transfer! [:your-transfer {:data-f      your-data-f
                                         :target-path [:your-data]}]})

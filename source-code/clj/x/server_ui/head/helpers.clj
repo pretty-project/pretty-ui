@@ -168,7 +168,7 @@
   ; @param (map) head-props
   ;  {:app-title (string)
   ;   :selected-language (keyword)
-  ;   :theme-color (string)}
+  ;   :theme-color (string)(opt)}
   ;
   ; @return (hiccup)
   [head _ {:keys [app-title selected-language theme-color]}]
@@ -178,7 +178,7 @@
                              ; A mobileszköz böngészők ne nagyítsák a tartalmat input elemek kitöltése közben.
                              ; https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
                              [:meta {:content "width=320, initial-scale=1 maximum-scale=1" :name "viewport"}]
-                             [:meta {:content theme-color                                  :name "theme-color"}]
+                             (if theme-color [:meta {:content theme-color                  :name "theme-color"}])
                              [:meta {:content selected-language                            :http-equiv "content-language"}]]))
 
 (defn head<-legal-information
