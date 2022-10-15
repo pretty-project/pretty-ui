@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-downloaded-item!
+(defn store-received-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
@@ -34,10 +34,9 @@
   ; XXX#3907
   ; A többi pluginnal megegyezően az item-browser plugin is névtér nélkül
   ; tárolja a letöltött dokumentumot.
-  (let [resolver-id (r download.subs/get-resolver-id db browser-id :get-item)
-        item-path   (r body.subs/get-body-prop       db browser-id :item-path)
-        document    (-> server-response resolver-id map/remove-namespace)]
-       (assoc-in db item-path document)))
+  (let [received-item (r download.subs/get-resolver-answer db browser-id :get-item server-response)
+        item-path     (r body.subs/get-body-prop           db browser-id :item-path)]
+       (assoc-in db item-path (map/remove-namespace received-item))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,4 +46,4 @@
   ;
   ; @return (map)
   [db [_ browser-id server-response]]
-  (r store-downloaded-item! db browser-id server-response))
+  (r store-received-item! db browser-id server-response))

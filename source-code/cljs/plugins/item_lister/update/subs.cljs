@@ -25,7 +25,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.update.subs
-(def get-mutation-name update.subs/get-mutation-name)
+(def get-mutation-name   update.subs/get-mutation-name)
+(def get-mutation-answer update.subs/get-mutation-answer)
 
 
 
@@ -45,8 +46,7 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
-  (let [mutation-name (r get-mutation-name db lister-id :delete-items!)]
-       (get server-response (symbol mutation-name))))
+  (r get-mutation-answer db lister-id :delete-items! server-response))
 
 
 
@@ -66,8 +66,7 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
-  (let [mutation-name  (r get-mutation-name               db lister-id :duplicate-items!)
-        item-namespace (r transfer.subs/get-transfer-item db lister-id :item-namespace)
-        copy-items     (get server-response (symbol mutation-name))
-        id-key         (keyword/add-namespace item-namespace :id)]
-       (vector/->items copy-items id-key)))
+  (let [item-namespace   (r transfer.subs/get-transfer-item db lister-id :item-namespace)
+        duplicated-items (r get-mutation-answer             db lister-id :duplicate-items! server-response)
+        id-key           (keyword/add-namespace item-namespace :id)]
+       (vector/->items duplicated-items id-key)))

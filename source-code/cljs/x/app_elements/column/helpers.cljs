@@ -12,22 +12,36 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.file-editor.download.validators
-    (:require [plugins.file-editor.download.subs :as download.subs]
-              [re-frame.api                      :refer [r]]))
+(ns x.app-elements.column.helpers
+    (:require [x.app-elements.element.helpers :as element.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn request-content-response-valid?
+(defn column-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) editor-id
-  ; @param (map) server-response
+  ; @param (keyword) column-id
+  ; @param (map) column-props
+  ;  {:style (map)(opt)}
   ;
-  ; @return (boolean)
-  [db [_ editor-id server-response]]
-  (let [received-content (r download.subs/get-resolver-answer db editor-id :get-content server-response)]
-       (map? received-content)))
+  ; @return (map)
+  ;  {:style (map)}
+  [_ {:keys [style]}]
+  {:style style})
+
+(defn column-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) column-id
+  ; @param (map) column-props
+  ;  {}
+  ;
+  ; @return (map)
+  ;  {}
+  [column-id column-props]
+  (merge (element.helpers/element-default-attributes column-id column-props)
+         (element.helpers/element-indent-attributes  column-id column-props)
+         {}))

@@ -31,7 +31,6 @@
   ;
   ; @return (boolean)
   [db [_ editor-id server-response]]
-  (let [new-item?     (r core.subs/new-item? db editor-id)
-        mutation-name (r update.subs/get-mutation-name db editor-id (if new-item? :add-item! :save-item!))
-        document      (get server-response (symbol mutation-name))]
-       (map/namespaced? document)))
+  (let [new-item?  (r core.subs/new-item?             db editor-id)
+        saved-item (r update.subs/get-mutation-answer db editor-id (if new-item? :add-item! :save-item!) server-response)]
+       (map/namespaced? saved-item)))

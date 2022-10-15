@@ -14,10 +14,12 @@
 
 (ns plugins.item-editor.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
+              [mid-fruits.map                     :as map]
+              [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
               [plugins.plugin-handler.update.subs :as update.subs]
-              [re-frame.api                       :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -25,7 +27,27 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.update.subs
-(def get-mutation-name update.subs/get-mutation-name)
+(def get-mutation-name   update.subs/get-mutation-name)
+(def get-mutation-answer update.subs/get-mutation-answer)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-on-saved-event
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) server-response
+  ;
+  ; @return (metamorphic-event)
+  [db [_ editor-id server-response]]
+  ; XXX#6077
+  (if-let [on-saved (r body.subs/get-body-prop db editor-id :on-saved)]
+          (let [new-item?  (r core.subs/new-item? db editor-id)
+                saved-item (r get-mutation-answer db editor-id (if new-item? :add-item! :save-item!) server-response)]
+               (r/metamorphic-event<-params on-saved (map/remove-namespace saved-item)))))
 
 
 
@@ -45,8 +67,8 @@
   ;
   ; @return (string)
   [db [_ editor-id server-response]]
-  (let [new-item?      (r core.subs/new-item?             db editor-id)
-        mutation-name  (r get-mutation-name               db editor-id (if new-item? :add-item! :save-item!))
+  (let [new-item?      (r core.subs/new-item? db editor-id)
+        saved-item     (r get-mutation-answer db editor-id (if new-item? :add-item! :save-item!) server-response)
         item-namespace (r transfer.subs/get-transfer-item db editor-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
-       (get-in server-response [(symbol mutation-name) id-key])))
+       (id-key saved-item)))

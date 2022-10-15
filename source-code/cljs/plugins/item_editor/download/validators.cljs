@@ -31,10 +31,9 @@
   ;
   ; @return (boolean)
   [db [_ editor-id server-response]]
-  (let [resolver-id (r download.subs/get-resolver-id db editor-id :get-item)
-        document    (get server-response resolver-id)
-        suggestions (get server-response :item-editor/get-item-suggestions)]
-       (and (or (map? suggestions)
+  (let [received-item        (r download.subs/get-resolver-answer db editor-id :get-item server-response)
+        received-suggestions (get server-response :item-editor/get-item-suggestions)]
+       (and (or (map? received-suggestions)
                 (not (r core.subs/download-suggestions? db editor-id)))
-            (or (map/namespaced? document)
+            (or (map/namespaced? received-item)
                 (not (r core.subs/download-item? db editor-id))))))

@@ -109,8 +109,8 @@
   [db [_ lister-id]]
   (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
        (-> db (dissoc-in items-path)
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :document-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-count])
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :all-item-count])
+              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-item-count])
               (dissoc-in [:plugins :plugin-handler/meta-items lister-id :data-received?]))))
 
 

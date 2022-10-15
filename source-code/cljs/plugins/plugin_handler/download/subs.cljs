@@ -38,6 +38,23 @@
        (keyword      (name handler-key)
                 (str (name action-key)))))
 
+(defn get-resolver-answer
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) plugin-id
+  ; @param (keyword) action-key
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r download.subs/get-resolver-answer db :my-plugin :get-items {...})
+  ;  =>
+  ;  [{...} {...}]
+  ;
+  ; @return (*)
+  [db [_ plugin-id action-key server-response]]
+  (let [resolver-id (r get-resolver-id db plugin-id action-key)]
+       (resolver-id server-response)))
+
 
 
 ;; -- Data-receiving subscriptions --------------------------------------------

@@ -12,18 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.user-handler.prototypes
-    (:require [x.server-user.account-handler.config   :as account-handler.config]
-              [x.server-user.document-handler.helpers :as document-handler.helpers]))
+(ns x.app-elements.column.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn prototype-f
+(defn column-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @return (function)
-  []
-  #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-USER-ACCOUNT} %))
+  ; @param (map) column-props
+  ;
+  ; @return (map)
+  ;  {}
+  [column-props]
+  (merge {}
+         (param column-props)))

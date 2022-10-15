@@ -30,6 +30,5 @@
   ;
   ; @return (boolean)
   [db [_ viewer-id server-response]]
-  (let [resolver-id (r download.subs/get-resolver-id db viewer-id :get-item)
-        document    (get server-response resolver-id)]
-       (map/namespaced? document)))
+  (let [received-item (r download.subs/get-resolver-answer db viewer-id :get-item server-response)]
+       (map/namespaced? received-item)))

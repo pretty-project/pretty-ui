@@ -51,6 +51,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; Ha az "Elem mentése" művelet sikeres befejeződésekor ...
+      ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
       ; A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
       ;        szerkesztésre VAGY új elem mentése történt és a plugin útvonal-vezérelt, ...
       ;        ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
@@ -69,15 +70,19 @@
                    ; Új elem mentésekor szükséges eltárolni a szerver által visszaküldött elem-azonosítót,
                    ; az [:item-editor/go-to! ...] esemény számára!
                    (cond ; A)
-                         (r core.subs/editing-item? db editor-id item-id) {:dispatch [:item-editor/go-up! editor-id]}
-                         (r core.subs/new-item?     db editor-id)         {:db       (r core.events/set-item-id! db editor-id item-id)
-                                                                           :dispatch [:item-editor/go-up! editor-id]}
+                         (r core.subs/editing-item? db editor-id item-id) {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
+                                                                                        [:item-editor/go-up! editor-id]]}
+                         (r core.subs/new-item?     db editor-id)         {:db          (r core.events/set-item-id! db editor-id item-id)
+                                                                           :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
+                                                                                        [:item-editor/go-up! editor-id]]}
                          ; B)
-                         :editor-leaved                                   {:dispatch [:ui/render-bubble! ::item-saved-dialog {:body :saved}]}))
+                         :editor-leaved                                   {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
+                                                                                        [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
               ; C)
               {:dispatch-if [(r ui/process-faked? db)
                              [:ui/end-fake-process!]]
-               :dispatch     [:ui/render-bubble! ::item-saved-dialog {:body :saved}]})))
+               :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
+                            [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
 
 (r/reg-event-fx :item-editor/save-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

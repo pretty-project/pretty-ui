@@ -30,8 +30,7 @@
   ;
   ; @return (boolean)
   [db [_ lister-id server-response]]
-  (let [mutation-name   (r update.subs/get-mutation-name db lister-id :reorder-items!)
-        reordered-items (get server-response (symbol mutation-name))]
+  (let [reordered-items (r update.subs/get-mutation-answer db lister-id :reorder-items! server-response)]
        (vector/nonempty? reordered-items)))
 
 
@@ -47,8 +46,7 @@
   ;
   ; @return (boolean)
   [db [_ lister-id server-response]]
-  (let [mutation-name    (r update.subs/get-mutation-name db lister-id :delete-items!)
-        deleted-item-ids (get server-response (symbol mutation-name))]
+  (let [deleted-item-ids (r update.subs/get-mutation-answer db lister-id :delete-items! server-response)]
        (vector/nonempty? deleted-item-ids)))
 
 
@@ -64,8 +62,7 @@
   ;
   ; @return (boolean)
   [db [_ lister-id server-response]]
-  (let [mutation-name   (r update.subs/get-mutation-name db lister-id :undo-delete-items!)
-        recovered-items (get server-response (symbol mutation-name))]
+  (let [recovered-items (r update.subs/get-mutation-answer db lister-id :undo-delete-items! server-response)]
        (vector/nonempty? recovered-items)))
 
 
@@ -81,6 +78,5 @@
   ;
   ; @return (boolean)
   [db [_ lister-id server-response]]
-  (let [mutation-name    (r update.subs/get-mutation-name db lister-id :duplicate-items!)
-        duplicated-items (get server-response (symbol mutation-name))]
+  (let [duplicated-items (r update.subs/get-mutation-answer db lister-id :duplicate-items! server-response)]
        (vector/nonempty? duplicated-items)))

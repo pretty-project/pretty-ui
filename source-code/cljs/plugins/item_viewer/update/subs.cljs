@@ -24,7 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.update.subs
-(def get-mutation-name update.subs/get-mutation-name)
+(def get-mutation-name   update.subs/get-mutation-name)
+(def get-mutation-answer update.subs/get-mutation-answer)
 
 
 
@@ -44,8 +45,7 @@
   ;
   ; @return (string)
   [db [_ viewer-id server-response]]
-  (let [mutation-name (r get-mutation-name db viewer-id :delete-item!)]
-       (get server-response (symbol mutation-name))))
+  (r update.subs/get-mutation-answer db viewer-id :delete-item! server-response))
 
 
 
@@ -65,7 +65,7 @@
   ;
   ; @return (string)
   [db [_ viewer-id server-response]]
-  (let [mutation-name  (r get-mutation-name               db viewer-id :duplicate-item!)
-        item-namespace (r transfer.subs/get-transfer-item db viewer-id :item-namespace)
+  (let [duplicated-item (r update.subs/get-mutation-answer db viewer-id :duplicate-item! server-response)
+        item-namespace  (r transfer.subs/get-transfer-item db viewer-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
-       (get-in server-response [(symbol mutation-name) id-key])))
+       (id-key duplicated-item)))

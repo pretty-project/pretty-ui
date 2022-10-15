@@ -31,9 +31,8 @@
   ;
   ; @return (boolean)
   [db [_ browser-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db browser-id :delete-item!)
-        document-id   (get server-response (symbol mutation-name))]
-       (string/nonempty? document-id)))
+  (let [deleted-item-id (r update.subs/get-mutation-answer db browser-id :delete-item! server-response)]
+       (string/nonempty? deleted-item-id)))
 
 
 
@@ -48,9 +47,8 @@
   ;
   ; @return (boolean)
   [db [_ browser-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db browser-id :undo-delete-item!)
-        document      (get server-response (symbol mutation-name))]
-       (map/namespaced? document)))
+  (let [recovered-item (r update.subs/get-mutation-answer db browser-id :undo-delete-item! server-response)]
+       (map/namespaced? recovered-item)))
 
 
 
@@ -65,9 +63,8 @@
   ;
   ; @return (boolean)
   [db [_ browser-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db browser-id :duplicate-item!)
-        document      (get server-response (symbol mutation-name))]
-       (map/namespaced? document)))
+  (let [duplicated-item (r update.subs/get-mutation-answer db browser-id :duplicate-item! server-response)]
+       (map/namespaced? duplicated-item)))
 
 
 
@@ -82,6 +79,5 @@
   ;
   ; @return (boolean)
   [db [_ browser-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db browser-id :update-item!)
-        document      (get server-response (symbol mutation-name))]
-       (map/namespaced? document)))
+  (let [updated-item (r update.subs/get-mutation-answer db browser-id :update-item! server-response)]
+       (map/namespaced? updated-item)))

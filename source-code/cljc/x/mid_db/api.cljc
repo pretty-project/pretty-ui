@@ -48,8 +48,6 @@
 
 ; x.mid-db.collection-handler
 (def collection->namespace                  collection-handler/collection->namespace)
-(def collection->namespaced-collection      collection-handler/collection->namespaced-collection)
-(def collection->non-namespaced-collection  collection-handler/collection->non-namespaced-collection)
 (def trim-collection                        collection-handler/trim-collection)
 (def filter-documents                       collection-handler/filter-documents)
 (def filter-document                        collection-handler/filter-document)

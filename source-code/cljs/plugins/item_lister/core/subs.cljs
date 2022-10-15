@@ -78,8 +78,8 @@
   ;
   ; @return (integer)
   [db [_ lister-id]]
-  (if-let [document-count (r get-meta-item db lister-id :document-count)]
-          (return document-count)
+  (if-let [all-item-count (r get-meta-item db lister-id :all-item-count)]
+          (return all-item-count)
           (return 0)))
 
 (defn all-items-downloaded?
@@ -105,8 +105,8 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (let [received-count (r get-meta-item db lister-id :received-count)]
-       (= received-count 0)))
+  (let [received-item-count (r get-meta-item db lister-id :received-item-count)]
+       (= received-item-count 0)))
 
 (defn download-more-items?
   ; WARNING! NON-PUBLIC! DO NOT USE!

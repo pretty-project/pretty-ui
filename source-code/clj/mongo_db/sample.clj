@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mongo-db.sample
-    (:require [mongo-db.api :as mongo-db]
-              [time.api     :as time]))
+    (:require [mid-fruits.candy :refer [return]]
+              [mongo-db.api     :as mongo-db]
+              [time.api         :as time]))
 
 
 
@@ -51,7 +52,7 @@
   (mongo-db/insert-document! "my_collection" {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"
                                               :namespace/id          "MyObjectId"}
-                                             {:prototype-f #(insert-prototype %)}))
+                                             {:prepare-f #(insert-prototype %)}))
 
 
 
@@ -71,7 +72,7 @@
   (mongo-db/save-document! "my_collection" {:namespace/my-keyword  :my-value
                                             :namespace/your-string "your-value"
                                             :namespace/id          "MyObjectId"}
-                                           {:prototype-f #(update-prototype %)}))
+                                           {:prepare-f #(update-prototype %)}))
 
 
 
@@ -88,7 +89,7 @@
   (mongo-db/update-document! "my_collection" {:namespace/id          "MyObjectId"}
                                              {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"}
-                                             {:prototype-f #(update-prototype %)}))
+                                             {:prepare-f #(update-prototype %)}))
 
 
 
@@ -105,7 +106,7 @@
   (mongo-db/upsert-document! "my_collection" {:namespace/id          "MyObjectId"}
                                              {:namespace/my-keyword  :my-value
                                               :namespace/your-string "your-value"}
-                                             {:prototype-f #(update-prototype %)}))
+                                             {:prepare-f #(update-prototype %)}))
 
 
 
@@ -117,8 +118,9 @@
 ; - A függvény visszatérési értéke sikeres írás esetén a módosított dokumentum.
 (defn apply-my-document!
   []
-  (mongo-db/apply-document! "my_collection" "MyObjectId"  #(merge % {:namespace/my-keyword :my-value})
-                                            {:prototype-f #(update-prototype %)}))
+  (mongo-db/apply-document! "my_collection" "MyObjectId" #(merge % {:namespace/my-keyword :my-value})
+                                            {:prepare-f  #(update-prototype %)
+                                             :postpare-f #(return           %)}))
 
 
 
@@ -129,7 +131,7 @@
 (defn apply-my-documents!
   []
   (mongo-db/apply-documents! "my_collection" #(merge % {:namespace/my-keyword :my-value})
-                                             {:prototype-f #(update-prototype %)}))
+                                             {:prepare-f #(update-prototype %)}))
 
 
 
@@ -149,4 +151,4 @@
 ; - A függvény visszatérési értéke sikeres duplikálás esetén a másolat dokumentum.
 (defn duplicate-my-document!
   []
-  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {:prototype-f #(insert-prototype %)}))
+  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {:prepare-f #(insert-prototype %)}))

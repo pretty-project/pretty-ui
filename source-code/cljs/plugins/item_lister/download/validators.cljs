@@ -29,8 +29,8 @@
   ;
   ; @return (boolean)
   [db [_ lister-id server-response]]
-  (let [resolver-id    (r download.subs/get-resolver-id db lister-id :get-items)
-        document-count (get-in server-response [resolver-id :document-count])
-        documents      (get-in server-response [resolver-id :documents])]
-       (and (integer? document-count)
-            (vector?  documents))))
+  (let [resolver-answer (r download.subs/get-resolver-answer db lister-id :get-items server-response)
+        all-item-count  (:all-item-count resolver-answer)
+        received-items  (:items          resolver-answer)]
+       (and (integer? all-item-count)
+            (vector?  received-items))))

@@ -49,7 +49,7 @@
   ;      letölti a másolat elemet, és a letöltés idejére szükséges megjeleníteni a letöltésjelzőt!
   (r core.events/reset-downloads! db viewer-id))
 
-(defn store-downloaded-item!
+(defn store-received-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) viewer-id
@@ -60,10 +60,9 @@
   ; XXX#3907
   ; A többi pluginnal megegyezően az item-viewer plugin is névtér nélkül
   ; tárolja a letöltött dokumentumot.
-  (let [resolver-id (r download.subs/get-resolver-id db viewer-id :get-item)
-        item-path   (r body.subs/get-body-prop       db viewer-id :item-path)
-        document    (-> server-response resolver-id map/remove-namespace)]
-       (assoc-in db item-path document)))
+  (let [received-item (r download.subs/get-resolver-answer db viewer-id :get-item server-response)
+        item-path     (r body.subs/get-body-prop           db viewer-id :item-path)]
+       (assoc-in db item-path (map/remove-namespace received-item))))
 
 (defn receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,5 +72,5 @@
   ;
   ; @return (map)
   [db [_ viewer-id server-response]]
-  (as-> db % (r data-received          % viewer-id)
-             (r store-downloaded-item! % viewer-id server-response)))
+  (as-> db % (r data-received        % viewer-id)
+             (r store-received-item! % viewer-id server-response)))

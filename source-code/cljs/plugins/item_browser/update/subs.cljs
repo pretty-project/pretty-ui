@@ -26,7 +26,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.plugin-handler.update.subs
-(def get-mutation-name update.subs/get-mutation-name)
+(def get-mutation-name   update.subs/get-mutation-name)
+(def get-mutation-answer update.subs/get-mutation-answer)
 
 
 
@@ -46,10 +47,10 @@
   ;
   ; @return (string)
   [db [_ browser-id server-response]]
-  (let [mutation-name  (r get-mutation-name               db browser-id :duplicate-item!)
-        item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)
-        id-key         (keyword/add-namespace item-namespace :id)]
-       (get-in server-response [(symbol mutation-name) id-key])))
+  (let [item-namespace  (r transfer.subs/get-transfer-item db browser-id :item-namespace)
+        duplicated-item (r get-mutation-answer             db browser-id :duplicate-item! server-response)
+        id-key          (keyword/add-namespace item-namespace :id)]
+       (id-key duplicated-item)))
 
 
 
@@ -68,18 +69,17 @@
   ;
   ; @return (boolean)
   [db [_ browser-id action-key server-response]]
-  ; - A parent-item-browsed? függvény visszatérési értéke TRUE, ha az aktuálisan böngészett elem
-  ;   azonosítója megegyezik a szerver-válaszából az action-key paraméterként átadott azonosítóval
-  ;   előállított mutation-name értékével kiolvasott dokumentból kiolvasott szűlő-elem azonosítójával.
+  ; A parent-item-browsed? függvény visszatérési értéke TRUE, ha az aktuálisan böngészett elem
+  ; azonosítója megegyezik a szerver-válaszából az action-key paraméterként átadott azonosítóval
+  ; előállított mutation-name értékével kiolvasott dokumentból kiolvasott szűlő-elem azonosítójával.
   ;
-  ; - A vizsgálat elvégzéséhez szükséges, ...
-  ;   ... hogy a body komponens a React-fába legyen csatolva (szükséges a :path-key tulajdonság olvasásához)!
+  ; A vizsgálat elvégzéséhez szükséges, ...
+  ; ... hogy a body komponens a React-fába legyen csatolva (szükséges a :path-key tulajdonság olvasásához)!
   (boolean (if (r body.subs/body-did-mount? db browser-id)
-               (let [mutation-name   (r get-mutation-name               db browser-id action-key)
+               (let [answered-item   (r get-mutation-answer db browser-id action-key server-response)
                      current-item-id (r core.subs/get-current-item-id   db browser-id)
                      item-namespace  (r transfer.subs/get-transfer-item db browser-id :item-namespace)
                      path-key        (r body.subs/get-body-prop         db browser-id :path-key)
                      path-key        (keyword/add-namespace item-namespace path-key)
-                     id-key          (keyword/add-namespace item-namespace :id)
-                     document        ((symbol mutation-name) server-response)]
-                    (= current-item-id (-> document path-key last id-key))))))
+                     id-key          (keyword/add-namespace item-namespace :id)]
+                    (= current-item-id (-> answered-item path-key last id-key))))))

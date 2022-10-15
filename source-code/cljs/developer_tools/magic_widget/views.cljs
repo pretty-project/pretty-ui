@@ -28,6 +28,19 @@
 ;; -- Header components -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn design-mode-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [deign-mode? @(r/subscribe [:db/get-item [:developer-tools :core/meta-items :design-mode?]])]
+       [elements/icon-button ::deign-mode-icon-button
+                             {:color       (if deign-mode? :primary :muted)
+                              :hover-color :highlight
+                              :icon        :edit
+                              :icon-family :material-symbols-outlined
+                              :indent      {:left :xxl}
+                              :on-click    [:developer-tools.core/toggle-design-mode!]
+                              :label       "Edit"}]))
+
 (defn toggle-popup-position-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -97,7 +110,6 @@
        [elements/icon-button ::toggle-print-events-icon-button
                              {:hover-color :highlight
                               :icon        :terminal
-                              :indent      {:left :xxl}
                               :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
                               :preset      (if print-events? :primary :muted)
                               :label       "Print"}]))
@@ -122,7 +134,8 @@
                                                      [request-browser-icon-button]
                                                      [route-browser-icon-button]
                                                      [re-frame-events-icon-button]]
-                                 :end-content [:<> [toggle-print-events-icon-button]
+                                 :end-content [:<> [design-mode-icon-button]
+                                                   [toggle-print-events-icon-button]
                                                    [toggle-popup-position-icon-button]
                                                    [close-icon-button]]
                                  :indent {:bottom :xs}}])

@@ -29,6 +29,5 @@
   ;
   ; @return (boolean)
   [db [_ editor-id server-response]]
-  (let [mutation-name (r update.subs/get-mutation-name db editor-id :save-content!)
-        file-content  (get server-response (symbol mutation-name))]
+  (let [file-content (r update.subs/get-mutation-answer db editor-id :save-content! server-response)]
        (map? file-content)))

@@ -16,6 +16,7 @@
     (:require [plugins.file-editor.backup.events     :as backup.events]
               [plugins.file-editor.core.subs         :as core.subs]
               [plugins.file-editor.update.queries    :as update.queries]
+              [plugins.file-editor.update.subs       :as update.subs]
               [plugins.file-editor.update.validators :as update.validators]
               [re-frame.api                          :as r :refer [r]]))
 
@@ -43,13 +44,16 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ editor-id _]]
-      ; A file-editor plugin az item-editor pluginnal ellentétben a tartalom
-      ; mentésének befejeződésekor nem lép ki a szerkesztőből, ezért szükséges
-      ; a tartalomról tárolt másolatot frissíteni, hogy a backup.subs/form-changed?
-      ; és a backup.subs/content-changed? függvények kimentei visszaálljanak alaphelyzetbe.
-      {:db       (r backup.events/backup-current-content! db editor-id)
-       :dispatch [:ui/render-bubble! ::content-saved-dialog {:body :saved}]}))
+  (fn [{:keys [db]} [_ editor-id server-response]]
+      ; A file-editor plugin a tartalom mentésének befejeződésekor ...
+      ; ... az item-editor pluginnal ellentétben nem lép ki a szerkesztőből,
+      ;     ezért szükséges a tartalomról tárolt másolatot frissíteni,
+      ;     hogy a backup.subs/form-changed? és a backup.subs/content-changed?
+      ;     függvények kimentei visszaálljanak alaphelyzetbe.
+      ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
+      {:db          (r backup.events/backup-current-content! db editor-id)
+       :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
+                    [:ui/render-bubble! ::content-saved-dialog {:body :saved}]]}))
 
 (r/reg-event-fx :file-editor/save-content-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

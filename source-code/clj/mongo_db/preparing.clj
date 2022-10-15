@@ -54,13 +54,13 @@
   ; @param (map) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
-  [collection-name document {:keys [ordered? prototype-f] :as options}]
-  (try (as-> document % (if-not ordered?    % (ordered-insert-input collection-name % options))
-                        (if-not prototype-f % (prototype-f %)))
+  [collection-name document {:keys [ordered? prepare-f] :as options}]
+  (try (as-> document % (if-not ordered?  % (ordered-insert-input collection-name % options))
+                        (if-not prepare-f % (prepare-f %)))
        (catch Exception e (println (str e "\n" {:collection-name collection-name :document document :options options})))))
 
 
@@ -76,7 +76,7 @@
   ; @param (map) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
@@ -94,12 +94,12 @@
   ; @param (string) collection-name
   ; @param (namespaced map) document
   ; @param (map) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
-  [collection-name document {:keys [prototype-f] :as options}]
-  (try (if prototype-f (prototype-f document)
-                       (return      document))
+  [collection-name document {:keys [prepare-f] :as options}]
+  (try (if prepare-f (prepare-f document)
+                     (return    document))
        (catch Exception e (println (str e "\n" {:collection-name collection-name :document document :options options})))))
 
 
@@ -113,7 +113,7 @@
   ; @param (string) collection-name
   ; @param (namespaced map) document
   ; @param (map) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
@@ -131,10 +131,9 @@
   ; @param (string) collection-name
   ; @param (namespaced map) document
   ; @param (map) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
-  ;  {:namespace/order (integer)}
   [collection-name document options]
   (update-input collection-name document options))
 
@@ -201,11 +200,11 @@
   ;   :label-key (namespaced keyword)(opt)
   ;   :ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @return (namespaced map)
   ;  {:namespace/order (integer)}
-  [collection-name document {:keys [changes label-key ordered? prototype-f] :as options}]
+  [collection-name document {:keys [changes label-key ordered? prepare-f] :as options}]
   (try (as-> document % (if-not changes   % (changed-duplicate-input collection-name % options))
                         (if-not label-key % (labeled-duplicate-input collection-name % options))
                         (if-not ordered?  % (ordered-duplicate-input collection-name % options))
@@ -214,5 +213,5 @@
                         ; - A dokumentum a prototípus függvény alkalmazása előtt megkapja a másolat azonosítóját,
                         ;   így az már elérhető a prototípus függvény számára
                         (engine/assoc-id %)
-                        (if-not prototype-f % (prototype-f %)))
+                        (if-not prepare-f % (prepare-f %)))
        (catch Exception e (println (str e "\n" {:collection-name collection-name :document document :options options})))))

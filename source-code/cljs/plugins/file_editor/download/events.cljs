@@ -44,7 +44,7 @@
   ; XXX#3005 (plugins.item-viewer.download.events)
   (r core.events/reset-downloads! db editor-id))
 
-(defn store-downloaded-content!
+(defn store-received-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
@@ -59,10 +59,9 @@
   ; XXX#3400
   ; A tartalomról letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb
   ; használatával a tartalom letöltéskori állapota visszaállítható legyen.
-  (let [resolver-id  (r download.subs/get-resolver-id db editor-id :get-content)
-        content-path (r body.subs/get-body-prop       db editor-id :content-path)
-        content      (-> server-response resolver-id map/remove-namespace)]
-       (assoc-in db content-path content)))
+  (let [received-content (r download.subs/get-resolver-answer db editor-id :get-content server-response)
+        content-path     (r body.subs/get-body-prop           db editor-id :content-path)]
+       (assoc-in db content-path (map/remove-namespace received-content))))
 
 (defn receive-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,6 +72,6 @@
   ; @return (map)
   [db [_ editor-id server-response]]
   (as-> db % (r data-received                         % editor-id)
-             (r store-downloaded-content!             % editor-id server-response)
+             (r store-received-content!               % editor-id server-response)
              (r core.events/use-default-content!      % editor-id)
              (r backup.events/backup-current-content! % editor-id)))

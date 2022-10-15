@@ -25,6 +25,7 @@
               [mongo-db.checking   :as checking]
               [mongo-db.engine     :as engine]
               [mongo-db.errors     :as errors]
+              [mongo-db.postparing :as postparing]
               [mongo-db.preparing  :as preparing]
               [mongo-db.reader     :as reader]
               [re-frame.api        :as r]))
@@ -175,7 +176,7 @@
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/insert-document! "my_collection" {:namespace/id "MyObjectId" ...} {...})
@@ -206,7 +207,7 @@
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/insert-documents! "my_collection" [{:namespace/id "12ab3cd4efg5h6789ijk0420" ...}] {...})
@@ -233,7 +234,7 @@
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/save-document! "my_collection" {:namespace/id "MyObjectId" ...} {...})
@@ -264,7 +265,7 @@
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/save-documents! "my_collection" [{:namespace/id "MyObjectId" ...}] {...})
@@ -290,7 +291,7 @@
   ;  {:namespace/id (string)(opt)}
   ; @param (map or namespaced map) document
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/update-document! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
@@ -324,7 +325,7 @@
   ;  {:namespace/id (string)(opt)}
   ; @param (namespaced map) document
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/update-documents! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
@@ -361,7 +362,7 @@
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/upsert-document! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
@@ -395,7 +396,7 @@
   ; @param (namespaced map) document
   ; @param (map)(opt) options
   ;  {:ordered? (boolean)(opt)
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/upsert-documents! "my_collection" {:namespace/score 100} {:namespace/score 0} {...})
@@ -430,7 +431,8 @@
   ; @param (string) document-id
   ; @param (function) f
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:postpare-f (function)(opt)
+  ;   :prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/apply-document! "my_collection" "MyObjectId" #(assoc % :namespace/color "Blue") {...})
@@ -440,11 +442,15 @@
    (apply-document! collection-name document-id f {}))
 
   ([collection-name document-id f options]
+   ; A prepare-f az f fügvvény alkalmazása előtt, a postpare-f függvény pedig az
+   ; f függvény alkalmazása után van használva.
    (if-let [document (reader/get-document-by-id collection-name document-id)]
            (if-let [document (preparing/apply-input collection-name document options)]
-                   (if-let [document (-> document f adaptation/save-input)]
-                           (let [result (save-and-return! collection-name document)]
-                                (adaptation/save-output result)))))))
+                   (if-let [document (f document)]
+                           (if-let [document (postparing/apply-input collection-name document options)]
+                                   (if-let [document (adaptation/save-input document)]
+                                           (let [result (save-and-return! collection-name document)]
+                                                (adaptation/save-output result)))))))))
 
 
 
@@ -455,7 +461,8 @@
   ; @param (string) collection-name
   ; @param (function) f
   ; @param (map)(opt) options
-  ;  {:prototype-f (function)(opt)}
+  ;  {:postpare-f (function)(opt)
+  ;   :prepare-f (function)(opt)}
   ;
   ; @usage
   ;  (mongo-db/apply-document! "my_collection" #(assoc % :namespace/color "Blue") {...})
@@ -465,6 +472,7 @@
    (apply-documents! collection-name f {}))
 
   ([collection-name f options]
+   ; XXX#9801
    (if-let [collection (reader/get-collection collection-name)]
            (letfn [(fi [result document]
                        (if-let [document (f document)]
@@ -612,7 +620,7 @@
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "#..." kifejezést
   ;   :ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/duplicate-document! "my_collection" "MyObjectId" {...})
@@ -646,7 +654,7 @@
   ;    A dokumentum melyik kulcsának értékéhez fűzze hozzá a "#..." kifejezést
   ;   :ordered? (boolean)(opt)
   ;    Default: false
-  ;   :prototype-f (function)(opt)}
+  ;   :prepare-f (function)(opt)}
   ;
   ; @example
   ;  (mongo-db/duplicate-documents! "my_collection" ["MyObjectId" "YourObjectId"] {...})

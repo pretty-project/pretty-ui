@@ -76,6 +76,7 @@
 (def get-document-element document/get-document-element)
 (def get-document-height  document/get-document-height)
 (def get-document-width   document/get-document-width)
+(def toggle-design-mode!  document/toggle-design-mode!)
 
 ; dom.element
 (def get-element-by-id              element/get-element-by-id)

@@ -49,37 +49,12 @@
   ; @param (maps in vector) collection
   ;
   ; @usage
-  ;  (db/collection->namespaced [{...} {...} {...}])
+  ;  (db/collection->namespace [{...} {...} {...}])
   ;
   ; @return (keyword)
   [collection]
   (if-let [first-document (first collection)]
           (map/get-namespace first-document)))
-
-(defn collection->namespaced-collection
-  ; @param (maps in vector) collection
-  ; @param (keyword) namespace
-  ;
-  ; @example
-  ;  (db/collection->namespaced-collection [{:foo "bar"} {:foo "boo"}] :baz)
-  ;  =>
-  ;  [{:baz/foo "bar"} {:baz/foo "boo"}]
-  ;
-  ; @return (maps in  vector)
-  [collection namespace]
-  (vector/->items collection #(map/add-namespace % namespace)))
-
-(defn collection->non-namespaced-collection
-  ; @param (maps in vector) collection
-  ;
-  ; @example
-  ;  (db/collection->namespaced-collection [{:baz/foo "bar"} {:baz/foo "boo"}])
-  ;  =>
-  ;  [{:foo "bar"} {:foo "boo"}]
-  ;
-  ; @return (maps in  vector)
-  [collection]
-  (vector/->items collection #(map/remove-namespace %)))
 
 
 

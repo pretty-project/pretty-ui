@@ -69,6 +69,8 @@
   ;   :error-element (metamorphic-content)(opt)
   ;   :form-element (metamorphic-content)
   ;   :ghost-element (metamorphic-content)(opt)
+  ;   :on-saved (metamorphic-event)(opt)
+  ;    Az esemény utolsó paraméterként megkapja a szervertől visszaérkező tartalmat.
   ;   :query (vector)(opt)
   ;   :transfer-id (keyword)(opt)}
   ;
