@@ -134,6 +134,9 @@
            :set-thumbnail!
            {:en "Set thumbnail"
             :hu "Bélyegkép beállítása"}
+           :show-preview!
+           {:en "Show preview"
+            :hu "Előnézet megtekintése"}
            :there-is-not-enough-space
            {:en "There is not enough space available to complete this operation"
             :hu "Nincs elegendő hely a művelet befejezéséhez"}
