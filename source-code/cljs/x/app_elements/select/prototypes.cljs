@@ -30,22 +30,22 @@
   ; @return (map)
   ;  {:add-option-f (function)
   ;   :border-radius (keyword)
+  ;   :option-field-placeholder (metamorphic-content)
   ;   :layout (keyword)
   ;   :min-width (keyword)
-  ;   :new-option-placeholder (metamorphic-content)
   ;   :no-options-label (metamorphic-content)
   ;   :option-label-f (function)
   ;   :option-value-f (function)
   ;   :value-path (vector)}
   [select-id select-props]
-  (merge {:border-radius          :s
-          :add-option-f           return
-          :option-label-f         return
-          :option-value-f         return
-          :layout                 :select
-          :min-width              :xxs
-          :new-option-placeholder :new-option
-          :no-options-label       :no-options
-          :options-path           (input.helpers/default-options-path select-id)
-          :value-path             (input.helpers/default-value-path   select-id)}
+  (merge {:border-radius            :s
+          :add-option-f             return
+          :option-field-placeholder :add!
+          :option-label-f           return
+          :option-value-f           return
+          :layout                   :select
+          :min-width                :xxs
+          :no-options-label         :no-options
+          :options-path             (input.helpers/default-options-path select-id)
+          :value-path               (input.helpers/default-value-path   select-id)}
          (param select-props)))

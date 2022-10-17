@@ -71,6 +71,7 @@
   ;
   ; @return (boolean)
   [box-id {:keys [option-label-f] :as box-props} option]
+  ; XXX#51910
   (let [field-content (text-field.helpers/get-field-content box-id)
         option-label  (option-label-f option)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})

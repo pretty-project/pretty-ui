@@ -13,10 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.select.helpers
-    (:require [re-frame.api                   :as r]
-              [x.app-elements.element.helpers :as element.helpers]
-              [x.app-elements.select.config   :as select.config]
-              [x.app-environment.api          :as environment]))
+    (:require [mid-fruits.candy                  :refer [return]]
+              [mid-fruits.string                 :as string]
+              [re-frame.api                      :as r]
+              [x.app-components.api              :as components]
+              [x.app-elements.element.helpers    :as element.helpers]
+              [x.app-elements.select.config      :as select.config]
+              [x.app-elements.text-field.helpers :as text-field.helpers]
+              [x.app-environment.api             :as environment]))
 
 
 
@@ -48,6 +52,27 @@
   ; @return (function)
   [select-id select-props]
   #(r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn render-option?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ;  {:option-label-f (function)(opt)}
+  ; @param (*) option
+  ;
+  ; @return (boolean)
+  [select-id {:keys [option-label-f] :as select-props} option]
+  ; XXX#51910 (x.app-elements.combo-box.helpers)
+  (let [field-content (text-field.helpers/get-field-content :elements.select/option-field)
+        option-label  (option-label-f option)]
+       (and (string/not-pass-with? (components/content option-label) field-content {:case-sensitive? false})
+            (string/starts-with?   (components/content option-label) field-content {:case-sensitive? false}))))
 
 
 

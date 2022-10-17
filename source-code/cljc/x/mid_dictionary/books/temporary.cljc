@@ -28,6 +28,14 @@
            :informations
            {:en "Informations"
             :hu "Információk"}
+
+           :service
+           {:en "Service"
+            :hu "Szolgáltatás"}
+           :services
+           {:en "Services"
+            :hu "Szolgáltatások"}
+
            :other
            {:en "Other"
             :hu "Egyéb"}
@@ -189,6 +197,12 @@
            :more-items
            {:en "More items"
             :hu "További tételek"}
+           :item
+           {:en "Item"
+            :hu "Tétel"}
+           :items
+           {:en "Items"
+            :hu "Tételek"}
            :less-options
            {:en "Less options"
             :hu "Kevesebb lehetőség"}

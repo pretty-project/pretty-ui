@@ -20,7 +20,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:automatic-price
+(def BOOK {:amount-price
+           {:en "Amount"
+            :hu "Összesen"}
+           :automatic-price
            {:en "Automatic price"
             :hu "Automatikus ár"}
            :automatic-pricing
@@ -97,6 +100,12 @@
            :product-description-short
            {:en "Description"
             :hu "Megnevezés"}
+           :product-group
+           {:en "Product group"
+            :hu "Termékcsoport"}
+           :product-groups
+           {:en "Product groups"
+            :hu "Termékcsoportok"}
            :total-price
            {:en "Total price"
             :hu "Végösszeg"}

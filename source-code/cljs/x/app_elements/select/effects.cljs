@@ -84,7 +84,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id select-props]]
-      (if-let [new-option-field-focused? (r input.subs/input-focused? db :elements.select/new-option-field)]
+      (if-let [option-field-focused? (r input.subs/input-focused? db :elements.select/option-field)]
               [:elements.select/add-option! select-id select-props])))
 
 
@@ -175,8 +175,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
-      (if-let [new-option-field-filled? (text-field.helpers/field-filled? :elements.select/new-option-field)]
-              (let [field-id      :elements.select/new-option-field
+      (if-let [option-field-filled? (text-field.helpers/field-filled? :elements.select/option-field)]
+              (let [field-id      :elements.select/option-field
                     field-props   (text-field.prototypes/field-props-prototype field-id {})
                     field-content (text-field.helpers/get-field-content        field-id)
                     option        (add-option-f field-content)]

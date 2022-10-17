@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.input.subs
-    (:require [mid-fruits.candy              :refer [param return]]
+    (:require [mid-fruits.candy              :refer [return]]
               [mid-fruits.map                :refer [dissoc-in]]
               [mid-fruits.vector             :as vector]
-              [re-frame.api                  :refer [r]]
+              [re-frame.api                  :as r :refer [r]]
               [x.app-elements.engine.element :as element]))
 
 
@@ -172,3 +172,12 @@
   ;  felsorolt inputok értékei nem NIL, FALSE vagy "" értékek
   [db [_ input-ids]])
   ;(vector/all-items-match? [(last input-ids)] #(r input-passed? db %)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:elements.input/get-input-value :my-input {...}]
+(r/reg-sub :elements.input/get-input-value get-input-value)

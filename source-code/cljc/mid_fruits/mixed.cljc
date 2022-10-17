@@ -277,6 +277,11 @@
   ;  0
   ;
   ; @example
+  ;  (mixed/to-number "a")
+  ;  =>
+  ;  0
+  ;
+  ; @example
   ;  (mixed/to-number "-3")
   ;  =>
   ;  -3
@@ -290,7 +295,8 @@
   [n]
   (cond (nil?          n) (return            0)
         (number?       n) (return            n)
-        (whole-number? n) (string/to-integer n)))
+        (whole-number? n) (string/to-integer n)
+        :return 0))
 
 
 

@@ -27,14 +27,14 @@
   ; elemek listája bővíthető egy a lista felső részén megjelenő szöveges mező
   ; használatával.
   ;
-  ; A {:new-option-placeholder "..."} tulajdonság értéke jelenik meg a szöveges
-  ; mező kitöltő szövegeként.
+  ; Az {:option-field-placeholder "..."} tulajdonság értéke jelenik meg a szöveges mező
+  ; kitöltő szövegeként.
   ;
   ; Az {:add-option-f ...} tulajdonságként átadott függvény alkalmazásával kerül
   ; hozzáadásra az új választható opció.
   [elements/select ::my-extendable-select
-                   {:add-option-f          #(return {:value %})
-                    :extendable?            true
-                    :option-label-f         :value
-                    :option-value-f         return
-                    :new-option-placeholder "New my item"}])
+                   {:add-option-f            #(return {:value %})
+                    :extendable?              true
+                    :option-field-placeholder "New my item"
+                    :option-label-f           :value
+                    :option-value-f           return}])

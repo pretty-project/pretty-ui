@@ -14,6 +14,7 @@
 
 (ns x.app-elements.select.views
     (:require [layouts.popup-a.api                           :as popup-a]
+              [mid-fruits.candy                              :refer [return]]
               [mid-fruits.random                             :as random]
               [mid-fruits.vector                             :as vector]
               [re-frame.api                                  :as r]
@@ -23,29 +24,29 @@
               [x.app-elements.element-components.icon-button :as icon-button]
               [x.app-elements.input.helpers                  :as input.helpers]
               [x.app-elements.label.views                    :as label.views]
-              [x.app-elements.text-field.views               :as text-field.views]
               [x.app-elements.select.helpers                 :as select.helpers]
-              [x.app-elements.select.prototypes              :as select.prototypes]))
+              [x.app-elements.select.prototypes              :as select.prototypes]
+              [x.app-elements.text-field.views               :as text-field.views]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- new-option-field
+(defn- option-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {:extendable? (boolean)(opt)
-  ;   :new-option-placeholder (metamorphic-content)}
-  [select-id {:keys [extendable? new-option-placeholder] :as select-props}]
+  ;   :option-field-placeholder (metamorphic-content)}
+  [select-id {:keys [extendable? option-field-placeholder] :as select-props}]
   (if extendable? (let [adornment-on-click [:elements.select/add-option! select-id select-props]
                         adornment-props    {:icon :add :on-click adornment-on-click :title :add!}]
-                       [text-field.views/element :elements.select/new-option-field
+                       [text-field.views/element :elements.select/option-field
                                                  {:end-adornments [adornment-props]
                                                   :indent         {:bottom :xs :vertical :xs}
-                                                  :placeholder    new-option-placeholder}])))
+                                                  :placeholder    option-field-placeholder}])))
 
 
 
@@ -70,7 +71,10 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [options (input.helpers/get-input-options select-id select-props)]
-       (letfn [(f [options option] (conj options [select-option select-id select-props option]))]
+       (letfn [(f [options option]
+                  (if (select.helpers/render-option? select-id select-props option)
+                      (conj   options [select-option select-id select-props option])
+                      (return options)))]
               (reduce f [:<>] options))))
 
 (defn- no-options-label
@@ -113,7 +117,7 @@
   [select-id select-props]
   [:div.x-select--options--header {:data-selectable false}
                                   [select-options-label select-id select-props]
-                                  [new-option-field     select-id select-props]])
+                                  [option-field         select-id select-props]])
 
 (defn- select-options-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -315,11 +319,11 @@
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :xxs
-  ;   :new-option-placeholder (metamorphic-content)(opt)
-  ;    Default: :new-option
   ;   :no-options-label (metamorphic-content)(opt)
   ;    Default: :no-options
   ;   :on-select (metamorphic-event)(opt)
+  ;   :option-field-placeholder (metamorphic-content)(opt)
+  ;    Default: :add!
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)

@@ -26,6 +26,15 @@
            :age-n
            {:en "Age: %"
             :hu "Kor: %"}
+           :cm
+           {:en "cm"
+            :hu "cm"}
+           :centimeter
+           {:en "Centimeter"
+            :hu "Centiméter"}
+           :dag
+           {:en "dag"
+            :hu "dkg"}
            :day
            {:en "Day"
             :hu "Nap"}
@@ -35,6 +44,21 @@
            :day-unit
            {:en "day(s)"
             :hu "nap"}
+           :decagram
+           {:en "Decagram"
+            :hu "Dekagramm"}
+           :decimeter
+           {:en "Decimeter"
+            :hu "Deciméter"}
+           :dm
+           {:en "dm"
+            :hu "dm"}
+           :gr
+           {:en "gr"
+            :hu "gr"}
+           :gram
+           {:en "Gram"
+            :hu "Gramm"}
            :height
            {:en "Height"
             :hu "Magasság"}
@@ -68,18 +92,45 @@
            :inner-width-n
            {:en "Inner width: %"
             :hu "Belső szélesség: %"}
+           :kg
+           {:en "kg"
+            :hu "kg"}
+           :km
+           {:en "km"
+            :hu "km"}
+           :kilogram
+           {:en "Kilogram"
+            :hu "Kilogramm"}
+           :kilometer
+           {:en "Kilometer"
+            :hu "Kilométer"}
            :length
            {:en "Length"
             :hu "Hossz"}
            :length-n
            {:en "Length: %"
             :hu "Hossz: %"}
+           :m
+           {:en "m"
+            :hu "m"}
+           :meter
+           {:en "Meter"
+            :hu "Méter"}
            :metric-unit
            {:en "Metric unit"
             :hu "Metrikus mértékegység"}
            :metric-units
            {:en "Metric units"
             :hu "Metrikus mértékegységek"}
+           :mg
+           {:en "mg"
+            :hu "mg"}
+           :milligram
+           {:en "Milligram"
+            :hu "Milligramm"}
+           :millimeter
+           {:en "Millimeter"
+            :hu "Milliméter"}
            :millisecond
            {:en "Millisecond"
             :hu "Milliszekundum"}
@@ -95,6 +146,9 @@
            :minute-unit
            {:en "minute(s)"
             :hu "perc"}
+           :mm
+           {:en "mm"
+            :hu "mm"}
            :month
            {:en "Month"
             :hu "Hónap"}
@@ -104,27 +158,54 @@
            :month-unit
            {:en "month(s)"
             :hu "hónap"}
+           :n
+           {:en "%"
+            :hu "%"}
+           :ms
+           {:en "ms"
+            :hu "ms"}
            :n-cm
            {:en "% cm"
             :hu "% cm"}
+           :n-dag
+           {:en "% dag"
+            :hu "% dkg"}
            :n-days
            {:en "% day(s)"
             :hu "% nap"}
            :n-dm
            {:en "% dm"
             :hu "% dm"}
-           :n-hours
+           :n-gr
+           {:en "% gr"
+            :hu "% gr"}
+           :n-h
+           {:en "% h"
+            :hu "% ó"}
+           :n-hour
            {:en "% hour(s)"
             :hu "% óra"}
+           :n-kg
+           {:en "% kg"
+            :hu "% kg"}
            :n-km
            {:en "% km"
             :hu "% km"}
+           :n-m
+           {:en "% m"
+            :hu "% m"}
+           :n-mg
+           {:en "% mg"
+            :hu "% mg"}
            :n-miles
            {:en "% mile(s)"
             :hu "% mérföld"}
            :n-milliseconds
            {:en "% millisecond(s)"
             :hu "% milliszekundum"}
+           :n-min
+           {:en "% min(s)"
+            :hu "% perc"}
            :n-minutes
            {:en "% minute(s)"
             :hu "% perc"}
@@ -134,9 +215,6 @@
            :n-months
            {:en "% month(s)"
             :hu "% hónap"}
-           :n-m
-           {:en "% m"
-            :hu "% m"}
            :n-pieces
            {:en "% piece(s)"
             :hu "% darab"}
@@ -146,6 +224,12 @@
            :n-secs
            {:en "% sec(s)"
             :hu "% mp"}
+           :n-t
+           {:en "% T"
+            :hu "% T"}
+           :n-unit
+           {:en "% unit(s)"
+            :hu "% egység"}
            :n-weeks
            {:en "% week(s)"
             :hu "% hét"}
@@ -188,20 +272,29 @@
            :sec-unit
            {:en "sec(s)"
             :hu "mp"}
+           :t
+           {:en "T"
+            :hu "T"}
            :today
            {:en "Today"
             :hu "Ma"}
            :tomorrow
            {:en "Tomorrow"
             :hu "Holnap"}
+           :ton
+           {:en "Ton"
+            :hu "Tonna"}
            :unit
+           {:en "Unit"
+            :hu "Egység"}
+           :unit-label
            {:en "Unit"
             :hu "Mértékegység"}
            :unit-price
            {:en "Unit price"
             :hu "Egységár"}
-           :unit-quantity
-           {:en "Unit quantity"
+           :quantity-unit
+           {:en "Quantity unit"
             :hu "Mennyiségi egység"}
            :us-unit
            {:en "US unit"
