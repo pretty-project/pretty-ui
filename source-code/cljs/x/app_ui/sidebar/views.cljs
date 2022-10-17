@@ -24,16 +24,16 @@
 (defn- sidebar-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [sidebar-content @(r/subscribe [:ui.sidebar/get-content])]
-       [:div#x-app-sidebar--content [components/content ::view sidebar-content]]))
+  (if-let [sidebar-content @(r/subscribe [:ui.sidebar/get-sidebar-content])]
+          [:div#x-app-sidebar--content [components/content ::view sidebar-content]]))
 
 (defn- sidebar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [sidebar-hidden? @(r/subscribe [:ui.sidebar/hidden?])]
-       [:div#x-app-sidebar {:data-hidden    sidebar-hidden?
-                            :data-nosnippet true}
-                           [sidebar-content]]))
+  (if-let [sidebar-hidden? @(r/subscribe [:ui.sidebar/sidebar-hidden?])]
+          [:<>]
+          [:div#x-app-sidebar {:data-nosnippet true}
+                              [sidebar-content]]))
 
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!

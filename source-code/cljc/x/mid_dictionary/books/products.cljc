@@ -41,6 +41,9 @@
            :list-price
            {:en "List price"
             :hu "Listaár"}
+           :item-number
+           {:en "Item number"
+            :hu "Cikkszám"}
            :manual-price
            {:en "Manual price"
             :hu "Egyedi ár"}

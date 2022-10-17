@@ -40,7 +40,7 @@
             ; akkor megtörténik a close esemény.
       (cond (and (r bubbles.subs/autoclose-bubble?        db bubble-id)
                  (r bubbles.subs/bubble-lifetime-elapsed? db bubble-id))
-            [:ui/close-bubble! bubble-id]
+            [:ui/remove-bubble! bubble-id]
             ; Ha a bubble rendelkezik {:autoclose? true} tulajdonsággal és még NEM járt le az ideje,
             ; akkor beidőzít egy autoclose eseményt a bubble várható élettartamára.
             ; Előfordulhat, hogy a bubble hátralévő idejében újra meghívásra kerül a render esemény,
@@ -49,14 +49,14 @@
             {:dispatch-later [{:ms (r bubbles.subs/get-bubble-lifetime-left db bubble-id)
                                :dispatch [:ui/autoclose-bubble?! bubble-id]}]})))
 
-(r/reg-event-fx :ui/close-bubble!
+(r/reg-event-fx :ui/remove-bubble!
   ; @param (keyword) bubble-id
   ; @param (map)(opt) action-props
   ;  {:timeout (ms)(opt)
   ;    Default: 0}
   ;
   ; @usage
-  ;  [:ui/close-bubble! :my-bubble]
+  ;  [:ui/remove-bubble! :my-bubble]
   (fn [{:keys [db]} [_ bubble-id {:keys [timeout]}]]
       (if timeout {:dispatch-later [{:ms timeout :dispatch [:ui/destroy-element! :bubbles bubble-id]}]}
                   [:ui/destroy-element! :bubbles bubble-id])))

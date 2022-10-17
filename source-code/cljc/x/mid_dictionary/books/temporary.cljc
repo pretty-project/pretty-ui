@@ -28,6 +28,9 @@
            :informations
            {:en "Informations"
             :hu "Információk"}
+           :default
+           {:en "Default"
+            :hu "Alapértelmezett"}
 
            :service
            {:en "Service"
@@ -42,6 +45,10 @@
            :template
            {:en "Template"
             :hu "Sablon"}
+
+
+           
+
 
            :icon
            {:en "Icon"

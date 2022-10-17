@@ -47,9 +47,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:ui.sidebar/get-content]
-(r/reg-sub :ui.sidebar/get-content get-sidebar-content)
+;  [:ui.sidebar/get-sidebar-content]
+(r/reg-sub :ui.sidebar/get-sidebar-content get-sidebar-content)
 
 ; @usage
-;  [:ui.sidebar/hidden?]
-(r/reg-sub :ui.sidebar/hidden? sidebar-hidden?)
+;  [:ui.sidebar/sidebar-hidden?]
+(r/reg-sub :ui.sidebar/sidebar-hidden? sidebar-hidden?)

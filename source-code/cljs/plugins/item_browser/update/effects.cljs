@@ -195,7 +195,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch-n [[:ui/close-bubble! ::item-deleted-dialog]
+            :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
                                               {:on-success [:item-browser/delete-item-undid       browser-id]
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]

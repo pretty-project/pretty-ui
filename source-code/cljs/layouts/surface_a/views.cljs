@@ -225,7 +225,7 @@
   [:div#surface-a (helpers/layout-attributes surface-id layout-props)
                   [background]
                   [:div#surface-a--header-sensor]
-                  [:div#surface-a--body [:div#surface-a--body-content [components/content content]]]
+                  [:div#surface-a--body [:div#surface-a--body-content [components/content surface-id content]]]
                   [header]
                   [footer]])
 

@@ -21,12 +21,41 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :ui.sidebar/render!
+(r/reg-event-fx :ui.sidebar/render-sidebar!
   ; @param (keyword)(opt) sidebar-id
   ; @param (map) sidebar-props
   ;
   ; @usage
-  ;  [:ui.sidebar/render! :my-content]
+  ;  [:ui.sidebar/render-sidebar! :my-sidebar {...}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ sidebar-id sidebar-props]]
       {:db (r sidebar.events/render-sidebar! db sidebar-id sidebar-props)}))
+
+(r/reg-event-fx :ui.sidebar/remove-sidebar!
+  ; @param (keyword) sidebar-id
+  ;
+  ; @usage
+  ;  [:ui.sidebar/remove-sidebar! :my-sidebar]
+  (fn [{:keys [db]} [_ sidebar-id]]
+      {:db (r sidebar.events/remove-sidebar! db sidebar-id)}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(r/reg-event-fx :ui.sidebar/show-sidebar!
+  ; @param (keyword) sidebar-id
+  ;
+  ; @usage
+  ;  [:ui.sidebar/show-sidebar! :my-sidebar]
+  (fn [{:keys [db]} [_ sidebar-id]]
+      {:db (r sidebar.events/show-sidebar! db sidebar-id)}))
+
+(r/reg-event-fx :ui.sidebar/hide-sidebar!
+  ; @param (keyword) sidebar-id
+  ;
+  ; @usage
+  ;  [:ui.sidebar/hide-sidebar! :my-sidebar]
+  (fn [{:keys [db]} [_ sidebar-id]]
+      {:db (r sidebar.events/hide-sidebar! db sidebar-id)}))

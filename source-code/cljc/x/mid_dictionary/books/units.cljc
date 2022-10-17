@@ -182,7 +182,7 @@
            :n-h
            {:en "% h"
             :hu "% ó"}
-           :n-hour
+           :n-hours
            {:en "% hour(s)"
             :hu "% óra"}
            :n-kg
@@ -227,7 +227,7 @@
            :n-t
            {:en "% T"
             :hu "% T"}
-           :n-unit
+           :n-units
            {:en "% unit(s)"
             :hu "% egység"}
            :n-weeks

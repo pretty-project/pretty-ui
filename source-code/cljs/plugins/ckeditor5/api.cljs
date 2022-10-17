@@ -12,19 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.text-editor.state
-    (:require [reagent.api :refer [ratom]]))
+(ns plugins.ckeditor5.api
+    (:require [plugins.ckeditor5.views :as views]))
 
 
 
+;; -- Redirects ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
 
-; @atom (map)
-(defonce EDITOR-INPUT (ratom {}))
-
-; @atom (map)
-(defonce EDITOR-OUTPUT (ratom {}))
-
-; @atom (map)
-(defonce EDITOR-TRIGGER (ratom {}))
+; plugins.ckeditor5.views
+(def body views/body)

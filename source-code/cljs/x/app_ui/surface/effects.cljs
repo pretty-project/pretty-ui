@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :ui/close-surface!
+(r/reg-event-fx :ui/remove-surface!
   ; @param (keyword) surface-id
   (fn [{:keys [db]} [_ surface-id]]
       [:ui/destroy-element! :surface surface-id]))

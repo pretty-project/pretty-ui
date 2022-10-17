@@ -32,7 +32,7 @@
   ;  {:dispatch-n (vector)}
   [bubble-id {:keys [primary-button]}]
   {:dispatch-n [(:on-click primary-button)
-                [:ui/close-bubble! bubble-id]]})
+                [:ui/remove-bubble! bubble-id]]})
 
 (defn bubble-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

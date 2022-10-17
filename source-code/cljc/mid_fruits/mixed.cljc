@@ -303,6 +303,39 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn add-numbers
+  ; @param (list of *) abc
+  ;
+  ; @example
+  ;  (mixed/add-numbers 1 "3" "a")
+  ;  =>
+  ;  4
+  ;
+  ; @return (integer)
+  [& abc]
+  (letfn [(f [result x]
+             (+ result (to-number x)))]
+         (reduce f 0 abc)))
+
+(defn multiply-numbers
+  ; @param (list of *) abc
+  ;
+  ; @example
+  ;  (mixed/multiply-numbers 1 "3" "a")
+  ;  =>
+  ;  3
+  ;
+  ; @return (integer)
+  [& abc]
+  (letfn [(f [result x]
+             (* result (to-number x)))]
+         (reduce f 1 abc)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn update-whole-number
   ; @param (integer or string) n
   ; @param (function) f

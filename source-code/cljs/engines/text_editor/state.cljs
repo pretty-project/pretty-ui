@@ -12,13 +12,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.text-editor.api
-    (:require [plugins.text-editor.views :as views]))
+(ns engines.text-editor.state
+    (:require [reagent.api :refer [ratom]]))
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.text-editor.views
-(def body views/body)
+; @atom (map)
+(defonce EDITOR-INPUT (ratom {}))
+
+; @atom (map)
+(defonce EDITOR-OUTPUT (ratom {}))
+
+; @atom (map)
+(defonce EDITOR-TRIGGER (ratom {}))

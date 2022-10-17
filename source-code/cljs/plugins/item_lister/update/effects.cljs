@@ -142,7 +142,7 @@
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
            {:db         (r ui/fake-process! db 15)
-            :dispatch-n [[:ui/close-bubble! ::items-deleted-dialog]
+            :dispatch-n [[:ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                               {:on-success [:item-lister/delete-items-undid       lister-id]
                                                :on-failure [:item-lister/undo-delete-items-failed lister-id]

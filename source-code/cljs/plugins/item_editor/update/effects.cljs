@@ -109,7 +109,7 @@
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
       {:db         (r core.events/set-recovery-mode! db editor-id)
-       :dispatch-n [[:ui/close-bubble! ::changes-discarded-dialog]
+       :dispatch-n [[:ui/remove-bubble! ::changes-discarded-dialog]
                     [:item-editor/edit-item! editor-id item-id]]}))
 
 (r/reg-event-fx :item-editor/render-changes-discarded-dialog!

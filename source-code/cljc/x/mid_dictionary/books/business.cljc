@@ -29,9 +29,9 @@
            :item-product-description-placeholder
            {:en "Item description"
             :hu "Tétel megnevezése"}
-           :issuer-data
-           {:en "Issuer data"
-            :hu "Kibocsátó adatok"}
+           :issuer-details
+           {:en "Issuer details"
+            :hu "Kibocsátó adatai"}
            :issuer-description
            {:en "Issuer's description"
             :hu "Kibocsátó leírása"}

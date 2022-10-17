@@ -50,11 +50,11 @@
       (let [popup-props (popups.prototypes/popup-props-prototype popup-props)]
            [:ui/render-popup-element! popup-id popup-props])))
 
-(r/reg-event-fx :ui/close-popup!
+(r/reg-event-fx :ui/remove-popup!
   ; @param (keyword) popup-id
   ;
   ; @usage
-  ;  [:ui/close-popup! :my-popup]
+  ;  [:ui/remove-popup! :my-popup]
   (fn [{:keys [db]} [_ popup-id]]
       {:dispatch-n [[:ui/destroy-element! :popups popup-id]
                     ; Eltávolítja a popup-id azonosítójú popup felület által elhelyezett scroll-tiltást

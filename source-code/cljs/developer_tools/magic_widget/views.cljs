@@ -122,7 +122,7 @@
                          :hover-color   :highlight
                         ;:indent        {:left :xxl}
                          :keypress      {:key-code 27 :required? true}
-                         :on-click      [:ui/close-popup! :developer-tools.magic-widget/view]
+                         :on-click      [:ui/remove-popup! :developer-tools.magic-widget/view]
                          :preset        :close
                          :label         "Close"}])
 

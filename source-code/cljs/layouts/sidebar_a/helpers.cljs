@@ -12,31 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns plugins.text-editor.prototypes
-    (:require [mid-fruits.candy            :refer [param]]
-              [plugins.text-editor.helpers :as helpers]))
+(ns layouts.sidebar-a.helpers)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn editor-props-prototype
+(defn layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) editor-id
-  ; @param (map) editor-props
+  ; @param (keyword) sidebar-id
+  ; @param (map) layout-props
+  ;  {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:buttons (keywords in vector)
-  ;   :insert-as (keyword)
-  ;   :min-height (px)
-  ;   :placeholder (metamorphic-content)
-  ;   :value-path (vector)}
-  [editor-id editor-props]
-  (merge {:buttons     [:bold :italic :underline :brush]
-          :insert-as   :cleared-html
-          :min-height  400
-          :placeholder :write-something!
-          :value-path  (helpers/default-value-path editor-id)}
-         (param editor-props)))
+  ;  {:style (map)}
+  [_ {:keys [style]}]
+  {:style style})

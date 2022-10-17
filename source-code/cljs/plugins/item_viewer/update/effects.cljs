@@ -120,7 +120,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
            {:db       (r ui/fake-process! db 15)
-            :dispatch-n [[:ui/close-bubble! ::item-deleted-dialog]
+            :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                               {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
@@ -227,5 +227,5 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   (fn [_ [_ viewer-id copy-id]]
-      {:dispatch-n [[:ui/close-bubble! ::item-duplicated-dialog]
+      {:dispatch-n [[:ui/remove-bubble! ::item-duplicated-dialog]
                     [:item-viewer/view-item! viewer-id copy-id]]}))

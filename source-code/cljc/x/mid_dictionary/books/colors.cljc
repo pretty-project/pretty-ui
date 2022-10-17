@@ -26,6 +26,12 @@
            :add-colors!
            {:en "Add colors"
             :hu "Színek hozzáadása"}
+           :black
+           {:en "Black"
+            :hu "Fekete"}
+           :blue
+           {:en "Blue"
+            :hu "Kék"}
            :change-color!
            {:en "Change color"
             :hu "Szín módosítása"}
@@ -44,9 +50,36 @@
            :colors
            {:en "Colors"
             :hu "Színek"}
+           :default-color
+           {:en "Default"
+            :hu "Alapértelmezett"}
+           :green
+           {:en "Green"
+            :hu "Zöld"}
+           :grey
+           {:en "Grey"
+            :hu "Szürke"}
+           :muted-color
+           {:en "Muted"
+            :hu "Tompa"}
+           :highlight-color
+           {:en "Highlighted"
+            :hu "Halvány"}
+           :primary-color
+           {:en "Primary"
+            :hu "Elsődleges"}
+           :red
+           {:en "Red"
+            :hu "Piros"}
+           :secondary-color
+           {:en "Secondary"
+            :hu "Másodlagos"}
            :select-color!
            {:en "Select color"
             :hu "Szín kiválasztása"}
            :select-colors!
            {:en "Select colors"
-            :hu "Színek kiválasztása"}})
+            :hu "Színek kiválasztása"}
+           :white
+           {:en "White"
+            :hu "Fehér"}})

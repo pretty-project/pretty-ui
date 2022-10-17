@@ -8,6 +8,16 @@
 
 
 
+/***** UI structure *****/
+
+#x-app-ui-structure {
+  display: flex;
+  flex-direction: row-reverse }
+
+/***** UI structure *****/
+
+
+
 /***** App bubbles *****/
 /*** App bubbles wrapper ***/
 
@@ -183,7 +193,7 @@
 /*** App surface wrapper ***/
 
 #x-app-surface {
-  width: 100% }
+  flex-grow: 1 }
 
 /*** App surface wrapper ***/
 
