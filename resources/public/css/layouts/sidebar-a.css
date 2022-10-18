@@ -11,7 +11,11 @@
 /* Sidebar A */
 
 #sidebar-a {
-  background-color: #b9cbd9;
+  -background-color: #b9cbd9;
+  -background-color: #2b3841;
+  -background-color: #150f22;
+  background-color: rgba(0, 0, 0, .01);
+  border-right: 1px solid #e9e7e7;
   height: 100vh }
 
 /* Sidebar A */
