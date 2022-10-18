@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.side-effects
-    (:require [re-frame.api                          :as r]
-              [server-fruits.io                      :as io]
+    (:require [io.api                                :as io]
+              [re-frame.api                          :as r]
               [x.server-user.settings-handler.config :as settings-handler.config]))
 
 

@@ -15,9 +15,9 @@
 (ns developer-tools.docs.side-effects
     (:require [developer-tools.docs.config  :as docs.config]
               [developer-tools.docs.helpers :as docs.helpers]
+              [io.api                       :as io]
               [mid-fruits.candy             :refer [param return]]
-              [mid-fruits.vector            :as vector]
-              [server-fruits.io             :as io]))
+              [mid-fruits.vector            :as vector]))
 
 
 

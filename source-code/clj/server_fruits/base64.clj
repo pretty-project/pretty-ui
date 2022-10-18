@@ -14,7 +14,7 @@
 
 (ns server-fruits.base64
     (:require [clojure.data.codec.base64 :as base64]
-              [server-fruits.io          :as io]))
+              [io.api                    :as io]))
 
 
 

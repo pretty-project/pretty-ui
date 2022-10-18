@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.file-handler.side-effects
-    (:require [server-fruits.io            :as io]
+    (:require [io.api                      :as io]
               [x.server-media.core.helpers :as core.helpers]))
 
 

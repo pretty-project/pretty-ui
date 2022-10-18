@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-media.core.helpers
-    (:require [mid-fruits.io           :as io]
-              [mid-fruits.string       :as string]
+    (:require [mid-fruits.string       :as string]
               [x.mid-media.core.config :as core.config]))
 
 
@@ -38,16 +37,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn allowed-extensions
-  ; @example
-  ;  (media/allowed-extensions)
-  ;  =>
-  ;  ("mp4" "ttf" "gif" "webm" ...)
-  ;
-  ; @return (list)
-  []
-  (vals io/EXTENSIONS))
 
 (defn filename->media-storage-uri
   ; @param (string) filename

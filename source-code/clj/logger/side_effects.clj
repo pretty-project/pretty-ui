@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns logger.side-effects
-    (:require [logger.config    :as config]
-              [server-fruits.io :as io]
-              [time.api         :as time]))
+    (:require [io.api        :as io]
+              [logger.config :as config]
+              [time.api      :as time]))
 
 
 

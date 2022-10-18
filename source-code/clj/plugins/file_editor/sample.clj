@@ -15,8 +15,8 @@
 (ns plugins.file-editor.sample
     (:require [plugins.file-editor.api]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+              [io.api                                :as io]
               [mid-fruits.candy                      :refer [return]]
-              [server-fruits.io                      :as io]
               [re-frame.api                          :as r]))
 
 

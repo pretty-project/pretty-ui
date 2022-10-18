@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns local-db.side-effects
-    (:require [local-db.config   :as config]
+    (:require [io.api            :as io]
+              [local-db.config   :as config]
               [local-db.helpers  :as helpers]
               [mid-fruits.vector :as vector]
-              [server-fruits.io  :as io]
               [time.api          :as time]
               [x.server-db.api   :as db]))
 

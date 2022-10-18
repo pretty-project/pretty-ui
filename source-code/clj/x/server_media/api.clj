@@ -25,7 +25,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.server-media.core.helpers
-(def allowed-extensions                 core.helpers/allowed-extensions)
 (def filename->media-storage-uri        core.helpers/filename->media-storage-uri)
 (def media-storage-uri->filename        core.helpers/media-storage-uri->filename)
 (def filename->media-thumbnail-uri      core.helpers/filename->media-thumbnail-uri)
