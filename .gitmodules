@@ -1,4 +1,0 @@
-
-[submodule "mongo-db-api"]
-	path = submodules/mongo-db-api
-	url = git@github.com:bithandshake/mongo-db-api.git
