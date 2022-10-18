@@ -22,7 +22,7 @@
 ; @constant (strings in vector)
 ;  A wrap-reload alapértelmezett beállítással használva az "src" mappa fájljait figyeli
 (def SOURCE-DIRECTORY-PATHS [; A monotech-hq/monoset könyvtárban a forráskód a "source-code" mappában van
-                             "source-code" "deps"
+                             "source-code" "deps" "submodules"
 
                              ; A projektekben elhelyezett monotech-hq/monoset könyvtár a "monoset" mappában van
                              "monoset/source-code" "monoset/deps"])
