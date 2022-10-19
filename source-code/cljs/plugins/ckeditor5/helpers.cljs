@@ -68,7 +68,7 @@
   [editor-id {:keys [on-blur on-focus on-change value] :as editor-props}]
   {:editor    ckeditor5-build-decoupled-document
    :config    (ckeditor-config editor-id editor-props)
-   :data      value
+   :data      (str value)
    :on-blur   (fn [event]        (on-blur    event))
    :on-focus  (fn [event]        (on-focus   event))
    :on-ready  (fn [editor]       (on-ready-f editor))

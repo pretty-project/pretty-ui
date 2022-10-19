@@ -47,7 +47,10 @@
                                   (css/unparse {:box-shadow "none"})
                                   "}"
                                   ".ck strong {"
-                                  (css/unparse {:font-weight 500})
+                                  (css/unparse {:font-weight "500"})
+                                  "}"
+                                  ".ck.ck-button {"
+                                  (css/unparse {:cursor "pointer"})
                                   "}"]
        [:> CKEditor (helpers/ckeditor-attributes editor-id editor-props)]])
 
