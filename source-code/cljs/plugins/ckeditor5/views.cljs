@@ -40,8 +40,7 @@
                                                 :border-style  "none solid solid solid"
                                                 :border-width  "1px"
                                                 :cursor        "text"
-                                                :font-size     "var( --font-size-s )"
-                                                :caret-color "red !important"})
+                                                :font-size     "var( --font-size-s )"})
                                   "}"
                                   ".ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {"
                                   (css/unparse {:box-shadow "none"})
