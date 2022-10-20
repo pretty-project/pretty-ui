@@ -10,6 +10,7 @@
               [plugins.dnd-kit.prototypes :as prototypes]
               [plugins.dnd-kit.state      :as state]
 
+              ; TEMP
               [plugins.dnd-kit.utils :refer [to-clj-map]]))
 
 
@@ -59,18 +60,20 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:item-element (metamorphic-content)
+  ;  {:common-props (map)(opt)
+  ;   :item-element (metamorphic-content)
   ;   :item-id-f (function)}
   ; @param (integer) item-dex
   ; @param (*) item
-  [sortable-id {:keys [item-id-f item-element]} item-dex item]
+  [sortable-id {:keys [common-props item-id-f item-element]} item-dex item]
   (let [sortable (to-clj-map (useSortable (clj->js {:id (item-id-f item)})))
         {:keys [setNodeRef transform transition]} sortable]
-    [:div {:ref   (js->clj   setNodeRef)
-          ;:key   (str (item-id-f item) "--" item-dex)
+    [:div {;:key  (str (item-id-f item) "--" item-dex)
            :key   (item-id-f item)
+           :ref   (js->clj   setNodeRef)
            :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}}
-          [item-element sortable-id item-dex item sortable]]))
+          (if common-props [item-element sortable-id common-props item-dex item sortable]
+                           [item-element sortable-id              item-dex item sortable])]))
 
 (defn- render-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,7 +114,7 @@
   [:<> [:f> dnd-context sortable-id sortable-props]])
       ;[sortable-debug  sortable-id sortable-props]
 
-(defn sortable
+(defn- sortable
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) sortable-id
@@ -120,12 +123,13 @@
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (helpers/sortable-did-mount-f    sortable-id sortable-props))
                        :component-will-unmount (fn [_ _] (helpers/sortable-will-unmount-f sortable-id sortable-props))
                        :component-did-update   (fn [%]   (helpers/sortable-did-update-f   sortable-id %))
-                       :reagent-render         (fn [_ _] [sortable-body                   sortable-id sortable-props])}))
+                       :reagent-render         (fn [_ sortable-props] [sortable-body      sortable-id sortable-props])}))
 
 (defn body
   ; @param (keyword)(opt) sortable-id
   ; @param (map) sortable-props
-  ;  {:item-element (metamorphic-content)
+  ;  {:common-props (map)(opt)
+  ;   :item-element (metamorphic-content)
   ;   :item-id-f (function)(opt)
   ;    Default: return
   ;   :items (vector)
@@ -143,7 +147,13 @@
   ; @usage
   ;  (defn my-item-element [sortable-id item-dex item dnd-kit-props])
   ;  [sortable/body {:item-element #'my-item-element
-  ;                  :items ["My item" "Your item"]}]
+  ;                  :items        ["My item" "Your item"]}]
+  ;
+  ; @usage
+  ;  (defn my-item-element [sortable-id common-props item-dex item dnd-kit-props])
+  ;  [sortable/body {:common-props {...}
+  ;                  :item-element #'my-item-element
+  ;                  :items        ["My item" "Your item"]}]
   ([sortable-props]
    [body (random/generate-keyword) sortable-props])
 

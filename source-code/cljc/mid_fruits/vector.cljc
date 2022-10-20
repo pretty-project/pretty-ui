@@ -783,6 +783,23 @@
                               (conj   o x)))]
          (reduce remove-items-f [] n)))
 
+(defn remove-items-by
+  ; @param (vector) n
+  ; @param (function) f
+  ;
+  ; @example
+  ;  (vector/remove-items-by [:a :b :c] keyword?)
+  ;  =>
+  ;  []
+  ;
+  ; @return (vector)
+  [n f]
+  (letfn [(remove-items-f [o x]
+                          (if (f      x)
+                              (return o)
+                              (conj   o x)))]
+         (reduce remove-items-f [] n)))
+
 (defn difference
   ; @param (vector) a
   ; @param (vector) b

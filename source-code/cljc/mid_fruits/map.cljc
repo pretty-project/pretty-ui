@@ -277,7 +277,7 @@
   (if-let [_ (key n)]
           (dissoc-in n path)
           (assoc-in  n path value)))
-          
+
 (defn contains-key?
   ; @param (map) n
   ; @param (*) x
@@ -818,7 +818,7 @@
                        :return     (v-f n)))]
          (f n)))
 
-(defn ->remove-keys
+(defn ->remove-keys-by
   ; @param (map) n
   ; @param (function) r-f
   ;
@@ -831,7 +831,7 @@
   ; @return (map)
   [n r-f])
 
-(defn ->>remove-keys
+(defn ->>remove-keys-by
   ; @param (map) n
   ; @param (function) r-f
   ;
@@ -844,7 +844,7 @@
   ; @return (map)
   [n r-f])
 
-(defn ->remove-values
+(defn ->remove-values-by
   ; @param (map) n
   ; @param (function) r-f
   ;
@@ -857,7 +857,7 @@
   ; @return (map)
   [n r-f])
 
-(defn ->>remove-values
+(defn ->>remove-values-by
   ; @param (map) n
   ; @param (function) r-f
   ;

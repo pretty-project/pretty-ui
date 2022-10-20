@@ -95,6 +95,9 @@
            :select-item!
            {:en "Select item"
             :hu "Elem kijelölése"}
+           :select-items!
+           {:en "Select items"
+            :hu "Elemek kijelölése"}
            :unnamed-item
            {:en "Unnamed item"
             :hu "Névtelen elem"}})

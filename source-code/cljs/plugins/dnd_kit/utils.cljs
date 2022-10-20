@@ -6,11 +6,6 @@
 (defn to-clj-map [hash-map]
   (js->clj hash-map :keywordize-keys true))
 
-(defn index-of [items item]
-  (if (map? (first items))
-      (vector/get-first-match-item-dex items #(= (:id item) (:id %)))
-      (.indexOf items (:id item))))
-
 (defn vec-remove
   "Remove elem in coll by index."
   [coll pos]

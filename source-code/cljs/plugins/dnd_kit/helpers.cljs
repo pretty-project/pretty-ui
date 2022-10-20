@@ -1,9 +1,10 @@
 
 (ns plugins.dnd-kit.helpers
-    (:require [plugins.dnd-kit.state :as state]
-              [plugins.dnd-kit.utils :refer [to-clj-map reorder index-of]]
-              [re-frame.api :as r]
-              [reagent.api  :as reagent]))
+    (:require [mid-fruits.vector     :as vector]
+              [plugins.dnd-kit.state :as state]
+              [plugins.dnd-kit.utils :refer [reorder]]
+              [re-frame.api          :as r]
+              [reagent.api           :as reagent]))
 
 
 
@@ -41,6 +42,32 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 
+(defn event->origin-dex
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) sortable-id
+  ; @param (map) sortable-props
+  ;  {}
+  ; @param (?) event
+  ;
+  ; @return (integer)
+  [_ {:keys [item-id-f items]} event]
+  (vector/get-first-match-item-dex items #(= (item-id-f %)
+                                             (aget event "active" "id"))))
+
+(defn event->target-dex
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) sortable-id
+  ; @param (map) sortable-props
+  ;  {}
+  ; @param (?) event
+  ;
+  ; @return (integer)
+  [_ {:keys [item-id-f items]} event]
+  (vector/get-first-match-item-dex items #(= (item-id-f %)
+                                             (aget event "over" "id"))))
+
 (defn drag-start-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -58,13 +85,12 @@
   ;  {:on-drag-end (metamorphic-event)(opt)
   ;   :on-order-changed (metamorphic-event)(opt)}
   ; @param (?) event
-  [sortable-id {:keys [on-drag-end on-order-changed]} event]
-  (let [{:keys [active over]} (to-clj-map event)
-        origin-dex (index-of (get @state/SORTABLE-ITEMS sortable-id) active)
-        taget-dex  (index-of (get @state/SORTABLE-ITEMS sortable-id) over)]
+  [sortable-id {:keys [on-drag-end on-order-changed] :as sortable-props} event]
+  (let [origin-dex (event->origin-dex sortable-id sortable-props event)
+        target-dex (event->target-dex sortable-id sortable-props event)]
     ;;check if dragged element is moved if so than reset the items order
-    (if (not= origin-dex taget-dex)
-        (let [reordered-items (reorder (get @state/SORTABLE-ITEMS sortable-id) origin-dex taget-dex)]
+    (if (not= origin-dex target-dex)
+        (let [reordered-items (reorder (get @state/SORTABLE-ITEMS sortable-id) origin-dex target-dex)]
              (swap! state/SORTABLE-ITEMS assoc sortable-id reordered-items)
              (if on-order-changed (r/dispatch-sync (r/metamorphic-event<-params on-order-changed reordered-items)))))
     (swap! state/GRABBED-ITEM dissoc sortable-id)

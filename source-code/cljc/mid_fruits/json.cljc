@@ -351,7 +351,7 @@
   ;      de az üres térkép eltávolítása után az azt tartalmazó vektor is üressé
   ;      válik és ezért a következő iterációban már eltávolítható.
   (letfn [(r-f [x] (vector/contains-item? [{} [] () nil ""] x))]
-         (let [result (map/->>remove-values n r-f)]
+         (let [result (map/->>remove-values-by n r-f)]
               (if (=                 n result)
                   (return              result)
                   (remove-blank-values result)))))
