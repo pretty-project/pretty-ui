@@ -26,9 +26,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; plugins.item-lister.body.views
-(def list-element     body.views/list-element)
-(def no-items-to-show body.views/no-items-to-show)
-(def ghost-element    body.views/ghost-element)
+(def list-element  body.views/list-element)
+(def placeholder   body.views/placeholder)
+(def ghost-element body.views/ghost-element)
 
 
 
@@ -56,7 +56,7 @@
         @(r/subscribe [:item-browser/data-received? browser-id])
          [:<> [list-element              browser-id]
               [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
-              [no-items-to-show          browser-id]
+              [placeholder               browser-id]
               [ghost-element             browser-id]]
          :data-not-received
          [ghost-element browser-id]))
@@ -82,6 +82,8 @@
   ;    W/ {:auto-title? true}
   ;   :list-element (metamorphic-content)
   ;   :path-key (keyword)
+  ;   :placeholder (metamorphic-content)(opt)
+  ;    Default: :no-items-to-show
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
   ;   :search-keys (keywords in vector)(opt)

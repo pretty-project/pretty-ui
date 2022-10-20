@@ -77,6 +77,9 @@
            :header-title
            {:en "Header title"
             :hu "Fejléc címe"}
+           :no-content-selected
+           {:en "No content selected"
+            :hu "Nincs tartalom kiválasztva"}
            :only-visible-to-editors
            {:en "Only visible to editors"
             :hu "Csak a szerkesztők számára látható"}

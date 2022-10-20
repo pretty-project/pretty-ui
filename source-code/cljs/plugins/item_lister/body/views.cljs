@@ -27,7 +27,7 @@
 ;; -- Indicator components ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn no-items-to-show-label
+(defn placeholder-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
@@ -39,22 +39,23 @@
   ;   ne jelenjen meg a no-items-to-show-label felirat!
   (let [downloading-items? @(r/subscribe [:item-lister/downloading-items? lister-id])
         data-received?     @(r/subscribe [:item-lister/data-received?     lister-id])
-        no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])]
+        no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])
+        placeholder        @(r/subscribe [:item-lister/get-body-prop      lister-id :placeholder])]
        (if (and no-items-to-show? data-received? (not downloading-items?))
-           [elements/label ::no-items-to-show-label
+           [elements/label ::placeholder-label
                            {:color       :highlight
-                            :content     :no-items-to-show
+                            :content     placeholder
                             :font-size   :xs
                             :font-weight :bold
                             :indent      {:all :xs}}])))
 
-(defn no-items-to-show
+(defn placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  [elements/row ::no-items-to-show
-                {:content [no-items-to-show-label lister-id]
+  [elements/row ::placeholder
+                {:content [placeholder-label lister-id]
                  :horizontal-align :center}])
 
 
@@ -105,7 +106,7 @@
         @(r/subscribe [:item-lister/data-received? lister-id])
          [:<> [list-element              lister-id]
               [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-              [no-items-to-show          lister-id]
+              [placeholder               lister-id]
               [ghost-element             lister-id]]
          :data-not-received
          [ghost-element lister-id]))
@@ -122,6 +123,8 @@
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
   ;   :order-key (keyword)(opt)
+  ;   :placeholder (metamorphic-content)(opt)
+  ;    Default: :no-items-to-show
   ;   :prefilter (map)(opt)
   ;   :query (vector)(opt)
   ;   :transfer-id (keyword)(opt)}
