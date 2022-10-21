@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.side-effects
-    (:require [accountant.core                   :as accountant.core]
+    (:require [accountant.core]
+              [clerk.core]
               [re-frame.api                      :as r]
               [x.app-router.route-handler.config :as route-handler.config]))
 
@@ -21,6 +22,11 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn- initialize-positioning!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  [_]
+  (clerk.core/initialize!))
 
 (defn- configure-navigation!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,6 +55,9 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-fx :router/initialize-positioning! initialize-positioning!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-fx :router/configure-navigation! configure-navigation!)

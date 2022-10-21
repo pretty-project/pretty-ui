@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.config
-    (:require [re-frame.api :as r]))
+    (:require [clerk.core]
+              [reagent.core]
+              [re-frame.api :as r]))
 
 
 
@@ -28,6 +30,8 @@
                                       :route-template "/page-not-found"}})
 
 ; @constant (map)
-(def ACCOUNTANT-CONFIG {:nav-handler  #(r/dispatch   [:router/handle-route!          %])
-                        :path-exists? #(r/subscribed [:router/route-template-exists? %])
+(def ACCOUNTANT-CONFIG {:nav-handler  (fn [route-string] (reagent.core/after-render clerk.core/after-render!)
+                                                         (r/dispatch [:router/handle-route! route-string])
+                                                         (clerk.core/navigate-page! route-string))
+                        :path-exists? (fn [route-string] (r/subscribed [:router/route-template-exists? route-string]))
                         :reload-same-path? false})

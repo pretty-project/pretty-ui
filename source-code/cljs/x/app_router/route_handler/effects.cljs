@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.effects
-    (:require [re-frame.api                       :as r :refer [r]]
+    (:require
+              [re-frame.api                       :as r :refer [r]]
               [x.app-db.api                       :as db]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.events  :as route-handler.events]
@@ -36,11 +37,11 @@
   ; @usage
   ;  [:router/change-to! "/my-route" {...}]
   (fn [{:keys [db]} [_ route-string route-props]]
-      ; - A [:router/change-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
-      ;   események megtörténése nélkül.
+      ; A [:router/change-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
+      ; események megtörténése nélkül.
       ;
-      ; - Az útvonal használata előtt az útvonal-kezelőt {:change-mode? true} állapotba állítja,
-      ;   ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
+      ; Az útvonal használata előtt az útvonal-kezelőt {:change-mode? true} állapotba állítja,
+      ; ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
       {:db       (r route-handler.events/set-change-mode! db)
        :dispatch [:router/go-to! route-string route-props]}))
 
@@ -144,5 +145,6 @@
 (r/reg-event-fx :router/init-router!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      {:db (r route-handler.events/init-router! db)
-       :fx [:router/configure-navigation!]}))
+      {:db   (r route-handler.events/init-router! db)
+       :fx-n [[:router/initialize-positioning!]
+              [:router/configure-navigation!]]}))
