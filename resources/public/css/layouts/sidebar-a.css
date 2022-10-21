@@ -11,19 +11,18 @@
 /* Sidebar A */
 
 #sidebar-a {
-  -background-color: #b9cbd9;
-  -background-color: #2b3841;
-  -background-color: #150f22;
-  background-color: rgba(0, 0, 0, .01);
-  border-right: 1px solid #e9e7e7;
-  height: 100vh }
+  background-color: var( --background-color-invert );
+  background-color: var( --fill-color-invert );
+  height: 100vh;
+  position: sticky;
+  top: 0 }
 
 /* Sidebar A */
 
 /* Content */
 
 #sidebar-a--content {
-
-}
+  height: 100%;
+  overflow-y: auto }
 
 /* Content */

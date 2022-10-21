@@ -32,7 +32,8 @@
   ;  {:content (metamorphic-content)}
   [sidebar-id {:keys [content] :as layout-props}]
   [:div#sidebar-a (helpers/layout-attributes sidebar-id layout-props)
-                  [:div#sidebar-a--content [components/content sidebar-id content]]])
+                  [:div#sidebar-a--content {:data-hide-scrollbar true}
+                                           [components/content sidebar-id content]]])
 
 (defn layout
   ; @param (keyword) sidebar-id

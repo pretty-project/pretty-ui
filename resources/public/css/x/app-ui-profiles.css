@@ -11,14 +11,18 @@
 /* @name app-edge
  *  M, L, XL, XXL méretű kijelzőkön a box elemben megjelenített tartalom és a képernyő széle
  *  közötti esztétikai távolság.
- *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-edge értéke 0vw.
+ *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-edge értéke 0%.
  *
  * @name app-width
- *  app-width = 100vw - app-edge
- *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-width értéke 100vw.
+ *  app-width = 100% - app-edge
+ *  XXS, XS, S méretű kijelzőkön helytakarékosság miatt az app-width értéke 100%.
  *
  * @name content-width
  *  ...
+ *
+ * Az x4.7.9 verzió óta az app-edge és app-width szélessége vw mértékegység helyett,
+ * % mértékegységet használ, mivel az esetlegesen megjelenített oldalsáv miatt
+ * az app-surface szélesség már nem 100vw!
  */
 
 
@@ -239,8 +243,8 @@ body[data-viewport-profile="xxs"] {
 /*** App ***/
 
 /* XXX#8607 */
---app-edge:    0vw;
---app-width: 100vw;
+--app-edge:    0%;
+--app-width: 100%;
 
 /*** App ***/
 
@@ -268,8 +272,8 @@ body[data-viewport-profile="xs"] {
 /*** App ***/
 
 /* XXX#8607 */
---app-edge:    0vw;
---app-width: 100vw;
+--app-edge:    0%;
+--app-width: 100%;
 
 /*** App ***/
 
@@ -297,8 +301,8 @@ body[data-viewport-profile="s"] {
 /*** App ***/
 
 /* XXX#8607 */
---app-edge:    0vw;
---app-width: 100vw;
+--app-edge:    0%;
+--app-width: 100%;
 
 /*** App ***/
 
@@ -326,7 +330,7 @@ body[data-viewport-profile="m"] {
 /*** App ***/
 
 --app-edge:  12px;
---app-width: calc(100vw - 24px);
+--app-width: calc(100% - 24px);
 
 /*** App ***/
 
@@ -354,7 +358,7 @@ body[data-viewport-profile="l"] {
 /*** App ***/
 
 --app-edge:  12px;
---app-width: calc(100vw - 24px);
+--app-width: calc(100% - 24px);
 
 /*** App ***/
 
@@ -382,7 +386,7 @@ body[data-viewport-profile="xl"] {
 /*** App ***/
 
 --app-edge:  12px;
---app-width: calc(100vw - 24px);
+--app-width: calc(100% - 24px);
 
 /*** App ***/
 
@@ -410,7 +414,7 @@ body[data-viewport-profile="xxl"] {
 /*** App ***/
 
 --app-edge:  12px;
---app-width: calc(100vw - 24px);
+--app-width: calc(100% - 24px);
 
 /*** App ***/
 

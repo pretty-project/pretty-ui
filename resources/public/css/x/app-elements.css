@@ -243,7 +243,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="muted"],
+.x-button[data-disabled="false"]                                .x-button--body:hover[data-hover-color="muted"],
 .x-card[data-hover-color="muted"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
@@ -308,7 +308,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="highlight"],
+.x-button[data-disabled="false"]                                    .x-button--body:hover[data-hover-color="highlight"],
 .x-card[data-hover-color="highlight"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
@@ -347,6 +347,17 @@ body {
 /*** Highlight ***/
 
 /*** Invert ***/
+/* Hover-color */
+
+/* XXX#4005 */
+.x-button[data-disabled="false"]                                 .x-button--body:hover[data-hover-color="invert"],
+.x-card[data-hover-color="invert"][data-disabled="false"]        .x-card--body:hover,
+.x-icon-button[data-hover-color="invert"][data-disabled="false"] .x-icon-button--body:hover::before,
+.x-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-invert ) }
+
+/* Hover-color */
+
 /* Text-color */
 
 .x-button--body[data-color="invert"],
@@ -396,7 +407,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="primary"],
+.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="primary"],
 .x-card[data-hover-color="primary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
@@ -472,7 +483,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="secondary"],
+.x-button[data-disabled="false"]                                    .x-button--body:hover[data-hover-color="secondary"],
 .x-card[data-hover-color="secondary"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
@@ -548,7 +559,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="success"],
+.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="success"],
 .x-card[data-hover-color="success"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
@@ -624,7 +635,7 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"] .x-button--body:hover[data-hover-color="warning"],
+.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="warning"],
 .x-card[data-hover-color="warning"][data-disabled="false"]        .x-card--body:hover,
 .x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover::before,
 .x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {

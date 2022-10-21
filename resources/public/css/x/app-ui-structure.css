@@ -209,6 +209,21 @@
 
 
 
+/***** App sidebar *****/
+
+#x-app-sidebar--content {
+  /* BUG#0410
+   * Ha az #x-app-sidebar--content elem tartalma sticky pozícionálású, akkor
+   * szükséges, hogy az #x-app-sidebar--content elem magassága legalább akkora
+   * legyen, mint az #x-app-surface elem magassága, mert a sticky pozícionálású
+   * elemek csak addig tartják meg a sticky tulajdonságukat, ameddig az őket
+   * tartalmazó sticky-container elem a viewport-ban van. */
+  height: 100% }
+
+/***** App sidebar *****/
+
+
+
 /***** Error shield *****/
 
 #x-error-shield {

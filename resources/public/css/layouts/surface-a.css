@@ -24,7 +24,7 @@
 
 #surface-a {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   min-height: 100vh;
   width: 100% }
 
@@ -52,7 +52,7 @@
   display: flex;
   justify-content: center;
   left: 0;
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100% }
 
@@ -120,7 +120,8 @@
   flex-grow: 1;
   justify-content: center;
  -padding-top: 96px;
-  padding-top: 72px;
+ -padding-top: 72px;
+  padding-top: 24px;
   width: 100% }
 
 @media only screen and (max-width: 719px) {

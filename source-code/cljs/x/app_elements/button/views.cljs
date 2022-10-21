@@ -93,7 +93,7 @@
   ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-color (keyword or string)(opt)
-  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :border-radius (keyword)(opt)
   ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl

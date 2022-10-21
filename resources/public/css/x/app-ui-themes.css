@@ -18,6 +18,7 @@ body[data-theme="dark"] {
   --app-overlay-color:          var( --black-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --black-x-light );
+  --fill-color-invert:          var( --white-xx-light );
   /* Ghost color */
   --ghost-color:                var( --black );
   /* Scroll-shadow */
@@ -27,6 +28,7 @@ body[data-theme="dark"] {
   --background-color:           var( --black-light );
   --background-color-muted:     var( --grey-x-dark );
   --background-color-highlight: var( --black-light );
+  --background-color-invert:    var( --white-xx-light );
   --background-color-primary:   var( --soft-blue-xx-dark );
   --background-color-secondary: var( --soft-purple-xx-dark );
   --background-color-success:   var( --soft-green-xx-dark );
@@ -35,6 +37,7 @@ body[data-theme="dark"] {
   --border-color:               var( --black-x-light );
   --border-color-muted:         var( --black-xx-light );
   --border-color-highlight:     var( --grey-xx-dark );
+  --border-color-invert:        var( --grey-x-light );
   --border-color-primary:       var( --hard-blue );
   --border-color-secondary:     var( --hard-purple );
   --border-color-success:       var( --hard-green );
@@ -52,7 +55,7 @@ body[data-theme="dark"] {
   --hover-color:                var( --black-xx-light );
   --hover-color-muted:          var( --grey );
   --hover-color-highlight:      var( --grey-x-light );
-  --hover-color-invert:         var( --white-xx-dark );
+  --hover-color-invert:         var( --white-xx-light );
   --hover-color-primary:        var( --soft-blue-x-dark );
   --hover-color-secondary:      var( --soft-purple-x-dark );
   --hover-color-success:        var( --soft-green-x-dark );
@@ -66,6 +69,7 @@ body[data-theme="light"] {
   --app-overlay-color:          var( --white-semi-transparent );
   /* Fill color */
   --fill-color:                 var( --white-xx-light );
+  --fill-color-invert:          var( --black-x-light );
   /* Ghost color */
   --ghost-color:                var( --white );
   /* Scroll-shadow */
@@ -75,6 +79,7 @@ body[data-theme="light"] {
   --background-color:           var( --white-xx-light );
   --background-color-muted:     var( --grey-x-light );
   --background-color-highlight: var( --white-light );
+  --background-color-invert:    var( --black-light );
   --background-color-primary:   var( --soft-blue );
   --background-color-secondary: var( --soft-purple );
   --background-color-success:   var( --soft-green );
@@ -83,6 +88,7 @@ body[data-theme="light"] {
   --border-color:               var( --grey-x-light );
   --border-color-muted:         var( --grey-xx-light );
   --border-color-highlight:     var( --white );
+  --border-color-invert:        var( --black-x-light );
   --border-color-primary:       var( --hard-blue );
   --border-color-secondary:     var( --hard-purple );
   --border-color-success:       var( --soft-green );
@@ -100,6 +106,7 @@ body[data-theme="light"] {
   --hover-color:                var( --white-xx-light );
   --hover-color-muted:          var( --grey-xx-light );
   --hover-color-highlight:      var( --white );
+  --hover-color-invert:         var( --black-xx-light );
   --hover-color-primary:        var( --soft-blue-light );
   --hover-color-secondary:      var( --soft-purple-light );
   --hover-color-success:        var( --soft-green-light );

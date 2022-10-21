@@ -28,7 +28,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn background
-  []
+  [_ _]
   [:div#surface-a--background [:svg {:style {:width "100%" :height "100%"}
                                      :preserve-aspect-ratio "none"
                                      :view-box              "0 0 100 100"}
@@ -181,7 +181,7 @@
 
 (defn- footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
           [:div#surface-a--footer [:div#surface-a--footer-content [privacy-policy-button]
                                                                   [terms-of-service-button]
@@ -204,11 +204,25 @@
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  []
+  [_ _]
   (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
           (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
                                :component-will-unmount (fn [] (helpers/header-will-unmount-f))
                                :reagent-render         (fn [] [header-structure])})))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) surface-id
+  ; @param (map) layout-props
+  ;  {:content (metamorphic-content)}
+  [surface-id {:keys [content] :as layout-props}]
+  [:div#surface-a--body [:div#surface-a--body-content [components/content surface-id content]]])
 
 
 
@@ -220,14 +234,13 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) layout-props
-  ;  {:content (metamorphic-content)}
-  [surface-id {:keys [content] :as layout-props}]
+  [surface-id layout-props]
   [:div#surface-a (helpers/layout-attributes surface-id layout-props)
-                  [background]
-                  [:div#surface-a--header-sensor]
-                  [:div#surface-a--body [:div#surface-a--body-content [components/content surface-id content]]]
-                  [header]
-                  [footer]])
+                  [background                surface-id layout-props]
+                  [footer                    surface-id layout-props]
+                  [body                      surface-id layout-props]
+                  [header                    surface-id layout-props]
+                  [:div#surface-a--header-sensor]])
 
 (defn layout
   ; @param (keyword) surface-id

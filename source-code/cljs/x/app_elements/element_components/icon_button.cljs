@@ -128,7 +128,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :hover-color (keyword or string)(opt)
-  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)
