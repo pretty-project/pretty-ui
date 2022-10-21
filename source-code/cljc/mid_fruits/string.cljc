@@ -85,7 +85,7 @@
 (defn part
   ; @param (string) n
   ; @param (integer) start
-  ; @param (integer) end
+  ; @param (integer)(opt) end
   ;
   ; @example
   ;  (string/part "abcdef" 2 4)
@@ -98,12 +98,15 @@
   ;  "cd"
   ;
   ; @return (string)
-  [n start end]
-  (if (and (nonempty? n)
-           (math/between? end   0 (count n))
-           (math/between? start 0 (count n)))
-      (subs   n start end)
-      (return n)))
+  ([n start]
+   (part n start (count n)))
+
+  ([n start end]
+   (if (and (nonempty? n)
+            (math/between? end   0 (count n))
+            (math/between? start 0 (count n)))
+       (subs   n start end)
+       (return n))))
 
 (defn trim
   ; @param (string) n

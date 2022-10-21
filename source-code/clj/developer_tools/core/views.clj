@@ -21,7 +21,10 @@
               [mid-fruits.string                      :as string]
               [mongo-db.api                           :as mongo-db]
               [re-frame.api                           :as r]
-              [x.server-user.api                      :as user]))
+              [x.server-user.api                      :as user]
+
+              ; TEMP
+              [docs.api :as docs]))
 
 
 
@@ -58,6 +61,10 @@
                 "<pre style=\"white-space: normal\">"
                 (menu-bar        request)
                 (developer-tools request)
+
+                ; TEMP
+                (docs/create-documentation! {:path "submodules/io-api"})
+
                 "</pre>"
                 "</body>"
                 "</html>"))
