@@ -79,8 +79,16 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
-  (fn [{:keys [db]} _]
+  (fn [{:keys [db]} [_ server-props]]
       (println details/app-codename "launching server ...")
       {; A szerver indítása utáni események meghívása
        ; (Dispatch on-server-launch events)
-       :dispatch-n (r core/get-period-events db :on-server-launch)}))
+       :dispatch-n (r core/get-period-events db :on-server-launch)
+       :dispatch-tick [{:tick 100 :dispatch [:boot-loader/server-launched server-props]}]}))
+
+(r/reg-event-fx :boot-loader/server-launched
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) server-props
+  (fn [{:keys [db]} _]
+      (println details/app-codename "server launched")))
