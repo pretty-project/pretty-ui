@@ -29,10 +29,13 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
-  [:<> [:style {:type "text/css"} ".ck.ck-toolbar {"
+  [:div {:style {:display "flex" :flex-direction "column-reverse"}}
+       [:style {:type "text/css"} ".ck.ck-toolbar {"
                                   (css/unparse {:border-color "var( --border-color-highlight )"
                                                 :border-style "solid"
-                                                :border-width "1px"})
+                                                :border-width "1px"
+                                                :position     "sticky"
+                                                :top          "48px"})
                                   "}"
                                   ".ck.ck-editor__editable_inline,"
                                   ".ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {"

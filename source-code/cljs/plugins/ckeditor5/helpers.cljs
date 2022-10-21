@@ -25,7 +25,7 @@
   [editor]
   (let [parent-node (-> editor .-sourceElement .-parentNode)
         toolbar     (-> editor .-ui .-view .-toolbar .-element)]
-       (.prepend parent-node toolbar)))
+       (.append parent-node toolbar)))
 
 
 
