@@ -32,7 +32,7 @@
   [:div {:style {:display "flex" :flex-direction "column-reverse"}}
        [:style {:type "text/css"} ".ck.ck-toolbar {"
                                   (css/unparse {:border-color "var( --border-color-highlight )"
-                                                :border-style "solid"
+                                                :border-style "none none solid none"
                                                 :border-width "1px"
                                                 :position     "sticky"
                                                 :top          "48px"})
