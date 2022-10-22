@@ -63,7 +63,7 @@
                 (developer-tools request)
 
                 ; TEMP
-                (docs/create-documentation! {:path "submodules/io-api"})
+                ;(docs/create-documentation! {:path "submodules/io-api"})
 
                 "</pre>"
                 "</body>"

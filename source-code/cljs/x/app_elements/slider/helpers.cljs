@@ -41,15 +41,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn sliding!
+(defn slide!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (DOM-event) mouse-event
   [mouse-event slider-id thumb-id]
-  (let [start-x (get-in @slider.state/THUMBS [thumb-id :start-x])
-        mouse-x (dom/get-mouse-x mouse-event)]
-       (swap! slider.state/THUMBS assoc-in [slider-id thumb-id :translate-x] 50))
-  (println (dom/get-mouse-x mouse-event)))
+  (let [initial-mouse-x     (get-in @slider.state/THUMBS [slider-id thumb-id :initial-mouse-x])
+        initial-translate-x (get-in @slider.state/THUMBS [slider-id thumb-id :initial-translate-x])
+        current-mouse-x     (dom/get-mouse-x mouse-event)
+        current-translate-x (+ initial-translate-x (- current-mouse-x initial-mouse-x))]
+       (swap! slider.state/THUMBS assoc-in [slider-id thumb-id :current-translate-x] current-translate-x)))
 
 (defn stop-sliding!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +59,7 @@
   ; @param (keyword) thumb-id
   [mouse-event slider-id thumb-id]
   (swap! slider.state/THUMBS update-in [slider-id thumb-id] merge {;:start-position mouse-x
-                                                                   :sliding?       false}))
+                                                                   :thumb-sliding? false}))
 
 (defn start-sliding!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -67,10 +68,12 @@
   ; @param (keyword) slider-id
   ; @param (keyword) thumb-id
   [mouse-event slider-id thumb-id]
-  (let [mouse-x (dom/get-mouse-x mouse-event)]
-       (swap! slider.state/THUMBS update-in [slider-id thumb-id] merge {:start-x  mouse-x
-                                                                        :sliding? true})
-       (letfn [(sliding-f      [mouse-event] (sliding!             mouse-event slider-id thumb-id))
+  (let [initial-mouse-x     (dom/get-mouse-x mouse-event)
+        initial-translate-x (get-in @slider.state/THUMBS [slider-id thumb-id :current-translate-x] 0)]
+       (swap! slider.state/THUMBS update-in [slider-id thumb-id] merge {:initial-mouse-x     initial-mouse-x
+                                                                        :initial-translate-x initial-translate-x
+                                                                        :thumb-sliding?      true})
+       (letfn [(sliding-f      [mouse-event] (slide!               mouse-event slider-id thumb-id))
                (stop-sliding-f [mouse-event] (dom/prevent-default! mouse-event)
                                              (stop-sliding!        mouse-event slider-id thumb-id)
                                              (dom/remove-event-listener! "mousemove" sliding-f)
@@ -108,11 +111,11 @@
   ; @return (map)
   ;  {}
   [slider-id {:keys []}]
-  (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :translate-x] 0)]
+  (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
        {:data-clickable true
         :on-mouse-down  #(start-sliding! % slider-id :primary)
-        :style          {:left      (->         100 css/percent)
-                         :transform (-> translate-x css/percent css/translate-x)}}))
+        :style          {:left      (->           0 css/px)
+                         :transform (-> translate-x css/px css/translate-x)}}))
 
 (defn slider-secondary-thumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,11 +127,11 @@
   ; @return (map)
   ;  {}
   [slider-id slider-props]
-  (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :translate-x] 0)]
+  (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
        {:data-clickable true
         :on-mouse-down  #(start-sliding! % slider-id :secondary)
-        :style          {:left      (->           0 css/percent)
-                         :transform (-> translate-x css/percent css/translate-x)}}))
+        :style          {:right     (->           0 css/px)
+                         :transform (-> translate-x css/px css/translate-x)}}))
 
 (defn slider-line-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

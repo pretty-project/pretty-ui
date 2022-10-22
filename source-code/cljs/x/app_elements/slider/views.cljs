@@ -86,8 +86,8 @@
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.x-slider (slider.helpers/slider-attributes slider-id slider-props)
-                 [slider-label                      slider-id slider-props]
-                 [slider-body                       slider-id slider-props]])
+                 [slider-label                     slider-id slider-props]
+                 [slider-body                      slider-id slider-props]])
 
 (defn- slider
   ; WARNING! NON-PUBLIC! DO NOT USE!

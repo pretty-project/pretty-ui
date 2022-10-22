@@ -20,7 +20,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (map)
-(def BOOK {:currency
+(def BOOK {:crypto-currency
+           {:en "Crypto currency"
+            :hu "Kriptovaluta"}
+           :crypto-currencies
+           {:en "Crypto currencies"
+            :hu "Kriptovaluták"}
+           :currency
            {:en "Currency"
             :hu "Pénznem"}
            :current-price
@@ -35,6 +41,12 @@
            :default-vat-value
            {:en "Default VAT value"
             :hu "Alapértelmezett ÁFA érték"}
+           :market-position
+           {:en "Market position"
+            :hu "Piaci pozíció"}
+           :market-positions
+           {:en "Market positions"
+            :hu "Piaci pozíciók"}
            :market-price
            {:en "Market price"
             :hu "Árfolyam"}
@@ -47,6 +59,9 @@
            :secondary-currency
            {:en "Secondary currency"
             :hu "Másodlagos pénznem"}
+           :trading-bot
+           {:en "Trading bot"
+            :hu "Kereskedő robot"}
            :vat
            {:en "VAT"
             :hu "ÁFA"}
