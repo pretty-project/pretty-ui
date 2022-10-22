@@ -31,11 +31,11 @@
   ;
   ; @return (map)
   ;  {:app-build (string)
-  ;   :core-js (string)
+  ;   :js-build (keyword)
   ;   :selected-theme (string)}
   [request body-props]
   (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config body-props
               {:app-build      (core/app-build)
-               :core-js        (router/request->route-prop       request :core-js router/DEFAULT-CORE-JS)
+               :js-build       (router/request->route-prop       request :js-build router/DEFAULT-JS-BUILD)
                :selected-theme (user/request->user-settings-item request :selected-theme)})))

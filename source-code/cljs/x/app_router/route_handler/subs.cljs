@@ -184,6 +184,15 @@
   (let [current-route-id (r get-current-route-id db)]
        (get-in db [:router :route-handler/client-routes current-route-id :route-template])))
 
+(defn get-current-js-build
+  ; @usage
+  ;  (r router/get-current-js-build db)
+  ;
+  ; @return (string)
+  [db _]
+  (let [current-route-id (r get-current-route-id db)]
+       (get-in db [:router :route-handler/client-routes current-route-id :js-build])))
+
 (defn get-current-route-path-params
   ; @usage
   ;  (r router/get-current-route-path-params db)
@@ -389,6 +398,10 @@
 ; @usage
 ;  [:router/get-current-route-template]
 (r/reg-sub :router/get-current-route-template get-current-route-template)
+
+; @usage
+;  [:router/get-current-js-build]
+(r/reg-sub :router/get-current-js-build get-current-js-build)
 
 ; @usage
 ;  [:router/get-current-route-path-params]

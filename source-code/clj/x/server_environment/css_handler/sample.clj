@@ -22,14 +22,14 @@
 ;; -- CSS fájl hozzáadása a szerver indulásakor Re-Frame eseménnyel -----------
 ;; ----------------------------------------------------------------------------
 
-; - A :core-js opcionális tulajdonság  használatával beállítható, hogy melyik
-;   .js fájl (pl. app.js) használatakor töltődjön be az adott .css fájl
+; A :js-build opcionális tulajdonság  használatával beállítható, hogy melyik
+; JS build (pl. :site) használatakor töltődjön be az adott .css fájl
 ;
-; - Ha egy .css fájlt egy-egy útvonal használatához szeretnéd kapcsolni,
-;   akkor használd a kliens-oldali [:environment/add-css! ...] eseményt!
+; Ha egy .css fájlt egy-egy útvonal használatához szeretnéd kapcsolni,
+; akkor használd a kliens-oldali [:environment/add-css! ...] eseményt!
 (core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:environment/add-css! {:core-js "sample.js"
-                                           :uri     "/css/sample.css"}]})
+  {:on-server-boot [:environment/add-css! {:js-build :sample
+                                           :uri      "/css/sample.css"}]})
 
 
 
@@ -38,7 +38,7 @@
 
 (defn add-my-css!
   [db _]
-  (r environment/add-css! db {:core-js "sample.js"
-                              :uri     "/css/sample.css"}))
+  (r environment/add-css! db {:js-build :sample
+                              :uri      "/css/sample.css"}))
 
 (r/reg-event-db :add-my-css! add-my-css!)

@@ -23,7 +23,8 @@
 
 (defn add-css!
   ; @param (map) css-props
-  ;  {:core-js (string)(opt)
+  ;  {:js-build (keyword)(opt)
+  ;    A fájl kiszolgálása hozzárendelhető egy megadott JS build-hez.
   ;   :uri (string)}
   ;
   ; @usage

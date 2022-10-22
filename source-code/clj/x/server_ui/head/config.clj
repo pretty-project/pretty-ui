@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (maps in vector)
-;  [{:core-js (string)(opt)
+;  [{:js-build (keyword)(opt)
 ;    :uri (string)}]
 (def SYSTEM-CSS-PATHS [; ...
                        {:uri "/css/normalize.css"}

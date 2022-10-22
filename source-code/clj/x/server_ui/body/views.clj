@@ -47,7 +47,7 @@
   ; @param (map)(opt) body-props
   ;  {:loading-screen (hiccup)(opt)
   ;   :plugin-js-paths (maps in vector)
-  ;    [{:core-js (string)(opt)
+  ;    [{:js-build (keyword)(opt)
   ;      :route-template (string)(opt)
   ;      :uri (string)}]}
   ;

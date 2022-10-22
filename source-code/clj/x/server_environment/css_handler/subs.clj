@@ -25,7 +25,7 @@
   ;  (r environment/get-css-paths db)
   ;
   ; @return (maps in vector)
-  ;  [{:core-js (string)
+  ;  [{:js-build (keyword)
   ;    :uri (string)}]
   [db _]
   (get-in db [:environment :css-handler/data-items]))

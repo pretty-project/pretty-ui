@@ -35,6 +35,7 @@
 (def get-current-route-id           route-handler.subs/get-current-route-id)
 (def get-current-route-path         route-handler.subs/get-current-route-path)
 (def get-current-route-template     route-handler.subs/get-current-route-template)
+(def get-current-js-build           route-handler.subs/get-current-js-build)
 (def get-current-route-path-params  route-handler.subs/get-current-route-path-params)
 (def get-current-route-path-param   route-handler.subs/get-current-route-path-param)
 (def get-current-route-query-params route-handler.subs/get-current-route-query-params)

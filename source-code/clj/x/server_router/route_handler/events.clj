@@ -86,9 +86,9 @@
   ;  {:add-to-sitemap? (boolean)(opt)
   ;    Default: false
   ;   :get (function or map)(opt)
+  ;   :js-build (keyword)(opt)
+  ;    Default: route-handler.config/DEFAULT-JS-BUILD
   ;   :post (function or map)(opt)
-  ;   :core-js (string)(opt)
-  ;    Default: route-handler.config/DEFAULT-CORE-JS
   ;   :restricted? (boolean)(opt)
   ;    Default: false
   ;   :route-parent (string)(opt)

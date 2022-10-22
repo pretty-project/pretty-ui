@@ -63,12 +63,12 @@
   ;
   ; @return (map)
   ;  {:get (map)
-  ;   :core-js (string)
+  ;   :js-build (keyword)
   ;   :post (map)
   ;   :route-parent (string)}
   [db [_ _ {:keys [get post restricted? route-parent] :as route-props}]]
   (let [app-home (r core/get-app-config-item db :app-home)]
-       (merge {:core-js route-handler.config/DEFAULT-CORE-JS}
+       (merge {:js-build route-handler.config/DEFAULT-JS-BUILD}
               (param route-props)
               (if route-parent {:route-parent (route-handler.helpers/resolve-variable-route-string route-parent app-home)})
               (if get          {:get          (handler-prototype get  {:restricted? restricted?})})

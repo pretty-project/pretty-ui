@@ -34,7 +34,7 @@
 (def get-default-route  default-handler.subs/get-default-route)
 
 ; x.server-router.route-handler.config
-(def DEFAULT-CORE-JS route-handler.config/DEFAULT-CORE-JS)
+(def DEFAULT-JS-BUILD route-handler.config/DEFAULT-JS-BUILD)
 
 ; x.server-router.route-handler.helpers
 (def request->route-prop              route-handler.helpers/request->route-prop)

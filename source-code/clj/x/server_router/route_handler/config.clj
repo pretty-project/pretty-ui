@@ -19,11 +19,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-(def DEFAULT-CORE-JS "app.js")
+; @constant (keyword)
+(def DEFAULT-JS-BUILD :app)
 
 ; @constant (keywords in vector)
-(def CLIENT-ROUTE-KEYS [:client-event :core-js :on-leave-event :restricted? :route-parent :route-template])
+(def CLIENT-ROUTE-KEYS [:js-build :client-event :on-leave-event :restricted? :route-parent :route-template])
 
 ; @constant (keywords in vector)
-(def SERVER-ROUTE-KEYS [:get :core-js :post :restricted? :route-template :server-event])
+(def SERVER-ROUTE-KEYS [:js-build :get :post :restricted? :route-template :server-event])

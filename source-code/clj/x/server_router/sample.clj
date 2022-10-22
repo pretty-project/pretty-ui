@@ -48,7 +48,7 @@
 ;  Pl.:
 ;  {:get            #(my-handler %)
 ;   :post           {...}
-;   :core-js        "app.js"
+;   :js-build       :app
 ;   :client-event   [:my-client-event]
 ;   :server-event   [:my-server-event]
 ;   :restricted?    true
@@ -162,17 +162,17 @@
 
 
 
-;; -- {:core-js "..."} beállítás használata -----------------------------------
+;; -- {:js-build "..."} tulajdonság használata --------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A {:core-js "..."} tulajdonság átadásával az alapbeállítástól eltérő .js fájl is használható.
+; A {:js-build "..."} tulajdonság átadásával az alapbeállítástól eltérő JS build is használható.
 (core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get {:handler #(my-handler %)}
-                                                      :core-js "my-app.js"}]
+                                                      :js-build :my-build}]
                                  [:router/add-route! {:route-template "/your-route"
                                                       :post {:handler #(your-handler %)}
-                                                      :core-js "your-app.js"}]]}})
+                                                      :js-build :your-build}]]}})
 
 
 

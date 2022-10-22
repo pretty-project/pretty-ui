@@ -65,9 +65,7 @@
   ;
   ; @return (maps in vector)
   [request head-props]
-  ; XXX#5061
-  ; A head elemben felsorolt CSS fájlok forrásáról bővebben a modul
-  ; README.md fájljában olvashatsz!
+  ; XXX#5061 (source-code/clj/x/server_ui/README.md)
   (let [app-config            @(r/subscribe [:core/get-app-config])
         environment-css-paths @(r/subscribe [:environment/get-css-paths])]
        (vector/concat-items head.config/SYSTEM-CSS-PATHS
@@ -83,40 +81,40 @@
 (defn include-css?
   ; @param (map) request
   ; @param (map) head-props
-  ;  {:core-js (string)}
+  ;  {:js-build (keyword)}
   ; @param (map) css-props
-  ;  {:core-js (string)(opt)
+  ;  {:js-build (keyword)(opt)
   ;   :route-template (string)(opt)}
   ;
   ; @return (boolean)
-  [request {:keys [core-js]} {:keys [route-template] :as css-props}]
+  [request {:keys [js-build]} {:keys [route-template] :as css-props}]
   ; XXX#1720
   ; A head komponensben felsorolt CSS fájlok abban az esetben lesznek ténylegesen
   ; alkalmazva, ha a CSS fájlt leíró css-props térképben ...
-  ; ... nincs meghatározva, hogy a CSS fájl melyik core-js fájl használata esetén
-  ;     legyen alkalmazva, vagy a css-props térképben meghatároztt core-js fájl
-  ;     megegyezik az aktuálisan használatban lévő core-js fájllal.
+  ; ... nincs meghatározva, hogy a CSS fájl melyik JS build használata esetén
+  ;     legyen alkalmazva, vagy a css-props térképben meghatároztt JS build
+  ;     megegyezik az aktuálisan használatban lévő JS build-el.
   ; ... nincs meghatározva, hogy a CSS fájl milyen útonal használata esetén legyen
   ;     alkalmazva, vagy az aktuálisan használt útvonal illeszkedik a css-props
   ;     térképben meghatározott route-template mintával.
-  (and (or (-> css-props :core-js nil?)
-           (-> css-props :core-js (= core-js)))
+  (and (or (-> css-props :js-build nil?)
+           (-> css-props :js-build (= js-build)))
        (or (-> css-props :route-template nil?)
            (router/request->route-template-matched? request route-template))))
 
 (defn include-favicon?
   ; @param (map) request
   ; @param (map) head-props
-  ;  {:core-js (string)}
+  ;  {:js-build (keyword)}
   ; @param (map) favicon-props
-  ;  {:core-js (string)(opt)
+  ;  {:js-build (keyword)(opt)
   ;   :route-template (string)(opt)}
   ;
   ; @return (boolean)
-  [request {:keys [core-js]} {:keys [route-template] :as favicon-props}]
+  [request {:keys [js-build]} {:keys [route-template] :as favicon-props}]
   ; XXX#1720
-  (and (or (-> favicon-props :core-js nil?)
-           (-> favicon-props :core-js (= core-js)))
+  (and (or (-> favicon-props :js-build nil?)
+           (-> favicon-props :js-build (= js-build)))
        (or (-> favicon-props :route-template nil?)
            (router/request->route-template-matched? request route-template))))
 
@@ -246,7 +244,7 @@
   ; @param (map) head-props
   ;  {:app-build (string)(opt)
   ;   :favicon-paths (maps in vector)
-  ;    [{:core-js (string)(opt)
+  ;    [{:js-build (keyword)(opt)
   ;      :size (string)
   ;      :uri (string)}]
   ;
