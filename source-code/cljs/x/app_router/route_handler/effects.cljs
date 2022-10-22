@@ -26,23 +26,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :router/change-to!
+(r/reg-event-fx :router/swap-to!
   ; @param (string) route-string
   ; @param (map)(opt) router-props
   ;  {:route-parent (string)(opt)}
   ;
   ; @usage
-  ;  [:router/change-to! "/my-route"]
+  ;  [:router/swap-to! "/my-route"]
   ;
   ; @usage
-  ;  [:router/change-to! "/my-route" {...}]
+  ;  [:router/swap-to! "/my-route" {...}]
   (fn [{:keys [db]} [_ route-string route-props]]
-      ; A [:router/change-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
+      ; A [:router/swap-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
       ; események megtörténése nélkül.
       ;
-      ; Az útvonal használata előtt az útvonal-kezelőt {:change-mode? true} állapotba állítja,
+      ; Az útvonal használata előtt az útvonal-kezelőt {:swap-mode? true} állapotba állítja,
       ; ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
-      {:db       (r route-handler.events/set-change-mode! db)
+      {:db       (r route-handler.events/set-swap-mode! db)
        :dispatch [:router/go-to! route-string route-props]}))
 
 (r/reg-event-fx :router/go-home!
@@ -130,10 +130,10 @@
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-string]]
       (let [route-id (r route-handler.subs/match-route-id db route-string)]
-           (if-let [change-mode? (get-in db [:router :route-handler/meta-items :change-mode?])]
-                   ; Ha az útvonal-kezelő {:change-mode? true} állapotban van ...
+           (if-let [swap-mode? (get-in db [:router :route-handler/meta-items :swap-mode?])]
+                   ; Ha az útvonal-kezelő {:swap-mode? true} állapotban van ...
                    {:db (r route-handler.events/handle-route! db route-id route-string)}
-                   ; Ha az útvonal-kezelő NINCS {:change-mode? true} állapotban ...
+                   ; Ha az útvonal-kezelő NINCS {:swap-mode? true} állapotban ...
                    (if (r route-handler.subs/require-authentication? db route-id)
                        ; Ha az útvonal kezeléséhez bejelentkezés szükséges ...
                        {:db       (r route-handler.events/handle-route! db route-id route-string)

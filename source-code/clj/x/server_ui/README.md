@@ -4,7 +4,6 @@
   1. ... a head.config/SYSTEM-CSS-PATHS vektorban felsorolt fájlok.
   2. ... az [:environment/add-css! ...] eseménnyel hozzáadott fájlok.
   3. ... az x.app-config.edn fájl {:css-paths [...]} tulajdonsága.
-  4. ... a head komponens {:css-paths [...]} paramétere.
 
 
 

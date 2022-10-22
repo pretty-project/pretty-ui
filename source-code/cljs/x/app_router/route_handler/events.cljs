@@ -21,26 +21,43 @@
               [x.app-db.api                       :as db]
               [x.app-router.route-handler.config  :as route-handler.config]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
-              [x.app-router.route-handler.subs    :as route-handler.subs]))
+              [x.app-router.route-handler.subs    :as route-handler.subs]
+              [x.app-ui.api                       :as ui]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-change-mode!
+(defn set-swap-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
-  (assoc-in db [:router :route-handler/meta-items :change-mode?] true))
+  (assoc-in db [:router :route-handler/meta-items :swap-mode?] true))
 
-(defn quit-change-mode!
+(defn quit-swap-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
-  (assoc-in db [:router :route-handler/meta-items :change-mode?] false))
+  (assoc-in db [:router :route-handler/meta-items :swap-mode?] false))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-default-routes!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  ; A szerverről érkezett client-routes útvonalak magasabb prioritásúak, mint a DEFAULT-ROUTES útvonalak!
+  ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni a kliens-oldali DEFAULT-ROUTES útvonalakat.
+  (let [client-routes (r route-handler.subs/get-client-routes db)]
+       (assoc-in db [:router :route-handler/client-routes]
+                    (merge route-handler.config/DEFAULT-ROUTES client-routes))))
 
 
 
@@ -83,17 +100,6 @@
                              (uri/uri->parent-uri route-string)))
               (dissoc-in [:router :route-handler/meta-items :virtual-parent]))))
 
-(defn set-default-routes!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  ; A szerverről érkezett client-routes útvonalak magasabb prioritásúak, mint a DEFAULT-ROUTES útvonalak!
-  ; Így lehetséges a szerver-oldalon beállított útvonalakkal felülírni a kliens-oldali DEFAULT-ROUTES útvonalakat.
-  (let [client-routes (r route-handler.subs/get-client-routes db)]
-       (assoc-in db [:router :route-handler/client-routes]
-                    (merge route-handler.config/DEFAULT-ROUTES client-routes))))
-
 (defn reg-to-history!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -102,6 +108,18 @@
   ; @return (map)
   [db [_ route-id]]
   (r db/apply-item! db [:router :route-handler/meta-items :history] vector/conj-item route-id))
+
+(defn configure-ui!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (string) route-id
+  ;
+  ; @return (map)
+  [db [_ route-id]]
+  ; XXX#5670
+  (let [js-build (r route-handler.subs/get-current-js-build db)]
+       (case js-build :app  (r ui/set-interface! db :application-ui)
+                      :site (r ui/set-interface! db :website-ui))))
 
 (defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -114,10 +132,11 @@
   ; A handle-route! függvény ...
   ; ... eltárolja az aktuális route-string paraméterből származtatott értékeket.
   ; ... eltárolja az aktuális route-id azonosítót
-  ; ... kilépteti az útvonal-kezelőt az esetlegesen beállított {:change-mode? true} állapotból.
+  ; ... kilépteti az útvonal-kezelőt az esetlegesen beállított {:swap-mode? true} állapotból.
   (as-> db % (r store-current-route! % route-string)
              (r reg-to-history!      % route-id)
-             (r quit-change-mode!    % route-id)))
+             (r quit-swap-mode!      % route-id)
+             (r configure-ui!        % route-id)))
 
 (defn go-to!
   ; WARNING! NON-PUBLIC! DO NOT USE!

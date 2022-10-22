@@ -70,8 +70,7 @@
         environment-css-paths @(r/subscribe [:environment/get-css-paths])]
        (vector/concat-items head.config/SYSTEM-CSS-PATHS
                             environment-css-paths
-                            (:css-paths app-config)
-                            (:css-paths head-props))))
+                            (:css-paths app-config))))
 
 
 

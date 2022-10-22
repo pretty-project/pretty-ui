@@ -15,6 +15,8 @@
 (ns x.app-ui.api
     (:require [x.app-ui.bubbles.effects]
               [x.app-ui.bubbles.subs]
+              [x.app-ui.interface.effects]
+              [x.app-ui.interface.events]
               [x.app-ui.popups.effects]
               [x.app-ui.popups.events]
               [x.app-ui.popups.subs]
@@ -34,6 +36,7 @@
               [x.app-ui.bubbles.views               :as bubbles.views]
               [x.app-ui.error-shield.helpers        :as error-shield.helpers]
               [x.app-ui.error-shield.side-effects   :as error-shield.side-effects]
+              [x.app-ui.interface.subs              :as interface.subs]
               [x.app-ui.loading-screen.side-effects :as loading-screen.side-effects]
               [x.app-ui.progress-bar.events         :as progress-bar.events]
               [x.app-ui.progress-bar.subs           :as progress-bar.subs]
@@ -45,7 +48,7 @@
 
 
 
-;; -- Redirects ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; x.app-ui.bubbles.views
@@ -56,6 +59,11 @@
 
 ; x.app-ui.error-shield.side-effects
 (def set-error-shield! error-shield.side-effects/set-error-shield!)
+
+; x.app-ui.interface.subs
+(def get-interface          interface.subs/get-interface)
+(def application-interface? interface.subs/application-interface?)
+(def website-interface?     interface.subs/website-interface?)
 
 ; x.app-ui.loading-screen.side-effects
 (def hide-loading-screen! loading-screen.side-effects/hide-loading-screen!)

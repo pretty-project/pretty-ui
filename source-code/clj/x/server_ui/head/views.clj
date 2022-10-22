@@ -25,10 +25,6 @@
   ; @param (map) request
   ; @param (map)(opt) head-props
   ;  {:app-title (string)(opt)
-  ;   :css-paths (maps in vector)(opt)
-  ;    [{:js-build (keyword)(opt)
-  ;      :route-template (string)(opt)
-  ;      :uri (string)}]
   ;   :meta-description (string)(opt)
   ;   :meta-keywords (string or strings in vector)(opt)
   ;   :meta-name (string)

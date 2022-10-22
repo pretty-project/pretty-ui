@@ -92,12 +92,12 @@
 ;; -- Az útvonal lecserélése hatások nélkül -----------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A [:router/change-to! ...] esemény lecseréli az aktuálisan használt útvonalat,
+; A [:router/swap-to! ...] esemény lecseréli az aktuálisan használt útvonalat,
 ; a paraméterként kapott útvonalra, az útvonalhoz rendelt események figyelmen
 ; kívül hagyásával.
 ;
-; A [:router/change-to! ...] esemény az útvonal-kezelőt {:change-mode? true}
+; A [:router/swap-to! ...] esemény az útvonal-kezelőt {:swap-mode? true}
 ; állapotba lépteti, amely állapotban az útvonalkezelő felismeri, hogy
 ; az útvonalhoz rendelt események figyelmen kívül hagyhatók.
-(r/reg-event-fx :change-my-route!
-  [:router/change-route! "/@app-home/my-route"])
+(r/reg-event-fx :swap-my-route!
+  [:router/swap-to! "/@app-home/my-route"])
