@@ -347,16 +347,6 @@
   (let [current-route-id (r get-current-route-id db)]
        (not= route-id current-route-id)))
 
-(defn reload-same-path?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (string) route-string
-  ;
-  ; @return (boolean)
-  [db [_ route-string]]
-  (let [current-route-string (r get-current-route-string db)]
-       (and route-handler.config/RELOAD-SAME-PATH? (= route-string current-route-string))))
-
 (defn get-history
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

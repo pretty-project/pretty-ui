@@ -36,13 +36,6 @@
   [db _]
   (assoc-in db [:router :route-handler/meta-items :swap-mode?] true))
 
-(defn quit-swap-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @return (map)
-  [db _]
-  (assoc-in db [:router :route-handler/meta-items :swap-mode?] false))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -132,10 +125,8 @@
   ; A handle-route! függvény ...
   ; ... eltárolja az aktuális route-string paraméterből származtatott értékeket.
   ; ... eltárolja az aktuális route-id azonosítót
-  ; ... kilépteti az útvonal-kezelőt az esetlegesen beállított {:swap-mode? true} állapotból.
   (as-> db % (r store-current-route! % route-string)
              (r reg-to-history!      % route-id)
-             (r quit-swap-mode!      % route-id)
              (r configure-ui!        % route-id)))
 
 (defn go-to!

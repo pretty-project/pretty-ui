@@ -37,7 +37,7 @@
   ; @usage
   ;  [:router/swap-to! "/my-route" {...}]
   (fn [{:keys [db]} [_ route-string route-props]]
-      ; A [:router/swap-to! ...] esemény lecseréli az aktuális útvonalat, a hozzátartozó
+      ; A [:router/swap-to! ...] esemény lecseréli az aktuális útvonalat, a hozzárendelt
       ; események megtörténése nélkül.
       ;
       ; Az útvonal használata előtt az útvonal-kezelőt {:swap-mode? true} állapotba állítja,
@@ -91,11 +91,8 @@
       (let [route-string (r route-handler.subs/use-app-home    db route-string)
             route-string (r route-handler.subs/use-path-params db route-string)
             route-string (r route-handler.subs/use-debug-mode  db route-string)]
-           (if (r route-handler.subs/reload-same-path? db route-string)
-               {:db       (r route-handler.events/go-to! db route-string route-props)
-                :dispatch [:router/handle-route!            route-string]}
-               {:db       (r route-handler.events/go-to! db route-string route-props)
-                :fx       [:router/navigate!                route-string]}))))
+           {:db (r route-handler.events/go-to! db route-string route-props)
+            :fx [:router/navigate!                route-string]})))
 
 
 
@@ -130,17 +127,13 @@
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-string]]
       (let [route-id (r route-handler.subs/match-route-id db route-string)]
-           (if-let [swap-mode? (get-in db [:router :route-handler/meta-items :swap-mode?])]
-                   ; Ha az útvonal-kezelő {:swap-mode? true} állapotban van ...
-                   {:db (r route-handler.events/handle-route! db route-id route-string)}
-                   ; Ha az útvonal-kezelő NINCS {:swap-mode? true} állapotban ...
-                   (if (r route-handler.subs/require-authentication? db route-id)
-                       ; Ha az útvonal kezeléséhez bejelentkezés szükséges ...
-                       {:db       (r route-handler.events/handle-route! db route-id route-string)
-                        :dispatch [:router/handle-login! route-id route-string]}
-                       ; Ha az útvonal kezeléséhez NEM szüksége bejelentkezés ...
-                       {:db       (r route-handler.events/handle-route! db route-id route-string)
-                        :dispatch [:router/handle-events! route-id route-string]})))))
+           (if (r route-handler.subs/require-authentication? db route-id)
+               ; Ha az útvonal kezeléséhez bejelentkezés szükséges ...
+               {:db       (r route-handler.events/handle-route! db route-id route-string)
+                :dispatch [:router/handle-login! route-id route-string]}
+               ; Ha az útvonal kezeléséhez NEM szüksége bejelentkezés ...
+               {:db       (r route-handler.events/handle-route! db route-id route-string)
+                :dispatch [:router/handle-events! route-id route-string]}))))
 
 (r/reg-event-fx :router/init-router!
   ; WARNING! NON-PUBLIC! DO NOT USE!

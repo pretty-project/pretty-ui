@@ -355,16 +355,14 @@
   ; @param (string) x
   ;
   ; @example
-  ;  (string/before-first-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   ", y")
+  ;  (string/before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                 ", y")
   ;  =>
   ;  "With insomnia"
   ;
   ; @example
-  ;  (string/before-first-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "abc")
+  ;  (string/before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                 "abc")
   ;  =>
   ;  nil
   ;
@@ -381,16 +379,14 @@
   ; @param (string) x
   ;
   ; @example
-  ;  (string/before-last-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   ", y")
+  ;  (string/before-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                ", y")
   ;  =>
   ;  "With insomnia"
   ;
   ; @example
-  ;  (string/before-first-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "abc")
+  ;  (string/before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                "abc")
   ;  =>
   ;  nil
   ;
