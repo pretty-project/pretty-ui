@@ -28,7 +28,7 @@
   ; @usage
   ;  (hash/hmac-sha256 "My text" "my-secret-key")
   ;
-  ; @return (string)
+  ; @return (hex string)
   [n secret-key]
   (-> n (mac/hash {:key secret-key :alg :hmac+sha256})
         (codecs/bytes->hex)))
