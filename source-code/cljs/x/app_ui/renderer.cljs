@@ -1,12 +1,7 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2021.01.14
-; Description:
-; Version: v4.1.4
-; Compatibility: x4.6.0
+; WARNING
+; Az x.app-ui.renderer névtér újraírása szükséges, a Re-Frame adatbázis események
+; számának csökkentése érdekében!
 
 
 
@@ -209,8 +204,8 @@
   ;
   ; @return (keywords in vector)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-data-order db partition-id)))
+  (let [data-order-key (engine/data-key renderer-id :data-order)]
+       (get-in db [:ui data-order-key])))
 
 (r/reg-sub :ui/get-element-order get-element-order)
 
@@ -221,8 +216,8 @@
   ;
   ; @return (vector)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-data-order db partition-id)))
+  (let [data-order-key (engine/data-key renderer-id :data-order)]
+       (get-in db [:ui data-order-key])))
 
 (defn get-invisible-element-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -231,8 +226,8 @@
   ;
   ; @return (vector)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :invisible-elements)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :invisible-elements])))
 
 (defn get-visible-element-order
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -294,8 +289,8 @@
   ;
   ; @return (integer)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :max-elements-rendered)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :max-elements-rendered])))
 
 (defn max-elements-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -315,8 +310,8 @@
   ;
   ; @return (keyword)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :queue-behavior)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :queue-behavior])))
 
 (defn- pushed-rendering-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -346,8 +341,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (boolean (r db/get-meta-item db partition-id :required?))))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :required?])))
 
 (defn- get-alternate-renderer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -356,8 +351,8 @@
   ;
   ; @return (keyword)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :alternate-renderer)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :alternate-renderer])))
 
 (defn- renderer-require-error?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -378,8 +373,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (boolean (r db/get-meta-item db partition-id :reserved?))))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :reserved?])))
 
 (defn- renderer-free?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -388,8 +383,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (not (r db/get-meta-item db partition-id :reserved?))))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (not (get-in db [:ui meta-items-key :reserved?]))))
 
 (defn get-element-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -399,8 +394,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (get-in db (db/path partition-id element-id))))
+  (let [data-items-key (engine/data-key renderer-id :data-items)]
+       (get-in db [:ui data-items-key element-id])))
 
 (r/reg-sub :ui/get-element-props get-element-props)
 
@@ -413,8 +408,8 @@
   ;
   ; @return (*)
   [db [_ renderer-id element-id prop-key]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (get-in db (db/path partition-id element-id prop-key))))
+  (let [data-items-key (engine/data-key renderer-id :data-items)]
+       (get-in db [:ui data-items-key element-id prop-key])))
 
 (defn reveal-element-animated?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -472,8 +467,8 @@
   ;
   ; @return (boolean)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :rerender-same?)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :rerender-same?])))
 
 (defn get-rerender-delay
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -546,8 +541,8 @@
   ;    (map) element-props]
   ;   [...]]
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (r db/get-meta-item db partition-id :rendering-queue)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :rendering-queue])))
 
 (defn- get-next-rendering
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -714,8 +709,8 @@
   ;
   ; @return (ms)
   [db [_ renderer-id element-id action-key]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (get-in db (db/meta-item-path partition-id :render-log element-id action-key))))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (get-in db [:ui meta-items-key :render-log element-id action-key])))
 
 
 
@@ -734,8 +729,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id action-key]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :render-log element-id action-key)
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (assoc-in db [:ui meta-items-key :render-log element-id action-key]
                     (time/elapsed))))
 
 (defn- reserve-renderer!
@@ -745,8 +740,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :reserved?) true)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (assoc-in db [:ui meta-items-key :reserved?] true)))
 
 (r/reg-event-db :ui/reserve-renderer! reserve-renderer!)
 
@@ -757,8 +752,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :reserved?) false)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (assoc-in db [:ui meta-items-key :reserved?] false)))
 
 (defn- store-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -769,9 +764,11 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id element-props]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+  (let [data-items-key (engine/data-key renderer-id :data-items)
+        data-order-key (engine/data-key renderer-id :data-order)]
        (as-> db % (r update-render-log! % renderer-id  element-id :rendered-at)
-                  (r db/add-data-item!  % partition-id element-id element-props))))
+                  (r db/set-item!       % [:ui data-items-key element-id] element-props)
+                  (r db/apply-item!     % [:ui data-order-key] vector/move-item-to-last element-id))))
 
 (defn- remove-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -781,9 +778,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (as-> db % (r update-render-log!   % renderer-id  element-id :props-removed-at)
-                  (r db/remove-data-item! % partition-id element-id))))
+  (let [data-items-key (engine/data-key renderer-id :data-items)]
+       (as-> db % (r update-render-log! % renderer-id  element-id :props-removed-at)
+                  (r db/remove-item!    % [:ui data-items-key element-id]))))
 
 (r/reg-event-db :ui/remove-element! remove-element!)
 
@@ -796,9 +793,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id element-props]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
+  (let [data-items-key (engine/data-key renderer-id :data-items)]
        (as-> db % (r update-render-log! % renderer-id element-id :updated-at)
-                  (r db/set-item!       % (db/path partition-id element-id) element-props))))
+                  (r db/set-item!       % [:ui data-items-key element-id] element-props))))
 
 (defn set-element-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -810,8 +807,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id prop-key prop-value]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/path partition-id element-id prop-key) prop-value)))
+  (let [data-items-key (engine/data-key renderer-id :data-items)]
+       (assoc-in db [:ui data-items-key element-id prop-key] prop-value)))
 
 (r/reg-event-db :ui/set-element-prop! set-element-prop!)
 
@@ -825,8 +822,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (update-in db [partition-id :data-order] vector/remove-item element-id)))
+  (let [data-order-key (engine/data-key renderer-id :data-order)]
+       (update-in db [:ui data-order-key] vector/remove-item element-id)))
 
 (r/reg-event-db :ui/stop-element-rendering! stop-element-rendering!)
 
@@ -839,9 +836,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id element-props]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (update-in db (db/meta-item-path partition-id :rendering-queue)
-                  vector/conj-item [element-id element-props])))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (update-in db [:ui meta-items-key :rendering-queue]
+                     vector/conj-item [element-id element-props])))
 
 (r/reg-event-db :ui/render-element-later! render-element-later!)
 
@@ -852,9 +849,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (update-in db (db/meta-item-path partition-id :rendering-queue)
-                  vector/remove-nth-item 0)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (update-in db [:ui meta-items-key :rendering-queue]
+                     vector/remove-nth-item 0)))
 
 (r/reg-event-db :ui/trim-rendering-queue! trim-rendering-queue!)
 
@@ -865,8 +862,8 @@
   ;
   ; @return (map)
   [db [_ renderer-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (assoc-in db (db/meta-item-path partition-id :rendering-queue) [])))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (assoc-in db [:ui meta-items-key :rendering-queue] [])))
 
 (r/reg-event-db :ui/empty-rendering-queue! empty-rendering-queue!)
 
@@ -878,9 +875,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (update-in db (db/meta-item-path partition-id :invisible-elements)
-                  vector/conj-item element-id)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (update-in db [:ui meta-items-key :invisible-elements]
+                     vector/conj-item element-id)))
 
 (r/reg-event-db :ui/mark-element-as-invisible! mark-element-as-invisible!)
 
@@ -892,9 +889,9 @@
   ;
   ; @return (map)
   [db [_ renderer-id element-id]]
-  (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-       (update-in db (db/meta-item-path partition-id :invisible-elements)
-                  vector/remove-item element-id)))
+  (let [meta-items-key (engine/data-key renderer-id :meta-items)]
+       (update-in db [:ui meta-items-key :invisible-elements]
+                     vector/remove-item element-id)))
 
 (r/reg-event-db :ui/unmark-element-as-invisible! unmark-element-as-invisible!)
 
@@ -909,8 +906,12 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   (fn [{:keys [db]} [_ renderer-id renderer-props]]
-      (let [partition-id (engine/renderer-id->partition-id renderer-id)]
-           {:db (r db/reg-partition! db partition-id {:ordered? true :meta-items renderer-props})})))
+      (let [data-items-key (engine/data-key renderer-id :data-items)
+            data-order-key (engine/data-key renderer-id :data-order)
+            meta-items-key (engine/data-key renderer-id :meta-items)]
+           {:db (as-> db % (r db/set-item! % [:ui data-items-key] {})
+                           (r db/set-item! % [:ui data-order-key] [])
+                           (r db/set-item! % [:ui meta-items-key] renderer-props))})))
 
 (r/reg-event-fx :ui/destruct-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!

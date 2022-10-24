@@ -43,7 +43,7 @@
   ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/added-document-prototype {} {...})
+  ;  (added-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -66,7 +66,7 @@
   ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/updated-document-prototype {} {...})
+  ;  (updated-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -90,7 +90,7 @@
   ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/updated-document-prototype {} {...})
+  ;  (updated-document-prototype {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-at (string)
@@ -118,7 +118,7 @@
   ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (user/fill-document {} {...})
+  ;  (fill-document {} {...})
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-by (map)

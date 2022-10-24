@@ -41,12 +41,12 @@
   ;   :suffix (string)(opt)}
   ;
   ; @example
-  ;  (r dictionary/look-up :my-term! {:language :en})
+  ;  (r look-up :my-term! {:language :en})
   ;  =>
   ;  "My term"
   ;
   ; @example
-  ;  (r dictionary/look-up :my-name-is-n {:language :en :replacements ["John"]})
+  ;  (r look-up :my-name-is-n {:language :en :replacements ["John"]})
   ;  =>
   ;  "My name is John"
   ;

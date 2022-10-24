@@ -28,7 +28,7 @@
   ; @param (string) user-account-id
   ;
   ; @usage
-  ;  (user/user-account-id->user-profile "my-account")
+  ;  (user-account-id->user-profile "my-account")
   ;
   ; @return (namespaced map)
   [user-account-id]
@@ -39,7 +39,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (user/user-account-id->user-profile "my-account" :first-name)
+  ;  (user-account-id->user-profile "my-account" :first-name)
   ;
   ; @return (*)
   [user-account-id item-key]
@@ -56,7 +56,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (user/request->user-profile-item {...})
+  ;  (request->user-profile-item {...})
   ;
   ; @return (namespaced map)
   [request]
@@ -68,7 +68,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (user/request->user-profile-item {...})
+  ;  (request->user-profile-item {...})
   ;
   ; @return (namespaced map)
   [request]
@@ -81,7 +81,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (user/request->user-profile-item {...} :first-name)
+  ;  (request->user-profile-item {...} :first-name)
   ;
   ; @return (*)
   [request item-key]

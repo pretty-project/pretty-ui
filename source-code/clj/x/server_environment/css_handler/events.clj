@@ -28,7 +28,7 @@
   ;   :uri (string)}
   ;
   ; @usage
-  ;  (r environment/add-css! db {...})
+  ;  (r add-css! db {...})
   ;
   ; @return (map)
   [db [_ css-props]]

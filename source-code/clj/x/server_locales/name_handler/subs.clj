@@ -27,7 +27,7 @@
   ; @param (keyword) locale-id
   ;
   ; @example
-  ;  (r locales/get-name-order db :en)
+  ;  (r get-name-order db :en)
   ;  =>
   ;  :normal
   ;
@@ -42,7 +42,7 @@
   ; @param (keyword) locale-id
   ;
   ; @example
-  ;  (r locales/get-ordered-name db "First" "Last" :en)
+  ;  (r get-ordered-name db "First" "Last" :en)
   ;  =>
   ;  "First Last"
   ;

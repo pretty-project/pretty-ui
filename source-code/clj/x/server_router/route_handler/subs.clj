@@ -38,7 +38,7 @@
  ; WARNING! NON-PUBLIC! DO NOT USE!
  ;
  ; @usage
- ;  (r router/get-sitemap-routes db)
+ ;  (r get-sitemap-routes db)
  ;
  ; @return (strings in vector)
  [db _]
@@ -48,7 +48,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @usage
-  ;  (r router/get-server-routes db)
+  ;  (r get-server-routes db)
   ;
   ; @return (map)
   [db _]
@@ -58,7 +58,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @usage
-  ;  (r router/get-client-routes db)
+  ;  (r get-client-routes db)
   ;
   ; @return (map)
   [db _]
@@ -82,7 +82,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @example
-  ;  (r router/get-ordered-routes db)
+  ;  (r get-ordered-routes db)
   ;  =>
   ;  [["my-route"  {:get  {...}}]
   ;   ["your-route {:post {...}}"]]

@@ -17,7 +17,7 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn request->cookies
@@ -184,16 +184,16 @@
   ;    Default: 200}
   ;
   ; @example
-  ;  (http/response-wrap {:body "foo"})
+  ;  (response-wrap {:body "foo"})
   ;  =>
   ;  {:body    "foo"
   ;   :headers {"Content-Type" "text/plain"}
   ;   :status  200}
   ;
   ; @example
-  ;  (http/response-wrap {:body      "foo"
-  ;                       :headers   {"Content-Disposition" "inline"}
-  ;                       :mime-type "text/plain"})
+  ;  (response-wrap {:body      "foo"
+  ;                  :headers   {"Content-Disposition" "inline"}
+  ;                  :mime-type "text/plain"})
   ;  =>
   ;  {:body    "foo"
   ;   :headers {"Content-Type"        "text/plain"
@@ -224,8 +224,8 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/error-wrap {:error-message "File not found"
-  ;                    :status        404}
+  ;  (error-wrap {:error-message "File not found"
+  ;               :status        404}
   ;  =>
   ;  {:body    ":file-not-found"
   ;   :headers {"Content-Type" "text/plain"}
@@ -244,7 +244,7 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/html-wrap {:body "<!DOCTYPE html> ..."})
+  ;  (html-wrap {:body "<!DOCTYPE html> ..."})
   ;  =>
   ;  {:body    "<!DOCTYPE html> ..."
   ;   :headers {"Content-Type" "text/html"}
@@ -264,7 +264,7 @@
 
   ;
   ; @example
-  ;  (http/json-wrap {:body "{...}"})
+  ;  (json-wrap {:body "{...}"})
   ;  =>
   ;  {:body    "{...}"
   ;   :headers {"Content-Type" "application/json"}
@@ -283,7 +283,7 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/map-wrap {:body {...})
+  ;  (map-wrap {:body {...})
   ;  =>
   ;  {:body    "{...}"
   ;   :headers {"Content-Type" "text/plain"}
@@ -303,17 +303,17 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
-  ;                    :mime-type "image/png"})
+  ;  (media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
+  ;               :mime-type "image/png"})
   ;  =>
   ;  {:body    #object[java.io.File 0x4571e67a "/my-file.png"
   ;   :headers {"Content-Type" "image/png"}
   ;   :status  200}
   ;
   ; @example
-  ;  (http/media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
-  ;                    :filename  "my-file.png"
-  ;                    :mime-type "image/png"})
+  ;  (media-wrap {:body      #object[java.io.File 0x4571e67a "/my-file.png"
+  ;               :filename  "my-file.png"
+  ;               :mime-type "image/png"})
   ;  =>
   ;  {:body    #object[java.io.File 0x4571e67a "/my-file.png"
   ;   :headers {"Content-Type"        "image/png"
@@ -336,7 +336,7 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/xml-wrap {:body "foo"})
+  ;  (xml-wrap {:body "foo"})
   ;  =>
   ;  {:body    "foo"
   ;   :headers {"Content-Type" "application/xml"}
@@ -355,7 +355,7 @@
   ;   :status (integer)(opt)}
   ;
   ; @example
-  ;  (http/text-wrap {:body "foo"})
+  ;  (text-wrap {:body "foo"})
   ;  =>
   ;  {:body    "foo"
   ;   :headers {"Content-Type" "text/plain"}

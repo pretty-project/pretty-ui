@@ -52,7 +52,7 @@
   ;      :uri (string)}]}
   ;
   ; @usage
-  ;  (ui/body {...} {...})
+  ;  (body {...} {...})
   ([request]
    (view request {}))
 

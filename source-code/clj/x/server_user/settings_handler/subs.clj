@@ -23,7 +23,7 @@
 
 (defn get-default-user-settings
   ; @usage
-  ;  (r user/get-default-user-settings db)
+  ;  (r get-default-user-settings db)
   ;
   ; @return (namespaced map)
   [db _]

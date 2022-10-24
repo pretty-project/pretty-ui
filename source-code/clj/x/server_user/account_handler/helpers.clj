@@ -28,7 +28,7 @@
   ; @param (string) user-account-id
   ;
   ; @example
-  ;  (user/user-account-id->user-account "my-account")
+  ;  (user-account-id->user-account "my-account")
   ;  =>
   ;  {:user-account/id "my-account"
   ;   :user-account/password "my-password"
@@ -43,7 +43,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (user/user-account-id->user-account "my-account" :email-address)
+  ;  (user-account-id->user-account "my-account" :email-address)
   ;
   ; @return (*)
   [user-account-id item-key]

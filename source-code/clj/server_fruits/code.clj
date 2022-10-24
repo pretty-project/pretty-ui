@@ -28,9 +28,9 @@
   ;   [...]]
   ;
   ; @usage
-  ;  (code/run-code! "(println (my-function my-var))"
-  ;                  [["my-function" "my-namespace/my-function"]
-  ;                   ["my-var"      :my-value]])
+  ;  (run-code! "(println (my-function my-var))"
+  ;             [["my-function" "my-namespace/my-function"]
+  ;              ["my-var"      :my-value]])
   ([source-code]
    (run-code! source-code []))
 

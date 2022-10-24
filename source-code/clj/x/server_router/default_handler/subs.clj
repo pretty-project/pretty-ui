@@ -24,7 +24,7 @@
   ; @param (keyword) route-id
   ;
   ; @usage
-  ;  (r router/get-default-routes db)
+  ;  (r get-default-routes db)
   ;
   ; @return (map)
   [db [_ route-id]]
@@ -34,7 +34,7 @@
   ; @param (keyword) route-id
   ;
   ; @usage
-  ;  (r router/get-default-route db :my-default-route)
+  ;  (r get-default-route db :my-default-route)
   ;
   ; @return (map)
   [db [_ route-id]]

@@ -34,7 +34,7 @@
   ;   :roles (strings in vector)(opt)}
   ;
   ; @usage
-  ;  (user/add-user! {...})
+  ;  (add-user! {...})
   ;
   ; @return (boolean)
   ([user-props]

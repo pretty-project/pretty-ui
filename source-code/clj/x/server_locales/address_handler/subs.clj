@@ -29,7 +29,7 @@
   ; @param (keyword) locale-id
   ;
   ; @example
-  ;  (r locales/address->ordered-address db "537" "US" "Bradford" "537 Paper Street" :en)
+  ;  (r address->ordered-address db "537" "US" "Bradford" "537 Paper Street" :en)
   ;  =>
   ;  "US, 537 Paper Street, Bradford, 19806"
   ;

@@ -34,7 +34,7 @@
   ;  {:query-string (string)}
   ;
   ; @usage
-  ;  (a/request->debug-mode {...})
+  ;  (request->debug-mode {...})
   ;
   ; @return (string)
   [request]

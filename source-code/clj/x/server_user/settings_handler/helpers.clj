@@ -30,7 +30,7 @@
   ; @param (string) user-account-id
   ;
   ; @usage
-  ;  (user/user-account-id->user-settings "my-account")
+  ;  (user-account-id->user-settings "my-account")
   ;
   ; @return (namespaced map)
   [user-account-id]
@@ -43,7 +43,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (user/user-account-id->user-settings-item "my-account" :selected-language)
+  ;  (user-account-id->user-settings-item "my-account" :selected-language)
   ;
   ; @return (*)
   [user-account-id item-key]
@@ -60,7 +60,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (user/request->user-settings {...})
+  ;  (request->user-settings {...})
   ;
   ; @return (namespaced map)
   [request]
@@ -73,7 +73,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (user/request->user-settings {...})
+  ;  (request->user-settings {...})
   ;
   ; @return (namespaced map)
   [request]
@@ -87,7 +87,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (user/request->user-settings-item {...} :selected-language)
+  ;  (request->user-settings-item {...} :selected-language)
   ;
   ; @return (map)
   [request item-key]

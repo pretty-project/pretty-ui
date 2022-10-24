@@ -30,7 +30,7 @@
   ;   :status (integer)}
   ;
   ; @usage
-  ;  (r router/set-default-route! db :my-default-route {...})
+  ;  (r set-default-route! db :my-default-route {...})
   ;
   ; @return (map)
   [db [_ route-id route-props]]

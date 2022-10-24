@@ -41,16 +41,16 @@
   ;   :title (string)(opt)}
   ;
   ; @usage
-  ;  (pdf-generator/generate-pdf! [:html ...])
+  ;  (generate-pdf! [:html ...])
   ;
   ; @usage
-  ;  (pdf-generator/generate-pdf! [:html ...] {...})
+  ;  (generate-pdf! [:html ...] {...})
   ;
   ; @usage
-  ;  (pdf-generator/generate-pdf! [:html ...] {:base-uri   "http://localhost:3000/"
-  ;                                            :css-paths  ["public/css/my-style.css"]
-  ;                                            :font-paths [{:font-family "Montserrat"
-  ;                                                          :src "public/fonts/Montserrat/.../Montserrat-Regular.ttf"}]})
+  ;  (generate-pdf! [:html ...] {:base-uri   "http://localhost:3000/"
+  ;                              :css-paths  ["public/css/my-style.css"]
+  ;                              :font-paths [{:font-family "Montserrat"
+  ;                                            :src "public/fonts/Montserrat/.../Montserrat-Regular.ttf"}]})
   ;
   ; @return (?)
   ([n]
@@ -78,7 +78,7 @@
   ;  {...}
   ;
   ; @usage
-  ;  (pdf-generator/generate-base64-pdf! [:html ...])
+  ;  (generate-base64-pdf! [:html ...])
   ;
   ; @return (string)
   ([n]

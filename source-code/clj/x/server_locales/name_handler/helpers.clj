@@ -43,7 +43,7 @@
   ; @param (map) request
   ;
   ; @usage
-  ;  (locales/request->ordered-user-name {...})
+  ;  (request->ordered-user-name {...})
   ;
   ; @return (string)
   [request]

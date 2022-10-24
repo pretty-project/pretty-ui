@@ -92,7 +92,7 @@
   ; @param (*)(opt) default-value
   ;
   ; @usage
-  ;  (router/request->route-prop {...} :my-prop)
+  ;  (request->route-prop {...} :my-prop)
   ;
   ; @return (*)
   ([request prop-key]
@@ -122,7 +122,7 @@
   ; @param (string) route-template
   ;
   ; @usage
-  ;  (router/request->route-template-matched? {} "/my-route/:item-id")
+  ;  (request->route-template-matched? {} "/my-route/:item-id")
   ;
   ; @return (boolean)
   [request route-template]

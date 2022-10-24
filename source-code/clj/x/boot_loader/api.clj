@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.api
-    (:require [x.server-dictionary.api]
+    (:require [x.server-db.api]
+              [x.server-dictionary.api]
               [x.server-environment.api]
               [x.server-router.api]
               [x.server-sync.api]

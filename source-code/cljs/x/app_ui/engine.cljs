@@ -30,19 +30,20 @@
 ;; -- Helpers -----------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn renderer-id->partition-id
+(defn data-key
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
+  ; @param (keyword) key
   ;
   ; @example
-  ;  (renderer-id->partition-id :my-renderer)
+  ;  (data-key :my-renderer :data-items)
   ;  =>
-  ;  :ui/my-renderer
+  ;  :my-renderer/data-items
   ;
   ; @return (keyword)
-  [renderer-id]
-  (keyword "ui" (name renderer-id)))
+  [renderer-id key]
+  (keyword (name renderer-id) (name key)))
 
 (defn renderer-id->dom-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

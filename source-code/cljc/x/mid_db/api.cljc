@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.09.26
-; Description:
-; Version: v0.3.8
-; Compatibility: x4.1.5
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -24,132 +13,47 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.api
-    (:require [x.mid-db.backup-handler       :as backup-handler]
-              [x.mid-db.collection-handler   :as collection-handler]
-              [x.mid-db.data-order-handler   :as data-order-handler]
-              [x.mid-db.data-range-handler   :as data-range-handler]
-              [x.mid-db.document-handler     :as document-handler]
-              [x.mid-db.engine               :as engine]
-              [x.mid-db.partition-handler    :as partition-handler]))
+    (:require [x.mid-db.backup-handler.effects]
+              [x.mid-db.backup-handler.events :as backup-handler.events]
+              [x.mid-db.backup-handler.subs   :as backup-handler.subs]
+              [x.mid-db.core.events           :as core.events]
+              [x.mid-db.core.subs             :as core.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-db.backup-handler
-(def item-path->backup-item-path backup-handler/item-path->backup-item-path)
-(def get-backup-item             backup-handler/get-backup-item)
-(def item-changed?               backup-handler/item-changed?)
-(def item-unchanged?             backup-handler/item-unchanged?)
-(def store-backup-item!          backup-handler/store-backup-item!)
-(def restore-backup-item!        backup-handler/restore-backup-item!)
-(def remove-backup-item!         backup-handler/remove-backup-item!)
+; x.mid-db.backup-handler.events
+(def store-backup-item!   backup-handler.events/store-backup-item!)
+(def restore-backup-item! backup-handler.events/restore-backup-item!)
+(def remove-backup-item!  backup-handler.events/remove-backup-item!)
 
-; x.mid-db.collection-handler
-(def collection->namespace                  collection-handler/collection->namespace)
-(def trim-collection                        collection-handler/trim-collection)
-(def filter-documents                       collection-handler/filter-documents)
-(def filter-document                        collection-handler/filter-document)
-(def match-documents                        collection-handler/match-documents)
-(def match-document                         collection-handler/match-document)
-(def get-documents-kv                       collection-handler/get-documents-kv)
-(def get-document-kv                        collection-handler/get-document-kv)
-(def get-document                           collection-handler/get-document)
-(def get-document-item                      collection-handler/get-document-item)
-(def get-documents                          collection-handler/get-documents)
-(def add-document                           collection-handler/add-document)
-(def remove-document                        collection-handler/remove-document)
-(def remove-documents                       collection-handler/remove-documents)
-(def apply-document                         collection-handler/apply-document)
-(def document-exists?                       collection-handler/document-exists?)
+; x.mid-db.backup-handler.subs
+(def get-backup-item backup-handler.subs/get-backup-item)
+(def item-changed?   backup-handler.subs/item-changed?)
+(def item-unchanged? backup-handler.subs/item-unchanged?)
 
-; x.mid-db.data-order-handler
-(def data-item-last?          data-order-handler/data-item-last?)
-(def data-item-first?         data-order-handler/data-item-first?)
-(def get-data-item-position   data-order-handler/get-data-item-position)
-(def move-data-item-to-last!  data-order-handler/move-data-item-to-last!)
-(def move-data-item-to-first! data-order-handler/move-data-item-to-first!)
-(def move-data-item!          data-order-handler/move-data-item!)
-(def remove-data-item!        data-order-handler/remove-data-item!)
-(def add-data-item!           data-order-handler/add-data-item!)
-(def update-data-item!        data-order-handler/update-data-item!)
-(def apply-data-item!         data-order-handler/apply-data-item!)
-(def apply-data-items!        data-order-handler/apply-data-items!)
-(def copy-item-to-partition!  data-order-handler/copy-item-to-partition!)
-(def move-item-to-partition!  data-order-handler/move-item-to-partition!)
-(def empty-partition!         data-order-handler/empty-partition!)
+; x.mid-db.core.events
+(def empty-db!           core.events/empty-db!)
+(def toggle-item!        core.events/toggle-item!)
+(def toggle-item-value!  core.events/toggle-item-value!)
+(def copy-item!          core.events/copy-item!)
+(def move-item!          core.events/move-item!)
+(def set-item!           core.events/set-item!)
+(def set-vector-item!    core.events/set-vector-item!)
+(def remove-item!        core.events/remove-item!)
+(def remove-vector-item! core.events/remove-vector-item!)
+(def remove-item-n!      core.events/remove-item-n!)
+(def inc-item-n!         core.events/inc-item-n!)
+(def dec-item-n!         core.events/dec-item-n!)
+(def apply-item!         core.events/apply-item!)
 
-; x.mid-db.data-range-handler
-(def data-cursor-value-in-threshold?   data-range-handler/data-cursor-value-in-threshold?)
-(def get-data-cursor-high              data-range-handler/get-data-cursor-high)
-(def get-data-cursor-low               data-range-handler/get-data-cursor-low)
-(def data-range-passable?              data-range-handler/data-range-passable?)
-(def get-first-data-item-id-in-range   data-range-handler/get-first-data-item-id-in-range)
-(def get-first-data-item-in-range      data-range-handler/get-first-data-item-in-range)
-(def get-last-data-item-id-in-range    data-range-handler/get-last-data-item-id-in-range)
-(def get-last-data-item-in-range       data-range-handler/get-last-data-item-in-range)
-(def get-first-data-item-id-post-range data-range-handler/get-first-data-item-id-post-range)
-(def get-first-data-item-post-range    data-range-handler/get-first-data-item-post-range)
-(def get-last-data-item-id-pre-range   data-range-handler/get-last-data-item-id-pre-range)
-(def get-last-data-item-pre-range      data-range-handler/get-last-data-item-pre-range)
-(def get-in-range-data-order           data-range-handler/get-in-range-data-order)
-(def get-in-range-data-items           data-range-handler/get-in-range-data-items)
-(def get-pre-range-data-order          data-range-handler/get-pre-range-data-order)
-(def get-pre-range-data-items          data-range-handler/get-pre-range-data-items)
-(def get-post-range-data-order         data-range-handler/get-post-range-data-order)
-(def get-post-range-data-items         data-range-handler/get-post-range-data-items)
-(def partition-ranged?                 data-range-handler/partition-ranged?)
-(def step-data-cursor-high-bwd!        data-range-handler/step-data-cursor-high-bwd!)
-(def step-data-cursor-high-fwd!        data-range-handler/step-data-cursor-high-fwd!)
-(def step-data-cursor-low-bwd!         data-range-handler/step-data-cursor-low-bwd!)
-(def step-data-cursor-low-fwd!         data-range-handler/step-data-cursor-low-fwd!)
-(def trim-partition!                   data-range-handler/trim-partition!)
-
-; x.mid-db.document-handler
-(def assoc-document-value            document-handler/assoc-document-value)
-(def dissoc-document-value           document-handler/dissoc-document-value)
-(def get-document-value              document-handler/get-document-value)
-(def document->document-id           document-handler/document->document-id)
-(def document->unidentified-document document-handler/document->unidentified-document)
-(def document->pure-document         document-handler/document->pure-document)
-(def document->identified-document   document-handler/document->identified-document)
-
-; x.mid-db.engine
-(def subscribe-item       engine/subscribe-item)
-(def subscribed-item      engine/subscribed-item)
-(def get-db               engine/get-db)
-(def get-item             engine/get-item)
-(def item-exists?         engine/item-exists?)
-(def get-item-count       engine/get-item-count)
-(def get-applied-item     engine/get-applied-item)
-(def empty-db!            engine/empty-db!)
-(def toggle-item!         engine/toggle-item!)
-(def toggle-item-value!   engine/toggle-item-value!)
-(def copy-item!           engine/copy-item!)
-(def move-item!           engine/move-item!)
-(def set-item!            engine/set-item!)
-(def set-vector-item!     engine/set-vector-item!)
-(def remove-item!         engine/remove-item!)
-(def remove-vector-item!  engine/remove-vector-item!)
-(def remove-item-n!       engine/remove-item-n!)
-(def inc-item-n!          engine/inc-item-n!)
-(def dec-item-n!          engine/dec-item-n!)
-(def apply-item!          engine/apply-item!)
-(def distribute-items!    engine/distribute-items!)
-
-; x.mid-db.partition-handler
-(def data-item-path                 partition-handler/data-item-path)
-(def path                           partition-handler/path)
-(def meta-item-path                 partition-handler/meta-item-path)
-(def get-partition                  partition-handler/get-partition)
-(def get-data-items                 partition-handler/get-data-items)
-(def get-data-item                  partition-handler/get-data-item)
-(def data-item-exists?              partition-handler/data-item-exists?)
-(def get-data-item-count            partition-handler/get-data-item-count)
-(def get-meta-items                 partition-handler/get-meta-items)
-(def get-meta-item                  partition-handler/get-meta-item)
-(def get-data-order                 partition-handler/get-data-order)
-(def partition-ordered?             partition-handler/partition-ordered?)
-(def partition-empty?               partition-handler/partition-empty?)
-(def reg-partition!                 partition-handler/reg-partition!)
+; x.mid-db.core.subs
+(def subscribe-item   core.subs/subscribe-item)
+(def subscribed-item  core.subs/subscribed-item)
+(def get-db           core.subs/get-db)
+(def get-item         core.subs/get-item)
+(def item-exists?     core.subs/item-exists?)
+(def get-item-count   core.subs/get-item-count)
+(def get-applied-item core.subs/get-applied-item)

@@ -24,11 +24,19 @@
   ; @param (keyword) channel-id
   ; @param (map) ...
   ;  {...}
+  ;
+  ; @usage
+  ;  (r notifiy-client! db :my-channel {...})
+  ;
+  ; @return (db)
   [channel-id])
+  ; TODO
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @usage
+;  [:activities/notifiy-client! :my-channel {...}]
 (r/reg-fx :activities/notifiy-client! notifiy-client!)

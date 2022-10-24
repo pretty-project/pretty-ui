@@ -12,17 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.error-shield.views)
+(ns x.mid-db.backup-handler.effects
+    (:require [re-frame.api                 :as r :refer [r]]
+              [x.mid-db.backup-handler.subs :as backup-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (map) request
-  [request]
-  [:div#x-error-shield {:data-nosnippet "true"}
-                       [:div#x-error-shield--body [:div#x-error-shield--content]
-                                                  [:a#x-error-shield--refresh-button {:href "#" :onClick "location.reload ();"}
-                                                                                     "Refresh"]]])
+(r/reg-event-fx :db/resolve-backup-item!
+  ; @param (vector) item-path
+  ; @param (map) events
+  ;  {:on-changed (metamorphic-event)(opt)
+  ;   :on-unchanged (metamorphic-event)(opt)}
+  (fn [{:keys [db]} [_ item-path {:keys [on-changed on-unchanged]}]]
+      (if (r backup-handler.subs/item-changed? db item-path)
+          {:dispatch on-changed}
+          {:dispatch on-unchanged})))

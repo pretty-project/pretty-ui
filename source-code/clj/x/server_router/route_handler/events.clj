@@ -101,14 +101,14 @@
   ;    Az útvonal meghívásakor a szerver-oldalon megtörténő esemény}
   ;
   ; @usage
-  ;  (r router/add-route! db {...})
+  ;  (r add-route! db {...})
   ;
   ; @usage
-  ;  (r router/add-route! db :my-route {...})
+  ;  (r add-route! db :my-route {...})
   ;
   ; @usage
-  ;  (r router/add-route! db :my-route {:route-template "/my-route"
-  ;                                     :get (fn [request] ...)})
+  ;  (r add-route! db :my-route {:route-template "/my-route"
+  ;                              :get (fn [request] ...)})
   ;
   ; @return (map)
   [db [_ route-id route-props]]
@@ -130,9 +130,9 @@
   ; @param (map) routes
   ;
   ; @usage
-  ;  (r router/add-routes! db {:my-route {:route-template "/my-route"
-  ;                                       :get {:handler my-handler}}
-  ;                            :your-route {...}})
+  ;  (r add-routes! db {:my-route {:route-template "/my-route"
+  ;                                :get {:handler my-handler}}
+  ;                     :your-route {...}})
   ;
   ; @return (map)
   [db [_ routes]]

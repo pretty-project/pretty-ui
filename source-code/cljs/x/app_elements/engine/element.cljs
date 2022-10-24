@@ -230,7 +230,8 @@
   ;
   ; @return (map)
   [db [_ element-id prop-key prop-value]]
-  (assoc-in db (db/path :elements/primary element-id prop-key) prop-value))
+  (assoc-in db [:elements/primary :data-items element-id prop-key] prop-value))
+
 
 ; @usage
 ;  [:elements/set-element-prop! :my-element :my-prop "My value"]
@@ -260,8 +261,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-path prop-value]]
-  (let [prop-path (vector/concat-items (db/path :elements/primary element-id)
-                                       (param prop-path))]
+  (let [prop-path (vector/concat-items [:elements/primary :data-items element-id] prop-path)]
        (assoc-in db prop-path prop-value)))
 
 ; @usage
@@ -277,7 +277,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-key]]
-  (dissoc-in db (db/path :elements/primary element-id prop-key)))
+  (dissoc-in db [:elements/primary :data-items element-id prop-key]))
 
 ; @usage
 ;  [:elements/remove-element-prop! :my-element :my-prop]
@@ -292,8 +292,7 @@
   ;
   ; @return (map)
   [db [_ element-id prop-path]]
-  (let [prop-path (vector/concat-items (db/path :elements/primary element-id)
-                                       (param prop-path))]
+  (let [prop-path (vector/concat-items [:elements/primary :data-items element-id] prop-path)]
        (dissoc-in db prop-path)))
 
 ; @usage

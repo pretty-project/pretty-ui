@@ -29,15 +29,15 @@
   ;   :target-path (vector)}
   ;
   ; @usage
-  ;  (core/reg-transfer! {...})
+  ;  (reg-transfer! {...})
   ;
   ; @usage
-  ;  (core/reg-transfer! :my-transfer {...})
+  ;  (reg-transfer! :my-transfer {...})
   ;
   ; @usage
   ;  (defn my-data-f [request] {:my-data ...})
-  ;  (core/reg-transfer! {:data-f      my-data-f
-  ;                       :target-path [:my-data]})
+  ;  (reg-transfer! {:data-f      my-data-f
+  ;                  :target-path [:my-data]})
   ([transfer-props]
    (reg-transfer! (random/generate-keyword) transfer-props))
 

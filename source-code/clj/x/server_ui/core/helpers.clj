@@ -25,7 +25,7 @@
   ;  {:uri (string)}
   ;
   ; @usage
-  ;  (ui/include-js {:uri "/my-script.js"})
+  ;  (include-js {:uri "/my-script.js"})
   [{:keys [uri]}]
   [:script {:type "text/javascript" :src uri}])
 
@@ -35,7 +35,7 @@
   ;   :uri (string)}
   ;
   ; @usage
-  ;  (ui/include-css {:uri "/my-style.css"})
+  ;  (include-css {:uri "/my-style.css"})
   [{:keys [on-load uri]}]
   [:link {:type "text/css" :href uri :rel "stylesheet" :on-load on-load}])
 
@@ -45,8 +45,8 @@
   ;   :size (string)}
   ;
   ; @usage
-  ;  (ui/include-favicon {:uri  "/my-favicon.ico"
-  ;                       :size "16x16"})
+  ;  (include-favicon {:uri  "/my-favicon.ico"
+  ;                    :size "16x16"})
   [{:keys [uri size]}]
   [:link {:rel "icon" :type "image/png" :href uri :sizes size}])
 
@@ -59,7 +59,7 @@
   ;  {:uri (string)}
   ;
   ; @usage
-  ;  (ui/include-font {:uri "/my-style.css"})
+  ;  (include-font {:uri "/my-style.css"})
   ;  =>
   ;  [:style {:type "text/css"} "@import url('/my-style.css')"]
   [{:keys [uri]}]

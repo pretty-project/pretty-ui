@@ -12,16 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns local-db.config
-    (:require [io.api :as io]))
+(ns x.app-db.backup-handler.subs
+    (:require [x.mid-db.backup-handler.subs :as backup-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (B)
-(def MAX-FILESIZE (io/MB->B 10))
-
-; @constant (string)
-(def LOCAL-DB-PATH "environment/db/")
+; x.mid-db.backup-handler.subs
+(def get-backup-item backup-handler.subs/get-backup-item)
+(def item-changed?   backup-handler.subs/item-changed?)
+(def item-unchanged? backup-handler.subs/item-unchanged?)

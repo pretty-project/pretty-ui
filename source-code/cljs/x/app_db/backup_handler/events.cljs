@@ -12,17 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.error-shield.views)
+(ns x.app-db.backup-handler.events
+    (:require [x.mid-db.backup-handler.events :as backup-handler.events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (map) request
-  [request]
-  [:div#x-error-shield {:data-nosnippet "true"}
-                       [:div#x-error-shield--body [:div#x-error-shield--content]
-                                                  [:a#x-error-shield--refresh-button {:href "#" :onClick "location.reload ();"}
-                                                                                     "Refresh"]]])
+; x.mid-db.backup-handler.events
+(def store-backup-item!   backup-handler.events/store-backup-item!)
+(def restore-backup-item! backup-handler.events/restore-backup-item!)
+(def remove-backup-item!  backup-handler.events/remove-backup-item!)

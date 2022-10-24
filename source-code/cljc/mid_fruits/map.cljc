@@ -883,29 +883,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn assoc-ns
-  ; @param (map) n
-  ; @param (keyword) key
-  ; @param (*) value
-  ;
-  ; @example
-  ;  (assoc-ns {:fruit/apple "red"} :banana "yellow")
-  ;  =>
-  ;  {:fruit/apple "red" :fruit/banana "yellow"}
-  ;
-  ; @return (map)
-  [n key value])
-  ; TODO ...
-
-(defn assoc-in-ns
-  ; @param (map) n
-  ; @param (vector) keys
-  ; @param (*) value
-  ;
-  ; @return (map)
-  [n keys value])
-  ; TODO ...
-
 (defn get-namespace
   ; @param (map) n
   ;
@@ -979,3 +956,37 @@
   (letfn [(f [n item-key item-value]
              (assoc n (-> item-key name keyword) item-value))]
          (reduce-kv f {} n)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn assoc-ns
+  ; @param (map) n
+  ; @param (keyword) key
+  ; @param (*) value
+  ;
+  ; @example
+  ;  (assoc-ns {:fruit/apple "red"} :banana "yellow")
+  ;  =>
+  ;  {:fruit/apple "red" :fruit/banana "yellow"}
+  ;
+  ; @return (map)
+  [n key value])
+  ; TODO ...
+
+(defn get-ns
+  ; @param (map) n
+  ; @param (keyword) key
+  ;
+  ; @example
+  ;  (get-ns {:fruit/apple "red"} :apple)
+  ;  =>
+  ;  "red"
+  ;
+  ; @return (*)
+  [n key]
+  (if-let [namespace (get-namespace n)]
+          (let [key (keyword (name namespace) (name key))]
+               (get n key))))

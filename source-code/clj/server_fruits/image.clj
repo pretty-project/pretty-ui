@@ -45,12 +45,12 @@
   ; @param (integers in vector) max-size
   ;
   ; @example
-  ;  (image/scale-dimensions [1200 600] [400 150])
+  ;  (scale-dimensions [1200 600] [400 150])
   ;  =>
   ;  [300 150]
   ;
   ; @example
-  ;  (image/scale-dimensions [400 150] [1200 600])
+  ;  (scale-dimensions [400 150] [1200 600])
   ;  =>
   ;  [1200 450]
   ;
@@ -110,7 +110,7 @@
   ;  {:max-size (px)}
   ;
   ; @usage
-  ;  (image/generate-thumbnail! "my-file.png" "my-thumbnail.png" {:max-size 512})
+  ;  (generate-thumbnail! "my-file.png" "my-thumbnail.png" {:max-size 512})
   [input-path output-path {:keys [max-size] :as options}]
   (let [input       (-> input-path clojure.java.io/file ImageIO/read)
         input-width (-> input .getWidth)

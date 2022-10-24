@@ -32,7 +32,7 @@
   ;   :share-preview-uri (string)(opt)}
   ;
   ; @usage
-  ;  (ui/head {...} {...})
+  ;  (head {...} {...})
   ([request]
    (view request {}))
 

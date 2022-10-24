@@ -14,11 +14,11 @@
 
 (ns developer-tools.mongo-db-browser.views
     (:require [developer-tools.mongo-db-browser.styles :as mongo-db-browser.styles]
+              [mid-fruits.map                          :as map]
               [mid-fruits.pretty                       :as pretty]
               [mid-fruits.string                       :as string]
               [mongo-db.api                            :as mongo-db]
-              [server-fruits.http                      :as http]
-              [x.server-db.api                         :as db]))
+              [server-fruits.http                      :as http]))
 
 
 
@@ -51,7 +51,7 @@
 (defn- document
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]} document-dex document]
-  (let [document-id    (db/document->document-id document)
+  (let [document-id    (map/get-ns document :id)
         document-style (mongo-db-browser.styles/document-style {:document-dex document-dex})
         button-style   (mongo-db-browser.styles/remove-button-style)]
        (str "<div style=\""document-style"; position: relative\">"

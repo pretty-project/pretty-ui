@@ -29,7 +29,7 @@
   ;   :suffix (string)(opt)}
   ;
   ; @example
-  ;  (dictionary/looked-up :my-term {:language :en})
+  ;  (looked-up :my-term {:language :en})
   ;  =>
   ;  "My term"
   ;

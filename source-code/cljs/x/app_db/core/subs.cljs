@@ -12,17 +12,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.error-shield.views)
+(ns x.app-db.core.subs
+    (:require [x.mid-db.core.subs :as core.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (map) request
-  [request]
-  [:div#x-error-shield {:data-nosnippet "true"}
-                       [:div#x-error-shield--body [:div#x-error-shield--content]
-                                                  [:a#x-error-shield--refresh-button {:href "#" :onClick "location.reload ();"}
-                                                                                     "Refresh"]]])
+; x.mid-db.core.subs
+(def subscribe-item   core.subs/subscribe-item)
+(def subscribed-item  core.subs/subscribed-item)
+(def get-db           core.subs/get-db)
+(def get-item         core.subs/get-item)
+(def item-exists?     core.subs/item-exists?)
+(def get-item-count   core.subs/get-item-count)
+(def get-applied-item core.subs/get-applied-item)

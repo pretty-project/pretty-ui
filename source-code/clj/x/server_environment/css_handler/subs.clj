@@ -22,7 +22,7 @@
 
 (defn get-css-paths
   ; @usage
-  ;  (r environment/get-css-paths db)
+  ;  (r get-css-paths db)
   ;
   ; @return (maps in vector)
   ;  [{:js-build (keyword)

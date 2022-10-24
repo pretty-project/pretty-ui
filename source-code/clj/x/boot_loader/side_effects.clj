@@ -28,5 +28,8 @@
   ;    Default: false
   ;   :port (integer or string)(opt)
   ;    Default: DEFAULT-PORT}
+  ;
+  ; @usage
+  ;  (start-server! {...})
   ([]             (start-server! {}))
   ([server-props] (r/dispatch [:boot-loader/start-server! server-props])))

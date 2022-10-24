@@ -26,7 +26,7 @@
   ; @param (string) destination-filepath
   ;
   ; @usage
-  ;  (base64/encode "my-document.pdf" "my-document.b64")
+  ;  (encode "my-document.pdf" "my-document.b64")
   ;
   ; @return (string)
   [source-filepath destination-filepath]

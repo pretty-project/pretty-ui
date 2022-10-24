@@ -41,7 +41,7 @@
   ;
   ; @return (*)
   [db [_ component-id prop-key]]
-  (get-in db (db/path :components/primary component-id prop-key)))
+  (get-in db [:components/primary :data-items component-id prop-key]))
 
 (r/reg-sub :components/get-component-prop get-component-prop)
 
@@ -59,7 +59,7 @@
   ;
   ; @return (map)
   [db [_ component-id prop-key prop-value]]
-  (assoc-in db (db/path :components/primary component-id prop-key) prop-value))
+  (assoc-in db [:components/primary :data-items component-id prop-key] prop-value))
 
 (defn remove-component-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -68,4 +68,4 @@
   ;
   ; @return (map)
   [db [_ component-id]]
-  (dissoc-in db (db/path :components/primary component-id)))
+  (dissoc-in db [:components/primary :data-items component-id]))

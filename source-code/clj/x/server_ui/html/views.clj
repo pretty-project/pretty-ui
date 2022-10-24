@@ -26,10 +26,7 @@
   ; @param (hiccup) body
   ;
   ; @usage
-  ;  (ui/html (ui/head) (ui/body))
-  ;
-  ; @usage
-  ;  (ui/html [:head] [:body])
+  ;  (html [:head] [:body])
   [head body]
   ; XXX#7659
   (html5 {:data-hide-scrollbar true
