@@ -25,7 +25,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/map->vector {0 :x 1 :y 2 :z})
+  ;  (map->vector {0 :x 1 :y 2 :z})
   ;  =>
   ;  [:x :y :z]
   ;
@@ -37,7 +37,7 @@
   ; @param (map) n
   ;
   ; @usage
-  ;  (map/nonempty? {})
+  ;  (nonempty? {})
   ;
   ; @return (boolean)
   [n]
@@ -48,7 +48,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/get-keys {:a {:b "a/b"}})
+  ;  (get-keys {:a {:b "a/b"}})
   ;  =>
   ;  [:a]
   ;
@@ -60,7 +60,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/get-first-key {:a {:b "a/b"} :c "xyz"})
+  ;  (get-first-key {:a {:b "a/b"} :c "xyz"})
   ;  =>
   ;  :a
   ;
@@ -72,7 +72,7 @@
   ; @param (map) n
   ;
   ; @usage
-  ;  (map/get-values {:a {:b "a/b"}})
+  ;  (get-values {:a {:b "a/b"}})
   ;
   ; @return (vector)
   [n]
@@ -84,7 +84,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/get-first-value {:a "abc" :c "xyz"})
+  ;  (get-first-value {:a "abc" :c "xyz"})
   ;  =>
   ;  "abc"
   ;
@@ -100,7 +100,7 @@
   ;  (deep-merge {:a {:b "a/b"}} {:c {:d "c/d"}})
   ;
   ; @usage
-  ;  (map/deep-merge {:a {:b "a/b"}} {:c {:d "c/d"}})
+  ;  (deep-merge {:a {:b "a/b"}} {:c {:d "c/d"}})
   ;
   ; @return (*)
   [n & xyz]
@@ -117,12 +117,12 @@
   ; @param (list of maps) xyz
   ;
   ; @example
-  ;  (map/reversed-merge {:a "1"} {:a "2"})
+  ;  (reversed-merge {:a "1"} {:a "2"})
   ;  =>
   ;  {:a "1"}
   ;
   ; @example
-  ;  (map/reversed-merge {:a "1"} {:a "2"} {:a "3"})
+  ;  (reversed-merge {:a "1"} {:a "2"} {:a "3"})
   ;  =>
   ;  {:a "1"}
   ;
@@ -135,7 +135,7 @@
   ; @param (vector) keys
   ;
   ; @example
-  ;  (map/remove-keys {:a "A" :b "B" :c "C"} [:a :c])
+  ;  (remove-keys {:a "A" :b "B" :c "C"} [:a :c])
   ;  =>
   ;  {:b "B"}
   ;
@@ -148,7 +148,7 @@
   ; @param (map) b
   ;
   ; @example
-  ;  (map/difference {:a "a" :b "b"} {:a "a"})
+  ;  (difference {:a "a" :b "b"} {:a "a"})
   ;  =>
   ;  {:b "b"}
   ;
@@ -161,7 +161,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/swap {:a "a" :b "b"})
+  ;  (swap {:a "a" :b "b"})
   ;  =>
   ;  {"a" :a "b" :b}
   ;
@@ -186,7 +186,7 @@
   ;  (dissoc-in {:a {:b "a/b"}} [:a])
   ;
   ; @usage
-  ;  (map/dissoc-in {:a {:b "a/b"}} [:a])
+  ;  (dissoc-in {:a {:b "a/b"}} [:a])
   ;
   ; @return (map)
   [n [key & keys :as value-path]]
@@ -218,7 +218,7 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/inject-in {} [:a :b] :c "x")
+  ;  (inject-in {} [:a :b] :c "x")
   ;  =>
   ;  {:a {:b {:c "x"}}}
   ;
@@ -232,17 +232,17 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/toggle {} :a "A")
+  ;  (toggle {} :a "A")
   ;  =>
   ;  {:a "A"}
   ;
   ; @example
-  ;  (map/toggle {:a "A"} :a "A")
+  ;  (toggle {:a "A"} :a "A")
   ;  =>
   ;  {}
   ;
   ; @example
-  ;  (map/toggle {:a "B"} :a "A")
+  ;  (toggle {:a "B"} :a "A")
   ;  =>
   ;  {}
   ;
@@ -258,17 +258,17 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/toggle {} [:x :a] "A")
+  ;  (toggle {} [:x :a] "A")
   ;  =>
   ;  {:x {:a "A"}}
   ;
   ; @example
-  ;  (map/toggle {:a "A"} [:x :a] "A")
+  ;  (toggle {:a "A"} [:x :a] "A")
   ;  =>
   ;  {:x {}}
   ;
   ; @example
-  ;  (map/toggle {:a "B"} [:x :a] "A")
+  ;  (toggle {:a "B"} [:x :a] "A")
   ;  =>
   ;  {:x {}}
   ;
@@ -283,7 +283,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (map/contains-key? {:a {:b "a/b"}} :a)
+  ;  (contains-key? {:a {:b "a/b"}} :a)
   ;  =>
   ;  true
   ;
@@ -296,17 +296,17 @@
   ; @param (* in vector) xyz
   ;
   ; @example
-  ;  (map/contains-of-keys? {:a {:b "a/b"}} [:a])
+  ;  (contains-of-keys? {:a {:b "a/b"}} [:a])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (map/contains-of-keys? {:a {:b "a/b"}} [:a :b :c])
+  ;  (contains-of-keys? {:a {:b "a/b"}} [:a :b :c])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (map/contains-of-keys? {:a {:b "a/b"}} [:b :c :d])
+  ;  (contains-of-keys? {:a {:b "a/b"}} [:b :c :d])
   ;  =>
   ;  false
   ;
@@ -319,13 +319,13 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (map/contains-value? {} "x")
+  ;  (contains-value? {} "x")
   ;  =>
   ;  false
   ;
   ;
   ; @example
-  ;  (map/contains-value? {:x "x"} "x")
+  ;  (contains-value? {:x "x"} "x")
   ;  =>
   ;  true
   ;
@@ -339,9 +339,9 @@
   ; @param (vector) b-path
   ;
   ; @example
-  ;  (map/values-equal? {:a {:b "FOO"}
-  ;                      :c {:d "FOO"}}
-  ;                     [:a :b] [:c :d])
+  ;  (values-equal? {:a {:b "FOO"}
+  ;                  :c {:d "FOO"}}
+  ;                 [:a :b] [:c :d])
   ;  =>
   ;  true
   ;
@@ -356,7 +356,7 @@
   ; @param (*) to
   ;
   ; @example
-  ;  (map/rekey-item {:a "x"} :a :b)
+  ;  (rekey-item {:a "x"} :a :b)
   ;  =>
   ;  {:b "x"}
   ;
@@ -369,7 +369,7 @@
   ; @param (list of *) ks
   ;
   ; @example
-  ;  (map/rekey-items {:a "x" :c "y"} :a :b :c :d)
+  ;  (rekey-items {:a "x" :c "y"} :a :b :c :d)
   ;  =>
   ;  {:b "x" :d "y"}
   ;
@@ -389,12 +389,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/update-some {:a [:x :y]} :a vector/conj-item :z)
+  ;  (update-some {:a [:x :y]} :a vector/conj-item :z)
   ;  =>
   ;  {:a [:x :y :z]}
   ;
   ; @example
-  ;  (map/update-some {:a [:x :y]} :a vector/conj-item nil)
+  ;  (update-some {:a [:x :y]} :a vector/conj-item nil)
   ;  =>
   ;  {:a [:x :y]}
   ;
@@ -412,12 +412,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item :z)
+  ;  (update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item :z)
   ;  =>
   ;  {:a {:b [:x :y :z]}}
   ;
   ; @example
-  ;  (map/update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item nil)
+  ;  (update-in-some {:a {:b [:x :y]}} [:a :b] vector/conj-item nil)
   ;  =>
   ;  {:a {:b [:x :y]}}
   ;
@@ -434,12 +434,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/assoc-some {:a [:x :y]} :b :z)
+  ;  (assoc-some {:a [:x :y]} :b :z)
   ;  =>
   ;  {:a [:x :y] :b :z}
   ;
   ; @example
-  ;  (map/assoc-some {:a [:x :y]} :b nil)
+  ;  (assoc-some {:a [:x :y]} :b nil)
   ;  =>
   ;  {:a [:x :y]}
   ;
@@ -456,12 +456,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/assoc-in-some {:a [:x :y]} [:b :c] :z)
+  ;  (assoc-in-some {:a [:x :y]} [:b :c] :z)
   ;  =>
   ;  {:a [:x :y] :b {:c :z}}
   ;
   ; @example
-  ;  (map/assoc-in-some {:a [:x :y]} [:b :c] nil)
+  ;  (assoc-in-some {:a [:x :y]} [:b :c] nil)
   ;  =>
   ;  {:a [:x :y]}
   ;
@@ -478,12 +478,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/assoc-or {:a :b} :a :c)
+  ;  (assoc-or {:a :b} :a :c)
   ;  =>
   ;  {:a :b}
   ;
   ; @example
-  ;  (map/assoc-or {:a nil} :a :c)
+  ;  (assoc-or {:a nil} :a :c)
   ;  =>
   ;  {:a :c}
   ;
@@ -499,12 +499,12 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/assoc-in-or {:a {:b :c}} [:a :b] :d)
+  ;  (assoc-in-or {:a {:b :c}} [:a :b] :d)
   ;  =>
   ;  {:a {:b :c}}
   ;
   ; @example
-  ;  (map/assoc-in-or {:a {:b nil}} [:a :b] :d)
+  ;  (assoc-in-or {:a {:b nil}} [:a :b] :d)
   ;  =>
   ;  {:a {:b :d}}
   ;
@@ -520,22 +520,22 @@
   ;    Default: false}
   ;
   ; @example
-  ;  (map/match-pattern? {:a "a" :b "b"} {:a "a"})
+  ;  (match-pattern? {:a "a" :b "b"} {:a "a"})
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (map/match-pattern? {:a "a" :b "b"} {:a "a" :c "c"})
+  ;  (match-pattern? {:a "a" :b "b"} {:a "a" :c "c"})
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/match-pattern? {:a "a" :b "b"} {:a "a"} {:strict-matching? true})
+  ;  (match-pattern? {:a "a" :b "b"} {:a "a"} {:strict-matching? true})
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/match-pattern? {:a "a" :b "b"} {:a "a" :b "b"} {:strict-matching? true})
+  ;  (match-pattern? {:a "a" :b "b"} {:a "a" :b "b"} {:strict-matching? true})
   ;  =>
   ;  true
   ;
@@ -566,7 +566,7 @@
   ; @param (function) f
   ;
   ; @example
-  ;  (map/get-keys-by {:a "a" :b :b :c :c} string?)
+  ;  (get-keys-by {:a "a" :b :b :c :c} string?)
   ;  =>
   ;  [:a]
   ;
@@ -584,12 +584,12 @@
   ; @param (function) filter-f
   ;
   ; @example
-  ;  (map/filter-values {:a 0 :b 1 :c 2} even?)
+  ;  (filter-values {:a 0 :b 1 :c 2} even?)
   ;  =>
   ;  {:a 0 :c 2}
   ;
   ; @example
-  ;  (map/filter-values {:a "abc" :b "def" :c "ghi"} #(string/starts-with? % "a"))
+  ;  (filter-values {:a "abc" :b "def" :c "ghi"} #(string/starts-with? % "a"))
   ;  =>
   ;  {:a "abc"}
   ;
@@ -603,14 +603,14 @@
   ; @param (function) value-f
   ;
   ; @example
-  ;  (map/filter-values-by {:a {:value "abc"} :b {:value "def"}}
-  ;                        #(string/starts-with? % "a") :value)
+  ;  (filter-values-by {:a {:value "abc"} :b {:value "def"}}
+  ;                    #(string/starts-with? % "a") :value)
   ;  =>
   ;  {:a {:value "abc"}}
   ;
   ; @example
-  ;  (map/filter-values-by {:a {:value "abc"} :b {:value "def"}}
-  ;                        #(string/starts-with? % "a") (get % :value))
+  ;  (filter-values-by {:a {:value "abc"} :b {:value "def"}}
+  ;                    #(string/starts-with? % "a") (get % :value))
   ;  =>
   ;  {:a {:value "abc"}}
   ;
@@ -628,12 +628,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (map/any-key-match? {:a 1 :b 2} string?)
+  ;  (any-key-match? {:a 1 :b 2} string?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/any-key-match? {:a 1 "b" 2} string?)
+  ;  (any-key-match? {:a 1 "b" 2} string?)
   ;  =>
   ;  true
   ;
@@ -646,12 +646,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (map/any-value-match? {:a 1 :b 2} string?)
+  ;  (any-value-match? {:a 1 :b 2} string?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/any-value-match? {:a 1 :b "2"} string?)
+  ;  (any-value-match? {:a 1 :b "2"} string?)
   ;  =>
   ;  true
   ;
@@ -664,12 +664,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (map/all-values-match? {:a 1 :b "2"} string?)
+  ;  (all-values-match? {:a 1 :b "2"} string?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/all-values-match? {:a "1" :b "2"} string?)
+  ;  (all-values-match? {:a "1" :b "2"} string?)
   ;  =>
   ;  true
   ;
@@ -682,12 +682,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (map/get-first-match-key {:a 1 :b 2} string?)
+  ;  (get-first-match-key {:a 1 :b 2} string?)
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (map/get-first-match-key {:a 1 "b" 2} string?)
+  ;  (get-first-match-key {:a 1 "b" 2} string?)
   ;  =>
   ;  "b"
   ;
@@ -700,17 +700,17 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (map/get-first-match-value {:a 1 :b 2} string?)
+  ;  (get-first-match-value {:a 1 :b 2} string?)
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (map/get-first-match-value {:a 1 :b "2"} string?)
+  ;  (get-first-match-value {:a 1 :b "2"} string?)
   ;  =>
   ;  "2"
   ;
   ; @example
-  ;  (map/get-first-match-value {:a {:id "apple"} :b {:id "banana"}} #(= "apple" (:id %)))
+  ;  (get-first-match-value {:a {:id "apple"} :b {:id "banana"}} #(= "apple" (:id %)))
   ;  =>
   ;  {:id "apple"}
   ;
@@ -728,7 +728,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (map/->keys {:a "A" :b "B"} name)
+  ;  (->keys {:a "A" :b "B"} name)
   ;  =>
   ;  {"a" "1" "b" "2"}
   ;
@@ -741,7 +741,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (map/->>keys {:a "A" :b "B" :c [{:d "D"}]} name)
+  ;  (->>keys {:a "A" :b "B" :c [{:d "D"}]} name)
   ;  =>
   ;  {"a" "1" "b" "2" "c" [{"d" "D"}]}
   ;
@@ -759,7 +759,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (map/->values {:a "A" :b "B"} keyword)
+  ;  (->values {:a "A" :b "B"} keyword)
   ;  =>
   ;  {:a :A :b :B}
   ;
@@ -772,7 +772,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (map/->>values {:a "A" :b "B" :c [:x "y" {:d "D"}]} keyword)
+  ;  (->>values {:a "A" :b "B" :c [:x "y" {:d "D"}]} keyword)
   ;  =>
   ;  {:a :A :b :B :c [:x :y {:d :D}]}
   ;
@@ -791,7 +791,7 @@
   ; @param (function) v-f
   ;
   ; @example
-  ;  (map/->keys {:a 1 :b 2} name inc)
+  ;  (->keys {:a 1 :b 2} name inc)
   ;  =>
   ;  {"a" 2 "b" 3}
   ;
@@ -805,7 +805,7 @@
   ; @param (function) v-f
   ;
   ; @example
-  ;  (map/->>kv {"a" "A" "b" "B" "c" ["x" "y" {"d" "D"}]} keyword keyword)
+  ;  (->>kv {"a" "A" "b" "B" "c" ["x" "y" {"d" "D"}]} keyword keyword)
   ;  =>
   ;  {:a :A :b :B :c [:x :y {:d :D}]}
   ;
@@ -823,8 +823,8 @@
   ; @param (function) r-f
   ;
   ; @example
-  ;  (map/->remove-keys {:a "A" :b "B"}
-  ;                     #(= % :a))
+  ;  (->remove-keys {:a "A" :b "B"}
+  ;                 #(= % :a))
   ;  =>
   ;  {:b "B"}
   ;
@@ -836,8 +836,8 @@
   ; @param (function) r-f
   ;
   ; @example
-  ;  (map/->>remove-keys {:a "A" :b "B" :c {:a "A" :b "B"}}
-  ;                      #(= % :a))
+  ;  (->>remove-keys {:a "A" :b "B" :c {:a "A" :b "B"}}
+  ;                  #(= % :a))
   ;  =>
   ;  {:b "B" :c {:b "B"}}
   ;
@@ -849,8 +849,8 @@
   ; @param (function) r-f
   ;
   ; @example
-  ;  (map/->remove-values {:a "A" :b "B"}
-  ;                       #(= % "A"))
+  ;  (->remove-values {:a "A" :b "B"}
+  ;                   #(= % "A"))
   ;  =>
   ;  {:b "B"}
   ;
@@ -862,8 +862,8 @@
   ; @param (function) r-f
   ;
   ; @example
-  ;  (map/->>remove-values {:a "A" :b "B" :c {:a "A" :b "B" :c [{:a "A"}]}}
-  ;                        #(= % "A"))
+  ;  (->>remove-values {:a "A" :b "B" :c {:a "A" :b "B" :c [{:a "A"}]}}
+  ;                    #(= % "A"))
   ;  =>
   ;  {:b "B" :c {:b "B" :c [{}]}}
   ;
@@ -889,7 +889,7 @@
   ; @param (*) value
   ;
   ; @example
-  ;  (map/assoc-ns {:fruit/apple "red"} :banana "yellow")
+  ;  (assoc-ns {:fruit/apple "red"} :banana "yellow")
   ;  =>
   ;  {:fruit/apple "red" :fruit/banana "yellow"}
   ;
@@ -910,20 +910,20 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/get-namespace {:bar "baz"})
+  ;  (get-namespace {:bar "baz"})
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (map/get-namespace {:foo/bar "baz"})
+  ;  (get-namespace {:foo/bar "baz"})
   ;  =>
   ;  :foo
   ;
   ; @example
-  ;  (map/get-namespace {:foo     "bar"
-  ;                      :baz     "boo"
-  ;                      :bam/box "bok"
-  ;                      :kop/lok "map"})
+  ;  (get-namespace {:foo     "bar"
+  ;                  :baz     "boo"
+  ;                  :bam/box "bok"
+  ;                  :kop/lok "map"})
   ;  =>
   ;  :bam
   ;
@@ -938,12 +938,12 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/namespaced? {:foo "bar"})
+  ;  (namespaced? {:foo "bar"})
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (map/namespaced? {:foo/bar "baz"})
+  ;  (namespaced? {:foo/bar "baz"})
   ;  =>
   ;  true
   ;
@@ -956,7 +956,7 @@
   ; @param (keyword) namespace
   ;
   ; @example
-  ;  (map/add-namespace {:foo "bar"} :baz)
+  ;  (add-namespace {:foo "bar"} :baz)
   ;  =>
   ;  {:baz/foo "bar"}
   ;
@@ -970,7 +970,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (map/remove-namespace {:baz/foo "bar"})
+  ;  (remove-namespace {:baz/foo "bar"})
   ;  =>
   ;  {:foo "bar"}
   ;

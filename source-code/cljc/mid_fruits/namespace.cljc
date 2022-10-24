@@ -24,7 +24,7 @@
   ; @param (namespaced keyword) sample
   ;
   ; @usage
-  ;  (namespace/detect ::this)
+  ;  (detect ::this)
   ;
   ; @return (keyword)
   [sample]

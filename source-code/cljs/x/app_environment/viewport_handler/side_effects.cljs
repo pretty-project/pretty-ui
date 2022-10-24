@@ -34,13 +34,13 @@
   (r/dispatch [:db/set-item! [:environment :viewport-handler/meta-items]
                              {:viewport-height      (dom/get-viewport-height)
                               :viewport-orientation (dom/get-viewport-orientation)
-                              :viewport-profile     (dom/get-viewport-profile)
+                              :viewport-profile     (viewport-handler.helpers/detect-viewport-profile)
                               :viewport-width       (dom/get-viewport-width)}]))
 
 (defn detect-viewport-profile!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [viewport-profile (dom/get-viewport-profile)]
+  (let [viewport-profile (viewport-handler.helpers/detect-viewport-profile)]
        (element-handler.side-effects/set-element-attribute! "x-body-container" "data-viewport-profile" (name viewport-profile))))
 
 

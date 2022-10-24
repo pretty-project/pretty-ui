@@ -28,7 +28,7 @@
   ; @param (integer) n
   ;
   ; @example
-  ;  (math/power 2 3)
+  ;  (power 2 3)
   ;  =>
   ;  8
   ;
@@ -41,12 +41,12 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/floor 4.20)
+  ;  (floor 4.20)
   ;  =>
   ;  4
   ;
   ; @example
-  ;  (math/floor 4.80)
+  ;  (floor 4.80)
   ;  =>
   ;  4
   ;
@@ -58,12 +58,12 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/ceil 4.20)
+  ;  (ceil 4.20)
   ;  5
   ;  4
   ;
   ; @example
-  ;  (math/ceil 4.80)
+  ;  (ceil 4.80)
   ;  =>
   ;  5
   ;
@@ -76,17 +76,17 @@
   ; @param (integer) precision
   ;
   ; @example
-  ;  (math/round 4.20)
+  ;  (round 4.20)
   ;  =>
   ;  4
   ;
   ; @example
-  ;  (math/round 4.80)
+  ;  (round 4.80)
   ;  =>
   ;  5
   ;
   ; @example
-  ;  (math/round 420 100)
+  ;  (round 420 100)
   ;  =>
   ;  400
   ;
@@ -104,7 +104,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/absolute -4.20)
+  ;  (absolute -4.20)
   ;  =>
   ;  4.20
   ;
@@ -116,7 +116,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/negative 4.20)
+  ;  (negative 4.20)
   ;  =>
   ;  -4.20
   ;
@@ -130,7 +130,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/positive -4.20)
+  ;  (positive -4.20)
   ;  =>
   ;  4.20
   ;
@@ -145,7 +145,7 @@
   ; @param (number) b
   ;
   ; @usage
-  ;  (math/absolute-difference 4.20 42)
+  ;  (absolute-difference 4.20 42)
   ;
   ; @return (number)
   [a b]
@@ -155,7 +155,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/opposite 4.20)
+  ;  (opposite 4.20)
   ;  =>
   ;  -4.20
   ;
@@ -169,7 +169,7 @@
   ; @param (number) max
   ;
   ; @example
-  ;  (math/between? 4.20 0 42)
+  ;  (between? 4.20 0 42)
   ;  =>
   ;  true
   ;
@@ -184,7 +184,7 @@
   ; @param (number) max
   ;
   ; @example
-  ;  (math/between! 4.20 0 42)
+  ;  (between! 4.20 0 42)
   ;  =>
   ;  4.20
   ;
@@ -198,7 +198,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/negative? -4.20)
+  ;  (negative? -4.20)
   ;  =>
   ;  true
   ;
@@ -210,7 +210,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/positive? 4.20)
+  ;  (positive? 4.20)
   ;  =>
   ;  true
   ;
@@ -222,7 +222,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/nonnegative? 4.20)
+  ;  (nonnegative? 4.20)
   ;  =>
   ;  true
   ;
@@ -235,17 +235,17 @@
   ; @param (collection) n
   ;
   ; @example
-  ;  (math/collection-minimum [100 14 3 55])
+  ;  (collection-minimum [100 14 3 55])
   ;  =>
   ;  3
   ;
   ; @example
-  ;  (math/collection-minimum ["0" 1 "a" nil])
+  ;  (collection-minimum ["0" 1 "a" nil])
   ;  =>
   ;  1
   ;
   ; @example
-  ;  (math/collection-minimum ["0" "a"])
+  ;  (collection-minimum ["0" "a"])
   ;  =>
   ;  nil
   ;
@@ -257,17 +257,17 @@
   ; @param (collection) n
   ;
   ; @example
-  ;  (math/collection-maximum [100 14 3 55])
+  ;  (collection-maximum [100 14 3 55])
   ;  =>
   ;  100
   ;
   ; @example
-  ;  (math/collection-maximum ["0" 1 "a" nil])
+  ;  (collection-maximum ["0" 1 "a" nil])
   ;  =>
   ;  1
   ;
   ; @example
-  ;  (math/collection-maximum ["0" "a"])
+  ;  (collection-maximum ["0" "a"])
   ;  =>
   ;  nil
   ;
@@ -279,7 +279,7 @@
   ; @param (list of number) xyz
   ;
   ; @example
-  ;  (math/minimum -4.20 2 0)
+  ;  (minimum -4.20 2 0)
   ;  =>
   ;  2
   ;
@@ -291,7 +291,7 @@
   ; @param (list of numbers) xyz
   ;
   ; @example
-  ;  (math/maximum -4.20 2 0)
+  ;  (maximum -4.20 2 0)
   ;  =>
   ;  2
   ;
@@ -303,7 +303,7 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (math/percent->angle 50)
+  ;  (percent->angle 50)
   ;  =>
   ;  180
   ;
@@ -316,7 +316,7 @@
   ; @param (number) value
   ;
   ; @example
-  ;  (math/percent 50 20)
+  ;  (percent 50 20)
   ;  =>
   ;  40
   ;
@@ -331,7 +331,7 @@
   ; @param (number) percentage
   ;
   ; @example
-  ;  (math/percent 50 40)
+  ;  (percent 50 40)
   ;  =>
   ;  20
   ;
@@ -344,7 +344,7 @@
   ; @param (number) percentage
   ;
   ; @example
-  ;  (math/percent-rest 50 40)
+  ;  (percent-rest 50 40)
   ;  =>
   ;  30
   ;
@@ -357,7 +357,7 @@
   ; @param (number) percentage
   ;
   ; @example
-  ;  (math/percent-add 50 40)
+  ;  (percent-add 50 40)
   ;  =>
   ;  70
   ;
@@ -378,22 +378,22 @@
   ; @param (integer) domain
   ;
   ; @example
-  ;  (math/domain-inchoate 9 5)
+  ;  (domain-inchoate 9 5)
   ;  =>
   ;  2
   ;
   ; @example
-  ;  (math/domain-inchoate 10 5)
+  ;  (domain-inchoate 10 5)
   ;  =>
   ;  2
   ;
   ; @example
-  ;  (math/domain-inchoate 11 5)
+  ;  (domain-inchoate 11 5)
   ;  =>
   ;  3
   ;
   ; @example
-  ;  (math/domain-inchoate 0 5)
+  ;  (domain-inchoate 0 5)
   ;  =>
   ;  0
   ;
@@ -411,22 +411,22 @@
   ; @param (integer) domain
   ;
   ; @example
-  ;  (math/domain-floor 9 5)
+  ;  (domain-floor 9 5)
   ;  =>
   ;  6
   ;
   ; @example
-  ;  (math/domain-floor 10 5)
+  ;  (domain-floor 10 5)
   ;  =>
   ;  6
   ;
   ; @example
-  ;  (math/domain-floor 11 5)
+  ;  (domain-floor 11 5)
   ;  =>
   ;  11
   ;
   ; @example
-  ;  (math/domain-floor 0 5)
+  ;  (domain-floor 0 5)
   ;  =>
   ;  -4
   ;
@@ -444,22 +444,22 @@
   ; @param (integer) domain
   ;
   ; @example
-  ;  (math/domain-ceil 9 5)
+  ;  (domain-ceil 9 5)
   ;  =>
   ;  10
   ;
   ; @example
-  ;  (math/domain-ceil 10 5)
+  ;  (domain-ceil 10 5)
   ;  =>
   ;  10
   ;
   ; @example
-  ;  (math/domain-ceil 11 5)
+  ;  (domain-ceil 11 5)
   ;  =>
   ;  15
   ;
   ; @example
-  ;  (math/domain-ceil 0 5)
+  ;  (domain-ceil 0 5)
   ;  =>
   ;  0
   ;
@@ -484,7 +484,7 @@
   ; @param (*)(opt) value-if-smaller
   ;
   ; @example
-  ;  (math/choose 4.20 42 "A" "B")
+  ;  (choose 4.20 42 "A" "B")
   ;  =>
   ;  "B"
   ;
@@ -516,7 +516,7 @@
   ;   (integer) range-to]
   ;
   ; @example
-  ;  (math/calc 42 [10 50] [100 500])
+  ;  (calc 42 [10 50] [100 500])
   ;  =>
   ;  420
   ;

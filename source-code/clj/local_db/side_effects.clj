@@ -77,7 +77,7 @@
   ; @param (string) collection-name
   ;
   ; @example
-  ;  (local-db/get-collection "my_collection")
+  ;  (get-collection "my_collection")
   ;  =>
   ;  [{...} {...} {...}]
   ;
@@ -91,7 +91,7 @@
   ; @param (maps in vector) collection
   ;
   ; @usage
-  ;  (local-db/set-collection! "my_collection" [{...} {...} {...}])
+  ;  (set-collection! "my_collection" [{...} {...} {...}])
   ;
   ; @return (nil)
   [collection-name collection]
@@ -109,7 +109,7 @@
   ; @param (function) filter-f
   ;
   ; @usage
-  ;  (local-db/filter-documents "my_collection" #(= :value (:key %1)))
+  ;  (filter-documents "my_collection" #(= :value (:key %1)))
   ;
   ; @return (maps in vector)
   [collection-name filter-f]
@@ -121,7 +121,7 @@
   ; @param (function) filter-f
   ;
   ; @usage
-  ;  (local-db/filter-document "my_collection" #(= :value (:key %1)))
+  ;  (filter-document "my_collection" #(= :value (:key %1)))
   ;
   ; @return (map)
   [collection-name filter-f]
@@ -133,7 +133,7 @@
   ; @param (map) pattern
   ;
   ; @example
-  ;  (local-db/match-documents "my_collection" {:foo "bar"})
+  ;  (match-documents "my_collection" {:foo "bar"})
   ;  =>
   ;  [{:foo "bar" :baz "boo"}]
   ;
@@ -147,7 +147,7 @@
   ; @param (keyword) pattern
   ;
   ; @example
-  ;  (local-db/match-document "my_collection" {:foo "bar"})
+  ;  (match-document "my_collection" {:foo "bar"})
   ;  =>
   ;  {:foo "bar" :baz "boo"}
   ;
@@ -251,11 +251,11 @@
   ; @param (list of *)(opt) params
   ;
   ; @usage
-  ;  (local-db/apply-document! "my_collection" "my-document" assoc :foo "bar")
+  ;  (apply-document! "my_collection" "my-document" assoc :foo "bar")
   ;
   ; @usage
-  ;  (local-db/apply-document! "my_collection" "my-document"
-  ;                            (fn [document] (assoc document :foo "bar")))
+  ;  (apply-document! "my_collection" "my-document"
+  ;                   (fn [document] (assoc document :foo "bar")))
   ;
   ; @return (nil)
   [collection-name document-id f & params]
