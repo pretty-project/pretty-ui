@@ -98,6 +98,20 @@
         (keyword? n) (-> n name hyphenize-key keyword)
         :return   n))
 
+(defn snake-case-key
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/snake-case-key :myKey)
+  ;  =>
+  ;  :my-key
+  ;
+  ; @return (*)
+  [n]
+  (cond (string?  n) (string/snake-case n)
+        (keyword? n) (-> n name snake-case-key keyword)
+        :return   n))
+
 
 
 ;; -- Keywordize / unkeywordize / ... value -----------------------------------
@@ -244,6 +258,20 @@
   (cond (map?    n) (map/->>keys    n hyphenize-keys)
         (vector? n) (vector/->items n hyphenize-keys)
         :return     (hyphenize-key  n)))
+
+(defn snake-case-keys
+  ; @param (*) n
+  ;
+  ; @example
+  ;  (json/snake-case-keys {:myKey :my-value})
+  ;  =>
+  ;  {:my-key :my-value}
+  ;
+  ; @return (*)
+  [n]
+  (cond (map?    n) (map/->>keys     n snake-case-keys)
+        (vector? n) (vector/->items  n snake-case-keys)
+        :return     (snake-case-key  n)))
 
 
 

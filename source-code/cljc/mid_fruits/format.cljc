@@ -120,7 +120,7 @@
         (if ; If x is an empty string ...
             (< count 1) x
             ; If x is NOT an empty string ...
-            (if-let [separator-index (string/first-index-of x ".")]
+            (if-let [separator-index (string/first-dex-of x ".")]
                     ; If x is contains "." ...
                     (let [diff (- count separator-index length 1)]
                          (cond ; If x is too long ...
@@ -169,7 +169,7 @@
                      (f (string/insert-part n "." (-> x :separators last))
                         (update x :separators vector/pop-last-item))
                      (return n))
-                 (if-let [separator (string/first-index-of n ".")]
+                 (if-let [separator (string/first-dex-of   n ".")]
                          (f (string/remove-first-occurence n ".")
                             (update x :separators conj separator))
                          (f (leading-zeros (mixed/update-whole-number n inc) (count n))

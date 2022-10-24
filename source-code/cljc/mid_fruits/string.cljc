@@ -19,7 +19,7 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (def empty-string "")
@@ -397,7 +397,7 @@
              (string/includes? n x))
         (subs n 0 (string/last-index-of n x))))
 
-(defn first-index-of
+(defn first-dex-of
   ; @param (string) n
   ; @param (string) x
   ;
@@ -407,7 +407,7 @@
              (nonempty? x))
         (string/index-of n x)))
 
-(defn last-index-of
+(defn last-dex-of
   ; @param (string) n
   ; @param (string) x
   ;
@@ -417,21 +417,43 @@
              (nonempty? x))
         (string/last-index-of n x)))
 
+(defn nth-dex-of
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (integer) dex
+  ;
+  ; @example
+  ;  (string/nth-dex-of "AbcAbcAbc" "A" 2)
+  ;  =>
+  ;  3
+  ;
+  ; @return (integer)
+  [n x dex]
+  (when (and (nonempty? n)
+             (nonempty? x)
+             (>=        dex 1))
+        (letfn [(f [cursor lap]
+                   (if-let [first-dex (-> n (subs cursor)
+                                            (string/index-of x))]
+                           (if (= lap dex)
+                               (+ cursor first-dex)
+                               (f (+ first-dex cursor 1)
+                                  (inc lap)))))]
+               (f 0 1))))
+
 (defn after-first-occurence
   ; @param (string) n
   ; @param (string) x
   ;
   ; @example
-  ;  (string/after-first-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "never")
+  ;  (string/after-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                "never")
   ;  =>
   ;  "really asleep."
   ;
   ; @example
-  ;  (string/after-first-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "abc")
+  ;  (string/after-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                                "abc")
   ;  =>
   ;  nil
   ;
@@ -448,16 +470,14 @@
   ; @param (string) x
   ;
   ; @example
-  ;  (string/after-last-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "never")
+  ;  (string/after-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                               "never")
   ;  =>
   ;  "really asleep."
   ;
   ; @example
-  ;  (string/after-last-occurence
-  ;   "With insomnia, you're never really awake; but you're never really asleep."
-  ;   "abc")
+  ;  (string/after-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                               "abc")
   ;  =>
   ;  nil
   ;
@@ -1042,8 +1062,10 @@
 (defn uppercase
   ; @param (string) n
   ;
-  ; @usage
-  ;  (string/uppercase "to-uppercase")
+  ; @example
+  ;  (string/uppercase "uppercase")
+  ;  =>
+  ;  "UPPERCASE"
   ;
   ; @return (string)
   [n]
@@ -1052,8 +1074,10 @@
 (defn lowercase
   ; @param (string) n
   ;
-  ; @usage
-  ;  (string/lowercase "TO-LOWERCASE")
+  ; @example
+  ;  (string/lowercase "LOWERCASE")
+  ;  =>
+  ;  "lowercase"
   ;
   ; @return (string)
   [n]
@@ -1084,24 +1108,40 @@
   ;
   ; @param (string) n
   ;
-  ; @usage
-  ;  (string/snake-case "toSnakeCase")
+  ; @example
+  ;  (string/snake-case "SnakeCase")
+  ;  =>
+  ;  "snake-case"
   ;
   ; @return (string)
   [n]
-  (return n))
+  (let [count (count n)]
+       (letfn [(f [result cursor]
+                  (if (= count cursor)
+                      (return result)
+                      (let [char (subs n cursor (inc cursor))]
+                           (if (= char (uppercase char))
+                               (f (str (subs n 0 cursor)
+                                       (if (not= cursor 0) "-")
+                                       (lowercase char)
+                                       (subs n (inc cursor)))
+                                  (inc cursor))
+                               (f result (inc cursor))))))]
+              (f n 0))))
 
 (defn CamelCase
   ; WARNING! INCOMPLETE! DO NOT USE!
   ;
   ; @param (string) n
   ;
-  ; @usage
-  ;  (string/CamelCase "to-camel-case")
+  ; @example
+  ;  (string/CamelCase "camel-case")
+  ;  =>
+  ;  "CamelCase"
   ;
   ; @return (string)
-  [n]
-  (return n))
+  [n])
+  ; TODO
 
 (defn abc?
   ; @param (list of strings)

@@ -285,7 +285,7 @@
           ;    Pl. n: ":my-param/xxx"
           ;         =>
           ;         [:my-param "/xxx"]
-          (f0 [n] (if-let [pos (string/first-index-of n "/")]
+          (f0 [n] (if-let [pos (string/first-dex-of n "/")]
                           [(keyword (subs n 1 pos))
                            (str     (subs n   pos))]
                           [(keyword (subs n 1)) ""]))
@@ -301,7 +301,7 @@
           ;    majd a behelyettesítés után az eredménnyel újra meghívja önmagát, további
           ;    útvonal-paramétereket keresve a szövegben.
           (f1 [n]
-              (if-let [pos (string/first-index-of n "/:")]
+              (if-let [pos (string/first-dex-of n "/:")]
                       ; Ha az f függvény n paramétere tartalmazza a "/:" részletet ...
                       (let [base (subs n 0 (inc pos))
                             end  (subs n   (inc pos))
