@@ -44,7 +44,7 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [sidebar-a/layout :my-sidebar {...}]
+  ;  [layout :my-sidebar {...}]
   [sidebar-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [] ;layout-props (prototypes/layout-props-prototype layout-props)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

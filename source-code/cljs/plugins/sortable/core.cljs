@@ -587,7 +587,7 @@
   ; @param (*) sortable-item
   ;
   ; @usage
-  ;  (r sortable/add-sortable-item! db :my-sortable "My item")
+  ;  (r add-sortable-item! db :my-sortable "My item")
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item]]
@@ -612,7 +612,7 @@
   ; @param (vector) sortable-item
   ;
   ; @usage
-  ;  (r sortable/add-sortable-items! db :my-sortable ["My item" "Your item"])
+  ;  (r add-sortable-items! db :my-sortable ["My item" "Your item"])
   ;
   ; @return (map)
   [db [_ sortable-id sortable-items]]
@@ -627,7 +627,7 @@
   ; @param (integer) target-dex
   ;
   ; @usage
-  ;  (r sortable/inject-sortable-item! db :my-sortable "My item" 5)
+  ;  (r inject-sortable-item! db :my-sortable "My item" 5)
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item target-dex]]
@@ -649,7 +649,7 @@
   ; @param (integer) sortable-item-dex
   ;
   ; @usage
-  ;  (r sortable/remove-sortable-item! db :my-sortable 3)
+  ;  (r remove-sortable-item! db :my-sortable 3)
   ;
   ; @return (map)
   [db [event-id sortable-id sortable-item-dex]]
@@ -669,7 +669,7 @@
   ; @param (integers in vector) sortable-item-dex-list
   ;
   ; @usage
-  ;  (r sortable/remove-sortable-items! db :my-sortable [0 3])
+  ;  (r remove-sortable-items! db :my-sortable [0 3])
   ;
   ; @return (map)
   [db [_ sortable-id sortable-item-dex-list]]

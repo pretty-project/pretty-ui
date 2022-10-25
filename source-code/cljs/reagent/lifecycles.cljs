@@ -47,10 +47,10 @@
   ;  {...}
   ;
   ; @usage
-  ;  (reagent/lifecycles {...})
+  ;  (lifecycles {...})
   ;
   ; @usage
-  ;  (reagent/lifecycles :my-component {...})
+  ;  (lifecycles :my-component {...})
   ;
   ; @return (?)
   ([lifecycles]

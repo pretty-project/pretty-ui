@@ -46,10 +46,10 @@
   ;    Default: :s}
   ;
   ; @usage
-  ;  [elements/vertical-separator {...}]
+  ;  [vertical-separator {...}]
   ;
   ; @usage
-  ;  [elements/vertical-separator :my-vertical-separator {...}]
+  ;  [vertical-separator :my-vertical-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

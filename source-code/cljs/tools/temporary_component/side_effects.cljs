@@ -28,12 +28,12 @@
   ;
   ; @usage W/O callback
   ;  (defn my-component [])
-  ;  (temporary-component/append-component! [my-component])
+  ;  (append-component! [my-component])
   ;
   ; @usage W/ callback
   ;  (defn my-button [] [:a {:href "foo/bar"}])
   ;  (defn click-my-button! [] ...)
-  ;  (temporary-component/append-component! [my-button] click-my-button!)
+  ;  (append-component! [my-button] click-my-button!)
   ([component]
    (helpers/remove-container!)
    (helpers/create-container!)
@@ -48,6 +48,6 @@
 
 (defn remove-component!
   ; @usage
-  ;  (temporary-component/remove-component!)
+  ;  (remove-component!)
   []
   (helpers/remove-container!))

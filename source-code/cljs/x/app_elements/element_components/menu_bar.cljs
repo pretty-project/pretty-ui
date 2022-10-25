@@ -232,10 +232,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/menu-bar {...}]
+  ;  [menu-bar {...}]
   ;
   ; @usage
-  ;  [elements/menu-bar :my-menu-bar {...}]
+  ;  [menu-bar :my-menu-bar {...}]
   ([bar-props]
    [element (random/generate-keyword) bar-props])
 

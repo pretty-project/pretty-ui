@@ -196,7 +196,7 @@
   ; @param (keyword) prop-key
   ;
   ; @usage
-  ;  (r element/get-element-prop db :my-element :my-prop)
+  ;  (r get-element-prop db :my-element :my-prop)
   ;
   ; @return (*)
   [db [_ element-id prop-key]]
@@ -226,7 +226,7 @@
   ; @param (*) prop-value
   ;
   ; @usage
-  ;  (r element/set-element-prop! db :my-element :my-prop "My value")
+  ;  (r set-element-prop! db :my-element :my-prop "My value")
   ;
   ; @return (map)
   [db [_ element-id prop-key prop-value]]
@@ -243,7 +243,7 @@
   ; @param (*) prop-value
   ;
   ; @usage
-  ;  (r element/update-element-prop! db :my-element :my-prop vector/conj-item "My value" "Your value")
+  ;  (r update-element-prop! db :my-element :my-prop vector/conj-item "My value" "Your value")
   ;
   ; @return (map)
   [db [_ element-id prop-key f & params]]
@@ -257,7 +257,7 @@
   ; @param (*) prop-value
   ;
   ; @usage
-  ;  (r element/set-element-subprop! db :my-element [:my-prop :my-subprop] "My value")
+  ;  (r set-element-subprop! db :my-element [:my-prop :my-subprop] "My value")
   ;
   ; @return (map)
   [db [_ element-id prop-path prop-value]]
@@ -273,7 +273,7 @@
   ; @param (keyword) prop-key
   ;
   ; @usage
-  ;  (r element/remove-element-prop! db :my-element :my-prop)
+  ;  (r remove-element-prop! db :my-element :my-prop)
   ;
   ; @return (map)
   [db [_ element-id prop-key]]
@@ -288,7 +288,7 @@
   ; @param (vector) prop-path
   ;
   ; @usage
-  ;  (r element/remove-element-subprop! db :my-element [:my-prop :my-subprop])
+  ;  (r remove-element-subprop! db :my-element [:my-prop :my-subprop])
   ;
   ; @return (map)
   [db [_ element-id prop-path]]

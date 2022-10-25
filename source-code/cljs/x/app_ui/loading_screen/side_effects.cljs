@@ -24,7 +24,7 @@
 
 (defn hide-loading-screen!
   ; @usage
-  ;  (ui/hide-loading-screen!)
+  ;  (hide-loading-screen!)
   []
   (environment/hide-element-animated! renderer/HIDE-ANIMATION-TIMEOUT "x-loading-screen"))
 

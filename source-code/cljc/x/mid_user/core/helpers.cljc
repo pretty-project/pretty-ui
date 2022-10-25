@@ -24,7 +24,7 @@
   ; @param (vector) user-roles
   ;
   ; @usage
-  ;  (user/user-roles->user-identified? [...])
+  ;  (user-roles->user-identified? [...])
   ;
   ; @return (boolean)
   [user-roles]
@@ -34,7 +34,7 @@
   ; @param (vector) user-roles
   ;
   ; @usage
-  ;  (user/user-roles->user-unidentified? [...])
+  ;  (user-roles->user-unidentified? [...])
   ;
   ; @return (boolean)
   [user-roles]

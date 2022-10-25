@@ -27,7 +27,7 @@
   ; @param (keyword) locale-id
   ;
   ; @usage
-  ;  (locales/name->ordered-name "First name" "Last name" :en)
+  ;  (name->ordered-name "First name" "Last name" :en)
   ;
   ; @return (string)
   [first-name last-name locale-id]

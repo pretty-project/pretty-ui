@@ -23,12 +23,12 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (seqable/nonseqable? 420)
+  ;  (nonseqable? 420)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (seqable/nonseqable? "420")
+  ;  (nonseqable? "420")
   ;  =>
   ;  false
   ;
@@ -40,12 +40,12 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (seqable/nonempty? 420)
+  ;  (nonempty? 420)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (seqable/nonempty? "420")
+  ;  (nonempty? "420")
   ;  =>
   ;  true
   ;

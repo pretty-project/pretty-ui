@@ -100,7 +100,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (eql/document-link? {:directory/id "my-directory"})
+  ;  (document-link? {:directory/id "my-directory"})
   ;  =>
   ;  true
   ;
@@ -116,12 +116,12 @@
   ; @param (keyword)(opt) namespace
   ;
   ; @example
-  ;  (eql/id->document-link "my-directory")
+  ;  (id->document-link "my-directory")
   ;  =>
   ;  {:id "my-directory"}
   ;
   ; @example
-  ;  (eql/id->document-link "my-directory" :directory)
+  ;  (id->document-link "my-directory" :directory)
   ;  =>
   ;  {:directory/id "my-directory"}
   ;
@@ -133,7 +133,7 @@
   ; @param (map) document-link
   ;
   ; @example
-  ;  (eql/document-link->id {:directory/id "my-directory"})
+  ;  (document-link->id {:directory/id "my-directory"})
   ;  =>
   ;  "my-directory"
   ;
@@ -150,7 +150,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (eql/document-entity? [:directory/id "my-directory"])
+  ;  (document-entity? [:directory/id "my-directory"])
   ;  =>
   ;  true
   ;
@@ -166,12 +166,12 @@
   ; @param (keyword)(opt) namespace
   ;
   ; @example
-  ;  (eql/id->document-entity "my-directory")
+  ;  (id->document-entity "my-directory")
   ;  =>
   ;  [:id "my-directory"]
   ;
   ; @example
-  ;  (eql/id->document-entity "my-directory" :directory)
+  ;  (id->document-entity "my-directory" :directory)
   ;  =>
   ;  [:directory/id "my-directory"]
   ;
@@ -183,7 +183,7 @@
   ; @param (vector) document-entity
   ;
   ; @example
-  ;  (eql/document-entity->id [:directory/id "my-directory"])
+  ;  (document-entity->id [:directory/id "my-directory"])
   ;  =>
   ;  "my-directory"
   ;
@@ -200,7 +200,7 @@
   ; @param (string) id
   ;
   ; @example
-  ;  (eql/id->placeholder "my-id")
+  ;  (id->placeholder "my-id")
   ;  =>
   ;  :>/my-id
   ;
@@ -218,18 +218,18 @@
   ; @param (keyword, map, string or vector) query-parts
   ;
   ; @example
-  ;  (eql/append-to-query nil :all-users)
+  ;  (append-to-query nil :all-users)
   ;  =>
   ;  [:all-users]
   ;
   ; @example
-  ;  (eql/append-to-query [] :all-users)
+  ;  (append-to-query [] :all-users)
   ;  =>
   ;  [:all-users]
   ;
   ; @example
-  ;  (eql/append-to-query [:all-users]
-  ;                       [:directory/id :my-directory])
+  ;  (append-to-query [:all-users]
+  ;                   [:directory/id :my-directory])
   ;  =>
   ;  [:all-users [:directory/id :my-directory]]
   ;

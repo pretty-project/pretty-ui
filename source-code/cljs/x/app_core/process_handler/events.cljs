@@ -25,7 +25,7 @@
   ; @param (percent) process-progress
   ;
   ; @usage
-  ;  (r a/set-process-progress! db :my-process 100)
+  ;  (r set-process-progress! db :my-process 100)
   ;
   ; @return (map)
   [db [_ process-id process-progress]]
@@ -37,7 +37,7 @@
   ;  :prepare, :progress, :failure, :success
   ;
   ; @usage
-  ;  (r a/set-process-status! db :my-process :success)
+  ;  (r set-process-status! db :my-process :success)
   ;
   ; @return (map)
   [db [_ process-id process-status]]
@@ -49,7 +49,7 @@
   ;  :active, :idle, :stalled, ...
   ;
   ; @usage
-  ;  (r a/set-process-activity! db :my-process :active)
+  ;  (r set-process-activity! db :my-process :active)
   ;
   ; @return (map)
   [db [_ process-id process-activity]]

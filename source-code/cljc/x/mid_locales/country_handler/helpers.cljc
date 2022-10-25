@@ -25,7 +25,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-native-name :hu)
+  ;  (country-native-name :hu)
   ;  =>
   ;  "Budapest"
   ;
@@ -37,7 +37,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-currencies :hu)
+  ;  (country-currencies :hu)
   ;  =>
   ;  "HUF"
   ;
@@ -49,7 +49,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-currency :hu)
+  ;  (country-currency :hu)
   ;  =>
   ;  "HUF"
   ;
@@ -62,7 +62,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-languages :hu)
+  ;  (country-languages :hu)
   ;  =>
   ;  ["hu"]
   ;
@@ -74,7 +74,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-language :hu)
+  ;  (country-language :hu)
   ;  =>
   ;  "hu"
   ;
@@ -87,7 +87,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-name :hu)
+  ;  (country-name :hu)
   ;  =>
   ;  "Magyarország"
   ;
@@ -99,7 +99,7 @@
   ; @param (keyword)
   ;
   ; @example
-  ;  (locales/country-native-name :hu)
+  ;  (country-native-name :hu)
   ;  =>
   ;  "Magyarország"
   ;

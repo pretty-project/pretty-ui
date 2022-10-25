@@ -78,10 +78,10 @@
   ;   :value (string)(opt)}
   ;
   ; @usage
-  ;  [ckeditor5/body {...}]
+  ;  [body {...}]
   ;
   ; @usage
-  ;  [ckeditor5/body :my-editor {...}]
+  ;  [body :my-editor {...}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

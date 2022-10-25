@@ -60,7 +60,7 @@
   ; @param (keywords in vector) change-keys
   ;
   ; @usage
-  ;  (r file-editor/form-changed? db :my-editor [:name :email-address])
+  ;  (r form-changed? db :my-editor [:name :email-address])
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]

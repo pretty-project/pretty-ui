@@ -32,7 +32,7 @@
   ; @param (atom) atom
   ;
   ; @usage
-  ;  (reagent/not! my-atom)
+  ;  (not! my-atom)
   ;
   ; @return (atom)
   [atom]

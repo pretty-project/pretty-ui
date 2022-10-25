@@ -35,7 +35,7 @@
   ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (core.helpers/default-item-path :my-browser)
+  ;  (default-item-path :my-browser)
   ;  =>
   ;  [:plugins :plugin-handler/browsed-item :my-browser]
   ;

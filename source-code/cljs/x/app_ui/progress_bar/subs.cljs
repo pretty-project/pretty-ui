@@ -24,7 +24,7 @@
 
 (defn process-faked?
   ; @usage
-  ;  (r ui/process-faked? db)
+  ;  (r process-faked? db)
   ;
   ; @return (boolean)
   [db _]

@@ -61,7 +61,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
+  ;  (r get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;

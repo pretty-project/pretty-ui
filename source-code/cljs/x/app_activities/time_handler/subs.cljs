@@ -26,12 +26,12 @@
   ; @param (string) timestamp
   ;
   ; @example
-  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  (r get-actual-timestamp db "2020-04-20T16:20:00.123Z")
   ;  =>
   ;  "Today, 16:20"
   ;
   ; @example
-  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  (r get-actual-timestamp db "2020-04-20T16:20:00.123Z")
   ;  =>
   ;  "2020/04/20"
   ;
@@ -47,12 +47,12 @@
   ; @param (string) timestamp
   ;
   ; @example
-  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  (r get-actual-timestamp db "2020-04-20T16:20:00.123Z")
   ;  =>
   ;  "5m"
   ;
   ; @example
-  ;  (r activities/get-actual-timestamp db "2020-04-20T16:20:00.123Z")
+  ;  (r get-actual-timestamp db "2020-04-20T16:20:00.123Z")
   ;  =>
   ;  "7d"
   ;

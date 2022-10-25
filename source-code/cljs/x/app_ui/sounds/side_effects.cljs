@@ -26,7 +26,7 @@
   ; @param (keyword) sound-id
   ;
   ; @usage
-  ;  (ui/play-sound! :my-sound)
+  ;  (play-sound! :my-sound)
   [sound-id]
   (let [catalog-id      (sounds.helpers/sound-id->catalog-id sound-id)
         catalog-element (dom/get-element-by-id               catalog-id)]

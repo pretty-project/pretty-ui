@@ -30,8 +30,8 @@
   ;  {:preset (keyword)(opt)}
   ;
   ; @usage
-  ;  (element.helpers/apply-preset {:preset-name {...}}
-  ;                                {:preset :preset-name ...})
+  ;  (apply-preset {:preset-name {...}}
+  ;                {:preset :preset-name ...})
   ;
   ; @return (map)
   [presets {:keys [preset] :as element-props}]
@@ -48,12 +48,12 @@
   ; @param (keyword or string) color-value
   ;
   ; @example
-  ;  (element.helpers/apply-color {...} :color :data-color :muted)
+  ;  (apply-color {...} :color :data-color :muted)
   ;  =>
   ;  {:data-color :muted}
   ;
   ; @example
-  ;  (element.helpers/apply-color {...} :color :data-color "#fff")
+  ;  (apply-color {...} :color :data-color "#fff")
   ;  =>
   ;  {:style {:color "fff"}}
   ;
@@ -72,12 +72,12 @@
   ; @param (keyword, px or string) dimension-value
   ;
   ; @example
-  ;  (element.helpers/apply-dimension {...} :width :data-width 128)
+  ;  (apply-dimension {...} :width :data-width 128)
   ;  =>
   ;  {:style {:width "128px"}}
   ;
   ; @example
-  ;  (element.helpers/apply-dimension {...} :width :data-width "128px")
+  ;  (apply-dimension {...} :width :data-width "128px")
   ;  =>
   ;  {:style {:width "128px"}}
   ;

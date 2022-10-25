@@ -26,7 +26,7 @@
   ; @param (*)(opt) default-value
   ;
   ; @usage
-  ; (db/subscribe-item [:my-item])
+  ; (subscribe-item [:my-item])
   ;
   ; @return (atom)
   ([item-path]
@@ -40,7 +40,7 @@
   ; @param (*)(opt) default-value
   ;
   ; @usage
-  ; (db/subscribed-item [:my-item])
+  ; (subscribed-item [:my-item])
   ;
   ; @return (*)
   ([item-path]
@@ -64,10 +64,10 @@
   ; @param (*)(opt) default-value
   ;
   ; @usage
-  ;  (r db/get-item [:my-item])
+  ;  (r get-item [:my-item])
   ;
   ; @usage
-  ;  (r db/get-item [:my-item] "Default value")
+  ;  (r get-item [:my-item] "Default value")
   ;
   ; @return (*)
   [db [_ item-path default-value]]
@@ -77,7 +77,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/item-exists? [:my-item])
+  ;  (r item-exists? [:my-item])
   ;
   ; @return (boolean)
   [db [_ item-path]]
@@ -87,7 +87,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/get-item-count [:my-item])
+  ;  (r get-item-count [:my-item])
   ;
   ; @return (integer)
   [db [_ item-path]]
@@ -99,7 +99,7 @@
   ; @param (function) f
   ;
   ; @usage
-  ;  (r db/get-applied-item [:my-item] #(< 5 (count %)))
+  ;  (r get-applied-item [:my-item] #(< 5 (count %)))
   ;
   ; @return (integer)
   [db [_ item-path f]]

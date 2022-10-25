@@ -22,7 +22,7 @@
 
 (defn app-build
   ; @example
-  ;  (a/app-build)
+  ;  (app-build)
   ;  =>
   ;  "0.4.2"
   ;

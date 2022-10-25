@@ -74,10 +74,10 @@
   ;    Default: 1}
   ;
   ; @usage
-  ;  [elements/vertical-line {...}]
+  ;  [vertical-line {...}]
   ;
   ; @usage
-  ;  [elements/vertical-line :my-vertical-line {...}]
+  ;  [vertical-line :my-vertical-line {...}]
   ([line-props]
    [element (random/generate-keyword) line-props])
 

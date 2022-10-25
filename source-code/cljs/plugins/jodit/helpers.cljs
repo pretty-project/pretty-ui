@@ -41,7 +41,7 @@
   ;   :link, :undo, :redo, :brush]
   ;
   ; @example
-  ;  (helpers/parse-buttons [:bold :italic])
+  ;  (parse-buttons [:bold :italic])
   ;  =>
   ;  "bold, italic"
   ;

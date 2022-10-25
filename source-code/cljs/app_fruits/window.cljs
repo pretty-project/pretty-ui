@@ -37,7 +37,7 @@
 
 (defn get-uri-base
   ; @example
-  ;  (window/get-uri-base)
+  ;  (get-uri-base)
   ;  =>
   ;  "https://my-domain.com"
   ;

@@ -123,10 +123,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [text-editor/body {...}]
+  ;  [body {...}]
   ;
   ; @usage
-  ;  [text-editor/body :my-editor {...}]
+  ;  [body :my-editor {...}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

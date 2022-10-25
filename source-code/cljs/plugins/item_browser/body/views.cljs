@@ -90,13 +90,13 @@
   ;    Default: plugins.item-lister.core.config/DEFAULT-SEARCH-KEYS
   ;   :transfer-id (keyword)(opt)}
   ;
-  ; @example
-  ;  [item-browser/body :my-browser {...}]
+  ; @usage
+  ;  [body :my-browser {...}]
   ;
-  ; @example
+  ; @usage
   ;  (defn my-list-element [browser-id items] [:div ...])
-  ;  [item-browser/body :my-browser {:list-element #'my-list-element
-  ;                                  :prefilter    {:my-type/color "red"}}]
+  ;  [body :my-browser {:list-element #'my-list-element
+  ;                     :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
        (reagent/lifecycles (core.helpers/component-id browser-id :body)

@@ -110,10 +110,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/breadcrumbs {...}]
+  ;  [breadcrumbs {...}]
   ;
   ; @usage
-  ;  [elements/breadcrumbs :my-breadcrumbs {...}]
+  ;  [breadcrumbs :my-breadcrumbs {...}]
   ([breadcrumbs-props]
    [element (random/generate-keyword) breadcrumbs-props])
 

@@ -25,7 +25,7 @@
 
 (defn get-app-home
   ; @example
-  ;  (r router/get-app-home db)
+  ;  (r get-app-home db)
   ;  =>
   ;  "/my-app"
   ;
@@ -38,12 +38,12 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (r router/use-app-home db "/@app-home/my-route")
+  ;  (r use-app-home db "/@app-home/my-route")
   ;  =>
   ;  "/my-app/my-route"
   ;
   ; @example
-  ;  (r router/use-app-home db "https://my-app.com/@app-home/my-route")
+  ;  (r use-app-home db "https://my-app.com/@app-home/my-route")
   ;  =>
   ;  "https://my-app.com/my-app/my-route"
   ;
@@ -59,7 +59,7 @@
 
 (defn get-app-domain
   ; @example
-  ;  (r router/get-app-domain db)
+  ;  (r get-app-domain db)
   ;  =>
   ;  "https://my-app.com"
   ;
@@ -72,12 +72,12 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (r router/use-app-domain db "/my-route")
+  ;  (r use-app-domain db "/my-route")
   ;  =>
   ;  "https://my-app.com/my-route"
   ;
   ; @example
-  ;  (r router/use-app-domain db "https://my-app.com/my-route")
+  ;  (r use-app-domain db "https://my-app.com/my-route")
   ;  =>
   ;  "https://my-app.com/my-route"
   ;

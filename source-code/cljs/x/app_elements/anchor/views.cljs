@@ -80,10 +80,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/anchor {...}]
+  ;  [anchor {...}]
   ;
   ; @usage
-  ;  [elements/anchor :my-anchor {...}]
+  ;  [anchor :my-anchor {...}]
   ([anchor-props]
    [element (random/generate-keyword) anchor-props])
 

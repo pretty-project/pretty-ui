@@ -25,7 +25,7 @@
   ; @param (map) term
   ;
   ; @usage
-  ;  (r dictionary/add-term! db :my-term {:en "My term"})
+  ;  (r add-term! db :my-term {:en "My term"})
   ;
   ; @return (map)
   [db [_ term-id term]]
@@ -35,7 +35,7 @@
   ; @param (map) terms
   ;
   ; @usage
-  ;  (r dictionary/add-terms! db {:my-term {:en "My term"}})
+  ;  (r add-terms! db {:my-term {:en "My term"}})
   ;
   ; @return (map)
   [db [_ terms]]

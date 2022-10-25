@@ -142,10 +142,10 @@
   ;   :value-path (vector)}
   ;
   ; @usage
-  ;  [elements/digit-field {...}]
+  ;  [digit-field {...}]
   ;
   ; @usage
-  ;  [elements/digit-field :my-digit-field {...}]
+  ;  [digit-field :my-digit-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

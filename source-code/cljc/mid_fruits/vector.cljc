@@ -28,7 +28,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/to-map [:x :y :z])
+  ;  (to-map [:x :y :z])
   ;  =>
   ;  {0 :x 1 :y 2 :z}
   ;
@@ -46,7 +46,7 @@
   ; @param (*) n
   ;
   ; @usage
-  ;  (vector/nonempty? [])
+  ;  (nonempty? [])
   ;
   ; @return (boolean)
   ;  Is n a nonempty vector?
@@ -85,7 +85,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/contains-item? [:a :b] :a)
+  ;  (contains-item? [:a :b] :a)
   ;  =>
   ;  true
   ;
@@ -98,7 +98,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/not-contains-item? [:a :b] :a)
+  ;  (not-contains-item? [:a :b] :a)
   ;  =>
   ;  false
   ;
@@ -111,12 +111,12 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/min? [:a :b] 3)
+  ;  (min? [:a :b] 3)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/min? [:a :b :c] 3)
+  ;  (min? [:a :b :c] 3)
   ;  =>
   ;  true
   ;
@@ -130,12 +130,12 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/max? [:a :b :c] 3)
+  ;  (max? [:a :b :c] 3)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/max? [:a :b :c :d] 3)
+  ;  (max? [:a :b :c :d] 3)
   ;  =>
   ;  false
   ;
@@ -149,12 +149,12 @@
   ; @param (vector) b
   ;
   ; @example
-  ;  (vector/longer? [:a :b :c] [:a :b :c :d])
+  ;  (longer? [:a :b :c] [:a :b :c :d])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/longer? [:a :b :c :d] [:a :b])
+  ;  (longer? [:a :b :c :d] [:a :b])
   ;  =>
   ;  false
   ;
@@ -172,7 +172,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/reverse-items [:a :b :c])
+  ;  (reverse-items [:a :b :c])
   ;  =>
   ;  [:c :b :a]
   ;
@@ -185,7 +185,7 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/repeat-item :a 5)
+  ;  (repeat-item :a 5)
   ;  =>
   ;  [:a :a :a :a :a]
   ;
@@ -203,7 +203,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/cons-item [:a :b] :c)
+  ;  (cons-item [:a :b] :c)
   ;  =>
   ;  [:c :a :b]
   ;
@@ -216,12 +216,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/cons-item-once [:a :b] :b)
+  ;  (cons-item-once [:a :b] :b)
   ;  =>
   ;  [:a :b]
   ;
   ; @example
-  ;  (vector/cons-item-once [:a :b] :c)
+  ;  (cons-item-once [:a :b] :c)
   ;  =>
   ;  [:c :a :b]
   ;
@@ -236,12 +236,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/conj-item [:a :b] :c)
+  ;  (conj-item [:a :b] :c)
   ;  =>
   ;  [:a :b :c]
   ;
   ; @example
-  ;  (vector/conj-item [:a :b] :c :d)
+  ;  (conj-item [:a :b] :c :d)
   ;  =>
   ;  [:a :b :c :d]
   ;
@@ -256,12 +256,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/conj-item-once [:a :b] :b)
+  ;  (conj-item-once [:a :b] :b)
   ;  =>
   ;  [:a :b]
   ;
   ; @example
-  ;  (vector/conj-item-once [:a :b] :c)
+  ;  (conj-item-once [:a :b] :c)
   ;  =>
   ;  [:a :b :c]
   ;
@@ -278,12 +278,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/conj-some [:a :b] :c)
+  ;  (conj-some [:a :b] :c)
   ;  =>
   ;  [:a :b :c]
   ;
   ; @example
-  ;  (vector/conj-some [:a :b] nil)
+  ;  (conj-some [:a :b] nil)
   ;  =>
   ;  [:a :b]
   ;
@@ -296,7 +296,7 @@
   ; @param (list of vectors) abc
   ;
   ; @usage
-  ;  (vector/concat-items [:a :b] [:c :d] [:e :f])
+  ;  (concat-items [:a :b] [:c :d] [:e :f])
   ;
   ; @return (vector)
   [& abc]
@@ -311,7 +311,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/dex-range [:a :b :c])
+  ;  (dex-range [:a :b :c])
   ;  =>
   ;  [0 1 2]
   ;
@@ -323,7 +323,7 @@
   ; @param (integer) dex
   ;
   ; @usage
-  ;  (vector/dex-first? 1)
+  ;  (dex-first? 1)
   ;
   ; @return (boolean)
   [dex]
@@ -334,7 +334,7 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/dex-last? [:a :b :c] 2)
+  ;  (dex-last? [:a :b :c] 2)
   ;  =>
   ;  true
   ;
@@ -347,7 +347,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/last-dex [:a :b :c])
+  ;  (last-dex [:a :b :c])
   ;  =>
   ;  2
   ;
@@ -363,12 +363,12 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/next-dex [:a :b :c :d] 3)
+  ;  (next-dex [:a :b :c :d] 3)
   ;  =>
   ;  0
   ;
   ; @example
-  ;  (vector/next-dex [] 3)
+  ;  (next-dex [] 3)
   ;  =>
   ;  0
   ;
@@ -386,7 +386,7 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/inc-dex [:a :b :c :d] 3)
+  ;  (inc-dex [:a :b :c :d] 3)
   ;  =>
   ;  3
   ;
@@ -403,12 +403,12 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/prev-dex [:a :b :c :d] 0)
+  ;  (prev-dex [:a :b :c :d] 0)
   ;  =>
   ;  3
   ;
   ; @example
-  ;  (vector/prev-dex [] 3)
+  ;  (prev-dex [] 3)
   ;  =>
   ;  0
   ;
@@ -426,7 +426,7 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/dec-dex [:a :b :c :d] 0)
+  ;  (dec-dex [:a :b :c :d] 0)
   ;  =>
   ;  0
   ;
@@ -441,27 +441,27 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/match-dex ["a" "b" "c"] 0)
+  ;  (match-dex ["a" "b" "c"] 0)
   ;  =>
   ;  0
   ;
   ; @example
-  ;  (vector/match-dex ["a" "b" "c"] 1)
+  ;  (match-dex ["a" "b" "c"] 1)
   ;  =>
   ;  1
   ;
   ; @example
-  ;  (vector/match-dex ["a" "b" "c"] 2)
+  ;  (match-dex ["a" "b" "c"] 2)
   ;  =>
   ;  2
   ;
   ; @example
-  ;  (vector/match-dex ["a" "b" "c"] 3)
+  ;  (match-dex ["a" "b" "c"] 3)
   ;  =>
   ;  0
   ;
   ; @example
-  ;  (vector/match-dex ["a" "b" "c"] 4)
+  ;  (match-dex ["a" "b" "c"] 4)
   ;  =>
   ;  1
   ;
@@ -492,7 +492,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/last-item [:a :b :c])
+  ;  (last-item [:a :b :c])
   ;  =>
   ;  :c
   ;
@@ -504,7 +504,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/first-item [:a :b :c])
+  ;  (first-item [:a :b :c])
   ;  =>
   ;  :a
   ;
@@ -517,7 +517,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/item-last? [:a :b] :b)
+  ;  (item-last? [:a :b] :b)
   ;  =>
   ;  true
   ;
@@ -530,7 +530,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/item-first? [:a :b] :a)
+  ;  (item-first? [:a :b] :a)
   ;  =>
   ;  true
   ;
@@ -549,12 +549,12 @@
   ; @param (integer)(opt) high
   ;
   ; @example
-  ;  (vector/ranged-items [:a :b :c :d :e :f] 1 3)
+  ;  (ranged-items [:a :b :c :d :e :f] 1 3)
   ;  =>
   ;  [:b :c]
   ;
   ; @example
-  ;  (vector/ranged-items [:a :b :c :d :e :f] 2)
+  ;  (ranged-items [:a :b :c :d :e :f] 2)
   ;  =>
   ;  [:c :d :e :f]
   ;
@@ -576,7 +576,7 @@
   ; @param (integer) length
   ;
   ; @example
-  ;  (vector/last-items [:a :b :c :d :e] 2)
+  ;  (last-items [:a :b :c :d :e] 2)
   ;  =>
   ;  [:d :e]
   ;
@@ -591,7 +591,7 @@
   ; @param (integer) length
   ;
   ; @example
-  ;  (vector/first-items [:a :b :c :d :e] 3)
+  ;  (first-items [:a :b :c :d :e] 3)
   ;  =>
   ;  [:a :b :c]
   ;
@@ -608,7 +608,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/shift-first-item [:a :b :c :d :e])
+  ;  (shift-first-item [:a :b :c :d :e])
   ;  =>
   ;  [:b :c :d :e]
   ;
@@ -622,7 +622,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/pop-last-item [:a :b :c :d :e])
+  ;  (pop-last-item [:a :b :c :d :e])
   ;  =>
   ;  [:a :b :c :d]
   ;
@@ -642,7 +642,7 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/count? [:a :b :c] 3)
+  ;  (count? [:a :b :c] 3)
   ;  =>
   ;  true
   ;
@@ -658,17 +658,17 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/count! [:a :b :c] 3)
+  ;  (count! [:a :b :c] 3)
   ;  =>
   ;  [:a :b :c]
   ;
   ; @example
-  ;  (vector/count! [:a :b :c] 2)
+  ;  (count! [:a :b :c] 2)
   ;  =>
   ;  [:a :b]
   ;
   ; @example
-  ;  (vector/count! [:a :b :c] 5)
+  ;  (count! [:a :b :c] 5)
   ;  =>
   ;  [:a :b :c nil nil]
   ;
@@ -688,12 +688,12 @@
   ; @param (*) dex
   ;
   ; @example
-  ;  (vector/remove-item [:a :b] :b)
+  ;  (remove-item [:a :b] :b)
   ;  =>
   ;  [:a]
   ;
   ; @example
-  ;  (vector/remove-item [:a :b :a] :a)
+  ;  (remove-item [:a :b :a] :a)
   ;  =>
   ;  [:b]
   ;
@@ -706,12 +706,12 @@
   ; @param (*) dex
   ;
   ; @example
-  ;  (vector/remove-item-once [:a :b :b] :b)
+  ;  (remove-item-once [:a :b :b] :b)
   ;  =>
   ;  [:a :b]
   ;
   ; @example
-  ;  (vector/remove-item-once [:a :b :a] :a)
+  ;  (remove-item-once [:a :b :a] :a)
   ;  =>
   ;  [:b :a]
   ;
@@ -735,7 +735,7 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/remove-nth-item [:a :b :c :d :e] 2)
+  ;  (remove-nth-item [:a :b :c :d :e] 2)
   ;  =>
   ;  [:a :b :d :e]
   ;
@@ -749,7 +749,7 @@
   ; @param (integers in vector) dexes
   ;
   ; @example
-  ;  (vector/remove-nth-item [:a :b :c :d :e] [0 2])
+  ;  (remove-nth-item [:a :b :c :d :e] [0 2])
   ;  =>
   ;  [:b :d :e]
   ;
@@ -766,12 +766,12 @@
   ; @param (vector) xyz
   ;
   ; @example
-  ;  (vector/remove-items [:a :b :c] [:b :c])
+  ;  (remove-items [:a :b :c] [:b :c])
   ;  =>
   ;  [:a]
   ;
   ; @example
-  ;  (vector/remove-items [:a :b :b :c ] [:b :c])
+  ;  (remove-items [:a :b :b :c ] [:b :c])
   ;  =>
   ;  [:a]
   ;
@@ -788,7 +788,7 @@
   ; @param (function) f
   ;
   ; @example
-  ;  (vector/remove-items-by [:a :b :c] keyword?)
+  ;  (remove-items-by [:a :b :c] keyword?)
   ;  =>
   ;  []
   ;
@@ -805,7 +805,7 @@
   ; @param (vector) b
   ;
   ; @example
-  ;  (vector/difference [:a :b :c] [:b :c])
+  ;  (difference [:a :b :c] [:b :c])
   ;  =>
   ;  [:a]
   ;
@@ -818,7 +818,7 @@
   ; @param (vector) xyz
   ;
   ; @example
-  ;  (vector/keep-items [:a :b :c :d] [:b :c])
+  ;  (keep-items [:a :b :c :d] [:b :c])
   ;  =>
   ;  [:b :c]
   ;
@@ -836,7 +836,7 @@
   ; @param (*) v
   ;
   ; @example
-  ;  (vector/remove-items-kv [{:a "a"} {:b "b"} {:c "c"}] :b "b")
+  ;  (remove-items-kv [{:a "a"} {:b "b"} {:c "c"}] :b "b")
   ;  =>
   ;  [{:a "a"} {:c "c"}]
   ;
@@ -848,7 +848,7 @@
   ; @param (vector) n
   ;
   ; @usage
-  ;  (vector/remove-last-item [:a :b :c])
+  ;  (remove-last-item [:a :b :c])
   ;
   ; @return (vector)
   [n]
@@ -858,7 +858,7 @@
   ; @param (vector) n
   ;
   ; @usage
-  ;  (vector/remove-first-item [:a :b :c])
+  ;  (remove-first-item [:a :b :c])
   ;
   ; @return (vector)
   [n]
@@ -874,7 +874,7 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/duplicate-nth-item [:a :b :c :d :e] 2)
+  ;  (duplicate-nth-item [:a :b :c :d :e] 2)
   ;  =>
   ;  [:a :b :c :c :d :e]
   ;
@@ -898,7 +898,7 @@
   ; @param (list of vectors) abc
   ;
   ; @example
-  ;  (vector/concat-items-once [:a :b :c] [:c :d :e :a])
+  ;  (concat-items-once [:a :b :c] [:c :d :e :a])
   ;  =>
   ;  [:b :c :d :e :a]
   ;
@@ -917,17 +917,17 @@
   ; @param (integer) to
   ;
   ; @example
-  ;  (vector/move-item [:a :b :c :d :e :f :g :h] 2 2)
+  ;  (move-item [:a :b :c :d :e :f :g :h] 2 2)
   ;  =>
   ;  [:a :b :c :d :e :f :g :h]
   ;
   ; @example
-  ;  (vector/move-item [:a :b :c :d :e :f :g :h] 2 5)
+  ;  (move-item [:a :b :c :d :e :f :g :h] 2 5)
   ;  =>
   ;  [:a :b :d :e :c :f :g :h]
   ;
   ; @example
-  ;  (vector/move-item [:a :b :c :d :e :f :g :h] 5 2)
+  ;  (move-item [:a :b :c :d :e :f :g :h] 5 2)
   ;  =>
   ;  [:a :b :f :c :d :e :g :h]
   ;
@@ -954,12 +954,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/move-item-to-last [:a :b] :a)
+  ;  (move-item-to-last [:a :b] :a)
   ;  =>
   ;  [:b :a]
   ;
   ; @example
-  ;  (vector/move-item-to-last [:b] :a)
+  ;  (move-item-to-last [:b] :a)
   ;  =>
   ;  [:b :a]
   ;
@@ -972,12 +972,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/move-item-to-first [:a :b] :b)
+  ;  (move-item-to-first [:a :b] :b)
   ;  =>
   ;  [:b :a]
   ;
   ; @example
-  ;  (vector/move-item-to-first [:a] :b)
+  ;  (move-item-to-first [:a] :b)
   ;  =>
   ;  [:b :a]
   ;
@@ -991,7 +991,7 @@
   ; @param (*) b
   ;
   ; @example
-  ;  (vector/change-item [:a :b :c :d :c] :c :x)
+  ;  (change-item [:a :b :c :d :c] :c :x)
   ;  =>
   ;  [:a :b :x :d :x]
   ;
@@ -1009,12 +1009,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/replace-nth-item [:a :b :c :d] 1 :x)
+  ;  (replace-nth-item [:a :b :c :d] 1 :x)
   ;  =>
   ;  [:a :x :c :d]
   ;
   ; @example
-  ;  (vector/replace-nth-item [:a :b :c :d] 999 :x)
+  ;  (replace-nth-item [:a :b :c :d] 999 :x)
   ;  =>
   ;  [:a :b :c :d]
   ;
@@ -1033,22 +1033,22 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/inject-item [:a :b :c] 2 :d)
+  ;  (inject-item [:a :b :c] 2 :d)
   ;  =>
   ;  [:a :b :d :c]
   ;
   ; @example
-  ;  (vector/inject-item [:a :b :c] 999 :d)
+  ;  (inject-item [:a :b :c] 999 :d)
   ;  =>
   ;  [:a :b :d :c]
   ;
   ; @example
-  ;  (vector/inject-item nil 999 :d)
+  ;  (inject-item nil 999 :d)
   ;  =>
   ;  [:d]
   ;
   ; @example
-  ;  (vector/inject-item {:a "b"} 1 :d)
+  ;  (inject-item {:a "b"} 1 :d)
   ;  =>
   ;  {:a "b"}
   ;
@@ -1068,12 +1068,12 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/toggle-item [:a :b] :c)
+  ;  (toggle-item [:a :b] :c)
   ;  =>
   ;  [:a :b :c]
   ;
   ; @example
-  ;  (vector/toggle-item [:a :b :c] :c)
+  ;  (toggle-item [:a :b :c] :c)
   ;  =>
   ;  [:a :b]
   ;
@@ -1092,7 +1092,7 @@
   ; @param (vector) n
   ;
   ; @usage
-  ;  (vector/remove-duplicates [:a :b :c :a])
+  ;  (remove-duplicates [:a :b :c :a])
   ;
   ; @return (vector)
   [n]
@@ -1107,7 +1107,7 @@
   ; @param (vector) b
   ;
   ; @example
-  ;  (vector/similars [:a :b :c] [:c :d :e])
+  ;  (similars [:a :b :c] [:c :d :e])
   ;  =>
   ;  [:c]
   ;
@@ -1124,12 +1124,12 @@
   ; @param (vector) b
   ;
   ; @example
-  ;  (vector/contains-similars? [:a :b :c] [:c :d :e])
+  ;  (contains-similars? [:a :b :c] [:c :d :e])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/contains-similars? [:a :b :c] [:d :e :f])
+  ;  (contains-similars? [:a :b :c] [:d :e :f])
   ;  =>
   ;  false
   ;
@@ -1149,7 +1149,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/item-last-dex [:a :b :a :b] :b)
+  ;  (item-last-dex [:a :b :a :b] :b)
   ;  =>
   ;  3
   ;
@@ -1164,7 +1164,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/item-first-dex [:a :b :a :b] :b)
+  ;  (item-first-dex [:a :b :a :b] :b)
   ;  =>
   ;  1
   ;
@@ -1179,7 +1179,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/items-before-first-occurence [:a :b :c :d :d :e] :d)
+  ;  (items-before-first-occurence [:a :b :c :d :d :e] :d)
   ;  =>
   ;  [:a :b :c]
   ;
@@ -1194,7 +1194,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/items-after-first-occurence [:a :b :c :d :d :e] :d)
+  ;  (items-after-first-occurence [:a :b :c :d :d :e] :d)
   ;  =>
   ;  [:d :e]
   ;
@@ -1209,7 +1209,7 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/remove-first-occurence [:a :b :c :d :d :e] :d)
+  ;  (remove-first-occurence [:a :b :c :d :d :e] :d)
   ;  =>
   ;  [:a :b :c :d :e]
   ;
@@ -1226,17 +1226,17 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/move-first-occurence [:a :b :c :a :b :c] :b 3)
+  ;  (move-first-occurence [:a :b :c :a :b :c] :b 3)
   ;  =>
   ;  [:a :c :b :a :b :c]
   ;
   ; @example
-  ;  (vector/move-first-occurence [:a :b :c :a :b :c] :b 1)
+  ;  (move-first-occurence [:a :b :c :a :b :c] :b 1)
   ;  =>
   ;  [:a :b :c :a :b :c]
   ;
   ; @example
-  ;  (vector/move-first-occurence [:a :b :c :a :b :c] :b 20)
+  ;  (move-first-occurence [:a :b :c :a :b :c] :b 20)
   ;  =>
   ;  [:a :c :a :b :c :b]
   ;
@@ -1258,17 +1258,17 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/prev-item [:a :b :c :d] :b)
+  ;  (prev-item [:a :b :c :d] :b)
   ;  =>
   ;  :a
   ;
   ; @example
-  ;  (vector/prev-item [:a :b :c :d] nil)
+  ;  (prev-item [:a :b :c :d] nil)
   ;  =>
   ;  :d
   ;
   ; @example
-  ;  (vector/prev-item [] :a)
+  ;  (prev-item [] :a)
   ;  =>
   ;  ?
   ;
@@ -1282,17 +1282,17 @@
   ; @param (*) x
   ;
   ; @example
-  ;  (vector/next-item [:a :b :c :d] :a)
+  ;  (next-item [:a :b :c :d] :a)
   ;  =>
   ;  :b
   ;
   ; @example
-  ;  (vector/next-item [:a :b :c :d] nil)
+  ;  (next-item [:a :b :c :d] nil)
   ;  =>
   ;  :a
   ;
   ; @example
-  ;  (vector/next-item [] :a)
+  ;  (next-item [] :a)
   ;  =>
   ;  ?
   ;
@@ -1312,7 +1312,7 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/filter-items [:a :b "c"] keyword?)
+  ;  (filter-items [:a :b "c"] keyword?)
   ;  =>
   ;  [:a :b]
   ;
@@ -1325,11 +1325,11 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/first-filtered ["a" :b "c" :d "e"] keyword?)
+  ;  (first-filtered ["a" :b "c" :d "e"] keyword?)
   ;  =>
   ;  :b
   ;
-  ;  (vector/first-filtered ["a" :b "c" :d "e"] #(string? %1))
+  ;  (first-filtered ["a" :b "c" :d "e"] #(string? %1))
   ;  =>
   ;  "a"
   ;
@@ -1342,11 +1342,11 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/first-filtered ["a" :b "c" :d "e"] keyword?)
+  ;  (first-filtered ["a" :b "c" :d "e"] keyword?)
   ;  =>
   ;  :d
   ;
-  ;  (vector/first-filtered ["a" :b "c" :d "e"] #(string? %1))
+  ;  (first-filtered ["a" :b "c" :d "e"] #(string? %1))
   ;  =>
   ;  "e"
   ;
@@ -1360,11 +1360,11 @@
   ; @param (integer) dex
   ;
   ; @example
-  ;  (vector/nth-filtered ["a" :b "c" :d "e"] keyword? 2)
+  ;  (nth-filtered ["a" :b "c" :d "e"] keyword? 2)
   ;  =>
   ;  :d
   ;
-  ;  (vector/nth-filtered ["a" :b "c" :d "e"] #(string? %1) 2)
+  ;  (nth-filtered ["a" :b "c" :d "e"] #(string? %1) 2)
   ;  =>
   ;  "c"
   ;
@@ -1395,7 +1395,7 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/filtered-count [:a :b "c"] keyword?)
+  ;  (filtered-count [:a :b "c"] keyword?)
   ;  =>
   ;  2
   ;
@@ -1409,7 +1409,7 @@
   ; @param (integer) x
   ;
   ; @example
-  ;  (vector/filtered-count? [:a :b "c"] keyword? 2)
+  ;  (filtered-count? [:a :b "c"] keyword? 2)
   ;  =>
   ;  true
   ;
@@ -1426,7 +1426,7 @@
   ; @param (vector) n
   ;
   ; @example
-  ;  (vector/abc-items [:b "b" :a "a" nil])
+  ;  (abc-items [:b "b" :a "a" nil])
   ;  =>
   ;  [nil "a" "b" :a :b]
   ;
@@ -1451,7 +1451,7 @@
   ; @param (function)(opt) comparator-f
   ;
   ; @example
-  ;  (vector/sort-items ["a" "c" "b"] string/abc?)
+  ;  (sort-items ["a" "c" "b"] string/abc?)
   ;  =>
   ;  ["a" "b" "c"]
   ;
@@ -1467,12 +1467,12 @@
   ; @param (function) comparator-f
   ;
   ; @example
-  ;  (vector/items-sorted? ["a" "c" "b"] string/abc?)
+  ;  (items-sorted? ["a" "c" "b"] string/abc?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/items-sorted? ["a" "b" "c"] string/abc?)
+  ;  (items-sorted? ["a" "b" "c"] string/abc?)
   ;  =>
   ;  true
   ;
@@ -1486,12 +1486,12 @@
   ; @param (function) value-f
   ;
   ; @example
-  ;  (vector/sort-items-by [{:a 3} {:a 2} {:a 1}] :a)
+  ;  (sort-items-by [{:a 3} {:a 2} {:a 1}] :a)
   ;  =>
   ;  [{:a 1} {:a 2} {:a 3}]
   ;
   ; @example
-  ;  (vector/sort-items-by [[1 2] [2 2] [2 3]] > first)
+  ;  (sort-items-by [[1 2] [2 2] [2 3]] > first)
   ;  =>
   ;  [[2 2] [2 3] [1 2]]
   ;
@@ -1512,12 +1512,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/any-item-match? [:a :b :c] string?)
+  ;  (any-item-match? [:a :b :c] string?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/any-item-match? [:a "b" :c] string?)
+  ;  (any-item-match? [:a "b" :c] string?)
   ;  =>
   ;  true
   ;
@@ -1530,12 +1530,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/all-items-match? [:a "b" "c"] string?)
+  ;  (all-items-match? [:a "b" "c"] string?)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/all-items-match? ["a" "b" "c"] string?)
+  ;  (all-items-match? ["a" "b" "c"] string?)
   ;  =>
   ;  true
   ;
@@ -1548,12 +1548,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/get-first-match-item [:a :b :c] string?)
+  ;  (get-first-match-item [:a :b :c] string?)
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (vector/get-first-match-item [:a "b" :c] string?)
+  ;  (get-first-match-item [:a "b" :c] string?)
   ;  =>
   ;  "b"
   ;
@@ -1566,12 +1566,12 @@
   ; @param (function) test-f
   ;
   ; @example
-  ;  (vector/get-first-match-item-dex [:a :b :c] string?)
+  ;  (get-first-match-item-dex [:a :b :c] string?)
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (vector/get-first-match-item-dex [:a "b" :c] string?)
+  ;  (get-first-match-item-dex [:a "b" :c] string?)
   ;  =>
   ;  1
   ;
@@ -1590,32 +1590,32 @@
   ; @param (function) comparator-f
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 2] <)
+  ;  (compared-items-ordered? [0 1 3] [0 1 2] <)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 4] <)
+  ;  (compared-items-ordered? [0 1 3] [0 1 4] <)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [0 1 3] [0 1 3] <)
+  ;  (compared-items-ordered? [0 1 3] [0 1 3] <)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? [] [] <)
+  ;  (compared-items-ordered? [] [] <)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? ["a" "b" "c"] ["d" "a"] string/abc?)
+  ;  (compared-items-ordered? ["a" "b" "c"] ["d" "a"] string/abc?)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (vector/compared-items-ordered? ["a" "b" "c"] ["a" "b"] string/abc?)
+  ;  (compared-items-ordered? ["a" "b" "c"] ["a" "b"] string/abc?)
   ;  =>
   ;  false
   ;
@@ -1656,7 +1656,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (vector/->items [:a :b :c] name)
+  ;  (->items [:a :b :c] name)
   ;  =>
   ;  ["a" "b" "c"]
   ;
@@ -1669,7 +1669,7 @@
   ; @param (function) update-f
   ;
   ; @example
-  ;  (vector/->>items [:a :b :c [:d :e {:e :f}]] name)
+  ;  (->>items [:a :b :c [:d :e {:e :f}]] name)
   ;  =>
   ;  ["a" "b" "c" ["d" "e" {:e "f"}]]
   ;

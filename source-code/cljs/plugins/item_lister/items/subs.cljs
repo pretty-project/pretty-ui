@@ -26,7 +26,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/get-item db :my-lister "my-item")
+  ;  (r get-item db :my-lister "my-item")
   ;
   ; @return (map)
   [db [_ lister-id item-id]]
@@ -37,7 +37,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/export-item db :my-lister "my-item")
+  ;  (r export-item db :my-lister "my-item")
   ;
   ; @return (namespaced map)
   [db [_ lister-id item-id]]
@@ -48,7 +48,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/item-downloaded? db :my-lister "my-item")
+  ;  (r item-downloaded? db :my-lister "my-item")
   ;
   ; @return (boolean)
   [db [_ lister-id item-id]]
@@ -64,7 +64,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/get-item-dex db :my-lister "my-item")
+  ;  (r get-item-dex db :my-lister "my-item")
   ;
   ; @return (integer)
   [db [_ lister-id item-id]]
@@ -75,7 +75,7 @@
   ; @param (string) item-ids
   ;
   ; @usage
-  ;  (r item-lister/get-item-dexes db :my-lister ["my-item"])
+  ;  (r get-item-dexes db :my-lister ["my-item"])
   ;
   ; @return (integers in vector)
   [db [_ lister-id item-ids]]
@@ -91,7 +91,7 @@
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r item-lister/item-disabled? db :my-lister 42)
+  ;  (r item-disabled? db :my-lister 42)
   ;
   ; @return (boolean)
   [db [_ lister-id item-dex]]
@@ -102,7 +102,7 @@
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r item-lister/item-last? db :my-lister 42)
+  ;  (r item-last? db :my-lister 42)
   ;
   ; @return (boolean)
   [db [_ lister-id item-dex]]

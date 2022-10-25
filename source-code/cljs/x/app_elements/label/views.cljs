@@ -197,10 +197,10 @@
   ;    Default: :none}
   ;
   ; @usage
-  ;  [elements/label {...}]
+  ;  [label {...}]
   ;
   ; @usage
-  ;  [elements/label :my-label {...}]
+  ;  [label :my-label {...}]
   ([label-props]
    [element (random/generate-keyword) label-props])
 

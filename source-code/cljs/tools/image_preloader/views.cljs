@@ -29,13 +29,13 @@
   ;  {:uri (string)}
   ;
   ; @usage
-  ;  [image-preloader/component {...}]
+  ;  [component {...}]
   ;
   ; @usage
-  ;  [image-preloader/component :my-preloader {...}]
+  ;  [component :my-preloader {...}]
   ;
   ; @usage
-  ;  [image-preloader/component {:uri "/my-image.png"}]
+  ;  [component {:uri "/my-image.png"}]
   ([preloader-props]
    [component (random/generate-keyword) preloader-props])
 

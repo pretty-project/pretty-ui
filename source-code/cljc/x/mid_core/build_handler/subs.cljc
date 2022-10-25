@@ -22,7 +22,7 @@
 
 (defn get-app-build
   ; @usage
-  ;  (r a/get-app-build db)
+  ;  (r get-app-build db)
   ;
   ; @return (string)
   [db _]

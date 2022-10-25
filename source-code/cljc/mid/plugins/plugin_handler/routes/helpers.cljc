@@ -26,7 +26,7 @@
   ; @param (keyword) route-key
   ;
   ; @example
-  ;  (routes.helpers/route-id :my-namespace/my-plugin :extended)
+  ;  (route-id :my-namespace/my-plugin :extended)
   ;  =>
   ;  :my-namespace.my-plugin/extended-route
   ;

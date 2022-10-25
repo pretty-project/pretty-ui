@@ -29,7 +29,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (forms/valid-string " abCd12 ")
+  ;  (valid-string " abCd12 ")
   ;  =>
   ;  "abCd12"
   ;
@@ -46,7 +46,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (forms/pin? "0000")
+  ;  (pin? "0000")
   ;
   ; @return (boolean)
   [n]
@@ -56,7 +56,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (forms/password? "Abcde1")
+  ;  (password? "Abcde1")
   ;
   ; @return (boolean)
   [n]
@@ -67,7 +67,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (forms/email-address? "foo@bar.baz")
+  ;  (email-address? "foo@bar.baz")
   ;
   ; @return (boolean)
   [n]
@@ -77,7 +77,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (forms/phone-number? "+36301234567")
+  ;  (phone-number? "+36301234567")
   ;
   ; @return (boolean)
   [n]
@@ -94,34 +94,34 @@
   ; @param (vector) keys
   ;
   ; @usage
-  ;  (forms/items-different? {...} {...})
+  ;  (items-different? {...} {...})
   ;
   ; @usage
-  ;  (forms/items-different? {...} {...} [...])
+  ;  (items-different? {...} {...} [...])
   ;
   ; @example
-  ;  (forms/items-different? {:color "Red"   :size "XL"}
-  ;                          {:color "Green" :size "XL"})
+  ;  (items-different? {:color "Red"   :size "XL"}
+  ;                    {:color "Green" :size "XL"})
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (forms/items-different? {:color "Red"}
-  ;                          {:color "Red" :size "XL"})
+  ;  (items-different? {:color "Red"}
+  ;                    {:color "Red" :size "XL"})
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (forms/items-different? {:color "Red"   :size "XL"}
-  ;                          {:color "Green" :size "XL"}
-  ;                          [:color])
+  ;  (items-different? {:color "Red"   :size "XL"}
+  ;                    {:color "Green" :size "XL"}
+  ;                    [:color])
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (forms/items-different? {:color "Red"   :size "XL"}
-  ;                          {:color "Green" :size "XL"}
-  ;                          [:size])
+  ;  (items-different? {:color "Red"   :size "XL"}
+  ;                    {:color "Green" :size "XL"}
+  ;                    [:size])
   ;  =>
   ;  false
   ;

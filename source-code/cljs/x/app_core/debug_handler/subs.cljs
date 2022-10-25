@@ -22,7 +22,7 @@
 
 (defn get-debug-mode
   ; @usage
-  ;  (r a/get-debug-mode db)
+  ;  (r get-debug-mode db)
   ;
   ; @return (string)
   [db _]
@@ -30,7 +30,7 @@
 
 (defn debug-mode-detected?
   ; @usage
-  ;  (r a/debug-mode-detected? db)
+  ;  (r debug-mode-detected? db)
   ;
   ; @return (boolean)
   [db _]

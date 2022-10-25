@@ -25,7 +25,7 @@
   ; @param (px) height
   ;
   ; @example
-  ;  (svg/view-box 1024 1024)
+  ;  (view-box 1024 1024)
   ;  =>
   ;  "0 0 1024 1024"
   ;
@@ -37,7 +37,7 @@
   ; @param (map) attributes
   ;
   ; @usage
-  ;  (svg/element-attributes {...})
+  ;  (element-attributes {...})
   ;
   ; @return (map)
   [attributes]
@@ -51,7 +51,7 @@
   ;   :width (px)}
   ;
   ; @example
-  ;  (svg/wrapper-attributes {:height 256 :width 256})
+  ;  (wrapper-attributes {:height 256 :width 256})
   ;  =>
   ;  {:style {:height "100%" :width "100%"}
   ;   :view-box "0 0 256 256"

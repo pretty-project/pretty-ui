@@ -35,7 +35,7 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (core.helpers/default-item-path :my-editor)
+  ;  (default-item-path :my-editor)
   ;  =>
   ;  [:plugins :plugin-handler/edited-items :my-editor]
   ;
@@ -49,7 +49,7 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (core.helpers/default-suggestions-path :my-editor)
+  ;  (default-suggestions-path :my-editor)
   ;  =>
   ;  [:plugins :plugin-handler/suggestions :my-editor]
   ;

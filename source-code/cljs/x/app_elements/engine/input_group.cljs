@@ -170,7 +170,7 @@
   ;
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
-  ;  (r engine/increase-input-count! db :my-group {:initial-value "Apple"} 1)
+  ;  (r increase-input-count! db :my-group {:initial-value "Apple"} 1)
   ;  =>
   ;  {:my-value ["First value" "Second value" "Apple"]}
   ;
@@ -191,7 +191,7 @@
   ;
   ; @example
   ;  (def db {:my-value ["First value" "Second value"]})
-  ;  (r engine/decrease-input-count! db :my-group {...} 1)
+  ;  (r decrease-input-count! db :my-group {...} 1)
   ;  =>
   ;  {:my-value ["First value"]}
   ;
@@ -215,13 +215,13 @@
   ;
   ; @example
   ;  (def db {:my-group-value []})
-  ;  (r engine/stack-to-group-value! db :my-group :my-input {:label "My value"})
+  ;  (r stack-to-group-value! db :my-group :my-input {:label "My value"})
   ;  =>
   ;  {:my-group-value [{:label "My value"}]}
   ;
   ; @example
   ;  (def db {:my-group-value ["First value" "Second value"]})
-  ;  (r engine/stack-to-group-value! db :my-group :my-input "My value")
+  ;  (r stack-to-group-value! db :my-group :my-input "My value")
   ;  =>
   ;  {:my-group-value ["First value" "Second value" "My value"]}
   ;
@@ -241,7 +241,7 @@
   ;
   ; @example
   ;  (def db {:my-group-value ["First value" "Second value"]})
-  ;  (r engine/unstack-from-group-value! db :my-group :my-input 0)
+  ;  (r unstack-from-group-value! db :my-group :my-input 0)
   ;  =>
   ;  {:my-group-value ["Second value"]}
   ;

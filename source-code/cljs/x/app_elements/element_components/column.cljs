@@ -83,10 +83,10 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  [elements/column {...}]
+  ;  [column {...}]
   ;
   ; @usage
-  ;  [elements/column :my-column {...}]
+  ;  [column :my-column {...}]
   ([column-props]
    [element (random/generate-keyword) column-props])
 

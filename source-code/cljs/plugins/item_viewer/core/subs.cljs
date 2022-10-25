@@ -67,7 +67,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-viewer/viewing-item? db :my-viewer "my-item")
+  ;  (r viewing-item? db :my-viewer "my-item")
   ;
   ; @return (boolean)
   [db [_ viewer-id item-id]]

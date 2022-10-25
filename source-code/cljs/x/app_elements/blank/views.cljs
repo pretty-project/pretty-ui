@@ -61,10 +61,10 @@
   ;     :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/blank {...}]
+  ;  [blank {...}]
   ;
   ; @usage
-  ;  [elements/blank :my-blank {...}]
+  ;  [blank :my-blank {...}]
   ([blank-props]
    [element (random/generate-keyword) blank-props])
 

@@ -40,7 +40,7 @@
   ;  {:route-template (string)}
   ;
   ; @example
-  ;  (route-handler.helpers/route-props->route-data :my-route {:route-template "/my-route"})
+  ;  (route-props->route-data :my-route {:route-template "/my-route"})
   ;  =>
   ;  ["/my-route" :my-route]
   ;
@@ -56,8 +56,8 @@
   ; @param (map) routes
   ;
   ; @example
-  ;  (route-handler.helpers/routes->destructed-routes {:my-route   {:route-template "/my-route"}
-  ;                                                    :your-route {:route-template "/your-route"}})
+  ;  (routes->destructed-routes {:my-route   {:route-template "/my-route"}
+  ;                              :your-route {:route-template "/your-route"}})
   ;  =>
   ;  [["/my-route"   :my-route]]
   ;   ["/your-route" :your-route]]

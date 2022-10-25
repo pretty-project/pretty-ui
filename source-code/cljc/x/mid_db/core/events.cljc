@@ -32,7 +32,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/toggle-item! [:my-item])
+  ;  (r toggle-item! [:my-item])
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -43,7 +43,7 @@
   ; @param (*) item-value
   ;
   ; @usage
-  ;  (r db/toggle-item-value! [:my-item] :my-value)
+  ;  (r toggle-item-value! [:my-item] :my-value)
   ;
   ; @return (map)
   [db [_ item-path item-value]]
@@ -57,7 +57,7 @@
   ; @param (vector) to-item-path
   ;
   ; @usage
-  ;  (r db/copy-item! [:move-from] [:move-to])
+  ;  (r copy-item! [:move-from] [:move-to])
   ;
   ; @return (map)
   [db [_ from-item-path to-item-path]]
@@ -70,7 +70,7 @@
   ; @param (vector) to-item-path
   ;
   ; @usage
-  ;  (r db/move-item! [:move-from] [:move-to])
+  ;  (r move-item! [:move-from] [:move-to])
   ;
   ; @return (map)
   [db [_ from-item-path to-item-path]]
@@ -84,7 +84,7 @@
   ; @param (*) item
   ;
   ; @usage
-  ;  (r db/set-item! [:my-item] :item-value)
+  ;  (r set-item! [:my-item] :item-value)
   ;
   ; @return (map)
   [db [_ item-path item]]
@@ -101,31 +101,31 @@
   ;
   ; @example
   ;  (def db {})
-  ;  (r db/set-vector-item! [:my-item 0] :item-value)
+  ;  (r set-vector-item! [:my-item 0] :item-value)
   ;  =>
   ;  {:my-item [:item-value]}
   ;
   ; @example
   ;  (def db {})
-  ;  (r db/set-vector-item! [:my-item 2] :item-value)
+  ;  (r set-vector-item! [:my-item 2] :item-value)
   ;  =>
   ;  {:my-item [:item-value]}
   ;
   ; @example
   ;  (def db {:my-item {}})
-  ;  (r db/set-vector-item! [:my-item 0] :item-value)
+  ;  (r set-vector-item! [:my-item 0] :item-value)
   ;  =>
   ;  {:my-item [:item-value]}
   ;
   ; @example
   ;  (def db {:my-item [])
-  ;  (r db/set-vector-item! [:my-item 0] :item-value)
+  ;  (r set-vector-item! [:my-item 0] :item-value)
   ;  =>
   ;  {:my-item [:item-value]}
   ;
   ; @example
   ;  (def db {:my-item [:first-value :second-value])
-  ;  (r db/set-vector-item! [:my-item 0] :item-value)
+  ;  (r set-vector-item! [:my-item 0] :item-value)
   ;  =>
   ;  {:my-item [:item-value :second-value]}
   ;
@@ -144,7 +144,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/remove-item! [:my-item])
+  ;  (r remove-item! [:my-item])
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -155,7 +155,7 @@
   ;  Az item-path útvonal utolsó eleme integer típusú kell legyen!
   ;
   ; @usage
-  ;  (r db/remove-vector-item! [:my-item 0])
+  ;  (r remove-vector-item! [:my-item 0])
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -169,7 +169,7 @@
   ; @param (vectors in vector) item-paths
   ;
   ; @usage
-  ;  (r db/remove-item-n! [[:my-item] [...]])
+  ;  (r remove-item-n! [[:my-item] [...]])
   ;
   ; @return (map)
   [db [_ & item-paths]]
@@ -180,7 +180,7 @@
   ; @param (vectors in vector) item-paths
   ;
   ; @usage
-  ;  (r db/inc-item-n! [[:my-item] [...]])
+  ;  (r inc-item-n! [[:my-item] [...]])
   ;
   ; @return (map)
   [db [_ & item-paths]]
@@ -191,7 +191,7 @@
   ; @param (vectors in vector) item-paths
   ;
   ; @usage
-  ;  (r db/dec-item-n! [[:my-item] [...]])
+  ;  (r dec-item-n! [[:my-item] [...]])
   ;
   ; @return (map)
   [db [_ & item-paths]]
@@ -204,10 +204,10 @@
   ; @param (list of *) params
   ;
   ; @usage
-  ;  (r db/apply-item! db [:my-item] not)
+  ;  (r apply-item! db [:my-item] not)
   ;
   ; @usage
-  ;  (r db/apply-item! db [:my-item] vector/conj-item :apple)
+  ;  (r apply-item! db [:my-item] vector/conj-item :apple)
   ;
   ; @return (map)
   [db [_ item-path f & params]]

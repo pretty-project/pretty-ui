@@ -75,7 +75,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (html/to-hiccup "</br>")
+  ;  (to-hiccup "</br>")
   ;  =>
   ;  [:br]
   ;

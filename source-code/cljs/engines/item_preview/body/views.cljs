@@ -75,12 +75,12 @@
   ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [item-preview/body :my-preview {...}]
+  ;  [body :my-preview {...}]
   ;
   ; @usage
   ;  (defn my-preview-element [] [:div ...])
-  ;  [item-preview/body :my-preview {:item-id "my-item"
-  ;                                  :preview-element #'my-preview-element}]
+  ;  [body :my-preview {:item-id "my-item"
+  ;                     :preview-element #'my-preview-element}]
   [preview-id body-props]
   (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]
        (reagent/lifecycles (core.helpers/component-id preview-id :body)

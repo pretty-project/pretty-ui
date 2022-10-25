@@ -130,12 +130,12 @@
   ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [item-lister/body :my-lister {...}]
+  ;  [body :my-lister {...}]
   ;
   ; @usage
   ;  (defn my-list-element [lister-id items] [:div ...])
-  ;  [item-lister/body :my-lister {:list-element #'my-list-element
-  ;                                :prefilter    {:my-type/color "red"}}]
+  ;  [body :my-lister {:list-element #'my-list-element
+  ;                    :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
   (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)

@@ -139,21 +139,21 @@
   ;    Az esemény utolsó paraméterként megkapja az ... (?)}
   ;
   ; @usage
-  ;  [sortable/body {...}]
+  ;  [body {...}]
   ;
   ; @usage
-  ;  [sortable/body :my-sortable {...}]
+  ;  [body :my-sortable {...}]
   ;
   ; @usage
   ;  (defn my-item-element [sortable-id item-dex item dnd-kit-props])
-  ;  [sortable/body {:item-element #'my-item-element
-  ;                  :items        ["My item" "Your item"]}]
+  ;  [body {:item-element #'my-item-element
+  ;         :items        ["My item" "Your item"]}]
   ;
   ; @usage
   ;  (defn my-item-element [sortable-id common-props item-dex item dnd-kit-props])
-  ;  [sortable/body {:common-props {...}
-  ;                  :item-element #'my-item-element
-  ;                  :items        ["My item" "Your item"]}]
+  ;  [body {:common-props {...}
+  ;         :item-element #'my-item-element
+  ;         :items        ["My item" "Your item"]}]
   ([sortable-props]
    [body (random/generate-keyword) sortable-props])
 

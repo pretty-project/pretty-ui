@@ -26,7 +26,7 @@
   ; @param (map) sidebar-props
   ;
   ; @usage
-  ;  (r ui/render-sidebar! db :my-content {...})
+  ;  (r render-sidebar! db :my-content {...})
   ;
   ; @return (map)
   [db [_ sidebar-id sidebar-props]]
@@ -36,7 +36,7 @@
   ; @param (keyword) sidebar-id
   ;
   ; @usage
-  ;  (r ui/remove-sidebar! db :my-content)
+  ;  (r remove-sidebar! db :my-content)
   ;
   ; @return (map)
   [db [_ sidebar-id]]
@@ -50,7 +50,7 @@
 
 (defn hide-sidebar!
   ; @usage
-  ;  (r ui/hide-sidebar! db)
+  ;  (r hide-sidebar! db)
   ;
   ; @return (map)
   [db _]
@@ -58,7 +58,7 @@
 
 (defn show-sidebar!
   ; @usage
-  ;  (r ui/show-sidebar! db)
+  ;  (r show-sidebar! db)
   ;
   ; @return (map)
   [db _]

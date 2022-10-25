@@ -50,7 +50,7 @@
   ;   :on-server-launch   (metamorphic-event)(opt)}
   ;
   ; @usage
-  ;  (core/reg-lifecycles! :namespace/lifecycles
+  ;  (reg-lifecycles! :namespace/lifecycles
   ;                        {...})
   ([lifecycles]
    (reg-lifecycles! (lifecycle-handler.helpers/generate-life-id) lifecycles))

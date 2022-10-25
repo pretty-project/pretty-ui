@@ -83,10 +83,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/color-marker {...}]
+  ;  [color-marker {...}]
   ;
   ; @usage
-  ;  [elements/color-marker :my-color-marker {...}]
+  ;  [color-marker :my-color-marker {...}]
   ([marker-props]
    [element (random/generate-keyword) marker-props])
 

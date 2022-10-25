@@ -67,16 +67,16 @@
   ;    A visszatérési értéknek térkép típusnak kell lennie!}
   ;
   ; @usage
-  ;  [components/subscriber {...}]
+  ;  [subscriber {...}]
   ;
   ; @usage
-  ;  [components/subscriber :my-component {...}]
+  ;  [subscriber :my-component {...}]
   ;
   ; @usage
   ;  (defn my-component [component-id component-props])
-  ;  [components/subscriber :my-component
-  ;                         {:render-f   #'my-component
-  ;                          :subscriber [:get-my-component-props]}]
+  ;  [subscriber :my-component
+  ;              {:render-f   #'my-component
+  ;               :subscriber [:get-my-component-props]}]
   ;
   ; @return (*)
   ([context-props]

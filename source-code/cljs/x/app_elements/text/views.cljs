@@ -131,10 +131,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/text {...}]
+  ;  [text {...}]
   ;
   ; @usage
-  ;  [elements/text :my-text {...}]
+  ;  [text :my-text {...}]
   ([text-props]
    [element (random/generate-keyword) text-props])
 

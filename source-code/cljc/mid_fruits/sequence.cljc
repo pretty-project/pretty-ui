@@ -25,12 +25,12 @@
   ; @param (integer) max
   ;
   ; @example
-  ;  (sequence/next-dex 10 8 20)
+  ;  (next-dex 10 8 20)
   ;  =>
   ;  11
   ;
   ; @example
-  ;  (sequence/next-dex 20 8 20)
+  ;  (next-dex 20 8 20)
   ;  =>
   ;  8
   ;
@@ -48,12 +48,12 @@
   ; @param (integer) max
   ;
   ; @example
-  ;  (sequence/prev-dex 10 8 20)
+  ;  (prev-dex 10 8 20)
   ;  =>
   ;  9
   ;
   ; @example
-  ;  (sequence/prev-dex 8 8 20)
+  ;  (prev-dex 8 8 20)
   ;  =>
   ;  20
   ;
@@ -71,12 +71,12 @@
   ; @param (integer) max
   ;
   ; @example
-  ;  (sequence/prev-prev-dex 10 8 20)
+  ;  (prev-prev-dex 10 8 20)
   ;  =>
   ;  8
   ;
   ; @example
-  ;  (sequence/prev-prev-dex 9 8 20)
+  ;  (prev-prev-dex 9 8 20)
   ;  =>
   ;  20
   ;

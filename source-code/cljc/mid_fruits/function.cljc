@@ -25,7 +25,7 @@
   ; @param (string) var-name
   ;
   ; @example
-  ;  (function/->js "mid-fruits.vector/conj-item")
+  ;  (->js "mid-fruits.vector/conj-item")
   ;  =>
   ;  "mid_fruits.vector.conj_item"
   ;
@@ -39,7 +39,7 @@
   ; @param (list of *) args
   ;
   ; @example
-  ;  (function/invoke "mid-fruits.vector/conj-item" [:a :b] :c)
+  ;  (invoke "mid-fruits.vector/conj-item" [:a :b] :c)
   ;  =>
   ;  [:a :b :c]
   [function-name & args])

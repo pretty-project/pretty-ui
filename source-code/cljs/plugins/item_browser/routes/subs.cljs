@@ -36,7 +36,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r item-browser/get-item-route db :my-browser "my-item")
+  ;  (r get-item-route db :my-browser "my-item")
   ;  =>
   ;  "/@app-home/my-browser/my-item"
   ;

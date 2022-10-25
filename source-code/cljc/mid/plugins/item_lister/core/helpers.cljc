@@ -35,7 +35,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (core.helpers/default-items-path :my-lister)
+  ;  (default-items-path :my-lister)
   ;  =>
   ;  [:plugins :plugin-handler/downloaded-items :my-lister]
   ;

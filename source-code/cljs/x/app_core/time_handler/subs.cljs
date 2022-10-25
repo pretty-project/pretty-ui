@@ -23,45 +23,45 @@
 
 (defn get-server-time
   ; @usage
-  ;  (r a/get-server-time db)
+  ;  (r get-server-time db)
   [db _]
   (get-in db [:core :time-handler/meta-items :server-time]))
 
 (defn get-server-year
   ; @usage
-  ;  (r a/get-server-year db)
+  ;  (r get-server-year db)
   [db _]
   (let [server-time (r get-server-time db)]
        (time/timestamp-string->year server-time)))
 
 (defn get-server-month
   ; @usage
-  ;  (r a/get-server-month db)
+  ;  (r get-server-month db)
   [db _])
 
 (defn get-server-week
   ; @usage
-  ;  (r a/get-server-week db)
+  ;  (r get-server-week db)
   [db _])
 
 (defn get-server-day
   ; @usage
-  ;  (r a/get-server-day db)
+  ;  (r get-server-day db)
   [db _])
 
 (defn get-server-hour
   ; @usage
-  ;  (r a/get-server-hour db)
+  ;  (r get-server-hour db)
   [db _])
 
 (defn get-server-seconds
   ; @usage
-  ;  (r a/get-server-seconds db)
+  ;  (r get-server-seconds db)
   [db _])
 
 (defn get-server-milliseconds
   ; @usage
-  ;  (r a/get-server-milliseconds db)
+  ;  (r get-server-milliseconds db)
   [db _])
 
 

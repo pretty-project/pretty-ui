@@ -30,7 +30,7 @@
   ;
   ; @usage
   ;  (defn my-handler-f [e] ...)
-  ;  (environment/add-event-listener! "mousemove" my-handler-f)
+  ;  (add-event-listener! "mousemove" my-handler-f)
   [type listener & [element-id]]
   (let [target (event-handler.helpers/element-id->target element-id)]
        (dom/add-event-listener! type listener target)))
@@ -43,7 +43,7 @@
   ;
   ; @usage
   ;  (defn my-handler-f [e] ...)
-  ;  (environment/remove-event-listener! "mousemove" my-handler-f)
+  ;  (remove-event-listener! "mousemove" my-handler-f)
   [type listener & [element-id]]
   (let [target (event-handler.helpers/element-id->target element-id)]
        (dom/remove-event-listener! type listener target)))
@@ -55,7 +55,7 @@
   ;  Default: js/window
   ;
   ; @usage
-  ;  (environment/add-event! "mousemove" [:my-event])
+  ;  (add-event! "mousemove" [:my-event])
   [type event & [element-id]]
   (let [listener #(r/dispatch event)
         target    (event-handler.helpers/element-id->target element-id)]

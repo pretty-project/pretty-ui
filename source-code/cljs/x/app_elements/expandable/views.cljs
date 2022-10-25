@@ -108,10 +108,10 @@
   ;   :label (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [elements/expandable {...}]
+  ;  [expandable {...}]
   ;
   ; @usage
-  ;  [elements/expandable :my-expandable {...}]
+  ;  [expandable :my-expandable {...}]
   ([expandable-props]
    [element (random/generate-keyword) expandable-props])
 

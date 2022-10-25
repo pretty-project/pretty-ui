@@ -78,10 +78,10 @@
   ;    Default: 1}
   ;
   ; @usage
-  ;  [elements/horizontal-line {...}]
+  ;  [horizontal-line {...}]
   ;
   ; @usage
-  ;  [elements/horizontal-line :my-horizontal-line {...}]
+  ;  [horizontal-line :my-horizontal-line {...}]
   ([line-props]
    [element (random/generate-keyword) line-props])
 

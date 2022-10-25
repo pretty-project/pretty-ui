@@ -24,7 +24,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/get-backup-item db [:my-item])
+  ;  (r get-backup-item db [:my-item])
   ;
   ; @return (*)
   [db [_ item-path]]
@@ -34,7 +34,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/item-changed? db [:my-item])
+  ;  (r item-changed? db [:my-item])
   ;
   ; @return (boolean)
   [db [_ item-path]]
@@ -45,7 +45,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/item-unchanged? db [:my-item])
+  ;  (r item-unchanged? db [:my-item])
   ;
   ; @return (boolean)
   [db [_ item-path]]

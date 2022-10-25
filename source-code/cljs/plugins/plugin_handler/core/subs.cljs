@@ -50,7 +50,7 @@
   ; @param (keyword) request-key
   ;
   ; @example
-  ;  (r core.subs/get-request-id db :my-plugin :browser)
+  ;  (r get-request-id db :my-plugin :browser)
   ;  =>
   ;  :my-handler/synchronize-browser!
   ;
@@ -80,7 +80,7 @@
   ; @param (keyword) request-key
   ;
   ; @usage
-  ;  (r core.subs/plugin-synchronizing? db :my-plugin :browser)
+  ;  (r plugin-synchronizing? db :my-plugin :browser)
   ;
   ; @return (boolean)
   [db [_ plugin-id request-key]]
@@ -259,8 +259,8 @@
   ; @param (vector) query
   ;
   ; @usage
-  ;  (plugin/body :my-plugin {:query [:my-query]})
-  ;  (r download.subs/use-query-prop db :my-plugin [...])
+  ;  [body :my-plugin {:query [:my-query]}]
+  ;  (r use-query-prop db :my-plugin [...])
   ;
   ; @return (vector)
   ;  [:my-query ...]

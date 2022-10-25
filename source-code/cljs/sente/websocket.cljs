@@ -25,8 +25,6 @@
 (def ?csrf-token (when-let [el (.getElementById js/document "sente-csrf-token")]
                            (.getAttribute el "data-csrf-token")))
 
-(println (str " sdffb" ?csrf-token))
-
 (let [{:keys [chsk ch-recv send-fn state]}
       (sente/make-channel-socket-client! "/chsk" ?csrf-token {:type :auto})] ; e/o #{:auto :ajax :ws}
 

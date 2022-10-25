@@ -86,10 +86,10 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  [elements/row {...}]
+  ;  [row {...}]
   ;
   ; @usage
-  ;  [elements/row :my-row {...}]
+  ;  [row :my-row {...}]
   ([row-props]
    [element (random/generate-keyword) row-props])
 

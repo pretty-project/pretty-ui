@@ -22,7 +22,7 @@
 
 (defn get-app-config
   ; @usage
-  ;  (r a/get-app-config db)
+  ;  (r get-app-config db)
   ;
   ; @return (map)
   [db _]
@@ -32,7 +32,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r a/get-app-config-item db :my-item)
+  ;  (r get-app-config-item db :my-item)
   ;
   ; @return (*)
   [db [_ item-key]]
@@ -40,7 +40,7 @@
 
 (defn get-server-config
   ; @usage
-  ;  (r a/get-server-config db)
+  ;  (r get-server-config db)
   ;
   ; @return (map)
   [db _]
@@ -50,7 +50,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r a/get-server-config-item db :my-item)
+  ;  (r get-server-config-item db :my-item)
   ;
   ; @return (*)
   [db [_ item-key]]

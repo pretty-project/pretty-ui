@@ -177,11 +177,13 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/radio-button
-  ;   {:options [{:value :foo :label "Foo"} {:value :bar :label "Bar"}]}]
+  ;  [radio-button {...}]
   ;
   ; @usage
-  ;  [elements/radio-button :my-radio-button {...}]
+  ;  [radio-button :my-radio-button {...}]
+  ;
+  ; @usage
+  ;  [radio-button :my-radio-button {:options [{:value :foo :label "Foo"} {:value :bar :label "Bar"}]}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

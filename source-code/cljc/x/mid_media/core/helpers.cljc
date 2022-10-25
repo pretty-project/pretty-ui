@@ -42,7 +42,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (media/filename->media-storage-uri "ab3450.jpg")
+  ;  (filename->media-storage-uri "ab3450.jpg")
   ;  =>
   ;  "/media/storage/ab3450.jpg"
   ;
@@ -54,7 +54,7 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (media/media-storage-uri->filename "/media/storage/ab3450.jpg")
+  ;  (media-storage-uri->filename "/media/storage/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -66,7 +66,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (media/filename->media-thumbnail-uri "ab3450.jpg")
+  ;  (filename->media-thumbnail-uri "ab3450.jpg")
   ;  =>
   ;  "/media/thumbnails/ab3450.jpg"
   ;
@@ -78,7 +78,7 @@
   ; @param (string) uri
   ;
   ; @example
-  ;  (media/media-thumbnail-uri->filename "/media/thumbnails/ab3450.jpg")
+  ;  (media-thumbnail-uri->filename "/media/thumbnails/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -90,7 +90,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (media/filename->media-storage-filepath "ab3450.jpg")
+  ;  (filename->media-storage-filepath "ab3450.jpg")
   ;  =>
   ;  "environment/media/storage/ab3450.jpg"
   ;
@@ -102,7 +102,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/media-storage-filepath->filename "environment/media/storage/ab3450.jpg")
+  ;  (media-storage-filepath->filename "environment/media/storage/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -114,7 +114,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (media/filename->media-thumbnail-filepath "ab3450.jpg")
+  ;  (filename->media-thumbnail-filepath "ab3450.jpg")
   ;  =>
   ;  "environment/media/thumbnails/ab3450.jpg"
   ;
@@ -126,7 +126,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/media-thumbnail-filepath->filename "environment/media/thumbnails/ab3450.jpg")
+  ;  (media-thumbnail-filepath->filename "environment/media/thumbnails/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;
@@ -138,7 +138,7 @@
   ; @param (string) filename
   ;
   ; @example
-  ;  (media/filename->temporary-filepath "ab3450.jpg")
+  ;  (filename->temporary-filepath "ab3450.jpg")
   ;  =>
   ;  "environment/media/temp/ab3450.jpg"
   ;
@@ -150,7 +150,7 @@
   ; @param (string) filepath
   ;
   ; @example
-  ;  (media/temporary-filepath->filename "environment/media/temp/ab3450.jpg")
+  ;  (temporary-filepath->filename "environment/media/temp/ab3450.jpg")
   ;  =>
   ;  "ab3450.jpg"
   ;

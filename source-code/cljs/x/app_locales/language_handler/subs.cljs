@@ -25,7 +25,7 @@
 
 (defn get-app-languages
   ; @usage
-  ;  (r locales/get-app-languages db)
+  ;  (r get-app-languages db)
   ;
   ; @return (keywords in vector)
   [db _]
@@ -34,7 +34,7 @@
 
 (defn app-multilingual?
   ; @usage
-  ;  (r locales/app-multilingual? db)
+  ;  (r app-multilingual? db)
   ;
   ; @return (boolean)
   [db _]
@@ -43,7 +43,7 @@
 
 (defn get-selected-language
   ; @usage
-  ;  (r locales/get-selected-language db)
+  ;  (r get-selected-language db)
   ;
   ; @return (keyword)
   [db _]

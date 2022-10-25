@@ -28,12 +28,12 @@
   ; @param (keyword) locale-id
   ;
   ; @example
-  ;  (locales/address->ordered-address "19806" "US" "Bradford" "537 Paper Street" :en)
+  ;  (address->ordered-address "19806" "US" "Bradford" "537 Paper Street" :en)
   ;  =>
   ;  "US, 537 Paper Street, Bradford, 19806"
   ;
   ; @example
-  ;  (locales/address->ordered-address "1025" "HU" "Budapest" "Minta utca 123." :hu)
+  ;  (address->ordered-address "1025" "HU" "Budapest" "Minta utca 123." :hu)
   ;  =>
   ;  "HU, 1025 Budapest, Minta utca 123."
   ;

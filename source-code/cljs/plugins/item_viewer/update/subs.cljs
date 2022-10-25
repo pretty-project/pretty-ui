@@ -39,7 +39,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
+  ;  (r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
   ;  =>
   ;  "my-item"
   ;
@@ -59,7 +59,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  (r get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ;  =>
   ;  "my-item"
   ;

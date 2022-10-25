@@ -38,7 +38,7 @@
   ; @param (keyword) tag-name
   ;
   ; @example
-  ;  (hiccup/tag-name? [:div "Hello World!"] :div)
+  ;  (tag-name? [:div "Hello World!"] :div)
   ;  =>
   ;  true
   ;
@@ -56,8 +56,8 @@
   ; @param (function) f
   ;
   ; @example
-  ;  (hiccup/walk [:td [:p {:style {:color "red"}}]]
-  ;              #(conj % "420"))
+  ;  (walk [:td [:p {:style {:color "red"}}]]
+  ;        #(conj % "420"))
   ;  =>
   ;  [:td [:p {:style {:color "red"}} "420"] "420"]
   ;
@@ -73,7 +73,7 @@
   ; @param (hiccup) container
   ;
   ; @example
-  ;  (hiccup/explode "ab" [:div])
+  ;  (explode "ab" [:div])
   ;  =>
   ;  [:div [:span "a"]
   ;        [:span "b"])
@@ -94,7 +94,7 @@
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/to-string [:div {:style {:color "red"}} "Hello World!"])
+  ;  (to-string [:div {:style {:color "red"}} "Hello World!"])
   ;  =>
   ;  {:style {:color "red"}}
   ;
@@ -109,7 +109,7 @@
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/to-style [:div {:style {:color "red"}} "Hello World!"])
+  ;  (to-style [:div {:style {:color "red"}} "Hello World!"])
   ;  =>
   ;  {:color "red"}
   ;
@@ -122,7 +122,7 @@
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/to-string [:div {:style {:color "red"}} "Hello World!"])
+  ;  (to-string [:div {:style {:color "red"}} "Hello World!"])
   ;  =>
   ;  {:style {:color "red"}}
   ;
@@ -144,7 +144,7 @@
   ;  Default: " "
   ;
   ; @example
-  ;  (hiccup/to-string [:div "Hello" [:strong "World!"]])
+  ;  (to-string [:div "Hello" [:strong "World!"]])
   ;  =>
   ;  "Hello World!"
   ;
@@ -163,7 +163,7 @@
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/content-length [:div "Hello World!"])
+  ;  (content-length [:div "Hello World!"])
   ;  =>
   ;  12
   ;
@@ -181,17 +181,17 @@
   ; @param (string)(opt) flag
   ;
   ; @example
-  ;  (hiccup/value "my-namespace/my-value?")
+  ;  (value "my-namespace/my-value?")
   ;  =>
   ;  "my-namespace--my-value"
   ;
   ; @example
-  ;  (hiccup/value :your-namespace/your-value!)
+  ;  (value :your-namespace/your-value!)
   ;  =>
   ;  "your-namespace--your-value"
   ;
   ; @example
-  ;  (hiccup/value :our-namespace/our-value "420")
+  ;  (value :our-namespace/our-value "420")
   ;  =>
   ;  "our-namespace--our-value--420"
   ;
@@ -219,12 +219,12 @@
   ; @param (hiccup) n
   ;
   ; @example
-  ;  (hiccup/unparse-css [:td [:p {:style {:color "red"}}]])
+  ;  (unparse-css [:td [:p {:style {:color "red"}}]])
   ;  =>
   ;  [:td [:p {:style "color: red;"}]]
   ;
   ; @example
-  ;  (hiccup/unparse-css [:td [:p {:style "color: red;"}]])
+  ;  (unparse-css [:td [:p {:style "color: red;"}]])
   ;  =>
   ;  [:td [:p {:style "color: red;"}]]
   ;

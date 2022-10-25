@@ -28,7 +28,7 @@
   ;
   ; @usage
   ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
-  ;  (x.boot-loader.api/start-app! #'app)
+  ;  (start-app! #'app)
   [app]
   (r/dispatch-sync [:boot-loader/start-app! app]))
 
@@ -37,7 +37,7 @@
   ;
   ; @usage
   ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
-  ;  (x.boot-loader.api/render-app! #'app)
+  ;  (render-app! #'app)
   [app]
   (reagent/render [app #'ui/structure]
                   (dom/get-element-by-id "x-app-container")))

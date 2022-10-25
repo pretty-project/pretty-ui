@@ -31,7 +31,7 @@
   ; @param (keyword) element-id
   ;
   ; @example
-  ;  (target-handler.helpers/element-id->target-id :my-namespace/my-element)
+  ;  (element-id->target-id :my-namespace/my-element)
   ;  =>
   ;  "my-namespace--my-element--target"
   ;

@@ -24,12 +24,12 @@
   ; @param (string) mime-type
   ;
   ; @example
-  ;  (base64/wrap "..." "application/pdf")
+  ;  (wrap "..." "application/pdf")
   ;  =>
   ;  "data:application/pdf;base64,..."
   ;
   ; @example
-  ;  (base64/wrap nil "application/pdf")
+  ;  (wrap nil "application/pdf")
   ;  =>
   ;  nil
   ;
@@ -42,7 +42,7 @@
   ; @param (string) mime-type
   ;
   ; @usage
-  ;  (base64/to-blob "..." "application/pdf")
+  ;  (to-blob "..." "application/pdf")
   ;
   ; @return (object)
   [base64 mime-type]

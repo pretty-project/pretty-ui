@@ -25,7 +25,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-selected-item-ids db :my-handler)
+  ;  (r get-selected-item-ids db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -35,7 +35,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/select-handler-nonempty? db :my-handler)
+  ;  (r select-handler-nonempty? db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -46,7 +46,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/select-handler-empty? db :my-handler)
+  ;  (r select-handler-empty? db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -57,7 +57,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/select-handler-enabled? db :my-handler)
+  ;  (r select-handler-enabled? db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -68,7 +68,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/select-handler-disabled? db :my-handler)
+  ;  (r select-handler-disabled? db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -80,7 +80,7 @@
   ; @param (keyword) item-id
   ;
   ; @usage
-  ;  (r gestures/item-selected? db :my-handler :my item)
+  ;  (r item-selected? db :my-handler :my item)
   ;
   ; @return (boolean)
   [db [_ handler-id item-id]]

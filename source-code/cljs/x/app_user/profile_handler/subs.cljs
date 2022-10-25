@@ -23,7 +23,7 @@
 
 (defn get-user-profile
   ; @usage
-  ;  (r user/get-user-profile db)
+  ;  (r get-user-profile db)
   ;
   ; @return (map)
   [db _]
@@ -33,7 +33,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r user/get-user-profile-item db :email-address)
+  ;  (r get-user-profile-item db :email-address)
   ;
   ; @return (map)
   [db [_ item-key]]
@@ -41,7 +41,7 @@
 
 (defn get-user-email-address
   ; @usage
-  ;  (r user/get-user-email-address db)
+  ;  (r get-user-email-address db)
   ;
   ; @return (string)
   [db _]
@@ -49,7 +49,7 @@
 
 (defn get-user-first-name
   ; @usage
-  ;  (r user/get-user-first-name db)
+  ;  (r get-user-first-name db)
   ;
   ; @return (string)
   [db _]
@@ -57,7 +57,7 @@
 
 (defn get-user-last-name
   ; @usage
-  ;  (r user/get-user-last-name db)
+  ;  (r get-user-last-name db)
   ;
   ; @return (string)
   [db _]
@@ -65,7 +65,7 @@
 
 (defn get-user-locale
   ; @usage
-  ;  (r user/get-user-locale db)
+  ;  (r get-user-locale db)
   ;
   ; @return (string)
   [db _]
@@ -73,7 +73,7 @@
 
 (defn get-user-phone-number
   ; @usage
-  ;  (r user/get-user-phone-number db)
+  ;  (r get-user-phone-number db)
   ;
   ; @return (string)
   [db _]
@@ -81,7 +81,7 @@
 
 (defn get-user-profile-picture
   ; @usage
-  ;  (r user/get-user-profile-picture db)
+  ;  (r get-user-profile-picture db)
   ;
   ; @return (string)
   [db _]

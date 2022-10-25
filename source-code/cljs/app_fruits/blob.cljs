@@ -23,7 +23,7 @@
   ; @param (object) blob
   ;
   ; @usage
-  ;  (blob/to-object-url ...) 
+  ;  (to-object-url ...) 
   ;
   ; @return (object)
   [blob]

@@ -94,13 +94,13 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/color-stamp {...}]
+  ;  [color-stamp {...}]
   ;
   ; @usage
-  ;  [elements/color-stamp :my-color-stamp {...}]
+  ;  [color-stamp :my-color-stamp {...}]
   ;
   ; @usage
-  ;  [elements/color-stamp :my-color-stamp {:colors ["red" "green" "blue"]}]
+  ;  [color-stamp :my-color-stamp {:colors ["red" "green" "blue"]}]
   ([stamp-props]
    [element (random/generate-keyword) stamp-props])
 

@@ -24,7 +24,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/pause-stepping! db :my-handler)
+  ;  (r pause-stepping! db :my-handler)
   ;
   ; @return (map)
   [db [_ handler-id]]
@@ -34,7 +34,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/run-stepping! db :my-handler)
+  ;  (r run-stepping! db :my-handler)
   ;
   ; @return (map)
   [db [_ handler-id]]

@@ -35,7 +35,7 @@
   ; @param (number or string) n
   ;
   ; @example
-  ;  (format/group-number 4200.5)
+  ;  (group-number 4200.5)
   ;  =>
   ;  "4 200.5"
   ;
@@ -63,7 +63,7 @@
   ; @param (integer) length
   ;
   ; @example
-  ;  (format/leading-zeros 7 3)
+  ;  (leading-zeros 7 3)
   ;  =>
   ;  "007"
   ;
@@ -79,7 +79,7 @@
   ; @param (integer)(opt) length
   ;
   ; @example
-  ;  (format/trailing-zeros 7 3)
+  ;  (trailing-zeros 7 3)
   ;  =>
   ;  "700"
   ;
@@ -96,17 +96,17 @@
   ;  Default: 2
   ;
   ; @example
-  ;  (format/decimals nil 2)
+  ;  (decimals nil 2)
   ;  =>
   ;  ""
   ;
   ; @example
-  ;  (format/decimals "1" 2)
+  ;  (decimals "1" 2)
   ;  =>
   ;  "1.00"
   ;
   ; @example
-  ;  (format/decimals "11.0000" 3)
+  ;  (decimals "11.0000" 3)
   ;  =>
   ;  "11.000"
   ;
@@ -138,12 +138,12 @@
   ; @param (number) n
   ;
   ; @example
-  ;  (format/round 1740)
+  ;  (round 1740)
   ;  =>
   ;  "2K"
   ;
   ; @example
-  ;  (format/round 1000420)
+  ;  (round 1000420)
   ;  =>
   ;  "1M"
   ;
@@ -157,7 +157,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (format/inc-version "1.2.19")
+  ;  (inc-version "1.2.19")
   ;  =>
   ;  "1.2.20"
   ;

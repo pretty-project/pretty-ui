@@ -116,10 +116,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/chip-group {...}]
+  ;  [chip-group {...}]
   ;
   ; @usage
-  ;  [elements/chip-group :my-chip-group {...}]
+  ;  [chip-group :my-chip-group {...}]
   ([group-props]
    [element (random/generate-keyword) group-props])
 

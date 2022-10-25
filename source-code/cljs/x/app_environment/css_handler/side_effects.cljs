@@ -30,7 +30,7 @@
   ;  {:as-first? (boolean)}
   ;
   ; @usage
-  ;  (environment/add-css! "/css/filename.css")
+  ;  (add-css! "/css/filename.css")
   [uri options]
   (let [head-element (dom/get-head-element)
         app-build    (core/app-build)
@@ -43,7 +43,7 @@
   ; @param (string) uri
   ;
   ; @usage
-  ;  (environment/remove-css! "/css/filename.css")
+  ;  (remove-css! "/css/filename.css")
   [uri])
   ; TODO ...
 

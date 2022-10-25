@@ -33,10 +33,10 @@
   ;   :date-to (string)(opt)}
   ;
   ; @usage
-  ;  [elements/date-field {...}]
+  ;  [date-field {...}]
   ;
   ; @usage
-  ;  [elements/date-field :my-date-field {...}]
+  ;  [date-field :my-date-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

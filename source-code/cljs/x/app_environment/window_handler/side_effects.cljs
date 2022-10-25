@@ -27,7 +27,7 @@
   ; @param (string) uri
   ;
   ; @usage
-  ;  (environment/open-new-browser-tab! "www.my-site.com/my-link")
+  ;  (open-new-browser-tab! "www.my-site.com/my-link")
   [uri]
   (.open js/window uri "_blank"))
 
@@ -35,19 +35,19 @@
   ; @param (string) title
   ;
   ; @usage
-  ;  (environment/set-window-title! "My title")
+  ;  (set-window-title! "My title")
   [title]
   (set! (-> js/document .-title) title))
 
 (defn reload-window!
   ; @usage
-  ;  (environment/reload-window!)
+  ;  (reload-window!)
   [_]
   (.reload js/window.location true))
 
 (defn go-to-root!
   ; @usage
-  ;  (environment/go-to-root!)
+  ;  (go-to-root!)
   [_]
   (set! (-> js/window .-location .-href) "/"))
 
@@ -55,7 +55,7 @@
   ; @param (string) uri
   ;
   ; @usage
-  ;  (environment/go-to! "www.my-site.com/my-link")
+  ;  (go-to! "www.my-site.com/my-link")
   [uri]
   (set! (-> js/window .-location .-href) uri))
 
@@ -66,8 +66,8 @@
   ;   :interval (ms)}
   ;
   ; @usage
-  ;  (environment/set-interval! :my-interval {:event [:my-event]
-  ;                                           :interval 420})
+  ;  (set-interval! :my-interval {:event [:my-event]
+  ;                               :interval 420})
   [interval-id {:keys [interval event] :as interval-props}]
   (fn [[interval-id {:keys [interval event] :as interval-props}]]
       (letfn [(f [] (r/dispatch event))]
@@ -79,7 +79,7 @@
   ; @param (keyword) interval-id
   ;
   ; @usage
-  ;  (environment/clear-interval! :my-interval)
+  ;  (clear-interval! :my-interval)
   [interval-id]
   (let [js-id (get-in @window-handler.state/INTERVALS interval-id :js-id)]
        (time/clear-interval! js-id)))
@@ -91,8 +91,8 @@
   ;   :timeout (ms)}
   ;
   ; @usage
-  ;  (environment/set-timeout! :my-timeout {:event [:my-event]
-  ;                                         :timeout 420})
+  ;  (set-timeout! :my-timeout {:event [:my-event]
+  ;                             :timeout 420})
   [timeout-id {:keys [timeout event] :as timeout-props}]
   (letfn [(f [] (r/dispatch event))]
          (let [js-id         (time/set-timeout! f timeout)
@@ -103,7 +103,7 @@
   ; @param (keyword) timeout-id
   ;
   ; @usage
-  ;  (environment/clear-timeout! :my-timeout)
+  ;  (clear-timeout! :my-timeout)
   [timeout-id]
   (let [js-id (get-in @window-handler.state/TIMEOUTS timeout-id :js-id)]))
        ; TODO ...

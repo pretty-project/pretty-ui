@@ -110,10 +110,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/chip {...}]
+  ;  [chip {...}]
   ;
   ; @usage
-  ;  [elements/chip :my-chip {...}]
+  ;  [chip :my-chip {...}]
   ([chip-props]
    [element (random/generate-keyword) chip-props])
 

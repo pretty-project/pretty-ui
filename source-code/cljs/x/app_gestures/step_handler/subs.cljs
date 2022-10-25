@@ -26,7 +26,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/step-handler-inited? db :my-handler)
+  ;  (r step-handler-inited? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]
@@ -37,7 +37,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/autostep? db :my-handler)
+  ;  (r autostep? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]
@@ -48,7 +48,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/progressive-stepping? db :my-handler)
+  ;  (r progressive-stepping? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]
@@ -59,7 +59,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-step-timeout db :my-handler)
+  ;  (r get-step-timeout db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -71,7 +71,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-steps db :my-handler)
+  ;  (r get-steps db :my-handler)
   ;
   ; @return (vector)
   [db [_ handler-id]]
@@ -82,7 +82,7 @@
   ; @param (integer) dex
   ;
   ; @usage
-  ;  (r gestures/get-step db :my-handler)
+  ;  (r get-step db :my-handler)
   ;
   ; @return (*)
   [db [_ handler-id dex]]
@@ -92,7 +92,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-max-dex db :my-handler)
+  ;  (r get-max-dex db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -105,7 +105,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-current-dex db :my-handler)
+  ;  (r get-current-dex db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -116,7 +116,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/max-dex-reached? db :my-handler)
+  ;  (r max-dex-reached? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]
@@ -127,7 +127,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-prev-dex db :my-handler)
+  ;  (r get-prev-dex db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -141,7 +141,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-next-dex db :my-handler)
+  ;  (r get-next-dex db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -157,7 +157,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-current-step db :my-handler)
+  ;  (r get-current-step db :my-handler)
   ;
   ; @return (*)
   [db [_ handler-id]]
@@ -168,7 +168,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-prev-step db :my-handler)
+  ;  (r get-prev-step db :my-handler)
   ;
   ; @return (*)
   [db [_ handler-id]]
@@ -179,7 +179,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-next-step db :my-handler)
+  ;  (r get-next-step db :my-handler)
   ;
   ; @return (*)
   [db [_ handler-id]]
@@ -190,7 +190,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/stepping-paused? db :my-handler)
+  ;  (r stepping-paused? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]
@@ -200,7 +200,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-step-count db :my-handler)
+  ;  (r get-step-count db :my-handler)
   ;
   ; @return (integer)
   [db [_ handler-id]]
@@ -210,7 +210,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/step-in-progress? db :my-handler)
+  ;  (r step-in-progress? db :my-handler)
   ;
   ; @return (boolean)
   [db [_ handler-id]]

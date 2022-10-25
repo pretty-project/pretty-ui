@@ -25,7 +25,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/get-request-status db :my-request)
+  ;  (r get-request-status db :my-request)
   ;
   ; @return (keyword)
   [db [_ request-id]]
@@ -35,7 +35,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/get-request-sent-time db :my-request)
+  ;  (r get-request-sent-time db :my-request)
   ;
   ; @return (string)
   [db [_ request-id]]
@@ -45,7 +45,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/get-request-activity db :my-request)
+  ;  (r get-request-activity db :my-request)
   ;
   ; @return (keyword)
   [db [_ request-id]]
@@ -55,7 +55,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/get-request-progress db :my-request)
+  ;  (r get-request-progress db :my-request)
   ;
   ; @return (keyword)
   [db [_ request-id]]
@@ -65,7 +65,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/request-active? db :my-request)
+  ;  (r request-active? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -75,7 +75,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/request-sent? db :my-request)
+  ;  (r request-sent? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -86,7 +86,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/request-successed? db :my-request)
+  ;  (r request-successed? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -97,7 +97,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/request-failured? db :my-request)
+  ;  (r request-failured? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -108,7 +108,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/request-aborted? db :my-request)
+  ;  (r request-aborted? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]
@@ -120,7 +120,7 @@
   ;  {:sent-time (string)}
   ;
   ; @usage
-  ;  (r sync/request-resent? db :my-request)
+  ;  (r request-resent? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id {:keys [sent-time]}]]
@@ -130,7 +130,7 @@
   ; @param (keyword) request-id
   ;
   ; @usage
-  ;  (r sync/listening-to-request? db :my-request)
+  ;  (r listening-to-request? db :my-request)
   ;
   ; @return (boolean)
   [db [_ request-id]]

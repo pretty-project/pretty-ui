@@ -26,14 +26,14 @@
   ; megakadalyozasa vegett
   ;
   ; @usage
-  ;  (environment/prevent-selecting!)
+  ;  (prevent-selecting!)
   [_]
  ;(dom/add-event-listener! "touchstart" #(.preventDefault %)
   (dom/add-event-listener! "mousedown" dom/select-preventer))
 
 (defn enable-selecting!
   ; @usage
-  ;  (environment/enable-selecting!)
+  ;  (enable-selecting!)
   [_]
   (dom/remove-event-listener! "mousedown" dom/select-preventer))
 

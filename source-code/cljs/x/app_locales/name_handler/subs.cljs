@@ -25,7 +25,7 @@
 
 (defn get-name-order
   ; @usage
-  ;  (r locales/get-name-order db)
+  ;  (r get-name-order db)
   ;
   ; @return (keyword)
   ;  :normal, :reversed
@@ -38,7 +38,7 @@
   ; @param (string) last-name
   ;
   ; @usage
-  ;  (r locales/get-ordered-name db "First" "Last")
+  ;  (r get-ordered-name db "First" "Last")
   ;
   ; @return (string)
   [db [_ first-name last-name]]

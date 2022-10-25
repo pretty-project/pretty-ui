@@ -26,10 +26,10 @@
   ;    Default: 100}
   ;
   ; @usage
-  ;  (forms/form-block-attributes)
+  ;  (form-block-attributes)
   ;
   ; @usage
-  ;  (forms/form-block-attributes {...})
+  ;  (form-block-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)
@@ -41,10 +41,10 @@
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (forms/form-row-attributes)
+  ;  (form-row-attributes)
   ;
   ; @usage
-  ;  (forms/form-row-attributes {...})
+  ;  (form-row-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)}
@@ -55,10 +55,10 @@
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (forms/form-column-attributes)
+  ;  (form-column-attributes)
   ;
   ; @usage
-  ;  (forms/form-column-attributes {...})
+  ;  (form-column-attributes {...})
   ;
   ; @return (map)
   ;  {:class (keyword)}

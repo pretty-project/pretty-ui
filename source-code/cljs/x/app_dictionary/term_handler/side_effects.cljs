@@ -28,7 +28,7 @@
   ;   :suffix (string)(opt)}
   ;
   ; @example
-  ;  (dictionary/looked-up :my-term)
+  ;  (looked-up :my-term)
   ;  =>
   ;  "My term"
   ;

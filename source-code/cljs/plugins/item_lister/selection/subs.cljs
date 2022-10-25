@@ -25,7 +25,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (r item-lister/export-selection db :my-lister)
+  ;  (r export-selection db :my-lister)
   ;  =>
   ;  ["my-item" "your-item"]
   ;
@@ -37,7 +37,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (r item-lister/export-single-selection db :my-lister)
+  ;  (r export-single-selection db :my-lister)
   ;  =>
   ;  "my-item"
   ;
@@ -54,7 +54,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/get-selected-item-count db :my-lister)
+  ;  (r get-selected-item-count db :my-lister)
   ;
   ; @return (integer)
   [db [_ lister-id]]
@@ -64,7 +64,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/all-items-selected? db :my-lister)
+  ;  (r all-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -74,7 +74,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/all-downloaded-items-selected? db :my-lister)
+  ;  (r all-downloaded-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -84,7 +84,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/any-item-selected? db :my-lister)
+  ;  (r any-item-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -94,7 +94,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/any-downloaded-item-selected? db :my-lister)
+  ;  (r any-downloaded-item-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -104,7 +104,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r item-lister/no-items-selected? db :my-lister)
+  ;  (r no-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -115,7 +115,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-lister/item-selected? db :my-lister "my-item")
+  ;  (r item-selected? db :my-lister "my-item")
   ;
   ; @return (boolean)
   [db [_ lister-id item-id]]

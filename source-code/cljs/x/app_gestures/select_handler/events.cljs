@@ -33,7 +33,7 @@
   ;    Default: []}
   ;
   ; @usage
-  ;  (r gestures/init-select-handler! db :my-handler {...})
+  ;  (r init-select-handler! db :my-handler {...})
   ;
   ; @return (map)
   [db [_ handler-id handler-props]]
@@ -44,7 +44,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/empty-select-handler! :my-handler)
+  ;  (r empty-select-handler! :my-handler)
   ;
   ; @return (map)
   [db [_ handler-id]]
@@ -54,7 +54,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/enable-select-handler! :my-handler)
+  ;  (r enable-select-handler! :my-handler)
   ;
   ; @return (map)
   [db [_ handler-id]]
@@ -64,7 +64,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/disable-select-handler! :my-handler)
+  ;  (r disable-select-handler! :my-handler)
   ;
   ; @return (map)
   [db [_ handler-id]]
@@ -75,7 +75,7 @@
   ; @param (keyword) item-id
   ;
   ; @usage
-  ;  (r gestures/select-item! :my-handler :my-item)
+  ;  (r select-item! :my-handler :my-item)
   ;
   ; @return (map)
   [db [_ handler-id item-id]]

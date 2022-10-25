@@ -55,10 +55,10 @@
   ;   :value (string)(opt)}
   ;
   ; @usage
-  ;  [jodit/body {...}]
+  ;  [body {...}]
   ;
   ; @usage
-  ;  [jodit/body :my-editor {...}]
+  ;  [body :my-editor {...}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

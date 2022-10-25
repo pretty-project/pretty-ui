@@ -26,7 +26,7 @@
   ; @param (keyword) component-key
   ;
   ; @example
-  ;  (core.helpers/component-id :my-namespace/my-plugin :view)
+  ;  (component-id :my-namespace/my-plugin :view)
   ;  =>
   ;  :my-namespace.my-plugin/view
   ;
@@ -44,7 +44,7 @@
   ; @param (keyword) data-key
   ;
   ; @example
-  ;  (core.helpers/default-data-path :my-plugin :suggestions)
+  ;  (default-data-path :my-plugin :suggestions)
   ;  =>
   ;  [:plugins :plugin-handler/suggestions :my-plugin]
   ;

@@ -27,7 +27,7 @@
   ; @param (integers in vector) item-dexes
   ;
   ; @usage
-  ;  (r item-browser/disable-items! db :my-browser [0 1 4])
+  ;  (r disable-items! db :my-browser [0 1 4])
   ;
   ; @return (map)
   [db [_ browser-id item-dexes]]
@@ -38,7 +38,7 @@
   ; @param (integers in vector) item-dexes
   ;
   ; @usage
-  ;  (r item-browser/enable-items! db :my-browser [0 1 4])
+  ;  (r enable-items! db :my-browser [0 1 4])
   ;
   ; @return (map)
   [db [_ browser-id item-dexes]]
@@ -48,7 +48,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/enable-all-items! db :my-browser)
+  ;  (r enable-all-items! db :my-browser)
   ;
   ; @return (map)
   [db [_ browser-id]]
@@ -64,7 +64,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/disable-item! db :my-browser "my-item")
+  ;  (r disable-item! db :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
@@ -76,7 +76,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/enable-item! db :my-browser "my-item")
+  ;  (r enable-item! db :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]

@@ -29,7 +29,7 @@
   ;    Default: true}
   ;
   ; @usage
-  ;  (r gestures/init-view-handler! db :my-view-handler {:default-view-id :my-view})
+  ;  (r init-view-handler! db :my-view-handler {:default-view-id :my-view})
   ;
   ; @return (map)
   [db [_ handler-id {:keys [default-view-id reinit?]}]]
@@ -47,7 +47,7 @@
   ; @param (keyword) view-id
   ;
   ; @usage
-  ;  (r gestures/change-view! db :my-view-handler :my-view)
+  ;  (r change-view! db :my-view-handler :my-view)
   ;
   ; @return (map)
   [db [_ handler-id view-id]]

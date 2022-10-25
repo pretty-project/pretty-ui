@@ -35,7 +35,7 @@
   ; @param (namespaced keyword) order-by
   ;
   ; @example
-  ;  (core.helpers/order-by-label-f :name/ascending)
+  ;  (order-by-label-f :name/ascending)
   ;  =>
   ;  :by-name-ascending
   ;

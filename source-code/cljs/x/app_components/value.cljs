@@ -56,15 +56,15 @@
   ;   :value (keyword or string)}
   ;
   ; @usage
-  ;  (r components/get-metamorphic-value db {...})
+  ;  (r get-metamorphic-value db {...})
   ;
   ; @example
-  ;  (r components/get-metamorphic-value db {:value :username})
+  ;  (r get-metamorphic-value db {:value :username})
   ;  =>
   ;  "Username"
   ;
   ; @example (string)
-  ;  (r components/get-metamorphic-value db {:value "Hakuna Matata"})
+  ;  (r get-metamorphic-value db {:value "Hakuna Matata"})
   ;  =>
   ;  "Hakuna Matata"
   ;
@@ -95,10 +95,10 @@
   ;   :value (metamorphic-content)}
   ;
   ; @usage
-  ;  (components/value {...})
+  ;  (value {...})
   ;
   ; @usage
-  ;  (components/value :my-value {...})
+  ;  (value :my-value {...})
   ;
   ; @return (string)
   ([value-props]

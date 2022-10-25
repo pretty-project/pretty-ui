@@ -91,10 +91,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/color-selector {...}]
+  ;  [color-selector {...}]
   ;
   ; @usage
-  ;  [elements/color-selector :my-color-selector {...}]
+  ;  [color-selector :my-color-selector {...}]
   ([selector-props]
    [element (random/generate-keyword) selector-props])
 

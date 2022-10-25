@@ -17,7 +17,7 @@
               [reagent.api              :as reagent]
               [re-frame.api             :as r]
               [x.app-components.content :as content.views]))
-              
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -54,20 +54,20 @@
   ;   :render-f (function)(opt)}
   ;
   ; @usage
-  ;  [components/querier {...}]
+  ;  [querier {...}]
   ;
   ; @usage
-  ;  [components/querier :my-querier {...}]
-  ;
-  ; @usage
-  ;  (defn my-component [server-response] ...)
-  ;  [components/querier :my-querier {:component [my-component]
-  ;                                   :query     [:my-query]}]
+  ;  [querier :my-querier {...}]
   ;
   ; @usage
   ;  (defn my-component [server-response] ...)
-  ;  [components/querier :my-querier {:query    [:my-query]
-  ;                                   :render-f #'my-component}]
+  ;  [querier :my-querier {:component [my-component]
+  ;                        :query     [:my-query]}]
+  ;
+  ; @usage
+  ;  (defn my-component [server-response] ...)
+  ;  [querier :my-querier {:query    [:my-query]
+  ;                        :render-f #'my-component}]
   ([querier-props]
    [component (random/generate-keyword) querier-props])
 

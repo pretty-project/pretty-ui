@@ -185,10 +185,10 @@
   ;     Max: 6}
   ;
   ; @usage
-  ;  [elements/circle-diagram {...}]
+  ;  [circle-diagram {...}]
   ;
   ; @usage
-  ;  [elements/circle-diagram :my-circle-diagram {...}]
+  ;  [circle-diagram :my-circle-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

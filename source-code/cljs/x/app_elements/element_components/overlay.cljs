@@ -59,10 +59,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/overlay {...}]
+  ;  [overlay {...}]
   ;
   ; @usage
-  ;  [elements/overlay :my-overlay {...}]
+  ;  [overlay :my-overlay {...}]
   ([overlay-props]
    [element (random/generate-keyword) overlay-props])
 

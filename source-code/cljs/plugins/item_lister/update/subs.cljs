@@ -40,7 +40,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-deleted-item-ids :my-lister {my-handler/delete-items! ["my-item"]})
+  ;  (r get-deleted-item-ids :my-lister {my-handler/delete-items! ["my-item"]})
   ;  =>
   ;  ["my-item"]
   ;
@@ -60,7 +60,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
+  ;  (r get-duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
   ;  =>
   ;  ["my-item"]
   ;

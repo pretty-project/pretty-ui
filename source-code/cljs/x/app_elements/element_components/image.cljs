@@ -112,10 +112,10 @@
   ;   :width (string)(opt)}
   ;
   ; @usage
-  ;  [elements/image {...}]
+  ;  [image {...}]
   ;
   ; @usage
-  ;  [elements/image :my-image {...}]
+  ;  [image :my-image {...}]
   ([image-props]
    [element (random/generate-keyword) image-props])
 

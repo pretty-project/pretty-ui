@@ -27,7 +27,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/element-disabled? "my-element")
+  ;  (element-disabled? "my-element")
   ;
   ; @return (boolean)
   [element-id]
@@ -38,7 +38,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/element-enabled? "my-element")
+  ;  (element-enabled? "my-element")
   ;
   ; @return (boolean)
   [element-id]
@@ -54,7 +54,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/focus-element! "my-element")
+  ;  (focus-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/focus-element! element)))
@@ -67,7 +67,7 @@
   ; @param (string)(opt) element-id
   ;
   ; @usage
-  ;  (environment/blur-element! "my-element")
+  ;  (blur-element! "my-element")
   []
   (if-let [element (dom/get-active-element)]
           (dom/blur-element! element)))
@@ -86,7 +86,7 @@
   ; @param (string) class-name
   ;
   ; @usage
-  ;  (environment/add-element-class! "my-element" "my-class")
+  ;  (add-element-class! "my-element" "my-class")
   [element-id class-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-class! element class-name)))
@@ -100,7 +100,7 @@
   ; @param (string) class-name
   ;
   ; @usage
-  ;  (environment/remove-element-class! "my-element" "my-class")
+  ;  (remove-element-class! "my-element" "my-class")
   [element-id class-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-class! element class-name)))
@@ -119,7 +119,7 @@
   ; @param (map) style
   ;
   ; @usage
-  ;  (environment/set-element-style! "my-element" {:opacity "1"})
+  ;  (set-element-style! "my-element" {:opacity "1"})
   [element-id style]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-style! element style)))
@@ -132,7 +132,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/remove-element-style! "my-element")
+  ;  (remove-element-style! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-style! element)))
@@ -147,7 +147,7 @@
   ; @param (string) style-value
   ;
   ; @usage
-  ;  (environment/set-element-style-value! "my-element" "opacity" "1")
+  ;  (set-element-style-value! "my-element" "opacity" "1")
   [element-id style-name style-value]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-style-value! element style-name style-value)))
@@ -161,7 +161,7 @@
   ; @param (string) style-name
   ;
   ; @usage
-  ;  (environment/remove-element-style-value! "my-element" "opacity")
+  ;  (remove-element-style-value! "my-element" "opacity")
   [element-id style-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-style-value! element style-name)))
@@ -181,7 +181,7 @@
   ; @param (*) attribute-value
   ;
   ; @usage
-  ;  (environment/set-element-attribute! "my-element" "my-attribute" "my-value")
+  ;  (set-element-attribute! "my-element" "my-attribute" "my-value")
   [element-id attribute-name attribute-value]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-attribute! element attribute-name attribute-value)))
@@ -195,7 +195,7 @@
   ; @param (string) attribute-name
   ;
   ; @usage
-  ;  (environment/remove-element-attribute! "my-element" "my-attribute")
+  ;  (remove-element-attribute! "my-element" "my-attribute")
   [element-id attribute-name]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element-attribute! element attribute-name)))
@@ -214,7 +214,7 @@
   ; @param (string) content
   ;
   ; @usage
-  ;  (environment/set-element-content! "my-element" "My content")
+  ;  (set-element-content! "my-element" "My content")
   [element-id content]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-element-content! element content)))
@@ -227,7 +227,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/empty-element! "my-element")
+  ;  (empty-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/empty-element! element)))
@@ -245,7 +245,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/remove-element! "my-element")
+  ;  (remove-element! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/remove-element! element)))
@@ -263,7 +263,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/reveal-element! "my-element")
+  ;  (reveal-element! "my-element")
   [element-id]
   (set-element-style-value! element-id "display" "block"))
 
@@ -275,7 +275,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/hide-element! "my-element")
+  ;  (hide-element! "my-element")
   [element-id]
   (set-element-style-value! element-id "display" "none"))
 
@@ -293,7 +293,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/remove-element-animated! 500 "my-element")
+  ;  (remove-element-animated! 500 "my-element")
   [timeout element-id]
   (set-element-attribute! element-id "data-animation" "hide")
   (letfn [(f [] (remove-element! element-id))]
@@ -308,7 +308,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/hide-element-animated! 500 "my-element")
+  ;  (hide-element-animated! 500 "my-element")
   [timeout element-id]
   (set-element-attribute! element-id "data-animation" "hide")
   (letfn [(f [] (set-element-style-value!  element-id "display" "none")
@@ -323,7 +323,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/reveal-element-animated! "my-element")
+  ;  (reveal-element-animated! "my-element")
   [element-id]
   (set-element-style-value! element-id "display"        "block")
   (set-element-attribute!   element-id "data-animation" "reveal"))
@@ -341,7 +341,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/mark-element-masspoint-orientation! "my-element")
+  ;  (mark-element-masspoint-orientation! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (let [masspoint-orientation (dom/get-element-masspoint-orientation element)]
@@ -355,7 +355,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/unmark-element-masspoint-orientation! "my-element")
+  ;  (unmark-element-masspoint-orientation! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (remove-element-attribute! element-id "data-masspoint-orientation")))
@@ -374,7 +374,7 @@
   ; @param (integer) selection-start
   ;
   ; @usage
-  ;  (environment/set-selection-start! "my-element" 2)
+  ;  (set-selection-start! "my-element" 2)
   [element-id selection-start]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-selection-start! element selection-start)))
@@ -388,7 +388,7 @@
   ; @param (integer) selection-end
   ;
   ; @usage
-  ;  (environment/set-selection-end! "my-element" 2)
+  ;  (set-selection-end! "my-element" 2)
   [element-id selection-end]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-selection-end! element selection-end)))
@@ -403,7 +403,7 @@
   ; @param (integer) selection-end
   ;
   ; @usage
-  ;  (environment/set-selection-range! "my-element" 2 10)
+  ;  (set-selection-range! "my-element" 2 10)
   [element-id selection-start selection-end]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-selection-range! element selection-start selection-end)))
@@ -417,7 +417,7 @@
   ; @param (integer) caret-position
   ;
   ; @usage
-  ;  (environment/set-caret-position! "my-element" 20)
+  ;  (set-caret-position! "my-element" 20)
   [element-id caret-position]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/set-caret-position! element caret-position)))
@@ -430,7 +430,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/move-caret-to-start! "my-element")
+  ;  (move-caret-to-start! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/move-caret-to-start! element)))
@@ -443,7 +443,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/move-caret-to-end! "my-element")
+  ;  (move-caret-to-end! "my-element")
   [element-id]
   (if-let [element (dom/get-element-by-id element-id)]
           (dom/move-caret-to-end! element)))

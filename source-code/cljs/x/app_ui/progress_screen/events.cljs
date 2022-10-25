@@ -25,7 +25,7 @@
   ; @param (keyword) process-id
   ;
   ; @usage
-  ;  (r ui/lock-screen! db process-id)
+  ;  (r lock-screen! db process-id)
   ;
   ; @return (map)
   [db [_ process-id]]
@@ -35,7 +35,7 @@
   ; @param (keyword) process-id
   ;
   ; @usage
-  ;  (r ui/unlock-screen! db process-id)
+  ;  (r unlock-screen! db process-id)
   ;
   ; @return (map)
   [db [_ process-id]]

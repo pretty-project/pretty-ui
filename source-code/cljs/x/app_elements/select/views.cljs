@@ -338,16 +338,16 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/select {...}]
+  ;  [select {...}]
   ;
   ; @usage
-  ;  [elements/select :my-select {...}]
+  ;  [select :my-select {...}]
   ;
   ; @usage
-  ;  [elements/select {:icon         :sort
-  ;                    :layout       :icon-button
-  ;                    :options-path [:my-options]
-  ;                    :value-path   [:my-selected-option]}]
+  ;  [select {:icon         :sort
+  ;           :layout       :icon-button
+  ;           :options-path [:my-options]
+  ;           :value-path   [:my-selected-option]}]
   ([select-props]
    [element (random/generate-keyword) select-props])
 

@@ -39,10 +39,10 @@
   ;    Default: 1}
   ;
   ; @usage
-  ;  [elements/multiline-field {...}]
+  ;  [multiline-field {...}]
   ;
   ; @usage
-  ;  [elements/multiline-field :my-multiline-field {...}]
+  ;  [multiline-field :my-multiline-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

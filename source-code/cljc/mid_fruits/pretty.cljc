@@ -221,10 +221,10 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  (pretty/mixed->string {:a {:b "a/b"}})
+  ;  (mixed->string {:a {:b "a/b"}})
   ;
   ; @usage
-  ;  [:pre (pretty/mixed->string {:a {:b "a/b"}})]
+  ;  [:pre (mixed->string {:a {:b "a/b"}})]
   ;
   ; @return (string)
   ([n]

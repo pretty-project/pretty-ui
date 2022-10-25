@@ -27,7 +27,7 @@
   ; @param (keyword) box-id
   ;
   ; @example
-  ;  (multi-combo-box.helpers/box-id->group-id :my-multi-combo-box)
+  ;  (box-id->group-id :my-multi-combo-box)
   ;  =>
   ;  :my-multi-combo-box--chip-group
   ;
@@ -41,7 +41,7 @@
   ; @param (keyword) box-id
   ;
   ; @example
-  ;  (multi-combo-box.helpers/box-id->field-id :my-multi-combo-box)
+  ;  (box-id->field-id :my-multi-combo-box)
   ;  =>
   ;  :my-multi-combo-box--text-field
   ;

@@ -28,7 +28,7 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r update.subs/get-mutation-name db :my-plugin :delete-items)
+  ;  (r get-mutation-name db :my-plugin :delete-items)
   ;  =>
   ;  :my-handler/delete-items!
   ;
@@ -46,7 +46,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r update.subs/get-mutation-answer db :my-plugin :delete-items {...})
+  ;  (r get-mutation-answer db :my-plugin :delete-items {...})
   ;  =>
   ;  ["my-item" "your-item"]
   ;

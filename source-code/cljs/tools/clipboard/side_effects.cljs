@@ -25,7 +25,7 @@
 
 (defn copy-text!
   ; @usage
-  ;  (clipboard/copy-text! "My text")
+  ;  (copy-text! "My text")
   ;
   ; @param (string) text
   [text]

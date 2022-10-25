@@ -22,7 +22,7 @@
 
 (defn get-interface
   ; @usage
-  ;  (r ui/get-interface db)
+  ;  (r get-interface db)
   ;
   ; @return (keyword)
   ;  :application-ui, :website-ui
@@ -31,7 +31,7 @@
 
 (defn application-interface?
   ; @usage
-  ;  (r ui/application-interface? db)
+  ;  (r application-interface? db)
   ;
   ; @return (boolean)
   [db _]
@@ -39,7 +39,7 @@
 
 (defn website-interface?
   ; @usage
-  ;  (r ui/website-interface? db)
+  ;  (r website-interface? db)
   ;
   ; @return (boolean)
   [db _]

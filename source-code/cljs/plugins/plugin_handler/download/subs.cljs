@@ -28,7 +28,7 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r download.subs/get-resolver-id db :my-plugin :get-items)
+  ;  (r get-resolver-id db :my-plugin :get-items)
   ;  =>
   ;  :my-handler/get-items
   ;
@@ -46,7 +46,7 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r download.subs/get-resolver-answer db :my-plugin :get-items {...})
+  ;  (r get-resolver-answer db :my-plugin :get-items {...})
   ;  =>
   ;  [{...} {...}]
   ;

@@ -24,10 +24,10 @@
   ; @param (list of *) abc
   ;
   ; @usage
-  ;  (error/try! #(my-function "Apple"))
+  ;  (try! #(my-function "Apple"))
   ;
   ; @usage
-  ;  (error/try! my-function "Apple")
+  ;  (try! my-function "Apple")
   ;
   ; @return (*)
   [f & abc]
@@ -38,7 +38,7 @@
   ; @param (string) e
   ;
   ; @usage
-  ;  (error/throw! "Something went wrong ...")
+  ;  (throw! "Something went wrong ...")
   ;
   ; @return (?)
   [e]

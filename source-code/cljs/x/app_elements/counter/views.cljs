@@ -139,10 +139,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/counter {...}]
+  ;  [counter {...}]
   ;
   ; @usage
-  ;  [elements/counter :my-counter {...}]
+  ;  [counter :my-counter {...}]
   ([counter-props]
    [element (random/generate-keyword) counter-props])
 

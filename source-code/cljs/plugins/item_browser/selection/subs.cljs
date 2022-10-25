@@ -24,8 +24,8 @@
 (defn export-selection
   ; @param (keyword) browser-id
   ;
-  ; @usage
-  ;  (r item-browser/export-selection db :my-browser)
+  ; @example
+  ;  (r export-selection db :my-browser)
   ;  =>
   ;  ["my-item" "your-item"]
   ;
@@ -37,7 +37,7 @@
   ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (r item-browser/export-single-selection db :my-browser)
+  ;  (r export-single-selection db :my-browser)
   ;  =>
   ;  "my-item"
   ;
@@ -54,7 +54,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/get-selected-item-count db :my-browser)
+  ;  (r get-selected-item-count db :my-browser)
   ;
   ; @return (integer)
   [db [_ browser-id]]
@@ -64,7 +64,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/all-items-selected? db :my-browser)
+  ;  (r all-items-selected? db :my-browser)
   ;
   ; @return (boolean)
   [db [_ browser-id]]
@@ -74,7 +74,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/all-downloaded-items-selected? db :my-browser)
+  ;  (r all-downloaded-items-selected? db :my-browser)
   ;
   ; @return (boolean)
   [db [_ browser-id]]
@@ -84,7 +84,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/any-item-selected? db :my-browser)
+  ;  (r any-item-selected? db :my-browser)
   ;
   ; @return (boolean)
   [db [_ browser-id]]
@@ -94,7 +94,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/any-downloaded-item-selected? db :my-browser)
+  ;  (r any-downloaded-item-selected? db :my-browser)
   ;
   ; @return (boolean)
   [db [_ browser-id]]
@@ -104,7 +104,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/no-items-selected? db :my-browser)
+  ;  (r no-items-selected? db :my-browser)
   ;
   ; @return (boolean)
   [db [_ browser-id]]
@@ -115,7 +115,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/item-selected? db :my-browser "my-item")
+  ;  (r item-selected? db :my-browser "my-item")
   ;
   ; @return (boolean)
   [db [_ browser-id item-id]]

@@ -33,10 +33,10 @@
   ;    Default: false}
   ;
   ; @usage
-  ;  [elements/password-field {...}]
+  ;  [password-field {...}]
   ;
   ; @usage
-  ;  [elements/password-field :my-password-field {...}]
+  ;  [password-field :my-password-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

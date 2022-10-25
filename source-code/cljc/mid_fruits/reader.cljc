@@ -20,14 +20,14 @@
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn read-str
   ; @param (string) n
   ;
   ; @usage
-  ;  (reader/read-str "{:a "b"}")
+  ;  (read-str "{:a "b"}")
   ;
   ; @return (*)
   [n]
@@ -45,22 +45,22 @@
   ; @param (n) string
   ;
   ; @example
-  ;  (reader/string->mixed "")
+  ;  (string->mixed "")
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (reader/string->mixed ":foo")
+  ;  (string->mixed ":foo")
   ;  =>
   ;  :foo
   ;
   ; @example
-  ;  (reader/string->mixed "{:foo :bar}")
+  ;  (string->mixed "{:foo :bar}")
   ;  =>
   ;  {:foo :bar}
   ;
   ; @example
-  ;  (reader/string->mixed "[:foo]")
+  ;  (string->mixed "[:foo]")
   ;  =>
   ;  [:foo]
   ;
@@ -80,17 +80,17 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (reader/string->map "foo")
+  ;  (string->map "foo")
   ;  =>
   ;  {:0 "foo"}
   ;
   ; @example
-  ;  (reader/string->map nil)
+  ;  (string->map nil)
   ;  =>
   ;  {}
   ;
   ; @example
-  ;  (reader/string->map "{:foo :bar}")
+  ;  (string->map "{:foo :bar}")
   ;  =>
   ;  {:foo :bar}
   ;

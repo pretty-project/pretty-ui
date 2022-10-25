@@ -31,10 +31,10 @@
   ; @param (map) field-props
   ;
   ; @usage
-  ;  [elements/search-field {...}]
+  ;  [search-field {...}]
   ;
   ; @usage
-  ;  [elements/search-field :my-search-field {...}]
+  ;  [search-field :my-search-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

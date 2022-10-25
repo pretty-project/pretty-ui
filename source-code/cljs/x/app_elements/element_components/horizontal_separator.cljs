@@ -46,10 +46,10 @@
   ;    Default: :s}
   ;
   ; @usage
-  ;  [elements/horizontal-separator {...}]
+  ;  [horizontal-separator {...}]
   ;
   ; @usage
-  ;  [elements/horizontal-separator :my-horizontal-separator {...}]
+  ;  [horizontal-separator :my-horizontal-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

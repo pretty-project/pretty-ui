@@ -90,10 +90,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/toggle {...}]
+  ;  [toggle {...}]
   ;
   ; @usage
-  ;  [elements/toggle :my-toggle {...}]
+  ;  [toggle :my-toggle {...}]
   ([toggle-props]
    [element (random/generate-keyword) toggle-props])
 

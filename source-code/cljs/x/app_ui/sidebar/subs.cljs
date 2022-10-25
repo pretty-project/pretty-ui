@@ -22,7 +22,7 @@
 
 (defn get-sidebar-content
   ; @usage
-  ;  (r ui/get-sidebar-content db)
+  ;  (r get-sidebar-content db)
   ;
   ; @return (metamorphic-content)
   [db _]
@@ -35,7 +35,7 @@
 
 (defn sidebar-hidden?
   ; @usage
-  ;  (r ui/sidebar-hidden? db)
+  ;  (r sidebar-hidden? db)
   ;
   ; @return (boolean)
   [db _]

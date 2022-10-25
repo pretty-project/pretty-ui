@@ -153,7 +153,7 @@
 
 (defn get-current-route-string
   ; @usage
-  ;  (r router/get-current-route-string db)
+  ;  (r get-current-route-string db)
   ;
   ; @return (string)
   [db _]
@@ -161,7 +161,7 @@
 
 (defn get-current-route-id
   ; @usage
-  ;  (r router/get-current-route-id db)
+  ;  (r get-current-route-id db)
   ;
   ; @return (keyword)
   [db _]
@@ -169,7 +169,7 @@
 
 (defn get-current-route-path
   ; @usage
-  ;  (r router/get-current-route-path db)
+  ;  (r get-current-route-path db)
   ;
   ; @return (string)
   [db _]
@@ -177,7 +177,7 @@
 
 (defn get-current-route-template
   ; @usage
-  ;  (r router/get-current-route-template db)
+  ;  (r get-current-route-template db)
   ;
   ; @return (string)
   [db _]
@@ -186,7 +186,7 @@
 
 (defn get-current-js-build
   ; @usage
-  ;  (r router/get-current-js-build db)
+  ;  (r get-current-js-build db)
   ;
   ; @return (string)
   [db _]
@@ -195,7 +195,7 @@
 
 (defn get-current-route-path-params
   ; @usage
-  ;  (r router/get-current-route-path-params db)
+  ;  (r get-current-route-path-params db)
   ;
   ; @return (map)
   [db _]
@@ -205,7 +205,7 @@
   ; @param (keyword) param-key
   ;
   ; @usage
-  ;  (r router/get-current-route-path-param db :my-param)
+  ;  (r get-current-route-path-param db :my-param)
   ;
   ; @return (string)
   [db [_ param-key]]
@@ -216,7 +216,7 @@
   ; @param (string) param-value
   ;
   ; @usage
-  ;  (r router/current-route-path-param? db :my-param "My value")
+  ;  (r current-route-path-param? db :my-param "My value")
   ;
   ; @return (boolean)
   [db [_ param-key param-value]]
@@ -225,7 +225,7 @@
 
 (defn get-current-route-query-params
   ; @usage
-  ;  (r router/get-current-route-query-params db)
+  ;  (r get-current-route-query-params db)
   ;
   ; @return (map)
   [db _]
@@ -235,7 +235,7 @@
   ; @param (keyword) param-key
   ;
   ; @usage
-  ;  (r router/get-current-route-query-param db :my-param)
+  ;  (r get-current-route-query-param db :my-param)
   ;
   ; @return (string)
   [db [_ param-key]]
@@ -246,7 +246,7 @@
   ; @param (string) param-value
   ;
   ; @usage
-  ;  (r router/current-route-query-param? db :my-param "My value")
+  ;  (r current-route-query-param? db :my-param "My value")
   ;
   ; @return (boolean)
   [db [_ param-key param-value]]
@@ -255,7 +255,7 @@
 
 (defn get-current-route-fragment
   ; @usage
-  ;  (r router/get-current-route-fragment db)
+  ;  (r get-current-route-fragment db)
   ;
   ; @return (string)
   [db _]
@@ -263,7 +263,7 @@
 
 (defn get-current-route-parent
   ; @usage
-  ;  (r router/get-current-route-parent db)
+  ;  (r get-current-route-parent db)
   ;
   ; @return (string)
   [db _]
@@ -273,7 +273,7 @@
   ; @param (string) uri
   ;
   ; @usage
-  ;  (r router/use-path-params db "/@app-home/my-route/:my-param/xxx")
+  ;  (r use-path-params db "/@app-home/my-route/:my-param/xxx")
   ;  =>
   ;  "/@app-home/my-route/my-value/xxx"
   ;
@@ -320,7 +320,7 @@
 
 (defn at-home?
   ; @usage
-  ;  (r router/at-home? db)
+  ;  (r at-home? db)
   ;
   ; @return (boolean)
   [db _]
@@ -330,7 +330,7 @@
 
 (defn home-next-door?
   ; @usage
-  ;  (r router/home-next-door? db)
+  ;  (r home-next-door? db)
   ;
   ; @return (boolean)
   [db _]

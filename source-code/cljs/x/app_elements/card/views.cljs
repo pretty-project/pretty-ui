@@ -102,10 +102,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/card {...}]
+  ;  [card {...}]
   ;
   ; @usage
-  ;  [elements/card :my-card {...}]
+  ;  [card :my-card {...}]
   ([card-props]
    [element (random/generate-keyword) card-props])
 

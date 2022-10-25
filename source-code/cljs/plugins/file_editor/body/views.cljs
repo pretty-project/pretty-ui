@@ -75,11 +75,11 @@
   ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [file-editor/body :my-editor {...}]
+  ;  [body :my-editor {...}]
   ;
   ; @usage
   ;  (defn my-form-element [] [:div ...])
-  ;  [file-editor/body :my-editor {:form-element #'my-form-element}]
+  ;  [body :my-editor {:form-element #'my-form-element}]
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)

@@ -26,7 +26,7 @@
   ; @param (keyword) process-id
   ;
   ; @usage
-  ;  (r ui/listen-to-process! db :my-request)
+  ;  (r listen-to-process! db :my-request)
   ;
   ; @return (map)
   [db [_ process-id]]
@@ -36,7 +36,7 @@
   ; @param (keyword) process-id
   ;
   ; @usage
-  ;  (r ui/stop-listening-to-process! db :my-request)
+  ;  (r stop-listening-to-process! db :my-request)
   ;
   ; @return (map)
   [db [_ process-id]]
@@ -51,7 +51,7 @@
   ; @param (integer) fake-progress
   ;
   ; @usage
-  ;  (r ui/fake-process! db 40)
+  ;  (r fake-process! db 40)
   ;
   ; @return (map)
   [db [_ fake-progress]]
@@ -59,7 +59,7 @@
 
 (defn stop-faking-process!
   ; @usage
-  ;  (r ui/stop-faking-process! db)
+  ;  (r stop-faking-process! db)
   ;
   ; @return (map)
   [db [_ process-id]]

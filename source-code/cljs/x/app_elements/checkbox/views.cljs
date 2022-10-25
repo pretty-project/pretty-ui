@@ -168,10 +168,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/checkbox {...}]
+  ;  [checkbox {...}]
   ;
   ; @usage
-  ;  [elements/checkbox :my-checkbox {...}]
+  ;  [checkbox :my-checkbox {...}]
   ([checkbox-props]
    [element (random/generate-keyword) checkbox-props])
 

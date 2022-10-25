@@ -25,7 +25,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/select-all-items! :my-browser)
+  ;  (r select-all-items! :my-browser)
   ;
   ; @return (map)
   [db [_ browser-id]]
@@ -36,7 +36,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/toggle-item-selection! :my-browser "my-item")
+  ;  (r toggle-item-selection! :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
@@ -47,7 +47,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/toggle-single-item-selection! :my-browser "my-item")
+  ;  (r toggle-single-item-selection! :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
@@ -59,7 +59,7 @@
   ; @param (integer) selection-limit
   ;
   ; @usage
-  ;  (r item-browser/toggle-limited-item-selection! :my-browser "my-item" 8)
+  ;  (r toggle-limited-item-selection! :my-browser "my-item" 8)
   ;
   ; @return (map)
   [db [_ browser-id item-id selection-limit]]
@@ -69,7 +69,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r item-browser/discard-selection! :my-browser)
+  ;  (r discard-selection! :my-browser)
   ;
   ; @return (map)
   [db [_ browser-id]]
@@ -85,7 +85,7 @@
   ; @param (strings in vector) selected-item-ids
   ;
   ; @usage
-  ;  (r item-browser/import-selection! db :my-browser ["my-item" "your-item"])
+  ;  (r import-selection! db :my-browser ["my-item" "your-item"])
   ;
   ; @return (map)
   [db [_ browser-id selected-item-ids]]
@@ -96,7 +96,7 @@
   ; @param (string) selected-item-id
   ;
   ; @usage
-  ;  (r item-browser/import-single-selection! db :my-browser "my-item")
+  ;  (r import-single-selection! db :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id selected-item-id]]

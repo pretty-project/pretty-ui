@@ -28,7 +28,7 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (gestures/ordered-label? "My item #3")
+  ;  (ordered-label? "My item #3")
   ;
   ; @return (boolean)
   [n]
@@ -47,17 +47,17 @@
   ; @param (strings in vector)(opt) concurent-labels
   ;
   ; @example
-  ;  (gestures/item-label->copy-label "My item" ["Your item" "Their item"])
+  ;  (item-label->copy-label "My item" ["Your item" "Their item"])
   ;  =>
   ;  "My item #2"
   ;
   ; @example
-  ;  (gestures/item-label->copy-label "My item" ["My item" "My item #2"])
+  ;  (item-label->copy-label "My item" ["My item" "My item #2"])
   ;  =>
   ;  "My item #3"
   ;
   ; @example
-  ;  (gestures/item-label->copy-label "My item #2" ["Your item"])
+  ;  (item-label->copy-label "My item #2" ["Your item"])
   ;  =>
   ;  "My item #3"
   ;

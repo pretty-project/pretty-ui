@@ -91,10 +91,10 @@
   ;   :options-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/multi-combo-box {...}]
+  ;  [multi-combo-box {...}]
   ;
   ; @usage
-  ;  [elements/multi-combo-box :my-multi-combo-box {...}]
+  ;  [multi-combo-box :my-multi-combo-box {...}]
   ([box-props]
    [element (random/generate-keyword) box-props])
 

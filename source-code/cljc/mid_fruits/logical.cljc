@@ -175,17 +175,17 @@
   ; @param (*) b
   ;
   ; @example
-  ;  (logical/swap "A" "A" "B")
+  ;  (swap "A" "A" "B")
   ;  =>
   ;  "B"
   ;
   ; @example
-  ;  (logical/swap "B" "A" "B")
+  ;  (swap "B" "A" "B")
   ;  =>
   ;  "A"
   ;
   ; @example
-  ;  (logical/swap "C" "A" "B")
+  ;  (swap "C" "A" "B")
   ;  =>
   ;  "C"
   ;

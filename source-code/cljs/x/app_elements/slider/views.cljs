@@ -131,10 +131,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/slider {...}]
+  ;  [slider {...}]
   ;
   ; @usage
-  ;  [elements/slider :my-slider {...}]
+  ;  [slider :my-slider {...}]
   ([slider-props]
    [element (random/generate-keyword) slider-props])
 

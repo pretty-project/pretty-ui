@@ -49,7 +49,7 @@
   ;  {:cookie-type (keyword)}
   ;
   ; @example
-  ;  (engine/cookie-id->cookie-name :my-cookie {:cookie-type :user-experience})
+  ;  (cookie-id->cookie-name :my-cookie {:cookie-type :user-experience})
   ;  =>
   ;  "xue-my-cookie"
   ;
@@ -65,7 +65,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->cookie-name-prefix "xn-my-cookie")
+  ;  (cookie-name->cookie-name-prefix "xn-my-cookie")
   ;  =>
   ;  "xn"
   ;
@@ -79,7 +79,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->system-cookie? "xa-my-cookie")
+  ;  (cookie-name->system-cookie? "xa-my-cookie")
   ;  =>
   ;  true
   ;
@@ -95,7 +95,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->system-cookie? "xn-my-cookie")
+  ;  (cookie-name->system-cookie? "xn-my-cookie")
   ;  =>
   ;  true
   ;
@@ -111,7 +111,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->system-cookie? "xue-my-cookie")
+  ;  (cookie-name->system-cookie? "xue-my-cookie")
   ;  =>
   ;  true
   ;
@@ -127,7 +127,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->system-cookie? "xn-my-cookie")
+  ;  (cookie-name->system-cookie? "xn-my-cookie")
   ;  =>
   ;  true
   ;
@@ -142,7 +142,7 @@
   ; @param (string) cookie-name
   ;
   ; @example
-  ;  (engine/cookie-name->cookie-id "xn-my-cookie")
+  ;  (cookie-name->cookie-id "xn-my-cookie")
   ;  =>
   ;  :my-cookie
   ;

@@ -26,7 +26,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/get-item db :my-browser "my-item")
+  ;  (r get-item db :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
@@ -37,7 +37,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/export-item db :my-browser "my-item")
+  ;  (r export-item db :my-browser "my-item")
   ;
   ; @return (namespaced map)
   [db [_ browser-id item-id]]
@@ -48,7 +48,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/item-downloaded? db :my-browser "my-item")
+  ;  (r item-downloaded? db :my-browser "my-item")
   ;
   ; @return (boolean)
   [db [_ browser-id item-id]]
@@ -59,7 +59,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/get-item-dex db :my-browser "my-item")
+  ;  (r get-item-dex db :my-browser "my-item")
   ;
   ; @return (integer)
   [db [_ browser-id item-id]]

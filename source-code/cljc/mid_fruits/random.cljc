@@ -35,7 +35,7 @@
 
 (defn generate-boolean
   ; @usage
-  ;  (random/generate-boolean)
+  ;  (generate-boolean)
   ;
   ; @param (boolean)
   []
@@ -48,7 +48,7 @@
 
 (defn generate-uuid
   ; @usage
-  ;  (random/generate-uuid)
+  ;  (generate-uuid)
   ;
   ; @return (string)
   []
@@ -57,7 +57,7 @@
 
 (defn generate-string
   ; @usage
-  ;  (random/generate-string)
+  ;  (generate-string)
   ;
   ; @return (string)
   []
@@ -67,7 +67,7 @@
   ; @param (string)(opt) namespace
   ;
   ; @usage
-  ;  (random/generate-keyword)
+  ;  (generate-keyword)
   ;
   ; @return (keyword)
   ([]
@@ -86,7 +86,7 @@
 
 (defn generate-react-key
   ; @usage
-  ;  (random/generate-react-key)
+  ;  (generate-react-key)
   ;
   ; @return (string)
   []
@@ -96,7 +96,7 @@
   ; @param (integer) digits
   ;
   ; @example
-  ;  (random/generate-number 3)
+  ;  (generate-number 3)
   ;  =>
   ;  420
   ;
@@ -117,12 +117,12 @@
   ; @param (vector) n
   ;
   ; @usage
-  ;  (random/pick-vector-item [:a :b :c]
+  ;  (pick-vector-item [:a :b :c]
   ;  =>
   ;  :a
   ;
   ; @usage
-  ;  (random/pick-vector-item [:a :b :c]
+  ;  (pick-vector-item [:a :b :c]
   ;  =>
   ;  :c
   ;

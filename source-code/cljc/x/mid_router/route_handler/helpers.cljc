@@ -29,7 +29,7 @@
   ; @param (string) route-template
   ;
   ; @example
-  ;  (route-handler.helpers/route-conflict? [[...] ["/my-route" {...}] [...] [...] [...]] "/my-route")
+  ;  (route-conflict? [[...] ["/my-route" {...}] [...] [...] [...]] "/my-route")
   ;  =>
   ;  true
   ;
@@ -49,22 +49,22 @@
   ; @param (string) b
   ;
   ; @example
-  ;  (route-handler.helpers/route-template-parts-ordered? "abcd" "abcd")
+  ;  (route-template-parts-ordered? "abcd" "abcd")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (route-handler.helpers/route-template-parts-ordered? "abcd" "efgh")
+  ;  (route-template-parts-ordered? "abcd" "efgh")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (route-handler.helpers/route-template-parts-ordered? "efgh" "abcd")
+  ;  (route-template-parts-ordered? "efgh" "abcd")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (route-handler.helpers/route-template-parts-ordered? ":abcd" "abcd")
+  ;  (route-template-parts-ordered? ":abcd" "abcd")
   ;  =>
   ;  false
   ;
@@ -94,22 +94,22 @@
   ; @param (string) b
   ;
   ; @example
-  ;  (route-handler.helpers/route-templates-ordered? "/ab/cd" "/ab/cd")
+  ;  (route-templates-ordered? "/ab/cd" "/ab/cd")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (route-handler.helpers/route-templates-ordered? "/ab/cd" "/ef/gh")
+  ;  (route-templates-ordered? "/ab/cd" "/ef/gh")
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (route-handler.helpers/route-templates-ordered? "/ef/gh" "/ab/cd")
+  ;  (route-templates-ordered? "/ef/gh" "/ab/cd")
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (route-handler.helpers/route-templates-ordered? "/:ab/cd" "/ab/cd")
+  ;  (route-templates-ordered? "/:ab/cd" "/ab/cd")
   ;  =>
   ;  false
   ;
@@ -125,10 +125,10 @@
   ; @param (vectors in vector) routes
   ;
   ; @example
-  ;  (route-handler.helpers/destructed-routes->ordered-routes [["/my-route/:a" {...}]
-  ;                                                            ["/my-route/c"  {...}]
-  ;                                                            ["/my-route/b"  {...}]
-  ;                                                            ["/my-route"    {...}]]
+  ;  (destructed-routes->ordered-routes [["/my-route/:a" {...}]
+  ;                                      ["/my-route/c"  {...}]
+  ;                                      ["/my-route/b"  {...}]
+  ;                                      ["/my-route"    {...}]]
   ;  =>
   ;  [["/my-route/b"  {...}]]
   ;   ["/my-route/c"  {...}]
@@ -148,7 +148,7 @@
   ; @param (string) route-string
   ;
   ; @example
-  ;  (route-handler.helpers/variable-route-string? "/@app-home/your-route")
+  ;  (variable-route-string? "/@app-home/your-route")
   ;  =>
   ;  true
   ;
@@ -161,7 +161,7 @@
   ; @param (string) app-home
   ;
   ; @example
-  ;  (route-handler.helpers/resolve-variable-route-string "/@app-home/your-route" "/my-app")
+  ;  (resolve-variable-route-string "/@app-home/your-route" "/my-app")
   ;  =>
   ;  "/my-app/your-route"
   ;

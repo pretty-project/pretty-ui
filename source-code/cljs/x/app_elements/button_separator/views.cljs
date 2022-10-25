@@ -58,10 +58,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/button-separator {...}]
+  ;  [button-separator {...}]
   ;
   ; @usage
-  ;  [elements/button-separator :my-separator {...}]
+  ;  [button-separator :my-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

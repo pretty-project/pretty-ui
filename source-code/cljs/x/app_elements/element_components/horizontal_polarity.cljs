@@ -98,14 +98,14 @@
   ;   :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  [elements/horizontal-polarity {...}]
+  ;  [horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [elements/horizontal-polarity :my-horizontal-polarity {...}]
+  ;  [horizontal-polarity :my-horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [elements/horizontal-polarity {:start-content [:<> [elements/label {:content "My label"}]
-  ;                                                     [elements/label {:content "My label"}]]}]
+  ;  [horizontal-polarity {:start-content [:<> [label {:content "My label"}]
+  ;                                            [label {:content "My label"}]]}]
   ([polarity-props]
    [element (random/generate-keyword) polarity-props])
 

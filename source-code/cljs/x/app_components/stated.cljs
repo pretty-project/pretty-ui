@@ -359,21 +359,21 @@
   ;   :updater (metamorphic-event)(opt)}
   ;
   ; @usage
-  ;  [components/stated {...}]
+  ;  [stated {...}]
   ;
   ; @usage
-  ;  [components/stated :my-component {...}]
-  ;
-  ; @usage
-  ;  (defn my-component [component-id component-props])
-  ;  [components/stated :my-component
-  ;                     {:render-f   #'my-component
-  ;                      :subscriber [:get-my-component-props]}]
+  ;  [stated :my-component {...}]
   ;
   ; @usage
   ;  (defn my-component [component-id component-props])
-  ;  [components/stated {:component  [my-component :my-component]
-  ;                      :subscriber [:get-my-component-props]}]
+  ;  [stated :my-component
+  ;          {:render-f   #'my-component
+  ;           :subscriber [:get-my-component-props]}]
+  ;
+  ; @usage
+  ;  (defn my-component [component-id component-props])
+  ;  [stated {:component  [my-component :my-component]
+  ;           :subscriber [:get-my-component-props]}]
   ([context-props]
    [component (random/generate-keyword) context-props])
 

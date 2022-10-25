@@ -37,7 +37,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r item-editor/get-item-route db :my-editor "my-item")
+  ;  (r get-item-route db :my-editor "my-item")
   ;  =>
   ;  "/@app-home/my-editor/my-item"
   ;
@@ -51,7 +51,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r item-editor/get-edit-route db :my-editor "my-item")
+  ;  (r get-edit-route db :my-editor "my-item")
   ;  =>
   ;  "/@app-home/my-editor/my-item/edit"
   ;

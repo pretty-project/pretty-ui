@@ -186,45 +186,45 @@
   ;    W/ {:content (keyword or string)}}
   ;
   ; @usage
-  ;  [components/content {...}]
+  ;  [content {...}]
   ;
   ; @usage
-  ;  [components/content :my-component {...}]
+  ;  [content :my-component {...}]
   ;
   ; @example
-  ;  [components/content {:content :username}]
+  ;  [content {:content :username}]
   ;  =>
   ;  "Username"
   ;
   ; @example
-  ;  [components/content {:content "Hakuna Matata"}]
+  ;  [content {:content "Hakuna Matata"}]
   ;  =>
   ;  "Hakuna Matata"
   ;
   ; @example
   ;  (defn my-component [component-id])
-  ;  [components/content :my-component {:content #'my-component}]
+  ;  [content :my-component {:content #'my-component}]
   ;
   ; @example
   ;  (defn my-component [component-id])
-  ;  [components/content {:content [my-component :my-component]}]
+  ;  [content {:content [my-component :my-component]}]
   ;
   ; @example
   ;  (defn my-component-a [component-id])
   ;  (defn my-component-b [component-id])
-  ;  [components/content {:content [:<> [my-component-a :my-component]
-  ;                                     [my-component-b :your-component]]}]
+  ;  [content {:content [:<> [my-component-a :my-component]
+  ;                          [my-component-b :your-component]]}]
   ;
   ; @example
   ;  (defn my-component [component-id component-props])
-  ;  [components/content :my-component
-  ;                      {:content    #'my-component
-  ;                       :subscriber [:get-my-component-props]}]
+  ;  [content :my-component
+  ;           {:content    #'my-component
+  ;            :subscriber [:get-my-component-props]}]
   ;
   ; @example
   ;  (defn my-component [component-id component-props])
-  ;  [components/content {:content    [my-component :my-component]
-  ;                       :subscriber [:get-my-component-props]}]
+  ;  [content {:content    [my-component :my-component]
+  ;            :subscriber [:get-my-component-props]}]
   ([context-props]
    (component (random/generate-keyword) context-props))
 

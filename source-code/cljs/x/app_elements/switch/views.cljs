@@ -165,10 +165,10 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/switch {...}]
+  ;  [switch {...}]
   ;
   ; @usage
-  ;  [elements/switch :my-switch {...}]
+  ;  [switch :my-switch {...}]
   ([switch-props]
    [element (random/generate-keyword) switch-props])
 

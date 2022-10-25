@@ -73,10 +73,10 @@
   ;     Max: 6}
   ;
   ; @usage
-  ;  [elements/line-diagram {...}]
+  ;  [line-diagram {...}]
   ;
   ; @usage
-  ;  [elements/point-diagram :my-point-diagram {...}]
+  ;  [point-diagram :my-point-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

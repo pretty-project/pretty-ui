@@ -22,7 +22,7 @@
 
 (defn error-shield-hidden?
   ; @usage
-  ;  (ui/error-shield-hidden?)
+  ;  (error-shield-hidden?)
   ;
   ; @return (boolean)
   []

@@ -29,13 +29,13 @@
   ; @param (n) integer
   ;
   ; @usage
-  ;  (environment/set-scroll-y! 100)
+  ;  (set-scroll-y! 100)
   [n]
   (dom/set-scroll-y! n))
 
 (defn scroll-to-top!
   ; @usage
-  ;  (environment/scroll-to-top!)
+  ;  (scroll-to-top!)
   [_]
   (dom/set-scroll-y! 0))
 
@@ -44,7 +44,7 @@
   ; @param (integer)(opt) offset
   ;
   ; @usage
-  ;  (environment/scroll-to-element-top! "my-element" 50)
+  ;  (scroll-to-element-top! "my-element" 50)
   [element-id offset]
   (dom/scroll-to-element-top! (dom/get-element-by-id element-id) offset))
 

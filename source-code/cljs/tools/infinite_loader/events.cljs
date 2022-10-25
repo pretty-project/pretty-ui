@@ -47,7 +47,7 @@
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r infinite-loader/pause-loader! db :my-loader)
+  ;  (r pause-loader! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]
@@ -57,7 +57,7 @@
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r infinite-loader/restart-loader! db :my-loader)
+  ;  (r restart-loader! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]

@@ -79,10 +79,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/icon {...}]
+  ;  [icon {...}]
   ;
   ; @usage
-  ;  [elements/icon :my-icon {...}]
+  ;  [icon :my-icon {...}]
   ([icon-props]
    [element (random/generate-keyword) icon-props])
 

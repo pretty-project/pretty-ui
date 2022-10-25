@@ -142,7 +142,7 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [popup-a/layout :my-popup {...}]
+  ;  [layout :my-popup {...}]
   [popup-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [layout-props (prototypes/layout-props-prototype layout-props)]
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

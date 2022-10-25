@@ -61,10 +61,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/ghost {...}]
+  ;  [ghost {...}]
   ;
   ; @usage
-  ;  [elements/ghost :my-ghost {...}]
+  ;  [ghost :my-ghost {...}]
   ([ghost-props]
    [element (random/generate-keyword) ghost-props])
 

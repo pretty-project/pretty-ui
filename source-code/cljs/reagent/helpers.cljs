@@ -23,12 +23,12 @@
   ; @param (*)
   ;
   ; @example
-  ;  (reagent/component? [:div "..."])
+  ;  (component? [:div "..."])
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (reagent/component? [my-component "..."])
+  ;  (component? [my-component "..."])
   ;  =>
   ;  true
   ;

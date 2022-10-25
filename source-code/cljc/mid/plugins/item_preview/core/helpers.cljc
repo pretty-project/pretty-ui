@@ -35,7 +35,7 @@
   ; @param (keyword) preview-id
   ;
   ; @example
-  ;  (core.helpers/default-item-path :my-preview)
+  ;  (default-item-path :my-preview)
   ;  =>
   ;  [:plugins :plugin-handler/downloaded-items :my-preview]
   ;

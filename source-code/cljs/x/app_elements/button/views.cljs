@@ -145,13 +145,13 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/button {...}]
+  ;  [button {...}]
   ;
   ; @usage
-  ;  [elements/button :my-button {...}]
+  ;  [button :my-button {...}]
   ;
   ; @usage
-  ;  [elements/button {:keypress {:key-code 13} :on-click [:my-event]}]
+  ;  [button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

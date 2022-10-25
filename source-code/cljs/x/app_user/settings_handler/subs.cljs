@@ -22,7 +22,7 @@
 
 (defn get-user-settings
   ; @usage
-  ;  (r user/get-user-settings db)
+  ;  (r get-user-settings db)
   ;
   ; @return (map)
   [db _]
@@ -32,7 +32,7 @@
   ; @param (keyword) item-key
   ;
   ; @usage
-  ;  (r user/get-user-settings-item db :my-settings-item)
+  ;  (r get-user-settings-item db :my-settings-item)
   ;
   ; @return (*)
   [db [_ item-key]]

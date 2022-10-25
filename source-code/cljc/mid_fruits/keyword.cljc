@@ -26,7 +26,7 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/to-string :foo.bar/baz)
+  ;  (to-string :foo.bar/baz)
   ;  =>
   ;  "foo.bar/baz"
   ;
@@ -48,12 +48,12 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/namespaced :foo)
+  ;  (namespaced :foo)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (keyword/namespaced :foo/bar)
+  ;  (namespaced :foo/bar)
   ;  =>
   ;  true
   ;
@@ -66,12 +66,12 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/namespaced! :foo/bar)
+  ;  (namespaced! :foo/bar)
   ;  =>
   ;  :foo/bar
   ;
   ; @example
-  ;  (keyword/namespaced! :bar)
+  ;  (namespaced! :bar)
   ;  =>
   ;  :ko4983l3-i8790-j93l3-lk8385u591o2/bar
   ;
@@ -90,12 +90,12 @@
   ; @param (keywords and/or strings) abc
   ;
   ; @example
-  ;  (keyword/join :a :b "c" :d)
+  ;  (join :a :b "c" :d)
   ;  =>
   ;  :abcd
   ;
   ; @example
-  ;  (keyword/join :x/a :x/b "c" :d)
+  ;  (join :x/a :x/b "c" :d)
   ;  =>
   ;  :abcd
   ;
@@ -111,17 +111,17 @@
   ; @param (string)(opt) separator
   ;
   ; @example
-  ;  (keyword/append :bar :baz)
+  ;  (append :bar :baz)
   ;  =>
   ;  :barbaz
   ;
   ; @example
-  ;  (keyword/append :foo/bar :baz)
+  ;  (append :foo/bar :baz)
   ;  =>
   ;  :foo/barbaz
   ;
   ; @example
-  ;  (keyword/append :foo/bar :baz "--")
+  ;  (append :foo/bar :baz "--")
   ;  =>
   ;  :foo/bar--baz
   ;
@@ -145,7 +145,7 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/add-namespace :foo :bar)
+  ;  (add-namespace :foo :bar)
   ;  =>
   ;  :foo/bar
   ;
@@ -158,7 +158,7 @@
   ; @param (keywords in vector) abc
   ;
   ; @example
-  ;  (keyword/add-items-namespace :foo [:bar :baz])
+  ;  (add-items-namespace :foo [:bar :baz])
   ;  =>
   ;  [:foo/bar :foo/baz]
   ;
@@ -172,12 +172,12 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/get-namespace :bar)
+  ;  (get-namespace :bar)
   ;  =>
   ;  nil
   ;
   ; @example
-  ;  (keyword/get-namespace :foo/bar)
+  ;  (get-namespace :foo/bar)
   ;  =>
   ;  :foo
   ;
@@ -191,7 +191,7 @@
   ; @param (keyword) n
   ;
   ; @example
-  ;  (keyword/get-namespace :foo/bar)
+  ;  (get-namespace :foo/bar)
   ;  =>
   ;  :bar
   ;
@@ -205,7 +205,7 @@
   ; @param (keyword) x
   ;
   ; @example
-  ;  (keyword/before-last-occurence :foo/bar :ar)
+  ;  (before-last-occurence :foo/bar :ar)
   ;  =>
   ;  :foo/b
   ;
@@ -219,7 +219,7 @@
   ; @param (keyword) x
   ;
   ; @example
-  ;  (keyword/after-last-occurence :foo/bar :fo)
+  ;  (after-last-occurence :foo/bar :fo)
   ;  =>
   ;  :o/bar
   ;
@@ -233,22 +233,22 @@
   ; @param (keyword) x
   ;
   ; @example
-  ;  (keyword/starts-with? :foo :fo)
+  ;  (starts-with? :foo :fo)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (keyword/starts-with? :foo/bar :fo)
+  ;  (starts-with? :foo/bar :fo)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (keyword/starts-with? :foo/bar :ba)
+  ;  (starts-with? :foo/bar :ba)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (keyword/starts-with? :foo/bar :foo/b)
+  ;  (starts-with? :foo/bar :foo/b)
   ;  =>
   ;  true
   ;
@@ -271,22 +271,22 @@
   ; @param (keyword) x
   ;
   ; @example
-  ;  (keyword/ends-with? :foo :oo)
+  ;  (ends-with? :foo :oo)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (keyword/ends-with? :foo/bar :ar)
+  ;  (ends-with? :foo/bar :ar)
   ;  =>
   ;  true
   ;
   ; @example
-  ;  (keyword/ends-with? :foo/bar :ba)
+  ;  (ends-with? :foo/bar :ba)
   ;  =>
   ;  false
   ;
   ; @example
-  ;  (keyword/ends-with? :foo/bar :o/bar)
+  ;  (ends-with? :foo/bar :o/bar)
   ;  =>
   ;  true
   ;

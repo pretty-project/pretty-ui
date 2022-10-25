@@ -25,7 +25,7 @@
   ; @param (keyword) sound-id
   ;
   ; @example
-  ;  (sounds.engine/sound-id->catalog-id :my-sound)
+  ;  (sound-id->catalog-id :my-sound)
   ;  =>
   ;  "x-app-sound--my-sound"
   ;

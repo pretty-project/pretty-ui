@@ -22,7 +22,7 @@
 
 
 
-;; -- Configuration -----------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
@@ -50,7 +50,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-key :my-namespace/key)
+  ;  (unkeywordize-key :my-namespace/key)
   ;  =>
   ;  "my-namespace/key"
   ;
@@ -62,7 +62,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/keywordize-key "my-namespace/key")
+  ;  (keywordize-key "my-namespace/key")
   ;  =>
   ;  :my-namespace/key
   ;
@@ -74,7 +74,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/underscore-key :my-namespace/key)
+  ;  (underscore-key :my-namespace/key)
   ;  =>
   ;  :my_namespace/key
   ;
@@ -88,7 +88,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/hyphenize-key :my_namespace/key)
+  ;  (hyphenize-key :my_namespace/key)
   ;  =>
   ;  :my-namespace/key
   ;
@@ -102,7 +102,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/snake-case-key :myKey)
+  ;  (snake-case-key :myKey)
   ;  =>
   ;  :my-key
   ;
@@ -121,7 +121,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordized-value? "*:apple")
+  ;  (unkeywordized-value? "*:apple")
   ;  =>
   ;  true
   ;
@@ -136,7 +136,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/keywordize-value "*:my-value")
+  ;  (keywordize-value "*:my-value")
   ;  =>
   ;  :my-value
   ;
@@ -150,7 +150,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-value :my-value)
+  ;  (unkeywordize-value :my-value)
   ;  =>
   ;  "*:my-value"
   ;
@@ -169,7 +169,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/trim-value " My value ")
+  ;  (trim-value " My value ")
   ;  =>
   ;  "My value"
   ;
@@ -188,7 +188,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/parseint-value "420")
+  ;  (parseint-value "420")
   ;  =>
   ;  420
   ;
@@ -205,7 +205,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-keys {:my-namespace/key :my-value})
+  ;  (unkeywordize-keys {:my-namespace/key :my-value})
   ;  =>
   ;  {"my-namespace/key" :my-value}
   ;
@@ -221,7 +221,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/keywordize-keys {"my-namespace/key" :my-value})
+  ;  (keywordize-keys {"my-namespace/key" :my-value})
   ;  =>
   ;  {:my-namespace/key :my-value}
   ;
@@ -235,7 +235,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/underscore-keys {:my-namespace/key :my-value})
+  ;  (underscore-keys {:my-namespace/key :my-value})
   ;  =>
   ;  {:my_namespace/key :my-value}
   ;
@@ -249,7 +249,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/hyphenize-keys {:my_namespace/key :my-value})
+  ;  (hyphenize-keys {:my_namespace/key :my-value})
   ;  =>
   ;  {:my-namespace/key :my-value}
   ;
@@ -263,7 +263,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/snake-case-keys {:myKey :my-value})
+  ;  (snake-case-keys {:myKey :my-value})
   ;  =>
   ;  {:my-key :my-value}
   ;
@@ -288,7 +288,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/unkeywordize-values {:a :b :c [:d "e"] :f {:g "h" :i :j}})
+  ;  (unkeywordize-values {:a :b :c [:d "e"] :f {:g "h" :i :j}})
   ;  =>
   ;  {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}}
   ;
@@ -306,7 +306,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/keywordize-values {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}})
+  ;  (keywordize-values {:a "*:b" :c ["*:d" "e"] :f {:g "*h" :i "*:j"}})
   ;  =>
   ;  {:a :b :c [:d "e"] :f {:g "h" :i :j}}
   ;
@@ -327,7 +327,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/trim-values {:a "b " :c [" d " "e"] :f {:g " h"}})
+  ;  (trim-values {:a "b " :c [" d " "e"] :f {:g " h"}})
   ;  =>
   ;  {:a "b" :c ["d" "e"] :f {:g "h"}}
   ;
@@ -346,7 +346,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/parseint-values {:a "0" :c ["1"] :f {:g "2"}})
+  ;  (parseint-values {:a "0" :c ["1"] :f {:g "2"}})
   ;  =>
   ;  {:a 0 :c [1] :f {:g 2}}
   ;
@@ -365,7 +365,7 @@
   ; @param (*) n
   ;
   ; @example
-  ;  (json/remove-blank-values {:a "" :c [] :f {:g nil}})
+  ;  (remove-blank-values {:a "" :c [] :f {:g nil}})
   ;  =>
   ;  {}
   ;

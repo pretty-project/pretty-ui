@@ -24,7 +24,7 @@
   ; @param (?) this
   ;
   ; @usage
-  ;  (reagent/lifecycles {:component-did-update (fn [this] (reagent/arguments this))})
+  ;  (lifecycles {:component-did-update (fn [this] (arguments this))})
   ;
   ; @return (*)
   [this]

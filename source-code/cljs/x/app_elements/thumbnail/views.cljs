@@ -111,10 +111,10 @@
   ;    Default: :s}
   ;
   ; @usage
-  ;  [elements/thumbnail {...}]
+  ;  [thumbnail {...}]
   ;
   ; @usage
-  ;  [elements/thumbnail :my-thumbnail {...}]
+  ;  [thumbnail :my-thumbnail {...}]
   ([thumbnail-props]
    [element (random/generate-keyword) thumbnail-props])
 

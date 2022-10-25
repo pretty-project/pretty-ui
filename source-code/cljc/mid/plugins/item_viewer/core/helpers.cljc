@@ -35,7 +35,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @example
-  ;  (core.helpers/default-item-path :my-viewer)
+  ;  (default-item-path :my-viewer)
   ;  =>
   ;  [:plugins :plugin-handler/viewed-items :my-viewer]
   ;

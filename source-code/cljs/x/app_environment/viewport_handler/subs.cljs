@@ -24,7 +24,7 @@
 
 (defn get-viewport-height
   ; @usage
-  ;  (r environment/get-viewport-height db)
+  ;  (r get-viewport-height db)
   ;
   ; @return (integer)
   [db _]
@@ -32,7 +32,7 @@
 
 (defn get-viewport-width
   ; @usage
-  ;  (r environment/get-viewport-width db)
+  ;  (r get-viewport-width db)
   ;
   ; @return (integer)
   [db _]
@@ -42,7 +42,7 @@
   ; XXX#6408
   ;
   ; @usage
-  ;  (r environment/get-viewport-profile db)
+  ;  (r get-viewport-profile db)
   ;
   ; @return (keyword)
   ;  :xs, :s, :m, :l, :xl
@@ -53,7 +53,7 @@
   ; @param (keyword) n
   ;
   ; @usage
-  ;  (r environment/viewport-profile-match? :xl)
+  ;  (r viewport-profile-match? :xl)
   ;
   ; @return (boolean)
   [db [_ n]]
@@ -63,7 +63,7 @@
   ; @param (vector) n
   ;
   ; @usage
-  ;  (r environment/viewport-profiles-match? [:xs :s :m])
+  ;  (r viewport-profiles-match? [:xs :s :m])
   ;
   ; @return (boolean)
   [db [_ n]]
@@ -71,7 +71,7 @@
 
 (defn viewport-small?
   ; @usage
-  ;  (r environment/viewport-small? db)
+  ;  (r viewport-small? db)
   ;
   ; @return (boolean)
   [db _]
@@ -79,7 +79,7 @@
 
 (defn viewport-medium?
   ; @usage
-  ;  (r environment/viewport-medium? db)
+  ;  (r viewport-medium? db)
   ;
   ; @return (boolean)
   [db _]
@@ -87,7 +87,7 @@
 
 (defn viewport-large?
   ; @usage
-  ;  (r environment/viewport-large? db)
+  ;  (r viewport-large? db)
   ;
   ; @return (boolean)
   [db _]
@@ -95,7 +95,7 @@
 
 (defn get-viewport-orientation
   ; @usage
-  ;  (r environment/get-viewport-orientation db)
+  ;  (r get-viewport-orientation db)
   ;
   ; @return (keyword)
   ;  :landscape, :portrait

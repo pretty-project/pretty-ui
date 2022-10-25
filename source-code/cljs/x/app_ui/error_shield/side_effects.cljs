@@ -28,7 +28,7 @@
   ; @param (*) content
   ;
   ; @usage
-  ;  (ui/set-error-shield! "My content")
+  ;  (set-error-shield! "My content")
   [content]
   (environment/set-element-content! "x-error-shield--content" content)
   (if (error-shield.helpers/error-shield-hidden?)

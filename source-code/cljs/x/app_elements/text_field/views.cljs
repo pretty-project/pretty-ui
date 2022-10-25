@@ -382,30 +382,30 @@
   ;   :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/text-field {...}]
+  ;  [text-field {...}]
   ;
   ; @usage
-  ;  [elements/text-field :my-text-field {...}]
+  ;  [text-field :my-text-field {...}]
   ;
   ; @usage
-  ;  [elements/text-field {:validator {:f               #(not (empty? %))
-  ;                                    :invalid-message "Invalid value"}}]
+  ;  [text-field {:validator {:f               #(not (empty? %))
+  ;                           :invalid-message "Invalid value"}}]
   ;
   ; @usage
   ;  (defn get-invalid-message [value] "Invalid value")
-  ;  [elements/text-field {:validator {:f                 #(not (empty? %))
-  ;                                    :invalid-message-f get-invalid-message}}]
+  ;  [text-field {:validator {:f                 #(not (empty? %))
+  ;                           :invalid-message-f get-invalid-message}}]
   ;
   ; @usage
   ;  (defn my-surface [field-id])
-  ;  [elements/text-field {:surface {:content #'my-surface}}]
+  ;  [text-field {:surface {:content #'my-surface}}]
   ;
   ; @usage
   ;  (defn my-surface [field-id surface-props])
-  ;  [elements/text-field {:surface #'my-surface}]
+  ;  [text-field {:surface #'my-surface}]
   ;
   ; @usage
-  ; [elements/text-field {:modifier #(string/starts-with! % "/")}]
+  ; [text-field {:modifier #(string/starts-with! % "/")}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

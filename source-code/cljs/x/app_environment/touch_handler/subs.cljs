@@ -21,7 +21,7 @@
 
 (defn touch-detected?
   ; @usage
-  ;  (r environment/touch-detected? db)
+  ;  (r touch-detected? db)
   ;
   ; @return (boolean)
   [db _]

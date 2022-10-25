@@ -24,7 +24,7 @@
 
 (defn get-user-id
   ; @usage
-  ;  (r user/get-user-id db)
+  ;  (r get-user-id db)
   ;
   ; @return (string)
   [db _]
@@ -32,7 +32,7 @@
 
 (defn get-user-email-address
   ; @usage
-  ;  (r user/get-user-email-address db)
+  ;  (r get-user-email-address db)
   ;
   ; @return (string)
   [db _]
@@ -40,7 +40,7 @@
 
 (defn get-user-roles
   ; @usage
-  ;  (r user/get-user-roles db)
+  ;  (r get-user-roles db)
   ;
   ; @return (strings in vector)
   [db _]
@@ -50,7 +50,7 @@
   ; @param (string) user-role
   ;
   ; @usage
-  ;  (r user/user-has-role? db)
+  ;  (r user-has-role? db)
   ;
   ; @return (boolean)
   [db [_ user-role]]
@@ -65,7 +65,7 @@
   ;  függvényt!
   ;
   ; @usage
-  ;  (r user/logged-in? db)
+  ;  (r logged-in? db)
   ;
   ; @return (boolean)
   [db _]
@@ -76,7 +76,7 @@
   ; WARNING#4003
   ;
   ; @usage
-  ;  (r user/logged-out? db)
+  ;  (r logged-out? db)
   ;
   ; @return (boolean)
   [db _]
@@ -85,7 +85,7 @@
 
 (defn user-identified?
   ; @usage
-  ;  (r user/user-identified? db)
+  ;  (r user-identified? db)
   ;
   ; @return (boolean)
   [db _]
@@ -94,7 +94,7 @@
 
 (defn user-unidentified?
   ; @usage
-  ;  (r user/user-unidentified? db)
+  ;  (r user-unidentified? db)
   ;
   ; @return (boolean)
   [db _]
@@ -103,7 +103,7 @@
 
 (defn get-login-attempted-at
   ; @usage
-  ;  (r user/get-login-attempted-at db)
+  ;  (r get-login-attempted-at db)
   ;
   ; @return (string)
   [db _]
@@ -111,7 +111,7 @@
 
 (defn login-attempted?
   ; @usage
-  ;  (r user/login-attempted? db)
+  ;  (r login-attempted? db)
   ;
   ; @return (boolean)
   [db _]
@@ -120,7 +120,7 @@
 
 (defn client-locked?
   ; @usage
-  ;  (r user/client-locked? db)
+  ;  (r client-locked? db)
   ;
   ; @return (boolean)
   [db _]

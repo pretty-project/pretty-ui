@@ -43,7 +43,7 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [bubble-a/layout :my-bubble {...}]
+  ;  [layout :my-bubble {...}]
   [bubble-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [layout-props (prototypes/layout-props-prototype layout-props)]
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

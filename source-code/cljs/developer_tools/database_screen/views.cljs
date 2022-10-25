@@ -23,7 +23,7 @@
 
 (defn view
   ; @usage
-  ;  [developer-tools/database-screen]
+  ;  [database-screen]
   []
   (let [db @(r/subscribe [:db/get-db])]
        [:div#x-developer-tools--database-screen [:pre (pretty/mixed->string db)]]))

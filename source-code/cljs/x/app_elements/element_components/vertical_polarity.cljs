@@ -98,14 +98,14 @@
   ;   :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  [elements/vertical-polarity {...}]
+  ;  [vertical-polarity {...}]
   ;
   ; @usage
-  ;  [elements/vertical-polarity :my-vertical-polarity {...}]
+  ;  [vertical-polarity :my-vertical-polarity {...}]
   ;
   ; @usage
-  ;  [elements/vertical-polarity {:start-content [:<> [elements/label {:content "My label"}]
-  ;                                                   [elements/label {:content "My label"}]]}]
+  ;  [vertical-polarity {:start-content [:<> [label {:content "My label"}]
+  ;                                          [label {:content "My label"}]]}]
   ([polarity-props]
    [element (random/generate-keyword) polarity-props])
 

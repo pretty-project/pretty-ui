@@ -26,7 +26,7 @@
   ;  :normal, :reversed
   ;
   ; @usage
-  ;  [locales/name-order "First" "Last" :reversed]
+  ;  [name-order "First" "Last" :reversed]
   [first-name last-name name-order]
   (case name-order :reversed [:<> last-name  first-name]
                              [:<> first-name last-name]))

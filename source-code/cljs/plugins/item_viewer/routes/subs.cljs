@@ -36,7 +36,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r item-viewer/get-item-route db :my-viewer "my-item")
+  ;  (r get-item-route db :my-viewer "my-item")
   ;  =>
   ;  "/@app-home/my-viewer/my-item"
   ;

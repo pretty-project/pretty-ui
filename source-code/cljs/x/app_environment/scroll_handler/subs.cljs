@@ -21,7 +21,7 @@
 
 (defn scrolled-to-top?
   ; @usage
-  ;  (r environment/scrolled-to-top? db)
+  ;  (r scrolled-to-top? db)
   ;
   ; @return (boolean)
   [db _]

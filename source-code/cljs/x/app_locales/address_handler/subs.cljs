@@ -29,7 +29,7 @@
   ; @param (string) address
   ;
   ; @usage
-  ;  (r locales/address->ordered-address db "537" "US" "Bradford" "537 Paper Street")
+  ;  (r address->ordered-address db "537" "US" "Bradford" "537 Paper Street")
   ;
   ; @return (string)
   [db [_ zip-code country city address]]

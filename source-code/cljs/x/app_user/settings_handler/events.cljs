@@ -25,7 +25,7 @@
   ; @param (*) item-value
   ;
   ; @usage
-  ;  (r user/set-user-settings-item! db :my-settings-item "My value")
+  ;  (r set-user-settings-item! db :my-settings-item "My value")
   ;
   ; @return (map)
   [db [_ item-key item-value]]
@@ -35,7 +35,7 @@
   ; @param (map) user-settings
   ;
   ; @usage
-  ;  (r user/set-user-settings! db {:my-settings-item "My value"})
+  ;  (r set-user-settings! db {:my-settings-item "My value"})
   ;
   ; @return (map)
   [db [_ user-settings]]

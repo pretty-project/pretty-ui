@@ -60,10 +60,10 @@
   ;   :uri (string)}
   ;
   ; @usage
-  ;  [image-loader/component {...}]
+  ;  [component {...}]
   ;
   ; @usage
-  ;  [image-loader/component :my-loader {...}]
+  ;  [component :my-loader {...}]
   ([loader-props]
    [component (random/generate-keyword) loader-props])
 

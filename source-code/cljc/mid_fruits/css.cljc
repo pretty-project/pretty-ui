@@ -24,7 +24,7 @@
   ; @param (list of keyword or keywords in vector)
   ;
   ; @example
-  ;  (css/join-class :my-class [:your-class] :our-class)
+  ;  (join-class :my-class [:your-class] :our-class)
   ;  =>
   ;  [:my-class :your-class :our-class]
   ;
@@ -39,7 +39,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/calc "100% - 100px")
+  ;  (calc "100% - 100px")
   ;  =>
   ;  "calc(100% - 100px)"
   ;
@@ -51,7 +51,7 @@
   ; @param (ms) n
   ;
   ; @example
-  ;  (css/ms 500)
+  ;  (ms 500)
   ;  =>
   ;  "500ms"
   ;
@@ -63,7 +63,7 @@
   ; @param (s) n
   ;
   ; @example
-  ;  (css/s 3)
+  ;  (s 3)
   ;  =>
   ;  "3s"
   ;
@@ -75,7 +75,7 @@
   ; @param (percent) n
   ;
   ; @example
-  ;  (css/percent 100)
+  ;  (percent 100)
   ;  =>
   ;  "100%"
   ;
@@ -87,7 +87,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/px "100")
+  ;  (px "100")
   ;  =>
   ;  "100px"
   ;
@@ -99,7 +99,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/rotate "120")
+  ;  (rotate "120")
   ;  =>
   ;  "rotate(120deg)"
   ;
@@ -111,7 +111,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/rotate-x "120")
+  ;  (rotate-x "120")
   ;  =>
   ;  "rotateX(120deg)"
   ;
@@ -123,7 +123,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/rotate-y "120")
+  ;  (rotate-y "120")
   ;  =>
   ;  "rotateY(120deg)"
   ;
@@ -135,7 +135,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/rotate-z "120")
+  ;  (rotate-z "120")
   ;  =>
   ;  "rotateZ(120deg)"
   ;
@@ -147,7 +147,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/scale "1.1")
+  ;  (scale "1.1")
   ;  =>
   ;  "scale(1.1)"
   ;
@@ -160,12 +160,12 @@
   ; @param (string)(opt) suffix
   ;
   ; @example
-  ;  (css/translate "120" "px")
+  ;  (translate "120" "px")
   ;  =>
   ;  "translate(120px)"
   ;
   ; @example
-  ;  (css/translate "120px")
+  ;  (translate "120px")
   ;  =>
   ;  "translate(120px)"
   ;
@@ -178,12 +178,12 @@
   ; @param (string)(opt) suffix
   ;
   ; @example
-  ;  (css/translate-x "120" "px")
+  ;  (translate-x "120" "px")
   ;  =>
   ;  "translateX(120px)"
   ;
   ; @example
-  ;  (css/translate-x "120px")
+  ;  (translate-x "120px")
   ;  =>
   ;  "translateX(120px)"
   ;
@@ -196,12 +196,12 @@
   ; @param (string)(opt) suffix
   ;
   ; @example
-  ;  (css/translate-y "120" "px")
+  ;  (translate-y "120" "px")
   ;  =>
   ;  "translateY(120px)"
   ;
   ; @example
-  ;  (css/translate-y "120px")
+  ;  (translate-y "120px")
   ;  =>
   ;  "translateY(120px)"
   ;
@@ -214,12 +214,12 @@
   ; @param (string)(opt) suffix
   ;
   ; @example
-  ;  (css/translate-z "120" "px")
+  ;  (translate-z "120" "px")
   ;  =>
   ;  "translateZ(120px)"
   ;
   ; @example
-  ;  (css/translate-z "120px")
+  ;  (translate-z "120px")
   ;  =>
   ;  "translateZ(120px)"
   ;
@@ -231,7 +231,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/url "/my-file.ext")
+  ;  (url "/my-file.ext")
   ;  =>
   ;  "url(/my-file.ext)"
   ;
@@ -245,7 +245,7 @@
   ;  "%", "px", "rem", ...
   ;
   ; @example
-  ;  (css/value 180 "%")
+  ;  (value 180 "%")
   ;  =>
   ;  "180%"
   ;
@@ -257,7 +257,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/var "my-var")
+  ;  (var "my-var")
   ;  =>
   ;  "var( --my-var )"
   ;
@@ -269,7 +269,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/horizontal-padding "12px")
+  ;  (horizontal-padding "12px")
   ;  =>
   ;  "12px 0"
   ;
@@ -281,7 +281,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/vertical-padding "12px")
+  ;  (vertical-padding "12px")
   ;  =>
   ;  "0 12px"
   ;
@@ -293,7 +293,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/horizontal-margin "12px")
+  ;  (horizontal-margin "12px")
   ;  =>
   ;  "12px 0"
   ;
@@ -305,7 +305,7 @@
   ; @param (string) n
   ;
   ; @example
-  ;  (css/vertical-margin "12px")
+  ;  (vertical-margin "12px")
   ;  =>
   ;  "0 12px"
   ;
@@ -318,7 +318,7 @@
   ; @param (list of strings) color-stops
   ;
   ; @example
-  ;  (css/linear-gradient "0deg" "red" "green" "blue")
+  ;  (linear-gradient "0deg" "red" "green" "blue")
   ;  =>
   ;  "linear-gradient(0deg, red, green, blue)"
   ;
@@ -336,7 +336,7 @@
   ; @param (map) n
   ;
   ; @example
-  ;  (css/unparse {:opacity 1 :width "100%"})
+  ;  (unparse {:opacity 1 :width "100%"})
   ;  =>
   ;  "opacity: 1; width: 100%;"
   ;

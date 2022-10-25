@@ -27,7 +27,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (update.helpers/dialog-id :my-plugin :delete "my-item")
+  ;  (dialog-id :my-plugin :delete "my-item")
   ;  =>
   ;  :my-plugin-delete-my-item-dialog
   ;
@@ -48,7 +48,7 @@
   ; @param (strings in vector) item-ids
   ;
   ; @example
-  ;  (update.helpers/dialog-id :my-plugin :delete ["my-item" "your-item"])
+  ;  (dialog-id :my-plugin :delete ["my-item" "your-item"])
   ;  =>
   ;  :my-plugin-delete-["my-item" "your-item"]-dialog
   ;

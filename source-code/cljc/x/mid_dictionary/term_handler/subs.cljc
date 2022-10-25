@@ -25,12 +25,12 @@
   ; @param (keyword)(opt) language
   ;
   ; @example
-  ;  (r dictionary/get-term db :my-term)
+  ;  (r get-term db :my-term)
   ;  =>
   ;  {:en "My term"}
   ;
   ; @example
-  ;  (r dictionary/get-term db :my-term :en)
+  ;  (r get-term db :my-term :en)
   ;  =>
   ;  "My term"
   ;
@@ -44,10 +44,10 @@
   ; @param (keyword)(opt) language
   ;
   ; @usage
-  ;  (r dictionary/term-exists? db :my-term)
+  ;  (r term-exists? db :my-term)
   ;
   ; @usage
-  ;  (r dictionary/term-exists? db :my-term :en)
+  ;  (r term-exists? db :my-term :en)
   ;
   ; @return (boolean)
   [db [_ term-id language]]

@@ -72,10 +72,10 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [elements/file-drop-area {...}]
+  ;  [file-drop-area {...}]
   ;
   ; @usage
-  ;  [elements/file-drop-area :my-file-drop-area {...}]
+  ;  [file-drop-area :my-file-drop-area {...}]
   ([area-props]
    [element (random/generate-keyword) area-props])
 

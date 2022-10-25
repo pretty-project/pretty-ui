@@ -24,7 +24,7 @@
   ; @param (keyword) element-id
   ;
   ; @usage
-  ;  (react/get-reference :my-element)
+  ;  (get-reference :my-element)
   ;
   ; @return (function)
   [element-id]
@@ -34,7 +34,7 @@
   ; @param (keyword) element-id
   ;
   ; @usage
-  ;  [:div {:ref (react/set-reference! :my-element)}]
+  ;  [:div {:ref (set-reference! :my-element)}]
   ;
   ; @return (function)
   [element-id]

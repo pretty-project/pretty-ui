@@ -22,7 +22,7 @@
 
 (defn get-pressed-keys
   ; @usage
-  ;  (r environment/get-pressed-keys? db)
+  ;  (r get-pressed-keys? db)
   ;
   ; @return (integers in vector)
   [db _]
@@ -32,7 +32,7 @@
   ; @param (integer) key-code
   ;
   ; @usage
-  ;  (r environment/key-pressed? db 27)
+  ;  (r key-pressed? db 27)
   ;
   ; @return (boolean)
   [db [_ key-code]]
@@ -40,7 +40,7 @@
 
 (defn type-mode-enabled?
   ; @usage
-  ;  (r environment/type-mode-enabled? db)
+  ;  (r type-mode-enabled? db)
   ;
   ; @return (boolean)
   [db _]

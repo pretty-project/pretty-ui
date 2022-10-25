@@ -77,11 +77,11 @@
   ;   :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [item-viewer/body :my-viewer {...}]
+  ;  [body :my-viewer {...}]
   ;
   ; @usage
   ;  (defn my-item-element [] [:div ...])
-  ;  [item-viewer/body :my-viewer {:item-element #'my-item-element}]
+  ;  [body :my-viewer {:item-element #'my-item-element}]
   [viewer-id body-props]
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]
        (reagent/lifecycles (core.helpers/component-id viewer-id :body)

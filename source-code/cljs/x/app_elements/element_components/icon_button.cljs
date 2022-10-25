@@ -161,13 +161,13 @@
   ;    :placeholder}
   ;
   ; @usage
-  ;  [elements/icon-button {...}]
+  ;  [icon-button {...}]
   ;
   ; @usage
-  ;  [elements/icon-button :my-button {...}]
+  ;  [icon-button :my-button {...}]
   ;
   ; @usage
-  ;  [elements/icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
+  ;  [icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

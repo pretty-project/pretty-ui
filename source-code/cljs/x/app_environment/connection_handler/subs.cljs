@@ -22,7 +22,7 @@
 
 (defn browser-online?
   ; @usage
-  ;  (r environment/browser-online? db)
+  ;  (r browser-online? db)
   ;
   ; @return (boolean)
   [db _]
@@ -31,7 +31,7 @@
 
 (defn browser-offline?
   ; @usage
-  ;  (r environment/browser-offline? db)
+  ;  (r browser-offline? db)
   ;
   ; @return (boolean)
   [db _]

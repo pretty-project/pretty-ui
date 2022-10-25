@@ -251,7 +251,7 @@
   ;   :style (map)(opt)}
   ;
   ; @usage
-  ;  [surface-a/layout :my-surface {...}]
+  ;  [layout :my-surface {...}]
   [surface-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [] ;layout-props (prototypes/layout-props-prototype layout-props)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

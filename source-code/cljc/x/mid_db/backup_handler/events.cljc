@@ -26,7 +26,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/store-backup-item! db [:my-item])
+  ;  (r store-backup-item! db [:my-item])
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -37,7 +37,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/restore-backup-item! db [:my-item])
+  ;  (r restore-backup-item! db [:my-item])
   ;
   ; @return (map)
   [db [_ item-path]]
@@ -47,7 +47,7 @@
   ; @param (vector) item-path
   ;
   ; @usage
-  ;  (r db/remove-backup-item! db [:my-item])
+  ;  (r remove-backup-item! db [:my-item])
   ;
   ; @return (map)
   [db [_ item-path]]

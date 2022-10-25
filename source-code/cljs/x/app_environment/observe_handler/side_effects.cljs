@@ -26,7 +26,7 @@
   ; @param (function) callback-f
   ;
   ; @usage
-  ;  (environment/setup-intersection-observer! "my-element" (fn [intersecting?] ...))
+  ;  (setup-intersection-observer! "my-element" (fn [intersecting?] ...))
   [element-id callback-f]
   (if-let [element (dom/get-element-by-id element-id)]
           (let [observer (dom/setup-intersection-observer! element callback-f)]
@@ -36,7 +36,7 @@
   ; @param (string) element-id
   ;
   ; @usage
-  ;  (environment/remove-intersection-observer! "my-element")
+  ;  (remove-intersection-observer! "my-element")
   ;
   ; @return (undefined)
   [element-id]

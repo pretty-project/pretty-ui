@@ -24,7 +24,7 @@
 
 (defn get-stored-cookies
   ; @usage
-  ;  (r environment/get-stored-cookies db)
+  ;  (r get-stored-cookies db)
   ;
   ; @return (map)
   [db _]
@@ -32,7 +32,7 @@
 
 (defn any-cookies-stored?
   ; @usage
-  ;  (r environment/any-cookies-stored? db)
+  ;  (r any-cookies-stored? db)
   ;
   ; @return (boolean)
   [db _]
@@ -43,7 +43,7 @@
   ; @param (keyword) cookie-id
   ;
   ; @usage
-  ;  (r environment/get-cookie-value db :my-cookie)
+  ;  (r get-cookie-value db :my-cookie)
   ;
   ; @return (*)
   [db [_ cookie-id]]
@@ -51,7 +51,7 @@
 
 (defn cookies-enabled-by-browser?
   ; @usage
-  ;  (r environment/cookies-enabled-by-browser? db)
+  ;  (r cookies-enabled-by-browser? db)
   ;
   ; @return (boolean)
   [db _]
@@ -59,7 +59,7 @@
 
 (defn analytics-cookies-enabled?
   ; @usage
-  ;  (r environment/analytics-cookies-enabled? db)
+  ;  (r analytics-cookies-enabled? db)
   ;
   ; @return (boolean)
   [db _]
@@ -67,7 +67,7 @@
 
 (defn necessary-cookies-enabled?
   ; @usage
-  ;  (r environment/necessary-cookies-enabled? db)
+  ;  (r necessary-cookies-enabled? db)
   ;
   ; @return (boolean)
   [db _]
@@ -75,7 +75,7 @@
 
 (defn user-experience-cookies-enabled?
   ; @usage
-  ;  (r environment/user-experience-cookies-enabled? db)
+  ;  (r user-experience-cookies-enabled? db)
   ;
   ; @return (boolean)
   [db _]

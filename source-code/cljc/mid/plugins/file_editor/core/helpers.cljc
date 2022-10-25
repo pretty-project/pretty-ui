@@ -35,7 +35,7 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (core.helpers/default-content-path :my-editor)
+  ;  (default-content-path :my-editor)
   ;  =>
   ;  [:plugins :plugin-handler/edited-contents :my-editor]
   ;

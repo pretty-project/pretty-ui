@@ -179,7 +179,7 @@
 
 (defn quit-type-mode!
   ; @usage
-  ;  (r environment/quit-type-mode! db)
+  ;  (r quit-type-mode! db)
   ;
   ; @return (map)
   [db _]
@@ -188,7 +188,7 @@
 
 (defn set-type-mode!
   ; @usage
-  ;  (r environment/set-type-mode! db)
+  ;  (r set-type-mode! db)
   ;
   ; @return (map)
   [db _]

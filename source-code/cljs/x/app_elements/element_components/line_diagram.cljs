@@ -150,10 +150,10 @@
   ;    Default: A szakaszok aktuális értékének összege}
   ;
   ; @usage
-  ;  [elements/line-diagram {...}]
+  ;  [line-diagram {...}]
   ;
   ; @usage
-  ;  [elements/line-diagram :my-line-diagram {...}]
+  ;  [line-diagram :my-line-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

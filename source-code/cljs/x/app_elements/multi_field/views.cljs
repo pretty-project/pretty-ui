@@ -75,10 +75,10 @@
   ;    Default: 8}
   ;
   ; @usage
-  ;  [elements/multi-field {...}]
+  ;  [multi-field {...}]
   ;
   ; @usage
-  ;  [elements/multi-field :my-multi-field {...}]
+  ;  [multi-field :my-multi-field {...}]
   ([group-props]
    [element (random/generate-keyword) group-props])
 

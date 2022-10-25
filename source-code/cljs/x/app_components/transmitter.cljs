@@ -108,11 +108,11 @@
   ; @usage
   ;  (defn my-component [component-id dynamic-props])
   ;  (defn my-modifier [component-id dynamic-props] (do-something-with dynamic-props))
-  ;  [components/transmitter {:render-f         #'my-component
-  ;                           :base-props       {...}
-  ;                           :initial-props    {...}
-  ;                           :modifier         my-modifier
-  ;                           :subscribed-props {...}}]
+  ;  [transmitter {:render-f         #'my-component
+  ;                :base-props       {...}
+  ;                :initial-props    {...}
+  ;                :modifier         my-modifier
+  ;                :subscribed-props {...}}]
   ([context-props]
    [component (random/generate-keyword) context-props])
 

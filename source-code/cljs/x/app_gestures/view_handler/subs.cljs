@@ -24,7 +24,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  (r gestures/get-current-view-id db :my-view-handler)
+  ;  (r get-current-view-id db :my-view-handler)
   ;
   ; @return (keyword)
   [db [_ handler-id]]
@@ -35,7 +35,7 @@
   ; @param (keyword) view-id
   ;
   ; @usage
-  ;  (r gestures/view-selected? db :my-view-handler :my-view)
+  ;  (r view-selected? db :my-view-handler :my-view)
   ;
   ; @return (boolean)
   [db [_ handler-id view-id]]

@@ -177,10 +177,10 @@
   ;   :options-path (vector)(opt)}
   ;
   ; @usage
-  ;  [elements/combo-box {...}]
+  ;  [combo-box {...}]
   ;
   ; @usage
-  ;  [elements/combo-box :my-combo-box {...}]
+  ;  [combo-box :my-combo-box {...}]
   ([box-props]
    [element (random/generate-keyword) box-props])
 
