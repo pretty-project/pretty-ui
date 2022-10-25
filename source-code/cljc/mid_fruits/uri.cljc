@@ -165,10 +165,10 @@
   ;
   ; @return (string)
   [uri]
-  (let [protocol (uri->protocol uri)
-        tail     (uri->tail     uri)]
-       (-> uri (string/not-starts-with! (str protocol "://"))
-               (string/not-ends-with!   (str "?" tail)))))
+  (-> uri (string/after-first-occurence  "://"  {:return? true})
+          (string/after-first-occurence  "www." {:return? true})
+          (string/before-first-occurence "?"    {:return? true})
+          (string/before-first-occurence "#"    {:return? true})))
 
 (defn uri->path
   ; @param (string) uri
