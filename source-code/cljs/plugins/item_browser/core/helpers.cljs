@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.core.helpers
-    (:require [mid.plugins.item-browser.core.helpers :as core.helpers]))
+    (:require [mid.engines.item-browser.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.item-browser.core.helpers
+; mid.engines.item-browser.core.helpers
 (def component-id      core.helpers/component-id)
 (def default-item-path core.helpers/default-item-path)

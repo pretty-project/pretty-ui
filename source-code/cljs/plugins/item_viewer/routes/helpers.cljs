@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.routes.helpers
-    (:require [mid.plugins.item-viewer.routes.helpers :as routes.helpers]))
+    (:require [mid.engines.item-viewer.routes.helpers :as routes.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.item-viewer.routes.helpers
+; mid.engines.item-viewer.routes.helpers
 (def route-id routes.helpers/route-id)

@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.file-editor.routes.helpers
-    (:require [mid.plugins.file-editor.routes.helpers :as routes.helpers]))
+    (:require [mid.engines.file-editor.routes.helpers :as routes.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.file-editor.routes.helpers
+; mid.engines.file-editor.routes.helpers
 (def route-id routes.helpers/route-id)

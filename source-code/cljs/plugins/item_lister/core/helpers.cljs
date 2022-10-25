@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.core.helpers
-    (:require [mid.plugins.item-lister.core.helpers :as core.helpers]))
+    (:require [mid.engines.item-lister.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.item-lister.core.helpers
+; mid.engines.item-lister.core.helpers
 (def component-id       core.helpers/component-id)
 (def default-items-path core.helpers/default-items-path)
 

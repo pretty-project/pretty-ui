@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.plugin-handler.core.helpers
-    (:require [mid.plugins.plugin-handler.core.helpers :as core.helpers]))
+    (:require [mid.engines.engine-handler.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.plugins.plugin-handler.core.helpers
+; mid.engines.engine-handler.core.helpers
 (def component-id core.helpers/component-id)
