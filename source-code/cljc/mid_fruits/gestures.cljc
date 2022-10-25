@@ -68,8 +68,8 @@
   ([item-label concurent-labels]
    (letfn [(test-f [n] (not (vector/contains-item? concurent-labels n)))
            (f      [n] (if (ordered-label? n)
-                           (let [copy-dex      (string/after-last-occurence  n "#")
-                                 label-base    (string/before-last-occurence n "#")
+                           (let [copy-dex      (string/after-last-occurence  n "#" {:return? false})
+                                 label-base    (string/before-last-occurence n "#" {:return? true})
                                  next-copy-dex (mixed/update-whole-number copy-dex inc)]
                                 (str label-base "#" next-copy-dex))
                            (str n " #2")))]

@@ -56,7 +56,7 @@
   ; @return (string)
   [country-code]
   (let [country-currencies (country-currencies country-code)]
-       (string/before-first-occurence country-currencies ",")))
+       (string/before-first-occurence country-currencies "," {:return? true})))
 
 (defn country-languages
   ; @param (keyword)

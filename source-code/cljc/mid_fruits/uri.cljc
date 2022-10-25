@@ -33,11 +33,11 @@
   ; @example
   ;  (uri->protocol "my-domain.com/my-path")
   ;  =>
-  ;  ""
+  ;  nil
   ;
   ; @return (string)
   [uri]
-  (string/before-first-occurence uri "://"))
+  (string/before-first-occurence uri "://" {:return? false}))
 
 (defn uri->domain
   ; @param (string) uri
@@ -49,11 +49,8 @@
   ;
   ; @return (string)
   [uri]
-  (let [protocol (uri->protocol uri)]
-       (if (string/nonempty? protocol)
-           (-> uri (string/after-first-occurence  "://")
-                   (string/before-first-occurence "/"))
-           (-> uri (string/before-first-occurence "/")))))
+  (-> uri (string/after-first-occurence  "://" {:return? true})
+          (string/before-first-occurence "/"   {:return? true})))
 
 (defn uri->subdomain
   ; @param (string) uri
@@ -82,7 +79,7 @@
   [uri]
   (let [domain (uri->domain uri)]
        (if (string/nonempty?            domain)
-           (string/after-last-occurence domain "."))))
+           (string/after-last-occurence domain "." {:return? false}))))
 
 (defn uri->tail
   ; @param (string) uri
@@ -95,18 +92,18 @@
   ; @example
   ;  (uri->tail "https://my-domain.com/my-path#my-fragment")
   ;  =>
-  ;  "d"
+  ;  "my-fragment"
   ;
   ; @example
   ;  (uri->tail "https://my-domain.com/my-path")
   ;  =>
-  ;  ""
+  ;  nil
   ;
   ; @return (string)
   [uri]
   (if (string/contains-part?        uri "?")
       (string/after-first-occurence uri "?")
-      (string/after-first-occurence uri "#")))
+      (string/after-first-occurence uri "#" {:return? false})))
 
 (defn uri->parent-uri
   ; @param (string) uri
@@ -128,7 +125,7 @@
   ;
   ; @return (string)
   [uri]
-  (-> uri (string/before-last-occurence "/")
+  (-> uri (string/before-last-occurence "/" {:return? false})
           (string/starts-with!          "/")))
 
 (defn uri->local-uri
@@ -293,7 +290,7 @@
   ;
   ; @return (string)
   [uri]
-  (string/after-first-occurence uri "#"))
+  (string/after-first-occurence uri "#" {:return? false}))
 
 (defn uri->uri-before-fragment
   ; @param (string) uri
@@ -310,9 +307,7 @@
   ;
   ; @return (string)
   [uri]
-  (if (string/contains-part?         uri "#")
-      (string/before-first-occurence uri "#")
-      (return                        uri)))
+  (string/before-first-occurence uri "#" {:return true}))
 
 (defn uri->query-string
   ; @param (string) uri
@@ -331,7 +326,7 @@
   [uri]
   (let [uri-before-fragment (uri->uri-before-fragment uri)]
        (if (string/contains-part?        uri-before-fragment "?")
-           (string/after-first-occurence uri-before-fragment "?"))))
+           (string/after-first-occurence uri-before-fragment "?" {:return? false}))))
 
 (defn uri->query-params
   ; @param (string) uri

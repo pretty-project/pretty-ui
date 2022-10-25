@@ -71,7 +71,7 @@
   ;
   ; @return (string)
   [cookie-name]
-  (string/before-first-occurence cookie-name "-"))
+  (string/before-first-occurence cookie-name "-" {:return? false}))
 
 (defn cookie-name->analytics-cookie?
   ; WARNING! NON-PUBLIC! DO NOT USE!

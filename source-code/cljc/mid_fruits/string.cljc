@@ -350,53 +350,6 @@
            (str (subs n 0 dex) x (subs n dex)))
       (return n)))
 
-(defn before-first-occurence
-  ; @param (string) n
-  ; @param (string) x
-  ;
-  ; @example
-  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
-  ;                          ", y")
-  ;  =>
-  ;  "With insomnia"
-  ;
-  ; @example
-  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
-  ;                          "abc")
-  ;  =>
-  ;  nil
-  ;
-  ; @return (string)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x)
-             (string/includes? n x))
-        (subs n 0 (dec (+ (string/index-of n x)
-                          (count x))))))
-
-(defn before-last-occurence
-  ; @param (string) n
-  ; @param (string) x
-  ;
-  ; @example
-  ;  (before-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
-  ;                         ", y")
-  ;  =>
-  ;  "With insomnia"
-  ;
-  ; @example
-  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
-  ;                         "abc")
-  ;  =>
-  ;  nil
-  ;
-  ; @return (string)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x)
-             (string/includes? n x))
-        (subs n 0 (string/last-index-of n x))))
-
 (defn first-dex-of
   ; @param (string) n
   ; @param (string) x
@@ -441,9 +394,85 @@
                                   (inc lap)))))]
                (f 0 1))))
 
+(defn before-first-occurence
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (map) options
+  ;  {:return? (boolean)(opt)
+  ;    Default: false}
+  ;
+  ; @example
+  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                          ", y")
+  ;  =>
+  ;  "With insomnia"
+  ;
+  ; @example
+  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                          "abc")
+  ;  =>
+  ;  nil
+  ;
+  ; @example
+  ;  (before-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                          "abc" {:return? true})
+  ;  =>
+  ;  "With insomnia, you're never really awake; but you're never really asleep."
+  ;
+  ; @return (string)
+  ([n x]
+   (before-first-occurence n x {:return? false}))
+
+  ([n x {:keys [return?]}]
+   (if (and (nonempty? n)
+            (nonempty? x)
+            (string/includes? n x))
+       (subs n 0 (dec (+ (string/index-of n x)
+                         (count x))))
+       (if return? n))))
+
+(defn before-last-occurence
+  ; @param (string) n
+  ; @param (string) x
+  ; @param (map) options
+  ;  {:return? (boolean)(opt)
+  ;    Default: false}
+  ;
+  ; @example
+  ;  (before-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                         ", y")
+  ;  =>
+  ;  "With insomnia"
+  ;
+  ; @example
+  ;  (before-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                         "abc")
+  ;  =>
+  ;  nil
+  ;
+  ; @example
+  ;  (before-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                         "abc" {:return? true})
+  ;  =>
+  ;  "With insomnia, you're never really awake; but you're never really asleep."
+  ;
+  ; @return (string)
+  ([n x]
+   (before-last-occurence n x {:return? false}))
+
+  ([n x {:keys [return?]}]
+   (if (and (nonempty? n)
+            (nonempty? x)
+            (string/includes? n x))
+       (subs n 0 (string/last-index-of n x))
+       (if return? n))))
+
 (defn after-first-occurence
   ; @param (string) n
   ; @param (string) x
+  ; @param (map) options
+  ;  {:return? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  (after-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
@@ -457,17 +486,30 @@
   ;  =>
   ;  nil
   ;
+  ; @example
+  ;  (after-first-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                         "abc" {:return? true})
+  ;  =>
+  ;  "With insomnia, you're never really awake; but you're never really asleep."
+  ;
   ; @return (string)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x)
-             (string/includes? n x))
-        (subs n (+ (string/index-of n x)
-                   (count x)))))
+  ([n x]
+   (after-first-occurence n x {:return? false}))
+
+  ([n x {:keys [return?]}]
+   (if (and (nonempty? n)
+            (nonempty? x)
+            (string/includes? n x))
+       (subs n (+ (string/index-of n x)
+                  (count x)))
+       (if return? n))))
 
 (defn after-last-occurence
   ; @param (string) n
   ; @param (string) x
+  ; @param (map) options
+  ;  {:return? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  (after-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
@@ -481,13 +523,23 @@
   ;  =>
   ;  nil
   ;
+  ; @example
+  ;  (after-last-occurence "With insomnia, you're never really awake; but you're never really asleep."
+  ;                        "abc" {:return? true})
+  ;  =>
+  ;  "With insomnia, you're never really awake; but you're never really asleep."
+  ;
   ; @return (string)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x)
-             (string/includes? n x))
-        (subs n (+ (string/last-index-of n x)
-                   (count x)))))
+  ([n x]
+   (after-last-occurence n x {:return? false}))
+
+  ([n x {:keys [return?]}]
+   (if (and (nonempty? n)
+            (nonempty? x)
+            (string/includes? n x))
+       (subs n (+ (string/last-index-of n x)
+                  (count x)))
+       (if return? n))))
 
 (defn remove-first-occurence
   ; @param (string) n
@@ -518,6 +570,9 @@
   ; @param (string) n
   ; @param (string) x
   ; @param (string) y
+  ; @param (map) options
+  ;  {:return? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  (between-occurences "Hey You!" "H" "u")
@@ -988,15 +1043,35 @@
   ; @param (integer) limit
   ; @param (map)(opt) options
   ;  {:reverse? (boolean)(opt)
-  ;    Default: false
-  ;    TODO: az utolsó x sort tartja meg }
+  ;    Default: false}
+  ;
+  ; @example
+  ;  (max-lines "abc\ndef\nghi" 2)
+  ;  =>
+  ;  "abc\ndef"
+  ;
+  ; @example
+  ;  (max-lines "abc\ndef\nghi" 2 {:reverse? true})
+  ;  =>
+  ;  "def\nghi"
   ;
   ; @return (string)
   ([n limit]
-   n)
+   (max-lines n limit {:reverse? false}))
 
   ([n limit {:keys [reverse?]}]
-   n))
+   (if (nonempty? n)
+       (let [lines (split n #"\n")
+             count (count lines)
+             limit (min   limit count)
+             lines (if reverse? (subvec lines (- count limit) count)
+                                (subvec lines 0 limit))]
+            (letfn [(f [result dex]
+                       (if (= dex limit)
+                           (return result)
+                           (f (str result (if (not= dex 0) "\n") (nth lines dex))
+                              (inc dex))))]
+                   (f "" 0))))))
 
 (defn paren
   ; @param (string) n
