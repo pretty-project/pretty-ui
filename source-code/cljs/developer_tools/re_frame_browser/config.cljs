@@ -20,8 +20,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def SYSTEM-KEYS [:core :developer-tools :dictionary :elements :environment :gestures :locales :plugins
-                  :router :sync :tools :user :ui :views
+(def SYSTEM-KEYS [:core :developer-tools :dictionary :elements :engines :environment
+                  :gestures :locales :plugins :router :sync :tools :user :ui :views
 
                   ; TEMP
                   :components/primary :core/build-handler :elements/primary :environment/keypress-events

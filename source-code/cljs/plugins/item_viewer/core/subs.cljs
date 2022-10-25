@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.core.subs
     (:require [plugins.item-viewer.download.subs :as download.subs]
-              [plugins.plugin-handler.core.subs  :as core.subs]
+              [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.subs
+; plugins.engine-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
 (def plugin-synchronizing?        core.subs/plugin-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
@@ -72,7 +72,7 @@
   ; @return (boolean)
   [db [_ viewer-id item-id]]
   ; A viewing-item? függvény visszatérési értéke akkor TRUE, ...
-  ; ... ha az item-viewer plugin body komponense a React-fába van csatolva.
+  ; ... ha az item-viewer engine body komponense a React-fába van csatolva.
   ; ... ha az item-id paraméterként átadott azonosítójú elem van megnyitva szerkesztésre.
   (r core.subs/current-item? db viewer-id item-id))
 

@@ -28,6 +28,6 @@
   ; @param (string) item-id
   [editor-id item-id]
   (let [undo-event [:item-editor/undo-discard-changes! editor-id item-id]]
-       [ui/state-changed-bubble-body :plugins.item-editor/changes-discarded-dialog
+       [ui/state-changed-bubble-body :engines.item-editor/changes-discarded-dialog
                                      {:label          :unsaved-changes-discarded
                                       :primary-button {:label :restore! :on-click undo-event}}]))

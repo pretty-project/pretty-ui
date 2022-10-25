@@ -23,7 +23,7 @@
               [plugins.item-lister.items.subs         :as items.subs]
               [plugins.item-lister.selection.subs     :as selection.subs]
               [plugins.item-lister.selection.events   :as selection.events]
-              [plugins.plugin-handler.download.events :as download.events]
+              [plugins.engine-handler.download.events :as download.events]
               [re-frame.api                           :as r :refer [r]]))
 
 
@@ -31,7 +31,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.download.events
+; plugins.engine-handler.download.events
 (def data-received download.events/data-received)
 
 
@@ -48,7 +48,7 @@
   ; @return (map)
   [db [_ lister-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-editor plugin is névtér nélkül
+  ; A többi pluginnal megegyezően az item-editor engine is névtér nélkül
   ; tárolja a letöltött dokumentumokat.
   (let [resolver-answer (r download.subs/get-resolver-answer db lister-id :get-items server-response)
         items-path      (r body.subs/get-body-prop           db lister-id :items-path)
@@ -76,8 +76,8 @@
         all-item-count      (:all-item-count resolver-answer)
         received-items      (:items          resolver-answer)
         received-item-count (count received-items)]
-      (-> db (assoc-in [:plugins :plugin-handler/meta-items lister-id :all-item-count]      all-item-count)
-             (assoc-in [:plugins :plugin-handler/meta-items lister-id :received-item-count] received-item-count))))
+      (-> db (assoc-in [:engines :engine-handler/meta-items lister-id :all-item-count]      all-item-count)
+             (assoc-in [:engines :engine-handler/meta-items lister-id :received-item-count] received-item-count))))
 
 (defn receive-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,9 +94,9 @@
              ; TEMP#4681
              ; A {:first-data-received? true} állapotot szükséges megkülönböztetni
              ; a {:data-received? true} állapottól, mert bizonyos esetekben, amikor
-             ; a listaelemek törlődnek (pl. kereséskor), a plugin kilép
+             ; a listaelemek törlődnek (pl. kereséskor), az engine kilép
              ; a {:data-received? true} állapotból.
-             (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))
+             (assoc-in % [:engines :engine-handler/meta-items lister-id :first-data-received?] true)))
 
 (defn store-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,13 +129,13 @@
   ; A kijelölt elemeken végzett műveletek sikeres befejezése után a listaelemek újratöltődnek.
   ;
   ; Az újra letöltött elemek fogadásakor is szükséges {:data-received? true} állapotba léptetni
-  ; a plugint az data-received függvény alkalmazásával!
+  ; a engine-t az data-received függvény alkalmazásával!
   ; Pl.: Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
-  ;      és a folyamat közben elhagyja a plugint, majd ismét megnyitja azt, akkor az újból megnyitott
-  ;      plugin nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
+  ;      és a folyamat közben elhagyja a engine-t, majd ismét megnyitja azt, akkor az újból megnyitott
+  ;      engine nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
   ;      indított elemek újratöltése még folyamatban van.
-  ;      A plugin nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
-  ;      előfordulhat, hogy a megnyitás után a plugin nem az [:item-lister/request-items! ...]
+  ;      Az engine nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
+  ;      előfordulhat, hogy a megnyitás után az engine nem az [:item-lister/request-items! ...]
   ;      esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
   ;      követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
   ;      lekérés tölti le megnyitás után az első elemeket.
@@ -147,4 +147,4 @@
              (r data-received                  % lister-id)
 
              ; TEMP#4681
-             (assoc-in % [:plugins :plugin-handler/meta-items lister-id :first-data-received?] true)))
+             (assoc-in % [:engines :engine-handler/meta-items lister-id :first-data-received?] true)))

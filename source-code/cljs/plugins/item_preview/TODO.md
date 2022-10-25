@@ -6,5 +6,5 @@
 
 # 00001
   A project-kit jelenleg is működő picker-eiben megváltozott az elemek
-  letöltésének és újratöltésének logikája. Az item-picker plugint majd
+  letöltésének és újratöltésének logikája. Az item-picker engine-t majd
   aktualizálni kell!

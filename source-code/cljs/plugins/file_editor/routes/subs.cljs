@@ -14,7 +14,7 @@
 
 (ns plugins.file-editor.routes.subs
     (:require [plugins.file-editor.transfer.subs  :as transfer.subs]
-              [plugins.plugin-handler.routes.subs :as routes.subs]
+              [plugins.engine-handler.routes.subs :as routes.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -22,5 +22,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.routes.subs
+; plugins.engine-handler.routes.subs
 (def route-handled? routes.subs/route-handled?)

@@ -90,10 +90,10 @@
   ; @return (map)
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
-  ; Az item-browser plugin az item-editor pluginhoz hasonlóan duplikáláskor az elem azonosítója
-  ; helyett az elemet küldi el a szerver számára, hogy a két plugin mutation függvényei hasonló
+  ; Az item-browser engine az item-editor pluginhoz hasonlóan duplikáláskor az elem azonosítója
+  ; helyett az elemet küldi el a szerver számára, hogy a két engine mutation függvényei hasonló
   ; paraméterezéssel működjenek.
-  ; (az item-browser plugin működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
+  ; (az item-browser engine működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
        (r core.subs/use-query-params db browser-id {:item exported-item})))
 

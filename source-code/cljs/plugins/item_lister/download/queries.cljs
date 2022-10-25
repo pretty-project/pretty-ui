@@ -57,7 +57,7 @@
         resolver-props (r get-request-items-resolver-props db lister-id)
         query          [`(~resolver-id ~resolver-props)]]
        ; XXX#9981
-       ; Az item-lister plugin body komponense számára {:query [...]} tulajdonságként
+       ; Az item-lister engine body komponense számára {:query [...]} tulajdonságként
        ; átadott Pathom lekérés vektort csak abban az esetben fűzi össze az elemek
        ; letöltéséhez készített lekérés vektorral, ha még nem töltődött le egyetlen
        ; elem sem, tehát a {:query [...]} tulajdonság csak az elemek első letöltésekor

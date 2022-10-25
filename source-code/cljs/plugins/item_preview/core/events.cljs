@@ -15,7 +15,7 @@
 (ns plugins.item-preview.core.events
     (:require [mid-fruits.map                     :refer [dissoc-in]]
               [plugins.item-preview.body.subs     :as body.subs]
-              [plugins.plugin-handler.core.events :as core.events]
+              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.events
+; plugins.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
@@ -57,7 +57,7 @@
   ; @return (map)
   [db [_ preview-id]]
   (let [item-path (r body.subs/get-body-prop db preview-id :item-path)]
-       (-> db (dissoc-in [:plugins :plugin-handler/meta-items preview-id :data-received?])
+       (-> db (dissoc-in [:engines :engine-handler/meta-items preview-id :data-received?])
               (dissoc-in item-path))))
 
 
@@ -86,7 +86,7 @@
   ;     current-item-id értéket, különben az update-item-id! függvény nem
   ;     használná a body komponens item-id paraméterét a current-item-id
   ;     új értékeként!
-  ; ... szükséges kiléptetni a plugint az esetlegesen beállított {:error-mode? true}
+  ; ... szükséges kiléptetni a engine-t az esetlegesen beállított {:error-mode? true}
   ;     állapotból!
   (as-> db % (r remove-meta-items! % preview-id)
              (r update-item-id!    % preview-id)

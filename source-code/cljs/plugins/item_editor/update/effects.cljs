@@ -53,13 +53,13 @@
       ; Ha az "Elem mentése" művelet sikeres befejeződésekor ...
       ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
       ; A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
-      ;        szerkesztésre VAGY új elem mentése történt és a plugin útvonal-vezérelt, ...
+      ;        szerkesztésre VAGY új elem mentése történt és az engine útvonal-vezérelt, ...
       ;        ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
       ;            útvonalra.
       ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
       ;            15%-ig szimulált folyamat.
       ;
-      ; B) a body komponens már nincs a React-fába csatolva és a plugin útvonal-vezérelt, ...
+      ; B) a body komponens már nincs a React-fába csatolva és az engine útvonal-vezérelt, ...
       ;        ... megjelenít egy értesítést.
       ;
       ; C) ... az A) kimenetel feltételei nem teljesülnek ...
@@ -119,7 +119,7 @@
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
       ; Az [:item-editor/render-changes-discarded-dialog! ...] esemény paraméterként kapja az item-editor
-      ; plugin elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
+      ; engine elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
       ; már nem elérhető a Re-Frame adatbázisban.
       [:ui/render-bubble! ::changes-discarded-dialog
                           {:body             [update.views/changes-discarded-dialog-body editor-id item-id]

@@ -13,9 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.effects
-    (:require
-              [re-frame.api                       :as r :refer [r]]
-              [x.app-db.api                       :as db]
+    (:require [re-frame.api                       :as r :refer [r]]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.events  :as route-handler.events]
               [x.app-router.route-handler.subs    :as route-handler.subs]

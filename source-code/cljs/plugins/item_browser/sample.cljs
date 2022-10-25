@@ -21,15 +21,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-browser plugin dokumentációjából hiányzó részeket az item-lister
-; plugin dokumentációjában keresd!
+; Az item-browser engine dokumentációjából hiányzó részeket az item-lister
+; engine dokumentációjában keresd!
 
 
 
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; Az engine beállításához mindenképpen szükséges a szerver-oldali
 ; [:item-browser/init-browser! ...] eseményt beállításához!
 
 

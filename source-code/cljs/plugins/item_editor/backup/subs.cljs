@@ -19,7 +19,7 @@
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.download.subs  :as download.subs]
-              [plugins.plugin-handler.backup.subs :as backup.subs]
+              [plugins.engine-handler.backup.subs :as backup.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.backup.subs
+; plugins.engine-handler.backup.subs
 (def get-backup-item    backup.subs/get-backup-item)
 (def export-backup-item backup.subs/export-backup-item)
 
@@ -44,7 +44,7 @@
   ;
   ; @return (map)
   [db [_ editor-id item-id]]
-  (get-in db [:plugins :plugin-handler/item-changes editor-id item-id]))
+  (get-in db [:engines :engine-handler/item-changes editor-id item-id]))
 
 
 

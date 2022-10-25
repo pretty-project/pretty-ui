@@ -32,7 +32,7 @@
   ; @return (map)
   [db [_ browser-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-browser plugin is névtér nélkül
+  ; A többi pluginnal megegyezően az item-browser engine is névtér nélkül
   ; tárolja a letöltött dokumentumot.
   (let [received-item (r download.subs/get-resolver-answer db browser-id :get-item server-response)
         item-path     (r body.subs/get-body-prop           db browser-id :item-path)]

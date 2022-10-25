@@ -23,7 +23,7 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; Az engine beállításához mindenképpen szükséges a szerver-oldali
 ; [:item-lister/init-lister! ...] eseményt használni!
 
 
@@ -74,7 +74,7 @@
 
 
 
-;; -- A plugin használata alapbeállításokkal ----------------------------------
+;; -- Az engine használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn my-list-element
@@ -106,7 +106,7 @@
 ;; -- Pathom lekérés használata az elemek első letöltésekor -------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-lister plugin body komponensének {:query [...]} tulajdonságaként
+; Az item-lister engine body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elemek első letöltődésekor küldött lekéréssel
 ; összefűzve elküldésre kerül.
 (defn my-query

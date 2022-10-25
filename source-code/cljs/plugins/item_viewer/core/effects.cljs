@@ -32,10 +32,10 @@
   (fn [{:keys [db]} [_ viewer-id item-id]]
       ; XXX#5575
       ;
-      ; A) Ha az item-viewer plugin útvonal-vezérelt, ...
+      ; A) Ha az item-viewer engine útvonal-vezérelt, ...
       ;    ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
       ;
-      ; B) Ha az item-viewer plugin NEM útvonal-vezérelt és a body komponens a React-fába
+      ; B) Ha az item-viewer engine NEM útvonal-vezérelt és a body komponens a React-fába
       ;    van csatolva, ...
       ;    ... akkor beállítja az item-id paraméter értékét az aktuálisan megtekintett
       ;        elem azonosítójaként.

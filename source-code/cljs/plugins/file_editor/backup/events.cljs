@@ -31,7 +31,7 @@
   ; @return (map)
   [db [_ editor-id]]
   (let [current-content (r core.subs/get-current-content db editor-id)]
-       (assoc-in db [:plugins :plugin-handler/backup-items editor-id] current-content)))
+       (assoc-in db [:engines :engine-handler/backup-items editor-id] current-content)))
 
 
 

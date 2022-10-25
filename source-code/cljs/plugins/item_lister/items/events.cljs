@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.items.events
-    (:require [plugins.plugin-handler.items.events :as items.events]
+    (:require [plugins.engine-handler.items.events :as items.events]
               [re-frame.api                        :refer [r]]))
 
 

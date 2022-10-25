@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.body.subs
-    (:require [plugins.plugin-handler.body.subs :as body.subs]
+    (:require [plugins.engine-handler.body.subs :as body.subs]
               [re-frame.api                     :as r]))
 
 
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.body.subs
+; plugins.engine-handler.body.subs
 (def get-body-prop   body.subs/get-body-prop)
 (def body-did-mount? body.subs/body-did-mount?)
 

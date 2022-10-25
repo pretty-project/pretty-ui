@@ -27,7 +27,7 @@
   ; @param (string) item-id
   [browser-id item-id]
   (let [undo-event [:item-browser/undo-delete-item! browser-id item-id]]
-       [ui/state-changed-bubble-body :plugins.item-browser/item-deleted-dialog
+       [ui/state-changed-bubble-body :engines.item-browser/item-deleted-dialog
                                      {:label          :item-deleted
                                       :primary-button {:label :recover! :on-click undo-event}}]))
 
@@ -43,5 +43,5 @@
   ; @param (string) copy-id
   [browser-id _]
   ; XXX#7002
-  [ui/state-changed-bubble-body :plugins.item-browser/item-duplicated-dialog
+  [ui/state-changed-bubble-body :engines.item-browser/item-duplicated-dialog
                                 {:label :item-duplicated}])

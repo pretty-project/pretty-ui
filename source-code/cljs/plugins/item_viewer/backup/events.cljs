@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.backup.events
-    (:require [plugins.plugin-handler.backup.events :as backup.events]))
+    (:require [plugins.engine-handler.backup.events :as backup.events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.backup.events
+; plugins.engine-handler.backup.events
 (def backup-current-item! backup.events/backup-current-item!)

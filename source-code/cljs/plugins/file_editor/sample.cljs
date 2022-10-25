@@ -21,12 +21,12 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; Az engine beállításához mindenképpen szükséges a szerver-oldali
 ; [:file-editor/init-editor! ...] eseményt használni!
 
 
 
-;; -- A plugin használata alapbeállításokkal ----------------------------------
+;; -- Az engine használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn my-editor
@@ -45,7 +45,7 @@
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 
-; A file-editor plugin body komponensének {:query [...]} tulajdonságaként
+; A file-editor engine body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
 ; összefűzve elküldésre kerül.
 (defn my-query

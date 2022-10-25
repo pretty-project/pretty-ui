@@ -14,7 +14,7 @@
 
 (ns plugins.item-browser.items.events
     (:require [plugins.item-browser.items.subs     :as items.subs]
-              [plugins.plugin-handler.items.events :as items.events]
+              [plugins.engine-handler.items.events :as items.events]
               [re-frame.api                        :refer [r]]))
 
 

@@ -14,7 +14,7 @@
 
 (ns plugins.item-preview.core.subs
     (:require [plugins.item-preview.body.subs   :as body.subs]
-              [plugins.plugin-handler.core.subs :as core.subs]
+              [plugins.engine-handler.core.subs :as core.subs]
               [re-frame.api                     :as r :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.subs
+; plugins.engine-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
 (def get-current-item-id   core.subs/get-current-item-id)
@@ -44,7 +44,7 @@
   ; @return (boolean)
   [db [_ preview-id]]
   ; XXX#5476
-  ; Ha az item-preview plugin több példányban jelenik meg, akkor szükséges
+  ; Ha az item-preview engine több példányban jelenik meg, akkor szükséges
   ; a különböző példányok lekéréseinek azonosítóit megkülönböztetni egymástól!
   ; Amíg a core.subs/get-request-id függvény a lekérés azonosítójának névtereként
   ; a handler-key kulcsot használja (ami az eltérő azonosítójú példányoknál is megegyezhet!),
@@ -75,8 +75,8 @@
   [db [_ preview-id]]
   ; XXX#5051
   ; Ha a body komponens valamelyik paramétere megváltozik, akkor a komponens
-  ; component-did-update életciklusa megtörténik, ami a plugin újratöltését kezdeményezi.
-  ; Csak abban az esetben szükséges újratölteni a plugint, ha a body komponens item-id
+  ; component-did-update életciklusa megtörténik, ami az engine újratöltését kezdeményezi.
+  ; Csak abban az esetben szükséges újratölteni a engine-t, ha a body komponens item-id
   ; tulajdonságának értéke megváltozik!
   (let [item-id         (r body.subs/get-body-prop db preview-id :item-id)
         current-item-id (r get-current-item-id     db preview-id)]

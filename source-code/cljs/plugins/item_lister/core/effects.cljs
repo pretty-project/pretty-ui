@@ -94,4 +94,4 @@
                                         :initial-options order-by-options
                                         :on-select       [:item-lister/order-items! lister-id]
                                         :options-label   :order-by
-                                        :value-path      [:plugins :plugin-handler/meta-items lister-id :order-by]}]))
+                                        :value-path      [:engines :engine-handler/meta-items lister-id :order-by]}]))

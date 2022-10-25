@@ -16,7 +16,7 @@
     (:require [mid-fruits.vector                    :as vector]
               [plugins.item-lister.body.subs        :as body.subs]
               [plugins.item-lister.core.subs        :as core.subs]
-              [plugins.plugin-handler.backup.events :as backup.events]
+              [plugins.engine-handler.backup.events :as backup.events]
               [re-frame.api                         :as r :refer [r]]))
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.backup.events
+; plugins.engine-handler.backup.events
 (def clean-backup-items! backup.events/clean-backup-items!)
 
 
@@ -49,7 +49,7 @@
        (letfn [(f [db item-dex]
                   (let [item-id (get-in db (vector/concat-items items-path [item-dex :id]))
                         item    (get-in db (vector/conj-item    items-path item-dex))]
-                       (assoc-in db [:plugins :plugin-handler/backup-items lister-id item-id] item)))]
+                       (assoc-in db [:engines :engine-handler/backup-items lister-id item-id] item)))]
               (reduce f db selected-items))))
 
 

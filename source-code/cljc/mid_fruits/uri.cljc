@@ -307,7 +307,7 @@
   ;
   ; @return (string)
   [uri]
-  (string/before-first-occurence uri "#" {:return true}))
+  (string/before-first-occurence uri "#" {:return? true}))
 
 (defn uri->query-string
   ; @param (string) uri

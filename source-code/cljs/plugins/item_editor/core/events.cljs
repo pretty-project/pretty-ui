@@ -18,7 +18,7 @@
               [plugins.item-editor.backup.events  :as backup.events]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
-              [plugins.plugin-handler.core.events :as core.events]
+              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.events
+; plugins.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
@@ -72,12 +72,12 @@
   [db [_ editor-id]]
   ; A body komponens component-will-unmount életciklusa által alkalmazott
   ; reset-downloads! függvény nem törli ki az elemről készült backup-item másolatot,
-  ; hogy a plugin elhagyása utáni esetleges "El nem mentett változtatások visszaállítása"
+  ; hogy az engine elhagyása utáni esetleges "El nem mentett változtatások visszaállítása"
   ; funkció használatakor a {:recovery-mode? true} állapotban újra elinduló plugin
   ; számára elérhetők legyenek a visszaállításhoz szükséges adatok.
   (let [item-path        (r body.subs/get-body-prop db editor-id :item-path)
         suggestions-path (r body.subs/get-body-prop db editor-id :suggestions-path)]
-       (-> db (dissoc-in [:plugins :plugin-handler/meta-items editor-id :data-received?])
+       (-> db (dissoc-in [:engines :engine-handler/meta-items editor-id :data-received?])
               (dissoc-in item-path)
               (dissoc-in suggestions-path))))
 

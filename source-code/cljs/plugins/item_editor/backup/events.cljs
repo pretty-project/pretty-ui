@@ -18,7 +18,7 @@
               [plugins.item-editor.backup.subs      :as backup.subs]
               [plugins.item-editor.body.subs        :as body.subs]
               [plugins.item-editor.core.subs        :as core.subs]
-              [plugins.plugin-handler.backup.events :as backup.events]
+              [plugins.engine-handler.backup.events :as backup.events]
               [re-frame.api                         :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.backup.events
+; plugins.engine-handler.backup.events
 (def backup-current-item! backup.events/backup-current-item!)
 
 
@@ -37,10 +37,10 @@
 (defn store-current-item-changes!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) plugin-id
+  ; @param (keyword) engine-id
   ;
   ; @return (map)
-  [db [_ plugin-id]]
+  [db [_ engine-id]]
   ; A store-current-item-changes! eltárolja az elem aktuális állapota és az elemről utoljára
   ; készült másolat közötti különbséget.
   ; Pl.: Ha az el nem mentett változtatásokat tartalmazó szerkesztő elhagyásakor megjelenő
@@ -50,11 +50,11 @@
   ;      állapotára is visszaállítható legyen.
   ;      Ehhez szükséges az elemről a letöltéskor készült másolatot megőrizni és kilépéskor
   ;      eltárolni a másolat és az aktuális állapot közötti különbséget.
-  (let [current-item-id (r core.subs/get-current-item-id db plugin-id)
-        current-item    (r core.subs/get-current-item    db plugin-id)
-        backup-item     (r backup.subs/get-backup-item   db plugin-id current-item-id)
+  (let [current-item-id (r core.subs/get-current-item-id db engine-id)
+        current-item    (r core.subs/get-current-item    db engine-id)
+        backup-item     (r backup.subs/get-backup-item   db engine-id current-item-id)
         item-changes    (map/difference current-item backup-item)]
-       (assoc-in db [:plugins :plugin-handler/item-changes plugin-id current-item-id] item-changes)))
+       (assoc-in db [:engines :engine-handler/item-changes engine-id current-item-id] item-changes)))
 
 
 
@@ -71,7 +71,7 @@
   [db [_ editor-id item-id]]
   ; Ha a clean-recovery-data! függvény alkalmazásakor ismételten ugyanaz az elem van megnyitva
   ; szerkesztésre, akkor a clean-recovery-data! függvény nem végez műveletet.
-  ; Pl.: A felhasználó a :plugins.item-editor/changes-discarded-dialog értesítésen
+  ; Pl.: A felhasználó a :engines.item-editor/changes-discarded-dialog értesítésen
   ;      a "Visszaállítás" lehetőséget választja és a szerkesztő {:recovery-mode? true}
   ;      beállítással megnyitja ugyanazt az elemet szerkesztésre, mielőtt
   ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
@@ -79,8 +79,8 @@
   ;      az [:item-editor/clean-recovery-data! ...] esemény megtörténne.
   (if-let [editing-item? (r core.subs/editing-item? db editor-id item-id)]
           (return db)
-          (-> db (dissoc-in [:plugins :plugin-handler/backup-items editor-id item-id])
-                 (dissoc-in [:plugins :plugin-handler/item-changes editor-id item-id]))))
+          (-> db (dissoc-in [:engines :engine-handler/backup-items editor-id item-id])
+                 (dissoc-in [:engines :engine-handler/item-changes editor-id item-id]))))
 
 (defn recover-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

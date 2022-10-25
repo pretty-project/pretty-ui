@@ -44,6 +44,6 @@
         resolver-props (r get-request-item-resolver-props db browser-id)]
        ; XXX#9981
        ; A download.subs/use-query-prop függvényt az item-browser komponensben
-       ; nem szükséges alkalmazni, mivel a plugin alapját adó item-lister plugin
+       ; nem szükséges alkalmazni, mivel az engine alapját adó item-lister plugin
        ; az elemek első letöltésekor alkalmazza a függvényt.
        [`(~resolver-id ~resolver-props)]))

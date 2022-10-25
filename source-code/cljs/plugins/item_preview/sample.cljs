@@ -22,12 +22,12 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; Az engine beállításához mindenképpen szükséges a szerver-oldali
 ; [:item-preview/init-preview! ...] eseményt használni!
 
 
 
-;; -- A plugin használata alapbeállításokkal ----------------------------------
+;; -- Az engine használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn my-preview
@@ -40,7 +40,7 @@
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-preview plugin body komponensének {:query [...]} tulajdonságaként
+; Az item-preview engine body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
 ; összefűzve elküldésre kerül.
 (defn my-query

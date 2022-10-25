@@ -19,7 +19,7 @@
               [plugins.item-editor.core.events        :as core.events]
               [plugins.item-editor.core.subs          :as core.subs]
               [plugins.item-editor.download.subs      :as download.subs]
-              [plugins.plugin-handler.download.events :as download.events]
+              [plugins.engine-handler.download.events :as download.events]
               [re-frame.api                           :refer [r]]))
 
 
@@ -27,7 +27,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.download.events
+; plugins.engine-handler.download.events
 (def data-received download.events/data-received)
 
 
@@ -67,7 +67,7 @@
   ; @return (map)
   [db [_ editor-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-editor plugin is névtér nélkül
+  ; A többi pluginnal megegyezően az item-editor engine is névtér nélkül
   ; tárolja a letöltött dokumentumot.
   ;
   ; XXX#3400

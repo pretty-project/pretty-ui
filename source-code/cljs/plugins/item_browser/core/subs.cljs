@@ -17,7 +17,7 @@
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
-              [plugins.plugin-handler.core.subs   :as core.subs]
+              [plugins.engine-handler.core.subs   :as core.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -32,7 +32,7 @@
 (def export-downloaded-items plugins.item-lister.core.subs/export-downloaded-items)
 (def get-current-order-by    plugins.item-lister.core.subs/get-current-order-by)
 
-; plugins.plugin-handler.core.subs
+; plugins.engine-handler.core.subs
 (def get-meta-item          core.subs/get-meta-item)
 (def plugin-synchronizing?  core.subs/plugin-synchronizing?)
 (def get-current-item-id    core.subs/get-current-item-id)
@@ -69,7 +69,7 @@
   ; @return (boolean)
   [db [_ browser-id item-id]]
   ; A browsing-item? függvény visszatérési értéke akkor TRUE, ...
-  ; ... ha az item-browser plugin body komponense a React-fába van csatolva.
+  ; ... ha az item-browser engine body komponense a React-fába van csatolva.
   ; ... ha az item-id paraméterként átadott azonosító az aktuálisan böngészett elem azonosítója.
   (r core.subs/current-item? db browser-id item-id))
 

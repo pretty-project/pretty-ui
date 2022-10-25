@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.download.subs
-    (:require [plugins.plugin-handler.core.subs     :as core.subs]
-              [plugins.plugin-handler.download.subs :as download.subs]
+    (:require [plugins.engine-handler.core.subs     :as core.subs]
+              [plugins.engine-handler.download.subs :as download.subs]
               [re-frame.api                         :as r :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.download.subs
+; plugins.engine-handler.download.subs
 (def get-resolver-id     download.subs/get-resolver-id)
 (def get-resolver-answer download.subs/get-resolver-answer)
 (def data-received?      download.subs/data-received?)
@@ -41,10 +41,10 @@
   [db [_ lister-id]]
   ; TEMP#4681 Megfelelőbb nevet kell neki találni!
   ;
-  ; A listaelemek újratöltésekor a letöltött elemek törlődnek és a plugin kilép
+  ; A listaelemek újratöltésekor a letöltött elemek törlődnek és az engine kilép
   ; a {:data-received? true} állapotból, ezért a data-received? feliratkozás
   ; nem mindenre használható.
-  ; Az elemek első letöltődése után a plugin {:first-data-received? true}
+  ; Az elemek első letöltődése után az engine {:first-data-received? true}
   ; állapotba lép és abban is marad, mert a listaelemek újratöltésekor és más
   ; esetben sem lép ki ebből az állapotból.
   (r core.subs/get-meta-item db lister-id :first-data-received?))

@@ -53,7 +53,7 @@
       ; A) Ha az "Elem törlése" művelet sikeres befejeződésekor ...
       ;    ... a body komponens a React-fába van csatolva,
       ;    ... a törölt elem van megnyitva megtekintésre,
-      ;    ... a plugin rendelkezik a {:base-route "..."} tulajdonsággal, ...
+      ;    ... az engine rendelkezik a {:base-route "..."} tulajdonsággal, ...
       ;        ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
       ;            elküldött útvonalra.
       ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
@@ -133,12 +133,12 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ viewer-id item-id _]]
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin rendelkezik
+      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine rendelkezik
       ;    az elem útvonalának elkészítéséhez szükséges tulajdonságokkal ...
       ;    ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
       ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
 
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor a plugin NEM rendelkezik
+      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine NEM rendelkezik
       ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
       ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db viewer-id item-id)]

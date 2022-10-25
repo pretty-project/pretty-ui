@@ -35,7 +35,7 @@
   ; XXX#6177
   ; A body-did-mount függvény alkalmazza az item-lister body-did-mount függvényét, ...
   ;
-  ; Az item-browser plugin minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
+  ; Az item-browser engine minden Pathom lekérés küldésekor elküldi a szerver számára a body komponens
   ; {:items-key ...} és {:path-key ...} tulajdonságát.
   (as-> db % (r body.events/body-did-mount        % browser-id browser-props)
              (r core.events/use-default-order-by! % browser-id)

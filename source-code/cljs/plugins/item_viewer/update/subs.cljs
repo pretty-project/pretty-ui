@@ -15,7 +15,7 @@
 (ns plugins.item-viewer.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
               [plugins.item-viewer.transfer.subs  :as transfer.subs]
-              [plugins.plugin-handler.update.subs :as update.subs]
+              [plugins.engine-handler.update.subs :as update.subs]
               [re-frame.api                       :refer [r]]))
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.update.subs
+; plugins.engine-handler.update.subs
 (def get-mutation-name   update.subs/get-mutation-name)
 (def get-mutation-answer update.subs/get-mutation-answer)
 

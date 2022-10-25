@@ -39,13 +39,13 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; Ha az item-editor plugin elhagyásakor, az elem el nem mentett változtatásokat tartalmaz,
-      ; és a plugin nem "Új elem hozzáadása" módban futott ...
+      ; Ha az item-editor engine elhagyásakor, az elem el nem mentett változtatásokat tartalmaz,
+      ; és az engine nem "Új elem hozzáadása" módban futott ...
       ; ... megjelenít egy értesítést az el nem mentett változtatások visszavonásának lehetőségével.
       ; ... eltárolja az elem változtatásait, ami alapján az elem visszaállítása elvégezhető.
       ;
       ; BUG#5161
-      ; Az x4.7.0 változat óta, ha a plugin "Új elem hozzáadása" módban fut, a current-item-id
+      ; Az x4.7.0 változat óta, ha az engine "Új elem hozzáadása" módban fut, a current-item-id
       ; értéke NIL, ezért nem lehetséges az új elemről másolatot készíteni kilépéskor.
       ;
       ; + A body-will-unmount esemény megtörténésekor a new-item? függvény már használható,

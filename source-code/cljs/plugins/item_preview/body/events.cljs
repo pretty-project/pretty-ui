@@ -14,7 +14,7 @@
 
 (ns plugins.item-preview.body.events
     (:require [plugins.item-preview.core.events   :as core.events]
-              [plugins.plugin-handler.body.events :as body.events]
+              [plugins.engine-handler.body.events :as body.events]
               [re-frame.api                       :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.body.events
+; plugins.engine-handler.body.events
 (def store-body-props!  body.events/store-body-props!)
 (def remove-body-props! body.events/remove-body-props!)
 (def update-body-props! body.events/update-body-props!)

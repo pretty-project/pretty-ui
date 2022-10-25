@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.download.subs :as download.subs]
-              [plugins.plugin-handler.core.subs  :as core.subs]
+              [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.subs
+; plugins.engine-handler.core.subs
 (def get-meta-item             core.subs/get-meta-item)
 (def plugin-synchronizing?     core.subs/plugin-synchronizing?)
 (def get-downloaded-items      core.subs/get-downloaded-items)
@@ -143,7 +143,7 @@
   ; @return (boolean)
   [db [_ lister-id]]
   ; A kiválasztott elemeken végzett műveletek is {:lister-synchronizing? true} állapotba hozzák
-  ; az item-lister plugint, ezért önmagában a {:lister-synchronizing? true} állapot nem
+  ; az item-lister engine-t, ezért önmagában a {:lister-synchronizing? true} állapot nem
   ; feltétlenül azt jelenti, hogy elemek letöltése történik. Ezért szükséges az elemek letöltése
   ; állapot megállapításához a lister-synchronizing? és download-more-items? függvényt
   ; együtt alkalmazni.

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.download.subs
-    (:require [plugins.plugin-handler.download.subs :as download.subs]
+    (:require [plugins.engine-handler.download.subs :as download.subs]
               [re-frame.api                         :as r]))
 
 
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.download.subs
+; plugins.engine-handler.download.subs
 (def get-resolver-id     download.subs/get-resolver-id)
 (def get-resolver-answer download.subs/get-resolver-answer)
 (def data-received?      download.subs/data-received?)

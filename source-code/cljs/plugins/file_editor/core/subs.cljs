@@ -15,7 +15,7 @@
 (ns plugins.file-editor.core.subs
     (:require [plugins.file-editor.body.subs     :as body.subs]
               [plugins.file-editor.download.subs :as download.subs]
-              [plugins.plugin-handler.core.subs  :as core.subs]
+              [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.subs
+; plugins.engine-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
 (def plugin-synchronizing? core.subs/plugin-synchronizing?)
 (def use-query-prop        core.subs/use-query-prop)

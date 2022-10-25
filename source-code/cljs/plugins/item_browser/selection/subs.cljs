@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.selection.subs
-    (:require [plugins.plugin-handler.selection.subs :as selection.subs]
+    (:require [plugins.engine-handler.selection.subs :as selection.subs]
               [re-frame.api                          :as r :refer [r]]))
 
 

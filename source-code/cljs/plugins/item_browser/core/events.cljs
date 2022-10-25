@@ -19,7 +19,7 @@
               [plugins.item-browser.core.subs     :as core.subs]
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
-              [plugins.plugin-handler.core.events :as core.events]
+              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -35,7 +35,7 @@
 (def use-default-order-by! plugins.item-lister.core.events/use-default-order-by!)
 (def filter-items!         plugins.item-lister.core.events/filter-items!)
 
-; plugins.plugin-handler.core.events
+; plugins.engine-handler.core.events
 (def set-query-param! core.events/set-query-param!)
 (def set-item-id!     core.events/set-item-id!)
 (def update-item-id!  core.events/update-item-id!)
@@ -52,9 +52,9 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  ; Az aktuálisan böngészett elem azonosítójának eltárolásakor a plugin query-params
-  ; térképében is szükséges eltárolni az elem azonosítóját, mert az item-browser plugin az
-  ; item-lister plugin letöltő funkciójával tölti le az elemeket, de az item-lister plugin
+  ; Az aktuálisan böngészett elem azonosítójának eltárolásakor az engine query-params
+  ; térképében is szükséges eltárolni az elem azonosítóját, mert az item-browser engine az
+  ; item-lister engine letöltő funkciójával tölti le az elemeket, de az item-lister plugin
   ; nem használ :item-id paramétert az elemek letöltésekor ezért az item-browser plugin
   ; a query-params használatával teszi bele az aktuálisan böngészett elem azonosíját
   ; a Pathom lekéresekkel elküldött adatok közé.
@@ -89,7 +89,7 @@
   ; @return (map)
   [db [_ browser-id]]
   ; XXX#1329
-  ; Ha az aktuálisan böngészett elem megváltozásakor az item-browser plugin {:disabled? true} állapotban
+  ; Ha az aktuálisan böngészett elem megváltozásakor az item-browser engine {:disabled? true} állapotban
   ; tart egyes listaelemeket (pl. folyamatban lévő törlés miatt), akkor a load-browser! függvény feloldja
   ; az összes listaelem {:disabled? true} állapotát, mert a listaelemek az indexük és nem pedig az azonosítójuk
   ; alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,

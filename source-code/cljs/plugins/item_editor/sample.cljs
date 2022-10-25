@@ -21,12 +21,12 @@
 ;; -- Szerver-oldali beállítás ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A plugin beállításához mindenképpen szükséges a szerver-oldali
+; Az engine beállításához mindenképpen szükséges a szerver-oldali
 ; [:item-editor/init-editor! ...] eseményt használni!
 
 
 
-;; -- A plugin használata alapbeállításokkal ----------------------------------
+;; -- Az engine használata alapbeállításokkal ----------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn my-editor
@@ -79,14 +79,14 @@
 ; A body komponens {:item-id "..."} paraméterének értékét használja az aktuálisan
 ; szerkesztett elem azonosítójaként, ...
 ; ... amikor az aktuális útvonalból nem származtatható az :item-id útvonal-paraméter.
-; ... a plugin NEM útvonal-vezérelt.
+; ... az engine NEM útvonal-vezérelt.
 
 
 
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 
-; Az item-editor plugin body komponensének {:query [...]} tulajdonságaként
+; Az item-editor engine body komponensének {:query [...]} tulajdonságaként
 ; átadott Pathom lekérés vektor az elem letöltődésekor küldött lekéréssel
 ; összefűzve elküldésre kerül.
 (defn my-query

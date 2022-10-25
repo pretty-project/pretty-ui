@@ -18,7 +18,7 @@
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
-              [plugins.plugin-handler.update.subs :as update.subs]
+              [plugins.engine-handler.update.subs :as update.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.update.subs
+; plugins.engine-handler.update.subs
 (def get-mutation-name   update.subs/get-mutation-name)
 (def get-mutation-answer update.subs/get-mutation-answer)
 

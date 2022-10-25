@@ -17,7 +17,7 @@
               [mid-fruits.map                     :refer [dissoc-in]]
               [plugins.item-lister.body.subs      :as body.subs]
               [plugins.item-lister.core.subs      :as core.subs]
-              [plugins.plugin-handler.core.events :as core.events]
+              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.plugin-handler.core.events
+; plugins.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
@@ -60,8 +60,8 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; Ha az item-lister plugin elhagyása előtt a set-memory-mode! függvény alkalmazásával
-  ; a {:memory-mode? true} állapot beállításra kerül, akkor az item-lister plugin legközelebbi
+  ; Ha az item-lister engine elhagyása előtt a set-memory-mode! függvény alkalmazásával
+  ; a {:memory-mode? true} állapot beállításra kerül, akkor az item-lister engine legközelebbi
   ; megnyitásakor a listaelemek a legutóbbi keresési és rendezési beállítások szerint töltődnek majd le.
   (r set-mode! db lister-id :memory-mode?))
 
@@ -77,19 +77,19 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; Ha az item-lister plugin elhagyása előtt, a {:memory-mode? true} állapot ...
+  ; Ha az item-lister engine elhagyása előtt, a {:memory-mode? true} állapot ...
   ; ... beállításra került, akkor megjegyzi a legutóbb használt keresési és rendezési beállításokat,
-  ;     így a plugin újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
+  ;     így az engine újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
   ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet
   ;     a lista legutóbbi állapotához.
-  ; ... NEM került beállításra, akkor a plugin újbóli megnyitásakor a listaelemek az alapértelmezett
+  ; ... NEM került beállításra, akkor az engine újbóli megnyitásakor a listaelemek az alapértelmezett
   ;     beállítások szerint töltődnek majd le.
   (if-let [memory-mode? (r core.subs/get-meta-item db lister-id :memory-mode?)]
-          (let [meta-items (get-in db [:plugins :plugin-handler/meta-items lister-id])]
-               (as-> db % (dissoc-in % [:plugins :plugin-handler/meta-items lister-id])
-                          (assoc-in  % [:plugins :plugin-handler/meta-items lister-id]
+          (let [meta-items (get-in db [:engines :engine-handler/meta-items lister-id])]
+               (as-> db % (dissoc-in % [:engines :engine-handler/meta-items lister-id])
+                          (assoc-in  % [:engines :engine-handler/meta-items lister-id]
                                        (select-keys meta-items [:order-by :search-term]))))
-          (dissoc-in db [:plugins :plugin-handler/meta-items lister-id])))
+          (dissoc-in db [:engines :engine-handler/meta-items lister-id])))
 
 (defn reset-selections!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,7 +98,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  (dissoc-in db [:plugins :plugin-handler/meta-items lister-id :selected-items]))
+  (dissoc-in db [:engines :engine-handler/meta-items lister-id :selected-items]))
 
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,9 +109,9 @@
   [db [_ lister-id]]
   (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
        (-> db (dissoc-in items-path)
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :all-item-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :received-item-count])
-              (dissoc-in [:plugins :plugin-handler/meta-items lister-id :data-received?]))))
+              (dissoc-in [:engines :engine-handler/meta-items lister-id :all-item-count])
+              (dissoc-in [:engines :engine-handler/meta-items lister-id :received-item-count])
+              (dissoc-in [:engines :engine-handler/meta-items lister-id :data-received?]))))
 
 
 
@@ -126,7 +126,7 @@
   ; @return (map)
   [db [_ lister-id]]
   (let [default-order-by (r body.subs/get-body-prop db lister-id :default-order-by)]
-       (assoc-in db [:plugins :plugin-handler/meta-items lister-id :order-by] default-order-by)))
+       (assoc-in db [:engines :engine-handler/meta-items lister-id :order-by] default-order-by)))
 
 
 
@@ -143,7 +143,7 @@
   [db [_ lister-id filter-pattern]]
   (as-> db % (r reset-downloads!  % lister-id)
              (r reset-selections! % lister-id)
-             (assoc-in % [:plugins :plugin-handler/meta-items lister-id :active-filter] filter-pattern)))
+             (assoc-in % [:engines :engine-handler/meta-items lister-id :active-filter] filter-pattern)))
 
 
 
