@@ -33,9 +33,9 @@
   [n]
   (dom/set-scroll-y! n))
 
-(defn scroll-to-top!
+(defn reset-scroll-y!
   ; @usage
-  ;  (scroll-to-top!)
+  ;  (reset-scroll-y!)
   [_]
   (dom/set-scroll-y! 0))
 
@@ -76,8 +76,8 @@
 (r/reg-fx :environment/set-scroll-y! set-scroll-y!)
 
 ; @usage
-;  [:environment/scroll-to-top!]
-(r/reg-fx :environment/scroll-to-top! scroll-to-top!)
+;  [:environment/reset-scroll-y!]
+(r/reg-fx :environment/reset-scroll-y! reset-scroll-y!)
 
 ; @usage
 ;  [:environment/scroll-to-element-top! "my-element" 50]

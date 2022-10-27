@@ -16,6 +16,7 @@
     (:require [re-frame.api             :as r]
               [reagent.api              :as reagent]
               [x.app-components.api     :as components]
+              [x.app-environment.api    :as environment]
               [x.app-ui.renderer        :rename {component renderer}]
               [x.app-ui.surface.helpers :as surface.helpers]))
 
@@ -45,11 +46,22 @@
   ;
   ; @param (keyword) surface-id
   [surface-id]
+  ; environment/reset-scroll-y!
+  ; A felület kirenderelése után azonnal, szükséges a scroll-y értékét alaphelyzetbe
+  ; állítani, hogy a kirenderelt felület tartalma ne az előző felülettől "örökölt"
+  ; scroll-y értéken jelenjen meg!
+  ;
+  ; Előfordulhat, hogy egy felületen belül az egymás alatti szekciók,
+  ; különböző útvonalakhoz tartoznak (pl. weboldalaknál), ilyenkor az egyes útvonalak
+  ; újra meghívják a [:ui/render-surface! ...] eseményt, ami NEM rendereli ki újra
+  ; ugyanazt a felületet, tehát a component-did-mount életciklus nem történik meg,
+  ; ezért nem állítódik alaphelyzetbe a scroll-y értéke (ez jó)!
   (let [on-mount   @(r/subscribe [:ui/get-surface-prop surface-id :on-mount])
         on-unmount @(r/subscribe [:ui/get-surface-prop surface-id :on-unmount])]
        (reagent/lifecycles surface-id
                            {:reagent-render         (fn [] [surface-element-structure surface-id])
-                            :component-did-mount    (fn [] (r/dispatch on-mount))
+                            :component-did-mount    (fn [] (r/dispatch on-mount)
+                                                           (environment/reset-scroll-y!))
                             :component-will-unmount (fn [] (r/dispatch on-unmount))})))
 
 

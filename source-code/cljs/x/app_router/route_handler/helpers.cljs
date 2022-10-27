@@ -84,6 +84,10 @@
   ;
   ; @param (map) route-string
   [route-string]
+ ; BUG#3001
+ ; {:reload-same-path? true} beállítással használt accountant plugin esetén a nav-handler-f
+ ; függvény kétszer hívódik meg, ha az útvonal megváltozik!
+
  ;(reagent/after-render clerk/after-render!)
   (r/dispatch [:router/handle-route! route-string]))
  ;(clerk/navigate-page! route-string))

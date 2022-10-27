@@ -124,7 +124,7 @@
 
 ; x.app-environment.scroll-handler.side-effects
 (def set-scroll-y!          scroll-handler.side-effects/set-scroll-y!)
-(def scroll-to-top!         scroll-handler.side-effects/scroll-to-top!)
+(def reset-scroll-y!        scroll-handler.side-effects/reset-scroll-y!)
 (def scroll-to-element-top! scroll-handler.side-effects/scroll-to-element-top!)
 
 ; x.app-environment.scroll-handler.subs
