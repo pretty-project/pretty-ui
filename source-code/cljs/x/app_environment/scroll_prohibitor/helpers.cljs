@@ -12,26 +12,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.html.views
-    (:require [hiccup.page      :refer [html5]]
-              [mid-fruits.candy :refer [param]]))
+(ns x.app-environment.scroll-prohibitor.helpers
+    (:require [dom.api :as dom]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (hiccup) head
-  ; @param (hiccup) body
+(defn dom-scroll-disabled?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @usage
-  ;  (html [:head] [:body])
-  [head body]
-  ; XXX#7659 (source-code/cljs/x/app-environment/scroll_prohibitor/README.md)
-  (html5 {:data-hide-scrollbar true
-          :id    "x-document-element"
-          :data-scroll-disabled "true"
-          :style "overflow-y: hidden"}
-         (param head)
-         (param body)))
+  ; @return (boolean)
+  []
+  (let [data-scroll-disabled (dom/get-element-attribute (dom/get-document-element) "data-scroll-disabled")]
+       (= data-scroll-disabled "true")))

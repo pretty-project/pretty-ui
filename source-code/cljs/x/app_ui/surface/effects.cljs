@@ -35,17 +35,16 @@
   ;  {:render-animated? (boolean)(opt)}
   (fn [{:keys [db]} [_ surface-id {:keys [render-animated?] :as surface-props}]]
       (let [close-popups-duration (r renderer/get-visible-elements-destroying-duration db :popups)]
-           {:dispatch-later
-            [{:ms                     0 :dispatch [:ui/destroy-all-elements! :popups]}
-             {:ms close-popups-duration :dispatch [:environment/enable-scroll!]}
-             {:ms close-popups-duration :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
+           {:dispatch-later [{:ms                     0 :dispatch [:ui/destroy-all-elements! :popups]}
+                             {:ms close-popups-duration :dispatch [:environment/enable-scroll!]}
+                             {:ms close-popups-duration :dispatch [:ui/request-rendering-element! :surface surface-id surface-props]}]})))
 
 (r/reg-event-fx :ui/render-surface!
   ; @param (keyword)(opt) surface-id
   ; @param (map) surface-props
   ;  {:content (metamorphic-content)
-  ;   :on-surface-closed (metamorphic-event)(opt)
-  ;   :on-surface-rendered (metamorphic-event)(opt)}
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [:ui/render-surface! {...}]

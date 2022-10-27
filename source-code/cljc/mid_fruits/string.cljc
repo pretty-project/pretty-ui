@@ -283,13 +283,13 @@
   ; @example
   ;  (split ".b.c" #"_")
   ;  =>
-  ;  []
+  ;  [".b.c"]
   ;
   ; @return (strings in vector)
   [n delimiter]
-  (if (and delimiter (nonempty? n))
-      (string/split n delimiter)
-      (return      [n])))
+  (cond (-> n str empty?) []
+        (some? delimiter) (string/split n delimiter)
+        :return           [(str n)]))
 
 (defn prefix
   ; @param (string) n

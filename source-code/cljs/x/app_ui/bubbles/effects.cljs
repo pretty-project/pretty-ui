@@ -67,8 +67,8 @@
   ;  {:autoclose? (boolean)(opt)
   ;    Default: true
   ;   :body (metamorphic-content)
-  ;   :on-bubble-closed (metamorphic-event)(opt)
-  ;   :on-bubble-rendered (metamorphic-event)(opt)
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)
   ;   :user-close? (boolean)(opt)
   ;    Default: true}
   ;

@@ -46,7 +46,7 @@
   ; @usage
   ;  (scroll-to-element-top! "my-element" 50)
   [element-id offset]
-  (dom/scroll-to-element-top! (dom/get-element-by-id element-id) offset))
+  (dom/scroll-to-element-top! (dom/get-element-by-id element-id) (or offset 0)))
 
 
 

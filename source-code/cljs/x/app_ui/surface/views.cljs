@@ -45,12 +45,12 @@
   ;
   ; @param (keyword) surface-id
   [surface-id]
-  (let [on-surface-closed   @(r/subscribe [:ui/get-surface-prop surface-id :on-surface-closed])
-        on-surface-rendered @(r/subscribe [:ui/get-surface-prop surface-id :on-surface-rendered])]
+  (let [on-mount   @(r/subscribe [:ui/get-surface-prop surface-id :on-mount])
+        on-unmount @(r/subscribe [:ui/get-surface-prop surface-id :on-unmount])]
        (reagent/lifecycles surface-id
                            {:reagent-render         (fn [] [surface-element-structure surface-id])
-                            :component-will-unmount (fn [] (r/dispatch on-surface-closed))
-                            :component-did-mount    (fn [] (r/dispatch on-surface-rendered))})))
+                            :component-did-mount    (fn [] (r/dispatch on-mount))
+                            :component-will-unmount (fn [] (r/dispatch on-unmount))})))
 
 
 

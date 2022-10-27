@@ -115,7 +115,7 @@
   (fn [{:keys [db]} _]
       {; 1. Az útvonalhoz tartozó esemény meghívása
        ;    (Dispatch the current route-event)
-       :fx [:router/dispatch-current-route!]
+       :dispatch [:router/dispatch-current-route!]
        ; 2. Az applikáció renderelése utáni események meghívása
        ;    (Dispatch on-app-launch events)
        :dispatch-n (r core/get-period-events db :on-app-launch)}))

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.text.views
-    (:require [mid-fruits.random              :as random]
+    (:require [mid-fruits.candy               :refer [return]]
+              [mid-fruits.random              :as random]
               [mid-fruits.string              :as string]
               [x.app-components.api           :as components]
               [x.app-elements.label.views     :as label.views]
@@ -47,18 +48,29 @@
                             (if placeholder (components/content placeholder)
                                             "\u00A0")])
 
+(defn- text-content-rows
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  ;  {:content (metamorphic-content)}
+  [_ {:keys [content]}])
+
 (defn- text-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
   ;  {:content (metamorphic-content)}
-  [label-id {:keys [content]}]
-  (let [content      (components/content content)
-        content-rows (string/split       content "\n")]
+  [_ {:keys [content]}]
+  (let [content (components/content content)]
        (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
                                           (conj %1 [:br] %3)))]
-              (reduce-kv f [:div.x-text--content] content-rows))))
+              (if (string? content)
+                  (let [content-rows (string/split content "\n")]
+                       (reduce-kv f [:div.x-text--content] content-rows))
+                  ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
+                  (return content)))))
 
 (defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

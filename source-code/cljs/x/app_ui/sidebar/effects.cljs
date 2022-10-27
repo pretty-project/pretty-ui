@@ -24,6 +24,7 @@
 (r/reg-event-fx :ui.sidebar/render-sidebar!
   ; @param (keyword)(opt) sidebar-id
   ; @param (map) sidebar-props
+  ;  {}
   ;
   ; @usage
   ;  [:ui.sidebar/render-sidebar! :my-sidebar {...}]

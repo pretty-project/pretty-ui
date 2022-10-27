@@ -13,10 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.api
-    (:require [x.app-router.route-handler.effects]
+    (:require [plugins.clerk.api]
+              [plugins.accountant.api]
+              [x.app-router.route-handler.effects]
               [x.app-router.route-handler.events]
               [x.app-router.route-handler.lifecycles]
-              [x.app-router.route-handler.side-effects]
               [x.app-router.route-handler.subs :as route-handler.subs]))
 
 

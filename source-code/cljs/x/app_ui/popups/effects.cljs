@@ -34,7 +34,9 @@
 (r/reg-event-fx :ui/render-popup!
   ; @param (keyword)(opt) popup-id
   ; @param (map) popup-props
-  ;  {:content (metamorphic-content)}
+  ;  {:content (metamorphic-content)
+  ;   :on-mount (metamorphic-event)(opt)
+  ;   :on-unmount (metamorphic-event)(opt)}
   ;
   ; @usage
   ;  [:ui/render-popup! {...}]

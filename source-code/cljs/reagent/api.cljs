@@ -31,6 +31,7 @@
 
 ; reagent.core
 (def adapt-react-class core/adapt-react-class)
+(def after-render      core/after-render)
 (def as-element        core/as-element)
 
 ; reagent.dom

@@ -292,23 +292,6 @@
   [uri]
   (string/after-first-occurence uri "#" {:return? false}))
 
-(defn uri->uri-before-fragment
-  ; @param (string) uri
-  ;
-  ; @example
-  ;  (uri->uri-before-fragment "https://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
-  ;  =>
-  ;  "https://my-domain.com/my-path?my-param=my-value&your-param"
-  ;
-  ; @example
-  ;  (uri->uri-before-fragment "https://my-domain.com/my-path?my-param=my-value&your-param")
-  ;  =>
-  ;  "https://my-domain.com/my-path?my-param=my-value&your-param"
-  ;
-  ; @return (string)
-  [uri]
-  (string/before-first-occurence uri "#" {:return? true}))
-
 (defn uri->query-string
   ; @param (string) uri
   ;
@@ -324,9 +307,36 @@
   ;
   ; @return (string)
   [uri]
-  (let [uri-before-fragment (uri->uri-before-fragment uri)]
-       (if (string/contains-part?        uri-before-fragment "?")
-           (string/after-first-occurence uri-before-fragment "?" {:return? false}))))
+  (-> uri (string/after-first-occurence  "?" {:return? false})
+          (string/before-first-occurence "#" {:return? true})))
+
+(defn query-params->query-string
+  ; @param (map) query-params
+  ;
+  ; @example
+  ;  (query-params->query-string {:my-param "my-value" :your-param nil})
+  ;   =>
+  ;  "my-param=my-value&your-param"
+  ;
+  ; @return (string)
+  [query-params]
+  (letfn [(f [o k v] (str o (if o "&") (name k)
+                            (if v "=") v))]
+         (reduce-kv f nil query-params)))
+
+(defn query-string->query-params
+  ; @param (string) query-string
+  ;
+  ; @example
+  ;  (query-string->query-params "my-param=my-value&your-param")
+  ;   =>
+  ;  {:my-param "my-value" :your-param nil}
+  ;
+  ; @return (map)
+  [query-string]
+  (letfn [(f [o x] (let [[k v] (string/split x #"=")]
+                        (assoc o (keyword k) v)))]
+         (reduce f {} (string/split query-string #"&"))))
 
 (defn uri->query-params
   ; @param (string) uri
@@ -334,7 +344,7 @@
   ; @example
   ;  (uri->query-params "http://my-domain.com/my-path?my-param=my-value&your-param#my-fragment")
   ;   =>
-  ;  {:a "b" :c nil}
+  ;  {:my-param "my-value" :your-param nil}
   ;
   ; @example
   ;  (uri->query-params "http://my-domain.com/my-path#my-fragment")
@@ -344,11 +354,7 @@
   ; @return (map)
   [uri]
   (let [query-string (uri->query-string uri)]
-       (letfn [(f [o x] (let [k-v (string/split x #"=")
-                              k   (keyword (first  k-v))
-                              v            (second k-v)]
-                             (assoc o k v)))]
-              (reduce f {} (string/split query-string #"&")))))
+       (query-string->query-params query-string)))
 
 (defn string->uri
   ; @param (string) n
@@ -376,9 +382,9 @@
   #?(:cljs (.encodeURIComponent js/window n)))
     ;:clj TODO ...
 
-(defn uri<-query-param
+(defn uri<-query-string
   ; @param (string) uri
-  ; @param (string) query-param
+  ; @param (string) query-string
   ;
   ; @example
   ;  (uri<-query-param "my-domain.com/my-path" "my-param")
@@ -401,28 +407,15 @@
   ;  "my-domain.com/my-path?my-param&your-param=your-value"
   ;
   ; @return (string)
-  [uri query-param]
-  (let [fragment     (uri->fragment     uri)
-        query-string (uri->query-string uri)]
-       (cond ; uri contains fragment & query-string ...
-             (and (some? fragment)
-                  (some? query-string))
-             (str (string/before-first-occurence uri "?")
-                  (str "?" query-string "&" query-param "#" fragment))
-             ; uri contains fragment ...
-             (and (some? fragment)
-                  (nil?  query-string))
-             (str (string/before-first-occurence uri "#")
-                  (str "?" query-param "#" fragment))
-             ; uri contains query-string ...
-             (and (nil?  fragment)
-                  (some? query-string))
-             (str (string/before-first-occurence uri "?")
-                  (str "?" query-string "&" query-param))
-             ; uri NOT contains fragment or query-string ...
-             (and (nil? fragment)
-                  (nil? query-string))
-             (str uri "?" query-param))))
+  [uri query-string]
+  (let [fragment     (uri->fragment uri)
+        query-string (if-let [x (uri->query-string uri)] (str x "&" query-string) query-string)
+        ; Szükséges eltávolítani a duplikációkat!
+        query-string (-> query-string query-string->query-params query-params->query-string)]
+       (str (-> uri (string/before-first-occurence "?" {:return? true})
+                    (string/before-first-occurence "#" {:return? true}))
+            (if (string/nonempty? query-string) (str "?" query-string))
+            (if (string/nonempty? fragment)     (str "#" fragment)))))
 
 (defn path->match-template?
   ; @param (string) path

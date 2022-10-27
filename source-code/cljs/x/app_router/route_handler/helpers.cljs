@@ -13,7 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.helpers
-    (:require [mid-fruits.candy                   :refer [param return]]
+    (:require [mid-fruits.candy                   :refer [return]]
+              [plugins.clerk.api                  :as clerk]
+              [re-frame.api                       :as r]
+              [reagent.api                        :as reagent]
               [x.mid-router.route-handler.helpers :as route-handler.helpers]))
 
 
@@ -70,3 +73,28 @@
                  (let [route-data (route-props->route-data route-id route-props)]
                       (conj destructed-routes route-data))))]
          (reduce-kv f [] routes)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn nav-handler-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) route-string
+  [route-string]
+ ;(reagent/after-render clerk/after-render!)
+  (r/dispatch [:router/handle-route! route-string]))
+ ;(clerk/navigate-page! route-string))
+
+(defn path-exists-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) route-string
+  ;
+  ; @return (boolean)
+  [route-string]
+  ; The fn should return truthy if the path is handled by your SPA, because accountant will
+  ; call event.preventDefault() to prevent the browser from doing a full page request.
+  (r/subscribed [:router/route-template-exists? route-string]))

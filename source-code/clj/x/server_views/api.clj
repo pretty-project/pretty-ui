@@ -14,5 +14,6 @@
 
 (ns x.server-views.api
     (:require [x.server-views.view-handler.effects]
+              [x.server-views.view-handler.lifecycles]
               [x.server-views.view-handler.subs]
               [x.server-views.view-handler.transfer]))

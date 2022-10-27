@@ -18,38 +18,6 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
-;; -- XXX#3387 ----------------------------------------------------------------
-
-; @name route-string
-;  "/products/big-green-bong?type=hit#order"
-;
-; @name route-path
-;  "/products/big-green-bong"
-;
-; @name route-template
-;  "/products/:product-id"
-;
-; @name route-tail
-;  "type=hit#order"
-;
-; @name route-query-string
-;  "type=hit"
-;
-; @name route-query-params
-;  {"type" "hit"}
-;
-; @name route-fragment
-;  "order"
-;
-; @name client-event
-;  [:products/render!]
-;
-; @name route-id
-;  :products/route
-
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -70,12 +38,12 @@
 
 ; A [:router/go-home!] esemény meghívásával a kliens-oldali útvonal-kezelő az x.app-config.edn
 ; fájlban {:app-home "/..."} tulajdonságként beállított útvonalra irányít át.
-(r/reg-event-fx :go-my-home!
+(r/reg-event-fx :go-to-my-home!
   [:router/go-home!])
 
 ; Az útvonalban használt "/@app-home" részt, az útvonal-kezelő behelyettesíti
 ; az x.app-config.edn fájlban {:app-home "/..."} tulajdonságként beállított útvonal értékével.
-(r/reg-event-fx :go-my-route!
+(r/reg-event-fx :go-to-my-route!
   [:router-go-to! "/@app-home/your-route"])
 
 
@@ -83,7 +51,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :go-my-back!
+(r/reg-event-fx :my-go-back!
   ; TODO ...
   [:router/go-back!])
 

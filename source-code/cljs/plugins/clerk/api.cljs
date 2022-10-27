@@ -12,26 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.html.views
-    (:require [hiccup.page      :refer [html5]]
-              [mid-fruits.candy :refer [param]]))
+(ns plugins.clerk.api
+    (:require [plugins.clerk.side-effects :as side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (hiccup) head
-  ; @param (hiccup) body
-  ;
-  ; @usage
-  ;  (html [:head] [:body])
-  [head body]
-  ; XXX#7659 (source-code/cljs/x/app-environment/scroll_prohibitor/README.md)
-  (html5 {:data-hide-scrollbar true
-          :id    "x-document-element"
-          :data-scroll-disabled "true"
-          :style "overflow-y: hidden"}
-         (param head)
-         (param body)))
+; plugins.clerk.side-effects
+(def initialize!    side-effects/initialize!)
+(def navigate-page! side-effects/navigate-page!)
+(def after-render!  side-effects/after-render!)

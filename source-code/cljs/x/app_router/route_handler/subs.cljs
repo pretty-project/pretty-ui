@@ -48,8 +48,8 @@
   ; @return (string)
   [db [_ route-string]]
   (if-let [debug-mode (r core/get-debug-mode db)]
-          (uri/uri<-query-param route-string debug-mode)
-          (return               route-string)))
+          (uri/uri<-query-string route-string debug-mode)
+          (return                route-string)))
 
 
 
@@ -337,6 +337,16 @@
   (= (r get-app-home             db)
      (r get-current-route-parent db)))
 
+(defn route-id-unchanged?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ;
+  ; @return (boolean)
+  [db [_ route-id]]
+  (let [current-route-id (r get-current-route-id db)]
+       (= route-id current-route-id)))
+
 (defn route-id-changed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -346,6 +356,11 @@
   [db [_ route-id]]
   (let [current-route-id (r get-current-route-id db)]
        (not= route-id current-route-id)))
+
+
+
+;; -- History subscriptions ---------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn get-history
   ; WARNING! NON-PUBLIC! DO NOT USE!

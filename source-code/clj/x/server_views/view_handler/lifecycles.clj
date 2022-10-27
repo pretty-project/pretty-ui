@@ -12,26 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.html.views
-    (:require [hiccup.page      :refer [html5]]
-              [mid-fruits.candy :refer [param]]))
+(ns x.server-views.view-handler.lifecycles
+    (:require [x.server-core.api :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (hiccup) head
-  ; @param (hiccup) body
-  ;
-  ; @usage
-  ;  (html [:head] [:body])
-  [head body]
-  ; XXX#7659 (source-code/cljs/x/app-environment/scroll_prohibitor/README.md)
-  (html5 {:data-hide-scrollbar true
-          :id    "x-document-element"
-          :data-scroll-disabled "true"
-          :style "overflow-y: hidden"}
-         (param head)
-         (param body)))
+(core/reg-lifecycles! ::lifecycles
+  {:on-server-init [:router/add-route! :page-not-found {:client-event [:views/render-error-screen! :page-not-found]
+                                                        :route-template "/page-not-found"}]})

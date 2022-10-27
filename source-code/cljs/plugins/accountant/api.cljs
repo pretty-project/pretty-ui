@@ -12,26 +12,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.html.views
-    (:require [hiccup.page      :refer [html5]]
-              [mid-fruits.candy :refer [param]]))
+(ns plugins.accountant.api
+    (:require [plugins.accountant.side-effects :as side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (hiccup) head
-  ; @param (hiccup) body
-  ;
-  ; @usage
-  ;  (html [:head] [:body])
-  [head body]
-  ; XXX#7659 (source-code/cljs/x/app-environment/scroll_prohibitor/README.md)
-  (html5 {:data-hide-scrollbar true
-          :id    "x-document-element"
-          :data-scroll-disabled "true"
-          :style "overflow-y: hidden"}
-         (param head)
-         (param body)))
+; plugins.accountant.side-effects
+(def configure-navigation!   side-effects/configure-navigation!)
+(def unconfigure-navigation! side-effects/unconfigure-navigation!)
+(def navigate!               side-effects/navigate!)
+(def dispatch-current!       side-effects/dispatch-current!)

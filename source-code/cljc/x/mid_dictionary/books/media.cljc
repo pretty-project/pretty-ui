@@ -32,6 +32,12 @@
            :deleting-files-and-directories-is-not-reversible
            {:en "Deleting files and directories is not reversible!"
             :hu "A fájlok és mappák törlése nem visszavonható!"}
+           :directories
+           {:en "Directories"
+            :hu "Mappák"}
+           :directory
+           {:en "Directory"
+            :hu "Mappa"}
            :directory-does-not-exists
            {:en "This is not the directory you are looking for"
             :hu "A mappa nem található!"}
@@ -53,6 +59,12 @@
            :empty-directory
            {:en "Empty directory"
             :hu "Üres mappa"}
+           :file
+           {:en "File"
+            :hu "Fájl"}
+           :files
+           {:en "Files"
+            :hu "Fájlok"}
            :file-upload-failure
            {:en "File upload failure"
             :hu "Sikertelen fájlfeltöltés"}

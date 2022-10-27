@@ -34,14 +34,14 @@
 
 
 # XXX#7659
-- Az app inicializalasakor, amikor még látható a töltő képernyő, de az app-container rendereren
-  mar megjelent olyan tartalom ami 100vh-nal magasabb akkor felvillan a scrollbar.
+  Az app inicializálásakor, amikor még látható a töltőképernyő, de az app-container
+  elemen már megjelent olyan tartalom ami 100 vh-nál magasabb, akkor felvillan a scrollbar.
   Ennek elkerülése végett a html elemen, inline-style-ként legyen rögzítve az "overflow: hidden" tulajdonság.
 
 
 
 # WARNING!
-- Google Chrome for mobile 90.0 (Google Android ?, Samsung S8+)
+  Google Chrome for mobile 90.0 (Google Android ?, Samsung S8+)
   A @dnd-kit/sortable elemei hibásan érzékelik scroll-y értéket,
   ha a [:html {:style {:overflow-y "scroll"}}] érték be van állítva.
   A görgetés tiltásának feloldása után ezért az {:overflow-y "hidden"} értéket törölni szükséges,

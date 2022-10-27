@@ -91,12 +91,12 @@
   ;
   ; @param (keyword) bubble-id
   [bubble-id]
-  (let [on-bubble-closed   @(r/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-closed])
-        on-bubble-rendered @(r/subscribe [:ui/get-bubble-prop bubble-id :on-bubble-rendered])]
+  (let [on-mount   @(r/subscribe [:ui/get-bubble-prop bubble-id :on-mount])
+        on-unmount @(r/subscribe [:ui/get-bubble-prop bubble-id :on-unmount])]
        (reagent/lifecycles bubble-id
                            {:reagent-render         (fn [] [bubble-element-structure bubble-id])
-                            :component-will-unmount (fn [] (r/dispatch on-bubble-closed))
-                            :component-did-mount    (fn [] (r/dispatch on-bubble-rendered))})))
+                            :component-did-mount    (fn [] (r/dispatch on-mount))
+                            :component-will-unmount (fn [] (r/dispatch on-unmount))})))
 
 
 
