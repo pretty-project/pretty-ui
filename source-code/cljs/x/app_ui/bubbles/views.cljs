@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.bubbles.views
-    (:require [re-frame.api                :as r]
+    (:require [elements.api                :as elements]
+              [re-frame.api                :as r]
               [reagent.api                 :as reagent]
               [x.app-components.api        :as x.components]
-              [x.app-elements.api          :as elements]
               [x.app-ui.renderer           :rename {component renderer}]
               [x.app-ui.bubbles.config     :as bubbles.config]
               [x.app-ui.bubbles.helpers    :as bubbles.helpers]

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-preview.sample
-    (:require [plugins.item-preview.api :as item-preview]
-              [re-frame.api             :as r]
-              [x.app-elements.api       :as elements]))
+    (:require [elements.api             :as elements]
+              [plugins.item-preview.api :as item-preview]
+              [re-frame.api             :as r]))
 
 
 

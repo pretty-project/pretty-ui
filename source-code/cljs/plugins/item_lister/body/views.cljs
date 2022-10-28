@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.body.views
-    (:require [mid-fruits.logical                  :refer [nor]]
+    (:require [elements.api                        :as elements]
+              [mid-fruits.logical                  :refer [nor]]
               [plugins.item-lister.body.prototypes :as body.prototypes]
               [plugins.item-lister.core.helpers    :as core.helpers]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
-              [x.app-components.api                :as x.components]
-              [x.app-elements.api                  :as elements]))
+              [x.app-components.api                :as x.components]))
 
 
 

@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- az x ne használja az elements! legyen tőle független
+
 - x.server-user.api :as user
   =>
   x.user.api :as x.user

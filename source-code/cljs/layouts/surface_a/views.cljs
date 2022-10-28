@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns layouts.surface-a.views
-    (:require [layouts.surface-a.helpers :as helpers]
+    (:require [elements.api              :as elements]
+              [layouts.surface-a.helpers :as helpers]
               [layouts.surface-a.state   :as state]
               [mid-fruits.css            :as css]
               [react.api                 :as react]
               [reagent.api               :as reagent]
               [re-frame.api              :as r]
-              [x.app-components.api      :as x.components]
-              [x.app-elements.api        :as elements]))
+              [x.app-components.api      :as x.components]))
 
 
 

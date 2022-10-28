@@ -14,13 +14,13 @@
 
 (ns developer-tools.re-frame-browser.views
     (:require [developer-tools.re-frame-browser.config :as re-frame-browser.config]
+              [elements.api                        :as elements]
               [mid-fruits.candy                    :refer [param return]]
               [mid-fruits.map                      :as map]
               [mid-fruits.pretty                   :as pretty]
               [mid-fruits.string                   :as string]
               [mid-fruits.vector                   :as vector]
               [re-frame.api                        :as r]
-              [x.app-elements.api                  :as elements]
               [x.app-environment.api               :as x.environment]))
 
 

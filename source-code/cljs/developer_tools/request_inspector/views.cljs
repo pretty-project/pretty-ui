@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.request-inspector.views
-    (:require [mid-fruits.pretty  :as pretty]
+    (:require [elements.api       :as elements]
+              [mid-fruits.pretty  :as pretty]
               [mid-fruits.vector  :as vector]
               [re-frame.api       :as r]
-              [time.api           :as time]
-              [x.app-elements.api :as elements]))
+              [time.api           :as time]))
 
 
 

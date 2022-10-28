@@ -18,10 +18,10 @@
               [developer-tools.re-frame-browser.views  :rename {body re-frame-browser}]
               [developer-tools.request-inspector.views :rename {body request-inspector}]
               [developer-tools.route-browser.views     :rename {body route-browser}]
+              [elements.api                            :as elements]
               [mid-fruits.css                          :as css]
               [mid-fruits.vector                       :as vector]
-              [re-frame.api                            :as r]
-              [x.app-elements.api                      :as elements]))
+              [re-frame.api                            :as r]))
 
 
 

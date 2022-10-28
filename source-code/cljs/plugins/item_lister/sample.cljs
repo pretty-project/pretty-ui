@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.sample
-    (:require [plugins.item-lister.api :as item-lister]
+    (:require [elements.api            :as elements]
+              [plugins.item-lister.api :as item-lister]
               [re-frame.api            :as r]
-              [x.app-core.api          :as x.core]
-              [x.app-elements.api      :as elements]))
+              [x.app-core.api          :as x.core]))
 
 
 

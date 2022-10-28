@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.text-editor.views
-    (:require [engines.text-editor.helpers    :as helpers]
+    (:require [elements.api                   :as elements]
+              [engines.text-editor.helpers    :as helpers]
               [engines.text-editor.prototypes :as prototypes]
               [engines.text-editor.state      :as state]
               [mid-fruits.random              :as random]
               [plugins.ckeditor5.api          :as ckeditor5]
               [re-frame.api                   :as r]
-              [reagent.api                    :as reagent]
-              [x.app-elements.api             :as elements]))
+              [reagent.api                    :as reagent]))
 
 
 

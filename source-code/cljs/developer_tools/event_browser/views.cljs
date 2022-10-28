@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.event-browser.views
-    (:require [mid-fruits.vector  :as vector]
-              [re-frame.api       :as r]
-              [x.app-elements.api :as elements]))
+    (:require [elements.api       :as elements]
+              [mid-fruits.vector  :as vector]
+              [re-frame.api       :as r]))
 
 
 
