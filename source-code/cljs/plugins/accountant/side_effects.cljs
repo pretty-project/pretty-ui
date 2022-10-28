@@ -32,7 +32,6 @@
   ;  (configure-navigation! {...})
   [navigation-props]
   ; Create and configure HTML5 history navigation.
-  (println "conf-nav")
   (accountant.core/configure-navigation! navigation-props))
 
 (defn unconfigure-navigation!
