@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.error-handler.side-effects
-    (:require [re-frame.api  :as r]
-              [x.app-details :as details]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -26,14 +25,16 @@
   ;
   ; @param (list of strings) warning-message
   [& warning-message]
-  (println (reduce #(str %1 "\n" %2) nil warning-message)))
+  (letfn [(f [%1 %2] (str %1 "\n" %2))]
+         (println (reduce f nil warning-message))))
 
 (defn print-error!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (list of strings) error-message
   [& error-message]
-  (println (reduce #(str %1 "\n" %2) nil error-message)))
+  (letfn [(f [%1 %2] (str %1 "\n" %2))]
+         (println (reduce f nil error-message))))
 
 
 

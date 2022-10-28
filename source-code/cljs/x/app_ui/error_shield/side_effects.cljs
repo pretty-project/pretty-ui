@@ -15,7 +15,7 @@
 (ns x.app-ui.error-shield.side-effects
     (:require [re-frame.api                  :as r]
               [time.api                      :as time]
-              [x.app-environment.api         :as environment]
+              [x.app-environment.api         :as x.environment]
               [x.app-ui.error-shield.helpers :as error-shield.helpers]
               [x.app-ui.renderer             :as renderer]))
 
@@ -30,9 +30,9 @@
   ; @usage
   ;  (set-error-shield! "My content")
   [content]
-  (environment/set-element-content! "x-error-shield--content" content)
+  (x.environment/set-element-content! "x-error-shield--content" content)
   (if (error-shield.helpers/error-shield-hidden?)
-      (environment/reveal-element-animated! "x-error-shield")))
+      (x.environment/reveal-element-animated! "x-error-shield")))
 
 
 

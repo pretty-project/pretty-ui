@@ -22,7 +22,7 @@
               [plugins.item-lister.update.validators :as update.validators]
               [plugins.item-lister.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as ui]))
+              [x.app-ui.api                          :as x.ui]))
 
 
 
@@ -110,11 +110,11 @@
           ; A)
           {:db          (r update.events/delete-items-failed db lister-id)
            :dispatch    [:ui/render-bubble! {:body :failed-to-delete}]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]}
           ; B)
           {:dispatch    [:ui/render-bubble! {:body :failed-to-delete}]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/render-items-deleted-dialog!
@@ -141,7 +141,7 @@
   (fn [{:keys [db]} [_ lister-id item-ids]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
-           {:db         (r ui/fake-process! db 15)
+           {:db         (r x.ui/fake-process! db 15)
             :dispatch-n [[:ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                               {:on-success [:item-lister/delete-items-undid       lister-id]
@@ -166,7 +166,7 @@
           ; A)
           [:item-lister/reload-items! lister-id]
           ; B)
-          {:dispatch-if [(r ui/process-faked? db)
+          {:dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/undo-delete-items-failed
@@ -181,7 +181,7 @@
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:ui/render-bubble! {:body :failed-to-undo-delete}]
-       :dispatch-if [(r ui/process-faked? db)
+       :dispatch-if [(r x.ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
 
@@ -198,7 +198,7 @@
       (let [item-ids     (r selection.subs/export-selection                   db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
-           {:db       (r ui/fake-process! db 15)
+           {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                            {:on-success [:item-lister/items-duplicated       lister-id]
                                             :on-failure [:item-lister/duplicate-items-failed lister-id]
@@ -249,11 +249,11 @@
           ; A)
           {:db          (r update.events/duplicate-items-failed db lister-id)
            :dispatch    [:ui/render-bubble! {:body :failed-to-duplicate}]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]}
           ; B)
           {:dispatch    [:ui/render-bubble! {:body :failed-to-duplicate}]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/render-items-duplicated-dialog!

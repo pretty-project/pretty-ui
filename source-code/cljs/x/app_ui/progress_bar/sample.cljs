@@ -14,7 +14,7 @@
 
 (ns x.app-ui.progress-bar.sample
     (:require [re-frame.api :as r :refer [r]]
-              [x.app-ui.api :as ui]))
+              [x.app-ui.api :as x.ui]))
 
 
 
@@ -27,7 +27,7 @@
 (r/reg-event-fx :listen-to-my-request!
   (fn [{:keys [db]} _]
       {; A.
-       :db       (r ui/listen-to-process! db :my-request)
+       :db       (r x.ui/listen-to-process! db :my-request)
        ; B.
        :dispatch [:ui/listen-to-process! :my-request]}))
 
@@ -36,6 +36,6 @@
 (r/reg-event-fx :stop-listening-to-my-request!
   (fn [{:keys [db]} _]
       {; A.
-       :db       (r ui/stop-listening-to-process! db :my-request)
+       :db       (r x.ui/stop-listening-to-process! db :my-request)
        ; B.
        :dispatch [:ui/stop-listening-to-process! :my-request]}))

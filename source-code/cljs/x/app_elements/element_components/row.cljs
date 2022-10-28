@@ -15,7 +15,7 @@
 (ns x.app-elements.element-components.row
     (:require [mid-fruits.candy                    :refer [param]]
               [mid-fruits.random                   :as random]
-              [x.app-components.api                :as components]
+              [x.app-components.api                :as x.components]
               [x.app-elements.engine.api           :as engine]
               [x.app-elements.flex-handler.helpers :as flex-handler.helpers]))
 
@@ -53,7 +53,7 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id {:keys [content]}]
-  [:div.x-row--body [components/content row-id content]])
+  [:div.x-row--body [x.components/content row-id content]])
 
 (defn- row
   ; WARNING! NON-PUBLIC! DO NOT USE!

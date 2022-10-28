@@ -19,9 +19,9 @@
               [re-frame.api             :as r]
               [server-fruits.http       :as http]
               [time.api                 :as time]
-              [x.app-details            :as details]
+              [x.app-details            :as x.details]
               [x.server-core.api        :refer [cache-control-uri]]
-              [x.server-router.api      :as router]
+              [x.server-router.api      :as x.router]
               [x.server-ui.core.helpers :refer [include-css include-favicon include-font]]
               [x.server-ui.head.config  :as head.config]))
 
@@ -99,7 +99,7 @@
   (and (or (-> css-props :js-build nil?)
            (-> css-props :js-build (= js-build)))
        (or (-> css-props :route-template nil?)
-           (router/request->route-template-matched? request route-template))))
+           (x.router/request->route-template-matched? request route-template))))
 
 (defn include-favicon?
   ; @param (map) request
@@ -115,7 +115,7 @@
   (and (or (-> favicon-props :js-build nil?)
            (-> favicon-props :js-build (= js-build)))
        (or (-> favicon-props :route-template nil?)
-           (router/request->route-template-matched? request route-template))))
+           (x.router/request->route-template-matched? request route-template))))
 
 
 
@@ -189,9 +189,9 @@
   ; @return (hiccup)
   [head _ {:keys [author]}]
   (let [current-year          (time/get-year)
-        copyright-information (details/copyright-information current-year)]
+        copyright-information (x.details/copyright-information current-year)]
        (vector/concat-items head [[:meta {:content author                :name "author"}]
-                                  [:meta {:content details/app-version   :name "version"}]
+                                  [:meta {:content x.details/app-version :name "version"}]
                                   [:meta {:content copyright-information :name "copyright"}]])))
 
 (defn head<-og-properties

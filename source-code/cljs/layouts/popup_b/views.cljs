@@ -17,7 +17,7 @@
               [layouts.popup-b.prototypes :as prototypes]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
-              [x.app-components.api       :as components]))
+              [x.app-components.api       :as x.components]))
 
 
 
@@ -31,7 +31,7 @@
   ; @param (map) layout-props
   ;  {:content (metamorphic-content)}
   [popup-id {:keys [content]}]
-  [:div.popup-b--content [components/content popup-id content]])
+  [:div.popup-b--content [x.components/content popup-id content]])
 
 (defn- popup-b
   ; WARNING! NON-PUBLIC! DO NOT USE!

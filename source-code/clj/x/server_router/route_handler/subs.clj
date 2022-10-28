@@ -15,8 +15,7 @@
 (ns x.server-router.route-handler.subs
     (:require [re-frame.api                          :as r :refer [r]]
               [x.mid-router.route-handler.subs       :as route-handler.subs]
-              [x.server-router.route-handler.helpers :as route-handler.helpers]
-              [x.server-user.api                     :as user]))
+              [x.server-router.route-handler.helpers :as route-handler.helpers]))
 
 
 

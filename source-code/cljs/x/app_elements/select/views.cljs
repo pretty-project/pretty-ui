@@ -19,7 +19,7 @@
               [mid-fruits.vector                             :as vector]
               [re-frame.api                                  :as r]
               [reagent.api                                   :as reagent]
-              [x.app-components.api                          :as components]
+              [x.app-components.api                          :as x.components]
               [x.app-elements.button.views                   :as button.views]
               [x.app-elements.element-components.icon-button :as icon-button]
               [x.app-elements.input.helpers                  :as input.helpers]
@@ -62,7 +62,7 @@
   ; @param (*) option
   [select-id {:keys [option-label-f] :as select-props} option]
   [:button.x-select--option (select.helpers/select-option-attributes select-id select-props option)
-                            (-> option option-label-f components/content)])
+                            (-> option option-label-f x.components/content)])
 
 (defn- select-option-list-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +84,7 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [no-options-label]}]
-  [:div.x-select--no-options-label (components/content no-options-label)])
+  [:div.x-select--no-options-label (x.components/content no-options-label)])
 
 (defn- select-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,7 +105,7 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [options-label]}]
-  (if options-label [:div.x-select--options--label (components/content options-label)]
+  (if options-label [:div.x-select--options--label (x.components/content options-label)]
                     [:div.x-select--options--label {:data-placeholder true}]))
 
 (defn- select-options-header
@@ -153,7 +153,7 @@
   [select-id select-props]
   (if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
           [:div.x-select--warning {:data-selectable false}
-                                  (components/content :please-select-an-option)]))
+                                  (x.components/content :please-select-an-option)]))
 
 
 
@@ -176,8 +176,8 @@
   ;  {}
   [_ {:keys [option-label-f value-path]}]
   (if-let [selected-option @(r/subscribe [:db/get-item value-path])]
-          [:div.x-select--button-label (-> selected-option option-label-f components/content)]
-          [:div.x-select--button-label (-> :select!                       components/content)]))
+          [:div.x-select--button-label (-> selected-option option-label-f x.components/content)]
+          [:div.x-select--button-label (-> :select!                       x.components/content)]))
 
 (defn- select-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

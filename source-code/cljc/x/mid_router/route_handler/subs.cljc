@@ -16,7 +16,7 @@
     (:require [mid-fruits.string :as string]
               [mid-fruits.uri    :as uri]
               [re-frame.api      :as r :refer [r]]
-              [x.mid-core.api    :as core]))
+              [x.mid-core.api    :as x.core]))
 
 
 
@@ -31,7 +31,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-home (r core/get-app-config-item db :app-home)]
+  (let [app-home (r x.core/get-app-config-item db :app-home)]
        (uri/valid-path app-home)))
 
 (defn use-app-home
@@ -65,7 +65,7 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-domain (r core/get-app-config-item db :app-domain)]
+  (let [app-domain (r x.core/get-app-config-item db :app-domain)]
        (uri/valid-uri app-domain)))
 
 (defn use-app-domain

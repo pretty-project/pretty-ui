@@ -17,7 +17,7 @@
               [mid-fruits.random                   :as random]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as components]
+              [x.app-components.api                :as x.components]
               [x.app-elements.combo-box.helpers    :as combo-box.helpers]
               [x.app-elements.combo-box.prototypes :as combo-box.prototypes]
               [x.app-elements.text-field.helpers   :as text-field.helpers]
@@ -36,7 +36,7 @@
   ;  {:option-label-f (function)}
   ; @param (map) option
   [_ {:keys [option-label-f]} option]
-  [:div.x-combo-box--option-label (-> option option-label-f components/content)])
+  [:div.x-combo-box--option-label (-> option option-label-f x.components/content)])
 
 (defn- combo-box-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,7 +121,7 @@
   [:div.x-combo-box--no-options-label ; BUG#2105
                                       {:on-mouse-down #(.preventDefault %)
                                        :on-mouse-up   #(r/dispatch [:elements.text-field/hide-surface! box-id])}
-                                      (components/content no-options-label)])
+                                      (x.components/content no-options-label)])
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!

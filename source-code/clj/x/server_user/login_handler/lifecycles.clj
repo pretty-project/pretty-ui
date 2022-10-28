@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.login-handler.lifecycles
-    (:require [x.server-core.api                  :as core]
+    (:require [x.server-core.api                  :as x.core]
               [x.server-user.login-handler.routes :as login-handler.routes]))
 
 
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-init [:router/add-routes! {:user/authenticate {:route-template "/user/authenticate"
                                                              :post {:handler login-handler.routes/authenticate}}
                                          :user/logout       {:route-template "/user/logout"

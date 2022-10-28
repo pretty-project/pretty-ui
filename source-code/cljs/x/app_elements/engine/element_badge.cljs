@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.element-badge
-    (:require [x.app-components.api :as components]))
+    (:require [x.app-components.api :as x.components]))
 
 
 
@@ -32,7 +32,7 @@
   ; nélkül is!
   (cond (and badge-color badge-content)
         [:div.x-element-badge {:data-color badge-color}
-                              [:div.x-element-badge--content (components/content badge-content)]]
+                              [:div.x-element-badge--content (x.components/content badge-content)]]
         badge-color   [:div.x-element-badge {:data-color badge-color}]
         badge-content [:div.x-element-badge {:data-color :primary}
-                                            [:div.x-element-badge--content (components/content badge-content)]]))
+                                            [:div.x-element-badge--content (x.components/content badge-content)]]))

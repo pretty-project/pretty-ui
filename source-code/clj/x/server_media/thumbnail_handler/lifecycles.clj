@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.thumbnail-handler.lifecycles
-    (:require [x.server-core.api                       :as core]
+    (:require [x.server-core.api                       :as x.core]
               [x.server-media.thumbnail-handler.routes :as thumbnail-handler.routes]))
 
 
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-init [:router/add-route! :media/download-thumbnail
                                        {:route-template "/media/thumbnails/:filename"
                                         :get {:handler thumbnail-handler.routes/download-thumbnail}}]})

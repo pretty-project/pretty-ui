@@ -14,7 +14,7 @@
 
 (ns x.app-environment.keypress-handler.sample
     (:require [re-frame.api          :as r :refer [r]]
-              [x.app-environment.api :as environment]))
+              [x.app-environment.api :as x.environment]))
 
 
 
@@ -45,5 +45,5 @@
 ; függvények segítségével kiolvashatod a Re-Frame adatbázisból az aktuálisan lenyomott billenytyűket.
 (defn my-subscription
   [db _]
-  {:pressed-keys (r environment/get-pressed-keys db)
-   :key-pressed? (r environment/key-pressed?     db 27)})
+  {:pressed-keys (r x.environment/get-pressed-keys db)
+   :key-pressed? (r x.environment/key-pressed?     db 27)})

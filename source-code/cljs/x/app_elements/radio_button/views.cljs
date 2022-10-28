@@ -15,7 +15,7 @@
 (ns x.app-elements.radio-button.views
     (:require [mid-fruits.random                      :as random]
               [reagent.api                            :as reagent]
-              [x.app-components.api                   :as components]
+              [x.app-components.api                   :as x.components]
               [x.app-elements.input.helpers           :as input.helpers]
               [x.app-elements.label.views             :as label.views]
               [x.app-elements.radio-button.helpers    :as radio-button.helpers]
@@ -35,7 +35,7 @@
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.x-radio-button--option-helper (components/content option-helper)])))
+                           [:div.x-radio-button--option-helper (x.components/content option-helper)])))
 
 (defn- radio-button-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.x-radio-button--option-label (components/content option-label)]))
+       [:div.x-radio-button--option-label (x.components/content option-label)]))
 
 (defn- radio-button-option-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,7 +96,7 @@
   ;  {:unselectable? (boolean)(opt)}
   [button-id {:keys [unselectable?] :as button-props}]
   (if unselectable? [:button.x-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
-                                                         ;[:div.x-radio-button--clear-button-label (components/content :delete!)]
+                                                         ;[:div.x-radio-button--clear-button-label (x.components/content :delete!)]
 
 (defn- radio-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!

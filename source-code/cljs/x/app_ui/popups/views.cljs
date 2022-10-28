@@ -15,7 +15,7 @@
 (ns x.app-ui.popups.views
     (:require [re-frame.api            :as r]
               [reagent.api             :as reagent]
-              [x.app-components.api    :as components]
+              [x.app-components.api    :as x.components]
               [x.app-ui.popups.helpers :as popups.helpers]
               [x.app-ui.renderer       :rename {component renderer}]))
 
@@ -45,7 +45,7 @@
   ; @param (keyword) popup-id
   [popup-id]
   (let [content @(r/subscribe [:ui/get-popup-prop popup-id :content])]
-       [:div.x-app-popups--element--content [components/content popup-id content]]))
+       [:div.x-app-popups--element--content [x.components/content popup-id content]]))
 
 (defn popup-element
   ; WARNING! NON-PUBLIC! DO NOT USE!

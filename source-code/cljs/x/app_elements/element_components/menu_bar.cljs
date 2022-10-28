@@ -17,8 +17,8 @@
               [mid-fruits.random         :as random]
               [mid-fruits.vector         :as vector]
               [re-frame.api              :as r]
-              [x.app-components.api      :as components]
-              [x.app-environment.api     :as environment]
+              [x.app-components.api      :as x.components]
+              [x.app-environment.api     :as x.environment]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -56,10 +56,10 @@
   [bar-id _ {:keys [active? disabled? href on-click]}]
   (if disabled? ; If menu-item is disabled ...
                 (cond-> {:data-disabled true
-                         :on-mouse-up  #(environment/blur-element!)}
+                         :on-mouse-up  #(x.environment/blur-element!)}
                         (some? active?) (assoc :data-active (boolean active?)))
                 ; If menu-item is NOT disabled ...
-                (cond-> {:on-mouse-up   #(environment/blur-element!)}
+                (cond-> {:on-mouse-up   #(x.environment/blur-element!)}
                         (some? href)     (assoc :href        (str        href))
                         (some? on-click) (assoc :on-click   #(r/dispatch on-click))
                         (some? active?)  (assoc :data-active (boolean    active?)))))
@@ -119,7 +119,7 @@
   ; @param (map) item-props
   ;  {:label (metamorphic-content)(opt)}
   [_ _ {:keys [label]}]
-  (if label [:div.x-menu-bar--menu-item--label (components/content label)]))
+  (if label [:div.x-menu-bar--menu-item--label (x.components/content label)]))
 
 (defn- toggle-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-views.view-handler.lifecycles
-    (:require [x.server-core.api :as core]))
+    (:require [x.server-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-init [:router/add-route! :page-not-found {:client-event [:views/render-error-screen! :page-not-found]
                                                         :route-template "/page-not-found"}]})

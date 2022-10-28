@@ -15,7 +15,6 @@
 (ns x.app-elements.slider.events
     (:require [mid-fruits.candy            :refer [return]]
               [re-frame.api                :as r :refer [r]]
-              [x.app-db.api                :as db]
               [x.app-elements.input.events :as input.events]))
 
 

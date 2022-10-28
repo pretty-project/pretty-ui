@@ -16,7 +16,7 @@
     (:require [mid-fruits.logical              :refer [nonfalse?]]
               [x.app-elements.element.helpers  :as element.helpers]
               [x.app-elements.expandable.state :as expandable.state]
-              [x.app-environment.api           :as environment]))
+              [x.app-environment.api           :as x.environment]))
 
 
 
@@ -71,4 +71,4 @@
                 {:data-clickable  true
                  :data-selectable false
                  :on-click    #(toggle! expandable-id)
-                 :on-mouse-up #(environment/blur-element!)}))
+                 :on-mouse-up #(x.environment/blur-element!)}))

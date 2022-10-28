@@ -27,7 +27,7 @@
     (:require [mid-fruits.candy     :refer [param return]]
               [mid-fruits.random    :as random]
               [re-frame.api         :as r :refer [r]]
-              [x.app-dictionary.api :as dictionary]))
+              [x.app-dictionary.api :as x.dictionary]))
 
 
 
@@ -74,10 +74,10 @@
         ; - (r get-metamorphic-value db {:value :username})
         ; - (r get-metamorphic-value db         :username)
         (string?  value-props) (return value-props)
-        (keyword? value-props) (r dictionary/look-up db value-props)
+        (keyword? value-props) (r x.dictionary/look-up db value-props)
         ; *
         (string?  value) (str value suffix)
-        (keyword? value) (str (r dictionary/look-up db value) suffix)))
+        (keyword? value) (str (r x.dictionary/look-up db value) suffix)))
 
 ; @usage
 ;  [:components/get-metamorphic-value ...]

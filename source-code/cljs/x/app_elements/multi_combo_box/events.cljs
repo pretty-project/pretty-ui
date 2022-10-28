@@ -15,7 +15,7 @@
 (ns x.app-elements.multi-combo-box.events
     (:require [mid-fruits.vector :as vector]
               [re-frame.api      :refer [r]]
-              [x.app-db.api      :as db]))
+              [x.app-db.api      :as x.db]))
 
 
 
@@ -34,7 +34,7 @@
   ; @return (map)
   [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
-       (r db/apply-item! db value-path vector/conj-item-once option-value)))
+       (r x.db/apply-item! db value-path vector/conj-item-once option-value)))
 
 (defn use-field-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,4 +48,4 @@
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
-       (r db/apply-item! db value-path vector/conj-item-once field-value)))
+       (r x.db/apply-item! db value-path vector/conj-item-once field-value)))

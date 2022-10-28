@@ -14,9 +14,9 @@
 
 (ns x.server-ui.body.prototypes
     (:require [re-frame.api        :as r]
-              [x.server-core.api   :as core]
-              [x.server-router.api :as router]
-              [x.server-user.api   :as user]))
+              [x.server-core.api   :as x.core]
+              [x.server-router.api :as x.router]
+              [x.server-user.api   :as x.user]))
 
 
 
@@ -36,6 +36,6 @@
   [request body-props]
   (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config body-props
-              {:app-build      (core/app-build)
-               :js-build       (router/request->route-prop       request :js-build router/DEFAULT-JS-BUILD)
-               :selected-theme (user/request->user-settings-item request :selected-theme)})))
+              {:app-build      (x.core/app-build)
+               :js-build       (x.router/request->route-prop       request :js-build x.router/DEFAULT-JS-BUILD)
+               :selected-theme (x.user/request->user-settings-item request :selected-theme)})))

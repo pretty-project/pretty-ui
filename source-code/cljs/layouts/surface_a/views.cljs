@@ -19,7 +19,7 @@
               [react.api                 :as react]
               [reagent.api               :as reagent]
               [re-frame.api              :as r]
-              [x.app-components.api      :as components]
+              [x.app-components.api      :as x.components]
               [x.app-elements.api        :as elements]))
 
 
@@ -63,7 +63,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [react/mount-animation {:mounted? @state/HEADER-TITLE-VISIBLE?}
-                         [:div#surface-a--header-title (components/content @state/HEADER-TITLE)]])
+                         [:div#surface-a--header-title (x.components/content @state/HEADER-TITLE)]])
 
 (defn- header-shadow
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -222,7 +222,7 @@
   ; @param (map) layout-props
   ;  {:content (metamorphic-content)}
   [surface-id {:keys [content] :as layout-props}]
-  [:div#surface-a--body [:div#surface-a--body-content [components/content surface-id content]]])
+  [:div#surface-a--body [:div#surface-a--body-content [x.components/content surface-id content]]])
 
 
 

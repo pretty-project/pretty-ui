@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                 :refer [param]]
               [mid-fruits.random                :as random]
               [reagent.api                      :as reagent]
-              [x.app-components.api             :as components]
+              [x.app-components.api             :as x.components]
               [x.app-elements.button.helpers    :as button.helpers]
               [x.app-elements.button.presets    :as button.presets]
               [x.app-elements.button.prototypes :as button.prototypes]
@@ -35,7 +35,7 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-button--label [components/content label]]))
+  (if label [:div.x-button--label [x.components/content label]]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!

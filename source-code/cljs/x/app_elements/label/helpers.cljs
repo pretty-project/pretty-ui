@@ -15,7 +15,7 @@
 (ns x.app-elements.label.helpers
     (:require [x.app-elements.element.helpers :as element.helpers]
               [x.app-elements.label.state     :as label.state]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -91,4 +91,4 @@
    :data-selectable  false
    :data-icon-family :material-icons-filled
    :on-click        #(toggle-info-text-visiblity! label-id)
-   :on-mouse-up     #(environment/blur-element!)})
+   :on-mouse-up     #(x.environment/blur-element!)})

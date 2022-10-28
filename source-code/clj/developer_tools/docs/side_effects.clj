@@ -16,7 +16,7 @@
     (:require [developer-tools.docs.config  :as docs.config]
               [developer-tools.docs.helpers :as docs.helpers]
               [io.api                       :as io]
-              [mid-fruits.candy             :refer [param return]]
+              [mid-fruits.candy             :refer [return]]
               [mid-fruits.vector            :as vector]))
 
 

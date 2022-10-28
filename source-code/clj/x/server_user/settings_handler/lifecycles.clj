@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.lifecycles
-    (:require [x.server-core.api :as core]))
+    (:require [x.server-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:fx [:user/import-default-user-settings!]}})

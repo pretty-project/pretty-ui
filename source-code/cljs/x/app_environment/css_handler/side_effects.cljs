@@ -16,7 +16,7 @@
     (:require [dom.api                               :as dom]
               [mid-fruits.string                     :as string]
               [re-frame.api                          :as r]
-              [x.app-core.api                        :as core :refer [cache-control-uri]]
+              [x.app-core.api                        :as x.core :refer [cache-control-uri]]
               [x.app-environment.css-handler.helpers :as css-handler.helpers]))
 
 
@@ -33,7 +33,7 @@
   ;  (add-css! "/css/filename.css")
   [uri options]
   (let [head-element (dom/get-head-element)
-        app-build    (core/app-build)
+        app-build    (x.core/app-build)
         filepath     (cache-control-uri (string/starts-with! uri "/") app-build)
         link-element (css-handler.helpers/create-link-element! uri)]
        (if-not (css-handler.helpers/source-exists?       head-element uri)

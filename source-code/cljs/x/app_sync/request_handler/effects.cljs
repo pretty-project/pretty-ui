@@ -16,7 +16,7 @@
     (:require [ajax.api]
               [mid-fruits.reader                     :as reader]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-core.api                        :as core]
+              [x.app-core.api                        :as x.core]
               [x.app-sync.request-handler.config     :as request-handler.config]
               [x.app-sync.request-handler.events     :as request-handler.events]
               [x.app-sync.request-handler.prototypes :as request-handler.prototypes]
@@ -86,7 +86,7 @@
       ;      eseménye között újra elküldhetők eltérő beállításokkal, ami miatt szükséges a beállításokat
       ;      tartalmazó request-props térképet paraméterként átadni az eseményeknek és függvényeknek!
       (let [request-props (r request-handler.prototypes/request-props-prototype db request-props)]
-           (if (r core/start-process? db request-id)
+           (if (r x.core/start-process? db request-id)
                {:db       (r request-handler.events/send-request! db request-id request-props)
                 :fx       [:ajax/send-request! request-id request-props]
                 :dispatch [:sync/request-sent  request-id request-props]}))))

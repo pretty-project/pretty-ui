@@ -14,13 +14,13 @@
 
 (ns x.server-router.route-handler.transfer
     (:require [re-frame.api      :as r]
-              [x.server-core.api :as core]))
+              [x.server-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-transfer! :router/transfer-client-routes!
+(x.core/reg-transfer! :router/transfer-client-routes!
   {:data-f      (fn [_] (r/subscribed [:router/get-client-routes]))
    :target-path [:router :route-handler/client-routes]})

@@ -20,7 +20,7 @@
               [react.api                  :as react]
               [reagent.api                :as reagent]
               [re-frame.api               :as r]
-              [x.app-components.api       :as components]))
+              [x.app-components.api       :as x.components]))
 
 
 
@@ -35,7 +35,7 @@
   ; {:footer (metamorphic-content)}
   [popup-id {:keys [footer]}]
   [:div.popup-a--footer {:data-shadow-visible (popup-id @state/FOOTER-SHADOW-VISIBLE?)}
-                        [:div.popup-a--footer-content [components/content popup-id footer]]])
+                        [:div.popup-a--footer-content [x.components/content popup-id footer]]])
 
 (defn- footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,7 +76,7 @@
   ; - A megoldás az, hogy a footer-sensor elemet a .popup-a--body-content elemen belül a tartalom
   ;   után kell elhelyezni!
   [:div.popup-a--body [:div.popup-a--body-content (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
-                                                  [components/content popup-id body]
+                                                  [x.components/content popup-id body]
                                                   (if footer [:div {:id (hiccup/value popup-id "footer-sensor")}])]])
 
 (defn- header-structure
@@ -87,7 +87,7 @@
   ; {:header (metamorphic-content)}
   [popup-id {:keys [header]}]
   [:div.popup-a--header {:data-shadow-visible (popup-id @state/HEADER-SHADOW-VISIBLE?)}
-                        [:div.popup-a--header-content [components/content popup-id header]]])
+                        [:div.popup-a--header-content [x.components/content popup-id header]]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

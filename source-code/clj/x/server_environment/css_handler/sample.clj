@@ -14,8 +14,8 @@
 
 (ns x.server-environment.css-handler.sample
     (:require [re-frame.api             :as r :refer [r]]
-              [x.server-core.api        :as core]
-              [x.server-environment.api :as environment]))
+              [x.server-core.api        :as x.core]
+              [x.server-environment.api :as x.environment]))
 
 
 
@@ -27,7 +27,7 @@
 ;
 ; Ha egy .css fájlt egy-egy útvonal használatához szeretnéd kapcsolni,
 ; akkor használd a kliens-oldali [:environment/add-css! ...] eseményt!
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot [:environment/add-css! {:js-build :sample
                                            :uri      "/css/sample.css"}]})
 
@@ -38,7 +38,7 @@
 
 (defn add-my-css!
   [db _]
-  (r environment/add-css! db {:js-build :sample
-                              :uri      "/css/sample.css"}))
+  (r x.environment/add-css! db {:js-build :sample
+                                :uri      "/css/sample.css"}))
 
 (r/reg-event-db :add-my-css! add-my-css!)

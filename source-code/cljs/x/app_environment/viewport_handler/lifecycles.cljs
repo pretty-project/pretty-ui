@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler.lifecycles
-    (:require [x.app-core.api :as core]))
+    (:require [x.app-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-app-init {:fx-n [[:environment/detect-viewport-profile!]
                         [:environment/listen-to-viewport-resize!]
                         [:environment/update-viewport-data!]]}})

@@ -20,8 +20,8 @@
               [plugins.engine-handler.routes.subs   :as routes.subs]
               [plugins.engine-handler.transfer.subs :as transfer.subs]
               [re-frame.api                         :refer [r]]
-              [x.app-activities.api                 :as activities]
-              [x.app-sync.api                       :as sync]))
+              [x.app-activities.api                 :as x.activities]
+              [x.app-sync.api                       :as x.sync]))
 
 
 
@@ -86,7 +86,7 @@
   [db [_ engine-id request-key]]
   ; XXX#5476
   (let [request-id (r get-request-id db engine-id request-key)]
-       (r sync/listening-to-request? db request-id)))
+       (r x.sync/listening-to-request? db request-id)))
 
 
 
@@ -164,7 +164,7 @@
   [db [_ engine-id]]
   (let [current-item (r get-current-item db engine-id)]
        (if-let [modified-at (:modified-at current-item)]
-               (r activities/get-actual-timestamp db modified-at))))
+               (r x.activities/get-actual-timestamp db modified-at))))
 
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!

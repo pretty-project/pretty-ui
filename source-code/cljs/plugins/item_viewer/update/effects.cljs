@@ -23,7 +23,7 @@
               [plugins.item-viewer.update.validators :as update.validators]
               [plugins.item-viewer.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as ui]))
+              [x.app-ui.api                          :as x.ui]))
 
 
 
@@ -69,7 +69,7 @@
                              [:router/go-to! base-route]]}
                ; B)
                {:dispatch    [:item-viewer/render-item-deleted-dialog! viewer-id item-id]
-                :dispatch-if [(r ui/process-faked? db)
+                :dispatch-if [(r x.ui/process-faked? db)
                               [:ui/end-fake-process!]]}))))
 
 (r/reg-event-fx :item-viewer/delete-item-failed
@@ -83,7 +83,7 @@
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
            {:dispatch    [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]
-            :dispatch-if [(r ui/process-faked? db)
+            :dispatch-if [(r x.ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/render-item-deleted-dialog!
@@ -119,7 +119,7 @@
       ; ...
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
-           {:db       (r ui/fake-process! db 15)
+           {:db       (r x.ui/fake-process! db 15)
             :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                               {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
@@ -145,7 +145,7 @@
               ; A)
               [:router/go-to! item-route]
               ; B)
-              {:dispatch-if [(r ui/process-faked? db)
+              {:dispatch-if [(r x.ui/process-faked? db)
                              [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/undo-delete-item-failed
@@ -159,7 +159,7 @@
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
            {:dispatch    [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]
-            :dispatch-if [(r ui/process-faked? db)
+            :dispatch-if [(r x.ui/process-faked? db)
                           [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/render-undo-delete-item-failed-dialog!

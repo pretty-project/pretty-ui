@@ -17,7 +17,7 @@
               [react.api                 :as react]
               [reagent.api               :as reagent]
               [re-frame.api              :as r]
-              [x.app-components.api      :as components]))
+              [x.app-components.api      :as x.components]))
 
 
 
@@ -33,7 +33,7 @@
   [sidebar-id {:keys [content] :as layout-props}]
   [:div#sidebar-a (helpers/layout-attributes sidebar-id layout-props)
                   [:div#sidebar-a--content {:data-hide-scrollbar true}
-                                           [components/content sidebar-id content]]])
+                                           [x.components/content sidebar-id content]]])
 
 (defn layout
   ; @param (keyword) sidebar-id

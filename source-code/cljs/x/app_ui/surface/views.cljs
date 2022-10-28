@@ -15,8 +15,8 @@
 (ns x.app-ui.surface.views
     (:require [re-frame.api             :as r]
               [reagent.api              :as reagent]
-              [x.app-components.api     :as components]
-              [x.app-environment.api    :as environment]
+              [x.app-components.api     :as x.components]
+              [x.app-environment.api    :as x.environment]
               [x.app-ui.renderer        :rename {component renderer}]
               [x.app-ui.surface.helpers :as surface.helpers]))
 
@@ -31,7 +31,7 @@
   ; @param (keyword) surface-id
   [surface-id]
   (let [content @(r/subscribe [:ui/get-surface-prop surface-id :content])]
-       [:div.x-app-surface--element--content [components/content surface-id content]]))
+       [:div.x-app-surface--element--content [x.components/content surface-id content]]))
 
 (defn surface-element-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ;
   ; @param (keyword) surface-id
   [surface-id]
-  ; environment/reset-scroll-y!
+  ; x.environment/reset-scroll-y!
   ; A felület kirenderelése után azonnal, szükséges a scroll-y értékét alaphelyzetbe
   ; állítani, hogy a kirenderelt felület tartalma ne az előző felülettől "örökölt"
   ; scroll-y értéken jelenjen meg!
@@ -61,7 +61,7 @@
        (reagent/lifecycles surface-id
                            {:reagent-render         (fn [] [surface-element-structure surface-id])
                             :component-did-mount    (fn [] (r/dispatch on-mount)
-                                                           (environment/reset-scroll-y!))
+                                                           (x.environment/reset-scroll-y!))
                             :component-will-unmount (fn [] (r/dispatch on-unmount))})))
 
 

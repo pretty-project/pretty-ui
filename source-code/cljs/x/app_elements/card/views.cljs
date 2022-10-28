@@ -14,7 +14,7 @@
 
 (ns x.app-elements.card.views
     (:require [mid-fruits.random              :as random]
-              [x.app-components.api           :as components]
+              [x.app-components.api           :as x.components]
               [x.app-elements.card.helpers    :as card.helpers]
               [x.app-elements.card.prototypes :as card.prototypes]
               [x.app-elements.engine.api      :as engine]))
@@ -32,7 +32,7 @@
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
   [:button.x-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
-                        [components/content                       card-id content]
+                        [x.components/content                     card-id content]
                         [engine/element-badge                     card-id card-props]])
 
 (defn- static-card
@@ -43,7 +43,7 @@
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
   [:div.x-card--body (card.helpers/static-card-body-attributes card-id card-props)
-                     [components/content                       card-id content]
+                     [x.components/content                     card-id content]
                      [engine/element-badge                     card-id card-props]])
 
 (defn- card

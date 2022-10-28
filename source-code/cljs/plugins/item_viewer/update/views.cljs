@@ -14,7 +14,7 @@
 
 (ns plugins.item-viewer.update.views
     (:require [re-frame.api :as r]
-              [x.app-ui.api :as ui]))
+              [x.app-ui.api :as x.ui]))
 
 
 
@@ -28,9 +28,9 @@
   ; @param (string) item-id
   [viewer-id item-id]
   (let [undo-event [:item-viewer/undo-delete-item! viewer-id item-id]]
-       [ui/state-changed-bubble-body :engines.item-viewer/item-deleted-dialog
-                                     {:label          :item-deleted
-                                      :primary-button {:label :recover! :on-click undo-event}}]))
+       [x.ui/state-changed-bubble-body :engines.item-viewer/item-deleted-dialog
+                                       {:label          :item-deleted
+                                        :primary-button {:label :recover! :on-click undo-event}}]))
 
 
 
@@ -44,9 +44,9 @@
   ; @param (string) item-id
   [viewer-id item-id]
   (let [retry-event [:item-viewer/undo-delete-item! viewer-id item-id]]
-       [ui/state-changed-bubble-body :engines.item-viewer/undo-delete-item-failed-dialog
-                                     {:label          :failed-to-undo-delete
-                                      :primary-button {:label :retry! :on-click retry-event}}]))
+       [x.ui/state-changed-bubble-body :engines.item-viewer/undo-delete-item-failed-dialog
+                                       {:label          :failed-to-undo-delete
+                                        :primary-button {:label :retry! :on-click retry-event}}]))
 
 
 
@@ -60,6 +60,6 @@
   ; @param (string) copy-id
   [viewer-id copy-id]
   (let [view-event [:item-viewer/view-duplicated-item! viewer-id copy-id]]
-       [ui/state-changed-bubble-body :engines.item-viewer/item-duplicated-dialog
-                                     {:label          :item-duplicated
-                                      :primary-button {:label :view-copy! :on-click view-event}}]))
+       [x.ui/state-changed-bubble-body :engines.item-viewer/item-duplicated-dialog
+                                       {:label          :item-duplicated
+                                        :primary-button {:label :view-copy! :on-click view-event}}]))

@@ -15,7 +15,7 @@
 (ns x.app-ui.bubbles.views
     (:require [re-frame.api                :as r]
               [reagent.api                 :as reagent]
-              [x.app-components.api        :as components]
+              [x.app-components.api        :as x.components]
               [x.app-elements.api          :as elements]
               [x.app-ui.renderer           :rename {component renderer}]
               [x.app-ui.bubbles.config     :as bubbles.config]
@@ -75,7 +75,7 @@
        [:div.x-app-bubbles--element--body
          (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
                (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
-               :default        [components/content bubble-id body])]))
+               :default        [x.components/content bubble-id body])]))
 
 (defn bubble-element-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

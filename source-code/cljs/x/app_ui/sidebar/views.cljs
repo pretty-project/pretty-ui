@@ -14,7 +14,7 @@
 
 (ns x.app-ui.sidebar.views
     (:require [re-frame.api         :as r]
-              [x.app-components.api :as components]))
+              [x.app-components.api :as x.components]))
 
 
 
@@ -25,7 +25,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [sidebar-content @(r/subscribe [:ui.sidebar/get-sidebar-content])]
-          [:div#x-app-sidebar--content [components/content ::view sidebar-content]]))
+          [:div#x-app-sidebar--content [x.components/content ::view sidebar-content]]))
 
 (defn- sidebar
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -22,7 +22,7 @@
               [plugins.item-browser.update.validators :as update.validators]
               [plugins.item-browser.update.views      :as update.views]
               [re-frame.api                           :as r :refer [r]]
-              [x.app-ui.api                           :as ui]))
+              [x.app-ui.api                           :as x.ui]))
 
 
 
@@ -157,11 +157,11 @@
           ; A)
           {:db          (r update.events/delete-item-failed db browser-id item-id)
            :dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]}
           ; B)
           {:dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
-           :dispatch-if [(r ui/process-faked? db)
+           :dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-browser/render-delete-item-failed-dialog!
@@ -194,7 +194,7 @@
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
-           {:db       (r ui/fake-process! db 15)
+           {:db       (r x.ui/fake-process! db 15)
             :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
                                               {:on-success [:item-browser/delete-item-undid       browser-id]
@@ -219,7 +219,7 @@
           ; A)
           [:item-browser/reload-items! browser-id]
           ; B)
-          {:dispatch-if [(r ui/process-faked? db)
+          {:dispatch-if [(r x.ui/process-faked? db)
                          [:ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-browser/undo-delete-item-failed
@@ -234,7 +234,7 @@
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:item-browser/render-undo-delete-item-failed-dialog! browser-id]
-       :dispatch-if [(r ui/process-faked? db)
+       :dispatch-if [(r x.ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
 (r/reg-event-fx :item-browser/render-undo-delete-item-failed-dialog!
@@ -259,7 +259,7 @@
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-duplicate-item-query          db browser-id item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
-           {:db       (r ui/fake-process! db 15)
+           {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
                                            {:on-success [:item-browser/item-duplicated       browser-id]
                                             :on-failure [:item-browser/duplicate-item-failed browser-id]
@@ -299,7 +299,7 @@
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:item-browser/render-duplicate-item-failed-dialog! browser-id]
-       :dispatch-if [(r ui/process-faked? db)
+       :dispatch-if [(r x.ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
 (r/reg-event-fx :item-browser/render-item-duplicated-dialog!

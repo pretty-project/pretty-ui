@@ -17,7 +17,7 @@
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.nvironment]))
 
 
 
@@ -126,7 +126,7 @@
                         :id              (hiccup/value button-id "body")
                         :on-click       #(r/dispatch on-click)
                         :on-mouse-over  #(r/dispatch on-mouse-over)
-                        :on-mouse-up    #(environment/blur-element!)})))
+                        :on-mouse-up    #(x.environment/blur-element!)})))
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

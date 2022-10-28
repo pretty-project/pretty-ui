@@ -16,7 +16,7 @@
     (:require [plugins.file-editor.body.prototypes :as body.prototypes]
               [plugins.file-editor.core.helpers    :as core.helpers]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as components]
+              [x.app-components.api                :as x.components]
               [re-frame.api                        :as r]))
 
 
@@ -30,7 +30,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (if-let [ghost-element @(r/subscribe [:file-editor/get-body-prop editor-id :ghost-element])]
-          [components/content ghost-element]))
+          [x.components/content ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (if-let [error-element @(r/subscribe [:file-editor/get-body-prop editor-id :error-element])]
-          [components/content error-element]))
+          [x.components/content error-element]))
 
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (let [form-element @(r/subscribe [:file-editor/get-body-prop editor-id :form-element])]
-       [components/content form-element]))
+       [x.components/content form-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

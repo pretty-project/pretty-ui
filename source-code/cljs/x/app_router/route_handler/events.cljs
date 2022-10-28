@@ -18,10 +18,10 @@
               [mid-fruits.uri                     :as uri]
               [mid-fruits.vector                  :as vector]
               [re-frame.api                       :refer [r]]
-              [x.app-db.api                       :as db]
+              [x.app-db.api                       :as x.db]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.subs    :as route-handler.subs]
-              [x.app-ui.api                       :as ui]))
+              [x.app-ui.api                       :as x.ui]))
 
 
 
@@ -97,7 +97,7 @@
   ;
   ; @return (map)
   [db [_ route-id _]]
-  (r db/apply-item! db [:router :route-handler/meta-items :history] vector/conj-item route-id))
+  (r x.db/apply-item! db [:router :route-handler/meta-items :history] vector/conj-item route-id))
 
 (defn configure-ui!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,8 +109,8 @@
   [db [_ route-id _]]
   ; XXX#5670
   (let [js-build (r route-handler.subs/get-current-js-build db)]
-       (case js-build :app  (r ui/set-interface! db :application-ui)
-                      :site (r ui/set-interface! db :website-ui))))
+       (case js-build :app  (r x.ui/set-interface! db :application-ui)
+                      :site (r x.ui/set-interface! db :website-ui))))
 
 (defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!

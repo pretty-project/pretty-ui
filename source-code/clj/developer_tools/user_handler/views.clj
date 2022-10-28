@@ -14,7 +14,7 @@
 
 (ns developer-tools.user-handler.views
     (:require [developer-tools.user-handler.styles :as user-handler.styles]
-              [x.server-user.api                   :as user]))
+              [x.server-user.api                   :as x.user]))
 
 
 
@@ -38,11 +38,11 @@
         email-address (get query-params "email-address")
         password      (get query-params "password")
         pin           (get query-params "pin")]
-       (if (user/add-user! {:first-name    first-name
-                            :last-name     last-name
-                            :email-address email-address
-                            :password      password
-                            :pin           pin})
+       (if (x.user/add-user! {:first-name    first-name
+                              :last-name     last-name
+                              :email-address email-address
+                              :password      password
+                              :pin           pin})
            (refresh-page "add-user-success")
            (refresh-page "add-user-failure"))))
 

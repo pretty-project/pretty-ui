@@ -15,7 +15,7 @@
 (ns x.app-dictionary.term-handler.subs
     (:require [mid-fruits.string                  :as string]
               [re-frame.api                       :as r :refer [r]]
-              [x.app-locales.api                  :as locales]
+              [x.app-locales.api                  :as x.locales]
               [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
 
 
@@ -52,7 +52,7 @@
   ;
   ; @return (string)
   [db [_ term-id {:keys [prefix replacements suffix]}]]
-  (let [language        (r locales/get-selected-language db)
+  (let [language        (r x.locales/get-selected-language db)
         translated-term (r get-term db term-id language)]
        (if replacements (string/use-replacements (str prefix translated-term suffix) replacements)
                         (str prefix translated-term suffix))))

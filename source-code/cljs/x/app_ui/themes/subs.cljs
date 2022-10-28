@@ -14,7 +14,7 @@
 
 (ns x.app-ui.themes.subs
     (:require [re-frame.api   :refer [r]]
-              [x.app-user.api :as user]))
+              [x.app-user.api :as x.user]))
 
 
 
@@ -24,4 +24,4 @@
 (defn get-selected-theme
   ; @return (keyword)
   [db _]
-  (r user/get-user-settings-item db :selected-theme))
+  (r x.user/get-user-settings-item db :selected-theme))

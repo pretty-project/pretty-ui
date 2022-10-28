@@ -17,7 +17,7 @@
               [plugins.item-preview.core.helpers    :as core.helpers]
               [reagent.api                          :as reagent]
               [re-frame.api                         :as r]
-              [x.app-components.api                 :as components]))
+              [x.app-components.api                 :as x.components]))
 
 
 
@@ -30,7 +30,7 @@
   ; @param (keyword) preview-id
   [preview-id]
   (if-let [ghost-element @(r/subscribe [:item-preview/get-body-prop preview-id :ghost-element])]
-          [components/content ghost-element]))
+          [x.components/content ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) preview-id
   [preview-id]
   (if-let [error-element @(r/subscribe [:item-preview/get-body-prop preview-id :error-element])]
-          [components/content error-element]))
+          [x.components/content error-element]))
 
 (defn preview-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) preview-id
   [preview-id]
   (let [preview-element @(r/subscribe [:item-preview/get-body-prop preview-id :preview-element])]
-       [components/content preview-element]))
+       [x.components/content preview-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

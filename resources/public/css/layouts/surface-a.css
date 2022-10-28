@@ -35,6 +35,7 @@
 #surface-a--background {
   background-color: #fdfdfd;
   background-color: #fafafa;
+  background-color: var( --app-background-color );
   height: 100vh;
   left: 0;
   position: fixed;
@@ -42,7 +43,7 @@
   width: 100% }
 
 .surface-a--background-pattern {
-  fill: #f6f3f3 }
+  fill: var( --app-background-pattern-color ) }
 
 /* Background */
 

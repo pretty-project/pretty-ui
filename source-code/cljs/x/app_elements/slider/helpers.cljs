@@ -17,8 +17,7 @@
               [mid-fruits.css                 :as css]
               [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-elements.slider.state    :as slider.state]
-              [x.app-environment.api          :as environment]))
+              [x.app-elements.slider.state    :as slider.state]))
 
 
 

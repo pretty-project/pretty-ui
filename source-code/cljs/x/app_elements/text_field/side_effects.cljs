@@ -17,7 +17,7 @@
               [mid-fruits.string                 :as string]
               [re-frame.api                      :as r]
               [x.app-elements.text-field.helpers :as text-field.helpers]
-              [x.app-environment.api             :as environment]))
+              [x.app-environment.api             :as x.environment]))
 
 
 
@@ -70,8 +70,8 @@
   ; @param (map) field-props
   [field-id _]
   (let [field-input-id (hiccup/value field-id "input")]
-       (environment/move-caret-to-end! field-input-id)
-       (environment/focus-element!     field-input-id)))
+       (x.environment/move-caret-to-end! field-input-id)
+       (x.environment/focus-element!     field-input-id)))
 
 
 

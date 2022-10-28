@@ -15,7 +15,7 @@
 (ns x.app-elements.element-components.toggle
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
-              [x.app-components.api      :as components]
+              [x.app-components.api      :as x.components]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -49,7 +49,7 @@
   [toggle-id {:keys [content] :as toggle-props}]
   ; Majd a toggle-body kapja a background-color-t és hover-color-t
   [:button.x-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
-                          [components/content               toggle-id content]])
+                          [x.components/content             toggle-id content]])
 
 (defn- toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!

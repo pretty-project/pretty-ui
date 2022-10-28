@@ -15,7 +15,7 @@
 (ns x.app-elements.label.views
     (:require [mid-fruits.candy                :refer [param]]
               [mid-fruits.random               :as random]
-              [x.app-components.api            :as components]
+              [x.app-components.api            :as x.components]
               [x.app-elements.label.helpers    :as label.helpers]
               [x.app-elements.label.prototypes :as label.prototypes]))
 
@@ -50,7 +50,7 @@
   ; @param (map) label-props
   ;  {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div.x-label--helper (components/content helper)]))
+  (if helper [:div.x-label--helper (x.components/content helper)]))
 
 (defn label-info-text
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,7 +60,7 @@
   ;  {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.helpers/info-text-visible? label-id)]
-                        [:div.x-label--info-text (components/content info-text)])))
+                        [:div.x-label--info-text (x.components/content info-text)])))
 
 (defn label-info-text-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -90,7 +90,7 @@
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   [:div.x-label--placeholder {:data-selectable false}
-                             (if placeholder (components/content placeholder)
+                             (if placeholder (x.components/content placeholder)
                                              "\u00A0")])
 
 (defn- label-content
@@ -104,7 +104,7 @@
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   [:label.x-label--content {:for target-id}
-                           (components/content content)])
+                           (x.components/content content)])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,7 +123,7 @@
   ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
   [:div.x-label--body (label.helpers/label-body-attributes label-id label-props)
                       ; BUG#3400
-                      (if (-> content components/content str empty?)
+                      (if (-> content x.components/content str empty?)
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]

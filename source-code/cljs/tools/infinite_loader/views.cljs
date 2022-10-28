@@ -19,7 +19,7 @@
               [reagent.api                   :as reagent]
               [re-frame.api                  :as r]
               [tools.infinite-loader.helpers :as helpers]
-              [x.app-environment.api         :as environment]))
+              [x.app-environment.api         :as x.environment]))
 
 
 
@@ -56,6 +56,6 @@
    (let [observer-id (helpers/loader-id->observer-id loader-id)
          element-id  (hiccup/value observer-id)
          callback-f #(if % (r/dispatch on-viewport))]
-        (reagent/lifecycles {:component-did-mount    (fn [] (environment/setup-intersection-observer!  element-id callback-f))
-                             :component-will-unmount (fn [] (environment/remove-intersection-observer! element-id))
+        (reagent/lifecycles {:component-did-mount    (fn [] (x.environment/setup-intersection-observer!  element-id callback-f))
+                             :component-will-unmount (fn [] (x.environment/remove-intersection-observer! element-id))
                              :reagent-render         (fn [] [infinite-loader loader-id])}))))

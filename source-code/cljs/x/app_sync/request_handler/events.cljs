@@ -17,9 +17,9 @@
               [mid-fruits.vector                  :as vector]
               [re-frame.api                       :refer [r]]
               [time.api                           :as time]
-              [x.app-core.api                     :as core]
-              [x.app-db.api                       :as db]
-              [x.app-ui.api                       :as ui]
+              [x.app-core.api                     :as x.core]
+              [x.app-db.api                       :as x.db]
+              [x.app-ui.api                       :as x.ui]
               [x.app-sync.request-handler.subs    :as request-handler.subs]
               [x.app-sync.response-handler.events :as response-handler.events]
               [x.app-sync.response-handler.subs   :as response-handler.subs]))
@@ -39,8 +39,8 @@
   [db [_ request-id request-props]]
   ; DEBUG
   ; A request-id azonosítójú lekérés adatainak utolsó 256 alkalommal elküldött példányát eltárolja.
-  (as-> db % (r db/apply-item! % [:sync :request-handler/data-history request-id] vector/conj-item request-props)
-             (r db/apply-item! % [:sync :request-handler/data-history request-id] vector/last-items 256)))
+  (as-> db % (r x.db/apply-item! % [:sync :request-handler/data-history request-id] vector/conj-item request-props)
+             (r x.db/apply-item! % [:sync :request-handler/data-history request-id] vector/last-items 256)))
 
 (defn store-request-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,8 +87,8 @@
   ;
   ; @return (map)
   [db [_ request-id request-props server-response]]
-  (as-> db % (r core/set-process-status!                        % request-id :success)
-             (r core/set-process-activity!                      % request-id :idle)
+  (as-> db % (r x.core/set-process-status!                      % request-id :success)
+             (r x.core/set-process-activity!                    % request-id :idle)
              (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-failured
@@ -103,8 +103,8 @@
   ; DEBUG
   ; A szerver-válasz hiba vagy nem megfelelő esetén is eltárolásra kerül,
   ; hogy a fejlesztői eszközök hozzáférjenek a szerver-válasz értékéhez ...
-  (as-> db % (r core/set-process-status!                        % request-id :failure)
-             (r core/set-process-activity!                      % request-id :idle)
+  (as-> db % (r x.core/set-process-status!                      % request-id :failure)
+             (r x.core/set-process-activity!                    % request-id :idle)
              (r response-handler.events/store-request-response! % request-id request-props server-response)))
 
 (defn request-stalled
@@ -123,13 +123,13 @@
       ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request újra el lett küldve ...
       (let [display-progress? (get-in db [:sync :request-handler/data-items request-id :display-progress?])
             lock-screen?      (get-in db [:sync :request-handler/data-items request-id :lock-screen?])]
-           (cond-> (r core/set-process-activity! db request-id :stalled)
-                   (not display-progress?) (as-> % (r ui/stop-listening-to-process! db request-id))
-                   (not lock-screen?)      (as-> % (r ui/unlock-screen!             db request-id))))
+           (cond-> (r x.core/set-process-activity! db request-id :stalled)
+                   (not display-progress?) (as-> % (r x.ui/stop-listening-to-process! db request-id))
+                   (not lock-screen?)      (as-> % (r x.ui/unlock-screen!             db request-id))))
       ; Ha az {:on-stalled [...]} esemény megtörténése előtt a request NEM lett újra elküldve ...
-      (cond-> (r core/set-process-activity! db request-id :stalled)
-              display-progress? (as-> % (r ui/stop-listening-to-process! % request-id))
-              lock-screen?      (as-> % (r ui/unlock-screen!             % request-id)))))
+      (cond-> (r x.core/set-process-activity! db request-id :stalled)
+              display-progress? (as-> % (r x.ui/stop-listening-to-process! % request-id))
+              lock-screen?      (as-> % (r x.ui/unlock-screen!             % request-id)))))
 
 (defn reset-request-process!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -140,13 +140,13 @@
   ; @return (map)
   [db [_ request-id _]]
   (as-> db % ; Set request status
-             (r core/set-process-status!   % request-id :progress)
+             (r x.core/set-process-status!   % request-id :progress)
              ; Set request activity
-             (r core/set-process-activity! % request-id :active)
+             (r x.core/set-process-activity! % request-id :active)
              ; Set request progress
              ; Szükséges a process-progress értékét nullázni!
              ; A szerver-válasz megérkezése után a process-progress értéke 100%-on marad.
-             (r core/set-process-progress! % request-id 0)))
+             (r x.core/set-process-progress! % request-id 0)))
 
 (defn send-request!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -162,5 +162,5 @@
              :store-request-props!     (as-> % (r store-request-props!     % request-id request-props))
              :store-request-sent-time! (as-> % (r store-request-sent-time! % request-id request-props))
              :reset-request-process!   (as-> % (r reset-request-process!   % request-id request-props))
-             display-progress?         (as-> % (r ui/listen-to-process!    % request-id))
-             lock-screen?              (as-> % (r ui/lock-screen!          % request-id))))
+             display-progress?         (as-> % (r x.ui/listen-to-process!  % request-id))
+             lock-screen?              (as-> % (r x.ui/lock-screen!        % request-id))))

@@ -17,7 +17,7 @@
               [time.api                :as time]
               [x.app-ui.bubbles.config :as bubbles.config]
               [x.app-ui.renderer       :as renderer]
-              [x.app-user.api          :as user]))
+              [x.app-user.api          :as x.user]))
 
 
 
@@ -39,7 +39,7 @@
   ;
   ; @return (boolean)
   [db _]
-  (r user/get-user-settings-item db :notification-bubbles-enabled?))
+  (r x.user/get-user-settings-item db :notification-bubbles-enabled?))
 
 (defn bubble-lifetime-elapsed?
   ; WARNING! NON-PUBLIC! DO NOT USE!

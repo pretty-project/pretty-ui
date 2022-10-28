@@ -17,7 +17,7 @@
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.events  :as route-handler.events]
               [x.app-router.route-handler.subs    :as route-handler.subs]
-              [x.app-views.api                    :as views]))
+              [x.app-views.api                    :as x.views]))
 
 
 
@@ -78,7 +78,7 @@
   ; @param (keyword) route-id
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-id route-string]]
-      (let [login-screen (r views/get-login-screen db)]
+      (let [login-screen (r x.views/get-login-screen db)]
            {:dispatch-n [[:boot-loader/set-restart-target! route-string]
                          login-screen]})))
 

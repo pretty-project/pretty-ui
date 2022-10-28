@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.sample
-    (:require [x.boot-loader.api :as boot-loader]))
+    (:require [x.boot-loader.api :as x.boot-loader]))
 
 
 
@@ -22,7 +22,7 @@
 
 (defn start-my-server!
   []
-  (boot-loader/start-server! {}))
+  (x.boot-loader/start-server! {}))
 
 
 
@@ -38,6 +38,6 @@
 ;     értéket használja.
 (defn start-my-server!
   []
-  (boot-loader/start-server! {:dev-mode? true
-                              :join?     true
-                              :port      420}))
+  (x.boot-loader/start-server! {:dev-mode? true
+                                :join?     true
+                                :port      420}))

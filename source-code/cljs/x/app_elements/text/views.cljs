@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy               :refer [return]]
               [mid-fruits.random              :as random]
               [mid-fruits.string              :as string]
-              [x.app-components.api           :as components]
+              [x.app-components.api           :as x.components]
               [x.app-elements.label.views     :as label.views]
               [x.app-elements.text.helpers    :as text.helpers]
               [x.app-elements.text.prototypes :as text.prototypes]))
@@ -45,7 +45,7 @@
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   [:div.x-text--placeholder {:data-selectable false}
-                            (if placeholder (components/content placeholder)
+                            (if placeholder (x.components/content placeholder)
                                             "\u00A0")])
 
 (defn- text-content-rows
@@ -63,7 +63,7 @@
   ; @param (map) text-props
   ;  {:content (metamorphic-content)}
   [_ {:keys [content]}]
-  (let [content (components/content content)]
+  (let [content (x.components/content content)]
        (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
                                           (conj %1 [:br] %3)))]
               (if (string? content)
@@ -84,10 +84,10 @@
   [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
                      ; BUG#3400
                      ; Az empty? függvény alkalmazása előtt az str függvényt
-                     ; szükséges használni, különben ha a components/content
+                     ; szükséges használni, különben ha a x.components/content
                      ; függvény kimenete integer típusú, akkor az empty?
                      ; függvény hibát dob!
-                     (if (-> content components/content str empty?)
+                     (if (-> content x.components/content str empty?)
                          [text-placeholder text-id text-props]
                          [text-content     text-id text-props])])
 

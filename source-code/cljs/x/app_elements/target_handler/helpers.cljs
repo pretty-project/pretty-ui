@@ -15,7 +15,7 @@
 (ns x.app-elements.target-handler.helpers
     (:require [mid-fruits.candy      :refer [param]]
               [mid-fruits.hiccup     :as hiccup]
-              [x.app-environment.api :as environment]))
+              [x.app-environment.api :as x.environment]))
 
 
 
@@ -46,7 +46,7 @@
   ;
   ; @return (boolean)
   [element-id]
-  (-> element-id element-id->target-id environment/element-disabled?))
+  (-> element-id element-id->target-id x.environment/element-disabled?))
 
 (defn element-id->target-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,4 +55,4 @@
   ;
   ; @return (boolean)
   [element-id]
-  (-> element-id element-id->target-id environment/element-enabled?))
+  (-> element-id element-id->target-id x.environment/element-enabled?))

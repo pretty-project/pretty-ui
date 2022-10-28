@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                          :refer [param return]]
               [mid-fruits.random                         :as random]
               [re-frame.api                              :as r]
-              [x.app-components.api                      :as components]
+              [x.app-components.api                      :as x.components]
               [x.app-elements.engine.api                 :as engine]
               [x.app-elements.element.helpers            :as element.helpers]
               [x.app-elements.preset-handler.icon-button :as preset-handler.icon-button]))
@@ -59,7 +59,7 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-icon-button--label (components/content label)]))
+  (if label [:div.x-icon-button--label (x.components/content label)]))
 
 (defn- icon-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,7 +91,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id {:keys [tooltip] :as button-props}]
-  [:div.x-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (components/content {:content tooltip})}))
+  [:div.x-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (x.components/content {:content tooltip})}))
                       [icon-button-body          button-id button-props]])
 
 (defn- stated-element

@@ -14,7 +14,7 @@
 
 (ns x.app-ui.themes.events
     (:require [re-frame.api   :refer [r]]
-              [x.app-user.api :as user]))
+              [x.app-user.api :as x.user]))
 
 
 
@@ -28,4 +28,4 @@
   ;
   ; @return (map)
   [db [_ theme-id]]
-  (r user/set-user-settings-item! db :selected-theme theme-id))
+  (r x.user/set-user-settings-item! db :selected-theme theme-id))

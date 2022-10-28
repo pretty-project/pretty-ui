@@ -14,7 +14,7 @@
 
 (ns x.server-router.sample
     (:require [server-fruits.http :as http]
-              [x.server-core.api  :as core]))
+              [x.server-core.api  :as x.core]))
 
 
 
@@ -119,7 +119,7 @@
 
 ; A szerver inicializálásakor szükséges beállítani a :method-not-allowed, :not-acceptable
 ; és :not-found alapértelmezett kezelőket!
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-init {:dispatch-n [[:router/set-default-route! :method-not-allowed {}]
                                  [:router/set-default-route! :not-acceptable     {}]
                                  [:router/set-default-route! :not-found          {}]]}})
@@ -129,10 +129,10 @@
 ;; -- Útvonal(ak) hozzáadása --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; - A [:router/add-route! ...] eseményeket {:on-server-boot ...} időzítéssel hívd meg!
-; - A [:router/add-route! ...] eseményeket meghívhatod route-id azonosító megadásával
-;   vagy anélkül (csak az útvonal tulajdonságait tartalmazó route-props térkép átadásával)
-(core/reg-lifecycles! ::lifecycles
+; A [:router/add-route! ...] eseményeket {:on-server-boot ...} időzítéssel hívd meg!
+; A [:router/add-route! ...] eseményeket meghívhatod route-id azonosító megadásával
+; vagy anélkül (csak az útvonal tulajdonságait tartalmazó route-props térkép átadásával)
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {}]
                                  [:router/add-route! :my-route {}]]}})
 
@@ -144,7 +144,7 @@
 ; Az általad megadott route-id azonosítóval rendelkező útvonalakat könnyebb átlátni
 ; hibakereséskor, illetve lehetséges felülírni a rendszer által hozzáadott útvonalakat,
 ; ha megegyező azonosítóval adsz hozzá útvonalat (pl. :page-not-found, ...)
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot [:router/add-route! :page-not-found {}]})
 
 
@@ -156,7 +156,7 @@
 ; egy tetszőleges útvonalra, akkor az útvonalak {:route-template "/..."} tulajdonságainak
 ; értékében az "/@app-home/..." formula használatával hivatkozhatsz az {:app-home "/..."}
 ; értékére.
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"}]
                                  [:router/add-route! {:route-template "/@app-home/your-route"}]]}})
 
@@ -166,7 +166,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; A {:js-build "..."} tulajdonság átadásával az alapbeállítástól eltérő JS build is használható.
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get {:handler #(my-handler %)}
                                                       :js-build :my-build}]
@@ -181,7 +181,7 @@
 
 ; A {:restricted? true} tulajdonság beállításával az útvonalak kiszolgálása
 ; és az útvonalak eseményeinek lefutásához a felhasználó azonosítása szükséges.
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get  {:handler #(my-handler %)}
                                                       :restricted? true}]
@@ -199,6 +199,6 @@
 
 ; Az {:add-to-sitemap? true} beállítás használatával az útvonal hozzáadódik
 ; a /sitemap.xml fájlban kiszolgált webhelytérképhez.
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot [:router/add-route! {:route-template "/my-route"}
                                        :add-to-sitemap? true]})

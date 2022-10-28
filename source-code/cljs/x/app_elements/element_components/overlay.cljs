@@ -15,7 +15,7 @@
 (ns x.app-elements.element-components.overlay
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
-              [x.app-components.api      :as components]
+              [x.app-components.api      :as x.components]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -47,7 +47,7 @@
   ;  {:content (metamorphic-content)}
   [overlay-id {:keys [content] :as overlay-props}]
   [:div.x-overlay (engine/element-attributes overlay-id overlay-props)
-                  [components/content overlay-id content]])
+                  [x.components/content overlay-id content]])
 
 (defn element
   ; @param (keyword)(opt) overlay-id

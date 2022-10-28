@@ -20,7 +20,7 @@
               [plugins.item-lister.items.events     :as items.events]
               [plugins.item-lister.selection.events :as selection.events]
               [re-frame.api                         :refer [r]]
-              [x.app-ui.api                         :as ui]))
+              [x.app-ui.api                         :as x.ui]))
 
 
 
@@ -56,7 +56,7 @@
   [db [_ lister-id]]
   (as-> db % (r backup.events/backup-selected-items!     % lister-id)
              (r selection.events/disable-selected-items! % lister-id)
-             (r ui/fake-process!                         % 15)))
+             (r x.ui/fake-process!                       % 15)))
 
 (defn delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

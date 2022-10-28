@@ -16,7 +16,7 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [plugins.item-editor.transfer.subs :as transfer.subs]
               [re-frame.api                      :refer [r]]
-              [x.app-router.api                  :as router]))
+              [x.app-router.api                  :as x.router]))
 
 
 
@@ -69,7 +69,7 @@
   ;
   ; @return (string)
   [db [_ _]]
-  (if-let [item-id (r router/get-current-route-path-param db :item-id)]
+  (if-let [item-id (r x.router/get-current-route-path-param db :item-id)]
           (return item-id)))
 
 (defn get-derived-view-id
@@ -79,5 +79,5 @@
   ;
   ; @return (keyword)
   [db [_ _]]
-  (if-let [view-id (r router/get-current-route-path-param db :view-id)]
+  (if-let [view-id (r x.router/get-current-route-path-param db :view-id)]
           (keyword view-id)))

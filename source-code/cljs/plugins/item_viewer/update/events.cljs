@@ -16,7 +16,7 @@
     (:require [plugins.item-viewer.backup.events :as backup.events]
               [plugins.item-viewer.core.subs     :as core.subs]
               [re-frame.api                      :refer [r]]
-              [x.app-ui.api                      :as ui]))
+              [x.app-ui.api                      :as x.ui]))
 
 
 
@@ -34,4 +34,4 @@
   ; visszaállításához.
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
        (as-> db % (r backup.events/backup-current-item! % viewer-id current-item-id)
-                  (r ui/fake-process!                   % 15))))
+                  (r x.ui/fake-process!                 % 15))))

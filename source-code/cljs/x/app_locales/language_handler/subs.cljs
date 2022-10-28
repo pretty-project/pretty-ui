@@ -15,8 +15,8 @@
 (ns x.app-locales.language-handler.subs
     (:require [mid-fruits.vector :as vector]
               [re-frame.api      :as r :refer [r]]
-              [x.app-core.api    :as core]
-              [x.app-user.api    :as user]))
+              [x.app-core.api    :as x.core]
+              [x.app-user.api    :as x.user]))
 
 
 
@@ -29,7 +29,7 @@
   ;
   ; @return (keywords in vector)
   [db _]
-  (let [app-languages (r core/get-app-config-item db :app-languages)]
+  (let [app-languages (r x.core/get-app-config-item db :app-languages)]
        (reduce conj [] app-languages)))
 
 (defn app-multilingual?
@@ -47,7 +47,7 @@
   ;
   ; @return (keyword)
   [db _]
-  (r user/get-user-settings-item db :selected-language))
+  (r x.user/get-user-settings-item db :selected-language))
 
 
 

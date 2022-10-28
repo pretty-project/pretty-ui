@@ -16,11 +16,11 @@
     (:require [mid-fruits.candy                  :refer [return]]
               [mid-fruits.string                 :as string]
               [re-frame.api                      :as r]
-              [x.app-components.api              :as components]
+              [x.app-components.api              :as x.components]
               [x.app-elements.element.helpers    :as element.helpers]
               [x.app-elements.select.config      :as select.config]
               [x.app-elements.text-field.helpers :as text-field.helpers]
-              [x.app-environment.api             :as environment]))
+              [x.app-environment.api             :as x.environment]))
 
 
 
@@ -71,8 +71,8 @@
   ; XXX#51910 (x.app-elements.combo-box.helpers)
   (let [field-content (text-field.helpers/get-field-content :elements.select/option-field)
         option-label  (option-label-f option)]
-       (and (string/not-pass-with? (components/content option-label) field-content {:case-sensitive? false})
-            (string/starts-with?   (components/content option-label) field-content {:case-sensitive? false}))))
+       (and (string/not-pass-with? (x.components/content option-label) field-content {:case-sensitive? false})
+            (string/starts-with?   (x.components/content option-label) field-content {:case-sensitive? false}))))
 
 
 
@@ -118,7 +118,7 @@
                       :data-border-color (if required-warning? :warning :highlight)}
                      {:data-clickable    true
                       :on-click          #(r/dispatch on-click)
-                      :on-mouse-up       #(environment/blur-element!)
+                      :on-mouse-up       #(x.environment/blur-element!)
                       :data-border-color (if required-warning? :warning :highlight)})))
 
 
@@ -142,4 +142,4 @@
         on-click         [:elements.select/select-option! select-id select-props option]]
        {:data-selected option-selected?
         :on-click     #(r/dispatch on-click)
-        :on-mouse-up  #(environment/blur-element!)}))
+        :on-mouse-up  #(x.environment/blur-element!)}))

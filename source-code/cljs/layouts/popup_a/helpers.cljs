@@ -15,7 +15,7 @@
 (ns layouts.popup-a.helpers
     (:require [layouts.popup-a.state :as state]
               [mid-fruits.hiccup     :as hiccup]
-              [x.app-environment.api :as environment]))
+              [x.app-environment.api :as x.environment]))
 
 
 
@@ -52,14 +52,14 @@
   [popup-id]
   (letfn [(f [intersecting?] (if intersecting? (swap! state/HEADER-SHADOW-VISIBLE? dissoc popup-id)
                                                (swap! state/HEADER-SHADOW-VISIBLE? assoc  popup-id true)))]
-         (environment/setup-intersection-observer! (hiccup/value popup-id "header-sensor") f)))
+         (x.environment/setup-intersection-observer! (hiccup/value popup-id "header-sensor") f)))
 
 (defn header-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (environment/remove-intersection-observer! (hiccup/value popup-id "header-sensor")))
+  (x.environment/remove-intersection-observer! (hiccup/value popup-id "header-sensor")))
 
 
 
@@ -73,11 +73,11 @@
   [popup-id]
   (letfn [(f [intersecting?] (if intersecting? (swap! state/FOOTER-SHADOW-VISIBLE? dissoc popup-id)
                                                (swap! state/FOOTER-SHADOW-VISIBLE? assoc  popup-id true)))]
-         (environment/setup-intersection-observer! (hiccup/value popup-id "footer-sensor") f)))
+         (x.environment/setup-intersection-observer! (hiccup/value popup-id "footer-sensor") f)))
 
 (defn footer-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (environment/remove-intersection-observer! (hiccup/value popup-id "footer-sensor")))
+  (x.environment/remove-intersection-observer! (hiccup/value popup-id "footer-sensor")))

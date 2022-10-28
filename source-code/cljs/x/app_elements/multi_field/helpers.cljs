@@ -17,7 +17,7 @@
               [mid-fruits.hiccup              :as hiccup]
               [mid-fruits.vector              :as vector]
               [re-frame.api                   :as r]
-              [x.app-components.api           :as components]
+              [x.app-components.api           :as x.components]
               [x.app-elements.element.helpers :as element.helpers]))
 
 
@@ -89,7 +89,7 @@
         (return label)
         ; Multi-field label
         (and label (group-props->multi-field? group-id group-props field-dex))
-        (components/content {:content label :suffix (str " #" (inc field-dex))})))
+        (x.components/content {:content label :suffix (str " #" (inc field-dex))})))
 
 (defn field-dex->end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -17,7 +17,7 @@
               [plugins.item-viewer.core.helpers    :as core.helpers]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
-              [x.app-components.api                :as components]))
+              [x.app-components.api                :as x.components]))
 
 
 
@@ -30,7 +30,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (if-let [ghost-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
-          [components/content ghost-element]))
+          [x.components/content ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (if-let [error-element @(r/subscribe [:item-lister/get-body-prop viewer-id :error-element])]
-          [components/content error-element]))
+          [x.components/content error-element]))
 
 (defn- item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (let [item-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :item-element])]
-       [components/content item-element]))
+       [x.components/content item-element]))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -14,7 +14,7 @@
 
 (ns x.app-elements.expandable.views
     (:require [mid-fruits.random                    :as random]
-              [x.app-components.api                 :as components]
+              [x.app-components.api                 :as x.components]
               [x.app-elements.expandable.helpers    :as expandable.helpers]
               [x.app-elements.expandable.prototypes :as expandable.prototypes]))
 
@@ -51,7 +51,7 @@
   ; @param (map) expandable-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-expandable--label (components/content label)]))
+  (if label [:div.x-expandable--label (x.components/content label)]))
 
 (defn- expandable-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,7 +72,7 @@
   ;  {:content (metamorphic-content)(opt)}
   [expandable-id {:keys [content]}]
   (if (expandable.helpers/expanded? expandable-id)
-      [:div.x-expandable--body [components/content expandable-id content]]))
+      [:div.x-expandable--body [x.components/content expandable-id content]]))
 
 (defn expandable
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.engine.stated-element
-    (:require [x.app-components.api          :as components]
-              [x.app-db.api                  :as db]
+    (:require [x.app-components.api          :as x.components]
               [x.app-elements.engine.element :as element]))
 
 
@@ -83,12 +82,12 @@
                :as context-props}]
   (let [initial-props      (element-props->initial-props element-props)
         element-props-path [:elements/primary :data-items element-id]]
-       [components/stated element-id
-                          {:base-props         element-props
-                           :destructor         destructor
-                           :initial-props      initial-props
-                           :initial-props-path element-props-path
-                           :initializer        initializer
-                           :modifier           modifier
-                           :render-f           render-f
-                           :subscriber         subscriber}]))
+       [x.components/stated element-id
+                            {:base-props         element-props
+                             :destructor         destructor
+                             :initial-props      initial-props
+                             :initial-props-path element-props-path
+                             :initializer        initializer
+                             :modifier           modifier
+                             :render-f           render-f
+                             :subscriber         subscriber}]))

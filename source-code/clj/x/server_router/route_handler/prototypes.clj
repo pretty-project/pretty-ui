@@ -15,7 +15,7 @@
 (ns x.server-router.route-handler.prototypes
     (:require [mid-fruits.candy                      :refer [param return]]
               [re-frame.api                          :refer [r]]
-              [x.server-core.api                     :as core]
+              [x.server-core.api                     :as x.core]
               [x.server-router.route-handler.config  :as route-handler.config]
               [x.server-router.route-handler.helpers :as route-handler.helpers]))
 
@@ -67,7 +67,7 @@
   ;   :post (map)
   ;   :route-parent (string)}
   [db [_ _ {:keys [get post restricted? route-parent] :as route-props}]]
-  (let [app-home (r core/get-app-config-item db :app-home)]
+  (let [app-home (r x.core/get-app-config-item db :app-home)]
        (merge {:js-build route-handler.config/DEFAULT-JS-BUILD}
               (param route-props)
               (if route-parent {:route-parent (route-handler.helpers/resolve-variable-route-string route-parent app-home)})

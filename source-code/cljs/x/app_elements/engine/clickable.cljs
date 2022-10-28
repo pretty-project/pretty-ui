@@ -17,10 +17,9 @@
               [mid-fruits.candy                      :refer [param]]
               [mid-fruits.map                        :as map]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-components.api                  :as components]
               [x.app-elements.engine.element         :as element]
               [x.app-elements.target-handler.helpers :as target-handler.helpers]
-              [x.app-environment.api                 :as environment]))
+              [x.app-environment.api                 :as x.environment]))
 
 
 
@@ -57,10 +56,10 @@
                                       ; hívható meg.
                                       :on-click #(do (if stop-propagation? (dom/stop-propagation! %))
                                                      (r/dispatch on-click))
-                                      :on-mouse-up #(environment/blur-element!)}
+                                      :on-mouse-up #(x.environment/blur-element!)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
                                                                                (r/dispatch on-right-click)
-                                                                               (environment/blur-element!))}))))
+                                                                               (x.environment/blur-element!))}))))
 
 
 

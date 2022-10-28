@@ -14,7 +14,7 @@
 
 (ns x.app-elements.blank.views
     (:require [mid-fruits.random               :as random]
-              [x.app-components.api            :as components]
+              [x.app-components.api            :as x.components]
               [x.app-elements.blank.helpers    :as blank.helpers]
               [x.app-elements.blank.prototypes :as blank.prototypes]))
 
@@ -31,7 +31,7 @@
   ;  {}
   [blank-id {:keys [content] :as blank-props}]
   [:div.x-blank--body (blank.helpers/blank-body-attributes blank-id blank-props)
-                      [components/content content]])
+                      [x.components/content content]])
 
 (defn- blank
   ; WARNING! NON-PUBLIC! DO NOT USE!

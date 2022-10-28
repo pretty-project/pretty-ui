@@ -15,7 +15,7 @@
 (ns x.boot-loader.subs
     (:require [mid-fruits.candy :refer [param return]]
               [re-frame.api     :refer [r]]
-              [x.app-core.api   :as core]))
+              [x.app-core.api   :as x.core]))
 
 
 
@@ -27,4 +27,4 @@
   [db _]
   (if-let [restart-target (get-in db [:boot-loader :restart-handler/meta-items :restart-target])]
           (return restart-target)
-          (r core/get-app-config-item db :app-home)))
+          (r x.core/get-app-config-item db :app-home)))

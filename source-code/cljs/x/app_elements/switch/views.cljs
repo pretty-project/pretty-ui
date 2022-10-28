@@ -15,7 +15,7 @@
 (ns x.app-elements.switch.views
     (:require [mid-fruits.random                :as random]
               [reagent.api                      :as reagent]
-              [x.app-components.api             :as components]
+              [x.app-components.api             :as x.components]
               [x.app-elements.input.helpers     :as input.helpers]
               [x.app-elements.label.views       :as label.views]
               [x.app-elements.switch.helpers    :as switch.helpers]
@@ -35,7 +35,7 @@
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.x-switch--option-helper (components/content option-helper)])))
+                           [:div.x-switch--option-helper (x.components/content option-helper)])))
 
 (defn- switch-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.x-switch--option-label (components/content option-label)]))
+       [:div.x-switch--option-label (x.components/content option-label)]))
 
 (defn- switch-option-content
   ; WARNING! NON-PUBLIC! DO NOT USE!

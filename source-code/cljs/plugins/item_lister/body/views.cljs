@@ -19,7 +19,7 @@
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
-              [x.app-components.api                :as components]
+              [x.app-components.api                :as x.components]
               [x.app-elements.api                  :as elements]))
 
 
@@ -75,7 +75,7 @@
           (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
                 data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
                (if-not (and all-items-downloaded? data-received?)
-                       [components/content ghost-element]))))
+                       [x.components/content ghost-element]))))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +83,7 @@
   ; @param (keyword) lister-id
   [lister-id]
   (if-let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
-          [components/content error-element]))
+          [x.components/content error-element]))
 
 (defn list-element
   ; WARNING! NON-PUBLIC! DO NOT USE!

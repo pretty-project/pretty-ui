@@ -14,10 +14,10 @@
 
 (ns x.server-ui.head.prototypes
     (:require [re-frame.api             :as r]
-              [x.server-core.api        :as core]
-              [x.server-environment.api :as environment]
-              [x.server-router.api      :as router]
-              [x.server-user.api        :as user]))
+              [x.server-core.api        :as x.core]
+              [x.server-environment.api :as x.environment]
+              [x.server-router.api      :as x.router]
+              [x.server-user.api        :as x.user]))
 
 
 
@@ -38,7 +38,7 @@
   [request head-props]
   (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config head-props
-              {:app-build         (core/app-build)
-               :js-build          (router/request->route-prop       request :js-build router/DEFAULT-JS-BUILD)
-               :crawler-rules     (environment/crawler-rules        request)
-               :selected-language (user/request->user-settings-item request :selected-language)})))
+              {:app-build         (x.core/app-build)
+               :js-build          (x.router/request->route-prop       request :js-build x.router/DEFAULT-JS-BUILD)
+               :crawler-rules     (x.environment/crawler-rules        request)
+               :selected-language (x.user/request->user-settings-item request :selected-language)})))

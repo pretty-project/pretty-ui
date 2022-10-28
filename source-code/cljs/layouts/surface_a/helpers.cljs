@@ -15,7 +15,7 @@
 (ns layouts.surface-a.helpers
     (:require [layouts.surface-a.state :as state]
               [reagent.api             :as reagent]
-              [x.app-environment.api   :as environment]))
+              [x.app-environment.api   :as x.environment]))
 
 
 
@@ -48,12 +48,12 @@
   (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-TITLE-VISIBLE? false)
                                                (reset! state/HEADER-TITLE-VISIBLE? true)))]
          (reset! state/HEADER-TITLE title)
-         (environment/setup-intersection-observer! "surface-a--title-sensor" f)))
+         (x.environment/setup-intersection-observer! "surface-a--title-sensor" f)))
 
 (defn title-sensor-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (environment/remove-intersection-observer! "surface-a--title-sensor"))
+  (x.environment/remove-intersection-observer! "surface-a--title-sensor"))
 
 (defn title-sensor-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,9 +78,9 @@
   []
   (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-SHADOW-VISIBLE? false)
                                                (reset! state/HEADER-SHADOW-VISIBLE? true)))]
-         (environment/setup-intersection-observer! "surface-a--header-sensor" f)))
+         (x.environment/setup-intersection-observer! "surface-a--header-sensor" f)))
 
 (defn header-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (environment/remove-intersection-observer! "surface-a--header-sensor"))
+  (x.environment/remove-intersection-observer! "surface-a--header-sensor"))

@@ -20,11 +20,11 @@
               [mid-fruits.string                :as string]
               [re-frame.api                     :as r]
               [time.api                         :as time]
-              [x.app-components.api             :as components]
+              [x.app-components.api             :as x.components]
               [x.app-elements.element.helpers   :as element.helpers]
               [x.app-elements.text-field.config :as text-field.config]
               [x.app-elements.text-field.state  :as text-field.state]
-              [x.app-environment.api            :as environment]))
+              [x.app-environment.api            :as x.environment]))
 
 
 
@@ -85,7 +85,7 @@
   ; @return (boolean)
   [field-id]
   (let [field-input-id (hiccup/value field-id "input")]
-       (environment/element-enabled? field-input-id)))
+       (x.environment/element-enabled? field-input-id)))
 
 (defn field-emptiable?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -334,12 +334,12 @@
   (merge {:data-clickable  true
           :data-selectable false
           :on-mouse-down #(.preventDefault %)
-          :title          (components/content tooltip)}
+          :title          (x.components/content tooltip)}
          (if     icon         {:data-icon-family icon-family})
          (if     disabled?    {:disabled   "1" :data-disabled true})
          (if-not tab-indexed? {:tab-index "-1"})
          (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
-                                                 (environment/blur-element!))})))
+                                                 (x.environment/blur-element!))})))
 
 (defn adornment-placeholder-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

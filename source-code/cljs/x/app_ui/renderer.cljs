@@ -25,7 +25,7 @@
               [re-frame.api       :as r :refer [r]]
               [reagent.api        :as reagent]
               [time.api           :as time]
-              [x.app-db.api       :as db]
+              [x.app-db.api       :as x.db]
               [x.app-ui.engine    :as engine]))
 
 
@@ -767,8 +767,8 @@
   (let [data-items-key (engine/data-key renderer-id :data-items)
         data-order-key (engine/data-key renderer-id :data-order)]
        (as-> db % (r update-render-log! % renderer-id  element-id :rendered-at)
-                  (r db/set-item!       % [:ui data-items-key element-id] element-props)
-                  (r db/apply-item!     % [:ui data-order-key] vector/move-item-to-last element-id))))
+                  (r x.db/set-item!     % [:ui data-items-key element-id] element-props)
+                  (r x.db/apply-item!   % [:ui data-order-key] vector/move-item-to-last element-id))))
 
 (defn- remove-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -780,7 +780,7 @@
   [db [_ renderer-id element-id]]
   (let [data-items-key (engine/data-key renderer-id :data-items)]
        (as-> db % (r update-render-log! % renderer-id  element-id :props-removed-at)
-                  (r db/remove-item!    % [:ui data-items-key element-id]))))
+                  (r x.db/remove-item!  % [:ui data-items-key element-id]))))
 
 (r/reg-event-db :ui/remove-element! remove-element!)
 
@@ -795,7 +795,7 @@
   [db [_ renderer-id element-id element-props]]
   (let [data-items-key (engine/data-key renderer-id :data-items)]
        (as-> db % (r update-render-log! % renderer-id element-id :updated-at)
-                  (r db/set-item!       % [:ui data-items-key element-id] element-props))))
+                  (r x.db/set-item!     % [:ui data-items-key element-id] element-props))))
 
 (defn set-element-prop!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -909,9 +909,9 @@
       (let [data-items-key (engine/data-key renderer-id :data-items)
             data-order-key (engine/data-key renderer-id :data-order)
             meta-items-key (engine/data-key renderer-id :meta-items)]
-           {:db (as-> db % (r db/set-item! % [:ui data-items-key] {})
-                           (r db/set-item! % [:ui data-order-key] [])
-                           (r db/set-item! % [:ui meta-items-key] renderer-props))})))
+           {:db (as-> db % (r x.db/set-item! % [:ui data-items-key] {})
+                           (r x.db/set-item! % [:ui data-order-key] [])
+                           (r x.db/set-item! % [:ui meta-items-key] renderer-props))})))
 
 (r/reg-event-fx :ui/destruct-renderer!
   ; WARNING! NON-PUBLIC! DO NOT USE!

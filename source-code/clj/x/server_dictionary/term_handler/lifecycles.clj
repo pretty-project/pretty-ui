@@ -14,12 +14,12 @@
 
 (ns x.server-dictionary.term-handler.lifecycles
     (:require [x.mid-dictionary.books :refer [BOOKS]]
-              [x.server-core.api      :as core]))
+              [x.server-core.api      :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-init [:dictionary/add-terms! BOOKS]})

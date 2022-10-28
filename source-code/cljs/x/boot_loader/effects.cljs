@@ -14,9 +14,9 @@
 
 (ns x.boot-loader.effects
     (:require [re-frame.api       :as r :refer [r]]
-              [x.app-core.api     :as core]
-              [x.app-router.api   :as router]
-              [x.app-user.api     :as user]
+              [x.app-core.api     :as x.core]
+              [x.app-router.api   :as x.router]
+              [x.app-user.api     :as x.user]
               [x.boot-loader.subs :as subs]))
 
 
@@ -27,7 +27,7 @@
 (r/reg-event-fx :boot-loader/refresh-app!
   ; Az aktuális route-ot újraindítás utáni útvonalként használva, elindítja a [:boot-loader/restart-app! ...] eseményt.
   (fn [{:keys [db]} _]
-      (let [current-route-string (r router/get-current-route-string db)]
+      (let [current-route-string (r x.router/get-current-route-string db)]
            [:boot-loader/restart-app! {:restart-target current-route-string}])))
 
 (r/reg-event-fx :boot-loader/restart-app!
@@ -72,7 +72,7 @@
   (fn [{:keys [db]} [_ app]]
       {; 1. Az inicializálási események meghívása
        ;    (Dispatch on-app-init events)
-       :dispatch-n (r core/get-period-events db :on-app-init)
+       :dispatch-n (r x.core/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció betöltésének folytatása
        :dispatch-later [{:ms 100 :dispatch [:boot-loader/boot-app! app]}]}))
 
@@ -86,7 +86,7 @@
   (fn [{:keys [db]} [_ app]]
        ; 1. Az indítási események meghívása
        ;    (Dispatch on-app-boot events)
-      {:dispatch-n (r core/get-period-events db :on-app-boot)
+      {:dispatch-n (r x.core/get-period-events db :on-app-boot)
        ; 2. Az indítási események lefutása után az applikáció betöltésének folytatása
        :dispatch-later [{:ms 100 :dispatch [:boot-loader/build-app! app]}]}))
 
@@ -102,7 +102,7 @@
        :fx [:boot-loader/render-app! app]
        ; 2. Ha a felhasználó nem vendégként lett azonosítva, akkor a bejelentkezési események meghívása
        ;    (Dispatch on-login events)
-       :dispatch-if [(r user/user-identified? db) [:core/login-app!]]
+       :dispatch-if [(r x.user/user-identified? db) [:core/login-app!]]
        ; ...
        :dispatch-later
        [; 3. Az applikáció renderelése utáni események meghívása
@@ -118,7 +118,7 @@
        :dispatch [:router/dispatch-current-route!]
        ; 2. Az applikáció renderelése utáni események meghívása
        ;    (Dispatch on-app-launch events)
-       :dispatch-n (r core/get-period-events db :on-app-launch)}))
+       :dispatch-n (r x.core/get-period-events db :on-app-launch)}))
 
 (r/reg-event-fx :boot-loader/app-synchronized
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,7 +129,7 @@
   ; @usage
   ;  [:boot-loader/app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
-      (let [app-build (r core/get-app-config-item db :app-build)]
+      (let [app-build (r x.core/get-app-config-item db :app-build)]
            {:dispatch-n [; 1.
                          [:environment/set-cookie! :x-app-build {:value app-build}]
                          ; 2.

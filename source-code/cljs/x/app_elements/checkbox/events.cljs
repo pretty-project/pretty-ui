@@ -15,7 +15,7 @@
 (ns x.app-elements.checkbox.events
     (:require [mid-fruits.vector           :as vector]
               [re-frame.api                :as r :refer [r]]
-              [x.app-db.api                :as db]
+              [x.app-db.api                :as x.db]
               [x.app-elements.input.events :as input.events]
               [x.app-elements.input.subs   :as input.subs]))
 
@@ -61,8 +61,8 @@
         option-value (option-value-f option)]
        (as-> db % (r input.events/mark-as-visited! % checkbox-id)
                   (if (vector/min? options 2)
-                      (r db/apply-item!        % value-path vector/toggle-item option-value)
-                      (r db/toggle-item-value! % value-path                    option-value)))))
+                      (r x.db/apply-item!        % value-path vector/toggle-item option-value)
+                      (r x.db/toggle-item-value! % value-path                    option-value)))))
 
 
 

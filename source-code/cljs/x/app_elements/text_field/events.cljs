@@ -17,11 +17,11 @@
               [mid-fruits.map               :refer [dissoc-in]]
               [mid-fruits.string            :as string]
               [re-frame.api                 :as r :refer [r]]
-              [x.app-db.api                 :as db]
+              [x.app-db.api                 :as x.db]
               [x.app-elements.input.events  :as input.events]
               [x.app-elements.input.helpers :as input.helpers]
               [x.app-elements.input.subs    :as input.subs]
-              [x.app-environment.api        :as environment]))
+              [x.app-environment.api        :as x.environment]))
 
 
 
@@ -106,8 +106,8 @@
   [db [_ _ {:keys [field-value-f value-path]} field-content]]
   (let [field-value (field-value-f field-content)]
        (if (input.helpers/value-path->vector-item? value-path)
-           (r db/set-vector-item! db value-path field-value)
-           (r db/set-item!        db value-path field-value))))
+           (r x.db/set-vector-item! db value-path field-value)
+           (r x.db/set-item!        db value-path field-value))))
 
 
 
@@ -139,7 +139,7 @@
   (as-> db % (r input.events/mark-as-blurred! % field-id field-props)
              (r input.events/mark-as-visited! % field-id field-props)
              (r hide-surface!                 % field-id)
-             (r environment/quit-type-mode!   %)))
+             (r x.environment/quit-type-mode! %)))
 
 (defn field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -152,7 +152,7 @@
   [db [_ field-id {:keys [autofocus?] :as field-props}]]
   (let [visited? (r input.subs/input-visited? db field-id)]
        (as-> db % (r input.events/mark-as-focused! % field-id field-props)
-                  (r environment/set-type-mode!    %)
+                  (r x.environment/set-type-mode!  %)
                   ; Az autofocus használatakor nem szükséges lenyitni a surface felületet!
                   (if (and autofocus? (not visited?))
                       (return          %)

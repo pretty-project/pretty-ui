@@ -21,7 +21,7 @@
               [mid-fruits.vector                   :as vector]
               [re-frame.api                        :as r]
               [x.app-elements.api                  :as elements]
-              [x.app-environment.api               :as environment]))
+              [x.app-environment.api               :as x.environment]))
 
 
 
@@ -50,7 +50,7 @@
                       [icon-button-label label true]]
                 [:button {:data-clickable true
                           :on-click    #(r/dispatch on-click)
-                          :on-mouse-up #(environment/blur-element!)
+                          :on-mouse-up #(x.environment/blur-element!)
                           :style {:display :block :padding "0 12px" :min-width "60px"}}
                          [:div.x-icon.x-element {:style {:width "100%"}}
                                                 [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
@@ -219,7 +219,7 @@
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        [:button {:data-clickable true :style {:display :block}
                  :on-click #(r/dispatch [:developer-tools.re-frame-browser/go-to! (vector/conj-item current-path map-key)])
-                 :on-mouse-up #(environment/blur-element!)}
+                 :on-mouse-up #(x.environment/blur-element!)}
                 (cond (string? map-key) (string/quotes map-key)
                       (nil?    map-key) (str           "nil")
                       :return           (str           map-key))]))

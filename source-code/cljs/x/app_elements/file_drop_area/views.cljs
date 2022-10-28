@@ -14,7 +14,7 @@
 
 (ns x.app-elements.file-drop-area.views
     (:require [mid-fruits.random                        :as random]
-              [x.app-components.api                     :as components]
+              [x.app-components.api                     :as x.components]
               [x.app-elements.file-drop-area.helpers    :as file-drop-area.helpers]
               [x.app-elements.file-drop-area.prototypes :as file-drop-area.prototypes]))
 
@@ -30,7 +30,7 @@
   ; @param (map) area-props
   ;  {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  [:div.x-file-drop-area--label (components/content label)])
+  [:div.x-file-drop-area--label (x.components/content label)])
 
 (defn- file-drop-area-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

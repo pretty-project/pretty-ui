@@ -14,7 +14,7 @@
 
 (ns plugins.item-editor.update.views
     (:require [re-frame.api :as r]
-              [x.app-ui.api :as ui]))
+              [x.app-ui.api :as x.ui]))
 
 
 
@@ -28,6 +28,6 @@
   ; @param (string) item-id
   [editor-id item-id]
   (let [undo-event [:item-editor/undo-discard-changes! editor-id item-id]]
-       [ui/state-changed-bubble-body :engines.item-editor/changes-discarded-dialog
-                                     {:label          :unsaved-changes-discarded
-                                      :primary-button {:label :restore! :on-click undo-event}}]))
+       [x.ui/state-changed-bubble-body :engines.item-editor/changes-discarded-dialog
+                                       {:label          :unsaved-changes-discarded
+                                        :primary-button {:label :restore! :on-click undo-event}}]))

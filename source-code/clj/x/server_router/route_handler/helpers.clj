@@ -21,7 +21,7 @@
               [server-fruits.http                   :as http]
               [x.mid-router.route-handler.helpers   :as route-handler.helpers]
               [x.server-router.route-handler.config :as route-handler.config]
-              [x.server-user.api                    :as user]))
+              [x.server-user.api                    :as x.user]))
 
 
 
@@ -141,6 +141,6 @@
   ;
   ; @return (function)
   [handler]
-  (fn [request] (if (user/request->authenticated? request)
-                    (handler                      request)
+  (fn [request] (if (x.user/request->authenticated? request)
+                    (handler                        request)
                     (http/error-wrap {:body :access-denied :status 403}))))

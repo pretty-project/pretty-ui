@@ -19,7 +19,7 @@
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-browser.items.subs    :as items.subs]
               [re-frame.api                       :refer [r]]
-              [x.app-ui.api                       :as ui]))
+              [x.app-ui.api                       :as x.ui]))
 
 
 
@@ -67,7 +67,7 @@
   [db [_ browser-id item-id]]
   (as-> db % (r backup.events/backup-item! % browser-id item-id)
              (r items.events/disable-item! % browser-id item-id)
-             (r ui/fake-process!           % 15)))
+             (r x.ui/fake-process!         % 15)))
 
 (defn delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!

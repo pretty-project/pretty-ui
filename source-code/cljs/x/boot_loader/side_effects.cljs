@@ -16,7 +16,7 @@
     (:require [dom.api      :as dom]
               [re-frame.api :as r]
               [reagent.api  :as reagent]
-              [x.app-ui.api :as ui]))
+              [x.app-ui.api :as x.ui]))
 
 
 
@@ -39,7 +39,7 @@
   ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
   ;  (render-app! #'app)
   [app]
-  (reagent/render [app #'ui/structure]
+  (reagent/render [app #'x.ui/structure]
                   (dom/get-element-by-id "x-app-container")))
 
 

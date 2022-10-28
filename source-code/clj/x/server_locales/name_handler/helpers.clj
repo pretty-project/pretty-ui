@@ -14,7 +14,7 @@
 
 (ns x.server-locales.name-handler.helpers
     (:require [x.mid-locales.name-handler.helpers   :as name-handler.helpers]
-              [x.server-user.api                    :as user]
+              [x.server-user.api                    :as x.user]
               [x.server-locales.name-handler.config :as name-handler.config]))
 
 
@@ -36,7 +36,7 @@
   ; @return (keyword)
   ;  :normal, :reversed
   [request]
-  (let [selected-language (user/request->user-settings-item request :selected-language)]
+  (let [selected-language (x.user/request->user-settings-item request :selected-language)]
        (get name-handler.config/NAME-ORDERS selected-language)))
 
 (defn request->ordered-user-name
@@ -47,7 +47,7 @@
   ;
   ; @return (string)
   [request]
-  (let [first-name        (user/request->user-profile-item  request :first-name)
-        last-name         (user/request->user-profile-item  request :last-name)
-        selected-language (user/request->user-settings-item request :selected-language)]
+  (let [first-name        (x.user/request->user-profile-item  request :first-name)
+        last-name         (x.user/request->user-profile-item  request :last-name)
+        selected-language (x.user/request->user-settings-item request :selected-language)]
        (name->ordered-name first-name last-name selected-language)))

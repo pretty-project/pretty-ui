@@ -17,7 +17,7 @@
               [mid-fruits.random                    :as random]
               [mid-fruits.vector                    :as vector]
               [re-frame.api                         :as r]
-              [x.app-components.api                 :as components]
+              [x.app-components.api                 :as x.components]
               [x.app-elements.chip-group.helpers    :as chip-group.helpers]
               [x.app-elements.chip-group.prototypes :as chip-group.prototypes]
               [x.app-elements.chip.views            :as chip.views]
@@ -35,7 +35,7 @@
   ; @param (map) group-props
   ;  {:no-chips-label (metamorphic-content)(opt)}
   [_ {:keys [no-chips-label]}]
-  (if no-chips-label [:div.x-chip-group--no-chips-label (components/content no-chips-label)]))
+  (if no-chips-label [:div.x-chip-group--no-chips-label (x.components/content no-chips-label)]))
 
 (defn- chip-group-chip
   ; WARNING! NON-PUBLIC! DO NOT USE!

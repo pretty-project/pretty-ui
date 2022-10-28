@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns layouts.surface-a.lifecycles
-    (:require [x.server-core.api :as core]))
+    (:require [x.server-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot [:environment/add-css! {:uri "/css/layouts/surface-a.css"}]})

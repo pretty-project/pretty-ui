@@ -31,7 +31,7 @@
               [reagent.api                  :refer [component?]]
               [re-frame.api                 :as r]
               [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-dictionary.api         :as dictionary]))
+              [x.app-dictionary.api         :as x.dictionary]))
 
 
 
@@ -109,7 +109,7 @@
   ;
   ; @return (string)
   [_ {:keys [content] :as context-props}]
-  (dictionary/looked-up content context-props))
+  (x.dictionary/looked-up content context-props))
 
 (defn- static-render-fn-content
   ; WARNING! NON-PUBLIC! DO NOT USE!

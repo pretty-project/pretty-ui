@@ -15,7 +15,7 @@
 (ns x.app-ui.progress-bar.subs
     (:require [mid-fruits.candy :refer [param return]]
               [re-frame.api     :as r :refer [r]]
-              [x.app-core.api   :as core]))
+              [x.app-core.api   :as x.core]))
 
 
 
@@ -42,7 +42,7 @@
   [db _]
   (let [fake-progress (get-in db [:ui :progress-bar/meta-items :fake-progress] 0)]
        (if-let [process-id (get-in db [:ui :progress-bar/meta-items :process-id])]
-               (let [process-progress (r core/get-process-progress db process-id)]
+               (let [process-progress (r x.core/get-process-progress db process-id)]
                     (max fake-progress process-progress))
                (return fake-progress))))
 
@@ -52,7 +52,7 @@
   ; @return (boolean)
   [db _]
   (if-let [process-id (get-in db [:ui :progress-bar/meta-items :process-id])]
-          (r core/process-failured? db process-id)))
+          (r x.core/process-failured? db process-id)))
 
 
 

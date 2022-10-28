@@ -14,7 +14,7 @@
 
 (ns x.app-router.route-handler.sample
     (:require [re-frame.api     :as r]
-              [x.app-router.api :as router]))
+              [x.app-router.api :as x.router]))
 
 
 

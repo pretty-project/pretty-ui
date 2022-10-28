@@ -19,7 +19,7 @@
               [mid-fruits.vector                    :as vector]
               [reagent.api                          :as reagent]
               [re-frame.api                         :as r]
-              [x.app-components.api                 :as components]
+              [x.app-components.api                 :as x.components]
               [x.app-elements.label.views           :as label.views]
               [x.app-elements.text-field.helpers    :as text-field.helpers]
               [x.app-elements.text-field.prototypes :as text-field.prototypes]))
@@ -62,7 +62,7 @@
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/static-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:div.x-field-adornments--static-adornment adornment-attributes icon]
-             label [:div.x-field-adornments--static-adornment adornment-attributes (components/content label)])))
+             label [:div.x-field-adornments--static-adornment adornment-attributes (x.components/content label)])))
 
 (defn field-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,7 +115,7 @@
   [field-id {:keys [surface]}]
   (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
                       [:div.x-text-field--surface {:on-mouse-down #(.preventDefault %)}
-                                                  [components/content field-id surface]])))
+                                                  [x.components/content field-id surface]])))
 
 
 
@@ -130,7 +130,7 @@
   [field-id field-props]
   (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:div.x-text-field--warning {:data-selectable false}
-                                      (components/content :please-fill-out-this-field)]))
+                                      (x.components/content :please-fill-out-this-field)]))
 
 (defn- text-field-invalid-warning
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -143,7 +143,7 @@
           [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
           (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
                   [:div.x-text-field--warning {:data-selectable false}
-                                              (-> validator :invalid-message components/content)])))
+                                              (-> validator :invalid-message x.components/content)])))
 
 
 
@@ -166,7 +166,7 @@
                        ; BUG#3400
                        (if (-> field-content str empty?)
                            [:div.x-text-field--placeholder {:data-selectable false}
-                                                           (components/content placeholder)]))))
+                                                           (x.components/content placeholder)]))))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!

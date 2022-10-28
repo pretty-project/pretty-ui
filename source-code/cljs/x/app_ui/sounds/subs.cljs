@@ -14,7 +14,7 @@
 
 (ns x.app-ui.sounds.subs
     (:require [re-frame.api   :refer [r]]
-              [x.app-user.api :as user]))
+              [x.app-user.api :as x.user]))
 
 
 
@@ -24,4 +24,4 @@
 (defn enabled-by-user?
   ; @return (boolean)
   [db _]
-  (r user/get-user-profile-item db :notifications :notification-sounds.enabled?))
+  (r x.user/get-user-profile-item db :notifications :notification-sounds.enabled?))

@@ -15,7 +15,7 @@
 (ns x.app-elements.chip-group.events
     (:require [mid-fruits.vector         :as vector]
               [re-frame.api              :as r :refer [r]]
-              [x.app-db.api              :as db]
+              [x.app-db.api              :as x.db]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -33,7 +33,7 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [value-path]} chip-dex]]
-  (r db/apply-item! db value-path vector/remove-nth-item chip-dex))
+  (r x.db/apply-item! db value-path vector/remove-nth-item chip-dex))
 
 
 

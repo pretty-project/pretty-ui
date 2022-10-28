@@ -14,7 +14,7 @@
 
 (ns x.app-sync.request-handler.subs
     (:require [re-frame.api   :as r :refer [r]]
-              [x.app-core.api :as core]))
+              [x.app-core.api :as x.core]))
 
 
 
@@ -29,7 +29,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r core/get-process-status db request-id))
+  (r x.core/get-process-status db request-id))
 
 (defn get-request-sent-time
   ; @param (keyword) request-id
@@ -49,7 +49,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r core/get-process-activity db request-id))
+  (r x.core/get-process-activity db request-id))
 
 (defn get-request-progress
   ; @param (keyword) request-id
@@ -59,7 +59,7 @@
   ;
   ; @return (keyword)
   [db [_ request-id]]
-  (r core/get-process-progress db request-id))
+  (r x.core/get-process-progress db request-id))
 
 (defn request-active?
   ; @param (keyword) request-id
@@ -69,7 +69,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (r core/process-active? db request-id))
+  (r x.core/process-active? db request-id))
 
 (defn request-sent?
   ; @param (keyword) request-id
@@ -90,7 +90,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-status (r core/get-process-status db request-id)]
+  (let [request-status (r x.core/get-process-status db request-id)]
        (= request-status :success)))
 
 (defn request-failured?
@@ -101,7 +101,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-status (r core/get-process-status db request-id)]
+  (let [request-status (r x.core/get-process-status db request-id)]
        (= request-status :failure)))
 
 (defn request-aborted?
@@ -134,7 +134,7 @@
   ;
   ; @return (boolean)
   [db [_ request-id]]
-  (let [request-activity (r core/get-process-activity db request-id)]
+  (let [request-activity (r x.core/get-process-activity db request-id)]
        (or (= request-activity :active)
            (= request-activity :idle))))
 

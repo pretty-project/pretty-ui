@@ -15,7 +15,7 @@
 (ns x.app-elements.chip.views
     (:require [mid-fruits.candy               :refer [param]]
               [mid-fruits.random              :as random]
-              [x.app-components.api           :as components]
+              [x.app-components.api           :as x.components]
               [x.app-elements.chip.helpers    :as chip.helpers]
               [x.app-elements.chip.prototypes :as chip.prototypes]))
 
@@ -41,7 +41,7 @@
   ; @param (map) chip-props
   ;  {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  [:div.x-chip--label (components/content label)])
+  [:div.x-chip--label (x.components/content label)])
 
 (defn- chip-primary-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

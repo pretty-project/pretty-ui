@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-elements.radio-button.helpers
-    (:require [re-frame.api                   :as r]  
-              [x.app-components.api           :as components]
+    (:require [re-frame.api                   :as r]
+              [x.app-components.api           :as x.components]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -81,8 +81,8 @@
   (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
           {:data-clickable true
            :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
-           :on-mouse-up   #(environment/blur-element!)
-           :title          (components/content :uncheck-selected!)}
+           :on-mouse-up   #(x.environment/blur-element!)
+           :title          (x.components/content :uncheck-selected!)}
           {:data-disabled  true
            :disabled       true}))
 
@@ -102,4 +102,4 @@
                       :disabled      true}
                      {:data-selected option-selected?
                       :on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
-                      :on-mouse-up  #(environment/blur-element!)})))
+                      :on-mouse-up  #(x.environment/blur-element!)})))

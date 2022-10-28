@@ -15,7 +15,7 @@
 (ns plugins.item-lister.sample
     (:require [plugins.item-lister.api :as item-lister]
               [re-frame.api            :as r]
-              [x.app-core.api          :as core]
+              [x.app-core.api          :as x.core]
               [x.app-elements.api      :as elements]))
 
 
@@ -98,7 +98,7 @@
 ; esemény order-by-options tulajdonságánal egyedi értékeket is használtál, akkor
 ; ne felejtsd el a szótárhoz adni a megfelelő kifejezéseket!
 ; Pl.: A :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
 
 

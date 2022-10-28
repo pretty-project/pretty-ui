@@ -15,7 +15,7 @@
 (ns x.app-activities.time-handler.subs
     (:require [re-frame.api         :as r :refer [r]]
               [time.api             :as time]
-              [x.app-dictionary.api :as dictionary]))
+              [x.app-dictionary.api :as x.dictionary]))
 
 
 
@@ -38,7 +38,7 @@
   ; @return (string)
   [db [_ timestamp]]
   (if (time/timestamp-string->today? timestamp)
-      (let [today-term (r dictionary/look-up db :today)
+      (let [today-term (r x.dictionary/look-up db :today)
             time       (time/timestamp-string->time timestamp :hhmm)]
            (str today-term ", " time))
       (time/timestamp-string->date timestamp :yyyymmdd)))

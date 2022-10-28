@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.touch-handler.lifecycles
-    (:require [x.app-core.api :as core]))
+    (:require [x.app-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-app-init {:fx [:environment/detect-touch-events-api!]}})

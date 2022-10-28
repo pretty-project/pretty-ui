@@ -19,9 +19,9 @@
               [mid-fruits.vector                 :as vector]
               [reitit.frontend                   :as reitit.frontend]
               [re-frame.api                      :as r :refer [r]]
-              [x.app-core.api                    :as core]
+              [x.app-core.api                    :as x.core]
               [x.app-router.route-handler.config :as route-handler.config]
-              [x.app-user.api                    :as user]
+              [x.app-user.api                    :as x.user]
               [x.mid-router.route-handler.subs   :as route-handler.subs]))
 
 
@@ -47,7 +47,7 @@
   ;
   ; @return (string)
   [db [_ route-string]]
-  (if-let [debug-mode (r core/get-debug-mode db)]
+  (if-let [debug-mode (r x.core/get-debug-mode db)]
           (uri/uri<-query-string route-string debug-mode)
           (return                route-string)))
 
@@ -126,8 +126,8 @@
   ;
   ; @return (boolean)
   [db [_ route-id]]
-  (and (r route-restricted?       db route-id)
-       (r user/user-unidentified? db)))
+  (and (r route-restricted?         db route-id)
+       (r x.user/user-unidentified? db)))
 
 
 

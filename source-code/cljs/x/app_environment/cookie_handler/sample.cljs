@@ -14,7 +14,7 @@
 
 (ns x.app-environment.cookie-handler.sample
     (:require [re-frame.api          :as r :refer [r]]
-              [x.app-environment.api :as environment]))
+              [x.app-environment.api :as x.environment]))
 
 
 
@@ -23,9 +23,9 @@
 
 (defn my-subscription
   [db _]
-  {:any-cookies-stored? (r environment/any-cookies-stored? db)
-   :stored-cookies      (r environment/get-stored-cookies  db)
-   :my-cookie-value     (r environment/get-cookie-value    db :my-cookie)})
+  {:any-cookies-stored? (r x.environment/any-cookies-stored? db)
+   :stored-cookies      (r x.environment/get-stored-cookies  db)
+   :my-cookie-value     (r x.environment/get-cookie-value    db :my-cookie)})
 
 (r/reg-event-fx :set-my-cookies!
   {:dispatch-n [[:environment/set-cookie! {}]

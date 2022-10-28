@@ -14,7 +14,7 @@
 
 (ns x.app-elements.breadcrumbs.views
     (:require [mid-fruits.random                     :as random]
-              [x.app-components.api                  :as components]
+              [x.app-components.api                  :as x.components]
               [x.app-elements.breadcrumbs.helpers    :as breadcrumbs.helpers]
               [x.app-elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]))
 
@@ -34,9 +34,9 @@
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:div.x-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                              ; BUG#3400
-                             (if (-> label       components/content str empty?)
-                                 (-> placeholder components/content)
-                                 (-> label       components/content))])
+                             (if (-> label       x.components/content str empty?)
+                                 (-> placeholder x.components/content)
+                                 (-> label       x.components/content))])
 
 (defn- breadcrumbs-button-crumb
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,9 +49,9 @@
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:button.x-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                                 ; BUG#3400
-                                (if (-> label       components/content str empty?)
-                                    (-> placeholder components/content)
-                                    (-> label       components/content))])
+                                (if (-> label       x.components/content str empty?)
+                                    (-> placeholder x.components/content)
+                                    (-> label       x.components/content))])
 
 (defn- breadcrumbs-crumb
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -15,7 +15,7 @@
 (ns x.app-elements.element-components.column
     (:require [mid-fruits.candy                    :refer [param]]
               [mid-fruits.random                   :as random]
-              [x.app-components.api                :as components]
+              [x.app-components.api                :as x.components]
               [x.app-elements.engine.api           :as engine]
               [x.app-elements.flex-handler.helpers :as flex-handler.helpers]))
 
@@ -51,7 +51,7 @@
   ; @param (map) column-props
   ;  {:content (metamorphic-content)}
   [column-id {:keys [content]}]
-  [:div.x-column--body [components/content column-id content]])
+  [:div.x-column--body [x.components/content column-id content]])
 
 (defn- column
   ; WARNING! NON-PUBLIC! DO NOT USE!

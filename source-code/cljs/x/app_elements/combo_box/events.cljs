@@ -14,7 +14,7 @@
 
 (ns x.app-elements.combo-box.events
     (:require [re-frame.api                 :as r :refer [r]]
-              [x.app-db.api                 :as db]
+              [x.app-db.api                 :as x.db]
               [x.app-elements.input.events  :as input.events]
               [x.app-elements.input.helpers :as input.helpers]))
 
@@ -51,8 +51,8 @@
   [db [_ _ {:keys [option-value-f value-path]} selected-option]]
   (let [option-value (option-value-f selected-option)]
        (if (input.helpers/value-path->vector-item? value-path)
-           (r db/set-vector-item! db value-path option-value)
-           (r db/set-item!        db value-path option-value))))
+           (r x.db/set-vector-item! db value-path option-value)
+           (r x.db/set-item!        db value-path option-value))))
 
 
 

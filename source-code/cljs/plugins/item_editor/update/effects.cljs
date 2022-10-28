@@ -23,7 +23,7 @@
               [plugins.item-editor.update.validators :as update.validators]
               [plugins.item-editor.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as ui]))
+              [x.app-ui.api                          :as x.ui]))
 
 
 
@@ -38,7 +38,7 @@
   (fn [{:keys [db]} [_ editor-id]]
       (let [query        (r update.queries/get-save-item-query          db editor-id)
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]
-           {:db       (r ui/fake-process! db 15)
+           {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
                                            {:on-success [:item-editor/item-saved       editor-id]
                                             :on-failure [:item-editor/save-item-failed editor-id]
@@ -79,7 +79,7 @@
                          :editor-leaved                                   {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
                                                                                         [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
               ; C)
-              {:dispatch-if [(r ui/process-faked? db)
+              {:dispatch-if [(r x.ui/process-faked? db)
                              [:ui/end-fake-process!]]
                :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
                             [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
@@ -94,7 +94,7 @@
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
-       :dispatch-if [(r ui/process-faked? db)
+       :dispatch-if [(r x.ui/process-faked? db)
                      [:ui/end-fake-process!]]}))
 
 

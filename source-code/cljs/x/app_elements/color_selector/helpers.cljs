@@ -16,7 +16,7 @@
     (:require [mid-fruits.vector              :as vector]
               [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -40,7 +40,7 @@
         :data-collected   (vector/contains-item? selected-options option)
         :data-icon-family :material-icons-filled
         :on-click        #(r/dispatch on-click)
-        :on-mouse-up     #(environment/blur-element!)}))
+        :on-mouse-up     #(x.environment/blur-element!)}))
 
 (defn color-selector-options-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -15,7 +15,7 @@
 (ns x.server-core.server-handler.side-effects
     (:require [org.httpkit.server                      :refer [run-server]]
               [re-frame.api                            :as r]
-              [x.app-details                           :as details]
+              [x.app-details                           :as x.details]
               [x.server-core.router-handler.helpers    :refer [ring-handler]]
               [x.server-core.server-handler.prototypes :as server-handler.prototypes]))
 
@@ -39,7 +39,7 @@
        (r/dispatch [:core/store-server-state! server-state])
        ; *
        (let [server-port (get server-props :port)]
-            (println details/app-codename "started on port:" server-port))))
+            (println x.details/app-codename "started on port:" server-port))))
 
 
 

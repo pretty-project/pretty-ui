@@ -19,7 +19,7 @@
               [plugins.item-editor.download.subs :as download.subs]
               [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]
-              [x.app-router.api                  :as router]))
+              [x.app-router.api                  :as x.router]))
 
 
 
@@ -93,7 +93,7 @@
   ; Ezért a "/my-route/create" formátumú útvonalak használatakor az :item-id útvonal-paraméter
   ; nem elérhető, ami miatt az "Új elem hozzáadása" mód megállapítása az útvonal azonosítója
   ; alapján történik.
-  (let [current-route-id (r router/get-current-route-id db)]
+  (let [current-route-id (r x.router/get-current-route-id db)]
        (= "creator-route" (name current-route-id))))
 
 

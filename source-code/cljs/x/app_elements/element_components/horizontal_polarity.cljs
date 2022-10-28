@@ -15,7 +15,7 @@
 (ns x.app-elements.element-components.horizontal-polarity
     (:require [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
-              [x.app-components.api      :as components]
+              [x.app-components.api      :as x.components]
               [x.app-elements.engine.api :as engine]))
 
 
@@ -45,7 +45,7 @@
   ; @param (map) polarity-props
   ;  {:start-content (metamorphic-content)}
   [_ {:keys [start-content]}]
-  (if start-content [:div.x-horizontal-polarity--start-content [components/content start-content]]
+  (if start-content [:div.x-horizontal-polarity--start-content [x.components/content start-content]]
                     [:div.x-horizontal-polarity--placeholder]))
 
 (defn- middle-content
@@ -55,7 +55,7 @@
   ; @param (map) polarity-props
   ;  {:middle-content (metamorphic-content)}
   [_ {:keys [middle-content]}]
-  (if middle-content [:div.x-horizontal-polarity--middle-content [components/content middle-content]]
+  (if middle-content [:div.x-horizontal-polarity--middle-content [x.components/content middle-content]]
                      [:div.x-horizontal-polarity--placeholder]))
 
 (defn- end-content
@@ -65,7 +65,7 @@
   ; @param (map) polarity-props
   ;  {:end-content (metamorphic-content)}
   [_ {:keys [end-content orientation]}]
-  (if end-content [:div.x-horizontal-polarity--end-content [components/content end-content]]
+  (if end-content [:div.x-horizontal-polarity--end-content [x.components/content end-content]]
                   [:div.x-horizontal-polarity--placeholder]))
 
 (defn- horizontal-polarity

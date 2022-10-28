@@ -16,8 +16,7 @@
     (:require [layouts.bubble-a.helpers    :as helpers]
               [layouts.bubble-a.prototypes :as prototypes]
               [reagent.api                 :as reagent]
-              [re-frame.api                :as r]
-              [x.app-components.api        :as components]))
+              [re-frame.api                :as r]))
 
 
 

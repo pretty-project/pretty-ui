@@ -15,7 +15,7 @@
 (ns x.app-elements.counter.helpers
     (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -81,7 +81,7 @@
             :data-disabled  true}
            {:data-clickable true
             :on-click    #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
-            :on-mouse-up #(environment/blur-element!)})))
+            :on-mouse-up #(x.environment/blur-element!)})))
 
 (defn decrease-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -99,7 +99,7 @@
             :data-disabled  true}
            {:data-clickable true
             :on-click    #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
-            :on-mouse-up #(environment/blur-element!)})))
+            :on-mouse-up #(x.environment/blur-element!)})))
 
 (defn reset-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

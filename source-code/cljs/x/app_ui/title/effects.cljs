@@ -14,7 +14,7 @@
 
 (ns x.app-ui.title.effects
     (:require [re-frame.api        :as r :refer [r]]
-              [x.app-core.api      :as core]
+              [x.app-core.api      :as x.core]
               [x.app-ui.title.subs :as title.subs]))
 
 
@@ -26,7 +26,7 @@
   ; @usage
   ;  [:ui/restore-default-window-title!]
   (fn [{:keys [db]} _]
-      (let [window-title (r core/get-app-config-item db :app-title)]
+      (let [window-title (r x.core/get-app-config-item db :app-title)]
            {:fx [:environment/set-window-title! window-title]})))
 
 (r/reg-event-fx :ui/set-window-title!

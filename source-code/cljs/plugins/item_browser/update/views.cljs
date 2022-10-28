@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.update.views
-    (:require [x.app-ui.api :as ui]))
+    (:require [x.app-ui.api :as x.ui]))
 
 
 
@@ -27,9 +27,9 @@
   ; @param (string) item-id
   [browser-id item-id]
   (let [undo-event [:item-browser/undo-delete-item! browser-id item-id]]
-       [ui/state-changed-bubble-body :engines.item-browser/item-deleted-dialog
-                                     {:label          :item-deleted
-                                      :primary-button {:label :recover! :on-click undo-event}}]))
+       [x.ui/state-changed-bubble-body :engines.item-browser/item-deleted-dialog
+                                       {:label          :item-deleted
+                                        :primary-button {:label :recover! :on-click undo-event}}]))
 
 
 
@@ -43,5 +43,5 @@
   ; @param (string) copy-id
   [browser-id _]
   ; XXX#7002
-  [ui/state-changed-bubble-body :engines.item-browser/item-duplicated-dialog
-                                {:label :item-duplicated}])
+  [x.ui/state-changed-bubble-body :engines.item-browser/item-duplicated-dialog
+                                  {:label :item-duplicated}])

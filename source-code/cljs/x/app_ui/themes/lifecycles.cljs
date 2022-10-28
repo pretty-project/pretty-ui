@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.themes.lifecycles
-    (:require [x.app-core.api :as core]))
+    (:require [x.app-core.api :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(core/reg-lifecycles! ::lifecycles
+(x.core/reg-lifecycles! ::lifecycles
   {:on-login [:ui/theme-changed]})

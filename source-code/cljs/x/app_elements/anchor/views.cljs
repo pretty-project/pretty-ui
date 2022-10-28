@@ -14,7 +14,7 @@
 
 (ns x.app-elements.anchor.views
     (:require [mid-fruits.random                :as random]
-              [x.app-components.api             :as components]
+              [x.app-components.api             :as x.components]
               [x.app-elements.anchor.helpers    :as anchor.helpers]
               [x.app-elements.anchor.prototypes :as anchor.prototypes]))
 
@@ -31,7 +31,7 @@
   ;  {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
   [:a.x-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
-                     [components/content content]])
+                     [x.components/content content]])
 
 (defn- anchor
   ; WARNING! NON-PUBLIC! DO NOT USE!

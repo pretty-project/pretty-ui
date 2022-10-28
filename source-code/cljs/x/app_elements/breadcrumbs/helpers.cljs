@@ -15,7 +15,7 @@
 (ns x.app-elements.breadcrumbs.helpers
     (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -37,7 +37,7 @@
                 {:data-clickable true
                  :href           href
                  :on-click       #(r/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)}))
+                 :on-mouse-up    #(x.environment/blur-element!)}))
 
 (defn breadcrumbs-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,4 +93,4 @@
   {:data-clickable  true
    :data-selectable false
    :on-click    #(r/dispatch [:router/go-to! route])
-   :on-mouse-up #(environment/blur-element!)})
+   :on-mouse-up #(x.environment/blur-element!)})

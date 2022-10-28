@@ -21,7 +21,7 @@
               [mid-fruits.string                      :as string]
               [mongo-db.api                           :as mongo-db]
               [re-frame.api                           :as r]
-              [x.server-user.api                      :as user]))
+              [x.server-user.api                      :as x.user]))
 
               ; TEMP
               ;[docs.api :as docs]))
@@ -54,7 +54,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
   (if (or @(r/subscribe [:core/dev-mode?])
-           (user/request->root-user? request))
+           (x.user/request->root-user? request))
       (let [body-style (core.styles/body-style)]
            (str "<html>"
                 "<body style=\""body-style"\">"

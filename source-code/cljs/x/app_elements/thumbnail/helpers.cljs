@@ -15,7 +15,7 @@
 (ns x.app-elements.thumbnail.helpers
     (:require [re-frame.api                   :as r]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as environment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
@@ -36,7 +36,7 @@
                  :style           style}
                 {:data-clickable  true
                  :on-click       #(r/dispatch on-click)
-                 :on-mouse-up    #(environment/blur-element!)
+                 :on-mouse-up    #(x.environment/blur-element!)
                  :style           style}))
 
 (defn static-thumbnail-body-attributes
