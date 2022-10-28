@@ -17,7 +17,7 @@
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
               [x.app-elements.element.helpers :as element.helpers]
-              [x.app-environment.api          :as x.nvironment]))
+              [x.app-environment.api          :as x.environment]))
 
 
 
