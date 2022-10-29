@@ -23,6 +23,9 @@
   ; @param (string) n
   ; @param (regex pattern) pattern
   ;
+  ; @usage
+  ;  (re-match? "..." #"...")
+  ;
   ; @return (boolean)
   [n pattern]
   (and (string? n)
@@ -32,6 +35,9 @@
 (defn re-mismatch?
   ; @param (string) n
   ; @param (regex pattern) pattern
+  ;
+  ; @usage
+  ;  (re-mismatch? "..." #"...")
   ;
   ; @return (boolean)
   [n pattern]

@@ -333,6 +333,19 @@
       (str    n suffix)
       (return n)))
 
+(defn contains-part?
+  ; @param (string) n
+  ; @param (string) x
+  ;
+  ; @usage
+  ;  (contains-part? "abc" "ab")
+  ;
+  ; @return (boolean)
+  [n x]
+  (when (and (nonempty? n)
+             (nonempty? x))
+        (string/includes? n x)))
+
 (defn insert-part
   ; @param (string) n
   ; @param (string) x
@@ -597,17 +610,44 @@
 (defn count-occurences
   ; @param (string) n
   ; @param (string) x
+  ; @param (map)(opt)
+  ;  {:separate-matches? (boolean)(opt)
+  ;    Default: false}
   ;
   ; @example
   ;  (count-occurences "abca" "a")
   ;  =>
   ;  2
   ;
+  ; @example
+  ;  (count-occurences "abca" "ab")
+  ;  =>
+  ;  1
+  ;
+  ; @example
+  ;  (count-occurences "aaaa" "aa")
+  ;  =>
+  ;  3
+  ;
+  ; @example
+  ;  (count-occurences "aaaa" "aa" {:separate-matches? true})
+  ;  =>
+  ;  2
+  ;
   ; @return (integer)
-  [n x]
-  (if (nonempty? n)
-      (get (frequencies n) x)
-      (return 0)))
+  ([n x]
+   (count-occurences n x {}))
+
+  ([n x {:keys [separate-matches?]}]
+   (if (contains-part? n x)
+       (letfn [(f [cursor match-count]
+                  (if-let [first-dex (first-dex-of (part n cursor) x)]
+                          (let [step (if separate-matches? (count x) 1)]
+                               (f (+   cursor step)
+                                  (inc match-count)))
+                          (return match-count)))]
+              (f 0 0))
+       (return 0))))
 
 (defn min-occurence?
   ; @param (string) n
@@ -892,19 +932,6 @@
   ([n x options]
    (let [pass-with? (pass-with? n x options)]
         (not pass-with?))))
-
-(defn contains-part?
-  ; @param (string) n
-  ; @param (string) x
-  ;
-  ; @usage
-  ;  (contains-part? "abc" "ab")
-  ;
-  ; @return (boolean)
-  [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/includes? n x)))
 
 (defn replace-part
   ; @param (string) n
