@@ -1,0 +1,318 @@
+
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
+/***** Min-width *****/
+
+body {
+  /*  320px (legkisebb támogatott képernyő-szélesség)
+   * - 96px (kettő ikon-gomb szélessége) */
+  --element-min-width-xxs: 224px;
+
+  /*  320px (legkisebb támogatott képernyő-szélesség)
+   * - 48px (egy ikon-gomb szélessége) */
+  --element-min-width-xs:  272px;
+
+  /* */
+  --element-min-width-s:   var( --content-width-xxs );
+  --element-min-width-m:   var( --content-width-xs );
+  --element-min-width-l:   var( --content-width-s );
+  --element-min-width-xl:  var( --content-width-m );
+  --element-min-width-xxl: var( --content-width-l );
+}
+
+/***** Min-width *****/
+
+
+
+/***** Size profiles *****/
+/*** XXS ***/
+
+.e-element[data-min-width="xxs"] {
+  min-width: var( --element-min-width-xxs ) }
+
+.e-icon-button[data-height="xxs"] .e-icon-button--body {
+  height: 12px }
+
+.e-color-stamp--body[data-size="xxs"] {
+  grid-gap: 1px;
+  height: 12px;
+  width: 12px }
+
+.e-ghost[data-height="xxs"] .e-ghost--body {
+  height: 12px }
+
+.e-color-marker[data-size="xxs"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 12px;
+  width: 6px }
+
+.e-thumbnail[data-height="xxs"] .e-thumbnail--body {
+  height: 36px }
+
+.e-thumbnail[data-width="xxs"] .e-thumbnail--body {
+  width: 36px }
+
+.e-horizontal-separator[data-size="xxs"] {
+  height: 6px }
+
+.e-vertical-separator[data-size="xxs"] {
+  width: 4px }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.e-element[data-min-width="xs"] {
+  min-width: var( --element-min-width-xs ) }
+
+.e-icon-button[data-height="xs"] .e-icon-button--body {
+  height: 18px }
+
+.e-color-stamp--body[data-size="xs"] {
+  grid-gap: 1px;
+  height: 18px;
+  width: 18px }
+
+.e-ghost[data-height="xs"] .e-ghost--body {
+  height: 18px }
+
+.e-color-marker[data-size="xs"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 18px;
+  width: 6px }
+
+.e-thumbnail[data-height="xs"] .e-thumbnail--body {
+  height: 48px }
+
+.e-thumbnail[data-width="xs"] .e-thumbnail--body {
+  width: 48px }
+
+.e-horizontal-separator[data-size="xs"] {
+  height: 12px }
+
+.e-vertical-separator[data-size="xs"] {
+  width: 8px }
+
+/*** XS ***/
+
+/*** S ***/
+
+.e-element[data-min-width="s"] {
+  min-width: var( --element-min-width-s ) }
+
+.e-icon-button[data-height="s"] .e-icon-button--body {
+  height: 24px }
+
+.e-color-stamp--body[data-size="s"] {
+  grid-gap: 1px;
+  height: 24px;
+  width: 24px }
+
+.e-ghost[data-height="s"] .e-ghost--body {
+  height: 24px }
+
+.e-color-marker[data-size="s"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 24px;
+  width: 6px }
+
+.e-thumbnail[data-height="s"] .e-thumbnail--body {
+  height: 60px }
+
+.e-thumbnail[data-width="s"] .e-thumbnail--body {
+  width: 60px }
+
+.e-horizontal-separator[data-size="s"] {
+  height: 18px }
+
+.e-vertical-separator[data-size="s"] {
+  width: 12px }
+
+/*** S ***/
+
+/*** M ***/
+
+.e-element[data-min-width="m"] {
+  min-width: var( --element-min-width-m ) }
+
+.e-icon-button[data-height="m"] .e-icon-button--body {
+  height: 30px }
+
+.e-color-stamp--body[data-size="m"] {
+  grid-gap: 1px;
+  height: 30px;
+  width: 30px }
+
+.e-ghost[data-height="m"] .e-ghost--body {
+  height: 30px }
+
+.e-color-marker[data-size="m"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 30px;
+  width: 6px }
+
+.e-thumbnail[data-height="m"] .e-thumbnail--body {
+  height: 72px }
+
+.e-thumbnail[data-width="m"] .e-thumbnail--body {
+  width: 72px }
+
+.e-horizontal-separator[data-size="m"] {
+  height: 24px }
+
+.e-vertical-separator[data-size="m"] {
+  width: 18px }
+
+/*** M ***/
+
+/*** L ***/
+
+.e-element[data-min-width="l"] {
+  min-width: var( --element-min-width-l ) }
+
+.e-icon-button[data-height="l"] .e-icon-button--body {
+  height: 36px }
+
+.e-color-stamp--body[data-size="l"] {
+  grid-gap: 2px;
+  height: 36px;
+  width: 36px }
+
+.e-ghost[data-height="l"] .e-ghost--body {
+  height: 36px }
+
+.e-color-marker[data-size="l"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 36px;
+  width: 6px }
+
+.e-thumbnail[data-height="l"] .e-thumbnail--body {
+  height: 84px }
+
+.e-thumbnail[data-width="l"] .e-thumbnail--body {
+  width: 84px }
+
+.e-horizontal-separator[data-size="l"] {
+  height: 36px }
+
+.e-vertical-separator[data-size="l"] {
+  width: 24px }
+
+/*** L ***/
+
+/*** XL ***/
+
+.e-element[data-min-width="xl"] {
+  min-width: var( --element-min-width-xl ) }
+
+.e-icon-button[data-height="xl"] .e-icon-button--body {
+  height: 42px }
+
+.e-color-stamp--body[data-size="xl"] {
+  grid-gap: 2px;
+  height: 42px;
+  width: 42px }
+
+.e-ghost[data-height="xl"] .e-ghost--body {
+  height: 42px }
+
+.e-color-marker[data-size="xl"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 42px;
+  width: 6px }
+
+.e-thumbnail[data-height="xl"] .e-thumbnail--body {
+  height: 96px }
+
+.e-thumbnail[data-width="xl"] .e-thumbnail--body {
+  width: 96px }
+
+.e-horizontal-separator[data-size="xl"] {
+  height: 42px }
+
+.e-vertical-separator[data-size="xl"] {
+  width: 36px }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.e-element[data-min-width="xxl"] {
+  min-width: var( --element-min-width-xxl ) }
+
+.e-icon-button[data-height="xxl"] .e-icon-button--body {
+  height: 48px }
+
+.e-color-stamp--body[data-size="xxl"] {
+  grid-gap: 2px;
+  height: 48px;
+  width: 48px }
+
+.e-ghost[data-height="xxl"] .e-ghost--body {
+  height: 48px }
+
+.e-color-marker[data-size="xxl"] .e-color-marker--body {
+  border-radius: 3px;
+  height: 48px;
+  width: 6px }
+
+.e-thumbnail[data-height="xxl"] .e-thumbnail--body {
+  height: 108px }
+
+.e-thumbnail[data-width="xxl"] .e-thumbnail--body {
+  width: 108px }
+
+.e-horizontal-separator[data-size="xxl"] {
+  height: 48px }
+
+.e-vertical-separator[data-size="xxl"] {
+  width: 48px }
+
+/*** XXL ***/
+
+/*** 3XL ***/
+
+.e-ghost[data-height="3xl"] .e-ghost--body {
+  height: 60px }
+
+.e-thumbnail[data-height="3xl"] .e-thumbnail--body {
+  height: 120px }
+
+.e-thumbnail[data-width="3xl"] .e-thumbnail--body {
+  width: 120px }
+
+/*** 3XL ***/
+
+/*** 4XL ***/
+
+.e-ghost[data-height="4xl"] .e-ghost--body {
+  height: 72px }
+
+.e-thumbnail[data-height="4xl"] .e-thumbnail--body {
+  height: 132px }
+
+.e-thumbnail[data-width="4xl"] .e-thumbnail--body {
+  width: 132px }
+
+/*** 4XL ***/
+
+/*** 5XL ***/
+
+.e-ghost[data-height="5xl"] .e-ghost--body {
+  height: 84px }
+
+.e-thumbnail[data-height="5xl"] .e-thumbnail--body {
+  height: 144px }
+
+.e-thumbnail[data-width="5xl"] .e-thumbnail--body {
+  width: 144px }
+
+/*** 5XL ***/
+/***** Size profiles *****/

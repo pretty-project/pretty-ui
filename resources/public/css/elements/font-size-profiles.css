@@ -1,0 +1,257 @@
+
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
+/***** Font-size profiles *****/
+/*** XXS ***/
+
+.e-icon[data-size="xxs"] .e-icon--body {
+  font-size: var( --icon-size-xxs );
+
+  /* BUG#0983 */
+  height: 24px;
+  width: 24px }
+
+.e-anchor[data-font-size="xxs"],
+.e-table[data-font-size="xxs"],
+.e-text[data-font-size="xxs"] {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: var( --line-height-xxs ) }
+
+.e-button--body[data-font-size="xxs"] {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs );
+  /* XXX#6610
+   * Az XXS és XS betűméretű gomboknál fontos, hogy a sormagasság 24px legyen,
+   * különben túl nagy lenne a távolság a felette elhelyezett tartalmilag hozzá
+   * kapcsolódó label elemtől! */
+  line-height: 24px }
+
+.e-button--body[data-font-size="xxs"][data-hover-color] {
+  /* XXX#0404
+   * A hover-color tulajdonsággal rendelkező button elem sormagassága minimum 36px
+   * kell, hogy legyen, különben túl vékonynak néz ki! */
+  line-height: 36px }
+
+.e-label[data-font-size="xxs"] {
+  font-size: var( --font-size-xxs );
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 24px }
+
+.e-label[data-font-size="xs"] .e-label--icon {
+  font-size: var( --icon-size-xxs ) }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.e-icon[data-size="xs"] .e-icon--body {
+  font-size: var( --icon-size-xs );
+
+  /* BUG#0983 */
+  height: 24px;
+  width: 24px }
+
+.e-anchor[data-font-size="xs"],
+.e-table[data-font-size="xs"],
+.e-text[data-font-size="xs"] {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: var( --line-height-xs ) }
+
+.e-checkbox[data-font-size="xs"]     .e-checkbox--option-label,
+.e-menu-bar[data-font-size="xs"]     .e-menu-bar--menu-item--label,
+.e-radio-button[data-font-size="xs"] .e-radio-button--option-label,
+.e-switch[data-font-size="xs"]       .e-switch--option-label {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs ) }
+
+.e-button--body[data-font-size="xs"] {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  /* XXX#6610 */
+  line-height: 24px }
+
+.e-button--body[data-font-size="xs"][data-hover-color] {
+  /* XXX#0404 */
+  line-height: 36px }
+
+.e-label[data-font-size="xs"] {
+  font-size: var( --font-size-xs );
+  letter-spacing: var( --letter-spacing-xs );
+  line-height: 24px }
+
+.e-label[data-font-size="xs"] .e-label--icon {
+  font-size: var( --icon-size-xxs ) }
+
+/*** XS ***/
+
+/*** S ***/
+
+.e-icon[data-size="s"] .e-icon--body {
+  font-size: var( --icon-size-s );
+
+  /* BUG#0983 */
+  height: 24px;
+  width: 24px }
+
+.e-anchor[data-font-size="s"],
+.e-table[data-font-size="s"],
+.e-text[data-font-size="s"] {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s ) }
+
+.e-checkbox[data-font-size="s"]     .e-checkbox--option-label,
+.e-menu-bar[data-font-size="s"]     .e-menu-bar--menu-item--label,
+.e-radio-button[data-font-size="s"] .e-radio-button--option-label,
+.e-switch[data-font-size="s"]       .e-switch--option-label {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s ) }
+
+.e-button--body[data-font-size="s"] {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 36px }
+
+.e-label[data-font-size="s"] {
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
+  line-height: 24px }
+
+.e-label[data-font-size="s"] .e-label--icon {
+  font-size: var( --icon-size-xs ) }
+
+/*** S ***/
+
+/*** M ***/
+
+.e-icon[data-size="m"] .e-icon--body {
+  font-size: var( --icon-size-m );
+
+  /* BUG#0983 */
+  height: 24px;
+  width: 24px }
+
+.e-anchor[data-font-size="m"],
+.e-table[data-font-size="m"],
+.e-text[data-font-size="m"] {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m );
+  line-height: var( --line-height-m ) }
+
+.e-button--body[data-font-size="m"] {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m );
+  line-height: 36px }
+
+.e-label[data-font-size="m"] {
+  font-size: var( --font-size-m );
+  letter-spacing: var( --letter-spacing-m );
+  line-height: 24px }
+
+.e-label[data-font-size="m"] .e-label--icon {
+  font-size: var( --icon-size-s ) }
+
+/*** M ***/
+
+/*** L ***/
+
+.e-icon[data-size="l"] .e-icon--body {
+  font-size: var( --icon-size-l );
+
+  /* BUG#0983 */
+  height: 48px;
+  width: 48px }
+
+.e-anchor[data-font-size="l"],
+.e-table[data-font-size="l"],
+.e-text[data-font-size="l"] {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l );
+  line-height: var( --line-height-l ) }
+
+.e-button--body[data-font-size="l"] {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l );
+  line-height: 36px }
+
+.e-label[data-font-size="l"] {
+  font-size: var( --font-size-l );
+  letter-spacing: var( --letter-spacing-l );
+  line-height: 36px }
+
+.e-label[data-font-size="l"] .e-label--icon {
+  font-size: var( --icon-size-m ) }
+
+/*** L ***/
+
+/*** XL ***/
+
+.e-icon[data-size="xl"] .e-icon--body {
+  font-size: var( --icon-size-xl );
+
+  /* BUG#0983 */
+  height: 48px;
+  width: 48px }
+
+.e-anchor[data-font-size="xl"],
+.e-table[data-font-size="xl"],
+.e-text[data-font-size="xl"] {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl );
+  line-height: var( --line-height-xl ) }
+
+.e-button--body[data-font-size="xl"] {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl );
+  line-height: 36px }
+
+.e-label[data-font-size="xl"] {
+  font-size: var( --font-size-xl );
+  letter-spacing: var( --letter-spacing-xl );
+  line-height: 36px }
+
+.e-label[data-font-size="xl"] .e-label--icon {
+  font-size: var( --icon-size-m ) }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.e-icon[data-size="xxl"] .e-icon--body {
+  font-size: var( --icon-size-xxl );
+
+  /* BUG#0983 */
+  height: 48px;
+  width: 48px }
+
+.e-anchor[data-font-size="xxl"],
+.e-table[data-font-size="xxl"],
+.e-text[data-font-size="xxl"] {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl );
+  line-height: var( --line-height-xxl ) }
+
+.e-button--body[data-font-size="xxl"] {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl );
+  line-height: 36px }
+
+.e-label[data-font-size="xxl"] {
+  font-size: var( --font-size-xxl );
+  letter-spacing: var( --letter-spacing-xxl );
+  line-height: 48px }
+
+.e-label[data-font-size="xxl"] .e-label--icon {
+  font-size: var( --icon-size-m ) }
+
+/*** XXL ***/
+/***** Font-size profiles *****/

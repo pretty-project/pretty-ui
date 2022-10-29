@@ -1,0 +1,112 @@
+
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
+/***** Align profiles *****/
+/*** Horizontal align ***/
+
+.e-button--body[data-horizontal-align="left"],
+.e-card-group[data-horizontal-align="left"],
+.e-label[data-horizontal-align="left"] .e-label--body,
+.e-menu-bar[data-horizontal-align="left"],
+.e-row[data-horizontal-align="left"] .e-row--body {
+  justify-content: flex-start }
+
+.e-card[data-horizontal-align="left"] .e-card--body,
+.e-column[data-horizontal-align="left"] .e-column--body {
+  align-items: flex-start }
+
+.e-text[data-horizontal-align="left"] .e-text--body {
+  align-items: flex-start;
+  text-align: left }
+
+.e-table--header-cell[data-horizontal-align="left"],
+.e-table--body-cell[data-horizontal-align="left"] {
+  text-align: left }
+
+.e-button--body[data-horizontal-align="center"],
+.e-card-group[data-horizontal-align="center"],
+.e-label[data-horizontal-align="center"] .e-label--body,
+.e-menu-bar[data-horizontal-align="center"],
+.e-row[data-horizontal-align="center"] .e-row--body {
+  justify-content: center }
+
+.e-card[data-horizontal-align="center"] .e-card--body,
+.e-column[data-horizontal-align="center"] .e-column--body {
+  align-items: center }
+
+.e-text[data-horizontal-align="center"] .e-text--body {
+  align-items: center;
+  text-align: center }
+
+.e-table--header-cell[data-horizontal-align="center"],
+.e-table--body-cell[data-horizontal-align="center"] {
+  text-align: center }
+
+.e-button--body[data-horizontal-align="right"],
+.e-card-group[data-horizontal-align="right"],
+.e-label[data-horizontal-align="right"] .e-label--body,
+.e-menu-bar[data-horizontal-align="right"],
+.e-row[data-horizontal-align="right"] .e-row--body {
+  justify-content: flex-end }
+
+.e-card[data-horizontal-align="right"] .e-card--body,
+.e-column[data-horizontal-align="right"] .e-column--body {
+  align-items: flex-end }
+
+.e-text[data-horizontal-align="right"] .e-text--body {
+  align-items: flex-end;
+  text-align: right }
+
+.e-table--header-cell[data-horizontal-align="right"],
+.e-table--body-cell[data-horizontal-align="right"] {
+  text-align: right }
+
+.e-row[data-horizontal-align="space-around"] .e-row--body {
+  justify-content: space-around }
+
+.e-row[data-horizontal-align="space-between"] .e-row--body {
+  justify-content: space-between }
+
+.e-row[data-horizontal-align="space-evenly"] .e-row--body {
+  justify-content: space-evenly }
+
+/*** Horizontal align ***/
+
+/*** Vertical align ***/
+
+.e-column[data-vertical-align="top"] .e-column--body {
+  justify-content: flex-start }
+
+.e-row[data-vertical-align="top"] .e-row--body {
+  align-items: flex-start }
+
+.e-column[data-vertical-align="center"] .e-column--body {
+  justify-content: center }
+
+.e-row[data-vertical-align="center"] .e-row--body {
+  align-items: center }
+
+.e-column[data-vertical-align="bottom"] .e-column--body {
+  justify-content: flex-end }
+
+.e-row[data-vertical-align="bottom"] .e-row--body {
+  align-items: flex-end }
+
+.e-column[data-vertical-align="space-around"] .e-column--body {
+  justify-content: space-around }
+
+.e-column[data-vertical-align="space-between"] .e-column--body {
+  justify-content: space-between }
+
+.e-column[data-vertical-align="space-evenly"] .e-column--body {
+  justify-content: space-evenly }
+
+/*** Vertical align ***/
+/***** Align profiles *****/

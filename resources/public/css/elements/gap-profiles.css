@@ -1,0 +1,81 @@
+
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
+/***** Gap profiles *****/
+/*** XXS ***/
+
+.e-row[data-gap="xxs"] .e-row--body {
+  grid-column-gap: 6px }
+
+.e-column[data-gap="xxs"] .e-column--body {
+  grid-row-gap: 6px }
+
+/*** XXS ***/
+
+/*** XS ***/
+
+.e-row[data-gap="xs"] .e-row--body {
+  grid-column-gap: 12px }
+
+.e-column[data-gap="xs"] .e-column--body {
+  grid-row-gap: 12px }
+
+/*** XS ***/
+
+/*** S ***/
+
+.e-row[data-gap="s"] .e-row--body {
+  grid-column-gap: 18px }
+
+.e-column[data-gap="s"] .e-column--body {
+  grid-row-gap: 18px }
+
+/*** S ***/
+
+/*** M ***/
+
+.e-row[data-gap="m"] .e-row--body {
+  grid-column-gap: 24px }
+
+.e-column[data-gap="m"] .e-column--body {
+  grid-row-gap: 24px }
+
+/*** M ***/
+
+/*** L ***/
+
+.e-row[data-gap="l"] .e-row--body {
+  grid-column-gap: 36px }
+
+.e-column[data-gap="l"] .e-column--body {
+  grid-row-gap: 36px }
+
+/*** L ***/
+
+/*** XL ***/
+
+.e-row[data-gap="xl"] .e-row--body {
+  grid-column-gap: 42px }
+
+.e-column[data-gap="xl"] .e-column--body {
+  grid-row-gap: 42px }
+
+/*** XL ***/
+
+/*** XXL ***/
+
+.e-row[data-gap="xxl"] .e-row--body {
+  grid-column-gap: 48px }
+
+.e-column[data-gap="xxl"] .e-column--body {
+  grid-row-gap: 48px }
+
+/*** XXL ***/
+/***** Gap profiles *****/

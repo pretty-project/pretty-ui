@@ -1,0 +1,494 @@
+
+/* Legal information
+ *
+ * Monoset Clojure/ClojureScript Library
+ * https://monotech.hu/monoset
+ *
+ * Copyright Adam Szűcs and other contributors - All rights reserved */
+
+
+
+/***** Color profiles *****/
+/*** Muted ***/
+/* Background-color */
+
+.e-button--body[data-background-color="muted"],
+.e-card[data-background-color="muted"]        .e-card--body,
+.e-color-marker--color[data-color="muted"],
+.e-chip[data-background-color="muted"]        .e-chip--body,
+.e-icon-button[data-background-color="muted"] .e-icon-button--body,
+.e-toggle[data-background-color="muted"] {
+  background-color: var( --background-color-muted ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="muted"],
+.e-card[data-border-color="muted"]         .e-card--body,
+.e-checkbox[data-border-color="muted"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="muted"]      .e-counter--decrease-button,
+.e-counter[data-border-color="muted"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="muted"]  .e-icon-button--body,
+.e-radio-button[data-border-color="muted"] .e-radio-button--option-button,
+.e-switch[data-border-color="muted"]       .e-switch--option-track {
+  border-color: var( --border-color-muted ) }
+
+/* Border-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                .e-button--body:hover[data-hover-color="muted"],
+.e-card[data-hover-color="muted"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="muted"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-muted ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-button-separator[data-color="muted"] .e-button-separator--body,
+.e-horizontal-line[data-color="muted"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="muted"],
+.e-vertical-line[data-color="muted"]    .e-vertical-line--body {
+  background-color: var( --border-color-muted ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="muted"] {
+  stroke: var( --border-color-muted ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-anchor[data-color="muted"],
+.e-button--body[data-color="muted"],
+.e-chip[data-color="muted"]        .e-chip--body,
+.e-icon[data-color="muted"]        .e-icon--body,
+.e-icon-button[data-color="muted"] .e-icon-button--body,
+.e-label[data-color="muted"],
+.e-text[data-color="muted"] .e-text--body {
+  color: var( --color-muted ) }
+
+/* Text-color */
+/*** Muted ***/
+
+/*** Highlight ***/
+/* Background-color */
+
+.e-button--body[data-background-color="highlight"],
+.e-card[data-background-color="highlight"]        .e-card--body,
+.e-color-marker--color[data-color="highlight"],
+.e-chip[data-background-color="highlight"]        .e-chip--body,
+.e-icon-button[data-background-color="highlight"] .e-icon-button--body,
+.e-toggle[data-background-color="highlight"] {
+  background-color: var( --background-color-highlight ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="highlight"],
+.e-icon-button[data-border-color="highlight"] .e-icon-button--body,
+.e-card[data-border-color="highlight"]        .e-card--body,
+.e-select--button-body[data-border-color="highlight"] {
+  border-color: var( --border-color-highlight ) }
+
+/* Border-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="highlight"],
+.e-card[data-hover-color="highlight"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="highlight"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-highlight ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-button-separator[data-color="highlight"] .e-button-separator--body,
+.e-horizontal-line[data-color="highlight"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="highlight"],
+.e-vertical-line[data-color="highlight"]    .e-vertical-line--body {
+  background-color: var( --border-color-highlight ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="highlight"] {
+  stroke: var( --border-color-highlight ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-button--body[data-color="highlight"],
+.e-chip[data-color="highlight"]        .e-chip--body,
+.e-icon[data-color="highlight"]        .e-icon--body,
+.e-icon-button[data-color="highlight"] .e-icon-button--body,
+.e-label[data-color="highlight"],
+.e-text[data-color="highlight"] .e-text--body {
+  color: var( --color-highlight ) }
+
+/* Text-color */
+/*** Highlight ***/
+
+/*** Invert ***/
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                 .e-button--body:hover[data-hover-color="invert"],
+.e-card[data-hover-color="invert"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="invert"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-invert ) }
+
+/* Hover-color */
+
+/* Text-color */
+
+.e-button--body[data-color="invert"],
+.e-icon[data-color="invert"]        .e-icon--body,
+.e-icon-button[data-color="invert"] .e-icon-button--body,
+.e-label[data-color="invert"],
+.e-text[data-color="invert"] {
+  color: var( --color-invert ) }
+
+/* Text-color */
+/*** Invert ***/
+
+/*** Primary ***/
+/* Background-color */
+
+.e-button--body[data-background-color="primary"],
+.e-card[data-background-color="primary"]        .e-card--body,
+.e-color-marker--color[data-color="primary"],
+.e-chip[data-background-color="primary"]        .e-chip--body,
+.e-icon-button[data-background-color="primary"] .e-icon-button--body,
+.e-toggle[data-background-color="primary"] {
+  background-color: var( --background-color-primary ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.e-element-badge[data-color="primary"] {
+  background-color: var( --border-color-primary ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="primary"],
+.e-card[data-border-color="primary"]         .e-card--body,
+.e-checkbox[data-border-color="primary"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="primary"]      .e-counter--decrease-button,
+.e-counter[data-border-color="primary"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="primary"]  .e-icon-button--body,
+.e-radio-button[data-border-color="primary"] .e-radio-button--option-button,
+.e-switch[data-border-color="primary"]       .e-switch--option-track,
+.e-text-field[data-border-color="primary"]   .e-text-field--input-container {
+  border-color: var( --border-color-primary ) }
+
+/* Border-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="primary"],
+.e-card[data-hover-color="primary"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="primary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-primary ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-horizontal-line[data-color="primary"] .e-horizontal-line--body,
+.e-line-diagram--section[data-color="primary"],
+.e-vertical-line[data-color="primary"]   .e-vertical-line--body {
+  background-color: var( --border-color-primary ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="primary"] {
+  stroke: var( --border-color-primary ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-anchor[data-color="primary"],
+.e-button--body[data-color="primary"],
+.e-chip[data-color="primary"]        .e-chip--body,
+.e-icon[data-color="primary"]        .e-icon--body,
+.e-icon-button[data-color="primary"] .e-icon-button--body,
+.e-label[data-color="primary"],
+.e-text[data-color="primary"] .e-text--body {
+  color: var( --color-primary ) }
+
+/* Text-color */
+/*** Primary ***/
+
+/*** Secondary ***/
+/* Background-color */
+
+.e-button--body[data-background-color="secondary"],
+.e-card[data-background-color="secondary"]        .e-card--body,
+.e-color-marker--color[data-color="secondary"],
+.e-chip[data-background-color="secondary"]        .e-chip--body,
+.e-icon-button[data-background-color="secondary"] .e-icon-button--body,
+.e-toggle[data-background-color="secondary"] {
+  background-color: var( --background-color-secondary ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.e-element-badge[data-color="secondary"] {
+  background-color: var( --border-color-secondary ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="secondary"],
+.e-card[data-border-color="secondary"]         .e-card--body,
+.e-checkbox[data-border-color="secondary"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="secondary"]      .e-counter--decrease-button,
+.e-counter[data-border-color="secondary"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="secondary"]  .e-icon-button--body,
+.e-radio-button[data-border-color="secondary"] .e-radio-button--option-button,
+.e-switch[data-border-color="secondary"]       .e-switch--option-track,
+.e-text-field[data-border-color="secondary"]   .e-text-field--input-container {
+  border-color: var( --border-color-secondary ) }
+
+/* Border-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="secondary"],
+.e-card[data-hover-color="secondary"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="secondary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-secondary ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-horizontal-line[data-color="secondary"] .e-horizontal-line--body,
+.e-line-diagram--section[data-color="secondary"],
+.e-vertical-line[data-color="secondary"]   .e-vertical-line--body {
+  background-color: var( --border-color-secondary ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="secondary"] {
+  stroke: var( --border-color-secondary ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-anchor[data-color="secondary"],
+.e-button--body[data-color="secondary"],
+.e-chip[data-color="secondary"]        .e-chip--body,
+.e-icon[data-color="secondary"]        .e-icon--body,
+.e-icon-button[data-color="secondary"] .e-icon-button--body,
+.e-label[data-color="secondary"],
+.e-text[data-color="secondary"] .e-text--body {
+  color: var( --color-secondary ) }
+
+/* Text-color */
+/*** Secondary ***/
+
+/*** Success ***/
+/* Background-color */
+
+.e-button--body[data-background-color="success"],
+.e-card[data-background-color="success"]        .e-card--body,
+.e-color-marker--color[data-color="success"],
+.e-chip[data-background-color="success"]        .e-chip--body,
+.e-icon-button[data-background-color="success"] .e-icon-button--body,
+.e-toggle[data-background-color="success"] {
+  background-color: var( --background-color-success ) }
+
+/* Background-color */
+
+/* Badge-color */
+
+.e-element-badge[data-color="success"] {
+  background-color: var( --border-color-success ) }
+
+/* Badge-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="success"],
+.e-card[data-border-color="success"]         .e-card--body,
+.e-checkbox[data-border-color="success"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="success"]      .e-counter--decrease-button,
+.e-counter[data-border-color="success"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="success"]  .e-icon-button--body,
+.e-radio-button[data-border-color="success"] .e-radio-button--option-button,
+.e-switch[data-border-color="success"]       .e-switch--option-track,
+.e-text-field[data-border-color="success"]   .e-text-field--input-container {
+  border-color: var( --border-color-success ) }
+
+/* Border-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="success"],
+.e-card[data-hover-color="success"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="success"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="success"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-success ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-line-diagram--section[data-color="success"],
+.e-vertical-line[data-color="success"] .e-vertical-line--body {
+  background-color: var( --border-color-success ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="success"] {
+  stroke: var( --border-color-success ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-anchor[data-color="success"],
+.e-button--body[data-color="success"],
+.e-chip[data-color="success"]        .e-chip--body,
+.e-icon[data-color="success"]        .e-icon--body,
+.e-icon-button[data-color="success"] .e-icon-button--body,
+.e-label[data-color="success"],
+.e-text[data-color="success"] .e-text--body {
+  color: var( --color-success ) }
+
+/* Text-color */
+/*** Success ***/
+
+/*** Warning ***/
+/* Background-color */
+
+.e-button--body[data-background-color="warning"],
+.e-card[data-background-color="warning"]        .e-card--body,
+.e-color-marker--color[data-color="warning"],
+.e-chip[data-background-color="warning"]        .e-chip--body,
+.e-icon-button[data-background-color="warning"] .e-icon-button--body,
+.e-toggle[data-background-color="warning"] {
+  background-color: var( --background-color-warning ) }
+
+/* Background-color */
+
+/* Border-color */
+
+.e-button--body[data-border-color="warning"],
+.e-card[data-border-color="warning"]         .e-card--body,
+.e-checkbox[data-border-color="warning"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="warning"]      .e-counter--decrease-button,
+.e-counter[data-border-color="warning"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="warning"]  .e-icon-button--body,
+.e-radio-button[data-border-color="warning"] .e-radio-button--option-button,
+.e-select--button-body[data-border-color="warning"],
+.e-switch[data-border-color="warning"]       .e-switch--option-track,
+.e-text-field[data-border-color="warning"]   .e-text-field--input-container {
+  border-color: var( --border-color-warning ) }
+
+/* Border-color */
+
+/* Badge-color */
+
+.e-element-badge[data-color="warning"] {
+  background-color: var( --border-color-warning ) }
+
+/* Badge-color */
+
+/* Hover-color */
+
+/* XXX#4005 */
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="warning"],
+.e-card[data-hover-color="warning"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="warning"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
+  background-color: var( --hover-color-warning ) }
+
+/* Hover-color */
+
+/* Line-color */
+
+.e-line-diagram--section[data-color="warning"],
+.e-vertical-line[data-color="warning"] .e-vertical-line--body {
+  background-color: var( --border-color-warning ) }
+
+/* Line-color */
+
+/* Stroke-color */
+
+.e-circle-diagram--section[data-color="warning"] {
+  stroke: var( --border-color-warning ) }
+
+/* Stroke-color */
+
+/* Text-color */
+
+.e-anchor[data-color="warning"],
+.e-button--body[data-color="warning"],
+.e-chip[data-color="warning"]        .e-chip--body,
+.e-icon[data-color="warning"]        .e-icon--body,
+.e-icon-button[data-color="warning"] .e-icon-button--body,
+.e-label[data-color="warning"],
+.e-text[data-color="warning"] .e-text--body {
+  color: var( --color-warning ) }
+
+/* Text-color */
+/*** Warning ***/
+
+/*** Default ***/
+/* Line-color */
+
+.e-horizontal-line[data-color="default"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="default"],
+.e-vertical-line[data-color="default"]    .e-vertical-line--body {
+  background-color: var( --border-color ) }
+
+/* Line-color */
+/*** Default ***/
+
+/*** None ***/
+/* Border-color */
+
+/* Az icon-button elem {:border-color :none} beállítással használva,
+ * az elem {color: ...} tulajdonságának értékét használná a {border-color: ...}
+ * tulajdonság értékeként is, ha nem lenne beállítva a transparent érték! */
+.e-icon-button[data-border-color="none"] .e-icon-button--body {
+  border-color: transparent }
+
+/* Border-color */
+/*** None ***/
+/***** Color profiles *****/
