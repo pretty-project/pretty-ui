@@ -109,11 +109,11 @@
 
 ; @usage
 ;  [:environment/get-viewport-height]
-;(r/reg-sub :environment/get-viewport-height get-viewport-height)
+(r/reg-sub :environment/get-viewport-height get-viewport-height)
 
 ; @usage
 ;  [:environment/get-viewport-width]
-;(r/reg-sub :environment/get-viewport-width get-viewport-width)
+(r/reg-sub :environment/get-viewport-width get-viewport-width)
 
 ; @usage
 ;  [:environment/get-viewport-profile]
@@ -141,4 +141,4 @@
 
 ; @usage
 ;  [:environment/get-viewport-orientation]
-;(r/reg-sub :environment/get-viewport-orientation get-viewport-orientation)
+(r/reg-sub :environment/get-viewport-orientation get-viewport-orientation)

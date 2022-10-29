@@ -176,6 +176,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn join-class
+  ; @param (list of keyword or keywords in vector)
+  ;
+  ; @example
+  ;  (join-class :my-class [:your-class] :our-class)
+  ;  =>
+  ;  [:my-class :your-class :our-class]
+  ;
+  ; @return (keywords in vector)
+  [& xyz]
+  (letfn [(join-class-f [o x] (cond (vector?  x) (concat o x)
+                                    (keyword? x) (conj   o x)
+                                    :return   o))]
+         (reduce join-class-f [] xyz)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn value
   ; @param (keyword or string) n
   ; @param (string)(opt) flag

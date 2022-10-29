@@ -138,10 +138,10 @@
   ; XXX#4005
   ; A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
   ; attribútumot alkalmazni!
-  {:class         (css/join-class :x-element class)
-   :data-disabled (boolean        disabled?)})
-  ;:id            (hiccup/value   element-id)
-  ;:key           (hiccup/value   element-id)
+  {:class         (hiccup/join-class :x-element class)
+   :data-disabled (boolean           disabled?)})
+  ;:id            (hiccup/value      element-id)
+  ;:key           (hiccup/value      element-id)
 
    ; WARNING! DEPRECATED! DO NOT USE!
    ; Az elemek body komponensein lesz ezentúl alkalmazva a style!
