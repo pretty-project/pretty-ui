@@ -85,7 +85,7 @@
   ; @param (map) image-props
   [image-id image-props]
   (let [image-attributes (image-attributes image-id image-props)]
-       [:img.x-image (engine/element-attributes image-id image-props image-attributes)]))
+       [:img.e-image (engine/element-attributes image-id image-props image-attributes)]))
 
 (defn element
   ; @param (keyword)(opt) image-id

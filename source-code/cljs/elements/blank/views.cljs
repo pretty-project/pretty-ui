@@ -30,7 +30,7 @@
   ; @param (map) blank-props
   ;  {}
   [blank-id {:keys [content] :as blank-props}]
-  [:div.x-blank--body (blank.helpers/blank-body-attributes blank-id blank-props)
+  [:div.e-blank--body (blank.helpers/blank-body-attributes blank-id blank-props)
                       [x.components/content content]])
 
 (defn- blank
@@ -39,7 +39,7 @@
   ; @param (keyword) blank-id
   ; @param (map) blank-props
   [blank-id blank-props]
-  [:div.x-blank (blank.helpers/blank-attributes blank-id blank-props)
+  [:div.e-blank (blank.helpers/blank-attributes blank-id blank-props)
                 [blank-body                     blank-id blank-props]])
 
 (defn element

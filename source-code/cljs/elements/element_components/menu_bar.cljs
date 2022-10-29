@@ -109,7 +109,7 @@
   ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)}
   [_ _ {:keys [icon icon-family]}]
-  (if icon [:div.x-menu-bar--menu-item--icon {:data-icon-family icon-family} icon]))
+  (if icon [:div.e-menu-bar--menu-item--icon {:data-icon-family icon-family} icon]))
 
 (defn- menu-item-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -119,7 +119,7 @@
   ; @param (map) item-props
   ;  {:label (metamorphic-content)(opt)}
   [_ _ {:keys [label]}]
-  (if label [:div.x-menu-bar--menu-item--label (x.components/content label)]))
+  (if label [:div.e-menu-bar--menu-item--label (x.components/content label)]))
 
 (defn- toggle-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,7 +128,7 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   [bar-id bar-props item-props]
-  [:button.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
+  [:button.e-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                                  [menu-item-icon       bar-id bar-props item-props]
                                  [menu-item-label      bar-id bar-props item-props]
                                  [engine/element-badge bar-id           item-props]])
@@ -140,7 +140,7 @@
   ; @param (map) bar-props
   ; @param (map) item-props
   [bar-id bar-props item-props]
-  [:a.x-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
+  [:a.e-menu-bar--menu-item (menu-item-attributes bar-id bar-props item-props)
                             [menu-item-icon       bar-id bar-props item-props]
                             [menu-item-label      bar-id bar-props item-props]])
 
@@ -168,10 +168,10 @@
   ; XXX#5406
   ; A {:orientation :horizontal} menük esetén az overflow-x: scroll tulajdonság
   ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
-  ; (hibamentesen), ha scroll-container elem (.x-menu-bar--items)
+  ; (hibamentesen), ha scroll-container elem (.e-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
   (letfn [(f [item-list item-props] (conj item-list [menu-item bar-id bar-props item-props]))]
-         [:div.x-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})
+         [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})
                                       (reduce f [:<>] menu-items)]))
 
 (defn menu-bar
@@ -180,7 +180,7 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   [bar-id bar-props]
-  [:div.x-menu-bar (menu-bar-attributes bar-id bar-props)
+  [:div.e-menu-bar (menu-bar-attributes bar-id bar-props)
                    [menu-items          bar-id bar-props]])
 
 (defn element

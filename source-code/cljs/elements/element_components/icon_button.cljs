@@ -59,7 +59,7 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-icon-button--label (x.components/content label)]))
+  (if label [:div.e-icon-button--label (x.components/content label)]))
 
 (defn- icon-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +69,7 @@
   ;  {:icon (keyword)
   ;   :icon-family (keyword)}
   [_ {:keys [icon icon-family]}]
-  [:i.x-icon-button--icon {:data-icon-family icon-family} icon])
+  [:i.e-icon-button--icon {:data-icon-family icon-family} icon])
 
 (defn- icon-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,7 +77,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id {:keys [label] :as button-props}]
-  [:button.x-icon-button--body (merge
+  [:button.e-icon-button--body (merge
                                 (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
                                 {:style (:style button-props)
                                  :data-labeled (some? label)})
@@ -91,7 +91,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id {:keys [tooltip] :as button-props}]
-  [:div.x-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (x.components/content {:content tooltip})}))
+  [:div.e-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (x.components/content {:content tooltip})}))
                       [icon-button-body          button-id button-props]])
 
 (defn- stated-element
@@ -123,7 +123,7 @@
   ;    Default: :xs
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false

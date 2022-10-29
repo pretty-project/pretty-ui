@@ -31,7 +31,7 @@
   ; @param (map) card-props
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
-  [:button.x-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
+  [:button.e-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
                         [x.components/content                     card-id content]
                         [engine/element-badge                     card-id card-props]])
 
@@ -42,7 +42,7 @@
   ; @param (map) card-props
   ;  {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
-  [:div.x-card--body (card.helpers/static-card-body-attributes card-id card-props)
+  [:div.e-card--body (card.helpers/static-card-body-attributes card-id card-props)
                      [x.components/content                     card-id content]
                      [engine/element-badge                     card-id card-props]])
 
@@ -53,7 +53,7 @@
   ; @param (map) card-props
   ;  {:on-click (metamorphic-event)(opt)}
   [card-id {:keys [on-click] :as card-props}]
-  [:div.x-card (card.helpers/card-attributes card-id card-props)
+  [:div.e-card (card.helpers/card-attributes card-id card-props)
                (cond (some? on-click) [toggle-card card-id card-props]
                      (nil?  on-click) [static-card card-id card-props])])
 

@@ -31,8 +31,8 @@
   ; A {:badge-content ...} tulajdonság használható, a {:badge-color ...} tulajdonság meghatározása
   ; nélkül is!
   (cond (and badge-color badge-content)
-        [:div.x-element-badge {:data-color badge-color}
-                              [:div.x-element-badge--content (x.components/content badge-content)]]
-        badge-color   [:div.x-element-badge {:data-color badge-color}]
-        badge-content [:div.x-element-badge {:data-color :primary}
-                                            [:div.x-element-badge--content (x.components/content badge-content)]]))
+        [:div.e-element-badge {:data-color badge-color}
+                              [:div.e-element-badge--content (x.components/content badge-content)]]
+        badge-color   [:div.e-element-badge {:data-color badge-color}]
+        badge-content [:div.e-element-badge {:data-color :primary}
+                                            [:div.e-element-badge--content (x.components/content badge-content)]]))

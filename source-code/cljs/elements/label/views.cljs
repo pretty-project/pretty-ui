@@ -41,7 +41,7 @@
   ;      állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
   ;      a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.
   (if (true? required?)
-      [:span.x-label--asterisk "*"]))
+      [:span.e-label--asterisk "*"]))
 
 (defn- label-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,7 +50,7 @@
   ; @param (map) label-props
   ;  {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div.x-label--helper (x.components/content helper)]))
+  (if helper [:div.e-label--helper (x.components/content helper)]))
 
 (defn label-info-text
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,7 +60,7 @@
   ;  {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.helpers/info-text-visible? label-id)]
-                        [:div.x-label--info-text (x.components/content info-text)])))
+                        [:div.e-label--info-text (x.components/content info-text)])))
 
 (defn label-info-text-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -69,7 +69,7 @@
   ; @param (map) label-props
   ;  {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text] :as label-props}]
-  (if info-text [:button.x-label--info-text-button (label.helpers/label-info-text-button-attributes label-id label-props)
+  (if info-text [:button.e-label--info-text-button (label.helpers/label-info-text-button-attributes label-id label-props)
                                                    (param :info_outline)]))
 
 (defn- label-icon
@@ -80,7 +80,7 @@
   ;  {:icon (keyword)
   ;   :icon-family (keyword)}
   [_ {:keys [icon icon-family]}]
-  [:i.x-label--icon {:data-icon-family icon-family} icon])
+  [:i.e-label--icon {:data-icon-family icon-family} icon])
 
 (defn- label-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,7 +89,7 @@
   ; @param (map) label-props
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
-  [:div.x-label--placeholder {:data-selectable false}
+  [:div.e-label--placeholder {:data-selectable false}
                              (if placeholder (x.components/content placeholder)
                                              "\u00A0")])
 
@@ -103,7 +103,7 @@
   [label-id {:keys [content target-id]}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  [:label.x-label--content {:for target-id}
+  [:label.e-label--content {:for target-id}
                            (x.components/content content)])
 
 (defn- label-body
@@ -121,14 +121,14 @@
   ; Ilyenkor ha nem lenne minden esetben placeholder alkalmazva, akkor 0px magasságú lenne
   ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
   ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
-  [:div.x-label--body (label.helpers/label-body-attributes label-id label-props)
+  [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
                       ; BUG#3400
                       (if (-> content x.components/content str empty?)
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]
                                [label-asterisk label-id label-props]
-                               (if icon [:div.x-label--icon-placeholder])
+                               (if icon [:div.e-label--icon-placeholder])
                                [label-info-text-button label-id label-props]])])
 
 (defn- label
@@ -137,7 +137,7 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   [label-id label-props]
-  [:div.x-label (label.helpers/label-attributes label-id label-props)
+  [:div.e-label (label.helpers/label-attributes label-id label-props)
                 [label-body                     label-id label-props]
                 [label-info-text                label-id label-props]
                 [label-helper                   label-id label-props]])
@@ -151,7 +151,7 @@
   ; @param (map) label-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)
   ;   :disabled? (boolean)(opt)
@@ -160,7 +160,7 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :font-weight (keyword)(opt)
-  ;    :normal, :bold, extra-bold
+  ;    :bold, extra-bold, :inherit, :normal
   ;    Default :bold
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right

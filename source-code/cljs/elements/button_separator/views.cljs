@@ -28,7 +28,7 @@
   ; @param (keyword) separator-id
   ; @param (map) separator-props
   [separator-id separator-props]
-  [:div.x-button-separator--body (button-separator.helpers/separator-body-attributes separator-id separator-props)])
+  [:div.e-button-separator--body (button-separator.helpers/separator-body-attributes separator-id separator-props)])
 
 (defn button-separator
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,7 +36,7 @@
   ; @param (keyword) separator-id
   ; @param (map) separator-props
   [separator-id separator-props]
-  [:div.x-button-separator (button-separator.helpers/separator-attributes separator-id separator-props)
+  [:div.e-button-separator (button-separator.helpers/separator-attributes separator-id separator-props)
                            [button-separator-body                         separator-id separator-props]])
 
 (defn element

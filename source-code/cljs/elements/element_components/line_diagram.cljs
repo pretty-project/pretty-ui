@@ -95,7 +95,7 @@
   ;  {:label (metamorphic-content)}
   [_ diagram-props {:keys [color label] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
-       [:div.x-line-diagram--section {:data-color    (param color)
+       [:div.e-line-diagram--section {:data-color    (param color)
                                       :style {:width (css/percent value-ratio)}}]))
 
 (defn- line-diagram-sections
@@ -110,7 +110,7 @@
               (let [section-props (section-props-prototype section-props)]
                    (vector/conj-item line-diagram-sections
                                      [line-diagram-section diagram-id diagram-props section-props])))
-          [:div.x-line-diagram--sections {:style {:height (css/px strength)}}]
+          [:div.e-line-diagram--sections {:style {:height (css/px strength)}}]
           (param sections)))
 
 (defn line-diagram
@@ -119,7 +119,7 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   [diagram-id diagram-props]
-  [:div.x-line-diagram (engine/element-attributes diagram-id diagram-props)
+  [:div.e-line-diagram (engine/element-attributes diagram-id diagram-props)
                        [line-diagram-sections     diagram-id diagram-props]])
 
 (defn element

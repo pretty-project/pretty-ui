@@ -33,7 +33,7 @@
 
 /***** Element debug *****/
 
-/* Az .x-element::after pszeudóelem használatával az egyes elemeken
+/* Az .e-element::after pszeudóelem használatával az egyes elemeken
  * az x-debug animáció jelzi azok újrarenderelődését */
 
 /*
@@ -41,7 +41,7 @@
   from { transform: scale(1) }
   to   { transform: scale(0) }}
 
-.x-element::after {
+.e-element::after {
   animation-duration: .3s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
@@ -84,23 +84,23 @@ body {
 /***** Active state and focused state *****/
 
 /* WARNING! DEPRECATED! USE {:data-clickable true} INSTEAD! */
-.x-icon-button--body:active,
-.x-icon-button--body:focus,
-.x-menu-bar--menu-item:active,
-.x-menu-bar--menu-item:focus,
+.e-icon-button--body:active,
+.e-icon-button--body:focus,
+.e-menu-bar--menu-item:active,
+.e-menu-bar--menu-item:focus,
 /* DEPRECATED! */
 
 /* A checkbox, radio-button és switch elemnek csak a felirata és a helper
  * változik az elemre való kattintáskor */
-.x-checkbox--option:active     .x-checkbox--option-content,
-.x-checkbox--option:focus      .x-checkbox--option-content,
-.x-radio-button--option:active .x-radio-button--option-content,
-.x-radio-button--option:focus  .x-radio-button--option-content,
-.x-switch--option:active       .x-switch--option-content,
-.x-switch--option:focus        .x-switch--option-content,
+.e-checkbox--option:active     .e-checkbox--option-content,
+.e-checkbox--option:focus      .e-checkbox--option-content,
+.e-radio-button--option:active .e-radio-button--option-content,
+.e-radio-button--option:focus  .e-radio-button--option-content,
+.e-switch--option:active       .e-switch--option-content,
+.e-switch--option:focus        .e-switch--option-content,
 
-.x-toggle:active,
-.x-toggle:focus {
+.e-toggle:active,
+.e-toggle:focus {
   opacity: .5 }
 
 /***** Active state and focused state *****/
@@ -110,101 +110,101 @@ body {
 /***** Align profiles *****/
 /*** Horizontal align ***/
 
-.x-button--body[data-horizontal-align="left"],
-.x-card-group[data-horizontal-align="left"],
-.x-label[data-horizontal-align="left"] .x-label--body,
-.x-menu-bar[data-horizontal-align="left"],
-.x-row[data-horizontal-align="left"] .x-row--body {
+.e-button--body[data-horizontal-align="left"],
+.e-card-group[data-horizontal-align="left"],
+.e-label[data-horizontal-align="left"] .e-label--body,
+.e-menu-bar[data-horizontal-align="left"],
+.e-row[data-horizontal-align="left"] .e-row--body {
   justify-content: flex-start }
 
-.x-card[data-horizontal-align="left"] .x-card--body,
-.x-column[data-horizontal-align="left"] .x-column--body {
+.e-card[data-horizontal-align="left"] .e-card--body,
+.e-column[data-horizontal-align="left"] .e-column--body {
   align-items: flex-start }
 
-.x-text[data-horizontal-align="left"] .x-text--body {
+.e-text[data-horizontal-align="left"] .e-text--body {
   align-items: flex-start;
   text-align: left }
 
-.x-table--header-cell[data-horizontal-align="left"],
-.x-table--body-cell[data-horizontal-align="left"] {
+.e-table--header-cell[data-horizontal-align="left"],
+.e-table--body-cell[data-horizontal-align="left"] {
   text-align: left }
 
-.x-button--body[data-horizontal-align="center"],
-.x-card-group[data-horizontal-align="center"],
-.x-label[data-horizontal-align="center"] .x-label--body,
-.x-menu-bar[data-horizontal-align="center"],
-.x-row[data-horizontal-align="center"] .x-row--body {
+.e-button--body[data-horizontal-align="center"],
+.e-card-group[data-horizontal-align="center"],
+.e-label[data-horizontal-align="center"] .e-label--body,
+.e-menu-bar[data-horizontal-align="center"],
+.e-row[data-horizontal-align="center"] .e-row--body {
   justify-content: center }
 
-.x-card[data-horizontal-align="center"] .x-card--body,
-.x-column[data-horizontal-align="center"] .x-column--body {
+.e-card[data-horizontal-align="center"] .e-card--body,
+.e-column[data-horizontal-align="center"] .e-column--body {
   align-items: center }
 
-.x-text[data-horizontal-align="center"] .x-text--body {
+.e-text[data-horizontal-align="center"] .e-text--body {
   align-items: center;
   text-align: center }
 
-.x-table--header-cell[data-horizontal-align="center"],
-.x-table--body-cell[data-horizontal-align="center"] {
+.e-table--header-cell[data-horizontal-align="center"],
+.e-table--body-cell[data-horizontal-align="center"] {
   text-align: center }
 
-.x-button--body[data-horizontal-align="right"],
-.x-card-group[data-horizontal-align="right"],
-.x-label[data-horizontal-align="right"] .x-label--body,
-.x-menu-bar[data-horizontal-align="right"],
-.x-row[data-horizontal-align="right"] .x-row--body {
+.e-button--body[data-horizontal-align="right"],
+.e-card-group[data-horizontal-align="right"],
+.e-label[data-horizontal-align="right"] .e-label--body,
+.e-menu-bar[data-horizontal-align="right"],
+.e-row[data-horizontal-align="right"] .e-row--body {
   justify-content: flex-end }
 
-.x-card[data-horizontal-align="right"] .x-card--body,
-.x-column[data-horizontal-align="right"] .x-column--body {
+.e-card[data-horizontal-align="right"] .e-card--body,
+.e-column[data-horizontal-align="right"] .e-column--body {
   align-items: flex-end }
 
-.x-text[data-horizontal-align="right"] .x-text--body {
+.e-text[data-horizontal-align="right"] .e-text--body {
   align-items: flex-end;
   text-align: right }
 
-.x-table--header-cell[data-horizontal-align="right"],
-.x-table--body-cell[data-horizontal-align="right"] {
+.e-table--header-cell[data-horizontal-align="right"],
+.e-table--body-cell[data-horizontal-align="right"] {
   text-align: right }
 
-.x-row[data-horizontal-align="space-around"] .x-row--body {
+.e-row[data-horizontal-align="space-around"] .e-row--body {
   justify-content: space-around }
 
-.x-row[data-horizontal-align="space-between"] .x-row--body {
+.e-row[data-horizontal-align="space-between"] .e-row--body {
   justify-content: space-between }
 
-.x-row[data-horizontal-align="space-evenly"] .x-row--body {
+.e-row[data-horizontal-align="space-evenly"] .e-row--body {
   justify-content: space-evenly }
 
 /*** Horizontal align ***/
 
 /*** Vertical align ***/
 
-.x-column[data-vertical-align="top"] .x-column--body {
+.e-column[data-vertical-align="top"] .e-column--body {
   justify-content: flex-start }
 
-.x-row[data-vertical-align="top"] .x-row--body {
+.e-row[data-vertical-align="top"] .e-row--body {
   align-items: flex-start }
 
-.x-column[data-vertical-align="center"] .x-column--body {
+.e-column[data-vertical-align="center"] .e-column--body {
   justify-content: center }
 
-.x-row[data-vertical-align="center"] .x-row--body {
+.e-row[data-vertical-align="center"] .e-row--body {
   align-items: center }
 
-.x-column[data-vertical-align="bottom"] .x-column--body {
+.e-column[data-vertical-align="bottom"] .e-column--body {
   justify-content: flex-end }
 
-.x-row[data-vertical-align="bottom"] .x-row--body {
+.e-row[data-vertical-align="bottom"] .e-row--body {
   align-items: flex-end }
 
-.x-column[data-vertical-align="space-around"] .x-column--body {
+.e-column[data-vertical-align="space-around"] .e-column--body {
   justify-content: space-around }
 
-.x-column[data-vertical-align="space-between"] .x-column--body {
+.e-column[data-vertical-align="space-between"] .e-column--body {
   justify-content: space-between }
 
-.x-column[data-vertical-align="space-evenly"] .x-column--body {
+.e-column[data-vertical-align="space-evenly"] .e-column--body {
   justify-content: space-evenly }
 
 /*** Vertical align ***/
@@ -216,26 +216,26 @@ body {
 /*** Muted ***/
 /* Background-color */
 
-.x-button--body[data-background-color="muted"],
-.x-card[data-background-color="muted"]        .x-card--body,
-.x-color-marker--color[data-color="muted"],
-.x-chip[data-background-color="muted"]        .x-chip--body,
-.x-icon-button[data-background-color="muted"] .x-icon-button--body,
-.x-toggle[data-background-color="muted"] {
+.e-button--body[data-background-color="muted"],
+.e-card[data-background-color="muted"]        .e-card--body,
+.e-color-marker--color[data-color="muted"],
+.e-chip[data-background-color="muted"]        .e-chip--body,
+.e-icon-button[data-background-color="muted"] .e-icon-button--body,
+.e-toggle[data-background-color="muted"] {
   background-color: var( --background-color-muted ) }
 
 /* Background-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="muted"],
-.x-card[data-border-color="muted"]         .x-card--body,
-.x-checkbox[data-border-color="muted"]     .x-checkbox--option-button::before,
-.x-counter[data-border-color="muted"]      .x-counter--decrease-button,
-.x-counter[data-border-color="muted"]      .x-counter--increase-button,
-.x-icon-button[data-border-color="muted"]  .x-icon-button--body,
-.x-radio-button[data-border-color="muted"] .x-radio-button--option-button,
-.x-switch[data-border-color="muted"]       .x-switch--option-track {
+.e-button--body[data-border-color="muted"],
+.e-card[data-border-color="muted"]         .e-card--body,
+.e-checkbox[data-border-color="muted"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="muted"]      .e-counter--decrease-button,
+.e-counter[data-border-color="muted"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="muted"]  .e-icon-button--body,
+.e-radio-button[data-border-color="muted"] .e-radio-button--option-button,
+.e-switch[data-border-color="muted"]       .e-switch--option-track {
   border-color: var( --border-color-muted ) }
 
 /* Border-color */
@@ -243,40 +243,40 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                .x-button--body:hover[data-hover-color="muted"],
-.x-card[data-hover-color="muted"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="muted"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                .e-button--body:hover[data-hover-color="muted"],
+.e-card[data-hover-color="muted"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="muted"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
   background-color: var( --hover-color-muted ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-button-separator[data-color="muted"] .x-button-separator--body,
-.x-horizontal-line[data-color="muted"]  .x-horizontal-line--body,
-.x-line-diagram--section[data-color="muted"],
-.x-vertical-line[data-color="muted"]    .x-vertical-line--body {
+.e-button-separator[data-color="muted"] .e-button-separator--body,
+.e-horizontal-line[data-color="muted"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="muted"],
+.e-vertical-line[data-color="muted"]    .e-vertical-line--body {
   background-color: var( --border-color-muted ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="muted"] {
+.e-circle-diagram--section[data-color="muted"] {
   stroke: var( --border-color-muted ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-anchor[data-color="muted"],
-.x-button--body[data-color="muted"],
-.x-chip[data-color="muted"]        .x-chip--body,
-.x-icon[data-color="muted"]        .x-icon--body,
-.x-icon-button[data-color="muted"] .x-icon-button--body,
-.x-label[data-color="muted"],
-.x-text[data-color="muted"] .x-text--body {
+.e-anchor[data-color="muted"],
+.e-button--body[data-color="muted"],
+.e-chip[data-color="muted"]        .e-chip--body,
+.e-icon[data-color="muted"]        .e-icon--body,
+.e-icon-button[data-color="muted"] .e-icon-button--body,
+.e-label[data-color="muted"],
+.e-text[data-color="muted"] .e-text--body {
   color: var( --color-muted ) }
 
 /* Text-color */
@@ -285,22 +285,22 @@ body {
 /*** Highlight ***/
 /* Background-color */
 
-.x-button--body[data-background-color="highlight"],
-.x-card[data-background-color="highlight"]        .x-card--body,
-.x-color-marker--color[data-color="highlight"],
-.x-chip[data-background-color="highlight"]        .x-chip--body,
-.x-icon-button[data-background-color="highlight"] .x-icon-button--body,
-.x-toggle[data-background-color="highlight"] {
+.e-button--body[data-background-color="highlight"],
+.e-card[data-background-color="highlight"]        .e-card--body,
+.e-color-marker--color[data-color="highlight"],
+.e-chip[data-background-color="highlight"]        .e-chip--body,
+.e-icon-button[data-background-color="highlight"] .e-icon-button--body,
+.e-toggle[data-background-color="highlight"] {
   background-color: var( --background-color-highlight ) }
 
 /* Background-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="highlight"],
-.x-icon-button[data-border-color="highlight"] .x-icon-button--body,
-.x-card[data-border-color="highlight"]        .x-card--body,
-.x-select--button-body[data-border-color="highlight"] {
+.e-button--body[data-border-color="highlight"],
+.e-icon-button[data-border-color="highlight"] .e-icon-button--body,
+.e-card[data-border-color="highlight"]        .e-card--body,
+.e-select--button-body[data-border-color="highlight"] {
   border-color: var( --border-color-highlight ) }
 
 /* Border-color */
@@ -308,39 +308,39 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                    .x-button--body:hover[data-hover-color="highlight"],
-.x-card[data-hover-color="highlight"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="highlight"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="highlight"],
+.e-card[data-hover-color="highlight"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="highlight"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
   background-color: var( --hover-color-highlight ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-button-separator[data-color="highlight"] .x-button-separator--body,
-.x-horizontal-line[data-color="highlight"]  .x-horizontal-line--body,
-.x-line-diagram--section[data-color="highlight"],
-.x-vertical-line[data-color="highlight"]    .x-vertical-line--body {
+.e-button-separator[data-color="highlight"] .e-button-separator--body,
+.e-horizontal-line[data-color="highlight"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="highlight"],
+.e-vertical-line[data-color="highlight"]    .e-vertical-line--body {
   background-color: var( --border-color-highlight ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="highlight"] {
+.e-circle-diagram--section[data-color="highlight"] {
   stroke: var( --border-color-highlight ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-button--body[data-color="highlight"],
-.x-chip[data-color="highlight"]        .x-chip--body,
-.x-icon[data-color="highlight"]        .x-icon--body,
-.x-icon-button[data-color="highlight"] .x-icon-button--body,
-.x-label[data-color="highlight"],
-.x-text[data-color="highlight"] .x-text--body {
+.e-button--body[data-color="highlight"],
+.e-chip[data-color="highlight"]        .e-chip--body,
+.e-icon[data-color="highlight"]        .e-icon--body,
+.e-icon-button[data-color="highlight"] .e-icon-button--body,
+.e-label[data-color="highlight"],
+.e-text[data-color="highlight"] .e-text--body {
   color: var( --color-highlight ) }
 
 /* Text-color */
@@ -350,20 +350,21 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                 .x-button--body:hover[data-hover-color="invert"],
-.x-card[data-hover-color="invert"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="invert"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                 .e-button--body:hover[data-hover-color="invert"],
+.e-card[data-hover-color="invert"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="invert"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
   background-color: var( --hover-color-invert ) }
 
 /* Hover-color */
 
 /* Text-color */
 
-.x-button--body[data-color="invert"],
-.x-icon[data-color="invert"]        .x-icon--body,
-.x-icon-button[data-color="invert"] .x-icon-button--body,
-.x-label[data-color="invert"] {
+.e-button--body[data-color="invert"],
+.e-icon[data-color="invert"]        .e-icon--body,
+.e-icon-button[data-color="invert"] .e-icon-button--body,
+.e-label[data-color="invert"],
+.e-text[data-color="invert"] {
   color: var( --color-invert ) }
 
 /* Text-color */
@@ -372,34 +373,34 @@ body {
 /*** Primary ***/
 /* Background-color */
 
-.x-button--body[data-background-color="primary"],
-.x-card[data-background-color="primary"]        .x-card--body,
-.x-color-marker--color[data-color="primary"],
-.x-chip[data-background-color="primary"]        .x-chip--body,
-.x-icon-button[data-background-color="primary"] .x-icon-button--body,
-.x-toggle[data-background-color="primary"] {
+.e-button--body[data-background-color="primary"],
+.e-card[data-background-color="primary"]        .e-card--body,
+.e-color-marker--color[data-color="primary"],
+.e-chip[data-background-color="primary"]        .e-chip--body,
+.e-icon-button[data-background-color="primary"] .e-icon-button--body,
+.e-toggle[data-background-color="primary"] {
   background-color: var( --background-color-primary ) }
 
 /* Background-color */
 
 /* Badge-color */
 
-.x-element-badge[data-color="primary"] {
+.e-element-badge[data-color="primary"] {
   background-color: var( --border-color-primary ) }
 
 /* Badge-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="primary"],
-.x-card[data-border-color="primary"]         .x-card--body,
-.x-checkbox[data-border-color="primary"]     .x-checkbox--option-button::before,
-.x-counter[data-border-color="primary"]      .x-counter--decrease-button,
-.x-counter[data-border-color="primary"]      .x-counter--increase-button,
-.x-icon-button[data-border-color="primary"]  .x-icon-button--body,
-.x-radio-button[data-border-color="primary"] .x-radio-button--option-button,
-.x-switch[data-border-color="primary"]       .x-switch--option-track,
-.x-text-field[data-border-color="primary"]   .x-text-field--input-container {
+.e-button--body[data-border-color="primary"],
+.e-card[data-border-color="primary"]         .e-card--body,
+.e-checkbox[data-border-color="primary"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="primary"]      .e-counter--decrease-button,
+.e-counter[data-border-color="primary"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="primary"]  .e-icon-button--body,
+.e-radio-button[data-border-color="primary"] .e-radio-button--option-button,
+.e-switch[data-border-color="primary"]       .e-switch--option-track,
+.e-text-field[data-border-color="primary"]   .e-text-field--input-container {
   border-color: var( --border-color-primary ) }
 
 /* Border-color */
@@ -407,39 +408,39 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="primary"],
-.x-card[data-hover-color="primary"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="primary"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="primary"],
+.e-card[data-hover-color="primary"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="primary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-primary ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-horizontal-line[data-color="primary"] .x-horizontal-line--body,
-.x-line-diagram--section[data-color="primary"],
-.x-vertical-line[data-color="primary"]   .x-vertical-line--body {
+.e-horizontal-line[data-color="primary"] .e-horizontal-line--body,
+.e-line-diagram--section[data-color="primary"],
+.e-vertical-line[data-color="primary"]   .e-vertical-line--body {
   background-color: var( --border-color-primary ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="primary"] {
+.e-circle-diagram--section[data-color="primary"] {
   stroke: var( --border-color-primary ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-anchor[data-color="primary"],
-.x-button--body[data-color="primary"],
-.x-chip[data-color="primary"]        .x-chip--body,
-.x-icon[data-color="primary"]        .x-icon--body,
-.x-icon-button[data-color="primary"] .x-icon-button--body,
-.x-label[data-color="primary"],
-.x-text[data-color="primary"] .x-text--body {
+.e-anchor[data-color="primary"],
+.e-button--body[data-color="primary"],
+.e-chip[data-color="primary"]        .e-chip--body,
+.e-icon[data-color="primary"]        .e-icon--body,
+.e-icon-button[data-color="primary"] .e-icon-button--body,
+.e-label[data-color="primary"],
+.e-text[data-color="primary"] .e-text--body {
   color: var( --color-primary ) }
 
 /* Text-color */
@@ -448,34 +449,34 @@ body {
 /*** Secondary ***/
 /* Background-color */
 
-.x-button--body[data-background-color="secondary"],
-.x-card[data-background-color="secondary"]        .x-card--body,
-.x-color-marker--color[data-color="secondary"],
-.x-chip[data-background-color="secondary"]        .x-chip--body,
-.x-icon-button[data-background-color="secondary"] .x-icon-button--body,
-.x-toggle[data-background-color="secondary"] {
+.e-button--body[data-background-color="secondary"],
+.e-card[data-background-color="secondary"]        .e-card--body,
+.e-color-marker--color[data-color="secondary"],
+.e-chip[data-background-color="secondary"]        .e-chip--body,
+.e-icon-button[data-background-color="secondary"] .e-icon-button--body,
+.e-toggle[data-background-color="secondary"] {
   background-color: var( --background-color-secondary ) }
 
 /* Background-color */
 
 /* Badge-color */
 
-.x-element-badge[data-color="secondary"] {
+.e-element-badge[data-color="secondary"] {
   background-color: var( --border-color-secondary ) }
 
 /* Badge-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="secondary"],
-.x-card[data-border-color="secondary"]         .x-card--body,
-.x-checkbox[data-border-color="secondary"]     .x-checkbox--option-button::before,
-.x-counter[data-border-color="secondary"]      .x-counter--decrease-button,
-.x-counter[data-border-color="secondary"]      .x-counter--increase-button,
-.x-icon-button[data-border-color="secondary"]  .x-icon-button--body,
-.x-radio-button[data-border-color="secondary"] .x-radio-button--option-button,
-.x-switch[data-border-color="secondary"]       .x-switch--option-track,
-.x-text-field[data-border-color="secondary"]   .x-text-field--input-container {
+.e-button--body[data-border-color="secondary"],
+.e-card[data-border-color="secondary"]         .e-card--body,
+.e-checkbox[data-border-color="secondary"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="secondary"]      .e-counter--decrease-button,
+.e-counter[data-border-color="secondary"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="secondary"]  .e-icon-button--body,
+.e-radio-button[data-border-color="secondary"] .e-radio-button--option-button,
+.e-switch[data-border-color="secondary"]       .e-switch--option-track,
+.e-text-field[data-border-color="secondary"]   .e-text-field--input-container {
   border-color: var( --border-color-secondary ) }
 
 /* Border-color */
@@ -483,39 +484,39 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                    .x-button--body:hover[data-hover-color="secondary"],
-.x-card[data-hover-color="secondary"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="secondary"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="secondary"],
+.e-card[data-hover-color="secondary"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="secondary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-secondary ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-horizontal-line[data-color="secondary"] .x-horizontal-line--body,
-.x-line-diagram--section[data-color="secondary"],
-.x-vertical-line[data-color="secondary"]   .x-vertical-line--body {
+.e-horizontal-line[data-color="secondary"] .e-horizontal-line--body,
+.e-line-diagram--section[data-color="secondary"],
+.e-vertical-line[data-color="secondary"]   .e-vertical-line--body {
   background-color: var( --border-color-secondary ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="secondary"] {
+.e-circle-diagram--section[data-color="secondary"] {
   stroke: var( --border-color-secondary ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-anchor[data-color="secondary"],
-.x-button--body[data-color="secondary"],
-.x-chip[data-color="secondary"]        .x-chip--body,
-.x-icon[data-color="secondary"]        .x-icon--body,
-.x-icon-button[data-color="secondary"] .x-icon-button--body,
-.x-label[data-color="secondary"],
-.x-text[data-color="secondary"] .x-text--body {
+.e-anchor[data-color="secondary"],
+.e-button--body[data-color="secondary"],
+.e-chip[data-color="secondary"]        .e-chip--body,
+.e-icon[data-color="secondary"]        .e-icon--body,
+.e-icon-button[data-color="secondary"] .e-icon-button--body,
+.e-label[data-color="secondary"],
+.e-text[data-color="secondary"] .e-text--body {
   color: var( --color-secondary ) }
 
 /* Text-color */
@@ -524,34 +525,34 @@ body {
 /*** Success ***/
 /* Background-color */
 
-.x-button--body[data-background-color="success"],
-.x-card[data-background-color="success"]        .x-card--body,
-.x-color-marker--color[data-color="success"],
-.x-chip[data-background-color="success"]        .x-chip--body,
-.x-icon-button[data-background-color="success"] .x-icon-button--body,
-.x-toggle[data-background-color="success"] {
+.e-button--body[data-background-color="success"],
+.e-card[data-background-color="success"]        .e-card--body,
+.e-color-marker--color[data-color="success"],
+.e-chip[data-background-color="success"]        .e-chip--body,
+.e-icon-button[data-background-color="success"] .e-icon-button--body,
+.e-toggle[data-background-color="success"] {
   background-color: var( --background-color-success ) }
 
 /* Background-color */
 
 /* Badge-color */
 
-.x-element-badge[data-color="success"] {
+.e-element-badge[data-color="success"] {
   background-color: var( --border-color-success ) }
 
 /* Badge-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="success"],
-.x-card[data-border-color="success"]         .x-card--body,
-.x-checkbox[data-border-color="success"]     .x-checkbox--option-button::before,
-.x-counter[data-border-color="success"]      .x-counter--decrease-button,
-.x-counter[data-border-color="success"]      .x-counter--increase-button,
-.x-icon-button[data-border-color="success"]  .x-icon-button--body,
-.x-radio-button[data-border-color="success"] .x-radio-button--option-button,
-.x-switch[data-border-color="success"]       .x-switch--option-track,
-.x-text-field[data-border-color="success"]   .x-text-field--input-container {
+.e-button--body[data-border-color="success"],
+.e-card[data-border-color="success"]         .e-card--body,
+.e-checkbox[data-border-color="success"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="success"]      .e-counter--decrease-button,
+.e-counter[data-border-color="success"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="success"]  .e-icon-button--body,
+.e-radio-button[data-border-color="success"] .e-radio-button--option-button,
+.e-switch[data-border-color="success"]       .e-switch--option-track,
+.e-text-field[data-border-color="success"]   .e-text-field--input-container {
   border-color: var( --border-color-success ) }
 
 /* Border-color */
@@ -559,38 +560,38 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="success"],
-.x-card[data-hover-color="success"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="success"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="success"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="success"],
+.e-card[data-hover-color="success"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="success"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="success"][data-disabled="false"]:hover {
   background-color: var( --hover-color-success ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-line-diagram--section[data-color="success"],
-.x-vertical-line[data-color="success"] .x-vertical-line--body {
+.e-line-diagram--section[data-color="success"],
+.e-vertical-line[data-color="success"] .e-vertical-line--body {
   background-color: var( --border-color-success ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="success"] {
+.e-circle-diagram--section[data-color="success"] {
   stroke: var( --border-color-success ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-anchor[data-color="success"],
-.x-button--body[data-color="success"],
-.x-chip[data-color="success"]        .x-chip--body,
-.x-icon[data-color="success"]        .x-icon--body,
-.x-icon-button[data-color="success"] .x-icon-button--body,
-.x-label[data-color="success"],
-.x-text[data-color="success"] .x-text--body {
+.e-anchor[data-color="success"],
+.e-button--body[data-color="success"],
+.e-chip[data-color="success"]        .e-chip--body,
+.e-icon[data-color="success"]        .e-icon--body,
+.e-icon-button[data-color="success"] .e-icon-button--body,
+.e-label[data-color="success"],
+.e-text[data-color="success"] .e-text--body {
   color: var( --color-success ) }
 
 /* Text-color */
@@ -599,35 +600,35 @@ body {
 /*** Warning ***/
 /* Background-color */
 
-.x-button--body[data-background-color="warning"],
-.x-card[data-background-color="warning"]        .x-card--body,
-.x-color-marker--color[data-color="warning"],
-.x-chip[data-background-color="warning"]        .x-chip--body,
-.x-icon-button[data-background-color="warning"] .x-icon-button--body,
-.x-toggle[data-background-color="warning"] {
+.e-button--body[data-background-color="warning"],
+.e-card[data-background-color="warning"]        .e-card--body,
+.e-color-marker--color[data-color="warning"],
+.e-chip[data-background-color="warning"]        .e-chip--body,
+.e-icon-button[data-background-color="warning"] .e-icon-button--body,
+.e-toggle[data-background-color="warning"] {
   background-color: var( --background-color-warning ) }
 
 /* Background-color */
 
 /* Border-color */
 
-.x-button--body[data-border-color="warning"],
-.x-card[data-border-color="warning"]         .x-card--body,
-.x-checkbox[data-border-color="warning"]     .x-checkbox--option-button::before,
-.x-counter[data-border-color="warning"]      .x-counter--decrease-button,
-.x-counter[data-border-color="warning"]      .x-counter--increase-button,
-.x-icon-button[data-border-color="warning"]  .x-icon-button--body,
-.x-radio-button[data-border-color="warning"] .x-radio-button--option-button,
-.x-select--button-body[data-border-color="warning"],
-.x-switch[data-border-color="warning"]       .x-switch--option-track,
-.x-text-field[data-border-color="warning"]   .x-text-field--input-container {
+.e-button--body[data-border-color="warning"],
+.e-card[data-border-color="warning"]         .e-card--body,
+.e-checkbox[data-border-color="warning"]     .e-checkbox--option-button::before,
+.e-counter[data-border-color="warning"]      .e-counter--decrease-button,
+.e-counter[data-border-color="warning"]      .e-counter--increase-button,
+.e-icon-button[data-border-color="warning"]  .e-icon-button--body,
+.e-radio-button[data-border-color="warning"] .e-radio-button--option-button,
+.e-select--button-body[data-border-color="warning"],
+.e-switch[data-border-color="warning"]       .e-switch--option-track,
+.e-text-field[data-border-color="warning"]   .e-text-field--input-container {
   border-color: var( --border-color-warning ) }
 
 /* Border-color */
 
 /* Badge-color */
 
-.x-element-badge[data-color="warning"] {
+.e-element-badge[data-color="warning"] {
   background-color: var( --border-color-warning ) }
 
 /* Badge-color */
@@ -635,38 +636,38 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.x-button[data-disabled="false"]                                  .x-button--body:hover[data-hover-color="warning"],
-.x-card[data-hover-color="warning"][data-disabled="false"]        .x-card--body:hover,
-.x-icon-button[data-hover-color="warning"][data-disabled="false"] .x-icon-button--body:hover::before,
-.x-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
+.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="warning"],
+.e-card[data-hover-color="warning"][data-disabled="false"]        .e-card--body:hover,
+.e-icon-button[data-hover-color="warning"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
   background-color: var( --hover-color-warning ) }
 
 /* Hover-color */
 
 /* Line-color */
 
-.x-line-diagram--section[data-color="warning"],
-.x-vertical-line[data-color="warning"] .x-vertical-line--body {
+.e-line-diagram--section[data-color="warning"],
+.e-vertical-line[data-color="warning"] .e-vertical-line--body {
   background-color: var( --border-color-warning ) }
 
 /* Line-color */
 
 /* Stroke-color */
 
-.x-circle-diagram--section[data-color="warning"] {
+.e-circle-diagram--section[data-color="warning"] {
   stroke: var( --border-color-warning ) }
 
 /* Stroke-color */
 
 /* Text-color */
 
-.x-anchor[data-color="warning"],
-.x-button--body[data-color="warning"],
-.x-chip[data-color="warning"]        .x-chip--body,
-.x-icon[data-color="warning"]        .x-icon--body,
-.x-icon-button[data-color="warning"] .x-icon-button--body,
-.x-label[data-color="warning"],
-.x-text[data-color="warning"] .x-text--body {
+.e-anchor[data-color="warning"],
+.e-button--body[data-color="warning"],
+.e-chip[data-color="warning"]        .e-chip--body,
+.e-icon[data-color="warning"]        .e-icon--body,
+.e-icon-button[data-color="warning"] .e-icon-button--body,
+.e-label[data-color="warning"],
+.e-text[data-color="warning"] .e-text--body {
   color: var( --color-warning ) }
 
 /* Text-color */
@@ -675,9 +676,9 @@ body {
 /*** Default ***/
 /* Line-color */
 
-.x-horizontal-line[data-color="default"]  .x-horizontal-line--body,
-.x-line-diagram--section[data-color="default"],
-.x-vertical-line[data-color="default"]    .x-vertical-line--body {
+.e-horizontal-line[data-color="default"]  .e-horizontal-line--body,
+.e-line-diagram--section[data-color="default"],
+.e-vertical-line[data-color="default"]    .e-vertical-line--body {
   background-color: var( --border-color ) }
 
 /* Line-color */
@@ -689,7 +690,7 @@ body {
 /* Az icon-button elem {:border-color :none} beállítással használva,
  * az elem {color: ...} tulajdonságának értékét használná a {border-color: ...}
  * tulajdonság értékeként is, ha nem lenne beállítva a transparent érték! */
-.x-icon-button[data-border-color="none"] .x-icon-button--body {
+.e-icon-button[data-border-color="none"] .e-icon-button--body {
   border-color: transparent }
 
 /* Border-color */
@@ -701,21 +702,21 @@ body {
 /***** Font-size profiles *****/
 /*** XXS ***/
 
-.x-icon[data-size="xxs"] .x-icon--body {
+.e-icon[data-size="xxs"] .e-icon--body {
   font-size: var( --icon-size-xxs );
 
   /* BUG#0983 */
   height: 24px;
   width: 24px }
 
-.x-anchor[data-font-size="xxs"],
-.x-table[data-font-size="xxs"],
-.x-text[data-font-size="xxs"] {
+.e-anchor[data-font-size="xxs"],
+.e-table[data-font-size="xxs"],
+.e-text[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   line-height: var( --line-height-xxs ) }
 
-.x-button--body[data-font-size="xxs"] {
+.e-button--body[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   /* XXX#6610
@@ -724,223 +725,223 @@ body {
    * kapcsolódó label elemtől! */
   line-height: 24px }
 
-.x-button--body[data-font-size="xxs"][data-hover-color] {
+.e-button--body[data-font-size="xxs"][data-hover-color] {
   /* XXX#0404
    * A hover-color tulajdonsággal rendelkező button elem sormagassága minimum 36px
    * kell, hogy legyen, különben túl vékonynak néz ki! */
   line-height: 36px }
 
-.x-label[data-font-size="xxs"] {
+.e-label[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
   line-height: 24px }
 
-.x-label[data-font-size="xs"] .x-label--icon {
+.e-label[data-font-size="xs"] .e-label--icon {
   font-size: var( --icon-size-xxs ) }
 
 /*** XXS ***/
 
 /*** XS ***/
 
-.x-icon[data-size="xs"] .x-icon--body {
+.e-icon[data-size="xs"] .e-icon--body {
   font-size: var( --icon-size-xs );
 
   /* BUG#0983 */
   height: 24px;
   width: 24px }
 
-.x-anchor[data-font-size="xs"],
-.x-table[data-font-size="xs"],
-.x-text[data-font-size="xs"] {
+.e-anchor[data-font-size="xs"],
+.e-table[data-font-size="xs"],
+.e-text[data-font-size="xs"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs ) }
 
-.x-checkbox[data-font-size="xs"]     .x-checkbox--option-label,
-.x-menu-bar[data-font-size="xs"]     .x-menu-bar--menu-item--label,
-.x-radio-button[data-font-size="xs"] .x-radio-button--option-label,
-.x-switch[data-font-size="xs"]       .x-switch--option-label {
+.e-checkbox[data-font-size="xs"]     .e-checkbox--option-label,
+.e-menu-bar[data-font-size="xs"]     .e-menu-bar--menu-item--label,
+.e-radio-button[data-font-size="xs"] .e-radio-button--option-label,
+.e-switch[data-font-size="xs"]       .e-switch--option-label {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
 
-.x-button--body[data-font-size="xs"] {
+.e-button--body[data-font-size="xs"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   /* XXX#6610 */
   line-height: 24px }
 
-.x-button--body[data-font-size="xs"][data-hover-color] {
+.e-button--body[data-font-size="xs"][data-hover-color] {
   /* XXX#0404 */
   line-height: 36px }
 
-.x-label[data-font-size="xs"] {
+.e-label[data-font-size="xs"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: 24px }
 
-.x-label[data-font-size="xs"] .x-label--icon {
+.e-label[data-font-size="xs"] .e-label--icon {
   font-size: var( --icon-size-xxs ) }
 
 /*** XS ***/
 
 /*** S ***/
 
-.x-icon[data-size="s"] .x-icon--body {
+.e-icon[data-size="s"] .e-icon--body {
   font-size: var( --icon-size-s );
 
   /* BUG#0983 */
   height: 24px;
   width: 24px }
 
-.x-anchor[data-font-size="s"],
-.x-table[data-font-size="s"],
-.x-text[data-font-size="s"] {
+.e-anchor[data-font-size="s"],
+.e-table[data-font-size="s"],
+.e-text[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
 
-.x-checkbox[data-font-size="s"]     .x-checkbox--option-label,
-.x-menu-bar[data-font-size="s"]     .x-menu-bar--menu-item--label,
-.x-radio-button[data-font-size="s"] .x-radio-button--option-label,
-.x-switch[data-font-size="s"]       .x-switch--option-label {
+.e-checkbox[data-font-size="s"]     .e-checkbox--option-label,
+.e-menu-bar[data-font-size="s"]     .e-menu-bar--menu-item--label,
+.e-radio-button[data-font-size="s"] .e-radio-button--option-label,
+.e-switch[data-font-size="s"]       .e-switch--option-label {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
 
-.x-button--body[data-font-size="s"] {
+.e-button--body[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: 36px }
 
-.x-label[data-font-size="s"] {
+.e-label[data-font-size="s"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px }
 
-.x-label[data-font-size="s"] .x-label--icon {
+.e-label[data-font-size="s"] .e-label--icon {
   font-size: var( --icon-size-xs ) }
 
 /*** S ***/
 
 /*** M ***/
 
-.x-icon[data-size="m"] .x-icon--body {
+.e-icon[data-size="m"] .e-icon--body {
   font-size: var( --icon-size-m );
 
   /* BUG#0983 */
   height: 24px;
   width: 24px }
 
-.x-anchor[data-font-size="m"],
-.x-table[data-font-size="m"],
-.x-text[data-font-size="m"] {
+.e-anchor[data-font-size="m"],
+.e-table[data-font-size="m"],
+.e-text[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: var( --line-height-m ) }
 
-.x-button--body[data-font-size="m"] {
+.e-button--body[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: 36px }
 
-.x-label[data-font-size="m"] {
+.e-label[data-font-size="m"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: 24px }
 
-.x-label[data-font-size="m"] .x-label--icon {
+.e-label[data-font-size="m"] .e-label--icon {
   font-size: var( --icon-size-s ) }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-icon[data-size="l"] .x-icon--body {
+.e-icon[data-size="l"] .e-icon--body {
   font-size: var( --icon-size-l );
 
   /* BUG#0983 */
   height: 48px;
   width: 48px }
 
-.x-anchor[data-font-size="l"],
-.x-table[data-font-size="l"],
-.x-text[data-font-size="l"] {
+.e-anchor[data-font-size="l"],
+.e-table[data-font-size="l"],
+.e-text[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: var( --line-height-l ) }
 
-.x-button--body[data-font-size="l"] {
+.e-button--body[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: 36px }
 
-.x-label[data-font-size="l"] {
+.e-label[data-font-size="l"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: 36px }
 
-.x-label[data-font-size="l"] .x-label--icon {
+.e-label[data-font-size="l"] .e-label--icon {
   font-size: var( --icon-size-m ) }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-icon[data-size="xl"] .x-icon--body {
+.e-icon[data-size="xl"] .e-icon--body {
   font-size: var( --icon-size-xl );
 
   /* BUG#0983 */
   height: 48px;
   width: 48px }
 
-.x-anchor[data-font-size="xl"],
-.x-table[data-font-size="xl"],
-.x-text[data-font-size="xl"] {
+.e-anchor[data-font-size="xl"],
+.e-table[data-font-size="xl"],
+.e-text[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: var( --line-height-xl ) }
 
-.x-button--body[data-font-size="xl"] {
+.e-button--body[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: 36px }
 
-.x-label[data-font-size="xl"] {
+.e-label[data-font-size="xl"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: 36px }
 
-.x-label[data-font-size="xl"] .x-label--icon {
+.e-label[data-font-size="xl"] .e-label--icon {
   font-size: var( --icon-size-m ) }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-icon[data-size="xxl"] .x-icon--body {
+.e-icon[data-size="xxl"] .e-icon--body {
   font-size: var( --icon-size-xxl );
 
   /* BUG#0983 */
   height: 48px;
   width: 48px }
 
-.x-anchor[data-font-size="xxl"],
-.x-table[data-font-size="xxl"],
-.x-text[data-font-size="xxl"] {
+.e-anchor[data-font-size="xxl"],
+.e-table[data-font-size="xxl"],
+.e-text[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: var( --line-height-xxl ) }
 
-.x-button--body[data-font-size="xxl"] {
+.e-button--body[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: 36px }
 
-.x-label[data-font-size="xxl"] {
+.e-label[data-font-size="xxl"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: 48px }
 
-.x-label[data-font-size="xxl"] .x-label--icon {
+.e-label[data-font-size="xxl"] .e-label--icon {
   font-size: var( --icon-size-m ) }
 
 /*** XXL ***/
@@ -951,26 +952,26 @@ body {
 /***** Font weight profiles *****/
 /*** Normal ***/
 
-.x-label[data-font-weight="normal"],
-.x-text[data-font-weight="normal"] {
+.e-label[data-font-weight="normal"],
+.e-text[data-font-weight="normal"] {
   font-weight: 400 }
 
 /*** Normal ***/
 
 /*** Bold ***/
 
-.x-button--body[data-font-weight="bold"],
-.x-label[data-font-weight="bold"],
-.x-text[data-font-weight="bold"] {
+.e-button--body[data-font-weight="bold"],
+.e-label[data-font-weight="bold"],
+.e-text[data-font-weight="bold"] {
   font-weight: 500 }
 
 /*** Bold ***/
 
 /*** Extra bold ***/
 
-.x-button--body[data-font-weight="extra-bold"],
-.x-label[data-font-weight="extra-bold"],
-.x-text[data-font-weight="extra-bold"] {
+.e-button--body[data-font-weight="extra-bold"],
+.e-label[data-font-weight="extra-bold"],
+.e-text[data-font-weight="extra-bold"] {
   font-weight: 600 }
 
 /*** Extra bold ***/
@@ -981,70 +982,70 @@ body {
 /***** Gap profiles *****/
 /*** XXS ***/
 
-.x-row[data-gap="xxs"] .x-row--body {
+.e-row[data-gap="xxs"] .e-row--body {
   grid-column-gap: 6px }
 
-.x-column[data-gap="xxs"] .x-column--body {
+.e-column[data-gap="xxs"] .e-column--body {
   grid-row-gap: 6px }
 
 /*** XXS ***/
 
 /*** XS ***/
 
-.x-row[data-gap="xs"] .x-row--body {
+.e-row[data-gap="xs"] .e-row--body {
   grid-column-gap: 12px }
 
-.x-column[data-gap="xs"] .x-column--body {
+.e-column[data-gap="xs"] .e-column--body {
   grid-row-gap: 12px }
 
 /*** XS ***/
 
 /*** S ***/
 
-.x-row[data-gap="s"] .x-row--body {
+.e-row[data-gap="s"] .e-row--body {
   grid-column-gap: 18px }
 
-.x-column[data-gap="s"] .x-column--body {
+.e-column[data-gap="s"] .e-column--body {
   grid-row-gap: 18px }
 
 /*** S ***/
 
 /*** M ***/
 
-.x-row[data-gap="m"] .x-row--body {
+.e-row[data-gap="m"] .e-row--body {
   grid-column-gap: 24px }
 
-.x-column[data-gap="m"] .x-column--body {
+.e-column[data-gap="m"] .e-column--body {
   grid-row-gap: 24px }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-row[data-gap="l"] .x-row--body {
+.e-row[data-gap="l"] .e-row--body {
   grid-column-gap: 36px }
 
-.x-column[data-gap="l"] .x-column--body {
+.e-column[data-gap="l"] .e-column--body {
   grid-row-gap: 36px }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-row[data-gap="xl"] .x-row--body {
+.e-row[data-gap="xl"] .e-row--body {
   grid-column-gap: 42px }
 
-.x-column[data-gap="xl"] .x-column--body {
+.e-column[data-gap="xl"] .e-column--body {
   grid-row-gap: 42px }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-row[data-gap="xxl"] .x-row--body {
+.e-row[data-gap="xxl"] .e-row--body {
   grid-column-gap: 48px }
 
-.x-column[data-gap="xxl"] .x-column--body {
+.e-column[data-gap="xxl"] .e-column--body {
   grid-row-gap: 48px }
 
 /*** XXL ***/
@@ -1055,13 +1056,13 @@ body {
 /***** Orientation profiles *****/
 /*** Horizontal orientation ***/
 
-.x-menu-bar[data-orientation="horizontal"],
-.x-menu-bar[data-orientation="horizontal"] .x-menu-bar--menu-items {
+.e-menu-bar[data-orientation="horizontal"],
+.e-menu-bar[data-orientation="horizontal"] .e-menu-bar--menu-items {
   display: flex;
   flex-direction: row }
 
-.x-menu[data-orientation="horizontal"],
-.x-tabs[data-orientation="horizontal"] {
+.e-menu[data-orientation="horizontal"],
+.e-tabs[data-orientation="horizontal"] {
   display: flex;
   flex-direction: column }
 
@@ -1069,12 +1070,12 @@ body {
 
 /*** Vertical orientation ***/
 
-.x-menu-bar[data-orientation="vertical"] .x-menu-bar--menu-items {
+.e-menu-bar[data-orientation="vertical"] .e-menu-bar--menu-items {
   display: flex;
   flex-direction: column }
 
-.x-menu[data-orientation="vertical"],
-.x-tabs[data-orientation="vertical"] {
+.e-menu[data-orientation="vertical"],
+.e-tabs[data-orientation="vertical"] {
   display: flex;
   flex-direction: row }
 
@@ -1086,13 +1087,13 @@ body {
 /***** Position profiles *****/
 /*** Horizontal position ***/
 
-.x-element[data-horizontal-position="left"] {
+.e-element[data-horizontal-position="left"] {
   align-self: flex-start }
 
-.x-element[data-horizontal-position="center"] {
+.e-element[data-horizontal-position="center"] {
   align-self: center }
 
-.x-element[data-horizontal-position="right"] {
+.e-element[data-horizontal-position="right"] {
   align-self: flex-end }
 
 /*** Horizontal position ***/
@@ -1106,284 +1107,284 @@ body {
 /***** Size profiles *****/
 /*** XXS ***/
 
-.x-element[data-min-width="xxs"] {
+.e-element[data-min-width="xxs"] {
   min-width: var( --element-min-width-xxs ) }
 
-.x-icon-button[data-height="xxs"] .x-icon-button--body {
+.e-icon-button[data-height="xxs"] .e-icon-button--body {
   height: 12px }
 
-.x-color-stamp--body[data-size="xxs"] {
+.e-color-stamp--body[data-size="xxs"] {
   grid-gap: 1px;
   height: 12px;
   width: 12px }
 
-.x-ghost[data-height="xxs"] .x-ghost--body {
+.e-ghost[data-height="xxs"] .e-ghost--body {
   height: 12px }
 
-.x-color-marker[data-size="xxs"] .x-color-marker--body {
+.e-color-marker[data-size="xxs"] .e-color-marker--body {
   border-radius: 3px;
   height: 12px;
   width: 6px }
 
-.x-thumbnail[data-height="xxs"] .x-thumbnail--body {
+.e-thumbnail[data-height="xxs"] .e-thumbnail--body {
   height: 36px }
 
-.x-thumbnail[data-width="xxs"] .x-thumbnail--body {
+.e-thumbnail[data-width="xxs"] .e-thumbnail--body {
   width: 36px }
 
-.x-horizontal-separator[data-size="xxs"] {
+.e-horizontal-separator[data-size="xxs"] {
   height: 6px }
 
-.x-vertical-separator[data-size="xxs"] {
+.e-vertical-separator[data-size="xxs"] {
   width: 4px }
 
 /*** XXS ***/
 
 /*** XS ***/
 
-.x-element[data-min-width="xs"] {
+.e-element[data-min-width="xs"] {
   min-width: var( --element-min-width-xs ) }
 
-.x-icon-button[data-height="xs"] .x-icon-button--body {
+.e-icon-button[data-height="xs"] .e-icon-button--body {
   height: 18px }
 
-.x-color-stamp--body[data-size="xs"] {
+.e-color-stamp--body[data-size="xs"] {
   grid-gap: 1px;
   height: 18px;
   width: 18px }
 
-.x-ghost[data-height="xs"] .x-ghost--body {
+.e-ghost[data-height="xs"] .e-ghost--body {
   height: 18px }
 
-.x-color-marker[data-size="xs"] .x-color-marker--body {
+.e-color-marker[data-size="xs"] .e-color-marker--body {
   border-radius: 3px;
   height: 18px;
   width: 6px }
 
-.x-thumbnail[data-height="xs"] .x-thumbnail--body {
+.e-thumbnail[data-height="xs"] .e-thumbnail--body {
   height: 48px }
 
-.x-thumbnail[data-width="xs"] .x-thumbnail--body {
+.e-thumbnail[data-width="xs"] .e-thumbnail--body {
   width: 48px }
 
-.x-horizontal-separator[data-size="xs"] {
+.e-horizontal-separator[data-size="xs"] {
   height: 12px }
 
-.x-vertical-separator[data-size="xs"] {
+.e-vertical-separator[data-size="xs"] {
   width: 8px }
 
 /*** XS ***/
 
 /*** S ***/
 
-.x-element[data-min-width="s"] {
+.e-element[data-min-width="s"] {
   min-width: var( --element-min-width-s ) }
 
-.x-icon-button[data-height="s"] .x-icon-button--body {
+.e-icon-button[data-height="s"] .e-icon-button--body {
   height: 24px }
 
-.x-color-stamp--body[data-size="s"] {
+.e-color-stamp--body[data-size="s"] {
   grid-gap: 1px;
   height: 24px;
   width: 24px }
 
-.x-ghost[data-height="s"] .x-ghost--body {
+.e-ghost[data-height="s"] .e-ghost--body {
   height: 24px }
 
-.x-color-marker[data-size="s"] .x-color-marker--body {
+.e-color-marker[data-size="s"] .e-color-marker--body {
   border-radius: 3px;
   height: 24px;
   width: 6px }
 
-.x-thumbnail[data-height="s"] .x-thumbnail--body {
+.e-thumbnail[data-height="s"] .e-thumbnail--body {
   height: 60px }
 
-.x-thumbnail[data-width="s"] .x-thumbnail--body {
+.e-thumbnail[data-width="s"] .e-thumbnail--body {
   width: 60px }
 
-.x-horizontal-separator[data-size="s"] {
+.e-horizontal-separator[data-size="s"] {
   height: 18px }
 
-.x-vertical-separator[data-size="s"] {
+.e-vertical-separator[data-size="s"] {
   width: 12px }
 
 /*** S ***/
 
 /*** M ***/
 
-.x-element[data-min-width="m"] {
+.e-element[data-min-width="m"] {
   min-width: var( --element-min-width-m ) }
 
-.x-icon-button[data-height="m"] .x-icon-button--body {
+.e-icon-button[data-height="m"] .e-icon-button--body {
   height: 30px }
 
-.x-color-stamp--body[data-size="m"] {
+.e-color-stamp--body[data-size="m"] {
   grid-gap: 1px;
   height: 30px;
   width: 30px }
 
-.x-ghost[data-height="m"] .x-ghost--body {
+.e-ghost[data-height="m"] .e-ghost--body {
   height: 30px }
 
-.x-color-marker[data-size="m"] .x-color-marker--body {
+.e-color-marker[data-size="m"] .e-color-marker--body {
   border-radius: 3px;
   height: 30px;
   width: 6px }
 
-.x-thumbnail[data-height="m"] .x-thumbnail--body {
+.e-thumbnail[data-height="m"] .e-thumbnail--body {
   height: 72px }
 
-.x-thumbnail[data-width="m"] .x-thumbnail--body {
+.e-thumbnail[data-width="m"] .e-thumbnail--body {
   width: 72px }
 
-.x-horizontal-separator[data-size="m"] {
+.e-horizontal-separator[data-size="m"] {
   height: 24px }
 
-.x-vertical-separator[data-size="m"] {
+.e-vertical-separator[data-size="m"] {
   width: 18px }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-element[data-min-width="l"] {
+.e-element[data-min-width="l"] {
   min-width: var( --element-min-width-l ) }
 
-.x-icon-button[data-height="l"] .x-icon-button--body {
+.e-icon-button[data-height="l"] .e-icon-button--body {
   height: 36px }
 
-.x-color-stamp--body[data-size="l"] {
+.e-color-stamp--body[data-size="l"] {
   grid-gap: 2px;
   height: 36px;
   width: 36px }
 
-.x-ghost[data-height="l"] .x-ghost--body {
+.e-ghost[data-height="l"] .e-ghost--body {
   height: 36px }
 
-.x-color-marker[data-size="l"] .x-color-marker--body {
+.e-color-marker[data-size="l"] .e-color-marker--body {
   border-radius: 3px;
   height: 36px;
   width: 6px }
 
-.x-thumbnail[data-height="l"] .x-thumbnail--body {
+.e-thumbnail[data-height="l"] .e-thumbnail--body {
   height: 84px }
 
-.x-thumbnail[data-width="l"] .x-thumbnail--body {
+.e-thumbnail[data-width="l"] .e-thumbnail--body {
   width: 84px }
 
-.x-horizontal-separator[data-size="l"] {
+.e-horizontal-separator[data-size="l"] {
   height: 36px }
 
-.x-vertical-separator[data-size="l"] {
+.e-vertical-separator[data-size="l"] {
   width: 24px }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-element[data-min-width="xl"] {
+.e-element[data-min-width="xl"] {
   min-width: var( --element-min-width-xl ) }
 
-.x-icon-button[data-height="xl"] .x-icon-button--body {
+.e-icon-button[data-height="xl"] .e-icon-button--body {
   height: 42px }
 
-.x-color-stamp--body[data-size="xl"] {
+.e-color-stamp--body[data-size="xl"] {
   grid-gap: 2px;
   height: 42px;
   width: 42px }
 
-.x-ghost[data-height="xl"] .x-ghost--body {
+.e-ghost[data-height="xl"] .e-ghost--body {
   height: 42px }
 
-.x-color-marker[data-size="xl"] .x-color-marker--body {
+.e-color-marker[data-size="xl"] .e-color-marker--body {
   border-radius: 3px;
   height: 42px;
   width: 6px }
 
-.x-thumbnail[data-height="xl"] .x-thumbnail--body {
+.e-thumbnail[data-height="xl"] .e-thumbnail--body {
   height: 96px }
 
-.x-thumbnail[data-width="xl"] .x-thumbnail--body {
+.e-thumbnail[data-width="xl"] .e-thumbnail--body {
   width: 96px }
 
-.x-horizontal-separator[data-size="xl"] {
+.e-horizontal-separator[data-size="xl"] {
   height: 42px }
 
-.x-vertical-separator[data-size="xl"] {
+.e-vertical-separator[data-size="xl"] {
   width: 36px }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-element[data-min-width="xxl"] {
+.e-element[data-min-width="xxl"] {
   min-width: var( --element-min-width-xxl ) }
 
-.x-icon-button[data-height="xxl"] .x-icon-button--body {
+.e-icon-button[data-height="xxl"] .e-icon-button--body {
   height: 48px }
 
-.x-color-stamp--body[data-size="xxl"] {
+.e-color-stamp--body[data-size="xxl"] {
   grid-gap: 2px;
   height: 48px;
   width: 48px }
 
-.x-ghost[data-height="xxl"] .x-ghost--body {
+.e-ghost[data-height="xxl"] .e-ghost--body {
   height: 48px }
 
-.x-color-marker[data-size="xxl"] .x-color-marker--body {
+.e-color-marker[data-size="xxl"] .e-color-marker--body {
   border-radius: 3px;
   height: 48px;
   width: 6px }
 
-.x-thumbnail[data-height="xxl"] .x-thumbnail--body {
+.e-thumbnail[data-height="xxl"] .e-thumbnail--body {
   height: 108px }
 
-.x-thumbnail[data-width="xxl"] .x-thumbnail--body {
+.e-thumbnail[data-width="xxl"] .e-thumbnail--body {
   width: 108px }
 
-.x-horizontal-separator[data-size="xxl"] {
+.e-horizontal-separator[data-size="xxl"] {
   height: 48px }
 
-.x-vertical-separator[data-size="xxl"] {
+.e-vertical-separator[data-size="xxl"] {
   width: 48px }
 
 /*** XXL ***/
 
 /*** 3XL ***/
 
-.x-ghost[data-height="3xl"] .x-ghost--body {
+.e-ghost[data-height="3xl"] .e-ghost--body {
   height: 60px }
 
-.x-thumbnail[data-height="3xl"] .x-thumbnail--body {
+.e-thumbnail[data-height="3xl"] .e-thumbnail--body {
   height: 120px }
 
-.x-thumbnail[data-width="3xl"] .x-thumbnail--body {
+.e-thumbnail[data-width="3xl"] .e-thumbnail--body {
   width: 120px }
 
 /*** 3XL ***/
 
 /*** 4XL ***/
 
-.x-ghost[data-height="4xl"] .x-ghost--body {
+.e-ghost[data-height="4xl"] .e-ghost--body {
   height: 72px }
 
-.x-thumbnail[data-height="4xl"] .x-thumbnail--body {
+.e-thumbnail[data-height="4xl"] .e-thumbnail--body {
   height: 132px }
 
-.x-thumbnail[data-width="4xl"] .x-thumbnail--body {
+.e-thumbnail[data-width="4xl"] .e-thumbnail--body {
   width: 132px }
 
 /*** 4XL ***/
 
 /*** 5XL ***/
 
-.x-ghost[data-height="5xl"] .x-ghost--body {
+.e-ghost[data-height="5xl"] .e-ghost--body {
   height: 84px }
 
-.x-thumbnail[data-height="5xl"] .x-thumbnail--body {
+.e-thumbnail[data-height="5xl"] .e-thumbnail--body {
   height: 144px }
 
-.x-thumbnail[data-width="5xl"] .x-thumbnail--body {
+.e-thumbnail[data-width="5xl"] .e-thumbnail--body {
   width: 144px }
 
 /*** 5XL ***/
@@ -1394,115 +1395,115 @@ body {
 /***** Border-radius profiles *****/
 /*** XXS ***/
 
-.x-button--body[data-border-radius="xxs"] {
+.e-button--body[data-border-radius="xxs"] {
   border-radius: var( --border-radius-xxs );
   padding: 0 var( --border-radius-xxs ) }
 
-.x-card[data-border-radius="xxs"] .x-card--body,
-.x-ghost[data-border-radius="xxs"] .x-ghost--body,
-.x-icon-button[data-border-radius="xxs"] .x-icon-button--body::before,
-.x-select[data-border-radius="xxs"] .x-select--button-body,
-.x-text-field[data-border-radius="xxs"] .x-text-field--input-container,
-.x-thumbnail[data-border-radius="xxs"] .x-thumbnail--body,
-.x-toggle[data-border-radius="xxs"] .x-toggle--body {
+.e-card[data-border-radius="xxs"] .e-card--body,
+.e-ghost[data-border-radius="xxs"] .e-ghost--body,
+.e-icon-button[data-border-radius="xxs"] .e-icon-button--body::before,
+.e-select[data-border-radius="xxs"] .e-select--button-body,
+.e-text-field[data-border-radius="xxs"] .e-text-field--input-container,
+.e-thumbnail[data-border-radius="xxs"] .e-thumbnail--body,
+.e-toggle[data-border-radius="xxs"] .e-toggle--body {
   border-radius: var( --border-radius-xxs ) }
 
 /*** XXS ***/
 
 /*** XS ***/
 
-.x-button--body[data-border-radius="xs"] {
+.e-button--body[data-border-radius="xs"] {
   border-radius: var( --border-radius-xs );
   padding: 0 var( --border-radius-xs ) }
 
-.x-card[data-border-radius="xs"] .x-card--body,
-.x-ghost[data-border-radius="xs"] .x-ghost--body,
-.x-icon-button[data-border-radius="xs"] .x-icon-button--body::before,
-.x-select[data-border-radius="xs"] .x-select--button-body,
-.x-text-field[data-border-radius="xs"] .x-text-field--input-container,
-.x-thumbnail[data-border-radius="xs"] .x-thumbnail--body,
-.x-toggle[data-border-radius="xs"] .x-toggle--body {
+.e-card[data-border-radius="xs"] .e-card--body,
+.e-ghost[data-border-radius="xs"] .e-ghost--body,
+.e-icon-button[data-border-radius="xs"] .e-icon-button--body::before,
+.e-select[data-border-radius="xs"] .e-select--button-body,
+.e-text-field[data-border-radius="xs"] .e-text-field--input-container,
+.e-thumbnail[data-border-radius="xs"] .e-thumbnail--body,
+.e-toggle[data-border-radius="xs"] .e-toggle--body {
   border-radius: var( --border-radius-xs ) }
 
 /*** XS ***/
 
 /*** S ***/
 
-.x-button--body[data-border-radius="s"] {
+.e-button--body[data-border-radius="s"] {
   border-radius: var( --border-radius-s );
   padding: 0 var( --border-radius-s ) }
 
-.x-card[data-border-radius="s"] .x-card--body,
-.x-ghost[data-border-radius="s"] .x-ghost--body,
-.x-icon-button[data-border-radius="s"] .x-icon-button--body::before,
-.x-select[data-border-radius="s"] .x-select--button-body,
-.x-text-field[data-border-radius="s"] .x-text-field--input-container,
-.x-thumbnail[data-border-radius="s"] .x-thumbnail--body,
-.x-toggle[data-border-radius="s"] .x-toggle--body {
+.e-card[data-border-radius="s"] .e-card--body,
+.e-ghost[data-border-radius="s"] .e-ghost--body,
+.e-icon-button[data-border-radius="s"] .e-icon-button--body::before,
+.e-select[data-border-radius="s"] .e-select--button-body,
+.e-text-field[data-border-radius="s"] .e-text-field--input-container,
+.e-thumbnail[data-border-radius="s"] .e-thumbnail--body,
+.e-toggle[data-border-radius="s"] .e-toggle--body {
   border-radius: var( --border-radius-s ) }
 
 /*** S ***/
 
 /*** M ***/
 
-.x-button--body[data-border-radius="m"] {
+.e-button--body[data-border-radius="m"] {
   border-radius: var( --border-radius-m );
   padding: 0 var( --border-radius-m ) }
 
-.x-card[data-border-radius="m"] .x-card--body,
-.x-ghost[data-border-radius="m"] .x-ghost--body,
-.x-icon-button[data-border-radius="m"] .x-icon-button--body::before,
-.x-select[data-border-radius="m"] .x-select--button-body,
-.x-text-field[data-border-radius="m"] .x-text-field--input-container,
-.x-thumbnail[data-border-radius="m"] .x-thumbnail--body,
-.x-toggle[data-border-radius="m"] .x-toggle--body {
+.e-card[data-border-radius="m"] .e-card--body,
+.e-ghost[data-border-radius="m"] .e-ghost--body,
+.e-icon-button[data-border-radius="m"] .e-icon-button--body::before,
+.e-select[data-border-radius="m"] .e-select--button-body,
+.e-text-field[data-border-radius="m"] .e-text-field--input-container,
+.e-thumbnail[data-border-radius="m"] .e-thumbnail--body,
+.e-toggle[data-border-radius="m"] .e-toggle--body {
   border-radius: var( --border-radius-m ) }
 
 /*** M ***/
 
 /*** L ***/
 
-.x-button--body[data-border-radius="l"] {
+.e-button--body[data-border-radius="l"] {
   border-radius: var( --border-radius-l );
   padding: 0 var( --border-radius-l ) }
 
-.x-card[data-border-radius="l"] .x-card--body,
-.x-ghost[data-border-radius="l"] .x-ghost--body,
-.x-icon-button[data-border-radius="l"] .x-icon-button--body::before,
-.x-select[data-border-radius="l"] .x-select--button-body,
-.x-text-field[data-border-radius="l"] .x-text-field--input-container,
-.x-thumbnail[data-border-radius="l"] .x-thumbnail--body,
-.x-toggle[data-border-radius="l"] .x-toggle--body {
+.e-card[data-border-radius="l"] .e-card--body,
+.e-ghost[data-border-radius="l"] .e-ghost--body,
+.e-icon-button[data-border-radius="l"] .e-icon-button--body::before,
+.e-select[data-border-radius="l"] .e-select--button-body,
+.e-text-field[data-border-radius="l"] .e-text-field--input-container,
+.e-thumbnail[data-border-radius="l"] .e-thumbnail--body,
+.e-toggle[data-border-radius="l"] .e-toggle--body {
   border-radius: var( --border-radius-l ) }
 
 /*** L ***/
 
 /*** XL ***/
 
-.x-button--body[data-border-radius="xl"] {
+.e-button--body[data-border-radius="xl"] {
   border-radius: var( --border-radius-xl );
   padding: 0 var( --border-radius-xl ) }
 
-.x-card[data-border-radius="xl"] .x-card--body,
-.x-ghost[data-border-radius="xl"] .x-ghost--body,
-.x-icon-button[data-border-radius="xl"] .x-icon-button--body::before,
-.x-thumbnail[data-border-radius="xl"] .x-thumbnail--body,
-.x-toggle[data-border-radius="xl"] .x-toggle--body {
+.e-card[data-border-radius="xl"] .e-card--body,
+.e-ghost[data-border-radius="xl"] .e-ghost--body,
+.e-icon-button[data-border-radius="xl"] .e-icon-button--body::before,
+.e-thumbnail[data-border-radius="xl"] .e-thumbnail--body,
+.e-toggle[data-border-radius="xl"] .e-toggle--body {
   border-radius: var( --border-radius-xl ) }
 
 /*** XL ***/
 
 /*** XXL ***/
 
-.x-button--body[data-border-radius="xxl"] {
+.e-button--body[data-border-radius="xxl"] {
   border-radius: var( --border-radius-xxl );
   padding: 0 var( --border-radius-xxl ) }
 
-.x-card[data-border-radius="xxl"] .x-card--body,
-.x-ghost[data-border-radius="xxl"] .x-ghost--body,
-.x-icon-button[data-border-radius="xxl"] .x-icon-button--body::before,
-.x-thumbnail[data-border-radius="xxl"] .x-thumbnail--body,
-.x-toggle[data-border-radius="xxl"] .x-toggle--body {
+.e-card[data-border-radius="xxl"] .e-card--body,
+.e-ghost[data-border-radius="xxl"] .e-ghost--body,
+.e-icon-button[data-border-radius="xxl"] .e-icon-button--body::before,
+.e-thumbnail[data-border-radius="xxl"] .e-thumbnail--body,
+.e-toggle[data-border-radius="xxl"] .e-toggle--body {
   border-radius: var( --border-radius-xxl ) }
 
 /*** XXL ***/
@@ -1512,12 +1513,12 @@ body {
 
 /***** Stretch profiles *****/
 
-.x-element[data-stretch-orientation="both"],
-.x-element[data-stretch-orientation="horizontal"] {
+.e-element[data-stretch-orientation="both"],
+.e-element[data-stretch-orientation="horizontal"] {
   width: 100% }
 
-.x-element[data-stretch-orientation="both"],
-.x-element[data-stretch-orientation="vertical"] {
+.e-element[data-stretch-orientation="both"],
+.e-element[data-stretch-orientation="vertical"] {
   height: 100% }
 
 /***** Stretch profiles *****/
@@ -1526,7 +1527,7 @@ body {
 
 /***** Element badge *****/
 
-.x-element-badge {
+.e-element-badge {
   border-radius: 50%;
   position: absolute;
 
@@ -1534,7 +1535,7 @@ body {
   min-height: 8px;
   min-width: 8px }
 
-.x-element-badge--content {
+.e-element-badge--content {
   /* TEMP */
   background-color: #375dd6;
   color: white;
@@ -1555,69 +1556,69 @@ body {
 /* Az elemek {:indent ...} tulajdonságát margin helyett padding tulajdonsággal
  * szükséges megvalósítani, mert a böngésző a margin tulajdonságok értékét
  * bizonyos esetekben összevonja */
-.x-element[data-indent-all="xxs"]        { padding:         6px }
-.x-element[data-indent-all="xs"]         { padding:        12px }
-.x-element[data-indent-all="s"]          { padding:        18px }
-.x-element[data-indent-all="m"]          { padding:        24px }
-.x-element[data-indent-all="l"]          { padding:        36px }
-.x-element[data-indent-all="xl"]         { padding:        42px }
-.x-element[data-indent-all="xxl"]        { padding:        48px }
-.x-element[data-indent-horizontal="xxs"] { padding-bottom:  6px;
+.e-element[data-indent-all="xxs"]        { padding:         6px }
+.e-element[data-indent-all="xs"]         { padding:        12px }
+.e-element[data-indent-all="s"]          { padding:        18px }
+.e-element[data-indent-all="m"]          { padding:        24px }
+.e-element[data-indent-all="l"]          { padding:        36px }
+.e-element[data-indent-all="xl"]         { padding:        42px }
+.e-element[data-indent-all="xxl"]        { padding:        48px }
+.e-element[data-indent-horizontal="xxs"] { padding-bottom:  6px;
                                            padding-top:     6px }
-.x-element[data-indent-horizontal="xs"]  { padding-bottom: 12px;
+.e-element[data-indent-horizontal="xs"]  { padding-bottom: 12px;
                                            padding-top:    12px }
-.x-element[data-indent-horizontal="s"]   { padding-bottom: 18px;
+.e-element[data-indent-horizontal="s"]   { padding-bottom: 18px;
                                            padding-top:    18px }
-.x-element[data-indent-horizontal="m"]   { padding-bottom: 24px;
+.e-element[data-indent-horizontal="m"]   { padding-bottom: 24px;
                                            padding-top:    24px }
-.x-element[data-indent-horizontal="l"]   { padding-bottom: 36px;
+.e-element[data-indent-horizontal="l"]   { padding-bottom: 36px;
                                            padding-top:    36px }
-.x-element[data-indent-horizontal="xl"]  { padding-bottom: 42px;
+.e-element[data-indent-horizontal="xl"]  { padding-bottom: 42px;
                                            padding-top:    42px }
-.x-element[data-indent-horizontal="xxl"] { padding-bottom: 48px;
+.e-element[data-indent-horizontal="xxl"] { padding-bottom: 48px;
                                            padding-top:    48px }
-.x-element[data-indent-vertical="xxs"]   { padding-left:    6px;
+.e-element[data-indent-vertical="xxs"]   { padding-left:    6px;
                                            padding-right:   6px }
-.x-element[data-indent-vertical="xs"]    { padding-left:   12px;
+.e-element[data-indent-vertical="xs"]    { padding-left:   12px;
                                            padding-right:  12px }
-.x-element[data-indent-vertical="s"]     { padding-left:   18px;
+.e-element[data-indent-vertical="s"]     { padding-left:   18px;
                                            padding-right:  18px }
-.x-element[data-indent-vertical="m"]     { padding-left:   24px;
+.e-element[data-indent-vertical="m"]     { padding-left:   24px;
                                            padding-right:  24px }
-.x-element[data-indent-vertical="l"]     { padding-left:   36px;
+.e-element[data-indent-vertical="l"]     { padding-left:   36px;
                                            padding-right:  36px }
-.x-element[data-indent-vertical="xl"]    { padding-left:   42px;
+.e-element[data-indent-vertical="xl"]    { padding-left:   42px;
                                            padding-right:  42px }
-.x-element[data-indent-vertical="xxl"]   { padding-left:   48px;
+.e-element[data-indent-vertical="xxl"]   { padding-left:   48px;
                                            padding-right:  48px }
-.x-element[data-indent-bottom="xxs"]     { padding-bottom:  6px }
-.x-element[data-indent-bottom="xs"]      { padding-bottom: 12px }
-.x-element[data-indent-bottom="s"]       { padding-bottom: 18px }
-.x-element[data-indent-bottom="m"]       { padding-bottom: 24px }
-.x-element[data-indent-bottom="l"]       { padding-bottom: 36px }
-.x-element[data-indent-bottom="xl"]      { padding-bottom: 42px }
-.x-element[data-indent-bottom="xxl"]     { padding-bottom: 48px }
-.x-element[data-indent-left="xxs"]       { padding-left:    6px }
-.x-element[data-indent-left="xs"]        { padding-left:   12px }
-.x-element[data-indent-left="s"]         { padding-left:   18px }
-.x-element[data-indent-left="m"]         { padding-left:   24px }
-.x-element[data-indent-left="l"]         { padding-left:   36px }
-.x-element[data-indent-left="xl"]        { padding-left:   42px }
-.x-element[data-indent-left="xxl"]       { padding-left:   48px }
-.x-element[data-indent-right="xxs"]      { padding-right:   6px }
-.x-element[data-indent-right="xs"]       { padding-right:  12px }
-.x-element[data-indent-right="s"]        { padding-right:  18px }
-.x-element[data-indent-right="m"]        { padding-right:  24px }
-.x-element[data-indent-right="l"]        { padding-right:  36px }
-.x-element[data-indent-right="xl"]       { padding-right:  42px }
-.x-element[data-indent-right="xxl"]      { padding-right:  48px }
-.x-element[data-indent-top="xxs"]        { padding-top:     6px }
-.x-element[data-indent-top="xs"]         { padding-top:    12px }
-.x-element[data-indent-top="s"]          { padding-top:    18px }
-.x-element[data-indent-top="m"]          { padding-top:    24px }
-.x-element[data-indent-top="l"]          { padding-top:    36px }
-.x-element[data-indent-top="xl"]         { padding-top:    42px }
-.x-element[data-indent-top="xxl"]        { padding-top:    48px }
+.e-element[data-indent-bottom="xxs"]     { padding-bottom:  6px }
+.e-element[data-indent-bottom="xs"]      { padding-bottom: 12px }
+.e-element[data-indent-bottom="s"]       { padding-bottom: 18px }
+.e-element[data-indent-bottom="m"]       { padding-bottom: 24px }
+.e-element[data-indent-bottom="l"]       { padding-bottom: 36px }
+.e-element[data-indent-bottom="xl"]      { padding-bottom: 42px }
+.e-element[data-indent-bottom="xxl"]     { padding-bottom: 48px }
+.e-element[data-indent-left="xxs"]       { padding-left:    6px }
+.e-element[data-indent-left="xs"]        { padding-left:   12px }
+.e-element[data-indent-left="s"]         { padding-left:   18px }
+.e-element[data-indent-left="m"]         { padding-left:   24px }
+.e-element[data-indent-left="l"]         { padding-left:   36px }
+.e-element[data-indent-left="xl"]        { padding-left:   42px }
+.e-element[data-indent-left="xxl"]       { padding-left:   48px }
+.e-element[data-indent-right="xxs"]      { padding-right:   6px }
+.e-element[data-indent-right="xs"]       { padding-right:  12px }
+.e-element[data-indent-right="s"]        { padding-right:  18px }
+.e-element[data-indent-right="m"]        { padding-right:  24px }
+.e-element[data-indent-right="l"]        { padding-right:  36px }
+.e-element[data-indent-right="xl"]       { padding-right:  42px }
+.e-element[data-indent-right="xxl"]      { padding-right:  48px }
+.e-element[data-indent-top="xxs"]        { padding-top:     6px }
+.e-element[data-indent-top="xs"]         { padding-top:    12px }
+.e-element[data-indent-top="s"]          { padding-top:    18px }
+.e-element[data-indent-top="m"]          { padding-top:    24px }
+.e-element[data-indent-top="l"]          { padding-top:    36px }
+.e-element[data-indent-top="xl"]         { padding-top:    42px }
+.e-element[data-indent-top="xxl"]        { padding-top:    48px }
 
 /***** Element indent *****/
 
@@ -1625,20 +1626,20 @@ body {
 
 /***** Field adornments *****/
 
-.x-field-adornments {
+.e-field-adornments {
   display: flex;
   padding: 0 4px }
 
-.x-field-adornments--placeholder {
+.e-field-adornments--placeholder {
   cursor: text;
   width: 8px }
 
-.x-field-adornments--button-adornment[data-disabled="true"] {
+.e-field-adornments--button-adornment[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
-.x-field-adornments--button-adornment,
-.x-field-adornments--static-adornment {
+.e-field-adornments--button-adornment,
+.e-field-adornments--static-adornment {
   height: 32px;
   line-height: 32px;
   text-align: center;
@@ -1646,14 +1647,14 @@ body {
   /* (24px - 18px) / 2 = 3px */
   padding: 0 3px }
 
-.x-field-adornments--button-adornment:not([data-icon-family]),
-.x-field-adornments--static-adornment:not([data-icon-family]) {
+.e-field-adornments--button-adornment:not([data-icon-family]),
+.e-field-adornments--static-adornment:not([data-icon-family]) {
   font-size: var( --font-size-xs );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-xxs ) }
 
-.x-field-adornments--button-adornment[data-icon-family],
-.x-field-adornments--static-adornment[data-icon-family] {
+.e-field-adornments--button-adornment[data-icon-family],
+.e-field-adornments--static-adornment[data-icon-family] {
   font-size: 18px }
 
 /***** Field adornments *****/
@@ -1663,7 +1664,7 @@ body {
 /***** Anchor *****/
 /*** Anchor body ***/
 
-.x-anchor--body {
+.e-anchor--body {
   cursor: pointer;
   display: block;
   font-weight: 500;
@@ -1678,7 +1679,7 @@ body {
 /***** Breadcrumbs *****/
 /*** Breadcrumbs body ***/
 
-.x-breadcrumbs--body {
+.e-breadcrumbs--body {
   display: flex;
   grid-column-gap: 24px;
   overflow-x: auto }
@@ -1687,14 +1688,14 @@ body {
 
 /*** Breadcrumbs crumb ***/
 
-.x-breadcrumbs--crumb {
+.e-breadcrumbs--crumb {
   color: var( --color-muted );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: 24px;
   white-space: nowrap }
 
-.x-breadcrumbs--crumb:not(:last-child):after {
+.e-breadcrumbs--crumb:not(:last-child):after {
   background-color: var( --border-color-highlight );
   border-radius: 3px;
   content: '';
@@ -1704,7 +1705,7 @@ body {
   top: 9px;
   width: 6px }
 
-.x-breadcrumbs--crumb[data-clickable] {
+.e-breadcrumbs--crumb[data-clickable] {
   font-weight: 600 }
 
 /*** Breadcrumbs crumb ***/
@@ -1715,7 +1716,7 @@ body {
 /***** Button *****/
 /*** Button body ***/
 
-.x-button--body {
+.e-button--body {
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -1724,7 +1725,7 @@ body {
   width: 100%;
  }
 
-.x-button--body[data-border-color] {
+.e-button--body[data-border-color] {
   border-style: solid;
   border-width: 1px }
 
@@ -1732,7 +1733,7 @@ body {
 
 /*** Button icon ***/
 
-.x-button--icon {
+.e-button--icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -1741,13 +1742,13 @@ body {
   justify-content: center;
   width: var( --icon-size-default ) }
 
-.x-button--icon[data-icon-position="left"] {
+.e-button--icon[data-icon-position="left"] {
   margin-right: 6px }
 
-.x-button--icon[data-icon-position="right"] {
+.e-button--icon[data-icon-position="right"] {
   margin-left: 6px }
 
-.x-button--icon-placeholder {
+.e-button--icon-placeholder {
   /* XXX#4509
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása. */
@@ -1757,7 +1758,7 @@ body {
 
 /*** Button label ***/
 
-.x-button--label {
+.e-button--label {
   white-space: nowrap;
   word-wrap: normal }
 
@@ -1768,11 +1769,11 @@ body {
 
 /***** Button-separator *****/
 
-.x-button-separator {
+.e-button-separator {
   align-items: center;
   display: flex }
 
-.x-button-separator--body {
+.e-button-separator--body {
   height: 18px;
   width: 1px }
 
@@ -1783,7 +1784,7 @@ body {
 /***** Card *****/
 /*** Card wrapper ***/
 
-.x-card {
+.e-card {
   /* A stretch-orientation tulajdonság használatával egyes esetekben
    * az egymás melletti card elemek magassága megegyzik.
    * (100% - 2x horizontal-margin) */
@@ -1793,7 +1794,7 @@ body {
 
 /*** Button badge ***/
 
-.x-card .x-element-badge {
+.e-card .e-element-badge {
   right: 6px;
   top:   6px }
 
@@ -1801,12 +1802,12 @@ body {
 
 /*** Card body ***/
 
-.x-card--body {
+.e-card--body {
   display: flex;
   flex-direction: column;
   width: 100% }
 
-.x-card[data-border-color] .x-card--body {
+.e-card[data-border-color] .e-card--body {
   border-style: solid;
   border-width: 1px }
 
@@ -1818,7 +1819,7 @@ body {
 /***** Card-group *****/
 /*** Card-group wrapper ***/
 
-.x-card-group {
+.e-card-group {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 12px }
@@ -1831,7 +1832,7 @@ body {
 /***** Checkbox *****/
 /*** Checkbox options ***/
 
-.x-checkbox[data-options-orientation="horizontal"] .x-checkbox--body {
+.e-checkbox[data-options-orientation="horizontal"] .e-checkbox--body {
   display: flex;
   grid-column-gap: 24px }
 
@@ -1839,17 +1840,17 @@ body {
 
 /*** Checkbox option ***/
 
-.x-checkbox--option {
+.e-checkbox--option {
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px }
 
-.x-checkbox--option-button {
+.e-checkbox--option-button {
   height: 24px;
   margin-right: 6px;
   width: 24px }
 
-.x-checkbox--option-button::before {
+.e-checkbox--option-button::before {
   background-color: var( --fill-color );
   border-radius: var( --border-radius-xs );
   border-style: solid;
@@ -1861,13 +1862,13 @@ body {
   top: 2px;
   width: 20px }
 
-.x-checkbox--option-label {
+.e-checkbox--option-label {
   /* XXX#5050 */
   font-weight: 500;
   line-height: 24px;
   text-align: left }
 
-.x-checkbox--option-helper {
+.e-checkbox--option-helper {
   /* XXX#5050 */
   color:       var( --color-muted );
   font-size:   var( --font-size-xs );
@@ -1878,7 +1879,7 @@ body {
 
 /*** Checkbox marker ***/
 
-.x-checkbox--option-button::after {
+.e-checkbox--option-button::after {
   content: '';
   font-size: 16px;
   height: 16px;
@@ -1888,7 +1889,7 @@ body {
   top: 4px;
   width: 16px }
 
-.x-checkbox--option[data-checked="true"] .x-checkbox--option-button::after {
+.e-checkbox--option[data-checked="true"] .e-checkbox--option-button::after {
   content: 'done' }
 
 /*** Checkbox marker ***/
@@ -1904,7 +1905,7 @@ body {
 /***** Chip *****/
 /*** Chip body ***/
 
-.x-chip--body {
+.e-chip--body {
   border-radius: 12px;
   display: flex;
   height: 24px;
@@ -1914,7 +1915,7 @@ body {
 
 /*** Chip icon ***/
 
-.x-chip--icon {
+.e-chip--icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -1928,7 +1929,7 @@ body {
 
 /*** Chip label ***/
 
-.x-chip--label {
+.e-chip--label {
   font-size: var( --font-size-xs );
   font-weight: 500;
   line-height: 24px;
@@ -1938,7 +1939,7 @@ body {
 
 /*** Chip primary button ***/
 
-.x-chip--primary-button {
+.e-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
   border-radius: 10px;
   color: var( --color );
@@ -1946,7 +1947,7 @@ body {
   margin: 2px 2px 0 12px;
   width: 20px }
 
-.x-chip--primary-button-icon {
+.e-chip--primary-button-icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -1954,7 +1955,7 @@ body {
   justify-content: center;
   line-height: 20px }
 
-.x-chip--primary-button--placeholder {
+.e-chip--primary-button--placeholder {
   width: 12px }
 
 /*** Chip primary button ***/
@@ -1965,13 +1966,13 @@ body {
 /***** Chip-group *****/
 /*** Chip-group wrapper ***/
 
-.x-chip-group {}
+.e-chip-group {}
 
 /*** Chip-group wrapper ***/
 
 /*** Chip-group chips ***/
 
-.x-chip-group--chips {
+.e-chip-group--chips {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 12px;
@@ -1981,11 +1982,11 @@ body {
 
 /*** Chip-group no-chips label ***/
 
-.x-chip-group--no-chips-label {
+.e-chip-group--no-chips-label {
   color: var( --color-highlight );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  /* A .x-chip-group--no-chips-label elem magassága megegyzik az .x-chip-group--chips elem
+  /* A .e-chip-group--no-chips-label elem magassága megegyzik az .e-chip-group--chips elem
    * magasságával */
  -line-height: 36px;
   line-height: 24px }
@@ -1998,13 +1999,13 @@ body {
 /***** Circle diagram *****/
 /*** Circle diagram wrapper ***/
 
-.x-circle-diagram {
+.e-circle-diagram {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center }
 
-.x-circle-diagram[data-layout="row"] {
+.e-circle-diagram[data-layout="row"] {
   min-height: 48px }
 
 /*** Circle diagram wrapper ***/
@@ -2017,7 +2018,7 @@ body {
 
 /*** Circle diagram section ***/
 
-.x-circle-diagram--section {
+.e-circle-diagram--section {
   /* A transition tulajdonság használatával a szekciók darabosan
      animálva változtatták a méretüket!
  -transition: stroke-dasharray .5s ease-out; */
@@ -2032,15 +2033,15 @@ body {
 
 /***** Color-marker *****/
 
-.x-color-marker {}
+.e-color-marker {}
 
-.x-color-marker--body {
+.e-color-marker--body {
   display: flex;
   flex-direction: column;
   grid-row-gap: 2px;
   overflow: hidden }
 
-.x-color-marker--color {
+.e-color-marker--color {
   flex-grow: 1 }
 
 /***** Color-marker *****/
@@ -2050,7 +2051,7 @@ body {
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.x-color-selector--body {
+.e-color-selector--body {
   display: flex;
   grid-column-gap: 12px;
   padding: 12px }
@@ -2059,7 +2060,7 @@ body {
 
 /*** Color-selector option ***/
 
-.x-color-selector--option[data-collected="true"]::after {
+.e-color-selector--option[data-collected="true"]::after {
   align-items: center;
   background-color: var( --fill-color );
   border-radius: 12px;
@@ -2076,7 +2077,7 @@ body {
   top: 14px;
   width: 20px }
 
-.x-color-selector--option--color {
+.e-color-selector--option--color {
   border-radius: var( --border-radius-m );
   height: 48px;
   width: 48px }
@@ -2088,7 +2089,7 @@ body {
 
 /***** Color-stamp *****/
 
-.x-color-stamp--body {
+.e-color-stamp--body {
   background-color: var( --fill-color );
   border-radius: var( --border-radius-s );
   display: flex;
@@ -2098,11 +2099,11 @@ body {
   overflow: hidden;
   width: 100% }
 
-.x-color-stamp--color {
+.e-color-stamp--color {
   flex-grow: 1;
   height: 100% }
 
-.x-color-stamp--placeholder {
+.e-color-stamp--placeholder {
   background-color: var( --background-color-highlight );
   height: 100%;
   width: 100% }
@@ -2114,24 +2115,24 @@ body {
 /***** Column *****/
 /*** Column wrapper ***/
 
-.x-column--body {
+.e-column--body {
   display: flex;
   flex-direction: column;
   /* BUG
-   * Az .x-column--body nem lehet {height: 100%} magas, mert akkor mindig akkora, mint a szülő elem
+   * Az .e-column--body nem lehet {height: 100%} magas, mert akkor mindig akkora, mint a szülő elem
    * ha azt akarod, hogy kitöltse a rendelkezésre álló helyet, akkor flex-grow tulajdonságot kell
    * beállítani. A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!! */
   /* BUG
-   * Vissza kellett állítani a {height: 100%} beállítás használatát, mert enélkül az .x-column--body
-   * elem nem vette fel a .x-column elem magasságát, ezért nem működött a benne megjelenített tartalom
+   * Vissza kellett állítani a {height: 100%} beállítás használatát, mert enélkül az .e-column--body
+   * elem nem vette fel a .e-column elem magasságát, ezért nem működött a benne megjelenített tartalom
    * középre igazítása. Tényleg meg lehet oldali flex-grow tulajdonság használatával, de az előző
    * leírás szerint a {height: 100%} beállítás használatával akkor van probléma, ha:
    * "A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!!"
-   * De az .x-column--body mindig egyedül van a szülő elemben (.x-column)! (Vagy melyik elem van egyedül, miben?)
+   * De az .e-column--body mindig egyedül van a szülő elemben (.e-column)! (Vagy melyik elem van egyedül, miben?)
    */
   height: 100% }
 
-.x-column[data-wrap-items="true"] .x-column--body {
+.e-column[data-wrap-items="true"] .e-column--body {
   flex-wrap: wrap }
 
 /*** Column wrapper ***/
@@ -2142,7 +2143,7 @@ body {
 /***** Combo-box *****/
 /*** Combo-box surface ***/
 
-.x-combo-box--surface {
+.e-combo-box--surface {
   font-size: var( --font-size-s );
   line-height: var( --line-height-s );
   letter-spacing: var( --letter-spacing-s ) }
@@ -2151,13 +2152,13 @@ body {
 
 /*** Combo-box options ***/
 
-.x-combo-box--options {
+.e-combo-box--options {
   display: flex;
   flex-direction: column;
   max-height: 340px;
   overflow-y: scroll }
 
-.x-combo-box--no-options-label {
+.e-combo-box--no-options-label {
   align-items: center;
   color: var( --color-muted );
   display: flex;
@@ -2171,8 +2172,8 @@ body {
 
 /*** Combo-box option ***/
 
-.x-combo-box--field-content-option,
-.x-combo-box--option {
+.e-combo-box--field-content-option,
+.e-combo-box--option {
   align-items: center;
   display: flex;
   flex-shrink: 0;
@@ -2180,13 +2181,13 @@ body {
   text-align: left;
   width: 100% }
 
-.x-combo-box--option[data-highlighted="true"] {
+.e-combo-box--option[data-highlighted="true"] {
   background-color: var( --background-color-highlight ) }
 
-.x-combo-box--option:hover {
+.e-combo-box--option:hover {
   background-color: var( --hover-color-highlight ) }
 
-.x-combo-box--field-content-option {
+.e-combo-box--field-content-option {
   color: var( --color-muted )}
 
 /*** Combo-box option ***/
@@ -2197,7 +2198,7 @@ body {
 /***** Counter *****/
 /*** Counter body ***/
 
-.x-counter--body {
+.e-counter--body {
   align-items: center;
   display: flex;
   padding-bottom: 6px;
@@ -2207,7 +2208,7 @@ body {
 
 /*** Counter value ***/
 
-.x-counter--value {
+.e-counter--value {
   font-weight: 500;
   line-height: 24px;
   min-width: 64px;
@@ -2217,9 +2218,9 @@ body {
 
 /*** Counter button ***/
 
-.x-counter--decrease-button,
-.x-counter--increase-button,
-.x-counter--reset-button {
+.e-counter--decrease-button,
+.e-counter--increase-button,
+.e-counter--reset-button {
   background-color: var( --fill-color );
   border-radius: 50%;
   border-style: solid;
@@ -2227,42 +2228,42 @@ body {
   height: 20px;
   width: 20px }
 
-.x-counter--decrease-button::before,
-.x-counter--increase-button::before,
-.x-counter--increase-button::after,
-.x-counter--reset-button::before,
-.x-counter--reset-button::after {
+.e-counter--decrease-button::before,
+.e-counter--increase-button::before,
+.e-counter--increase-button::after,
+.e-counter--reset-button::before,
+.e-counter--reset-button::after {
   background-color: var( --color );
   border-radius: 1px;
   content: '';
   position: absolute }
 
-.x-counter--decrease-button::before,
-.x-counter--increase-button::before,
-.x-counter--reset-button::before {
+.e-counter--decrease-button::before,
+.e-counter--increase-button::before,
+.e-counter--reset-button::before {
   height: 2px;
   left: 4px;
   top: 7px;
   width: 8px }
 
-.x-counter--increase-button::after,
-.x-counter--reset-button::after {
+.e-counter--increase-button::after,
+.e-counter--reset-button::after {
   height: 8px;
   left: 7px;
   top: 4px;
   width: 2px }
 
-.x-counter--reset-button {
+.e-counter--reset-button {
   border-color: var( --color );
   margin-left: 12px }
 
-.x-counter--reset-button::before,
-.x-counter--reset-button::after {
+.e-counter--reset-button::before,
+.e-counter--reset-button::after {
   transform: rotateZ( -45deg ) }
 
-.x-counter--decrease-button[data-disabled="true"],
-.x-counter--increase-button[data-disabled="true"],
-.x-counter--reset-button[data-disabled="true"] {
+.e-counter--decrease-button[data-disabled="true"],
+.e-counter--increase-button[data-disabled="true"],
+.e-counter--reset-button[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
@@ -2274,14 +2275,14 @@ body {
 /***** Digit field *****/
 /***** Digit field wrapper *****/
 
-.x-digit-field {
+.e-digit-field {
   height: 48px }
 
 /***** Digit field wrapper *****/
 
 /***** Digit field input *****/
 
-.x-digit-field--input {
+.e-digit-field--input {
   color: var( --fill-color );
   height: 100%;
   width: 100% }
@@ -2290,7 +2291,7 @@ body {
 
 /***** Digit field cover *****/
 
-.x-digit-field--cover {
+.e-digit-field--cover {
   display: flex;
   grid-column-gap: 12px;
   height: 100%;
@@ -2299,7 +2300,7 @@ body {
   top: 0;
   width: 100% }
 
-.x-digit-field--cover--digit {
+.e-digit-field--cover--digit {
   align-items: center;
   border-color: var( --color-highlight );
   border-radius: var( --border-radius-s );
@@ -2321,7 +2322,7 @@ body {
 /***** Expandable *****/
 /*** Expandable header ***/
 
-.x-expandable--header {
+.e-expandable--header {
   align-items: center;
   display: flex;
   justify-content: left }
@@ -2330,7 +2331,7 @@ body {
 
 /*** Expandable icon ***/
 
-.x-expandable--icon {
+.e-expandable--icon {
   font-size: var( --icon-size-m );
   height: 24px;
   line-height: 24px;
@@ -2341,7 +2342,7 @@ body {
 
 /*** Expandable label ***/
 
-.x-expandable--label {
+.e-expandable--label {
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
@@ -2352,7 +2353,7 @@ body {
 
 /*** Expandable expand icon ***/
 
-.x-expandable--expand-icon {
+.e-expandable--expand-icon {
   align-items: center;
   display: flex;
   font-size: var( --icon-size-m );
@@ -2369,7 +2370,7 @@ body {
 /***** File drop area *****/
 /*** File drop area body ***/
 
-.x-file-drop-area--body {
+.e-file-drop-area--body {
   align-items: center;
   background-color: var( --background-color-highlight );
   border-radius: var( --border-radius-xxl );
@@ -2381,14 +2382,14 @@ body {
   padding: 0 24px;
   width: 280px }
 
-.x-file-drop-area--label {
+.e-file-drop-area--label {
   color: var( --color-muted );
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: var( --line-height-s ) }
 
-.x-file-drop-area--icon {
+.e-file-drop-area--icon {
   font-size: var( --icon-size-xxl );
   height: 36px;
   line-height: 36px }
@@ -2400,15 +2401,15 @@ body {
 
 /***** Ghost *****/
 
-.x-ghost {
+.e-ghost {
   /* XXX#5577
    * A {:size ...} tulajdonság nélkül használt ghost elem magassága beállítható
-   * a {:style {:height "..."}} beállítás használatával, ilyenkor az .x-ghost--body
-   * elem magassága alkalmazkodik az .x-ghost elem magasságához */
+   * a {:style {:height "..."}} beállítás használatával, ilyenkor az .e-ghost--body
+   * elem magassága alkalmazkodik az .e-ghost elem magasságához */
   display: flex;
   flex-direction: column }
 
-.x-ghost--body {
+.e-ghost--body {
   background-color: var( --ghost-color );
   /* XXX#5577 */
   flex-grow: 1 }
@@ -2419,8 +2420,8 @@ body {
 
 /***** Horizontal line *****/
 
-.x-horizontal-line,
-.x-horizontal-line--body {
+.e-horizontal-line,
+.e-horizontal-line--body {
   width: 100% }
 
 /***** Horizontal line *****/
@@ -2429,7 +2430,7 @@ body {
 
 /***** Icon *****/
 
-.x-icon--body {
+.e-icon--body {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -2438,7 +2439,7 @@ body {
 
 /*** Icon layout ***/
 
-.x-icon[data-layout="touch-target"] {
+.e-icon[data-layout="touch-target"] {
   height: 48px;
   width: 48px }
 
@@ -2450,7 +2451,7 @@ body {
 /***** Label *****/
 /*** Label wrapper ***/
 
-.x-label {
+.e-label {
   display: flex;
   flex-direction: column;
   justify-content: center }
@@ -2459,7 +2460,7 @@ body {
 
 /*** Label body ***/
 
-.x-label--body {
+.e-label--body {
   align-items: center;
   display: flex}
 
@@ -2467,7 +2468,7 @@ body {
 
 /*** Label content ***/
 
-.x-label--content {
+.e-label--content {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap }
@@ -2480,7 +2481,7 @@ body {
  * (pl. no-options-label, no-chips-label, ...) mindegyike highlight színnel
  * van kiírva, ezért a label elem tartalmának hiányát jelző placeholder felirat
  * is highlight színt kap! */
-.x-label--placeholder {
+.e-label--placeholder {
   color: var( --color-highlight );
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2490,7 +2491,7 @@ body {
 
 /*** Label asterisk ***/
 
-.x-label--asterisk {
+.e-label--asterisk {
   color: var( --color-warning );
   font-weight: 600;
   padding-left: 2px }
@@ -2499,7 +2500,7 @@ body {
 
 /*** Label icon ***/
 
-.x-label--icon {
+.e-label--icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -2509,7 +2510,7 @@ body {
   justify-content: center;
   width: 24px }
 
-.x-label--icon-placeholder {
+.e-label--icon-placeholder {
   /* XXX#4509 */
   width: 12px }
 
@@ -2517,8 +2518,8 @@ body {
 
 /*** Label helper, info-text ***/
 
-.x-label--helper,
-.x-label--info-text {
+.e-label--helper,
+.e-label--info-text {
   color:          var( --color-muted );
   font-size:      var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
@@ -2528,7 +2529,7 @@ body {
 
 /*** Label info-text button ***/
 
-.x-label--info-text-button {
+.e-label--info-text-button {
   color:       var( --color-muted );
   font-size:   var( --icon-size-xxs );
   line-height: 24px;
@@ -2543,7 +2544,7 @@ body {
 /***** Line diagram *****/
 /*** Line diagram wrapper ***/
 
-.x-line-diagram {
+.e-line-diagram {
   display: flex;
   flex-direction: column;
   justify-content: center }
@@ -2552,14 +2553,14 @@ body {
 
 /*** Line diagram sections ***/
 
-.x-line-diagram--sections {
+.e-line-diagram--sections {
   display: flex }
 
 /*** Line diagram sections ***/
 
 /*** Line diagram section ***/
 
-.x-line-diagram--section {
+.e-line-diagram--section {
   transition: width .5s ease-out;
   height: 100% }
 
@@ -2571,12 +2572,12 @@ body {
 /***** Icon-button *****/
 /*** Icon-button wrapper ***/
 
-.x-icon-button--body {
+.e-icon-button--body {
   /* A min-width tulajdonság azért szükséges, hogy az icon-button elemet a környező tartalom ne
    * kényszerítse méretcsökkenésre */
   min-width: 48px }
 
-.x-icon-button[data-border-color] .x-icon-button--body {
+.e-icon-button[data-border-color] .e-icon-button--body {
   border-style: solid;
   border-width: 1px }
 
@@ -2584,7 +2585,7 @@ body {
 
 /*** Icon-button badge ***/
 
-.x-icon-button .x-element-badge {
+.e-icon-button .e-element-badge {
   right: 6px;
   top:   6px }
 
@@ -2592,7 +2593,7 @@ body {
 
 /*** Icon-button body ***/
 
-.x-icon-button--body {
+.e-icon-button--body {
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -2601,17 +2602,17 @@ body {
   justify-content: center;
   width: 100% }
 
-.x-icon-button[data-variant="filled"] .x-icon-button--body {
+.e-icon-button[data-variant="filled"] .e-icon-button--body {
   border-radius: var( --border-radius-xs ) }
 
-.x-icon-button[data-variant="placeholder"] .x-icon-button--body {
+.e-icon-button[data-variant="placeholder"] .e-icon-button--body {
   cursor: default }
 
 /*** Icon-button body ***/
 
 /*** Icon-button hover ***/
 
-.x-icon-button--body::before {
+.e-icon-button--body::before {
   content: '';
   left: 6px;
   position: absolute;
@@ -2627,7 +2628,7 @@ body {
    * a calc függvénnyel számítani a pszeudo-elem magasságát! */
   height: calc(100% - 12px) }
 
-.x-icon-button--body[data-labeled="true"]::before {
+.e-icon-button--body[data-labeled="true"]::before {
   /* TEMP
    * Teszt: hover-color & label együtt */
   left: 10px;
@@ -2639,7 +2640,7 @@ body {
 
 /*** Icon-button icon ***/
 
-.x-icon-button--icon {
+.e-icon-button--icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -2656,7 +2657,7 @@ body {
   overflow: hidden;
 
   /* BUG#0984
-   * Az .x-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
+   * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
    * eltakarná az ikont, ha az nem abszolút pozícionálással jellene meg, mert a pszeudo-elem
    * a {position: absolute} beállítása miatt az ikon felett jelenne meg! */
   left: 12px;
@@ -2671,7 +2672,7 @@ body {
 
 /*** Icon-button label ***/
 
-.x-icon-button--label {
+.e-icon-button--label {
   font-size: 9px;
   font-weight: 600;
   height: 12px;
@@ -2703,26 +2704,26 @@ body {
 
 /*** Menu item ***/
 
-/* Az .x-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
+/* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
  * meg kell feleljenek a felsorolt felhasználási módoknak:
  *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
  *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
  *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
 /* TODO
  * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
-.x-menu-bar--menu-item {
+.e-menu-bar--menu-item {
   align-items: center;
   color: var( --color-highlight );
-  /* Ha az .x-menu-bar--menu-item elem egyszerre feliratot és ikont is megjelenít,
+  /* Ha az .e-menu-bar--menu-item elem egyszerre feliratot és ikont is megjelenít,
    * akkor a felirat és az ikon közötti esztétikai távolságot a column-gap
    * tulajdonság határozza meg */
   column-gap: 6px;
   display: flex;
-  /* Ha az .x-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
+  /* Ha az .e-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
    * akkor az ikon-gombként jelenik meg (12px + 24px + 12px = 48px szélesség) */
   padding: 0 12px }
 
-.x-menu-bar--menu-item[data-active="true"]::after {
+.e-menu-bar--menu-item[data-active="true"]::after {
   background-color: var( --border-color-primary );
  -border-radius: 1.5px;
   bottom: 0;
@@ -2736,13 +2737,13 @@ body {
   position: absolute;
   width: 40% }
 
-.x-menu-bar--menu-item[data-active="true"] {
+.e-menu-bar--menu-item[data-active="true"] {
   color: var( --color ) }
 
-.x-menu-bar[data-layout="fit"] .x-menu-bar--menu-item { height: 24px }
-.x-menu-bar[data-layout="row"] .x-menu-bar--menu-item { height: 48px }
+.e-menu-bar[data-layout="fit"] .e-menu-bar--menu-item { height: 24px }
+.e-menu-bar[data-layout="row"] .e-menu-bar--menu-item { height: 48px }
 
-.x-menu-bar--menu-item--icon {
+.e-menu-bar--menu-item--icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -2751,7 +2752,7 @@ body {
   justify-content: center;
   width: var( --icon-size-default ) }
 
-.x-menu-bar--menu-item--label {
+.e-menu-bar--menu-item--label {
   font-weight: 600;
   line-height: var( --line-height-s );
   white-space: nowrap }
@@ -2760,7 +2761,7 @@ body {
 
 /*** Menu item badge ***/
 
-.x-menu-bar--menu-item .x-element-badge {
+.e-menu-bar--menu-item .e-element-badge {
   min-height: 6px;
   right: 6px;
   top: 12px;
@@ -2773,7 +2774,7 @@ body {
 
 /***** Multi field *****/
 
-.x-multi-field {
+.e-multi-field {
   /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
    * text-field alkomponensei */
   display: flex;
@@ -2786,7 +2787,7 @@ body {
 
 /***** Overlay *****/
 
-.x-overlay[data-disabled="true"] {
+.e-overlay[data-disabled="true"] {
   opacity: .3 }
 
 /***** Overlay *****/
@@ -2796,7 +2797,7 @@ body {
 /***** Radio button *****/
 /*** Radio button clear button ***/
 
-.x-radio-button--clear-button {
+.e-radio-button--clear-button {
   background-color: var( --fill-color );
   border-color: var( --color );
   border-radius: 50%;
@@ -2808,27 +2809,27 @@ body {
   height: 20px;
   width: 20px }
 
-.x-radio-button--clear-button::before,
-.x-radio-button--clear-button::after {
+.e-radio-button--clear-button::before,
+.e-radio-button--clear-button::after {
   background-color: var( --color );
   border-radius: 1px;
   content: '';
   position: absolute;
   transform: rotateZ( -45deg ) }
 
-.x-radio-button--clear-button::before {
+.e-radio-button--clear-button::before {
   height: 2px;
   left: 4px;
   top: 7px;
   width: 8px }
 
-.x-radio-button--clear-button::after {
+.e-radio-button--clear-button::after {
   height: 8px;
   left: 7px;
   top: 4px;
   width: 2px }
 
-.x-radio-button--clear-button[data-disabled="true"] {
+.e-radio-button--clear-button[data-disabled="true"] {
   cursor: default;
   opacity: .5 }
 
@@ -2836,7 +2837,7 @@ body {
 
 /*** Radio button options ***/
 
-.x-radio-button[data-options-orientation="horizontal"] .x-radio-button--body {
+.e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
   display: flex;
   grid-column-gap: 24px }
 
@@ -2844,12 +2845,12 @@ body {
 
 /*** Radio button option ***/
 
-.x-radio-button--option {
+.e-radio-button--option {
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px }
 
-.x-radio-button--option-label {
+.e-radio-button--option-label {
   /* XXX#5050
    * A {text-align: left} beállítás biztosítja, hogy a label és a helper
    * feliratok közül bármelyik lehet hosszabb a másiknál, mind a kettő
@@ -2858,7 +2859,7 @@ body {
   line-height: 24px;
   text-align:  left }
 
-.x-radio-button--option-helper {
+.e-radio-button--option-helper {
   /* XXX#5050 */
   color:       var( --color-muted );
   font-size:   var( --font-size-xs );
@@ -2869,7 +2870,7 @@ body {
 
 /*** Radio button option button ***/
 
-.x-radio-button--option-button {
+.e-radio-button--option-button {
   background-color: var( --fill-color );
   border-radius:    50%;
   border-style:     solid;
@@ -2884,8 +2885,8 @@ body {
 
 /*** Radio button option marker ***/
 
-.x-radio-button--option[data-selected="true"]
-.x-radio-button--option-button::before {
+.e-radio-button--option[data-selected="true"]
+.e-radio-button--option-button::before {
   animation-name: opacity-0-1;
   animation-duration: .1s;
   background-color: var( --color );
@@ -2905,19 +2906,19 @@ body {
 /***** Row *****/
 /*** Row body ***/
 
-.x-row--body {
+.e-row--body {
   display: flex;
   /* - Az x-row--body elem ugyanolyan magas kell legyen, mint az x-row elem, hogy minden esetben
    *   megfelelően működjön a vertikális igazítás!
    * - Ha az x-row komponens {:style {...}} tulajdonságával beállítod az x-row elem magasságát,
    *   és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
    *   a tartalom magassága kevesebb, mint az x-row elem beállított magassága, akkor a {height: 100%}
-   *   tulajdonság nélkül az .x-row--body elem magassága a tartalom magasságával lenne egyenlő
+   *   tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
    *   és nem működne a tartalom középre igazítása! */
   height: 100%;
   width: 100% }
 
-.x-row[data-wrap-items="true"] .x-row--body {
+.e-row[data-wrap-items="true"] .e-row--body {
   flex-wrap: wrap }
 
 /*** Row body ***/
@@ -2927,7 +2928,7 @@ body {
 
 /***** Polarity *****/
 
-.x-horizontal-polarity {
+.e-horizontal-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
  -height: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
@@ -2935,23 +2936,23 @@ body {
   justify-content: space-between;
   width: 100% }
 
-.x-horizontal-polarity--start-content,
-.x-horizontal-polarity--middle-content,
-.x-horizontal-polarity--end-content {
+.e-horizontal-polarity--start-content,
+.e-horizontal-polarity--middle-content,
+.e-horizontal-polarity--end-content {
   display: flex }
 
-.x-horizontal-polarity--start-content {
+.e-horizontal-polarity--start-content {
  -position: absolute;
 }
-.x-horizontal-polarity--end-content {
+.e-horizontal-polarity--end-content {
  -position: absolute;
 }
-.x-horizontal-polarity--middle-content {
+.e-horizontal-polarity--middle-content {
  -justify-content: center;
  -position: absolute;
  -width: 100% }
 
-.x-vertical-polarity {
+.e-vertical-polarity {
   /* WARNING! DEPRECATED! DO NOT USE! */
  -width: 100%;
   /* WARNING! DEPRECATED! DO NOT USE! */
@@ -2960,9 +2961,9 @@ body {
   height: 100%;
   justify-content: space-between }
 
-.x-vertical-polarity--start-content,
-.x-vertical-polarity--middle-content,
-.x-vertical-polarity--end-content {
+.e-vertical-polarity--start-content,
+.e-vertical-polarity--middle-content,
+.e-vertical-polarity--end-content {
   display: flex;
   flex-direction: column }
 
@@ -2973,7 +2974,7 @@ body {
 /***** Select *****/
 /*** Select button ***/
 
-.x-select--button-body {
+.e-select--button-body {
   background: var( --fill-color );
   border-style: solid;
   border-width: 1px;
@@ -2983,7 +2984,7 @@ body {
   padding: 0 12px;
   width: 100% }
 
-.x-select--button-label {
+.e-select--button-label {
   display: flex;
   flex-direction: column;
   font-size: var( --font-size-s );
@@ -2993,7 +2994,7 @@ body {
   letter-spacing: var( --letter-spacing-s );
   line-height: 100% }
 
-.x-select--button-icon {
+.e-select--button-icon {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -3004,7 +3005,7 @@ body {
 
 /*** Select warning ***/
 
-.x-select--warning {
+.e-select--warning {
   color: var( --color-warning );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-s );
@@ -3015,12 +3016,12 @@ body {
 
 /*** Select options ***/
 
-.x-select--option-list {
+.e-select--option-list {
   display: flex;
   flex-direction: column;
   padding-bottom: 12px }
 
-.x-select--no-options-label {
+.e-select--no-options-label {
   align-self: center;
   color: var( --color-highlight );
   font-size: var( --font-size-s );
@@ -3032,29 +3033,29 @@ body {
 
 /*** Select option ***/
 
-.x-select--option {
+.e-select--option {
   border-radius: var( --border-radius-xs );
   display: flex;
   padding: 0 24px;
   width: 100% }
 
-.x-select--option:hover {
+.e-select--option:hover {
   background-color: var( --hover-color-highlight ) }
 
 /*** Select option ***/
 
 /*** Select option label ***/
 
-.x-select--option {
+.e-select--option {
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: 36px }
 
-.x-select--option[data-selected="true"] {
+.e-select--option[data-selected="true"] {
   font-weight: 600 }
 
-.x-select--option[data-selected="true"]::before {
+.e-select--option[data-selected="true"]::before {
   background-color: var( --color-primary );
   border-radius: 50%;
   content: '';
@@ -3068,7 +3069,7 @@ body {
 
 /*** Select option icon ***/
 
-.x-select--option-icon {
+.e-select--option-icon {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -3082,9 +3083,9 @@ body {
 
 /*** Select options header ***/
 
-.x-select--options--header {}
+.e-select--options--header {}
 
-.x-select--options--label {
+.e-select--options--label {
   display: flex;
   font-size: var( --font-size-s );
   font-weight: 500;
@@ -3092,7 +3093,7 @@ body {
   letter-spacing: var( --letter-spacing-s );
   line-height: 48px }
 
-.x-select--options--label[data-placeholder="true"] {
+.e-select--options--label[data-placeholder="true"] {
   height: 12px }
 
 /*** Select options header ***/
@@ -3102,8 +3103,8 @@ body {
 
 /***** Separator *****/
 
-.x-horizontal-separator,
-.x-vertical-separator {
+.e-horizontal-separator,
+.e-vertical-separator {
   flex-shrink: 0;
   width: 100% }
 
@@ -3114,14 +3115,14 @@ body {
 /***** Slider *****/
 /*** Slider body ***/
 
-.x-slider--body {
+.e-slider--body {
   height: 20px }
 
 /*** Slider body ***/
 
 /*** Slider track ***/
 
-.x-slider--track {
+.e-slider--track {
   background-color: var( --background-color-highlight );
   border-radius: 2px;
   height: 4px;
@@ -3134,14 +3135,14 @@ body {
 
 /*** Slider line ***/
 
-.x-slider--line {
+.e-slider--line {
   cursor: grab;
   height: 10px;
   opacity: .3;
   position: absolute;
   top: 5px }
 
-.x-slider--line::after {
+.e-slider--line::after {
   background-color: var( --border-color-primary );
   border-radius: 2px;
   content: '';
@@ -3154,7 +3155,7 @@ body {
 
 /*** Slider thumb ***/
 
-.x-slider--thumb {
+.e-slider--thumb {
   background-color: var( --border-color-primary );
   border-radius: 6px;
   cursor: grab;
@@ -3171,7 +3172,7 @@ body {
 /***** Slideshow *****/
 /*** Slideshow steps wrapper ***/
 
-.x-slideshow--steps {
+.e-slideshow--steps {
   height: 100%;
   overflow: hidden;
   width: 100% }
@@ -3180,56 +3181,56 @@ body {
 
 /*** Slideshow steps ***/
 
-.x-slideshow--prev-step,
-.x-slideshow--current-step,
-.x-slideshow--temp-step,
-.x-slideshow--next-step {
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow--temp-step,
+.e-slideshow--next-step {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
   width: 100% }
 
-.x-slideshow--prev-step,
-.x-slideshow--next-step,
-.x-slideshow--temp-step {
+.e-slideshow--prev-step,
+.e-slideshow--next-step,
+.e-slideshow--temp-step {
   left: 0;
   position: absolute;
   top: 0 }
 
-.x-slideshow--prev-step,
-.x-slideshow--current-step,
-.x-slideshow--next-step {
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow--next-step {
   transition: transform .25s ease-in-out }
 
-.x-slideshow[data-animation="slide-in-bwd"]
-.x-slideshow--prev-step,
-.x-slideshow--current-step,
-.x-slideshow[data-animation="slide-in-fwd"]
-.x-slideshow--next-step {
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--next-step {
   transform: translateX( 0 ) }
 
-.x-slideshow--prev-step,
-.x-slideshow[data-animation="slide-in-fwd"]
-.x-slideshow--current-step {
+.e-slideshow--prev-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--current-step {
   transform: translateX( -100% ) }
 
-.x-slideshow--next-step,
-.x-slideshow[data-animation="slide-in-bwd"]
-.x-slideshow--current-step {
+.e-slideshow--next-step,
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--current-step {
   transform: translateX( 100% ) }
 
-.x-slideshow[data-animation="slide-in-bwd"]
-.x-slideshow--temp-step,
-.x-slideshow[data-animation="slide-in-fwd"]
-.x-slideshow--temp-step {
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--temp-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--temp-step {
   opacity: 0 }
 
 /*** Slideshow steps ***/
 
 /*** Slideshow controls ***/
 
-.x-slideshow--controls {
+.e-slideshow--controls {
   animation-fill-mode: both;
   animation-name: opacity-1-0;
   animation-duration: .3s;
@@ -3239,24 +3240,24 @@ body {
   top: 0;
   width: 100% }
 
-.x-slideshow--controls:hover {
+.e-slideshow--controls:hover {
   animation-name: none }
 
-.x-slideshow--controls--go-bwd,
-.x-slideshow--controls--go-fwd {
+.e-slideshow--controls--go-bwd,
+.e-slideshow--controls--go-fwd {
   height: 80px;
   position: absolute;
   top: calc( 50% - 40px );
   width: 80px }
 
-.x-slideshow--controls--go-bwd {
+.e-slideshow--controls--go-bwd {
   left: 0 }
 
-.x-slideshow--controls--go-fwd {
+.e-slideshow--controls--go-fwd {
   right: 0 }
 
-.x-slideshow--controls--go-bwd::before,
-.x-slideshow--controls--go-fwd::before {
+.e-slideshow--controls--go-bwd::before,
+.e-slideshow--controls--go-fwd::before {
   color: var( --white );
   font-size: 64px;
   height: 64px;
@@ -3266,10 +3267,10 @@ body {
   top: 8px;
   width: 64px }
 
-.x-slideshow--controls--go-bwd::before {
+.e-slideshow--controls--go-bwd::before {
   content: 'chevron_left' }
 
-.x-slideshow--controls--go-fwd::before {
+.e-slideshow--controls--go-fwd::before {
   content: 'chevron_right' }
 
 /*** Slideshow controls ***/
@@ -3280,7 +3281,7 @@ body {
 /***** Switch *****/
 /*** Switch options ***/
 
-.x-switch[data-options-orientation="horizontal"] .x-switch--body {
+.e-switch[data-options-orientation="horizontal"] .e-switch--body {
   display: flex;
   grid-column-gap: 24px }
 
@@ -3288,12 +3289,12 @@ body {
 
 /*** Switch option ***/
 
-.x-switch--option {
+.e-switch--option {
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px }
 
-.x-switch--option-track {
+.e-switch--option-track {
   background-color: var( --fill-color );
   border-radius: 10px;
   border-style:  solid;
@@ -3304,13 +3305,13 @@ body {
   height:        20px;
   width:         40px }
 
-.x-switch--option-label {
+.e-switch--option-label {
   /* XXX#5050 */
   font-weight: 500;
   line-height: 24px;
   text-align:  left }
 
-.x-switch--option-helper {
+.e-switch--option-helper {
   /* XXX#5050 */
   color:       var( --color-muted );
   font-size:   var( --font-size-xs );
@@ -3321,7 +3322,7 @@ body {
 
 /*** Switch thumb ***/
 
-.x-switch--option-track::before {
+.e-switch--option-track::before {
   background-color: var( --color );
   border-radius: 50%;
   content: '';
@@ -3332,7 +3333,7 @@ body {
   top: 2px;
   width: 12px }
 
-.x-switch--option[data-switched="true"] .x-switch--option-track::before {
+.e-switch--option[data-switched="true"] .e-switch--option-track::before {
   transform: translateX( 20px ) }
 
 /*** Switch thumb ***/
@@ -3346,7 +3347,7 @@ body {
 
 /*** Table label ***/
 
-.x-table--label {
+.e-table--label {
   font-size: var( --font-size-m );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-m );
@@ -3356,7 +3357,7 @@ body {
 
 /*** Table header ***/
 
-.x-table--header-cell {
+.e-table--header-cell {
   background-color: var( --border-color-muted ) }
 
 /*** Table header ***/
@@ -3365,25 +3366,25 @@ body {
 
 /*** Table header cell label ***/
 
-.x-table--header-cell--label {
+.e-table--header-cell--label {
   display: flex;
   flex-direction: column;
   justify-content: center }
 
-.x-table[data-layout="row"] .x-table--header-cell--label {
+.e-table[data-layout="row"] .e-table--header-cell--label {
   height: 48px }
 
 /*** Table header cell label ***/
 
 /*** Table header cell ***/
 
-.x-table--header-cell {
+.e-table--header-cell {
   font-weight: 600 }
 
-.x-table--header-cell:first-child {
+.e-table--header-cell:first-child {
   border-radius: 8px 0 0 0 }
 
-.x-table--header-cell:last-child {
+.e-table--header-cell:last-child {
   border-radius: 0 8px 0 0 }
 
 /*** Table header cell ***/
@@ -3393,30 +3394,30 @@ body {
 
 /*** Table body row ***/
 
-.x-table[data-layout="row"] .x-table--body-row {
+.e-table[data-layout="row"] .e-table--body-row {
   height: 48px }
 
 /*** Table body row ***/
 
 /*** Table body cell ***/
 
-.x-table--body-row[data-even="true"] .x-table--body-cell {
+.e-table--body-row[data-even="true"] .e-table--body-cell {
   background-color: var( --background-color-highlight ) }
 
-.x-table[data-horizontal-border="normal"] .x-table--body-cell {
+.e-table[data-horizontal-border="normal"] .e-table--body-cell {
   border-top-color: var( --border-color-muted );
   border-top-style: solid;
   border-top-width: 1px }
 
-.x-table[data-horizontal-border="normal"] .x-table--body-row:first-child .x-table--body-cell {
+.e-table[data-horizontal-border="normal"] .e-table--body-row:first-child .e-table--body-cell {
   border-top-width: 0 }
 
-.x-table[data-vertical-border="normal"] .x-table--body-cell {
+.e-table[data-vertical-border="normal"] .e-table--body-cell {
   border-left-color: var( --border-color-muted );
   border-left-style: solid;
   border-left-width: 1px }
 
-.x-table[data-vertical-border="normal"] .x-table--body-cell:first-child {
+.e-table[data-vertical-border="normal"] .e-table--body-cell:first-child {
   border-left-width: 0 }
 
 /*** Table body cell ***/
@@ -3427,23 +3428,23 @@ body {
 /***** Text *****/
 /*** Text wrapper ***/
 
-.x-text {}
+.e-text {}
 
 /*** Text wrapper ***/
 
 /*** Text body ***/
 
-.x-text--body {
+.e-text--body {
   display: flex;
   flex-direction: column;
   justify-content: center }
 
-.x-text--body[data-cropped="true"] {
+.e-text--body[data-cropped="true"] {
   justify-content: flex-start;
   overflow-y: hidden;
   text-overflow: ellipsis }
 
-.x-text--body[data-cropped="true"]::after {
+.e-text--body[data-cropped="true"]::after {
   background-image: linear-gradient(0deg, white, transparent);
   bottom: 0;
  -content: '';
@@ -3456,7 +3457,7 @@ body {
 
 /*** Text placeholder ***/
 
-.x-text--placeholder {
+.e-text--placeholder {
   color: var( --color-muted ) }
 
 /*** Text placeholder ***/
@@ -3467,9 +3468,9 @@ body {
 /***** Text field *****/
 /*** Field input-container ***/
 
-/* Az .x-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
+/* Az .e-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
  * pl.: adornment ikonok, feliratok és gombok, placeholder elem ... */
-.x-text-field--input-container {
+.e-text-field--input-container {
   background-color: var( --fill-color );
   border-color: var( --border-color-highlight );
   border-style: solid;
@@ -3484,14 +3485,14 @@ body {
 
 /*** Field input ***/
 
-.x-text-field--input-structure {
+.e-text-field--input-structure {
   flex-grow: 1 }
 
-.x-text-field--input-emphasize {
+.e-text-field--input-emphasize {
   height: 100%;
   width: 100% }
 
-.x-text-field--input {
+.e-text-field--input {
   color: var( --color );
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
@@ -3499,10 +3500,10 @@ body {
   padding: 4px 0;
   width: 100% }
 
-.x-text-field--input[type="date"] {
+.e-text-field--input[type="date"] {
   cursor: text }
 
-textarea.x-text-field--input {
+textarea.e-text-field--input {
   overflow: hidden;
   resize: none }
 
@@ -3510,7 +3511,7 @@ textarea.x-text-field--input {
 
 /*** Field warning ***/
 
-.x-text-field--warning {
+.e-text-field--warning {
   color: var( --color-warning );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-s );
@@ -3521,7 +3522,7 @@ textarea.x-text-field--input {
 
 /*** Field placeholder ***/
 
-.x-text-field--placeholder {
+.e-text-field--placeholder {
   color: var( --color-muted);
   font-size: var( --font-size-xs );
   left: 0;
@@ -3539,7 +3540,7 @@ textarea.x-text-field--input {
 
 /*** Field surface ***/
 
-.x-text-field--surface {
+.e-text-field--surface {
   background-color: var( --background-color );
   border-radius: var( --border-radius-s );
   box-shadow: var( --box-shadow-black-xx-light );
@@ -3559,17 +3560,17 @@ textarea.x-text-field--input {
 
 /***** Thumbnail *****/
 
-.x-thumbnail--body {
+.e-thumbnail--body {
   overflow: hidden }
 
-.x-thumbnail--image {
+.e-thumbnail--image {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
   width: 100% }
 
-.x-thumbnail--icon {
+.e-thumbnail--icon {
   align-items: center;
   background-color: var( --background-color-highlight );
   color: var( --color-highlight );
@@ -3588,7 +3589,7 @@ textarea.x-text-field--input {
 /***** Toggle *****/
 /*** Toggle body ***/
 
-.x-toggle--body {
+.e-toggle--body {
   cursor: pointer;
   display: block;
   font-weight: 500;
@@ -3606,19 +3607,19 @@ textarea.x-text-field--input {
 
 /***** Vertical line *****/
 
-.x-vertical-line,
-.x-vertical-line--body {
+.e-vertical-line,
+.e-vertical-line--body {
   height: 100% }
 
-.x-vertical-line[data-layout="row"] {
+.e-vertical-line[data-layout="row"] {
   align-items: center;
   display: flex;
   flex-direction: column;
   height: 48px;
   justify-content: center }
 
-.x-vertical-line[data-layout="row"]
-.x-vertical-line--body {
+.e-vertical-line[data-layout="row"]
+.e-vertical-line--body {
   height: 24px }
 
 /***** Vertical line *****/

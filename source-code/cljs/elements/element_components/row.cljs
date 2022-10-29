@@ -53,7 +53,7 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id {:keys [content]}]
-  [:div.x-row--body [x.components/content row-id content]])
+  [:div.e-row--body [x.components/content row-id content]])
 
 (defn- row
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,7 +62,7 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id row-props]
-  [:div.x-row (flex-handler.helpers/flexible-attributes row-id row-props)
+  [:div.e-row (flex-handler.helpers/flexible-attributes row-id row-props)
               [row-body                                 row-id row-props]])
 
 (defn element

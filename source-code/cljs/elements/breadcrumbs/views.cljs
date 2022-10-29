@@ -32,7 +32,7 @@
   ;  {:label (metamorphic-content)(opt)
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
-  [:div.x-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
+  [:div.e-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                              ; BUG#3400
                              (if (-> label       x.components/content str empty?)
                                  (-> placeholder x.components/content)
@@ -47,7 +47,7 @@
   ;  {:label (metamorphic-content)(opt)
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
-  [:button.x-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
+  [:button.e-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                                 ; BUG#3400
                                 (if (-> label       x.components/content str empty?)
                                     (-> placeholder x.components/content)
@@ -71,7 +71,7 @@
   ; @param (map) breadcrumbs-props
   ;  {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
-  [:div.x-breadcrumbs--body (breadcrumbs.helpers/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
+  [:div.e-breadcrumbs--body (breadcrumbs.helpers/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
                             (letfn [(f [crumb-list crumb]
                                        (conj crumb-list [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb]))]
                                    (reduce f [:<>] crumbs))])
@@ -82,7 +82,7 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   [breadcrumbs-id breadcrumbs-props]
-  [:div.x-breadcrumbs (breadcrumbs.helpers/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
+  [:div.e-breadcrumbs (breadcrumbs.helpers/breadcrumbs-attributes breadcrumbs-id breadcrumbs-props)
                       [breadcrumbs-body                           breadcrumbs-id breadcrumbs-props]])
 
 (defn element
@@ -96,7 +96,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

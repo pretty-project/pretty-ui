@@ -61,7 +61,7 @@
   ;  {:option-label-f (function)}
   ; @param (*) option
   [select-id {:keys [option-label-f] :as select-props} option]
-  [:button.x-select--option (select.helpers/select-option-attributes select-id select-props option)
+  [:button.e-select--option (select.helpers/select-option-attributes select-id select-props option)
                             (-> option option-label-f x.components/content)])
 
 (defn- select-option-list-items
@@ -84,7 +84,7 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [no-options-label]}]
-  [:div.x-select--no-options-label (x.components/content no-options-label)])
+  [:div.e-select--no-options-label (x.components/content no-options-label)])
 
 (defn- select-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,7 +93,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [options (input.helpers/get-input-options select-id select-props)]
-       [:div.x-select--option-list {:data-selectable false}
+       [:div.e-select--option-list {:data-selectable false}
                                    (if (vector/nonempty? options)
                                        [select-option-list-items select-id select-props]
                                        [no-options-label         select-id select-props])]))
@@ -105,8 +105,8 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [options-label]}]
-  (if options-label [:div.x-select--options--label (x.components/content options-label)]
-                    [:div.x-select--options--label {:data-placeholder true}]))
+  (if options-label [:div.e-select--options--label (x.components/content options-label)]
+                    [:div.e-select--options--label {:data-placeholder true}]))
 
 (defn- select-options-header
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,7 +115,7 @@
   ; @param (map) select-props
   ;  {}
   [select-id select-props]
-  [:div.x-select--options--header {:data-selectable false}
+  [:div.e-select--options--header {:data-selectable false}
                                   [select-options-label select-id select-props]
                                   [option-field         select-id select-props]])
 
@@ -152,7 +152,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
-          [:div.x-select--warning {:data-selectable false}
+          [:div.e-select--warning {:data-selectable false}
                                   (x.components/content :please-select-an-option)]))
 
 
@@ -166,7 +166,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [_ _]
-  [:i.x-select--button-icon {:data-icon-family :material-icons-filled} :unfold_more])
+  [:i.e-select--button-icon {:data-icon-family :material-icons-filled} :unfold_more])
 
 (defn- select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -176,8 +176,8 @@
   ;  {}
   [_ {:keys [option-label-f value-path]}]
   (if-let [selected-option @(r/subscribe [:db/get-item value-path])]
-          [:div.x-select--button-label (-> selected-option option-label-f x.components/content)]
-          [:div.x-select--button-label (-> :select!                       x.components/content)]))
+          [:div.e-select--button-label (-> selected-option option-label-f x.components/content)]
+          [:div.e-select--button-label (-> :select!                       x.components/content)]))
 
 (defn- select-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -186,7 +186,7 @@
   ; @param (map) select-props
   ;  {}
   [select-id select-props]
-  [:button.x-select--button-body (select.helpers/select-button-body-attributes select-id select-props)
+  [:button.e-select--button-body (select.helpers/select-button-body-attributes select-id select-props)
                                  [select-button-label                          select-id select-props]
                                  [select-button-icon                           select-id select-props]])
 
@@ -196,7 +196,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select--button {:data-selectable false}
+  [:div.e-select--button {:data-selectable false}
                          [select-button-body select-id select-props]])
 
 (defn- active-button-label
@@ -217,7 +217,7 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.x-select (select.helpers/select-attributes select-id select-props)
+  [:div.e-select (select.helpers/select-attributes select-id select-props)
                  [active-button-label              select-id select-props]
                  [select-button                    select-id select-props]
                  [select-required-warning          select-id select-props]])

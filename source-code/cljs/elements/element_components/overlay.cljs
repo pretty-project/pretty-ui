@@ -46,7 +46,7 @@
   ; @param (map) overlay-props
   ;  {:content (metamorphic-content)}
   [overlay-id {:keys [content] :as overlay-props}]
-  [:div.x-overlay (engine/element-attributes overlay-id overlay-props)
+  [:div.e-overlay (engine/element-attributes overlay-id overlay-props)
                   [x.components/content overlay-id content]])
 
 (defn element

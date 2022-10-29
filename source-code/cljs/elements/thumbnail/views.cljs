@@ -44,9 +44,9 @@
   ;  {:background-size (keyword)
   ;   :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
-  [:button.x-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                             [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
-                             [:div.x-thumbnail--image {:style {:background-image (css/url uri)
+  [:button.e-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
+                             [:div.e-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
+                             [:div.e-thumbnail--image {:style {:background-image (css/url uri)
                                                                :background-size background-size}}]])
 
 (defn- static-thumbnail
@@ -57,9 +57,9 @@
   ;  {:background-size (keyword)
   ;   :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
-  [:div.x-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                          [:div.x-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
-                          [:div.x-thumbnail--image {:style {:background-image (css/url uri)
+  [:div.e-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
+                          [:div.e-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
+                          [:div.e-thumbnail--image {:style {:background-image (css/url uri)
                                                             :background-size background-size}}]])
 
 (defn- thumbnail
@@ -69,7 +69,7 @@
   ; @param (map) thumbnail-props
   ;  {:on-click (metamorphic-event)(opt)}
   [thumbnail-id {:keys [on-click] :as thumbnail-props}]
-  [:div.x-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
+  [:div.e-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
                     [thumbnail-label thumbnail-id thumbnail-props]
                     (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
                           (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props])])

@@ -65,8 +65,8 @@
   ; @param (keyword) line-id
   ; @param (map) line-props
   [line-id line-props]
-  [:div.x-horizontal-line (engine/element-attributes line-id line-props)
-                          [:div.x-horizontal-line--body (line-body-attributes line-id line-props)]])
+  [:div.e-horizontal-line (engine/element-attributes line-id line-props)
+                          [:div.e-horizontal-line--body (line-body-attributes line-id line-props)]])
 
 (defn element
   ; @param (keyword)(opt) line-id

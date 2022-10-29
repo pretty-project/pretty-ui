@@ -31,8 +31,8 @@
   ; @param (map) selector-props
   ; @param (string) option
   [selector-id selector-props option]
-  [:button.x-color-selector--option (color-selector.helpers/color-selector-option-attributes selector-id selector-props option)
-                                    [:div.x-color-selector--option--color {:style {:background-color option}}]])
+  [:button.e-color-selector--option (color-selector.helpers/color-selector-option-attributes selector-id selector-props option)
+                                    [:div.e-color-selector--option--color {:style {:background-color option}}]])
 
 (defn- color-selector-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,7 +50,7 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  [:div.x-color-selector--body (color-selector.helpers/color-selector-body-attributes selector-id selector-props)
+  [:div.e-color-selector--body (color-selector.helpers/color-selector-body-attributes selector-id selector-props)
                                [color-selector-option-list                            selector-id selector-props]])
 
 (defn- color-selector-options-structure
@@ -68,7 +68,7 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  [:div.x-color-selector--options (color-selector.helpers/color-selector-options-attributes selector-id selector-props)
+  [:div.e-color-selector--options (color-selector.helpers/color-selector-options-attributes selector-id selector-props)
                                   [color-selector-options-structure                         selector-id selector-props]])
 
 

@@ -35,7 +35,7 @@
   ; @param (map) button-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-button--label [x.components/content label]]))
+  (if label [:div.e-button--label [x.components/content label]]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
   [button-id {:keys [icon] :as button-props}]
-  [:i.x-button--icon (button.helpers/button-icon-attributes button-id button-props)
+  [:i.e-button--icon (button.helpers/button-icon-attributes button-id button-props)
                      (param icon)])
 
 (defn- button-body
@@ -54,11 +54,11 @@
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
   [button-id {:keys [icon icon-position] :as button-props}]
-  [:button.x-button--body (button.helpers/button-body-attributes button-id button-props)
+  [:button.e-button--body (button.helpers/button-body-attributes button-id button-props)
                           (if icon (case icon-position :left  [button-icon button-id button-props]
-                                                       :right [:div.x-button--icon-placeholder]))
+                                                       :right [:div.e-button--icon-placeholder]))
                           [button-label button-id button-props]
-                          (if icon (case icon-position :left  [:div.x-button--icon-placeholder]
+                          (if icon (case icon-position :left  [:div.e-button--icon-placeholder]
                                                        :right [button-icon button-id button-props]))
                           [engine/element-badge button-id button-props]])
 
@@ -68,7 +68,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:div.x-button (button.helpers/button-attributes button-id button-props)
+  [:div.e-button (button.helpers/button-attributes button-id button-props)
                  [button-body                      button-id button-props]])
 
 (defn- button
@@ -100,15 +100,15 @@
   ;    Default: :s
   ;   :class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :font-weight (keyword)(opt)
-  ;    :bold, :extra-bold
+  ;    :bold, :extra-bold, :inherit
   ;    Default: :bold
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right

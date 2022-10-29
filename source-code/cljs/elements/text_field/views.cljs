@@ -36,7 +36,7 @@
   ; @param (map) field-props
   [field-id field-props]
   (let [placeholder-attributes (text-field.helpers/adornment-placeholder-attributes field-id field-props)]
-       [:div.x-field-adornments--placeholder placeholder-attributes]))
+       [:div.e-field-adornments--placeholder placeholder-attributes]))
 
 (defn button-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,8 +48,8 @@
   ;   :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/button-adornment-attributes field-id field-props adornment-props)]
-       (cond icon  [:button.x-field-adornments--button-adornment adornment-attributes icon]
-             label [:button.x-field-adornments--button-adornment adornment-attributes label])))
+       (cond icon  [:button.e-field-adornments--button-adornment adornment-attributes icon]
+             label [:button.e-field-adornments--button-adornment adornment-attributes label])))
 
 (defn static-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,8 +61,8 @@
   ;   :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/static-adornment-attributes field-id field-props adornment-props)]
-       (cond icon  [:div.x-field-adornments--static-adornment adornment-attributes icon]
-             label [:div.x-field-adornments--static-adornment adornment-attributes (x.components/content label)])))
+       (cond icon  [:div.e-field-adornments--static-adornment adornment-attributes icon]
+             label [:div.e-field-adornments--static-adornment adornment-attributes (x.components/content label)])))
 
 (defn field-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,7 +86,7 @@
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/nonempty? end-adornments)
            (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
-                  (reduce f [:div.x-field-adornments] end-adornments))
+                  (reduce f [:div.e-field-adornments] end-adornments))
            [field-adornments-placeholder field-id field-props])))
 
 (defn field-start-adornments
@@ -98,7 +98,7 @@
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
       (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
-             (reduce f [:div.x-field-adornments] start-adornments))
+             (reduce f [:div.e-field-adornments] start-adornments))
       [field-adornments-placeholder field-id field-props]))
 
 
@@ -114,7 +114,7 @@
   ;  {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface]}]
   (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
-                      [:div.x-text-field--surface {:on-mouse-down #(.preventDefault %)}
+                      [:div.e-text-field--surface {:on-mouse-down #(.preventDefault %)}
                                                   [x.components/content field-id surface]])))
 
 
@@ -129,7 +129,7 @@
   ; @param (map) field-props
   [field-id field-props]
   (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
-          [:div.x-text-field--warning {:data-selectable false}
+          [:div.e-text-field--warning {:data-selectable false}
                                       (x.components/content :please-fill-out-this-field)]))
 
 (defn- text-field-invalid-warning
@@ -142,7 +142,7 @@
   (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
           (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
-                  [:div.x-text-field--warning {:data-selectable false}
+                  [:div.e-text-field--warning {:data-selectable false}
                                               (-> validator :invalid-message x.components/content)])))
 
 
@@ -165,7 +165,7 @@
   (if placeholder (let [field-content (text-field.helpers/get-field-content field-id)]
                        ; BUG#3400
                        (if (-> field-content str empty?)
-                           [:div.x-text-field--placeholder {:data-selectable false}
+                           [:div.e-text-field--placeholder {:data-selectable false}
                                                            (x.components/content placeholder)]))))
 
 (defn- text-field-input
@@ -175,8 +175,8 @@
   ; @param (map) field-props
   ;  {:multiline? (boolean)(opt)}
   [field-id {:keys [multiline?] :as field-props}]
-  (if multiline? [:textarea.x-text-field--input (text-field.helpers/field-body-attributes field-id field-props)]
-                 [:input.x-text-field--input    (text-field.helpers/field-body-attributes field-id field-props)]))
+  (if multiline? [:textarea.e-text-field--input (text-field.helpers/field-body-attributes field-id field-props)]
+                 [:input.e-text-field--input    (text-field.helpers/field-body-attributes field-id field-props)]))
 
 (defn- text-field-input-emphasize
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -186,10 +186,10 @@
   [field-id field-props]
   ; BUG#3445
   ; A {:multiline? true} beállítással használt mező textarea komponensénél valamiért
-  ; 6.5px-el magasabb az .x-text-field--input-emphasize elem, ezért szükséges az .x-...-emphasize
+  ; 6.5px-el magasabb az .e-text-field--input-emphasize elem, ezért szükséges az .e-...-emphasize
   ; elemnek is beállítani a textarea elem magasságát!
   ; Google Chrome 101.0.4951.64
-  [:div.x-text-field--input-emphasize {:style (text-field.helpers/field-body-style field-id field-props)}
+  [:div.e-text-field--input-emphasize {:style (text-field.helpers/field-body-style field-id field-props)}
                                       [text-field-input field-id field-props]])
 
 (defn- text-field-input-structure
@@ -199,15 +199,15 @@
   ; @param (map) field-props
   [field-id field-props]
   ; XXX#3415
-  ; Az .x-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
+  ; Az .e-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
   ; placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel.
   ;
   ; BUG#3418
-  ; A DOM-fában az .x-text-field--input (input) elem ELŐTT elhelyezett .x-text-field--placeholder (div)
-  ; elem valamiért az .x-text-field--input elem FELETT jelent meg ezért az .x-text-field--input elem
-  ; az .x-text-field--input-emphasize (div) elembe került, így a placeholder elem az input elem alatt jelenik meg.
+  ; A DOM-fában az .e-text-field--input (input) elem ELŐTT elhelyezett .e-text-field--placeholder (div)
+  ; elem valamiért az .e-text-field--input elem FELETT jelent meg ezért az .e-text-field--input elem
+  ; az .e-text-field--input-emphasize (div) elembe került, így a placeholder elem az input elem alatt jelenik meg.
   ; Google Chrome 98.0.4758.80
-  [:div.x-text-field--input-structure [text-field-placeholder     field-id field-props]
+  [:div.e-text-field--input-structure [text-field-placeholder     field-id field-props]
                                       [text-field-input-emphasize field-id field-props]])
 
 (defn- text-field-input-container
@@ -216,7 +216,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field--input-container [field-start-adornments     field-id field-props]
+  [:div.e-text-field--input-container [field-start-adornments     field-id field-props]
                                       [text-field-input-structure field-id field-props]
                                       [field-end-adornments       field-id field-props]
                                       [text-field-surface         field-id field-props]])
@@ -267,7 +267,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-text-field (text-field.helpers/field-attributes field-id field-props)
+  [:div.e-text-field (text-field.helpers/field-attributes field-id field-props)
                      [text-field-label                    field-id field-props]
                      [text-field-input-container          field-id field-props]
                      [text-field-required-warning         field-id field-props]

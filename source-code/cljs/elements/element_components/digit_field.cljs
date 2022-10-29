@@ -97,7 +97,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:input.x-digit-field--input {:type "text"
+  [:input.e-digit-field--input {:type "text"
                                 :id (target-handler.helpers/element-id->target-id field-id)
                                 :on-change #(let [v (dom/event->value %)]
                                                  (r/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
@@ -108,11 +108,11 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reduce (fn [%1 %2] (conj %1 [:div.x-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.helpers/element-id->target-id field-id)))
+  (reduce (fn [%1 %2] (conj %1 [:div.e-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.helpers/element-id->target-id field-id)))
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
                                                                  (mid-fruits.string/get-nth-character (:value field-props) %2)]))
-    [:div.x-digit-field--cover {:style {:width (-> field-props field-props->digits-width css/px)}}]
+    [:div.e-digit-field--cover {:style {:width (-> field-props field-props->digits-width css/px)}}]
     (range 4)))
 
 (defn- digit-field
@@ -121,7 +121,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.x-digit-field (engine/element-attributes field-id field-props)
+  [:div.e-digit-field (engine/element-attributes field-id field-props)
                       [digit-field-input         field-id field-props]
                       [digit-field-cover         field-id field-props]])
 

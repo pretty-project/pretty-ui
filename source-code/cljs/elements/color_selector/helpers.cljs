@@ -51,7 +51,7 @@
   ; @return (map)
   ;  {}
   [_ _]
-  {:class :x-element})
+  {:class :e-element})
 
 (defn color-selector-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

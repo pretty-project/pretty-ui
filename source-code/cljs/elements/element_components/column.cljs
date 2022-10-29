@@ -51,7 +51,7 @@
   ; @param (map) column-props
   ;  {:content (metamorphic-content)}
   [column-id {:keys [content]}]
-  [:div.x-column--body [x.components/content column-id content]])
+  [:div.e-column--body [x.components/content column-id content]])
 
 (defn- column
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -59,7 +59,7 @@
   ; @param (keyword) column-id
   ; @param (map) column-props
   [column-id column-props]
-  [:div.x-column (flex-handler.helpers/flexible-attributes column-id column-props)
+  [:div.e-column (flex-handler.helpers/flexible-attributes column-id column-props)
                  [column-body                              column-id column-props]])
 
 (defn element

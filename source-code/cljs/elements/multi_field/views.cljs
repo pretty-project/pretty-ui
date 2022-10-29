@@ -36,7 +36,7 @@
   (let [field-key   (multi-field.helpers/field-dex->react-key     group-id group-props field-dex)
         field-id    (multi-field.helpers/field-dex->field-id      group-id group-props field-dex)
         field-props (multi-field.prototypes/field-props-prototype group-id group-props field-dex)]
-       [:div.x-multi-field--text-field {:key field-key}
+       [:div.e-multi-field--text-field {:key field-key}
                                        (if (or initial-options options options-path)
                                            [combo-box.views/element  field-id field-props]
                                            [text-field.views/element field-id field-props])]))
@@ -57,7 +57,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.x-multi-field (multi-field.helpers/group-attributes group-id group-props)
+  [:div.e-multi-field (multi-field.helpers/group-attributes group-id group-props)
                       [multi-field-field-group              group-id group-props]])
 
 (defn element

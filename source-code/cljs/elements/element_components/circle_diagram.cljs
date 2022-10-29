@@ -108,7 +108,7 @@
         rotation-angle   (math/percent->angle rotation-percent)
         rotation         (+ rotation-angle ANGLE-CORRECTION)]
        [:circle {:cx x :cy y :r r
-                 :class :x-circle-diagram--section
+                 :class :e-circle-diagram--section
                  :data-color color
                  :style {:stroke-dasharray (str dash-filled " " dash-empty)
                          :stroke-width     (css/px strength)
@@ -132,7 +132,7 @@
   ; @param (map) diagram-props
   ;  {:diameter (px)}
   [diagram-id {:keys [diameter] :as diagram-props}]
-  [:div.x-circle-diagram--svg {:style {:height (css/px diameter)
+  [:div.e-circle-diagram--svg {:style {:height (css/px diameter)
                                        :width  (css/px diameter)}}
                               [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
                                     (circle-diagram-sections diagram-id diagram-props)]])
@@ -144,7 +144,7 @@
   ; @param (map) diagram-props
   ;  {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.x-circle-diagram--label]))
+  (if label [:div.e-circle-diagram--label]))
 
 (defn circle-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -152,7 +152,7 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   [diagram-id diagram-props]
-  [:div.x-circle-diagram (engine/element-attributes diagram-id diagram-props)
+  [:div.e-circle-diagram (engine/element-attributes diagram-id diagram-props)
                          [circle-diagram-label      diagram-id diagram-props]
                          [circle-diagram-circle     diagram-id diagram-props]])
 

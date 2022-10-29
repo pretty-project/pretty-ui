@@ -32,7 +32,6 @@
                        {:uri "/css/x/app-ui-themes.css"}
                        {:uri "/css/x/app-ui-structure.css"}
                        {:uri "/css/x/app-ui-animations.css"}
-                       {:uri "/css/x/app-elements.css"}
 
                        ; Montserrat font
                        {:uri "/fonts/montserrat-font.css"}

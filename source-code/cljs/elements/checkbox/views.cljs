@@ -35,7 +35,7 @@
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.x-checkbox--option-helper (x.components/content option-helper)])))
+                           [:div.e-checkbox--option-helper (x.components/content option-helper)])))
 
 (defn- checkbox-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.x-checkbox--option-label (x.components/content option-label)]))
+       [:div.e-checkbox--option-label (x.components/content option-label)]))
 
 (defn- checkbox-option-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +55,7 @@
   ; @param (map) checkbox-props
   ; @param (*) option
   [checkbox-id checkbox-props option]
-  [:div.x-checkbox--option-content [checkbox-option-label  checkbox-id checkbox-props option]
+  [:div.e-checkbox--option-content [checkbox-option-label  checkbox-id checkbox-props option]
                                    [checkbox-option-helper checkbox-id checkbox-props option]])
 
 (defn- checkbox-option
@@ -65,8 +65,8 @@
   ; @param (map) checkbox-props
   ; @param (*) option
   [checkbox-id checkbox-props option]
-  [:button.x-checkbox--option (checkbox.helpers/checkbox-option-attributes checkbox-id checkbox-props option)
-                              [:div.x-checkbox--option-button {:data-icon-family :material-icons-filled}]
+  [:button.e-checkbox--option (checkbox.helpers/checkbox-option-attributes checkbox-id checkbox-props option)
+                              [:div.e-checkbox--option-button {:data-icon-family :material-icons-filled}]
                               [checkbox-option-content checkbox-id checkbox-props option]])
 
 (defn- checkbox-options
@@ -86,7 +86,7 @@
   ; @param (map) checkbox-props
   ;  {}
   [checkbox-id {:keys [style] :as checkbox-props}]
-  [:div.x-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
+  [:div.e-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
                          [checkbox-options                          checkbox-id checkbox-props]])
 
 (defn- checkbox-label
@@ -107,7 +107,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  [:div.x-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
+  [:div.e-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
                    [checkbox-label                       checkbox-id checkbox-props]
                    [checkbox-body                        checkbox-id checkbox-props]])
 
@@ -131,10 +131,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xs, :s
-  ;    Default: :s
-  ;   :font-size (keyword)(opt)
-  ;    :xs, :s
+  ;    :xs, :s, :inherit
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)

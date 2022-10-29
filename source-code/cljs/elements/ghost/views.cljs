@@ -28,7 +28,7 @@
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
   [ghost-id ghost-props]
-  [:div.x-ghost--body (ghost.helpers/ghost-body-attributes ghost-id ghost-props)])
+  [:div.e-ghost--body (ghost.helpers/ghost-body-attributes ghost-id ghost-props)])
 
 (defn ghost
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,7 +36,7 @@
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
   [ghost-id ghost-props]
-  [:div.x-ghost (ghost.helpers/ghost-attributes ghost-id ghost-props)
+  [:div.e-ghost (ghost.helpers/ghost-attributes ghost-id ghost-props)
                 [ghost-body                     ghost-id ghost-props]])
 
 (defn element

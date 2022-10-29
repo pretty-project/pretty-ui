@@ -35,7 +35,7 @@
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.x-radio-button--option-helper (x.components/content option-helper)])))
+                           [:div.e-radio-button--option-helper (x.components/content option-helper)])))
 
 (defn- radio-button-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.x-radio-button--option-label (x.components/content option-label)]))
+       [:div.e-radio-button--option-label (x.components/content option-label)]))
 
 (defn- radio-button-option-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +55,7 @@
   ; @param (map) button-props
   ; @param (*) option
   [button-id button-props option]
-  [:div.x-radio-button--option-content [radio-button-option-label  button-id button-props option]
+  [:div.e-radio-button--option-content [radio-button-option-label  button-id button-props option]
                                        [radio-button-option-helper button-id button-props option]])
 
 (defn- radio-button-option
@@ -65,8 +65,8 @@
   ; @param (map) button-props
   ; @param (*) option
   [button-id button-props option]
-  [:button.x-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
-                                  [:div.x-radio-button--option-button]
+  [:button.e-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
+                                  [:div.e-radio-button--option-button]
                                   [radio-button-option-content button-id button-props option]])
 
 (defn- radio-button-options
@@ -85,7 +85,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:div.x-radio-button--body (radio-button.helpers/radio-button-body-attributes button-id button-props)
+  [:div.e-radio-button--body (radio-button.helpers/radio-button-body-attributes button-id button-props)
                              [radio-button-options                              button-id button-props]])
 
 (defn- radio-button-unselect-button
@@ -95,8 +95,8 @@
   ; @param (map) button-props
   ;  {:unselectable? (boolean)(opt)}
   [button-id {:keys [unselectable?] :as button-props}]
-  (if unselectable? [:button.x-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
-                                                         ;[:div.x-radio-button--clear-button-label (x.components/content :delete!)]
+  (if unselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
+                                                         ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
 
 (defn- radio-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +116,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  [:div.x-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
+  [:div.e-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
                        [radio-button-label                           button-id button-props]
                        [radio-button-unselect-button                 button-id button-props]
                        [radio-button-body                            button-id button-props]])
@@ -141,7 +141,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xs, :s
+  ;    :xs, :s, :inherit
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)

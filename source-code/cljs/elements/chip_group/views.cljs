@@ -35,7 +35,7 @@
   ; @param (map) group-props
   ;  {:no-chips-label (metamorphic-content)(opt)}
   [_ {:keys [no-chips-label]}]
-  (if no-chips-label [:div.x-chip-group--no-chips-label (x.components/content no-chips-label)]))
+  (if no-chips-label [:div.e-chip-group--no-chips-label (x.components/content no-chips-label)]))
 
 (defn- chip-group-chip
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +58,7 @@
   (let [chips @(r/subscribe [:db/get-item value-path])]
        (if (vector/nonempty? chips)
            (letfn [(f [chip-list chip-dex chip] (conj chip-list [chip-group-chip group-id group-props chip-dex chip]))]
-                  (reduce-indexed f [:div.x-chip-group--chips] chips))
+                  (reduce-indexed f [:div.e-chip-group--chips] chips))
            [chip-group-no-chips-label group-id group-props])))
 
 (defn- chip-group-body
@@ -67,7 +67,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.x-chip-group--body (chip-group.helpers/chip-group-body-attributes group-id group-props)
+  [:div.e-chip-group--body (chip-group.helpers/chip-group-body-attributes group-id group-props)
                            [chip-group-chips                              group-id group-props]])
 
 (defn- chip-group-label
@@ -87,7 +87,7 @@
   ; @param (keyword) group-id
   ; @param (map) group-props
   [group-id group-props]
-  [:div.x-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
+  [:div.e-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
                      [chip-group-label                         group-id group-props]
                      [chip-group-body                          group-id group-props]])
 

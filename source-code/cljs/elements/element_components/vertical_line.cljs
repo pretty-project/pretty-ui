@@ -83,5 +83,5 @@
 
   ([line-id line-props]
    (let [line-props (line-props-prototype line-props)]
-        [:div.x-vertical-line (engine/element-attributes line-id line-props)
-                              [:div.x-vertical-line--body (line-body-attributes line-id line-props)]])))
+        [:div.e-vertical-line (engine/element-attributes line-id line-props)
+                              [:div.e-vertical-line--body (line-body-attributes line-id line-props)]])))

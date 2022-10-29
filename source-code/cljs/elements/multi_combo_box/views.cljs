@@ -61,7 +61,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div.x-multi-combo-box (multi-combo-box.helpers/box-attributes box-id box-props)
+  [:div.e-multi-combo-box (multi-combo-box.helpers/box-attributes box-id box-props)
                           [text-field.views/text-field-label      box-id box-props]
                           [multi-combo-box-chip-group             box-id box-props]
                           [multi-combo-box-field                  box-id box-props]])

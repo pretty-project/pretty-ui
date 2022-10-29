@@ -48,7 +48,7 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   [diagram-id diagram-props]
-  [:div.x-point-diagram
+  [:div.e-point-diagram
     {:style {:width "500px" :height "300px"}}
     (str diagram-props)
     [:svg {:style {:width "100%" :height "100%"

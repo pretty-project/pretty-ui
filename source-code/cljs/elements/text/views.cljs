@@ -44,7 +44,7 @@
   ; @param (map) text-props
   ;  {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
-  [:div.x-text--placeholder {:data-selectable false}
+  [:div.e-text--placeholder {:data-selectable false}
                             (if placeholder (x.components/content placeholder)
                                             "\u00A0")])
 
@@ -68,7 +68,7 @@
                                           (conj %1 [:br] %3)))]
               (if (string? content)
                   (let [content-rows (string/split content "\n")]
-                       (reduce-kv f [:div.x-text--content] content-rows))
+                       (reduce-kv f [:div.e-text--content] content-rows))
                   ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
                   (return content)))))
 
@@ -81,7 +81,7 @@
   ;   :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content] :as text-props}]
   ; XXX#9811
-  [:div.x-text--body (text.helpers/text-body-attributes text-id text-props)
+  [:div.e-text--body (text.helpers/text-body-attributes text-id text-props)
                      ; BUG#3400
                      ; Az empty? függvény alkalmazása előtt az str függvényt
                      ; szükséges használni, különben ha a x.components/content
@@ -97,7 +97,7 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   [text-id text-props]
-  [:div.x-text (text.helpers/text-attributes text-id text-props)
+  [:div.e-text (text.helpers/text-attributes text-id text-props)
                [text-label                   text-id text-props]
                [text-body                    text-id text-props]])
 
@@ -110,14 +110,14 @@
   ; @param (map) text-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)
-  ;    :default, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)(opt)
   ;   :font-size (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :font-weight (keyword)(opt)
-  ;    :bold, :extra-bold, :normal
+  ;    :bold, :extra-bold, :inherit, :normal
   ;    Default: :normal
   ;   :horizontal-align (keyword)(opt)
   ;    :center, :left, :right

@@ -30,7 +30,7 @@
   ; @param (map) area-props
   ;  {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  [:div.x-file-drop-area--label (x.components/content label)])
+  [:div.e-file-drop-area--label (x.components/content label)])
 
 (defn- file-drop-area-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,8 +38,8 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   [area-id area-props]
-  [:button.x-file-drop-area--body (file-drop-area.helpers/area-body-attributes area-id area-props)
-                                  [:i.x-file-drop-area--icon {:data-icon-family :material-icons-filled} :cloud_upload]
+  [:button.e-file-drop-area--body (file-drop-area.helpers/area-body-attributes area-id area-props)
+                                  [:i.e-file-drop-area--icon {:data-icon-family :material-icons-filled} :cloud_upload]
                                   [file-drop-area-label area-id area-props]])
 
 (defn- file-drop-area
@@ -48,7 +48,7 @@
   ; @param (keyword) area-id
   ; @param (map) area-props
   [area-id area-props]
-  [:div.x-file-drop-area (file-drop-area.helpers/area-attributes area-id area-props)
+  [:div.e-file-drop-area (file-drop-area.helpers/area-attributes area-id area-props)
                          [file-drop-area-body                    area-id area-props]])
 
 (defn element

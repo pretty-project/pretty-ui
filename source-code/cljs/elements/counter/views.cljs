@@ -32,7 +32,7 @@
   ; @param (map) counter-props
   ;  {:resetable? (boolean)(opt)}
   [counter-id {:keys [resetable?] :as counter-props}]
-  (if resetable? [:button.x-counter--reset-button (counter.helpers/reset-button-attributes counter-id counter-props)]))
+  (if resetable? [:button.e-counter--reset-button (counter.helpers/reset-button-attributes counter-id counter-props)]))
 
 (defn- counter-increase-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -41,7 +41,7 @@
   ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}
   [counter-id counter-props]
-  [:button.x-counter--increase-button (counter.helpers/increase-button-attributes counter-id counter-props)])
+  [:button.e-counter--increase-button (counter.helpers/increase-button-attributes counter-id counter-props)])
 
 (defn- counter-decrease-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,7 +50,7 @@
   ; @param (map) counter-props
   ;  {:disabled? (boolean)(opt)}r/
   [counter-id counter-props]
-  [:button.x-counter--decrease-button (counter.helpers/decrease-button-attributes counter-id counter-props)])
+  [:button.e-counter--decrease-button (counter.helpers/decrease-button-attributes counter-id counter-props)])
 
 (defn- counter-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,7 +60,7 @@
   ;  {:value-path (vector)}
   [_ {:keys [value-path]}]
   (let [value @(r/subscribe [:db/get-item value-path])]
-       [:div.x-counter--value value]))
+       [:div.e-counter--value value]))
 
 (defn- counter-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -68,7 +68,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  [:div.x-counter--body (counter.helpers/counter-body-attributes counter-id counter-props)
+  [:div.e-counter--body (counter.helpers/counter-body-attributes counter-id counter-props)
                         [counter-decrease-button                 counter-id counter-props]
                         [counter-value                           counter-id counter-props]
                         [counter-increase-button                 counter-id counter-props]
@@ -92,7 +92,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  [:div.x-counter (counter.helpers/counter-attributes counter-id counter-props)
+  [:div.e-counter (counter.helpers/counter-attributes counter-id counter-props)
                   [counter-label                      counter-id counter-props]
                   [counter-body                       counter-id counter-props]])
 

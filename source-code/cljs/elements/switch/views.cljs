@@ -35,7 +35,7 @@
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.x-switch--option-helper (x.components/content option-helper)])))
+                           [:div.e-switch--option-helper (x.components/content option-helper)])))
 
 (defn- switch-option-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.x-switch--option-label (x.components/content option-label)]))
+       [:div.e-switch--option-label (x.components/content option-label)]))
 
 (defn- switch-option-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,7 +55,7 @@
   ; @param (map) switch-props
   ; @param (*) option
   [switch-id switch-props option]
-  [:div.x-switch--option-content [switch-option-label  switch-id switch-props option]
+  [:div.e-switch--option-content [switch-option-label  switch-id switch-props option]
                                  [switch-option-helper switch-id switch-props option]])
 
 (defn- switch-option
@@ -65,8 +65,8 @@
   ; @param (map) switch-props
   ; @param (*) option
   [switch-id switch-props option]
-  [:button.x-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                            [:div.x-switch--option-track]
+  [:button.e-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
+                            [:div.e-switch--option-track]
                             [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options
@@ -85,7 +85,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  [:div.x-switch--body (switch.helpers/switch-body-attributes switch-id switch-props)
+  [:div.e-switch--body (switch.helpers/switch-body-attributes switch-id switch-props)
                        [switch-options                        switch-id switch-props]])
 
 (defn- switch-label
@@ -106,7 +106,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  [:div.x-switch (switch.helpers/switch-attributes switch-id switch-props)
+  [:div.e-switch (switch.helpers/switch-attributes switch-id switch-props)
                  [switch-label                     switch-id switch-props]
                  [switch-body                      switch-id switch-props]])
 
@@ -130,7 +130,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xs, :s
+  ;    :xs, :s, :inherit
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)

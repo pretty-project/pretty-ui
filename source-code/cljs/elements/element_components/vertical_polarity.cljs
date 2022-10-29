@@ -45,8 +45,8 @@
   ; @param (map) polarity-props
   ;  {:start-content (metamorphic-content)}
   [_ {:keys [start-content]}]
-  (if start-content [:div.x-vertical-polarity--start-content [x.components/content start-content]]
-                    [:div.x-vertical-polarity--placeholder]))
+  (if start-content [:div.e-vertical-polarity--start-content [x.components/content start-content]]
+                    [:div.e-vertical-polarity--placeholder]))
 
 (defn- middle-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,8 +55,8 @@
   ; @param (map) polarity-props
   ;  {:middle-content (metamorphic-content)}
   [_ {:keys [middle-content]}]
-  (if middle-content [:div.x-vertical-polarity--middle-content [x.components/content middle-content]]
-                     [:div.x-vertical-polarity--placeholder]))
+  (if middle-content [:div.e-vertical-polarity--middle-content [x.components/content middle-content]]
+                     [:div.e-vertical-polarity--placeholder]))
 
 (defn- end-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -65,8 +65,8 @@
   ; @param (map) polarity-props
   ;  {:end-content (metamorphic-content)}
   [_ {:keys [end-content orientation]}]
-  (if end-content [:div.x-vertical-polarity--end-content [x.components/content end-content]]
-                  [:div.x-vertical-polarity--placeholder]))
+  (if end-content [:div.e-vertical-polarity--end-content [x.components/content end-content]]
+                  [:div.e-vertical-polarity--placeholder]))
 
 (defn- vertical-polarity
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,7 +74,7 @@
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   [polarity-id polarity-props]
-  [:div.x-vertical-polarity (engine/element-attributes polarity-id polarity-props)
+  [:div.e-vertical-polarity (engine/element-attributes polarity-id polarity-props)
                             [start-content             polarity-id polarity-props]
                             [middle-content            polarity-id polarity-props]
                             [end-content               polarity-id polarity-props]])

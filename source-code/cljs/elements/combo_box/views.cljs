@@ -36,7 +36,7 @@
   ;  {:option-label-f (function)}
   ; @param (map) option
   [_ {:keys [option-label-f]} option]
-  [:div.x-combo-box--option-label (-> option option-label-f x.components/content)])
+  [:div.e-combo-box--option-label (-> option option-label-f x.components/content)])
 
 (defn- combo-box-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,7 +51,7 @@
   ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
   ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
   ;  React-fából történő lecsatolását okozná.
-  [:button.x-combo-box--option {:on-mouse-down #(do (.preventDefault %))
+  [:button.e-combo-box--option {:on-mouse-down #(do (.preventDefault %))
                                 :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
                                ;:data-selected ...
                                 :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
@@ -95,7 +95,7 @@
   ; útvonalra, amikor ténylegesen ki lett választva az adott opció.
   (let [field-content (text-field.helpers/get-field-content box-id)]
        (if-not (-> field-content str empty?)
-               [:div.x-combo-box--field-content-option field-content])))
+               [:div.e-combo-box--field-content-option field-content])))
 
 (defn- combo-box-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,7 +107,7 @@
        (letfn [(f [option-list option-dex option]
                   ;^{:key (random/generate-react-key)}
                   (conj option-list [combo-box-option box-id box-props option-dex option]))]
-              [:div.x-combo-box--options {:data-hide-scrollbar true}
+              [:div.e-combo-box--options {:data-hide-scrollbar true}
                                          [combo-box-field-content-option box-id box-props]
                                          (reduce-indexed f [:<>] options)])))
 
@@ -118,7 +118,7 @@
   ; @param (map) box-props
   ;  {:no-options-label (metamorphic-content)}
   [box-id {:keys [no-options-label]}]
-  [:div.x-combo-box--no-options-label ; BUG#2105
+  [:div.e-combo-box--no-options-label ; BUG#2105
                                       {:on-mouse-down #(.preventDefault %)
                                        :on-mouse-up   #(r/dispatch [:elements.text-field/hide-surface! box-id])}
                                       (x.components/content no-options-label)])
@@ -129,7 +129,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  [:div.x-combo-box--surface [combo-box-options box-id box-props]])
+  [:div.e-combo-box--surface [combo-box-options box-id box-props]])
                              ; Szükségtelen megjeleníteni a no-options-label feliratot.
                              ; HACK#1450
                              ; [combo-box-no-options-label box-id box-props]

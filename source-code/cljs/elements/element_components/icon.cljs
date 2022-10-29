@@ -48,15 +48,15 @@
   ;  {:icon (keyword)
   ;   :icon-family (keyword)}
   [icon-id {:keys [icon icon-family style] :as icon-props}]
-  [:div.x-icon (engine/element-attributes icon-id icon-props)
-               [:i.x-icon--body {:data-icon-family icon-family :style style} icon]])
+  [:div.e-icon (engine/element-attributes icon-id icon-props)
+               [:i.e-icon--body {:data-icon-family icon-family :style style} icon]])
 
 (defn element
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :icon (keyword)
   ;   :icon-family (keyword)(opt)

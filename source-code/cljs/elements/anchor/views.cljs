@@ -30,7 +30,7 @@
   ; @param (map) anchor-props
   ;  {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
-  [:a.x-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
+  [:a.e-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
                      [x.components/content content]])
 
 (defn- anchor
@@ -43,7 +43,7 @@
   ; hogy a disabled állapotot megfelelően lehessen alkalmazni.
   ; Az elemet disabled állapotában eltakaró overlay az elem kattintható komponensének
   ; vagy a kattintható komponens valamely ősének szomszédos eleme kell legyen.
-  [:div.x-anchor (anchor.helpers/anchor-attributes anchor-id anchor-props)
+  [:div.e-anchor (anchor.helpers/anchor-attributes anchor-id anchor-props)
                  [anchor-body                      anchor-id anchor-props]])
 
 (defn element
@@ -62,7 +62,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;    Default: :s
   ;   :href (string)(opt)
   ;   :indent (map)(opt)

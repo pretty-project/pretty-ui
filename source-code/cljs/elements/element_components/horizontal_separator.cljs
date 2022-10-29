@@ -55,4 +55,4 @@
 
   ([separator-id separator-props]
    (let [separator-props (separator-props-prototype separator-props)]
-        [:div.x-horizontal-separator (engine/element-attributes separator-id separator-props)])))
+        [:div.e-horizontal-separator (engine/element-attributes separator-id separator-props)])))

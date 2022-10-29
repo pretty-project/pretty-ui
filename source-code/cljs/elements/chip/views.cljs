@@ -32,7 +32,7 @@
   ;  {:icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)}
   [_ {:keys [icon icon-family]}]
-  (if icon [:i.x-chip--icon {:data-icon-family icon-family} icon]))
+  (if icon [:i.e-chip--icon {:data-icon-family icon-family} icon]))
 
 (defn- chip-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -41,7 +41,7 @@
   ; @param (map) chip-props
   ;  {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  [:div.x-chip--label (x.components/content label)])
+  [:div.e-chip--label (x.components/content label)])
 
 (defn- chip-primary-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,10 +51,10 @@
   ;  {:primary-button-event (metamorphic-event)(opt)
   ;   :primary-button-icon (keyword)}
   [chip-id {:keys [primary-button-event primary-button-icon] :as chip-props}]
-  (if primary-button-event [:button.x-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
-                                                           [:i.x-chip--primary-button-icon {:data-icon-family :material-icons-filled}
+  (if primary-button-event [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
+                                                           [:i.e-chip--primary-button-icon {:data-icon-family :material-icons-filled}
                                                                                            (param primary-button-icon)]]
-                           [:div.x-chip--primary-button--placeholder]))
+                           [:div.e-chip--primary-button--placeholder]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,7 +62,7 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   [chip-id chip-props]
-  [:div.x-chip--body (chip.helpers/chip-body-attributes chip-id chip-props)
+  [:div.e-chip--body (chip.helpers/chip-body-attributes chip-id chip-props)
                      [chip-icon                         chip-id chip-props]
                      [chip-label                        chip-id chip-props]
                      [chip-primary-button               chip-id chip-props]])
@@ -73,7 +73,7 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   [chip-id chip-props]
-  [:div.x-chip (chip.helpers/chip-attributes chip-id chip-props)
+  [:div.e-chip (chip.helpers/chip-attributes chip-id chip-props)
                [chip-body                    chip-id chip-props]])
 
 (defn element
@@ -83,7 +83,7 @@
   ;    :highlight, :muted, :primary, :secondary, :success, :warning
   ;    Default: :primary
   ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :class (keyword or keywords in vector)(opt)
   ;   :disabled? (boolean)(opt)

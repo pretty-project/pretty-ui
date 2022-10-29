@@ -34,9 +34,9 @@
   (if (vector/nonempty? colors)
       (letfn [(f [color-stamp color]
                  (let [stamp-color-attributes (color-stamp.helpers/stamp-color-attributes stamp-id stamp-props color)]
-                      (conj color-stamp [:div.x-color-stamp--color stamp-color-attributes])))]
+                      (conj color-stamp [:div.e-color-stamp--color stamp-color-attributes])))]
              (reduce f [:<>] colors))
-      [:div.x-color-stamp--placeholder]))
+      [:div.e-color-stamp--placeholder]))
 
 (defn color-stamp-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
   [stamp-id stamp-props]
-  [:div.x-color-stamp--body (color-stamp.helpers/stamp-body-attributes stamp-id stamp-props)
+  [:div.e-color-stamp--body (color-stamp.helpers/stamp-body-attributes stamp-id stamp-props)
                             [color-stamp-colors                        stamp-id stamp-props]])
 
 (defn- color-stamp-label
@@ -64,7 +64,7 @@
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
   [stamp-id stamp-props]
-  [:div.x-color-stamp (color-stamp.helpers/stamp-attributes stamp-id stamp-props)
+  [:div.e-color-stamp (color-stamp.helpers/stamp-attributes stamp-id stamp-props)
                       [color-stamp-label                    stamp-id stamp-props]
                       [color-stamp-body                     stamp-id stamp-props]])
 

@@ -29,7 +29,7 @@
   ; @param (map) marker-props
   ; @param (keyword or string) color
   [marker-id marker-props color]
-  [:div.x-color-marker--color (color-marker.helpers/marker-color-attributes marker-id marker-props color)])
+  [:div.e-color-marker--color (color-marker.helpers/marker-color-attributes marker-id marker-props color)])
 
 (defn- color-marker-colors
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -47,7 +47,7 @@
   ; @param (keyword) marker-id
   ; @param (map) marker-props
   [marker-id marker-props]
-  [:div.x-color-marker--body (color-marker.helpers/marker-body-attributes marker-id marker-props)
+  [:div.e-color-marker--body (color-marker.helpers/marker-body-attributes marker-id marker-props)
                              [color-marker-colors                         marker-id marker-props]])
 
 (defn- color-marker
@@ -57,7 +57,7 @@
   ; @param (map) marker-props
   ;  {}
   [marker-id {:keys [colors] :as marker-props}]
-  [:div.x-color-marker (color-marker.helpers/marker-attributes marker-id marker-props)
+  [:div.e-color-marker (color-marker.helpers/marker-attributes marker-id marker-props)
                        [color-marker-body                      marker-id marker-props]])
 
 (defn element
