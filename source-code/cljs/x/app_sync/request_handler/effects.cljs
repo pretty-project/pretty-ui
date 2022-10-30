@@ -66,6 +66,7 @@
   ;    Az esemény utolsó paraméterként megkapja a szerver-válasz értékét.
   ;   :params (map)(opt)
   ;    W/ {:method :post}
+  ;   :refresh-interval (ms)(opt)
   ;   :response-f (function)(opt)
   ;   :timeout (ms)(opt)
   ;    Default: request-handler.config/DEFAULT-REQUEST-TIMEOUT
@@ -154,7 +155,9 @@
   ;
   ; @param (keyword) request-id
   ; @param (map) request-props
+  ;  {:refresh-interval (ms)(opt)}
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ request-id request-props server-response]]
+  (fn [{:keys [db]} [_ request-id {:keys [refresh-interval] :as request-props} server-response]]
       {:db       (r request-handler.events/request-stalled            db request-id request-props)
-       :dispatch (r request-handler.subs/get-request-on-stalled-event db request-id request-props server-response)}))
+       :dispatch (r request-handler.subs/get-request-on-stalled-event db request-id request-props server-response)
+       :dispatch-later [(if refresh-interval {:ms refresh-interval :dispatch [:sync/send-request! request-id request-props]})]}))

@@ -43,7 +43,7 @@
 
 
 
-;; -- Keywordize / unkeywordize / ... key -------------------------------------
+;; -- Keywordize / unkeywordize key -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn unkeywordize-key
@@ -114,7 +114,7 @@
 
 
 
-;; -- Keywordize / unkeywordize / ... value -----------------------------------
+;; -- Keywordize / unkeywordize value -----------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn unkeywordized-value?
@@ -162,7 +162,7 @@
 
 
 
-;; -- Trim ... value ----------------------------------------------------------
+;; -- Trim value --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn trim-value
@@ -181,24 +181,24 @@
 
 
 
-;; -- Parseint ... value ------------------------------------------------------
+;; -- Parse number value ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn parseint-value
+(defn parse-number-value
   ; @param (*) n
   ;
   ; @example
-  ;  (parseint-value "420")
+  ;  (parse-number-value "89.420")
   ;  =>
-  ;  420
+  ;  89.420
   ;
   ; @return (*)
   [n]
-  (mixed/parse-whole-number n))
+  (mixed/parse-number n))
 
 
 
-;; -- Keywordize / unkeywordize / ... keys ------------------------------------
+;; -- Keywordize / unkeywordize keys ------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn unkeywordize-keys
@@ -275,7 +275,7 @@
 
 
 
-;; -- Keywordize / unkeywordize / ... values ----------------------------------
+;; -- Keywordize / unkeywordize values ----------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn unkeywordize-values
@@ -320,7 +320,7 @@
 
 
 
-;; -- Trim ... values ---------------------------------------------------------
+;; -- Trim values -------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn trim-values
@@ -339,26 +339,26 @@
 
 
 
-;; -- Parseint ... values -----------------------------------------------------
+;; -- Parse number values -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn parseint-values
+(defn parse-number-values
   ; @param (*) n
   ;
   ; @example
-  ;  (parseint-values {:a "0" :c ["1"] :f {:g "2"}})
+  ;  (parse-number-values {:a "0" :c ["1"] :f {:g "2"}})
   ;  =>
   ;  {:a 0 :c [1] :f {:g 2}}
   ;
   ; @return (*)
   [n]
-  (cond (map?    n) (map/->>values  n parseint-values)
-        (vector? n) (vector/->items n parseint-values)
-        :return     (parseint-value n)))
+  (cond (map?    n) (map/->>values      n parse-number-values)
+        (vector? n) (vector/->items     n parse-number-values)
+        :return     (parse-number-value n)))
 
 
 
-;; -- Remove blank ... values -------------------------------------------------
+;; -- Remove blank values -----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn remove-blank-values

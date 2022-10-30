@@ -14,12 +14,6 @@
 
 
 
-# base-props
-  A content komponensnek {:content ...} tulajdonságként átadott komponens számára utolsó paraméterként
-  átadott térkép alapja (az XXX#0001 logika szerint).
-
-
-
 # prefix, suffix
   Ha a content komponensnek {:content ...} tulajdonságként az app-dictionary szótár egy kifejezésre
   utaló kulcszó vagy szöveg kerül átadásra, akkor a {:prefix ...} vagy {:suffix ...} tulajdonságként
@@ -32,8 +26,3 @@
   A content komponensnek {:replacements [...]} tulajdonságként vektorban átadott string típusok,
   a {:content ...} tulajdonságként átadott tartalom jelőlői ("%", "%1", "%2", ...) helyett
   kerülnek behelyettesítésre.
-
-
-
-# subscriber
-  A feliratkozás visszatérési értékének típusú térkép kell legyen!

@@ -12,6 +12,7 @@
 
 #x-app-ui-structure {
   display: flex;
+  /* BUG#0009 (x.app-ui.renderer.views) */
   flex-direction: row-reverse }
 
 /***** UI structure *****/

@@ -43,10 +43,6 @@
 
 - Read this bible: https://developer.mozilla.org/en-US/docs/Web/Performance
 
-- Mivel megszünt a monosetben a project-emulátor és a fejlesztése külsö projectben
-  futtatva történik ezért biztos egy csomo minden többé nem fog a monoset-be kelleni
-  pl deps.edn kell ezentúl, és hasonlok...
-
 - OPTIMISATION:
   Felesleges Re-Frame írások:
   -
@@ -70,8 +66,6 @@
 
 - LICENSE fájlt átolvasni!! Milyen licenc van a monoset-ben????
 
-- css/x/app-layouts.css fájl sorsa
-
 - Az item-listerekben a kereso mezo jobb lenne ha disabled true allapotban lenne
   amig a tobbi elem is abban van, de akkor elvesziti a fokuszt, ha esetleg fokuszalt
   allapotban volt a request elkuldesekor (pl kereses)
@@ -83,8 +77,6 @@
 - Amikor keresel pl item-listerben, akkor kereséskor az útvonalba is bele kell irni
   a keresőszot pl.: "/app/clients/search=xyz"
   Mindenhol igy csinálják és ha ráfrissitesz akkor megmarad a keresőszo
-
-- item-editor/header DEPRECATED
 
 - Az item-lister reset-downloads! függvény {:data-received? false} állapotba lépteti
   a plugin ami miatt a header eltünik az elemek letöltése utánig kereséskor is,
@@ -124,15 +116,12 @@
   Ha sikerült különválasztani, akkor a file-uploaderben sem lesz szükség rá, hogy az item-browser/list-item
   komponens legyen a listaelem, mivel semmi köze az item-browser-hez a fájlfeltöltének!
 
-
 - A css class és data-attribute selector-ok elerési ideje köbö egyforma.
   Egyes elemeken pl. buttonokon rengeteg data-attribute van, amit ugy lehet gyorsitani, hogy
   a css fájlba lennének preset-ek! [:div.x-button {:data-preset :my-preset}]
   Így a border-radius, hover-color, color, stb nem 5-6-7 data-attribute használatával
   volna meghatározva, hanem volna 20-30 preset azt csá.
   Ezt majd akkor amikor több fájlra lesz darabolva az .x-app-elements.css
-
-
 
 - Mi lenne ha az X (ui) névterek nem tartalmaznának design-t?
   A popup csak egy fekete layer lenne. A notification csak egy pozicio lenne ...
@@ -146,10 +135,6 @@
 - Fájlfeltöltéskor a line-diagram fél másodpercenként új id-t kap.
   Egyáltalán kell az elemeknek, hogy dom id-ként megkapják az id-t?
   Soha sehol nem volt még megtargetelve!
-
-- A field input mezők teljesítményét nagymértékben javítaná, ha a mező aktuális értéke,
-  nem írás közben íróda a Re-Frame adatbázisba, hanem az :on-blur esemény megtörténésekor
-  (az :on-type-ended eseménynek is kell írnia!)
 
 - request-inspector időrendben a legfirssebb request legyne mindig felül
 
@@ -184,13 +169,6 @@
 
 - sok a :refer [param return] require ahol nem kell a (param ...)  
 
-- Monoset struktura
-  - Monoset a különbözö külső könyvtárak kapjanak saját mappát
-    react.api, reagent.api, re-frame.api, sortable.api, full-calendar.api,
-  - Az app-core event-handler a re-frame.api-t használja
-  - A plugin-ok visszamehetnek az x-be x.app-plugins. ...
-    (az item-sorter is maradhat plugin, csak használja a sortable.api-t)
-
 - Az item-editor duplikálás -> majd másolat szerkesztése átirányit az uj route-ra de nem
   történik ujratöltés
 
@@ -209,8 +187,6 @@
 
 - az elementek min-width tulajdonságara lehet hogy nincs többé szükség, ha a form-ok
   wrapper-jei határozzák meg az inputok szélességét,
-
-- a pluginok :item-actions tulajdonsága hol a header-ön van hol a body-n egységesíteni kell
 
 - pluginok error-mode-ját teszteni kell
 
@@ -241,23 +217,9 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - project-details.edn fájl ne tartalmazzon kommenteket, az legyen egy külön fájlban és akkor
   lehet függvénnyel írni a fájlba az app-build értékét automtikusan (vagy legyen máshova írva az app-build?)
 
-- user-ek jelszavait hash-elve tárolni
-
-- user-ek mongo-db-be
-  az isntaller csináljon egy demo(pw: mono) és egy developer(pw: mono) user-t
-  a developer usernek legyen egy "developer" role-ja. A developer role inditsa el a developer-modot
-  legyen eltárolva a developer user-nek, a mongo-ban, hogy print-events? ...
-
 - A mongo-db kezelje a permission-öket, a local-db ne kezelje a permission-öket
 
 - {:content :content-props :subscriber} formula kivezetése ...
-
-- mid-fruits.string/max-lines függvényt megírni, hogy a log ne töltse meg a tárhelyet!
-
-- pathom/reg-prototype használatával az extension-ök handler függvényeit egységesíteni lehetne
-  item-editor/handlers és item-lister/handlers függvényekként
-
-- Loading animations: DEPRECATED
 
 - (def a [0 1 2 3 4 5])
   (println (str (apply > a)))
@@ -277,13 +239,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - request->added-prop, modified-prop, ... törölhető
 
-- icon-button külön element lehet ujra, már csak a bubble-ok fogadnak button-props térképeket, amihez
-  szükséges a közös elem.
-
-- db/id-handler mehet mid-fruits/eql-be
-
-- A go-back-surface-label-bar és go-back-popup-label-bar nem jo, hogy browser-back-et használ!
-
 - Text-field nem reagál az ESC billentyűra, amikor emptiable? true (a combo-box reagál)
 
 - Text-field szélessége megváltozik az emptiable? true adornment (és más adornment) ki-bekapcsolásakor
@@ -299,17 +254,10 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - Pathom handler-ekbe user-auth-ot vizsgálni
 
-- Legyen e layout fit a default mindenhol?
-
 - Fájlkezelőben lecsekkolni, h ne lehessen egy mappát saját magába move-olni vagy (?másolni?, ez télleg cenk?)
 
 - Ha az elemeknél különválasztásra kerül a :color tulajdonság, :color, :background-color, :border-color
   tulajdonságokra akkor megvalosítható az, hogy pl.: a label elemnek :color tulajdonságként string kerül átadásra, akkor az inline-style-ként hozzáadja, hogy {:color "..."}
-
-- A görgetéskor tapasztalhato laggolo kontent kirajzolás probléma valsz teljesítmény probléma ami
-  adodhat több dolog összeadodásábol, pl.: scroll-handler a re-frame db-be ir, a kártyákon box-shadow
-  van ami a legcinkesebb performance szempontbol, lehet hogy még sok helyen van opacity használva,
-  ami performance szempontbol cinkes, és
 
 - A normalize.css -ből kikerül a html { scroll-behavior: smooth} mert azt hittem, hogy az
   csak arra való, hogy a scrollto és scrollby fgv-ek viselkedését meghatározza, ezért
@@ -359,6 +307,8 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 
 - load timeout errort is teszelni kell!
 
+- A load-timeout error felülirja a hibaképernyőt!
+
 - Text-field label
   - https://css-tricks.com/html-inputs-and-labels-a-love-story/
   - Ne legyen a label-ben interaktív elem, csak text!
@@ -378,8 +328,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
   https://policies.google.com/technologies/cookies?hl=hu
   Localstorage vs süti / gdpr (a sütik elmennek a szerora a request-el)
 
-- A button elemnek legyen hover állapota, hogy egyértelmű legyen UX szempontbol
-
 - Megvizsgálni, hogy szükséges-e minden esetben, hogy a response-handler
   read-string-elje a szerver válaszát. Paul szerint talán a :transit-params megoldja,
   hogy clojure adatszerkezeket lehessen küldeni a kliensre
@@ -392,7 +340,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
   a bejelentkezett (applikácót használó) felhasználók a beállítások felület
   egyik tab-ja ként használhatnak, míg a vendég felhasználók (weboldalt látogató)
   a footer-en elhelyezett hivatkozásról érhetnek el.
-- Nem megy a tab-background backdrop-filter iOS-on
 - Nem megy a viewport tetejére a szkroll-csík iOS-on relative tabon
 
 # x4.7.0
@@ -419,8 +366,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
   elnevezéseket rendezni!  
 
 # x4.9.0
-- A pdf generator és más service-ek teleszemetelik a /tmp mappát,
-  cron-ba be kell állítani, hogy törlödjön egy bizonyos idő után!
 - Access webapp when offline:
   https://en.wikipedia.org/wiki/Cache_manifest_in_HTML5  
 
@@ -428,10 +373,6 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - Ha az applikáció full-screen modban van vagy headless browser-ben akkor
   a felhasználó nem feltétlenül tud frissíteni, ezért szükséges lehet,
   az app-menu-be egy "Restart app" gomb ami reboot-olja az applikációt.
-- A tabok sorrendjenek megvaltozasakor, az x.app-components/image-preloader
-  komponenst tartalmazo tab ujrarenderelesevel, hogyan viselkedik
-  az image-preloader?
-  (Az app-components.stated felismeri ha éppen remount-ol!)
 - Ha egy üzenet érkezik, vagy esetleg valamilyen fontos event történt, akkor
   a favicon-on jelenjen meg egy piros pont, és 1000ms-enként váltogassa a
   browser-tab title-t!
@@ -440,11 +381,9 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - css :in-range selector
 
 # x5.0.1
-- Event-id eltávolítása az event-vector-ból trim interceptor használatával
-- A reg-event-fx eseménykezelő a cofx map helyett a db map-ot használja kontextusként!
 - Minden regisztrált felhasználó meghivat új felhasználókat, de az általa
   meghivottak csak annyi jogosultságot kapnak, mint a meghivó személy, igy
-  lényegében semmilyen kockázatot nem jelent az, hogy bárki behivhat uj embereket
+  lényegében semmilyen kockázatot nem jelent(?) az, hogy bárki behivhat uj embereket
   a céghez ahol dolgozik.
 - on-click helyett használj on-mouse-down-t, ha request-et inditasz, mert
   ca. 80 ms-el hamarabb megtörténik

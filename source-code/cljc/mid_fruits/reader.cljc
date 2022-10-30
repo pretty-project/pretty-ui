@@ -15,7 +15,7 @@
 (ns mid-fruits.reader
     (:require #?(:cljs [cljs.reader :as reader])
               #?(:clj  [clojure.edn :as edn])
-              [mid-fruits.candy  :refer [param return]]
+              [mid-fruits.candy  :refer [return]]
               [mid-fruits.string :as string]))
 
 
@@ -64,17 +64,14 @@
   ;  =>
   ;  [:foo]
   ;
-  ; @return (nil, keyword, map, string or vector)
+  ; @return (nil, keyword, map, number, string or vector)
   [n]
   (if (string/nonempty? n)
       (let [x (read-str n)]
-           (if (or (keyword? x)
-                   (map?     x)
-                   (vector?  x))
+           (if (some #(% x) [keyword? map? vector? number?])
                (return x)
                ; Előfordulhat, hogy a read-str függvény egy Error objektummal tér vissza
-               (return n)))
-      (return nil)))
+               (return n)))))
 
 (defn string->map
   ; @param (string) n

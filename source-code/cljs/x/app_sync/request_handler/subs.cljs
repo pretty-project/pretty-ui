@@ -239,6 +239,10 @@
 (r/reg-sub :sync/request-failured? request-failured?)
 
 ; @usage
+;  [:sync/request-stalled? :my-request]
+(r/reg-sub :sync/request-stalled? request-stalled?)
+
+; @usage
 ;  [:sync/request-aborted? :my-request]
 (r/reg-sub :sync/request-aborted? request-aborted?)
 

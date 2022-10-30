@@ -23,35 +23,57 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- querier-placeholder
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) querier-id
+  ; @param (map) querier-props
+  ;  {:placeholder (metamorphic-content)(opt)}
+  [querier-id {:keys [placeholder]}]
+  (if placeholder [content.views/component querier-id {:content placeholder}]))
+
 (defn- querier-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) querier-id
   ; @param (map) querier-props
-  ;  {:component (component)(opt)
-  ;   :render-f (function)(opt)}
-  [querier-id {:keys [component render-f]}]
-  (if-let [server-response @(r/subscribe [:pathom/get-query-response querier-id])]
-          (cond render-f  [render-f       server-response]
-                component (conj component server-response))))
+  ;  {:content (metamorphic-content)(opt)}
+  [querier-id {:keys [content]}]
+  (if content (let [server-response @(r/subscribe [:pathom/get-query-response querier-id])]
+                   [content.views/component querier-id {:content content
+                                                        :params  [server-response]}])))
+
+(defn- querier-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) querier-id
+  ; @param (map) querier-props
+  [querier-id querier-props]
+  (if (or @(r/subscribe [:sync/request-stalled? querier-id])
+          @(r/subscribe [:sync/request-resent?  querier-id]))
+      [querier-content     querier-id querier-props]
+      [querier-placeholder querier-id querier-props]))
 
 (defn- querier
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) querier-id
   ; @param (map) querier-props
-  ;  {:query (vector)}
-  [querier-id {:keys [query] :as querier-props}]
-  (reagent/lifecycles {:component-did-mount    (fn [] (r/dispatch [:pathom/send-query!           querier-id {:query query}]))
-                       :component-will-unmount (fn [] (r/dispatch [:pathom/clear-query-response! querier-id]))
-                       :reagent-render         (fn [] [querier-content querier-id querier-props])}))
+  ;  {:query (vector)
+  ;   :refresh-interval (ms)(opt)}
+  [querier-id {:keys [query refresh-interval] :as querier-props}]
+  (let [query-props {:query query :refresh-interval refresh-interval}]
+       (reagent/lifecycles {:component-did-mount    (fn [] (r/dispatch [:pathom/send-query!           querier-id query-props]))
+                            :component-will-unmount (fn [] (r/dispatch [:pathom/clear-query-response! querier-id]))
+                            :reagent-render         (fn [] [querier-body querier-id querier-props])})))
 
 (defn component
   ; @param (keyword)(opt) querier-id
   ; @param (map) querier-props
-  ;  {:component (component)(opt)
+  ;  {:content (metamorphic-content)(opt)
+  ;   :placeholder (metamorphic-content)(opt)
   ;   :query (vector)
-  ;   :render-f (function)(opt)}
+  ;   :refresh-interval (ms)(opt)}
   ;
   ; @usage
   ;  [querier {...}]
@@ -60,14 +82,17 @@
   ;  [querier :my-querier {...}]
   ;
   ; @usage
-  ;  (defn my-component [server-response] ...)
-  ;  [querier :my-querier {:component [my-component]
-  ;                        :query     [:my-query]}]
+  ;  [querier :my-querier {:query [:my-query]}]
   ;
   ; @usage
-  ;  (defn my-component [server-response] ...)
-  ;  [querier :my-querier {:query    [:my-query]
-  ;                        :render-f #'my-component}]
+  ;  (defn my-component [querier-id server-response] ...)
+  ;  [querier :my-querier {:content [my-component]
+  ;                        :query   [:my-query]}]
+  ;
+  ; @usage
+  ;  (defn my-component [querier-id server-response] ...)
+  ;  [querier :my-querier {:content  #'my-component
+  ;                        :query    [:my-query]}]
   ([querier-props]
    [component (random/generate-keyword) querier-props])
 

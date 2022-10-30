@@ -25,10 +25,10 @@
 
 (ns x.app-components.api
     (:require [x.app-components.content.views :as content.views]
+              [x.app-components.delayer.views :as delayer.views]
               [x.app-components.querier.views :as querier.views]
               [x.app-components.stated        :as stated]
               [x.app-components.subscriber    :as subscriber]
-              [x.app-components.transmitter   :as transmitter]
               [x.app-components.value         :as value]))
 
 
@@ -39,6 +39,9 @@
 ; x.app-components.content.views
 (def content content.views/component)
 
+; x.app-components.delayer.views
+(def delayer delayer.views/component)
+
 ; x.app-components.querier
 (def querier querier.views/component)
 
@@ -47,9 +50,6 @@
 
 ; x.app-components.subscriber
 (def subscriber subscriber/component)
-
-; x.app-components.transmitter
-(def transmitter transmitter/component)
 
 ; x.app-components.value
 (def get-metamorphic-value value/get-metamorphic-value)

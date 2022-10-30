@@ -1144,9 +1144,20 @@
   ; @param (keyword) renderer-id
   ; @param (map) renderer-props
   [renderer-id renderer-props]
+  ; BUG#0009
+  ; Ha egy renderer nem jelenít meg elemeket, akkor a wrapper komponense nincs
+  ; a React-fába csatolva.
+  ; Ennek következtében a {flex-direction: row-reverse} beállítással használt
+  ; [:div#x-app-ui-structure] elemben addig a pillanatig, amíg nem jelenik meg
+  ; az [:div#x-app-surface] elem, addig az [:div#x-app-sidebar] elem a viewport
+  ; jobb oldalán jelenik meg.
+  ; Ennek elkerülése érdekében a wrapper komponensek mindenképpen megjelennek,
+  ; így nem fordulhat elő olyan pillanat az applikáció betöltése közben, hogy
+  ; a sidebar a surface hiánya miatt a jobb oldalon jelenne meg.
   (let [element-order @(r/subscribe [:ui/get-element-order renderer-id])]
        (if (vector/nonempty? element-order)
-           [elements renderer-id renderer-props])))
+           [elements renderer-id renderer-props]
+           [wrapper  renderer-id renderer-props])))
 
 (defn component
   ; WARNING! NON-PUBLIC! DO NOT USE!

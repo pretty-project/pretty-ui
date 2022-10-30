@@ -13,14 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content.views
-    (:require [mid-fruits.candy             :refer [param return]]
-              [mid-fruits.hiccup            :refer [hiccup?]]
-              [mid-fruits.random            :as random]
-              [mid-fruits.string            :as string]
-              [reagent.api                  :refer [component?]]
-              [re-frame.api                 :as r]
-              [x.app-components.transmitter :rename {component transmitter}]
-              [x.app-dictionary.api         :as x.dictionary]))
+    (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.hiccup :refer [hiccup?]]
+              [mid-fruits.random :as random]
+              [mid-fruits.string :as string]
+              [mid-fruits.vector :as vector]
+              [reagent.api       :refer [component?]]
+              [re-frame.api      :as r]))
 
 
 
@@ -30,8 +29,8 @@
 (defn- string-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
+  ; @param (keyword) content-id
+  ; @param (map) content-props
   ;  {:content (keyword)
   ;   :prefix (string)(opt)
   ;   :replacements (vector)(opt)
@@ -46,95 +45,87 @@
 (defn- number-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
+  ; @param (keyword) content-id
+  ; @param (map) content-props
   ;
   ; @return (string)
-  [component-id context-props]
-  (string-content component-id (update context-props :content str)))
+  [content-id content-props]
+  (string-content content-id (update content-props :content str)))
 
 (defn- dictionary-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
+  ; @param (keyword) content-id
+  ; @param (map) content-props
   ;  {:content (keyword)}
   ;
   ; @return (string)
-  [_ {:keys [content] :as context-props}]
-  (x.dictionary/looked-up content context-props))
-
-(defn- static-render-fn-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:base-props (map)(opt)
-  ;   :content (function)}
-  [component-id {:keys [base-props content]}]
-  [transmitter component-id {:base-props base-props
-                             :render-f   content}])
-
-(defn- subscribed-render-fn-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:base-props (map)(opt)
-  ;   :content (function)
-  ;   :subscriber (subscription-vector)}
-  [component-id {:keys [subscriber] :as context-props}]
-  (let [subscribed-props (r/subscribe subscriber)]
-       (fn [_ {:keys [base-props content]}]
-           [transmitter component-id {:base-props       base-props
-                                      :render-f         content
-                                      :subscribed-props @subscribed-props}])))
+  [content-id {:keys [content] :as content-props}]
+  (let [content @(r/subscribe [:dictionary/look-up content])]
+       (string-content content-id (assoc content-props :content content))))
 
 (defn- render-fn-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:subscriber (subscription-vector)(opt)}
-  [component-id {:keys [subscriber] :as context-props}]
-  (if subscriber [subscribed-render-fn-content component-id context-props]
-                 [static-render-fn-content     component-id context-props]))
+  ; @param (keyword) content-id
+  ; @param (map) content-props
+  ;  {:content (function)
+  ;   :params (vector)(opt)}
+  [content-id {:keys [content params]}]
+  (if params (vector/concat-items [content content-id] params)
+             [content content-id]))
+
+(defn- hiccup-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) content-id
+  ; @param (map) content-props
+  ;  {:content (hiccup)}
+  [content-id {:keys [content]}]
+  (return content))
+
+(defn- component-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) content-id
+  ; @param (map) content-props
+  ;  {:content (component)
+  ;   :params (vector)(opt)}
+  [content-id {:keys [content params]}]
+  (if params (vector/concat-items content params)
+             (return              content)))
 
 (defn- content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) component-id
-  ; @param (map) context-props
-  ;  {:content (component, keyword, integer or string)}
-  [component-id {:keys [content] :as context-props}]
-  (cond (keyword? content) (dictionary-content component-id context-props)
-        (string?  content) (string-content     component-id context-props)
-        (number?  content) (number-content     component-id context-props)
-      ; #' The symbol must resolve to a var, and the Var object itself (not its value) is returned.
-      ;
-      ; (var? #'my-component) => true
-      ; (fn?  #'my-component) => true
-      ; (var?   my-component) => false
-      ; (fn?    my-component) => true
-      ;
-      ; (var?       content) [render-fn-content component-id context-props]
-        (fn?        content) [render-fn-content component-id context-props]
-      ; A cond feltétel-listájának :return ága kielégíti a (component? ...) és (hiccup? ...) feltételeket!
-      ; (component? content) (return      content)
-      ; (hiccup?    content) (return      content)
+  ; @param (keyword) content-id
+  ; @param (map) content-props
+  ;  {:content (component, function, keyword, hiccup, integer or string)}
+  [content-id {:keys [content] :as content-props}]
+  ; #' The symbol must resolve to a var, and the Var object itself (not its value) is returned.
+  ;
+  ; (var? #'my-component) => true
+  ; (fn?  #'my-component) => true
+  ; (var?   my-component) => false
+  ; (fn?    my-component) => true
+  (cond (keyword?   content) (dictionary-content content-id content-props)
+        (string?    content) (string-content     content-id content-props)
+        (number?    content) (number-content     content-id content-props)
+      ; (var?       content) [render-fn-content  content-id content-props]
+        (fn?        content) [render-fn-content  content-id content-props]
+        (component? content) [component-content  content-id content-props]
+        (hiccup?    content) [hiccup-content     content-id content-props]
         :return     content))
 
 (defn component
-  ; @param (keyword)(opt) component-id
-  ; @param (map) component-props
-  ;  {:base-props (map)(opt)
-  ;    W/ {:content (component)}
-  ;   :content (component, function, keyword, hiccup, integer or string)(opt)
+  ; @param (keyword)(opt) content-id
+  ; @param (map) content-props
+  ;  {:content (component, function, keyword, hiccup, integer or string)(opt)
+  ;   :params (vector)(opt)
   ;   :prefix (string)(opt)
+  ;    W/ {:content (keyword or string)}
   ;   :replacements (vector)(opt)
   ;    W/ {:content (keyword or string)}
-  ;   :subscriber (subscription-vector)(opt)
-  ;    A visszatérési értéknek térkép típusnak kell lennie!
   ;   :suffix (string)(opt)
   ;    W/ {:content (keyword or string)}}
   ;
@@ -145,43 +136,42 @@
   ;  [content :my-component {...}]
   ;
   ; @example
-  ;  [content {:content :username}]
+  ;  [content {:content :first-name}]
   ;  =>
-  ;  "Username"
+  ;  "First name"
   ;
   ; @example
   ;  [content {:content "Hakuna Matata"}]
   ;  =>
   ;  "Hakuna Matata"
   ;
-  ; @example
-  ;  (defn my-component [component-id])
-  ;  [content :my-component {:content #'my-component}]
+  ; @usage
+  ;  (defn my-component [content-id])
+  ;  [content :my-content {:content #'my-component}]
   ;
-  ; @example
-  ;  (defn my-component [component-id])
-  ;  [content {:content [my-component :my-component]}]
+  ; @usage
+  ;  (defn my-component [my-color])
+  ;  [content {:content [my-component :green]}]
   ;
-  ; @example
-  ;  (defn my-component-a [component-id])
-  ;  (defn my-component-b [component-id])
-  ;  [content {:content [:<> [my-component-a :my-component]
-  ;                          [my-component-b :your-component]]}]
+  ; @usage
+  ;  (defn my-component   [my-color])
+  ;  (defn your-component [your-color])
+  ;  [content {:content [:<> [my-component   :green]
+  ;                          [your-component :blue]]}]
   ;
-  ; @example
-  ;  (defn my-component [component-id component-props])
-  ;  [content :my-component
-  ;           {:content    #'my-component
-  ;            :subscriber [:get-my-component-props]}]
+  ; @usage
+  ;  (defn my-component [content-id my-color])
+  ;  [content :my-content {:content #'my-component
+  ;                        :params  [:green]}]
   ;
-  ; @example
-  ;  (defn my-component [component-id component-props])
-  ;  [content {:content    [my-component :my-component]
-  ;            :subscriber [:get-my-component-props]}]
-  ([context-props]
-   (component (random/generate-keyword) context-props))
+  ; @usage
+  ;  (defn my-component [content-id my-color])
+  ;  [content {:content [my-component :my-component]
+  ;            :params  [:green]}]
+  ([content-props]
+   (component (random/generate-keyword) content-props))
 
-  ([component-id context-props]
-   (if-not (map? context-props)
-           (content component-id {:content context-props})
-           (content component-id           context-props))))
+  ([content-id content-props]
+   (if (map?    content-props)
+       (content content-id           content-props)
+       (content content-id {:content content-props}))))
