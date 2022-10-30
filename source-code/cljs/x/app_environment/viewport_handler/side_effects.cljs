@@ -15,6 +15,7 @@
 (ns x.app-environment.viewport-handler.side-effects
     (:require [dom.api                                        :as dom]
               [re-frame.api                                   :as r]
+              [window.api                                     :as window]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]
               [x.app-environment.viewport-handler.helpers     :as viewport-handler.helpers]))
 
@@ -32,10 +33,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (r/dispatch [:db/set-item! [:environment :viewport-handler/meta-items]
-                             {:viewport-height      (dom/get-viewport-height)
-                              :viewport-orientation (dom/get-viewport-orientation)
+                             {:viewport-height      (window/get-viewport-height)
+                              :viewport-orientation (window/get-viewport-orientation)
                               :viewport-profile     (viewport-handler.helpers/detect-viewport-profile)
-                              :viewport-width       (dom/get-viewport-width)}]))
+                              :viewport-width       (window/get-viewport-width)}]))
 
 (defn detect-viewport-profile!
   ; WARNING! NON-PUBLIC! DO NOT USE!
