@@ -13,20 +13,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.views
-    (:require [elements.button.views                   :as button.views]
-              [elements.element-components.icon-button :as icon-button]
-              [elements.input.helpers                  :as input.helpers]
-              [elements.label.views                    :as label.views]
-              [elements.select.helpers                 :as select.helpers]
-              [elements.select.prototypes              :as select.prototypes]
-              [elements.text-field.views               :as text-field.views]
-              [layouts.popup-a.api                     :as popup-a]
-              [mid-fruits.candy                        :refer [return]]
-              [mid-fruits.random                       :as random]
-              [mid-fruits.vector                       :as vector]
-              [re-frame.api                            :as r]
-              [reagent.api                             :as reagent]
-              [x.app-components.api                    :as x.components]))
+    (:require [elements.button.views      :as button.views]
+              [elements.icon-button.views :as icon-button.views]
+              [elements.input.helpers     :as input.helpers]
+              [elements.label.views       :as label.views]
+              [elements.select.helpers    :as select.helpers]
+              [elements.select.prototypes :as select.prototypes]
+              [elements.text-field.views  :as text-field.views]
+              [layouts.popup-a.api        :as popup-a]
+              [mid-fruits.candy           :refer [return]]
+              [mid-fruits.random          :as random]
+              [mid-fruits.vector          :as vector]
+              [re-frame.api               :as r]
+              [reagent.api                :as reagent]
+              [x.app-components.api       :as x.components]))
 
 
 
@@ -252,7 +252,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (let [on-click [:elements.select/render-options! select-id select-props]]
-       [icon-button/element select-id (assoc select-props :on-click on-click)]))
+       [icon-button.views/element select-id (assoc select-props :on-click on-click)]))
 
 
 

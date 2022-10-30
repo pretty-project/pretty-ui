@@ -90,7 +90,7 @@
 (r/reg-event-fx :router/go-back!
   ; @usage
   ;  [:router/go-back!]
-  {:fx [:router/navigate-back!]})
+  {:fx [:environment/go-back!]})
 
 (r/reg-event-fx :router/go-home!
   ; @usage

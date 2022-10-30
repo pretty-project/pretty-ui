@@ -16,8 +16,7 @@
     (:require [elements.engine.clickable      :as clickable]
               [elements.engine.element        :as element]
               [elements.engine.element-badge  :as element-badge]
-              [elements.engine.input-group    :as input-group]
-              [elements.engine.stated-element :as stated-element]))
+              [elements.engine.input-group    :as input-group]))
 
 
 
@@ -43,6 +42,3 @@
 (def get-input-group-props input-group/get-input-group-props)
 (def decrease-input-count! input-group/decrease-input-count!)
 (def increase-input-count! input-group/increase-input-count!)
-
-; x.app-elements.engine.stated-element
-(def stated-element stated-element/element)

@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.api
-    (:require [x.app-components.content       :as content]
+    (:require [x.app-components.content.views :as content.views]
               [x.app-components.querier.views :as querier.views]
               [x.app-components.stated        :as stated]
               [x.app-components.subscriber    :as subscriber]
@@ -36,8 +36,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-components.content
-(def content content/component)
+; x.app-components.content.views
+(def content content.views/component)
 
 ; x.app-components.querier
 (def querier querier.views/component)

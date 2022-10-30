@@ -150,8 +150,4 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (field-props-prototype field-id field-props)]
-        [engine/stated-element field-id
-                               {:render-f      #'digit-field
-                                :element-props field-props
-                                :subscriber    [:elements/get-digit-field-props field-id]}])))
+   (let [field-props (field-props-prototype field-id field-props)])))

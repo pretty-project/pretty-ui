@@ -1,15 +1,4 @@
 
-;; -- Header ------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Author: bithandshake
-; Created: 2020.10.23
-; Description:
-; Version: v2.9.8
-; Compatibility: x4.5.6
-
-
-
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -23,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-components.content
+(ns x.app-components.content.views
     (:require [mid-fruits.candy             :refer [param return]]
               [mid-fruits.hiccup            :refer [hiccup?]]
               [mid-fruits.random            :as random]
@@ -35,43 +24,7 @@
 
 
 
-;; -- Names -------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; @name metamorphic-content
-;  A (metamorphic-content) típust a content komponens valósítja meg.
-;  - Értéke lehet szimbólumként átadott komponens:
-;    Pl. #'my-component
-;  - Értéke lehet React komponensként átadott komponens:
-;    Pl. [:<> [my-component] ...]
-;  - Értéke lehet az app-dictionary szótár egy kifejezésére utaló kulcsszó:
-;    Pl. :my-term
-;  - Értéke lehet egy egyszerű string:
-;    Pl. "My content"
-;  - Értéke lehet egy hiccup vektor:
-;    Pl. [:div "My content"]
-;
-; @name base-props
-;  A content komponensnek {:content ...} tulajdonságként átadott komponens számára utolsó paraméterként
-;  átadott térkép alapja (az XXX#0001 logika szerint).
-;
-; @name prefix, suffix
-;  Ha a content komponensnek {:content ...} tulajdonságként az app-dictionary szótár egy kifejezésre
-;  utaló kulcszó vagy szöveg kerül átadásra, akkor a {:prefix ...} vagy {:suffix ...} tulajdonságként
-;  átadott string típusú tartalmat prefixumként vagy toldalékaként használja.
-;
-; XXX#4509
-; @name replacements
-;  A content komponensnek {:replacements [...]} tulajdonságként vektorban átadott string típusok,
-;  a {:content ...} tulajdonságként átadott tartalom jelőlői ("%", "%1", "%2", ...) helyett
-;  kerülnek behelyettesítésre.
-;
-; @name subscriber
-;  A feliratkozás visszatérési értékének típusú térkép kell legyen!
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- string-content

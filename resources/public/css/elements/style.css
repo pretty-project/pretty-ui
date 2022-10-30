@@ -217,10 +217,10 @@ body {
 /* Background-color */
 
 .e-button--body[data-background-color="muted"],
-.e-card[data-background-color="muted"]        .e-card--body,
+.e-card[data-background-color="muted"] .e-card--body,
 .e-color-marker--color[data-color="muted"],
-.e-chip[data-background-color="muted"]        .e-chip--body,
-.e-icon-button[data-background-color="muted"] .e-icon-button--body,
+.e-chip[data-background-color="muted"] .e-chip--body,
+.e-icon-button--body[data-background-color="muted"],
 .e-toggle[data-background-color="muted"] {
   background-color: var( --background-color-muted ) }
 
@@ -233,7 +233,7 @@ body {
 .e-checkbox[data-border-color="muted"]     .e-checkbox--option-button::before,
 .e-counter[data-border-color="muted"]      .e-counter--decrease-button,
 .e-counter[data-border-color="muted"]      .e-counter--increase-button,
-.e-icon-button[data-border-color="muted"]  .e-icon-button--body,
+.e-icon-button--body[data-border-color="muted"],
 .e-radio-button[data-border-color="muted"] .e-radio-button--option-button,
 .e-switch[data-border-color="muted"]       .e-switch--option-track {
   border-color: var( --border-color-muted ) }
@@ -243,9 +243,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                .e-button--body:hover[data-hover-color="muted"],
-.e-card[data-hover-color="muted"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="muted"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                         .e-button--body:hover[data-hover-color="muted"],
+.e-card[data-hover-color="muted"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="muted"]:hover::before,
 .e-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
   background-color: var( --hover-color-muted ) }
 
@@ -272,9 +272,9 @@ body {
 
 .e-anchor[data-color="muted"],
 .e-button--body[data-color="muted"],
-.e-chip[data-color="muted"]        .e-chip--body,
-.e-icon[data-color="muted"]        .e-icon--body,
-.e-icon-button[data-color="muted"] .e-icon-button--body,
+.e-chip[data-color="muted"] .e-chip--body,
+.e-icon[data-color="muted"] .e-icon--body,
+.e-icon-button--body[data-color="muted"],
 .e-label[data-color="muted"],
 .e-text[data-color="muted"] .e-text--body {
   color: var( --color-muted ) }
@@ -286,10 +286,10 @@ body {
 /* Background-color */
 
 .e-button--body[data-background-color="highlight"],
-.e-card[data-background-color="highlight"]        .e-card--body,
+.e-card[data-background-color="highlight"] .e-card--body,
 .e-color-marker--color[data-color="highlight"],
-.e-chip[data-background-color="highlight"]        .e-chip--body,
-.e-icon-button[data-background-color="highlight"] .e-icon-button--body,
+.e-chip[data-background-color="highlight"] .e-chip--body,
+.e-icon-button--body[data-background-color="highlight"],
 .e-toggle[data-background-color="highlight"] {
   background-color: var( --background-color-highlight ) }
 
@@ -298,8 +298,8 @@ body {
 /* Border-color */
 
 .e-button--body[data-border-color="highlight"],
-.e-icon-button[data-border-color="highlight"] .e-icon-button--body,
-.e-card[data-border-color="highlight"]        .e-card--body,
+.e-icon-button--body[data-border-color="highlight"],
+.e-card[data-border-color="highlight"] .e-card--body,
 .e-select--button-body[data-border-color="highlight"] {
   border-color: var( --border-color-highlight ) }
 
@@ -308,9 +308,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="highlight"],
-.e-card[data-hover-color="highlight"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="highlight"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                             .e-button--body:hover[data-hover-color="highlight"],
+.e-card[data-hover-color="highlight"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="highlight"]:hover::before,
 .e-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
   background-color: var( --hover-color-highlight ) }
 
@@ -336,9 +336,9 @@ body {
 /* Text-color */
 
 .e-button--body[data-color="highlight"],
-.e-chip[data-color="highlight"]        .e-chip--body,
-.e-icon[data-color="highlight"]        .e-icon--body,
-.e-icon-button[data-color="highlight"] .e-icon-button--body,
+.e-chip[data-color="highlight"] .e-chip--body,
+.e-icon[data-color="highlight"] .e-icon--body,
+.e-icon-button--body[data-color="highlight"],
 .e-label[data-color="highlight"],
 .e-text[data-color="highlight"] .e-text--body {
   color: var( --color-highlight ) }
@@ -350,9 +350,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                 .e-button--body:hover[data-hover-color="invert"],
-.e-card[data-hover-color="invert"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="invert"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                          .e-button--body:hover[data-hover-color="invert"],
+.e-card[data-hover-color="invert"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="invert"]:hover::before,
 .e-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
   background-color: var( --hover-color-invert ) }
 
@@ -361,8 +361,8 @@ body {
 /* Text-color */
 
 .e-button--body[data-color="invert"],
-.e-icon[data-color="invert"]        .e-icon--body,
-.e-icon-button[data-color="invert"] .e-icon-button--body,
+.e-icon[data-color="invert"] .e-icon--body,
+.e-icon-button--body[data-color="invert"],
 .e-label[data-color="invert"],
 .e-text[data-color="invert"] {
   color: var( --color-invert ) }
@@ -377,7 +377,7 @@ body {
 .e-card[data-background-color="primary"]        .e-card--body,
 .e-color-marker--color[data-color="primary"],
 .e-chip[data-background-color="primary"]        .e-chip--body,
-.e-icon-button[data-background-color="primary"] .e-icon-button--body,
+.e-icon-button--body[data-background-color="primary"],
 .e-toggle[data-background-color="primary"] {
   background-color: var( --background-color-primary ) }
 
@@ -397,7 +397,7 @@ body {
 .e-checkbox[data-border-color="primary"]     .e-checkbox--option-button::before,
 .e-counter[data-border-color="primary"]      .e-counter--decrease-button,
 .e-counter[data-border-color="primary"]      .e-counter--increase-button,
-.e-icon-button[data-border-color="primary"]  .e-icon-button--body,
+.e-icon-button--body[data-border-color="primary"],
 .e-radio-button[data-border-color="primary"] .e-radio-button--option-button,
 .e-switch[data-border-color="primary"]       .e-switch--option-track,
 .e-text-field[data-border-color="primary"]   .e-text-field--input-container {
@@ -408,9 +408,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="primary"],
-.e-card[data-hover-color="primary"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="primary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                           .e-button--body:hover[data-hover-color="primary"],
+.e-card[data-hover-color="primary"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="primary"]:hover::before,
 .e-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-primary ) }
 
@@ -436,9 +436,9 @@ body {
 
 .e-anchor[data-color="primary"],
 .e-button--body[data-color="primary"],
-.e-chip[data-color="primary"]        .e-chip--body,
-.e-icon[data-color="primary"]        .e-icon--body,
-.e-icon-button[data-color="primary"] .e-icon-button--body,
+.e-chip[data-color="primary"] .e-chip--body,
+.e-icon[data-color="primary"] .e-icon--body,
+.e-icon-button--body[data-color="primary"],
 .e-label[data-color="primary"],
 .e-text[data-color="primary"] .e-text--body {
   color: var( --color-primary ) }
@@ -453,7 +453,7 @@ body {
 .e-card[data-background-color="secondary"]        .e-card--body,
 .e-color-marker--color[data-color="secondary"],
 .e-chip[data-background-color="secondary"]        .e-chip--body,
-.e-icon-button[data-background-color="secondary"] .e-icon-button--body,
+.e-icon-button--body[data-background-color="secondary"],
 .e-toggle[data-background-color="secondary"] {
   background-color: var( --background-color-secondary ) }
 
@@ -473,7 +473,7 @@ body {
 .e-checkbox[data-border-color="secondary"]     .e-checkbox--option-button::before,
 .e-counter[data-border-color="secondary"]      .e-counter--decrease-button,
 .e-counter[data-border-color="secondary"]      .e-counter--increase-button,
-.e-icon-button[data-border-color="secondary"]  .e-icon-button--body,
+.e-icon-button--body[data-border-color="secondary"],
 .e-radio-button[data-border-color="secondary"] .e-radio-button--option-button,
 .e-switch[data-border-color="secondary"]       .e-switch--option-track,
 .e-text-field[data-border-color="secondary"]   .e-text-field--input-container {
@@ -484,9 +484,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                    .e-button--body:hover[data-hover-color="secondary"],
-.e-card[data-hover-color="secondary"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="secondary"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                             .e-button--body:hover[data-hover-color="secondary"],
+.e-card[data-hover-color="secondary"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="secondary"]:hover::before,
 .e-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
   background-color: var( --hover-color-secondary ) }
 
@@ -512,9 +512,9 @@ body {
 
 .e-anchor[data-color="secondary"],
 .e-button--body[data-color="secondary"],
-.e-chip[data-color="secondary"]        .e-chip--body,
-.e-icon[data-color="secondary"]        .e-icon--body,
-.e-icon-button[data-color="secondary"] .e-icon-button--body,
+.e-chip[data-color="secondary"] .e-chip--body,
+.e-icon[data-color="secondary"] .e-icon--body,
+.e-icon-button--body[data-color="secondary"],
 .e-label[data-color="secondary"],
 .e-text[data-color="secondary"] .e-text--body {
   color: var( --color-secondary ) }
@@ -526,10 +526,10 @@ body {
 /* Background-color */
 
 .e-button--body[data-background-color="success"],
-.e-card[data-background-color="success"]        .e-card--body,
+.e-card[data-background-color="success"] .e-card--body,
 .e-color-marker--color[data-color="success"],
-.e-chip[data-background-color="success"]        .e-chip--body,
-.e-icon-button[data-background-color="success"] .e-icon-button--body,
+.e-chip[data-background-color="success"] .e-chip--body,
+.e-icon-button--body[data-background-color="success"],
 .e-toggle[data-background-color="success"] {
   background-color: var( --background-color-success ) }
 
@@ -549,7 +549,7 @@ body {
 .e-checkbox[data-border-color="success"]     .e-checkbox--option-button::before,
 .e-counter[data-border-color="success"]      .e-counter--decrease-button,
 .e-counter[data-border-color="success"]      .e-counter--increase-button,
-.e-icon-button[data-border-color="success"]  .e-icon-button--body,
+.e-icon-button--body[data-border-color="success"],
 .e-radio-button[data-border-color="success"] .e-radio-button--option-button,
 .e-switch[data-border-color="success"]       .e-switch--option-track,
 .e-text-field[data-border-color="success"]   .e-text-field--input-container {
@@ -560,9 +560,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="success"],
-.e-card[data-hover-color="success"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="success"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                           .e-button--body:hover[data-hover-color="success"],
+.e-card[data-hover-color="success"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="success"]:hover::before,
 .e-toggle[data-hover-color="success"][data-disabled="false"]:hover {
   background-color: var( --hover-color-success ) }
 
@@ -587,9 +587,9 @@ body {
 
 .e-anchor[data-color="success"],
 .e-button--body[data-color="success"],
-.e-chip[data-color="success"]        .e-chip--body,
-.e-icon[data-color="success"]        .e-icon--body,
-.e-icon-button[data-color="success"] .e-icon-button--body,
+.e-chip[data-color="success"] .e-chip--body,
+.e-icon[data-color="success"] .e-icon--body,
+.e-icon-button--body[data-color="success"],
 .e-label[data-color="success"],
 .e-text[data-color="success"] .e-text--body {
   color: var( --color-success ) }
@@ -601,10 +601,10 @@ body {
 /* Background-color */
 
 .e-button--body[data-background-color="warning"],
-.e-card[data-background-color="warning"]        .e-card--body,
+.e-card[data-background-color="warning"] .e-card--body,
 .e-color-marker--color[data-color="warning"],
-.e-chip[data-background-color="warning"]        .e-chip--body,
-.e-icon-button[data-background-color="warning"] .e-icon-button--body,
+.e-chip[data-background-color="warning"] .e-chip--body,
+.e-icon-button--body[data-background-color="warning"],
 .e-toggle[data-background-color="warning"] {
   background-color: var( --background-color-warning ) }
 
@@ -617,7 +617,7 @@ body {
 .e-checkbox[data-border-color="warning"]     .e-checkbox--option-button::before,
 .e-counter[data-border-color="warning"]      .e-counter--decrease-button,
 .e-counter[data-border-color="warning"]      .e-counter--increase-button,
-.e-icon-button[data-border-color="warning"]  .e-icon-button--body,
+.e-icon-button--body[data-border-color="warning"],
 .e-radio-button[data-border-color="warning"] .e-radio-button--option-button,
 .e-select--button-body[data-border-color="warning"],
 .e-switch[data-border-color="warning"]       .e-switch--option-track,
@@ -636,9 +636,9 @@ body {
 /* Hover-color */
 
 /* XXX#4005 */
-.e-button[data-disabled="false"]                                  .e-button--body:hover[data-hover-color="warning"],
-.e-card[data-hover-color="warning"][data-disabled="false"]        .e-card--body:hover,
-.e-icon-button[data-hover-color="warning"][data-disabled="false"] .e-icon-button--body:hover::before,
+.e-button[data-disabled="false"]                           .e-button--body:hover[data-hover-color="warning"],
+.e-card[data-hover-color="warning"][data-disabled="false"] .e-card--body:hover,
+.e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="warning"]:hover::before,
 .e-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
   background-color: var( --hover-color-warning ) }
 
@@ -663,9 +663,9 @@ body {
 
 .e-anchor[data-color="warning"],
 .e-button--body[data-color="warning"],
-.e-chip[data-color="warning"]        .e-chip--body,
-.e-icon[data-color="warning"]        .e-icon--body,
-.e-icon-button[data-color="warning"] .e-icon-button--body,
+.e-chip[data-color="warning"] .e-chip--body,
+.e-icon[data-color="warning"] .e-icon--body,
+.e-icon-button--body[data-color="warning"],
 .e-label[data-color="warning"],
 .e-text[data-color="warning"] .e-text--body {
   color: var( --color-warning ) }
@@ -690,7 +690,7 @@ body {
 /* Az icon-button elem {:border-color :none} beállítással használva,
  * az elem {color: ...} tulajdonságának értékét használná a {border-color: ...}
  * tulajdonság értékeként is, ha nem lenne beállítva a transparent érték! */
-.e-icon-button[data-border-color="none"] .e-icon-button--body {
+.e-icon-button--body[data-border-color="none"] {
   border-color: transparent }
 
 /* Border-color */
@@ -1110,7 +1110,7 @@ body {
 .e-element[data-min-width="xxs"] {
   min-width: var( --element-min-width-xxs ) }
 
-.e-icon-button[data-height="xxs"] .e-icon-button--body {
+.e-icon-button--body[data-height="xxs"] {
   height: 12px }
 
 .e-color-stamp--body[data-size="xxs"] {
@@ -1145,7 +1145,7 @@ body {
 .e-element[data-min-width="xs"] {
   min-width: var( --element-min-width-xs ) }
 
-.e-icon-button[data-height="xs"] .e-icon-button--body {
+.e-icon-button--body[data-height="xs"] {
   height: 18px }
 
 .e-color-stamp--body[data-size="xs"] {
@@ -1180,7 +1180,7 @@ body {
 .e-element[data-min-width="s"] {
   min-width: var( --element-min-width-s ) }
 
-.e-icon-button[data-height="s"] .e-icon-button--body {
+.e-icon-button--body[data-height="s"] {
   height: 24px }
 
 .e-color-stamp--body[data-size="s"] {
@@ -1215,7 +1215,7 @@ body {
 .e-element[data-min-width="m"] {
   min-width: var( --element-min-width-m ) }
 
-.e-icon-button[data-height="m"] .e-icon-button--body {
+.e-icon-button--body[data-height="m"] {
   height: 30px }
 
 .e-color-stamp--body[data-size="m"] {
@@ -1250,7 +1250,7 @@ body {
 .e-element[data-min-width="l"] {
   min-width: var( --element-min-width-l ) }
 
-.e-icon-button[data-height="l"] .e-icon-button--body {
+.e-icon-button--body[data-height="l"] {
   height: 36px }
 
 .e-color-stamp--body[data-size="l"] {
@@ -1285,7 +1285,7 @@ body {
 .e-element[data-min-width="xl"] {
   min-width: var( --element-min-width-xl ) }
 
-.e-icon-button[data-height="xl"] .e-icon-button--body {
+.e-icon-button--body[data-height="xl"] {
   height: 42px }
 
 .e-color-stamp--body[data-size="xl"] {
@@ -1320,7 +1320,7 @@ body {
 .e-element[data-min-width="xxl"] {
   min-width: var( --element-min-width-xxl ) }
 
-.e-icon-button[data-height="xxl"] .e-icon-button--body {
+.e-icon-button--body[data-height="xxl"] {
   height: 48px }
 
 .e-color-stamp--body[data-size="xxl"] {
@@ -1401,7 +1401,7 @@ body {
 
 .e-card[data-border-radius="xxs"] .e-card--body,
 .e-ghost[data-border-radius="xxs"] .e-ghost--body,
-.e-icon-button[data-border-radius="xxs"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="xxs"]::before,
 .e-select[data-border-radius="xxs"] .e-select--button-body,
 .e-text-field[data-border-radius="xxs"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="xxs"] .e-thumbnail--body,
@@ -1418,7 +1418,7 @@ body {
 
 .e-card[data-border-radius="xs"] .e-card--body,
 .e-ghost[data-border-radius="xs"] .e-ghost--body,
-.e-icon-button[data-border-radius="xs"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="xs"]::before,
 .e-select[data-border-radius="xs"] .e-select--button-body,
 .e-text-field[data-border-radius="xs"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="xs"] .e-thumbnail--body,
@@ -1435,7 +1435,7 @@ body {
 
 .e-card[data-border-radius="s"] .e-card--body,
 .e-ghost[data-border-radius="s"] .e-ghost--body,
-.e-icon-button[data-border-radius="s"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="s"]::before,
 .e-select[data-border-radius="s"] .e-select--button-body,
 .e-text-field[data-border-radius="s"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="s"] .e-thumbnail--body,
@@ -1452,7 +1452,7 @@ body {
 
 .e-card[data-border-radius="m"] .e-card--body,
 .e-ghost[data-border-radius="m"] .e-ghost--body,
-.e-icon-button[data-border-radius="m"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="m"]::before,
 .e-select[data-border-radius="m"] .e-select--button-body,
 .e-text-field[data-border-radius="m"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="m"] .e-thumbnail--body,
@@ -1469,7 +1469,7 @@ body {
 
 .e-card[data-border-radius="l"] .e-card--body,
 .e-ghost[data-border-radius="l"] .e-ghost--body,
-.e-icon-button[data-border-radius="l"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="l"]::before,
 .e-select[data-border-radius="l"] .e-select--button-body,
 .e-text-field[data-border-radius="l"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="l"] .e-thumbnail--body,
@@ -1486,7 +1486,7 @@ body {
 
 .e-card[data-border-radius="xl"] .e-card--body,
 .e-ghost[data-border-radius="xl"] .e-ghost--body,
-.e-icon-button[data-border-radius="xl"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="xl"]::before,
 .e-thumbnail[data-border-radius="xl"] .e-thumbnail--body,
 .e-toggle[data-border-radius="xl"] .e-toggle--body {
   border-radius: var( --border-radius-xl ) }
@@ -1501,7 +1501,7 @@ body {
 
 .e-card[data-border-radius="xxl"] .e-card--body,
 .e-ghost[data-border-radius="xxl"] .e-ghost--body,
-.e-icon-button[data-border-radius="xxl"] .e-icon-button--body::before,
+.e-icon-button--body[data-border-radius="xxl"]::before,
 .e-thumbnail[data-border-radius="xxl"] .e-thumbnail--body,
 .e-toggle[data-border-radius="xxl"] .e-toggle--body {
   border-radius: var( --border-radius-xxl ) }
@@ -2577,7 +2577,7 @@ body {
    * kényszerítse méretcsökkenésre */
   min-width: 48px }
 
-.e-icon-button[data-border-color] .e-icon-button--body {
+.e-icon-button--body[data-border-color] {
   border-style: solid;
   border-width: 1px }
 
@@ -2601,9 +2601,6 @@ body {
   height: 100%;
   justify-content: center;
   width: 100% }
-
-.e-icon-button[data-variant="filled"] .e-icon-button--body {
-  border-radius: var( --border-radius-xs ) }
 
 .e-icon-button[data-variant="placeholder"] .e-icon-button--body {
   cursor: default }

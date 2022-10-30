@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.window-handler.side-effects
-    (:require [re-frame.api                           :as r]
+    (:require [dom.api                                :as dom]
+              [re-frame.api                           :as r]
               [time.api                               :as time]
               [window.api                             :as window]
               [x.app-environment.window-handler.state :as window-handler.state]))
@@ -23,33 +24,44 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn open-new-browser-tab!
-  ; @param (string) uri
-  ;
-  ; @usage
-  ;  (open-new-browser-tab! "www.my-site.com/my-link")
-  [uri]
-  (.open js/window uri "_blank"))
-
-(defn set-window-title!
+(defn set-tab-title!
   ; @param (string) title
   ;
   ; @usage
-  ;  (set-window-title! "My title")
+  ;  (set-tab-title! "My title")
   [title]
-  (set! (-> js/document .-title) title))
+  (dom/set-document-title! title))
 
-(defn reload-window!
+(defn open-tab!
+  ; @param (string) uri
+  ;
   ; @usage
-  ;  (reload-window!)
-  [_]
-  (.reload js/window.location true))
+  ;  (open-tab! "www.my-site.com/my-link")
+  [uri]
+  (window/open-tab!))
 
-(defn go-to-root!
+(defn reload-tab!
   ; @usage
-  ;  (go-to-root!)
+  ;  (reload-tab!)
   [_]
-  (set! (-> js/window .-location .-href) "/"))
+  (window/reload-tab!))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn go-root!
+  ; @usage
+  ;  (go-root!)
+  [_]
+  (window/go-root!))
+
+(defn go-back!
+  ; @usage
+  ;  (go-back!)
+  [_]
+  (window/go-back!))
 
 (defn go-to!
   ; @param (string) uri
@@ -57,7 +69,12 @@
   ; @usage
   ;  (go-to! "www.my-site.com/my-link")
   [uri]
-  (set! (-> js/window .-location .-href) uri))
+  (window/go-to! uri))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn set-interval!
   ; @param (keyword) interval-id
@@ -126,20 +143,24 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:environment/open-new-browser-tab! "www.my-site.com/my-link"]
-(r/reg-fx :environment/open-new-browser-tab! open-new-browser-tab!)
+;  [:environment/set-tab-title! "My title"]
+(r/reg-fx :environment/set-tab-title! set-tab-title!)
 
 ; @usage
-;  [:environment/set-window-title! "My title"]
-(r/reg-fx :environment/set-window-title! set-window-title!)
+;  [:environment/open-tab! "www.my-site.com/my-link"]
+(r/reg-fx :environment/open-tab! open-tab!)
 
 ; @usage
-;  [:environment/reload-window!]
-(r/reg-fx :environment/reload-window! reload-window!)
+;  [:environment/reload-tab!]
+(r/reg-fx :environment/reload-tab! reload-tab!)
 
 ; @usage
-;  [:environment/go-to-root!]
-(r/reg-fx :environment/go-to-root!)
+;  [:environment/go-root!]
+(r/reg-fx :environment/go-root! go-root!)
+
+; @usage
+;  [:environment/go-back!]
+(r/reg-fx :environment/go-back! go-back!)
 
 ; @usage
 ;  [:environment/go-to! "www.my-site.com/my-link"]

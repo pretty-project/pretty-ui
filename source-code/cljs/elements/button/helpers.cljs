@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.button.helpers
-    (:require [elements.element.helpers :as element.helpers]
+    (:require [dom.api                  :as dom]
+              [elements.element.helpers :as element.helpers]
               [mid-fruits.hiccup        :as hiccup]
               [re-frame.api             :as r]
               [reagent.api              :as reagent]
@@ -64,6 +65,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn on-click-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:disabled? (boolean)(opt)
+  ;   :on-click (metamorphic-event)(opt)
+  ;   :stop-propagation? (boolean)(opt)}
+  [_ {:keys [disabled? on-click stop-propagation?]}]
+  (if disabled? (fn [%] (if stop-propagation? (dom/stop-propagation! %)))
+                (fn [%] (if stop-propagation? (dom/stop-propagation! %))
+                        (r/dispatch on-click))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn button-icon-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -78,30 +97,64 @@
   {:data-icon-family   icon-family
    :data-icon-position icon-position})
 
-(defn button-body-attributes
+(defn button-color-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:background-color (keyword or string)(opt)
   ;   :border-color (keyword or string)(opt)
-  ;   :border-radius (keyword)(opt)
   ;   :color (keyword or string)
-  ;   :disabled? (boolean)(opt)
-  ;   :font-size (keyword)
-  ;   :font-weight (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :hover-color (keyword)(opt)
-  ;   :on-click (metamorphic-event)(opt)
+  ;   :hover-color (keyword)(opt)}
+  ;
+  ; @return (map)
+  [_ {:keys [background-color border-color color hover-color]}]
+  (-> {} (element.helpers/apply-color :background-color :data-background-color background-color)
+         (element.helpers/apply-color :border-color     :data-border-color         border-color)
+         (element.helpers/apply-color :color            :data-color                       color)
+         (element.helpers/apply-color :hover-color      :data-hover-color           hover-color)))
+
+(defn button-font-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:font-size (keyword)
+  ;   :font-weight (keyword)}
+  ;
+  ; @return (map)
+  ;  {:data-font-size (keyword)
+  ;   :data-font-weight (keyword)}
+  [_ {:keys [font-size font-weight]}]
+  {:data-font-size   font-size
+   :data-font-weight font-weight})
+
+(defn button-layout-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:border-radius (keyword)(opt)
+  ;   :horizontal-align (keyword)(opt)}
+  ;
+  ; @return (map)
+  ;  {:data-border-radius (keyword)
+  ;   :data-horizontal-align (keyword)}
+  [_ {:keys [border-radius horizontal-align]}]
+  {:data-border-radius    border-radius
+   :data-horizontal-align horizontal-align})
+
+(defn button-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:disabled? (boolean)(opt)
   ;   :on-mouse-over (metamorphic-event)(opt)
   ;   :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-clickable (boolean)
-  ;   :data-font-size (keyword)
-  ;   :data-font-weight (keyword)
-  ;   :data-horizontal-align (keyword)
+  ;  {:data-clickable (boolean)
   ;   :data-selectable (boolean)
   ;   :disabled (boolean)
   ;   :id (string)
@@ -109,22 +162,17 @@
   ;   :on-mouse-over (function)
   ;   :on-mouse-up (function)
   ;   :style (map)}
-  [button-id {:keys [background-color border-color border-radius color disabled? font-size font-weight
-                     horizontal-align hover-color on-click on-mouse-over style]}]
-  (merge (-> {:style style}
-             (element.helpers/apply-color :background-color :data-background-color background-color)
-             (element.helpers/apply-color :border-color     :data-border-color         border-color)
-             (element.helpers/apply-color :color            :data-color                       color)
-             (element.helpers/apply-color :hover-color      :data-hover-color           hover-color))
-         {:data-border-radius    border-radius
-          :data-font-size        font-size
-          :data-font-weight      font-weight
-          :data-horizontal-align horizontal-align
-          :data-selectable       false}
-         (if disabled? {:disabled       true}
+  [button-id {:keys [disabled? on-mouse-over style] :as button-props}]
+  (merge {:data-selectable false
+          :style           style}
+         (button-color-attributes  button-id button-props)
+         (button-font-attributes   button-id button-props)
+         (button-layout-attributes button-id button-props)
+         (if disabled? {:disabled       true
+                        :on-click       (on-click-f button-id button-props)}
                        {:data-clickable true
-                        :id              (hiccup/value button-id "body")
-                        :on-click       #(r/dispatch on-click)
+                        :id             (hiccup/value button-id "body")
+                        :on-click       (on-click-f   button-id button-props)
                         :on-mouse-over  #(r/dispatch on-mouse-over)
                         :on-mouse-up    #(x.environment/blur-element!)})))
 

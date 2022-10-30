@@ -14,6 +14,9 @@
 
 # x4.7.0
 
+- elements.api elemek body komponensein legyenek a body-ra jellemző data-attribute-ok
+  és a style
+
 - az x ne használja az elements! legyen tőle független
 
 - x.server-user.api :as user

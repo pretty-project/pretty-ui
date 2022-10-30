@@ -24,9 +24,19 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
+  ;  {:background-color (keyword or string)(opt)
+  ;   :hover-color (keyword or string)(opt)}
   ;
   ; @return (map)
-  ;  {}
-  [button-props]
-  (merge {}
+  ;  {:background-color (keyword or string)
+  ;   :border-radius (keyword)
+  ;   :color (keyword or string)
+  ;   :icon-family (keyword)
+  ;   :height (keyword)}
+  [{:keys [background-color hover-color] :as button-props}]
+  (merge {:color            :default
+          :icon-family      :material-icons-filled
+          :height           :xxl}
+         (if background-color {:border-radius :s})
+         (if hover-color      {:border-radius :s})
          (param button-props)))

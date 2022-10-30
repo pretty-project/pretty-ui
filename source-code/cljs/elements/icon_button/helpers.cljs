@@ -13,7 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.icon-button.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [elements.button.helpers  :as button.helpers]
+              [elements.element.helpers :as element.helpers]
+              [x.app-components.api     :as x.components]))
 
 
 
@@ -25,23 +27,28 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:style (map)(opt)}
+  ;  {:label (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
+  ;  {:data-labeled (boolean)}
+  [button-id {:keys [height label] :as button-props}]
+  (merge {:data-height  height
+          :data-labeled (boolean label)}
+         (button.helpers/button-body-attributes button-id button-props)))
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ;  {:tooltip (metamorphic-content)(opt)
+  ;   :data-variant (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {}
-  [button-id button-props]
+  ;  {:data-tooltip (string)
+  ;   :data-variant (keyword)}
+  [button-id {:keys [tooltip variant] :as button-props}]
   (merge (element.helpers/element-default-attributes button-id button-props)
          (element.helpers/element-indent-attributes  button-id button-props)
-         {}))
+         (if tooltip {:data-tooltip (x.components/content {:content tooltip})})
+         (if variant {:data-variant variant})))

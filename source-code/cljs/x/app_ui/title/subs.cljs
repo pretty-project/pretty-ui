@@ -24,16 +24,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-window-title-value
+(defn get-tab-title-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (metamorphic-content) window-title
+  ; @param (metamorphic-content) tab-title
   ;
   ; @return (string)
-  [db [_ window-title]]
-  (let [app-title    (r x.core/get-app-config-item       db :app-title)
-        window-title (r x.components/get-metamorphic-value db window-title)
-        window-title (string/trim window-title)]
-       (if (empty? window-title)
+  [db [_ tab-title]]
+  (let [app-title (r x.core/get-app-config-item         db :app-title)
+        tab-title (r x.components/get-metamorphic-value db tab-title)
+        tab-title (string/trim tab-title)]
+       (if (empty? tab-title)
            (return app-title)
-           (str    window-title " - " app-title))))
+           (str    tab-title " - " app-title))))

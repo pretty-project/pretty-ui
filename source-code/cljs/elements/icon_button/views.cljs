@@ -12,44 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.icon-button
-    (:require [elements.engine.api                 :as engine]
-              [elements.element.helpers            :as element.helpers]
-              [elements.preset-handler.icon-button :as preset-handler.icon-button]
-              [mid-fruits.candy                    :refer [param return]]
-              [mid-fruits.random                   :as random]
-              [re-frame.api                        :as r]
-              [x.app-components.api                :as x.components]))
+(ns elements.icon-button.views
+    (:require [elements.button.helpers         :as button.helpers]
+              [elements.engine.api             :as engine]
+              [elements.element.helpers        :as element.helpers]
+              [elements.icon-button.helpers    :as icon-button.helpers]
+              [elements.icon-button.presets    :as icon-button.presets]
+              [elements.icon-button.prototypes :as icon-button.prototypes]
+              [mid-fruits.random               :as random]
+              [reagent.api                     :as reagent]
+              [x.app-components.api            :as x.components]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- button-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) button-props
-  ;  {:background-color (keyword or string)(opt)
-  ;   :hover-color (keyword or string)(opt)}
-  ;
-  ; @return (map)
-  ;  {:background-color (keyword or string)
-  ;   :border-radius (keyword)
-  ;   :color (keyword or string)
-  ;   :icon-family (keyword)
-  ;   :height (keyword)}
-  [{:keys [background-color hover-color] :as button-props}]
-  (merge {:color            :default
-          :icon-family      :material-icons-filled
-          :height           :xxl}
-         (if background-color {:border-radius :s})
-         (if hover-color      {:border-radius :s})
-         (param button-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- icon-button-label
@@ -76,35 +52,31 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id {:keys [label] :as button-props}]
-  [:button.e-icon-button--body (merge
-                                (engine/clickable-body-attributes button-id button-props {:on-mouse-over #(r/dispatch (:on-mouse-over button-props))})
-                                {:style (:style button-props)
-                                 :data-labeled (some? label)})
-                               [icon-button-icon                 button-id button-props]
-                               [icon-button-label                button-id button-props]
-                               [engine/element-badge             button-id button-props]])
+  [button-id button-props]
+  [:button.e-icon-button--body (icon-button.helpers/button-body-attributes button-id button-props)
+                               [icon-button-icon                           button-id button-props]
+                               [icon-button-label                          button-id button-props]
+                               [engine/element-badge                       button-id button-props]])
+
+(defn- icon-button-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  [button-id {:keys [tooltip] :as button-props}]
+  [:div.e-icon-button (icon-button.helpers/button-attributes button-id button-props)
+                      [icon-button-body                      button-id button-props]])
 
 (defn- icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id {:keys [tooltip] :as button-props}]
-  [:div.e-icon-button (engine/element-attributes button-id button-props (if tooltip {:data-tooltip (x.components/content {:content tooltip})}))
-                      [icon-button-body          button-id button-props]])
-
-(defn- stated-element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
   [button-id button-props]
-  [engine/stated-element button-id
-                         {:render-f      #'icon-button
-                          :element-props button-props
-                          :destructor    [:elements/destruct-clickable! button-id]
-                          :initializer   [:elements/init-clickable!     button-id]}])
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (button.helpers/button-did-mount-f    button-id button-props))
+                       :component-will-unmount (fn [_ _] (button.helpers/button-will-unmount-f button-id button-props))
+                       :component-did-update   (fn [%]   (button.helpers/button-did-update-f   button-id %))
+                       :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
 (defn element
   ; @param (keyword)(opt) button-id
@@ -172,7 +144,6 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id {:keys [keypress] :as button-props}]
-   (let [button-props (element.helpers/apply-preset preset-handler.icon-button/BUTTON-PROPS-PRESETS button-props)
-         button-props (button-props-prototype button-props)]
-        (if keypress [stated-element button-id button-props]
-                     [icon-button    button-id button-props]))))
+   (let [button-props (element.helpers/apply-preset icon-button.presets/BUTTON-PROPS-PRESETS button-props)
+         button-props (icon-button.prototypes/button-props-prototype button-props)]
+        [icon-button button-id button-props])))

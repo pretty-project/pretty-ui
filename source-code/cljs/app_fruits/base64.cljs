@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-fruits.base64)
+(ns app-fruits.base64
+    (:require [mid-fruits.string :as string]))
 
 
 
@@ -29,13 +30,19 @@
   ;  "data:application/pdf;base64,..."
   ;
   ; @example
+  ;  (wrap "" "application/pdf")
+  ;  =>
+  ;  nil
+  ;
+  ; @example
   ;  (wrap nil "application/pdf")
   ;  =>
   ;  nil
   ;
   ; @return (string)
   [base64 mime-type]
-  (if base64 (str "data:"mime-type";base64,"base64)))
+  (if (string/nonempty? base64)
+      (str "data:"mime-type";base64,"base64)))
 
 (defn to-blob
   ; @param (string) base64

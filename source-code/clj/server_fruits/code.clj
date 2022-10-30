@@ -38,7 +38,7 @@
    ; A load-string függvény számára paraméterként átadott forráskód a clojure.core
    ; névtérben kerül értelmezésre, ezért a definiált környezeti változókat {:private true}
    ; beállítással szükséges létrehozni, ellenkező esetben a definiált változók nevei
-   ; összes névtér számára foglaltak lennének a clojure.core névtér által az egyes
+   ; az összes névtér számára foglaltak lennének a clojure.core névtér által az egyes
    ; névterek wrap-reload általi újratöltésekor.
    (if (string/nonempty? source-code)
        (letfn [(environment-f [environment [var-name var-value]]
