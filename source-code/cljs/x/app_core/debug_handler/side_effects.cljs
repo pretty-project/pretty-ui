@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.debug-handler.side-effects
-    (:require [app-fruits.window                :as window]
-              [mid-fruits.uri                   :as uri]
+    (:require [mid-fruits.uri                   :as uri]
               [re-frame.api                     :as r]
+              [window.api                       :as window]
               [x.app-core.debug-handler.helpers :as debug-handler.helpers]))
 
 

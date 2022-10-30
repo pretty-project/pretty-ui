@@ -34,6 +34,7 @@
 (def request-sent?         request-handler.subs/request-sent?)
 (def request-successed?    request-handler.subs/request-successed?)
 (def request-failured?     request-handler.subs/request-failured?)
+(def request-stalled?      request-handler.subs/request-stalled?)
 (def request-aborted?      request-handler.subs/request-aborted?)
 (def request-resent?       request-handler.subs/request-resent?)
 (def listening-to-request? request-handler.subs/listening-to-request?)

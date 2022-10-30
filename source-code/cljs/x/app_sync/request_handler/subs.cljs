@@ -104,6 +104,17 @@
   (let [request-status (r x.core/get-process-status db request-id)]
        (= request-status :failure)))
 
+(defn request-stalled?
+  ; @param (keyword) request-id
+  ;
+  ; @usage
+  ;  (r request-stalled? db :my-request)
+  ;
+  ; @return (boolean)
+  [db [_ request-id]]
+  (let [request-activity (r x.core/get-process-activity db request-id)]
+       (= request-activity :stalled)))
+
 (defn request-aborted?
   ; @param (keyword) request-id
   ;

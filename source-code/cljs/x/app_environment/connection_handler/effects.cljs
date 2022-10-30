@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.connection-handler.effects
-    (:require [app-fruits.window :as window]
-              [re-frame.api      :as r]))
+    (:require [re-frame.api :as r]
+              [window.api   :as window]))
 
 
 
