@@ -105,14 +105,17 @@
   ;  {:background-color (keyword or string)(opt)
   ;   :border-color (keyword or string)(opt)
   ;   :color (keyword or string)
-  ;   :hover-color (keyword)(opt)}
+  ;   :hover-color (keyword)(opt)
+  ;   :style (map)(opt)}
   ;
   ; @return (map)
-  [_ {:keys [background-color border-color color hover-color]}]
-  (-> {} (element.helpers/apply-color :background-color :data-background-color background-color)
-         (element.helpers/apply-color :border-color     :data-border-color         border-color)
-         (element.helpers/apply-color :color            :data-color                       color)
-         (element.helpers/apply-color :hover-color      :data-hover-color           hover-color)))
+  ;  {:style (map)}
+  [_ {:keys [background-color border-color color hover-color style]}]
+  (-> {:style style}
+      (element.helpers/apply-color :background-color :data-background-color background-color)
+      (element.helpers/apply-color :border-color     :data-border-color         border-color)
+      (element.helpers/apply-color :color            :data-color                       color)
+      (element.helpers/apply-color :hover-color      :data-hover-color           hover-color)))
 
 (defn button-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -150,8 +153,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:disabled? (boolean)(opt)
-  ;   :on-mouse-over (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ;   :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
   ;  {:data-clickable (boolean)
@@ -160,21 +162,19 @@
   ;   :id (string)
   ;   :on-click (function)
   ;   :on-mouse-over (function)
-  ;   :on-mouse-up (function)
-  ;   :style (map)}
-  [button-id {:keys [disabled? on-mouse-over style] :as button-props}]
-  (merge {:data-selectable false
-          :style           style}
+  ;   :on-mouse-up (function)}
+  [button-id {:keys [disabled? on-mouse-over] :as button-props}]
+  (merge {:data-selectable false}
          (button-color-attributes  button-id button-props)
          (button-font-attributes   button-id button-props)
          (button-layout-attributes button-id button-props)
          (if disabled? {:disabled       true
-                        :on-click       (on-click-f button-id button-props)}
-                       {:data-clickable true
-                        :id             (hiccup/value button-id "body")
+                        :on-click       (on-click-f   button-id button-props)}
+                       {:id             (hiccup/value button-id "body")
                         :on-click       (on-click-f   button-id button-props)
                         :on-mouse-over  #(r/dispatch on-mouse-over)
-                        :on-mouse-up    #(x.environment/blur-element!)})))
+                        :on-mouse-up    #(x.environment/blur-element!)
+                        :data-clickable true})))
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

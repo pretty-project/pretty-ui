@@ -42,7 +42,8 @@
 (defn apply-color
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) element-props
+  ; @param (map) element-attributes
+  ;  {:style (map)(opt)}
   ; @param (keyword) color-key
   ; @param (keyword) color-data-key
   ; @param (keyword or string) color-value
@@ -57,16 +58,22 @@
   ;  =>
   ;  {:style {:color "fff"}}
   ;
+  ; @example
+  ;  (apply-color {:style {:padding "12px"}} :color :data-color "#fff")
+  ;  =>
+  ;  {:style {:color "fff" :padding "12px"}}
+  ;
   ; @return (map)
-  [element-props color-key color-data-key color-value]
-  (cond (keyword? color-value) (assoc    element-props color-data-key     color-value)
-        (string?  color-value) (assoc-in element-props [:style color-key] color-value)
-        :return element-props))
+  ;  {:style (map)}
+  [element-attributes color-key color-data-key color-value]
+  (cond (keyword? color-value) (assoc    element-attributes color-data-key     color-value)
+        (string?  color-value) (assoc-in element-attributes [:style color-key] color-value)
+        :return element-attributes))
 
 (defn apply-dimension
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) element-props
+  ; @param (map) element-attributes
   ; @param (keyword) dimension-key
   ; @param (keyword) dimension-data-key
   ; @param (keyword, px or string) dimension-value
@@ -87,10 +94,10 @@
   ;  {:data-min-width :s}
   ;
   ; @return (map)
-  [element-props dimension-key dimension-data-key dimension-value]
-  (cond (keyword? dimension-value) (assoc    element-props dimension-data-key dimension-value)
-        (integer? dimension-value) (assoc-in element-props [:style dimension-key] (css/px dimension-value))
-        (string?  dimension-value) (assoc-in element-props [:style dimension-key] (param  dimension-value))))
+  [element-attributes dimension-key dimension-data-key dimension-value]
+  (cond (keyword? dimension-value) (assoc    element-attributes dimension-data-key dimension-value)
+        (integer? dimension-value) (assoc-in element-attributes [:style dimension-key] (css/px dimension-value))
+        (string?  dimension-value) (assoc-in element-attributes [:style dimension-key] (param  dimension-value))))
 
 
 
