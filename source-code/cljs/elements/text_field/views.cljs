@@ -336,7 +336,7 @@
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :xxs
+  ;    Default: :none
   ;   :modifier (function)(opt)
   ;   :on-blur (metamorphic-event)(opt)
   ;   :on-change (metamorphic-event)(opt)

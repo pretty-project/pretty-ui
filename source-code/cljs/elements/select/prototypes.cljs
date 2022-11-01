@@ -32,7 +32,6 @@
   ;   :border-radius (keyword)
   ;   :option-field-placeholder (metamorphic-content)
   ;   :layout (keyword)
-  ;   :min-width (keyword)
   ;   :no-options-label (metamorphic-content)
   ;   :option-label-f (function)
   ;   :option-value-f (function)
@@ -44,7 +43,6 @@
           :option-label-f           return
           :option-value-f           return
           :layout                   :select
-          :min-width                :xxs
           :no-options-label         :no-options
           :options-path             (input.helpers/default-options-path select-id)
           :value-path               (input.helpers/default-value-path   select-id)}

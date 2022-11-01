@@ -126,7 +126,7 @@
   width: 100% }
 
 @media only screen and (max-width: 719px) {
-#surface-a--body { padding-top: 60px }}
+#surface-a--body { -padding-top: 0 }}
 
 #surface-a--body-content {
  -background: white;
@@ -134,7 +134,7 @@
  -border: 1px solid #f0f0f0;
   max-width: var( --content-width-l );
 
-  /* x4.7.2#1
+  /* x4.7.2 #1
    * A surface-a felületen megjelenő tartalom padding-left és padding-right
    * tulajdonságai kikapcsolásra kerültek, hogy a felület széléhez igazított
    * ikon-gombok a fejléc ikon-gombjai alatt jelenjenek meg */

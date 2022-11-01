@@ -27,10 +27,8 @@
   ;
   ; @return (map)
   ;  {:border-radius (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :min-width (keyword)}
+  ;   :horizontal-align (keyword)}
   [card-props]
   (merge {:border-radius    :s
-          :horizontal-align :center
-          :min-width        :xxs}
+          :horizontal-align :center}
          (param card-props)))

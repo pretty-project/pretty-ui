@@ -94,7 +94,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :xxs
+  ;    Default: :none
   ;   :on-click (metamorphic-event)(opt)
   ;   :stretch-orientation (keyword)(opt)
   ;    :horizontal, :vertical, :both, :none

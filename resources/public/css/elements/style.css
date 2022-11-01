@@ -70,11 +70,11 @@ body {
   --element-min-width-xs:  272px;
 
   /* */
-  --element-min-width-s:   var( --content-width-xxs );
-  --element-min-width-m:   var( --content-width-xs );
-  --element-min-width-l:   var( --content-width-s );
-  --element-min-width-xl:  var( --content-width-m );
-  --element-min-width-xxl: var( --content-width-l );
+  --element-min-width-s:   272px;
+  --element-min-width-m:   272px;
+  --element-min-width-l:   272px;
+  --element-min-width-xl:  272px;
+  --element-min-width-xxl: 272px;
 }
 
 /***** Element profiles *****/
