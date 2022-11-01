@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.queries
-    (:require [plugins.item-editor.core.subs     :as core.subs]
-              [plugins.item-editor.download.subs :as download.subs]
+    (:require [plugins.item-viewer.core.subs     :as core.subs]
+              [plugins.item-viewer.download.subs :as download.subs]
               [re-frame.api                      :refer [r]]))
 
 
