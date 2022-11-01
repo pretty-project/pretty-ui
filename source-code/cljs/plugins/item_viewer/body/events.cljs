@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.body.events
-    (:require [plugins.item-viewer.core.events    :as core.events]
-              [plugins.engine-handler.body.events :as body.events]
+    (:require [engines.engine-handler.body.events :as body.events]
+              [plugins.item-viewer.core.events    :as core.events]
               [re-frame.api                       :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.body.events
+; engines.engine-handler.body.events
 (def store-body-props!  body.events/store-body-props!)
 (def remove-body-props! body.events/remove-body-props!)
 (def update-body-props! body.events/update-body-props!)

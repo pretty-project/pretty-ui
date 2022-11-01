@@ -23,6 +23,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- breadcrumbs-separator
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  [_ _]
+  [:div.e-breadcrumbs--separator])
+
 (defn- breadcrumbs-static-crumb
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -72,9 +80,12 @@
   ;  {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   [:div.e-breadcrumbs--body (breadcrumbs.helpers/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
-                            (letfn [(f [crumb-list crumb]
-                                       (conj crumb-list [breadcrumbs-crumb breadcrumbs-id breadcrumbs-props crumb]))]
-                                   (reduce f [:<>] crumbs))])
+                            (letfn [(f [crumb-list dex crumb]
+                                       (conj crumb-list (if (not= dex 0)
+                                                            [:<> [breadcrumbs-separator breadcrumbs-id breadcrumbs-props crumb]
+                                                                 [breadcrumbs-crumb     breadcrumbs-id breadcrumbs-props crumb]]
+                                                            [:<> [breadcrumbs-crumb     breadcrumbs-id breadcrumbs-props crumb]])))]
+                                   (reduce-kv f [:<>] crumbs))])
 
 (defn- breadcrumbs
   ; WARNING! NON-PUBLIC! DO NOT USE!

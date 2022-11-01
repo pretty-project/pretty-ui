@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.items.subs
-    (:require [plugins.engine-handler.items.subs :as items.subs]
+    (:require [engines.engine-handler.items.subs :as items.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 

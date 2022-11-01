@@ -31,12 +31,14 @@
   ;  {:background-color (keyword or string)
   ;   :border-radius (keyword)
   ;   :color (keyword or string)
+  ;   :height (keyword)
   ;   :icon-family (keyword)
-  ;   :height (keyword)}
+  ;   :width (keyword)}
   [{:keys [background-color hover-color] :as button-props}]
   (merge {:color            :default
           :icon-family      :material-icons-filled
-          :height           :xxl}
+          :height           :xxl
+          :width            :xxl}
          (if background-color {:border-radius :s})
          (if hover-color      {:border-radius :s})
          (param button-props)))

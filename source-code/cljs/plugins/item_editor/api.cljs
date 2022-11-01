@@ -28,7 +28,7 @@
               [plugins.item-editor.update.subs]
               [plugins.item-editor.backup.subs :as backup.subs]
               [plugins.item-editor.body.views  :as body.views]
-              [plugins.item-lister.core.events :as core.events]
+              [plugins.item-editor.core.events :as core.events]
               [plugins.item-editor.core.subs   :as core.subs]
               [plugins.item-editor.routes.subs :as routes.subs]))
 

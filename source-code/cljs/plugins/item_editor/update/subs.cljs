@@ -15,10 +15,10 @@
 (ns plugins.item-editor.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
               [mid-fruits.map                     :as map]
+              [engines.engine-handler.update.subs :as update.subs]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
               [plugins.item-editor.transfer.subs  :as transfer.subs]
-              [plugins.engine-handler.update.subs :as update.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.update.subs
+; engines.engine-handler.update.subs
 (def get-mutation-name   update.subs/get-mutation-name)
 (def get-mutation-answer update.subs/get-mutation-answer)
 

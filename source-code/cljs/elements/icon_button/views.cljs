@@ -99,6 +99,9 @@
   ;    Default: :default
   ;   :disabled? (boolean)(opt)
   ;    Default: false
+  ;   :height (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl
+  ;    Default: :xxl
   ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   ;    Default: :none
@@ -119,9 +122,6 @@
   ;    {:key-code (integer)
   ;     :required? (boolean)(opt)
   ;      Default: false}
-  ;   :height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :xxl
   ;   :label (metamorphic-content)(opt)
   ;   :on-click (metamorphic handler)(opt)
   ;   :on-mouse-over (metamorphic handler)(opt)
@@ -130,7 +130,10 @@
   ;    Default: false
   ;   :style (map)(opt)
   ;   :variant (keyword)(opt)
-  ;    :placeholder}
+  ;    :placeholder
+  ;   :width (keyword)(opt)
+  ;    :xxl, :3xl
+  ;    Default: :xxl}
   ;
   ; @usage
   ;  [icon-button {...}]

@@ -14,10 +14,10 @@
 
 (ns plugins.item-browser.core.subs
     (:require [mid-fruits.keyword                 :as keyword]
+              [engines.engine-handler.core.subs   :as core.subs]
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
               [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
-              [plugins.engine-handler.core.subs   :as core.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -25,21 +25,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; engines.engine-handler.core.subs
+(def get-meta-item          core.subs/get-meta-item)
+(def engine-synchronizing?  core.subs/engine-synchronizing?)
+(def get-current-item-id    core.subs/get-current-item-id)
+(def get-current-item       core.subs/get-current-item)
+(def get-current-item-label core.subs/get-current-item-label)
+(def get-auto-title         core.subs/get-auto-title)
+(def use-query-params       core.subs/use-query-params)
+
 ; plugins.item-lister.core.subs
 (def get-all-item-count      plugins.item-lister.core.subs/get-all-item-count)
 (def lister-disabled?        plugins.item-lister.core.subs/lister-disabled?)
 (def get-downloaded-items    plugins.item-lister.core.subs/get-downloaded-items)
 (def export-downloaded-items plugins.item-lister.core.subs/export-downloaded-items)
 (def get-current-order-by    plugins.item-lister.core.subs/get-current-order-by)
-
-; plugins.engine-handler.core.subs
-(def get-meta-item          core.subs/get-meta-item)
-(def plugin-synchronizing?  core.subs/plugin-synchronizing?)
-(def get-current-item-id    core.subs/get-current-item-id)
-(def get-current-item       core.subs/get-current-item)
-(def get-current-item-label core.subs/get-current-item-label)
-(def get-auto-title         core.subs/get-auto-title)
-(def use-query-params       core.subs/use-query-params)
 
 
 ;; ----------------------------------------------------------------------------
@@ -77,6 +77,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
+  ;
+  ; @usage
+  ;  (r get-current-item-path db :my-browser)
+  ;  =>
+  ;  [{:my-type/id "my-item"} {...}]
   ;
   ; @return (maps in vector)
   [db [_ browser-id]]
@@ -120,7 +125,7 @@
        (if-let [parent-link (last current-item-path)]
                (get parent-link (keyword/add-namespace item-namespace :id)))))
 
-
+ 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -44,6 +44,9 @@
            :item-number
            {:en "Item number"
             :hu "Cikkszám"}
+           :item-number-n
+           {:en "Item number: %"
+            :hu "Cikkszám: %"}
            :manual-price
            {:en "Manual price"
             :hu "Egyedi ár"}

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-preview.transfer.subs
-    (:require [plugins.engine-handler.transfer.subs :as transfer.subs]
+    (:require [engines.engine-handler.transfer.subs :as transfer.subs]
               [re-frame.api                         :as r]))
 
 
@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.transfer.subs
+; engines.engine-handler.transfer.subs
 (def get-transfer-item transfer.subs/get-transfer-item)
 
 

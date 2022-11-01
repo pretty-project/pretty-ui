@@ -93,6 +93,26 @@
   [db _]
   (r viewport-profiles-match? db [:l :xl :xxl]))
 
+(defn viewport-min?
+  ; @param (px) min-width
+  ;
+  ; @usage
+  ;  (r viewport-min? db 1024)
+  ;
+  ; @return (boolean)
+  [db [_ min-width]]
+  (<= min-width (r get-viewport-width db)))
+
+(defn viewport-max?
+  ; @param (px) max-width
+  ;
+  ; @usage
+  ;  (r viewport-max? db 1024)
+  ;
+  ; @return (boolean)
+  [db [_ max-width]]
+  (>= max-width (r get-viewport-width db)))
+
 (defn get-viewport-orientation
   ; @usage
   ;  (r get-viewport-orientation db)
@@ -138,6 +158,14 @@
 ; @usage
 ;  [:environment/viewport-large?]
 (r/reg-sub :environment/viewport-large? viewport-large?)
+
+; @usage
+;  [:environment/viewport-min? 1024]
+(r/reg-sub :environment/viewport-min? viewport-min?)
+
+; @usage
+;  [:environment/viewport-max? 1024]
+(r/reg-sub :environment/viewport-max? viewport-max?)
 
 ; @usage
 ;  [:environment/get-viewport-orientation]

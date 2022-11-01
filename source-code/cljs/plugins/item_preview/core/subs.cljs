@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-preview.core.subs
-    (:require [plugins.item-preview.body.subs   :as body.subs]
-              [plugins.engine-handler.core.subs :as core.subs]
+    (:require [engines.engine-handler.core.subs :as core.subs]
+              [plugins.item-preview.body.subs   :as body.subs]
               [re-frame.api                     :as r :refer [r]]))
 
 
@@ -22,9 +22,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.subs
+; engines.engine-handler.core.subs
 (def get-meta-item         core.subs/get-meta-item)
-(def plugin-synchronizing? core.subs/plugin-synchronizing?)
+(def engine-synchronizing? core.subs/engine-synchronizing?)
 (def get-current-item-id   core.subs/get-current-item-id)
 (def no-item-id-passed?    core.subs/no-item-id-passed?)
 (def get-current-item      core.subs/get-current-item)
@@ -59,7 +59,7 @@
   ; @return (boolean)
   [db [_ preview-id]]
   ; XXX#0771
-  (r plugin-synchronizing? db preview-id preview-id))
+  (r engine-synchronizing? db preview-id preview-id))
 
 
 

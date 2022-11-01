@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.selection.events
-    (:require [plugins.engine-handler.selection.events :as selection.events]
+    (:require [engines.engine-handler.selection.events :as selection.events]
               [re-frame.api                            :as r :refer [r]]))
 
 

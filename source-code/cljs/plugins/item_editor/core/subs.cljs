@@ -15,9 +15,9 @@
 (ns plugins.item-editor.core.subs
     (:require [mid-fruits.logical                :refer [nor]]
               [mid-fruits.vector                 :as vector]
+              [engines.engine-handler.core.subs  :as core.subs]
               [plugins.item-editor.body.subs     :as body.subs]
               [plugins.item-editor.download.subs :as download.subs]
-              [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]
               [x.app-router.api                  :as x.router]))
 
@@ -26,9 +26,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.subs
+; engines.engine-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
-(def plugin-synchronizing?        core.subs/plugin-synchronizing?)
+(def engine-synchronizing?        core.subs/engine-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
@@ -59,7 +59,7 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  (r plugin-synchronizing? db editor-id :editor))
+  (r engine-synchronizing? db editor-id :editor))
 
 
 

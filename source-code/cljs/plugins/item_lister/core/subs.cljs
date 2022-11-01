@@ -14,9 +14,9 @@
 
 (ns plugins.item-lister.core.subs
     (:require [mid-fruits.candy                  :refer [return]]
+              [engines.engine-handler.core.subs  :as core.subs]
               [plugins.item-lister.body.subs     :as body.subs]
               [plugins.item-lister.download.subs :as download.subs]
-              [plugins.engine-handler.core.subs  :as core.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 
@@ -24,9 +24,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.subs
+; engines.engine-handler.core.subs
 (def get-meta-item             core.subs/get-meta-item)
-(def plugin-synchronizing?     core.subs/plugin-synchronizing?)
+(def engine-synchronizing?     core.subs/engine-synchronizing?)
 (def get-downloaded-items      core.subs/get-downloaded-items)
 (def export-downloaded-items   core.subs/export-downloaded-items)
 (def get-downloaded-item-count core.subs/get-downloaded-item-count)
@@ -54,7 +54,7 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (r plugin-synchronizing? db lister-id :lister))
+  (r engine-synchronizing? db lister-id :lister))
 
 
 

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-browser.items.events
-    (:require [plugins.item-browser.items.subs     :as items.subs]
-              [plugins.engine-handler.items.events :as items.events]
+    (:require [engines.engine-handler.items.events :as items.events]
+              [plugins.item-browser.items.subs     :as items.subs]
               [re-frame.api                        :refer [r]]))
 
 

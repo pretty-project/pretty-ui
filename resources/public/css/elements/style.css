@@ -84,8 +84,6 @@ body {
 /***** Active state and focused state *****/
 
 /* WARNING! DEPRECATED! USE {:data-clickable true} INSTEAD! */
-.e-icon-button--body:active,
-.e-icon-button--body:focus,
 .e-menu-bar--menu-item:active,
 .e-menu-bar--menu-item:focus,
 /* DEPRECATED! */
@@ -273,7 +271,7 @@ body {
 .e-anchor[data-color="muted"],
 .e-button--body[data-color="muted"],
 .e-chip[data-color="muted"] .e-chip--body,
-.e-icon[data-color="muted"] .e-icon--body,
+.e-icon--body[data-color="muted"],
 .e-icon-button--body[data-color="muted"],
 .e-label[data-color="muted"],
 .e-text[data-color="muted"] .e-text--body {
@@ -337,7 +335,7 @@ body {
 
 .e-button--body[data-color="highlight"],
 .e-chip[data-color="highlight"] .e-chip--body,
-.e-icon[data-color="highlight"] .e-icon--body,
+.e-icon--body[data-color="highlight"],
 .e-icon-button--body[data-color="highlight"],
 .e-label[data-color="highlight"],
 .e-text[data-color="highlight"] .e-text--body {
@@ -361,7 +359,7 @@ body {
 /* Text-color */
 
 .e-button--body[data-color="invert"],
-.e-icon[data-color="invert"] .e-icon--body,
+.e-icon--body[data-color="invert"],
 .e-icon-button--body[data-color="invert"],
 .e-label[data-color="invert"],
 .e-text[data-color="invert"] {
@@ -437,7 +435,7 @@ body {
 .e-anchor[data-color="primary"],
 .e-button--body[data-color="primary"],
 .e-chip[data-color="primary"] .e-chip--body,
-.e-icon[data-color="primary"] .e-icon--body,
+.e-icon--body[data-color="primary"],
 .e-icon-button--body[data-color="primary"],
 .e-label[data-color="primary"],
 .e-text[data-color="primary"] .e-text--body {
@@ -513,7 +511,7 @@ body {
 .e-anchor[data-color="secondary"],
 .e-button--body[data-color="secondary"],
 .e-chip[data-color="secondary"] .e-chip--body,
-.e-icon[data-color="secondary"] .e-icon--body,
+.e-icon--body[data-color="secondary"],
 .e-icon-button--body[data-color="secondary"],
 .e-label[data-color="secondary"],
 .e-text[data-color="secondary"] .e-text--body {
@@ -588,7 +586,7 @@ body {
 .e-anchor[data-color="success"],
 .e-button--body[data-color="success"],
 .e-chip[data-color="success"] .e-chip--body,
-.e-icon[data-color="success"] .e-icon--body,
+.e-icon--body[data-color="success"],
 .e-icon-button--body[data-color="success"],
 .e-label[data-color="success"],
 .e-text[data-color="success"] .e-text--body {
@@ -664,7 +662,7 @@ body {
 .e-anchor[data-color="warning"],
 .e-button--body[data-color="warning"],
 .e-chip[data-color="warning"] .e-chip--body,
-.e-icon[data-color="warning"] .e-icon--body,
+.e-icon--body[data-color="warning"],
 .e-icon-button--body[data-color="warning"],
 .e-label[data-color="warning"],
 .e-text[data-color="warning"] .e-text--body {
@@ -702,7 +700,7 @@ body {
 /***** Font-size profiles *****/
 /*** XXS ***/
 
-.e-icon[data-size="xxs"] .e-icon--body {
+.e-icon--body[data-size="xxs"] {
   font-size: var( --icon-size-xxs );
 
   /* BUG#0983 */
@@ -743,7 +741,7 @@ body {
 
 /*** XS ***/
 
-.e-icon[data-size="xs"] .e-icon--body {
+.e-icon--body[data-size="xs"] {
   font-size: var( --icon-size-xs );
 
   /* BUG#0983 */
@@ -786,7 +784,7 @@ body {
 
 /*** S ***/
 
-.e-icon[data-size="s"] .e-icon--body {
+.e-icon--body[data-size="s"] {
   font-size: var( --icon-size-s );
 
   /* BUG#0983 */
@@ -824,7 +822,7 @@ body {
 
 /*** M ***/
 
-.e-icon[data-size="m"] .e-icon--body {
+.e-icon--body[data-size="m"] {
   font-size: var( --icon-size-m );
 
   /* BUG#0983 */
@@ -855,7 +853,7 @@ body {
 
 /*** L ***/
 
-.e-icon[data-size="l"] .e-icon--body {
+.e-icon--body[data-size="l"] {
   font-size: var( --icon-size-l );
 
   /* BUG#0983 */
@@ -886,7 +884,7 @@ body {
 
 /*** XL ***/
 
-.e-icon[data-size="xl"] .e-icon--body {
+.e-icon--body[data-size="xl"] {
   font-size: var( --icon-size-xl );
 
   /* BUG#0983 */
@@ -917,7 +915,7 @@ body {
 
 /*** XXL ***/
 
-.e-icon[data-size="xxl"] .e-icon--body {
+.e-icon--body[data-size="xxl"] {
   font-size: var( --icon-size-xxl );
 
   /* BUG#0983 */
@@ -1323,6 +1321,13 @@ body {
 .e-icon-button--body[data-height="xxl"] {
   height: 48px }
 
+.e-icon-button--body[data-width="xxl"] {
+  width: 100%;
+  /* BUG#0990
+   * A min-width tulajdonság azért szükséges, hogy az icon-button elemet
+   * a környező tartalom ne kényszerítse méretcsökkenésre */
+  min-width: 48px }
+
 .e-color-stamp--body[data-size="xxl"] {
   grid-gap: 2px;
   height: 48px;
@@ -1351,6 +1356,14 @@ body {
 /*** XXL ***/
 
 /*** 3XL ***/
+
+.e-icon-button--body[data-height="3xl"] {
+  height: 60px }
+
+.e-icon-button--body[data-width="3xl"] {
+  width: 100%;
+  /* BUG#0990 */
+  min-width: 60px }
 
 .e-ghost[data-height="3xl"] .e-ghost--body {
   height: 60px }
@@ -1681,7 +1694,7 @@ body {
 
 .e-breadcrumbs--body {
   display: flex;
-  grid-column-gap: 24px;
+  grid-column-gap: 9px;
   overflow-x: auto }
 
 /*** Breadcrumbs body ***/
@@ -1689,21 +1702,27 @@ body {
 /*** Breadcrumbs crumb ***/
 
 .e-breadcrumbs--crumb {
-  color: var( --color-muted );
-  font-size: var( --font-size-xs );
+  color:          var( --color-muted );
+  font-size:      var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 24px;
-  white-space: nowrap }
+  line-height:    24px;
+  max-width:      160px;
+  overflow-x:     hidden;
+  text-overflow:  ellipsis;
+  white-space:    nowrap }
 
-.e-breadcrumbs--crumb:not(:last-child):after {
-  background-color: var( --border-color-highlight );
-  border-radius: 3px;
-  content: '';
-  height: 6px;
-  position: absolute;
-  right: -15px;
-  top: 9px;
-  width: 6px }
+.e-breadcrumbs--separator {
+  align-items: center;
+  display: flex;
+  height: 24px }
+
+.e-breadcrumbs--separator::after {
+  background-color: var( --border-color-muted );
+  border-radius:    3px;
+  content:          '';
+  height:           6px;
+  opacity:          .6;
+  width:            6px }
 
 .e-breadcrumbs--crumb[data-clickable] {
   font-weight: 600 }
@@ -2439,7 +2458,7 @@ body {
 
 /*** Icon layout ***/
 
-.e-icon[data-layout="touch-target"] {
+.e-icon--body[data-layout="touch-target"] {
   height: 48px;
   width: 48px }
 
@@ -2572,11 +2591,6 @@ body {
 /***** Icon-button *****/
 /*** Icon-button wrapper ***/
 
-.e-icon-button--body {
-  /* A min-width tulajdonság azért szükséges, hogy az icon-button elemet a környező tartalom ne
-   * kényszerítse méretcsökkenésre */
-  min-width: 48px }
-
 .e-icon-button--body[data-border-color] {
   border-style: solid;
   border-width: 1px }
@@ -2599,8 +2613,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: center;
-  width: 100% }
+  justify-content: center }
 
 .e-icon-button[data-variant="placeholder"] .e-icon-button--body {
   cursor: default }
@@ -2615,10 +2628,10 @@ body {
   position: absolute;
   top: 6px;
 
-  /* Azért calc(100% - 12px) magas és 36px széles a hover-background az ikon-button elemen,
-   * mert így az érzékelési terület szélétől 6px távolságra van, ami megegyezik
-   * a legkisebb indent méretével (XXS indent: 6px) */
-  width: 36px;
+  /* Azért calc(100% - 12px) magas és széles a hover-background az ikon-button
+   * elemen, mert így az érzékelési terület szélétől 6px távolságra van, ami
+   * megegyezik a legkisebb indent méretével (XXS indent: 6px) */
+  width: calc(100% - 12px);
 
   /* XXX#6610
    * Az ikon-gomb magassága a data-height attributtummal változik ezért szükséges
@@ -2628,10 +2641,8 @@ body {
 .e-icon-button--body[data-labeled="true"]::before {
   /* TEMP
    * Teszt: hover-color & label együtt */
-  left: 10px;
-  top: 10px;
-  height: calc(100% - 20px);
-  width: 28px }
+  top: 12px;
+  height: calc(100% - 24px) }
 
 /*** Icon-button hover ***/
 
@@ -2648,16 +2659,17 @@ body {
   /* BUG#0983
    * height, overflow, width:
    * A material-icon font-készlet letöltődése előtt felvillan az ikon neve (FOIT/FOUT).
-   * A height, overflow, és width tulajdonságok beállítása nélkül az ikon méretének pillanatnyi
-   * megváltozását okozná. */
+   * A height, overflow, és width tulajdonságok beállítása nélkül az ikon méretének
+   * pillanatnyi megváltozását okozná. */
   height: var( --icon-size-default );
   overflow: hidden;
 
   /* BUG#0984
-   * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal rendelkező pszeudo-elem
-   * eltakarná az ikont, ha az nem abszolút pozícionálással jellene meg, mert a pszeudo-elem
-   * a {position: absolute} beállítása miatt az ikon felett jelenne meg! */
-  left: 12px;
+   * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal
+   * rendelkező pszeudo-elem eltakarná az ikont, ha az nem abszolút pozícionálással
+   * jellene meg, mert a pszeudo-elem a {position: absolute} beállítása miatt
+   * az ikon felett jelenne meg! */
+  left: calc(50% - 12px);
   position: absolute;
 
   /* XXX#6610

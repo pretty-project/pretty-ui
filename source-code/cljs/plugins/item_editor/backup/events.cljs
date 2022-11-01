@@ -15,10 +15,10 @@
 (ns plugins.item-editor.backup.events
     (:require [mid-fruits.candy                     :refer [return]]
               [mid-fruits.map                       :as map :refer [dissoc-in]]
+              [engines.engine-handler.backup.events :as backup.events]
               [plugins.item-editor.backup.subs      :as backup.subs]
               [plugins.item-editor.body.subs        :as body.subs]
               [plugins.item-editor.core.subs        :as core.subs]
-              [plugins.engine-handler.backup.events :as backup.events]
               [re-frame.api                         :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.backup.events
+; engines.engine-handler.backup.events
 (def backup-current-item! backup.events/backup-current-item!)
 
 

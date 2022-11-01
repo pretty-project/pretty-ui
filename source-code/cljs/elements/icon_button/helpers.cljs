@@ -27,12 +27,17 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:label (metamorphic-content)(opt)}
+  ;  {:height (keyword)
+  ;   :label (metamorphic-content)(opt)
+  ;   :width (keyword)}
   ;
   ; @return (map)
-  ;  {:data-labeled (boolean)}
-  [button-id {:keys [height label] :as button-props}]
+  ;  {:data-height (keyword)
+  ;   :data-labeled (boolean)
+  ;   :data-width (keyword)}
+  [button-id {:keys [height label width] :as button-props}]
   (merge {:data-height  height
+          :data-width   width
           :data-labeled (boolean label)}
          (button.helpers/button-body-attributes button-id button-props)))
 

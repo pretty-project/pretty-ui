@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns forms.attributes
-    (:require [mid-fruits.css :as css]))
+    (:require [mid-fruits.css :as css]
+              [re-frame.api   :as r]))
 
 
 
@@ -35,7 +36,9 @@
   ;  {:class (keyword)
   ;   :style (map)}
   ([]                (form-block-attributes {:ratio 100}))
-  ([{:keys [ratio]}] {:style {:min-width (css/percent ratio)} :class :forms--form-block}))
+  ([{:keys [ratio]}] (if-let [viewport-large? @(r/subscribe [:environment/viewport-large?])]
+                             {:style {:min-width (css/percent ratio)} :class :forms--form-block}
+                             {:style {:min-width (css/percent 100)}   :class :forms--form-block})))
 
 (defn form-row-attributes
   ; @param (map)(opt) options

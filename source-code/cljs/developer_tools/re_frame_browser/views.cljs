@@ -34,28 +34,6 @@
   [:div {:style {:width "100%" :height "1px" :margin-bottom "24px"
                  :border "1px dashed var( --border-color-highlight)"}}])
 
-(defn icon-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [label & [disabled?]]
-  [:span {:style {:display "block" :text-align "center" :font-size "10px" :font-weight "600"
-                  :opacity (if disabled? ".5" "1")}}
-         (param label)])
-
-(defn icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  [{:keys [disabled? icon label on-click]}]
-  (if disabled? [:div {:style {:padding "0 12px" :min-width "60px"}}
-                      [:div.x-icon.x-element {:style {:opacity ".5" :width "100%"}}
-                                             [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
-                      [icon-button-label label true]]
-                [:button {:data-clickable true
-                          :on-click    #(r/dispatch on-click)
-                          :on-mouse-up #(x.environment/blur-element!)
-                          :style {:display :block :padding "0 12px" :min-width "60px"}}
-                         [:div.x-icon.x-element {:style {:width "100%"}}
-                                                [:i.x-icon--body {:data-icon-family :material-icons-filled} icon]]
-                         [icon-button-label label]]))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -94,7 +72,7 @@
 (defn header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [item-type]
-  [:div {:style {:margin-bottom "12px"}}
+  [:div {:style {}}
         [label-bar item-type]
         [breadcrumbs]])
 
@@ -103,85 +81,123 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn decrease-integer-button
+(defn decrease-integer-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
-       [icon-button {:icon "remove" :label "Dec" :on-click [:db/apply-item! current-path dec]}]))
+       [elements/icon-button ::decrease-integer-icon-button
+                             {:icon :remove :label "Dec" :on-click [:db/apply-item! current-path dec]
+                              :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn increase-integer-button
+(defn increase-integer-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
-       [icon-button {:icon "add" :label "Inc" :on-click [:db/apply-item! current-path inc]}]))
+       [elements/icon-button ::increase-integer-icon-button
+                             {:icon :add :label "Inc" :on-click [:db/apply-item! current-path inc]
+                              :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn swap-boolean-button
+(defn swap-boolean-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        (if-let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
-               [icon-button {:icon "task_alt"       :label "True"  :on-click [:db/toggle-item! current-path]}]
-               [icon-button {:icon "do_not_disturb" :label "False" :on-click [:db/toggle-item! current-path]}])))
+               [elements/icon-button ::swap-boolean-icon-button
+                                     {:icon :task_alt       :label "True"  :on-click [:db/toggle-item! current-path]
+                                      :hover-color :highlight :height :3xl :width :3xl}]
+               [elements/icon-button ::swap-boolean-icon-button
+                                     {:icon :do_not_disturb :label "False" :on-click [:db/toggle-item! current-path]
+                                      :hover-color :highlight :height :3xl :width :3xl}])))
 
-(defn toggle-data-view-button
+(defn toggle-data-view-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [show-data? @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :show-data?])]
-          [icon-button {:icon "code_off" :label "Hide data" :on-click [:developer-tools.re-frame-browser/toggle-data-view!]}]
-          [icon-button {:icon "code"     :label "Show data" :on-click [:developer-tools.re-frame-browser/toggle-data-view!]}]))
+          [elements/icon-button ::hide-data-icon-icon-button
+                                {:icon :code_off :label "Hide data" :on-click [:developer-tools.re-frame-browser/toggle-data-view!]
+                                 :hover-color :highlight :height :3xl :width :3xl}]
+          [elements/icon-button ::show-data-icon-icon-button
+                                {:icon :code     :label "Show data" :on-click [:developer-tools.re-frame-browser/toggle-data-view!]
+                                 :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn go-home-button
+(defn go-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [root-level? @(r/subscribe [:developer-tools.re-frame-browser/root-level?])]
-          [icon-button {:icon "home" :label "Root" :disabled? true}]
-          [icon-button {:icon "home" :label "Root" :on-click [:developer-tools.re-frame-browser/go-to! []]}]))
+          [elements/icon-button ::go-home-icon-button
+                                {:icon :home :label "Root" :disabled? true
+                                 :hover-color :highlight :height :3xl :width :3xl}]
+          [elements/icon-button ::go-home-icon-button
+                                {:icon :home :label "Root" :on-click [:developer-tools.re-frame-browser/go-to! []]
+                                 :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn go-up-button
+(defn go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [root-level? @(r/subscribe [:developer-tools.re-frame-browser/root-level?])]
-          [icon-button {:icon "chevron_left" :label "Go up" :disabled? true}]
-          [icon-button {:icon "chevron_left" :label "Go up" :on-click [:developer-tools.re-frame-browser/go-up!]}]))
+          [elements/icon-button ::go-up-icon-button
+                                {:icon :chevron_left :label "Go up" :disabled? true
+                                 :hover-color :highlight :height :3xl :width :3xl}]
+          [elements/icon-button ::go-up-icon-button
+                                {:icon :chevron_left :label "Go up" :on-click [:developer-tools.re-frame-browser/go-up!]
+                                 :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn remove-item-button
+(defn remove-item-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [root-level? @(r/subscribe [:developer-tools.re-frame-browser/root-level?])]
-          [icon-button {:icon "delete" :label "Remove" :disabled? true}]
+          [elements/icon-button ::remove-item-icon-button
+                                {:icon :delete :label "Remove" :disabled? true
+                                 :hover-color :highlight :height :3xl :width :3xl}]
           (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])
                 remove-event [:db/move-item! current-path [:developer-tools :re-frame-browser/meta-items :bin]]]
-               [icon-button {:icon "delete" :label "Remove" :on-click remove-event}])))
+               [elements/icon-button ::remove-item-icon-button
+                                     {:icon :delete :label "Remove" :on-click remove-event
+                                      :hover-color :highlight :height :3xl :width :3xl}])))
 
-(defn edit-item-button
+(defn edit-item-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [root-level? @(r/subscribe [:developer-tools.re-frame-browser/root-level?])]
-          [icon-button {:icon "edit" :label "Edit" :disabled? true}]
+          [elements/icon-button ::edit-item-icon-button
+                                {:icon :edit :label "Edit" :disabled? true
+                                 :hover-color :highlight :height :3xl :width :3xl}]
           (if-let [edit-item? @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :edit-item?])]
-                  [icon-button {:icon "edit_off" :label "Save" :on-click [:developer-tools.re-frame-browser/toggle-edit-item-mode!]}]
-                  [icon-button {:icon "edit"     :label "Edit" :on-click [:developer-tools.re-frame-browser/toggle-edit-item-mode!]}])))
+                  [elements/icon-button ::edit-item-icon-button
+                                        {:icon :edit_off :label "Save" :on-click [:developer-tools.re-frame-browser/toggle-edit-item-mode!]
+                                         :hover-color :highlight :height :3xl :width :3xl}]
+                  [elements/icon-button ::edit-item-icon-button
+                                        {:icon :edit     :label "Edit" :on-click [:developer-tools.re-frame-browser/toggle-edit-item-mode!]
+                                         :hover-color :highlight :height :3xl :width :3xl}])))
 
-(defn recycle-item-button
+(defn recycle-item-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        (if-let [bin @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :bin])]
                (let [revert-event [:db/move-item! [:developer-tools :re-frame-browser/meta-items :bin] current-path]]
-                    [icon-button {:icon "recycling" :label "Restore" :on-click revert-event}]))))
+                    [elements/icon-button ::recycle-item-icon-button
+                                          {:icon :recycling :label "Restore" :on-click revert-event
+                                           :hover-color :highlight :height :3xl :width :3xl}]))))
 
-(defn dispatch-event-button
+(defn dispatch-event-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
-       [icon-button {:icon "local_fire_department" :label "Dispatch" :on-click current-item}]))
+       [elements/icon-button ::dispatch-event-icon-button
+                             {:icon :local_fire_department :label "Dispatch" :on-click current-item
+                              :hover-color :highlight :height :3xl :width :3xl}]))
 
-(defn toggle-subscription-button
+(defn toggle-subscription-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (if-let [subscribe? @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :subscribe?])]
-          [icon-button {:icon "pause_circle" :label "Unsubscribe" :on-click [:developer-tools.re-frame-browser/toggle-subscription!]}]
-          [icon-button {:icon "play_circle"  :label "Subscribe"   :on-click [:developer-tools.re-frame-browser/toggle-subscription!]}]))
+          [elements/icon-button ::toggle-subscription-icon-button
+                                {:icon :pause_circle :label "Unsubscribe" :on-click [:developer-tools.re-frame-browser/toggle-subscription!]
+                                 :hover-color :highlight :height :3xl :width :3xl}]
+          [elements/icon-button ::toggle-subscription-icon-button
+                                {:icon :play_circle  :label "Subscribe"   :on-click [:developer-tools.re-frame-browser/toggle-subscription!]
+                                 :hover-color :highlight :height :3xl :width :3xl}]))
 
 
 
@@ -233,7 +249,7 @@
         system-keys   (vector/keep-items   map-keys re-frame-browser.config/SYSTEM-KEYS)
         app-keys      (vector/remove-items map-keys re-frame-browser.config/SYSTEM-KEYS)]
        [:div [header (str "map, "(count map-keys)" item(s)")]
-             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
+             [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button toggle-data-view-icon-button edit-item-icon-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [map-key %2]))]
@@ -248,7 +264,7 @@
   []
   (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
        [:div [header (str "vector, " (count current-item) " item(s)")]
-             [toolbar go-home-button go-up-button remove-item-button toggle-data-view-button edit-item-button]
+             [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button toggle-data-view-icon-button edit-item-icon-button]
              [horizontal-line]
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [:div (cond (nil?    %2) (str "nil")
@@ -262,7 +278,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "boolean"]
-        [toolbar go-home-button go-up-button remove-item-button swap-boolean-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button swap-boolean-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])])
@@ -271,7 +287,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "integer"]
-        [toolbar go-home-button go-up-button remove-item-button decrease-integer-button increase-integer-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button decrease-integer-icon-button increase-integer-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])])
@@ -281,7 +297,7 @@
   []
   (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
        [:div [header (str "string, "(count current-item) " char.")]
-             [toolbar go-home-button go-up-button remove-item-button edit-item-button]
+             [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button edit-item-icon-button]
              [horizontal-line]
              [:div (string/quotes current-item)]
              [edit-item]]))
@@ -290,7 +306,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "keyword"]
-        [toolbar go-home-button go-up-button remove-item-button edit-item-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button edit-item-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])
@@ -300,7 +316,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "component"]
-        [toolbar go-home-button go-up-button remove-item-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])])
@@ -309,7 +325,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "nil"]
-        [toolbar go-home-button go-up-button recycle-item-button]
+        [toolbar go-home-icon-button go-up-icon-button recycle-item-icon-button]
         [horizontal-line]
         [:div (str "nil")]])
 
@@ -317,7 +333,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "event-vector"]
-        [toolbar go-home-button go-up-button remove-item-button dispatch-event-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button dispatch-event-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])])
@@ -335,7 +351,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "subscription-vector"]
-        [toolbar go-home-button go-up-button remove-item-button toggle-subscription-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button toggle-subscription-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])
@@ -346,7 +362,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   [:div [header "unknown"]
-        [toolbar go-home-button go-up-button remove-item-button]
+        [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button]
         [horizontal-line]
         (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
              [:div (str current-item)])])

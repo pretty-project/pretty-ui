@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.core.subs
-    (:require [plugins.item-viewer.download.subs :as download.subs]
-              [plugins.engine-handler.core.subs  :as core.subs]
+    (:require [engines.engine-handler.core.subs  :as core.subs]
+              [plugins.item-viewer.download.subs :as download.subs]
               [re-frame.api                      :as r :refer [r]]))
 
 
@@ -22,9 +22,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.subs
+; engines.engine-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
-(def plugin-synchronizing?        core.subs/plugin-synchronizing?)
+(def engine-synchronizing?        core.subs/engine-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
@@ -55,7 +55,7 @@
   ;
   ; @return (boolean)
   [db [_ viewer-id]]
-  (r plugin-synchronizing? db viewer-id :viewer))
+  (r engine-synchronizing? db viewer-id :viewer))
 
 
 

@@ -14,9 +14,9 @@
 
 (ns plugins.item-lister.backup.events
     (:require [mid-fruits.vector                    :as vector]
+              [engines.engine-handler.backup.events :as backup.events]
               [plugins.item-lister.body.subs        :as body.subs]
               [plugins.item-lister.core.subs        :as core.subs]
-              [plugins.engine-handler.backup.events :as backup.events]
               [re-frame.api                         :as r :refer [r]]))
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.backup.events
+; engines.engine-handler.backup.events
 (def clean-backup-items! backup.events/clean-backup-items!)
 
 

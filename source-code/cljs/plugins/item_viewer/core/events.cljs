@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.core.events
-    (:require [mid-fruits.map                     :refer [dissoc-in]]
+    (:require [engines.engine-handler.core.events :as core.events]
+              [mid-fruits.map                     :refer [dissoc-in]]
               [plugins.item-viewer.body.subs      :as body.subs]
               [plugins.item-viewer.core.subs      :as core.subs]
-              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.events
+; engines.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-item-id!       core.events/set-item-id!)

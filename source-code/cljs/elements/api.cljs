@@ -70,7 +70,7 @@
               [elements.element-components.horizontal-line      :as element-components.horizontal-line]
               [elements.element-components.horizontal-polarity  :as element-components.horizontal-polarity]
               [elements.element-components.horizontal-separator :as element-components.horizontal-separator]
-              [elements.element-components.icon                 :as element-components.icon]
+              [elements.icon.views                              :as icon.views]
               [elements.icon-button.views                       :as icon-button.views]
               [elements.element-components.image                :as element-components.image]
               [elements.label.views                             :as label.views]
@@ -126,7 +126,7 @@
 (def horizontal-line      element-components.horizontal-line/element)
 (def horizontal-polarity  element-components.horizontal-polarity/element)
 (def horizontal-separator element-components.horizontal-separator/element)
-(def icon                 element-components.icon/element)
+(def icon                 icon.views/element)
 (def icon-button          icon-button.views/element)
 (def image                element-components.image/element)
 (def label                label.views/element)

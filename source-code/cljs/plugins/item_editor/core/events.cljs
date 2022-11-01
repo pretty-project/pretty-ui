@@ -15,10 +15,10 @@
 (ns plugins.item-editor.core.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :as map :refer [dissoc-in]]
+              [engines.engine-handler.core.events :as core.events]
               [plugins.item-editor.backup.events  :as backup.events]
               [plugins.item-editor.body.subs      :as body.subs]
               [plugins.item-editor.core.subs      :as core.subs]
-              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -26,7 +26,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.core.events
+; engines.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)

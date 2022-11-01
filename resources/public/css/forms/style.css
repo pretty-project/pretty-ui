@@ -49,7 +49,7 @@
    * egymáshoz viszonyított arányát!
    *
    * Az x4.7.6 verzió óta a flex-grow tulajdonság értéke {flex-grow: 0}.
-   * Ezért, ha egy elem tartalma szélesebb, mint a amilyen széles az elem lenne
+   * Ezért, ha egy elem tartalma szélesebb, mint amilyen széles az elem lenne
    * a min-width tulajdonsága szerint, és emiatt az egyik elem a sorban,
    * a .forms--form-row elem {flex-wrap: wrap} beállításának köszönhetően
    * új sorba törik, akkor a sorban maradt elemek szélessége nem kezdi el elvenni,

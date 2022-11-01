@@ -11,6 +11,7 @@
 /***** UI structure *****/
 
 #x-app-ui-structure {
+  /* BUG#4090 */
   display: flex;
   /* BUG#0009 (x.app-ui.renderer.views) */
   flex-direction: row-reverse }
@@ -194,7 +195,25 @@
 /*** App surface wrapper ***/
 
 #x-app-surface {
-  flex-grow: 1 }
+  flex-grow: 1;
+  /* BUG#4090
+   * 4.8.2.0
+   * Az #x-app-ui-structure elem {display: flex} beállítása miatt,
+   * ha az #x-app-surface elem ...
+   * ... olyan elemet tartalmaz, ami szélessebb, mint az #x-app-surface elem,
+   *     és {overflow-x: auto} beállítással rendelkezik,
+   * ... az #x-app-sidebar elem nem jelenik meg, tehát az #x-app-surface elem
+   *     önmagában foglalja el a viewport szélességét,
+   * akkor az #x-app-surface elem valamiért szélessebb lenne, mint az őt
+   * tartalmazó #x-app-ui-structure elem, ezért szükséges a {max-width: 100%}
+   * beállítást alkalmazni!
+   *
+   * Még így sem működik tökéletesen! Kisebb viewport szélesség esetén (pl. 800px)
+   * egy széles #x-app-surface tartalom már képes kikényszeríteni az #x-app-sidebar
+   * elem egy részét a viewport-ból!
+   * Amíg ez a probléma nem teljesen megoldott, addig a sidebar elemhez ajánlott
+   * minimum viewport szélesség: Ca. 1024px! */
+  max-width: 100% }
 
 /*** App surface wrapper ***/
 

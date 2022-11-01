@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-lister.update.subs
-    (:require [plugins.item-lister.transfer.subs  :as transfer.subs]
-              [plugins.engine-handler.update.subs :as update.subs]
+    (:require [engines.engine-handler.update.subs :as update.subs]
+              [plugins.item-lister.transfer.subs  :as transfer.subs]
               [mid-fruits.keyword                 :as keyword]
               [mid-fruits.vector                  :as vector]
               [re-frame.api                       :refer [r]]))
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.update.subs
+; engines.engine-handler.update.subs
 (def get-mutation-name   update.subs/get-mutation-name)
 (def get-mutation-answer update.subs/get-mutation-answer)
 

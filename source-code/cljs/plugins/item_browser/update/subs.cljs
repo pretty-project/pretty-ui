@@ -14,10 +14,10 @@
 
 (ns plugins.item-browser.update.subs
     (:require [mid-fruits.keyword                 :as keyword]
+              [engines.engine-handler.update.subs :as update.subs]
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.core.subs     :as core.subs]
               [plugins.item-browser.transfer.subs :as transfer.subs]
-              [plugins.engine-handler.update.subs :as update.subs]
               [re-frame.api                       :refer [r]]))
 
 
@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.update.subs
+; engines.engine-handler.update.subs
 (def get-mutation-name   update.subs/get-mutation-name)
 (def get-mutation-answer update.subs/get-mutation-answer)
 

@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-viewer.download.events
-    (:require [mid-fruits.map                         :as map]
+    (:require [engines.engine-handler.download.events :as download.events]
+              [mid-fruits.map                         :as map]
               [plugins.item-viewer.body.subs          :as body.subs]
               [plugins.item-viewer.core.events        :as core.events]
               [plugins.item-viewer.download.subs      :as download.subs]
-              [plugins.engine-handler.download.events :as download.events]
               [re-frame.api                           :as r :refer [r]]))
 
 
@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.download.events
+; engines.engine-handler.download.events
 (def data-received download.events/data-received)
 
 

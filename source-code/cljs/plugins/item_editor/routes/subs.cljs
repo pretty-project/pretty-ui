@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.item-editor.routes.subs
-    (:require [plugins.item-editor.transfer.subs  :as transfer.subs]
-              [plugins.engine-handler.routes.subs :as routes.subs]
+    (:require [engines.engine-handler.routes.subs :as routes.subs]
+              [plugins.item-editor.transfer.subs  :as transfer.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -22,7 +22,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.engine-handler.routes.subs
+; engines.engine-handler.routes.subs
 (def route-handled?      routes.subs/route-handled?)
 (def get-extended-route  routes.subs/get-extended-route)
 (def get-derived-item-id routes.subs/get-derived-item-id)

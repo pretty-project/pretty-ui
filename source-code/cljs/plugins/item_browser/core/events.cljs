@@ -15,11 +15,11 @@
 (ns plugins.item-browser.core.events
     (:require [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
+              [engines.engine-handler.core.events :as core.events]
               [plugins.item-browser.body.subs     :as body.subs]
               [plugins.item-browser.core.subs     :as core.subs]
               [plugins.item-browser.items.events  :as items.events]
               [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
-              [plugins.engine-handler.core.events :as core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -35,7 +35,7 @@
 (def use-default-order-by! plugins.item-lister.core.events/use-default-order-by!)
 (def filter-items!         plugins.item-lister.core.events/filter-items!)
 
-; plugins.engine-handler.core.events
+; engines.engine-handler.core.events
 (def set-query-param! core.events/set-query-param!)
 (def set-item-id!     core.events/set-item-id!)
 (def update-item-id!  core.events/update-item-id!)
