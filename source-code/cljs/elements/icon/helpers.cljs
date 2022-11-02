@@ -42,6 +42,7 @@
       (element.helpers/apply-color :color :data-color color)
       (merge {:data-icon-family icon-family
               :data-layout      layout
+              :data-selectable  false
               :data-size        size})))
 
 (defn icon-attributes

@@ -76,14 +76,14 @@
   ; @param (integer) item-dex
   ; @param (*) item
   [sortable-id {:keys [common-props item-id-f item-element]} item-dex item]
-  (let [sortable (js->clj (useSortable (clj->js {:id (item-id-f item)})) :keywordize-keys true)
-        {:keys [setNodeRef transform transition]} sortable]
+  (let [dnd-kit-props (js->clj (useSortable (clj->js {:id (item-id-f item)})) :keywordize-keys true)
+        {:keys [setNodeRef transform transition]} dnd-kit-props]
     [:div {;:key  (str (item-id-f item) "--" item-dex)
            :key   (item-id-f item)
            :ref   (js->clj   setNodeRef)
            :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}}
-          (if common-props [item-element sortable-id common-props item-dex item sortable]
-                           [item-element sortable-id              item-dex item sortable])]))
+          (if common-props [item-element sortable-id common-props item-dex item dnd-kit-props]
+                           [item-element sortable-id              item-dex item dnd-kit-props])]))
 
 (defn- render-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
