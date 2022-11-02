@@ -25,7 +25,10 @@
 ;                 ... 250) <- Nem mindenki programozó! :)
 
 ; @constant (px)
-(def FIELD-LINE-HEIGHT 24)
+(def LINE-HEIGHT-XS 21)
+
+; @constant (px)
+(def LINE-HEIGHT-S 24)
 
 ; @constant (px)
 (def FIELD-HORIZONTAL-PADDING 4)

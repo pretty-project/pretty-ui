@@ -16,6 +16,7 @@
     (:require [mid-fruits.candy   :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
+              [mid-fruits.mixed   :as mixed]
               [mid-fruits.seqable :refer [nonseqable?]]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]
@@ -54,11 +55,14 @@
                    (let [suggestion-key (nth suggestion-keys suggestion-key-dex)
                          k              (keyword (name item-namespace) (name suggestion-key))
                          v              (get document k)]
-                        ; Az empty? függvény kizárólag seqable értékeken alkalmazható!
-                        (cond (nonseqable? v) (return suggestions)
-                              (empty?      v) (return suggestions)
-                              (string?     v) (update suggestions suggestion-key vector/conj-item-once    v)
-                              (vector?     v) (update suggestions suggestion-key vector/concat-items-once v)
+                        ; Az mixed/blank? függvényt a string? és vector? feltétel előtt szükséges alkalmazni!
+                        (cond ; Non-seqable values ...
+                              (keyword?     v) (update suggestions suggestion-key vector/conj-item-once    v)
+                              (number?      v) (update suggestions suggestion-key vector/conj-item-once    v)
+                              ; Seqable values ...
+                              (mixed/blank? v) (return suggestions)
+                              (string?      v) (update suggestions suggestion-key vector/conj-item-once    v)
+                              (vector?      v) (update suggestions suggestion-key vector/concat-items-once v)
                               :return suggestions)))
                ; Az f1 függvény végigiterál a suggestion-keys vektor elemein.
                (f1 [suggestions document suggestion-key-dex]

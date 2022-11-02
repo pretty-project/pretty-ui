@@ -76,7 +76,7 @@
   ; @param (?) event
   ;
   ; @return (integer)
-  [_ {:keys [item-id-f items]} event]
+  [_ {:keys [item-id-f items] :as x} event]
   (vector/get-first-match-item-dex items #(= (item-id-f %)
                                              (aget event "over" "id"))))
 

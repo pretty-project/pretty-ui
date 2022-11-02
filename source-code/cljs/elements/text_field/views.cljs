@@ -36,7 +36,7 @@
   ; @param (map) field-props
   [field-id field-props]
   (let [placeholder-attributes (text-field.helpers/adornment-placeholder-attributes field-id field-props)]
-       [:div.e-field-adornments--placeholder placeholder-attributes]))
+       [:div.e-text-field--adornments-placeholder placeholder-attributes]))
 
 (defn button-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,8 +48,8 @@
   ;   :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/button-adornment-attributes field-id field-props adornment-props)]
-       (cond icon  [:button.e-field-adornments--button-adornment adornment-attributes icon]
-             label [:button.e-field-adornments--button-adornment adornment-attributes label])))
+       (cond icon  [:button.e-text-field--button-adornment adornment-attributes icon]
+             label [:button.e-text-field--button-adornment adornment-attributes label])))
 
 (defn static-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,8 +61,8 @@
   ;   :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/static-adornment-attributes field-id field-props adornment-props)]
-       (cond icon  [:div.e-field-adornments--static-adornment adornment-attributes icon]
-             label [:div.e-field-adornments--static-adornment adornment-attributes (x.components/content label)])))
+       (cond icon  [:div.e-text-field--static-adornment adornment-attributes icon]
+             label [:div.e-text-field--static-adornment adornment-attributes (x.components/content label)])))
 
 (defn field-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,7 +86,7 @@
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/nonempty? end-adornments)
            (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
-                  (reduce f [:div.e-field-adornments] end-adornments))
+                  (reduce f [:div.e-text-field--adornments] end-adornments))
            [field-adornments-placeholder field-id field-props])))
 
 (defn field-start-adornments
@@ -98,7 +98,7 @@
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
       (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
-             (reduce f [:div.e-field-adornments] start-adornments))
+             (reduce f [:div.e-text-field--adornments] start-adornments))
       [field-adornments-placeholder field-id field-props]))
 
 
@@ -252,7 +252,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ;  {:helper (metamorphic-content)(opt)
+  ;   :info-text (metamorphic-content)(opt)
+  ;   :label (metamorphic-content)(opt)
+  ;   :required? (boolean)(opt)}
   [field-id {:keys [helper info-text label required?]}]
   (if label (let [input-id (hiccup/value field-id "input")]
                  [label.views/element {:content   label
@@ -320,6 +323,9 @@
   ;    Default: return
   ;   :field-value-f (function)(opt)
   ;    Default: return
+  ;   :font-size (keyword)(opt)
+  ;    :xs, :s
+  ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)

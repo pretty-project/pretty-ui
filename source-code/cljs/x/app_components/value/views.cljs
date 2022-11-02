@@ -23,11 +23,11 @@
 
 (defn component
   ; @param (keyword)(opt) value-id
-  ; @param (map) value-props
-  ;  {:prefix (string)(opt)
+  ; @param (metamorphic-content) value
+  ;  {:content (keyword, hiccup, integer, number or string)
+  ;   :prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;   :suffix (string)(opt)
-  ;   :value (metamorphic-content)}
+  ;   :suffix (string)(opt)}
   ;
   ; @usage
   ;  (value {...})
@@ -36,8 +36,8 @@
   ;  (value :my-value {...})
   ;
   ; @return (string)
-  ([value-props]
-   (component (random/generate-keyword) value-props))
+  ([value]
+   (component (random/generate-keyword) value))
 
-  ([_ value-props]
-   @(r/subscribe [:components/get-metamorphic-value value-props])))
+  ([_ value]
+   @(r/subscribe [:components/get-metamorphic-value value])))

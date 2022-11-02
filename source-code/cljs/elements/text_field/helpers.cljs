@@ -191,11 +191,14 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
+  ;  {:font-size (keyword)}
   ;
   ; @return (integer)
-  [field-id field-props]
-  (+ (* text-field.config/FIELD-LINE-HEIGHT (field-body-line-count field-id field-props))
-     (* text-field.config/FIELD-HORIZONTAL-PADDING 2)))
+  [field-id {:keys [font-size] :as field-props}]
+  (case font-size :xs (+ (* text-field.config/LINE-HEIGHT-XS (field-body-line-count field-id field-props))
+                         (* text-field.config/FIELD-HORIZONTAL-PADDING 2))
+                  :s  (+ (* text-field.config/LINE-HEIGHT-S (field-body-line-count field-id field-props))
+                         (* text-field.config/FIELD-HORIZONTAL-PADDING 2))))
 
 (defn field-body-style
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -215,16 +218,21 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ;  {:border-color (keyword)
+  ;   :border-radius (keyword)
+  ;   :font-size (keyword)
+  ;   :min-width (keyword)
+  ;   :stretch-orientation (keyword)}
   ;
   ; @return (map)
   ;  {}
-  [field-id {:keys [border-color border-radius min-width stretch-orientation] :as field-props}]
+  [field-id {:keys [border-color border-radius font-size min-width stretch-orientation] :as field-props}]
   (let [any-warning? @(r/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (element.helpers/element-default-attributes field-id field-props)
               (element.helpers/element-indent-attributes  field-id field-props)
               (element.helpers/apply-color {} :border-color :data-border-color border-color)
               {:data-border-radius       border-radius
+               :data-font-size           font-size
                :data-min-width           min-width
                :data-stretch-orientation stretch-orientation}
               (if any-warning? {:data-border-color :warning}))))

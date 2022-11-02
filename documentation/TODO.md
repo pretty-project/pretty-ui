@@ -14,6 +14,8 @@
 
 # x4.7.0
 
+- text-field hack5041-et lecserélni a text-editor plugin synchronizer-ére
+
 - elements.api elemek body komponensein legyenek a body-ra jellemző data-attribute-ok
   és a style
 

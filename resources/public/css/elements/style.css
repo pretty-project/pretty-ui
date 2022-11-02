@@ -26,7 +26,6 @@
 /***** Element badge *****/
 /***** Element info *****/
 /***** Element indent *****/
-/***** Field adornments *****/
 /***** Elements ... *****/
 
 
@@ -758,7 +757,8 @@ body {
 .e-checkbox[data-font-size="xs"]     .e-checkbox--option-label,
 .e-menu-bar[data-font-size="xs"]     .e-menu-bar--menu-item--label,
 .e-radio-button[data-font-size="xs"] .e-radio-button--option-label,
-.e-switch[data-font-size="xs"]       .e-switch--option-label {
+.e-switch[data-font-size="xs"]       .e-switch--option-label,
+.e-text-field[data-font-size="xs"]   .e-text-field--input {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs ) }
 
@@ -779,6 +779,12 @@ body {
 
 .e-label[data-font-size="xs"] .e-label--icon {
   font-size: var( --icon-size-xxs ) }
+
+.e-text-field[data-font-size="xs"] .e-text-field--input,
+.e-text-field[data-font-size="xs"] .e-text-field--placeholder,
+.e-text-field[data-font-size="xs"] .e-text-field--button-adornment,
+.e-text-field[data-font-size="xs"] .e-text-field--static-adornment {
+  line-height: 21px }
 
 /*** XS ***/
 
@@ -801,7 +807,8 @@ body {
 .e-checkbox[data-font-size="s"]     .e-checkbox--option-label,
 .e-menu-bar[data-font-size="s"]     .e-menu-bar--menu-item--label,
 .e-radio-button[data-font-size="s"] .e-radio-button--option-label,
-.e-switch[data-font-size="s"]       .e-switch--option-label {
+.e-switch[data-font-size="s"]       .e-switch--option-label,
+.e-text-field[data-font-size="s"] .e-text-field--input {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s ) }
 
@@ -817,6 +824,12 @@ body {
 
 .e-label[data-font-size="s"] .e-label--icon {
   font-size: var( --icon-size-xs ) }
+
+.e-text-field[data-font-size="s"] .e-text-field--input,
+.e-text-field[data-font-size="s"] .e-text-field--placeholder,
+.e-text-field[data-font-size="s"] .e-text-field--button-adornment,
+.e-text-field[data-font-size="s"] .e-text-field--static-adornment {
+  line-height: 24px }
 
 /*** S ***/
 
@@ -1634,43 +1647,6 @@ body {
 .e-element[data-indent-top="xxl"]        { padding-top:    48px }
 
 /***** Element indent *****/
-
-
-
-/***** Field adornments *****/
-
-.e-field-adornments {
-  display: flex;
-  padding: 0 4px }
-
-.e-field-adornments--placeholder {
-  cursor: text;
-  width: 8px }
-
-.e-field-adornments--button-adornment[data-disabled="true"] {
-  cursor: default;
-  opacity: .5 }
-
-.e-field-adornments--button-adornment,
-.e-field-adornments--static-adornment {
-  height: 32px;
-  line-height: 32px;
-  text-align: center;
-  min-width: 24px;
-  /* (24px - 18px) / 2 = 3px */
-  padding: 0 3px }
-
-.e-field-adornments--button-adornment:not([data-icon-family]),
-.e-field-adornments--static-adornment:not([data-icon-family]) {
-  font-size: var( --font-size-xs );
-  font-weight: 500;
-  letter-spacing: var( --letter-spacing-xxs ) }
-
-.e-field-adornments--button-adornment[data-icon-family],
-.e-field-adornments--static-adornment[data-icon-family] {
-  font-size: 18px }
-
-/***** Field adornments *****/
 
 
 
@@ -3503,9 +3479,6 @@ body {
 
 .e-text-field--input {
   color: var( --color );
-  font-size: var( --font-size-s );
-  letter-spacing: var( --letter-spacing-s );
-  line-height: 24px;
   padding: 4px 0;
   width: 100% }
 
@@ -3517,6 +3490,39 @@ textarea.e-text-field--input {
   resize: none }
 
 /*** Field input ***/
+
+/*** Field adornments ***/
+
+.e-text-field--adornments {
+  display: flex;
+  padding: 0 4px }
+
+.e-text-field--adornments-placeholder {
+  cursor: text;
+  width: 8px }
+
+.e-text-field--button-adornment[data-disabled="true"] {
+  cursor: default;
+  opacity: .5 }
+
+.e-text-field--button-adornment,
+.e-text-field--static-adornment {
+  text-align: center;
+  min-width: 24px;
+  /* (24px - 18px) / 2 = 3px */
+  padding: 4px 3px }
+
+.e-text-field--button-adornment:not([data-icon-family]),
+.e-text-field--static-adornment:not([data-icon-family]) {
+  font-size: var( --font-size-xs );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-xxs ) }
+
+.e-text-field--button-adornment[data-icon-family],
+.e-text-field--static-adornment[data-icon-family] {
+  font-size: 18px }
+
+/*** Field adornments ***/
 
 /*** Field warning ***/
 
@@ -3536,7 +3542,7 @@ textarea.e-text-field--input {
   font-size: var( --font-size-xs );
   left: 0;
   letter-spacing: var( --letter-spacing-xs );
-  line-height: 32px;
+  padding: 4px 0;
   position: absolute;
   top: 0;
 

@@ -85,6 +85,7 @@
   ; @return (boolean)
   [n]
   ; Az empty? függvényt csak a seqable értékeken lehetséges alkalmazni!
+  ; (A nonseqable értékek nem lehetnek üresek! Pl.: :keyword)
   (and (-> n seqable?)
        (-> n   empty?)))
 

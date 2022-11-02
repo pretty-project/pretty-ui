@@ -13,15 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.dnd-kit.views
-    (:require ["@dnd-kit/core"      :as dnd-kit.core]
-              ["@dnd-kit/sortable"  :as dnd-kit.sortable]
-              ["@dnd-kit/utilities" :as dnd-kit.utilities]
-              [mid-fruits.random    :as random]
-              [reagent.api          :as reagent :refer [ratom]]
-
+    (:require ["@dnd-kit/core"            :as dnd-kit.core]
+              ["@dnd-kit/sortable"        :as dnd-kit.sortable]
+              ["@dnd-kit/utilities"       :as dnd-kit.utilities]
+              [mid-fruits.random          :as random]
               [plugins.dnd-kit.helpers    :as helpers]
               [plugins.dnd-kit.prototypes :as prototypes]
-              [plugins.dnd-kit.state      :as state]))
+              [plugins.dnd-kit.state      :as state]
+              [reagent.api                :as reagent :refer [ratom]]))
 
 
 
@@ -62,6 +61,7 @@
 (defn- sortable-debug
   [sortable-id _]
   [:div {}
+        [:br] (str "SORTABLE-ID:    " sortable-id)
         [:br] (str "GRABBED-ITEM:   " (get @state/GRABBED-ITEM   sortable-id))
         [:br] (str "SORTABLE-ITEMS: " (get @state/SORTABLE-ITEMS sortable-id))])
 

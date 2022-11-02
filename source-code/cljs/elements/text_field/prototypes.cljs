@@ -70,6 +70,7 @@
           :border-radius   :s
           :field-content-f return
           :field-value-f   return
+          :font-size       :s
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
          (param field-props)))

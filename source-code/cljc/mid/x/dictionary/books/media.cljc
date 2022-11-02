@@ -131,6 +131,12 @@
            :search-in-the-directory
            {:en "Search in the directory"
             :hu "Keresés a mappában"}
+           :select-file!
+           {:en "Select file"
+            :hu "Fájl kiválasztása"}
+           :select-files!
+           {:en "Select files"
+            :hu "Fájlok kiválasztása"}
            :select-image!
            {:en "Select image"
             :hu "Kép kiválasztása"}

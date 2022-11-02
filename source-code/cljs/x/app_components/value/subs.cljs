@@ -23,36 +23,37 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-metamorphic-value
-  ; @param (map) value-props
-  ;  {:prefix (string)(opt)
+  ; @param (metamorphic-content) value
+  ;  {:content (keyword, hiccup, integer, number or string)
+  ;   :prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;   :suffix (string)(opt)
-  ;   :value (keyword or string)}
+  ;   :suffix (string)(opt)}
   ;
   ; @usage
   ;  (r get-metamorphic-value db {...})
   ;
   ; @example
-  ;  (r get-metamorphic-value db {:value :username})
+  ;  (r get-metamorphic-value db {:content :username})
   ;  =>
   ;  "Username"
   ;
   ; @example (string)
-  ;  (r get-metamorphic-value db {:value "Hakuna Matata"})
+  ;  (r get-metamorphic-value db {:content "Hakuna Matata"})
+  ;  =>
+  ;  "Hakuna Matata"
+  ;
+  ; @example (string)
+  ;  (r get-metamorphic-value db "Hakuna Matata")
   ;  =>
   ;  "Hakuna Matata"
   ;
   ; @return (string)
-  [db [_ {:keys [prefix replacements suffix value] :as value-props}]]
-  ; A value-props térkép helyett a value tulajdonság értéke is átadható:
-  ; Pl.: (r get-metamorphic-value db {:value :username})
-  ;      (r get-metamorphic-value db         :username)
-  (if (map? value-props)
-      (cond (string?  value) (x.dictionary/join-string value prefix suffix replacements)
-            (keyword? value) (let [value       (r x.dictionary/look-up db value)
-                                   value-props (assoc value-props :value value)]
-                                  (r get-metamorphic-value db value-props)))
-      (r get-metamorphic-value db {:value value-props})))
+  [db [_ {:keys [content prefix replacements suffix] :as value}]]
+  (cond (-> value map? not)   (r get-metamorphic-value db {:content value})
+        (-> content string?)  (x.dictionary/join-string content prefix suffix replacements)
+        (-> content keyword?) (let [content (r x.dictionary/look-up db content)
+                                    value   (assoc value :content content)]
+                                   (r get-metamorphic-value db value))))
 
 
 

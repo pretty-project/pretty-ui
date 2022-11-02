@@ -93,7 +93,7 @@
   (if params (vector/concat-items content params)
              (return              content)))
 
-(defn- content
+(defn- metamorphic-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) content-id
@@ -117,8 +117,8 @@
 
 (defn component
   ; @param (keyword)(opt) content-id
-  ; @param (map) content-props
-  ;  {:content (component, function, keyword, hiccup, integer or string)(opt)
+  ; @param (metamorphic-content) content
+  ;  {:content (component, function, keyword, hiccup, integer, number or string)(opt)
   ;   :params (vector)(opt)
   ;   :prefix (string)(opt)
   ;    W/ {:content (keyword or string)}
@@ -166,13 +166,10 @@
   ;  (defn my-component [content-id my-color])
   ;  [content {:content [my-component :my-component]
   ;            :params  [:green]}]
-  ([content-props]
-   (component (random/generate-keyword) content-props))
+  ([content]
+   (component (random/generate-keyword) content))
 
-  ([content-id content-props]
-   ; A content-props térkép helyett a content tulajdonság értéke is átadható:
-   ; Pl.: [content {:content :username}]
-   ;      [content           :username]
-   (if (map?    content-props)
-       (content content-id           content-props)
-       (content content-id {:content content-props}))))
+  ([content-id content]
+   (if (map?    content)
+       (metamorphic-content content-id           content)
+       (metamorphic-content content-id {:content content}))))

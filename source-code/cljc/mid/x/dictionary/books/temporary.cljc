@@ -68,7 +68,9 @@
            :quantity
            {:en "Quantity"
             :hu "Mennyiség"}
-
+           :quantity-n
+           {:en "Quantity: %"
+            :hu "Mennyiség: %"}
            :expiration-date
            {:en "Expiration date"
             :hu "Lejárat dátuma"}
@@ -241,7 +243,7 @@
            :billing-data
            {:en "Billing data"
             :hu "Számlázási adatok"}
-            
+
            :company-data
            {:en "Company data"
             :hu "Cég adatok"}
