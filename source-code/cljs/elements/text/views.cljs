@@ -133,6 +133,9 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
+  ;   :line-height (keyword)(opt)
+  ;    :block, :normal
+  ;    Default: :normal
   ;   :max-lines (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none

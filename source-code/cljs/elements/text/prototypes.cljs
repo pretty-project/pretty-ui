@@ -29,10 +29,12 @@
   ;  {:font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
+  ;   :line-height (keyword)
   ;   :selectable? (boolean)}
   [text-props]
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
+          :line-height      :normal
           :selectable?      true}
          (param text-props)))

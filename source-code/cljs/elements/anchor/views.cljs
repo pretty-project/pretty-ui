@@ -74,7 +74,9 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  
+  ;   :line-height (keyword)(opt)
+  ;    :block, :normal
+  ;    Default: :normal
   ;   :on-click (metamorphic-event)(opt)
   ;   :stop-propagation? (boolean)(opt)
   ;    Default: false

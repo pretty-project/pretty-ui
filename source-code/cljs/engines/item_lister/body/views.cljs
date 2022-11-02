@@ -47,7 +47,8 @@
                             :content     placeholder
                             :font-size   :xs
                             :font-weight :bold
-                            :indent      {:all :xs}}])))
+                            :indent      {:all :xs}
+                            :line-height :block}])))
 
 (defn placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -38,7 +38,7 @@
   ; @usage
   ;  [state-changed-bubble-body :my-bubble {...}]
   [bubble-id {:keys [label primary-button]}]
-  [:<> (if label          [elements/label  {:content label :indent {:all :xs}}])
+  [:<> (if label          [elements/label  {:content label :indent {:all :xs} :line-height :block}])
        (if primary-button [elements/button (bubbles.prototypes/primary-button-props-prototype primary-button)])])
 
 
@@ -73,8 +73,8 @@
   ;   széléhez igazítva jelenjenek meg.
   (let [body @(r/subscribe [:ui/get-bubble-prop bubble-id :body])]
        [:div.x-app-bubbles--element--body
-         (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
-               (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs}}]
+         (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs} :line-height :block}]
+               (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs} :line-height :block}]
                :default        [x.components/content bubble-id body])]))
 
 (defn bubble-element-structure

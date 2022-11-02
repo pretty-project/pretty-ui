@@ -66,7 +66,7 @@
   ; @return (map)
   ;  {}
   [label-id {:keys [color font-size font-weight horizontal-align horizontal-position
-                    min-width vertical-position] :as label-props}]
+                    line-height min-width vertical-position] :as label-props}]
   (merge (element.helpers/element-default-attributes label-id label-props)
          (element.helpers/element-indent-attributes  label-id label-props)
          (element.helpers/apply-color {} :color :data-color color)
@@ -74,6 +74,7 @@
           :data-font-weight         font-weight
           :data-horizontal-align    horizontal-align
           :data-horizontal-position horizontal-position
+          :data-line-height         line-height
           :data-min-width           min-width
           :data-vertical-position   vertical-position}))
 

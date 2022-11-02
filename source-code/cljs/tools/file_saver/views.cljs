@@ -106,6 +106,7 @@
                    :font-weight :bold
                    :icon        :insert_drive_file
                    :indent      {:bottom :s :top :xs :vertical :xs}
+                   :line-height :block
                    :selectable? true}])
 
 (defn body

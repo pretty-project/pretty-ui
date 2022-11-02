@@ -36,7 +36,8 @@
                                   {:color       :muted
                                    :content     (str event-id)
                                    :font-size   :m
-                                   :font-weight :extra-bold}]
+                                   :font-weight :extra-bold
+                                   :line-height :block}]
                   [elements/icon-button {:variant :placeholder}]]
             [:div {:style {:padding "0 48px"}}
                   [elements/text-field ::event-vector
@@ -47,7 +48,8 @@
                                   {:color   :muted
                                    :content (str "["event-id (if parameters (str " " parameters)) "]")
                                    :font-size :xs
-                                   :indent     {:bottom :s}}]
+                                   :indent     {:bottom :s}
+                                   :line-height :block}]
                   [elements/button ::dispatch-button
                                    {:background-color :highlight
                                     :border-radius    :xs
@@ -77,7 +79,8 @@
                                     [elements/label {:color       :muted
                                                      :content     "Registrated events"
                                                      :font-size   :m
-                                                     :font-weight :extra-bold}]]]
+                                                     :font-weight :extra-bold
+                                                     :line-height :block}]]]
                         (-> event-handlers keys vector/abc-items)))))
 
 (defn body

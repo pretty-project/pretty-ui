@@ -73,9 +73,10 @@
   ; @param (map) editor-props
   ;  {}
   [_ {:keys [info-text label required?]}]
-  (if label [elements/label {:content   label
-                             :info-text info-text
-                             :required? required?}]))
+  (if label [elements/label {:content     label
+                             :info-text   info-text
+                             :line-height :block
+                             :required?   required?}]))
 
 (defn- text-editor-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

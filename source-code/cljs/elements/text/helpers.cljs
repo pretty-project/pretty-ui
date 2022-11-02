@@ -48,11 +48,12 @@
   ;
   ; @return (map)
   ;  {}
-  [text-id {:keys [color font-size font-weight horizontal-align min-width] :as text-props}]
+  [text-id {:keys [color font-size font-weight horizontal-align line-height min-width] :as text-props}]
   (merge (element.helpers/element-default-attributes text-id text-props)
          (element.helpers/element-indent-attributes  text-id text-props)
          (element.helpers/apply-color {} :color :data-color color)
          {:data-font-size        font-size
           :data-font-weight      font-weight
           :data-horizontal-align horizontal-align
+          :data-line-height      line-height
           :data-min-width        min-width}))

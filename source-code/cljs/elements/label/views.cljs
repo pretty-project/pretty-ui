@@ -182,6 +182,9 @@
   ;     :top (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :info-text (metamorphic-content)(opt)
+  ;   :line-height (keyword)(opt)
+  ;    :block, :normal
+  ;    Default: :normal
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none

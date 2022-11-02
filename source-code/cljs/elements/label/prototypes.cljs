@@ -31,12 +31,14 @@
   ;   :font-size (keyword)
   ;   :font-weight (keyword)
   ;   :horizontal-align (keyword)
+  ;   :line-height (keyword)
   ;   :selectable? (boolean)}
   [{:keys [icon] :as label-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :left
+          :line-height      :normal
           :selectable?      false}
          (if icon {:icon-family :material-icons-filled})
          (param label-props)))
