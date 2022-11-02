@@ -1,8 +1,20 @@
 
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns plugins.dnd-kit.helpers
     (:require [mid-fruits.vector     :as vector]
               [plugins.dnd-kit.state :as state]
-              [plugins.dnd-kit.utils :refer [reorder]]
               [re-frame.api          :as r]
               [reagent.api           :as reagent]))
 
@@ -68,6 +80,11 @@
   (vector/get-first-match-item-dex items #(= (item-id-f %)
                                              (aget event "over" "id"))))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn drag-start-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -75,7 +92,8 @@
   ; @param (map) sortable-props
   ; @param (?) event
   [sortable-id _ event]
-  (swap! state/GRABBED-ITEM assoc sortable-id (get-in (js->clj (aget event "active")) ["data" "current" "sortable" "index"])))
+  (let [grabbed-item-dex (get-in (js->clj (aget event "active")) ["data" "current" "sortable" "index"])]
+       (swap! state/GRABBED-ITEM assoc sortable-id grabbed-item-dex)))
 
 (defn drag-end-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -88,10 +106,11 @@
   [sortable-id {:keys [on-drag-end on-order-changed] :as sortable-props} event]
   (let [origin-dex (event->origin-dex sortable-id sortable-props event)
         target-dex (event->target-dex sortable-id sortable-props event)]
-    ;;check if dragged element is moved if so than reset the items order
+    ; Check if dragged element is moved if so than reset the items order.
     (if (not= origin-dex target-dex)
-        (let [reordered-items (reorder (get @state/SORTABLE-ITEMS sortable-id) origin-dex target-dex)]
+        (let [reordered-items (vector/move-item (get @state/SORTABLE-ITEMS sortable-id) origin-dex target-dex)]
              (swap! state/SORTABLE-ITEMS assoc sortable-id reordered-items)
-             (if on-order-changed (r/dispatch-sync (r/metamorphic-event<-params on-order-changed reordered-items)))))
+             (if on-order-changed (let [on-order-changed (r/metamorphic-event<-params on-order-changed reordered-items)]
+                                       (r/dispatch-sync on-order-changed)))))
     (swap! state/GRABBED-ITEM dissoc sortable-id)
     (if on-drag-end (r/dispatch-sync on-drag-end))))

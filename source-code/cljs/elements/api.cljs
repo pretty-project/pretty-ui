@@ -101,7 +101,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.app-elements.element-components.*
+; elements.*.views
 (def anchor               anchor.views/element)
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)

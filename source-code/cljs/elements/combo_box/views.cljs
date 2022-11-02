@@ -169,7 +169,7 @@
   ;   :on-select (metamorphic-event)(opt)
   ;   :options (vector)(opt)
   ;   :option-component (component)(opt)
-  ;    Default: x.app-elements.combo-box.views/default-option-component
+  ;    Default: elements.combo-box.views/default-option-component
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)

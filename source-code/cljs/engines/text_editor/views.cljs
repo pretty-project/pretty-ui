@@ -113,7 +113,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :indent (map)(opt)
-  ;    A tulajdonság leírását a x.app-elements.api/blank dokumentációjában találod!
+  ;    A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :placeholder (metamorphic-content)(opt)

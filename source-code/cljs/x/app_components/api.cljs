@@ -29,7 +29,8 @@
               [x.app-components.querier.views :as querier.views]
               [x.app-components.stated        :as stated]
               [x.app-components.subscriber    :as subscriber]
-              [x.app-components.value         :as value]))
+              [x.app-components.value.subs    :as value.subs]
+              [x.app-components.value.views   :as value.views]))
 
 
 
@@ -51,6 +52,8 @@
 ; x.app-components.subscriber
 (def subscriber subscriber/component)
 
-; x.app-components.value
-(def get-metamorphic-value value/get-metamorphic-value)
-(def value                 value/component)
+; x.app-components.value.subs
+(def get-metamorphic-value value.subs/get-metamorphic-value)
+
+; x.app-components.value.views
+(def value value.views/component)

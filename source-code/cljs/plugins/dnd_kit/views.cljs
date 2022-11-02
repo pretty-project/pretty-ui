@@ -1,4 +1,17 @@
 
+;; -- Legal information -------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; Monoset Clojure/ClojureScript Library
+; https://monotech.hu/monoset
+;
+; Copyright Adam Szűcs and other contributors - All rights reserved
+
+
+
+;; -- Namespace ---------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (ns plugins.dnd-kit.views
     (:require ["@dnd-kit/core"      :as dnd-kit.core]
               ["@dnd-kit/sortable"  :as dnd-kit.sortable]
@@ -8,10 +21,7 @@
 
               [plugins.dnd-kit.helpers    :as helpers]
               [plugins.dnd-kit.prototypes :as prototypes]
-              [plugins.dnd-kit.state      :as state]
-
-              ; TEMP
-              [plugins.dnd-kit.utils :refer [to-clj-map]]))
+              [plugins.dnd-kit.state      :as state]))
 
 
 
@@ -66,7 +76,7 @@
   ; @param (integer) item-dex
   ; @param (*) item
   [sortable-id {:keys [common-props item-id-f item-element]} item-dex item]
-  (let [sortable (to-clj-map (useSortable (clj->js {:id (item-id-f item)})))
+  (let [sortable (js->clj (useSortable (clj->js {:id (item-id-f item)})) :keywordize-keys true)
         {:keys [setNodeRef transform transition]} sortable]
     [:div {;:key  (str (item-id-f item) "--" item-dex)
            :key   (item-id-f item)

@@ -19,7 +19,7 @@
               [engines.item-browser.items.events  :as items.events]
               [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
-              [plugins.item-lister.core.events    :as plugins.item-lister.core.events]
+              [engines.item-lister.core.events    :as engines.item-lister.core.events]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -27,13 +27,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; plugins.item-lister.core.events
-(def set-meta-item!        plugins.item-lister.core.events/set-meta-item!)
-(def remove-meta-items!    plugins.item-lister.core.events/remove-meta-items!)
-(def set-error-mode!       plugins.item-lister.core.events/set-error-mode!)
-(def reset-downloads!      plugins.item-lister.core.events/reset-downloads!)
-(def use-default-order-by! plugins.item-lister.core.events/use-default-order-by!)
-(def filter-items!         plugins.item-lister.core.events/filter-items!)
+; engines.item-lister.core.events
+(def set-meta-item!        engines.item-lister.core.events/set-meta-item!)
+(def remove-meta-items!    engines.item-lister.core.events/remove-meta-items!)
+(def set-error-mode!       engines.item-lister.core.events/set-error-mode!)
+(def reset-downloads!      engines.item-lister.core.events/reset-downloads!)
+(def use-default-order-by! engines.item-lister.core.events/use-default-order-by!)
+(def filter-items!         engines.item-lister.core.events/filter-items!)
 
 ; engines.engine-handler.core.events
 (def set-query-param! core.events/set-query-param!)

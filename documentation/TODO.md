@@ -121,7 +121,7 @@
   a css fájlba lennének preset-ek! [:div.x-button {:data-preset :my-preset}]
   Így a border-radius, hover-color, color, stb nem 5-6-7 data-attribute használatával
   volna meghatározva, hanem volna 20-30 preset azt csá.
-  Ezt majd akkor amikor több fájlra lesz darabolva az .x-app-elements.css
+  Ezt majd akkor amikor több fájlra lesz darabolva az elements/style.css
 
 - Mi lenne ha az X (ui) névterek nem tartalmaznának design-t?
   A popup csak egy fekete layer lenne. A notification csak egy pozicio lenne ...
@@ -314,7 +314,7 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
   - Ne legyen a label-ben interaktív elem, csak text!
   - Ne label-lel legyen vezérelve a fókusz, hanem natívan (on-mouse-down sets focus)
 
-- x.app-elements/autocomplete-surface billentyűzet-vezérlés,
+- elements.api/autocomplete-surface billentyűzet-vezérlés,
   {:extendable? ... :on-extend tulajdonságok}
 
 - Ha egy popup label bar label nem fér, ki -> akkor text-overflow: ellipsis

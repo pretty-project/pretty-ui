@@ -15,7 +15,7 @@
 (ns engines.item-browser.body.views
     (:require [engines.item-browser.body.prototypes :as body.prototypes]
               [engines.item-browser.core.helpers    :as core.helpers]
-              [plugins.item-lister.body.views       :as body.views]
+              [engines.item-lister.body.views       :as body.views]
               [reagent.api                          :as reagent]
               [tools.infinite-loader.api            :as infinite-loader]
               [re-frame.api                         :as r]))

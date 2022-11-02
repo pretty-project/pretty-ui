@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content.views
-    (:require [mid-fruits.candy  :refer [return]]
-              [mid-fruits.hiccup :refer [hiccup?]]
-              [mid-fruits.random :as random]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]
-              [reagent.api       :refer [component?]]
-              [re-frame.api      :as r]))
+    (:require [mid-fruits.candy     :refer [return]]
+              [mid-fruits.hiccup    :refer [hiccup?]]
+              [mid-fruits.random    :as random]
+              [mid-fruits.vector    :as vector]
+              [reagent.api          :refer [component?]]
+              [re-frame.api         :as r]
+              [x.app-dictionary.api :as x.dictionary]))
 
 
 
@@ -33,14 +33,12 @@
   ; @param (map) content-props
   ;  {:content (keyword)
   ;   :prefix (string)(opt)
-  ;   :replacements (vector)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
   ;   :suffix (string)(opt)}
   ;
   ; @return (string)
   [_ {:keys [content prefix replacements suffix]}]
-  (if-not (empty? content)
-          (if replacements (string/use-replacements (str prefix content suffix) replacements)
-                           (str prefix content suffix))))
+  (x.dictionary/join-string content prefix suffix replacements))
 
 (defn- number-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -124,7 +122,7 @@
   ;   :params (vector)(opt)
   ;   :prefix (string)(opt)
   ;    W/ {:content (keyword or string)}
-  ;   :replacements (vector)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
   ;    W/ {:content (keyword or string)}
   ;   :suffix (string)(opt)
   ;    W/ {:content (keyword or string)}}
@@ -172,6 +170,9 @@
    (component (random/generate-keyword) content-props))
 
   ([content-id content-props]
+   ; A content-props térkép helyett a content tulajdonság értéke is átadható:
+   ; Pl.: [content {:content :username}]
+   ;      [content           :username]
    (if (map?    content-props)
        (content content-id           content-props)
        (content content-id {:content content-props}))))

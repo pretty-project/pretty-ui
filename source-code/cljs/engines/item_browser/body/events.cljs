@@ -14,7 +14,7 @@
 
 (ns engines.item-browser.body.events
     (:require [engines.item-browser.core.events :as core.events]
-              [plugins.item-lister.body.events  :as body.events]
+              [engines.item-lister.body.events  :as body.events]
               [re-frame.api                     :refer [r]]))
 
 

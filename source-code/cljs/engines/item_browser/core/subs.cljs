@@ -17,7 +17,7 @@
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.transfer.subs :as transfer.subs]
               [mid-fruits.keyword                 :as keyword]
-              [plugins.item-lister.core.subs      :as plugins.item-lister.core.subs]
+              [engines.item-lister.core.subs      :as engines.item-lister.core.subs]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -34,12 +34,12 @@
 (def get-auto-title         core.subs/get-auto-title)
 (def use-query-params       core.subs/use-query-params)
 
-; plugins.item-lister.core.subs
-(def get-all-item-count      plugins.item-lister.core.subs/get-all-item-count)
-(def lister-disabled?        plugins.item-lister.core.subs/lister-disabled?)
-(def get-downloaded-items    plugins.item-lister.core.subs/get-downloaded-items)
-(def export-downloaded-items plugins.item-lister.core.subs/export-downloaded-items)
-(def get-current-order-by    plugins.item-lister.core.subs/get-current-order-by)
+; engines.item-lister.core.subs
+(def get-all-item-count      engines.item-lister.core.subs/get-all-item-count)
+(def lister-disabled?        engines.item-lister.core.subs/lister-disabled?)
+(def get-downloaded-items    engines.item-lister.core.subs/get-downloaded-items)
+(def export-downloaded-items engines.item-lister.core.subs/export-downloaded-items)
+(def get-current-order-by    engines.item-lister.core.subs/get-current-order-by)
 
 
 ;; ----------------------------------------------------------------------------

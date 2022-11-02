@@ -13,17 +13,18 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.subs
-    (:require [mid-fruits.candy                   :refer [param return]]
-              [mid-fruits.string                  :as string]
-              [re-frame.api                       :as r :refer [r]]
-              [x.mid-dictionary.term-handler.subs :as term-handler.subs]))
+    (:require [mid-fruits.candy                         :refer [return]]
+              [mid-fruits.string                        :as string]
+              [mid.x.dictionary.term-handler.subs       :as term-handler.subs]
+              [re-frame.api                             :as r :refer [r]]
+              [x.server-dictionary.term-handler.helpers :as term-handler.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-dictionary.term-handler.subs
+; mid.x.dictionary.term-handler.subs
 (def get-term     term-handler.subs/get-term)
 (def term-exists? term-handler.subs/term-exists?)
 
@@ -36,8 +37,9 @@
   ; @param (keyword) term-id
   ; @param (map) options
   ;  {:language (keyword)
-  ;   :replacements (vector)(opt)
-  ;    XXX#4509
+  ;   :prefix (string)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
+  ;    XXX#4509 (mid-fruits.string)
   ;   :suffix (string)(opt)}
   ;
   ; @example
@@ -51,11 +53,10 @@
   ;  "My name is John"
   ;
   ; @return (string)
-  [db [_ term-id {:keys [language replacements suffix]}]]
+  [db [_ term-id {:keys [language prefix replacements suffix]}]]
   (let [translated-term (r get-term db term-id language)
         suffixed-term   (str translated-term suffix)]
-       (if replacements (string/use-replacements suffixed-term replacements)
-                        (return                  suffixed-term))))
+       (term-handler.helpers/join-string translated-term prefix suffix replacements)))
 
 
 

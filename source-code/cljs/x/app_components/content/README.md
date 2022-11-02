@@ -15,14 +15,9 @@
 
 
 # prefix, suffix
-  Ha a content komponensnek {:content ...} tulajdonságként az app-dictionary szótár egy kifejezésre
-  utaló kulcszó vagy szöveg kerül átadásra, akkor a {:prefix ...} vagy {:suffix ...} tulajdonságként
-  átadott string típusú tartalmat prefixumként vagy toldalékaként használja.
+# XXX#4510 (cljs/x/app-components/value/README.md)
 
 
 
 # replacements
-# XXX#4509
-  A content komponensnek {:replacements [...]} tulajdonságként vektorban átadott string típusok,
-  a {:content ...} tulajdonságként átadott tartalom jelőlői ("%", "%1", "%2", ...) helyett
-  kerülnek behelyettesítésre.
+# XXX#4509 (cljs/x/app-components/value/README.md)

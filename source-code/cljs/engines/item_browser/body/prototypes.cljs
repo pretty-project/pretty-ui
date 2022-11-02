@@ -14,7 +14,7 @@
 
 (ns engines.item-browser.body.prototypes
     (:require [engines.item-browser.core.helpers   :as core.helpers]
-              [plugins.item-lister.body.prototypes :as body.prototypes]))
+              [engines.item-lister.body.prototypes :as body.prototypes]))
 
 
 

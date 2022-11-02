@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-dictionary.term-handler.lifecycles
-    (:require [x.app-core.api         :as x.core]
-              [x.mid-dictionary.books :refer [BOOKS]]))
+    (:require [mid.x.dictionary.books :refer [BOOKS]]
+              [x.app-core.api         :as x.core]))
 
 
 

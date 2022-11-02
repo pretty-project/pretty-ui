@@ -14,7 +14,7 @@
 
 (ns engines.item-browser.download.subs
     (:require [engines.engine-handler.download.subs :as download.subs]
-              [plugins.item-lister.download.subs    :as plugins.item-lister.download.subs]
+              [engines.item-lister.download.subs    :as engines.item-lister.download.subs]
               [re-frame.api                         :as r]))
 
 
@@ -27,8 +27,8 @@
 (def get-resolver-answer download.subs/get-resolver-answer)
 (def data-received?      download.subs/data-received?)
 
-; plugins.item-lister.download.subs
-(def first-data-received? plugins.item-lister.download.subs/first-data-received?)
+; engines.item-lister.download.subs
+(def first-data-received? engines.item-lister.download.subs/first-data-received?)
 
 
 

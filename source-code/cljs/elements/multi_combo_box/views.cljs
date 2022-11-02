@@ -86,7 +86,7 @@
   ;   :option-value-f (function)(opt)
   ;    Default: return
   ;   :option-component (component)(opt)
-  ;    Default: x.app-elements.combo-box/default-option-component
+  ;    Default: elements.combo-box/default-option-component
   ;   :options (vector)(opt)
   ;   :options-path (vector)(opt)}
   ;

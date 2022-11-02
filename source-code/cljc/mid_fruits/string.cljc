@@ -50,8 +50,8 @@
   ;
   ; @return (boolean)
   [n]
-  (and      (string? n)
-       (not (empty?  n))))
+  (and (-> n string?)
+       (-> n empty? not)))
 
 (defn use-nil
   ; @param (*) n
@@ -78,9 +78,10 @@
   ;
   ; @param (string)
   [n dex]
-  (when (and (nonempty? n)
-             (>  (count n) dex))
-        (nth n dex)))
+  (let [n (str n)]
+       (if (and (-> n empty? not)
+                (> (count  n) dex))
+           (nth n dex))))
 
 (defn part
   ; @param (string) n
@@ -102,11 +103,12 @@
    (part n start (count n)))
 
   ([n start end]
-   (if (and (nonempty? n)
-            (math/between? end   0 (count n))
-            (math/between? start 0 (count n)))
-       (subs   n start end)
-       (return n))))
+   (let [n (str n)]
+        (if (and (-> n empty? not)
+                 (math/between? end   0 (count n))
+                 (math/between? start 0 (count n)))
+            (subs   n start end)
+            (return n)))))
 
 (defn trim
   ; @param (string) n
@@ -128,9 +130,10 @@
   ;
   ; @return (integer)
   [n]
-  (if (nonempty? n)
-      (count     n)
-      (return    0)))
+  (let [n (str n)]
+       (if (empty? n)
+           (return 0)
+           (count  n))))
 
 (defn join
   ; @param (collection) coll
@@ -161,8 +164,7 @@
   ([coll separator {:keys [join-empty?]}]
    (let [last-dex (-> coll count dec)]
         (letfn [(separate?      [dex]  (and (not= dex last-dex)
-                                            (-> (nth coll (inc dex))
-                                                str empty? not)))
+                                            (-> (nth coll (inc dex)) str empty? not)))
                 (join?          [part] (or (-> join-empty? false? not)
                                            (-> part str empty? not)))
                 (f [result dex part] (if (join? part)
@@ -190,8 +192,8 @@
   ; @return (string)
   [n limit & [suffix]]
   (let [n (str n)]
-       (if (and (nonempty? n)
-                (integer?  limit)
+       (if (and (-> n empty? not)
+                (integer?     limit)
                 (> (length n) limit))
            (str (subs  n 0 limit) suffix)
            (return n))))
@@ -212,9 +214,9 @@
   ;
   ; @return (boolean)
   [n min]
-  (and     (string?  n)
-           (integer? min)
-       (>= (length   n) min)))
+  (let [n (str n)]
+       (and     (integer?  min)
+            (>= (length n) min))))
 
 (defn max-length?
   ; @param (string) n
@@ -232,9 +234,9 @@
   ;
   ; @return (boolean)
   [n max]
-  (and     (string?  n)
-           (integer? max)
-       (<= (length   n) max)))
+  (let [n (str n)]
+       (and     (integer?  max)
+            (<= (length n) max))))
 
 (defn length?
   ; @param (string) n
@@ -258,13 +260,13 @@
   ;
   ; @return (boolean)
   ([n x]
-   (and      (string? n)
-        (= x (count   n))))
+   (let [n (str n)]
+        (= x (count n))))
 
   ([n min max]
-   (and         (string? n)
-        (<= min (count   n))
-        (>= max (count   n)))))
+   (let [n (str n)]
+        (and (<= min (count n))
+             (>= max (count n))))))
 
 (defn split
   ; @param (string) n
@@ -307,10 +309,12 @@
   ;
   ; @return (string)
   [n prefix]
-  (if (and (nonempty? n)
-           (nonempty? prefix))
-      (str    prefix n)
-      (return n)))
+  (let [n      (str n)
+        prefix (str prefix)]
+       (if (or (-> n      empty?)
+               (-> prefix empty?))
+           (return     n)
+           (str prefix n))))
 
 (defn suffix
   ; @param (string) n
@@ -328,10 +332,12 @@
   ;
   ; @return (string)
   [n suffix]
-  (if (and (nonempty? n)
-           (nonempty? suffix))
-      (str    n suffix)
-      (return n)))
+  (let [n      (str n)
+        suffix (str suffix)]
+       (if (or (-> n      empty?)
+               (-> suffix empty?))
+           (return n)
+           (str    n suffix))))
 
 (defn contains-part?
   ; @param (string) n
@@ -342,9 +348,11 @@
   ;
   ; @return (boolean)
   [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/includes? n x)))
+  (let [n (str n)
+        x (str x)]
+       (if-not (or (-> n empty?)
+                   (-> x empty?))
+               (string/includes? n x))))
 
 (defn insert-part
   ; @param (string) n
@@ -357,11 +365,13 @@
   ;
   ; @return (string)
   [n x dex]
-  (if (nonempty? x)
-      (let [count (count n)
-            dex   (math/between! dex 0 count)]
-           (str (subs n 0 dex) x (subs n dex)))
-      (return n)))
+  (let [n (str n)
+        x (str x)]
+       (if (empty? x)
+           (return n)
+           (let [count (count n)
+                 dex   (math/between! dex 0 count)]
+                (str (subs n 0 dex) x (subs n dex))))))
 
 (defn first-dex-of
   ; @param (string) n
@@ -369,9 +379,11 @@
   ;
   ; @return (integer)
   [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/index-of n x)))
+  (let [n (str n)
+        x (str x)]
+       (if-not (or (empty? n)
+                   (empty? x))
+               (string/index-of n x))))
 
 (defn last-dex-of
   ; @param (string) n
@@ -379,9 +391,11 @@
   ;
   ; @return (integer)
   [n x]
-  (when (and (nonempty? n)
-             (nonempty? x))
-        (string/last-index-of n x)))
+  (let [n (str n)
+        x (str x)]
+       (if-not (or (empty? n)
+                   (empty? x))
+               (string/last-index-of n x))))
 
 (defn nth-dex-of
   ; @param (string) n
@@ -953,8 +967,6 @@
   (string/replace (str n) x (str y)))
 
 (defn use-replacements
-  ; XXX#4509
-  ;
   ; @param (string) n
   ; @param (numbers or strings in vector) replacements
   ;
@@ -975,6 +987,8 @@
   ;
   ; @return (string)
   [n replacements]
+  ; XXX#4509
+  ;
   ; A behelyettesíthetőséget jelző karakter abban az esetben van számmal jelölve,
   ; (pl. %1, %2, ...) ha a szöveg több behelyettesítést fogad.
   ;
@@ -1016,6 +1030,26 @@
   ; @return (string)
   [n replacement]
   (replace-part n "%" replacement))
+
+(defn use-placeholder
+  ; @param (string) n
+  ; @param (string) placeholder
+  ;
+  ; @example
+  ;  (use-placeholder "My content" "My placeholder")
+  ;  =>
+  ;  "My content"
+  ;
+  ; @example
+  ;  (use-placeholder "" "My placeholder")
+  ;  =>
+  ;  "My placeholder"
+  ;
+  ; @return (string)
+  [n placeholder]
+  (if (nonempty? n)
+      (return    n)
+      (return    placeholder)))
 
 (defn filter-characters
   ; @param (string) n

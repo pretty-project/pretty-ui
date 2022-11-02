@@ -161,7 +161,7 @@
 
 (defn view
   [popup-id]
-  [:div {:style {:position "fixed" :top "0" :right "0" :max-height "100vh" :max-width "100%"
+  [:div {:style {:position "fixed" :top "0" :right "0" :max-height "calc(100vh - 48px)" :max-width "100%"
                  :background "rgba(255, 255, 255, .98)" :box-shadow "0 0 5px 1px rgba(0, 0, 0, .15)"
                  :display "flex" :flex-direction "column"
                  :border-radius "0 0 0 10px"}}

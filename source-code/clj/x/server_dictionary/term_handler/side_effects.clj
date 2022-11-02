@@ -24,8 +24,9 @@
   ; @param (keyword) term-id
   ; @param (map) options
   ;  {:language (keyword)
-  ;   :replacements (vector)(opt)
-  ;    XXX#4509
+  ;   :prefix (string)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
+  ;    XXX#4509 (mid-fruits.string)
   ;   :suffix (string)(opt)}
   ;
   ; @example
