@@ -50,4 +50,5 @@
 (def NAME-ORDERS name-handler.config/NAME-ORDERS)
 
 ; x.mid-locales.name-handler.helpers
-(def name->ordered-name name-handler.helpers/name->ordered-name)
+(def name->ordered-name     name-handler.helpers/name->ordered-name)
+(def name->ordered-initials name-handler.helpers/name->ordered-initials)

@@ -57,11 +57,13 @@
 (def NAME-ORDERS name-handler.config/NAME-ORDERS)
 
 ; x.app-locales.name-handler.helpers
-(def name->ordered-name name-handler.helpers/name->ordered-name)
+(def name->ordered-name     name-handler.helpers/name->ordered-name)
+(def name->ordered-initials name-handler.helpers/name->ordered-initials)
 
 ; x.app-locales.name-handler.subs
-(def get-name-order   name-handler.subs/get-name-order)
-(def get-ordered-name name-handler.subs/get-ordered-name)
+(def get-name-order       name-handler.subs/get-name-order)
+(def get-ordered-name     name-handler.subs/get-ordered-name)
+(def get-ordered-initials name-handler.subs/get-ordered-initials)
 
 ; x.app-locales.name-handler.views
 (def name-order name-handler.views/name-order)

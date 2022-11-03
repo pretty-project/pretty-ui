@@ -45,6 +45,18 @@
   (let [selected-language (r language-handler.subs/get-selected-language db)]
        (name-handler.helpers/name->ordered-name first-name last-name selected-language)))
 
+(defn get-ordered-initials
+  ; @param (string) first-name
+  ; @param (string) last-name
+  ;
+  ; @usage
+  ;  (r get-ordered-initials db "First" "Last")
+  ;
+  ; @return (string)
+  [db [_ first-name last-name]]
+  (let [selected-language (r language-handler.subs/get-selected-language db)]
+       (name-handler.helpers/name->ordered-initials first-name last-name selected-language)))
+
 
 
 ;; ----------------------------------------------------------------------------
@@ -57,3 +69,7 @@
 ; @usage
 ;  [:locales/get-ordered-name "First" "Last"]
 (r/reg-sub :locales/get-ordered-name get-ordered-name)
+
+; @usage
+;  [:locales/get-ordered-initials "First" "Last"]
+(r/reg-sub :locales/get-ordered-initials get-ordered-initials)

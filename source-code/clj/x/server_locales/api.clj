@@ -56,9 +56,11 @@
 
 ; x.server-locales.name-handler.helpers
 (def name->ordered-name         name-handler.helpers/name->ordered-name)
+(def name->ordered-initials     name-handler.helpers/name->ordered-initials)
 (def request->name-order        name-handler.helpers/request->name-order)
 (def request->ordered-user-name name-handler.helpers/request->ordered-user-name)
 
 ; x.server-locales.name-handler.subs
-(def get-name-order   name-handler.subs/get-name-order)
-(def get-ordered-name name-handler.subs/get-ordered-name)
+(def get-name-order       name-handler.subs/get-name-order)
+(def get-ordered-name     name-handler.subs/get-ordered-name)
+(def get-ordered-initials name-handler.subs/get-ordered-initials)
