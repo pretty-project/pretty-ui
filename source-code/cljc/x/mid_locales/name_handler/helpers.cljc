@@ -46,5 +46,5 @@
   ; @return (string)
   [first-name last-name locale-id]
   (let [name-order (get name-handler.config/NAME-ORDERS locale-id)]
-       (string/trim (case name-order :reversed (str (first last-name)  " " (first first-name))
-                                               (str (first first-name) " " (first last-name))))))
+       (string/trim (case name-order :reversed (str (first last-name)  (first first-name))
+                                               (str (first first-name) (first last-name))))))

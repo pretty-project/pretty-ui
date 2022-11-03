@@ -50,6 +50,9 @@
            :help-center
            {:en "Help center"
             :hu "Súgó központ"}
+           :home-screen
+           {:en "Home screen"
+            :hu "Kezdőképernyő"}
            :just-a-moment...
            {:en "Just a moment ..."
             :hu "Egy kis türelmet ..."}
