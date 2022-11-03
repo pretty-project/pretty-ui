@@ -904,11 +904,20 @@
   ;  =>
   ;  :bam
   ;
+  ; @example
+  ;  (get-namespace {"foo/bar" "baz"})
+  ;  =>
+  ;  :foo
+  ;
   ; @return (keyword)
   [n]
-  (letfn [(f [%] (if (keyword? %)
-                     (if-let [namespace (namespace %)]
-                             (keyword namespace))))]
+  (letfn [(f [item-key]
+             (cond (string? item-key)
+                   (if-let [namespace (-> item-key keyword namespace)]
+                           (keyword namespace))
+                   (keyword? item-key)
+                   (if-let [namespace (-> item-key         namespace)]
+                           (keyword namespace))))]
          (some f (keys n))))
 
 (defn namespaced?
@@ -937,10 +946,17 @@
   ;  =>
   ;  {:baz/foo "bar"}
   ;
+  ; @example
+  ;  (add-namespace {"foo" "bar"} :baz)
+  ;  =>
+  ;  {"baz/foo" "bar"}
+  ;
   ; @return (map)
   [n namespace]
   (letfn [(f [n item-key item-value]
-             (assoc n (keyword (name namespace) (name item-key)) item-value))]
+             (cond (string?  item-key) (assoc n (str     (name namespace) "/"   item-key)  item-value)
+                   (keyword? item-key) (assoc n (keyword (name namespace) (name item-key)) item-value)
+                   :return n))]
          (reduce-kv f {} n)))
 
 (defn remove-namespace
@@ -951,10 +967,17 @@
   ;  =>
   ;  {:foo "bar"}
   ;
+  ; @example
+  ;  (remove-namespace {"baz/foo" "bar"})
+  ;  =>
+  ;  {"foo" "bar"}
+  ;
   ; @return (map)
   [n]
   (letfn [(f [n item-key item-value]
-             (assoc n (-> item-key name keyword) item-value))]
+             (cond (string?  item-key) (assoc n (-> item-key keyword name)         item-value)
+                   (keyword? item-key) (assoc n (-> item-key         name keyword) item-value)
+                   :return n))]
          (reduce-kv f {} n)))
 
 

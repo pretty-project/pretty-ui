@@ -223,7 +223,8 @@
   [db [_ engine-id]]
   (let [item-namespace   (r transfer.subs/get-transfer-item db engine-id :item-namespace)
         downloaded-items (r get-downloaded-items            db engine-id)]
-       (vector/->items downloaded-items #(map/add-namespace % item-namespace))))
+       (letfn [(f [item] (map/add-namespace item item-namespace))]
+              (vector/->items downloaded-items f))))
 
 (defn get-downloaded-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

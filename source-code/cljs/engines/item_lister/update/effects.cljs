@@ -45,6 +45,20 @@
                                                    :on-failure [:item-lister/reorder-items-failed lister-id]
                                                    :query query :validator-f validator-f}]})))
 
+(r/reg-event-fx :item-lister/items-reordered
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  (fn [_ _]))
+
+(r/reg-event-fx :item-lister/reorder-items-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  ; @param (map) server-response
+  (fn [_ _]))
+
 
 
 ;; -- Delete items effects ----------------------------------------------------

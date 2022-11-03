@@ -31,11 +31,13 @@
   ; @return (map)
   ;  {:download-limit (integer)
   ;   :items-path (vector)
+  ;   :order-key (keyword)
   ;   :placeholder (metamorphic-content)
   ;   :transfer-id (keyword)}
   [lister-id body-props]
   (merge {:items-path     (core.helpers/default-items-path lister-id)
           :download-limit core.config/DEFAULT-DOWNLOAD-LIMIT
+          :order-key      :order
           :placeholder    :no-items-to-show
           ; XXX#8173
           :transfer-id lister-id}

@@ -15,6 +15,7 @@
 (ns engines.item-lister.sample
     (:require [elements.api            :as elements]
               [engines.item-lister.api :as item-lister]
+              [mid-fruits.vector       :as vector]
               [re-frame.api            :as r]
               [x.app-core.api          :as x.core]))
 
@@ -71,6 +72,28 @@
 ; a szerver-oldali változathoz.
 (r/reg-event-fx :reload-my-items!
   [:item-lister/reload-items! :my-lister])
+
+
+
+;; -- Listaelemek sorrendjének aktualizálása a szerveren ----------------------
+;; ----------------------------------------------------------------------------
+
+; Az [:item-lister/reorder-items! ...] esemény ...
+; ... a letöltött elemeket a reordered-items vektorban tárolt sorrendjük szerint
+;     ellátja a body-komponens számára :order-key paraméterként átadott kulcshoz
+;     rendelt sorrendi értékkel.
+; ... elküldi a szerver-oldali my-handler/reorder-items! mutation függvény számára
+;     az újrarendezett elemeket.
+;
+; (def db {:downloaded-items [{:id "my-item"} {:id "your-item"}]})
+; (r/dispatch [:reorder-my-items! [{:id "your-item"} {:id "my-item"}]])
+; =>
+; [{:id "your-item" :order 0} {:id "my-item" :order 1}]
+(r/reg-event-fx :reorder-my-items!
+  (fn [_ _]
+      (let [downloaded-items (r item-lister/get-downloaded-items db :my-lister)
+            reordered-items  (vector/move-item downloaded-items 0 5)]
+           [:item-lister/reorder-items! :my-lister reordered-items])))
 
 
 

@@ -124,6 +124,7 @@
   ;    Default: core.helpers/default-items-path
   ;   :list-element (metamorphic-content)
   ;   :order-key (keyword)(opt)
+  ;    Default: :order
   ;   :placeholder (metamorphic-content)(opt)
   ;    Default: :no-items-to-show
   ;   :prefilter (map)(opt)
