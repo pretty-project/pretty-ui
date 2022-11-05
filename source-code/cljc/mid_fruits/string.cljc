@@ -654,13 +654,14 @@
 
   ([n x {:keys [separate-matches?]}]
    (if (contains-part? n x)
-       (letfn [(f [cursor match-count]
-                  (if-let [first-dex (first-dex-of (part n cursor) x)]
-                          (let [step (if separate-matches? (count x) 1)]
-                               (f (+   cursor step)
-                                  (inc match-count)))
-                          (return match-count)))]
-              (f 0 0))
+       (let [step (if separate-matches? (count x) 1)]
+            (letfn [(f [cursor match-count]
+                       (if-let [first-dex (first-dex-of (part n cursor) x)]
+                               (let [step (if separate-matches? (count x) 1)]
+                                    (f (+   cursor first-dex step)
+                                       (inc match-count)))
+                               (return match-count)))]
+                   (f 0 0)))
        (return 0))))
 
 (defn min-occurence?
