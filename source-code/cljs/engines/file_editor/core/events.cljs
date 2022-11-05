@@ -27,20 +27,7 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (r set-mode! db editor-id :error-mode?))
+(def set-engine-error!  core.events/set-engine-error!)
 
 
 
@@ -82,4 +69,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :file-editor/set-error-mode! set-error-mode!)
+(r/reg-event-db :file-editor/set-engine-error! set-engine-error!)

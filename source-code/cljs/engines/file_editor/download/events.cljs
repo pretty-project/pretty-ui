@@ -53,7 +53,7 @@
   ; @return (map)
   [db [_ editor-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az file-editor engine is névtér nélkül
+  ; A többi engine-nel megegyezően az file-editor engine is névtér nélkül
   ; tárolja a letöltött tartalmat.
   ;
   ; XXX#3400

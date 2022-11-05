@@ -82,6 +82,21 @@
 
 
 
+;; -- Error events ------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-engine-error!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (keyword) error-id
+  ;
+  ; @return (map)
+  [db [_ engine-id error-id]]
+  (assoc-in db [:engines :engine-handler/meta-items engine-id :engine-error] error-id))
+
+
+
 ;; -- Query-param events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

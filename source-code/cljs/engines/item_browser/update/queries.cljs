@@ -90,7 +90,7 @@
   ; @return (map)
   ;  {:item (namespaced map)}
   [db [_ browser-id item-id]]
-  ; Az item-browser engine az item-editor pluginhoz hasonlóan duplikáláskor az elem azonosítója
+  ; Az item-browser engine az item-editor engine-hez hasonlóan duplikáláskor az elem azonosítója
   ; helyett az elemet küldi el a szerver számára, hogy a két engine mutation függvényei hasonló
   ; paraméterezéssel működjenek.
   ; (az item-browser engine működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)

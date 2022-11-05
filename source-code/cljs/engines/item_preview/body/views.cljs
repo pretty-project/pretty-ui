@@ -53,7 +53,7 @@
   ;
   ; @param (keyword) preview-id
   [preview-id]
-  (cond @(r/subscribe [:item-preview/get-meta-item preview-id :error-mode?])
+  (cond @(r/subscribe [:item-preview/get-meta-item preview-id :engine-error])
          [error-element preview-id]
         @(r/subscribe [:item-preview/data-received? preview-id])
          [preview-element preview-id]

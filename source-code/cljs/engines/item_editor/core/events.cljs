@@ -30,6 +30,7 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
+(def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
 (def update-item-id!    core.events/update-item-id!)
 
@@ -37,15 +38,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (map)
-  [db [_ editor-id]]
-  (r set-mode! db editor-id :error-mode?))
 
 (defn set-recovery-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,7 +65,7 @@
   ; A body komponens component-will-unmount életciklusa által alkalmazott
   ; reset-downloads! függvény nem törli ki az elemről készült backup-item másolatot,
   ; hogy az engine elhagyása utáni esetleges "El nem mentett változtatások visszaállítása"
-  ; funkció használatakor a {:recovery-mode? true} állapotban újra elinduló plugin
+  ; funkció használatakor a {:recovery-mode? true} állapotban újra elinduló engine
   ; számára elérhetők legyenek a visszaállításhoz szükséges adatok.
   (let [item-path        (r body.subs/get-body-prop db editor-id :item-path)
         suggestions-path (r body.subs/get-body-prop db editor-id :suggestions-path)]
@@ -131,4 +123,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :item-editor/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-editor/set-engine-error! set-engine-error!)

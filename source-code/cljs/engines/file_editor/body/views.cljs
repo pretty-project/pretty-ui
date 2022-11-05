@@ -53,7 +53,7 @@
   ;
   ; @param (keyword) editor-id
   [editor-id]
-  (cond @(r/subscribe [:file-editor/get-meta-item editor-id :error-mode?])
+  (cond @(r/subscribe [:file-editor/get-meta-item editor-id :engine-error])
          [error-element editor-id]
         @(r/subscribe [:file-editor/data-received? editor-id])
          [form-element editor-id]

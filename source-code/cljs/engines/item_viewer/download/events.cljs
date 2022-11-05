@@ -40,12 +40,12 @@
   ;
   ; @return (map)
   [db [_ viewer-id]]
-  ; XXX#3005 (engines.item-viewer.download.events)
-  ; Ha az [:item-viewer/request-item! ...] esemény megtörténésekor az item-viewer plugin
+  ; XXX#3005
+  ; Ha az [:item-viewer/request-item! ...] esemény megtörténésekor az item-viewer engine
   ; már használatban van, akkor az adatok letöltése előtt szükséges visszaléptetni a engine-t
   ; {:data-received? false} állapotba, hogy a letöltés idejére újra megjelenjen a letöltésjelző.
   ; Pl.: Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd a megjelenő
-  ;      értesítésen a "Másolat megtekintése" gombra kattint, akkor az item-viewer plugin
+  ;      értesítésen a "Másolat megtekintése" gombra kattint, akkor az item-viewer engine
   ;      letölti a másolat elemet, és a letöltés idejére szükséges megjeleníteni a letöltésjelzőt!
   (r core.events/reset-downloads! db viewer-id))
 
@@ -58,7 +58,7 @@
   ; @return (map)
   [db [_ viewer-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-viewer engine is névtér nélkül
+  ; A többi engine-nel megegyezően az item-viewer engine is névtér nélkül
   ; tárolja a letöltött dokumentumot.
   (let [received-item (r download.subs/get-resolver-answer db viewer-id :get-item server-response)
         item-path     (r body.subs/get-body-prop           db viewer-id :item-path)]

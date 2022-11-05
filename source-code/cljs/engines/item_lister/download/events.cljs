@@ -48,7 +48,7 @@
   ; @return (map)
   [db [_ lister-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-editor engine is névtér nélkül
+  ; A többi engine-nel megegyezően az item-editor engine is névtér nélkül
   ; tárolja a letöltött dokumentumokat.
   (let [resolver-answer (r download.subs/get-resolver-answer db lister-id :get-items server-response)
         items-path      (r body.subs/get-body-prop           db lister-id :items-path)

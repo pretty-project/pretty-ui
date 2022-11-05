@@ -46,7 +46,7 @@
   ; @param (map) server-response
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; A file-editor engine a tartalom mentésének befejeződésekor ...
-      ; ... az item-editor pluginnal ellentétben nem lép ki a szerkesztőből,
+      ; ... az item-editor engine-nel ellentétben nem lép ki a szerkesztőből,
       ;     ezért szükséges a tartalomról tárolt másolatot frissíteni,
       ;     hogy a backup.subs/form-changed? és a backup.subs/content-changed?
       ;     függvények kimentei visszaálljanak alaphelyzetbe.

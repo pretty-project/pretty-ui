@@ -12,36 +12,25 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.circle-diagram.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+(ns elements.circle-diagram.prototypes
+    (:require [elements.circle-diagram.helpers :as circle-diagram.helpers]
+              [mid-fruits.candy                :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-body-attributes
+(defn diagram-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:style (map)(opt)}
+  ;  {:strength (integer)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
-
-(defn diagram-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ;  {}
-  ;
-  ; @return (map)
-  ;  {}
-  [diagram-id diagram-props]
-  (merge (element.helpers/element-default-attributes diagram-id diagram-props)
-         (element.helpers/element-indent-attributes  diagram-id diagram-props)
-         {}))
+  ;  {:diameter (px)
+  ;   :strength (px)}
+  [{:keys [strength] :as diagram-props}]
+  (merge {:diameter 48
+          :strength  2}
+         (circle-diagram.helpers/diagram-props<-total-value diagram-props)))

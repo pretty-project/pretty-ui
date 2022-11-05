@@ -53,7 +53,7 @@
   ;
   ; @param (keyword) viewer-id
   [viewer-id]
-  (cond @(r/subscribe [:item-viewer/get-meta-item viewer-id :error-mode?])
+  (cond @(r/subscribe [:item-viewer/get-meta-item viewer-id :engine-error])
          [error-element viewer-id]
         @(r/subscribe [:item-viewer/data-received? viewer-id])
          [item-element viewer-id]

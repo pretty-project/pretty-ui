@@ -12,14 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-fruits.nato)
+(ns mid.engines.item-handler.routes.helpers
+    (:require [mid.engines.engine-handler.routes.helpers :as routes.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (strings in vector)
-(def ALPHABET ["Alfa"    "Bravo" "Charlie" "Delta"  "Echo"     "Foxtrot" "Golf"   "Hotel"  "India"
-               "Juliett" "Kilo"  "Lima"    "Mike"   "November" "Oscar"   "Papa"   "Quebec" "Romeo"
-               "Sierra"  "Tango" "Uniform" "Victor" "Whiskey"  "X-ray"   "Yankee" "Zulu"])
+; mid.engines.engine-handler.routes.helpers
+(def route-id routes.helpers/route-id)

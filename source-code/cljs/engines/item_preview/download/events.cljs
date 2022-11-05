@@ -52,7 +52,7 @@
   ; @return (map)
   [db [_ preview-id server-response]]
   ; XXX#3907
-  ; A többi pluginnal megegyezően az item-preview engine is névtér nélkül
+  ; A többi engine-nel megegyezően az item-preview engine is névtér nélkül
   ; tárolja a letöltött dokumentumot.
   (let [resolver-id (r download.subs/get-resolver-id db preview-id :get-item)
         item-path   (r body.subs/get-body-prop       db preview-id :item-path)

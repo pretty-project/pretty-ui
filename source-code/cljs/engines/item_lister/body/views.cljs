@@ -102,7 +102,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  (cond @(r/subscribe [:item-lister/get-meta-item lister-id :error-mode?])
+  (cond @(r/subscribe [:item-lister/get-meta-item lister-id :engine-error])
          [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])
          [:<> [list-element              lister-id]

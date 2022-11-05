@@ -36,8 +36,8 @@
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
                                            {:display-progress? true
                                             ; XXX#4057
-                                            :on-stalled [:file-editor/receive-content! editor-id]
-                                            :on-failure [:file-editor/set-error-mode!  editor-id]
+                                            :on-stalled [:file-editor/receive-content!  editor-id]
+                                            :on-failure [:file-editor/set-engine-error! editor-id :failed-to-request-content]
                                             :query query :validator-f validator-f}]})))
 
 (r/reg-event-fx :file-editor/receive-content!

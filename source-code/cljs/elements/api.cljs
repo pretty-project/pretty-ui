@@ -55,7 +55,7 @@
               [elements.checkbox.views                          :as checkbox.views]
               [elements.chip-group.views                        :as chip-group.views]
               [elements.chip.views                              :as chip.views]
-              [elements.element-components.circle-diagram       :as element-components.circle-diagram]
+              [elements.circle-diagram.views                    :as circle-diagram.views]
               [elements.color-selector.views                    :as color-selector.views]
               [elements.color-marker.views                      :as color-marker.views]
               [elements.color-stamp.views                       :as color-stamp.views]
@@ -111,7 +111,7 @@
 (def checkbox             checkbox.views/element)
 (def chip-group           chip-group.views/element)
 (def chip                 chip.views/element)
-(def circle-diagram       element-components.circle-diagram/element)
+(def circle-diagram       circle-diagram.views/element)
 (def color-selector       color-selector.views/element)
 (def color-marker         color-marker.views/element)
 (def color-stamp          color-stamp.views/element)

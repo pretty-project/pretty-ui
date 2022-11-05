@@ -49,7 +49,7 @@
   ; @param (keyword) browser-id
   [browser-id]
   ; XXX#6177
-  (cond @(r/subscribe [:item-browser/get-meta-item browser-id :error-mode?])
+  (cond @(r/subscribe [:item-browser/get-meta-item browser-id :engine-error])
          [error-element browser-id]
        ;@(r/subscribe [:environment/browser-offline?])
        ; [offline-body browser-id]

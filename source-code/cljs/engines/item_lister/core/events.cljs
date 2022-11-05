@@ -29,6 +29,7 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
+(def set-engine-error!  core.events/set-engine-error!)
 
 
 
@@ -43,15 +44,6 @@
   ; @return (map)
   [db [_ lister-id]]
   (r set-mode! db lister-id :reload-mode?))
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r set-mode! db lister-id :error-mode?))
 
 (defn set-memory-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -185,11 +177,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @param (keyword) lister-id
-;
-; @usage
-;  [:item-lister/set-error-mode! :my-lister]
-(r/reg-event-db :item-lister/set-error-mode! set-error-mode!)
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-event-db :item-lister/set-engine-error! set-engine-error!)
 
 ; @param (keyword) lister-id
 ;

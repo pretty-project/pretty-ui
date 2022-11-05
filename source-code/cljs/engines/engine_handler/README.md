@@ -1,6 +1,6 @@
 
-# XXX#7061
 # A {:query-params {...}} térkép ...
+# XXX#7061
   A {:query-params {...}} térkép minden resolver és mutation lekérés paraméter térképének
   alapja, így annak tartalma elérhető minden meghívott szerver-oldali mutation és resolver függvény
   paraméterei között.

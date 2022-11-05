@@ -12,35 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-fruits.error)
+(ns engines.item-handler.core.helpers
+    (:require [mid.engines.item-handler.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn try!
-  ; @param (function) f
-  ; @param (list of *) abc
-  ;
-  ; @usage
-  ;  (try! #(my-function "Apple"))
-  ;
-  ; @usage
-  ;  (try! my-function "Apple")
-  ;
-  ; @return (*)
-  [f & abc]
-  #?(:clj  (try (apply f abc) (catch Exception e (str e)))
-     :cljs (try (apply f abc) (catch :default  e (str e)))))
-
-(defn throw!
-  ; @param (string) e
-  ;
-  ; @usage
-  ;  (throw! "Something went wrong ...")
-  ;
-  ; @return (?)
-  [e]
-  #?(:clj  (throw (Exception. e))
-     :cljs (throw (js/Error.  e))))
+; mid.engines.item-handler.core.helpers
+(def component-id             core.helpers/component-id)
+(def default-item-path        core.helpers/default-item-path)
+(def default-suggestions-path core.helpers/default-suggestions-path)

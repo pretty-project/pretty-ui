@@ -36,8 +36,8 @@
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                            {:display-progress? true
                                             ; XXX#4057
-                                            :on-stalled [:item-viewer/receive-item!   viewer-id]
-                                            :on-failure [:item-viewer/set-error-mode! viewer-id]
+                                            :on-stalled [:item-viewer/receive-item!     viewer-id]
+                                            :on-failure [:item-viewer/set-engine-error! viewer-id :failed-to-request-item]
                                             :query query :validator-f validator-f}]})))
 
 (r/reg-event-fx :item-viewer/receive-item!

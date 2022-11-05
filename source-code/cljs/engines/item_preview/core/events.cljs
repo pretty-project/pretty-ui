@@ -27,22 +27,9 @@
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
+(def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
 (def update-item-id!    core.events/update-item-id!)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) preview-id
-  ;
-  ; @return (map)
-  [db [_ preview-id]]
-  (r set-mode! db preview-id :error-mode?))
 
 
 
@@ -86,7 +73,7 @@
   ;     current-item-id értéket, különben az update-item-id! függvény nem
   ;     használná a body komponens item-id paraméterét a current-item-id
   ;     új értékeként!
-  ; ... szükséges kiléptetni a engine-t az esetlegesen beállított {:error-mode? true}
+  ; ... szükséges kiléptetni a engine-t az esetlegesen beállított {:engine-error ...}
   ;     állapotból!
   (as-> db % (r remove-meta-items! % preview-id)
              (r update-item-id!    % preview-id)
@@ -98,4 +85,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :item-preview/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-preview/set-engine-error! set-engine-error!)

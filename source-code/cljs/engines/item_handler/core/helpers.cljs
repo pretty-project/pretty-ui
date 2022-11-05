@@ -12,20 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid-fruits.namespace
-    (:require [mid-fruits.keyword :as keyword]))
+(ns engines.item-handler.core.helpers
+    (:require [mid.engines.item-handler.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn detect
-  ; @param (namespaced keyword) sample
-  ;
-  ; @usage
-  ;  (detect ::this)
-  ;
-  ; @return (keyword)
-  [sample]
-  (keyword/get-namespace sample))
+; mid.engines.item-handler.core.helpers
+(def component-id             core.helpers/component-id)
+(def default-item-path        core.helpers/default-item-path)
+(def default-suggestions-path core.helpers/default-suggestions-path)

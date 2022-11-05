@@ -12,12 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-viewer.core.config)
+(ns engines.item-handler.core.prototypes
+    (:require [mid-fruits.candy :refer [param]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (keyword)
-(def DEFAULT-LABEL-KEY :name)
+(defn handler-props-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (map) handler-props
+  ;
+  ; @return (map)
+  [handler-id handler-props]
+  (merge {}
+         (param handler-props)))

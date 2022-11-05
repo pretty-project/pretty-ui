@@ -30,7 +30,7 @@
 ; engines.item-lister.core.events
 (def set-meta-item!        engines.item-lister.core.events/set-meta-item!)
 (def remove-meta-items!    engines.item-lister.core.events/remove-meta-items!)
-(def set-error-mode!       engines.item-lister.core.events/set-error-mode!)
+(def set-engine-error!     engines.item-lister.core.events/set-engine-error!)
 (def reset-downloads!      engines.item-lister.core.events/reset-downloads!)
 (def use-default-order-by! engines.item-lister.core.events/use-default-order-by!)
 (def filter-items!         engines.item-lister.core.events/filter-items!)
@@ -54,8 +54,8 @@
   [db [_ browser-id]]
   ; Az aktuálisan böngészett elem azonosítójának eltárolásakor az engine query-params
   ; térképében is szükséges eltárolni az elem azonosítóját, mert az item-browser engine az
-  ; item-lister engine letöltő funkciójával tölti le az elemeket, de az item-lister plugin
-  ; nem használ :item-id paramétert az elemek letöltésekor ezért az item-browser plugin
+  ; item-lister engine letöltő funkciójával tölti le az elemeket, de az item-lister engine
+  ; nem használ :item-id paramétert az elemek letöltésekor ezért az item-browser engine
   ; a query-params használatával teszi bele az aktuálisan böngészett elem azonosíját
   ; a Pathom lekéresekkel elküldött adatok közé.
   (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
@@ -112,4 +112,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :item-browser/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-browser/set-engine-error! set-engine-error!)

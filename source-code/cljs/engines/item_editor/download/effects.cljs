@@ -39,8 +39,8 @@
                                             ; Az on-success helyett on-stalled időzítéssel a UI változásai
                                             ; egyszerre történnek meg a lekérés okozta {:editor-disabled? true}
                                             ; állapot megszűnésével.
-                                            :on-stalled [:item-editor/receive-item!   editor-id]
-                                            :on-failure [:item-editor/set-error-mode! editor-id]
+                                            :on-stalled [:item-editor/receive-item!     editor-id]
+                                            :on-failure [:item-editor/set-engine-error! editor-id :failed-to-request-item]
                                             :query query :validator-f validator-f}]})))
 
 (r/reg-event-fx :item-editor/receive-item!

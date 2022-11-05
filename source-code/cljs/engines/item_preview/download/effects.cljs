@@ -37,8 +37,8 @@
                {:db       (r download.events/request-item! db preview-id)
                 :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
                                                ; XXX#4057
-                                               {:on-stalled [:item-preview/receive-item!   preview-id]
-                                                :on-failure [:item-preview/set-error-mode! preview-id]
+                                               {:on-stalled [:item-preview/receive-item!     preview-id]
+                                                :on-failure [:item-preview/set-engine-error! preview-id :failed-to-request-item]
                                                 :query query :validator-f validator-f}]}))))
 
 (r/reg-event-fx :item-preview/receive-item!

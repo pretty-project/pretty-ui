@@ -27,22 +27,9 @@
 ; engines.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
+(def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
 (def update-item-id!    core.events/update-item-id!)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn set-error-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) viewer-id
-  ;
-  ; @return (map)
-  [db [_ viewer-id]]
-  (assoc-in db [:engines :engine-handler/meta-items viewer-id :error-mode?] true))
 
 
 
@@ -80,4 +67,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :item-viewer/set-error-mode! set-error-mode!)
+(r/reg-event-db :item-viewer/set-engine-error! set-engine-error!)

@@ -56,7 +56,7 @@
                                 {:display-progress? true
                                  ; XXX#4057
                                  :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
-                                 :on-failure [:item-lister/set-error-mode!         lister-id]
+                                 :on-failure [:item-lister/set-engine-error!       lister-id :failed-to-reload-items]
                                  :query query :validator-f validator-f}])))
 
 (r/reg-event-fx :item-lister/receive-reloaded-items!
@@ -82,7 +82,7 @@
       ;     ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
       ;
       ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
-      ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett a pluginból), akkor
+      ;   már nincs a React-fába csatolva (pl. a felhasználó kilépett az engine-ből), akkor
       ;   nem tárolja el a letöltött elemeket.
       (if (r body.subs/body-did-mount? db lister-id)
           {:db (r download.events/receive-reloaded-items! db lister-id server-response)
@@ -112,8 +112,8 @@
                 validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
                [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                     {:display-progress? true
-                                     :on-stalled [:item-lister/receive-items!  lister-id]
-                                     :on-failure [:item-lister/set-error-mode! lister-id]
+                                     :on-stalled [:item-lister/receive-items!    lister-id]
+                                     :on-failure [:item-lister/set-engine-error! lister-id :failed-to-request-items]
                                      :query query :validator-f validator-f}]))))
 
 (r/reg-event-fx :item-lister/receive-items!
