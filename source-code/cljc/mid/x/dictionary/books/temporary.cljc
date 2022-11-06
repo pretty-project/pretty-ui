@@ -32,6 +32,10 @@
            {:en "Default"
             :hu "Alapértelmezett"}
 
+           :dictionary
+           {:en "Dictionary"
+            :hu "Szótár"}
+
            :service
            {:en "Service"
             :hu "Szolgáltatás"}

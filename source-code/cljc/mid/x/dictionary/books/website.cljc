@@ -73,4 +73,7 @@
             :hu "Webhely beállításai"}
            :website-content
            {:en "Website content"
-            :hu "Webhely tartalma"}})
+            :hu "Webhely tartalma"}
+           :website-dictionary
+           {:en "Website dictionary"
+            :hu "Webhely szótár"}})

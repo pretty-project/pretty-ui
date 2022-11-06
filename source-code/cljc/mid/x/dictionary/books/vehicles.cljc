@@ -23,12 +23,21 @@
 (def BOOK {:alcove-rv
            {:en "Alcove RV"
             :hu "Alkóvos lakóautó"}
+           :alcove-rvs
+           {:en "Alcove RVs"
+            :hu "Alkóvos lakóautók"}
            :bus
            {:en "Bus"
             :hu "Busz"}
+           :buses
+           {:en "Buses"
+            :hu "Buszok"}
            :caravan
            {:en "Caravan"
             :hu "Lakókocsi"}
+           :caravans
+           {:en "Caravans"
+            :hu "Lakókocsik"}
            :chassis
            {:en "Chassis"
             :hu ""}
@@ -56,6 +65,9 @@
            :semi-integrated-rv
            {:en "Semi integrated RV"
             :hu "Részintegrált lakóautó"}
+           :semi-integrated-rvs
+           {:en "Semi integrated RVs"
+            :hu "Részintegrált lakóautók"}
            :suspension
            {:en "Suspension"
             :hu "Felfüggesztés"}
@@ -74,9 +86,15 @@
            :van
            {:en "Van"
             :hu "Furgon"}
+           :vans
+           {:en "Vans"
+            :hu "Furgonok"}
            :van-rv
            {:en "Van RV"
             :hu "Kempingbusz"}
+           :van-rvs
+           {:en "Van RVs"
+            :hu "Kempingbuszok"}
            :vehicle
            {:en "Vehicle"
             :hu "Jármű"}
