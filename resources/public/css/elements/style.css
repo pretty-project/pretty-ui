@@ -1979,12 +1979,12 @@ body {
 
 /*** Chip-group no-chips label ***/
 
-.e-chip-group--no-chips-label {
+.e-chip-group--chips-placeholder {
   color: var( --color-highlight );
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
-  /* A .e-chip-group--no-chips-label elem magassága megegyzik az .e-chip-group--chips elem
-   * magasságával */
+  /* A .e-chip-group--chips-placeholder elem magassága megegyzik az .e-chip-group--chips
+   * elem magasságával */
  -line-height: 36px;
   line-height: 24px }
 
@@ -2094,7 +2094,7 @@ body {
   flex-grow: 1;
   height: 100% }
 
-.e-color-stamp--placeholder {
+.e-color-stamp--colors-placeholder {
   background-color: var( --background-color-highlight );
   height: 100%;
   width: 100% }
@@ -2149,7 +2149,7 @@ body {
   max-height: 340px;
   overflow-y: scroll }
 
-.e-combo-box--no-options-label {
+.e-combo-box--options-placeholder {
   align-items: center;
   color: var( --color-muted );
   display: flex;
@@ -2468,10 +2468,9 @@ body {
 
 /*** Label placeholder ***/
 
-/* Az elemekben megjelenített, a tartalom hiányát jelző feliratok,
- * (pl. no-options-label, no-chips-label, ...) mindegyike highlight színnel
- * van kiírva, ezért a label elem tartalmának hiányát jelző placeholder felirat
- * is highlight színt kap! */
+/* Az elemekben megjelenített, a tartalom hiányát jelző feliratok (placeholder-ek),
+ * mindegyike highlight színnel van kiírva, ezért a label elem tartalmának hiányát
+ * jelző placeholder felirat is highlight színt kap! */
 .e-label--placeholder {
   color: var( --color-highlight );
   overflow: hidden;
@@ -3002,7 +3001,7 @@ body {
   flex-direction: column;
   padding-bottom: 12px }
 
-.e-select--no-options-label {
+.e-select--options-placeholder {
   align-self: center;
   color: var( --color-highlight );
   font-size: var( --font-size-s );

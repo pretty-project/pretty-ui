@@ -28,14 +28,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- chip-group-no-chips-label
+(defn- chip-group-chips-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:no-chips-label (metamorphic-content)(opt)}
-  [_ {:keys [no-chips-label]}]
-  (if no-chips-label [:div.e-chip-group--no-chips-label (x.components/content no-chips-label)]))
+  ;  {:placeholder (metamorphic-content)(opt)}
+  [_ {:keys [placeholder]}]
+  (if placeholder [:div.e-chip-group--chips-placeholder (x.components/content placeholder)]))
 
 (defn- chip-group-chip
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -59,7 +59,7 @@
        (if (vector/nonempty? chips)
            (letfn [(f [chip-list chip-dex chip] (conj chip-list [chip-group-chip group-id group-props chip-dex chip]))]
                   (reduce-indexed f [:div.e-chip-group--chips] chips))
-           [chip-group-no-chips-label group-id group-props])))
+           [chip-group-chips-placeholder group-id group-props])))
 
 (defn- chip-group-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -111,7 +111,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
-  ;   :no-chips-label (metamorphic-content)(opt)
+  ;   :placeholder (metamorphic-content)(opt)
   ;   :style (map)(opt)
   ;   :value-path (vector)(opt)}
   ;

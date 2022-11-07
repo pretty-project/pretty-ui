@@ -77,13 +77,15 @@
   ; @param (*) item
   [sortable-id {:keys [common-props item-id-f item-element]} item-dex item]
   (let [dnd-kit-props (js->clj (useSortable (clj->js {:id (item-id-f item)})) :keywordize-keys true)
-        {:keys [setNodeRef transform transition]} dnd-kit-props]
-    [:div {;:key  (str (item-id-f item) "--" item-dex)
-           :key   (item-id-f item)
-           :ref   (js->clj   setNodeRef)
-           :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}}
-          (if common-props [item-element sortable-id common-props item-dex item dnd-kit-props]
-                           [item-element sortable-id              item-dex item dnd-kit-props])]))
+        {:keys [attributes isDragging listeners setNodeRef transform transition]} dnd-kit-props
+        handle-attributes (merge attributes listeners)
+        item-attributes   {:key   (item-id-f item)
+                          ;:key   (str (item-id-f item) "--" item-dex)
+                           :ref   (js->clj   setNodeRef)
+                           :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}
+                           :data-dragging isDragging}]
+    (if common-props [item-element sortable-id common-props item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}]
+                     [item-element sortable-id              item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}])))
 
 (defn- render-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -155,12 +157,12 @@
   ;  [body :my-sortable {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id item-dex item dnd-kit-props])
+  ;  (defn my-item-element [sortable-id item-dex item {:keys [dragging? handle-attributes item-attributes] :as drag-props}])
   ;  [body {:item-element #'my-item-element
   ;         :items        ["My item" "Your item"]}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id common-props item-dex item dnd-kit-props])
+  ;  (defn my-item-element [sortable-id common-props item-dex item {:keys [dragging? handle-attributes item-attributes] :as drag-props}])
   ;  [body {:common-props {...}
   ;         :item-element #'my-item-element
   ;         :items        ["My item" "Your item"]}]

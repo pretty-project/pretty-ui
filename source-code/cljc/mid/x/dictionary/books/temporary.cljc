@@ -46,9 +46,19 @@
            :other
            {:en "Other"
             :hu "Egyéb"}
+           :others
+           {:en "Others"
+            :hu "Egyebek"}
            :template
            {:en "Template"
             :hu "Sablon"}
+
+           :model
+           {:en "Model"
+            :hu "Modell"}
+           :models
+           {:en "Models"
+            :hu "Modellek"}
 
 
 

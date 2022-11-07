@@ -66,6 +66,16 @@
   [db [_ engine-id item-id]]
   (dissoc-in db [:engines :engine-handler/backup-items engine-id item-id]))
 
+(defn clean-current-item-backup!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
+       (r clean-backup-item! db engine-id current-item-id)))
+
 
 
 ;; -- Multiple item events ----------------------------------------------------

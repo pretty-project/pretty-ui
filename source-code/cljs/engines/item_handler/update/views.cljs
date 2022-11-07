@@ -18,16 +18,48 @@
 
 
 
-;; -- Restore discarded changes components ------------------------------------
+;; -- Delete item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn changes-discarded-dialog-body
+(defn item-deleted-dialog-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
   ; @param (string) item-id
   [handler-id item-id]
-  (let [undo-event [:item-handler/undo-discard-changes! handler-id item-id]]
-       [x.ui/state-changed-bubble-body :engines.item-handler/changes-discarded-dialog
-                                       {:label          :unsaved-changes-discarded
-                                        :primary-button {:label :restore! :on-click undo-event}}]))
+  (let [undo-event [:item-handler/undo-delete-item! handler-id item-id]]
+       [x.ui/state-changed-bubble-body :engines.item-handler/item-deleted-dialog
+                                       {:label          :item-deleted
+                                        :primary-button {:label :recover! :on-click undo-event}}]))
+
+
+
+;; -- Undo delete item components ---------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn undo-delete-item-failed-dialog-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (string) item-id
+  [handler-id item-id]
+  (let [retry-event [:item-handler/undo-delete-item! handler-id item-id]]
+       [x.ui/state-changed-bubble-body :engines.item-handler/undo-delete-item-failed-dialog
+                                       {:label          :failed-to-undo-delete
+                                        :primary-button {:label :retry! :on-click retry-event}}]))
+
+
+
+;; -- Duplicate item components -----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn item-duplicated-dialog-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (string) copy-id
+  [handler-id copy-id]
+  (let [view-event [:item-handler/handle-duplicated-item! handler-id copy-id]]
+       [x.ui/state-changed-bubble-body :engines.item-handler/item-duplicated-dialog
+                                       {:label          :item-duplicated
+                                        :primary-button {:label :view-copy! :on-click view-event}}]))

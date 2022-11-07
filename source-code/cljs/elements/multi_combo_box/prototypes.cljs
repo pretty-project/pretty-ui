@@ -49,7 +49,7 @@
   ;   :deletable? (boolean)
   ;   :indent (map)}
   [box-id box-props]
-  (let [group-props (dissoc box-props :helper :label :indent)]
+  (let [group-props (dissoc box-props :helper :label :indent :placeholder)]
        (merge {:chip-label-f return
                :indent       {:bottom :xxs}}
               (param group-props)
@@ -68,7 +68,6 @@
   ;
   ; @return (map)
   ;  {:field-value-f (function)
-  ;   :no-options-label (metamorphic-content)
   ;   :on-blur (metamorphic-event)
   ;   :on-change (metamorphic-event)
   ;   :on-focus (metamorphic-event)
@@ -91,12 +90,11 @@
   ; A multi-combo-box elem options-path útvonala megegyezik az elemben megjelenő
   ; combo-box elem options-path útvonalával, ezért az :options-path tulajdonság
   ; öröklődik a box-props térképből a field-props térképbe.
-  (merge {:field-value-f    return
-          :option-label-f   return
-          :option-value-f   return
-          :no-options-label :no-options
-          :options-path     (input.helpers/default-options-path box-id)
-          :value-path       (input.helpers/default-value-path   box-id)}
+  (merge {:field-value-f  return
+          :option-label-f return
+          :option-value-f return
+          :options-path   (input.helpers/default-options-path box-id)
+          :value-path     (input.helpers/default-value-path   box-id)}
          (param box-props)))
 
 (defn box-events-prototype

@@ -31,7 +31,7 @@
 
 (defn my-handler
   []
-  [item-handler/body :my-handler {:form-element [:div "My form"]}])
+  [item-handler/body :my-handler {:item-element [:div "My item"]}])
 
 
 
@@ -64,12 +64,12 @@
 
 
 
-;; -- Az [:item-handler/edit-item! "..."] esemény hanszálata ------------------
+;; -- Az [:item-handler/handle-item! "..."] esemény hanszálata ------------------
 ;; ----------------------------------------------------------------------------
 
 ; ...
-(r/reg-event-fx :edit-my-item!
-  [:item-handler/edit-item! :my-handler "my-item"])
+(r/reg-event-fx :handle-my-item!
+  [:item-handler/handle-item! :my-handler "my-item"])
 
 
 
@@ -77,7 +77,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; A body komponens {:item-id "..."} paraméterének értékét használja az aktuálisan
-; szerkesztett elem azonosítójaként, ...
+; kezelt elem azonosítójaként, ...
 ; ... amikor az aktuális útvonalból nem származtatható az :item-id útvonal-paraméter.
 ; ... az engine NEM útvonal-vezérelt.
 
@@ -91,5 +91,5 @@
 ; összefűzve elküldésre kerül.
 (defn my-query
   []
-  [item-handler/body :my-handler {:form-element [:div "My form"]
+  [item-handler/body :my-handler {:item-element [:div "My item"]
                                   :query        [:my-query]}])

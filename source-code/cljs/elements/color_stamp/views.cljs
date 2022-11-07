@@ -36,7 +36,7 @@
                  (let [stamp-color-attributes (color-stamp.helpers/stamp-color-attributes stamp-id stamp-props color)]
                       (conj color-stamp [:div.e-color-stamp--color stamp-color-attributes])))]
              (reduce f [:<>] colors))
-      [:div.e-color-stamp--placeholder]))
+      [:div.e-color-stamp--colors-placeholder]))
 
 (defn color-stamp-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

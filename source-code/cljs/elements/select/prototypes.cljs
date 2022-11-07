@@ -32,9 +32,9 @@
   ;   :border-radius (keyword)
   ;   :option-field-placeholder (metamorphic-content)
   ;   :layout (keyword)
-  ;   :no-options-label (metamorphic-content)
   ;   :option-label-f (function)
   ;   :option-value-f (function)
+  ;   :options-placeholder (metamorphic-content)
   ;   :value-path (vector)}
   [select-id select-props]
   (merge {:border-radius            :s
@@ -43,7 +43,7 @@
           :option-label-f           return
           :option-value-f           return
           :layout                   :select
-          :no-options-label         :no-options
+          :options-placeholder      :no-options
           :options-path             (input.helpers/default-options-path select-id)
           :value-path               (input.helpers/default-value-path   select-id)}
          (param select-props)))

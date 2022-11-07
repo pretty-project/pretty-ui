@@ -69,9 +69,10 @@
   ;      Ha a két engine lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
   ;      folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister
   ;      engine tévésen úgy érzékelné, hogy az elemek letöltése már folyamatban van.
-  (let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
-       (keyword (str                (name handler-key))
-                (str "synchronize-" (name request-key) "!"))))
+  (if-let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
+          (keyword (str                (name handler-key))
+                   (str "synchronize-" (name request-key) "!"))
+          (println "Missing handler-key in engine:" engine-id)))
 
 (defn engine-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

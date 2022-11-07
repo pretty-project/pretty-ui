@@ -26,9 +26,9 @@
       ; ...
 
 (defn my-item-element
-  [sortable-id item-dex item {:keys [attributes listeners isDragging] :as dnd-kit-props}]
-  [:div [:div.my-drag-handle (merge attributes listeners)]
-        [:div.my-item        (str   item)]])
+  [sortable-id item-dex item {:keys [handle-attributes item-attributes dragging?] :as drag-props}]
+  [:div [:div.my-drag-handle handle-attributes (str "Grab me!")]
+        [:div.my-item        item-attributes   (str item)]])
 
 (defn my-sortable
   []

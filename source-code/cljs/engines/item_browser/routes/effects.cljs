@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) browser-id
   (fn [{:keys [db]} [_ browser-id]]
-      ; XXX#5068 (engines.item-viewer.routes.effects)
+      ; XXX#5068 (engines.item-handler.routes.effects)
       (let [body-did-mount? (r body.subs/body-did-mount? db browser-id)
             on-route        (r transfer.subs/get-transfer-item db browser-id :on-route)
             route-title     (r transfer.subs/get-transfer-item db browser-id :route-title)]

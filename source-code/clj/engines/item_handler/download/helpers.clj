@@ -34,7 +34,7 @@
   ; @param (keyword) handler-id
   ;
   ; @example
-  ;  (item-handler/env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-handler)
+  ;  (env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-handler)
   ;  =>
   ;  {:my-type/my-key   ["..."]
   ;   :my-type/your-key ["..." "..."]}

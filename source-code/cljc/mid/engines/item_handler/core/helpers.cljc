@@ -37,11 +37,11 @@
   ; @example
   ;  (default-item-path :my-handler)
   ;  =>
-  ;  [:engines :engine-handler/edited-items :my-handler]
+  ;  [:engines :engine-handler/handled-items :my-handler]
   ;
   ; @return (vector)
   [handler-id]
-  (default-data-path handler-id :edited-items))
+  (default-data-path handler-id :handled-items))
 
 (defn default-suggestions-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

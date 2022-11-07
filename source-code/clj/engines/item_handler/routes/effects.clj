@@ -30,23 +30,8 @@
   ;  {:base-route (string)}
   (fn [_ [_ handler-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
-            extended-route (str            base-route "/:item-id/edit")]
+            extended-route (str            base-route "/:item-id")]
            [:router/add-route! (routes.helpers/route-id handler-id :extended)
                                {:client-event   [:item-handler/handle-route! handler-id]
                                 :restricted?    true
-                                ;:route-parent   base-route
                                 :route-template extended-route}])))
-
-(r/reg-event-fx :item-handler/add-creator-route!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ; @param (map) handler-props
-  ;  {:base-route (string)}
-  (fn [_ [_ handler-id {:keys [base-route]}]]
-      (let [base-route    (uri/valid-path base-route)
-            creator-route (str            base-route "/create")]
-           [:router/add-route! (routes.helpers/route-id handler-id :creator)
-                               {:client-event   [:item-handler/handle-route! handler-id]
-                                :restricted?    true
-                                :route-template creator-route}])))

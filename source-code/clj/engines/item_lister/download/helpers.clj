@@ -108,7 +108,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (item-lister/env->sort-pattern {...} :my-lister)
+  ;  (env->sort-pattern {...} :my-lister)
   ;  =>
   ;  {:my-type/name 1}
   ;
@@ -122,7 +122,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (item-lister/env->search-pattern {...} :my-lister)
+  ;  (env->search-pattern {...} :my-lister)
   ;  =>
   ;  {:$or [{:my-type/name "..."} {...}]}
   ;
@@ -140,7 +140,7 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (item-lister/env->pipeline-props {...} :my-lister)
+  ;  (env->pipeline-props {...} :my-lister)
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
@@ -171,7 +171,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (item-lister/env->get-pipeline {...} :my-lister)
+  ;  (env->get-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
   [env lister-id]
@@ -183,7 +183,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (item-lister/env->count-pipeline {...} :my-lister)
+  ;  (env->count-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
   [env lister-id]

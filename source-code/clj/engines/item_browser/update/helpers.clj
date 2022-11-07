@@ -29,7 +29,7 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item-browser/item->path :my-browser {...})
+  ;  (item->path :my-browser {...})
   ;  =>
   ;  [{:my-type/id "parent-item"}]
   ;
@@ -45,7 +45,7 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item-browser/item->parent-link :my-browser {...})
+  ;  (item->parent-link :my-browser {...})
   ;  =>
   ;  {:my-type/id "parent-item"}
   ;
@@ -60,7 +60,7 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item-browser/item->parent-id :my-browser {...})
+  ;  (item->parent-id :my-browser {...})
   ;  =>
   ;  "parent-item"
   ;
@@ -81,7 +81,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-browser/item-id->path :my-browser "my-item")
+  ;  (item-id->path :my-browser "my-item")
   ;  =>
   ;  [{:my-type/id "parent-item"}]
   ;
@@ -99,7 +99,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-browser/item-id->parent-link :my-browser "my-item")
+  ;  (item-id->parent-link :my-browser "my-item")
   ;  =>
   ;  {:my-type/id "parent-item"}
   ;
@@ -114,7 +114,7 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-browser/item-id->parent-id :my-browser "my-item")
+  ;  (item-id->parent-id :my-browser "my-item")
   ;  =>
   ;  "parent-item"
   ;

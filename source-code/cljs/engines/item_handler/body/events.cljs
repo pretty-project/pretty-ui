@@ -14,6 +14,7 @@
 
 (ns engines.item-handler.body.events
     (:require [engines.engine-handler.body.events :as body.events]
+              [engines.item-handler.backup.events :as backup.events]
               [engines.item-handler.core.events   :as core.events]
               [re-frame.api                       :refer [r]]))
 
@@ -49,9 +50,10 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  (as-> db % (r core.events/remove-meta-items! % handler-id)
-             (r core.events/reset-downloads!   % handler-id)
-             (r remove-body-props!             % handler-id)))
+  (as-> db % (r core.events/remove-meta-items!           % handler-id)
+             (r core.events/reset-downloads!             % handler-id)
+             (r backup.events/clean-current-item-backup! % handler-id)
+             (r remove-body-props!                       % handler-id)))
 
 (defn body-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!

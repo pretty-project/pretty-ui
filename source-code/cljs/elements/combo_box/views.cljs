@@ -69,7 +69,7 @@
   ; megjelenő surface felület minden esetben {:visible? true} állapotba lép,
   ; még akkor is, amikor az opciók listája nem tartalmazna elemet.
   ; A {:visible? true} állapotban lévő felület, ha nem jelenít meg sem választható
-  ; opciót, sem pedig a no-options-label feliratot (ki lett kapcsolva), akkor
+  ; opciót, sem pedig a options-placeholder feliratot (ki lett kapcsolva), akkor
   ; a felhasználó számára nem lenne látható, miközben az állapota {:visible? true}.
   ; Ilyen esetben előfordulhatna, ha az [:elements.combo-box/ESC-pressed ...]
   ; esemény, mivel azt érzékelné, hogy a felület {:visible? true} állapotban van,
@@ -87,7 +87,7 @@
   ; megjelenített kiválasztható opció tehát a felhasználó ténylegesen látja-e
   ; a felületet és az alapján döntené el, hogy mi történjen.
   ;
-  ; Egy harmadik megoldás lenne a no-options-label felirat használata.
+  ; Egy harmadik megoldás lenne az options-placeholder felirat használata.
   ;
   ; Egy negyedik megoldás, hogy a combo-box a google.com kereső mezőjéhez hasonlóan
   ; működne és az első választható opció mindig a beírt érték lenne, a mező tartalma
@@ -111,17 +111,17 @@
                                          [combo-box-field-content-option box-id box-props]
                                          (reduce-indexed f [:<>] options)])))
 
-(defn- combo-box-no-options-label
+(defn- combo-box-options-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:no-options-label (metamorphic-content)}
-  [box-id {:keys [no-options-label]}]
-  [:div.e-combo-box--no-options-label ; BUG#2105
-                                      {:on-mouse-down #(.preventDefault %)
-                                       :on-mouse-up   #(r/dispatch [:elements.text-field/hide-surface! box-id])}
-                                      (x.components/content no-options-label)])
+  ;  {:options-placeholder (metamorphic-content)}
+  [box-id {:keys [options-placeholder]}]
+  [:div.e-combo-box--options-placeholder ; BUG#2105
+                                        {:on-mouse-down #(.preventDefault %)
+                                         :on-mouse-up   #(r/dispatch [:elements.text-field/hide-surface! box-id])}
+                                        (x.components/content options-placeholder)])
 
 (defn- combo-box-surface
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,9 +130,9 @@
   ; @param (map) box-props
   [box-id box-props]
   [:div.e-combo-box--surface [combo-box-options box-id box-props]])
-                             ; Szükségtelen megjeleníteni a no-options-label feliratot.
+                             ; Szükségtelen megjeleníteni az options-placeholder feliratot.
                              ; HACK#1450
-                             ; [combo-box-no-options-label box-id box-props]
+                             ; [combo-box-options-placeholder box-id box-props]
 
 (defn- combo-box-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -164,17 +164,17 @@
   ;   :field-value-f (function)(opt)
   ;    Default: return
   ;   :initial-options (vector)(opt)
-  ;   :no-options-label (metamorphic-content)(opt)
-  ;    Default: :no-options
   ;   :on-select (metamorphic-event)(opt)
-  ;   :options (vector)(opt)
   ;   :option-component (component)(opt)
   ;    Default: elements.combo-box.views/default-option-component
   ;   :option-label-f (function)(opt)
   ;    Default: return
   ;   :option-value-f (function)(opt)
   ;    Default: return
-  ;   :options-path (vector)(opt)}
+  ;   :options (vector)(opt)
+  ;   :options-path (vector)(opt)
+  ;   :options-placeholder (metamorphic-content)(opt)
+  ;    Default: :no-options}
   ;
   ; @usage
   ;  [combo-box {...}]

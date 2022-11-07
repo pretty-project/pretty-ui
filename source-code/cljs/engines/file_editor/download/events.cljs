@@ -41,7 +41,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; XXX#3005 (engines.item-viewer.download.events)
+  ; XXX#3005 (engines.item-handler.download.events)
   (r core.events/reset-downloads! db editor-id))
 
 (defn store-received-content!

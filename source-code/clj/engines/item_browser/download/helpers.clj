@@ -30,7 +30,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->item-links {...} :my-browser)
+  ;  (env->item-links {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]
@@ -51,7 +51,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->sort-pattern {...} :my-browser)
+  ;  (env->sort-pattern {...} :my-browser)
   ;
   ; @return (map)
   [env browser-id]
@@ -62,7 +62,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->search-pattern {...} :my-browser)
+  ;  (env->search-pattern {...} :my-browser)
   ;
   ; @return (map)
   ;  {:$or (maps in vector)}
@@ -74,7 +74,7 @@
   ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (item-browser/env->pipeline-props {...} :my-browser)
+  ;  (env->pipeline-props {...} :my-browser)
   ;  =>
   ;  {:max-count 20
   ;   :skip       0
@@ -99,7 +99,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->get-pipeline {...} :my-browser)
+  ;  (env->get-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]
@@ -111,7 +111,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (item-browser/env->count-pipeline {...} :my-browser)
+  ;  (env->count-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]

@@ -77,14 +77,14 @@
                       (return options)))]
               (reduce f [:<>] options))))
 
-(defn- no-options-label
+(defn- options-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
-  [_ {:keys [no-options-label]}]
-  [:div.e-select--no-options-label (x.components/content no-options-label)])
+  ;  {:options-placeholder (metamorphic-content)}
+  [_ {:keys [options-placeholder]}]
+  [:div.e-select--options-placeholder (x.components/content options-placeholder)])
 
 (defn- select-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,7 +96,7 @@
        [:div.e-select--option-list {:data-selectable false}
                                    (if (vector/nonempty? options)
                                        [select-option-list-items select-id select-props]
-                                       [no-options-label         select-id select-props])]))
+                                       [options-placeholder      select-id select-props])]))
 
 (defn- select-options-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -319,8 +319,6 @@
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none
-  ;   :no-options-label (metamorphic-content)(opt)
-  ;    Default: :no-options
   ;   :on-select (metamorphic-event)(opt)
   ;   :option-field-placeholder (metamorphic-content)(opt)
   ;    Default: :add!
@@ -331,6 +329,8 @@
   ;   :options (vector)(opt)
   ;   :options-label (metamorphic-content)(opt)
   ;   :options-path (vector)(opt)
+  ;   :options-placeholder (metamorphic-content)(opt)
+  ;    Default: :no-options
   ;   :required? (boolean or keyword)(opt)
   ;    true, false, :unmarked
   ;    Default: false

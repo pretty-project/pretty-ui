@@ -101,9 +101,24 @@
            :vehicles
            {:en "Vehicles"
             :hu "Járművek"}
+           :vehicle-category
+           {:en "Vehicle category"
+            :hu "Járműkategória"}
+           :vehicle-categories
+           {:en "Vehicle types"
+            :hu "Járműkategóriák"}
+           :vehicle-model
+           {:en "Vehicle model"
+            :hu "Járműmodell"}
+           :vehicle-models
+           {:en "Vehicle models"
+            :hu "Járműmodellek"}
            :vehicle-type
            {:en "Vehicle type"
-            :hu "Jármű típusa"}
+            :hu "Járműtípus"}
+           :vehicle-types
+           {:en "Vehicle types"
+            :hu "Járműtípusok"}
            :wheel-size
            {:en "Wheel size"
             :hu "Kerékméret"}

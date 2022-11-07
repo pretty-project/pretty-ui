@@ -54,7 +54,7 @@
             validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                 {:display-progress? true
-                                 ; XXX#4057
+                                 ; XXX#4057 (engines.item-handler.download.effects)
                                  :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
                                  :on-failure [:item-lister/set-engine-error!       lister-id :failed-to-reload-items]
                                  :query query :validator-f validator-f}])))
@@ -102,7 +102,7 @@
       ; - Ha az infinite-loader komponens ismételten megjelenik a viewport területén, csak abban
       ;   az esetben próbál újabb elemeket letölteni, ha még nincs az összes letöltve.
       ;
-      ; - XXX#4057
+      ; - XXX#4057 (engines.item-handler.download.effects)
       ;   A letöltött dokumentumok on-success helyett on-stalled időpontban kerülnek tárolásra
       ;   a Re-Frame adatbázisba, így elkerülhető, hogy a request idle-timeout ideje alatt
       ;   az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző

@@ -42,7 +42,15 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  ; XXX#3005 (engines.item-viewer.download.events)
+  ; XXX#3005
+  ; Ha az [:item-handler/request-item! ...] esemény megtörténésekor az item-handler
+  ; engine már használatban van, akkor az adatok letöltése előtt szükséges visszaléptetni
+  ; az engine-t {:data-received? false} állapotba, hogy a letöltés idejére újra
+  ; megjelenjen a letöltésjelző!
+  ; Pl.: Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd
+  ;      a megjelenő értesítésen a "Másolat megtekintése" gombra kattint, akkor
+  ;      az item-handler engine letölti a másolat-elemet és a letöltés idejére
+  ;      szükséges újra megjeleníteni a letöltésjelzőt!
   (r core.events/reset-downloads! db handler-id))
 
 (defn store-received-suggestions!
@@ -93,9 +101,6 @@
           ; If handler downloading suggestions ...
           (r core.subs/download-suggestions? db handler-id)
           (as-> % (r store-received-suggestions! % handler-id server-response))
-          ; If handler in recovery-mode ...
-          (r core.subs/get-meta-item db handler-id :recovery-mode?)
-          (as-> % (r backup.events/recover-item! % handler-id))
           :use-initial-item!    (as-> % (r core.events/use-initial-item!      % handler-id))
           :use-default-item!    (as-> % (r core.events/use-default-item!      % handler-id))
           :backup-current-item! (as-> % (r backup.events/backup-current-item! % handler-id))))

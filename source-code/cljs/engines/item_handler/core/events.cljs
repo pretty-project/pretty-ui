@@ -39,22 +39,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn set-recovery-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (map)
-  [db [_ handler-id]]
-  ; A {:recovery-mode? true} beállítással elindítitott szerkesztő visszaállítja
-  ; az elemet az utoljára eltárolt másolat alapján.
-  (r set-mode! db handler-id :recovery-mode?))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn reset-downloads!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,11 +46,6 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  ; A body komponens component-will-unmount életciklusa által alkalmazott
-  ; reset-downloads! függvény nem törli ki az elemről készült backup-item másolatot,
-  ; hogy az engine elhagyása utáni esetleges "El nem mentett változtatások visszaállítása"
-  ; funkció használatakor a {:recovery-mode? true} állapotban újra elinduló engine
-  ; számára elérhetők legyenek a visszaállításhoz szükséges adatok.
   (let [item-path        (r body.subs/get-body-prop db handler-id :item-path)
         suggestions-path (r body.subs/get-body-prop db handler-id :suggestions-path)]
        (-> db (dissoc-in [:engines :engine-handler/meta-items handler-id :data-received?])

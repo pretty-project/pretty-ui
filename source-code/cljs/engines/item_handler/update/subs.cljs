@@ -72,3 +72,46 @@
         item-namespace (r transfer.subs/get-transfer-item db handler-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
        (id-key saved-item)))
+
+
+
+;; -- Delete item subscriptions -----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-deleted-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r get-deleted-item-id :my-handler {my-handler/delete-item! "my-item"})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ handler-id server-response]]
+  (r update.subs/get-mutation-answer db handler-id :delete-item! server-response))
+
+
+
+;; -- Duplicate item subscriptions --------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-duplicated-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ;  (r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ;  =>
+  ;  "my-item"
+  ;
+  ; @return (string)
+  [db [_ handler-id server-response]]
+  (let [duplicated-item (r update.subs/get-mutation-answer db handler-id :duplicate-item! server-response)
+        item-namespace  (r transfer.subs/get-transfer-item db handler-id :item-namespace)
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (id-key duplicated-item)))

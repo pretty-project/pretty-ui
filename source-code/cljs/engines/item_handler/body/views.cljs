@@ -40,13 +40,13 @@
   (if-let [error-element @(r/subscribe [:item-handler/get-body-prop handler-id :error-element])]
           [x.components/content error-element]))
 
-(defn form-element
+(defn item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
   [handler-id]
-  (let [form-element @(r/subscribe [:item-handler/get-body-prop handler-id :form-element])]
-       [x.components/content form-element]))
+  (let [item-element @(r/subscribe [:item-handler/get-body-prop handler-id :item-element])]
+       [x.components/content item-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -56,7 +56,7 @@
   (cond @(r/subscribe [:item-handler/get-meta-item handler-id :engine-error])
          [error-element handler-id]
         @(r/subscribe [:item-handler/data-received? handler-id])
-         [form-element handler-id]
+         [item-element handler-id]
          :data-not-received
          [ghost-element handler-id]))
 
@@ -67,10 +67,10 @@
   ;    Default: false
   ;    W/ {:label-key ...}
   ;   :default-item (map)(opt)
-  ;   :form-element (metamorphic-content)
   ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :initial-item (map)(opt)
+  ;   :item-element (metamorphic-content)
   ;   :item-id (string)(opt)
   ;   :item-path (vector)(opt)
   ;    Default: core.helpers/default-item-path
@@ -88,8 +88,8 @@
   ;  [body :my-handler {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [] [:div ...])
-  ;  [body :my-handler {:form-element #'my-form-element}]
+  ;  (defn my-item-element [] [:div ...])
+  ;  [body :my-handler {:item-element #'my-item-element}]
   [handler-id body-props]
   (let [body-props (body.prototypes/body-props-prototype handler-id body-props)]
        (reagent/lifecycles (core.helpers/component-id handler-id :body)

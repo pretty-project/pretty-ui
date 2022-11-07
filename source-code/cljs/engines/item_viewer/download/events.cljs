@@ -40,13 +40,7 @@
   ;
   ; @return (map)
   [db [_ viewer-id]]
-  ; XXX#3005
-  ; Ha az [:item-viewer/request-item! ...] esemény megtörténésekor az item-viewer engine
-  ; már használatban van, akkor az adatok letöltése előtt szükséges visszaléptetni a engine-t
-  ; {:data-received? false} állapotba, hogy a letöltés idejére újra megjelenjen a letöltésjelző.
-  ; Pl.: Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd a megjelenő
-  ;      értesítésen a "Másolat megtekintése" gombra kattint, akkor az item-viewer engine
-  ;      letölti a másolat elemet, és a letöltés idejére szükséges megjeleníteni a letöltésjelzőt!
+  ; XXX#3005 (engines.item-handler.download.events)
   (r core.events/reset-downloads! db viewer-id))
 
 (defn store-received-item!

@@ -35,10 +35,7 @@
            {:db       (r download.events/request-item! db editor-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
                                            {:display-progress? true
-                                            ; XXX#4057
-                                            ; Az on-success helyett on-stalled időzítéssel a UI változásai
-                                            ; egyszerre történnek meg a lekérés okozta {:editor-disabled? true}
-                                            ; állapot megszűnésével.
+                                            ; XXX#4057 (engines.item-handler.download.effects)
                                             :on-stalled [:item-editor/receive-item!     editor-id]
                                             :on-failure [:item-editor/set-engine-error! editor-id :failed-to-request-item]
                                             :query query :validator-f validator-f}]})))

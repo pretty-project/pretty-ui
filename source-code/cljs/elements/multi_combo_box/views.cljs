@@ -78,8 +78,6 @@
   ;   :field-value-f (function)(opt)
   ;    Default: return
   ;   :initial-options (vector)(opt)
-  ;   :no-options-label (metamorphic-content)(opt)
-  ;    Default: :no-options
   ;   :on-select (metamorphic-event)(opt)
   ;   :option-label-f (function)(opt)
   ;    Default: return
@@ -88,7 +86,8 @@
   ;   :option-component (component)(opt)
   ;    Default: elements.combo-box/default-option-component
   ;   :options (vector)(opt)
-  ;   :options-path (vector)(opt)}
+  ;   :options-path (vector)(opt)
+  ;   :placeholder (metamorphic-content)(opt)}
   ;
   ; @usage
   ;  [multi-combo-box {...}]

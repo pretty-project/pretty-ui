@@ -30,16 +30,7 @@
   ; @usage
   ;  [:item-viewer/view-item! :my-viewer "my-item"]
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      ; XXX#5575
-      ;
-      ; A) Ha az item-viewer engine útvonal-vezérelt, ...
-      ;    ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
-      ;
-      ; B) Ha az item-viewer engine NEM útvonal-vezérelt és a body komponens a React-fába
-      ;    van csatolva, ...
-      ;    ... akkor beállítja az item-id paraméter értékét az aktuálisan megtekintett
-      ;        elem azonosítójaként.
-      ;    ... meghívja az [:item-viewer/load-viewer! ...] eseményt.
+      ; XXX#5575 (engines.item-handler.core.effects)
       (if-let [route-handled? (r routes.subs/route-handled? db viewer-id)]
               ; A)
               (let [item-route (r routes.subs/get-item-route db viewer-id item-id)]

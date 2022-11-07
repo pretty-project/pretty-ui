@@ -14,12 +14,9 @@
 
 (ns engines.item-handler.backup.subs
     (:require [engines.engine-handler.backup.subs :as backup.subs]
-              [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.core.subs     :as core.subs]
               [engines.item-handler.download.subs :as download.subs]
               [forms.api                          :as forms]
-              [mid-fruits.candy                   :refer [return]]
-              [mid-fruits.mixed                   :as mixed]
               [re-frame.api                       :as r :refer [r]]))
 
 
@@ -30,21 +27,6 @@
 ; engines.engine-handler.backup.subs
 (def get-backup-item    backup.subs/get-backup-item)
 (def export-backup-item backup.subs/export-backup-item)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-item-changes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ handler-id item-id]]
-  (get-in db [:engines :engine-handler/item-changes handler-id item-id]))
 
 
 

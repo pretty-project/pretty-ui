@@ -38,6 +38,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.item-handler.backup.subs
+(def item-changed? backup.subs/item-changed?)
 (def form-changed? backup.subs/form-changed?)
 
 ; engines.item-handler.body.views
@@ -51,8 +52,7 @@
 (def get-current-item-id core.subs/get-current-item-id)
 (def get-current-item    core.subs/get-current-item)
 (def export-current-item core.subs/export-current-item)
-(def editing-item?       core.subs/editing-item?)
+(def handling-item?      core.subs/handling-item?)
 
 ; engines.item-handler.routes.subs
 (def get-item-route routes.subs/get-item-route)
-(def get-edit-route routes.subs/get-edit-route)
