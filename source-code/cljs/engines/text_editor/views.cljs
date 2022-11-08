@@ -85,10 +85,10 @@
   ; @param (map) editor-props
   ;  {}
   [editor-id editor-props]
-  [:<> [text-editor-label editor-id editor-props]
-       [ckeditor5         editor-id editor-props]
+  [:<> [text-editor-label  editor-id editor-props]
+       [ckeditor5          editor-id editor-props]
       ;[synchronizer-debug editor-id editor-props]
-       [synchronizer      editor-id editor-props]])
+       [synchronizer       editor-id editor-props]])
 
 (defn- text-editor
   ; WARNING! NON-PUBLIC! DO NOT USE!

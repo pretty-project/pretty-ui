@@ -47,15 +47,15 @@
   [editor-id editor-props]
   (merge {:buttons [:bold :italic :underline :fontColor]}
          editor-props
-         {:on-blur   #(r/dispatch-sync [:environment/quit-type-mode!])
-          :on-focus  #(r/dispatch-sync [:environment/set-type-mode!])
+         {:on-blur   helpers/on-blur-f
+          :on-focus  helpers/on-focus-f
           :on-change helpers/on-change-f
           :value     (helpers/get-editor-input editor-id)
           :font-colors [{:color "var( --color )"           :label @(r/subscribe [:dictionary/look-up :default-color])}
                         {:color "var( --color-muted )"     :label @(r/subscribe [:dictionary/look-up :muted-color])}
                         {:color "var( --color-highlight )" :label @(r/subscribe [:dictionary/look-up :highlight-color])}
                         {:color "var( --white-xx-Light )"  :label @(r/subscribe [:dictionary/look-up :white]) :hasBorder true}]
-          :background-colors [{:color "hsl(0, 75%, 60%)"  :label "Red"}
+          :background-colors [{:color "hsl( 0, 75%, 60%)" :label "Red"}
                               {:color "hsl(30, 75%, 60%)" :label "Orange"}
                               {:color "hsl(60, 75%, 60%)" :label "Yellow"}
                               {:color "hsl(90, 75%, 60%"  :label "Light green"}]}))

@@ -12,13 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-sorter.api
-    (:require [engines.item-sorter.views :as views]))
+(ns engines.item-sorter.state
+    (:require [reagent.api :refer [ratom]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; engines.item-sorter.views
-(def body views/body)
+; @atom (map)
+(defonce SORTABLE-ITEMS (ratom {}))

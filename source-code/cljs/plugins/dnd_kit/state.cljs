@@ -21,7 +21,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(def SORTABLE-ITEMS (ratom {}))
-
-; @atom (integer)
-(def GRABBED-ITEM (ratom nil))
+(def SORTABLE-STATE (ratom {}))

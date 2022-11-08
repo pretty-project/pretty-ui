@@ -140,10 +140,13 @@
   ;      component-did-update életciklusa nem triggerelődne.
   ;
   ; A key paraméter esetleges változtatása a szerkesztő villanását okozza.
+  ;
+  ; TODO
+  ; Az on-change függvény számára a mező értékét is szükséges átadni!
   {:config     (jodit-config editor-props)
-   :on-blur    on-blur
-   :on-change  on-change
-   :on-focus   on-focus
+   :on-blur    (fn [_] (if on-blur   (on-blur   editor-id editor-props)))
+   :on-focus   (fn [_] (if on-focus  (on-focus  editor-id editor-props)))
+   :on-change  (fn [_] (if on-change (on-change editor-id editor-props)))
    :key        update-trigger
    :value      value
    :tabIndex   1})

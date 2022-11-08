@@ -62,8 +62,7 @@
   [sortable-id _]
   [:div {}
         [:br] (str "SORTABLE-ID:    " sortable-id)
-        [:br] (str "GRABBED-ITEM:   " (get @state/GRABBED-ITEM   sortable-id))
-        [:br] (str "SORTABLE-ITEMS: " (get @state/SORTABLE-ITEMS sortable-id))])
+        [:br] (str "SORTABLE-STATE: " (get @state/SORTABLE-STATE sortable-id))])
 
 (defn- sortable-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -74,18 +73,19 @@
   ;   :item-element (metamorphic-content)
   ;   :item-id-f (function)}
   ; @param (integer) item-dex
-  ; @param (*) item
-  [sortable-id {:keys [common-props item-id-f item-element]} item-dex item]
-  (let [dnd-kit-props (js->clj (useSortable (clj->js {:id (item-id-f item)})) :keywordize-keys true)
+  ; @param (string) item-id
+  [sortable-id {:keys [common-props item-id-f item-element]} item-dex item-id]
+  (let [dnd-kit-props (js->clj (useSortable (clj->js {:id item-id})) :keywordize-keys true)
         {:keys [attributes isDragging listeners setNodeRef transform transition]} dnd-kit-props
-        handle-attributes (merge attributes listeners)
-        item-attributes   {:key   (item-id-f item)
-                          ;:key   (str (item-id-f item) "--" item-dex)
+        handle-attributes (merge attributes listeners {:tab-index -1})
+        item-attributes   {:key   item-id
+                          ;:key   (str item-id "--" item-dex)
                            :ref   (js->clj   setNodeRef)
                            :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}
-                           :data-dragging isDragging}]
-    (if common-props [item-element sortable-id common-props item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}]
-                     [item-element sortable-id              item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}])))
+                           :data-dragging isDragging}
+        item (get-in @state/SORTABLE-STATE [sortable-id :sortable-items item-id])]
+       (if common-props [item-element sortable-id common-props item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}]
+                        [item-element sortable-id              item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}])))
 
 (defn- render-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,9 +94,9 @@
   ; @param (map) sortable-props
   [sortable-id sortable-props]
   ; :f> needed cause useSortable hook
-  (letfn [(f [item-list item-dex item]
-             (conj item-list [:f> sortable-item sortable-id sortable-props item-dex item]))]
-         (reduce-kv f [:<>] (get @state/SORTABLE-ITEMS sortable-id))))
+  (letfn [(f [item-list item-dex item-id]
+             (conj item-list [:f> sortable-item sortable-id sortable-props item-dex item-id]))]
+         (reduce-kv f [:<>] (get-in @state/SORTABLE-STATE [sortable-id :item-order]))))
 
 (defn- dnd-context
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -106,16 +106,15 @@
   [sortable-id sortable-props]
   (let [sensors (useSensors (useSensor PointerSensor)
                             (useSensor TouchSensor))]
-       (if (-> @state/SORTABLE-ITEMS sortable-id empty? not)
-           [DndContext {:sensors            sensors
-                        :collisionDetection closestCenter
-                        :onDragStart        #(helpers/drag-start-f sortable-id sortable-props %)
-                        :onDragEnd          #(helpers/drag-end-f   sortable-id sortable-props %)}
-                       [SortableContext {:items (get @state/SORTABLE-ITEMS sortable-id)
-                                         :strategy rectSortingStrategy}
-                                        [render-items sortable-id sortable-props]]
-                       [DragOverlay {:z-index 1} (if (get @state/GRABBED-ITEM sortable-id)
-                                                     [:div {:style {:cursor :grabbing :width "100%" :height "100%"}}])]])))
+       [DndContext {:sensors            sensors
+                    :collisionDetection closestCenter
+                    :onDragStart        #(helpers/drag-start-f sortable-id sortable-props %)
+                    :onDragEnd          #(helpers/drag-end-f   sortable-id sortable-props %)}
+                   [SortableContext {:items (get-in @state/SORTABLE-STATE [sortable-id :item-order])
+                                     :strategy rectSortingStrategy}
+                                    [render-items sortable-id sortable-props]]
+                   [DragOverlay {:z-index 1} (if (get-in @state/SORTABLE-STATE [sortable-id :grabbed-item])
+                                                 [:div {:style {:cursor :grabbing :width "100%" :height "100%"}}])]]))
 
 (defn- sortable-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -123,8 +122,10 @@
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
   [sortable-id sortable-props]
-  [:<> [:f> dnd-context sortable-id sortable-props]])
-      ;[sortable-debug  sortable-id sortable-props]
+  ; BUG#0047 (plugins.dnd-kit.helpers)
+  (if (-> @state/SORTABLE-STATE sortable-id :item-order empty? not)
+      [:<> [:f> dnd-context sortable-id sortable-props]]))
+          ;[sortable-debug  sortable-id sortable-props]
 
 (defn- sortable
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -132,10 +133,11 @@
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
   [sortable-id sortable-props]
+  ; BUG#0047 (plugins.dnd-kit.helpers)
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (helpers/sortable-did-mount-f    sortable-id sortable-props))
                        :component-will-unmount (fn [_ _] (helpers/sortable-will-unmount-f sortable-id sortable-props))
                        :component-did-update   (fn [%]   (helpers/sortable-did-update-f   sortable-id %))
-                       :reagent-render         (fn [_ sortable-props] [sortable-body      sortable-id sortable-props])}))
+                       :reagent-render         (fn [_ sortable-props] [sortable-body sortable-id sortable-props])}))
 
 (defn body
   ; @param (keyword)(opt) sortable-id
@@ -145,10 +147,9 @@
   ;   :item-id-f (function)(opt)
   ;    Default: return
   ;   :items (vector)
-  ;   :on-drag-end (metamorphic-event)(opt)}
-  ;   :on-drag-start (metamorphic-event)(opt)}
-  ;   :on-order-changed (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja az ... (?)}
+  ;   :on-drag-end (function)(opt)
+  ;   :on-drag-start (function)(opt)
+  ;   :on-order-changed (function)(opt)}
   ;
   ; @usage
   ;  [body {...}]
@@ -157,15 +158,25 @@
   ;  [body :my-sortable {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id item-dex item {:keys [dragging? handle-attributes item-attributes] :as drag-props}])
-  ;  [body {:item-element #'my-item-element
-  ;         :items        ["My item" "Your item"]}]
+  ;  (defn my-item-element [sortable-id item-dex item drag-props]
+  ;                        (let [{:keys [dragging? handle-attributes item-attributes]} drag-props]))
+  ;  [body :my-sortable {:item-element #'my-item-element
+  ;                      :items        ["My item" "Your item"]}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id common-props item-dex item {:keys [dragging? handle-attributes item-attributes] :as drag-props}])
-  ;  [body {:common-props {...}
-  ;         :item-element #'my-item-element
-  ;         :items        ["My item" "Your item"]}]
+  ;  (defn my-item-element [sortable-id common-props item-dex item drag-props]
+  ;                        (let [{:keys [dragging? handle-attributes item-attributes]} drag-props]))
+  ;  [body :my-sortable {:common-props {...}
+  ;                      :item-element #'my-item-element
+  ;                      :items        ["My item" "Your item"]}]
+  ;
+  ; @usage
+  ;  (defn on-drag-start-f    [sortable-id sortable-props])
+  ;  (defn on-drag-end-f      [sortable-id sortable-props])
+  ;  (defn on-order-changed-f [sortable-id sortable-props items])
+  ;  [body :my-sortable {:on-drag-start    on-drag-start-f
+  ;                      :on-drag-end      on-drag-end-f
+  ;                      :on-order-changed on-order-changed-f}]
   ([sortable-props]
    [body (random/generate-keyword) sortable-props])
 

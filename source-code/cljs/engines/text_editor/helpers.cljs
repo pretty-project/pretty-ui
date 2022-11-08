@@ -24,6 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn default-value-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) editor-id
   ;
   ; @return (vector)
@@ -108,6 +110,27 @@
   (swap! state/EDITOR-INPUT   dissoc editor-id)
   (swap! state/EDITOR-OUTPUT  dissoc editor-id)
   (swap! state/EDITOR-TRIGGER dissoc editor-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn on-blur-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  [_ _]
+  (r/dispatch-sync [:environment/quit-type-mode!]))
+
+(defn on-focus-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) editor-id
+  ; @param (map) editor-props
+  [_ _]
+  (r/dispatch-sync [:environment/set-type-mode!]))
 
 (defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!

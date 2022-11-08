@@ -102,23 +102,23 @@
            {:en "Vehicles"
             :hu "Járművek"}
            :vehicle-category
-           {:en "Vehicle category"
-            :hu "Járműkategória"}
+           {:en "Category"
+            :hu "Kategória"}
            :vehicle-categories
-           {:en "Vehicle types"
-            :hu "Járműkategóriák"}
+           {:en "Categories"
+            :hu "Kategóriák"}
            :vehicle-model
-           {:en "Vehicle model"
-            :hu "Járműmodell"}
+           {:en "Model"
+            :hu "Modell"}
            :vehicle-models
-           {:en "Vehicle models"
-            :hu "Járműmodellek"}
+           {:en "Models"
+            :hu "Modellek"}
            :vehicle-type
-           {:en "Vehicle type"
-            :hu "Járműtípus"}
+           {:en "Type"
+            :hu "Típus"}
            :vehicle-types
-           {:en "Vehicle types"
-            :hu "Járműtípusok"}
+           {:en "Types"
+            :hu "Típusok"}
            :wheel-size
            {:en "Wheel size"
             :hu "Kerékméret"}
