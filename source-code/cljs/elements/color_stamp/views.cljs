@@ -54,9 +54,10 @@
   ; @param (map) stamp-props
   ;  {}
   [_ {:keys [helper info-text label]}]
-  (if label [label.views/element {:content   label
-                                  :helper    helper
-                                  :info-text info-text}]))
+  (if label [label.views/element {:content     label
+                                  :helper      helper
+                                  :info-text   info-text
+                                  :line-height :block}]))
 
 (defn color-stamp
   ; WARNING! NON-PUBLIC! DO NOT USE!

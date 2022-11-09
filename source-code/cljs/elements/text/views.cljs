@@ -34,8 +34,9 @@
   ;  {:info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)}
   [_ {:keys [info-text label]}]
-  (if label [label.views/element {:info-text info-text
-                                  :content   label}]))
+  (if label [label.views/element {:info-text   info-text
+                                  :content     label
+                                  :line-height :block}]))
 
 (defn- text-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!

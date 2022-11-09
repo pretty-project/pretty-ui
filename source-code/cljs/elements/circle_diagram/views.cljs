@@ -89,9 +89,10 @@
   ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)}
   [_ {:keys [helper info-text label]}]
-  (if label [label.views/element {:content   label
-                                  :helper    helper
-                                  :info-text info-text}]))
+  (if label [label.views/element {:content     label
+                                  :helper      helper
+                                  :info-text   info-text
+                                  :line-height :block}]))
 
 (defn circle-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!

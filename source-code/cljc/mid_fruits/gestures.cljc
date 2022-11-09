@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.gestures
-    (:require [mid-fruits.loop   :refer [do-while]]
+    (:require [mid-fruits.candy  :refer [return]]
+              [mid-fruits.loop   :refer [do-while]]
               [mid-fruits.mixed  :as mixed]
               [mid-fruits.regex  :refer [re-match?]]
               [mid-fruits.string :as string]
@@ -74,3 +75,34 @@
                                 (str label-base "#" next-copy-dex))
                            (str n " #2")))]
           (do-while f item-label test-f))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn resolve-variable
+  ; @param (string) text
+  ; @param (vectors in vector) variables
+  ;  [[(string) variable-value
+  ;    (list of strings) variable-names]
+  ;   [...]]}
+  ;
+  ; @example
+  ;  (resolve-variable "My favorite color: @color"
+  ;                    [["red" "@color"]])
+  ;
+  ; @example
+  ;  (resolve-variable "My favorite color: @color"
+  ;                    [["red" "@color" "@szin"]])
+  ;
+  ; @return (string)
+  [text variables]
+  (letfn [(f [result [variable-value & variable-names]]
+             (letfn [(f [result variable-name]
+                        (cond (nil?             variable-value) (return              result)
+                              (number?          variable-value) (string/replace-part result variable-name variable-value)
+                              (string/nonempty? variable-value) (string/replace-part result variable-name variable-value)
+                              :return result))]
+                    (reduce f result variable-names)))]
+         (reduce f text variables)))

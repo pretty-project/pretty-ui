@@ -95,6 +95,9 @@
            :select-contents!
            {:en "Select contents"
             :hu "Tartalmak kiválasztása"}
+           :subject
+           {:en "Subject"
+            :hu "Tárgy"}
            :subtitle
            {:en "Subtitle"
             :hu "Alcím"}

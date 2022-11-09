@@ -258,11 +258,12 @@
   ;   :required? (boolean)(opt)}
   [field-id {:keys [helper info-text label required?]}]
   (if label (let [input-id (hiccup/value field-id "input")]
-                 [label.views/element {:content   label
-                                       :helper    helper
-                                       :info-text info-text
-                                       :required? required?
-                                       :target-id input-id}])))
+                 [label.views/element {:content     label
+                                       :helper      helper
+                                       :info-text   info-text
+                                       :line-height :block
+                                       :required?   required?
+                                       :target-id   input-id}])))
 
 (defn- text-field-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -27,6 +27,7 @@
               [mid.x.dictionary.books.database       :as books.database]
               [mid.x.dictionary.books.developer      :as books.developer]
               [mid.x.dictionary.books.edit           :as books.edit]
+              [mid.x.dictionary.books.email          :as books.email]
               [mid.x.dictionary.books.error-messages :as books.error-messages]
               [mid.x.dictionary.books.error-reports  :as books.error-reports]
               [mid.x.dictionary.books.errors         :as books.errors]
@@ -82,6 +83,7 @@
                   books.database/BOOK
                   books.developer/BOOK
                   books.edit/BOOK
+                  books.email/BOOK
                   books.error-messages/BOOK
                   books.error-reports/BOOK
                   books.errors/BOOK

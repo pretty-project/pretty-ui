@@ -67,13 +67,5 @@
             :hu "Webhely"}
            :website-menu
            {:en "Website menu"
-            :hu "Webhely"}
-           :website-config
-           {:en "Website config"
-            :hu "Webhely beállításai"}
-           :website-content
-           {:en "Website content"
-            :hu "Webhely tartalma"}
-           :website-dictionary
-           {:en "Website dictionary"
-            :hu "Webhely szótár"}})
+            :hu "Webhely"}})
+           

@@ -74,10 +74,11 @@
   ; @param (map) slider-props
   ;  {}
   [_ {:keys [helper info-text label required?]}]
-  (if label [label.views/element {:content   label
-                                  :helper    helper
-                                  :info-text info-text
-                                  :required? required?}]))
+  (if label [label.views/element {:content     label
+                                  :helper      helper
+                                  :info-text   info-text
+                                  :line-height :block
+                                  :required?   required?}]))
 
 (defn- slider-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

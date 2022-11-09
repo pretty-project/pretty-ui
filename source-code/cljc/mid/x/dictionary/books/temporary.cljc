@@ -36,6 +36,10 @@
            {:en "Dictionary"
             :hu "Szótár"}
 
+           :server-data
+           {:en "Server data"
+            :hu "Szerver adatok"}
+
            :service
            {:en "Service"
             :hu "Szolgáltatás"}

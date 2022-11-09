@@ -105,10 +105,11 @@
   ; @param (map) button-props
   ;  {}
   [_ {:keys [helper info-text label required?]}]
-  (if label [label.views/element {:content   label
-                                  :helper    helper
-                                  :info-text info-text
-                                  :required? required?}]))
+  (if label [label.views/element {:content     label
+                                  :helper      helper
+                                  :info-text   info-text
+                                  :line-height :block
+                                  :required?   required?}]))
 
 (defn- radio-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

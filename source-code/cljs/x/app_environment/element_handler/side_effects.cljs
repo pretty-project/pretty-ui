@@ -31,8 +31,8 @@
   ;
   ; @return (boolean)
   [element-id]
-  (boolean (if-let [element (dom/get-element-by-id element-id)]
-                   (dom/element-disabled? element))))
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/element-disabled? element)))
 
 (defn element-enabled?
   ; @param (string) element-id
@@ -42,8 +42,8 @@
   ;
   ; @return (boolean)
   [element-id]
-  (boolean (if-let [element (dom/get-element-by-id element-id)]
-                   (dom/element-enabled? element))))
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/element-enabled? element)))
 
 
 

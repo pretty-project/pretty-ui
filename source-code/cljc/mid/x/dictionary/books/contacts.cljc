@@ -117,6 +117,12 @@
            :phone-number-placeholder
            {:en "+3630 123 4567"
             :hu "+3630 123 4567"}
+           :server-address
+           {:en "Server address"
+            :hu "Szerver cím"}
+           :server-address-placeholder
+           {:en "https://my-host.com"
+            :hu "https://kiszolgalom.hu"}
            :site
            {:en "Site"
             :hu "Telephely"}
@@ -136,14 +142,14 @@
            {:en "Website link"
             :hu "Webhely hivatkozás"}
            :website-link-placeholder
-           {:en "https://mysite.com"
-            :hu "https://oldalam.hu"}
+           {:en "https://my-website.com"
+            :hu "https://webhelyem.hu"}
            :webshop-link
            {:en "Webshop link"
             :hu "Webáruház hivatkozás"}
            :webshop-link-placeholder
-           {:en "https://myshop.com"
-            :hu "https://aruhazam.hu"}
+           {:en "https://my-webshop.com"
+            :hu "https://webaruhazam.hu"}
            :zip-code
            {:en "ZIP code"
             :hu "Irányítószám"}
