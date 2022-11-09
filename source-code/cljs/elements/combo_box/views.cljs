@@ -153,7 +153,7 @@
                        :reagent-render      (fn [_ box-props] [combo-box-structure box-id box-props])}))
 
 (defn element
-  ; XXX#0711
+  ; XXX#0711 (elements.text-field.views)
   ; A combo-box elem alapkomponense a text-field elem.
   ; A combo-box elem további paraméterezését a text-field elem dokumentációjában találod.
   ;

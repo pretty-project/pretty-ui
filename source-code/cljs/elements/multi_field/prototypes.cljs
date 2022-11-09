@@ -29,14 +29,12 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {:disallow-empty-input-group? (boolean)
-  ;   :max-input-count (integer)
+  ;  {:max-input-count (integer)
   ;   :value-path (vector)}
   [group-id group-props]
   (merge {:max-input-count 8
           :value-path (input.helpers/default-value-path group-id)}
-         (param group-props)
-         {:disallow-empty-input-group? true}))
+         (param group-props)))
 
 
 

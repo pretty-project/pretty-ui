@@ -304,16 +304,20 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:icon (keyword)(opt)
+  ;  {:color (keyword)
+  ;   :icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-selectable (boolean)
+  ;  {:data-color (keyword)
+  ;   :data-selectable (boolean)
   ;   :data-icon-family (keyword)}
-  [_ _ {:keys [icon icon-family]}]
-  (if icon {:data-selectable  false
+  [_ _ {:keys [color icon icon-family]}]
+  (if icon {:data-color       color
+            :data-selectable  false
             :data-icon-family icon-family}
-           {:data-selectable  false}))
+           {:data-color       color
+            :data-selectable  false}))
 
 (defn button-adornment-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -321,7 +325,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:disabled? (boolean)(opt)
+  ;  {:color (keyword)
+  ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :icon (keyword)(opt)
   ;   :icon-family (keyword)(opt)
@@ -334,12 +339,13 @@
   ;
   ; @return (map)
   ;  {}
-  [_ _ {:keys [disabled? icon icon-family on-click tab-indexed? tooltip]}]
+  [_ _ {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
   ; BUG#2105
   ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
   ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
   ; felület React-fából történő lecsatolását okozná.
-  (merge {:data-clickable  true
+  (merge {:data-color      color
+          :data-clickable  true
           :data-selectable false
           :on-mouse-down #(.preventDefault %)
           :title          (x.components/content tooltip)}

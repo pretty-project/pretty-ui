@@ -77,7 +77,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
-  ; XXX#0714
+  ; XXX#0714 (elements.button.views)
   ; A color-selector elem alapkomponense a button elem.
   ; A color-selector elem további paraméterezését a button elem dokumentációjában találod.
   ;

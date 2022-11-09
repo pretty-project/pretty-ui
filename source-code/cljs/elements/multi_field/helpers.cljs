@@ -62,18 +62,6 @@
   (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
        (vector/count? group-value max-input-count)))
 
-(defn field-dex->last-field?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ; @param (integer) field-dex
-  ;
-  ; @return (boolean)
-  [group-id group-props field-dex]
-  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
-       (vector/dex-last? group-value field-dex)))
-
 (defn field-dex->field-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -91,7 +79,7 @@
         (and label (group-props->multi-field? group-id group-props field-dex))
         (x.components/content {:content label :suffix (str " #" (inc field-dex))})))
 
-(defn field-dex->end-adornments
+(defn field-dex->control-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) group-id
@@ -100,32 +88,25 @@
   ;
   ; @return (maps in vector)
   [group-id group-props field-dex]
-        ; Multiple field & last field & maximum field count reached
-  (cond (and (field-dex->last-field?                group-id group-props field-dex)
-             (group-props->multi-field?             group-id group-props field-dex)
-             (group-props->max-field-count-reached? group-id group-props field-dex))
-        [{:icon     :close
-          :on-click [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
-          :tooltip  :delete-field!}]
-        ; Multiple field & last field
-        (and (field-dex->last-field?    group-id group-props field-dex)
-             (group-props->multi-field? group-id group-props field-dex))
-        [{:icon     :add
-          :on-click [:elements.multi-field/increase-field-count! group-id group-props field-dex]
-          :tooltip  :add-field!}
-         {:icon     :close
-          :on-click [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
-          :tooltip  :delete-field!}]
-        ; Single field
-        (group-props->single-field? group-id group-props field-dex)
-        [{:icon     :add
-          :on-click [:elements.multi-field/increase-field-count! group-id group-props field-dex]
-          :tooltip  :add-field!}]
-        ; Single field & not the last field
-        (group-props->multi-field? group-id group-props field-dex)
-        [{:icon     :close
-          :on-click [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
-          :tooltip  :delete-field!}]))
+  [{:icon      :add
+    :disabled? (group-props->max-field-count-reached?       group-id group-props field-dex)
+    :on-click  [:elements.multi-field/increase-field-count! group-id group-props field-dex]
+    :tooltip   :add-field!}
+   {:icon      :close
+    :on-click  [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
+    :tooltip   :delete-field!}])
+
+(defn field-dex->end-adornments
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ;  {:end-adornments (maps in vector)(opt)}
+  ; @param (integer) field-dex
+  ;
+  ; @return (maps in vector)
+  [group-id {:keys [end-adornments] :as group-props} field-dex]
+  (vector/concat-items end-adornments (field-dex->control-adornments group-id group-props field-dex)))
 
 (defn field-dex->autofocus?
   ; WARNING! NON-PUBLIC! DO NOT USE!

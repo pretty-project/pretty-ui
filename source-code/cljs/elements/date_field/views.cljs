@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
-  ; XXX#0711
+  ; XXX#0711 (elements.text-field.views)
   ; A date-field elem alapkomponense a text-field elem.
   ; A date-field elem további paraméterezését a text-field elem dokumentációjában találod.
   ;

@@ -61,7 +61,7 @@
                       [multi-field-field-group              group-id group-props]])
 
 (defn element
-  ; XXX#0711
+  ; XXX#0711 (elements.text-field.views)
   ; A multi-field elem alapkomponense a text-field vagy a combo-box elem.
   ; A multi-field elem további paraméterezését a text-field vagy a combo-box
   ; elem dokumentációjában találod.

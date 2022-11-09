@@ -31,11 +31,13 @@
   ;  {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:icon-family (keyword)
+  ;  {:color (keyword)
+  ;   :icon-family (keyword)
   ;   :tab-indexed? (boolean)}
   [{:keys [icon] :as adornment-props}]
   (merge (if icon {:icon-family :material-icons-filled})
-         {:tab-indexed? true}
+         {:color        :default
+          :tab-indexed? true}
          (param adornment-props)))
 
 (defn field-props-prototype

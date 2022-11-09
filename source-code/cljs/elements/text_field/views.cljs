@@ -308,7 +308,10 @@
   ;   :emptiable? (boolean)(opt)
   ;    Default: false
   ;   :end-adornments (maps in vector)(opt)
-  ;    [{:disabled? (boolean)(opt)
+  ;    [{:color (keyword)(opt)
+  ;       :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;       Default: :default
+  ;      :disabled? (boolean)(opt)
   ;       Default: false
   ;      :icon (keyword)
   ;      :icon-family (keyword)(opt)
@@ -356,7 +359,10 @@
   ;    true, false, :unmarked
   ;    Default: false
   ;   :start-adornments (maps in vector)(opt)
-  ;    [{:disabled? (boolean)(opt)
+  ;    [{:color (keyword)(opt)
+  ;       :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;       Default: :default
+  ;      :disabled? (boolean)(opt)
   ;       Default: false
   ;      :icon (keyword)(opt)
   ;      :icon-family (keyword)(opt)

@@ -132,7 +132,7 @@
   ;   :variant (keyword)(opt)
   ;    :placeholder
   ;   :width (keyword)(opt)
-  ;    :xxl, :3xl
+  ;    :l, :xl, :xxl, :3xl
   ;    Default: :xxl}
   ;
   ; @usage
