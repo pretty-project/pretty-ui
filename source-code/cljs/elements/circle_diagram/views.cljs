@@ -44,7 +44,7 @@
   (let [x  (/ diameter 2)
         y  (/ diameter 2)
         r  (/ (- diameter strength) 2)
-        cf (* 2 r math/pi)
+        cf (* 2 r math/PI)
         value-ratio      (math/percent total-value value)
         dash-filled      (* cf (/ value-ratio 100))
         dash-empty       (- cf dash-filled)

@@ -22,31 +22,30 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-;; CHANGED
-(defn editor-event! [editor event func]
-  ;; editor (js-obj)
-  ;; event  (string) (other events here -> https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_view_document-Document.html#events)
-  ;; func   (fn) (params depends on the event)
+(defn editor-event
+  ; @param (?) editor
+  ; @param (string) event
+  ;  https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_view_document-Document.html#events
+  ; @param (function) f
+  [editor event f]
   (let [document (-> editor .-editing .-view .-document)]
-    (.on document
-         event
-         func)))
+       (.on document event f)))
 
-;; CHANGED
-(defn force-plaintext-on-copy [editor]
-    (editor-event! editor
-     "clipboardInput"
-     (fn [event-info data]
-       (let [html-processor (-> editor .-data .-htmlProcessor)
-             plain-text     (.getData (-> data .-dataTransfer) "text/plain")]
-         (set! (.-content data)
-               (.toView html-processor
-                        (plainTextToHtml plain-text)))))))
+(defn force-paste-as-plain-text
+  ; @param (?) editor
+  [editor]
+  (letfn [(f [event-info data]
+             (let [html-processor (-> editor .-data .-processor)
+                  ;html-processor (-> editor .-data .-htmlProcessor)
+                   plain-text     (.getData (-> data .-dataTransfer) "text/plain")]
+                  (set! (.-content data)
+                        (.toView html-processor (plainTextToHtml plain-text)))))]
+         (editor-event editor "clipboardInput" f)))
 
 (defn on-ready-f
   ; @param (?) editor
   [editor]
-  (force-plaintext-on-copy editor)
+  (force-paste-as-plain-text editor)
   (let [parent-node (-> editor .-sourceElement .-parentNode)
         toolbar     (-> editor .-ui .-view .-toolbar .-element)]
        (.append parent-node toolbar)))
