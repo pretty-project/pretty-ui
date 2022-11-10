@@ -27,7 +27,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
+  ;  (defn app [ui-structure] [:div#my-app [ui-structure]])
   ;  (start-app! #'app)
   [app]
   (r/dispatch-sync [:boot-loader/start-app! app]))
@@ -36,7 +36,7 @@
   ; @param (component) app
   ;
   ; @usage
-  ;  (defn app [ui-structure] [:div#my-wrapper [ui-structure]])
+  ;  (defn app [ui-structure] [:div#my-app [ui-structure]])
   ;  (render-app! #'app)
   [app]
   (reagent/render [app #'x.ui/structure]

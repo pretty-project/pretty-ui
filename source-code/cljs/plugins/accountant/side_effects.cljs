@@ -30,16 +30,16 @@
   ;
   ; @usage
   ;  (configure-navigation! {...})
-  [navigation-props]
+  [navigation-props])
   ; Create and configure HTML5 history navigation.
-  (accountant.core/configure-navigation! navigation-props))
+  ;(accountant.core/configure-navigation! navigation-props))
 
 (defn unconfigure-navigation!
   ; @usage
   ;  (unconfigure-navigation! {...})
-  [_]
+  [_])
   ; Teardown HTML5 history navigation.
-  (accountant.core/unconfigure-navigation!))
+  ;(accountant.core/unconfigure-navigation!))
 
 
 
@@ -51,16 +51,16 @@
   ;
   ; @usage
   ;  (navigate! "...")
-  [route-string]
+  [route-string])
   ; Add a browser history entry. Updates window/location.
-  (accountant.core/navigate! route-string))
+  ;(accountant.core/navigate! route-string))
 
 (defn dispatch-current!
   ; @usage
   ;  (dispatch-current! "...")
-  [_]
+  [_])
   ; Dispatch current URI path. Call the nav-handler function.
-  (accountant.core/dispatch-current!))
+  ;(accountant.core/dispatch-current!))
 
 
 
