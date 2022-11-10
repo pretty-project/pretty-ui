@@ -15,7 +15,7 @@
 (ns elements.multi-field.helpers
     (:require [elements.element.helpers :as element.helpers]
               [mid-fruits.candy         :refer [return]]
-              [mid-fruits.hiccup        :as hiccup]
+              [hiccup.api               :as hiccup]
               [mid-fruits.vector        :as vector]
               [re-frame.api             :as r]
               [x.app-components.api     :as x.components]))

@@ -17,7 +17,7 @@
               [elements.combo-box.prototypes :as combo-box.prototypes]
               [elements.text-field.helpers   :as text-field.helpers]
               [elements.text-field.views     :as text-field.views]
-              [mid-fruits.loop               :refer [reduce-indexed]]
+              [loop.api                      :refer [reduce-indexed]]
               [mid-fruits.random             :as random]
               [re-frame.api                  :as r]
               [reagent.api                   :as reagent]

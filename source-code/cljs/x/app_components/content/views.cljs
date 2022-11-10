@@ -14,7 +14,7 @@
 
 (ns x.app-components.content.views
     (:require [mid-fruits.candy     :refer [return]]
-              [mid-fruits.hiccup    :refer [hiccup?]]
+              [hiccup.api           :refer [hiccup?]]
               [mid-fruits.random    :as random]
               [mid-fruits.vector    :as vector]
               [reagent.api          :refer [component?]]

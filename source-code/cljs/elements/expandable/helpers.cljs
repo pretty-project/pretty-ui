@@ -15,7 +15,7 @@
 (ns elements.expandable.helpers
     (:require [elements.element.helpers  :as element.helpers]
               [elements.expandable.state :as expandable.state]
-              [mid-fruits.logical        :refer [nonfalse?]]
+              [logical.api               :refer [nonfalse?]]
               [x.app-environment.api     :as x.environment]))
 
 

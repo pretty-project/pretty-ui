@@ -13,7 +13,7 @@
   ;   :email-address (string)
   ;   :host (string)
   ;   :password (string)
-  ;   :port (integer)
+  ;   :port (integer or string)
   ;   :sender-name (string)(opt)
   ;   :subject (string)(opt)
   ;   :username (string)}

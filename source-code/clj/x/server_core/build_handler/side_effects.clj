@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.build-handler.side-effects
-    (:require [io.api                                :as io]
-              [mid-fruits.format                     :as format]
+    (:require [format.api                            :as format]
+              [io.api                                :as io]
               [re-frame.api                          :as r]
               [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
               [x.server-core.build-handler.config    :as build-handler.config]))

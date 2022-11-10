@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.popups.helpers
-    (:require [mid-fruits.hiccup :as hiccup]
-              [re-frame.api      :as r]))
+    (:require [hiccup.api   :as hiccup]
+              [re-frame.api :as r]))
 
 
 

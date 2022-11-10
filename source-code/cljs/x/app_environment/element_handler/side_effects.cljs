@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.element-handler.side-effects
-    (:require [dom.api           :as dom]
-              [mid-fruits.hiccup :as hiccup]
-              [re-frame.api      :as r]
-              [time.api          :as time]))
+    (:require [dom.api      :as dom]
+              [hiccup.api   :as hiccup]
+              [re-frame.api :as r]
+              [time.api     :as time]))
 
 
 

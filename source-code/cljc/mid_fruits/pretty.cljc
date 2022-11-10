@@ -15,7 +15,7 @@
 (ns mid-fruits.pretty
     (:require [mid-fruits.candy  :refer [param return]]
               [mid-fruits.string :as string]
-              [mid-fruits.loop   :refer [reduce-indexed reduce-kv-indexed]]
+              [loop.api          :refer [reduce-indexed reduce-kv-indexed]]
               [mid-fruits.vector :as vector]))
 
 

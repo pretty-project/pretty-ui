@@ -17,7 +17,7 @@
               [elements.multi-field.helpers    :as multi-field.helpers]
               [elements.multi-field.prototypes :as multi-field.prototypes]
               [elements.text-field.views       :as text-field.views]
-              [mid-fruits.loop                 :refer [reduce-indexed]]
+              [loop.api                        :refer [reduce-indexed]]
               [mid-fruits.random               :as random]
               [re-frame.api                    :as r]))
 

@@ -15,7 +15,7 @@
 (ns tools.image-loader.helpers
     (:require [mid-fruits.candy         :refer [param]]
               [mid-fruits.css           :as css]
-              [mid-fruits.hiccup        :as hiccup]
+              [hiccup.api               :as hiccup]
               [tools.image-loader.state :as state]))
 
 

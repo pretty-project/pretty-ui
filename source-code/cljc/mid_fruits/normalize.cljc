@@ -40,9 +40,17 @@
        (string/replace text pattern "")))
 
 (defn space->separator
-  [text]
+  ; @param (string) n
+  ;
+  ; @example
+  ;  (space->separator "a b  c")
+  ;  =>
+  ;  "a-b-c"
+  ;
+  ; @return (string)
+  [n]
   "Changing ' ' to '-'. Keep one '-' if more than one are next to each other."
-  (string/replace text #"[ |-]{1,}" "-"))
+  (string/replace n #"[ |-]{1,}" "-"))
 
 
 
@@ -50,9 +58,17 @@
 ;; ----------------------------------------------------------------------------
 
 (defn clean-text
-  [text]
-  (-> text (str)
-           (deaccent)
-           (cut-special-chars "-")
-           (space->separator)
-           (string/lower-case)))
+  ; @param (string) n
+  ;
+  ; @example
+  ;  (clean-text "...")
+  ;  =>
+  ;  "..."
+  ;
+  ; @return (string)
+  [n]
+  (-> n (str)
+        (deaccent)
+        (cut-special-chars "-")
+        (space->separator)
+        (string/lower-case)))

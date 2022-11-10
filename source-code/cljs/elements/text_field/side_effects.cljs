@@ -14,7 +14,7 @@
 
 (ns elements.text-field.side-effects
     (:require [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.hiccup           :as hiccup]
+              [hiccup.api                  :as hiccup]
               [mid-fruits.string           :as string]
               [re-frame.api                :as r]
               [x.app-environment.api       :as x.environment]))

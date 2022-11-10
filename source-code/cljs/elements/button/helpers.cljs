@@ -15,7 +15,7 @@
 (ns elements.button.helpers
     (:require [dom.api                  :as dom]
               [elements.element.helpers :as element.helpers]
-              [mid-fruits.hiccup        :as hiccup]
+              [hiccup.api               :as hiccup]
               [re-frame.api             :as r]
               [reagent.api              :as reagent]
               [x.app-environment.api    :as x.environment]))

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.button.side-effects
-    (:require [mid-fruits.hiccup     :as hiccup]
+    (:require [hiccup.api            :as hiccup]
               [re-frame.api          :as r]
               [x.app-environment.api :as x.environment]))
 

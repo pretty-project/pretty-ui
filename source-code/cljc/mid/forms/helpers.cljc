@@ -14,7 +14,7 @@
 
 (ns mid.forms.helpers
     (:require [mid-fruits.mixed  :as mixed]
-              [mid-fruits.regex  :refer [re-match?]]
+              [regex.api         :refer [re-match?]]
               [mid-fruits.string :as string]
               [mid.forms.config  :as config]))
 

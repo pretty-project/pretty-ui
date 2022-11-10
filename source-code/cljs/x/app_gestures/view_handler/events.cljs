@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.view-handler.events
-    (:require [mid-fruits.logical :refer [nonfalse?]]
-              [re-frame.api       :as r]))
+    (:require [logical.api  :refer [nonfalse?]]
+              [re-frame.api :as r]))
 
 
 

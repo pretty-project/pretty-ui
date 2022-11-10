@@ -16,7 +16,7 @@
     (:require [layouts.popup-a.helpers    :as helpers]
               [layouts.popup-a.prototypes :as prototypes]
               [layouts.popup-a.state      :as state]
-              [mid-fruits.hiccup          :as hiccup]
+              [hiccup.api                 :as hiccup]
               [react.api                  :as react]
               [reagent.api                :as reagent]
               [re-frame.api               :as r]

@@ -19,7 +19,7 @@
               [elements.text-field.state  :as text-field.state]
               [mid-fruits.candy           :refer [return]]
               [mid-fruits.css             :as css]
-              [mid-fruits.hiccup          :as hiccup]
+              [hiccup.api                 :as hiccup]
               [mid-fruits.string          :as string]
               [re-frame.api               :as r]
               [time.api                   :as time]

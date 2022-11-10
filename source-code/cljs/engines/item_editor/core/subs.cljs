@@ -16,7 +16,7 @@
     (:require [engines.engine-handler.core.subs  :as core.subs]
               [engines.item-editor.body.subs     :as body.subs]
               [engines.item-editor.download.subs :as download.subs]
-              [mid-fruits.logical                :refer [nor]]
+              [logical.api                       :refer [nor]]
               [mid-fruits.vector                 :as vector]
               [re-frame.api                      :as r :refer [r]]
               [x.app-router.api                  :as x.router]))

@@ -17,7 +17,7 @@
               [elements.chip-group.prototypes :as chip-group.prototypes]
               [elements.chip.views            :as chip.views]
               [elements.label.views           :as label.views]
-              [mid-fruits.loop                :refer [reduce-indexed]]
+              [loop.api                       :refer [reduce-indexed]]
               [mid-fruits.random              :as random]
               [mid-fruits.vector              :as vector]
               [re-frame.api                   :as r]

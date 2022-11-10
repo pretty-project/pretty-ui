@@ -16,7 +16,7 @@
     (:require [elements.label.views           :as label.views]
               [elements.text-field.helpers    :as text-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
-              [mid-fruits.hiccup              :as hiccup]
+              [hiccup.api                     :as hiccup]
               [mid-fruits.random              :as random]
               [mid-fruits.string              :as string]
               [mid-fruits.vector              :as vector]

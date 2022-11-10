@@ -16,7 +16,7 @@
     (:require [engines.engine-handler.core.subs     :as core.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
               [mid-fruits.candy                     :refer [return]]
-              [mid-fruits.loop                      :refer [some-indexed]]
+              [loop.api                             :refer [some-indexed]]
               [mid-fruits.map                       :as map]
               [mid-fruits.vector                    :as vector]
               [re-frame.api                         :refer [r]]))

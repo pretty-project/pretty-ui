@@ -14,7 +14,7 @@
 
 (ns tools.infinite-loader.views
     (:require [dom.api                       :as dom]
-              [mid-fruits.hiccup             :as hiccup]
+              [hiccup.api                    :as hiccup]
               [mid-fruits.random             :as random]
               [reagent.api                   :as reagent]
               [re-frame.api                  :as r]

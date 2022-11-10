@@ -15,7 +15,7 @@
 (ns mid-fruits.mixed
     (:require [mid-fruits.candy  :refer [return]]
               [mid-fruits.map    :as map]
-              [mid-fruits.regex  :refer [re-match?]]
+              [regex.api         :refer [re-match?]]
               [mid-fruits.reader :as reader]
               [mid-fruits.vector :as vector]))
 

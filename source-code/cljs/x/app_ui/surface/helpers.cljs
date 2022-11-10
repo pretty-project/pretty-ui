@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.surface.helpers
-    (:require [mid-fruits.hiccup :as hiccup]))
+    (:require [hiccup.api :as hiccup]))
 
 
 

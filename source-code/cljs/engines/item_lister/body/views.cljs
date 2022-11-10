@@ -16,7 +16,7 @@
     (:require [elements.api                        :as elements]
               [engines.item-lister.body.prototypes :as body.prototypes]
               [engines.item-lister.core.helpers    :as core.helpers]
-              [mid-fruits.logical                  :refer [nor]]
+              [logical.api                         :refer [nor]]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]

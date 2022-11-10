@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.helpers
-    (:require [mid-fruits.hiccup                       :as hiccup]
+    (:require [hiccup.api                              :as hiccup]
               [mid-fruits.map                          :as map]
               [mid-fruits.string                       :as string]
               [x.app-environment.cookie-handler.config :as cookie-handler.config]))
