@@ -104,6 +104,14 @@
   (let [route-match (r get-route-match db route-string)]
        (boolean route-match)))
 
+(defn swap-mode?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (boolean)
+  [db _]
+  ; XXX#0781 (x.app-router.route-handler.effects)
+  (get-in db [:router :route-handler/meta-items :swap-mode?]))
+
 
 
 ;; -- Route subscriptions -----------------------------------------------------

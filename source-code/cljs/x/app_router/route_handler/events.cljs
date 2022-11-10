@@ -133,14 +133,28 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn swap-to!
+(defn set-swap-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
+  ; XXX#0781 (x.app-router.route-handler.effects)
   ; Az útvonal használata előtt az útvonal-kezelőt {:swap-mode? true} állapotba állítja,
   ; ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
   (assoc-in db [:router :route-handler/meta-items :swap-mode?] true))
+
+(defn quit-swap-mode!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @return (map)
+  [db _]
+  ; XXX#0781 (x.app-router.route-handler.effects)
+  (dissoc-in db [:router :route-handler/meta-items :swap-mode?]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn go-to!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -26,8 +26,10 @@
 (defn read-str
   ; @param (string) n
   ;
-  ; @usage
-  ;  (read-str "{:a "b"}")
+  ; @example
+  ;  (read-str "{:a \"b\"}")
+  ;  =>
+  ;  {:a "b"}
   ;
   ; @return (*)
   [n]

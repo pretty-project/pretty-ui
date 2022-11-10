@@ -66,11 +66,14 @@
   ; @param (keyword) route-id
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-id route-string]]
-      (let [previous-route-id (r route-handler.subs/get-current-route-id db)]
-           {:dispatch-n [(if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
-                                 (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
-                         (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
-                                 client-event)]})))
+      ; XXX#0781
+      (if-not (r route-handler.subs/swap-mode? db)
+              (let [previous-route-id (r route-handler.subs/get-current-route-id db)]
+                   {:dispatch-n [(if-let [on-leave-event (get-in db [:router :route-handler/client-routes previous-route-id :on-leave-event])]
+                                         (if (r route-handler.subs/route-id-changed? db route-id) on-leave-event))
+                                 (if-let [client-event (get-in db [:router :route-handler/client-routes route-id :client-event])]
+                                         client-event)]})
+              {:db (r route-handler.events/quit-swap-mode! db)})))
 
 (r/reg-event-fx :router/handle-login!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,9 +120,10 @@
   ; @usage
   ;  [:router/swap-to! "/my-route" {...}]
   (fn [{:keys [db]} [_ route-string route-props]]
+      ; XXX#0781
       ; A [:router/swap-to! ...] esemény lecseréli az aktuális útvonalat,
       ; a hozzárendelt események megtörténése nélkül.
-      {:db       (r route-handler.events/swap-to! db)
+      {:db       (r route-handler.events/set-swap-mode! db)
        :dispatch [:router/go-to! route-string route-props]}))
 
 (r/reg-event-fx :router/go-to!
