@@ -15,7 +15,7 @@
 (ns engines.item-lister.download.helpers
     (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
-              [mid-fruits.math    :as math]
+              [math.api           :as math]
               [mid-fruits.string  :as string]
               [mid-fruits.vector  :as vector]
               [mongo-db.api       :as mongo-db]

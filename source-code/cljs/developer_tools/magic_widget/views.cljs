@@ -19,7 +19,7 @@
               [developer-tools.request-inspector.views :rename {body request-inspector}]
               [developer-tools.route-browser.views     :rename {body route-browser}]
               [elements.api                            :as elements]
-              [mid-fruits.css                          :as css]
+              [css.api                                 :as css]
               [mid-fruits.vector                       :as vector]
               [re-frame.api                            :as r]))
 

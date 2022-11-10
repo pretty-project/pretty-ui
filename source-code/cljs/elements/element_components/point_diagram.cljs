@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.point-diagram
-    (:require [elements.engine.api :as engine]
-              [mid-fruits.candy    :refer [param]]
-              [mid-fruits.css      :as css]
-              [mid-fruits.math     :as math]
+    (:require [mid-fruits.candy    :refer [param]]
+              [css.api             :as css]
+              [elements.engine.api :as engine]
+              [math.api            :as math]
               [mid-fruits.random   :as random]
               [mid-fruits.vector   :as vector]))
 

@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-prohibitor.side-effects
-    (:require [dom.api                                     :as dom]
+    (:require [css.api                                     :as css]
+              [dom.api                                     :as dom]
               [mid-fruits.candy                            :refer [param]]
-              [mid-fruits.css                              :as css]
-              [mid-fruits.math                             :as math]
+              [math.api                                    :as math]
               [mid-fruits.string                           :as string]
               [re-frame.api                                :as r]
               [x.app-environment.scroll-prohibitor.helpers :as scroll-prohibitor.helpers]))

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.core.helpers
-    (:require [mid-fruits.css :as css]))
+    (:require [css.api :as css]))
 
 
 

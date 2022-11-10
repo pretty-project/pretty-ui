@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.slider.helpers
-    (:require [dom.api                  :as dom]
+    (:require [css.api                  :as css]
+              [dom.api                  :as dom]
               [elements.element.helpers :as element.helpers]
               [elements.slider.state    :as slider.state]
-              [mid-fruits.css           :as css]
               [re-frame.api             :as r]))
 
 

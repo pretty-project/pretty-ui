@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns forms.attributes
-    (:require [mid-fruits.css :as css]
-              [re-frame.api   :as r]))
+    (:require [css.api      :as css]
+              [re-frame.api :as r]))
 
 
 

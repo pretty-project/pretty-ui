@@ -14,7 +14,7 @@
 
 (ns mid-fruits.random
     (:require [mid-fruits.candy :refer [param]]
-              [mid-fruits.math  :as math]))
+              [math.api         :as math]))
 
 
 

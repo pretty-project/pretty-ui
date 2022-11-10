@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.horizontal-line
-    (:require [elements.engine.api :as engine]
-              [mid-fruits.candy    :refer [param]]
-              [mid-fruits.css      :as css]
+    (:require [mid-fruits.candy    :refer [param]]
+              [css.api             :as css]
+              [elements.engine.api :as engine]
               [mid-fruits.random   :as random]))
 
 

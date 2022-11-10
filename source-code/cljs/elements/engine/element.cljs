@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.engine.element
-    (:require [elements.element.helpers :as element.helpers]
-              [mid-fruits.candy         :refer [param]]
-              [mid-fruits.css           :as css]
+    (:require [mid-fruits.candy         :refer [param]]
+              [css.api                  :as css]
+              [elements.element.helpers :as element.helpers]
               [mid-fruits.keyword       :as keyword]
               [mid-fruits.map           :refer [dissoc-in]]
               [mid-fruits.vector        :as vector]

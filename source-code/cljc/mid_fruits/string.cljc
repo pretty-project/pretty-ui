@@ -15,7 +15,7 @@
 (ns mid-fruits.string
     (:require [clojure.string   :as string]
               [mid-fruits.candy :refer [param return]]
-              [mid-fruits.math  :as math]))
+              [math.api         :as math]))
 
 
 

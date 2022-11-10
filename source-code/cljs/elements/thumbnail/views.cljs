@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.thumbnail.views
-    (:require [elements.label.views          :as label.views]
+    (:require [css.api                       :as css]
+              [elements.label.views          :as label.views]
               [elements.thumbnail.helpers    :as thumbnail.helpers]
               [elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [mid-fruits.css                :as css]
               [mid-fruits.random             :as random]))
 
 

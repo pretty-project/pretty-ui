@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.circle-diagram.views
-    (:require [elements.circle-diagram.config     :as circle-diagram.config]
+    (:require [css.api                            :as css]
+              [elements.circle-diagram.config     :as circle-diagram.config]
               [elements.circle-diagram.helpers    :as circle-diagram.helpers]
               [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
               [elements.label.views               :as label.views]
-              [mid-fruits.css                     :as css]
-              [mid-fruits.math                    :as math]
+              [math.api                           :as math]
               [mid-fruits.random                  :as random]
               [mid-fruits.vector                  :as vector]
               [svg.api                            :as svg]))

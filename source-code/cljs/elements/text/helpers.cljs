@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [mid-fruits.css           :as css]))
+    (:require [css.api                  :as css]
+              [elements.element.helpers :as element.helpers]))
 
 
 
