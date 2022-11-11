@@ -33,6 +33,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn translate
+  ; @param (keyword) term-id
+  ; @param (map) options
+  ;  {:language (keyword)
+  ;   :prefix (string)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
+  ;    XXX#4509 (mid-fruits.string)
+  ;   :suffix (string)(opt)}
+  ;
+  ; @example
+  ;  (r translate {:en "Apple" :hu "Alma"} {:language :en})
+  ;  =>
+  ;  "Apple"
+  ;
+  ; @return (string)
+  [db [_ term {:keys [language prefix replacements suffix]}]]
+  (let [translated-term (term language)]
+       (term-handler.helpers/join-string translated-term prefix suffix replacements)))
+
 (defn look-up
   ; @param (keyword) term-id
   ; @param (map) options
@@ -43,7 +62,7 @@
   ;   :suffix (string)(opt)}
   ;
   ; @example
-  ;  (r look-up :my-term! {:language :en})
+  ;  (r look-up :my-term {:language :en})
   ;  =>
   ;  "My term"
   ;
@@ -54,14 +73,17 @@
   ;
   ; @return (string)
   [db [_ term-id {:keys [language prefix replacements suffix]}]]
-  (let [translated-term (r get-term db term-id language)
-        suffixed-term   (str translated-term suffix)]
+  (let [translated-term (r get-term db term-id language)]
        (term-handler.helpers/join-string translated-term prefix suffix replacements)))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; @usage
+;  [:dictionary/translate {:en "Apple" :hu "Alma"} {:language :en}]
+(r/reg-sub :dictionary/translate translate)
 
 ; @usage
 ;  [:dictionary/look-up :my-term {:language :en}]

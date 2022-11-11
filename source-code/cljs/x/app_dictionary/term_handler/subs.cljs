@@ -32,6 +32,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn translate
+  ; @param (map) term
+  ; @param (map)(opt) options
+  ;  {:prefix (string)(opt)
+  ;   :replacements (numbers or strings in vector)(opt)
+  ;    XXX#4509 (mid-fruits.string)
+  ;   :suffix (string)(opt)}
+  ;
+  ; @example
+  ;  (r translate db {:en "Apple" :hu "Alma"})
+  ;  =>
+  ;  "Apple"
+  ;
+  ; @return (string)
+  [db [_ term {:keys [prefix replacements suffix]}]]
+  (let [language        (r x.locales/get-selected-language db)
+        translated-term (get term language)]
+       (term-handler.helpers/join-string translated-term prefix suffix replacements)))
+
 (defn look-up
   ; @param (keyword) term-id
   ; @param (map)(opt) options
@@ -62,5 +81,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:dictionary/look-up! :my-term]
+;  [:dictionary/translate {:en "Apple" :hu "Alma"}]
+(r/reg-sub :dictionary/translate translate)
+
+; @usage
+;  [:dictionary/look-up :my-term]
 (r/reg-sub :dictionary/look-up look-up)

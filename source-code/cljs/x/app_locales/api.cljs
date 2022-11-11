@@ -22,6 +22,7 @@
               [x.app-locales.name-handler.helpers    :as name-handler.helpers]
               [x.app-locales.name-handler.subs       :as name-handler.subs]
               [x.app-locales.name-handler.views      :as name-handler.views]
+              [x.app-locales.language-handler.events :as language-handler.events]
               [x.app-locales.language-handler.subs   :as language-handler.subs]))
 
 
@@ -67,6 +68,9 @@
 
 ; x.app-locales.name-handler.views
 (def name-order name-handler.views/name-order)
+
+; x.app-locales.language-handler.events
+(def select-language! language-handler.events/select-language!)
 
 ; x.app-locales.language-handler.subs
 (def get-app-languages     language-handler.subs/get-app-languages)

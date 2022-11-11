@@ -65,6 +65,69 @@
            :fiverr-link-placeholder
            {:en ""
             :hu ""}
+           :github-link
+           {:en "GitHub link"
+            :hu "GitHub hivatkozás"}
+           :github-links
+           {:en "GitHub links"
+            :hu "GitHub hivatkozások"}
+           :github-link-placeholder
+           {:en "github.com/user"
+            :hu "github.com/user"}
+           :go-to-airbnb!
+           {:en "Go to Airbnb"
+            :hu "Tovább az Airbnb-re"}
+           :go-to-awwwards!
+           {:en "Go to Awwwards"
+            :hu "Tovább az Awwwards-ra"}
+           :go-to-behance!
+           {:en "Go to Behance"
+            :hu "Tovább a Behance-re"}
+           :go-to-facebook!
+           {:en "Go to Facebook"
+            :hu "Tovább a Facebook-ra"}
+           :go-to-fiverr!
+           {:en "Go to Fiverr"
+            :hu "Tovább a Fiverr-re"}
+           :go-to-github!
+           {:en "Go to GitHub"
+            :hu "Tovább a GitHub-ra"}
+           :go-to-instagram!
+           {:en "Go to Instagram"
+            :hu "Tovább az Instagram-ra"}
+           :go-to-linkedin!
+           {:en "Go to LinkedIn"
+            :hu "Tovább a LinkedIn-re"}
+           :go-to-pinterest!
+           {:en "Go to Pinterest"
+            :hu "Tovább a Pinterest-re"}
+           :go-to-reddit!
+           {:en "Go to Reddit"
+            :hu "Tovább a Reddit-re"}
+           :go-to-snapchat!
+           {:en "Go to Snapchat"
+            :hu "Tovább a Snapchat-re"}
+           :go-to-skype!
+           {:en "Go to Skype"
+            :hu "Tovább a Skype-ra"}
+           :go-to-tiktok!
+           {:en "Go to TikTok"
+            :hu "Tovább a TikTok-ra"}
+           :go-to-twitter!
+           {:en "Go to Twitter"
+            :hu "Tovább a Twitter-re"}
+           :go-to-viber!
+           {:en "Go to Viber"
+            :hu "Tovább a Viber-re"}
+           :go-to-vimeo!
+           {:en "Go to Vimeo"
+            :hu "Tovább a Vimeo-ra"}
+           :go-to-whatsapp!
+           {:en "Go to WhatsApp"
+            :hu "Tovább a WhatsApp-ra"}
+           :go-to-youtube!
+           {:en "Go to Youtube"
+            :hu "Tovább a Youtube-ra"}
            :instagram-link
            {:en "Instagram link"
             :hu "Instagram hivatkozás"}
@@ -75,11 +138,11 @@
            {:en "instagram.com/profile"
             :hu "instagram.com/profile"}
            :linkedin-link
-           {:en "Linkedin link"
-            :hu "Linkedin hivatkozás"}
+           {:en "LinkedIn link"
+            :hu "LinkedIn hivatkozás"}
            :linkedin-links
-           {:en "Linkedin links"
-            :hu "Linkedin hivatkozások"}
+           {:en "LinkedIn links"
+            :hu "LinkedIn hivatkozások"}
            :linkedin-link-placeholder
            {:en ""
             :hu ""}

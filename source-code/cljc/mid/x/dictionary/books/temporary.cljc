@@ -28,6 +28,24 @@
            :informations
            {:en "Informations"
             :hu "Információk"}
+           :message
+           {:en "Message"
+            :hu "Üzenet"}
+           :messages
+           {:en "Messages"
+            :hu "Üzenetek"}
+           :send-message!
+           {:en "Send message"
+            :hu "Üzenet küldése"}
+           :sending-message
+           {:en "Sending message"
+            :hu "Üzenet küldése"}
+           :message-sent
+           {:en "Message sent"
+            :hu "Üzenet elküldve"}
+           :send!
+           {:en "Send"
+            :hu "Küldés"}
            :default
            {:en "Default"
             :hu "Alapértelmezett"}

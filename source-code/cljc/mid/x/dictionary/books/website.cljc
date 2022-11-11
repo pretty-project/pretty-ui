@@ -38,12 +38,18 @@
            :informational-content
            {:en "Informational content"
             :hu "Információs tartalom"}
-           :main-page
-           {:en "Main page"
-            :hu "Főoldal"}
            :logo
            {:en "Logo"
             :hu "Logó"}
+           :main-page
+           {:en "Main page"
+            :hu "Főoldal"}
+           :our-services
+           {:en "Our services"
+            :hu "Szolgáltatásaink"}
+           :our-team
+           {:en "Our team"
+            :hu "Csapatunk"}
            :section
            {:en "Section"
             :hu "Szekció"}
@@ -68,4 +74,3 @@
            :website-menu
            {:en "Website menu"
             :hu "Webhely"}})
-           

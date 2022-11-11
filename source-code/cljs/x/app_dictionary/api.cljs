@@ -32,9 +32,11 @@
 (def join-string term-handler.helpers/join-string)
 
 ; x.app.dictionary.term-handler.side-effects
-(def looked-up term-handler.side-effects/looked-up)
+(def translated term-handler.side-effects/translated)
+(def looked-up  term-handler.side-effects/looked-up)
 
 ; x.app.dictionary.term-handler.subs
 (def get-term     term-handler.subs/get-term)
 (def term-exists? term-handler.subs/term-exists?)
+(def translate    term-handler.subs/translate)
 (def look-up      term-handler.subs/look-up)
