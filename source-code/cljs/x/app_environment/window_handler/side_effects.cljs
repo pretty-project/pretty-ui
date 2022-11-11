@@ -14,9 +14,9 @@
 
 (ns x.app-environment.window-handler.side-effects
     (:require [dom.api                                :as dom]
+              [js-window.api                          :as js-window]
               [re-frame.api                           :as r]
               [time.api                               :as time]
-              [window.api                             :as window]
               [x.app-environment.window-handler.state :as window-handler.state]))
 
 
@@ -38,13 +38,13 @@
   ; @usage
   ;  (open-tab! "www.my-site.com/my-link")
   [uri]
-  (window/open-tab!))
+  (js-window/open-tab!))
 
 (defn reload-tab!
   ; @usage
   ;  (reload-tab!)
   [_]
-  (window/reload-tab!))
+  (js-window/reload-tab!))
 
 
 
@@ -55,13 +55,13 @@
   ; @usage
   ;  (go-root!)
   [_]
-  (window/go-root!))
+  (js-window/go-root!))
 
 (defn go-back!
   ; @usage
   ;  (go-back!)
   [_]
-  (window/go-back!))
+  (js-window/go-back!))
 
 (defn go-to!
   ; @param (string) uri
@@ -69,7 +69,7 @@
   ; @usage
   ;  (go-to! "www.my-site.com/my-link")
   [uri]
-  (window/go-to! uri))
+  (js-window/go-to! uri))
 
 
 
@@ -134,8 +134,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (r/dispatch [:db/set-item! [:environment :window-handler/meta-items]
-                             {:language   (window/get-language)
-                              :user-agent (window/get-user-agent)}]))
+                             {:language  "hu" ; (window/get-language)
+                              :user-agent ""}])); (window/get-user-agent)}]))
 
 
 

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.viewport-handler.helpers
-    (:require [mid-fruits.map                            :as map]
+    (:require [js-window.api                             :as js-window]
+              [mid-fruits.map                            :as map]
               [re-frame.api                              :as r]
-              [window.api                                :as window]
               [x.app-environment.viewport-handler.config :as viewport-handler.config]))
 
 
@@ -29,7 +29,7 @@
   ; @return (keyword)
   ;  :xxs, :xs, :s, :m, :l, :xl, :xxl
   []
-  (let [viewport-width (window/get-viewport-width)]
+  (let [viewport-width (js-window/get-viewport-width)]
        (letfn [(f [{:keys [min max]}]
                   (and (>= viewport-width min)
                        (<= viewport-width max)))]

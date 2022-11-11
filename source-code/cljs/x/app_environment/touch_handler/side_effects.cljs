@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.touch-handler.side-effects
-    (:require [re-frame.api                                   :as r]
-              [window.api                                     :as window]
+    (:require [js-window.api                                  :as js-window]
+              [re-frame.api                                   :as r]
               [x.app-environment.element-handler.side-effects :as element-handler.side-effects]))
 
 
@@ -25,7 +25,7 @@
 (defn detect-touch-events-api!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [% (window/touch-events-api-detected?)]
+  (let [% (js-window/touch-events-api-detected?)]
        (element-handler.side-effects/set-element-attribute! "x-body-container" "data-touch-detected" %)
        (r/dispatch [:db/set-item! [:environment :touch-handler/meta-items :touch-detected?] %])))
 

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.connection-handler.effects
-    (:require [re-frame.api :as r]
-              [window.api   :as window]))
+    (:require [js-window.api :as js-window]
+              [re-frame.api  :as r]))
 
 
 
@@ -24,7 +24,7 @@
 (r/reg-event-fx :environment/connection-changed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
-      (let [browser-online? (window/browser-online?)]
+      (let [browser-online? (js-window/browser-online?)]
            {:db          (assoc-in db [:environment :connection-handler/meta-items :browser-online?] browser-online?)
             :dispatch-if [browser-online? [:core/connect-app!]
                                           [:core/disconnect-app!]]})))

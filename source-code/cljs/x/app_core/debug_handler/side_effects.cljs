@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.debug-handler.side-effects
-    (:require [mid-fruits.uri                   :as uri]
+    (:require [js-window.api                    :as js-window]
+              [mid-fruits.uri                   :as uri]
               [re-frame.api                     :as r]
-              [window.api                       :as window]
               [x.app-core.debug-handler.helpers :as debug-handler.helpers]))
 
 
@@ -26,7 +26,7 @@
 (defn- detect-debug-mode!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
-  (let [uri          (window/get-uri)
+  (let [uri          (js-window/get-uri)
         query-string (uri/uri->query-string uri)]
        (r/dispatch [:db/set-item! [:core :debug-handler/meta-items :debug-mode]
                                   (debug-handler.helpers/query-string->debug-mode query-string)])))
