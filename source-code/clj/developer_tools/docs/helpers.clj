@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.docs.helpers
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [candy.api         :refer [param return]]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]))
 

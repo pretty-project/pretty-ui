@@ -108,9 +108,10 @@
   ; @return (map)
   [db [_ route-id _]]
   ; XXX#5670
-  (let [js-build (r route-handler.subs/get-current-js-build db)]
-       (case js-build :app  (r x.ui/set-interface! db :application-ui)
-                      :site (r x.ui/set-interface! db :website-ui))))
+  (if-let [js-build (r route-handler.subs/get-current-js-build db)]
+          (case js-build :app  (r x.ui/set-interface! db :application-ui)
+                         :site (r x.ui/set-interface! db :website-ui))
+          (return db)))
 
 (defn handle-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!

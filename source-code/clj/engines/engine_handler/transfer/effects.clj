@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.transfer.effects
-    (:require [engines.engine-handler.transfer.helpers :as transfer.helpers]
-              [mid-fruits.candy                        :refer [return]]
+    (:require [candy.api                               :refer [return]]
+              [engines.engine-handler.transfer.helpers :as transfer.helpers]
               [re-frame.api                            :as r]))
 
 

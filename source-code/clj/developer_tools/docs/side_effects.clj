@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.docs.side-effects
-    (:require [developer-tools.docs.config  :as docs.config]
+    (:require [candy.api                    :refer [return]]
+              [developer-tools.docs.config  :as docs.config]
               [developer-tools.docs.helpers :as docs.helpers]
               [io.api                       :as io]
-              [mid-fruits.candy             :refer [return]]
               [mid-fruits.vector            :as vector]))
 
 
