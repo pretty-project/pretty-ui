@@ -33,10 +33,10 @@
 /***** Element debug *****/
 
 /* Az .e-element::after pszeudóelem használatával az egyes elemeken
- * az x-debug animáció jelzi azok újrarenderelődését */
+ * az e-debug animáció jelzi azok újrarenderelődését */
 
 /*
-@keyframes x-debug {
+@keyframes e-debug {
   from { transform: scale(1) }
   to   { transform: scale(0) }}
 
@@ -44,7 +44,7 @@
   animation-duration: .3s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
-  animation-name: x-debug;
+  animation-name: e-debug;
   background-color: rgba(200, 50, 50, .1);
   height: 100%;
   left: 0;
@@ -2908,11 +2908,11 @@ body {
 
 .e-row--body {
   display: flex;
-  /* - Az x-row--body elem ugyanolyan magas kell legyen, mint az x-row elem, hogy minden esetben
+  /* - Az e-row--body elem ugyanolyan magas kell legyen, mint az e-row elem, hogy minden esetben
    *   megfelelően működjön a vertikális igazítás!
-   * - Ha az x-row komponens {:style {...}} tulajdonságával beállítod az x-row elem magasságát,
+   * - Ha az e-row komponens {:style {...}} tulajdonságával beállítod az e-row elem magasságát,
    *   és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
-   *   a tartalom magassága kevesebb, mint az x-row elem beállított magassága, akkor a {height: 100%}
+   *   a tartalom magassága kevesebb, mint az e-row elem beállított magassága, akkor a {height: 100%}
    *   tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
    *   és nem működne a tartalom középre igazítása! */
   height: 100%;
