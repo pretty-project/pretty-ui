@@ -33,6 +33,7 @@
             parent-route (uri/uri->parent-uri base-route)]
            [:router/add-route! (routes.helpers/route-id browser-id :base)
                                {:client-event   [:item-browser/handle-route! browser-id]
+                                :js-build       :app
                                 :route-parent   parent-route
                                 :restricted?    true
                                 :route-template base-route}])))
@@ -49,6 +50,7 @@
             parent-route   (uri/uri->parent-uri base-route)]
            [:router/add-route! (routes.helpers/route-id browser-id :extended)
                                {:client-event   [:item-browser/handle-route! browser-id]
+                                :js-build       :app
                                 :route-parent   parent-route
                                 :restricted?    true
                                 :route-template extended-route}])))

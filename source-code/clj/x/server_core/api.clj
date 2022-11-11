@@ -29,6 +29,7 @@
               [x.server-core.config-handler.config          :as config-handler.config]
               [x.server-core.config-handler.subs            :as config-handler.subs]
               [x.server-core.debug-handler.helpers          :as debug-handler.helpers]
+              [x.server-core.js-handler.config              :as js-handler.config]
               [x.server-core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.server-core.lifecycle-handler.subs         :as lifecycle-handler.subs]
               [x.server-core.server-handler.subs            :as server-handler.subs]
@@ -59,6 +60,9 @@
 (def get-app-config-item    config-handler.subs/get-app-config-item)
 (def get-server-config      config-handler.subs/get-server-config)
 (def get-server-config-item config-handler.subs/get-server-config-item)
+
+; x.server-core.js-handler.config
+(def DEFAULT-JS-BUILD js-handler.config/DEFAULT-JS-BUILD)
 
 ; x.server-core.debug-handler.helpers
 (def request->debug-mode debug-handler.helpers/request->debug-mode)

@@ -21,5 +21,6 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-init [:router/add-route! :page-not-found {:client-event [:views/render-error-screen! :page-not-found]
+  {:on-server-init [:router/add-route! :page-not-found {:client-event   [:views/render-error-screen! :page-not-found]
+                                                        :js-build       :app
                                                         :route-template "/page-not-found"}]})

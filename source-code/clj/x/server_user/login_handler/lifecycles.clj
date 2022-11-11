@@ -27,4 +27,5 @@
                                          :user/logout       {:route-template "/user/logout"
                                                              :post {:handler login-handler.routes/logout}}
                                          :user/login        {:client-event   [:views/render-login-screen!]
+                                                             :js-build       :app
                                                              :route-template "/login"}}]})

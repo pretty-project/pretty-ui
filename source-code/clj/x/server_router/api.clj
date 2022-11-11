@@ -33,9 +33,6 @@
 (def get-default-routes default-handler.subs/get-default-routes)
 (def get-default-route  default-handler.subs/get-default-route)
 
-; x.server-router.route-handler.config
-(def DEFAULT-JS-BUILD route-handler.config/DEFAULT-JS-BUILD)
-
 ; x.server-router.route-handler.helpers
 (def request->route-prop              route-handler.helpers/request->route-prop)
 (def request->route-template-matched? route-handler.helpers/request->route-template-matched?)
@@ -50,6 +47,6 @@
 (def get-app-domain     route-handler.subs/get-app-domain)
 (def use-app-domain     route-handler.subs/use-app-domain)
 (def get-sitemap-routes route-handler.subs/get-sitemap-routes)
-(def get-client-routes  route-handler.subs/get-client-routes)
 (def get-server-routes  route-handler.subs/get-server-routes)
+(def get-client-routes  route-handler.subs/get-client-routes)
 (def get-ordered-routes route-handler.subs/get-ordered-routes)

@@ -26,9 +26,9 @@
 ;
 ; Bizonyos esetekben szükséges lehet a kliens-oldalon megállapítani, hogy egy
 ; új útvonalat konfliktus nélkül képes-e hozzáadni a rendszerhez.
-; Pl. új aloldal létrehozásakor
-; Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
-; hogy az megválaszolja, hogy konfliktus nélkül hozzáadható-e az új útvonal.
+; Pl.: Új aloldal létrehozásakor
+;      Ilyen esetben a hozzáadandó útvonalat szükséges elküldeni a szerver számára,
+;      hogy az megválaszolja, hogy konfliktus nélkül hozzáadható-e az új útvonal.
 
 
 
@@ -165,7 +165,8 @@
 ;; -- {:js-build "..."} tulajdonság használata --------------------------------
 ;; ----------------------------------------------------------------------------
 
-; A {:js-build "..."} tulajdonság átadásával az alapbeállítástól eltérő JS build is használható.
+; A {:js-build "..."} tulajdonság megadásával a rendszer a body komponensben
+; elhelyezi a megadott build-et kiszolgáló js fájlt.
 (x.core/reg-lifecycles! ::lifecycles
   {:on-server-boot {:dispatch-n [[:router/add-route! {:route-template "/my-route"
                                                       :get {:handler #(my-handler %)}
@@ -190,7 +191,8 @@
                                                       :restricted? true}]
                                  [:router/add-route! {:route-template "/our-route"
                                                       :client-event [:render-our-view!]
-                                                      :restricted? true}]]}})
+                                                      :restricted? true
+                                                      :js-build :my-build}]]}})
 
 
 

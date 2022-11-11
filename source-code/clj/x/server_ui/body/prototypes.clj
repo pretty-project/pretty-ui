@@ -37,5 +37,5 @@
   (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config body-props
               {:app-build      (x.core/app-build)
-               :js-build       (x.router/request->route-prop       request :js-build x.router/DEFAULT-JS-BUILD)
+               :js-build       (x.router/request->route-prop       request :js-build x.core/DEFAULT-JS-BUILD)
                :selected-theme (x.user/request->user-settings-item request :selected-theme)})))

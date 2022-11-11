@@ -13,15 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.helpers
-    (:require [mid-fruits.candy                     :refer [return]]
-              [mid-fruits.string                    :as string]
-              [mid-fruits.vector                    :as vector]
-              [mid-fruits.uri                       :as uri]
-              [re-frame.api                         :as r]
-              [server-fruits.http                   :as http]
-              [x.mid-router.route-handler.helpers   :as route-handler.helpers]
-              [x.server-router.route-handler.config :as route-handler.config]
-              [x.server-user.api                    :as x.user]))
+    (:require [mid-fruits.candy                   :refer [return]]
+              [mid-fruits.uri                     :as uri]
+              [re-frame.api                       :as r]
+              [server-fruits.http                 :as http]
+              [x.mid-router.route-handler.helpers :as route-handler.helpers]
+              [x.server-user.api                  :as x.user]))
 
 
 
@@ -39,7 +36,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn route-props->route-data
+(defn route-props->destructed-route
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) route-props
@@ -48,7 +45,7 @@
   ;   :route-template (string)}
   ;
   ; @example
-  ;  (route-handler.helpers/route-props->route-data {:route-template "/my-route" :get (fn [request] ...)})
+  ;  (route-props->destructed-route {:route-template "/my-route" :get (fn [request] ...)})
   ;  =>
   ;  ["/my-route" {:get (fn [request] ...)}]
   ;
@@ -66,8 +63,8 @@
   ; @param (map) routes
   ;
   ; @example
-  ;  (route-handler.helpers/routes->destructed-routes {:my-route   {:route-template "/my-route"   :get (fn [request] ...)}
-  ;                                                    :your-route {:route-template "/your-route" :get (fn [request] ...)}})
+  ;  (routes->destructed-routes {:my-route   {:route-template "/my-route"   :get (fn [request] ...)}
+  ;                              :your-route {:route-template "/your-route" :get (fn [request] ...)}})
   ;  =>
   ;  [["/my-route"   {:get (fn [request] ...)}]]
   ;   ["/your-route" {:get (fn [request] ...)}]]
@@ -77,7 +74,7 @@
   (letfn [(f [destructed-routes route-id {:keys [route-template] :as route-props}]
              (if (route-conflict? destructed-routes route-template)
                  (return          destructed-routes)
-                 (let [route-data (route-props->route-data route-props)]
+                 (let [route-data (route-props->destructed-route route-props)]
                       (conj destructed-routes route-data))))]
          (reduce-kv f [] routes)))
 
@@ -107,14 +104,12 @@
    ; ... és ha NEM talál az útvonalkezelőben ilyen útvonalat (pl. 404), akkor visszatér
    ;     az esetlegesen átadott default-value paraméterrel.
    ;
-   ; A request->route-prop függvény először az útvonalkezelő szerver-oldali, majd a kliens-oldali
-   ; útvonalain végigiterálva keres egyező útvonalat.
+   ; XXX#7708 (source-code/clj/x/server_router/README.md)
    (let [route-path (http/request->route-path request)]
-        (letfn [(f [[x {:keys [route-template] :as route-props}]]
+        (letfn [(f [[route-template route-props :as destructed-route]]
                    (if (uri/path->match-template? route-path route-template)
                        (prop-key route-props)))]
-               (or (some f @(r/subscribe [:router/get-server-routes]))
-                   (some f @(r/subscribe [:router/get-client-routes]))
+               (or (some f @(r/subscribe [:router/get-cached-routes]))
                    (return default-value))))))
 
 (defn request->route-template-matched?

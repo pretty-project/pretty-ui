@@ -158,7 +158,7 @@
   ;
   ; @return (boolean)
   [route-string]
-  (string/starts-with? route-string "/@app-home"))
+  (string/contains-part? route-string "/@app-home"))
 
 (defn resolve-variable-route-string
   ; @param (string) route-string
@@ -171,5 +171,4 @@
   ;
   ; @return (boolean)
   [route-string app-home]
-  (-> route-string (string/not-starts-with! "/@app-home")
-                   (string/starts-with!        app-home)))
+  (string/replace-part route-string "/@app-home" (string/starts-with! app-home "/")))

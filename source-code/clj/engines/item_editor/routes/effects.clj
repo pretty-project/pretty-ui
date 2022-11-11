@@ -33,6 +33,7 @@
             extended-route (str            base-route "/:item-id/edit")]
            [:router/add-route! (routes.helpers/route-id editor-id :extended)
                                {:client-event   [:item-editor/handle-route! editor-id]
+                                :js-build       :app
                                 :restricted?    true
                                 ;:route-parent   base-route
                                 :route-template extended-route}])))
@@ -48,5 +49,6 @@
             creator-route (str            base-route "/create")]
            [:router/add-route! (routes.helpers/route-id editor-id :creator)
                                {:client-event   [:item-editor/handle-route! editor-id]
+                                :js-build       :app
                                 :restricted?    true
                                 :route-template creator-route}])))

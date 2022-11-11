@@ -33,5 +33,6 @@
             extended-route (str            base-route "/:item-id")]
            [:router/add-route! (routes.helpers/route-id handler-id :extended)
                                {:client-event   [:item-handler/handle-route! handler-id]
+                                :js-build       :app
                                 :restricted?    true
                                 :route-template extended-route}])))

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.subs
-    (:require [re-frame.api                          :as r :refer [r]]
+    (:require [mid-fruits.candy                      :refer [return]]
+              [re-frame.api                          :as r :refer [r]]
               [x.mid-router.route-handler.subs       :as route-handler.subs]
               [x.server-router.route-handler.helpers :as route-handler.helpers]))
 
@@ -41,7 +42,7 @@
  ;
  ; @return (strings in vector)
  [db _]
- (get-in db [:router :sitemap-handler/data-items]))
+ (get-in db [:router :sitemap-handler/routes]))
 
 (defn get-server-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,6 +63,16 @@
   ; @return (map)
   [db _]
   (get-in db [:router :route-handler/client-routes]))
+
+(defn get-cached-routes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @usage
+  ;  (r get-cached-routes db)
+  ;
+  ; @return (map)
+  [db _]
+  (get-in db [:router :route-handler/cached-routes]))
 
 (defn get-destructed-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -113,6 +124,10 @@
 ; @usage
 ;  [:router/get-client-routes]
 (r/reg-sub :router/get-client-routes get-client-routes)
+
+; @usage
+;  [:router/get-cached-routes]
+(r/reg-sub :router/get-cached-routes get-cached-routes)
 
 ; @usage
 ;  [:router/get-ordered-routes]

@@ -32,5 +32,6 @@
       (let [base-route (uri/valid-path base-route)]
            [:router/add-route! (routes.helpers/route-id lister-id :base)
                                {:client-event   [:item-lister/handle-route! lister-id]
+                                :js-build       :app
                                 :restricted?    true
                                 :route-template base-route}])))

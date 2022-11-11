@@ -29,9 +29,9 @@
   ;  (html [:head] [:body])
   [head body]
   ; XXX#7659 (source-code/cljs/x/app_environment/scroll_prohibitor/README.md)
-  (html5 {:data-hide-scrollbar true
-          :id    "x-document-element"
+  (html5 {:data-hide-scrollbar  "true"
           :data-scroll-disabled "true"
-          :style "overflow-y: hidden"}
+          :id                   "x-document-element"
+          :style                "overflow-y: hidden"}
          (param head)
          (param body)))

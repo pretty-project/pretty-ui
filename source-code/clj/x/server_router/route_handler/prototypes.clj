@@ -32,20 +32,20 @@
   ;  {:restricted? (boolean)(opt)}
   ;
   ; @example
-  ;  (route-handler.prototypes/handler-prototype (fn [] ...) {...})
+  ;  (handler-prototype (fn [] ...) {...})
   ;  =>
   ;  {:handler (fn [] ...)}
   ;
   ; @example
-  ;  (route-handler.prototypes/handler-prototype {:handler (fn [] ...)} {...})
+  ;  (handler-prototype {:handler (fn [] ...)} {...})
   ;  =>
   ;  {:handler (fn [] ...)}
   ;
   ; @return (map)
   ;  {:handler (function)}
   [handler {:keys [restricted?]}]
-  ; Ha az útvonal {:restricted? true} beállítással lett hozzádva, akkor a handler függvényt
-  ; körbeveszi a route-authenticator függvénnyel.
+  ; Ha az útvonal {:restricted? true} beállítással lett hozzádva, akkor a handler
+  ; függvényt szükséges körbevenni a route-authenticator függvénnyel.
   (if restricted? (cond (fn?  handler) (return {:handler (route-handler.helpers/route-authenticator           handler)})
                         (map? handler) (assoc   :handler (route-handler.helpers/route-authenticator (:handler handler))))
                   (cond (fn?  handler) (return {:handler handler})
@@ -63,12 +63,11 @@
   ;
   ; @return (map)
   ;  {:get (map)
-  ;   :js-build (keyword)
   ;   :post (map)
   ;   :route-parent (string)}
   [db [_ _ {:keys [get post restricted? route-parent] :as route-props}]]
   (let [app-home (r x.core/get-app-config-item db :app-home)]
-       (merge {:js-build route-handler.config/DEFAULT-JS-BUILD}
+       (merge {}
               (param route-props)
               (if route-parent {:route-parent (route-handler.helpers/resolve-variable-route-string route-parent app-home)})
               (if get          {:get          (handler-prototype get  {:restricted? restricted?})})

@@ -39,6 +39,6 @@
   (let [app-config @(r/subscribe [:core/get-app-config])]
        (merge app-config head-props
               {:app-build         (x.core/app-build)
-               :js-build          (x.router/request->route-prop       request :js-build x.router/DEFAULT-JS-BUILD)
+               :js-build          (x.router/request->route-prop       request :js-build x.core/DEFAULT-JS-BUILD)
                :crawler-rules     (x.environment/crawler-rules        request)
                :selected-language (x.user/request->user-settings-item request :selected-language)})))

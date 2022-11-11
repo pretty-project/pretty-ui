@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.events
-    (:require [mid-fruits.candy                         :refer [param return]]
-              [mid-fruits.map                           :as map]
+    (:require [mid-fruits.candy                         :refer [return]]
               [mid-fruits.vector                        :as vector]
               [re-frame.api                             :as r :refer [r]]
               [x.server-router.route-handler.config     :as route-handler.config]
@@ -36,12 +35,28 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [route-template]}]]
-  (update-in db [:router :sitemap-handler/data-items] vector/conj-item route-template))
+  (update-in db [:router :sitemap-handler/routes] vector/conj-item route-template))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn cache-route-props!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (map) route-props
+  ;
+  ; @return (map)
+  [db [_ route-id route-props]]
+  ; XXX#7708 (source-code/clj/x/server_router/README.md)
+  (let [cached-routes    (r route-handler.subs/get-cached-routes db)
+        destructed-route (-> route-props (select-keys route-handler.config/CACHED-ROUTE-KEYS)
+                                         (route-handler.helpers/route-props->destructed-route))]
+       (assoc-in db [:router :route-handler/cached-routes]
+                    (-> cached-routes (vector/conj-item destructed-route)
+                                      (route-handler.helpers/destructed-routes->ordered-routes)))))
 
 (defn store-server-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -53,6 +68,7 @@
   ;
   ; @return (map)
   [db [_ route-id {:keys [get post] :as route-props}]]
+  ; XXX#7706 (source-code/clj/x/server_router/README.md)
   (if (or get post)
       (assoc-in db [:router :route-handler/server-routes route-id]
                    (select-keys route-props route-handler.config/SERVER-ROUTE-KEYS))
@@ -68,6 +84,7 @@
   ;
   ; @return (map)
   [db [_ route-id {:keys [client-event on-leave-event] :as route-props}]]
+  ; XXX#7707 (source-code/clj/x/server_router/README.md)
   (if (or client-event on-leave-event)
       (assoc-in db [:router :route-handler/client-routes route-id]
                    (select-keys route-props route-handler.config/CLIENT-ROUTE-KEYS))
@@ -78,12 +95,17 @@
   ;
   ; @param (keyword) route-id
   ; @param (map) route-props
+  ;  {:add-to-sitemap? (boolean)(opt)}
   ;
   ; @return (map)
   [db [_ route-id {:keys [add-to-sitemap?] :as route-props}]]
-  (as-> db % (r store-server-route-props! % route-id route-props)
-             (r store-client-route-props! % route-id route-props)
-             (if-not add-to-sitemap? % (r add-route-to-sitemap! % route-id route-props))))
+  (if add-to-sitemap? (as-> db % (r add-route-to-sitemap!     % route-id route-props)
+                                 (r store-server-route-props! % route-id route-props)
+                                 (r store-client-route-props! % route-id route-props)
+                                 (r cache-route-props!        % route-id route-props))
+                      (as-> db % (r store-server-route-props! % route-id route-props)
+                                 (r store-client-route-props! % route-id route-props)
+                                 (r cache-route-props!        % route-id route-props))))
 
 
 
@@ -97,7 +119,6 @@
   ;    Default: false
   ;   :get (function or map)(opt)
   ;   :js-build (keyword)(opt)
-  ;    Default: route-handler.config/DEFAULT-JS-BUILD
   ;   :post (function or map)(opt)
   ;   :restricted? (boolean)(opt)
   ;    Default: false
@@ -120,19 +141,20 @@
   ;  (r add-route! db :my-route {:route-template "/my-route"
   ;                              :get (fn [request] ...)})
   ;
+  ; @usage
+  ;  (r add-route! db :my-route {:route-template "/my-route"
+  ;                              :client-event [:my-event]
+  ;                              :js-build :my-build})
+  ;
   ; @return (map)
   [db [_ route-id route-props]]
   (let [route-props (r route-handler.prototypes/route-props-prototype db route-id route-props)]
        (if-let [route-template (get route-props :route-template)]
                ; If route-props contains route-template ...
-               (if (route-handler.helpers/variable-route-string? route-template)
-                   ; If route-template is variable ...
-                   (let [app-home       (r route-handler.subs/get-app-home db)
-                         route-template (route-handler.helpers/resolve-variable-route-string route-template app-home)
-                         route-props    (assoc route-props :route-template route-template)]
-                        (r store-route-props! db route-id route-props))
-                   ; If route-template is static ...
-                   (r store-route-props! db route-id route-props))
+               (let [app-home       (r route-handler.subs/get-app-home db)
+                     route-template (route-handler.helpers/resolve-variable-route-string route-template app-home)
+                     route-props    (assoc route-props :route-template route-template)]
+                    (r store-route-props! db route-id route-props))
                ; If route-props NOT contains route-template ...
                (r store-route-props! db route-id route-props))))
 

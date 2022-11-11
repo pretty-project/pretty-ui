@@ -12,15 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-ui.loading-screen.views)
+(ns x.server-core.js-handler.config
+    (:require [css.api :as css]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn view
-  ; @param (map) request
-  ; @param (hiccup) content
-  [_ content]
-  [:div {:id :x-loading-screen :data-nosnippet "true"} content])
+; @constant (keyword)
+(def DEFAULT-JS-BUILD :app)
