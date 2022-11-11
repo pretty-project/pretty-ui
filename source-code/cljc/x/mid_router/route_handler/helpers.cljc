@@ -29,14 +29,18 @@
   ; @param (string) route-template
   ;
   ; @example
-  ;  (route-conflict? [[...] ["/my-route" {...}] [...] [...] [...]] "/my-route")
+  ;  (route-conflict? [[...]
+  ;                    ["/my-route" {...}]
+  ;                    [...]]
+  ;                   "/my-route")
   ;  =>
   ;  true
   ;
   ; @return (boolean)
   [destructed-routes route-template]
   ; Ha két útvonal {:route-template "..."} tulajdonságának értéke megegyezik, akkor az útvonal-konfliktusnak számít!
-  (some #(= (first %) route-template) destructed-routes))
+  (letfn [(f [%] (= (first %) route-template))]
+         (some f destructed-routes)))
 
 (defn route-template-parts-ordered?
   ; WARNING! NON-PUBLIC! DO NOT USE!

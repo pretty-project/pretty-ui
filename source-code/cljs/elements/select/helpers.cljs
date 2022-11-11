@@ -68,7 +68,7 @@
   ;
   ; @return (boolean)
   [select-id {:keys [option-label-f] :as select-props} option]
-  ; XXX#51910 (elements.combo-box.helpers)
+  ; XXX#0714 (source-code/cljs/elements/combo_box/helpers.cljs)
   (let [field-content (text-field.helpers/get-field-content :elements.select/option-field)
         option-label  (option-label-f option)]
        (and (string/not-pass-with? (x.components/content option-label) field-content {:case-sensitive? false})

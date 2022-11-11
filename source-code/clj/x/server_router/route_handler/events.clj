@@ -27,6 +27,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn add-route-to-sitemap!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) route-id
+  ; @param (map) route-props
+  ;  {:route-template (string)}
+  ;
+  ; @return (map)
+  [db [_ _ {:keys [route-template]}]]
+  (update-in db [:router :sitemap-handler/data-items] vector/conj-item route-template))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn store-server-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,17 +73,6 @@
                    (select-keys route-props route-handler.config/CLIENT-ROUTE-KEYS))
       (return   db)))
 
-(defn add-route-to-sitemap!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) route-id
-  ; @param (map) route-props
-  ;  {:route-template (string)}
-  ;
-  ; @return (map)
-  [db [_ _ {:keys [route-template]}]]
-  (update-in db [:router :sitemap-handler/data-items] vector/conj-item route-template))
-
 (defn store-route-props!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,6 +84,11 @@
   (as-> db % (r store-server-route-props! % route-id route-props)
              (r store-client-route-props! % route-id route-props)
              (if-not add-to-sitemap? % (r add-route-to-sitemap! % route-id route-props))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn add-route!
   ; @param (keyword)(opt) route-id

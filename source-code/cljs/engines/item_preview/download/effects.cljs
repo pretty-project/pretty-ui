@@ -36,7 +36,7 @@
                 validator-f #(r download.validators/request-item-response-valid? db preview-id %)]
                {:db       (r download.events/request-item! db preview-id)
                 :dispatch [:pathom/send-query! (r core.subs/get-request-id db preview-id)
-                                               ; XXX#4057 (engines.item-handler.download.effects)
+                                               ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                                {:on-stalled [:item-preview/receive-item!     preview-id]
                                                 :on-failure [:item-preview/set-engine-error! preview-id :failed-to-request-item]
                                                 :query query :validator-f validator-f}]}))))

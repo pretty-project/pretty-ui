@@ -138,7 +138,7 @@
   ;
   ; @return (map)
   [db _]
-  ; XXX#0781 (x.app-router.route-handler.effects)
+  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
   ; Az útvonal használata előtt az útvonal-kezelőt {:swap-mode? true} állapotba állítja,
   ; ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
   (assoc-in db [:router :route-handler/meta-items :swap-mode?] true))
@@ -148,7 +148,7 @@
   ;
   ; @return (map)
   [db _]
-  ; XXX#0781 (x.app-router.route-handler.effects)
+  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
   (dissoc-in db [:router :route-handler/meta-items :swap-mode?]))
 
 

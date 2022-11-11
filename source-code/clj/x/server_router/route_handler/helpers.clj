@@ -110,7 +110,7 @@
    ; A request->route-prop függvény először az útvonalkezelő szerver-oldali, majd a kliens-oldali
    ; útvonalain végigiterálva keres egyező útvonalat.
    (let [route-path (http/request->route-path request)]
-        (letfn [(f [[_ {:keys [route-template] :as route-props}]]
+        (letfn [(f [[x {:keys [route-template] :as route-props}]]
                    (if (uri/path->match-template? route-path route-template)
                        (prop-key route-props)))]
                (or (some f @(r/subscribe [:router/get-server-routes]))

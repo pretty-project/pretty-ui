@@ -40,7 +40,7 @@
   ;
   ; @return (metamorphic-event)
   [db [_ editor-id server-response]]
-  ; XXX#6077 (engines.item-editor.update.subs)
+  ; XXX#6077 (source-code/cljs/engines/item_editor/update/subs.cljs)
   (if-let [on-saved (r body.subs/get-body-prop db editor-id :on-saved)]
           (let [saved-item (r get-mutation-answer db editor-id :save-item! server-response)]
                (r/metamorphic-event<-params on-saved (map/remove-namespace saved-item)))))

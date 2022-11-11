@@ -37,7 +37,7 @@
   ; @param (map)(opt) options
   ;  {:prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509 (mid-fruits.string)
+  ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
   ; @example
@@ -56,7 +56,7 @@
   ; @param (map)(opt) options
   ;  {:prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509 (mid-fruits.string)
+  ;    XXX#4509 
   ;   :suffix (string)(opt)}
   ;
   ; @example

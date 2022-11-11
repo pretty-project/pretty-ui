@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; XXX#5068 (engines.item-handler.routes.effects)
+      ; XXX#5068 (source-code/cljs/engines/item_handler/routes/effects.cljs)
       (let [body-did-mount? (r body.subs/body-did-mount?       db editor-id)
             on-route        (r transfer.subs/get-transfer-item db editor-id :on-route)
             route-title     (r transfer.subs/get-transfer-item db editor-id :route-title)]

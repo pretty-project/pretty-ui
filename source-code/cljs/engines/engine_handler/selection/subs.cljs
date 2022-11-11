@@ -30,7 +30,7 @@
   ;
   ; @return (strings in vector)
   [db [_ engine-id]]
-  ; XXX#8891 (cljs/engines/engine-handler/selection/README.md)
+  ; XXX#8891 (source-code/cljs/engines/engine_handler/selection/README.md)
   ; Az export-selection függvény visszatérési értéke a kijelölt listaelemek
   ; azonosítói egy vektorban felsorolva.
   (r core.subs/get-meta-item db engine-id :selected-items))
@@ -42,7 +42,7 @@
   ;
   ; @return (string)
   [db [_ engine-id]]
-  ; XXX#8891 (cljs/engines/engine-handler/selection/README.md)
+  ; XXX#8891 (source-code/cljs/engines/engine_handler/selection/README.md)
   (let [exported-selection (r export-selection db engine-id)]
        (first exported-selection)))
 

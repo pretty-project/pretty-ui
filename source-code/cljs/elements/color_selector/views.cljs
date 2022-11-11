@@ -77,7 +77,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
-  ; XXX#0714 (elements.button.views)
+  ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
   ; A color-selector elem alapkomponense a button elem.
   ; A color-selector elem további paraméterezését a button elem dokumentációjában találod.
   ;

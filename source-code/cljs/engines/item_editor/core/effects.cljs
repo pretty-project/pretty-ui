@@ -32,7 +32,7 @@
   ; @usage
   ;  [:item-editor/edit-item! :my-editor "my-item"]
   (fn [{:keys [db]} [_ editor-id item-id]]
-      ; XXX#5575 (engines.item-handler.core.effects)
+      ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               (let [edit-route (r routes.subs/get-edit-route db editor-id item-id)]
                    {:dispatch [:router/go-to! edit-route]})

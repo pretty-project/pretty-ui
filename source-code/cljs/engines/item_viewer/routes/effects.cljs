@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) viewer-id
   (fn [{:keys [db]} [_ viewer-id]]
-      ; XXX#5068 (engines.item-handler.routes.effects)
+      ; XXX#5068 (source-code/cljs/engines/item_handler/routes/effects.cljs)
       (let [body-did-mount? (r body.subs/body-did-mount? db viewer-id)
             on-route        (r transfer.subs/get-transfer-item db viewer-id :on-route)
             route-title     (r transfer.subs/get-transfer-item db viewer-id :route-title)]

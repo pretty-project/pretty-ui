@@ -58,7 +58,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; XXX#5067 (engines.item-editor.core.events)
+  ; XXX#5067 (source-code/cljs/engines/item_editor/core/events.cljs)
   (let [default-content (r body.subs/get-body-prop db editor-id :default-content)
         content-path    (r body.subs/get-body-prop db editor-id :content-path)]
        (update-in db content-path map/reversed-merge default-content)))

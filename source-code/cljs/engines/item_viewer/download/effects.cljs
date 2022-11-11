@@ -35,7 +35,7 @@
            {:db       (r download.events/request-item! db viewer-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                            {:display-progress? true
-                                            ; XXX#4057 (engines.item-handler.download.effects)
+                                            ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                             :on-stalled [:item-viewer/receive-item!     viewer-id]
                                             :on-failure [:item-viewer/set-engine-error! viewer-id :failed-to-request-item]
                                             :query query :validator-f validator-f}]})))

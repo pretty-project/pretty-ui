@@ -67,7 +67,7 @@
                           [multi-combo-box-field                  box-id box-props]])
 
 (defn element
-  ; XXX#0711 (elements.text-field.views)
+  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
   ; A multi-combo-box elem alapkomponense a text-field elem.
   ; A multi-combo-box elem további paraméterezését a text-field elem dokumentációjában találod.
   ;

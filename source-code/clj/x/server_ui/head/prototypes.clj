@@ -32,8 +32,8 @@
   ;
   ; @return (map)
   ;  {:app-build (string)
-  ;   :js-build (keyword)
   ;   :crawler-rules (string)
+  ;   :js-build (keyword)
   ;   :selected-language (keyword)}
   [request head-props]
   (let [app-config @(r/subscribe [:core/get-app-config])]

@@ -33,7 +33,7 @@
   ; @usage
   ;  [:item-browser/browse-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
-      ; XXX#5575 (engines.item-handler.core.effects)
+      ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db browser-id)]
               (let [item-route (r routes.subs/get-item-route db browser-id item-id)]
                    {:dispatch [:router/go-to! item-route]})

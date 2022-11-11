@@ -38,7 +38,7 @@
        ;(reitit-ring/router ordered-routes)
 
        ; Enable route conflicts handling:
-       ; XXX#4005
+       ; XXX#4006 (source-code/cljs/x/app_router/route_handler/subs.cljs)
        (reitit-ring/router ordered-routes {:conflicts nil})))
 
 (defn ring-handler

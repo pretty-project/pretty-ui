@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn element
-  ; XXX#0711 (elements.text-field.views)
+  ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
   ; A password-field elem alapkomponense a text-field elem.
   ; A password-field elem további paraméterezését a text-field elem dokumentációjában találod.
   ;

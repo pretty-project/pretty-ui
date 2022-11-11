@@ -64,7 +64,7 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  ; XXX#5067 (engines.item-handler.core.events)
+  ; XXX#5067 (source-code/cljs/engines/item_handler/core/events.cljs)
   (let [default-item (r body.subs/get-body-prop db handler-id :default-item)
         item-path    (r body.subs/get-body-prop db handler-id :item-path)]
        (update-in db item-path map/reversed-merge default-item)))

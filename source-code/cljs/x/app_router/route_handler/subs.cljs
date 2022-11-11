@@ -77,7 +77,7 @@
   ;
   ; @return (?)
   [db _]
-  ; XXX#4005
+  ; XXX#4006 (source-code/clj/x/server_core/router_handler/helpers.clj)
   ; A szerver-oldali útvonal-kezelőhöz hasonlóan a kliens-oldalon is szükséges
   ; átadni a {:conflicts nil} beállítást.
   (let [ordered-routes (r get-ordered-routes db)]
@@ -109,7 +109,7 @@
   ;
   ; @return (boolean)
   [db _]
-  ; XXX#0781 (x.app-router.route-handler.effects)
+  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
   (get-in db [:router :route-handler/meta-items :swap-mode?]))
 
 

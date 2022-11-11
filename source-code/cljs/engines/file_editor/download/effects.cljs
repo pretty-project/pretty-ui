@@ -35,7 +35,7 @@
            {:db       (r download.events/request-content! db editor-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
                                            {:display-progress? true
-                                            ; XXX#4057 (engines.item-handler.download.effects)
+                                            ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                             :on-stalled [:file-editor/receive-content!  editor-id]
                                             :on-failure [:file-editor/set-engine-error! editor-id :failed-to-request-content]
                                             :query query :validator-f validator-f}]})))

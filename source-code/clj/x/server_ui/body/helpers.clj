@@ -51,7 +51,7 @@
 
 (defn include-js?
   ; @param (map) request
-  ; @param (map) head-props
+  ; @param (map) body-props
   ;  {:js-build (keyword)}
   ; @param (map) js-props
   ;  {:js-build (keyword)(opt)
@@ -59,7 +59,7 @@
   ;
   ; @return (boolean)
   [request {:keys [js-build]} {:keys [route-template] :as js-props}]
-  ; XXX#1720
+  ; XXX#1720 (source-code/clj/x/server_ui/head/helpers.clj)
   (and (or (-> js-props :js-build nil?)
            (-> js-props :js-build (= js-build)))
        (or (-> js-props :route-template nil?)

@@ -200,5 +200,5 @@
 ; Az {:add-to-sitemap? true} beállítás használatával az útvonal hozzáadódik
 ; a /sitemap.xml fájlban kiszolgált webhelytérképhez.
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:router/add-route! {:route-template "/my-route"}
-                                       :add-to-sitemap? true]})
+  {:on-server-boot [:router/add-route! {:route-template "/my-route"
+                                        :add-to-sitemap? true}]})

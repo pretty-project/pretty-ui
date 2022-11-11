@@ -30,7 +30,7 @@
   ; @usage
   ;  [:item-viewer/view-item! :my-viewer "my-item"]
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      ; XXX#5575 (engines.item-handler.core.effects)
+      ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db viewer-id)]
               ; A)
               (let [item-route (r routes.subs/get-item-route db viewer-id item-id)]

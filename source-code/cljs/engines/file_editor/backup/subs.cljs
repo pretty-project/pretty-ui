@@ -47,9 +47,9 @@
   ;
   ; @return (boolean)
   [db [_ editor-id]]
-  ; XXX#6000 (mid.forms.helpers)
-  ; XXX#6001 (mid.forms.helpers)
-  ; XXX#5671 (engines.item-editor.backup.subs)
+  ; XXX#6000 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#6001 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#5671 (source-code/cljs/engines/item_editor/backup/subs.cljs)
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-content (r core.subs/get-current-content db editor-id)
                 backup-content  (r get-backup-content            db editor-id)]
@@ -64,9 +64,9 @@
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
-  ; XXX#6000 (mid.forms.helpers)
-  ; XXX#6001 (mid.forms.helpers)
-  ; XXX#5672 (engines.item-editor.backup.subs)
+  ; XXX#6000 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#6001 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#5672 (source-code/cljs/engines/item_editor/backup/subs.cljs)
   (if-let [data-received? (r download.subs/data-received? db editor-id)]
           (let [current-content (r core.subs/get-current-content db editor-id)
                 backup-content  (r get-backup-content            db editor-id)]

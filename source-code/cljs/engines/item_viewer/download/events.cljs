@@ -40,7 +40,7 @@
   ;
   ; @return (map)
   [db [_ viewer-id]]
-  ; XXX#3005 (engines.item-handler.download.events)
+  ; XXX#3005 (source-code/cljs/engines/item_handler/download/events.cljs)
   (r core.events/reset-downloads! db viewer-id))
 
 (defn store-received-item!

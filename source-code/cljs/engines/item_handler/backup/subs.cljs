@@ -40,9 +40,9 @@
   ;
   ; @return (boolean)
   [db [_ handler-id]]
-  ; XXX#6000 (mid.forms.helpers)
-  ; XXX#6001 (mid.forms.helpers)
-  ; XXX#5671 (engines.item-handler.backup.subs)
+  ; XXX#6000 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#6001 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#5671 (source-code/cljs/engines/item_editor/backup/subs.cljs)
   ; Az item-changed? függvény összehasonlítja az elem kezdeti értékéről készült
   ; másolatot az elem jelenlegi állapotával.
   (if-let [data-received? (r download.subs/data-received? db handler-id)]
@@ -60,9 +60,9 @@
   ;
   ; @return (boolean)
   [db [_ handler-id change-keys]]
-  ; XXX#6000 (mid.forms.helpers)
-  ; XXX#6001 (mid.forms.helpers)
-  ; XXX#5672 (engines.item-handler.backup.subs)
+  ; XXX#6000 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#6001 (source-code/cljc/mid/forms/helpers.cljc)
+  ; XXX#5672 (source-code/cljs/engines/item_editor/backup/subs.cljs)
   ; A form-changed? függvény összehasonlítja az elem {:change-keys [...]} paraméterként
   ; átadott kulcsainak értékeit az elemről tárolt másolat azonos értékeivel.
   (if-let [data-received? (r download.subs/data-received? db handler-id)]
