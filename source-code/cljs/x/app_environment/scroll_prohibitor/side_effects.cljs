@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-prohibitor.side-effects
-    (:require [mid-fruits.candy                            :refer [param]]
+    (:require [candy.api                                   :refer [param]]
               [css.api                                     :as css]
               [dom.api                                     :as dom]
               [math.api                                    :as math]

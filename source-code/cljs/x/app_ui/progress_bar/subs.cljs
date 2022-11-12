@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.progress-bar.subs
-    (:require [mid-fruits.candy :refer [param return]]
-              [re-frame.api     :as r :refer [r]]
-              [x.app-core.api   :as x.core]))
+    (:require [candy.api      :refer [return]]
+              [re-frame.api   :as r :refer [r]]
+              [x.app-core.api :as x.core]))
 
 
 

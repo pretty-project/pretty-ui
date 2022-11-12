@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.core.events
-    (:require [mid-fruits.candy                   :refer [return]]
+    (:require [candy.api                          :refer [return]]
               [engines.engine-handler.core.events :as core.events]
               [engines.item-handler.backup.events :as backup.events]
               [engines.item-handler.body.subs     :as body.subs]

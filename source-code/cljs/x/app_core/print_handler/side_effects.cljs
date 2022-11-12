@@ -14,6 +14,7 @@
 
 (ns x.app-core.print-handler.side-effects
     (:require [mid-fruits.string               :as string]
+              [syntax.api                      :as syntax]
               [time.api                        :as time]
               [x.app-core.print-handler.config :as print-handler.config]
               [x.app-core.print-handler.state  :as print-handler.state]))
@@ -68,7 +69,7 @@
   (-> (time/elapsed)
       (time/ms->time)
       (str " elapsed")
-      (string/bracket)))
+      (syntax/bracket)))
 
 (defn console
   ; @param (string) group-label

@@ -1135,54 +1135,6 @@
                               (inc dex))))]
                    (f "" 0))))))
 
-(defn paren
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (paren "420")
-  ;  =>
-  ;  "(420)"
-  ;
-  ; @return (string)
-  [n]
-  (str (when n (str "(" n ")"))))
-
-(defn bracket
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (bracket "420")
-  ;  =>
-  ;  "[420]"
-  ;
-  ; @return (string)
-  [n]
-  (str (when n (str "[" n "]"))))
-
-(defn percent
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (percent "99.999")
-  ;  =>
-  ;  "99.999%"
-  ;
-  ; @return (string)
-  [n]
-  (str (when n (str n "%"))))
-
-(defn quotes
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (quotes "420")
-  ;  =>
-  ;  "\"420\""
-  ;
-  ; @return (string)
-  [n]
-  (str (when n (str "\"" n "\""))))
-
 (defn capitalize
   ; @param (string) n
   ;
@@ -1192,7 +1144,6 @@
   ; @return (string)
   [n]
   (-> n str string/capitalize))
-
 
 (defn uppercase
   ; @param (string) n
@@ -1237,46 +1188,6 @@
   ; @return (boolean)
   [n]
   (not= n (lowercase n)))
-
-(defn snake-case
-  ; WARNING! INCOMPLETE! DO NOT USE!
-  ;
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (snake-case "SnakeCase")
-  ;  =>
-  ;  "snake-case"
-  ;
-  ; @return (string)
-  [n]
-  (let [count (count n)]
-       (letfn [(f [result cursor]
-                  (if (= count cursor)
-                      (return result)
-                      (let [char (subs n cursor (inc cursor))]
-                           (if (= char (uppercase char))
-                               (f (str (subs n 0 cursor)
-                                       (if (not= cursor 0) "-")
-                                       (lowercase char)
-                                       (subs n (inc cursor)))
-                                  (inc cursor))
-                               (f result (inc cursor))))))]
-              (f n 0))))
-
-(defn CamelCase
-  ; WARNING! INCOMPLETE! DO NOT USE!
-  ;
-  ; @param (string) n
-  ;
-  ; @example
-  ;  (CamelCase "camel-case")
-  ;  =>
-  ;  "CamelCase"
-  ;
-  ; @return (string)
-  [n])
-  ; TODO
 
 (defn abc?
   ; @param (list of strings)

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.helpers
-    (:require [mid-fruits.candy                   :refer [return]]
+    (:require [candy.api                          :refer [return]]
               [plugins.clerk.api                  :as clerk]
               [re-frame.api                       :as r]
               [reagent.api                        :as reagent]

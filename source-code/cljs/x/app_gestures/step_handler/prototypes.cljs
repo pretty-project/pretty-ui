@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.step-handler.prototypes
-    (:require [mid-fruits.candy                   :refer [param]]
+    (:require [candy.api                          :refer [param]]
               [x.app-gestures.step-handler.config :as step-handler.config]))
 
 

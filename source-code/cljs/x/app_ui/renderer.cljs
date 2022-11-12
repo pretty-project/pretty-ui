@@ -19,7 +19,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.renderer
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [candy.api         :refer [param return]]
               [hiccup.api        :as hiccup]
               [mid-fruits.vector :as vector]
               [re-frame.api      :as r :refer [r]]

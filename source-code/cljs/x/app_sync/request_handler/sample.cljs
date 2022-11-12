@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-sync.request-handler.sample
-    (:require [mid-fruits.candy :refer [return]]
-              [re-frame.api     :as r :refer [r]]
-              [x.app-sync.api   :as x.sync]))
+    (:require [candy.api      :refer [return]]
+              [re-frame.api   :as r :refer [r]]
+              [x.app-sync.api :as x.sync]))
 
 
 

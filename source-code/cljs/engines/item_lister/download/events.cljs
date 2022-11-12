@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.events
-    (:require [mid-fruits.candy                       :refer [return]]
+    (:require [candy.api                              :refer [return]]
               [engines.engine-handler.download.events :as download.events]
               [engines.item-lister.body.subs          :as body.subs]
               [engines.item-lister.core.events        :as core.events]

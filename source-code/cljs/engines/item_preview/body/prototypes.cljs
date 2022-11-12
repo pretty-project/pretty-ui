@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-preview.body.prototypes
-    (:require [mid-fruits.candy                  :refer [param]]
+    (:require [candy.api                         :refer [param]]
               [engines.item-preview.core.helpers :as core.helpers]))
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.css-handler.helpers
-    (:require [mid-fruits.candy  :refer [return]]
+    (:require [candy.api         :refer [return]]
               [dom.api           :as dom]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]))

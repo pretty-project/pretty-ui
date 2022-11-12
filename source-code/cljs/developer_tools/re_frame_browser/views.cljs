@@ -19,6 +19,7 @@
               [mid-fruits.map                      :as map]
               [mid-fruits.pretty                   :as pretty]
               [mid-fruits.string                   :as string]
+              [syntax.api                          :as syntax]
               [mid-fruits.vector                   :as vector]
               [re-frame.api                        :as r]
               [x.app-environment.api               :as x.environment]))
@@ -236,7 +237,7 @@
        [:button {:data-clickable true :style {:display :block}
                  :on-click #(r/dispatch [:developer-tools.re-frame-browser/go-to! (vector/conj-item current-path map-key)])
                  :on-mouse-up #(x.environment/blur-element!)}
-                (cond (string? map-key) (string/quotes map-key)
+                (cond (string? map-key) (syntax/quotes map-key)
                       (nil?    map-key) (str           "nil")
                       :return           (str           map-key))]))
 
@@ -268,7 +269,7 @@
              [horizontal-line]
              (if (empty? current-item) "Empty")
              (letfn [(f [%1 %2] (conj %1 [:div (cond (nil?    %2) (str "nil")
-                                                     (string? %2) (string/quotes %2)
+                                                     (string? %2) (syntax/quotes %2)
                                                      :return      (str           %2))]))]
                     (reduce f [:div] current-item))
              [show-data]
@@ -299,7 +300,7 @@
        [:div [header (str "string, "(count current-item) " char.")]
              [toolbar go-home-icon-button go-up-icon-button remove-item-icon-button edit-item-icon-button]
              [horizontal-line]
-             [:div (string/quotes current-item)]
+             [:div (syntax/quotes current-item)]
              [edit-item]]))
 
 (defn keyword-item
