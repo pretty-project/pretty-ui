@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-router.route-handler.events
-    (:require [mid-fruits.candy                   :refer [return]]
+    (:require [candy.api                          :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
               [mid-fruits.uri                     :as uri]
               [mid-fruits.vector                  :as vector]
-              [re-frame.api                       :refer [r]]
+              [re-frame.api                       :as r :refer [r]]
               [x.app-db.api                       :as x.db]
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.subs    :as route-handler.subs]
@@ -173,3 +173,11 @@
   ; {:route-parent "..."} tulajdonság értékét.
   (if route-parent (assoc-in db [:router :route-handler/meta-items :virtual-parent] route-parent)
                    (return   db)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-event-db :router/store-current-route! store-current-route!)

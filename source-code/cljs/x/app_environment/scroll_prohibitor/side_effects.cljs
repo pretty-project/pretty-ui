@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.scroll-prohibitor.side-effects
-    (:require [css.api                                     :as css]
+    (:require [mid-fruits.candy                            :refer [param]]
+              [css.api                                     :as css]
               [dom.api                                     :as dom]
-              [mid-fruits.candy                            :refer [param]]
               [math.api                                    :as math]
               [mid-fruits.string                           :as string]
               [re-frame.api                                :as r]

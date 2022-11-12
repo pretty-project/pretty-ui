@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.events
-    (:require [engines.engine-handler.download.events :as download.events]
+    (:require [mid-fruits.candy                       :refer [return]]
+              [engines.engine-handler.download.events :as download.events]
               [engines.item-lister.body.subs          :as body.subs]
               [engines.item-lister.core.events        :as core.events]
               [engines.item-lister.download.subs      :as download.subs]
@@ -21,7 +22,6 @@
               [engines.item-lister.items.subs         :as items.subs]
               [engines.item-lister.selection.subs     :as selection.subs]
               [engines.item-lister.selection.events   :as selection.events]
-              [mid-fruits.candy                       :refer [return]]
               [mid-fruits.map                         :as map]
               [mid-fruits.vector                      :as vector]
               [re-frame.api                           :as r :refer [r]]))

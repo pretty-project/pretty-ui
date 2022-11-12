@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text.views
-    (:require [mid-fruits.candy         :refer [return]]
+    (:require [candy.api                :refer [return]]
               [elements.label.views     :as label.views]
               [elements.text.helpers    :as text.helpers]
               [elements.text.prototypes :as text.prototypes]

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text-field.prototypes
-    (:require [mid-fruits.candy            :refer [param return]]
+    (:require [candy.api                   :refer [param return]]
               [elements.input.helpers      :as input.helpers]
               [elements.text-field.helpers :as text-field.helpers]
               [mid-fruits.random           :as random]

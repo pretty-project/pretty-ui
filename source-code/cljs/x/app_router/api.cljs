@@ -18,6 +18,7 @@
               [x.app-router.route-handler.effects]
               [x.app-router.route-handler.events]
               [x.app-router.route-handler.lifecycles]
+              [x.app-router.route-handler.side-effects]
               [x.app-router.route-handler.subs :as route-handler.subs]))
 
 

@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.selection.events
-    (:require [engines.engine-handler.core.subs      :as core.subs]
+    (:require [candy.api                             :refer [return]]
+              [engines.engine-handler.core.subs      :as core.subs]
               [engines.engine-handler.items.events   :as items.events]
               [engines.engine-handler.selection.subs :as selection.subs]
-              [mid-fruits.candy                      :refer [return]]
               [mid-fruits.map                        :refer [dissoc-in]]
               [mid-fruits.vector                     :as vector]
               [re-frame.api                          :refer [r]]))

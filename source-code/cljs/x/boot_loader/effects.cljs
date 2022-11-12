@@ -71,7 +71,7 @@
   ;  [:boot-loader/init-app! #'app]
   (fn [{:keys [db]} [_ app]]
       {; 1. Az inicializálási események meghívása
-       ;    (Dispatch on-app-init events)
+       ;    (dispatch on-app-init events)
        :dispatch-n (r x.core/get-period-events db :on-app-init)
        ; 2. Az inicializálási események lefutása után az applikáció betöltésének folytatása
        :dispatch-later [{:ms 100 :dispatch [:boot-loader/boot-app! app]}]}))
@@ -84,10 +84,13 @@
   ; @usage
   ;  [:boot-loader/boot-app! #'app]
   (fn [{:keys [db]} [_ app]]
-       ; 1. Az indítási események meghívása
-       ;    (Dispatch on-app-boot events)
-      {:dispatch-n (r x.core/get-period-events db :on-app-boot)
-       ; 2. Az indítási események lefutása után az applikáció betöltésének folytatása
+      {; 1. Az aktuális útvonal tulajdonságainak eltárolása
+       ;    (szükséges elérhetővé tenni az indítási folyamat eseményei számára)
+       :fx [:router/read-current-route!]
+       ; 2. Az indítási események meghívása
+       ;    (dispatch on-app-boot events)
+       :dispatch-n (r x.core/get-period-events db :on-app-boot)
+       ; 3. Az indítási események lefutása után az applikáció betöltésének folytatása
        :dispatch-later [{:ms 100 :dispatch [:boot-loader/build-app! app]}]}))
 
 (r/reg-event-fx :boot-loader/build-app!
@@ -101,7 +104,7 @@
       {; 1. Az applikáció renderelése
        :fx [:boot-loader/render-app! app]
        ; 2. Ha a felhasználó nem vendégként lett azonosítva, akkor a bejelentkezési események meghívása
-       ;    (Dispatch on-login events)
+       ;    (dispatch on-login events)
        :dispatch-if [(r x.user/user-identified? db) [:core/login-app!]]
        ; ...
        :dispatch-later
@@ -114,10 +117,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       {; 1. Az útvonalhoz tartozó esemény meghívása
-       ;    (Dispatch the current route-event)
+       ;    (dispatch the current route-event)
        :dispatch [:router/dispatch-current-route!]
        ; 2. Az applikáció renderelése utáni események meghívása
-       ;    (Dispatch on-app-launch events)
+       ;    (dispatch on-app-launch events)
        :dispatch-n (r x.core/get-period-events db :on-app-launch)}))
 
 (r/reg-event-fx :boot-loader/app-synchronized

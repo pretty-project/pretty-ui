@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.body.prototypes
-    (:require [engines.item-lister.core.config  :as core.config]
-              [engines.item-lister.core.helpers :as core.helpers]
-              [mid-fruits.candy                 :refer [param]]))
+    (:require [mid-fruits.candy                 :refer [param]]
+              [engines.item-lister.core.config  :as core.config]
+              [engines.item-lister.core.helpers :as core.helpers]))
 
 
 

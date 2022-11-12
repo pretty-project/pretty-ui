@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.queries
-    (:require [engines.item-lister.body.subs     :as body.subs]
+    (:require [mid-fruits.candy                  :refer [return]]
+              [engines.item-lister.body.subs     :as body.subs]
               [engines.item-lister.core.subs     :as core.subs]
               [engines.item-lister.download.subs :as download.subs]
-              [mid-fruits.candy                  :refer [return]]
               [re-frame.api                      :refer [r]]))
 
 

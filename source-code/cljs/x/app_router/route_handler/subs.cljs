@@ -279,47 +279,52 @@
 
 (defn use-path-params
   ; @param (string) uri
+  ; @param (map)(opt) path-params
+  ;  A path-params paraméter hiányában a függvény az aktuális útvonalból
+  ;  származtatott útvonal-paramétereket használja behelyettesítő értékekként.
   ;
   ; @usage
-  ;  (r use-path-params db "/@app-home/my-route/:my-param/xxx")
+  ;  (r use-path-params db "/@app-home/my-route/:my-param/xxx" {:my-param "my-value"})
   ;  =>
   ;  "/@app-home/my-route/my-value/xxx"
   ;
   ; @return (string)
-  [db [_ uri]]
-  (letfn [; 2. Az f0 függvény az n paraméterként kapott szöveget felbontja (param-key, trail)
-          ;    a "/" karakter első előfordulásánál és egy vektorban felsorolva visszatér
-          ;    a két felbontott részlettel (az első részletből kulcsszó típust készít)
-          ;    Pl. n: ":my-param/xxx"
-          ;         =>
-          ;         [:my-param "/xxx"]
-          (f0 [n] (if-let [pos (string/first-dex-of n "/")]
-                          [(keyword (subs n 1 pos))
-                           (str     (subs n   pos))]
-                          [(keyword (subs n 1)) ""]))
-          ; 1. Az f1 függvény az n paraméterként kapott szöveget felbontja (base, end),
-          ;    a "/:" részlet első előfordulásánál.
-          ;    Pl. n:    "/@app-home/my-route/:my-param/xxx"
-          ;         =>
-          ;         base: "/@app-home/my-route/"
-          ;         end:  ":my-param/xxx"
-          ;
-          ; 3. Az f1 függvény n paramétereként kapott szövegben az első útvonal-paramétert
-          ;    behelyettesíti az aktuális útvonalbeli értékével (ha lehetséges),
-          ;    majd a behelyettesítés után az eredménnyel újra meghívja önmagát, további
-          ;    útvonal-paramétereket keresve a szövegben.
-          (f1 [n]
-              (if-let [pos (string/first-dex-of n "/:")]
-                      ; Ha az f függvény n paramétere tartalmazza a "/:" részletet ...
-                      (let [base (subs n 0 (inc pos))
-                            end  (subs n   (inc pos))
-                            [param-key trail] (f0 end)]
-                           (if-let [param-value (r get-current-route-path-param db param-key)]
-                                   (f1 (str base param-value trail))
-                                   (f1 (str base param-key   trail))))
-                      ; Ha az f függvény n paramétere NEM tartalmazza az "/:" részletet ...
-                      (return n)))]
-         (f1 uri)))
+  [db [_ uri path-params]]
+  (let [path-params (or path-params (r get-current-route-path-params db))]
+       (letfn [; 2. Az f0 függvény az n paraméterként kapott szöveget felbontja (param-key, trail)
+               ;    a "/" karakter első előfordulásánál és egy vektorban felsorolva visszatér
+               ;    a két felbontott részlettel (az első részletből kulcsszó típust készít)
+               ;    Pl.: n: ":my-param/xxx"
+               ;         =>
+               ;         [:my-param "/xxx"]
+               (f0 [n] (if-let [pos (string/first-dex-of n "/")]
+                               [(keyword (subs n 1 pos))
+                                (str     (subs n   pos))]
+                               [(keyword (subs n 1)) ""]))
+               ; 1. Az f1 függvény az n paraméterként kapott szöveget felbontja (base, end),
+               ;    a "/:" részlet első előfordulásánál.
+               ;    Pl.: n:    "/@app-home/my-route/:my-param/xxx"
+               ;         =>
+               ;         base: "/@app-home/my-route/"
+               ;         end:  ":my-param/xxx"
+               ;
+               ; 3. Az f1 függvény n paramétereként kapott szövegben az első útvonal-paramétert
+               ;    behelyettesíti az aktuális útvonalbeli értékével (ha lehetséges),
+               ;    majd a behelyettesítés után az eredménnyel újra meghívja önmagát, további
+               ;    útvonal-paramétereket keresve a szövegben.
+               (f1 [n cursor]
+                   (if-let [pos (-> n (string/part cursor)
+                                      (string/first-dex-of "/:"))]
+                           ; Ha az f függvény n paramétere tartalmazza a "/:" részletet ...
+                           (let [base (subs n 0 (inc pos))
+                                 end  (subs n   (inc pos))
+                                 [param-key trail] (f0 end)]
+                                (if-let [param-value (get path-params param-key)]
+                                        (f1 (str base param-value trail) cursor)
+                                        (f1 (str base param-key   trail) cursor)))
+                           ; Ha az f függvény n paramétere NEM tartalmazza az "/:" részletet ...
+                           (return n)))]
+              (f1 uri 0))))
 
 
 
@@ -395,6 +400,9 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-sub :router/route-template-exists? route-template-exists?)
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-sub :router/match-route-id match-route-id)
 
 ; @usage
 ;  [:router/get-current-route-string]

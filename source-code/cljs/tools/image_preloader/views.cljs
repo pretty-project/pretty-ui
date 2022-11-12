@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.image-preloader.views
-    (:require [mid-fruits.candy  :refer [param]]
+    (:require [candy.api         :refer [param]]
               [mid-fruits.random :as random]
               [reagent.api       :as reagent]
               [re-frame.api      :as r]))

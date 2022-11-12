@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.core.subs
-    (:require [engines.engine-handler.body.subs     :as body.subs]
+    (:require [candy.api                            :refer [return]]
+              [engines.engine-handler.body.subs     :as body.subs]
               [engines.engine-handler.routes.subs   :as routes.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
-              [mid-fruits.candy                     :refer [return]]
               [mid-fruits.map                       :as map]
               [mid-fruits.vector                    :as vector]
               [re-frame.api                         :refer [r]]

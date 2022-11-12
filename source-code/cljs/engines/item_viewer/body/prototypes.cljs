@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-viewer.body.prototypes
-    (:require [engines.item-viewer.core.helpers :as core.helpers]
-              [mid-fruits.candy                 :refer [param]]))
+    (:require [mid-fruits.candy                 :refer [param]]
+              [engines.item-viewer.core.helpers :as core.helpers]))
 
 
 

@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-editor.backup.events
-    (:require [engines.engine-handler.backup.events :as backup.events]
+    (:require [candy.api                            :refer [return]]
+              [engines.engine-handler.backup.events :as backup.events]
               [engines.item-editor.backup.subs      :as backup.subs]
               [engines.item-editor.body.subs        :as body.subs]
               [engines.item-editor.core.subs        :as core.subs]
-              [mid-fruits.candy                     :refer [return]]
               [mid-fruits.map                       :as map :refer [dissoc-in]]
               [re-frame.api                         :as r :refer [r]]))
 

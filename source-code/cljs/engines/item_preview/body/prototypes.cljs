@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-preview.body.prototypes
-    (:require [engines.item-preview.core.helpers :as core.helpers]
-              [mid-fruits.candy                  :refer [param]]))
+    (:require [mid-fruits.candy                  :refer [param]]
+              [engines.item-preview.core.helpers :as core.helpers]))
 
 
 

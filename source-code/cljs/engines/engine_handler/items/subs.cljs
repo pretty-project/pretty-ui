@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.items.subs
-    (:require [engines.engine-handler.core.subs     :as core.subs]
+    (:require [candy.api                            :refer [return]]
+              [engines.engine-handler.core.subs     :as core.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
-              [mid-fruits.candy                     :refer [return]]
               [loop.api                             :refer [some-indexed]]
               [mid-fruits.map                       :as map]
               [mid-fruits.vector                    :as vector]

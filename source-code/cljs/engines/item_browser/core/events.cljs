@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.core.events
-    (:require [engines.engine-handler.core.events :as core.events]
+    (:require [candy.api                          :refer [return]]
+              [engines.engine-handler.core.events :as core.events]
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.core.subs     :as core.subs]
               [engines.item-browser.items.events  :as items.events]
-              [mid-fruits.candy                   :refer [return]]
               [mid-fruits.map                     :refer [dissoc-in]]
               [engines.item-lister.core.events    :as engines.item-lister.core.events]
               [re-frame.api                       :as r :refer [r]]))
