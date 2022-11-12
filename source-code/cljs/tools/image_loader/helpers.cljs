@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.image-loader.helpers
-    (:require [mid-fruits.candy         :refer [param]]
+    (:require [candy.api                :refer [param]]
               [css.api                  :as css]
               [hiccup.api               :as hiccup]
               [tools.image-loader.state :as state]))

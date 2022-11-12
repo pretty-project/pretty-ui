@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.counter.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [mid-fruits.candy       :refer [param]]))
+    (:require [candy.api              :refer [param]]
+              [elements.input.helpers :as input.helpers]))
 
 
 

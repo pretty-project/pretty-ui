@@ -15,13 +15,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.digit-field
-    (:require [css.api                         :as css]
+    (:require [mid-fruits.candy                :refer [param]]
+              [css.api                         :as css]
               [dom.api                         :as dom]
               [elements.engine.api             :as engine]
               [elements.input.helpers          :as input.helpers]
               ;[elements.passfield-handler.subs :as passfield-handler.subs]
               [elements.target-handler.helpers :as target-handler.helpers]
-              [mid-fruits.candy                :refer [param]]
               [mid-fruits.random               :as random]
               [mid-fruits.vector               :as vector]
               [re-frame.api                    :as r :refer [r]]))

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.circle-diagram.prototypes
-    (:require [elements.circle-diagram.helpers :as circle-diagram.helpers]
-              [mid-fruits.candy                :refer [param]]))
+    (:require [candy.api                       :refer [param]]
+              [elements.circle-diagram.helpers :as circle-diagram.helpers]))
 
 
 

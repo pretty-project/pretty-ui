@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.engine.element
-    (:require [mid-fruits.candy         :refer [param]]
+    (:require [candy.api                :refer [param]]
               [css.api                  :as css]
               [elements.element.helpers :as element.helpers]
               [mid-fruits.keyword       :as keyword]

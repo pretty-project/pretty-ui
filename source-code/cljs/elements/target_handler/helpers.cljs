@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.target-handler.helpers
-    (:require [mid-fruits.candy      :refer [param]]
+    (:require [candy.api             :refer [param]]
               [hiccup.api            :as hiccup]
               [x.app-environment.api :as x.environment]))
 

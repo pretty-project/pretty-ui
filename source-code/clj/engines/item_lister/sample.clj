@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.sample
-    (:require [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
+    (:require [candy.api                             :refer [return]]
+              [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [engines.item-lister.api               :as item-lister]
-              [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [re-frame.api                          :as r]))
 

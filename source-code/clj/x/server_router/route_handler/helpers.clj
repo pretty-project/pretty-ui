@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.helpers
-    (:require [mid-fruits.candy                   :refer [return]]
+    (:require [candy.api                          :refer [return]]
               [mid-fruits.uri                     :as uri]
               [re-frame.api                       :as r]
               [server-fruits.http                 :as http]

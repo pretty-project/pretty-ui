@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.prototypes
-    (:require [mid-fruits.candy                      :refer [param return]]
+    (:require [candy.api                             :refer [param return]]
               [re-frame.api                          :refer [r]]
               [x.server-core.api                     :as x.core]
               [x.server-router.route-handler.config  :as route-handler.config]

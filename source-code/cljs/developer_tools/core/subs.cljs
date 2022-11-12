@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.core.subs
-    (:require [developer-tools.core.state :as core.state]
-              [mid-fruits.candy           :refer [return]]
+    (:require [candy.api                  :refer [return]]
+              [developer-tools.core.state :as core.state]
               [re-frame.api               :as r :refer [r]]
               [x.app-core.api             :as x.core]))
 

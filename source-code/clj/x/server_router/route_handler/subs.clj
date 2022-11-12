@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-router.route-handler.subs
-    (:require [mid-fruits.candy                      :refer [return]]
+    (:require [candy.api                             :refer [return]]
               [re-frame.api                          :as r :refer [r]]
               [x.mid-router.route-handler.subs       :as route-handler.subs]
               [x.server-router.route-handler.helpers :as route-handler.helpers]))

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.re-frame-browser.views
-    (:require [developer-tools.re-frame-browser.config :as re-frame-browser.config]
+    (:require [candy.api                           :refer [param return]]
+              [developer-tools.re-frame-browser.config :as re-frame-browser.config]
               [elements.api                        :as elements]
-              [mid-fruits.candy                    :refer [param return]]
               [mid-fruits.map                      :as map]
               [mid-fruits.pretty                   :as pretty]
               [mid-fruits.string                   :as string]

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.document-handler.helpers
-    (:require [mid-fruits.candy                      :refer [param]]
+    (:require [candy.api                             :refer [param]]
               [mid-fruits.map                        :as map]
               [server-fruits.http                    :as http]
               [time.api                              :as time]

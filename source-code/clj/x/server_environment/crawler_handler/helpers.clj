@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-environment.crawler-handler.helpers
-    (:require [mid-fruits.candy   :refer [param return]]
-              [re-frame.api       :as r]
-              [time.api           :as time]
-              [x.app-details      :as x.details]
-              [x.server-user.api  :as x.user]))
+    (:require [candy.api         :refer [param return]]
+              [re-frame.api      :as r]
+              [time.api          :as time]
+              [x.app-details     :as x.details]
+              [x.server-user.api :as x.user]))
 
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.download.helpers
-    (:require [mid-fruits.candy        :refer [return]]
+    (:require [candy.api               :refer [return]]
               [mid-fruits.keyword      :as keyword]
               [mongo-db.api            :as mongo-db]
               [pathom.api              :as pathom]

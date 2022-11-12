@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.vertical-separator
-    (:require [elements.engine.api :as engine]
-              [mid-fruits.candy    :refer [param]]
+    (:require [mid-fruits.candy    :refer [param]]
+              [elements.engine.api :as engine]
               [mid-fruits.random   :as random]))
 
 

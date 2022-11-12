@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.engine.clickable
-    (:require [dom.api                         :as dom]
+    (:require [mid-fruits.candy                :refer [param]]
+              [dom.api                         :as dom]
               [elements.engine.element         :as element]
               [elements.target-handler.helpers :as target-handler.helpers]
-              [mid-fruits.candy                :refer [param]]
               [mid-fruits.map                  :as map]
               [re-frame.api                    :as r :refer [r]]
               [x.app-environment.api           :as x.environment]))

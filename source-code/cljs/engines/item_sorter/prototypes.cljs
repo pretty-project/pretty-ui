@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-sorter.prototypes
-    (:require [mid-fruits.candy            :refer [param]]
+    (:require [candy.api                   :refer [param]]
               [engines.text-editor.helpers :as helpers]
               [re-frame.api                :as r]))
 

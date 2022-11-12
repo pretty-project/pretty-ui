@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-editor.download.helpers
-    (:require [mid-fruits.candy   :refer [return]]
+    (:require [candy.api          :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
               [mid-fruits.mixed   :as mixed]

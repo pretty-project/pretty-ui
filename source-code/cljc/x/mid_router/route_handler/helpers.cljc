@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-router.route-handler.helpers
-    (:require [mid-fruits.candy  :refer [return]]
+    (:require [candy.api         :refer [return]]
               [mid-fruits.string :as string]
               [mid-fruits.vector :as vector]))
 

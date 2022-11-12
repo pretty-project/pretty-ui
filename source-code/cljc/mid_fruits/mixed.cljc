@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.mixed
-    (:require [mid-fruits.candy  :refer [return]]
+    (:require [candy.api         :refer [return]]
               [mid-fruits.map    :as map]
               [regex.api         :refer [re-match?]]
               [mid-fruits.reader :as reader]

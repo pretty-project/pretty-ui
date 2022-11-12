@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.chip.views
-    (:require [elements.chip.helpers    :as chip.helpers]
+    (:require [candy.api                :refer [param]]
+              [elements.chip.helpers    :as chip.helpers]
               [elements.chip.prototypes :as chip.prototypes]
-              [mid-fruits.candy         :refer [param]]
               [mid-fruits.random        :as random]
               [x.app-components.api     :as x.components]))
 

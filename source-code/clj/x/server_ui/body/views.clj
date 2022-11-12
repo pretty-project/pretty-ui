@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.body.views
-    (:require [mid-fruits.candy                 :refer [param]]
+    (:require [candy.api                        :refer [param]]
               [ring.middleware.anti-forgery     :refer [*anti-forgery-token*]]
               [x.server-ui.body.helpers         :as body.helpers]
               [x.server-ui.body.prototypes      :as body.prototypes]

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.string
-    (:require [clojure.string   :as string]
-              [mid-fruits.candy :refer [param return]]
-              [math.api         :as math]))
+    (:require [candy.api      :refer [param return]]
+              [clojure.string :as string]
+              [math.api       :as math]))
 
 
 

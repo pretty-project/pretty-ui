@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.lifecycle-handler.helpers
-    (:require [mid-fruits.candy                   :refer [return]]
+    (:require [candy.api                          :refer [return]]
               [mid-fruits.random                  :as random]
               [x.mid-core.lifecycle-handler.state :as lifecycle-handler.state]))
 

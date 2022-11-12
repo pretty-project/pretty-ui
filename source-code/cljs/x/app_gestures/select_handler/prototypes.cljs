@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-gestures.select-handler.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+    (:require [candy.api :refer [param]]))
 
 
 

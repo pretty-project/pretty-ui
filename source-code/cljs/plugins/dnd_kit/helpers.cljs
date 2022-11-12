@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.dnd-kit.helpers
-    (:require [mid-fruits.candy      :refer [return]]
+    (:require [candy.api             :refer [return]]
               [mid-fruits.map        :refer [dissoc-in]]
               [mid-fruits.vector     :as vector]
               [plugins.dnd-kit.state :as state]

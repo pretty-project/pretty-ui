@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.uri
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [candy.api         :refer [param return]]
               [mid-fruits.reader :as reader]
               [mid-fruits.string :as string]))
 

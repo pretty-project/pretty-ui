@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-dictionary.term-handler.subs
-    (:require [mid-fruits.candy                         :refer [return]]
+    (:require [candy.api                                :refer [return]]
               [mid-fruits.string                        :as string]
               [mid.x.dictionary.term-handler.subs       :as term-handler.subs]
               [re-frame.api                             :as r :refer [r]]
@@ -58,7 +58,7 @@
   ;  {:language (keyword)
   ;   :prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509 
+  ;    XXX#4509
   ;   :suffix (string)(opt)}
   ;
   ; @example

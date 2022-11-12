@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-db.core.subs
-    (:require [mid-fruits.candy :refer [return]]
-              [re-frame.api     :as r :refer [r]]))
+    (:require [candy.api    :refer [return]]
+              [re-frame.api :as r :refer [r]]))
 
 
 

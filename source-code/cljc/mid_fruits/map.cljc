@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.map
-    (:require [clojure.data     :as data]
-              [mid-fruits.candy :refer [return]]))
+    (:require [candy.api    :refer [return]]
+              [clojure.data :as data]))
 
 
 
@@ -31,7 +31,8 @@
   ;
   ; @return (vector)
   [n]
-  (reduce-kv #(conj %1 %3) [] n))
+  (letfn [(f [%1 _ %3] (conj %1 %3))]
+         (reduce-kv f [] n)))
 
 (defn nonempty?
   ; @param (map) n

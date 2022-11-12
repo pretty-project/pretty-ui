@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.image.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+    (:require [candy.api :refer [param]]))
 
 
 

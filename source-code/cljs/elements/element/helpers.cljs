@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element.helpers
-    (:require [mid-fruits.candy :refer [param return]]
-              [css.api          :as css]
-              [hiccup.api       :as hiccup]))
+    (:require [candy.api  :refer [param return]]
+              [css.api    :as css]
+              [hiccup.api :as hiccup]))
 
 
 

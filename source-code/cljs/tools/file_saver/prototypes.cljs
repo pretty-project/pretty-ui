@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.file-saver.prototypes
-    (:require [mid-fruits.candy        :refer [param]]
+    (:require [candy.api               :refer [param]]
               [tools.file-saver.config :as config]))
 
 

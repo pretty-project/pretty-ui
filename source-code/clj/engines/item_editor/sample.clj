@@ -14,8 +14,8 @@
 
 (ns engines.item-editor.sample
     (:require [engines.item-editor.api]
+              [candy.api                             :refer [return]]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
-              [mid-fruits.candy                      :refer [return]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
               [re-frame.api                          :as r]))

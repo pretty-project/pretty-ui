@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.menu-bar
-    (:require [elements.engine.api   :as engine]
-              [mid-fruits.candy      :refer [param return]]
+    (:require [mid-fruits.candy      :refer [param return]]
+              [elements.engine.api   :as engine]
               [mid-fruits.random     :as random]
               [mid-fruits.vector     :as vector]
               [re-frame.api          :as r]

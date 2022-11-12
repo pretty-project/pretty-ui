@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.pretty
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [candy.api         :refer [param return]]
               [mid-fruits.string :as string]
               [loop.api          :refer [reduce-indexed reduce-kv-indexed]]
               [mid-fruits.vector :as vector]))
 
 
 
-;; -- Helpers -----------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- string->wrap?

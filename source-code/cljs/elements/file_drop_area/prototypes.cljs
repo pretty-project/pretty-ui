@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.file-drop-area.prototypes
-    (:require [mid-fruits.candy :refer [param]]))
+    (:require [candy.api :refer [param]]))
 
 
 

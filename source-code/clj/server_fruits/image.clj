@@ -22,8 +22,8 @@
               [java.awt AlphaComposite]
               [java.awt Image]
               [java.io  File])
-    (:require [io.api           :as io]
-              [mid-fruits.candy :refer [param return]]))
+    (:require [candy.api :refer [return]]
+              [io.api    :as io]))
 
 
 

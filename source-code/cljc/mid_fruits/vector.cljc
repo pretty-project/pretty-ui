@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.vector
-    (:require [mid-fruits.candy    :refer [param return]]
+    (:require [candy.api           :refer [param return]]
               [math.api            :as math]
               [loop.api            :refer [some-indexed]]
               [mid-fruits.sequence :as sequence]))

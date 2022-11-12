@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.server-handler.prototypes
-    (:require [mid-fruits.candy  :refer [param]]
+    (:require [candy.api         :refer [param]]
               [mid-fruits.string :as string]
               [re-frame.api      :as r]))
 

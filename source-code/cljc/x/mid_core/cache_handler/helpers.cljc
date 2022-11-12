@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.mid-core.cache-handler.helpers
-    (:require [mid-fruits.candy :refer [param return]]))
+    (:require [candy.api :refer [param return]]))
 
 
 

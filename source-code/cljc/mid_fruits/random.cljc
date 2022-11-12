@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.random
-    (:require [mid-fruits.candy :refer [param]]
-              [math.api         :as math]))
+    (:require [candy.api :refer [param]]
+              [math.api  :as math]))
 
 
 

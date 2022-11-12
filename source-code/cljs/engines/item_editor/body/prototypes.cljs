@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-editor.body.prototypes
-    (:require [engines.item-editor.core.helpers :as core.helpers]
-              [mid-fruits.candy                 :refer [param]]))
+    (:require [candy.api                        :refer [param]]
+              [engines.item-editor.core.helpers :as core.helpers]))
 
 
 

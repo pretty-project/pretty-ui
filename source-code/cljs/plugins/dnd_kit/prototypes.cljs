@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns plugins.dnd-kit.prototypes
-    (:require [mid-fruits.candy :refer [param return]]))
+    (:require [candy.api :refer [param return]]))
 
 
 

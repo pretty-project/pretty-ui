@@ -15,10 +15,11 @@
 (ns app-fruits.html
     (:require [clojure.string]
               [clojure.walk]
-             ;[hickory.core   :as hc]
-              [mid-fruits.candy :refer [param return]]
-              [reagent-hickory.hickory.core :as hc]
-              [goog.string]))
+              [goog.string]
+             ;[hickory.core :as hc]
+              [candy.api :refer [param return]]
+              [reagent-hickory.hickory.core :as hc]))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

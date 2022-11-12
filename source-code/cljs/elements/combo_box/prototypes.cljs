@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.combo-box.prototypes
-    (:require [elements.input.helpers :as input.helpers]
-              [mid-fruits.candy       :refer [param return]]))
+    (:require [candy.api              :refer [param return]]
+              [elements.input.helpers :as input.helpers]))
+
 
 
 

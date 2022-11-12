@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.button.views
-    (:require [elements.button.helpers    :as button.helpers]
+    (:require [candy.api                  :refer [param]]
+              [elements.button.helpers    :as button.helpers]
               [elements.button.presets    :as button.presets]
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
               [elements.engine.api        :as engine]
-              [mid-fruits.candy           :refer [param]]
               [mid-fruits.random          :as random]
               [reagent.api                :as reagent]
               [x.app-components.api       :as x.components]))

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-user.settings-handler.helpers
-    (:require [io.api                                :as io]
+    (:require [candy.api                             :refer [return]]
+              [io.api                                :as io]
               [mongo-db.api                          :as mongo-db]
-              [mid-fruits.candy                      :refer [return]]
               [mid-fruits.keyword                    :as keyword]
               [re-frame.api                          :as r]
               [server-fruits.http                    :as http]

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.json
-    (:require [mid-fruits.candy   :refer [return]]
+    (:require [candy.api          :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.mixed   :as mixed]
               [mid-fruits.string  :as string]

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.label.views
-    (:require [elements.label.helpers    :as label.helpers]
+    (:require [mid-fruits.candy          :refer [param]]
+              [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
-              [mid-fruits.candy          :refer [param]]
               [mid-fruits.random         :as random]
               [x.app-components.api      :as x.components]))
 

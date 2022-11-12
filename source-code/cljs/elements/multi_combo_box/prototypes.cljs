@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.multi-combo-box.prototypes
-    (:require [elements.input.helpers           :as input.helpers]
-              [elements.multi-combo-box.helpers :as multi-combo-box.helpers]
-              [mid-fruits.candy                 :refer [param return]]))
+    (:require [mid-fruits.candy                 :refer [param return]]
+              [elements.input.helpers           :as input.helpers]
+              [elements.multi-combo-box.helpers :as multi-combo-box.helpers]))
 
 
 

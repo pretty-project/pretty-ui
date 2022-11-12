@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.input.events
-    (:require [elements.engine.element :as element]
-              [mid-fruits.candy        :refer [return]]
+    (:require [mid-fruits.candy        :refer [return]]
+              [elements.engine.element :as element]
               [mid-fruits.map          :refer [dissoc-in]]))
 
 

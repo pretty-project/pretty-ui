@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.line-diagram
-    (:require [mid-fruits.candy    :refer [param]]
+    (:require [candy.api           :refer [param]]
               [css.api             :as css]
               [elements.engine.api :as engine]
               [math.api            :as math]

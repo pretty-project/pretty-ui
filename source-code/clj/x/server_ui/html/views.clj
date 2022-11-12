@@ -13,8 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-ui.html.views
-    (:require [hiccup.page      :refer [html5]]
-              [mid-fruits.candy :refer [param]]))
+    (:require [candy.api   :refer [param]]
+              [hiccup.page :refer [html5]]))
+
 
 
 

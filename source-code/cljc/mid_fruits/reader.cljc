@@ -15,7 +15,7 @@
 (ns mid-fruits.reader
     (:require #?(:cljs [cljs.reader :as reader])
               #?(:clj  [clojure.edn :as edn])
-              [mid-fruits.candy  :refer [return]]
+              [candy.api         :refer [return]]
               [mid-fruits.string :as string]))
 
 

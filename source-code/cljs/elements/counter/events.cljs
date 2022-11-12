@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.counter.events
-    (:require [elements.counter.subs :as counter.subs]
+    (:require [candy.api             :refer [return]]
+              [elements.counter.subs :as counter.subs]
               [elements.input.events :as input.events]
-              [mid-fruits.candy      :refer [return]]
               [re-frame.api          :as r :refer [r]]
               [x.app-db.api          :as x.db]))
 

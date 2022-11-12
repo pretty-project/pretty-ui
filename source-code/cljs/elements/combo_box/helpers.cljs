@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.combo-box.helpers
-    (:require [elements.combo-box.state    :as combo-box.state]
+    (:require [candy.api                   :refer [return]]
+              [elements.combo-box.state    :as combo-box.state]
               [elements.input.helpers      :as input.helpers]
               [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.candy            :refer [return]]
               [mid-fruits.string           :as string]
               [mid-fruits.vector           :as vector]
               [re-frame.api                :as r]))

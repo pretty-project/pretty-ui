@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.image
-    (:require [dom.api             :as dom]
+    (:require [mid-fruits.candy    :refer [param]]
+              [dom.api             :as dom]
               [elements.engine.api :as engine]
-              [mid-fruits.candy    :refer [param]]
               [mid-fruits.random   :as random]
               [react.api           :as react]))
 

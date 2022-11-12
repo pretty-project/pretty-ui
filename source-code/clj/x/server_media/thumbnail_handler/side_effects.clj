@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.thumbnail-handler.side-effects
-    (:require [io.api                                  :as io]
-              [mid-fruits.candy                        :refer [return]]
+    (:require [candy.api                               :refer [return]]
+              [io.api                                  :as io]
               [server-fruits.image                     :as image]
               [x.server-media.core.helpers             :as core.helpers]
               [x.server-media.thumbnail-handler.config :as thumbnail-handler.config]))

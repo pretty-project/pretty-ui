@@ -14,9 +14,9 @@
 
 (ns engines.file-editor.sample
     (:require [engines.file-editor.api]
+              [candy.api                             :refer [return]]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver defmutation]]
               [io.api                                :as io]
-              [mid-fruits.candy                      :refer [return]]
               [re-frame.api                          :as r]))
 
 

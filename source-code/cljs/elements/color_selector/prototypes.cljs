@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.color-selector.prototypes
-    (:require [elements.color-selector.config :as color-selector.config]
-              [elements.input.helpers         :as input.helpers]
-              [mid-fruits.candy               :refer [param]]))
+    (:require [candy.api                      :refer [param]]
+              [elements.color-selector.config :as color-selector.config]
+              [elements.input.helpers         :as input.helpers]))
 
 
 

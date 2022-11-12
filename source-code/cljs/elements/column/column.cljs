@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.column
-    (:require [elements.engine.api           :as engine]
+    (:require [candy.api                     :refer [param]]
+              [elements.engine.api           :as engine]
               [elements.flex-handler.helpers :as flex-handler.helpers]
-              [mid-fruits.candy              :refer [param]]
               [mid-fruits.random             :as random]
               [x.app-components.api          :as x.components]))
 

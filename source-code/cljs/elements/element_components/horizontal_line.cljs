@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.horizontal-line
-    (:require [mid-fruits.candy    :refer [param]]
+    (:require [candy.api           :refer [param]]
               [css.api             :as css]
               [elements.engine.api :as engine]
               [mid-fruits.random   :as random]))

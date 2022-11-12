@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.keyword
-    (:require [mid-fruits.candy  :refer [param return]]
+    (:require [candy.api         :refer [param return]]
               [mid-fruits.random :as random]
               [mid-fruits.string :as string]))
 
