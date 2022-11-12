@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text-field.helpers
-    (:require [css.api                    :as css]
+    (:require [candy.api                  :refer [return]]
+              [css.api                    :as css]
               [dom.api                    :as dom]
               [elements.element.helpers   :as element.helpers]
               [elements.text-field.config :as text-field.config]
               [elements.text-field.state  :as text-field.state]
-              [mid-fruits.candy           :refer [return]]
               [hiccup.api                 :as hiccup]
               [mid-fruits.string          :as string]
               [re-frame.api               :as r]

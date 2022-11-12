@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content.views
-    (:require [mid-fruits.candy     :refer [return]]
+    (:require [candy.api            :refer [return]]
               [hiccup.api           :refer [hiccup?]]
               [mid-fruits.random    :as random]
               [mid-fruits.vector    :as vector]

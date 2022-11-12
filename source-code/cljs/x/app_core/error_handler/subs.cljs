@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.error-handler.subs
-    (:require [mid-fruits.candy                :refer [param return]]
+    (:require [candy.api                       :refer [param return]]
               [x.app-core.debug-handler.subs   :as debug-handler.subs]
               [x.app-core.error-handler.config :as error-handler.config]
               [x.app-core.event-handler        :as event-handler :refer [r]]))

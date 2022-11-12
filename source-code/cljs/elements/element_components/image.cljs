@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.image
-    (:require [mid-fruits.candy    :refer [param]]
+    (:require [candy.api           :refer [param]]
               [dom.api             :as dom]
               [elements.engine.api :as engine]
               [mid-fruits.random   :as random]

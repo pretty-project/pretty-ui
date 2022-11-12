@@ -15,7 +15,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.event-handler
-    (:require [mid-fruits.candy                      :refer [return]]
+    (:require [candy.api                             :refer [return]]
               [mid-fruits.vector                     :as vector]
               [re-frame.api                          :as re-frame]
               [x.app-core.print-handler.side-effects :as print-handler.side-effects]))

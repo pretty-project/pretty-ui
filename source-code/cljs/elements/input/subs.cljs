@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.input.subs
-    (:require [mid-fruits.candy        :refer [return]]
+    (:require [candy.api               :refer [return]]
               [elements.engine.element :as element]
               [mid-fruits.map          :refer [dissoc-in]]
               [mid-fruits.vector       :as vector]

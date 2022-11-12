@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.helpers
-    (:require [elements.element.helpers    :as element.helpers]
+    (:require [candy.api                   :refer [return]]
+              [elements.element.helpers    :as element.helpers]
               [elements.select.config      :as select.config]
               [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.candy            :refer [return]]
               [mid-fruits.string           :as string]
               [re-frame.api                :as r]
               [x.app-components.api        :as x.components]

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.sample
-    (:require [elements.api     :as elements]
-              [mid-fruits.candy :refer [return]]))
+    (:require [candy.api    :refer [return]]
+              [elements.api :as elements]))
 
 
 

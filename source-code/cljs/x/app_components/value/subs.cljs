@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.value.subs
-    (:require [mid-fruits.candy     :refer [return]]
+    (:require [candy.api            :refer [return]]
               [re-frame.api         :as r :refer [r]]
               [x.app-dictionary.api :as x.dictionary]))
 

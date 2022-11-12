@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.load-handler.events
-    (:require [mid-fruits.candy             :refer [return]]
+    (:require [candy.api                    :refer [return]]
               [mid-fruits.vector            :as vector]
               [time.api                     :as time]
               [re-frame.api                 :as r :refer [r]]

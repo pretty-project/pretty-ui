@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.image-loader.views
-    (:require [mid-fruits.candy           :refer [param]]
+    (:require [candy.api                  :refer [param]]
               [mid-fruits.random          :as random]
               [tools.image-loader.helpers :as helpers]))
 

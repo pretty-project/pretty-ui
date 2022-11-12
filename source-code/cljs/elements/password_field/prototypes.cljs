@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.password-field.prototypes
-    (:require [elements.password-field.helpers :as password-field.helpers]
+    (:require [candy.api                       :refer [param]]
+              [elements.password-field.helpers :as password-field.helpers]
               [elements.text-field.helpers     :as text-field.helpers]
               [forms.api                       :as forms]
-              [mid-fruits.candy                :refer [param]]
               [mid-fruits.vector               :as vector]))
 
 

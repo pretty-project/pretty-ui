@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.effects
-    (:require [elements.input.events          :as input.events]
+    (:require [candy.api                      :refer [return]]
+              [elements.input.events          :as input.events]
               [elements.input.subs            :as input.subs]
               [elements.select.config         :as select.config]
               [elements.select.events         :as select.events]
@@ -21,7 +22,6 @@
               [elements.select.views          :as select.views]
               [elements.text-field.helpers    :as text-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
-              [mid-fruits.candy               :refer [return]]
               [re-frame.api                   :as r :refer [r]]))
 
 

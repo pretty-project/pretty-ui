@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.events
-    (:require [elements.input.events :as input.events]
-              [mid-fruits.candy      :refer [return]]
+    (:require [candy.api             :refer [return]]
+              [elements.input.events :as input.events]
               [mid-fruits.vector     :as vector]
               [re-frame.api          :as r :refer [r]]))
 

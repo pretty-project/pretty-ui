@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.engine.clickable
-    (:require [mid-fruits.candy                :refer [param]]
+    (:require [candy.api                       :refer [param]]
               [dom.api                         :as dom]
               [elements.engine.element         :as element]
               [elements.target-handler.helpers :as target-handler.helpers]

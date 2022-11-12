@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-environment.cookie-handler.events
-    (:require [mid-fruits.candy                         :refer [return]]
+    (:require [candy.api                                :refer [return]]
               [mid-fruits.map                           :refer [dissoc-in]]
               [mid-fruits.reader                        :as reader]
               [re-frame.api                             :as r :refer [r]]

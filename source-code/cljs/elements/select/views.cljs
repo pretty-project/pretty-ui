@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.views
-    (:require [elements.button.views      :as button.views]
+    (:require [candy.api                  :refer [return]]
+              [elements.button.views      :as button.views]
               [elements.icon-button.views :as icon-button.views]
               [elements.input.helpers     :as input.helpers]
               [elements.label.views       :as label.views]
@@ -21,7 +22,6 @@
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [layouts.popup-a.api        :as popup-a]
-              [mid-fruits.candy           :refer [return]]
               [mid-fruits.random          :as random]
               [mid-fruits.vector          :as vector]
               [re-frame.api               :as r]

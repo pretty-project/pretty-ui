@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.stated
-    (:require [mid-fruits.candy             :refer [param return]]
+    (:require [candy.api                    :refer [param return]]
               [mid-fruits.map               :refer [dissoc-in]]
               [mid-fruits.random            :as random]
               [reagent.api                  :as reagent]

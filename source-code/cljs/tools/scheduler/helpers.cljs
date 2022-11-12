@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.scheduler.helpers
-    (:require [mid-fruits.candy :refer [param return]]
-              [time.api         :as time]))
+    (:require [candy.api :refer [param return]]
+              [time.api  :as time]))
 
 
 

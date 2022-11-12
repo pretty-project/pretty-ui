@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text.views
-    (:require [elements.label.views     :as label.views]
+    (:require [mid-fruits.candy         :refer [return]]
+              [elements.label.views     :as label.views]
               [elements.text.helpers    :as text.helpers]
               [elements.text.prototypes :as text.prototypes]
-              [mid-fruits.candy         :refer [return]]
               [mid-fruits.random        :as random]
               [mid-fruits.string        :as string]
               [x.app-components.api     :as x.components]))

@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.multi-field.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [mid-fruits.candy         :refer [return]]
+    (:require [candy.api                :refer [return]]
+              [elements.element.helpers :as element.helpers]
               [hiccup.api               :as hiccup]
               [mid-fruits.vector        :as vector]
               [re-frame.api             :as r]

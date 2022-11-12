@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.multi-field.events
-    (:require [elements.multi-field.subs :as multi-field.subs]
-              [mid-fruits.candy          :refer [return]]
+    (:require [candy.api                 :refer [return]]
+              [elements.multi-field.subs :as multi-field.subs]
               [mid-fruits.vector         :as vector]
               [re-frame.api              :refer [r]]))
 

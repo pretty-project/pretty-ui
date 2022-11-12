@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.label.views
-    (:require [mid-fruits.candy          :refer [param]]
+    (:require [candy.api                 :refer [param]]
               [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
               [mid-fruits.random         :as random]

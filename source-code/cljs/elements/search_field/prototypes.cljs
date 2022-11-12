@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.search-field.prototypes
-    (:require [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.candy            :refer [param]]))
+    (:require [candy.api                   :refer [param]]
+              [elements.text-field.helpers :as text-field.helpers]))
 
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.row
-    (:require [mid-fruits.candy              :refer [param]]
+    (:require [candy.api                     :refer [param]]
               [elements.engine.api           :as engine]
               [elements.flex-handler.helpers :as flex-handler.helpers]
               [mid-fruits.random             :as random]

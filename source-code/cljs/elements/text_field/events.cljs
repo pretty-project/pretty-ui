@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text-field.events
-    (:require [elements.input.events  :as input.events]
+    (:require [candy.api              :refer [return]]
+              [elements.input.events  :as input.events]
               [elements.input.helpers :as input.helpers]
               [elements.input.subs    :as input.subs]
-              [mid-fruits.candy       :refer [return]]
               [mid-fruits.map         :refer [dissoc-in]]
               [mid-fruits.string      :as string]
               [re-frame.api           :as r :refer [r]]

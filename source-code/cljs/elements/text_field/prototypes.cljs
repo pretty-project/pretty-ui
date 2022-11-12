@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text-field.prototypes
-    (:require [elements.input.helpers      :as input.helpers]
+    (:require [mid-fruits.candy            :refer [param return]]
+              [elements.input.helpers      :as input.helpers]
               [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.candy            :refer [param return]]
               [mid-fruits.random           :as random]
               [mid-fruits.vector           :as vector]))
 

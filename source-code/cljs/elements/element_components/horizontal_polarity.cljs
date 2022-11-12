@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.horizontal-polarity
-    (:require [mid-fruits.candy     :refer [param]]
+    (:require [candy.api            :refer [param]]
               [elements.engine.api  :as engine]
               [mid-fruits.random    :as random]
               [x.app-components.api :as x.components]))
