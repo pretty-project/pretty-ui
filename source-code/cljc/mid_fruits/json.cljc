@@ -15,9 +15,10 @@
 (ns mid-fruits.json
     (:require [candy.api          :refer [return]]
               [mid-fruits.keyword :as keyword]
+              [mid-fruits.map     :as map]
               [mid-fruits.mixed   :as mixed]
               [mid-fruits.string  :as string]
-              [mid-fruits.map     :as map]
+              [syntax.api         :as syntax]
               [mid-fruits.vector  :as vector]))
 
 
@@ -108,7 +109,7 @@
   ;
   ; @return (*)
   [n]
-  (cond (string?  n) (string/snake-case n)
+  (cond (string?  n) (syntax/snake-case n)
         (keyword? n) (-> n name snake-case-key keyword)
         :return   n))
 
