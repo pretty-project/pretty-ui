@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.helpers
-    (:require [candy.api          :refer [param return]]
+    (:require [mid-fruits.candy   :refer [param return]]
               [mid-fruits.keyword :as keyword]
               [math.api           :as math]
               [mid-fruits.string  :as string]
@@ -34,7 +34,7 @@
   ; @param (namespaced keyword) order-by
   ;
   ; @example
-  ;  (download.helpers/sort-pattern :my-lister :name/ascending)
+  ;  (sort-pattern :my-lister :name/ascending)
   ;  =>
   ;  {:my-type/name 1}
   ;
@@ -57,16 +57,16 @@
   ; @param (map) env
   ;
   ; @example
-  ;  (download.helpers/env->max-count {... .../params {:downloaded-item-count 24
-  ;                                                    :download-limit        20
-  ;                                                    :reload-items?         false}})
+  ;  (env->max-count {... .../params {:downloaded-item-count 24
+  ;                                   :download-limit        20
+  ;                                   :reload-items?         false}})
   ;  =>
   ;  20
   ;
   ; @example
-  ;  (download.helpers/env->max-count {... .../params {:downloaded-item-count 24
-  ;                                                    :download-limit        20
-  ;                                                    :reload-items?         true}})
+  ;  (env->max-count {... .../params {:downloaded-item-count 24
+  ;                                   :download-limit        20
+  ;                                   :reload-items?         true}})
   ;  =>
   ;  40
   ;
