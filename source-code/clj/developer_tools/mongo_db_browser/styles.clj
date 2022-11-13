@@ -27,8 +27,9 @@
   [& [{:keys [warning?]}]]
   (str "text-decoration: none; padding: 0 16px; line-height: 32px; display: flex;"
        "border-radius: 16px; margin: 8px; color: #222 !important; "
-       "font-size: 13px; font-weight: 500; border: 1px solid #888;"
+       "font-size: 13px; font-weight: 500; border: 1px solid #888; cursor: pointer;"
        "background: " (if warning? "#f3a9e3" "#cbf1dc")));)))
+
 
 (defn remove-button-style
   []

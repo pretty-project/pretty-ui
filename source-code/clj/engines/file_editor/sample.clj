@@ -44,7 +44,7 @@
 
 
 
-;; -- Az engine használatához szükséges resolver függvények --------------------
+;; -- Az engine használatához szükséges resolver függvények -------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- get-content-f
@@ -66,7 +66,7 @@
 
 
 
-;; -- Az engine használatához szükséges mutation függvények --------------------
+;; -- Az engine használatához szükséges mutation függvények -------------------
 ;; ----------------------------------------------------------------------------
 
 ; Sikeres mentés esetén a tartalommal szükséges visszatérni!

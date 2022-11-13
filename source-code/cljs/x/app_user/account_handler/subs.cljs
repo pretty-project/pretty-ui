@@ -13,9 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.account-handler.subs
-    (:require [mid-fruits.vector       :as vector]
-              [re-frame.api            :as r :refer [r]]
-              [x.app-user.core.helpers :as core.helpers]))
+    (:require [mid-fruits.vector :as vector]
+              [re-frame.api      :as r :refer [r]]))
 
 
 
@@ -57,67 +56,6 @@
   (let [user-roles (r get-user-roles db)]
        (vector/contains-item? user-roles user-role)))
 
-(defn logged-in?
-  ; WARNING#4003
-  ;  A rendszer a vendég felhasználó bejelentkezése esetén is bejelentkezettnek
-  ;  tekinthető!
-  ;  A felhasználói bejelentkezettség vizsgálatára használj (user-identified?)
-  ;  függvényt!
-  ;
-  ; @usage
-  ;  (r logged-in? db)
-  ;
-  ; @return (boolean)
-  [db _]
-  (let [user-id (r get-user-id db)]
-       (some? user-id)))
-
-(defn logged-out?
-  ; WARNING#4003
-  ;
-  ; @usage
-  ;  (r logged-out? db)
-  ;
-  ; @return (boolean)
-  [db _]
-  (let [user-id (r get-user-id db)]
-       (nil? user-id)))
-
-(defn user-identified?
-  ; @usage
-  ;  (r user-identified? db)
-  ;
-  ; @return (boolean)
-  [db _]
-  (let [user-roles (r get-user-roles db)]
-       (core.helpers/user-roles->user-identified? user-roles)))
-
-(defn user-unidentified?
-  ; @usage
-  ;  (r user-unidentified? db)
-  ;
-  ; @return (boolean)
-  [db _]
-  (let [user-roles (r get-user-roles db)]
-       (core.helpers/user-roles->user-unidentified? user-roles)))
-
-(defn get-login-attempted-at
-  ; @usage
-  ;  (r get-login-attempted-at db)
-  ;
-  ; @return (string)
-  [db _]
-  (get-in db [:user :account-handler/meta-items :login-attempted-at]))
-
-(defn login-attempted?
-  ; @usage
-  ;  (r login-attempted? db)
-  ;
-  ; @return (boolean)
-  [db _]
-  (let [login-attempted-at (r get-login-attempted-at db)]
-       (some? login-attempted-at)))
-
 (defn client-locked?
   ; @usage
   ;  (r client-locked? db)
@@ -135,14 +73,6 @@
 ; @usage
 ;  [:user/get-user-email-address]
 (r/reg-sub :user/get-user-email-address get-user-email-address)
-
-; @usage
-;  [:user/user-identified?]
-(r/reg-sub :user/user-identified? user-identified?)
-
-; @usage
-;  [:user/login-attempted?]
-(r/reg-sub :user/login-attempted? login-attempted?)
 
 ; @usage
 ;  [:user/client-locked?]

@@ -12,28 +12,16 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.login-handler.routes
-    (:require [x.server-user.login-handler.helpers :as login-handler.helpers]))
+(ns x.server-user.login-handler.transfer
+    (:require [mid-fruits.map                      :as map]
+              [x.server-core.api                   :as x.core]
+              [x.server-user.login-handler.helpers :as login-handler.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn authenticate
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (login-handler.helpers/authenticate-f request))
-
-(defn logout
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (login-handler.helpers/logout-f request))
+(x.core/reg-transfer! :user/transfer-user-login!
+  {:data-f      #(-> % login-handler.helpers/request->public-user-login map/remove-namespace)
+   :target-path [:user :login-handler/user-login]})

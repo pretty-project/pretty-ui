@@ -34,4 +34,7 @@
             :hu "Letöltési hiba"}
            :service-not-available
            {:en "Service not available"
-            :hu "A szolgáltatás nem elérhető"}})
+            :hu "A szolgáltatás nem elérhető"}
+           :unkown-error
+           {:en "Unknown error"
+            :hu "Ismeretlen hiba"}})

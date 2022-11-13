@@ -13,10 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.api
-    (:require [x.app-user.account-handler.effects]
-              [x.app-user.account-handler.events]
+    (:require [x.app-user.login-handler.effects]
+              [x.app-user.login-handler.events]
               [x.app-user.account-handler.subs     :as account-handler.subs]
               [x.app-user.core.helpers             :as core.helpers]
+              [x.app-user.login-handler.subs       :as login-handler.subs]
               [x.app-user.profile-handler.config   :as profile-handler.config]
               [x.app-user.profile-handler.events   :as profile-handler.events]
               [x.app-user.profile-handler.subs     :as profile-handler.subs]
@@ -33,17 +34,19 @@
 (def get-user-email-address account-handler.subs/get-user-email-address)
 (def get-user-roles         account-handler.subs/get-user-roles)
 (def user-has-role?         account-handler.subs/user-has-role?)
-(def logged-in?             account-handler.subs/logged-in?)
-(def logged-out?            account-handler.subs/logged-out?)
-(def user-identified?       account-handler.subs/user-identified?)
-(def user-unidentified?     account-handler.subs/user-unidentified?)
-(def get-login-attempted-at account-handler.subs/get-login-attempted-at)
-(def login-attempted?       account-handler.subs/login-attempted?)
 (def client-locked?         account-handler.subs/client-locked?)
 
 ; x.app-user.core.helpers
 (def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
 (def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)
+
+; x.app-user.login-handler.subs
+(def logged-in?         login-handler.subs/logged-in?)
+(def logged-out?        login-handler.subs/logged-out?)
+(def user-identified?   login-handler.subs/user-identified?)
+(def user-unidentified? login-handler.subs/user-unidentified?)
+(def get-login-failure  login-handler.subs/get-login-failure)
+(def login-failured?    login-handler.subs/login-failured?)
 
 ; x.app-user.profile-handler.config
 (def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)

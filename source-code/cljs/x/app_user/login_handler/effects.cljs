@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.account-handler.effects
-    (:require [re-frame.api                      :as r :refer [r]]
-              [x.app-user.account-handler.events :as account-handler.events]))
+(ns x.app-user.login-handler.effects
+    (:require [re-frame.api                    :as r :refer [r]]
+              [x.app-user.login-handler.events :as login-handler.events]))
 
 
 
@@ -42,20 +42,40 @@
   ; @usage
   ;  [:user/authenticate! {:email-address "hello@domain.com" :password "my-password"}]
   (fn [{:keys [db]} [_ login-data]]
-      {:db (r account-handler.events/clear-login-attempt! db)
+      {:db (r login-handler.events/clear-login-failure! db)
        :dispatch [:sync/send-request! :user/authenticate!
                                       {:method       :post
                                        :on-success   [:boot-loader/restart-app!]
-                                       :on-failure   [:user/reg-login-attempt!]
+                                       :on-failure   [:user/authentication-failed]
                                        :params       login-data
                                        :uri          "/user/authenticate"
                                        :idle-timeout 3000}]}))
+
+(r/reg-event-fx :user/authentication-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) server-response
+  ;  {:status (integer)}
+  (fn [_ [_ {:keys [status]}]]
+      (println (integer? status))
+      [:user/reg-login-failure! status]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :user/logout!
   ; @usage
   ;  [:user/logout!]
   [:sync/send-request! :user/logout!
                        {:method     :post
-                        :on-failure [:ui/render-bubble!        {:content :logout-failed}]
+                        :on-failure [:user/logout-failed]
                         :on-success [:boot-loader/restart-app! {:restart-target "/login"}]
                         :uri        "/user/logout"}])
+
+(r/reg-event-fx :user/logout-failed
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (map) server-response
+  [:ui/render-bubble! ::notification {:content :logout-failed}])

@@ -35,6 +35,8 @@
 (defn ->app-built
   ; @usage
   ;  (->app-built)
+  ;
+  ; @return (string)
   []
   ; Az app-build (az applikáció build-version számának) értékét beolvassa az azt
   ; tároló fájlból, majd növeli eggyel és a növelt értéket eltárolja a fájlban.

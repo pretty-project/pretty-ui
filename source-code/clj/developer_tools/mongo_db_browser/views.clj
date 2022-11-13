@@ -39,6 +39,10 @@
       (let [menu-button-style (mongo-db-browser.styles/menu-button-style {:warning? true})]
            (str "<a style=\""menu-button-style"\" href=\"?empty-collection="collection-name"\">Empty collection</a>"))))
 
+           ; confirm(); !!!!!!
+           ;(str "<style type=\"text/javascript\">function x() {alert('xas');}; x()</style>"
+            ;    "<div style=\""menu-button-style"\" onclick=\"emptyCollection()\">Empty collection</div>"])))
+
 (defn- menu-bar
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [browser-props]

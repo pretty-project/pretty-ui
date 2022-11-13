@@ -12,28 +12,29 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-user.login-handler.routes
-    (:require [x.server-user.login-handler.helpers :as login-handler.helpers]))
+(ns x.server-user.login-handler.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn authenticate
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (login-handler.helpers/authenticate-f request))
+; @constant (integer)
+(def MAX-LOGIN-ATTEMPT-LOG 16)
 
-(defn logout
-  ; WARNING! NON PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) request
-  ;
-  ; @return (map)
-  [request]
-  (login-handler.helpers/logout-f request))
+; @constant (integer)
+(def MAX-SUCCESSFUL-LOGIN-LOG 16)
+
+; @constant (integer)
+(def MAX-LOGIN-ATTEMPT-ALLOWED 3)
+
+; @constant (s)
+(def LOGIN-ATTEMPT-EXPIRATION-WINDOW 300)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @constant (namespaced map)
+(def PUBLIC-USER-LOGIN-PROJECTION {:user-login/id 0})

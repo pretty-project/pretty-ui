@@ -313,7 +313,8 @@
   ;
   ; @return (boolean)
   [n xyz]
-  (boolean (some #(contains? n %) xyz)))
+  (letfn [(f [%] (contains? n %))]
+         (boolean (some f xyz))))
 
 (defn contains-value?
   ; @param (map) n
@@ -361,9 +362,16 @@
   ;  =>
   ;  {:b "x"}
   ;
+  ; @example
+  ;  (rekey-item {:a "x"} :c :d)
+  ;  =>
+  ;  {:a "x"}
+  ;
   ; @return (map)
   [n from to]
-  (dissoc (assoc n to (get n from)) from))
+  (if (contains? n from)
+      (dissoc (assoc n to (get n from)) from)
+      (return n)))
 
 (defn rekey-items
   ; @param (map) n

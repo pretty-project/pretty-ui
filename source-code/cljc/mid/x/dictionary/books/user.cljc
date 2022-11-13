@@ -80,6 +80,9 @@
            :invalid-phone-number
            {:en "Invalid phone number"
             :hu "Érvénytelen telefonszám"}
+           :last-login-at-n
+           {:en "Last login at: %"
+            :hu "Utolsó bejelentkezés ideje: %"}
            :last-modified
            {:en "Last modified"
             :hu "Utoljára módosítva"}
@@ -138,7 +141,7 @@
            {:en "PIN"
             :hu "PIN"}
            :registered-at-n
-           {:en "registered at: %"
+           {:en "Registered at: %"
             :hu "Regisztráció ideje: %"}
            :show-password!
            {:en "Show password"

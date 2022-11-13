@@ -17,6 +17,7 @@
               [x.server-user.install-handler.lifecycles]
               [x.server-user.install-handler.side-effects]
               [x.server-user.login-handler.lifecycles]
+              [x.server-user.login-handler.transfer]
               [x.server-user.profile-handler.transfer]
               [x.server-user.settings-handler.lifecycles]
               [x.server-user.settings-handler.side-effects]
@@ -25,6 +26,7 @@
               [x.server-user.account-handler.helpers   :as account-handler.helpers]
               [x.server-user.core.helpers              :as core.helpers]
               [x.server-user.document-handler.helpers  :as document-handler.helpers]
+              [x.server-user.login-handler.helpers     :as login-handler.helpers]
               [x.server-user.profile-handler.config    :as profile-handler.config]
               [x.server-user.profile-handler.helpers   :as profile-handler.helpers]
               [x.server-user.session-handler.helpers   :as session-handler.helpers]
@@ -57,6 +59,11 @@
 (def updated-document-prototype    document-handler.helpers/updated-document-prototype)
 (def duplicated-document-prototype document-handler.helpers/duplicated-document-prototype)
 (def fill-document                 document-handler.helpers/fill-document)
+
+; x.server-user.login-handler.helpers
+(def user-account-id->user-login login-handler.helpers/user-account-id->user-login)
+(def request->user-login         login-handler.helpers/request->user-login)
+(def request->public-user-login  login-handler.helpers/request->public-user-login)
 
 ; x.server-user.profile-handler.config
 (def DEFAULT-PROFILE-PICTURE-URL profile-handler.config/DEFAULT-PROFILE-PICTURE-URL)

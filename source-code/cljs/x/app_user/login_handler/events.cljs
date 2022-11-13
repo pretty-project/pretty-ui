@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-user.account-handler.events
+(ns x.app-user.login-handler.events
     (:require [mid-fruits.map  :refer [dissoc-in]]
               [re-frame.api    :as r]
               [time.api        :as time]))
@@ -22,20 +22,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn reg-login-attempt!
+(defn reg-login-failure!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
+  ; @param (integer) status
+  ;
   ; @return (map)
-  [db _]
-  (assoc-in db [:user :account-handler/meta-items :login-attempted-at]
-               (time/elapsed)))
+  [db [_ status]]
+  (assoc-in db [:user :login-handler/meta-items :login-failure]
+               {:timestamp (time/elapsed)
+                :status    status}))
 
-(defn clear-login-attempt!
+(defn clear-login-failure!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @return (map)
   [db _]
-  (dissoc-in db [:user :account-handler/meta-items :login-attempted-at]))
+  (dissoc-in db [:user :login-handler/meta-items :login-failure]))
 
 
 
@@ -43,7 +46,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :user/reg-login-attempt! reg-login-attempt!)
+(r/reg-event-db :user/reg-login-failure! reg-login-failure!)
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :user/clear-login-attempt! clear-login-attempt!)
+(r/reg-event-db :user/clear-login-failure! clear-login-failure!)
