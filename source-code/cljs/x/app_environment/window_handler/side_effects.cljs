@@ -38,7 +38,7 @@
   ; @usage
   ;  (open-tab! "www.my-site.com/my-link")
   [uri]
-  (js-window/open-tab!))
+  (js-window/open-tab! uri))
 
 (defn reload-tab!
   ; @usage
