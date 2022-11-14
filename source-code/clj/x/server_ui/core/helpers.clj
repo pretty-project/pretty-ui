@@ -22,33 +22,36 @@
 
 (defn include-js
   ; @param (map) include-props
-  ;  {:uri (string)}
+  ;  {:id (keyword)
+  ;   :uri (string)}
   ;
   ; @usage
   ;  (include-js {:uri "/my-script.js"})
-  [{:keys [uri]}]
-  [:script {:type "text/javascript" :src uri}])
+  [{:keys [id uri]}]
+  [:script {:id id :type "text/javascript" :src uri}])
 
 (defn include-css
   ; @param (map) include-props
-  ;  {:on-load (function)(opt)
+  ;  {:id (keyword)
+  ;   :on-load (function)(opt)
   ;   :uri (string)}
   ;
   ; @usage
   ;  (include-css {:uri "/my-style.css"})
-  [{:keys [on-load uri]}]
-  [:link {:type "text/css" :href uri :rel "stylesheet" :on-load on-load}])
+  [{:keys [id on-load uri]}]
+  [:link {:id id :type "text/css" :href uri :rel "stylesheet" :on-load on-load}])
 
 (defn include-favicon
   ; @param (map) include-props
-  ;  {:uri (string)
-  ;   :size (string)}
+  ;  {:id (keyword)
+  ;   :size (string)
+  ;   :uri (string)}
   ;
   ; @usage
   ;  (include-favicon {:uri  "/my-favicon.ico"
   ;                    :size "16x16"})
-  [{:keys [uri size]}]
-  [:link {:rel "icon" :type "image/png" :href uri :sizes size}])
+  [{:keys [id size uri]}]
+  [:link {:id id :rel "icon" :type "image/png" :href uri :sizes size}])
 
 (defn include-font
   ; https://gtmetrix.com/avoid-css-import.html
@@ -56,11 +59,12 @@
   ; during the loading of a web page.
   ;
   ; @param (map) include-props
-  ;  {:uri (string)}
+  ;  {:id (keyword)
+  ;   :uri (string)}
   ;
   ; @usage
   ;  (include-font {:uri "/my-style.css"})
   ;  =>
   ;  [:style {:type "text/css"} "@import url('/my-style.css')"]
-  [{:keys [uri]}]
-  [:style {:type "text/css"} (str "@import " (css/url uri))])
+  [{:keys [id uri]}]
+  [:style {:id id :type "text/css"} (str "@import " (css/url uri))])

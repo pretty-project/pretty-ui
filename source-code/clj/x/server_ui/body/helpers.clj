@@ -55,7 +55,7 @@
   ; XXX#5062 (source-code/clj/x/server_ui/README.md)
   (let [app-config @(r/subscribe [:core/get-app-config])
         core-js-uri (core-js-uri request body-props)]
-       (vector/concat-items [{:uri core-js-uri}]
+       (vector/concat-items [{:id :x-core-js :uri core-js-uri}]
                             (:plugin-js-paths app-config)
                             (:plugin-js-paths body-props))))
 

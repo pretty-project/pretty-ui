@@ -18,7 +18,6 @@
               [x.server-ui.body.helpers         :as body.helpers]
               [x.server-ui.body.prototypes      :as body.prototypes]
               [x.server-ui.core.helpers         :refer [include-js]]
-              [x.server-ui.error-shield.views   :as error-shield.views]
               [x.server-ui.loading-screen.views :as loading-screen.views]))
 
 
@@ -39,8 +38,7 @@
                           (let [csrf-token (force *anti-forgery-token*)]
                                [:div#sente-csrf-token {:data-csrf-token csrf-token}])
                           [:div#x-app-container]
-                          (loading-screen.views/view request loading-screen)
-                          (error-shield.views/view   request)])
+                          (loading-screen.views/view request loading-screen)])
 
 (defn view
   ; @param (map) request

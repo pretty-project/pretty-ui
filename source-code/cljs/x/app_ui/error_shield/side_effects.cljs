@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-ui.error-shield.side-effects
-    (:require [re-frame.api                  :as r]
+    (:require [dom.api                       :as dom]
+              [re-frame.api                  :as r]
               [time.api                      :as time]
               [x.app-environment.api         :as x.environment]
               [x.app-ui.error-shield.helpers :as error-shield.helpers]
@@ -24,15 +25,43 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @constant (string)
+(def send-error-report-f (str "function sendErrorReport () { var reportButton = document.getElementById(\"x-error-shield--report-button\");"
+                              "                              reportButton.removeAttribute (\"onClick\");"
+                              "                              reportButton.setAttribute (\"data-disabled\", \"true\");"
+                              "                              reportButton.innerHTML = \"Error report sent\";"
+                              "}"))
+
 (defn set-error-shield!
   ; @param (*) content
   ;
   ; @usage
   ;  (set-error-shield! "My content")
   [content]
-  (x.environment/set-element-content! "x-error-shield--content" content)
-  (if (error-shield.helpers/error-shield-hidden?)
-      (x.environment/reveal-element-animated! "x-error-shield")))
+  (let [app-db @r/app-db]
+       (dom/append-script! send-error-report-f)
+       (dom/insert-as-last-of-type! (dom/get-element-by-id "x-body-container")
+                                    (-> (dom/create-element! "div")
+                                        (dom/set-element-id! "x-error-shield")
+                                        (dom/set-element-attribute! "data-nosnippet" "true")
+                                        (dom/append-element! (-> (dom/create-element! "div")
+                                                                 (dom/set-element-id! "x-error-shield--body")
+                                                                 (dom/append-element! (-> (dom/create-element!         "div")
+                                                                                          (dom/set-element-id!         "x-error-shield--content")
+                                                                                          (dom/set-element-content!    content)))
+                                                                 (dom/append-element! (-> (dom/create-element!         "a")
+                                                                                          (dom/set-element-id!         "x-error-shield--refresh-button")
+                                                                                          (dom/set-element-attributes! {:href            "#"
+                                                                                                                        :data-selectable "false"
+                                                                                                                        :data-clickable  "true"
+                                                                                                                        :onClick         "location.reload ()"})
+                                                                                          (dom/set-element-content!    "Refresh")))
+                                                                 (dom/append-element! (-> (dom/create-element!         "div")
+                                                                                          (dom/set-element-id!         "x-error-shield--report-button")
+                                                                                          (dom/set-element-attributes! {:onClick (str "sendErrorReport (\"""\")")
+                                                                                                                        :data-selectable "false"
+                                                                                                                        :data-clickable  "true"})
+                                                                                          (dom/set-element-content!    "Send error report")))))))))
 
 
 

@@ -8,7 +8,7 @@
 
 [data-clickable="true"]:active,
 [data-clickable="true"]:focus {
-  opacity: .5;
+  opacity: .5 !important;
 }
 
 /***** Clickable *****/
@@ -30,11 +30,8 @@
 }
 
 [data-disabled="true"] {
-  opacity: .5;
-}
-
-button[data-disabled="true"] {
-  cursor: default;
+  cursor:  default !important;
+  opacity: .5      !important;
 }
 
 /***** Disabled *****/

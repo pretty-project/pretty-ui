@@ -268,7 +268,6 @@
 
 #x-error-shield {
   background-color: var( --background-color );
-  display: none;
   height: 100vh;
   left: 0;
   position: fixed;
@@ -288,13 +287,30 @@
   width: 100%;
 }
 
-#x-error-shield--refresh-button {
-  color: var( --color-primary );
+#x-error-shield--content {
+  font-size: var( --font-size-s );
+  font-weight: 500;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+}
+
+#x-error-shield--refresh-button,
+#x-error-shield--report-button {
   cursor: pointer;
   font-size: var( --font-size-xs );
+  font-weight: 500;
   letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs );
-  margin-top: 12px;
+  line-height: 18px;
+}
+
+#x-error-shield--refresh-button {
+  color: var( --color-primary );
+  margin-top: 24px;
+}
+
+#x-error-shield--report-button {
+  color: var( --color-muted );
+  margin-top: 6px;
 }
 
 /***** Error shield *****/

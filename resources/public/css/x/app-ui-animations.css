@@ -174,22 +174,6 @@
 
 
 
-/***** Error-shield *****/
-
-#x-error-shield {
-  animation-duration: .3s;
-  animation-fill-mode: both;
-  animation-timing-function: ease-in-out;
-}
-
-#x-error-shield[data-animation="reveal"] {
-  animation-name: opacity-0-1;
-}
-
-/***** Error-shield *****/
-
-
-
 /***** App surface *****/
 
 .x-app-surface--element {
