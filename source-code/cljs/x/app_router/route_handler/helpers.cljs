@@ -14,17 +14,17 @@
 
 (ns x.app-router.route-handler.helpers
     (:require [candy.api                          :refer [return]]
+              [mid.x.router.route-handler.helpers :as route-handler.helpers]
               [plugins.clerk.api                  :as clerk]
               [re-frame.api                       :as r]
-              [reagent.api                        :as reagent]
-              [x.mid-router.route-handler.helpers :as route-handler.helpers]))
+              [reagent.api                        :as reagent]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-router.route-handler.helpers
+; mid.x.router.route-handler.helpers
 (def route-conflict?                   route-handler.helpers/route-conflict?)
 (def destructed-routes->ordered-routes route-handler.helpers/destructed-routes->ordered-routes)
 (def variable-route-string?            route-handler.helpers/variable-route-string?)

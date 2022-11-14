@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-media.core.helpers
-    (:require [x.mid-media.core.helpers :as core.helpers]))
+    (:require [mid.x.media.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-media.core.helpers
+; mid.x.media.core.helpers
 (def filename->media-storage-uri        core.helpers/filename->media-storage-uri)
 (def media-storage-uri->filename        core.helpers/media-storage-uri->filename)
 (def filename->media-thumbnail-uri      core.helpers/filename->media-thumbnail-uri)

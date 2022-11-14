@@ -29,7 +29,7 @@
   ;
   ; @return (map)
   [db [_ term-id term]]
-  (assoc-in db [:dictionary :term-handler/data-items term-id] term))
+  (assoc-in db [:x.dictionary :term-handler/data-items term-id] term))
 
 (defn add-terms!
   ; @param (map) terms
@@ -39,7 +39,7 @@
   ;
   ; @return (map)
   [db [_ terms]]
-  (update-in db [:dictionary :term-handler/data-items] merge terms))
+  (update-in db [:x.dictionary :term-handler/data-items] merge terms))
 
 
 
@@ -50,11 +50,11 @@
 ; @param (map) term
 ;
 ; @usage
-;  [:dictionary/add-term! :my-term {:en "My term"}]
-(r/reg-event-db :dictionary/add-term! add-term!)
+;  [:x.dictionary/add-term! :my-term {:en "My term"}]
+(r/reg-event-db :x.dictionary/add-term! add-term!)
 
 ; @param (map) terms
 ;
 ; @usage
-;  [:dictionary/add-terms! {:my-term {:en "My term"}}]
-(r/reg-event-db :dictionary/add-terms! add-terms!)
+;  [:x.dictionary/add-terms! {:my-term {:en "My term"}}]
+(r/reg-event-db :x.dictionary/add-terms! add-terms!)

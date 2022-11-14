@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-db.core.events
-    (:require [x.mid-db.core.events :as core.events]))
+    (:require [mid.x.db.core.events :as core.events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-db.core.events
+; mid.x.db.core.events
 (def empty-db!           core.events/empty-db!)
 (def toggle-item!        core.events/toggle-item!)
 (def toggle-item-value!  core.events/toggle-item-value!)

@@ -13,15 +13,15 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.debug-handler.helpers
-    (:require [server-fruits.http               :as http]
-              [x.mid-core.debug-handler.helpers :as helpers]))
+    (:require [mid.x.core.debug-handler.helpers :as helpers]
+              [server-fruits.http               :as http]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.debug-handler.helpers
+; mid.x.core.debug-handler.helpers
 (def query-string->debug-mode helpers/query-string->debug-mode)
 
 

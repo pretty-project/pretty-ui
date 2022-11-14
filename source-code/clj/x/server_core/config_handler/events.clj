@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.config-handler.events
-    (:require [x.mid-core.config-handler.events :as config-handler.events]))
+    (:require [mid.x.core.config-handler.events :as config-handler.events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.config-handler.events
+; mid.x.core.config-handler.events
 (def store-app-config!    config-handler.events/store-app-config!)
 (def store-server-config! config-handler.events/store-server-config!)

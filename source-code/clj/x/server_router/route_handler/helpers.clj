@@ -15,9 +15,9 @@
 (ns x.server-router.route-handler.helpers
     (:require [candy.api                          :refer [return]]
               [mid-fruits.uri                     :as uri]
+              [mid.x.router.route-handler.helpers :as route-handler.helpers]
               [re-frame.api                       :as r]
               [server-fruits.http                 :as http]
-              [x.mid-router.route-handler.helpers :as route-handler.helpers]
               [x.server-user.api                  :as x.user]))
 
 
@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-router.route-handler.helpers
+; mid.x.router.route-handler.helpers
 (def route-conflict?                   route-handler.helpers/route-conflict?)
 (def destructed-routes->ordered-routes route-handler.helpers/destructed-routes->ordered-routes)
 (def variable-route-string?            route-handler.helpers/variable-route-string?)

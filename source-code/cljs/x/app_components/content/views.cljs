@@ -59,7 +59,7 @@
   ;
   ; @return (string)
   [content-id {:keys [content] :as content-props}]
-  (let [content @(r/subscribe [:dictionary/look-up content])]
+  (let [content @(r/subscribe [:x.dictionary/look-up content])]
        (string-content content-id (assoc content-props :content content))))
 
 (defn- render-fn-content

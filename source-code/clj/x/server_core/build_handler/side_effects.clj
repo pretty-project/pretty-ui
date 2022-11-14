@@ -15,8 +15,8 @@
 (ns x.server-core.build-handler.side-effects
     (:require [format.api                            :as format]
               [io.api                                :as io]
+              [mid.x.core.build-handler.side-effects :as build-handler.side-effects]
               [re-frame.api                          :as r]
-              [x.mid-core.build-handler.side-effects :as build-handler.side-effects]
               [x.server-core.build-handler.config    :as build-handler.config]))
 
 
@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.build-handler.side-effects
+; mid.x.core.build-handler.side-effects
 (def app-build build-handler.side-effects/app-build)
 
 

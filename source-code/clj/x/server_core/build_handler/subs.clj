@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.build-handler.subs
-    (:require [x.mid-core.build-handler.subs :as build-handler.subs]))
+    (:require [mid.x.core.build-handler.subs :as build-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.build-handler.subs
+; mid.x.core.build-handler.subs
 (def get-app-build build-handler.subs/get-app-build)

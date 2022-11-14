@@ -82,7 +82,7 @@
             :hu "Érvénytelen telefonszám"}
            :last-login-at-n
            {:en "Last login at: %"
-            :hu "Utolsó bejelentkezés ideje: %"}
+            :hu "Legutóbbi bejelentkezés ideje: %"}
            :last-modified
            {:en "Last modified"
             :hu "Utoljára módosítva"}

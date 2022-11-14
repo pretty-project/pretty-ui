@@ -36,8 +36,8 @@
   ;
   ; @return (map or string)
   [db [_ term-id language]]
-  (if language (get-in db [:dictionary :term-handler/data-items term-id language])
-               (get-in db [:dictionary :term-handler/data-items term-id])))
+  (if language (get-in db [:x.dictionary :term-handler/data-items term-id language])
+               (get-in db [:x.dictionary :term-handler/data-items term-id])))
 
 (defn term-exists?
   ; @param (keyword) term-id
@@ -51,5 +51,5 @@
   ;
   ; @return (boolean)
   [db [_ term-id language]]
-  (if language (map/contains-key? (get-in db [:dictionary :term-handler/data-items term-id]) language)
-               (map/contains-key? (get-in db [:dictionary :term-handler/data-items])         term-id)))
+  (if language (map/contains-key? (get-in db [:x.dictionary :term-handler/data-items term-id]) language)
+               (map/contains-key? (get-in db [:x.dictionary :term-handler/data-items])         term-id)))

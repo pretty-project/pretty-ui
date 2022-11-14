@@ -81,8 +81,8 @@
   ;   :showWordsCounter (boolean)
   ;   :showXPathInStatusbar (boolean)}
   [{:keys [autofocus? buttons disabled? insert-as min-height placeholder]}]
-  (let [placeholder       @(r/subscribe [:dictionary/look-up placeholder])
-        selected-language @(r/subscribe [:locales/get-selected-language])]
+  (let [placeholder       @(r/subscribe [:x.dictionary/look-up placeholder])
+        selected-language @(r/subscribe [:x.locales/get-selected-language])]
        {:autofocus              autofocus?
         :buttons                (parse-buttons buttons)
         :buttonsXS              (parse-buttons buttons)

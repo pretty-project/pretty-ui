@@ -51,10 +51,10 @@
           :on-focus  helpers/on-focus-f
           :on-change helpers/on-change-f
           :value     (helpers/get-editor-input editor-id)
-          :font-colors [{:color "var( --color )"           :label @(r/subscribe [:dictionary/look-up :default-color])}
-                        {:color "var( --color-muted )"     :label @(r/subscribe [:dictionary/look-up :muted-color])}
-                        {:color "var( --color-highlight )" :label @(r/subscribe [:dictionary/look-up :highlight-color])}
-                        {:color "var( --white-xx-Light )"  :label @(r/subscribe [:dictionary/look-up :white]) :hasBorder true}]
+          :font-colors [{:color "var( --color )"           :label @(r/subscribe [:x.dictionary/look-up :default-color])}
+                        {:color "var( --color-muted )"     :label @(r/subscribe [:x.dictionary/look-up :muted-color])}
+                        {:color "var( --color-highlight )" :label @(r/subscribe [:x.dictionary/look-up :highlight-color])}
+                        {:color "var( --white-xx-Light )"  :label @(r/subscribe [:x.dictionary/look-up :white]) :hasBorder true}]
           :background-colors [{:color "hsl( 0, 75%, 60%)" :label "Red"}
                               {:color "hsl(30, 75%, 60%)" :label "Orange"}
                               {:color "hsl(60, 75%, 60%)" :label "Yellow"}

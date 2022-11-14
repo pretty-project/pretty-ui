@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.event-handler
+; mid.x.core.event-handler
 (def event-vector?              re-frame/event-vector?)
 (def subscription-vector?       re-frame/subscription-vector?)
 (def event-vector->event-id     re-frame/event-vector->event-id)

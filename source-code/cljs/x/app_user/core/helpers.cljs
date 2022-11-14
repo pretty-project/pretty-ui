@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-user.core.helpers
-    (:require [x.mid-user.core.helpers :as core.helpers]))
+    (:require [mid.x.user.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.core.helpers
+; mid.x.user.core.helpers
 (def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
 (def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)

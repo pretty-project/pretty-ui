@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-media.core.config
-    (:require [x.mid-media.core.config :as core.config]))
+    (:require [mid.x.media.core.config :as core.config]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-media.core.config
+; mid.x.media.core.config
 (def THUMBNAIL-URI-BASE      core.config/THUMBNAIL-URI-BASE)
 (def STORAGE-URI-BASE        core.config/STORAGE-URI-BASE)
 (def THUMBNAIL-FILEPATH-BASE core.config/THUMBNAIL-FILEPATH-BASE)

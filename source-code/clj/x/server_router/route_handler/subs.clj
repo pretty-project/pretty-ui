@@ -14,8 +14,8 @@
 
 (ns x.server-router.route-handler.subs
     (:require [candy.api                             :refer [return]]
+              [mid.x.router.route-handler.subs       :as route-handler.subs]
               [re-frame.api                          :as r :refer [r]]
-              [x.mid-router.route-handler.subs       :as route-handler.subs]
               [x.server-router.route-handler.helpers :as route-handler.helpers]))
 
 
@@ -23,7 +23,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-router.route-handler.subs
+; mid.x.router.route-handler.subs
 (def get-app-home   route-handler.subs/get-app-home)
 (def use-app-home   route-handler.subs/use-app-home)
 (def get-app-domain route-handler.subs/get-app-domain)

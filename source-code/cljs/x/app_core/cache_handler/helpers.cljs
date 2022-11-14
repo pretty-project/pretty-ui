@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.cache-handler.helpers
-    (:require [x.mid-core.cache-handler.helpers :as cache-handler.helpers]))
+    (:require [mid.x.core.cache-handler.helpers :as cache-handler.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.cache-handler.helpers
+; mid.x.core.cache-handler.helpers
 (def cache-control-uri cache-handler.helpers/cache-control-uri)

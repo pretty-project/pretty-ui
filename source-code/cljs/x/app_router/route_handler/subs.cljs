@@ -17,19 +17,19 @@
               [mid-fruits.string                 :as string]
               [mid-fruits.uri                    :as uri]
               [mid-fruits.vector                 :as vector]
+              [mid.x.router.route-handler.subs   :as route-handler.subs]
               [reitit.frontend                   :as reitit.frontend]
               [re-frame.api                      :as r :refer [r]]
               [x.app-core.api                    :as x.core]
               [x.app-router.route-handler.config :as route-handler.config]
-              [x.app-user.api                    :as x.user]
-              [x.mid-router.route-handler.subs   :as route-handler.subs]))
+              [x.app-user.api                    :as x.user]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-router.route-handler.subs
+; mid.x.router.route-handler.subs
 (def get-app-home   route-handler.subs/get-app-home)
 (def use-app-home   route-handler.subs/use-app-home)
 (def get-app-domain route-handler.subs/get-app-domain)

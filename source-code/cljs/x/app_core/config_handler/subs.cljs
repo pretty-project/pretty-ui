@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-core.config-handler.subs
-    (:require [x.mid-core.config-handler.subs :as config-handler.subs]))
+    (:require [mid.x.core.config-handler.subs :as config-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.config-handler.subs
+; mid.x.core.config-handler.subs
 (def get-app-config      config-handler.subs/get-app-config)
 (def get-app-config-item config-handler.subs/get-app-config-item)

@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.lifecycle-handler.subs
-    (:require [x.mid-core.lifecycle-handler.subs :as lifecycle-handler.subs]))
+    (:require [mid.x.core.lifecycle-handler.subs :as lifecycle-handler.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.lifecycle-handler.subs
+; mid.x.core.lifecycle-handler.subs
 (def get-period-events lifecycle-handler.subs/get-period-events)

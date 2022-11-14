@@ -26,6 +26,6 @@
                                                              :post {:handler login-handler.routes/authenticate}}
                                          :user/logout       {:route-template "/user/logout"
                                                              :post {:handler login-handler.routes/logout}}
-                                         :user/login        {:client-event   [:views/render-login-screen!]
+                                         :user/login        {:client-event   [:x.views/render-login-screen!]
                                                              :js-build       :app
                                                              :route-template "/login"}}]})

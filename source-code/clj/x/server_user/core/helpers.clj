@@ -14,14 +14,14 @@
 
 (ns x.server-user.core.helpers
     (:require [mid-fruits.random       :as random]
-              [x.mid-user.core.helpers :as core.helpers]))
+              [mid.x.user.core.helpers :as core.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-user.core.helpers
+; mid.x.user.core.helpers
 (def user-roles->user-identified?   core.helpers/user-roles->user-identified?)
 (def user-roles->user-unidentified? core.helpers/user-roles->user-unidentified?)
 

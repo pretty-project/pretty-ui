@@ -122,7 +122,7 @@
 ; ne felejtsd el a szótárhoz adni a megfelelő kifejezéseket!
 ; Pl.: A :my-order/ascending értékhez tartozó kifejezés: {:by-my-order-ascending {...}}
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-app-boot [:dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
+  {:on-app-boot [:x.dictionary/add-terms! {:by-my-order-ascending {:en "..." :hu "..."}}]})
 
 
 

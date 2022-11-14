@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-db.core.subs
-    (:require [x.mid-db.core.subs :as core.subs]))
+    (:require [mid.x.db.core.subs :as core.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-db.core.subs
+; mid.x.db.core.subs
 (def subscribe-item   core.subs/subscribe-item)
 (def subscribed-item  core.subs/subscribed-item)
 (def get-db           core.subs/get-db)

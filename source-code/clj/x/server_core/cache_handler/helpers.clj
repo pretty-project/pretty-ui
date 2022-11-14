@@ -13,16 +13,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.server-core.cache-handler.helpers
-    (:require [re-frame.api                     :as r :refer [r]]
-              [server-fruits.http               :as http]
-              [x.mid-core.cache-handler.helpers :as cache-handler.helpers]))
+    (:require [mid.x.core.cache-handler.helpers :as cache-handler.helpers]
+              [re-frame.api                     :as r :refer [r]]
+              [server-fruits.http               :as http]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; x.mid-core.cache-handler.helpers
+; mid.x.core.cache-handler.helpers
 (def cache-control-uri cache-handler.helpers/cache-control-uri)
 
 
