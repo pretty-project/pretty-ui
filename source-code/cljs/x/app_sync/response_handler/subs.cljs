@@ -57,12 +57,10 @@
   ;
   ; @return (map)
   ;  {:failure (keyword)
-  ;   :response (string)
-  ;   :validator-f (function)}
-  [db [_ _ {:keys [validator-f]} server-response-body]]
-  {:failure     :invalid
-   :response    server-response-body
-   :validator-f validator-f})
+  ;   :response (string)}
+  [db [_ _ _ server-response-body]]
+  {:failure  :invalid
+   :response server-response-body})
 
 
 

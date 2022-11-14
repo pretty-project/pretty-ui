@@ -107,7 +107,7 @@
        (letfn [(f [option-list option-dex option]
                   ;^{:key (random/generate-react-key)}
                   (conj option-list [combo-box-option box-id box-props option-dex option]))]
-              [:div.e-combo-box--options {:data-hide-scrollbar true}
+              [:div.e-combo-box--options {:data-scrollable-y true}
                                          [combo-box-field-content-option box-id box-props]
                                          (reduce-indexed f [:<>] options)])))
 

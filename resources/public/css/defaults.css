@@ -8,7 +8,8 @@
 
 [data-clickable="true"]:active,
 [data-clickable="true"]:focus {
-  opacity: .5 }
+  opacity: .5;
+}
 
 /***** Clickable *****/
 
@@ -25,36 +26,51 @@
   left: 0;
   position: absolute;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 [data-disabled="true"] {
-  opacity: .5 }
+  opacity: .5;
+}
 
 button[data-disabled="true"] {
-  cursor: default }
+  cursor: default;
+}
 
 /***** Disabled *****/
 
 
 
-/***** Hide scrollbar *****/
+/***** Scrollable *****/
 
 /* @usage
- *  [:div {:data-hide-scrollbar true} "My scroll-container"] */
+ *  [:div {:data-scrollable-y true} "My scroll-container"] */
 
+[data-scrollable-x="true"],
+[data-scrollable-y="true"],
 [data-hide-scrollbar="true"] {
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar for Firefox */
   scrollbar-width: none;
-  /* */
-  overflow-x: auto }
+}
 
+[data-scrollable-x="true"]::-webkit-scrollbar,
+[data-scrollable-y="true"]::-webkit-scrollbar,
 [data-hide-scrollbar="true"]::-webkit-scrollbar {
   /* Hide scrollbar for Chrome, Safari and Opera */
-  display: none }
+  display: none;
+}
 
-/***** Hide scrollbar *****/
+[data-scrollable-x="true"] {
+  overflow-x: auto;
+}
+
+[data-scrollable-y="true"] {
+  overflow-y: auto;
+}
+
+/***** Scrollable *****/
 
 
 
@@ -68,6 +84,7 @@ button[data-disabled="true"] {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  user-select: none }
+  user-select: none;
+}
 
 /***** Selectable *****/

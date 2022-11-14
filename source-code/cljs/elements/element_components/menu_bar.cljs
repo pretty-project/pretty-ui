@@ -171,7 +171,7 @@
   ; (hibamentesen), ha scroll-container elem (.e-menu-bar--items)
   ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
   (letfn [(f [item-list item-props] (conj item-list [menu-item bar-id bar-props item-props]))]
-         [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-hide-scrollbar true})
+         [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-scrollable-x true})
                                       (reduce f [:<>] menu-items)]))
 
 (defn menu-bar

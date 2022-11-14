@@ -15,7 +15,8 @@
   background-color: var( --fill-color-invert );
   height: 100vh;
   position: sticky;
-  top: 0 }
+  top: 0;
+}
 
 /* Sidebar A */
 
@@ -23,6 +24,7 @@
 
 #sidebar-a--content {
   height: 100%;
-  overflow-y: auto }
+  overflow-y: hidden;
+}
 
 /* Content */

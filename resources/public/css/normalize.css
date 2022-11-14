@@ -5,24 +5,28 @@
 body, p,
 button, input, optgroup, select, textarea {
   margin: 0;
-  padding: 0 }
+  padding: 0;
+}
 
 
 /* */
 h1, h2, h3, h4, h5, h6 {
-  margin: 0 }
+  margin: 0;
+}
 
 
 /* Remove the gray background on active links in IE 10. */
 a {
   background-color: transparent;
-  outline-style: none }
+  outline-style: none;
+}
 
 
 
 /* */
 iframe {
-  border: none }
+  border: none;
+}
 
 
 
@@ -32,14 +36,16 @@ iframe {
 img {
   /* 1. */ border-style: none;
   /* 2. */ box-sizing: content-box;
-  /* 3. */ display: block }
+  /* 3. */ display: block;
+}
 
 
 
 /* ... */
 button {
   color: inherit;
-  cursor: pointer }
+  cursor: pointer;
+}
 
 
 
@@ -47,7 +53,8 @@ button {
  * 1. Show the overflow in Edge. */
 button,
 input { /* 1. */
-  overflow: visible }
+  overflow: visible;
+}
 
 
 
@@ -60,13 +67,15 @@ textarea {
   font-size: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  outline-style: none }
+  outline-style: none;
+}
 
 
 
 /* Remove the border of focused content-editable elements */
 div[contenteditable="true"] {
-  outline-style: none }
+  outline-style: none;
+}
 
 
 
@@ -74,7 +83,8 @@ div[contenteditable="true"] {
  * 1. Remove the inheritence of text transforms in Firefox. */
 button,
 select { /* 1. */
-  text-transform: none }
+  text-transform: none;
+}
 
 
 
@@ -83,7 +93,8 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button }
+  -webkit-appearance: button;
+}
 
 
 
@@ -93,7 +104,8 @@ button::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   border-style: none;
-  padding: 0 }
+  padding: 0;
+}
 
 
 
@@ -102,7 +114,8 @@ button:-moz-focusring,
 [type="button"]:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText }
+  outline: 1px dotted ButtonText;
+}
 
 
 
@@ -113,7 +126,8 @@ button:-moz-focusring,
 
 /* */
 pre {
-  margin: 0 }
+  margin: 0;
+}
 
 
 
@@ -135,7 +149,8 @@ html {
    * window.scrollBy({top: 100, left: 0, behavior: auto})
    *
    * The scroll-behavior property doesn't work in IE and Safari. 2019.03.10 */
- -scroll-behavior: smooth }
+ -scroll-behavior: smooth;
+}
 
 
 
@@ -147,43 +162,51 @@ body {
   /* 1. */ cursor: default;
   /* 2. */ /* cursor: url('/cursor.png'), default; */
   /* 3. */ box-sizing: border-box;
-  /* 4. */ -webkit-font-smoothing: antialiased }
+  /* 4. */ -webkit-font-smoothing: antialiased;
+}
 
 
 
 /* ... */
 footer, header, div, label, p, span {
-  cursor: inherit }
+  cursor: inherit;
+}
 
 
 
 /* Everything is {position: relative}. */
 a, button, footer, header, section, div, p, span, label, img {
-  position: relative }
+  position: relative;
+}
 
 
 
 /* Hide scrollbar in Webkit browsers. */
 html::-webkit-scrollbar {
-  display: none }
+  display: none;
+}
 
 
 
 /* Inherit the box-sizing property of the body element. */
 *,
 *::before,
-*::after { box-sizing: inherit }
+*::after {
+  box-sizing: inherit;
+}
 
 
 
 /* ... */
 a, a:link, a:visited, a:active {
   color: inherit;
-	text-decoration: none }
+	text-decoration: none;
+}
 
 a:hover {
   color: inherit;
-  text-decoration: none }
+  text-decoration: none;
+}
 
 
 
@@ -191,16 +214,19 @@ a:hover {
 progress {
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none }
+  appearance: none;
+}
 
 
 
 /* Table */
 table {
-  border-spacing: 0 }
+  border-spacing: 0;
+}
 
 td, th {
-  padding: 0 }
+  padding: 0;
+}
 
 /***** Normalize *****/
 
@@ -219,6 +245,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: var( --color );
   -webkit-box-shadow: 0 0 0px 1000px var( --background-color ) inset;
-  transition: background-color 9999s ease-in-out 0s }
+  transition: background-color 9999s ease-in-out 0s;
+}
 
 /***** Autofill rules *****/

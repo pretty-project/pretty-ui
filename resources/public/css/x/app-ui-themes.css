@@ -59,7 +59,8 @@ body[data-theme="dark"] {
   --hover-color-primary:        var( --soft-blue-x-dark );
   --hover-color-secondary:      var( --soft-purple-x-dark );
   --hover-color-success:        var( --soft-green-x-dark );
-  --hover-color-warning:        var( --soft-red-x-dark ) }
+  --hover-color-warning:        var( --soft-red-x-dark );
+}
 
 body[data-theme="light"] {
   /* App background */
@@ -110,7 +111,8 @@ body[data-theme="light"] {
   --hover-color-primary:        var( --soft-blue-light );
   --hover-color-secondary:      var( --soft-purple-light );
   --hover-color-success:        var( --soft-green-light );
-  --hover-color-warning:        var( --soft-red-light ) }
+  --hover-color-warning:        var( --soft-red-light );
+}
 
 body[data-theme="high-contrast"] {}
 
@@ -122,11 +124,13 @@ body[data-theme="high-contrast"] {}
 
 body[data-theme="dark"] {
   background-color: var( --app-background-color );
-  color:            var( --color ) }
+  color:            var( --color );
+}
 
 body[data-theme="light"] {
   background-color: var( --app-background-color );
-  color:            var( --color ) }
+  color:            var( --color );
+}
 
 body[data-theme="high-contrast"] {}
 
@@ -142,13 +146,15 @@ html {
    * Equal to the computed value of font-size on the root element.
    * When specified on the font-size property of the root element,
    * the rem units refer to the property’s initial value. */
-  font-size:      var( --font-size-rem ) }
+  font-size:      var( --font-size-rem );
+}
 
 body {
   font-family:    var( --font-family-default );
   font-size:      var( --font-size-m );
   font-weight:    400;
   letter-spacing: var( --letter-spacing-m );
-  line-height:    var( --line-height-m ) }
+  line-height:    var( --line-height-m );
+}
 
 /***** Text *****/

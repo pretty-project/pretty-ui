@@ -16,19 +16,23 @@
 
 .x-app-bubbles--element {
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 .x-app-bubbles--element[data-animation="reveal"] {
   animation-duration: .3s;
-  animation-name: translate-x-110p-0 }
+  animation-name: translate-x-110p-0;
+}
 
 .x-app-bubbles--element[data-animation="hide"] {
   animation-duration: .3s;
-  animation-name: translate-x-0-110p }
+  animation-name: translate-x-0-110p;
+}
 
 .x-app-bubbles--element[data-animation="update"] {
   animation-duration: .15s;
-  animation-name: scale-1-085-1 }
+  animation-name: scale-1-085-1;
+}
 
 /***** App bubbles *****/
 
@@ -54,19 +58,22 @@
 
   animation-duration: .25s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 /* Show flip popup structure on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="reveal"] .x-app-popups--element--structure {
-  animation-name: translate-y-110p-0 }
+  animation-name: translate-y-110p-0;
+}
 
 /* Hide flip popup structure on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--structure {
-  animation-name: translate-y-0-110p }
+  animation-name: translate-y-0-110p;
+}
 
 /* Flip popup cover on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"] .x-app-popups--element--cover,
@@ -79,19 +86,22 @@
 
   animation-duration: .1s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 /* Show popup cover on XXS, XS, S viewport*/
 [data-viewport-profile="xxs"] [data-animation="reveal"] .x-app-popups--element--cover,
 [data-viewport-profile="xs"]  [data-animation="reveal"] .x-app-popups--element--cover,
 [data-viewport-profile="s"]   [data-animation="reveal"] .x-app-popups--element--cover {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 /* Hide flip popup cover on XXS, XS, S viewport */
 [data-viewport-profile="xxs"] [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
 [data-viewport-profile="xs"]  [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover,
 [data-viewport-profile="s"]   [data-layout="flip"][data-animation="hide"] .x-app-popups--element--cover {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 /*** Sliding flip popup structure on XXS, XS, S viewport ***/
 
@@ -104,21 +114,24 @@
 [data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"] {
   animation-duration: .1s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 /* Show boxed popup on M, L, XL, XXL viewport */
 [data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
 [data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
 [data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="reveal"],
 [data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="reveal"] {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 /* Hide boxed popup M, L, XL, XXL viewport */
 [data-viewport-profile="m"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="l"]   .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="xl"]  .x-app-popups--element[data-layout="boxed"][data-animation="hide"],
 [data-viewport-profile="xxl"] .x-app-popups--element[data-layout="boxed"][data-animation="hide"] {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 /*** Revealing boxed popup on M, L, XL, XXL viewport ***/
 
@@ -127,15 +140,18 @@
 .x-app-popups--element[data-layout="unboxed"] {
   animation-duration: .15s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 /* Revealing unboxed popup on all viewport size */
 .x-app-popups--element[data-layout="unboxed"][data-animation="reveal"] {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 /* Hide unboxed popup on all viewport size */
 .x-app-popups--element[data-layout="unboxed"][data-animation="hide"] {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 /*** Revealing unboxed popup on all viewport size ***/
 /***** App popups *****/
@@ -147,10 +163,12 @@
 #x-loading-screen {
   animation-duration: .3s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 #x-loading-screen[data-animation="hide"] {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 /***** Loading-screen *****/
 
@@ -161,10 +179,12 @@
 #x-error-shield {
   animation-duration: .3s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 #x-error-shield[data-animation="reveal"] {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 /***** Error-shield *****/
 
@@ -175,12 +195,15 @@
 .x-app-surface--element {
   animation-duration: .15s;
   animation-fill-mode: both;
-  animation-timing-function: ease-in-out }
+  animation-timing-function: ease-in-out;
+}
 
 .x-app-surface--element[data-animation="reveal"] {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 .x-app-surface--element[data-animation="hide"] {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 /***** App surface *****/

@@ -26,7 +26,8 @@
 
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap }
+  flex-wrap: wrap;
+}
 
 .forms--form-column {
  -max-width: 800px;
@@ -34,7 +35,8 @@
 
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap }
+  flex-wrap: wrap;
+}
 
 .forms--form-block {
   /* */
@@ -57,12 +59,12 @@
    * arányaikat.
    *
    * Pl.: Ha egy elem tartalmához tartozó info-text szélessebb, mint az elem
-   * a min-width tulajdonsága alapján lenne, akkor az info-text bekapcsolásakor
-   * a sor utolsó eleme megtörik a sor többi eleme alá, és ilyenkor a sorban
-   * maradó elemek szélessének arányai megváltoznának az eredeti {flex-grow: 1}
-   * beállítással! */
+   *      a min-width tulajdonsága alapján lenne, akkor az info-text bekapcsolásakor
+   *      a sor utolsó eleme megtörik a sor többi eleme alá, és ilyenkor a sorban
+   *      maradó elemek szélessének arányai megváltoznának az eredeti {flex-grow: 1}
+   *      beállítással! */
  -flex-grow: 1;
   flex-grow: 0;
- }
+}
 
 /***** Forms *****/

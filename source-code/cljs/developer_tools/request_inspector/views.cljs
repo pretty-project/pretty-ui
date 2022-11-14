@@ -17,6 +17,7 @@
               [mid-fruits.pretty  :as pretty]
               [mid-fruits.vector  :as vector]
               [re-frame.api       :as r]
+              [reagent.api        :refer [ratom]]
               [time.api           :as time]))
 
 
@@ -27,12 +28,24 @@
 (defn- request-data
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [request-props @(r/subscribe [:developer-tools.request-inspector/get-request-props])]
-       [:div {:style {:margin-bottom "48px"}}
-             [:div {:style {:font-weight "600" :line-height "32px"}}
-                   (str "Request details:")]
-             [:pre {:style {:font-size "12px" :line-height "18px"}}
-                   (pretty/mixed->string request-props)]]))
+  (letfn [(f [%] (cond-> % (:error-handler-f    %) (assoc :error-handler-f    "...")
+                           (:response-f         %) (assoc :response-f         "...")
+                           (:progress-handler-f %) (assoc :progress-handler-f "...")
+                           (:response-handler-f %) (assoc :response-handler-f "...")
+                           (:validator-f        %) (assoc :validator-f        "...")))]
+         (let [show-more?    (ratom false)
+               request-props (r/subscribe [:developer-tools.request-inspector/get-request-props])]
+              (fn []
+                  [:div {:style {:margin-bottom "48px"}}
+                        [:div {:style {:font-weight "600" :line-height "32px"}}
+                              (str "Request details:")]
+                        [:pre {:style {:font-size "12px" :line-height "18px"}}
+                              (pretty/mixed->string (if @show-more? @request-props (f @request-props)))]
+                        (if (not= @request-props (f @request-props))
+                            [:div {:style {:cursor "pointer" :font-size "12px" :padding-top "12px" :font-weight "500" :width "120px" :color "var(--color-primary)"}
+                                   :data-clickable "true" :on-click #(swap! show-more? not)
+                                   :data-selectable "false"}
+                                  (if @show-more? "Show less" "Show more")])]))))
 
 (defn- response-data
   ; WARNING! NON-PUBLIC! DO NOT USE!

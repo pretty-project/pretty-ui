@@ -239,7 +239,7 @@ body {
 /* Line-color */
 
 .e-button-separator[data-color="muted"] .e-button-separator--body,
-.e-horizontal-line[data-color="muted"]  .e-horizontal-line--body,
+.e-horizontal-line--body[data-color="muted"],
 .e-line-diagram--section[data-color="muted"],
 .e-vertical-line[data-color="muted"]    .e-vertical-line--body {
   background-color: var( --border-color-muted ) }
@@ -306,7 +306,7 @@ body {
 /* Line-color */
 
 .e-button-separator[data-color="highlight"] .e-button-separator--body,
-.e-horizontal-line[data-color="highlight"]  .e-horizontal-line--body,
+.e-horizontal-line--body[data-color="highlight"],
 .e-line-diagram--section[data-color="highlight"],
 .e-vertical-line[data-color="highlight"]    .e-vertical-line--body {
   background-color: var( --border-color-highlight ) }
@@ -409,7 +409,7 @@ body {
 
 /* Line-color */
 
-.e-horizontal-line[data-color="primary"] .e-horizontal-line--body,
+.e-horizontal-line--body[data-color="primary"],
 .e-line-diagram--section[data-color="primary"],
 .e-vertical-line[data-color="primary"]   .e-vertical-line--body {
   background-color: var( --border-color-primary ) }
@@ -487,7 +487,7 @@ body {
 
 /* Line-color */
 
-.e-horizontal-line[data-color="secondary"] .e-horizontal-line--body,
+.e-horizontal-line--body[data-color="secondary"],
 .e-line-diagram--section[data-color="secondary"],
 .e-vertical-line[data-color="secondary"]   .e-vertical-line--body {
   background-color: var( --border-color-secondary ) }
@@ -675,7 +675,7 @@ body {
 /*** Default ***/
 /* Line-color */
 
-.e-horizontal-line[data-color="default"]  .e-horizontal-line--body,
+.e-horizontal-line--body[data-color="default"],
 .e-line-diagram--section[data-color="default"],
 .e-vertical-line[data-color="default"]    .e-vertical-line--body {
   background-color: var( --border-color ) }
@@ -1693,7 +1693,7 @@ body {
 .e-breadcrumbs--body {
   display: flex;
   grid-column-gap: 9px;
-  overflow-x: auto }
+}
 
 /*** Breadcrumbs body ***/
 
@@ -2167,7 +2167,7 @@ body {
   display: flex;
   flex-direction: column;
   max-height: 340px;
-  overflow-y: scroll }
+}
 
 .e-combo-box--options-placeholder {
   align-items: center;

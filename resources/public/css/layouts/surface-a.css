@@ -14,7 +14,8 @@
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  user-select: none }
+  user-select: none;
+}
 
 /***** User select *****/
 
@@ -26,7 +27,8 @@
   display: flex;
   flex-direction: column-reverse;
   min-height: 100vh;
-  width: 100% }
+  width: 100%;
+}
 
 /* Surface A */
 
@@ -40,10 +42,12 @@
   left: 0;
   position: fixed;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 .surface-a--background-pattern {
-  fill: var( --app-background-pattern-color ) }
+  fill: var( --app-background-pattern-color );
+}
 
 /* Background */
 
@@ -55,7 +59,8 @@
   left: 0;
   position: sticky;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 #surface-a--header-shadow {
   animation-fill-mode: both;
@@ -71,30 +76,36 @@
   left: 0;
   position: absolute;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 #surface-a--header-shadow.r-mounting {
-  animation-name: opacity-0-098 }
+  animation-name: opacity-0-098;
+}
 
 #surface-a--header-shadow.r-unmounting {
-  animation-name: opacity-098-0 }
+  animation-name: opacity-098-0;
+}
 
 #surface-a--header-content {
   border-radius: 0 0 var( --border-radius-m ) var( --border-radius-m );
   display: flex;
   justify-content: space-between;
   max-width: var( --content-width-l );
-  width: 100% }
+  width: 100%;
+}
 
 [data-viewport-profile="xs"] #surface-a--header-content,
 [data-viewport-profile="xs"] #surface-a--header-shadow,
 [data-viewport-profile="s"]  #surface-a--header-content,
 [data-viewport-profile="s"]  #surface-a--header-shadow {
-  border-radius: 0 }
+  border-radius: 0;
+}
 
 .surface-a--header-block {
   align-items: center;
-  display: flex }
+  display: flex;
+}
 
 #surface-a--header-title {
   animation-fill-mode: both;
@@ -102,13 +113,16 @@
   font-size: var( --font-size-s );
   font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
-  line-height: 36px }
+  line-height: 36px;
+}
 
 #surface-a--header-title.r-mounting {
-  animation-name: opacity-0-1 }
+  animation-name: opacity-0-1;
+}
 
 #surface-a--header-title.r-unmounting {
-  animation-name: opacity-1-0 }
+  animation-name: opacity-1-0;
+}
 
 #surface-a--title-sensor {}
 
@@ -123,10 +137,12 @@
  -padding-top: 96px;
  -padding-top: 72px;
   padding-top: 24px;
-  width: 100% }
+  width: 100%;
+}
 
 @media only screen and (max-width: 719px) {
-#surface-a--body { -padding-top: 0 }}
+#surface-a--body { -padding-top: 0;
+}}
 
 #surface-a--body-content {
  -background: white;
@@ -140,7 +156,8 @@
    * ikon-gombok a fejléc ikon-gombjai alatt jelenjenek meg */
  -padding-left: 12px;
  -padding-right: 12px;
-  width: 100% }
+  width: 100%;
+}
 
 /* Body */
 
@@ -153,13 +170,15 @@
   justify-content: flex-end;
   padding-bottom: 12px;
   padding-bottom: 24px;
-  padding-top: 48px }
+  padding-top: 48px;
+}
 
 #surface-a--footer-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   max-width: var( --content-width-l );
-  width: 100% }
+  width: 100%;
+}
 
 /* Footer */

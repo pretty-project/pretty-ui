@@ -67,7 +67,7 @@
               [elements.expandable.views                        :as expandable.views]
               [elements.file-drop-area.views                    :as file-drop-area.views]
               [elements.ghost.views                             :as ghost.views]
-              [elements.element-components.horizontal-line      :as element-components.horizontal-line]
+              [elements.horizontal-line.views                   :as horizontal-line.views]
               [elements.element-components.horizontal-polarity  :as element-components.horizontal-polarity]
               [elements.element-components.horizontal-separator :as element-components.horizontal-separator]
               [elements.icon.views                              :as icon.views]
@@ -123,7 +123,7 @@
 (def expandable           expandable.views/element)
 (def file-drop-area       file-drop-area.views/element)
 (def ghost                ghost.views/element)
-(def horizontal-line      element-components.horizontal-line/element)
+(def horizontal-line      horizontal-line.views/element)
 (def horizontal-polarity  element-components.horizontal-polarity/element)
 (def horizontal-separator element-components.horizontal-separator/element)
 (def icon                 icon.views/element)

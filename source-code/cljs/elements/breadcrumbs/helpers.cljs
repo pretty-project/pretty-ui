@@ -49,8 +49,8 @@
   ; @return (map)
   ;  {}
   [_ {:keys [style]}]
-  {:data-hide-scrollbar true
-   :style               style})
+  {:data-scrollable-x true
+   :style             style})
 
 (defn breadcrumbs-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

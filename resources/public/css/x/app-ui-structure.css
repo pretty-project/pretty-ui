@@ -14,7 +14,8 @@
   /* BUG#4090 */
   display: flex;
   /* BUG#0009 (x.app-ui.renderer.views) */
-  flex-direction: row-reverse }
+  flex-direction: row-reverse;
+}
 
 /***** UI structure *****/
 
@@ -36,14 +37,16 @@
   width: 420px;
   /* BUG#4376 */
   /* XXX#0567 */
-  z-index: 996 }
+  z-index: 996;
+}
 
 [data-viewport-profile="xxs"] #x-app-bubbles,
 [data-viewport-profile="xs"]  #x-app-bubbles,
 [data-viewport-profile="s"]   #x-app-bubbles,
 [data-viewport-profile="m"]   #x-app-bubbles {
   padding-right: 0;
-  width: 100% }
+  width: 100%;
+}
 
 /*** App bubbles wrapper ***/
 
@@ -60,7 +63,8 @@
   justify-content: space-between;
   min-height: 48px;
   margin-bottom: 24px;
-  width: 100% }
+  width: 100%;
+}
 
 [data-viewport-profile="xxs"] .x-app-bubbles--element,
 [data-viewport-profile="xs"]  .x-app-bubbles--element,
@@ -68,7 +72,8 @@
 [data-viewport-profile="m"]   .x-app-bubbles--element {
   border-radius: 0;
   border-style: solid none none none;
-  margin-bottom: 0 }
+  margin-bottom: 0;
+}
 
 .x-app-bubbles--element--body {
   align-items: flex-start;
@@ -85,7 +90,8 @@
   /* A bubble elemeken lehetséges egyszerű szöveget megjeleníteni (ami nem képes távolságot
    * beállítani a bubble elem szélétől), ezért rendelkezik az .x-app-bubbles--element--body
    * elem {padding: ...} tulajdonsággal. */
- -padding: 0 12px }
+ -padding: 0 12px;
+}
 
 /*** App bubbles element ***/
 /***** App bubbles *****/
@@ -98,7 +104,8 @@
   /* BUG#4376
    * Egyes külső pluginok (pl.: FullCalendar) elemei rendelkezhetnek {z-index: ...} tulajdonsággal,
    * ami szükségessé teszi az applikáció egyes elemeinek kiemelését! */
-  z-index: 995 }
+  z-index: 995;
+}
 
 /*** Popup ***/
 
@@ -106,7 +113,8 @@
   left: 0;
   position: fixed;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 /*** Popup ***/
 
@@ -117,7 +125,8 @@
   display: flex;
   left: 6px;
   grid-column-gap: 12px;
-  position: fixed }
+  position: fixed;
+}
 
 .x-app-popups--element--debug-button {
   align-items: center;
@@ -130,13 +139,16 @@
   height: 36px;
   justify-content: center;
   padding: 0 12px;
-  user-select: none }
+  user-select: none;
+}
 
 .x-app-popups--element[data-minimized="true"] {
-  transform: translateX( 100% ) }
+  transform: translateX( 100% );
+}
 
 .x-app-popups--element[data-stick-to-top="true"] {
-  z-index: 999 }
+  z-index: 999;
+}
 
 /* Debug tools */
 /***** App popups *****/
@@ -151,16 +163,19 @@
   top: 0;
   width: 100%;
   /* BUG#4376 */
-  z-index: 997 }
+  z-index: 997;
+}
 
 #x-app-progress-bar--process-progress {
   background-color: var( --border-color-primary );
   border-radius: 0 1px 1px 0;
   transition: width .2s ease-in-out;
-  width: 0% }
+  width: 0%;
+}
 
 #x-app-progress-bar--process-progress[data-failured="true"] {
-  background-color: var( --border-color-warning ) }
+  background-color: var( --border-color-warning );
+}
 
 /***** Progress-bar *****/
 
@@ -174,7 +189,8 @@
   left: 0;
   position: fixed;
   top: 0;
-  width: 100% }
+  width: 100%;
+}
 
 /***** Progress-screen *****/
 
@@ -184,7 +200,8 @@
 /*** App sounds wrapper ***/
 
 #x-app-sounds {
-  display: none }
+  display: none;
+}
 
 /*** App sounds wrapper ***/
 /***** App sounds *****/
@@ -213,7 +230,8 @@
    * elem egy részét a viewport-ból!
    * Amíg ez a probléma nem teljesen megoldott, addig a sidebar elemhez ajánlott
    * minimum viewport szélesség: Ca. 1024px! */
-  max-width: 100% }
+  max-width: 100%;
+}
 
 /*** App surface wrapper ***/
 
@@ -222,7 +240,8 @@
 .x-app-surface--element--content {
   /* max-height & max-width: why? */
   max-height: 100%;
-  max-width:  100% }
+  max-width:  100%;
+}
 
 /*** Surface content ***/
 /***** App surface *****/
@@ -238,7 +257,8 @@
    * legyen, mint az #x-app-surface elem magassága, mert a sticky pozícionálású
    * elemek csak addig tartják meg a sticky tulajdonságukat, ameddig az őket
    * tartalmazó sticky-container elem a viewport-ban van. */
-  height: 100% }
+  height: 100%;
+}
 
 /***** App sidebar *****/
 
@@ -256,7 +276,8 @@
   width: 100%;
 
   /* BUG#4376 */
-  z-index: 999 }
+  z-index: 999;
+}
 
 #x-error-shield--body {
   align-items: center;
@@ -264,7 +285,8 @@
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  width: 100% }
+  width: 100%;
+}
 
 #x-error-shield--refresh-button {
   color: var( --color-primary );
@@ -272,7 +294,8 @@
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
   line-height: var( --line-height-xs );
-  margin-top: 12px }
+  margin-top: 12px;
+}
 
 /***** Error shield *****/
 
@@ -292,6 +315,7 @@
   width: 100%;
 
   /* BUG#4376 */
-  z-index: 998 }
+  z-index: 998;
+}
 
 /***** Loading-screen *****/

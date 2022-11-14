@@ -142,9 +142,9 @@
   ;    :error, :parse, :aborted, :timeout}
   ;   :response (string)
   ;    server-response-body}
-  (fn [{:keys [db]} [_ request-id {:keys [idle-timeout] :as request-props} {:keys [status-text] :as server-response}]]
-      (let [request-props (assoc request-props :request-failured? true)]
-
+  (fn [{:keys [db]} [_ request-id {:keys [idle-timeout] :as request-props} server-response]]
+      (let [request-props   (assoc  request-props   :request-failured? true)
+            server-response (update server-response :response reader/string->mixed)]
            {:db              (r request-handler.events/request-failured             db request-id request-props server-response)
             :dispatch-n     [(r request-handler.subs/get-request-on-failure-event   db request-id request-props server-response)
                              (r request-handler.subs/get-request-on-responsed-event db request-id request-props server-response)]
