@@ -16,7 +16,7 @@
     (:require [developer-tools.re-frame-browser.styles :as re-frame-browser.styles]
               [mid-fruits.map                          :as map]
               [mid-fruits.pretty                       :as pretty]
-              [mid-fruits.reader                       :as reader]
+              [reader.api                              :as reader]
               [mid-fruits.vector                       :as vector]
               [re-frame.api                            :as r]
               [server-fruits.http                      :as http]))

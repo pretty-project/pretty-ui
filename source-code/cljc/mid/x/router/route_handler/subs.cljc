@@ -14,9 +14,9 @@
 
 (ns mid.x.router.route-handler.subs
     (:require [mid-fruits.string :as string]
-              [mid-fruits.uri    :as uri]
               [mid.x.core.api    :as x.core]
-              [re-frame.api      :as r :refer [r]]))
+              [re-frame.api      :as r :refer [r]]
+              [uri.api           :as uri]))
 
 
 

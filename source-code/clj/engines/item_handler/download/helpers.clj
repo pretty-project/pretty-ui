@@ -16,13 +16,13 @@
     (:require [candy.api          :refer [return]]
               [mid-fruits.keyword :as keyword]
               [mid-fruits.map     :as map]
-              [mid-fruits.mixed   :as mixed]
-              [mid-fruits.seqable :refer [nonseqable?]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
+              [mixed.api          :as mixed]
               [mongo-db.api       :as mongo-db]
               [pathom.api         :as pathom]
-              [re-frame.api       :as r]))
+              [re-frame.api       :as r]
+              [seqable.api        :refer [nonseqable?]]
+              [mid-fruits.string  :as string]
+              [mid-fruits.vector  :as vector]))
 
 
 

@@ -29,16 +29,18 @@
   ; @param (map) button-props
   ;  {:height (keyword)
   ;   :label (metamorphic-content)(opt)
+  ;   :tooltip (metamorphic-content)(opt)
   ;   :width (keyword)}
   ;
   ; @return (map)
   ;  {:data-height (keyword)
   ;   :data-labeled (boolean)
   ;   :data-width (keyword)}
-  [button-id {:keys [height label width] :as button-props}]
+  [button-id {:keys [height label tooltip width] :as button-props}]
   (merge {:data-height  height
           :data-width   width
-          :data-labeled (boolean label)}
+          :data-labeled (boolean label)
+          :title        (x.components/content tooltip)}
          (button.helpers/button-body-attributes button-id button-props)))
 
 (defn button-attributes

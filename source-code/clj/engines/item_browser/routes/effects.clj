@@ -14,8 +14,8 @@
 
 (ns engines.item-browser.routes.effects
     (:require [engines.item-browser.routes.helpers :as routes.helpers]
-              [mid-fruits.uri                      :as uri]
-              [re-frame.api                        :as r]))
+              [re-frame.api                        :as r]
+              [uri.api                             :as uri]))
 
 
 

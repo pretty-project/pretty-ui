@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.forms.helpers
-    (:require [mid-fruits.mixed  :as mixed]
+    (:require [mid.forms.config  :as config]
+              [mixed.api         :as mixed]
               [regex.api         :refer [re-match?]]
-              [mid-fruits.string :as string]
-              [mid.forms.config  :as config]))
+              [mid-fruits.string :as string]))
 
 
 

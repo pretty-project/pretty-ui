@@ -1,8 +1,8 @@
 
 (ns plugins.postal.email
-    (:require [hiccup.page      :refer [include-js include-css html5]]
-              [mid-fruits.mixed :as mixed]
-              [postal.core      :as postal.core]))
+    (:require [hiccup.page  :refer [include-js include-css html5]]
+              [mixed.api    :as mixed]
+              [postal.core  :as postal.core]))
 
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------

@@ -15,9 +15,9 @@
 (ns x.router.route-handler.events
     (:require [candy.api                      :refer [return]]
               [mid-fruits.map                 :refer [dissoc-in]]
-              [mid-fruits.uri                 :as uri]
               [mid-fruits.vector              :as vector]
               [re-frame.api                   :as r :refer [r]]
+              [uri.api                        :as uri]
               [x.db.api                       :as x.db]
               [x.router.route-handler.helpers :as route-handler.helpers]
               [x.router.route-handler.subs    :as route-handler.subs]

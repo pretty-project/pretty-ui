@@ -16,7 +16,7 @@
     (:require [developer-tools.re-frame-browser.subs :as re-frame-browser.subs]
               [mid-fruits.map                        :refer [dissoc-in]]
               [mid-fruits.pretty                     :as pretty]
-              [mid-fruits.reader                     :as reader]
+              [reader.api                            :as reader]
               [mid-fruits.vector                     :as vector]
               [re-frame.api                          :as r :refer [r]]))
 

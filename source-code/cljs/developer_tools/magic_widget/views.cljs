@@ -21,7 +21,8 @@
               [elements.api                            :as elements]
               [css.api                                 :as css]
               [mid-fruits.vector                       :as vector]
-              [re-frame.api                            :as r]))
+              [re-frame.api                            :as r]
+              [reagent.api                             :refer [ratom]]))
 
 
 
@@ -31,7 +32,7 @@
 (defn design-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [deign-mode? @(r/subscribe [:x.db/get-item [:developer-tools :x.core/meta-items :design-mode?]])]
+  (let [deign-mode? @(r/subscribe [:x.db/get-item [:developer-tools :core/meta-items :design-mode?]])]
        [elements/icon-button ::deign-mode-icon-button
                              {:color       (if deign-mode? :primary :muted)
                               :hover-color :highlight
@@ -39,7 +40,8 @@
                               :icon-family :material-symbols-outlined
                               :indent      {:left :xxl}
                               :on-click    [:developer-tools.core/toggle-design-mode!]
-                              :label       "Edit"}]))
+                              :label       "Edit"
+                              :tooltip     "Toggle the DOM design mode"}]))
 
 (defn toggle-popup-position-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,16 +105,31 @@
                               :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :event-browser]
                               :label       "Events"}]))
 
+(defn toggle-show-db-write-count-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [show-db-write-count? @(r/subscribe [:x.db/get-item [:developer-tools :core/meta-items :show-db-write-count?]])]
+       [elements/icon-button ::toggle-show-db-write-count-icon-button
+                             {:hover-color :highlight
+                              :icon        :waterfall_chart
+                              :on-click    [:x.db/toggle-item! [:developer-tools :core/meta-items :show-db-write-count?]]
+                              :preset      (if show-db-write-count? :primary :muted)
+                              :label       "Writes"
+                              :tooltip     "Display the Re-Frame DB write count"}]))
+
 (defn toggle-print-events-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [print-events? @(r/subscribe [:developer-tools.core/print-events?])]
-       [elements/icon-button ::toggle-print-events-icon-button
-                             {:hover-color :highlight
-                              :icon        :terminal
-                              :on-click    [:x.core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
-                              :preset      (if print-events? :primary :muted)
-                              :label       "Print"}]))
+  ; A re-frame.api/DEBUG-MODE? nem reagent atom, ezért szükséges helyi atomban tárolni a kapcsoló értékét!
+  (let [print-events? (ratom @r/DEBUG-MODE?)]
+       (fn [] [elements/icon-button ::toggle-print-events-icon-button
+                                    {:hover-color :highlight
+                                     :icon        :terminal
+                                     :on-click    (fn [] (r/toggle-debug-mode!)
+                                                         (swap! print-events? not))
+                                     :preset      (if @print-events? :primary :muted)
+                                     :label       "Print"
+                                     :tooltip     "Console print the dispatched Re-Frame events"}])))
 
 (defn close-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -135,6 +152,7 @@
                                                      [route-browser-icon-button]
                                                      [re-frame-events-icon-button]]
                                  :end-content [:<> [design-mode-icon-button]
+                                                   [toggle-show-db-write-count-icon-button]
                                                    [toggle-print-events-icon-button]
                                                    [toggle-popup-position-icon-button]
                                                    [close-icon-button]]

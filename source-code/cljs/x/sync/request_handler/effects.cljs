@@ -14,8 +14,8 @@
 
 (ns x.sync.request-handler.effects
     (:require [ajax.api]
-              [mid-fruits.reader                 :as reader]
               [re-frame.api                      :as r :refer [r]]
+              [reader.api                        :as reader]
               [x.core.api                        :as x.core]
               [x.sync.request-handler.config     :as request-handler.config]
               [x.sync.request-handler.events     :as request-handler.events]

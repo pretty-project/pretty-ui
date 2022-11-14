@@ -14,10 +14,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid-fruits.vector
-    (:require [candy.api           :refer [param return]]
-              [math.api            :as math]
-              [loop.api            :refer [some-indexed]]
-              [mid-fruits.sequence :as sequence]))
+    (:require [candy.api    :refer [return]]
+              [math.api     :as math]
+              [loop.api     :refer [some-indexed]]
+              [sequence.api :as sequence]))
 
 
 

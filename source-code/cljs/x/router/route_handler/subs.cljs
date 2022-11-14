@@ -15,11 +15,11 @@
 (ns x.router.route-handler.subs
     (:require [candy.api                         :refer [return]]
               [mid-fruits.string               :as string]
-              [mid-fruits.uri                  :as uri]
               [mid-fruits.vector               :as vector]
               [mid.x.router.route-handler.subs :as route-handler.subs]
               [reitit.frontend                 :as reitit.frontend]
               [re-frame.api                    :as r :refer [r]]
+              [uri.api                         :as uri]
               [x.core.api                      :as x.core]
               [x.router.route-handler.config   :as route-handler.config]
               [x.user.api                      :as x.user]))

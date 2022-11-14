@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.re-frame-browser.subs
-    (:require [mid-fruits.mixed :as mixed]
-              [re-frame.api     :as r :refer [r]]))
+    (:require [mixed.api    :as mixed]
+              [re-frame.api :as r :refer [r]]))
 
 
 

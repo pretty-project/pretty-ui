@@ -14,10 +14,10 @@
 
 (ns x.router.route-handler.helpers
     (:require [candy.api                          :refer [return]]
-              [mid-fruits.uri                     :as uri]
               [mid.x.router.route-handler.helpers :as route-handler.helpers]
               [re-frame.api                       :as r]
               [server-fruits.http                 :as http]
+              [uri.api                            :as uri]
               [x.user.api                         :as x.user]))
 
 

@@ -14,8 +14,8 @@
 
 (ns x.core.debug-handler.side-effects
     (:require [js-window.api                :as js-window]
-              [mid-fruits.uri               :as uri]
               [re-frame.api                 :as r]
+              [uri.api                      :as uri]
               [x.core.debug-handler.helpers :as debug-handler.helpers]))
 
 

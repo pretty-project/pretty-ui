@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.event-browser.effects
-    (:require [mid-fruits.reader :as reader]
-              [re-frame.api      :as r]))
+    (:require [re-frame.api :as r]
+              [reader.api   :as reader]))
 
 
 

@@ -15,7 +15,7 @@
 (ns x.environment.cookie-handler.events
     (:require [candy.api                            :refer [return]]
               [mid-fruits.map                       :refer [dissoc-in]]
-              [mid-fruits.reader                    :as reader]
+              [reader.api                           :as reader]
               [re-frame.api                         :as r :refer [r]]
               [x.environment.cookie-handler.helpers :as cookie-handler.helpers]))
 

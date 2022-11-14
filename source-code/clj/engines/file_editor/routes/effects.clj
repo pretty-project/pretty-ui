@@ -14,8 +14,8 @@
 
 (ns engines.file-editor.routes.effects
     (:require [engines.file-editor.routes.helpers :as routes.helpers]
-              [mid-fruits.uri                     :as uri]
-              [re-frame.api                       :as r]))
+              [re-frame.api                       :as r]
+              [uri.api                            :as uri]))
 
 
 

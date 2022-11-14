@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.sync.response-handler.subs
-    (:require [mid-fruits.mixed  :as mixed]
-              [mid-fruits.reader :as reader]
-              [re-frame.api      :as r]))
+    (:require [mixed.api    :as mixed]
+              [re-frame.api :as r]
+              [reader.api   :as reader]))
 
 
 

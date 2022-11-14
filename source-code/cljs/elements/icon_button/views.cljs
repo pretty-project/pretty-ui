@@ -63,7 +63,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id {:keys [tooltip] :as button-props}]
+  [button-id button-props]
   [:div.e-icon-button (icon-button.helpers/button-attributes button-id button-props)
                       [icon-button-body                      button-id button-props]])
 
@@ -129,6 +129,7 @@
   ;   :stop-propagation? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)
+  ;   :tooltip (metamorphic-content)(opt)
   ;   :variant (keyword)(opt)
   ;    :placeholder
   ;   :width (keyword)(opt)
