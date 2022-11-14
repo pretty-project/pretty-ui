@@ -14,7 +14,7 @@
 
 (ns x.boot-loader.api
     (:require [x.app-activities.api]
-              [x.app-dictionary.api]
+              [x.dictionary.api]
               [x.app-environment.api]
               [x.locales.api]
               [x.app-media.api]

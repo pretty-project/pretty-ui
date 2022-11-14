@@ -16,7 +16,7 @@
     (:require [mid.x.dictionary.term-handler.subs :as term-handler.subs]
               [re-frame.api                       :as r :refer [r]]
               [x.dictionary.term-handler.helpers  :as term-handler.helpers]
-              [x.app-locales.api                  :as x.locales]))
+              [x.locales.api                      :as x.locales]))
 
 
 

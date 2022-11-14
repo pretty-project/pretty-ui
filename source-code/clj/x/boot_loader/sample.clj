@@ -30,7 +30,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; A start-server! függvény számára opcionálisan átadható ...
-; ... a dev-mode? tulajdonság, ami a monoset a fejlesztői eszközeinek ki/be kapcsolásához használ.
+; ... a dev-mode? tulajdonság, ami a Monoset fejlesztői eszközeinek ki/be kapcsolásához használ.
 ; ... a join? tulajdonság, ami (?) ...
 ; ... a port tulajdonság, amivel beállítható, hogy az applikació a szerver melyik
 ;     portján legyen elérhető.

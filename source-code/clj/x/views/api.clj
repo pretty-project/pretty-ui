@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.server-views.api
-    (:require [x.server-views.view-handler.effects]
-              [x.server-views.view-handler.lifecycles]
-              [x.server-views.view-handler.subs]
-              [x.server-views.view-handler.transfer]))
+(ns x.views.api
+    (:require [x.views.view-handler.effects]
+              [x.views.view-handler.lifecycles]
+              [x.views.view-handler.subs]
+              [x.views.view-handler.transfer]))

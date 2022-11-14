@@ -17,7 +17,7 @@
               [x.app-router.route-handler.helpers :as route-handler.helpers]
               [x.app-router.route-handler.events  :as route-handler.events]
               [x.app-router.route-handler.subs    :as route-handler.subs]
-              [x.app-views.api                    :as x.views]))
+              [x.views.api                        :as x.views]))
 
 
 

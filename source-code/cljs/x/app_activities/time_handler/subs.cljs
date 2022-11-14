@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-activities.time-handler.subs
-    (:require [re-frame.api         :as r :refer [r]]
-              [time.api             :as time]
-              [x.app-dictionary.api :as x.dictionary]))
+    (:require [re-frame.api     :as r :refer [r]]
+              [time.api         :as time]
+              [x.dictionary.api :as x.dictionary]))
 
 
 

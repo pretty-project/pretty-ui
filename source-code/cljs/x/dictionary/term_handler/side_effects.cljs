@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.app-dictionary.term-handler.side-effects
+(ns x.dictionary.term-handler.side-effects
     (:require [re-frame.api :as r]))
 
 

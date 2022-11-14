@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.content.views
-    (:require [candy.api            :refer [return]]
-              [hiccup.api           :refer [hiccup?]]
-              [mid-fruits.random    :as random]
-              [mid-fruits.vector    :as vector]
-              [reagent.api          :refer [component?]]
-              [re-frame.api         :as r]
-              [x.app-dictionary.api :as x.dictionary]))
+    (:require [candy.api         :refer [return]]
+              [hiccup.api        :refer [hiccup?]]
+              [mid-fruits.random :as random]
+              [mid-fruits.vector :as vector]
+              [reagent.api       :refer [component?]]
+              [re-frame.api      :as r]
+              [x.dictionary.api  :as x.dictionary]))
 
 
 

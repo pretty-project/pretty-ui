@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.app-components.value.subs
-    (:require [candy.api            :refer [return]]
-              [re-frame.api         :as r :refer [r]]
-              [x.app-dictionary.api :as x.dictionary]))
+    (:require [candy.api        :refer [return]]
+              [re-frame.api     :as r :refer [r]]
+              [x.dictionary.api :as x.dictionary]))
 
 
 
