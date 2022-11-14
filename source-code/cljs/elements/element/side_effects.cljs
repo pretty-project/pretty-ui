@@ -15,7 +15,7 @@
 (ns elements.element.side-effects
     (:require [elements.target-handler.helpers :as target-handler.helpers]
               [re-frame.api                    :as r]
-              [x.app-environment.api           :as x.environment]))
+              [x.environment.api               :as x.environment]))
 
 
 

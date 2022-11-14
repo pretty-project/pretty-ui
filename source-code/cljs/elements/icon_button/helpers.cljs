@@ -15,7 +15,7 @@
 (ns elements.icon-button.helpers
     (:require [elements.button.helpers  :as button.helpers]
               [elements.element.helpers :as element.helpers]
-              [x.app-components.api     :as x.components]))
+              [x.components.api         :as x.components]))
 
 
 

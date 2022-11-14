@@ -20,8 +20,8 @@
               [mid-fruits.map                       :as map]
               [mid-fruits.vector                    :as vector]
               [re-frame.api                         :refer [r]]
-              [x.app-activities.api                 :as x.activities]
-              [x.app-sync.api                       :as x.sync]))
+              [x.activities.api                     :as x.activities]
+              [x.sync.api                           :as x.sync]))
 
 
 

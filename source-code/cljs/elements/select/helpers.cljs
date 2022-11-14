@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.select.helpers
-    (:require [candy.api                   :refer [return]]
-              [elements.element.helpers    :as element.helpers]
-              [elements.select.config      :as select.config]
-              [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.string           :as string]
-              [re-frame.api                :as r]
-              [x.app-components.api        :as x.components]
-              [x.app-environment.api       :as x.environment]))
+    (:require [candy.api                     :refer [return]]
+              [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [elements.select.config        :as select.config]
+              [elements.text-field.helpers   :as text-field.helpers]
+              [mid-fruits.string             :as string]
+              [re-frame.api                  :as r]
+              [x.components.api              :as x.components]))
 
 
 
@@ -118,7 +118,7 @@
                       :data-border-color (if required-warning? :warning :highlight)}
                      {:data-clickable    true
                       :on-click          #(r/dispatch on-click)
-                      :on-mouse-up       #(x.environment/blur-element!)
+                      :on-mouse-up       #(element.side-effects/blur-element! select-id)
                       :data-border-color (if required-warning? :warning :highlight)})))
 
 
@@ -137,9 +137,9 @@
   ; @return (map)
   ;  {}
   [select-id {:keys [value-path] :as select-props} option]
-  (let [selected-value  @(r/subscribe [:db/get-item value-path])
+  (let [selected-value  @(r/subscribe [:x.db/get-item value-path])
         option-selected? (= selected-value option)
         on-click         [:elements.select/select-option! select-id select-props option]]
        {:data-selected option-selected?
         :on-click     #(r/dispatch on-click)
-        :on-mouse-up  #(x.environment/blur-element!)}))
+        :on-mouse-up  #(element.side-effects/blur-element! select-id)}))

@@ -64,5 +64,5 @@
   ; @param (keyword) saver-id
   ; @param (map) saver-props
   (fn [_ [_ saver-id saver-props]]
-      [:ui/render-popup! :file-saver/view
-                         {:content [views/view saver-id saver-props]}]))
+      [:x.ui/render-popup! :file-saver/view
+                           {:content [views/view saver-id saver-props]}]))

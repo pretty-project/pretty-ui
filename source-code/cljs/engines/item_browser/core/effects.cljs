@@ -36,7 +36,7 @@
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db browser-id)]
               (let [item-route (r routes.subs/get-item-route db browser-id item-id)]
-                   {:dispatch [:router/go-to! item-route]})
+                   {:dispatch [:x.router/go-to! item-route]})
               (if (r body.subs/body-did-mount? db browser-id)
                   {:db       (r core.events/set-item-id! db browser-id item-id)
                    :dispatch [:item-browser/load-browser! browser-id]}))))

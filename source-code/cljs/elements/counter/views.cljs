@@ -59,7 +59,7 @@
   ; @param (map) counter-props
   ;  {:value-path (vector)}
   [_ {:keys [value-path]}]
-  (let [value @(r/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:x.db/get-item value-path])]
        [:div.e-counter--value value]))
 
 (defn- counter-body

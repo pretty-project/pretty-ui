@@ -34,7 +34,7 @@
       (if-let [route-handled? (r routes.subs/route-handled? db viewer-id)]
               ; A)
               (let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
-                   {:dispatch [:router/go-to! item-route]})
+                   {:dispatch [:x.router/go-to! item-route]})
               ; B)
               (if (r body.subs/body-did-mount? db viewer-id)
                   {:db       (r core.events/set-item-id! db viewer-id item-id)

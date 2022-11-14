@@ -22,7 +22,7 @@
               [engines.item-lister.update.validators :as update.validators]
               [engines.item-lister.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as x.ui]))
+              [x.ui.api                              :as x.ui]))
 
 
 
@@ -123,13 +123,13 @@
       (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:db          (r update.events/delete-items-failed db lister-id)
-           :dispatch    [:ui/render-bubble! {:body :failed-to-delete}]
+           :dispatch    [:x.ui/render-bubble! {:body :failed-to-delete}]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]}
+                         [:x.ui/end-fake-process!]]}
           ; B)
-          {:dispatch    [:ui/render-bubble! {:body :failed-to-delete}]
+          {:dispatch    [:x.ui/render-bubble! {:body :failed-to-delete}]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]})))
+                         [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/render-items-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -137,9 +137,9 @@
   ; @param (keyword) lister-id
   ; @param (strings in vector) item-ids
   (fn [_ [_ lister-id item-ids]]
-      [:ui/render-bubble! ::items-deleted-dialog
-                          {:body             [update.views/items-deleted-dialog-body lister-id item-ids]
-                           :on-bubble-closed [:item-lister/clean-backup-items!       lister-id item-ids]}]))
+      [:x.ui/render-bubble! ::items-deleted-dialog
+                            {:body             [update.views/items-deleted-dialog-body lister-id item-ids]
+                             :on-bubble-closed [:item-lister/clean-backup-items!       lister-id item-ids]}]))
 
 
 
@@ -156,7 +156,7 @@
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
            {:db         (r x.ui/fake-process! db 15)
-            :dispatch-n [[:ui/remove-bubble! ::items-deleted-dialog]
+            :dispatch-n [[:x.ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                               {:on-success [:item-lister/delete-items-undid       lister-id]
                                                :on-failure [:item-lister/undo-delete-items-failed lister-id]
@@ -181,7 +181,7 @@
           [:item-lister/reload-items! lister-id]
           ; B)
           {:dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]})))
+                         [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/undo-delete-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -194,9 +194,9 @@
       ; A "Törölt elemek visszaállítása" művelet sikertelen befejeződésekor, ...
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:dispatch    [:ui/render-bubble! {:body :failed-to-undo-delete}]
+      {:dispatch    [:x.ui/render-bubble! {:body :failed-to-undo-delete}]
        :dispatch-if [(r x.ui/process-faked? db)
-                     [:ui/end-fake-process!]]}))
+                     [:x.ui/end-fake-process!]]}))
 
 
 
@@ -262,13 +262,13 @@
       (if (r body.subs/body-did-mount? db lister-id)
           ; A)
           {:db          (r update.events/duplicate-items-failed db lister-id)
-           :dispatch    [:ui/render-bubble! {:body :failed-to-duplicate}]
+           :dispatch    [:x.ui/render-bubble! {:body :failed-to-duplicate}]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]}
+                         [:x.ui/end-fake-process!]]}
           ; B)
-          {:dispatch    [:ui/render-bubble! {:body :failed-to-duplicate}]
+          {:dispatch    [:x.ui/render-bubble! {:body :failed-to-duplicate}]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]})))
+                         [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-lister/render-items-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -276,5 +276,5 @@
   ; @param (keyword) lister-id
   ; @param (strings in vector) copy-ids
   (fn [_ [_ lister-id copy-ids]]
-      [:ui/render-bubble! ::items-duplicated-dialog
-                          {:body [update.views/items-duplicated-dialog-body lister-id copy-ids]}]))
+      [:x.ui/render-bubble! ::items-duplicated-dialog
+                            {:body [update.views/items-duplicated-dialog-body lister-id copy-ids]}]))

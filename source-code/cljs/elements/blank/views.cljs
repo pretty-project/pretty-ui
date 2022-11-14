@@ -16,7 +16,7 @@
     (:require [elements.blank.helpers    :as blank.helpers]
               [elements.blank.prototypes :as blank.prototypes]
               [mid-fruits.random         :as random]
-              [x.app-components.api      :as x.components]))
+              [x.components.api          :as x.components]))
 
 
 

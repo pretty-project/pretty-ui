@@ -16,7 +16,7 @@
     (:require [engines.file-editor.body.prototypes :as body.prototypes]
               [engines.file-editor.core.helpers    :as core.helpers]
               [reagent.api                         :as reagent]
-              [x.app-components.api                :as x.components]
+              [x.components.api                    :as x.components]
               [re-frame.api                        :as r]))
 
 

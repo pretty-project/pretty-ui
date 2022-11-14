@@ -15,7 +15,7 @@
 (ns developer-tools.magic-widget.effects
     (:require [developer-tools.magic-widget.views :as magic-widget.views]
               [re-frame.api                       :as r :refer [r]]
-              [x.app-gestures.api                 :as x.gestures]))
+              [x.gestures.api                     :as x.gestures]))
 
 
 
@@ -27,5 +27,5 @@
   (fn [{:keys [db]} _]
       {:db       (r x.gestures/init-view-handler! db :developer-tools.magic-widget/handler
                                                      {:default-view-id :re-frame-browser :reinit? false})
-       :dispatch [:ui/render-popup! :developer-tools.magic-widget/view
-                                    {:content #'magic-widget.views/view}]}))
+       :dispatch [:x.ui/render-popup! :developer-tools.magic-widget/view
+                                      {:content #'magic-widget.views/view}]}))

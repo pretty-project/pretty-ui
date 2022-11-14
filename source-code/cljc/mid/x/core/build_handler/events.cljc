@@ -27,7 +27,7 @@
   ;
   ; @return (string)
   [db [_ app-build]]
-  (assoc-in db [:core :build-handler/meta-items :app-build] app-build))
+  (assoc-in db [:x.core :build-handler/meta-items :app-build] app-build))
 
 
 
@@ -35,4 +35,4 @@
 ;; ---------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :core/store-app-build! store-app-build!)
+(r/reg-event-db :x.core/store-app-build! store-app-build!)

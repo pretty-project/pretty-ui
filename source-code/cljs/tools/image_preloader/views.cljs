@@ -40,7 +40,7 @@
    [component (random/generate-keyword) preloader-props])
 
   ([preloader-id {:keys [uri]}]
-   (reagent/lifecycles {:component-will-mount                  #(r/dispatch [:core/start-synchron-signal! preloader-id])
-                        :reagent-render (fn [] [:img {:on-load #(r/dispatch [:core/end-synchron-signal!   preloader-id])
+   (reagent/lifecycles {:component-will-mount                  #(r/dispatch [:x.core/start-synchron-signal! preloader-id])
+                        :reagent-render (fn [] [:img {:on-load #(r/dispatch [:x.core/end-synchron-signal!   preloader-id])
                                                       :src      (param uri)
                                                       :style    {:display "none"}}])})))

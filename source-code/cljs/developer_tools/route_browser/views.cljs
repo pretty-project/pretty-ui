@@ -34,7 +34,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [client-routes @(r/subscribe [:router/get-client-routes])]
+  (let [client-routes @(r/subscribe [:x.router/get-client-routes])]
        (letfn [(f [route-list route-id]
                   (let [route-props (get client-routes route-id)]
                        (conj route-list [route-list-item route-id route-props])))]

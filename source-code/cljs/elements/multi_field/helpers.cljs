@@ -18,7 +18,7 @@
               [hiccup.api               :as hiccup]
               [mid-fruits.vector        :as vector]
               [re-frame.api             :as r]
-              [x.app-components.api     :as x.components]))
+              [x.components.api         :as x.components]))
 
 
 

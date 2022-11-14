@@ -21,7 +21,7 @@
               [elements.engine.api        :as engine]
               [mid-fruits.random          :as random]
               [reagent.api                :as reagent]
-              [x.app-components.api       :as x.components]))
+              [x.components.api           :as x.components]))
 
 
 

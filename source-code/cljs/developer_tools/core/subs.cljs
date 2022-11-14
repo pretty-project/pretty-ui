@@ -16,7 +16,7 @@
     (:require [candy.api                  :refer [return]]
               [developer-tools.core.state :as core.state]
               [re-frame.api               :as r :refer [r]]
-              [x.app-core.api             :as x.core]))
+              [x.core.api                 :as x.core]))
 
 
 

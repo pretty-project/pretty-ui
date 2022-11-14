@@ -76,7 +76,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [:ui/remove-popup! :elements.select/options])
+  [:x.ui/remove-popup! :elements.select/options])
 
 (r/reg-event-fx :elements.select/ENTER-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -100,8 +100,8 @@
   (fn [{:keys [db]} [_ select-id select-props]]
       (let [on-escape-props {:key-code 27 :required? true :on-keyup [:elements.select/ESC-pressed   select-id select-props]}
             on-enter-props  {:key-code 13 :required? true :on-keyup [:elements.select/ENTER-pressed select-id select-props]}]
-           {:dispatch-n [[:environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props]
-                         [:environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
+           {:dispatch-n [[:x.environment/reg-keypress-event! ::on-ESC-pressed   on-escape-props]
+                         [:x.environment/reg-keypress-event! ::on-ENTER-pressed on-enter-props]]})))
 
 (r/reg-event-fx :elements.select/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,8 +109,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [{:keys [db]} [_ select-id _]]
-      {:dispatch-n [[:environment/remove-keypress-event! ::on-ESC-pressed]
-                    [:environment/remove-keypress-event! ::on-ENTER-pressed]]}))
+      {:dispatch-n [[:x.environment/remove-keypress-event! ::on-ESC-pressed]
+                    [:x.environment/remove-keypress-event! ::on-ENTER-pressed]]}))
 
 
 
@@ -123,8 +123,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   (fn [_ [_ select-id select-props]]
-      [:ui/render-popup! :elements.select/options
-                         {:content [select.views/select-options select-id select-props]}]))
+      [:x.ui/render-popup! :elements.select/options
+                           {:content [select.views/select-options select-id select-props]}]))
 
 (r/reg-event-fx :elements.select/render-select!
   ; @param (keyword)(opt) select-id
@@ -160,7 +160,7 @@
   (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]
       (let [option-value (option-value-f option)]
            {:db             (r select.events/select-option! db select-id select-props option)
-            :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:ui/remove-popup! :elements.select/options]}
+            :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:x.ui/remove-popup! :elements.select/options]}
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
 

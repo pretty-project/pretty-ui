@@ -24,7 +24,7 @@
 (r/reg-event-fx :developer-tools.core/test!
   ; @usage
   ;  [:developer-tools.core/test!]
-  [:ui/render-bubble! {:body "It works!"}])
+  [:x.ui/render-bubble! {:body "It works!"}])
 
 
 
@@ -35,4 +35,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (dom/toggle-design-mode!)
-      {:db (update-in db [:developer-tools :core/meta-items :design-mode?] not)}))
+      {:db (update-in db [:developer-tools :x.core/meta-items :design-mode?] not)}))

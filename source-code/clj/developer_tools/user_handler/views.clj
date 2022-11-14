@@ -14,7 +14,7 @@
 
 (ns developer-tools.user-handler.views
     (:require [developer-tools.user-handler.styles :as user-handler.styles]
-              [x.server-user.api                   :as x.user]))
+              [x.user.api                          :as x.user]))
 
 
 

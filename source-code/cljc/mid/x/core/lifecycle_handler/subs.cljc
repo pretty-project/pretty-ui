@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core :lifecycle-handler/data-items]))
+  (get-in db [:x.core :lifecycle-handler/data-items]))
 
 (defn get-period-events
   ; WARNING! NON-PUBLIC! DO NOT USE!

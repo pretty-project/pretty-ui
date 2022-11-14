@@ -30,10 +30,10 @@
   ;
   ; @return (atom)
   ([item-path]
-   (-> [:db/get-item item-path] re-frame.core/subscribe))
+   (-> [:x.db/get-item item-path] re-frame.core/subscribe))
 
   ([item-path default-value]
-   (-> [:db/get-item item-path default-value] re-frame.core/subscribe)))
+   (-> [:x.db/get-item item-path default-value] re-frame.core/subscribe)))
 
 (defn subscribed-item
   ; @param (vector) item-path
@@ -44,10 +44,10 @@
   ;
   ; @return (*)
   ([item-path]
-   (-> [:db/get-item item-path] re-frame.core/subscribe deref))
+   (-> [:x.db/get-item item-path] re-frame.core/subscribe deref))
 
   ([item-path default-value]
-   (-> [:db/get-item item-path default-value] re-frame.core/subscribe deref)))
+   (-> [:x.db/get-item item-path default-value] re-frame.core/subscribe deref)))
 
 
 
@@ -112,13 +112,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:db/get-db]
-(r/reg-sub :db/get-db get-db)
+;  [:x.db/get-db]
+(r/reg-sub :x.db/get-db get-db)
 
 ; @usage
-;  [:db/get-item [:my-item]]
-(r/reg-sub :db/get-item get-item)
+;  [:x.db/get-item [:my-item]]
+(r/reg-sub :x.db/get-item get-item)
 
 ; @usage
-;  [:db/item-exists? [:my-item]]
-(r/reg-sub :db/item-exists? item-exists?)
+;  [:x.db/item-exists? [:my-item]]
+(r/reg-sub :x.db/item-exists? item-exists?)

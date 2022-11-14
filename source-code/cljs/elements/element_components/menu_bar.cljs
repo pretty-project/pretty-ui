@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element-components.menu-bar
-    (:require [candy.api             :refer [param return]]
-              [elements.engine.api   :as engine]
-              [mid-fruits.random     :as random]
-              [mid-fruits.vector     :as vector]
-              [re-frame.api          :as r]
-              [x.app-components.api  :as x.components]
-              [x.app-environment.api :as x.environment]))
+    (:require [candy.api                     :refer [param return]]
+              [elements.engine.api           :as engine]
+              [elements.element.side-effects :as element.side-effects]
+              [mid-fruits.random             :as random]
+              [mid-fruits.vector             :as vector]
+              [re-frame.api                  :as r]
+              [x.components.api              :as x.components]))
 
 
 
@@ -56,10 +56,10 @@
   [bar-id _ {:keys [active? disabled? href on-click]}]
   (if disabled? ; If menu-item is disabled ...
                 (cond-> {:data-disabled true
-                         :on-mouse-up  #(x.environment/blur-element!)}
+                         :on-mouse-up  #(element.side-effects/blur-element! bar-id)}
                         (some? active?) (assoc :data-active (boolean active?)))
                 ; If menu-item is NOT disabled ...
-                (cond-> {:on-mouse-up   #(x.environment/blur-element!)}
+                (cond-> {:on-mouse-up   #(element.side-effects/blur-element! bar-id)}
                         (some? href)     (assoc :href        (str        href))
                         (some? on-click) (assoc :on-click   #(r/dispatch on-click))
                         (some? active?)  (assoc :data-active (boolean    active?)))))

@@ -20,7 +20,7 @@
               [react.api                 :as react]
               [reagent.api               :as reagent]
               [re-frame.api              :as r]
-              [x.app-components.api      :as x.components]))
+              [x.components.api          :as x.components]))
 
 
 
@@ -96,18 +96,18 @@
   [elements/icon-button ::go-home-icon-button
                         {:border-radius :s
                          :hover-color   :highlight
-                         :on-click      [:router/go-home!]
+                         :on-click      [:x.router/go-home!]
                          :preset        :apps}])
                         ;:badge-color :secondary
 
 (defn go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [parent-route @(r/subscribe [:router/get-current-route-parent])]
+  (let [parent-route @(r/subscribe [:x.router/get-current-route-parent])]
        [elements/icon-button ::go-up-icon-button
                              {:border-radius :s
                               :hover-color   :highlight
-                              :on-click      [:router/go-to! parent-route]
+                              :on-click      [:x.router/go-to! parent-route]
                               :preset        :back}]))
 
 (defn at-home-icon-button
@@ -119,9 +119,9 @@
 (defn- navigation-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (cond @(r/subscribe [:router/at-home?])
+  (cond @(r/subscribe [:x.router/at-home?])
          [at-home-icon-button]
-        @(r/subscribe [:router/home-next-door?])
+        @(r/subscribe [:x.router/home-next-door?])
          [go-home-icon-button]
         :far-from-home
          [go-up-icon-button]))
@@ -137,7 +137,7 @@
                     :font-size :xs
                     :indent    {:vertical :xs}
                     :label     :privacy-policy
-                    :on-click  [:router/go-to! "/@app-home/privacy-policy"]}])
+                    :on-click  [:x.router/go-to! "/@app-home/privacy-policy"]}])
 
 (defn- terms-of-service-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -147,7 +147,7 @@
                     :font-size :xs
                     :indent    {:vertical :xs}
                     :label     :terms-of-service
-                    :on-click  [:router/go-to! "/@app-home/terms-of-service"]}])
+                    :on-click  [:x.router/go-to! "/@app-home/terms-of-service"]}])
 
 (defn- user-profile-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -157,7 +157,7 @@
                     :font-size :xs
                     :indent    {:vertical :xs}
                     :label     :user-profile
-                    :on-click  [:router/go-to! "/@app-home/user-profile"]}])
+                    :on-click  [:x.router/go-to! "/@app-home/user-profile"]}])
 
 (defn- settings-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -167,7 +167,7 @@
                     :font-size :xs
                     :indent    {:vertical :xs}
                     :label     :settings
-                    :on-click  [:router/go-to! "/@app-home/settings"]}])
+                    :on-click  [:x.router/go-to! "/@app-home/settings"]}])
 
 (defn- logout-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,7 +182,7 @@
 (defn- footer
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
+  (if-let [user-identified? @(r/subscribe [:x.user/user-identified?])]
           [:div#surface-a--footer [:div#surface-a--footer-content [privacy-policy-button]
                                                                   [terms-of-service-button]
                                                                   [user-profile-button]
@@ -205,7 +205,7 @@
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_ _]
-  (if-let [user-identified? @(r/subscribe [:user/user-identified?])]
+  (if-let [user-identified? @(r/subscribe [:x.user/user-identified?])]
           (reagent/lifecycles {:component-did-mount    (fn [] (helpers/header-did-mount-f))
                                :component-will-unmount (fn [] (helpers/header-will-unmount-f))
                                :reagent-render         (fn [] [header-structure])})))

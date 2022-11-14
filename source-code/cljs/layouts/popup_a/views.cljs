@@ -20,7 +20,7 @@
               [react.api                  :as react]
               [reagent.api                :as reagent]
               [re-frame.api               :as r]
-              [x.app-components.api       :as x.components]))
+              [x.components.api           :as x.components]))
 
 
 
@@ -118,7 +118,7 @@
   ;  {:close-by-cover? (boolean)(opt)}
   [popup-id {:keys [close-by-cover?] :as layout-props}]
   [:div.popup-a (helpers/layout-attributes popup-id layout-props)
-                [:div.popup-a--cover (if close-by-cover? {:on-click #(r/dispatch [:ui/remove-popup! popup-id])})]
+                [:div.popup-a--cover (if close-by-cover? {:on-click #(r/dispatch [:x.ui/remove-popup! popup-id])})]
                 [layout-structure popup-id layout-props]])
 
 (defn layout

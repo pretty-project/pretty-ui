@@ -13,6 +13,7 @@
 #sidebar-a {
   background-color: var( --background-color-invert );
   background-color: var( --fill-color-invert );
+  background-color: #535353;
   height: 100vh;
   position: sticky;
   top: 0;

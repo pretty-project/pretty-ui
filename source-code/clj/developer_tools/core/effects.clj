@@ -16,7 +16,7 @@
     (:require [developer-tools.core.routes :as core.routes]
               [mid-fruits.pretty           :as pretty]
               [re-frame.api                :as r :refer [r]]
-              [x.server-core.api           :as x.core]))
+              [x.core.api                  :as x.core]))
 
 
 
@@ -25,14 +25,14 @@
 
 (r/reg-event-fx :developer-tools.core/init!
   (fn [{:keys [db]} _]
-      {:dispatch-n [[:router/add-route! :developer-tools.core/route
-                                        {:route-template "/avocado-juice"
-                                         :get            (fn [request] (core.routes/download-developer-tools request))
-                                         :restricted?    (not (r x.core/dev-mode? db))}]
-                    [:router/add-route! :developer-tools.core/extended-route
-                                        {:route-template "/avocado-juice/:tool-id"
-                                         :get            (fn [request] (core.routes/download-developer-tools request))
-                                         :restricted?    (not (r x.core/dev-mode? db))}]]}))
+      {:dispatch-n [[:x.router/add-route! :developer-tools.core/route
+                                          {:route-template "/avocado-juice"
+                                           :get            (fn [request] (core.routes/download-developer-tools request))
+                                           :restricted?    (not (r x.core/dev-mode? db))}]
+                    [:x.router/add-route! :developer-tools.core/extended-route
+                                          {:route-template "/avocado-juice/:tool-id"
+                                           :get            (fn [request] (core.routes/download-developer-tools request))
+                                           :restricted?    (not (r x.core/dev-mode? db))}]]}))
 
 
 

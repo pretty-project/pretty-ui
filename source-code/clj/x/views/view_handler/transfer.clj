@@ -14,7 +14,7 @@
 
 (ns x.views.view-handler.transfer
     (:require [re-frame.api :as r]
-              [x.server-core.api   :as x.core]))
+              [x.core.api   :as x.core]))
 
 
 

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.switch.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [re-frame.api                  :as r]))
 
 
 
@@ -84,4 +84,4 @@
                       :disabled      true}
                      {:data-switched option-switched?
                       :on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
-                      :on-mouse-up  #(x.environment/blur-element!)})))
+                      :on-mouse-up  #(element.side-effects/blur-element! switch-id)})))

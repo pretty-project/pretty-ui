@@ -26,7 +26,7 @@
   ;
   ; @return (string)
   [db _]
-  (get-in db [:core :build-handler/meta-items :app-build]))
+  (get-in db [:x.core :build-handler/meta-items :app-build]))
 
 
 
@@ -34,5 +34,5 @@
 ;; ---------------------------------------------------------------------------
 
 ; @usage
-;  [:core/get-app-build]
-(r/reg-sub :core/get-app-build get-app-build)
+;  [:x.core/get-app-build]
+(r/reg-sub :x.core/get-app-build get-app-build)

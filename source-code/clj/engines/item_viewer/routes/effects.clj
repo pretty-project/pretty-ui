@@ -31,8 +31,8 @@
   (fn [_ [_ viewer-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id")]
-           [:router/add-route! (routes.helpers/route-id viewer-id :extended)
-                               {:client-event   [:item-viewer/handle-route! viewer-id]
-                                :js-build       :app 
-                                :restricted?    true
-                                :route-template extended-route}])))
+           [:x.router/add-route! (routes.helpers/route-id viewer-id :extended)
+                                 {:client-event   [:item-viewer/handle-route! viewer-id]
+                                  :js-build       :app
+                                  :restricted?    true
+                                  :route-template extended-route}])))

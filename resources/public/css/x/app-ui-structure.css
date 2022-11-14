@@ -13,7 +13,7 @@
 #x-app-ui-structure {
   /* BUG#4090 */
   display: flex;
-  /* BUG#0009 (x.app-ui.renderer.views) */
+  /* BUG#0009 (source-code/cljs/x/ui/renderer/views.cljs) */
   flex-direction: row-reverse;
 }
 

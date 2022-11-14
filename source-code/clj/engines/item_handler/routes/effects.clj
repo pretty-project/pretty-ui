@@ -31,8 +31,8 @@
   (fn [_ [_ handler-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id")]
-           [:router/add-route! (routes.helpers/route-id handler-id :extended)
-                               {:client-event   [:item-handler/handle-route! handler-id]
-                                :js-build       :app
-                                :restricted?    true
-                                :route-template extended-route}])))
+           [:x.router/add-route! (routes.helpers/route-id handler-id :extended)
+                                 {:client-event   [:item-handler/handle-route! handler-id]
+                                  :js-build       :app
+                                  :restricted?    true
+                                  :route-template extended-route}])))

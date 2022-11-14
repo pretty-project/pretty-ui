@@ -16,10 +16,10 @@
     (:require [candy.api                       :refer [param]]
               [dom.api                         :as dom]
               [elements.engine.element         :as element]
+              [elements.element.side-effects   :as element.side-effects]
               [elements.target-handler.helpers :as target-handler.helpers]
               [mid-fruits.map                  :as map]
-              [re-frame.api                    :as r :refer [r]]
-              [x.app-environment.api           :as x.environment]))
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
@@ -44,7 +44,7 @@
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click on-right-click stop-propagation?]}]
-  (cond-> {; XXX#4460 
+  (cond-> {; XXX#4460
            :id (target-handler.helpers/element-id->target-id element-id)}
           (boolean disabled?) (merge {:disabled true
                                       :on-click #(if stop-propagation? (dom/stop-propagation! %))})
@@ -57,10 +57,10 @@
                                       ; hívható meg.
                                       :on-click #(do (if stop-propagation? (dom/stop-propagation! %))
                                                      (r/dispatch on-click))
-                                      :on-mouse-up #(x.environment/blur-element!)}
+                                      :on-mouse-up #(element.side-effects/blur-element! element-id)}
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
                                                                                (r/dispatch on-right-click)
-                                                                               (x.environment/blur-element!))}))))
+                                                                               (element.side-effects/blur-element! element-id))}))))
 
 
 
@@ -73,11 +73,11 @@
   ; @param (keyword) element-id
   (fn [{:keys [db]} [_ element-id]]
       (if-let [keypress (r element/get-element-prop db element-id :keypress)]
-              [:environment/reg-keypress-event! element-id
-                                                {:key-code   (:key-code keypress)
-                                                 :on-keydown [:elements/key-pressed  element-id]
-                                                 :on-keyup   [:elements/key-released element-id]
-                                                 :required?  (:required? keypress)}])))
+              [:x.environment/reg-keypress-event! element-id
+                                                  {:key-code   (:key-code keypress)
+                                                   :on-keydown [:elements/key-pressed  element-id]
+                                                   :on-keyup   [:elements/key-released element-id]
+                                                   :required?  (:required? keypress)}])))
 
 (r/reg-event-fx :elements/destruct-clickable!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,7 +85,7 @@
   ; @param (keyword) element-id
   ; @param (map) element-props
   (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
-      (if keypress [:environment/remove-keypress-event! element-id])))
+      (if keypress [:x.environment/remove-keypress-event! element-id])))
 
 (r/reg-event-fx :elements/key-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!

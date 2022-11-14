@@ -93,17 +93,17 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:router/get-app-home]
-(r/reg-sub :router/get-app-home get-app-home)
+;  [:x.router/get-app-home]
+(r/reg-sub :x.router/get-app-home get-app-home)
 
 ; @usage
-;  [:router/use-app-home "/@app-home/my-route"]
-(r/reg-sub :router/use-app-home use-app-home)
+;  [:x.router/use-app-home "/@app-home/my-route"]
+(r/reg-sub :x.router/use-app-home use-app-home)
 
 ; @usage
-;  [:router/get-app-domain]
-(r/reg-sub :router/get-app-domain get-app-domain)
+;  [:x.router/get-app-domain]
+(r/reg-sub :x.router/get-app-domain get-app-domain)
 
 ; @usage
-;  [:router/use-app-domain "/my-route"]
-(r/reg-sub :router/use-app-domain use-app-domain)
+;  [:x.router/use-app-domain "/my-route"]
+(r/reg-sub :x.router/use-app-domain use-app-domain)

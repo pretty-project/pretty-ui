@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.subs
-    (:require [candy.api      :refer [return]]
-              [re-frame.api   :refer [r]]
-              [x.app-core.api :as x.core]))
+    (:require [candy.api    :refer [return]]
+              [re-frame.api :refer [r]]
+              [x.core.api   :as x.core]))
 
 
 

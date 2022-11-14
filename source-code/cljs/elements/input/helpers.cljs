@@ -35,7 +35,7 @@
   ; Az egyes elemek opciói elsődlegesen a paraméterkén kapott options vektor
   ; értékei alapján kerülnek felsorolásra, annak hiányában az options-path útvonalon
   ; található értékek alapján.
-  (or options @(r/subscribe [:db/get-item options-path])))
+  (or options @(r/subscribe [:x.db/get-item options-path])))
 
 ; XXX#NEW VERSION!
 (defn default-options-path

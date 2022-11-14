@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.color-selector.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [mid-fruits.vector        :as vector]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [mid-fruits.vector             :as vector]
+              [re-frame.api                  :as r]))
 
 
 
@@ -35,12 +35,12 @@
   ;  {}
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
-        selected-options @(r/subscribe [:db/get-item value-path])]
+        selected-options @(r/subscribe [:x.db/get-item value-path])]
        {:data-clickable   true
         :data-collected   (vector/contains-item? selected-options option)
         :data-icon-family :material-icons-filled
         :on-click        #(r/dispatch on-click)
-        :on-mouse-up     #(x.environment/blur-element!)}))
+        :on-mouse-up     #(element.side-effects/blur-element! selector-id)}))
 
 (defn color-selector-options-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

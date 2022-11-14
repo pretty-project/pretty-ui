@@ -58,4 +58,4 @@
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
       (if-let [auto-title (r core.subs/get-auto-title db editor-id)]
-              [:ui/set-window-title! auto-title])))
+              [:x.ui/set-window-title! auto-title])))

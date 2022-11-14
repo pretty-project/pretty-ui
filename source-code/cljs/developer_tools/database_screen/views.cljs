@@ -25,5 +25,5 @@
   ; @usage
   ;  [database-screen]
   []
-  (let [db @(r/subscribe [:db/get-db])]
+  (let [db @(r/subscribe [:x.db/get-db])]
        [:div#x-developer-tools--database-screen [:pre (pretty/mixed->string db)]]))

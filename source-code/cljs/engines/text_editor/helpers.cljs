@@ -98,7 +98,7 @@
   ; @param (map) editor-props
   ;  {:value-path (vector)}
   [editor-id {:keys [value-path]}]
-  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        (swap! state/EDITOR-INPUT assoc editor-id stored-value)))
 
 (defn synchronizer-will-unmount-f
@@ -122,7 +122,7 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [_ _]
-  (r/dispatch-sync [:environment/quit-type-mode!]))
+  (r/dispatch-sync [:x.environment/quit-type-mode!]))
 
 (defn on-focus-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,7 +130,7 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [_ _]
-  (r/dispatch-sync [:environment/set-type-mode!]))
+  (r/dispatch-sync [:x.environment/set-type-mode!]))
 
 (defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -145,4 +145,4 @@
   ; ... a dispatch-last függvénnyel a value-path Re-Frame adatbázis útvonalra írja,
   ;     ha a felhasználó már befejezte a gépelést.
   (set-editor-output! editor-id editor-content)
-  (r/dispatch-last    config/TYPE-ENDED-AFTER [:db/set-item! value-path editor-content]))
+  (r/dispatch-last    config/TYPE-ENDED-AFTER [:x.db/set-item! value-path editor-content]))

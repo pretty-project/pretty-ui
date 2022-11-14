@@ -15,18 +15,18 @@
   A mező értéke késleltetve íródik a Re-Frame adatbázisba!
 
 - Az x.app-sync.query-handler.* névterek most már pathom.* névtérbe költöztek!
-  A [:sync/send-query! ...] esemény ezentúl [:pathom/send-query! ...] néven
+  A [:x.sync/send-query! ...] esemény ezentúl [:pathom/send-query! ...] néven
   használható!
 
 
 
 # x4.7.0
-- [:ui/render-surface! ...]
-  [:ui/close-surface!  ...]
-  [:ui/render-popup!   ...]
-  [:ui/close-popup!    ...]
-  [:ui/render-bubble!  ...]
-  [:ui/close-bubble!   ...]
+- [:x.ui/render-surface! ...]
+  [:x.ui/close-surface!  ...]
+  [:x.ui/render-popup!   ...]
+  [:x.ui/close-popup!    ...]
+  [:x.ui/render-bubble!  ...]
+  [:x.ui/close-bubble!   ...]
 
 
 
@@ -65,10 +65,10 @@
 
 # x4.6.7
 
-- `[:environment/add-css! ...]` esemény ezentúl szerver-oldalon is használható, ha feltételesen
+- `[:x.environment/add-css! ...]` esemény ezentúl szerver-oldalon is használható, ha feltételesen
   szeretnél hozzáadni css fájlokat!
 
-- A kliens-oldali `[:environment/add-external-css! ...]` esemény megszűnt és az `[:environment/add-css! ...]`
+- A kliens-oldali `[:x.environment/add-external-css! ...]` esemény megszűnt és az `[:x.environment/add-css! ...]`
   esemény paraméterezése megváltozott!
 
 - Az `app-fruits.dom`     névtér ezentúl `dom.api`     néven elérhető!
@@ -103,7 +103,7 @@
 - Az `(item-editor/editor-uri ...)` függvény ezentúl nem elérhető, helyette az `(r item-editor/get-item-route ...)`
   subscription függvény használatával készíthetsz útvonalatat az egyes elemkhez.
 
-- A `[:ui/set-route-parent! ...]` esemény ezentúl nem elérhető
+- A `[:x.ui/set-route-parent! ...]` esemény ezentúl nem elérhető
   (a applikáció fejlécének navigációs gombja az aktuális útvonal alapján automatikusan beállítja magát)
 
 - Az item-lister plugin `{:new-item-route ...}` tulajdonsága helyett ezentúl `{:new-item-event ...}` tulajdonság használható
@@ -113,7 +113,7 @@
 # x4.6.4
 
 - Az útvonalak `{:route-parent "..."}` beállítása ezentúl nem elérhető, helyette a kliens-oldali
-  `[:ui/set-route-parent! "..."]` esemény használatával lehet beállítani a header navigációs gombjának
+  `[:x.ui/set-route-parent! "..."]` esemény használatával lehet beállítani a header navigációs gombjának
   viselkedését!
 
 - A `mongo-db.api/get-all-documents` függvény ezentúl `get-collection` néven érhető el
@@ -163,10 +163,10 @@
 
 - A `[:db/apply! ...]` esemény neve ezentúl `[:db/apply-item! ...]`
 
-- Az `[:environment/add-external-css! "..."]` eseményt ne használd! Helyett az `x.app-config.edn`
+- Az `[:x.environment/add-external-css! "..."]` eseményt ne használd! Helyett az `x.app-config.edn`
   fájlban hívd be az egyes css fájlokat!
 
-- A `[:ui/listen-to-request! ...]` eseményt ne hívd meg! Helyette az egyes request-eknek és query-knek
+- A `[:x.ui/listen-to-request! ...]` eseményt ne hívd meg! Helyette az egyes request-eknek és query-knek
   add át a `{:display-progress? true}` tulajdonságot!
 
 - Az útvonalak `{:js "..."}` beállítása ezentúl `{:core-js "..."}` névén elérhető
@@ -324,7 +324,7 @@
 - BREAKING CHANGE
   X Modulok Re-Frame esemény elnevezései megváltoznak:
   Pl.:
-  `[:x.app-router/...]` -> `[:router/...]`
+  `[:x.app-router/...]` -> `[:x.router/...]`
   ...
 
 - BREAKING CHANGE

@@ -22,7 +22,7 @@
               [syntax.api                          :as syntax]
               [mid-fruits.vector                   :as vector]
               [re-frame.api                        :as r]
-              [x.app-environment.api               :as x.environment]))
+              [x.environment.api                   :as x.environment]))
 
 
 
@@ -87,7 +87,7 @@
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        [elements/icon-button ::decrease-integer-icon-button
-                             {:icon :remove :label "Dec" :on-click [:db/apply-item! current-path dec]
+                             {:icon :remove :label "Dec" :on-click [:x.db/apply-item! current-path dec]
                               :hover-color :highlight :height :3xl :width :3xl}]))
 
 (defn increase-integer-icon-button
@@ -95,7 +95,7 @@
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        [elements/icon-button ::increase-integer-icon-button
-                             {:icon :add :label "Inc" :on-click [:db/apply-item! current-path inc]
+                             {:icon :add :label "Inc" :on-click [:x.db/apply-item! current-path inc]
                               :hover-color :highlight :height :3xl :width :3xl}]))
 
 (defn swap-boolean-icon-button
@@ -104,10 +104,10 @@
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        (if-let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
                [elements/icon-button ::swap-boolean-icon-button
-                                     {:icon :task_alt       :label "True"  :on-click [:db/toggle-item! current-path]
+                                     {:icon :task_alt       :label "True"  :on-click [:x.db/toggle-item! current-path]
                                       :hover-color :highlight :height :3xl :width :3xl}]
                [elements/icon-button ::swap-boolean-icon-button
-                                     {:icon :do_not_disturb :label "False" :on-click [:db/toggle-item! current-path]
+                                     {:icon :do_not_disturb :label "False" :on-click [:x.db/toggle-item! current-path]
                                       :hover-color :highlight :height :3xl :width :3xl}])))
 
 (defn toggle-data-view-icon-button
@@ -151,7 +151,7 @@
                                 {:icon :delete :label "Remove" :disabled? true
                                  :hover-color :highlight :height :3xl :width :3xl}]
           (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])
-                remove-event [:db/move-item! current-path [:developer-tools :re-frame-browser/meta-items :bin]]]
+                remove-event [:x.db/move-item! current-path [:developer-tools :re-frame-browser/meta-items :bin]]]
                [elements/icon-button ::remove-item-icon-button
                                      {:icon :delete :label "Remove" :on-click remove-event
                                       :hover-color :highlight :height :3xl :width :3xl}])))
@@ -176,7 +176,7 @@
   []
   (let [current-path @(r/subscribe [:developer-tools.re-frame-browser/get-current-path])]
        (if-let [bin @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :bin])]
-               (let [revert-event [:db/move-item! [:developer-tools :re-frame-browser/meta-items :bin] current-path]]
+               (let [revert-event [:x.db/move-item! [:developer-tools :re-frame-browser/meta-items :bin] current-path]]
                     [elements/icon-button ::recycle-item-icon-button
                                           {:icon :recycling :label "Restore" :on-click revert-event
                                            :hover-color :highlight :height :3xl :width :3xl}]))))

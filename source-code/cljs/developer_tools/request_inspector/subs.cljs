@@ -26,7 +26,7 @@
 (defn get-request-ids
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
-  (map/get-keys (get-in db [:sync :request-handler/data-history])))
+  (map/get-keys (get-in db [:x.sync :request-handler/data-history])))
 
 (defn get-inspected-request-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -37,7 +37,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [request-id      (r get-inspected-request-id db)
-        request-history (get-in db [:sync :request-handler/data-history request-id])]
+        request-history (get-in db [:x.sync :request-handler/data-history request-id])]
        (count request-history)))
 
 (defn get-request-history-dex
@@ -46,7 +46,7 @@
   (let [request-id (r get-inspected-request-id db)]
        (if-let [request-history-dex (get-in db [:developer-tools :request-inspector/meta-items :request-history-dex])]
                (return request-history-dex)
-               (let [request-history (get-in db [:sync :request-handler/data-history request-id])]
+               (let [request-history (get-in db [:x.sync :request-handler/data-history request-id])]
                     (vector/last-dex request-history)))))
 
 (defn get-request-props
@@ -54,21 +54,21 @@
   [db _]
   (let [request-id          (r get-inspected-request-id db)
         request-history-dex (r get-request-history-dex  db)]
-       (get-in db [:sync :request-handler/data-history request-id request-history-dex])))
+       (get-in db [:x.sync :request-handler/data-history request-id request-history-dex])))
 
 (defn get-request-response
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db _]
   (let [request-id          (r get-inspected-request-id db)
         request-history-dex (r get-request-history-dex  db)]
-       (get-in db [:sync :response-handler/data-history request-id request-history-dex])))
+       (get-in db [:x.sync :response-handler/data-history request-id request-history-dex])))
 
 (defn get-request-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [db [_ prop-key]]
   (let [request-id          (r get-inspected-request-id db)
         request-history-dex (r get-request-history-dex  db)]
-       (get-in db [:sync :request-handler/data-history request-id request-history-dex prop-key])))
+       (get-in db [:x.sync :request-handler/data-history request-id request-history-dex prop-key])))
 
 
 

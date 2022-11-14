@@ -23,7 +23,7 @@
               [engines.item-viewer.update.validators :as update.validators]
               [engines.item-viewer.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as x.ui]))
+              [x.ui.api                              :as x.ui]))
 
 
 
@@ -66,11 +66,11 @@
            (if (and base-route (r core.subs/viewing-item? db viewer-id item-id))
                ; A)
                {:dispatch-n [[:item-viewer/render-item-deleted-dialog! viewer-id item-id]
-                             [:router/go-to! base-route]]}
+                             [:x.router/go-to! base-route]]}
                ; B)
                {:dispatch    [:item-viewer/render-item-deleted-dialog! viewer-id item-id]
                 :dispatch-if [(r x.ui/process-faked? db)
-                              [:ui/end-fake-process!]]}))))
+                              [:x.ui/end-fake-process!]]}))))
 
 (r/reg-event-fx :item-viewer/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +84,7 @@
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
            {:dispatch    [:item-viewer/render-delete-item-failed-dialog! viewer-id item-id]
             :dispatch-if [(r x.ui/process-faked? db)
-                          [:ui/end-fake-process!]]})))
+                          [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -92,8 +92,8 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      [:ui/render-bubble! ::item-deleted-dialog
-                          {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
+      [:x.ui/render-bubble! ::item-deleted-dialog
+                            {:body [update.views/item-deleted-dialog-body viewer-id item-id]}]))
 
 (r/reg-event-fx :item-viewer/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,8 +101,8 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ viewer-id item-id]]
-      [:ui/render-bubble! ::delete-item-failed-dialog
-                          {:body :failed-to-delete}]))
+      [:x.ui/render-bubble! ::delete-item-failed-dialog
+                            {:body :failed-to-delete}]))
 
 
 
@@ -120,7 +120,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
            {:db       (r x.ui/fake-process! db 15)
-            :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
+            :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                               {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
@@ -143,10 +143,10 @@
       ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
               ; A)
-              [:router/go-to! item-route]
+              [:x.router/go-to! item-route]
               ; B)
               {:dispatch-if [(r x.ui/process-faked? db)
-                             [:ui/end-fake-process!]]})))
+                             [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,7 +160,7 @@
       (let [item-id (r update.subs/get-deleted-item-id db viewer-id server-response)]
            {:dispatch    [:item-viewer/render-undo-delete-item-failed-dialog! viewer-id item-id]
             :dispatch-if [(r x.ui/process-faked? db)
-                          [:ui/end-fake-process!]]})))
+                          [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-viewer/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -168,8 +168,8 @@
   ; @param (keyword) viewer-id
   ; @param (string) item-id
   (fn [_ [_ viewer-id item-id]]
-      [:ui/render-bubble! ::undo-delete-item-failed-dialog
-                          {:body [update.views/undo-delete-item-failed-dialog-body viewer-id item-id]}]))
+      [:x.ui/render-bubble! ::undo-delete-item-failed-dialog
+                            {:body [update.views/undo-delete-item-failed-dialog-body viewer-id item-id]}]))
 
 
 
@@ -209,8 +209,8 @@
   (fn [_ [_ _ _]]
       ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
       ; ... megjelenít egy értesítést.
-      [:ui/render-bubble! ::duplicate-item-failed-dialog
-                          {:body :failed-to-duplicate}]))
+      [:x.ui/render-bubble! ::duplicate-item-failed-dialog
+                            {:body :failed-to-duplicate}]))
 
 (r/reg-event-fx :item-viewer/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -218,8 +218,8 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   (fn [_ [_ viewer-id copy-id]]
-      [:ui/render-bubble! ::item-duplicated-dialog
-                          {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
+      [:x.ui/render-bubble! ::item-duplicated-dialog
+                            {:body [update.views/item-duplicated-dialog-body viewer-id copy-id]}]))
 
 (r/reg-event-fx :item-viewer/view-duplicated-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -227,5 +227,5 @@
   ; @param (keyword) viewer-id
   ; @param (string) copy-id
   (fn [_ [_ viewer-id copy-id]]
-      {:dispatch-n [[:ui/remove-bubble! ::item-duplicated-dialog]
+      {:dispatch-n [[:x.ui/remove-bubble! ::item-duplicated-dialog]
                     [:item-viewer/view-item! viewer-id copy-id]]}))

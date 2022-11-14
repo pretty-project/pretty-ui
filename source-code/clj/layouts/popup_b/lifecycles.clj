@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns layouts.popup-b.lifecycles
-    (:require [x.server-core.api :as x.core]))
+    (:require [x.core.api :as x.core]))
 
 
 
@@ -21,4 +21,4 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:environment/add-css! {:uri "/css/layouts/popup-b.css"}]})
+  {:on-server-boot [:x.environment/add-css! {:uri "/css/layouts/popup-b.css"}]})

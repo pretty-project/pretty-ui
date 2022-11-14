@@ -20,7 +20,7 @@
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
-              [x.app-components.api                :as x.components]))
+              [x.components.api                    :as x.components]))
 
 
 

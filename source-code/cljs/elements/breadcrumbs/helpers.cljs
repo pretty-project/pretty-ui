@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.breadcrumbs.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [re-frame.api                  :as r]))
 
 
 
@@ -32,12 +32,12 @@
   ;
   ; @return (map)
   ;  {}
-  [_ _ {:keys [disabled? href on-click]}]
+  [breadcrumbs-id _ {:keys [disabled? href on-click]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
                  :href           href
                  :on-click       #(r/dispatch on-click)
-                 :on-mouse-up    #(x.environment/blur-element!)}))
+                 :on-mouse-up    #(element.side-effects/blur-element! breadcrumbs-id)}))
 
 (defn breadcrumbs-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,8 +89,8 @@
   ;
   ; @return (map)
   ;  {}
-  [_ _ {:keys [route]}]
+  [breadcrumbs-id _ {:keys [route]}]
   {:data-clickable  true
    :data-selectable false
-   :on-click    #(r/dispatch [:router/go-to! route])
-   :on-mouse-up #(x.environment/blur-element!)})
+   :on-click    #(r/dispatch [:x.router/go-to! route])
+   :on-mouse-up #(element.side-effects/blur-element! breadcrumbs-id)})

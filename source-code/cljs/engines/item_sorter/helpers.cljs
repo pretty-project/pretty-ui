@@ -43,7 +43,7 @@
   ; @param (map) sorter-props
   ;  {:value-path (vector)}
   [_ {:keys [value-path]} items]
-  (r/dispatch-sync [:db/set-item value-path items]))
+  (r/dispatch-sync [:x.db/set-item value-path items]))
 
 (defn on-drag-start-f
   ; WARNING! NON-PUBLIC! DO NOT USE!

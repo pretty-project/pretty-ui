@@ -19,7 +19,7 @@
               [reagent.api                   :as reagent]
               [re-frame.api                  :as r]
               [tools.infinite-loader.helpers :as helpers]
-              [x.app-environment.api         :as x.environment]))
+              [x.environment.api             :as x.environment]))
 
 
 

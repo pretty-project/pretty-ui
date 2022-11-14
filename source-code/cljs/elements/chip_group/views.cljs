@@ -21,7 +21,7 @@
               [mid-fruits.random              :as random]
               [mid-fruits.vector              :as vector]
               [re-frame.api                   :as r]
-              [x.app-components.api           :as x.components]))
+              [x.components.api               :as x.components]))
 
 
 
@@ -55,7 +55,7 @@
   ; @param (map) group-props
   ;  {:value-path (vector)}
   [group-id {:keys [value-path] :as group-props}]
-  (let [chips @(r/subscribe [:db/get-item value-path])]
+  (let [chips @(r/subscribe [:x.db/get-item value-path])]
        (if (vector/nonempty? chips)
            (letfn [(f [chip-list chip-dex chip] (conj chip-list [chip-group-chip group-id group-props chip-dex chip]))]
                   (reduce-indexed f [:div.e-chip-group--chips] chips))

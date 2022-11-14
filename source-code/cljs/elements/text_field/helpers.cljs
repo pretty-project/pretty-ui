@@ -23,8 +23,8 @@
               [mid-fruits.string          :as string]
               [re-frame.api               :as r]
               [time.api                   :as time]
-              [x.app-components.api       :as x.components]
-              [x.app-environment.api      :as x.environment]))
+              [x.components.api           :as x.components]
+              [x.environment.api          :as x.environment]))
 
 
 

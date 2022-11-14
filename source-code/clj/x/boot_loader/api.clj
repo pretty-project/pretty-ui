@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.api
-    (:require [x.server-db.api]
+    (:require [x.db.api]
               [x.dictionary.api]
-              [x.server-environment.api]
-              [x.server-router.api]
+              [x.environment.api]
+              [x.router.api]
               [x.views.api]
               [x.boot-loader.effects]
               [x.boot-loader.side-effects :as side-effects]))

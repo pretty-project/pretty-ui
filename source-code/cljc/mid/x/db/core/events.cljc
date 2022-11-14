@@ -221,49 +221,49 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:db/empty-db!]
-(r/reg-event-db :db/empty-db! empty-db!)
+;  [:x.db/empty-db!]
+(r/reg-event-db :x.db/empty-db! empty-db!)
 
 ; @usage
-;  [:db/toggle-item! [:my-item]]
-(r/reg-event-db :db/toggle-item! toggle-item!)
+;  [:x.db/toggle-item! [:my-item]]
+(r/reg-event-db :x.db/toggle-item! toggle-item!)
 
 ; @usage
-;  [:db/toggle-item-value! [:my-item] :my-value]
-(r/reg-event-db :db/toggle-item-value! toggle-item-value!)
+;  [:x.db/toggle-item-value! [:my-item] :my-value]
+(r/reg-event-db :x.db/toggle-item-value! toggle-item-value!)
 
 ; @usage
-;  [:db/move-item! [:move-from] [:move-to]]
-(r/reg-event-db :db/move-item! move-item!)
+;  [:x.db/move-item! [:move-from] [:move-to]]
+(r/reg-event-db :x.db/move-item! move-item!)
 
 ; @usage
-;  [:db/set-item! [:my-item] "My value"]
-(r/reg-event-db :db/set-item! set-item!)
+;  [:x.db/set-item! [:my-item] "My value"]
+(r/reg-event-db :x.db/set-item! set-item!)
 
 ; @usage
-;  [:db/set-vector-item! [:my-item :0] "My value"]
-(r/reg-event-db :db/set-vector-item! set-vector-item!)
+;  [:x.db/set-vector-item! [:my-item :0] "My value"]
+(r/reg-event-db :x.db/set-vector-item! set-vector-item!)
 
 ; @usage
-;  [:db/remove-item! [:my-item]]
-(r/reg-event-db :db/remove-item! remove-item!)
+;  [:x.db/remove-item! [:my-item]]
+(r/reg-event-db :x.db/remove-item! remove-item!)
 
 ; @usage
-;  [:db/remove-vector-item! [:my-item 0]]
-(r/reg-event-db :db/remove-vector-item! remove-vector-item!)
+;  [:x.db/remove-vector-item! [:my-item 0]]
+(r/reg-event-db :x.db/remove-vector-item! remove-vector-item!)
 
 ; @usage
-;  [:db/remove-item-n! [[:my-item ] [...]]]
-(r/reg-event-db :db/remove-item-n! remove-item-n!)
+;  [:x.db/remove-item-n! [[:my-item ] [...]]]
+(r/reg-event-db :x.db/remove-item-n! remove-item-n!)
 
 ; @usage
-;  [:db/inc-item-n! [[:my-item] [...]]]
-(r/reg-event-db :db/inc-item-n! inc-item-n!)
+;  [:x.db/inc-item-n! [[:my-item] [...]]]
+(r/reg-event-db :x.db/inc-item-n! inc-item-n!)
 
 ; @usage
-;  [:db/dec-item-n! [[:my-item] [...]]]
-(r/reg-event-db :db/dec-item-n! dec-item-n!)
+;  [:x.db/dec-item-n! [[:my-item] [...]]]
+(r/reg-event-db :x.db/dec-item-n! dec-item-n!)
 
 ; @usage
-;  [:db/apply-item! [:my-item] merge {}]
-(r/reg-event-db :db/apply-item! apply-item!)
+;  [:x.db/apply-item! [:my-item] merge {}]
+(r/reg-event-db :x.db/apply-item! apply-item!)

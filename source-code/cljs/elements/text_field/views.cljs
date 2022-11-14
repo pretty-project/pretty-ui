@@ -22,7 +22,7 @@
               [mid-fruits.vector              :as vector]
               [reagent.api                    :as reagent]
               [re-frame.api                   :as r]
-              [x.app-components.api           :as x.components]))
+              [x.components.api               :as x.components]))
 
 
 
@@ -239,7 +239,7 @@
   [field-id {:keys [value-path] :as field-props}]
   ; HACK#5041
   ; Yes! This is what it seems like! Sorry for that :(
-  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        (r/dispatch [:elements.text-field/hack5041 field-id field-props])))
 
 

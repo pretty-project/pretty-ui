@@ -23,10 +23,6 @@
 
 - az x ne használja az elements! legyen tőle független
 
-- x.server-user.api :as user
-  =>
-  x.user.api :as x.user
-
 - Használj set-eket! #(1 2 3)
   + (set ...) set függvény!
   - Egy elem egyszer fordulhat elő benne
@@ -51,7 +47,7 @@
   Felesleges Re-Frame írások:
   -
 
-- Vannak olyan [:ui/render-bubble! ...] események, amik egy metamorphic-content-et
+- Vannak olyan [:x.ui/render-bubble! ...] események, amik egy metamorphic-content-et
   adnak át {:content ...} tulajdonságként, ez igy nem maradhat, a bubble layout-ja
   ki kell kerüljön az x-ből!
 
@@ -145,7 +141,7 @@
 - dom/form-data van egy kérdéses sor ...
   dom/file-selector detto
 
-- Beállítható temporary-parent, ami a kövi [:router/go-xxx! ...] eseménnyel törlődik
+- Beállítható temporary-parent, ami a kövi [:x.router/go-xxx! ...] eseménnyel törlődik
   - Így megadhato, hogy a "/models/:model-id/types/:type-id" útvonal vissza gombja
     a "/models/:model-id" útvonalra dobjon
   - A view-selector load-selector eseménye is állítsa be hogy az "/@app-home/extension/:view-id"
@@ -153,14 +149,6 @@
 
 - Milyen hatással van a view-selector plugin-ra, hogy hamarabb feliratkozhatsz a selected-view-id
   értékére mint, ahogy a body komponens eltárolja a default-view-id értékét
-
-- Elég mekülönböztetni egymástól az app/mid és server/mid névtereket
-  - Az app- és server- előtagok használata nem szükséges ha a mid meg van különböztetve
-  - A mid- prefix helyett legyen egy mid mappa inkább
-  - x.app-core   x.mid-core   x.server-core
-    x.core       mid.x.core   x.core
-  - app-extensions.storage    mid-extensions.storage   server-extensions.storage
-    extensions.storage        mid.extensions.storage   extensions.storage
 
 - A mid névterekbe nem is kell .api fájl csak a mid-core.api van meghivva itt-ott, amit
   levált majd a re-frame.api, utána törölhetők a mid-* .api fájlok
@@ -207,7 +195,7 @@
   adott billentyűre, akkor sokszor egymás utánban megtörténik az button on-click eventje,
   ami full cink, pl fájl letöltésnél hatszor tölti le a fájlt és hasonlok
 
-- x.app-ui modulban az environment/reveal-element-animated és environment/hide-element-animated
+- x.ui modulban az environment/reveal-element-animated és environment/hide-element-animated
   eljárásokat react-transition vezérlésre cserélni
 
 - Media picker SHIFT billentyűvel átrakja magát az item-lsiter select-mode-ba!
@@ -228,8 +216,8 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - (def a [0 1 2 3 4 5])
   (println (str (apply > a)))
 
-- (ns xyz (:require [x.app-user.api :as user]))
-  (println (str ::user/primary)) => :x.app-user.api/primary
+- (ns xyz (:require [x.user.api :as x.user]))
+  (println (str ::user/primary)) => :x.user.api/primary
 
 - nem mukodik a goog.net.cookies törlés! ez nem meg lett javitva?
 
@@ -340,7 +328,7 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 - BUG#0054
 - https://www.spar.hu/uzletek/spar-express-szeged-6723-makkoshazi-krt-1-
 - A privacy-policy beállításokat állandóan elérhetővé kell tenni a felhasználók
-  számára. Ezért kell egy x.app-ui.views/privacy-settings felület, amelyet
+  számára. Ezért kell egy x.ui.views/privacy-settings felület, amelyet
   a bejelentkezett (applikácót használó) felhasználók a beállítások felület
   egyik tab-ja ként használhatnak, míg a vendég felhasználók (weboldalt látogató)
   a footer-en elhelyezett hivatkozásról érhetnek el.
@@ -454,7 +442,7 @@ ha a notification@monotech.hu rol mennek ki a woermann os es kesobb mas oldalak 
 (defn- stay-in-viewport-element
   []
   [synth/subscriber ak7600
-   [:x.app-environment.dom-handler/get-relative-top ::scroll-signal]])         
+   [:x.environment.dom-handler/get-relative-top ::scroll-signal]])         
 
 (defn- test
   []

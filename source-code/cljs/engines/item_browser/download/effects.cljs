@@ -86,4 +86,4 @@
   ; @param (keyword) browser-id
   (fn [{:keys [db]} [_ browser-id]]
       (if-let [auto-title (r core.subs/get-auto-title db browser-id)]
-              [:ui/set-window-title! auto-title])))
+              [:x.ui/set-window-title! auto-title])))

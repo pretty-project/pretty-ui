@@ -43,7 +43,7 @@
       ;    ... meghívja az [:item-handler/load-handler! ...] eseményt.
       (if-let [route-handled? (r routes.subs/route-handled? db handler-id)]
               (let [item-route (r routes.subs/get-item-route db handler-id item-id)]
-                   {:dispatch [:router/go-to! item-route]})
+                   {:dispatch [:x.router/go-to! item-route]})
               (if (r body.subs/body-did-mount? db handler-id)
                   {:db       (r core.events/set-item-id! db handler-id item-id)
                    :dispatch [:item-handler/load-handler! handler-id]}))))
@@ -72,4 +72,4 @@
   ; @param (keyword) handler-id
   (fn [{:keys [db]} [_ handler-id]]
       (let [base-route (r transfer.subs/get-transfer-item db handler-id :base-route)]
-           [:router/go-to! base-route])))
+           [:x.router/go-to! base-route])))

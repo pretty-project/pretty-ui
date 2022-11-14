@@ -17,7 +17,7 @@
               [elements.engine.api           :as engine]
               [elements.flex-handler.helpers :as flex-handler.helpers]
               [mid-fruits.random             :as random]
-              [x.app-components.api          :as x.components]))
+              [x.components.api              :as x.components]))
 
 
 

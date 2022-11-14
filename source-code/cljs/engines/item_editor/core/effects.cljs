@@ -35,7 +35,7 @@
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               (let [edit-route (r routes.subs/get-edit-route db editor-id item-id)]
-                   {:dispatch [:router/go-to! edit-route]})
+                   {:dispatch [:x.router/go-to! edit-route]})
               (if (r body.subs/body-did-mount? db editor-id)
                   {:db       (r core.events/set-item-id! db editor-id item-id)
                    :dispatch [:item-editor/load-editor! editor-id]}))))
@@ -89,6 +89,6 @@
       ;      mentésekor jön létre!
       (if-let [current-item-id (r core.subs/get-current-item-id db editor-id)]
               (let [item-route (r routes.subs/get-item-route db editor-id current-item-id)]
-                   [:router/go-to! item-route])
+                   [:x.router/go-to! item-route])
               (let [base-route (r transfer.subs/get-transfer-item db editor-id :base-route)]
-                   [:router/go-to! base-route]))))
+                   [:x.router/go-to! base-route]))))

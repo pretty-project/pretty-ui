@@ -117,9 +117,9 @@
 (defn- request-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request-id]
-  (let [request-failured?  @(r/subscribe [:sync/request-failured?     request-id])
-        request-successed? @(r/subscribe [:sync/request-successed?    request-id])
-        request-sent-time  @(r/subscribe [:sync/get-request-sent-time request-id])]
+  (let [request-failured?  @(r/subscribe [:x.sync/request-failured?     request-id])
+        request-successed? @(r/subscribe [:x.sync/request-successed?    request-id])
+        request-sent-time  @(r/subscribe [:x.sync/get-request-sent-time request-id])]
        [:div {:data-clickable true
               :style {:width "100%" :display "flex" :justify-content "space-between" :cursor "pointer"
                       :margin "4px 0" :grid-column-gap "24px"}

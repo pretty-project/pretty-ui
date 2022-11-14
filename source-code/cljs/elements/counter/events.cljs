@@ -17,7 +17,7 @@
               [elements.counter.subs :as counter.subs]
               [elements.input.events :as input.events]
               [re-frame.api          :as r :refer [r]]
-              [x.app-db.api          :as x.db]))
+              [x.db.api              :as x.db]))
 
 
 

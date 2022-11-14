@@ -17,7 +17,7 @@
               [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
               [mid-fruits.random         :as random]
-              [x.app-components.api      :as x.components]))
+              [x.components.api          :as x.components]))
 
 
 

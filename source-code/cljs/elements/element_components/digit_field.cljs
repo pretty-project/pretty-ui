@@ -101,7 +101,7 @@
                                 ; XXX#4460
                                 :id (target-handler.helpers/element-id->target-id field-id)
                                 :on-change #(let [v (dom/event->value %)]
-                                                 (r/dispatch-sync [:db/set-item! (:value-path field-props) (str v)]))}])
+                                                 (r/dispatch-sync [:x.db/set-item! (:value-path field-props) (str v)]))}])
 
 (defn- digit-field-cover
   ; WARNING! NON-PUBLIC! DO NOT USE!

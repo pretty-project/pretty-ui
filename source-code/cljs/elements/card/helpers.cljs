@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.card.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [re-frame.api                  :as r]))
 
 
 
@@ -31,12 +31,12 @@
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [disabled? on-click style]}]
+  [card-id {:keys [disabled? on-click style]}]
   (if disabled? {:disabled       true
                  :style          style}
                 {:data-clickable true
                  :on-click      #(r/dispatch on-click)
-                 :on-mouse-up   #(x.environment/blur-element!)
+                 :on-mouse-up   #(element.side-effects/blur-element! card-id)
                  :style          style}))
 
 (defn static-card-body-attributes

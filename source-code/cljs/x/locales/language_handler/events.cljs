@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.locales.language-handler.events
-    (:require [re-frame.api   :as r :refer [r]]
-              [x.app-user.api :as x.user]))
+    (:require [re-frame.api :as r :refer [r]]
+              [x.user.api   :as x.user]))
 
 
 

@@ -28,6 +28,6 @@
   ; @param (keyword) engine-id
   ; @param (map) engine-props
   (fn [_ [_ engine-id engine-props]]
-      {:fx [:core/reg-transfer! (transfer.helpers/transfer-id engine-id)
-                                {:data-f      (fn [_] (return engine-props))
-                                 :target-path [:engines :engine-handler/transfer-items engine-id]}]}))
+      {:fx [:x.core/reg-transfer! (transfer.helpers/transfer-id engine-id)
+                                  {:data-f      (fn [_] (return engine-props))
+                                   :target-path [:engines :engine-handler/transfer-items engine-id]}]}))

@@ -49,7 +49,7 @@
                     :keypress    {:key-code 27}
                     :hover-color :highlight
                     :indent      {:all :xxs}
-                    :on-click    [:ui/remove-popup! :file-saver/view]
+                    :on-click    [:x.ui/remove-popup! :file-saver/view]
                     :preset      :cancel}])
 
 (defn- save-button
@@ -64,7 +64,7 @@
                     :hover-color :highlight
                     :indent      {:all :xxs}
                     :on-click    {:fx       [:file-saver/save-accepted saver-id saver-props]
-                                  :dispatch [:ui/remove-popup! :tools.file-saver/view]}
+                                  :dispatch [:x.ui/remove-popup! :tools.file-saver/view]}
                     :preset      :save}])
 
 (defn header

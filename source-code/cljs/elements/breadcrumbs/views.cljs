@@ -16,7 +16,7 @@
     (:require [elements.breadcrumbs.helpers    :as breadcrumbs.helpers]
               [elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
               [mid-fruits.random               :as random]
-              [x.app-components.api            :as x.components]))
+              [x.components.api                :as x.components]))
 
 
 

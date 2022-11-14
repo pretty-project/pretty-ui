@@ -13,11 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.text-field.side-effects
-    (:require [elements.text-field.helpers :as text-field.helpers]
-              [hiccup.api                  :as hiccup]
-              [mid-fruits.string           :as string]
-              [re-frame.api                :as r]
-              [x.app-environment.api       :as x.environment]))
+    (:require [elements.element.side-effects :as element.side-effects]
+              [elements.text-field.helpers   :as text-field.helpers]
+              [hiccup.api                    :as hiccup]
+              [mid-fruits.string             :as string]
+              [re-frame.api                  :as r]
+              [x.environment.api             :as x.environment]))
 
 
 
@@ -70,8 +71,8 @@
   ; @param (map) field-props
   [field-id _]
   (let [field-input-id (hiccup/value field-id "input")]
-       (x.environment/move-caret-to-end! field-input-id)
-       (x.environment/focus-element!     field-input-id)))
+       (x.environment/move-caret-to-end!    field-input-id)
+       (element.side-effects/focus-element! field-input-id)))
 
 
 

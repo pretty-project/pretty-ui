@@ -15,8 +15,8 @@
 (ns x.locales.language-handler.subs
     (:require [mid-fruits.vector :as vector]
               [re-frame.api      :as r :refer [r]]
-              [x.app-core.api    :as x.core]
-              [x.app-user.api    :as x.user]))
+              [x.core.api        :as x.core]
+              [x.user.api        :as x.user]))
 
 
 

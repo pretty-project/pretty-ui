@@ -19,7 +19,7 @@
               [elements.text.prototypes :as text.prototypes]
               [mid-fruits.random        :as random]
               [mid-fruits.string        :as string]
-              [x.app-components.api     :as x.components]))
+              [x.components.api         :as x.components]))
 
 
 

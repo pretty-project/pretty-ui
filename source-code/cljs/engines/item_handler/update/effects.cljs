@@ -24,7 +24,7 @@
               [engines.item-handler.update.validators :as update.validators]
               [engines.item-handler.update.views      :as update.views]
               [re-frame.api                           :as r :refer [r]]
-              [x.app-ui.api                           :as x.ui]))
+              [x.ui.api                               :as x.ui]))
 
 
 
@@ -78,12 +78,12 @@
                                                                                           [:item-handler/go-up! handler-id]]}
                          ; B)
                          :handler-leaved                                    {:dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
-                                                                                          [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
+                                                                                          [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
               ; C)
               {:dispatch-if [(r x.ui/process-faked? db)
-                             [:ui/end-fake-process!]]
+                             [:x.ui/end-fake-process!]]
                :dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
-                            [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
+                            [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
 
 (r/reg-event-fx :item-handler/save-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,9 +94,9 @@
       ; Az "Elem mentése" művelet sikertelen befejeződésekor, ...
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:dispatch    [:ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
+      {:dispatch    [:x.ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
        :dispatch-if [(r x.ui/process-faked? db)
-                     [:ui/end-fake-process!]]}))
+                     [:x.ui/end-fake-process!]]}))
 
 
 
@@ -139,11 +139,11 @@
            (if (and base-route (r core.subs/handling-item? db handler-id item-id))
                ; A)
                {:dispatch-n [[:item-handler/render-item-deleted-dialog! handler-id item-id]
-                             [:router/go-to! base-route]]}
+                             [:x.router/go-to! base-route]]}
                ; B)
                {:dispatch    [:item-handler/render-item-deleted-dialog! handler-id item-id]
                 :dispatch-if [(r x.ui/process-faked? db)
-                              [:ui/end-fake-process!]]}))))
+                              [:x.ui/end-fake-process!]]}))))
 
 (r/reg-event-fx :item-handler/delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -157,7 +157,7 @@
       (let [item-id (r update.subs/get-deleted-item-id db handler-id server-response)]
            {:dispatch    [:item-handler/render-delete-item-failed-dialog! handler-id item-id]
             :dispatch-if [(r x.ui/process-faked? db)
-                          [:ui/end-fake-process!]]})))
+                          [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-handler/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -165,8 +165,8 @@
   ; @param (keyword) handler-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ handler-id item-id]]
-      [:ui/render-bubble! ::item-deleted-dialog
-                          {:body [update.views/item-deleted-dialog-body handler-id item-id]}]))
+      [:x.ui/render-bubble! ::item-deleted-dialog
+                            {:body [update.views/item-deleted-dialog-body handler-id item-id]}]))
 
 (r/reg-event-fx :item-handler/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -174,8 +174,8 @@
   ; @param (keyword) handler-id
   ; @param (string) item-id
   (fn [{:keys [db]} [_ handler-id item-id]]
-      [:ui/render-bubble! ::delete-item-failed-dialog
-                          {:body :failed-to-delete}]))
+      [:x.ui/render-bubble! ::delete-item-failed-dialog
+                            {:body :failed-to-delete}]))
 
 
 
@@ -193,7 +193,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db handler-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db handler-id %)]
            {:db       (r x.ui/fake-process! db 15)
-            :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
+            :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db handler-id)
                                               {:on-success [:item-handler/delete-item-undid       handler-id item-id]
                                                :on-failure [:item-handler/undo-delete-item-failed handler-id]
@@ -216,10 +216,10 @@
       ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db handler-id item-id)]
               ; A)
-              [:router/go-to! item-route]
+              [:x.router/go-to! item-route]
               ; B)
               {:dispatch-if [(r x.ui/process-faked? db)
-                             [:ui/end-fake-process!]]})))
+                             [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-handler/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -233,7 +233,7 @@
       (let [item-id (r update.subs/get-deleted-item-id db handler-id server-response)]
            {:dispatch    [:item-handler/render-undo-delete-item-failed-dialog! handler-id item-id]
             :dispatch-if [(r x.ui/process-faked? db)
-                          [:ui/end-fake-process!]]})))
+                          [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-handler/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -241,8 +241,8 @@
   ; @param (keyword) handler-id
   ; @param (string) item-id
   (fn [_ [_ handler-id item-id]]
-      [:ui/render-bubble! ::undo-delete-item-failed-dialog
-                          {:body [update.views/undo-delete-item-failed-dialog-body handler-id item-id]}]))
+      [:x.ui/render-bubble! ::undo-delete-item-failed-dialog
+                            {:body [update.views/undo-delete-item-failed-dialog-body handler-id item-id]}]))
 
 
 
@@ -282,8 +282,8 @@
   (fn [_ [_ _ _]]
       ; Ha az "Elem duplikálása" művelet sikertelen volt, ...
       ; ... megjelenít egy értesítést.
-      [:ui/render-bubble! ::duplicate-item-failed-dialog
-                          {:body :failed-to-duplicate}]))
+      [:x.ui/render-bubble! ::duplicate-item-failed-dialog
+                            {:body :failed-to-duplicate}]))
 
 (r/reg-event-fx :item-handler/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -291,8 +291,8 @@
   ; @param (keyword) handler-id
   ; @param (string) copy-id
   (fn [_ [_ handler-id copy-id]]
-      [:ui/render-bubble! ::item-duplicated-dialog
-                          {:body [update.views/item-duplicated-dialog-body handler-id copy-id]}]))
+      [:x.ui/render-bubble! ::item-duplicated-dialog
+                            {:body [update.views/item-duplicated-dialog-body handler-id copy-id]}]))
 
 (r/reg-event-fx :item-handler/handle-duplicated-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -300,5 +300,5 @@
   ; @param (keyword) handler-id
   ; @param (string) copy-id
   (fn [_ [_ handler-id copy-id]]
-      {:dispatch-n [[:ui/remove-bubble! ::item-duplicated-dialog]
+      {:dispatch-n [[:x.ui/remove-bubble! ::item-duplicated-dialog]
                     [:item-handler/handle-item! handler-id copy-id]]}))

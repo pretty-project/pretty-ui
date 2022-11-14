@@ -17,7 +17,7 @@
               [engines.item-lister.api :as item-lister]
               [mid-fruits.vector       :as vector]
               [re-frame.api            :as r]
-              [x.app-core.api          :as x.core]))
+              [x.core.api              :as x.core]))
 
 
 

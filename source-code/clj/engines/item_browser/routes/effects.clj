@@ -31,12 +31,12 @@
   (fn [_ [_ browser-id {:keys [base-route]}]]
       (let [base-route   (uri/valid-path      base-route)
             parent-route (uri/uri->parent-uri base-route)]
-           [:router/add-route! (routes.helpers/route-id browser-id :base)
-                               {:client-event   [:item-browser/handle-route! browser-id]
-                                :js-build       :app
-                                :route-parent   parent-route
-                                :restricted?    true
-                                :route-template base-route}])))
+           [:x.router/add-route! (routes.helpers/route-id browser-id :base)
+                                 {:client-event   [:item-browser/handle-route! browser-id]
+                                  :js-build       :app
+                                  :route-parent   parent-route
+                                  :restricted?    true
+                                  :route-template base-route}])))
 
 (r/reg-event-fx :item-browser/add-extended-route!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,9 +48,9 @@
       (let [base-route     (uri/valid-path      base-route)
             extended-route (str                 base-route "/:item-id")
             parent-route   (uri/uri->parent-uri base-route)]
-           [:router/add-route! (routes.helpers/route-id browser-id :extended)
-                               {:client-event   [:item-browser/handle-route! browser-id]
-                                :js-build       :app
-                                :route-parent   parent-route
-                                :restricted?    true
-                                :route-template extended-route}])))
+           [:x.router/add-route! (routes.helpers/route-id browser-id :extended)
+                                 {:client-event   [:item-browser/handle-route! browser-id]
+                                  :js-build       :app
+                                  :route-parent   parent-route
+                                  :restricted?    true
+                                  :route-template extended-route}])))

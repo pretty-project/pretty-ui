@@ -28,4 +28,4 @@
   ;
   ; @return (string)
   []
- @(r/subscribe [:core/get-app-build]))
+ @(r/subscribe [:x.core/get-app-build]))

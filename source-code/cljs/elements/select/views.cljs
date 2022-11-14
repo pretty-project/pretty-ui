@@ -26,7 +26,7 @@
               [mid-fruits.vector          :as vector]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
-              [x.app-components.api       :as x.components]))
+              [x.components.api           :as x.components]))
 
 
 
@@ -175,7 +175,7 @@
   ; @param (map) select-props
   ;  {}
   [_ {:keys [option-label-f value-path]}]
-  (if-let [selected-option @(r/subscribe [:db/get-item value-path])]
+  (if-let [selected-option @(r/subscribe [:x.db/get-item value-path])]
           [:div.e-select--button-label (-> selected-option option-label-f x.components/content)]
           [:div.e-select--button-label (-> :select!                       x.components/content)]))
 

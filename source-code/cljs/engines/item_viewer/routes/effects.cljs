@@ -33,4 +33,4 @@
             route-title     (r transfer.subs/get-transfer-item db viewer-id :route-title)]
            {:dispatch   on-route
             :dispatch-n [(if body-did-mount? [:item-viewer/load-viewer! viewer-id])
-                         (if route-title     [:ui/set-window-title! route-title])]})))
+                         (if route-title     [:x.ui/set-window-title!   route-title])]})))

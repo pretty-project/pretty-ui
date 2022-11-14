@@ -14,7 +14,7 @@
 
 (ns x.dictionary.term-handler.lifecycles
     (:require [mid.x.dictionary.books :refer [BOOKS]]
-              [x.server-core.api      :as x.core]))
+              [x.core.api             :as x.core]))
 
 
 

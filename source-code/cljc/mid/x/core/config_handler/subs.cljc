@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core :config-handler/app-config]))
+  (get-in db [:x.core :config-handler/app-config]))
 
 (defn get-app-config-item
   ; @param (keyword) item-key
@@ -36,7 +36,7 @@
   ;
   ; @return (*)
   [db [_ item-key]]
-  (get-in db [:core :config-handler/app-config item-key]))
+  (get-in db [:x.core :config-handler/app-config item-key]))
 
 (defn get-server-config
   ; @usage
@@ -44,7 +44,7 @@
   ;
   ; @return (map)
   [db _]
-  (get-in db [:core :config-handler/server-config]))
+  (get-in db [:x.core :config-handler/server-config]))
 
 (defn get-server-config-item
   ; @param (keyword) item-key
@@ -54,7 +54,7 @@
   ;
   ; @return (*)
   [db [_ item-key]]
-  (get-in db [:core :config-handler/server-config item-key]))
+  (get-in db [:x.core :config-handler/server-config item-key]))
 
 
 
@@ -62,17 +62,17 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:core/get-app-config]
-(r/reg-sub :core/get-app-config get-app-config)
+;  [:x.core/get-app-config]
+(r/reg-sub :x.core/get-app-config get-app-config)
 
 ; @usage
-;  [:core/get-app-config-item :my-item]
-(r/reg-sub :core/get-app-config-item get-app-config-item)
+;  [:x.core/get-app-config-item :my-item]
+(r/reg-sub :x.core/get-app-config-item get-app-config-item)
 
 ; @usage
-;  [:core/get-server-config]
-(r/reg-sub :core/get-server-config get-server-config)
+;  [:x.core/get-server-config]
+(r/reg-sub :x.core/get-server-config get-server-config)
 
 ; @usage
-;  [:core/get-server-config-item :my-item]
-(r/reg-sub :core/get-server-config-item get-server-config-item)
+;  [:x.core/get-server-config-item :my-item]
+(r/reg-sub :x.core/get-server-config-item get-server-config-item)

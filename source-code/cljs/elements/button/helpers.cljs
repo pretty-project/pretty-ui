@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.button.helpers
-    (:require [dom.api                  :as dom]
-              [elements.element.helpers :as element.helpers]
-              [hiccup.api               :as hiccup]
-              [re-frame.api             :as r]
-              [reagent.api              :as reagent]
-              [x.app-environment.api    :as x.environment]))
+    (:require [dom.api                       :as dom]
+              [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [hiccup.api                    :as hiccup]
+              [re-frame.api                  :as r]
+              [reagent.api                   :as reagent]))
 
 
 
@@ -176,7 +176,7 @@
                        {:id             (hiccup/value button-id "body")
                         :on-click       (on-click-f   button-id button-props)
                         :on-mouse-over  #(r/dispatch  on-mouse-over)
-                        :on-mouse-up    #(x.environment/blur-element!)
+                        :on-mouse-up    #(element.side-effects/blur-element! button-id)
                         :data-clickable true})))
 
 (defn button-attributes

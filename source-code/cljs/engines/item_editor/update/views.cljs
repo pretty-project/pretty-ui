@@ -14,7 +14,7 @@
 
 (ns engines.item-editor.update.views
     (:require [re-frame.api :as r]
-              [x.app-ui.api :as x.ui]))
+              [x.ui.api     :as x.ui]))
 
 
 

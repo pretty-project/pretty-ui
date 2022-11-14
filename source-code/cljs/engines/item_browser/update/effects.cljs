@@ -22,7 +22,7 @@
               [engines.item-browser.update.validators :as update.validators]
               [engines.item-browser.update.views      :as update.views]
               [re-frame.api                           :as r :refer [r]]
-              [x.app-ui.api                           :as x.ui]))
+              [x.ui.api                               :as x.ui]))
 
 
 
@@ -87,9 +87,9 @@
       (if (r items.subs/item-downloaded? db browser-id item-id)
           ; A)
           {:db       (r update.events/update-item-failed db browser-id item-id)
-           :dispatch [:ui/render-bubble! {:body :failed-to-update}]}
+           :dispatch [:x.ui/render-bubble! {:body :failed-to-update}]}
           ; B)
-          [:ui/render-bubble! {:body :failed-to-update}])))
+          [:x.ui/render-bubble! {:body :failed-to-update}])))
 
 
 
@@ -158,18 +158,18 @@
           {:db          (r update.events/delete-item-failed db browser-id item-id)
            :dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]}
+                         [:x.ui/end-fake-process!]]}
           ; B)
           {:dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
            :dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]})))
+                         [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-browser/render-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! ::delete-item-failed-dialog {:body :failed-to-delete}]))
+      [:x.ui/render-bubble! ::delete-item-failed-dialog {:body :failed-to-delete}]))
 
 (r/reg-event-fx :item-browser/render-item-deleted-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -177,9 +177,9 @@
   ; @param (keyword) browser-id
   ; @param (string) item-id
   (fn [_ [_ browser-id item-id]]
-      [:ui/render-bubble! ::item-deleted-dialog
-                          {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
-                           ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
+      [:x.ui/render-bubble! ::item-deleted-dialog
+                            {:body [update.views/item-deleted-dialog-body browser-id item-id]}]))
+                             ;:on-bubble-closed [:item-browser/clean-backup-items! browser-id item-id]}]))
 
 
 
@@ -195,7 +195,7 @@
       (let [query        (r update.queries/get-undo-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:db       (r x.ui/fake-process! db 15)
-            :dispatch-n [[:ui/remove-bubble! ::item-deleted-dialog]
+            :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
                                               {:on-success [:item-browser/delete-item-undid       browser-id]
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]
@@ -220,7 +220,7 @@
           [:item-browser/reload-items! browser-id]
           ; B)
           {:dispatch-if [(r x.ui/process-faked? db)
-                         [:ui/end-fake-process!]]})))
+                         [:x.ui/end-fake-process!]]})))
 
 (r/reg-event-fx :item-browser/undo-delete-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -235,15 +235,15 @@
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:item-browser/render-undo-delete-item-failed-dialog! browser-id]
        :dispatch-if [(r x.ui/process-faked? db)
-                     [:ui/end-fake-process!]]}))
+                     [:x.ui/end-fake-process!]]}))
 
 (r/reg-event-fx :item-browser/render-undo-delete-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! ::undo-delete-item-failed-dialog
-                          {:body :failed-to-undo-delete}]))
+      [:x.ui/render-bubble! ::undo-delete-item-failed-dialog
+                            {:body :failed-to-undo-delete}]))
 
 
 
@@ -300,7 +300,7 @@
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       {:dispatch    [:item-browser/render-duplicate-item-failed-dialog! browser-id]
        :dispatch-if [(r x.ui/process-faked? db)
-                     [:ui/end-fake-process!]]}))
+                     [:x.ui/end-fake-process!]]}))
 
 (r/reg-event-fx :item-browser/render-item-duplicated-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -308,16 +308,16 @@
   ; @param (keyword) browser-id
   ; @param (string) copy-id
   (fn [_ [_ browser-id copy-id]]
-      [:ui/render-bubble! ::item-duplicated-dialog
-                          {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
+      [:x.ui/render-bubble! ::item-duplicated-dialog
+                            {:body [update.views/item-duplicated-dialog-body browser-id copy-id]}]))
 
 (r/reg-event-fx :item-browser/render-duplicate-item-failed-dialog!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   (fn [_ [_ _]]
-      [:ui/render-bubble! ::duplicate-item-failed-dialog
-                          {:body :failed-to-duplicate}]))
+      [:x.ui/render-bubble! ::duplicate-item-failed-dialog
+                            {:body :failed-to-duplicate}]))
 
 
 

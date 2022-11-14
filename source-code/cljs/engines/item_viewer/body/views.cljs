@@ -17,7 +17,7 @@
               [engines.item-viewer.core.helpers    :as core.helpers]
               [reagent.api                         :as reagent]
               [re-frame.api                        :as r]
-              [x.app-components.api                :as x.components]))
+              [x.components.api                    :as x.components]))
 
 
 

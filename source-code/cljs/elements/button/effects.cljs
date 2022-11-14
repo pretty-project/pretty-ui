@@ -66,11 +66,11 @@
   ;     :required? (boolean)(opt)
   ;      Default: false}}
   (fn [_ [_ button-id {:keys [keypress]}]]
-      [:environment/reg-keypress-event! button-id
-                                        {:key-code   (:key-code keypress)
-                                         :on-keydown [:elements.button/key-pressed  button-id]
-                                         :on-keyup   [:elements.button/key-released button-id]
-                                         :required?  (:required? keypress)}]))
+      [:x.environment/reg-keypress-event! button-id
+                                          {:key-code   (:key-code keypress)
+                                           :on-keydown [:elements.button/key-pressed  button-id]
+                                           :on-keyup   [:elements.button/key-released button-id]
+                                           :required?  (:required? keypress)}]))
 
 (r/reg-event-fx :elements.button/remove-keypress-event!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,7 +78,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   (fn [_ [_ button-id _]]
-      [:environment/remove-keypress-event! button-id]))
+      [:x.environment/remove-keypress-event! button-id]))
 
 
 

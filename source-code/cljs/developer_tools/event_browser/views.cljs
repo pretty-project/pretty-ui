@@ -25,12 +25,12 @@
 (defn event-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [event-id   @(r/subscribe [:db/get-item [:developer-tools :event-browser/meta-items :current-event]])
-        parameters @(r/subscribe [:db/get-item [:developer-tools :event-browser/meta-items :parameters]])]
+  (let [event-id   @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :current-event]])
+        parameters @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :parameters]])]
        [:div {:style {:width "100%"}}
             [:div {:style {:display :flex}}
                   [elements/icon-button ::back-button
-                                        {:on-click [:db/remove-item! [:developer-tools :event-browser/meta-items]]
+                                        {:on-click [:x.db/remove-item! [:developer-tools :event-browser/meta-items]]
                                          :preset   :back}]
                   [elements/label ::event-id
                                   {:color       :muted
@@ -62,14 +62,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [event-id event-props]
   [:button {:style {:display :block :text-align :left :padding "0px 12px" :width "100%"}
-            :on-click #(r/dispatch [:db/set-item! [:developer-tools :event-browser/meta-items :current-event] event-id])}
+            :on-click #(r/dispatch [:x.db/set-item! [:developer-tools :event-browser/meta-items :current-event] event-id])}
            [:div {:style {:font-size "14px" :font-weight "500"}}
                  (str "[" event-id " ...]")]])
 
 (defn event-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [event-handlers (x.app-core.event-handler/get-event-handlers :event)]
+  (let [event-handlers (r/get-event-handlers :event)]
        (letfn [(f [event-list event-id]
                   (let [event-props (get event-handlers event-id)]
                        (conj event-list [event-list-item event-id event-props])))]
@@ -86,6 +86,6 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [current-event @(r/subscribe [:db/get-item [:developer-tools :event-browser/meta-items :current-event]])]
+  (if-let [current-event @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :current-event]])]
           [event-view]
           [event-list]))

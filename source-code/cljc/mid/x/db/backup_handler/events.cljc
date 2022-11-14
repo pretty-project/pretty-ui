@@ -59,13 +59,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:db/store-backup-item! [:my-item]]
-(r/reg-event-db :db/store-backup-item! store-backup-item!)
+;  [:x.db/store-backup-item! [:my-item]]
+(r/reg-event-db :x.db/store-backup-item! store-backup-item!)
 
 ; @usage
-;  [:db/restore-backup-item! [:my-item]]
-(r/reg-event-db :db/restore-backup-item! restore-backup-item!)
+;  [:x.db/restore-backup-item! [:my-item]]
+(r/reg-event-db :x.db/restore-backup-item! restore-backup-item!)
 
 ; @usage
-;  [:db/remove-backup-item! [:my-item]]
-(r/reg-event-db :db/remove-backup-item! remove-backup-item!)
+;  [:x.db/remove-backup-item! [:my-item]]
+(r/reg-event-db :x.db/remove-backup-item! remove-backup-item!)

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.file-drop-area.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [re-frame.api                  :as r]))
 
 
 
@@ -37,7 +37,7 @@
                 {:data-clickable  true
                  :data-selectable false
                  :on-click       #(r/dispatch on-click)
-                 :on-mouse-up    #(x.environment/blur-element!)
+                 :on-mouse-up    #(element.side-effects/blur-element! card-id)
                  :style           style}))
 
 (defn area-attributes

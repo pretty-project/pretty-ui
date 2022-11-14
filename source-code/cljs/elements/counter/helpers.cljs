@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.counter.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.app-environment.api    :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [re-frame.api                  :as r]))
 
 
 
@@ -75,13 +75,13 @@
   ; @return (map)
   ;  {}
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
-  (let [value @(r/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:x.db/get-item value-path])]
        (if (or disabled? (= max-value value))
            {:disabled       true
             :data-disabled  true}
            {:data-clickable true
             :on-click    #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
-            :on-mouse-up #(x.environment/blur-element!)})))
+            :on-mouse-up #(element.side-effects/blur-element! counter-id)})))
 
 (defn decrease-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,13 +93,13 @@
   ; @return (map)
   ;  {}
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
-  (let [value @(r/subscribe [:db/get-item value-path])]
+  (let [value @(r/subscribe [:x.db/get-item value-path])]
        (if (or disabled? (= min-value value))
            {:disabled       true
             :data-disabled  true}
            {:data-clickable true
             :on-click    #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
-            :on-mouse-up #(x.environment/blur-element!)})))
+            :on-mouse-up #(element.side-effects/blur-element! counter-id)})))
 
 (defn reset-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.expandable.helpers
-    (:require [elements.element.helpers  :as element.helpers]
-              [elements.expandable.state :as expandable.state]
-              [logical.api               :refer [nonfalse?]]
-              [x.app-environment.api     :as x.environment]))
+    (:require [elements.element.helpers      :as element.helpers]
+              [elements.element.side-effects :as element.side-effects]
+              [elements.expandable.state     :as expandable.state]
+              [logical.api                   :refer [nonfalse?]]))
 
 
 
@@ -71,4 +71,4 @@
                 {:data-clickable  true
                  :data-selectable false
                  :on-click    #(toggle! expandable-id)
-                 :on-mouse-up #(x.environment/blur-element!)}))
+                 :on-mouse-up #(element.side-effects/blur-element! expandable-id)}))

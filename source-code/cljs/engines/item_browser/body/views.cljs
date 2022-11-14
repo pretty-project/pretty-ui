@@ -51,7 +51,7 @@
   ; XXX#6177
   (cond @(r/subscribe [:item-browser/get-meta-item browser-id :engine-error])
          [error-element browser-id]
-       ;@(r/subscribe [:environment/browser-offline?])
+       ;@(r/subscribe [:x.environment/browser-offline?])
        ; [offline-body browser-id]
         @(r/subscribe [:item-browser/data-received? browser-id])
          [:<> [list-element              browser-id]

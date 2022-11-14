@@ -23,7 +23,7 @@
 
 (defn element
   []
-  (if-let [debug-mode-detected? @(r/subscribe [:core/debug-mode-detected?])]
+  (if-let [debug-mode-detected? @(r/subscribe [:x.core/debug-mode-detected?])]
           (let [db-write-count @(r/subscribe [:developer-tools.core/get-db-write-count])]
                [:div {:style {:position :fixed :bottom 0 :right 0 :z-index 9999
                               :background-color "white" :border-radius "45px 0 0 0"

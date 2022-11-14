@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.api
-    (:require [x.app-activities.api]
+    (:require [x.activities.api]
               [x.dictionary.api]
-              [x.app-environment.api]
+              [x.environment.api]
               [x.locales.api]
-              [x.app-media.api]
-              [x.app-sync.api]
+              [x.media.api]
+              [x.sync.api]
               [x.views.api]
               [x.boot-loader.effects]
               [x.boot-loader.subs]

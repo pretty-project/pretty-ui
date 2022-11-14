@@ -19,7 +19,7 @@
               [engines.item-browser.items.events  :as items.events]
               [engines.item-browser.items.subs    :as items.subs]
               [re-frame.api                       :refer [r]]
-              [x.app-ui.api                       :as x.ui]))
+              [x.ui.api                           :as x.ui]))
 
 
 

@@ -16,7 +16,7 @@
     (:require [elements.anchor.helpers    :as anchor.helpers]
               [elements.anchor.prototypes :as anchor.prototypes]
               [mid-fruits.random          :as random]
-              [x.app-components.api       :as x.components]))
+              [x.components.api           :as x.components]))
 
 
 
@@ -48,7 +48,7 @@
 
 (defn element
   ; XXX#9085
-  ; Az anchor elem {:on-click [:router/go-to! "..."]} paraméterezés helyett
+  ; Az anchor elem {:on-click [:x.router/go-to! "..."]} paraméterezés helyett
   ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
   ; történő megnyitását.
   ;

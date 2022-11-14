@@ -20,8 +20,8 @@
               [mid-fruits.map         :refer [dissoc-in]]
               [mid-fruits.string      :as string]
               [re-frame.api           :as r :refer [r]]
-              [x.app-db.api           :as x.db]
-              [x.app-environment.api  :as x.environment]))
+              [x.db.api               :as x.db]
+              [x.environment.api      :as x.environment]))
 
 
 

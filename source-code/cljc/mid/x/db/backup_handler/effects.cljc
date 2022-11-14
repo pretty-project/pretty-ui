@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :db/resolve-backup-item!
+(r/reg-event-fx :x.db/resolve-backup-item!
   ; @param (vector) item-path
   ; @param (map) events
   ;  {:on-changed (metamorphic-event)(opt)

@@ -30,7 +30,7 @@
 (defn synchronizer-debug
   [editor-id {:keys [value-path]}]
   ; HACK#9910
-  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        [:div [:br] "output:  " (get @engines.text-editor.state/EDITOR-OUTPUT  editor-id)
              [:br] "input:   " (get @engines.text-editor.state/EDITOR-INPUT   editor-id)
              [:br] "trigger: " (get @engines.text-editor.state/EDITOR-TRIGGER editor-id)
@@ -49,7 +49,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [editor-id {:keys [value-path] :as editor-props}]
   ; HACK#9910
-  (let [stored-value @(r/subscribe [:db/get-item value-path])]
+  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        [synchronizer-sensor editor-id editor-props stored-value]))
 
 

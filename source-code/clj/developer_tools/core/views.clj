@@ -21,7 +21,7 @@
               [mid-fruits.string                      :as string]
               [mongo-db.api                           :as mongo-db]
               [re-frame.api                           :as r]
-              [x.server-user.api                      :as x.user]))
+              [x.user.api                             :as x.user]))
 
               ; TEMP
               ;[docs.api :as docs]))
@@ -53,7 +53,7 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [request]
-  (if (or @(r/subscribe [:core/dev-mode?])
+  (if (or @(r/subscribe [:x.core/dev-mode?])
            (x.user/request->root-user? request))
       (let [body-style (core.styles/body-style)]
            (str "<html>"

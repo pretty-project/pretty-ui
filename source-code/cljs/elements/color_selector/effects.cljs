@@ -28,8 +28,8 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   (fn [{:keys [db]} [_ selector-id selector-props]]
-      [:ui/render-popup! :elements.color-selector/options
-                         {:content [color-selector.views/color-selector-options selector-id selector-props]}]))
+      [:x.ui/render-popup! :elements.color-selector/options
+                           {:content [color-selector.views/color-selector-options selector-id selector-props]}]))
 
 (r/reg-event-fx :elements.color-selector/render-selector!
   ; @param (keyword) selector-id

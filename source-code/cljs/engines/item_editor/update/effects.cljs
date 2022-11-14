@@ -23,7 +23,7 @@
               [engines.item-editor.update.validators :as update.validators]
               [engines.item-editor.update.views      :as update.views]
               [re-frame.api                          :as r :refer [r]]
-              [x.app-ui.api                          :as x.ui]))
+              [x.ui.api                              :as x.ui]))
 
 
 
@@ -77,12 +77,12 @@
                                                                                         [:item-editor/go-up! editor-id]]}
                          ; B)
                          :editor-leaved                                   {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
-                                                                                        [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
+                                                                                        [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
               ; C)
               {:dispatch-if [(r x.ui/process-faked? db)
-                             [:ui/end-fake-process!]]
+                             [:x.ui/end-fake-process!]]
                :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
-                            [:ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
+                            [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]})))
 
 (r/reg-event-fx :item-editor/save-item-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,9 +93,9 @@
       ; Az "Elem mentése" művelet sikertelen befejeződésekor, ...
       ; ... megjelenít egy értesítést.
       ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      {:dispatch    [:ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
+      {:dispatch    [:x.ui/render-bubble! ::save-item-failed-dialog {:body :failed-to-save}]
        :dispatch-if [(r x.ui/process-faked? db)
-                     [:ui/end-fake-process!]]}))
+                     [:x.ui/end-fake-process!]]}))
 
 
 
@@ -109,7 +109,7 @@
   ; @param (string) item-id
   (fn [{:keys [db]} [_ editor-id item-id]]
       {:db         (r core.events/set-recovery-mode! db editor-id)
-       :dispatch-n [[:ui/remove-bubble! ::changes-discarded-dialog]
+       :dispatch-n [[:x.ui/remove-bubble! ::changes-discarded-dialog]
                     [:item-editor/edit-item! editor-id item-id]]}))
 
 (r/reg-event-fx :item-editor/render-changes-discarded-dialog!
@@ -121,6 +121,6 @@
       ; Az [:item-editor/render-changes-discarded-dialog! ...] esemény paraméterként kapja az item-editor
       ; engine elhagyása előtt szerkesztett elem azonosítóját, mert az ... esemény megtörténésekor az azonosító
       ; már nem elérhető a Re-Frame adatbázisban.
-      [:ui/render-bubble! ::changes-discarded-dialog
-                          {:body             [update.views/changes-discarded-dialog-body editor-id item-id]
-                           :on-bubble-closed [:item-editor/clean-recovery-data!          editor-id item-id]}]))
+      [:x.ui/render-bubble! ::changes-discarded-dialog
+                            {:body             [update.views/changes-discarded-dialog-body editor-id item-id]
+                             :on-bubble-closed [:item-editor/clean-recovery-data!          editor-id item-id]}]))

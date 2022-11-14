@@ -13,7 +13,7 @@
 
 # x4.6.7
 
-- Ezentúl szerver-oldalon is leheséges az [:environment/add-css! ...] eseménnyel,
+- Ezentúl szerver-oldalon is leheséges az [:x.environment/add-css! ...] eseménnyel,
   css fájlokat hozzáadni a rendszerhez!
 
 

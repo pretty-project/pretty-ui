@@ -20,7 +20,7 @@
               [engines.item-lister.items.events     :as items.events]
               [engines.item-lister.selection.events :as selection.events]
               [re-frame.api                         :refer [r]]
-              [x.app-ui.api                         :as x.ui]))
+              [x.ui.api                             :as x.ui]))
 
 
 

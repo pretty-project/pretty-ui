@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.update.views
-    (:require [x.app-ui.api :as x.ui]))
+    (:require [x.ui.api :as x.ui]))
 
 
 

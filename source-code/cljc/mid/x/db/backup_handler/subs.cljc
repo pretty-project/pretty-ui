@@ -58,13 +58,13 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:db/get-backup-item [:my-item]]
-(r/reg-sub :db/get-backup-item get-backup-item)
+;  [:x.db/get-backup-item [:my-item]]
+(r/reg-sub :x.db/get-backup-item get-backup-item)
 
 ; @usage
-;  [:db/item-changed? [:my-item]]
-(r/reg-sub :db/item-changed? item-changed?)
+;  [:x.db/item-changed? [:my-item]]
+(r/reg-sub :x.db/item-changed? item-changed?)
 
 ; @usage
-;  [:db/item-unchanged? [:my-item]]
-(r/reg-sub :db/item-unchanged? item-unchanged?)
+;  [:x.db/item-unchanged? [:my-item]]
+(r/reg-sub :x.db/item-unchanged? item-unchanged?)

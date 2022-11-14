@@ -27,9 +27,9 @@
   [_]
   ; A reg-lifecycles! függvény az életciklusok adatait fordítás-időben a LIFES atomban tárolja.
   ;
-  ; Az életciklusok adatait a boot-loader a {:core/import-lifecycles! nil} mellékhatás-esemény
+  ; Az életciklusok adatait a boot-loader a {:x.core/import-lifecycles! nil} mellékhatás-esemény
   ; meghívásával másolja a LIFES atomból a Re-Frame adatbázisba.
-  (r/dispatch [:db/set-item! [:core :lifecycle-handler/data-items] @lifecycle-handler.state/LIFES]))
+  (r/dispatch [:x.db/set-item! [:x.core :lifecycle-handler/data-items] @lifecycle-handler.state/LIFES]))
 
 
 
@@ -82,4 +82,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-fx :core/import-lifecycles! import-lifecycles!)
+(r/reg-fx :x.core/import-lifecycles! import-lifecycles!)

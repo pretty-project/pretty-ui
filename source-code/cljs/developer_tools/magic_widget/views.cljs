@@ -31,7 +31,7 @@
 (defn design-mode-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [deign-mode? @(r/subscribe [:db/get-item [:developer-tools :core/meta-items :design-mode?]])]
+  (let [deign-mode? @(r/subscribe [:x.db/get-item [:developer-tools :x.core/meta-items :design-mode?]])]
        [elements/icon-button ::deign-mode-icon-button
                              {:color       (if deign-mode? :primary :muted)
                               :hover-color :highlight
@@ -45,7 +45,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [popup-positions [:tr :br :bl :tl]
-        popup-position @(r/subscribe [:db/get-item [:developer-tools :magic-widget/popup-position]])]
+        popup-position @(r/subscribe [:x.db/get-item [:developer-tools :magic-widget/popup-position]])]
        [elements/icon-button ::toggle-popup-position-icon-button
                              {:hover-color :highlight
                               :icon        :tab
@@ -61,46 +61,46 @@
 (defn re-frame-browser-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-selected? @(r/subscribe [:gestures/view-selected? :developer-tools.magic-widget/handler :re-frame-browser])]
+  (let [view-selected? @(r/subscribe [:x.gestures/view-selected? :developer-tools.magic-widget/handler :re-frame-browser])]
        [elements/icon-button ::re-frame-browser-icon-button
                              {:color       (if view-selected? :default :muted)
                               :hover-color :highlight
                               :icon        :database
                               :icon-family :material-symbols-outlined
-                              :on-click    [:gestures/change-view! :developer-tools.magic-widget/handler :re-frame-browser]
+                              :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :re-frame-browser]
                               :label       "State"}]))
 
 (defn request-browser-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-selected? @(r/subscribe [:gestures/view-selected? :developer-tools.magic-widget/handler :request-inspector])]
+  (let [view-selected? @(r/subscribe [:x.gestures/view-selected? :developer-tools.magic-widget/handler :request-inspector])]
        [elements/icon-button ::request-browser-icon-button
                              {:color       (if view-selected? :default :muted)
                               :hover-color :highlight
                               :icon        :downloading
-                              :on-click    [:gestures/change-view! :developer-tools.magic-widget/handler :request-inspector]
+                              :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :request-inspector]
                               :label       "Requests"}]))
 
 (defn route-browser-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-selected? @(r/subscribe [:gestures/view-selected? :developer-tools.magic-widget/handler :route-browser])]
+  (let [view-selected? @(r/subscribe [:x.gestures/view-selected? :developer-tools.magic-widget/handler :route-browser])]
        [elements/icon-button ::route-browser-icon-button
                              {:color       (if view-selected? :default :muted)
                               :hover-color :highlight
                               :icon        :route
-                              :on-click    [:gestures/change-view! :developer-tools.magic-widget/handler :route-browser]
+                              :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :route-browser]
                               :label       "Routes"}]))
 
 (defn re-frame-events-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-selected? @(r/subscribe [:gestures/view-selected? :developer-tools.magic-widget/handler :event-browser])]
+  (let [view-selected? @(r/subscribe [:x.gestures/view-selected? :developer-tools.magic-widget/handler :event-browser])]
        [elements/icon-button ::re-frame-events-icon-button
                              {:color       (if view-selected? :default :muted)
                               :hover-color :highlight
                               :icon        :data_array
-                              :on-click    [:gestures/change-view! :developer-tools.magic-widget/handler :event-browser]
+                              :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :event-browser]
                               :label       "Events"}]))
 
 (defn toggle-print-events-icon-button
@@ -110,7 +110,7 @@
        [elements/icon-button ::toggle-print-events-icon-button
                              {:hover-color :highlight
                               :icon        :terminal
-                              :on-click    [:core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
+                              :on-click    [:x.core/set-debug-mode! (if print-events? "avocado-juice" "pineapple-juice")]
                               :preset      (if print-events? :primary :muted)
                               :label       "Print"}]))
 
@@ -122,7 +122,7 @@
                          :hover-color   :highlight
                         ;:indent        {:left :xxl}
                          :keypress      {:key-code 27 :required? true}
-                         :on-click      [:ui/remove-popup! :developer-tools.magic-widget/view]
+                         :on-click      [:x.ui/remove-popup! :developer-tools.magic-widget/view]
                          :preset        :close
                          :label         "Close"}])
 
@@ -148,7 +148,7 @@
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [view-id @(r/subscribe [:gestures/get-current-view-id :developer-tools.magic-widget/handler])]
+  (let [view-id @(r/subscribe [:x.gestures/get-current-view-id :developer-tools.magic-widget/handler])]
        (case view-id :re-frame-browser  [re-frame-browser]
                      :request-inspector [request-inspector]
                      :route-browser     [route-browser]

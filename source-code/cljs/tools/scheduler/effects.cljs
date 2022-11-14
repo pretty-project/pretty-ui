@@ -28,8 +28,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [_ _]
       {:dispatch-later [{:ms (time/get-milliseconds-left-from-this-minute)
-                         :fx [:environment/set-interval! :scheduler/interval
-                                                         {:event [:scheduler/watch-time!] :interval 60000}]}]}))
+                         :fx [:x.environment/set-interval! :scheduler/interval
+                                                           {:event [:scheduler/watch-time!] :interval 60000}]}]}))
 
 (r/reg-event-fx :scheduler/init-scheduler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,4 +75,4 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (if-not (r subs/any-schedule-registered? db)
-              {:fx [:environment/clear-interval! :scheduler/interval]})))
+              {:fx [:x.environment/clear-interval! :scheduler/interval]})))

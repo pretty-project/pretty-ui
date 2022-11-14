@@ -19,7 +19,7 @@
               [elements.label.views         :as label.views]
               [mid-fruits.random            :as random]
               [reagent.api                  :as reagent]
-              [x.app-components.api         :as x.components]))
+              [x.components.api             :as x.components]))
 
 
 

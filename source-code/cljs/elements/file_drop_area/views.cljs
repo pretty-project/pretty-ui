@@ -16,7 +16,7 @@
     (:require [elements.file-drop-area.helpers    :as file-drop-area.helpers]
               [elements.file-drop-area.prototypes :as file-drop-area.prototypes]
               [mid-fruits.random                  :as random]
-              [x.app-components.api               :as x.components]))
+              [x.components.api                   :as x.components]))
 
 
 

@@ -88,7 +88,7 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [query-params]}]
-  (let [db          @(r/subscribe [:db/get-db])
+  (let [db          @(r/subscribe [:x.db/get-db])
         path         (reader/string->mixed (get query-params "path" "[]"))
         current-item (get-in db path)]
        (re-frame-browser {:current-item current-item :path path})))
