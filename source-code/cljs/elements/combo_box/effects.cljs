@@ -91,11 +91,13 @@
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
       ; Ha a combo-box elem surface felülete ...
-      ; A) ... látható, akkor az ESC billentyű lenyomása a combo-box elem
-      ;        saját működését valósítja meg.
-      ; B) ... nem látható, akkor az ESC billentyű lenyomása a text-field elem
-      ;        működését valósítja meg.
-      (if (r text-field.subs/surface-visible? db box-id box-props)
+      ; A) ... megjelenít opciókat, akkor az ESC billentyű lenyomása a combo-box
+      ;        elem saját működését valósítja meg.
+      ; B) ... nem jelenít meg opciókat, akkor az ESC billentyű lenyomása a text-field
+      ;        elem működését valósítja meg.
+      ;
+      ; HACK#1450 (source-code/cljs/elements/combo-box/helpers.cljs)
+      (if (combo-box.helpers/any-option-rendered? box-id box-props)
           ; A)
           {:db (r text-field.events/hide-surface!            db box-id)
            :fx [:elements.combo-box/discard-option-highlighter! box-id]}

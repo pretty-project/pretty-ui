@@ -36,8 +36,7 @@
   ;   :on-focus (metamorphic-event)
   ;   :option-label-f (function)
   ;   :option-value-f (function)
-  ;   :options-path (vector)
-  ;   :options-placeholder (metamorphic-content)}
+  ;   :options-path (vector)}
   [box-id box-props]
   ; XXX#5067
   ; A field-content-f, field-value-f, option-label-f és option-value-f függvényeket
@@ -54,19 +53,17 @@
           :field-value-f    return
           :option-label-f   return
           :option-value-f   return
-          :options-placeholder :no-options
           :options-path     (input.helpers/default-options-path box-id)
           :value-path       (input.helpers/default-value-path   box-id)}
          (param box-props))
   ; WARNING! DEPRECATED! DO NOT USE!
 
-  (as-> {} % (merge % {:field-content-f     return
-                       :field-value-f       return
-                       :option-label-f      return
-                       :option-value-f      return
-                       :options-placeholder :no-options
-                       :options-path        (input.helpers/default-options-path box-id)
-                       :value-path          (input.helpers/default-value-path   box-id)})
+  (as-> {} % (merge % {:field-content-f return
+                       :field-value-f   return
+                       :option-label-f  return
+                       :option-value-f  return
+                       :options-path    (input.helpers/default-options-path box-id)
+                       :value-path      (input.helpers/default-value-path   box-id)})
              (merge % box-props)
              (merge {:on-blur   [:elements.combo-box/field-blurred box-id %]
                      :on-change [:elements.combo-box/field-changed box-id %]

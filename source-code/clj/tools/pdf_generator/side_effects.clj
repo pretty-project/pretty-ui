@@ -14,7 +14,7 @@
 
 (ns tools.pdf-generator.side-effects
     (:require [clj-htmltopdf.core         :refer [->pdf]]
-              [server-fruits.base64       :as base64]
+              [base64.api                 :as base64]
               [tools.pdf-generator.config :as config]))
 
 

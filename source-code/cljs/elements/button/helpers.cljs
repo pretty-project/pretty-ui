@@ -164,6 +164,9 @@
   ;   :on-mouse-over (function)
   ;   :on-mouse-up (function)}
   [button-id {:keys [disabled? on-mouse-over] :as button-props}]
+  ; XXX#4460
+  ; Az id attribútum használatával a gomb azonosítható válik a DOM műveletekhez.
+  ; Pl.: Fókusz beállítása
   (merge {:data-selectable false}
          (button-color-attributes  button-id button-props)
          (button-font-attributes   button-id button-props)
@@ -172,7 +175,7 @@
                         :on-click       (on-click-f   button-id button-props)}
                        {:id             (hiccup/value button-id "body")
                         :on-click       (on-click-f   button-id button-props)
-                        :on-mouse-over  #(r/dispatch on-mouse-over)
+                        :on-mouse-over  #(r/dispatch  on-mouse-over)
                         :on-mouse-up    #(x.environment/blur-element!)
                         :data-clickable true})))
 

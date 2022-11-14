@@ -37,5 +37,5 @@
           :min-height 1}
          (param field-props)
          {:multiline? true
-          ; XXX#6782
+          ; XXX#6782 (source-code/cljs/elements/text-field/prototypes.cljs)
           :autofill-name (random/generate-keyword)}))

@@ -14,7 +14,7 @@
 
 (ns x.locales.name-handler.helpers
     (:require [mid.x.locales.name-handler.helpers :as name-handler.helpers]
-              [x.user.api                         :as x.user]
+              [x.server-user.api                  :as x.user]
               [x.locales.name-handler.config      :as name-handler.config]))
 
 

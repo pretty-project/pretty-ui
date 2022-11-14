@@ -44,7 +44,8 @@
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click on-right-click stop-propagation?]}]
-  (cond-> {:id (target-handler.helpers/element-id->target-id element-id)}
+  (cond-> {; XXX#4460 
+           :id (target-handler.helpers/element-id->target-id element-id)}
           (boolean disabled?) (merge {:disabled true
                                       :on-click #(if stop-propagation? (dom/stop-propagation! %))})
           (not     disabled?) (merge {:href         (param href)

@@ -265,33 +265,54 @@
   ;   :type (keyword)
   ;   :value (string)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
+  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
+  ;
+  ; BUG#8809
+  ; Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
+  ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+  ;
+  ; XXX#4461
+  ; A {:type :date} típusú mezők min és max dátuma beállítható
+  ; a date-field date-from és date-field tulajdonságainak használatával.
   (if disabled? {:disabled   true
-                 :id         (hiccup/value field-id "input")
                  :max-length max-length
                  :type       type
+                 :id         (hiccup/value      field-id "input")
                  :style      (field-body-style  field-id field-props)
                  :value      (get-field-content field-id)
-                 ; BUG#8809
-                 ; Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-                 ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
                  :on-change #(let [])}
                 {:auto-complete  autofill-name
-                 :id             (hiccup/value field-id "input")
                  :max-length     max-length
+                 :min            date-from
+                 :max            date-to
                  :name           autofill-name
                  :type           type
+                 :id             (hiccup/value      field-id "input")
                  :style          (field-body-style  field-id field-props)
                  :value          (get-field-content field-id)
                  :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
                  :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
                  :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
-                 :on-change      (on-change-f field-id field-props)
+                 :on-change      (on-change-f field-id field-props)}))
 
-                 ; XXX#4461
-                 ; A {:type :date} típusú mezők min és max dátuma beállítható
-                 ; a date-field date-from és date-field tulajdonságainak használatával.
-                 :min date-from
-                 :max date-to}))
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn surface-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ;  {:id (string)
+  ;   :on-mouse-down (function)}
+  [field-id _]
+  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
+  {:id             (hiccup/value field-id "surface")
+   :on-mouse-down #(.preventDefault %)})
 
 
 

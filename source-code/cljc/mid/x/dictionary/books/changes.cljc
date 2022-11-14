@@ -23,6 +23,9 @@
 (def BOOK {:changes-discarded
            {:en "Changes discarded"
             :hu "Változások elvetve"}
+           :changes-saved
+           {:en "Changes saved"
+            :hu "Változások elmentve"}
            :no-changes-to-redo
            {:en "No changes to redo"
             :hu "Nincs megismételhető változás"}

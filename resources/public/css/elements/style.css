@@ -2443,17 +2443,6 @@ body {
   max-height: 340px;
 }
 
-.e-combo-box--options-placeholder {
-  align-items: center;
-  color: var( --color-muted );
-  display: flex;
-  font-size: var( --font-size-xs );
-  height: 32px;
-  letter-spacing: var( --letter-spacing-xs );
-  line-height: var( --line-height-xs );
-  padding: 0 8px;
-}
-
 /*** Combo-box options ***/
 
 /*** Combo-box option ***/

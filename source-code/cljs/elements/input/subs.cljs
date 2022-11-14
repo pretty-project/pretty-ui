@@ -74,7 +74,7 @@
   ;
   ; @return (vector)
   [db [_ _ {:keys [options options-path]}]]
-  ; XXX#2781
+  ; XXX#2781 (source-code/cljs/elements/input/helpers.cljs)
   (or options (get-in db options-path)))
 
 ; XXX#NEW VERSION!

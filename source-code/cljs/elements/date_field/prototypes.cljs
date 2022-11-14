@@ -33,6 +33,6 @@
   [_ field-props]
   (merge {}
          (param field-props)
-          ; XXX#6782
-         {:autofill-name (random/generate-keyword)
+         {; XXX#6782 (source-code/cljs/elements/text-field/prototypes.cljs)
+          :autofill-name (random/generate-keyword)
           :type          :date}))

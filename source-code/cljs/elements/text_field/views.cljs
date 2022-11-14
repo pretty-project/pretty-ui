@@ -112,9 +112,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {:surface (metamorphic-content)(opt)}
-  [field-id {:keys [surface]}]
+  [field-id {:keys [surface] :as field-props}]
   (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
-                      [:div.e-text-field--surface {:on-mouse-down #(.preventDefault %)}
+                      [:div.e-text-field--surface (text-field.helpers/surface-attributes field-id field-props)
                                                   [x.components/content field-id surface]])))
 
 
