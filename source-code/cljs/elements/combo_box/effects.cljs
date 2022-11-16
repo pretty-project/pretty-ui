@@ -91,17 +91,17 @@
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
       ; Ha a combo-box elem surface felülete ...
-      ; A) ... megjelenít opciókat, akkor az ESC billentyű lenyomása a combo-box
-      ;        elem saját működését valósítja meg.
-      ; B) ... nem jelenít meg opciókat, akkor az ESC billentyű lenyomása a text-field
-      ;        elem működését valósítja meg.
+      ; (A) ... megjelenít opciókat, akkor az ESC billentyű lenyomása a combo-box
+      ;         elem saját működését valósítja meg.
+      ; (B) ... nem jelenít meg opciókat, akkor az ESC billentyű lenyomása a text-field
+      ;         elem működését valósítja meg.
       ;
       ; HACK#1450 (source-code/cljs/elements/combo-box/helpers.cljs)
       (if (combo-box.helpers/any-option-rendered? box-id box-props)
-          ; A)
+          ; (A)
           {:db (r text-field.events/hide-surface!            db box-id)
            :fx [:elements.combo-box/discard-option-highlighter! box-id]}
-          ; B)
+          ; (B)
           [:elements.text-field/ESC-pressed box-id box-props])))
 
 (r/reg-event-fx :elements.combo-box/ENTER-pressed
@@ -112,26 +112,26 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       ; XXX#4146
       ; Ha a combo-box elem surface felülete ...
-      ; A) ... látható, akkor az ENTER billentyű lenyomása a combo-box elem
-      ;        saját működését valósítja meg.
-      ; B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
-      ;        működését valósítja meg.
+      ; (A) ... látható, akkor az ENTER billentyű lenyomása a combo-box elem
+      ;         saját működését valósítja meg.
+      ; (B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
+      ;         működését valósítja meg.
       ;
       ; Ha a surface felületen ...
-      ; A1) ... valamelyik opció ki van választva, akkor a kiválasztott opciót,
-      ;         eltárolja a value-path útvonalra és a szövegmező értékének is beállítja.
-      ; A2) ... egyik opció sincs kiválasztva, akkor eltünteti a surface felületet.
+      ; (A1) ... valamelyik opció ki van választva, akkor a kiválasztott opciót,
+      ;          eltárolja a value-path útvonalra és a szövegmező értékének is beállítja.
+      ; (A2) ... egyik opció sincs kiválasztva, akkor eltünteti a surface felületet.
       (if (r text-field.subs/surface-visible? db box-id box-props)
-          ; A)
+          ; (A)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
-                  ; A1)
+                  ; (A1)
                   {:db   (as-> db % (r combo-box.events/select-option! % box-id box-props highlighted-option)
                                     (r text-field.events/hide-surface! % box-id))
                    :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
                           [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]}
-                  ; A2)
+                  ; (A2)
                   {:db   (r text-field.events/hide-surface! db box-id)})
-          ; B)
+          ; (B)
           [:elements.text-field/ENTER-pressed box-id box-props])))
 
 

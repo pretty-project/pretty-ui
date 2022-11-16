@@ -53,33 +53,33 @@
   (fn [{:keys [db]} [_ handler-id server-response]]
       ; Ha az "Elem mentése" művelet sikeres befejeződésekor ...
       ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
-      ; A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
-      ;        kezelésre VAGY új elem mentése történt és az engine útvonal-vezérelt, ...
-      ;        ... az [:item-handler/go-up! ...] esemény átirányít a base-route vagy item-route
-      ;            útvonalra.
-      ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;            15%-ig szimulált folyamat.
+      ; (A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
+      ;         kezelésre VAGY új elem mentése történt és az engine útvonal-vezérelt, ...
+      ;         ... az [:item-handler/go-up! ...] esemény átirányít a base-route vagy item-route
+      ;             útvonalra.
+      ;         ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;             15%-ig szimulált folyamat.
       ;
-      ; B) a body komponens már nincs a React-fába csatolva és az engine útvonal-vezérelt, ...
-      ;        ... megjelenít egy értesítést.
+      ; (B) ... a body komponens már nincs a React-fába csatolva és az engine útvonal-vezérelt, ...
+      ;         ... megjelenít egy értesítést.
       ;
-      ; C) ... az A) kimenetel feltételei nem teljesülnek ...
-      ;        ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;        ... megjelenít egy értesítést.
+      ; (C) ... az (A) kimenetel feltételei nem teljesülnek ...
+      ;         ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;         ... megjelenít egy értesítést.
       (if-let [route-handled? (r routes.subs/route-handled? db handler-id)]
               (let [item-id (r update.subs/get-saved-item-id db handler-id server-response)]
                    ; Új elem mentésekor szükséges eltárolni a szerver által visszaküldött elem-azonosítót,
                    ; az [:item-handler/go-to! ...] esemény számára!
-                   (cond ; A)
+                   (cond ; (A)
                          (r core.subs/handling-item? db handler-id item-id) {:dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
                                                                                           [:item-handler/go-up! handler-id]]}
                          (r core.subs/new-item?     db handler-id)          {:db          (r core.events/set-item-id! db handler-id item-id)
                                                                              :dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
                                                                                           [:item-handler/go-up! handler-id]]}
-                         ; B)
+                         ; (B)
                          :handler-leaved                                    {:dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
                                                                                           [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
-              ; C)
+              ; (C)
               {:dispatch-if [(r x.ui/process-faked? db)
                              [:x.ui/end-fake-process!]]
                :dispatch-n [(r update.subs/get-on-saved-event db handler-id server-response)
@@ -123,24 +123,24 @@
   ; @param (keyword) handler-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ handler-id server-response]]
-      ; A) Ha az "Elem törlése" művelet sikeres befejeződésekor ...
-      ;    ... a body komponens a React-fába van csatolva,
-      ;    ... a törölt elem van megnyitva kezelésre,
-      ;    ... az engine rendelkezik a {:base-route "..."} tulajdonsággal, ...
-      ;        ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
-      ;            elküldött útvonalra.
-      ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;            15%-ig szimulált folyamat.
+      ; (A) Ha az "Elem törlése" művelet sikeres befejeződésekor ...
+      ;     ... a body komponens a React-fába van csatolva,
+      ;     ... a törölt elem van megnyitva kezelésre,
+      ;     ... az engine rendelkezik a {:base-route "..."} tulajdonsággal, ...
+      ;         ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
+      ;             elküldött útvonalra.
+      ;         ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;             15%-ig szimulált folyamat.
       ;
-      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha az (A) kimenetel feltételei nem teljesülnek ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id    (r update.subs/get-deleted-item-id db handler-id server-response)
             base-route (r transfer.subs/get-transfer-item db handler-id :base-route)]
            (if (and base-route (r core.subs/handling-item? db handler-id item-id))
-               ; A)
+               ; (A)
                {:dispatch-n [[:item-handler/render-item-deleted-dialog! handler-id item-id]
                              [:x.router/go-to! base-route]]}
-               ; B)
+               ; (B)
                {:dispatch    [:item-handler/render-item-deleted-dialog! handler-id item-id]
                 :dispatch-if [(r x.ui/process-faked? db)
                               [:x.ui/end-fake-process!]]}))))
@@ -206,18 +206,18 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ handler-id item-id _]]
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine rendelkezik
-      ;    az elem útvonalának elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
-      ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine rendelkezik
+      ;     az elem útvonalának elkészítéséhez szükséges tulajdonságokkal ...
+      ;     ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;     ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
 
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine NEM rendelkezik
-      ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine NEM rendelkezik
+      ;     az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db handler-id item-id)]
-              ; A)
+              ; (A)
               [:x.router/go-to! item-route]
-              ; B)
+              ; (B)
               {:dispatch-if [(r x.ui/process-faked? db)
                              [:x.ui/end-fake-process!]]})))
 

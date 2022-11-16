@@ -50,13 +50,13 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      ; A) ...
+      ; (A) ...
       ;
-      ; B) ...
+      ; (B) ...
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
-              ; A)
+              ; (A)
               [:item-editor/go-up! editor-id])))
-              ; B)
+              ; (B)
               ; ...
 
 

@@ -105,5 +105,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [query-params] :as request}]
   (if-let [email-address (get query-params "email-address")]
-          (add-user request)
+          (add-user     request)
           (user-handler request)))

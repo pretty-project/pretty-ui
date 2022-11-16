@@ -22,18 +22,18 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :x.user/authenticate!
-  ; A) Sikeres bejelentkezés
-  ;    A bejelentkező felületen lévő bejelentkezés gombra kattintva, a gomb
-  ;    várakozó állapotba lép. Ahhoz, hogy sikeres bejelentkezés után,
-  ;    de még a rendszer indulása előtt, amíg látható a bejelentkező felület,
-  ;    ne lehessen újból a bejelentkezés gombot megnyomni, szükséges
-  ;    az {:idle-timeout ...} értékét az alapbeállításnál magasabbra állítani.
+  ; (A) Sikeres bejelentkezés
+  ;     A bejelentkező felületen lévő bejelentkezés gombra kattintva, a gomb
+  ;     várakozó állapotba lép. Ahhoz, hogy sikeres bejelentkezés után,
+  ;     de még a rendszer indulása előtt, amíg látható a bejelentkező felület,
+  ;     ne lehessen újból a bejelentkezés gombot megnyomni, szükséges
+  ;     az {:idle-timeout ...} értékét az alapbeállításnál magasabbra állítani.
   ;
-  ; B) Sikertelen bejelentkezés
-  ;    A szerver válaszának megérkezésekor, sikertelen bejelentkezés esetén
-  ;    egy hibaüzenet jelenik meg a bejelentkező felületen.
-  ;    A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
-  ;    letelte után lehetséges a bejelentkezés gombot újból megnyomni.
+  ; (B) Sikertelen bejelentkezés
+  ;     A szerver válaszának megérkezésekor, sikertelen bejelentkezés esetén
+  ;     egy hibaüzenet jelenik meg a bejelentkező felületen.
+  ;     A szerver válaszának megérkezésekor elinduló {:idle-timeout ...} idő
+  ;     letelte után lehetséges a bejelentkezés gombot újból megnyomni.
   ;
   ; @param (map) authenticate-props
   ;  {:email-address (string)

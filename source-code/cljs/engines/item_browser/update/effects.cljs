@@ -75,20 +75,20 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id item-id _]]
-      ; A) Ha az "Elem felülírása" művelet sikertelen befejeződésekor a felülírt elem
-      ;    a megjelenített listaelemek között van, ...
-      ;    ... engedélyezi az ideiglenesen letiltott elemet.
-      ;    ... visszaállítja a felülírt elem kliens-oldali változatatát a változtatás előtti állapotra.
-      ;    ... megjelenít egy értesítést.
+      ; (A) Ha az "Elem felülírása" művelet sikertelen befejeződésekor a felülírt elem
+      ;     a megjelenített listaelemek között van, ...
+      ;     ... engedélyezi az ideiglenesen letiltott elemet.
+      ;     ... visszaállítja a felülírt elem kliens-oldali változatatát a változtatás előtti állapotra.
+      ;     ... megjelenít egy értesítést.
       ;
-      ; B) Ha az "Elem felülírása" művelet sikertelen befejeződésekor a felülírt elem
-      ;    NINCS a megjelenített listaelemek között, ...
-      ;    ... megjelenít egy értesítést.
+      ; (B) Ha az "Elem felülírása" művelet sikertelen befejeződésekor a felülírt elem
+      ;     NINCS a megjelenített listaelemek között, ...
+      ;     ... megjelenít egy értesítést.
       (if (r items.subs/item-downloaded? db browser-id item-id)
-          ; A)
+          ; (A)
           {:db       (r update.events/update-item-failed db browser-id item-id)
            :dispatch [:x.ui/render-bubble! {:body :failed-to-update}]}
-          ; B)
+          ; (B)
           [:x.ui/render-bubble! {:body :failed-to-update}])))
 
 
@@ -118,20 +118,20 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id item-id _]]
-      ; A) Ha az "Elem törlése" művelet sikeres befejeződésekor a törölt elem
-      ;    a megjelenített listaelemek között van, ...
-      ;    ... újratölti a listaelemeket, majd megjelenít egy értesítést.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha az "Elem törlése" művelet sikeres befejeződésekor a törölt elem
+      ;     a megjelenített listaelemek között van, ...
+      ;     ... újratölti a listaelemeket, majd megjelenít egy értesítést.
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha az "Elem törlése" művelet sikeres befejeződésekor a törölt elem
-      ;    NINCS a megjelenített listaelemek között, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; (B) Ha az "Elem törlése" művelet sikeres befejeződésekor a törölt elem
+      ;     NINCS a megjelenített listaelemek között, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (if (r items.subs/item-downloaded? db browser-id item-id)
-          ; A)
+          ; (A)
           (let [on-reload [:item-browser/render-item-deleted-dialog! browser-id item-id]]
                [:item-browser/reload-items! browser-id {:on-reload on-reload}])
-          ; B)
+          ; (B)
           [:item-browser/render-item-deleted-dialog! browser-id item-id])))
 
 (r/reg-event-fx :item-browser/delete-item-failed
@@ -143,23 +143,23 @@
   (fn [{:keys [db]} [_ browser-id item-id _]]
       ; XXX#0439
       ;
-      ; A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
-      ;    a megjelenített listaelemek között van, ...
-      ;    ... engedélyezi az ideiglenesen letiltott elemet.
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (A) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
+      ;     a megjelenített listaelemek között van, ...
+      ;     ... engedélyezi az ideiglenesen letiltott elemet.
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;
-      ; B) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
-      ;    NINCS a megjelenített listaelemek között, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha az "Elem törlése" művelet sikertelen befejeződésekor a törölt elem
+      ;     NINCS a megjelenített listaelemek között, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r items.subs/item-downloaded? db browser-id item-id)
-          ; A)
+          ; (A)
           {:db          (r update.events/delete-item-failed db browser-id item-id)
            :dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]}
-          ; B)
+          ; (B)
           {:dispatch    [:item-browser/render-delete-item-failed-dialog! browser-id]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]})))
@@ -207,18 +207,18 @@
   ; @param (keyword) browser-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id server-response]]
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az aktuálisan böngészett
-      ;    elem a visszaállított elem szülő-eleme, ...
-      ;    ... újratölti a listaelemeket.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az aktuálisan böngészett
+      ;     elem a visszaállított elem szülő-eleme, ...
+      ;     ... újratölti a listaelemeket.
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az aktuálisan böngészett
-      ;    elem NEM a visszaállított elem szülő-eleme, ...
-      ; ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az aktuálisan böngészett
+      ;     elem NEM a visszaállított elem szülő-eleme, ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r update.subs/parent-item-browsed? db browser-id :undo-delete-item! server-response)
-          ; A)
+          ; (A)
           [:item-browser/reload-items! browser-id]
-          ; B)
+          ; (B)
           {:dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]})))
 
@@ -271,21 +271,21 @@
   ; @param (keyword) browser-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ browser-id server-response]]
-      ; A) Ha az "Elem duplikálása" művelet sikeres befejeződésekor az aktuálisan böngészett
-      ;    elem a duplikált elem szülő-eleme, ...
-      ;    ... újratölti a listaelemeket, majd megjelenít egy értesítést.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha az "Elem duplikálása" művelet sikeres befejeződésekor az aktuálisan böngészett
+      ;     elem a duplikált elem szülő-eleme, ...
+      ;     ... újratölti a listaelemeket, majd megjelenít egy értesítést.
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha az "Elem duplikálása" művelet sikeres befejeződésekor az aktuálisan böngészett
-      ;    elem NEM a duplikált elem szülő-eleme, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; (B) Ha az "Elem duplikálása" művelet sikeres befejeződésekor az aktuálisan böngészett
+      ;     elem NEM a duplikált elem szülő-eleme, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [copy-id (r update.subs/get-copy-id db browser-id server-response)]
            (if (r update.subs/parent-item-browsed? db browser-id :duplicate-item! server-response)
-               ; A)
+               ; (A)
                (let [on-reload [:item-browser/render-item-duplicated-dialog! browser-id copy-id]]
                     [:item-browser/reload-items! browser-id {:on-reload on-reload}])
-               ; B)
+               ; (B)
                [:item-browser/render-item-duplicated-dialog! browser-id copy-id]))))
 
 (r/reg-event-fx :item-browser/duplicate-item-failed

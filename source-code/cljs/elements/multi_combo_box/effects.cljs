@@ -72,35 +72,35 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       ; XXX#4146
       ; Ha a multi-combo-box elem surface felülete ...
-      ; A) ... látható, akkor az ENTER billentyű lenyomása a multi-combo-box elem
-      ;        saját működését valósítja meg.
-      ; B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
-      ;        működését valósítja meg.
+      ; (A) ... látható, akkor az ENTER billentyű lenyomása a multi-combo-box elem
+      ;         saját működését valósítja meg.
+      ; (B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
+      ;         működését valósítja meg.
       ;
       ; Ha a surface felületen ...
-      ; A1) ... valamelyik opció ki van választva, akkor
-      ; A2) ... egyik opció sincs kiválasztva, akkor
+      ; (A1) ... valamelyik opció ki van választva, akkor
+      ; (A2) ... egyik opció sincs kiválasztva, akkor
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (r text-field.subs/surface-visible? db field-id field-props)
-               ; A)
+               ; (A)
                (if-let [highlighted-option (combo-box.helpers/get-highlighted-option field-id field-props)]
-                       ; A1)
+                       ; (A1)
                        {:db (as-> db % (r multi-combo-box.events/use-option! % box-id box-props highlighted-option)
                                        (r text-field.events/hide-surface!    % field-id))
                         :fx [:elements.combo-box/discard-option-highlighter! field-id field-props]}
-                       ; A2)
+                       ; (A2)
                        (if (text-field.helpers/field-empty? field-id)
                            {:db (r text-field.events/hide-surface! db field-id)}
                            (let [field-content (text-field.helpers/get-field-content field-id)]
                                 {:db (as-> db % (r text-field.events/hide-surface! % field-id)
                                                 (r multi-combo-box.events/use-field-content! % box-id box-props field-content))
                                  :dispatch [:elements.text-field/empty-field! field-id field-props]})))
-               ; B)
+               ; (B)
                (if (text-field.helpers/field-empty? field-id)
-                   ; B1)
+                   ; (B1)
                    [:elements.text-field/ENTER-pressed field-id field-props]
-                   ; B2)
+                   ; (B2)
                    (let [field-content (text-field.helpers/get-field-content field-id)]
                         {:dispatch-n [[:elements.text-field/ENTER-pressed field-id field-props]
                                       [:elements.text-field/empty-field!  field-id field-props]]

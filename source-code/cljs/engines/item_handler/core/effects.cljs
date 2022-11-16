@@ -33,14 +33,14 @@
   ;  [:item-handler/handle-item! :my-handler "my-item"]
   (fn [{:keys [db]} [_ handler-id item-id]]
       ; XXX#5575
-      ; A) Ha az item-handler engine útvonal-vezérelt, ...
-      ;    ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
+      ; (A) Ha az item-handler engine útvonal-vezérelt, ...
+      ;     ... akkor elkészíti az elem megtekintéséhez az útvonalat és átirányít arra.
       ;
-      ; B) Ha az item-handler engine NEM útvonal-vezérelt és a body komponens a React-fába
-      ;    van csatolva, ...
-      ;    ... akkor beállítja az item-id paraméter értékét az aktuálisan megtekintett
-      ;        elem azonosítójaként.
-      ;    ... meghívja az [:item-handler/load-handler! ...] eseményt.
+      ; (B) Ha az item-handler engine NEM útvonal-vezérelt és a body komponens a React-fába
+      ;     van csatolva, ...
+      ;     ... akkor beállítja az item-id paraméter értékét az aktuálisan megtekintett
+      ;         elem azonosítójaként.
+      ;     ... meghívja az [:item-handler/load-handler! ...] eseményt.
       (if-let [route-handled? (r routes.subs/route-handled? db handler-id)]
               (let [item-route (r routes.subs/get-item-route db handler-id item-id)]
                    {:dispatch [:x.router/go-to! item-route]})

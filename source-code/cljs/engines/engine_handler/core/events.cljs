@@ -158,31 +158,30 @@
   ; Az engine által aktuálisan megnyitandó elem azonosítójának különböző lehetséges
   ; forrásaiból, azok prioritása szerint aktualizálja a current-item-id értékét.
   ;
-  ; A) Ha az engine útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;    1. az aktuális útvonal :item-id útvonal-paramétere
-  ;    2. a body komponens {:item-id "..."} tulajdonsága.
-  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
+  ; (A) Ha az engine útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
+  ;     1. az aktuális útvonal :item-id útvonal-paramétere
+  ;     2. a body komponens {:item-id "..."} tulajdonsága.
+  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
   ;
-  ; B) Ha az engine NEM útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;    1. az engine eseményei vagy a engine-t használó modul eseményei által előre beállított érték.
-  ;    2. a body komponens {:item-id "..."} tulajdonsága.
-  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
+  ; (B) Ha az engine NEM útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
+  ;     1. az engine eseményei vagy a engine-t használó modul eseményei által előre beállított érték.
+  ;     2. a body komponens {:item-id "..."} tulajdonsága.
+  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
   (if-let [route-handled? (r routes.subs/route-handled? db engine-id)]
-          ; A)
+          ; (A)
           (if-let [derived-item-id (r routes.subs/get-derived-item-id db engine-id)]
                   (r set-item-id! db engine-id derived-item-id)
                   (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
                           (r set-item-id! db engine-id item-id)
                           (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
                                (r set-item-id! db engine-id default-item-id))))
-          ; B)
-        (let []
+          ; (B)
           (if-let [current-item-id (r core.subs/get-current-item-id db engine-id)]
                   (return db)
                   (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
                           (r set-item-id! db engine-id item-id)
                           (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
-                               (r set-item-id! db engine-id default-item-id)))))))
+                               (r set-item-id! db engine-id default-item-id))))))
 
 
 
@@ -217,14 +216,14 @@
   [db [_ engine-id]]
   ; XXX#9143
   (if-let [route-handled? (r routes.subs/route-handled? db engine-id)]
-          ; A)
+          ; (A)
           (if-let [derived-view-id (r routes.subs/get-derived-view-id db engine-id)]
                   (r set-view-id! db engine-id derived-view-id)
                   (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]
                           (r set-view-id! db engine-id view-id)
                           (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
                                (r set-view-id! db engine-id default-view-id))))
-          ; B)
+          ; (B)
           (if-let [current-view-id (r core.subs/get-current-view-id db engine-id)]
                   (return db)
                   (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]

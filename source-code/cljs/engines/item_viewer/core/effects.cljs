@@ -32,10 +32,10 @@
   (fn [{:keys [db]} [_ viewer-id item-id]]
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db viewer-id)]
-              ; A)
+              ; (A)
               (let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
                    {:dispatch [:x.router/go-to! item-route]})
-              ; B)
+              ; (B)
               (if (r body.subs/body-did-mount? db viewer-id)
                   {:db       (r core.events/set-item-id! db viewer-id item-id)
                    :dispatch [:item-viewer/load-viewer! viewer-id]}))))

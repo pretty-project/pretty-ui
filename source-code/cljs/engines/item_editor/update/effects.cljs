@@ -52,33 +52,33 @@
   (fn [{:keys [db]} [_ editor-id server-response]]
       ; Ha az "Elem mentése" művelet sikeres befejeződésekor ...
       ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
-      ; A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
-      ;        szerkesztésre VAGY új elem mentése történt és az engine útvonal-vezérelt, ...
-      ;        ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
-      ;            útvonalra.
-      ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;            15%-ig szimulált folyamat.
+      ; (A) ... a body komponens a React-fába van csatolva, a mentett elem van megnyitva
+      ;         szerkesztésre VAGY új elem mentése történt és az engine útvonal-vezérelt, ...
+      ;         ... az [:item-editor/go-up! ...] esemény átirányít a base-route vagy item-route
+      ;             útvonalra.
+      ;         ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;             15%-ig szimulált folyamat.
       ;
-      ; B) a body komponens már nincs a React-fába csatolva és az engine útvonal-vezérelt, ...
-      ;        ... megjelenít egy értesítést.
+      ; (B) a body komponens már nincs a React-fába csatolva és az engine útvonal-vezérelt, ...
+      ;         ... megjelenít egy értesítést.
       ;
-      ; C) ... az A) kimenetel feltételei nem teljesülnek ...
-      ;        ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
-      ;        ... megjelenít egy értesítést.
+      ; (C) ... az (A) kimenetel feltételei nem teljesülnek ...
+      ;         ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ;         ... megjelenít egy értesítést.
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]
               (let [item-id (r update.subs/get-saved-item-id db editor-id server-response)]
                    ; Új elem mentésekor szükséges eltárolni a szerver által visszaküldött elem-azonosítót,
                    ; az [:item-editor/go-to! ...] esemény számára!
-                   (cond ; A)
+                   (cond ; (A)
                          (r core.subs/editing-item? db editor-id item-id) {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
                                                                                         [:item-editor/go-up! editor-id]]}
                          (r core.subs/new-item?     db editor-id)         {:db          (r core.events/set-item-id! db editor-id item-id)
                                                                            :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
                                                                                         [:item-editor/go-up! editor-id]]}
-                         ; B)
+                         ; (B)
                          :editor-leaved                                   {:dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
                                                                                         [:x.ui/render-bubble! ::item-saved-dialog {:body :saved}]]}))
-              ; C)
+              ; (C)
               {:dispatch-if [(r x.ui/process-faked? db)
                              [:x.ui/end-fake-process!]]
                :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)

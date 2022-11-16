@@ -85,21 +85,21 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id server-response]]
-      ; A) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... újratölti a listaelemeket, majd megjelenít egy értesítést..
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;     a React-fába van csatolva, ...
+      ;     ... újratölti a listaelemeket, majd megjelenít egy értesítést..
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; (B) Ha az "Kijelölt elemek törlése" művelet sikeres befejeződésekor a body komponens
+      ;     NINCS a React-fába csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [item-ids (r update.subs/get-deleted-item-ids db lister-id server-response)]
            (if (r body.subs/body-did-mount? db lister-id)
-               ; A)
+               ; (A)
                (let [on-reload [:item-lister/render-items-deleted-dialog! lister-id item-ids]]
                     [:item-lister/reload-items! lister-id {:on-reload on-reload}])
-               ; B)
+               ; (B)
                [:item-lister/render-items-deleted-dialog! lister-id item-ids]))))
 
 (r/reg-event-fx :item-lister/delete-items-failed
@@ -110,23 +110,23 @@
   (fn [{:keys [db]} [_ lister-id _]]
       ; XXX#0439
       ;
-      ; A) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... engedélyezi az ideiglenesen letiltott elemeket.
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (A) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;     a React-fába van csatolva, ...
+      ;     ... engedélyezi az ideiglenesen letiltott elemeket.
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;
-      ; B) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha az "Kijelölt elemek törlése" művelet sikertelen befejeződésekor a body komponens
+      ;     NINCS a React-fába csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r body.subs/body-did-mount? db lister-id)
-          ; A)
+          ; (A)
           {:db          (r update.events/delete-items-failed db lister-id)
            :dispatch    [:x.ui/render-bubble! {:body :failed-to-delete}]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]}
-          ; B)
+          ; (B)
           {:dispatch    [:x.ui/render-bubble! {:body :failed-to-delete}]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]})))
@@ -168,18 +168,18 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id _]]
-      ; A) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... újratölti a listaelemeket.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
+      ;     a React-fába van csatolva, ...
+      ;     ... újratölti a listaelemeket.
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha a "Törölt elemek visszaállítása" művelet sikeres befejeződésekor a body komponens
+      ;     NINCS a React-fába csatolva, ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r body.subs/body-did-mount? db lister-id)
-          ; A)
+          ; (A)
           [:item-lister/reload-items! lister-id]
-          ; B)
+          ; (B)
           {:dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]})))
 
@@ -224,22 +224,22 @@
   ; @param (keyword) lister-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id server-response]]
-      ; A) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... újratölti a listaelemeket.
-      ;    ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
+      ;     a React-fába van csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... újratölti a listaelemeket.
+      ;     ... a listaelemek újratöltésekor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
       ;
-      ; B) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
+      ; (B) Ha a "Kijelölt elemek duplikálása" művelet sikeres befejeződésekor a body komponens
+      ;     NINCS a React-fába csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... feltételezi, hogy a progress-bar elemen 15%-ig szimulált folyamat befejeződött.
       (let [copy-ids (r update.subs/get-duplicated-item-ids db lister-id server-response)]
            (if (r body.subs/body-did-mount? db lister-id)
-               ; A)
+               ; (A)
                (let [on-reload [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]]
                     [:item-lister/reload-items! lister-id {:on-reload on-reload}])
-               ; B)
+               ; (B)
                [:item-lister/render-items-duplicated-dialog! lister-id copy-ids]))))
 
 (r/reg-event-fx :item-lister/duplicate-items-failed
@@ -250,22 +250,22 @@
   (fn [{:keys [db]} [_ lister-id _]]
       ; XXX#0439
       ;
-      ; A) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
-      ;    a React-fába van csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (A) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
+      ;     a React-fába van csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       ;
-      ; B) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
-      ;    NINCS a React-fába csatolva, ...
-      ;    ... megjelenít egy értesítést.
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha a "Kijelölt elemek duplikálása" művelet sikertelen befejeződésekor a body komponens
+      ;     NINCS a React-fába csatolva, ...
+      ;     ... megjelenít egy értesítést.
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if (r body.subs/body-did-mount? db lister-id)
-          ; A)
+          ; (A)
           {:db          (r update.events/duplicate-items-failed db lister-id)
            :dispatch    [:x.ui/render-bubble! {:body :failed-to-duplicate}]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]}
-          ; B)
+          ; (B)
           {:dispatch    [:x.ui/render-bubble! {:body :failed-to-duplicate}]
            :dispatch-if [(r x.ui/process-faked? db)
                          [:x.ui/end-fake-process!]]})))

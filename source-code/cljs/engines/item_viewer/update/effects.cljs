@@ -50,24 +50,24 @@
   ; @param (keyword) viewer-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ viewer-id server-response]]
-      ; A) Ha az "Elem törlése" művelet sikeres befejeződésekor ...
-      ;    ... a body komponens a React-fába van csatolva,
-      ;    ... a törölt elem van megnyitva megtekintésre,
-      ;    ... az engine rendelkezik a {:base-route "..."} tulajdonsággal, ...
-      ;        ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
-      ;            elküldött útvonalra.
-      ;        ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
-      ;            15%-ig szimulált folyamat.
+      ; (A) Ha az "Elem törlése" művelet sikeres befejeződésekor ...
+      ;     ... a body komponens a React-fába van csatolva,
+      ;     ... a törölt elem van megnyitva megtekintésre,
+      ;     ... az engine rendelkezik a {:base-route "..."} tulajdonsággal, ...
+      ;         ... átirányít a {:base-route "..."} tulajdonságként a kliens-oldali kezelő számára
+      ;             elküldött útvonalra.
+      ;         ... feltételezi, hogy az útvonal használatakor befejeződik a progress-bar elemen
+      ;             15%-ig szimulált folyamat.
       ;
-      ; B) Ha az A) kimenetel feltételei nem teljesülnek ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha az (A) kimenetel feltételei nem teljesülnek ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (let [item-id    (r update.subs/get-deleted-item-id db viewer-id server-response)
             base-route (r transfer.subs/get-transfer-item db viewer-id :base-route)]
            (if (and base-route (r core.subs/viewing-item? db viewer-id item-id))
-               ; A)
+               ; (A)
                {:dispatch-n [[:item-viewer/render-item-deleted-dialog! viewer-id item-id]
                              [:x.router/go-to! base-route]]}
-               ; B)
+               ; (B)
                {:dispatch    [:item-viewer/render-item-deleted-dialog! viewer-id item-id]
                 :dispatch-if [(r x.ui/process-faked? db)
                               [:x.ui/end-fake-process!]]}))))
@@ -133,18 +133,18 @@
   ; @param (string) item-id
   ; @param (map) server-response
   (fn [{:keys [db]} [_ viewer-id item-id _]]
-      ; A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine rendelkezik
-      ;    az elem útvonalának elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
-      ;    ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
+      ; (A) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine rendelkezik
+      ;     az elem útvonalának elkészítéséhez szükséges tulajdonságokkal ...
+      ;     ... elkészíti az elemhez tartozó útvonalat és átírányít arra.
+      ;     ... az útvonal használatakor befejeződik a progress-bar elemen 15%-ig szimulált folyamat.
 
-      ; B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine NEM rendelkezik
-      ;    az útvonal elkészítéséhez szükséges tulajdonságokkal ...
-      ;    ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
+      ; (B) Ha a "Törölt elem visszaállítása" művelet sikeres befejeződésekor az engine NEM rendelkezik
+      ;     az útvonal elkészítéséhez szükséges tulajdonságokkal ...
+      ;     ... esetlegesen befejezi a progress-bar elemen 15%-ig szimulált folyamatot.
       (if-let [item-route (r routes.subs/get-item-route db viewer-id item-id)]
-              ; A)
+              ; (A)
               [:x.router/go-to! item-route]
-              ; B)
+              ; (B)
               {:dispatch-if [(r x.ui/process-faked? db)
                              [:x.ui/end-fake-process!]]})))
 
