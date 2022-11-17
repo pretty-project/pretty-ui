@@ -14,7 +14,7 @@
 
 (ns developer-tools.core.effects
     (:require [developer-tools.core.routes :as core.routes]
-              [mid-fruits.pretty           :as pretty]
+              [pretty.print                :as pretty]
               [re-frame.api                :as r :refer [r]]
               [x.core.api                  :as x.core]))
 

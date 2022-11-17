@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.db.core.events
-    (:require [candy.api         :refer [return]]
-              [mid-fruits.map    :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]))
+    (:require [candy.api    :refer [return]]
+              [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]))
 
 
 
@@ -131,8 +131,8 @@
   ;
   ; @return (map)
   [db [_ item-path item]]
-  (let [item-parent-path (vector/pop-last-item item-path)
-        item-dex         (vector/last-item     item-path)
+  (let [item-parent-path (vector/remove-last-item item-path)
+        item-dex         (vector/last-item        item-path)
         item-parent      (get-in db item-parent-path)]
        (if (vector/nonempty? item-parent)
            (let [updated-item-parent (vector/replace-nth-item item-parent item-dex item)]
@@ -159,8 +159,8 @@
   ;
   ; @return (map)
   [db [_ item-path]]
-  (let [parent-path         (vector/pop-last-item item-path)
-        item-dex            (vector/last-item     item-path)
+  (let [parent-path         (vector/remove-last-item item-path)
+        item-dex            (vector/last-item        item-path)
         parent-item         (get-in db parent-path)
         updated-parent-item (vector/remove-nth-item parent-item item-dex)]
        (assoc-in db parent-path updated-parent-item)))

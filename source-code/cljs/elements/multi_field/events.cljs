@@ -15,8 +15,8 @@
 (ns elements.multi-field.events
     (:require [candy.api                 :refer [return]]
               [elements.multi-field.subs :as multi-field.subs]
-              [mid-fruits.vector         :as vector]
-              [re-frame.api              :refer [r]]))
+              [re-frame.api              :refer [r]]
+              [vector.api                :as vector]))
 
 
 

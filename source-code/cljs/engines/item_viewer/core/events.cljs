@@ -16,7 +16,7 @@
     (:require [engines.engine-handler.core.events :as core.events]
               [engines.item-viewer.body.subs      :as body.subs]
               [engines.item-viewer.core.subs      :as core.subs]
-              [mid-fruits.map                     :refer [dissoc-in]]
+              [map.api                            :refer [dissoc-in]]
               [re-frame.api                       :as r :refer [r]]))
 
 

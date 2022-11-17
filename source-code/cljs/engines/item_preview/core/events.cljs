@@ -15,7 +15,7 @@
 (ns engines.item-preview.core.events
     (:require [engines.engine-handler.core.events :as core.events]
               [engines.item-preview.body.subs     :as body.subs]
-              [mid-fruits.map                     :refer [dissoc-in]]
+              [map.api                            :refer [dissoc-in]]
               [re-frame.api                       :as r :refer [r]]))
 
 

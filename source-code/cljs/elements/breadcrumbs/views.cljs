@@ -15,7 +15,7 @@
 (ns elements.breadcrumbs.views
     (:require [elements.breadcrumbs.helpers    :as breadcrumbs.helpers]
               [elements.breadcrumbs.prototypes :as breadcrumbs.prototypes]
-              [mid-fruits.random               :as random]
+              [random.api                      :as random]
               [x.components.api                :as x.components]))
 
 

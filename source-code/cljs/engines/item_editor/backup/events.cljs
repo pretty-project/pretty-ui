@@ -18,7 +18,7 @@
               [engines.item-editor.backup.subs      :as backup.subs]
               [engines.item-editor.body.subs        :as body.subs]
               [engines.item-editor.core.subs        :as core.subs]
-              [mid-fruits.map                       :as map :refer [dissoc-in]]
+              [map.api                              :as map :refer [dissoc-in]]
               [re-frame.api                         :as r :refer [r]]))
 
 

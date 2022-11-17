@@ -18,7 +18,7 @@
               [elements.text-field.helpers   :as text-field.helpers]
               [elements.text-field.views     :as text-field.views]
               [loop.api                      :refer [reduce-indexed]]
-              [mid-fruits.random             :as random]
+              [random.api                    :as random]
               [re-frame.api                  :as r]
               [reagent.api                   :as reagent]
               [x.components.api              :as x.components]))

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.progress-bar.events
-    (:require [candy.api      :refer [return]]
-              [mid-fruits.map :refer [dissoc-in]]
-              [re-frame.api   :as r]))
+    (:require [candy.api    :refer [return]]
+              [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r]))
 
 
 

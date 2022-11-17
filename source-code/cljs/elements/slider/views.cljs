@@ -16,7 +16,7 @@
     (:require [elements.slider.helpers    :as slider.helpers]
               [elements.slider.prototypes :as slider.prototypes]
               [elements.label.views       :as label.views]
-              [mid-fruits.random          :as random]
+              [random.api                 :as random]
               [reagent.api                :as reagent]))
 
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.button.events
-    (:require [mid-fruits.map :refer [dissoc-in]]))
+    (:require [map.api :refer [dissoc-in]]))
 
 
 

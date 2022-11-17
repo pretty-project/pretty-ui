@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.server-handler.prototypes
-    (:require [candy.api         :refer [param]]
-              [mid-fruits.string :as string]
-              [re-frame.api      :as r]))
+    (:require [candy.api    :refer [param]]
+              [re-frame.api :as r]
+              [string.api   :as string]))
 
 
 
@@ -36,5 +36,5 @@
         max-body     @(r/subscribe [:x.core/get-server-config-item :max-body])]
        (merge {:max-body max-body}
               (param server-props)
-              (cond (string/nonempty? port) {:port (string/to-integer port)}
+              (cond (string/nonblank? port) {:port (string/to-integer port)}
                     (nil?             port) {:port default-port}))))

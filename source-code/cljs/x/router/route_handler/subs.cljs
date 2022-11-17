@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.router.route-handler.subs
-    (:require [candy.api                         :refer [return]]
-              [mid-fruits.string               :as string]
-              [mid-fruits.vector               :as vector]
+    (:require [candy.api                       :refer [return]]
               [mid.x.router.route-handler.subs :as route-handler.subs]
               [reitit.frontend                 :as reitit.frontend]
               [re-frame.api                    :as r :refer [r]]
+              [string.api                      :as string]
               [uri.api                         :as uri]
+              [vector.api                      :as vector]
               [x.core.api                      :as x.core]
               [x.router.route-handler.config   :as route-handler.config]
               [x.user.api                      :as x.user]))
@@ -77,7 +77,7 @@
   ;
   ; @return (?)
   [db _]
-  ; XXX#4006 (source-code/clj/x/server_core/router_handler/helpers.clj)
+  ; XXX#4006 (source-code/clj/x/core/router_handler/helpers.clj)
   ; A szerver-oldali útvonal-kezelőhöz hasonlóan a kliens-oldalon is szükséges
   ; átadni a {:conflicts nil} beállítást.
   (let [ordered-routes (r get-ordered-routes db)]
@@ -86,13 +86,13 @@
 (defn get-route-match
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) route-template
+  ; @param (string) route-string
   ;
   ; @return (map)
-  ;  https://github.com/metosin/reitit
-  [db [_ route-template]]
+  ; https://github.com/metosin/reitit
+  [db [_ route-string]]
   (let [router (r get-router db)]
-       (reitit.frontend/match-by-path router route-template)))
+       (reitit.frontend/match-by-path router route-string)))
 
 (defn route-template-exists?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -109,7 +109,7 @@
   ;
   ; @return (boolean)
   [db _]
-  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
+  ; XXX#0781 (source-code/cljs/x/router/route_handler/effects.cljs)
   (get-in db [:x.router :route-handler/meta-items :swap-mode?]))
 
 
@@ -149,10 +149,13 @@
   ;
   ; @return (keyword)
   [db [_ route-string]]
-  (if (r route-template-exists? db route-string)
-      (let [route-match (r get-route-match db route-string)]
-           (get-in route-match [:data :name]))
-      (return :page-not-found)))
+  (let [route-path     (uri/uri->path route-string)
+        ordered-routes (r get-ordered-routes db)]
+       (letfn [(f [[route-template route-id]]
+                  (if (uri/path->match-template? route-path route-template)
+                      (return route-id)))]
+              (or (some f ordered-routes)
+                  (return :page-not-found)))))
 
 
 

@@ -17,9 +17,9 @@
               [engines.engine-handler.core.subs      :as core.subs]
               [engines.engine-handler.items.events   :as items.events]
               [engines.engine-handler.selection.subs :as selection.subs]
-              [mid-fruits.map                        :refer [dissoc-in]]
-              [mid-fruits.vector                     :as vector]
-              [re-frame.api                          :refer [r]]))
+              [map.api                               :refer [dissoc-in]]
+              [re-frame.api                          :refer [r]]
+              [vector.api                            :as vector]))
 
 
 

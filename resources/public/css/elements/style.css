@@ -2002,7 +2002,7 @@ body {
 }
 
 .e-button--icon-placeholder {
-  /* XXX#4509
+  /* XXX#4519
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása. */
  -width: 12px;
@@ -2818,7 +2818,7 @@ body {
 }
 
 .e-label--icon-placeholder {
-  /* XXX#4509 */
+  /* XXX#4519 */
   width: 12px;
 }
 

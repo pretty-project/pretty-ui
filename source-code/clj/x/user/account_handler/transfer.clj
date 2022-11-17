@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.account-handler.transfer
-    (:require [mid-fruits.map                 :as map]
+    (:require [map.api                        :as map]
               [x.core.api                     :as x.core]
               [x.user.account-handler.helpers :as account-handler.helpers]))
 

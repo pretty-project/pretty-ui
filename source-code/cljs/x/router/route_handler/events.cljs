@@ -14,10 +14,10 @@
 
 (ns x.router.route-handler.events
     (:require [candy.api                      :refer [return]]
-              [mid-fruits.map                 :refer [dissoc-in]]
-              [mid-fruits.vector              :as vector]
+              [map.api                        :refer [dissoc-in]]
               [re-frame.api                   :as r :refer [r]]
               [uri.api                        :as uri]
+              [vector.api                     :as vector]
               [x.db.api                       :as x.db]
               [x.router.route-handler.helpers :as route-handler.helpers]
               [x.router.route-handler.subs    :as route-handler.subs]
@@ -139,7 +139,7 @@
   ;
   ; @return (map)
   [db _]
-  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
+  ; XXX#0781 (source-code/cljs/x/router/route_handler/effects.cljs)
   ; Az útvonal használata előtt az útvonal-kezelőt {:swap-mode? true} állapotba állítja,
   ; ezért a kezelő figyelmen kívül hagyja az útvonalhoz hozzárendelt eseményeket.
   (assoc-in db [:x.router :route-handler/meta-items :swap-mode?] true))
@@ -149,7 +149,7 @@
   ;
   ; @return (map)
   [db _]
-  ; XXX#0781 (source-code/cljs/x/app_router/route_handler/effects.cljs)
+  ; XXX#0781 (source-code/cljs/x/router/route_handler/effects.cljs)
   (dissoc-in db [:x.router :route-handler/meta-items :swap-mode?]))
 
 

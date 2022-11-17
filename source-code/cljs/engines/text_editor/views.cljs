@@ -17,7 +17,7 @@
               [engines.text-editor.helpers    :as helpers]
               [engines.text-editor.prototypes :as prototypes]
               [engines.text-editor.state      :as state]
-              [mid-fruits.random              :as random]
+              [random.api                     :as random]
               [plugins.ckeditor5.api          :as ckeditor5]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]))

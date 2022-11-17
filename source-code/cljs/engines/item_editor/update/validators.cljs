@@ -15,7 +15,7 @@
 (ns engines.item-editor.update.validators
     (:require [engines.item-editor.core.subs   :as core.subs]
               [engines.item-editor.update.subs :as update.subs]
-              [mid-fruits.map                  :as map]
+              [map.api                         :as map]
               [re-frame.api                    :refer [r]]))
 
 

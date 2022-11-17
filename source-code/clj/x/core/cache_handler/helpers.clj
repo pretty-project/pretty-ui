@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.cache-handler.helpers
-    (:require [mid.x.core.cache-handler.helpers :as cache-handler.helpers]
-              [re-frame.api                     :as r :refer [r]]
-              [server-fruits.http               :as http]))
+    (:require [http.api                         :as http]
+              [mid.x.core.cache-handler.helpers :as cache-handler.helpers]
+              [re-frame.api                     :as r :refer [r]]))
 
 
 

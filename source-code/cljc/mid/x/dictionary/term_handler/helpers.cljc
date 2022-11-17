@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.dictionary.term-handler.helpers
-    (:require [mid-fruits.string :as string]))
+    (:require [string.api :as string]))
 
 
 

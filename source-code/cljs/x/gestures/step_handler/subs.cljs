@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.gestures.step-handler.subs
-    (:require [candy.api         :refer [return]]
-              [re-frame.api      :refer [r]]
-              [mid-fruits.vector :as vector]))
+    (:require [candy.api    :refer [return]]
+              [re-frame.api :refer [r]]
+              [vector.api   :as vector]))
 
 
 

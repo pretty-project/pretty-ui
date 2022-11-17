@@ -18,7 +18,7 @@
               [elements.engine.element         :as element]
               [elements.element.side-effects   :as element.side-effects]
               [elements.target-handler.helpers :as target-handler.helpers]
-              [mid-fruits.map                  :as map]
+              [map.api                         :as map]
               [re-frame.api                    :as r :refer [r]]))
 
 

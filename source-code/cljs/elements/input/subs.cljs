@@ -15,9 +15,9 @@
 (ns elements.input.subs
     (:require [candy.api               :refer [return]]
               [elements.engine.element :as element]
-              [mid-fruits.map          :refer [dissoc-in]]
-              [mid-fruits.vector       :as vector]
-              [re-frame.api            :as r :refer [r]]))
+              [map.api                 :refer [dissoc-in]]
+              [re-frame.api            :as r :refer [r]]
+              [vector.api              :as vector]))
 
 
 

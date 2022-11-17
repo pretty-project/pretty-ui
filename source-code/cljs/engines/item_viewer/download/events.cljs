@@ -17,7 +17,7 @@
               [engines.item-viewer.body.subs          :as body.subs]
               [engines.item-viewer.core.events        :as core.events]
               [engines.item-viewer.download.subs      :as download.subs]
-              [mid-fruits.map                         :as map]
+              [map.api                                :as map]
               [re-frame.api                           :as r :refer [r]]))
 
 

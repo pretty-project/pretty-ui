@@ -18,7 +18,7 @@
               [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [elements.text-field.views           :as text-field.views]
-              [mid-fruits.random                   :as random]))
+              [random.api                          :as random]))
 
 
 

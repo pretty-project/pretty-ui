@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.value.views
-    (:require [mid-fruits.random :as random]
-              [re-frame.api      :as r]))
+    (:require [random.api   :as random]
+              [re-frame.api :as r]))
 
 
 

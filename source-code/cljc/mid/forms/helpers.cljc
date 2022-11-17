@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.forms.helpers
-    (:require [mid.forms.config  :as config]
-              [mixed.api         :as mixed]
-              [regex.api         :refer [re-match?]]
-              [mid-fruits.string :as string]))
+    (:require [mid.forms.config :as config]
+              [mixed.api        :as mixed]
+              [regex.api        :refer [re-match?]]
+              [string.api       :as string]))
 
 
 
@@ -61,7 +61,7 @@
   ; @return (boolean)
   [n]
  ;(re-match? n PASSWORD-PATTERN))
-  (string/nonempty? n))
+  (string/nonblank? n))
 
 (defn email-address?
   ; @param (string) n

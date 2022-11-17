@@ -14,9 +14,9 @@
 
 (ns x.user.profile-handler.helpers
     (:require [candy.api                     :refer [return]]
-              [mid-fruits.keyword            :as keyword]
+              [http.api                      :as http]
+              [keyword.api                   :as keyword]
               [mongo-db.api                  :as mongo-db]
-              [server-fruits.http            :as http]
               [x.user.profile-handler.config :as profile-handler.config]))
 
 

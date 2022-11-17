@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.locales.country-handler.helpers
-    (:require [mid-fruits.string                    :as string]
-              [mid.x.locales.country-handler.config :as country-handler.config]))
+    (:require [mid.x.locales.country-handler.config :as country-handler.config]
+              [string.api                           :as string]))
 
 
 

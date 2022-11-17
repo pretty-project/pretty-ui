@@ -15,7 +15,7 @@
 (ns elements.input.events
     (:require [candy.api               :refer [return]]
               [elements.engine.element :as element]
-              [mid-fruits.map          :refer [dissoc-in]]))
+              [map.api                 :refer [dissoc-in]]))
 
 
 

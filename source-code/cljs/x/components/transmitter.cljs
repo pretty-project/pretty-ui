@@ -24,8 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.transmitter
-    (:require [candy.api         :refer [param return]]
-              [mid-fruits.random :as random]))
+    (:require [candy.api  :refer [param return]]
+              [random.api :as random]))
 
 
 

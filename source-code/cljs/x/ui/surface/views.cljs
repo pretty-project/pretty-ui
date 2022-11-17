@@ -17,7 +17,7 @@
               [reagent.api          :as reagent]
               [x.components.api     :as x.components]
               [x.environment.api    :as x.environment]
-              [x.ui.renderer        :rename {component renderer}]
+              [x.ui.renderer.views  :rename {component renderer}]
               [x.ui.surface.helpers :as surface.helpers]))
 
 

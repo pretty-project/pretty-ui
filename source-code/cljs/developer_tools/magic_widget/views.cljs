@@ -20,9 +20,9 @@
               [developer-tools.route-browser.views     :rename {body route-browser}]
               [elements.api                            :as elements]
               [css.api                                 :as css]
-              [mid-fruits.vector                       :as vector]
               [re-frame.api                            :as r]
-              [reagent.api                             :refer [ratom]]))
+              [reagent.api                             :refer [ratom]]
+              [vector.api                              :as vector]))
 
 
 

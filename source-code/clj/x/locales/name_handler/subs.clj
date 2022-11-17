@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.locales.name-handler.subs
-    (:require [mid-fruits.string              :as string]
-              [re-frame.api                   :as r :refer [r]]
+    (:require [re-frame.api                   :as r :refer [r]]
+              [string.api                     :as string]
               [x.locales.name-handler.config  :as name-handler.config]
               [x.locales.name-handler.helpers :as name-handler.helpers]))
 

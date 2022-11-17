@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.surface.subs
-    (:require [re-frame.api  :as r :refer [r]]
-              [x.ui.renderer :as renderer]))
+    (:require [re-frame.api       :as r :refer [r]]
+              [x.ui.renderer.subs :as renderer.subs]))
 
 
 
@@ -29,7 +29,7 @@
   ;
   ; @return (boolean)
   [db [_ surface-id prop-key]]
-  (r renderer/get-element-prop db :surface surface-id prop-key))
+  (r renderer.subs/get-element-prop db :surface surface-id prop-key))
 
 
 

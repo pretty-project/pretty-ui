@@ -17,8 +17,8 @@
               [elements.input.events       :as input.events]
               [elements.text-field.events  :as text-field.events]
               [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.string           :as string]
-              [re-frame.api                :as r :refer [r]]))
+              [re-frame.api                :as r :refer [r]]
+              [string.api                  :as string]))
 
 
 
@@ -168,7 +168,7 @@
       (if (text-field.helpers/field-emptiable? field-id)
           {:db       (r text-field.events/empty-field! db field-id field-props)
            :fx       [:elements.text-field/empty-field! field-id]
-           :dispatch (if on-empty (r/metamorphic-event<-params on-empty string/empty-string))})))
+           :dispatch (if on-empty (r/metamorphic-event<-params on-empty string/EMPTY-STRING))})))
 
 
 

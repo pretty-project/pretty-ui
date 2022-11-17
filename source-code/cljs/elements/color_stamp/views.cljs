@@ -16,8 +16,8 @@
     (:require [elements.color-stamp.helpers    :as color-stamp.helpers]
               [elements.color-stamp.prototypes :as color-stamp.prototypes]
               [elements.label.views            :as label.views]
-              [mid-fruits.random               :as random]
-              [mid-fruits.vector               :as vector]))
+              [random.api                      :as random]
+              [vector.api                      :as vector]))
 
 
 

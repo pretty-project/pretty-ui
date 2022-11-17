@@ -15,9 +15,9 @@
 
 
 # prefix, suffix
-# XXX#4510 (source-code/cljs/x/app_components/value/README.md)
+# XXX#4510 (source-code/cljs/x/components/value/README.md)
 
 
 
 # replacements
-# XXX#4509 (source-code/cljs/x/app_components/value/README.md)
+# XXX#4509 (source-code/cljs/x/components/value/README.md)

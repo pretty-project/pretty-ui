@@ -15,8 +15,8 @@
 (ns engines.engine-handler.selection.subs
     (:require [engines.engine-handler.body.subs :as body.subs]
               [engines.engine-handler.core.subs :as core.subs]
-              [mid-fruits.vector                :as vector]
-              [re-frame.api                     :refer [r]]))
+              [re-frame.api                     :refer [r]]
+              [vector.api                       :as vector]))
 
 
 

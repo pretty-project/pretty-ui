@@ -15,10 +15,10 @@
 (ns x.user.user-handler.helpers
     (:require [forms.api                       :as forms]
               [hash.api                        :as hash]
-              [mid-fruits.map                  :as map]
-              [mid-fruits.string               :as string]
-              [mid-fruits.vector               :as vector]
+              [map.api                         :as map]
               [re-frame.api                    :as r]
+              [string.api                      :as string]
+              [vector.api                      :as vector]
               [x.user.core.helpers             :as core.helpers]
               [x.user.profile-handler.config   :as profile-handler.config]
               [x.user.settings-handler.helpers :as settings-handler.helpers]))

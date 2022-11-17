@@ -16,7 +16,7 @@
     (:require [candy.api                :refer [param]]
               [elements.chip.helpers    :as chip.helpers]
               [elements.chip.prototypes :as chip.prototypes]
-              [mid-fruits.random        :as random]
+              [random.api               :as random]
               [x.components.api         :as x.components]))
 
 

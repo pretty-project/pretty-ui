@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.scroll-prohibitor.subs
-    (:require [mid-fruits.map :as map]))
+    (:require [map.api :as map]))
 
 
 

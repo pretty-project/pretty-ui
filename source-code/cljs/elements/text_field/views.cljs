@@ -17,11 +17,11 @@
               [elements.text-field.helpers    :as text-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
               [hiccup.api                     :as hiccup]
-              [mid-fruits.random              :as random]
-              [mid-fruits.string              :as string]
-              [mid-fruits.vector              :as vector]
+              [random.api                     :as random]
               [reagent.api                    :as reagent]
               [re-frame.api                   :as r]
+              [string.api                     :as string]
+              [vector.api                     :as vector]
               [x.components.api               :as x.components]))
 
 

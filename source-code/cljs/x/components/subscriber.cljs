@@ -24,7 +24,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.subscriber
-    (:require [mid-fruits.random        :as random]
+    (:require [random.api               :as random]
               [re-frame.api             :as r]
               [x.components.transmitter :rename {component transmitter}]))
 

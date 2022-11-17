@@ -14,11 +14,11 @@
 
 (ns x.user.settings-handler.helpers
     (:require [candy.api                      :refer [return]]
+              [http.api                       :as http]
               [io.api                         :as io]
+              [keyword.api                    :as keyword]
               [mongo-db.api                   :as mongo-db]
-              [mid-fruits.keyword             :as keyword]
               [re-frame.api                   :as r]
-              [server-fruits.http             :as http]
               [x.user.settings-handler.config :as settings-handler.config]))
 
 

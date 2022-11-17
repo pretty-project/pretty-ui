@@ -17,8 +17,8 @@
               [elements.label.views     :as label.views]
               [elements.text.helpers    :as text.helpers]
               [elements.text.prototypes :as text.prototypes]
-              [mid-fruits.random        :as random]
-              [mid-fruits.string        :as string]
+              [random.api               :as random]
+              [string.api               :as string]
               [x.components.api         :as x.components]))
 
 

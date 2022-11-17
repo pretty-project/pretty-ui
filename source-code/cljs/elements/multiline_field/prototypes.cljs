@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.multiline-field.prototypes
-    (:require [candy.api         :refer [param]]
-              [mid-fruits.random :as random]))
+    (:require [candy.api  :refer [param]]
+              [random.api :as random]))
 
 
 

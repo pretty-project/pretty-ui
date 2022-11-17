@@ -17,9 +17,9 @@
               [engines.engine-handler.core.subs     :as core.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
               [loop.api                             :refer [some-indexed]]
-              [mid-fruits.map                       :as map]
-              [mid-fruits.vector                    :as vector]
-              [re-frame.api                         :refer [r]]))
+              [map.api                              :as map]
+              [re-frame.api                         :refer [r]]
+              [vector.api                           :as vector]))
 
 
 

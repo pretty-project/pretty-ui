@@ -16,9 +16,9 @@
     (:require [candy.api                     :refer [param return]]
               [elements.engine.api           :as engine]
               [elements.element.side-effects :as element.side-effects]
-              [mid-fruits.random             :as random]
-              [mid-fruits.vector             :as vector]
+              [random.api                    :as random]
               [re-frame.api                  :as r]
+              [vector.api                    :as vector]
               [x.components.api              :as x.components]))
 
 

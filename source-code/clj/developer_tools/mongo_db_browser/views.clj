@@ -14,11 +14,11 @@
 
 (ns developer-tools.mongo-db-browser.views
     (:require [developer-tools.mongo-db-browser.styles :as mongo-db-browser.styles]
-              [mid-fruits.map                          :as map]
-              [mid-fruits.pretty                       :as pretty]
-              [mid-fruits.string                       :as string]
+              [http.api                                :as http]
+              [map.api                                 :as map]
               [mongo-db.api                            :as mongo-db]
-              [server-fruits.http                      :as http]))
+              [pretty.print                            :as pretty]
+              [string.api                              :as string]))
 
 
 
@@ -28,14 +28,14 @@
 (defn- up-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
-  (if (string/nonempty? collection-name)
+  (if (string/nonblank? collection-name)
       (let [menu-button-style (mongo-db-browser.styles/menu-button-style)]
            (str "<a style=\""menu-button-style"\" href=\"?\">Back to collections</a>"))))
 
 (defn- empty-collection-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name]}]
-  (if (string/nonempty? collection-name)
+  (if (string/nonblank? collection-name)
       (let [menu-button-style (mongo-db-browser.styles/menu-button-style {:warning? true})]
            (str "<a style=\""menu-button-style"\" href=\"?empty-collection="collection-name"\">Empty collection</a>"))))
 
@@ -93,15 +93,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [collection-name empty-collection remove-document] :as browser-props}]
   (cond ; Emptying the collection ...
-        (string/nonempty? empty-collection)
+        (string/nonblank? empty-collection)
         (do (mongo-db/remove-all-documents! empty-collection)
             (refresh-page browser-props))
         ; Removing the document ...
-        (string/nonempty? remove-document)
+        (string/nonblank? remove-document)
         (do (mongo-db/remove-document! collection-name remove-document)
             (refresh-page browser-props))
         ; Collection view
-        (string/nonempty? collection-name)
+        (string/nonblank? collection-name)
         (str (menu-bar   browser-props)
              (collection browser-props))
         ; Database view

@@ -15,7 +15,7 @@
 (ns elements.icon.views
     (:require [elements.icon.helpers    :as icon.helpers]
               [elements.icon.prototypes :as icon.prototypes]
-              [mid-fruits.random        :as random]))
+              [random.api               :as random]))
 
 
 

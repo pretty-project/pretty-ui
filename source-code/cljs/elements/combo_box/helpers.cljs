@@ -19,9 +19,9 @@
               [elements.input.helpers      :as input.helpers]
               [elements.text-field.helpers :as text-field.helpers]
               [hiccup.api                  :as hiccup]
-              [mid-fruits.string           :as string]
-              [mid-fruits.vector           :as vector]
-              [re-frame.api                :as r]))
+              [re-frame.api                :as r]
+              [string.api                  :as string]
+              [vector.api                  :as vector]))
 
 
 

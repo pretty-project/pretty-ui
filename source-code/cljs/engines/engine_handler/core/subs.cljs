@@ -17,9 +17,9 @@
               [engines.engine-handler.body.subs     :as body.subs]
               [engines.engine-handler.routes.subs   :as routes.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
-              [mid-fruits.map                       :as map]
-              [mid-fruits.vector                    :as vector]
+              [map.api                              :as map]
               [re-frame.api                         :refer [r]]
+              [vector.api                           :as vector]
               [x.activities.api                     :as x.activities]
               [x.sync.api                           :as x.sync]))
 

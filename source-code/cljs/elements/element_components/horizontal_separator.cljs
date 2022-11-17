@@ -15,7 +15,7 @@
 (ns elements.element-components.horizontal-separator
     (:require [candy.api           :refer [param]]
               [elements.engine.api :as engine]
-              [mid-fruits.random   :as random]))
+              [random.api          :as random]))
 
 
 

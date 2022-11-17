@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.user.core.helpers
-    (:require [mid-fruits.vector :as vector]))
+    (:require [vector.api :as vector]))
 
 
 

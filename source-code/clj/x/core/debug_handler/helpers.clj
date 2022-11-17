@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.debug-handler.helpers
-    (:require [mid.x.core.debug-handler.helpers :as helpers]
-              [server-fruits.http               :as http]))
+    (:require [http.api                         :as http]
+              [mid.x.core.debug-handler.helpers :as helpers]))
 
 
 

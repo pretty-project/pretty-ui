@@ -16,10 +16,10 @@
     (:require [candy.api                :refer [param]]
               [css.api                  :as css]
               [elements.element.helpers :as element.helpers]
-              [mid-fruits.keyword       :as keyword]
-              [mid-fruits.map           :refer [dissoc-in]]
-              [mid-fruits.vector        :as vector]
-              [re-frame.api             :as r :refer [r]]))
+              [keyword.api              :as keyword]
+              [map.api                  :refer [dissoc-in]]
+              [re-frame.api             :as r :refer [r]]
+              [vector.api               :as vector]))
 
 
 

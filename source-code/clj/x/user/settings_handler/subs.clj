@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.settings-handler.subs
-    (:require [mid-fruits.map :as map]
-              [re-frame.api   :as r]))
+    (:require [map.api      :as map]
+              [re-frame.api :as r]))
 
 
 

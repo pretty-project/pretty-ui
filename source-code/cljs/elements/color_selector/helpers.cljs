@@ -15,8 +15,8 @@
 (ns elements.color-selector.helpers
     (:require [elements.element.helpers      :as element.helpers]
               [elements.element.side-effects :as element.side-effects]
-              [mid-fruits.vector             :as vector]
-              [re-frame.api                  :as r]))
+              [re-frame.api                  :as r]
+              [vector.api                    :as vector]))
 
 
 

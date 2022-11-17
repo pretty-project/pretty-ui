@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.scheduler.subs
-    (:require [mid-fruits.map :as map]))
+    (:require [map.api :as map]))
 
 
 

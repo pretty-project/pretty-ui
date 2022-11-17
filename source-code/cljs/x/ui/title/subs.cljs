@@ -13,11 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.title.subs
-    (:require [candy.api         :refer [return]]
-              [mid-fruits.string :as string]
-              [re-frame.api      :refer [r]]
-              [x.components.api  :as x.components]
-              [x.core.api        :as x.core]))
+    (:require [candy.api        :refer [return]]
+              [re-frame.api     :refer [r]]
+              [string.api       :as string]
+              [x.components.api :as x.components]
+              [x.core.api       :as x.core]))
 
 
 

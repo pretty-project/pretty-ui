@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.dictionary.term-handler.subs
-    (:require [mid-fruits.map :as map]))
+    (:require [map.api :as map]))
 
 
 

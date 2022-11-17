@@ -18,10 +18,10 @@
               [developer-tools.mongo-db-browser.views :as mongo-db-browser.views]
               [developer-tools.re-frame-browser.views :as re-frame-browser.views]
               [developer-tools.user-handler.views     :as user-handler.views]
-              [mid-fruits.pretty                      :as pretty]
-              [mid-fruits.string                      :as string]
               [mongo-db.api                           :as mongo-db]
+              [pretty.print                           :as pretty]
               [re-frame.api                           :as r]
+              [string.api                             :as string]
               [x.user.api                             :as x.user]))
 
 

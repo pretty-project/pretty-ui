@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.keypress-handler.events
-    (:require [candy.api         :refer [return]]
-              [mid-fruits.map    :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]))
+    (:require [candy.api    :refer [return]]
+              [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]))
 
 
 

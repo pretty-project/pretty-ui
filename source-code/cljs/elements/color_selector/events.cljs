@@ -15,8 +15,8 @@
 (ns elements.color-selector.events
     (:require [elements.color-selector.prototypes :as color-selector.prototypes]
               [elements.color-selector.views      :as color-selector.views]
-              [mid-fruits.vector                  :as vector]
-              [re-frame.api                       :as r]))
+              [re-frame.api                       :as r]
+              [vector.api                         :as vector]))
 
 
 

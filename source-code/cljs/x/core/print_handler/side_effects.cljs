@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.print-handler.side-effects
-    (:require [mid-fruits.string           :as string]
+    (:require [string.api                  :as string]
               [syntax.api                  :as syntax]
               [time.api                    :as time]
               [x.core.print-handler.config :as print-handler.config]
@@ -82,9 +82,9 @@
            (separate!))
        (if (-> n str (string/max-length? 60))
            ; If the message is shorter than 20 character ...
-           (.log js/console (str timestamp string/break n))
+           (.log js/console (str timestamp string/BREAK n))
            ; If the message is NOT shorter than 20 character ...
            (let [header (string/max-length n 60 "...")]
-                (-> js/console (.groupCollapsed (str  "%c" timestamp string/break header) "font-weight: 400"))
+                (-> js/console (.groupCollapsed (str  "%c" timestamp string/BREAK header) "font-weight: 400"))
                 (-> js/console (.log            (str n)))
                 (-> js/console (.groupEnd))))))

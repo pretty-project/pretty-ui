@@ -17,7 +17,7 @@
               [elements.label.views          :as label.views]
               [elements.thumbnail.helpers    :as thumbnail.helpers]
               [elements.thumbnail.prototypes :as thumbnail.prototypes]
-              [mid-fruits.random             :as random]))
+              [random.api                    :as random]))
 
 
 

@@ -15,7 +15,7 @@
 (ns elements.element-components.horizontal-polarity
     (:require [candy.api           :refer [param]]
               [elements.engine.api :as engine]
-              [mid-fruits.random   :as random]
+              [random.api          :as random]
               [x.components.api    :as x.components]))
 
 

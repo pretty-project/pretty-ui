@@ -15,7 +15,7 @@
 (ns elements.password-field.views
     (:require [elements.password-field.prototypes :as password-field.prototypes]
               [elements.text-field.views          :as text-field.views]
-              [mid-fruits.random                  :as random]))
+              [random.api                         :as random]))
 
 
 

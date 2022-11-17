@@ -14,9 +14,9 @@
 
 (ns x.dictionary.term-handler.subs
     (:require [candy.api                          :refer [return]]
-              [mid-fruits.string                  :as string]
               [mid.x.dictionary.term-handler.subs :as term-handler.subs]
               [re-frame.api                       :as r :refer [r]]
+              [string.api                         :as string]
               [x.dictionary.term-handler.helpers  :as term-handler.helpers]))
 
 
@@ -39,7 +39,7 @@
   ;  {:language (keyword)
   ;   :prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509
+  ;    XXX#4509 (string-api/source-code/cljc/string/replace.cljc)
   ;   :suffix (string)(opt)}
   ;
   ; @example
@@ -58,7 +58,7 @@
   ;  {:language (keyword)
   ;   :prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509
+  ;    XXX#4509 (string-api/source-code/cljc/string/replace.cljc)
   ;   :suffix (string)(opt)}
   ;
   ; @example

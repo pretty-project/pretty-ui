@@ -12,19 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns app-fruits.blob)
+(ns tools.thumbnail-generator.api
+    (:require [tools.thumbnail-generator.side-effects :as side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn to-object-url
-  ; @param (object) blob
-  ;
-  ; @usage
-  ;  (to-object-url ...) 
-  ;
-  ; @return (object)
-  [blob]
-  (.createObjectURL js/URL blob))
+; tools.thumbnail-generator.side-effects
+(def generate-thumbnail! side-effects/generate-thumbnail!)

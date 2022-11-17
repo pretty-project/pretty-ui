@@ -13,12 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.error-shield.side-effects
-    (:require [dom.api                   :as dom]
-              [re-frame.api              :as r]
-              [time.api                  :as time]
-              [x.environment.api         :as x.environment]
-              [x.ui.error-shield.helpers :as error-shield.helpers]
-              [x.ui.renderer             :as renderer]))
+    (:require [dom.api      :as dom]
+              [re-frame.api :as r]))
 
 
 

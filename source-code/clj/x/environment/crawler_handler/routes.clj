@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.crawler-handler.routes
-    (:require [server-fruits.http                    :as http]
+    (:require [http.api                              :as http]
               [x.environment.crawler-handler.helpers :as crawler-handler.helpers]))
 
 

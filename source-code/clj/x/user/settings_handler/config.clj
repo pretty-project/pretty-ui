@@ -28,7 +28,7 @@
 (def DEFAULT-USER-SETTINGS-FILEPATH "environment/x.default-user-settings.edn")
 
 ; @constant (map)
-; XXX#5890 (source-code/clj/x/server_user/settings_handler/side-effects.clj)
+; XXX#5890 (source-code/clj/x/user/settings_handler/side-effects.clj)
 ;
 ; A REQUIRED-USER-SETTINGS térkép tartalmazza az rendszer működéséhez
 ; nélkülözhetetlen beállításokat.

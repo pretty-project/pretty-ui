@@ -15,7 +15,7 @@
 (ns elements.search-field.views
     (:require [elements.search-field.prototypes :as search-field.prototypes]
               [elements.text-field.views        :as text-field.views]
-              [mid-fruits.random                :as random]))
+              [random.api                       :as random]))
 
 
 

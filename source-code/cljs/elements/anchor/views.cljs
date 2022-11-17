@@ -15,7 +15,7 @@
 (ns elements.anchor.views
     (:require [elements.anchor.helpers    :as anchor.helpers]
               [elements.anchor.prototypes :as anchor.prototypes]
-              [mid-fruits.random          :as random]
+              [random.api                 :as random]
               [x.components.api           :as x.components]))
 
 

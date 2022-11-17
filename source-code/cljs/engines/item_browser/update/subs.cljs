@@ -17,7 +17,7 @@
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.core.subs     :as core.subs]
               [engines.item-browser.transfer.subs :as transfer.subs]
-              [mid-fruits.keyword                 :as keyword]
+              [keyword.api                        :as keyword]
               [re-frame.api                       :refer [r]]))
 
 

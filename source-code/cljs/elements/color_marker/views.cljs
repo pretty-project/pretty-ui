@@ -15,7 +15,7 @@
 (ns elements.color-marker.views
     (:require [elements.color-marker.helpers    :as color-marker.helpers]
               [elements.color-marker.prototypes :as color-marker.prototypes]
-              [mid-fruits.random                :as random]))
+              [random.api                       :as random]))
 
 
 

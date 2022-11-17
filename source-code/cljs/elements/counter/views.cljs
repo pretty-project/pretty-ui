@@ -16,7 +16,7 @@
     (:require [elements.counter.helpers    :as counter.helpers]
               [elements.counter.prototypes :as counter.prototypes]
               [elements.label.views        :as label.views]
-              [mid-fruits.random           :as random]
+              [random.api                  :as random]
               [re-frame.api                :as r]
               [reagent.api                 :as reagent]))
 

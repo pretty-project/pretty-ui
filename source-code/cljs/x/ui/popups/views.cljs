@@ -17,7 +17,7 @@
               [reagent.api         :as reagent]
               [x.components.api    :as x.components]
               [x.ui.popups.helpers :as popups.helpers]
-              [x.ui.renderer       :rename {component renderer}]))
+              [x.ui.renderer.views :rename {component renderer}]))
 
 
 

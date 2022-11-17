@@ -16,8 +16,8 @@
     (:require [elements.combo-box.helpers  :as combo-box.helpers]
               [elements.combo-box.state    :as combo-box.state]
               [elements.text-field.helpers :as text-field.helpers]
-              [mid-fruits.vector           :as vector]
-              [re-frame.api                :as r]))
+              [re-frame.api                :as r]
+              [vector.api                  :as vector]))
 
 
 

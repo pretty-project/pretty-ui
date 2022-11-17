@@ -19,9 +19,9 @@
               [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
               [elements.label.views               :as label.views]
               [math.api                           :as math]
-              [mid-fruits.random                  :as random]
-              [mid-fruits.vector                  :as vector]
-              [svg.api                            :as svg]))
+              [random.api                         :as random]
+              [svg.api                            :as svg]
+              [vector.api                         :as vector]))
 
 
 

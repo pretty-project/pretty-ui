@@ -16,8 +16,8 @@
     (:require [engines.engine-handler.backup.events :as backup.events]
               [engines.item-lister.body.subs        :as body.subs]
               [engines.item-lister.core.subs        :as core.subs]
-              [mid-fruits.vector                    :as vector]
-              [re-frame.api                         :as r :refer [r]]))
+              [re-frame.api                         :as r :refer [r]]
+              [vector.api                           :as vector]))
 
 
 

@@ -14,7 +14,7 @@
 
 (ns plugins.jodit.views
     (:require [jodit-react           :default JoditEditor]
-              [mid-fruits.random     :as random]
+              [random.api            :as random]
               [plugins.jodit.helpers :as helpers]))
 
 

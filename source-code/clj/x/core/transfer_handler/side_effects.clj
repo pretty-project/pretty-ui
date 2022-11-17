@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.transfer-handler.side-effects
-    (:require [mid-fruits.random             :as random]
+    (:require [random.api                    :as random]
               [re-frame.api                  :as r]
               [x.core.transfer-handler.state :as transfer-handler.state]))
 

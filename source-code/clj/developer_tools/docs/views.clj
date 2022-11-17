@@ -93,7 +93,6 @@
        "</br>time-api"
        "</br>window-api"
        (status request)
-       (docs/create-documentation! {:path "submodules/bybit-api"})
        "</div>"))
 
 (defn view

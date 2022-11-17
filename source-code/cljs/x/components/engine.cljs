@@ -24,8 +24,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.engine
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [re-frame.api   :as r]))
+    (:require [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r]))
 
 
 

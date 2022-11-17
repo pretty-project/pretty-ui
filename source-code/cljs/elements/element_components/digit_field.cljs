@@ -22,9 +22,9 @@
               [elements.input.helpers          :as input.helpers]
               ;[elements.passfield-handler.subs :as passfield-handler.subs]
               [elements.target-handler.helpers :as target-handler.helpers]
-              [mid-fruits.random               :as random]
-              [mid-fruits.vector               :as vector]
-              [re-frame.api                    :as r :refer [r]]))
+              [random.api                      :as random]
+              [re-frame.api                    :as r :refer [r]]
+              [vector.api                      :as vector]))
 
 
 
@@ -112,7 +112,7 @@
   (reduce (fn [%1 %2] (conj %1 [:div.e-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.helpers/element-id->target-id field-id)))
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
-                                                                 (mid-fruits.string/get-nth-character (:value field-props) %2)]))
+                                                                 (string.api/get-nth-character (:value field-props) %2)]))
     [:div.e-digit-field--cover {:style {:width (-> field-props field-props->digits-width css/px)}}]
     (range 4)))
 

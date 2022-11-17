@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.transfer-handler.effects
-    (:require [mid-fruits.map                 :as map]
+    (:require [map.api                        :as map]
               [re-frame.api                   :as r :refer [r]]
               [x.core.transfer-handler.events :as transfer-handler.events]))
 

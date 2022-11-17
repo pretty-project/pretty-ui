@@ -12,11 +12,4 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns mid.x.locales.currency-handler.helpers
-    (:require [mid-fruits.string                     :as string]
-              [mid.x.locales.currency-handler.config :as currency-handler.config]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
+(ns mid.x.locales.currency-handler.helpers)

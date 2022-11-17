@@ -17,8 +17,8 @@
               [engines.item-editor.body.subs      :as body.subs]
               [engines.item-editor.core.subs      :as core.subs]
               [engines.item-editor.transfer.subs  :as transfer.subs]
-              [mid-fruits.keyword                 :as keyword]
-              [mid-fruits.map                     :as map]
+              [keyword.api                        :as keyword]
+              [map.api                            :as map]
               [re-frame.api                       :as r :refer [r]]))
 
 

@@ -19,7 +19,7 @@
               [elements.icon-button.helpers    :as icon-button.helpers]
               [elements.icon-button.presets    :as icon-button.presets]
               [elements.icon-button.prototypes :as icon-button.prototypes]
-              [mid-fruits.random               :as random]
+              [random.api                      :as random]
               [reagent.api                     :as reagent]
               [x.components.api                :as x.components]))
 

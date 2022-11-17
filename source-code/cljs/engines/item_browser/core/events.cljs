@@ -18,7 +18,7 @@
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.core.subs     :as core.subs]
               [engines.item-browser.items.events  :as items.events]
-              [mid-fruits.map                     :refer [dissoc-in]]
+              [map.api                            :refer [dissoc-in]]
               [engines.item-lister.core.events    :as engines.item-lister.core.events]
               [re-frame.api                       :as r :refer [r]]))
 

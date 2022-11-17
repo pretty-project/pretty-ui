@@ -15,7 +15,7 @@
 (ns elements.horizontal-line.views
     (:require [elements.horizontal-line.helpers    :as horizontal-line.helpers]
               [elements.horizontal-line.prototypes :as horizontal-line.prototypes]
-              [mid-fruits.random                   :as random]))
+              [random.api                          :as random]))
 
 
 

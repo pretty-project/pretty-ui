@@ -14,11 +14,11 @@
 
 (ns x.user.login-handler.helpers
     (:require [hash.api                      :as hash]
-              [mid-fruits.map                :as map]
+              [http.api                      :as http]
+              [map.api                       :as map]
               [mongo-db.api                  :as mongo-db]
-              [server-fruits.http            :as http]
-              [mid-fruits.vector             :as vector]
               [time.api                      :as time]
+              [vector.api                    :as vector]
               [x.user.account-handler.config :as account-handler.config]
               [x.user.login-handler.config   :as login-handler.config]))
 

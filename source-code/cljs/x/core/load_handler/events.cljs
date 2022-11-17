@@ -14,9 +14,9 @@
 
 (ns x.core.load-handler.events
     (:require [candy.api                :refer [return]]
-              [mid-fruits.vector        :as vector]
               [time.api                 :as time]
               [re-frame.api             :as r :refer [r]]
+              [vector.api               :as vector]
               [x.core.load-handler.subs :as load-handler.subs]))
 
 

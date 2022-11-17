@@ -17,9 +17,9 @@
               [elements.input.events  :as input.events]
               [elements.input.helpers :as input.helpers]
               [elements.input.subs    :as input.subs]
-              [mid-fruits.map         :refer [dissoc-in]]
-              [mid-fruits.string      :as string]
+              [map.api                :refer [dissoc-in]]
               [re-frame.api           :as r :refer [r]]
+              [string.api             :as string]
               [x.db.api               :as x.db]
               [x.environment.api      :as x.environment]))
 
@@ -91,7 +91,7 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]}]]
-  (let [field-value (field-value-f string/empty-string)]
+  (let [field-value (field-value-f string/EMPTY-STRING)]
        (assoc-in db value-path field-value)))
 
 (defn store-value!

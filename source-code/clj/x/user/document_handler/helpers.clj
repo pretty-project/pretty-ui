@@ -14,8 +14,8 @@
 
 (ns x.user.document-handler.helpers
     (:require [candy.api                      :refer [param]]
-              [mid-fruits.map                 :as map]
-              [server-fruits.http             :as http]
+              [http.api                       :as http]
+              [map.api                        :as map]
               [time.api                       :as time]
               [x.user.profile-handler.helpers :as profile-handler.helpers]))
 

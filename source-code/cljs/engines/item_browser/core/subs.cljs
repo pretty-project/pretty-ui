@@ -16,8 +16,8 @@
     (:require [engines.engine-handler.core.subs   :as core.subs]
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.transfer.subs :as transfer.subs]
-              [mid-fruits.keyword                 :as keyword]
               [engines.item-lister.core.subs      :as engines.item-lister.core.subs]
+              [keyword.api                        :as keyword]
               [re-frame.api                       :as r :refer [r]]))
 
 

@@ -17,8 +17,8 @@
               [css.api                                 :as css]
               [dom.api                                 :as dom]
               [math.api                                :as math]
-              [mid-fruits.string                       :as string]
               [re-frame.api                            :as r]
+              [string.api                              :as string]
               [x.environment.scroll-prohibitor.helpers :as scroll-prohibitor.helpers]))
 
 

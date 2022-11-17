@@ -29,7 +29,7 @@
   ; @usage
   ;  (html [:head] [:body])
   [head body]
-  ; XXX#7659 (source-code/cljs/x/app_environment/scroll_prohibitor/README.md)
+  ; XXX#7659 (source-code/cljs/x/environment/scroll_prohibitor/README.md)
   (html5 {:data-hide-scrollbar  "true"
           :data-scroll-disabled "true"
           :id                   "x-document-element"

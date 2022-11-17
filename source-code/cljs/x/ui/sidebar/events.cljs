@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.sidebar.events
-    (:require [mid-fruits.map :refer [dissoc-in]]
-              [re-frame.api   :as r :refer [r]]))
+    (:require [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r :refer [r]]))
 
 
 

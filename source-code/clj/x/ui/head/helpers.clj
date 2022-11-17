@@ -14,11 +14,11 @@
 
 (ns x.ui.head.helpers
     (:require [candy.api          :refer [param return]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
+              [http.api           :as http]
               [re-frame.api       :as r]
-              [server-fruits.http :as http]
+              [string.api         :as string]
               [time.api           :as time]
+              [vector.api         :as vector]
               [x.app-details      :as x.app-details]
               [x.core.api         :refer [cache-control-uri]]
               [x.router.api       :as x.router]
@@ -65,7 +65,7 @@
   ;
   ; @return (maps in vector)
   [request head-props]
-  ; XXX#5061 (source-code/clj/x/server_ui/README.md)
+  ; XXX#5061 (source-code/clj/x/ui/README.md)
   (let [app-config            @(r/subscribe [:x.core/get-app-config])
         environment-css-paths @(r/subscribe [:x.environment/get-css-paths])]
        (vector/concat-items head.config/SYSTEM-CSS-PATHS

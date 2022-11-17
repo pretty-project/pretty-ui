@@ -12,11 +12,11 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.locales.language-handler.subs
-    (:require [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]
-              [x.core.api        :as x.core]
-              [x.user.api        :as x.user]))
+(ns x.locales.language-handler.subs 
+    (:require [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]
+              [x.core.api   :as x.core]
+              [x.user.api   :as x.user]))
 
 
 

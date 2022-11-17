@@ -14,7 +14,7 @@
 
 (ns engines.item-preview.download.validators
     (:require [engines.item-preview.download.subs :as download.subs]
-              [mid-fruits.map                     :as map]
+              [map.api                            :as map]
               [re-frame.api                       :refer [r]]))
 
 

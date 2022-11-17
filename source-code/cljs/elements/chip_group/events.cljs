@@ -14,8 +14,8 @@
 
 (ns elements.chip-group.events
     (:require [elements.engine.api :as engine]
-              [mid-fruits.vector   :as vector]
               [re-frame.api        :as r :refer [r]]
+              [vector.api          :as vector]
               [x.db.api            :as x.db]))
 
 

@@ -14,11 +14,11 @@
 
 (ns developer-tools.re-frame-browser.events
     (:require [developer-tools.re-frame-browser.subs :as re-frame-browser.subs]
-              [mid-fruits.map                        :refer [dissoc-in]]
-              [mid-fruits.pretty                     :as pretty]
+              [map.api                               :refer [dissoc-in]]
+              [pretty.print                          :as pretty]
               [reader.api                            :as reader]
-              [mid-fruits.vector                     :as vector]
-              [re-frame.api                          :as r :refer [r]]))
+              [re-frame.api                          :as r :refer [r]]
+              [vector.api                            :as vector]))
 
 
 

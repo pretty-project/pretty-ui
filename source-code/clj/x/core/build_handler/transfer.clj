@@ -23,4 +23,4 @@
 
 (transfer-handler.side-effects/reg-transfer! :x.core/transfer-app-build!
   {:data-f      (fn [_] (r/subscribed [:x.core/get-app-build]))
-   :target-path [:x.core/build-handler :meta-items :app-build]})
+   :target-path [:x.core :build-handler/meta-items :app-build]})

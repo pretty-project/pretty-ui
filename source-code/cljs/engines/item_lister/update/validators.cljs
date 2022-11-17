@@ -14,8 +14,8 @@
 
 (ns engines.item-lister.update.validators
     (:require [engines.item-lister.update.subs :as update.subs]
-              [mid-fruits.vector               :as vector]
-              [re-frame.api                    :refer [r]]))
+              [re-frame.api                    :refer [r]]
+              [vector.api                      :as vector]))
 
 
 

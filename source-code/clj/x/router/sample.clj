@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.router.sample
-    (:require [server-fruits.http :as http]
-              [x.core.api         :as x.core]))
+    (:require [http.api   :as http]
+              [x.core.api :as x.core]))
 
 
 

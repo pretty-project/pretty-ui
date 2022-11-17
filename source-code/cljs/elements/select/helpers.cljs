@@ -18,8 +18,8 @@
               [elements.element.side-effects :as element.side-effects]
               [elements.select.config        :as select.config]
               [elements.text-field.helpers   :as text-field.helpers]
-              [mid-fruits.string             :as string]
               [re-frame.api                  :as r]
+              [string.api                    :as string]
               [x.components.api              :as x.components]))
 
 

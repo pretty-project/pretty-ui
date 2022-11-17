@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.keypress-handler.effects
-    (:require [mid-fruits.map                        :refer [dissoc-in]]
+    (:require [map.api                               :refer [dissoc-in]]
               [re-frame.api                          :as r :refer [r]]
               [x.environment.keypress-handler.events :as keypress-handler.events]
               [x.environment.keypress-handler.subs   :as keypress-handler.subs]))

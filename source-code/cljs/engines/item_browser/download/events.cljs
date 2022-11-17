@@ -15,7 +15,7 @@
 (ns engines.item-browser.download.events
     (:require [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.download.subs :as download.subs]
-              [mid-fruits.map                     :as map]
+              [map.api                            :as map]
               [re-frame.api                       :refer [r]]))
 
 

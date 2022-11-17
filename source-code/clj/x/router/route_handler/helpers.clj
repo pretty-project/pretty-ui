@@ -14,9 +14,9 @@
 
 (ns x.router.route-handler.helpers
     (:require [candy.api                          :refer [return]]
+              [http.api                           :as http]
               [mid.x.router.route-handler.helpers :as route-handler.helpers]
               [re-frame.api                       :as r]
-              [server-fruits.http                 :as http]
               [uri.api                            :as uri]
               [x.user.api                         :as x.user]))
 
@@ -104,7 +104,7 @@
    ; ... és ha NEM talál az útvonalkezelőben ilyen útvonalat (pl. 404), akkor visszatér
    ;     az esetlegesen átadott default-value paraméterrel.
    ;
-   ; XXX#7708 (source-code/clj/x/server_router/README.md)
+   ; XXX#7708 (source-code/clj/x/router/README.md)
    (let [route-path (http/request->route-path request)]
         (letfn [(f [[route-template route-props :as destructed-route]]
                    (if (uri/path->match-template? route-path route-template)

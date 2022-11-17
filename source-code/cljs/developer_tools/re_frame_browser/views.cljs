@@ -13,16 +13,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.re-frame-browser.views
-    (:require [candy.api                           :refer [param return]]
+    (:require [candy.api                               :refer [return]]
               [developer-tools.re-frame-browser.config :as re-frame-browser.config]
-              [elements.api                        :as elements]
-              [mid-fruits.map                      :as map]
-              [mid-fruits.pretty                   :as pretty]
-              [mid-fruits.string                   :as string]
-              [syntax.api                          :as syntax]
-              [mid-fruits.vector                   :as vector]
-              [re-frame.api                        :as r]
-              [x.environment.api                   :as x.environment]))
+              [elements.api                            :as elements]
+              [map.api                                 :as map]
+              [pretty.print                            :as pretty]
+              [re-frame.api                            :as r]
+              [string.api                              :as string]
+              [syntax.api                              :as syntax]
+              [vector.api                              :as vector]
+              [x.environment.api                       :as x.environment]))
 
 
 

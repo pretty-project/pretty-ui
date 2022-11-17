@@ -14,7 +14,7 @@
 
 (ns developer-tools.request-inspector.events
     (:require [developer-tools.request-inspector.subs :as request-inspector.subs]
-              [mid-fruits.map                         :refer [dissoc-in]]
+              [map.api                                :refer [dissoc-in]]
               [re-frame.api                           :as r :refer [r]]))
 
 

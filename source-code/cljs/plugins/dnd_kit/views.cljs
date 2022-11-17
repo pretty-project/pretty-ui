@@ -16,7 +16,7 @@
     (:require ["@dnd-kit/core"            :as dnd-kit.core]
               ["@dnd-kit/sortable"        :as dnd-kit.sortable]
               ["@dnd-kit/utilities"       :as dnd-kit.utilities]
-              [mid-fruits.random          :as random]
+              [random.api                 :as random]
               [plugins.dnd-kit.helpers    :as helpers]
               [plugins.dnd-kit.prototypes :as prototypes]
               [plugins.dnd-kit.state      :as state]

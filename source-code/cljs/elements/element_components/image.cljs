@@ -16,7 +16,7 @@
     (:require [candy.api           :refer [param]]
               [dom.api             :as dom]
               [elements.engine.api :as engine]
-              [mid-fruits.random   :as random]
+              [random.api          :as random]
               [react.api           :as react]))
 
 

@@ -15,8 +15,8 @@
 (ns engines.item-lister.sample
     (:require [elements.api            :as elements]
               [engines.item-lister.api :as item-lister]
-              [mid-fruits.vector       :as vector]
               [re-frame.api            :as r]
+              [vector.api              :as vector]
               [x.core.api              :as x.core]))
 
 

@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.router.route-handler.side-effects
-    (:require [js-window.api     :as js-window]
-              [mid-fruits.string :as string]
-              [re-frame.api      :as r]))
+    (:require [js-window.api :as js-window]
+              [re-frame.api  :as r]
+              [string.api    :as string]))
 
 
 

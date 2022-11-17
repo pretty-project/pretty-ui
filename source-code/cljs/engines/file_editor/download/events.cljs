@@ -18,7 +18,7 @@
               [engines.file-editor.body.subs          :as body.subs]
               [engines.file-editor.core.events        :as core.events]
               [engines.file-editor.download.subs      :as download.subs]
-              [mid-fruits.map                         :as map]
+              [map.api                                :as map]
               [re-frame.api                           :refer [r]]))
 
 

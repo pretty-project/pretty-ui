@@ -17,7 +17,7 @@
               [elements.color-selector.helpers    :as color-selector.helpers]
               [elements.color-selector.prototypes :as color-selector.prototypes]
               [layouts.popup-a.api                :as popup-a]
-              [mid-fruits.random                  :as random]))
+              [random.api                         :as random]))
 
 
 

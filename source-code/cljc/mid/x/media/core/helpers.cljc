@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.media.core.helpers
-    (:require [mid-fruits.string       :as string]
-              [mid.x.media.core.config :as core.config]))
+    (:require [mid.x.media.core.config :as core.config]
+              [string.api              :as string]))
 
 
 

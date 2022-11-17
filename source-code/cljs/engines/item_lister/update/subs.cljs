@@ -15,9 +15,9 @@
 (ns engines.item-lister.update.subs
     (:require [engines.engine-handler.update.subs :as update.subs]
               [engines.item-lister.transfer.subs  :as transfer.subs]
-              [mid-fruits.keyword                 :as keyword]
-              [mid-fruits.vector                  :as vector]
-              [re-frame.api                       :refer [r]]))
+              [keyword.api                        :as keyword]
+              [re-frame.api                       :refer [r]]
+              [vector.api                         :as vector]))
 
 
 

@@ -25,8 +25,8 @@
 
 (ns x.components.stated
     (:require [candy.api                :refer [param return]]
-              [mid-fruits.map           :refer [dissoc-in]]
-              [mid-fruits.random        :as random]
+              [map.api                  :refer [dissoc-in]]
+              [random.api               :as random]
               [reagent.api              :as reagent]
               [re-frame.api             :as r :refer [r]]
               [x.components.engine      :as engine]

@@ -17,8 +17,8 @@
               [css.api             :as css]
               [elements.engine.api :as engine]
               [math.api            :as math]
-              [mid-fruits.random   :as random]
-              [mid-fruits.vector   :as vector]))
+              [random.api          :as random]
+              [vector.api          :as vector]))
 
 
 

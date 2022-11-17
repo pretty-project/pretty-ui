@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.cookie-handler.subs
-    (:require [mid-fruits.map                       :as map]
+    (:require [map.api                              :as map]
               [re-frame.api                         :as r :refer [r]]
               [x.environment.cookie-handler.helpers :as cookie-handler.helpers]))
 

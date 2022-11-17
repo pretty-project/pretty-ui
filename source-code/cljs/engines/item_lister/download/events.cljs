@@ -22,9 +22,9 @@
               [engines.item-lister.items.subs         :as items.subs]
               [engines.item-lister.selection.subs     :as selection.subs]
               [engines.item-lister.selection.events   :as selection.events]
-              [mid-fruits.map                         :as map]
-              [mid-fruits.vector                      :as vector]
-              [re-frame.api                           :as r :refer [r]]))
+              [map.api                                :as map]
+              [re-frame.api                           :as r :refer [r]]
+              [vector.api                             :as vector]))
 
 
 

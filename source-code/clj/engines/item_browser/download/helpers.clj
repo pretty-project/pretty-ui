@@ -14,7 +14,7 @@
 
 (ns engines.item-browser.download.helpers
     (:require [candy.api               :refer [return]]
-              [mid-fruits.keyword      :as keyword]
+              [keyword.api             :as keyword]
               [mongo-db.api            :as mongo-db]
               [pathom.api              :as pathom]
               [engines.item-lister.api :as item-lister]

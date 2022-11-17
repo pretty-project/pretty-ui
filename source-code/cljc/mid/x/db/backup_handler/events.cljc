@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.db.backup-handler.events
-    (:require [mid-fruits.map               :refer [dissoc-in]]
+    (:require [map.api                      :refer [dissoc-in]]
               [mid.x.db.backup-handler.subs :as backup-handler.subs]
               [re-frame.api                 :as r :refer [r]]))
 

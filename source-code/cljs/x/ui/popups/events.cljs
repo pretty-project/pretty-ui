@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.popups.events
-    (:require [re-frame.api  :as r :refer [r]]
-              [x.ui.renderer :as renderer]))
+    (:require [re-frame.api         :as r :refer [r]]
+              [x.ui.renderer.events :as renderer.events]))
 
 
 
@@ -28,7 +28,7 @@
   ;
   ; @return (map)
   [db [_ popup-id]]
-  (r renderer/set-element-prop! db :popups popup-id :stick-to-top? true))
+  (r renderer.events/set-element-prop! db :popups popup-id :stick-to-top? true))
 
 (defn minimize-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -37,7 +37,7 @@
   ;
   ; @return (map)
   [db [_ popup-id]]
-  (r renderer/set-element-prop! db :popups popup-id :minimized? true))
+  (r renderer.events/set-element-prop! db :popups popup-id :minimized? true))
 
 (defn maximize-popup!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ;
   ; @return (map)
   [db [_ popup-id]]
-  (r renderer/set-element-prop! db :popups popup-id :minimized? false))
+  (r renderer.events/set-element-prop! db :popups popup-id :minimized? false))
 
 
 

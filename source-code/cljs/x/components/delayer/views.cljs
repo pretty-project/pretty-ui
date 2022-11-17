@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.delayer.views
-    (:require [mid-fruits.random            :as random]
+    (:require [random.api                   :as random]
               [reagent.api                  :as reagent]
               [x.components.content.views   :as content.views]
               [x.components.delayer.helpers :as delayer.helpers]

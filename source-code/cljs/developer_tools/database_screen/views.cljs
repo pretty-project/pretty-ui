@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.database-screen.views
-    (:require [mid-fruits.pretty :as pretty]
-              [re-frame.api      :as r]))
+    (:require [pretty.print :as pretty]
+              [re-frame.api :as r]))
 
 
 

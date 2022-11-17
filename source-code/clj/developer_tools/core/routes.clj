@@ -14,7 +14,7 @@
 
 (ns developer-tools.core.routes
     (:require [developer-tools.core.views :as core.views]
-              [server-fruits.http         :as http]))
+              [http.api                   :as http]))
 
 
 

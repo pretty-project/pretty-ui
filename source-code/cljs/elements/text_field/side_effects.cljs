@@ -16,8 +16,8 @@
     (:require [elements.element.side-effects :as element.side-effects]
               [elements.text-field.helpers   :as text-field.helpers]
               [hiccup.api                    :as hiccup]
-              [mid-fruits.string             :as string]
               [re-frame.api                  :as r]
+              [string.api                    :as string]
               [x.environment.api             :as x.environment]))
 
 
@@ -45,7 +45,7 @@
   ; @param (string) stored-value
   [field-id {:keys [field-content-f]} stored-value]
   (let [field-content (field-content-f stored-value)]
-       (text-field.helpers/set-field-content! field-id  field-content)))
+       (text-field.helpers/set-field-content! field-id field-content)))
 
 
 
@@ -57,7 +57,7 @@
   ;
   ; @param (keyword) field-id
   [field-id]
-  (text-field.helpers/set-field-content! field-id string/empty-string))
+  (text-field.helpers/set-field-content! field-id string/EMPTY-STRING))
 
 
 

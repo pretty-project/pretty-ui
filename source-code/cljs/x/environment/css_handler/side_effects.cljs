@@ -14,8 +14,8 @@
 
 (ns x.environment.css-handler.side-effects
     (:require [dom.api                           :as dom]
-              [mid-fruits.string                 :as string]
               [re-frame.api                      :as r]
+              [string.api                        :as string]
               [x.core.api                        :as x.core :refer [cache-control-uri]]
               [x.environment.css-handler.helpers :as css-handler.helpers]))
 

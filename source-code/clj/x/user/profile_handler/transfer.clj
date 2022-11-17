@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.profile-handler.transfer
-    (:require [mid-fruits.map                 :as map]
+    (:require [map.api                        :as map]
               [x.core.api                     :as x.core]
               [x.user.profile-handler.helpers :as profile-handler.helpers]))
 

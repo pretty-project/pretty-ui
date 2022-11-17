@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.media.thumbnail-handler.routes
-    (:require [io.api                           :as io]
-              [server-fruits.http               :as http]
+    (:require [http.api                         :as http]
+              [io.api                           :as io]
               [x.media.core.helpers             :as core.helpers]
               [x.media.thumbnail-handler.config :as thumbnail-handler.config]))
 

@@ -15,7 +15,7 @@
 (ns x.media.thumbnail-handler.side-effects
     (:require [candy.api                        :refer [return]]
               [io.api                           :as io]
-              [server-fruits.image              :as image]
+              [tools.thumbnail-generator.api    :as thumbnail-generator]
               [x.media.core.helpers             :as core.helpers]
               [x.media.thumbnail-handler.config :as thumbnail-handler.config]))
 
@@ -43,7 +43,7 @@
   [filename]
   (let [filepath       (core.helpers/filename->media-storage-filepath   filename)
         thumbnail-path (core.helpers/filename->media-thumbnail-filepath filename)]
-       (image/generate-thumbnail! filepath thumbnail-path {:max-size thumbnail-handler.config/DEFAULT-THUMBNAIL-SIZE})))
+       (thumbnail-generator/generate-thumbnail! filepath thumbnail-path {:max-size thumbnail-handler.config/DEFAULT-THUMBNAIL-SIZE})))
 
 (defn generate-pdf-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!

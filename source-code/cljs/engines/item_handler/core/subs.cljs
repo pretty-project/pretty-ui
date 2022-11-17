@@ -16,8 +16,8 @@
     (:require [engines.engine-handler.core.subs   :as core.subs]
               [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.download.subs :as download.subs]
-              [mid-fruits.vector                  :as vector]
-              [re-frame.api                       :as r :refer [r]]))
+              [re-frame.api                       :as r :refer [r]]
+              [vector.api                         :as vector]))
 
 
 

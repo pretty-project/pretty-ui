@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.update.helpers
-    (:require [mid-fruits.keyword :as keyword]
-              [mongo-db.api       :as mongo-db]
-              [pathom.api         :as pathom]
-              [re-frame.api       :as r]))
+    (:require [keyword.api  :as keyword]
+              [mongo-db.api :as mongo-db]
+              [pathom.api   :as pathom]
+              [re-frame.api :as r]))
 
 
 

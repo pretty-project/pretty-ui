@@ -14,7 +14,7 @@
 
 (ns x.ui.surface.effects
     (:require [re-frame.api            :as r :refer [r]]
-              [x.ui.renderer           :as renderer]
+              [x.ui.renderer.subs      :as renderer.subs]
               [x.ui.surface.prototypes :as surface.prototypes]))
 
 
@@ -34,7 +34,7 @@
   ; @param (map) surface-props
   ;  {:render-animated? (boolean)(opt)}
   (fn [{:keys [db]} [_ surface-id {:keys [render-animated?] :as surface-props}]]
-      (let [close-popups-duration (r renderer/get-visible-elements-destroying-duration db :popups)]
+      (let [close-popups-duration (r renderer.subs/get-visible-elements-destroying-duration db :popups)]
            {:dispatch-later [{:ms                     0 :dispatch [:x.ui/destroy-all-elements! :popups]}
                              {:ms close-popups-duration :dispatch [:x.environment/enable-scroll!]}
                              {:ms close-popups-duration :dispatch [:x.ui/request-rendering-element! :surface surface-id surface-props]}]})))

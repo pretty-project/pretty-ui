@@ -16,7 +16,7 @@
     (:require [re-frame.api        :as r :refer [r]]
               [time.api            :as time]
               [x.ui.bubbles.config :as bubbles.config]
-              [x.ui.renderer       :as renderer]
+              [x.ui.renderer.subs  :as renderer.subs]
               [x.user.api          :as x.user]))
 
 
@@ -32,7 +32,7 @@
   ;
   ; @return (boolean)
   [db [_ bubble-id prop-key]]
-  (r renderer/get-element-prop db :bubbles bubble-id prop-key))
+  (r renderer.subs/get-element-prop db :bubbles bubble-id prop-key))
 
 (defn bubbles-enabled-by-user?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -48,7 +48,7 @@
   ;
   ; @return (boolean)
   [db [_ bubble-id]]
-  (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)]
+  (let [render-requested-at (r renderer.subs/get-render-log db :bubbles bubble-id :render-requested-at)]
        (> (time/elapsed)
           (+ render-requested-at bubbles.config/BUBBLE-LIFETIME))))
 
@@ -59,7 +59,7 @@
   ;
   ; @return (ms)
   [db [_ bubble-id]]
-  (let [render-requested-at (r renderer/get-render-log db :bubbles bubble-id :render-requested-at)
+  (let [render-requested-at (r renderer.subs/get-render-log db :bubbles bubble-id :render-requested-at)
         bubble-close-time     (+ render-requested-at bubbles.config/BUBBLE-LIFETIME)]
        (- bubble-close-time (time/elapsed))))
 
@@ -70,7 +70,7 @@
   ;
   ; @return (boolean)
   [db [_ bubble-id]]
-  (boolean (r renderer/get-element-prop db :bubbles bubble-id :autoclose?)))
+  (boolean (r renderer.subs/get-element-prop db :bubbles bubble-id :autoclose?)))
 
 
 

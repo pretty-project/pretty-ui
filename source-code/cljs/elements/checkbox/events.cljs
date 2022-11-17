@@ -15,8 +15,8 @@
 (ns elements.checkbox.events
     (:require [elements.input.events :as input.events]
               [elements.input.subs   :as input.subs]
-              [mid-fruits.vector     :as vector]
               [re-frame.api          :as r :refer [r]]
+              [vector.api            :as vector]
               [x.db.api              :as x.db]))
 
 

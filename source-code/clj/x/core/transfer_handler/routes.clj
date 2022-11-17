@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.transfer-handler.routes
-    (:require [server-fruits.http            :as http]
+    (:require [http.api                      :as http]
               [x.core.transfer-handler.state :as transfer-handler.state]))
 
 

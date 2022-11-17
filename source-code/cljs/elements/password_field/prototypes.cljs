@@ -17,7 +17,7 @@
               [elements.password-field.helpers :as password-field.helpers]
               [elements.text-field.helpers     :as text-field.helpers]
               [forms.api                       :as forms]
-              [mid-fruits.vector               :as vector]))
+              [vector.api                      :as vector]))
 
 
 

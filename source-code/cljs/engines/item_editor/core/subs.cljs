@@ -17,8 +17,8 @@
               [engines.item-editor.body.subs     :as body.subs]
               [engines.item-editor.download.subs :as download.subs]
               [logical.api                       :refer [nor]]
-              [mid-fruits.vector                 :as vector]
               [re-frame.api                      :as r :refer [r]]
+              [vector.api                        :as vector]
               [x.router.api                      :as x.router]))
 
 

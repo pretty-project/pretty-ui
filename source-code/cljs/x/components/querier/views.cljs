@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.querier.views
-    (:require [mid-fruits.random          :as random]
+    (:require [random.api                 :as random]
               [reagent.api                :as reagent]
               [re-frame.api               :as r]
               [x.components.content.views :as content.views]))

@@ -14,7 +14,7 @@
 
 (ns x.environment.viewport-handler.helpers
     (:require [js-window.api                         :as js-window]
-              [mid-fruits.map                        :as map]
+              [map.api                               :as map]
               [re-frame.api                          :as r]
               [x.environment.viewport-handler.config :as viewport-handler.config]))
 

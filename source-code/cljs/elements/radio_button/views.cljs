@@ -17,7 +17,7 @@
               [elements.label.views             :as label.views]
               [elements.radio-button.helpers    :as radio-button.helpers]
               [elements.radio-button.prototypes :as radio-button.prototypes]
-              [mid-fruits.random                :as random]
+              [random.api                       :as random]
               [reagent.api                      :as reagent]
               [x.components.api                 :as x.components]))
 

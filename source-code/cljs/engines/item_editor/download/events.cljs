@@ -19,7 +19,7 @@
               [engines.item-editor.core.events        :as core.events]
               [engines.item-editor.core.subs          :as core.subs]
               [engines.item-editor.download.subs      :as download.subs]
-              [mid-fruits.map                         :as map]
+              [map.api                                :as map]
               [re-frame.api                           :refer [r]]))
 
 

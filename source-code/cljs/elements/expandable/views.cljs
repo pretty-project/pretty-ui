@@ -15,7 +15,7 @@
 (ns elements.expandable.views
     (:require [elements.expandable.helpers    :as expandable.helpers]
               [elements.expandable.prototypes :as expandable.prototypes]
-              [mid-fruits.random              :as random]
+              [random.api                     :as random]
               [x.components.api               :as x.components]))
 
 

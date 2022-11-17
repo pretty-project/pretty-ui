@@ -18,7 +18,7 @@
               [engines.item-handler.backup.events :as backup.events]
               [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.core.subs     :as core.subs]
-              [mid-fruits.map                     :as map :refer [dissoc-in]]
+              [map.api                            :as map :refer [dissoc-in]]
               [re-frame.api                       :as r :refer [r]]))
 
 

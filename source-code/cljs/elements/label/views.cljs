@@ -16,7 +16,7 @@
     (:require [candy.api                 :refer [param]]
               [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
-              [mid-fruits.random         :as random]
+              [random.api                :as random]
               [x.components.api          :as x.components]))
 
 

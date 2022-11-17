@@ -15,7 +15,7 @@
 (ns elements.blank.views
     (:require [elements.blank.helpers    :as blank.helpers]
               [elements.blank.prototypes :as blank.prototypes]
-              [mid-fruits.random         :as random]
+              [random.api                :as random]
               [x.components.api          :as x.components]))
 
 

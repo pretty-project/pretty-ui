@@ -15,7 +15,7 @@
 (ns engines.file-editor.update.subs
     (:require [engines.engine-handler.update.subs :as update.subs]
               [engines.file-editor.body.subs      :as body.subs]
-              [mid-fruits.map                     :as map]
+              [map.api                            :as map]
               [re-frame.api                       :as r :refer [r]]))
 
 

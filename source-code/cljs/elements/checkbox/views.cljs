@@ -17,7 +17,7 @@
               [elements.checkbox.prototypes :as checkbox.prototypes]
               [elements.input.helpers       :as input.helpers]
               [elements.label.views         :as label.views]
-              [mid-fruits.random            :as random]
+              [random.api                   :as random]
               [reagent.api                  :as reagent]
               [x.components.api             :as x.components]))
 

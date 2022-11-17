@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.session-handler.helpers
-    (:require [mid-fruits.string   :as string]
-              [mid-fruits.vector   :as vector]
+    (:require [http.api            :as http]
               [mongo-db.api        :as mongo-db]
-              [server-fruits.http  :as http]
+              [string.api          :as string]
+              [vector.api          :as vector]
               [x.user.core.helpers :as core.helpers]))
 
 
@@ -31,7 +31,7 @@
   ;
   ; @return (boolean)
   [{:user-account/keys [id roles]}]
-  (and (string/nonempty? id)
+  (and (string/nonblank? id)
        (vector/nonempty? roles)))
 
 (defn request->authenticated?

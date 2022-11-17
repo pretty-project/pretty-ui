@@ -14,7 +14,7 @@
 
 (ns mid.x.core.lifecycle-handler.helpers
     (:require [candy.api                          :refer [return]]
-              [mid-fruits.random                  :as random]
+              [random.api                         :as random]
               [mid.x.core.lifecycle-handler.state :as lifecycle-handler.state]))
 
 

@@ -14,9 +14,9 @@
 
 (ns engines.item-browser.update.validators
     (:require [engines.item-browser.update.subs :as update.subs]
-              [mid-fruits.map                   :as map]
-              [mid-fruits.string                :as string]
-              [re-frame.api                     :refer [r]]))
+              [map.api                          :as map]
+              [re-frame.api                     :refer [r]]
+              [string.api                       :as string]))
 
 
 
@@ -32,7 +32,7 @@
   ; @return (boolean)
   [db [_ browser-id server-response]]
   (let [deleted-item-id (r update.subs/get-mutation-answer db browser-id :delete-item! server-response)]
-       (string/nonempty? deleted-item-id)))
+       (string/nonblank? deleted-item-id)))
 
 
 

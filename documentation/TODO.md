@@ -3,14 +3,6 @@
 
 
 
-# Mono-template
-- Compile-kor kitörli a /public/js/plugins mappát? @Paul
-- Mono-template project-name.css -> site.css és app.css
-- Mono-template-ből hiányzik, hogy a /login route az app.js -t inditsa
-- MONOTEMPLATE-bol kivenni az mt-logo-.png fileokat
-- demo user tenni a monotemplate be is!
-
-
 
 # x4.7.0
 
@@ -27,12 +19,8 @@
   + (set ...) set függvény!
   - Egy elem egyszer fordulhat elő benne
 
-- A reg-lifecycles! is ugy legyen tabolva mint a reg-event-fx
-  (core/reg-lifecycles ::lifecycles
-    {...})
-
 - Az xxx-ek tartalmazzák a névtereket is
-  XXX#0551 (mid-fruits.map)
+  XXX#0551 (map.api       )
 
 - (defn f [{:keys [] {:keys [name]} :customer}])
   (f {:customer {:name "Peti" :address "Valahol"}})

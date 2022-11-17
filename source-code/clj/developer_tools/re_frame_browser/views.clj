@@ -14,12 +14,12 @@
 
 (ns developer-tools.re-frame-browser.views
     (:require [developer-tools.re-frame-browser.styles :as re-frame-browser.styles]
-              [mid-fruits.map                          :as map]
-              [mid-fruits.pretty                       :as pretty]
+              [http.api                                :as http]
+              [map.api                                 :as map]
+              [pretty.print                            :as pretty]
               [reader.api                              :as reader]
-              [mid-fruits.vector                       :as vector]
               [re-frame.api                            :as r]
-              [server-fruits.http                      :as http]))
+              [vector.api                              :as vector]))
 
 
 
@@ -30,7 +30,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [{:keys [path]}]
   (if (vector/nonempty? path)
-      (let [parent-path       (vector/pop-last-item path)
+      (let [parent-path       (vector/remove-last-item path)
             menu-button-style (re-frame-browser.styles/menu-button-style)]
            (str "<div><a style=\""menu-button-style"\" href=\"?path=" parent-path "\">..</a></div>"))
       (let [menu-button-style (re-frame-browser.styles/menu-button-style {:disabled? true})]

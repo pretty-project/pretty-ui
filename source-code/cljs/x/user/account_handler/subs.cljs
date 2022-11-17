@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.user.account-handler.subs
-    (:require [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]))
+(ns x.user.account-handler.subs 
+    (:require [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]))
 
 
 

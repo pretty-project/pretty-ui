@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.core.debug-handler.helpers
-    (:require [mid-fruits.string               :as string]
-              [mid-fruits.vector               :as vector]
-              [mid.x.core.debug-handler.config :as debug-handler.config]))
+    (:require [mid.x.core.debug-handler.config :as debug-handler.config]
+              [string.api                      :as string]
+              [vector.api                      :as vector]))
 
 
 

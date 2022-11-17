@@ -451,7 +451,7 @@
 # x4.3.7
 
 - CHANGE
-  A `mid-fruits.map` névtérben a függvények neveiben az "item" kifejezés "value" kifejezésre
+  A `map.api       ` névtérben a függvények neveiben az "item" kifejezés "value" kifejezésre
   lett cserélve!
 
 - NEW ELEMENT
@@ -494,7 +494,7 @@
 # x4.3.5
 
 - NEW FUNCTION
-  `mid-fruits.map/get-ordered-keys`
+  `map.api       /get-ordered-keys`
 
 
 
@@ -566,7 +566,7 @@
        => "Hi, my name is John"
 
 - NEW FUNCTION
-  `mid-fruits.string/use-replacements`
+  `string.api/use-replacements`
 
 - CHANGE
   `[elements.api/label {:horizontal-align ...}]`

@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.gestures.select-handler.events
-    (:require [mid-fruits.vector                    :as vector]
-              [re-frame.api                         :as r]
+(ns x.gestures.select-handler.events 
+    (:require [re-frame.api                         :as r]
+              [vector.api                           :as vector]
               [x.gestures.select-handler.prototypes :as select-handler.prototypes]))
 
 

@@ -20,8 +20,8 @@
               [elements.text-field.config :as text-field.config]
               [elements.text-field.state  :as text-field.state]
               [hiccup.api                 :as hiccup]
-              [mid-fruits.string          :as string]
               [re-frame.api               :as r]
+              [string.api                 :as string]
               [time.api                   :as time]
               [x.components.api           :as x.components]
               [x.environment.api          :as x.environment]))
@@ -75,7 +75,7 @@
   ; @return (boolean)
   [field-id]
   (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
-       (string/nonempty? field-content)))
+       (string/nonblank? field-content)))
 
 (defn field-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!

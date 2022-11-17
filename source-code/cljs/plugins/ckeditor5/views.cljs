@@ -15,7 +15,7 @@
 (ns plugins.ckeditor5.views
     (:require ["@ckeditor/ckeditor5-react" :refer [CKEditor]]
               [css.api                     :as css]
-              [mid-fruits.random           :as random]
+              [random.api                  :as random]
               [plugins.ckeditor5.helpers   :as helpers]))
 
 

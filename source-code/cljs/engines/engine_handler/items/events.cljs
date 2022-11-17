@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.items.events
-    (:require [mid-fruits.map    :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
-              [re-frame.api      :refer [r]]))
+    (:require [map.api      :refer [dissoc-in]]
+              [re-frame.api :refer [r]]
+              [vector.api   :as vector]))
 
 
 

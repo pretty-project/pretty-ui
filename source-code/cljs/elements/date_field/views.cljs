@@ -15,7 +15,7 @@
 (ns elements.date-field.views
     (:require [elements.date-field.prototypes :as date-field.prototypes]
               [elements.text-field.views      :as text-field.views]
-              [mid-fruits.random              :as random]))
+              [random.api                     :as random]))
 
 
 

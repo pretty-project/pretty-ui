@@ -15,7 +15,7 @@
 (ns elements.multiline-field.views
     (:require [elements.multiline-field.prototypes :as multiline-field.prototypes]
               [elements.text-field.views           :as text-field.views]
-              [mid-fruits.random                   :as random]))
+              [random.api                          :as random]))
 
 
 

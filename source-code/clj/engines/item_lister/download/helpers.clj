@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.helpers
-    (:require [candy.api          :refer [param return]]
-              [mid-fruits.keyword :as keyword]
-              [math.api           :as math]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]
-              [mongo-db.api       :as mongo-db]
-              [pathom.api         :as pathom]
-              [re-frame.api       :as r]))
+    (:require [candy.api    :refer [param return]]
+              [keyword.api  :as keyword]
+              [math.api     :as math]
+              [string.api   :as string]
+              [mongo-db.api :as mongo-db]
+              [pathom.api   :as pathom]
+              [re-frame.api :as r]
+              [vector.api   :as vector]))
 
 
 
@@ -132,7 +132,7 @@
   (let [item-namespace @(r/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
         search-keys     (pathom/env->param env :search-keys)
         search-term     (pathom/env->param env :search-term)]
-       (if (string/nonempty? search-term)
+       (if (string/nonblank? search-term)
            {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))})))
 
 (defn env->pipeline-props

@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.request-inspector.subs
-    (:require [candy.api         :refer [param return]]
-              [mid-fruits.map    :as map]
-              [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]))
+    (:require [candy.api    :refer [return]]
+              [map.api      :as map]
+              [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]))
 
 
 

@@ -14,9 +14,9 @@
 
 (ns x.sync.response-handler.events
     (:require [candy.api         :refer [return]]
-              [mid-fruits.map    :refer [dissoc-in]]
-              [mid-fruits.vector :as vector]
+              [map.api           :refer [dissoc-in]]
               [re-frame.api      :as r :refer [r]]
+              [vector.api        :as vector]
               [x.core.api        :as x.core]
               [x.db.api          :as x.db]))
 

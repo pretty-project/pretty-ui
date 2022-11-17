@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.viewport-handler.subs
-    (:require [dom.api           :as dom]
-              [mid-fruits.vector :as vector]
-              [re-frame.api      :as r :refer [r]]))
+    (:require [dom.api      :as dom]
+              [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]))
 
 
 

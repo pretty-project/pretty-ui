@@ -18,9 +18,9 @@
               [elements.chip.views            :as chip.views]
               [elements.label.views           :as label.views]
               [loop.api                       :refer [reduce-indexed]]
-              [mid-fruits.random              :as random]
-              [mid-fruits.vector              :as vector]
+              [random.api                     :as random]
               [re-frame.api                   :as r]
+              [vector.api                     :as vector]
               [x.components.api               :as x.components]))
 
 

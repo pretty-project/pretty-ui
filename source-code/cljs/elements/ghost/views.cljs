@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.ghost.views
-    (:require [mid-fruits.random         :as random]
+    (:require [random.api                :as random]
               [elements.ghost.helpers    :as ghost.helpers]
               [elements.ghost.prototypes :as ghost.prototypes]))
 

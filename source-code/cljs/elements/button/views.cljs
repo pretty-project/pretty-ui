@@ -19,7 +19,7 @@
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
               [elements.engine.api        :as engine]
-              [mid-fruits.random          :as random]
+              [random.api                 :as random]
               [reagent.api                :as reagent]
               [x.components.api           :as x.components]))
 

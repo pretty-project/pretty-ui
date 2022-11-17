@@ -13,16 +13,16 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.download.helpers
-    (:require [candy.api          :refer [return]]
-              [mid-fruits.keyword :as keyword]
-              [mid-fruits.map     :as map]
-              [mixed.api          :as mixed]
-              [mongo-db.api       :as mongo-db]
-              [pathom.api         :as pathom]
-              [re-frame.api       :as r]
-              [seqable.api        :refer [nonseqable?]]
-              [mid-fruits.string  :as string]
-              [mid-fruits.vector  :as vector]))
+    (:require [candy.api    :refer [return]]
+              [keyword.api  :as keyword]
+              [map.api      :as map]
+              [mixed.api    :as mixed]
+              [mongo-db.api :as mongo-db]
+              [pathom.api   :as pathom]
+              [re-frame.api :as r]
+              [seqable.api  :refer [nonseqable?]]
+              [string.api   :as string]
+              [vector.api   :as vector]))
 
 
 

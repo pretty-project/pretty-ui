@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.environment.css-handler.events
-    (:require [mid-fruits.vector :as vector]
-              [re-frame.api      :as r]))
+    (:require [re-frame.api :as r]
+              [vector.api   :as vector]))
 
 
 

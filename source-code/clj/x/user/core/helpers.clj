@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.core.helpers
-    (:require [mid-fruits.random       :as random]
+    (:require [random.api              :as random]
               [mid.x.user.core.helpers :as core.helpers]))
 
 

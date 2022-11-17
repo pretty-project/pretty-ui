@@ -14,11 +14,11 @@
 
 (ns plugins.dnd-kit.helpers
     (:require [candy.api             :refer [return]]
-              [mid-fruits.map        :refer [dissoc-in]]
-              [mid-fruits.vector     :as vector]
+              [map.api               :refer [dissoc-in]]
               [plugins.dnd-kit.state :as state]
               [reagent.api           :as reagent]
-              [time.api              :as time]))
+              [time.api              :as time]
+              [vector.api            :as vector]))
 
 
 

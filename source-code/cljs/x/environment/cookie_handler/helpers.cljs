@@ -14,8 +14,8 @@
 
 (ns x.environment.cookie-handler.helpers
     (:require [hiccup.api                          :as hiccup]
-              [mid-fruits.map                      :as map]
-              [mid-fruits.string                   :as string]
+              [map.api                             :as map]
+              [string.api                          :as string]
               [x.environment.cookie-handler.config :as cookie-handler.config]))
 
 

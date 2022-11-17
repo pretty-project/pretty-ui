@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.loading-screen.side-effects
-    (:require [re-frame.api      :as r]
-              [x.environment.api :as x.environment]
-              [x.ui.renderer     :as renderer]))
+    (:require [re-frame.api         :as r]
+              [x.environment.api    :as x.environment]
+              [x.ui.renderer.config :as renderer.config]))
 
 
 
@@ -26,7 +26,7 @@
   ; @usage
   ;  (hide-loading-screen!)
   []
-  (x.environment/hide-element-animated! renderer/HIDE-ANIMATION-TIMEOUT "x-loading-screen"))
+  (x.environment/hide-element-animated! renderer.config/HIDE-ANIMATION-TIMEOUT "x-loading-screen"))
 
 
 

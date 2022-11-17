@@ -14,12 +14,12 @@
 
 (ns x.router.route-handler.events
     (:require [candy.api                         :refer [return]]
-              [mid-fruits.vector                 :as vector]
               [re-frame.api                      :as r :refer [r]]
               [x.router.route-handler.config     :as route-handler.config]
               [x.router.route-handler.helpers    :as route-handler.helpers]
               [x.router.route-handler.prototypes :as route-handler.prototypes]
-              [x.router.route-handler.subs       :as route-handler.subs]))
+              [x.router.route-handler.subs       :as route-handler.subs]
+              [vector.api                        :as vector]))
 
 
 
@@ -50,7 +50,7 @@
   ;
   ; @return (map)
   [db [_ route-id route-props]]
-  ; XXX#7708 (source-code/clj/x/server_router/README.md)
+  ; XXX#7708 (source-code/clj/x/router/README.md)
   (let [cached-routes    (r route-handler.subs/get-cached-routes db)
         destructed-route (-> route-props (select-keys route-handler.config/CACHED-ROUTE-KEYS)
                                          (route-handler.helpers/route-props->destructed-route))]
@@ -68,7 +68,7 @@
   ;
   ; @return (map)
   [db [_ route-id {:keys [get post] :as route-props}]]
-  ; XXX#7706 (source-code/clj/x/server_router/README.md)
+  ; XXX#7706 (source-code/clj/x/router/README.md)
   (if (or get post)
       (assoc-in db [:x.router :route-handler/server-routes route-id]
                    (select-keys route-props route-handler.config/SERVER-ROUTE-KEYS))
@@ -84,7 +84,7 @@
   ;
   ; @return (map)
   [db [_ route-id {:keys [client-event on-leave-event] :as route-props}]]
-  ; XXX#7707 (source-code/clj/x/server_router/README.md)
+  ; XXX#7707 (source-code/clj/x/router/README.md)
   (if (or client-event on-leave-event)
       (assoc-in db [:x.router :route-handler/client-routes route-id]
                    (select-keys route-props route-handler.config/CLIENT-ROUTE-KEYS))

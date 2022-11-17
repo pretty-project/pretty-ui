@@ -16,7 +16,7 @@
     (:require [candy.api                     :refer [param]]
               [elements.engine.api           :as engine]
               [elements.flex-handler.helpers :as flex-handler.helpers]
-              [mid-fruits.random             :as random]
+              [random.api                    :as random]
               [x.components.api              :as x.components]))
 
 

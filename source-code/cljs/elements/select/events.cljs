@@ -15,8 +15,8 @@
 (ns elements.select.events
     (:require [candy.api             :refer [return]]
               [elements.input.events :as input.events]
-              [mid-fruits.vector     :as vector]
-              [re-frame.api          :as r :refer [r]]))
+              [re-frame.api          :as r :refer [r]]
+              [vector.api            :as vector]))
 
 
 

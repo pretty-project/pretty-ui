@@ -17,7 +17,7 @@
               [engines.text-sorter.helpers    :as helpers]
               [engines.text-sorter.prototypes :as prototypes]
               [engines.text-sorter.state      :as state]
-              [mid-fruits.random              :as random]
+              [random.api                     :as random]
               [plugins.dnd-kit.api            :as dnd-kit]))
 
 

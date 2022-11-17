@@ -21,6 +21,7 @@
               [x.ui.popups.subs]
               [x.ui.progress-bar.effects]
               [x.ui.progress-screen.subs]
+              [x.ui.renderer.effects]
               [x.ui.sounds.subs]
               [x.ui.sidebar.effects]
               [x.ui.sidebar.events]
@@ -41,7 +42,8 @@
               [x.ui.progress-bar.events         :as progress-bar.events]
               [x.ui.progress-bar.subs           :as progress-bar.subs]
               [x.ui.progress-screen.events      :as progress-screen.events]
-              [x.ui.renderer                    :as renderer]
+              [x.ui.renderer.events             :as renderer.events]
+              [x.ui.renderer.subs               :as renderer.subs]
               [x.ui.sounds.side-effects         :as sounds.side-effects]
               [x.ui.structure.views             :as structure.views]
               [x.ui.themes.subs                 :as themes.subs]))
@@ -62,7 +64,7 @@
 
 ; x.ui.interface.events
 (def set-interface! interface.events/set-interface!)
-  
+
 ; x.ui.interface.subs
 (def get-interface          interface.subs/get-interface)
 (def application-interface? interface.subs/application-interface?)
@@ -84,15 +86,17 @@
 (def lock-screen!   progress-screen.events/lock-screen!)
 (def unlock-screen! progress-screen.events/unlock-screen!)
 
-; x.ui.renderer
-(def element-rendered?      renderer/element-rendered?)
-(def element-invisible?     renderer/element-invisible?)
-(def element-visible?       renderer/element-visible?)
-(def any-element-rendered?  renderer/any-element-rendered?)
-(def any-element-invisible? renderer/any-element-invisible?)
-(def any-element-visible?   renderer/any-element-visible?)
-(def no-visible-elements?   renderer/no-visible-elements?)
-(def set-element-prop!      renderer/set-element-prop!)
+; x.ui.renderer.events
+(def set-element-prop! renderer.events/set-element-prop!)
+
+; x.ui.renderer.subs
+(def element-rendered?      renderer.subs/element-rendered?)
+(def element-invisible?     renderer.subs/element-invisible?)
+(def element-visible?       renderer.subs/element-visible?)
+(def any-element-rendered?  renderer.subs/any-element-rendered?)
+(def any-element-invisible? renderer.subs/any-element-invisible?)
+(def any-element-visible?   renderer.subs/any-element-visible?)
+(def no-visible-elements?   renderer.subs/no-visible-elements?)
 
 ; x.ui.sounds.side-effects
 (def play-sound! sounds.side-effects/play-sound!)

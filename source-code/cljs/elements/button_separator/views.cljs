@@ -15,7 +15,7 @@
 (ns elements.button-separator.views
     (:require [elements.button-separator.helpers    :as button-separator.helpers]
               [elements.button-separator.prototypes :as button-separator.prototypes]
-              [mid-fruits.random                    :as random]))
+              [random.api                           :as random]))
 
 
 

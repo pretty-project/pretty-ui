@@ -15,7 +15,7 @@
 (ns engines.file-editor.core.events
     (:require [engines.engine-handler.core.events :as core.events]
               [engines.file-editor.body.subs      :as body.subs]
-              [mid-fruits.map                     :as map :refer [dissoc-in]]
+              [map.api                            :as map :refer [dissoc-in]]
               [re-frame.api                       :as r :refer [r]]))
 
 

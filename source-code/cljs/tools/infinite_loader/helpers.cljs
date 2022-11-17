@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.infinite-loader.helpers
-    (:require [mid-fruits.keyword :as keyword]))
+    (:require [keyword.api :as keyword]))
 
 
 

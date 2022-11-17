@@ -25,4 +25,4 @@
                   :x.router :x.sync :tools :x.user :x.ui :x.views
 
                   ; TEMP
-                  :x.core/build-handler :elements/primary :x.environment/keypress-events])
+                  :elements/primary])

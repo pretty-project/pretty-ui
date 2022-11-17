@@ -25,7 +25,7 @@
   ; @param (map)(opt) options
   ;  {:prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509
+  ;    XXX#4509 (string-api/source-code/cljc/string/replace.cljc)
   ;   :suffix (string)(opt)}
   ;
   ; @example
@@ -42,7 +42,7 @@
   ; @param (map)(opt) options
   ;  {:prefix (string)(opt)
   ;   :replacements (numbers or strings in vector)(opt)
-  ;    XXX#4509
+  ;    XXX#4509 (string-api/source-code/cljc/string/replace.cljc)
   ;   :suffix (string)(opt)}
   ;
   ; @example

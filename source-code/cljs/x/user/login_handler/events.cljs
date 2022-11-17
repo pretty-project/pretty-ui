@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.login-handler.events
-    (:require [mid-fruits.map  :refer [dissoc-in]]
-              [re-frame.api    :as r]
-              [time.api        :as time]))
+    (:require [map.api      :refer [dissoc-in]]
+              [re-frame.api :as r]
+              [time.api     :as time]))
 
 
 

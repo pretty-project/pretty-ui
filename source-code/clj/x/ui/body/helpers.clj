@@ -14,8 +14,8 @@
 
 (ns x.ui.body.helpers
     (:require [candy.api         :refer [param return]]
-              [mid-fruits.vector :as vector]
               [re-frame.api      :as r]
+              [vector.api        :as vector]
               [x.core.api        :refer [cache-control-uri]]
               [x.router.api      :as router]
               [x.ui.body.config  :as body.config]
@@ -52,7 +52,7 @@
   ; @return (maps in vector)
   ;  [{:uri "/js/core/my-build.js"} ...]
   [request body-props]
-  ; XXX#5062 (source-code/clj/x/server_ui/README.md)
+  ; XXX#5062 (source-code/clj/x/ui/README.md)
   (let [app-config @(r/subscribe [:x.core/get-app-config])
         core-js-uri (core-js-uri request body-props)]
        (vector/concat-items [{:id :x-core-js :uri core-js-uri}]
@@ -74,7 +74,7 @@
   ;
   ; @return (boolean)
   [request {:keys [js-build]} {:keys [route-template] :as js-props}]
-  ; XXX#1720 (source-code/clj/x/server_ui/head/helpers.clj)
+  ; XXX#1720 (source-code/clj/x/ui/head/helpers.clj)
   (and (or (-> js-props :js-build nil?)
            (-> js-props :js-build (= js-build)))
        (or (-> js-props :route-template nil?)

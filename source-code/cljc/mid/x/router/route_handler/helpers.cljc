@@ -13,9 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns mid.x.router.route-handler.helpers
-    (:require [candy.api         :refer [return]]
-              [mid-fruits.string :as string]
-              [mid-fruits.vector :as vector]))
+    (:require [candy.api  :refer [return]]
+              [string.api :as string]
+              [vector.api :as vector]))
 
 
 
@@ -73,7 +73,8 @@
   ;  false
   ;
   ; @return (boolean)
-  [a b] ; Both a and b are path-param keys.
+  [a b]
+        ; Both a and b are path-param keys.
   (cond (and (string/starts-with? a ":")
              (string/starts-with? b ":"))
         (string/abc? a b)
@@ -121,7 +122,7 @@
   [a b]
   (let [a-parts (string/split a #"/")
         b-parts (string/split b #"/")]
-       (vector/compared-items-ordered? a-parts b-parts route-template-parts-ordered?)))
+       (vector/compared-items-sorted? a-parts b-parts route-template-parts-ordered?)))
 
 (defn destructed-routes->ordered-routes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,19 +130,30 @@
   ; @param (vectors in vector) routes
   ;
   ; @example
-  ;  (destructed-routes->ordered-routes [["/my-route/:a" {...}]
-  ;                                      ["/my-route/c"  {...}]
-  ;                                      ["/my-route/b"  {...}]
-  ;                                      ["/my-route"    {...}]]
+  ;  (destructed-routes->ordered-routes [["/my-route/:a" ...]
+  ;                                      ["/my-route/c"  ...]
+  ;                                      ["/my-route/b"  ...]
+  ;                                      ["/"            ...]
+  ;                                      ["/my-route"    ...]]
   ;  =>
-  ;  [["/my-route/b"  {...}]]
-  ;   ["/my-route/c"  {...}]
-  ;   ["/my-route/:a" {...}]
-  ;   ["/my-route"    {...}]]
+  ;  [["/"            ...]
+  ;   ["/my-route/b"  ...]
+  ;   ["/my-route/c"  ...]
+  ;   ["/my-route/:a" ...]
+  ;   ["/my-route"    ...]]
   ;
   ; @return (vectors in vector)
   [destructed-routes]
-  (vector/sort-items-by destructed-routes route-templates-ordered? first))
+  ; BUG#1246
+  ; A "/" útvonal(ak)at nem lehetséges a többi útvonallal összehasonlítani,
+  ; mivel az útvonalak összehasonlításkor a "/" elválasztó karakterrel felbontásra
+  ; kerülnek és az összehasonlító függvény a felbontott részeiket hasonlítja össze,
+  ; de a "/" útvonal nem bontható fel további részekre a "/" elválasztó karakterrel!
+  (letfn [(root-route? [[route-template _]] (= route-template "/"))]
+         (let [root-routes       (vector/filter-items-by destructed-routes root-route?)
+               destructed-routes (vector/remove-items-by destructed-routes root-route?)
+               ordered-routes    (vector/sort-items-by   destructed-routes route-templates-ordered? first)]
+              (vector/concat-items root-routes ordered-routes))))
 
 
 

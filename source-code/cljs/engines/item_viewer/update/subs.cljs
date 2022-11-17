@@ -15,7 +15,7 @@
 (ns engines.item-viewer.update.subs
     (:require [engines.engine-handler.update.subs :as update.subs]
               [engines.item-viewer.transfer.subs  :as transfer.subs]
-              [mid-fruits.keyword                 :as keyword]
+              [keyword.api                        :as keyword]
               [re-frame.api                       :refer [r]]))
 
 
