@@ -28,6 +28,10 @@
            :informations
            {:en "Informations"
             :hu "Információk"}
+
+           :no-visible-data
+           {:en "No visible data"
+            :hu "Nincs megjeleníthető adat"}
            :message
            {:en "Message"
             :hu "Üzenet"}

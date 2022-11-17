@@ -6,6 +6,9 @@
 
 # x4.7.0
 
+- a tool-ok nem hasznánalk x-et szoval clj-tools cljs-tools vagy mitomén hogy de
+  mehetnek repora
+
 - az element-ek style tulajdonsága a body komponensekene legyen
 
 - text-field hack5041-et lecserélni a text-editor plugin synchronizer-ére
