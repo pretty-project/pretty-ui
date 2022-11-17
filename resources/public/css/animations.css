@@ -125,6 +125,11 @@
 
 /*** Visibility ***/
 
+@keyframes opacity-1-05-1 {
+  0%   { opacity: 1.0 }
+  50%  { opacity: 0.5 }
+  100% { opacity: 1.0 }}
+
 @keyframes opacity-1-0 {
   to { opacity: 0 }}
 
@@ -137,12 +142,12 @@
   50%  { opacity: 1 }
   100% { opacity: 0 }}
 
-@keyframes opacity-09-0 {
-  from { opacity: .98 }
-  to   { opacity: 0 }}
+@keyframes opacity-098-0 {
+  from { opacity: 0.98 }
+  to   { opacity: 1.00 }}
 
 @keyframes opacity-0-098 {
-  from { opacity: 0 }
-  to   { opacity: .98 }}
+  from { opacity: 0.00 }
+  to   { opacity: 0.98 }}
 
 /*** Visibility ***/

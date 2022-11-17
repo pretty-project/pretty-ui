@@ -52,8 +52,9 @@
   ; @param (keyword) bubble-id
   [bubble-id]
   (if-let [user-close? @(r/subscribe [:x.ui/get-bubble-prop bubble-id :user-close?])]
-          [elements/icon-button {:on-click [:x.ui/remove-bubble! bubble-id]
-                                 :preset   :close}]))
+          [elements/icon-button {:hover-color :highlight
+                                 :on-click    [:x.ui/remove-bubble! bubble-id]
+                                 :preset      :close}]))
 
 (defn bubble-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

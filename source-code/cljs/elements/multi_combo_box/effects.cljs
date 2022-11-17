@@ -74,8 +74,8 @@
       ; Ha a multi-combo-box elem surface felülete ...
       ; (A) ... látható, akkor az ENTER billentyű lenyomása a multi-combo-box elem
       ;         saját működését valósítja meg.
-      ; (B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
-      ;         működését valósítja meg.
+      ; (B) ... nem látható és a mező tartalma nem üres, akkor az ENTER billentyű
+      ;         lenyomása
       ;
       ; Ha a surface felületen ...
       ; (A1) ... valamelyik opció ki van választva, akkor
@@ -99,11 +99,10 @@
                ; (B)
                (if (text-field.helpers/field-empty? field-id)
                    ; (B1)
-                   [:elements.text-field/ENTER-pressed field-id field-props]
+                   {}
                    ; (B2)
                    (let [field-content (text-field.helpers/get-field-content field-id)]
-                        {:dispatch-n [[:elements.text-field/ENTER-pressed field-id field-props]
-                                      [:elements.text-field/empty-field!  field-id field-props]]
+                        {:dispatch [:elements.text-field/empty-field! field-id field-props]
                          :db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)}))))))
 
 (r/reg-event-fx :elements.multi-combo-box/COMMA-pressed
@@ -146,5 +145,19 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [_ [_ box-id box-props]]
-      [:elements.multi-combo-box/remove-keypress-events! box-id box-props]))
+  (fn [{:keys [db]} [_ box-id box-props]]
+      ; TEST#0041
+      ; Mivel a multi-combo-box elem használata nem egyértelmű, tehát a felhasználó
+      ; számára nem látszódik, hogy nem egy text-field elemet használ, ezért a mező
+      ; elhagyásakor a benne maradt érték hozzáadódik az értékek vektorához.
+      ; Különben a felhasználó azt feltételezné, hogy kitölött egy mezőt és ha nem
+      ; adódik hozzá az értékek vektorához a mező tartalma, akkor az adat elveszne.
+      ; Szóval ez most egy UX teszt.
+      (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
+            field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
+           (if (text-field.helpers/field-empty? field-id)
+               [:elements.multi-combo-box/remove-keypress-events! box-id box-props]
+               (let [field-content (text-field.helpers/get-field-content field-id)]
+                    {:db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
+                     :dispatch-n [[:elements.text-field/empty-field! field-id field-props]
+                                  [:elements.multi-combo-box/remove-keypress-events! box-id box-props]]})))))
