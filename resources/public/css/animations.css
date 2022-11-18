@@ -142,6 +142,11 @@
   50%  { opacity: 1 }
   100% { opacity: 0 }}
 
+@keyframes opacity-1-0-1 {
+  0%   { opacity: 1 }
+  50%  { opacity: 0 }
+  100% { opacity: 1 }}
+
 @keyframes opacity-098-0 {
   from { opacity: 0.98 }
   to   { opacity: 1.00 }}

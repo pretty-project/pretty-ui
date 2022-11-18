@@ -110,15 +110,23 @@
                          :preset        :apps}])
                         ;:badge-color :secondary
 
+(defn go-back-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/icon-button ::go-back-icon-button
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         :on-click      [:x.router/go-back!]
+                         :preset        :back}])
+
 (defn go-up-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [parent-route @(r/subscribe [:x.router/get-current-route-parent])]
-       [elements/icon-button ::go-up-icon-button
-                             {:border-radius :s
-                              :hover-color   :highlight
-                              :on-click      [:x.router/go-to! parent-route]
-                              :preset        :back}]))
+  [elements/icon-button ::go-up-icon-button
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         :on-click      [:x.router/go-up!]
+                         :preset        :back}])
 
 (defn at-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!

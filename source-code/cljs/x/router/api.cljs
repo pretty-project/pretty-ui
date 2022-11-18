@@ -43,7 +43,7 @@
 (def get-current-route-query-params route-handler.subs/get-current-route-query-params)
 (def get-current-route-query-param  route-handler.subs/get-current-route-query-param)
 (def get-current-route-fragment     route-handler.subs/get-current-route-fragment)
-(def get-current-route-parent       route-handler.subs/get-current-route-parent)
+(def get-parent-route               route-handler.subs/get-parent-route)
 (def current-route-path-param?      route-handler.subs/current-route-path-param?)
 (def at-home?                       route-handler.subs/at-home?)
 (def home-next-door?                route-handler.subs/home-next-door?)

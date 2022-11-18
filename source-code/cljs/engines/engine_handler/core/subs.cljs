@@ -72,7 +72,14 @@
   (if-let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
           (keyword (str                (name handler-key))
                    (str "synchronize-" (name request-key) "!"))
-          (println "Missing handler-key in engine:" engine-id)))
+          (let [transfer-id (r body.subs/get-body-prop db engine-id :transfer-id)]
+               (println "Missing handler-key!\nengine-id:"engine-id"\ntransfer-id:"transfer-id)
+               (println "The handler-key property is important for the engines to make mutation"
+                        "and resolver queries!"
+                        "\nThis property should transferred with the engine properties during the"
+                        "boot transfer request!"
+                        "\nDid you pass the transfer-id prop to the engine properly? (not required)"
+                        "\nDid you set the server-side initialization event for the engine?"))))
 
 (defn engine-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

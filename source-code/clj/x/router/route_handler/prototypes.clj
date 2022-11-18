@@ -59,16 +59,16 @@
   ;  {:get (function or map)(opt)
   ;   :post (function or map)(opt)
   ;   :restricted? (boolean)(opt)
-  ;   :route-parent (string)(opt)}
+  ;   :parent-route (string)(opt)}
   ;
   ; @return (map)
   ;  {:get (map)
   ;   :post (map)
-  ;   :route-parent (string)}
-  [db [_ _ {:keys [get post restricted? route-parent] :as route-props}]]
+  ;   :parent-route (string)}
+  [db [_ _ {:keys [get post restricted? parent-route] :as route-props}]]
   (let [app-home (r x.core/get-app-config-item db :app-home)]
        (merge {}
               (param route-props)
-              (if route-parent {:route-parent (route-handler.helpers/resolve-variable-route-string route-parent app-home)})
+              (if parent-route {:parent-route (route-handler.helpers/resolve-variable-route-string parent-route app-home)})
               (if get          {:get          (handler-prototype get  {:restricted? restricted?})})
               (if post         {:post         (handler-prototype post {:restricted? restricted?})}))))

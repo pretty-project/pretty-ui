@@ -120,9 +120,9 @@
   ;   :get (function or map)(opt)
   ;   :js-build (keyword)(opt)
   ;   :post (function or map)(opt)
+  ;   :parent-route (string)(opt)
   ;   :restricted? (boolean)(opt)
   ;    Default: false
-  ;   :route-parent (string)(opt)
   ;   :route-template (string)
   ;   :client-event (metamorphic-event)(opt)
   ;    Az útvonal meghívásakor a kliens-oldalon megtörténő esemény

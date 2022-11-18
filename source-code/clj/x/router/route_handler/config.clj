@@ -29,4 +29,4 @@
 
 ; @constant (keywords in vector)
 ; XXX#7707 (source-code/clj/x/router/README.md)
-(def CLIENT-ROUTE-KEYS [:js-build :client-event :on-leave-event :restricted? :route-parent :route-template])
+(def CLIENT-ROUTE-KEYS [:js-build :client-event :on-leave-event :restricted? :parent-route :route-template])

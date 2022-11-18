@@ -35,7 +35,7 @@
                                  {:client-event   [:item-editor/handle-route! editor-id]
                                   :js-build       :app
                                   :restricted?    true
-                                  ;:route-parent   base-route
+                                  ;:parent-route   base-route
                                   :route-template extended-route}])))
 
 (r/reg-event-fx :item-editor/add-creator-route!

@@ -32,32 +32,32 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; - Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
-  ;   előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
-  ;
-  ; - Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
-  ;   ne jelenjen meg a no-items-to-show-label felirat!
-  (let [downloading-items? @(r/subscribe [:item-lister/downloading-items? lister-id])
-        data-received?     @(r/subscribe [:item-lister/data-received?     lister-id])
-        no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])
-        placeholder        @(r/subscribe [:item-lister/get-body-prop      lister-id :placeholder])]
-       (if (and no-items-to-show? data-received? (not downloading-items?))
-           [elements/label ::placeholder-label
-                           {:color       :highlight
-                            :content     placeholder
-                            :font-size   :xs
-                            :font-weight :bold
-                            :indent      {:all :xs}
-                            :line-height :block}])))
+  (let [placeholder @(r/subscribe [:item-lister/get-body-prop lister-id :placeholder])]
+       [elements/label ::placeholder-label
+                       {:color       :highlight
+                        :content     placeholder
+                        :font-size   :xs
+                        :font-weight :bold
+                        :indent      {:all :xs}
+                        :line-height :block}]))
 
 (defn placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  [elements/row ::placeholder
-                {:content [placeholder-label lister-id]
-                 :horizontal-align :center}])
+  ; Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
+  ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
+  ;
+  ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
+  ; ne jelenjen meg a no-items-to-show-label felirat!
+  (let [downloading-items? @(r/subscribe [:item-lister/downloading-items? lister-id])
+        data-received?     @(r/subscribe [:item-lister/data-received?     lister-id])
+        no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])]
+       (if (and no-items-to-show? data-received? (not downloading-items?))
+           [elements/row ::placeholder
+                         {:content [placeholder-label lister-id]
+                          :horizontal-align :center}])))
 
 
 
@@ -96,6 +96,13 @@
   (let [list-element @(r/subscribe [:item-lister/get-body-prop lister-id :list-element])]
        [x.components/content lister-id list-element]))
 
+(defn infinite-loader
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}])
+
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -104,10 +111,10 @@
   (cond @(r/subscribe [:item-lister/get-meta-item lister-id :engine-error])
          [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])
-         [:<> [list-element              lister-id]
-              [infinite-loader/component lister-id {:on-viewport [:item-lister/request-items! lister-id]}]
-              [placeholder               lister-id]
-              [ghost-element             lister-id]]
+         [:<> [list-element    lister-id]
+              [infinite-loader lister-id]
+              [placeholder     lister-id]
+              [ghost-element   lister-id]]
          :data-not-received
          [ghost-element lister-id]))
 

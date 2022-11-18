@@ -272,13 +272,29 @@
   [db _]
   (get-in db [:x.router :route-handler/meta-items :route-fragment]))
 
-(defn get-current-route-parent
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-parent-route
   ; @usage
-  ;  (r get-current-route-parent db)
+  ;  (r get-parent-route db)
   ;
   ; @return (string)
   [db _]
-  (get-in db [:x.router :route-handler/meta-items :route-parent]))
+  (get-in db [:x.router :route-handler/meta-items :parent-route]))
+
+(defn get-previous-route
+  ; @usage
+  ;  (r get-previous-route db)
+  ;
+  ; @return (string)
+  [db _])
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn use-path-params
   ; @param (string) uri
@@ -350,8 +366,8 @@
   ;
   ; @return (boolean)
   [db _]
-  (= (r get-app-home             db)
-     (r get-current-route-parent db)))
+  (= (r get-app-home     db)
+     (r get-parent-route db)))
 
 (defn route-id-unchanged?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -391,7 +407,7 @@
   ; @return (keyword)
   [db _]
   (let [history (r get-history db)]
-       (vector/last-item history)))
+       (-> history vector/last-item second)))
 
 
 
@@ -456,8 +472,8 @@
 (r/reg-sub :x.router/get-current-route-fragment get-current-route-fragment)
 
 ; @usage
-;  [:x.router/get-current-route-parent]
-(r/reg-sub :x.router/get-current-route-parent get-current-route-parent)
+;  [:x.router/get-parent-route]
+(r/reg-sub :x.router/get-parent-route get-parent-route)
 
 ; @usage
 ;  [:x.router/at-home?]

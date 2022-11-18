@@ -34,7 +34,7 @@
            [:x.router/add-route! (routes.helpers/route-id browser-id :base)
                                  {:client-event   [:item-browser/handle-route! browser-id]
                                   :js-build       :app
-                                  :route-parent   parent-route
+                                  :parent-route   parent-route
                                   :restricted?    true
                                   :route-template base-route}])))
 
@@ -51,6 +51,6 @@
            [:x.router/add-route! (routes.helpers/route-id browser-id :extended)
                                  {:client-event   [:item-browser/handle-route! browser-id]
                                   :js-build       :app
-                                  :route-parent   parent-route
+                                  :parent-route   parent-route
                                   :restricted?    true
                                   :route-template extended-route}])))

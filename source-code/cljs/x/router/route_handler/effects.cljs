@@ -106,13 +106,13 @@
   ; @usage
   ;  [:x.router/go-up!]
   (fn [{:keys [db]} _]
-      (let [parent-route (r route-handler.subs/get-current-route-parent db)]
+      (let [parent-route (r route-handler.subs/get-parent-route db)]
            [:x.router/go-to! parent-route])))
 
 (r/reg-event-fx :x.router/swap-to!
   ; @param (string) route-string
   ; @param (map)(opt) router-props
-  ;  {:route-parent (string)(opt)}
+  ;  {:parent-route (string)(opt)}
   ;
   ; @usage
   ;  [:x.router/swap-to! "/my-route"]
@@ -129,7 +129,7 @@
 (r/reg-event-fx :x.router/go-to!
   ; @param (string) route-string
   ; @param (map)(opt) route-props
-  ;  {:route-parent (string)(opt)}
+  ;  {:parent-route (string)(opt)}
   ;
   ; @usage
   ;  [:x.router/go-to! "/my-route"]

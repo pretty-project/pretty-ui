@@ -27,9 +27,9 @@
   [:x.router-go-to! "/my-route"])
 
 (r/reg-event-fx :go-to-your-route!
-  ; A {:route-parent "..."} beállítás használatával beállítható, hogy az útvonal
+  ; A {:parent-route "..."} beállítás használatával beállítható, hogy az útvonal
   ; szülő-útvonala, eltérjen az eredetileg beállított szülő-útvonaltól.
-  [:x.router-go-to! "/your-route" {:route-parent "/my-route"}])
+  [:x.router-go-to! "/your-route" {:parent-route "/my-route"}])
 
 
 

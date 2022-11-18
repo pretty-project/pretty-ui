@@ -28,7 +28,7 @@
   ; @param (keyword) item-key
   ;
   ; @return (*)
-  [db [_ engine-id item-key]]
+  [db [_ engine-id item-key {:keys [required?]}]]
   ; XXX#8173
   ; Az engine body komponensének React-fába csatolódása előtt a body komponens
   ; transfer-id tulajdonsága még nem elérhető, ezért addig az engine kliens-oldali
@@ -39,4 +39,4 @@
   ; megvalósítani, aminek szüksége van valamely szerver-oldali tulajdonságra!
   (if-let [transfer-id (r body.subs/get-body-prop db engine-id :transfer-id)]
           (get-in db [:engines :engine-handler/transfer-items transfer-id item-key])
-          (get-in db [:engines :engine-handler/transfer-items   engine-id item-key])))
+          (get-in db [:engines :engine-handler/transfer-items engine-id item-key])))
