@@ -40,7 +40,8 @@
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]
            {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
-                                           {:on-success [:item-editor/item-saved       editor-id]
+                                           {:display-progress? false
+                                            :on-success [:item-editor/item-saved       editor-id]
                                             :on-failure [:item-editor/save-item-failed editor-id]
                                             :query query :validator-f validator-f}]})))
 

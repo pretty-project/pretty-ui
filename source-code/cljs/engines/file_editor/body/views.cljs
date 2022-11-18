@@ -66,6 +66,8 @@
   ;  {:content-path (vector)(opt)
   ;    Default: core.helpers/default-content-path
   ;   :default-content (map)(opt)
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: true
   ;   :error-element (metamorphic-content)(opt)
   ;   :form-element (metamorphic-content)
   ;   :ghost-element (metamorphic-content)(opt)

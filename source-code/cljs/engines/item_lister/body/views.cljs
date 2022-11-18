@@ -122,6 +122,8 @@
   ; @param (keyword) lister-id
   ; @param (map) body-props
   ;  {:default-order-by (namespaced keyword)
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: true
   ;   :download-limit (integer)(opt)
   ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :error-element (metamorphic-content)(opt)

@@ -30,11 +30,12 @@
   ;
   ; @param (keyword) handler-id
   (fn [{:keys [db]} [_ handler-id]]
-      (let [query        (r download.queries/get-request-item-query          db handler-id)
-            validator-f #(r download.validators/request-item-response-valid? db handler-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                          db editor-id :display-progress?)
+            query             (r download.queries/get-request-item-query          db handler-id)
+            validator-f      #(r download.validators/request-item-response-valid? db handler-id %)]
            {:db       (r download.events/request-item! db handler-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                           {:display-progress? true
+                                           {:display-progress? display-progress?
                                             ; XXX#4057
                                             ; Az on-success helyett on-stalled időzítéssel a UI változásai
                                             ; egyszerre történnek meg a lekérés okozta {:handler-disabled? true}

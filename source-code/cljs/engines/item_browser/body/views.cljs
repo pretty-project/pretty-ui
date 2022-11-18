@@ -70,6 +70,8 @@
   ;    W/ {:label-key ...}
   ;   :default-item-id (string)
   ;   :default-order-by (namespaced keyword)
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: true
   ;   :download-limit (integer)(opt)
   ;    Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;   :error-element (metamorphic-content)(opt)

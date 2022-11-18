@@ -64,7 +64,8 @@
       (let [query        (r download.queries/get-request-item-query          db browser-id)
             validator-f #(r download.validators/request-item-response-valid? db browser-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                {:on-failure [:item-browser/set-engine-error! browser-id :failed-to-request-item]
+                                {:display-progress? false
+                                 :on-failure [:item-browser/set-engine-error! browser-id :failed-to-request-item]
                                  :on-success [:item-browser/receive-item!     browser-id]
                                  :query query :validator-f validator-f}])))
 

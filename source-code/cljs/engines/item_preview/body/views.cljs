@@ -65,7 +65,9 @@
 (defn body
   ; @param (keyword) preview-id
   ; @param (map) body-props
-  ;  {:error-element (metamorphic-content)(opt)
+  ;  {:display-progress? (boolean)(opt)
+  ;    Default: false
+  ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-id (string)
   ;   :item-path (vector)(opt)

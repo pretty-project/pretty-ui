@@ -15,6 +15,7 @@
 (ns engines.engine-handler.core.subs
     (:require [candy.api                            :refer [return]]
               [engines.engine-handler.body.subs     :as body.subs]
+              [engines.engine-handler.errors.subs   :as errors.subs]
               [engines.engine-handler.routes.subs   :as routes.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
               [map.api                              :as map]
@@ -72,14 +73,7 @@
   (if-let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
           (keyword (str                (name handler-key))
                    (str "synchronize-" (name request-key) "!"))
-          (let [transfer-id (r body.subs/get-body-prop db engine-id :transfer-id)]
-               (println "Missing handler-key!\nengine-id:"engine-id"\ntransfer-id:"transfer-id)
-               (println "The handler-key property is important for the engines to make mutation"
-                        "and resolver queries!"
-                        "\nThis property should transferred with the engine properties during the"
-                        "boot transfer request!"
-                        "\nDid you pass the transfer-id prop to the engine properly? (not required)"
-                        "\nDid you set the server-side initialization event for the engine?"))))
+          (r errors.subs/print-missing-handler-key db engine-id)))
 
 (defn engine-synchronizing?
   ; WARNING! NON-PUBLIC! DO NOT USE!

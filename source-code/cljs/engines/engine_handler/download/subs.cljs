@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.download.subs
-    (:require [engines.engine-handler.transfer.subs :as transfer.subs]
+    (:require [engines.engine-handler.errors.subs   :as errors.subs]
+              [engines.engine-handler.transfer.subs :as transfer.subs]
               [re-frame.api                         :refer [r]]))
 
 
@@ -34,9 +35,10 @@
   ;
   ; @return (keyword)
   [db [_ engine-id action-key]]
-  (let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
-       (keyword      (name handler-key)
-                (str (name action-key)))))
+  (if-let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
+          (keyword      (name handler-key)
+                   (str (name action-key)))
+          (r errors.subs/print-missing-handler-key db engine-id)))
 
 (defn get-resolver-answer
   ; WARNING! NON-PUBLIC! DO NOT USE!

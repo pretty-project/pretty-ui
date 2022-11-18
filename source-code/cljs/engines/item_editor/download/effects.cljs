@@ -30,11 +30,12 @@
   ;
   ; @param (keyword) editor-id
   (fn [{:keys [db]} [_ editor-id]]
-      (let [query        (r download.queries/get-request-item-query          db editor-id)
-            validator-f #(r download.validators/request-item-response-valid? db editor-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                          db editor-id :display-progress?)
+            query             (r download.queries/get-request-item-query          db editor-id)
+            validator-f      #(r download.validators/request-item-response-valid? db editor-id %)]
            {:db       (r download.events/request-item! db editor-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
-                                           {:display-progress? true
+                                           {:display-progress? display-progress?
                                             ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                             :on-stalled [:item-editor/receive-item!     editor-id]
                                             :on-failure [:item-editor/set-engine-error! editor-id :failed-to-request-item]

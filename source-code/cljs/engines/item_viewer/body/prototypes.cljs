@@ -28,10 +28,12 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:item-path (vector)
+  ;  {:display-progress? (boolean)
+  ;   :item-path (vector)
   ;   :transfer-id (keyword)}
   [viewer-id body-props]
-  (merge {:item-path (core.helpers/default-item-path viewer-id)
+  (merge {:display-progress? true
+          :item-path (core.helpers/default-item-path viewer-id)
           ; XXX#8173
           :transfer-id viewer-id}
          (param body-props)))

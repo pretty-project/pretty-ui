@@ -28,12 +28,14 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:item-path (vector)
+  ;  {:display-progress? (boolean)
+  ;   :item-path (vector)
   ;   :suggestions-path (vector)
   ;   :transfer-id (keyword)}
   [editor-id body-props]
-  (merge {:item-path        (core.helpers/default-item-path        editor-id)
-          :suggestions-path (core.helpers/default-suggestions-path editor-id)
+  (merge {:display-progress? true
+          :item-path         (core.helpers/default-item-path        editor-id)
+          :suggestions-path  (core.helpers/default-suggestions-path editor-id)
           ; XXX#8173
           :transfer-id editor-id}
          (param body-props)))

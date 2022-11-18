@@ -40,7 +40,8 @@
             validator-f #(r update.validators/delete-item-response-valid? db viewer-id %)]
            {:db       (r update.events/delete-item! db viewer-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
-                                           {:on-success [:item-viewer/item-deleted       viewer-id]
+                                           {:display-progress? false
+                                            :on-success [:item-viewer/item-deleted       viewer-id]
                                             :on-failure [:item-viewer/delete-item-failed viewer-id]
                                             :query query :validator-f validator-f}]})))
 
@@ -122,7 +123,8 @@
            {:db       (r x.ui/fake-process! db 15)
             :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
-                                              {:on-success [:item-viewer/delete-item-undid       viewer-id item-id]
+                                              {:display-progress? false
+                                               :on-success [:item-viewer/delete-item-undid       viewer-id item-id]
                                                :on-failure [:item-viewer/undo-delete-item-failed viewer-id]
                                                :query query :validator-f validator-f}]]})))
 
@@ -182,10 +184,11 @@
   ; @usage
   ;  [:item-viewer/duplicate-item! :my-viewer]
   (fn [{:keys [db]} [_ viewer-id]]
-      (let [query        (r update.queries/get-duplicate-item-query          db viewer-id)
-            validator-f #(r update.validators/duplicate-item-response-valid? db viewer-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                          db viewer-id :display-progress?)
+            query             (r update.queries/get-duplicate-item-query          db viewer-id)
+            validator-f      #(r update.validators/duplicate-item-response-valid? db viewer-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
-                                {:display-progress? true
+                                {:display-progress? display-progress?
                                  :on-success [:item-viewer/item-duplicated       viewer-id]
                                  :on-failure [:item-viewer/duplicate-item-failed viewer-id]
                                  :query query :validator-f validator-f}])))

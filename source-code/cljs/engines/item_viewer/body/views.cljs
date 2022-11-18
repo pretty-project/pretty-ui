@@ -66,6 +66,8 @@
   ;  {:auto-title? (boolean)(opt)
   ;    Default: false
   ;    W/ {:label-key ...}
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: true
   ;   :ghost-element (metamorphic-content)(opt)
   ;   :item-element (metamorphic-content)
   ;   :item-id (string)(opt)

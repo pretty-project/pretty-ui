@@ -67,6 +67,8 @@
   ;    Default: false
   ;    W/ {:label-key ...}
   ;   :default-item (map)(opt)
+  ;   :display-progress? (boolean)(opt)
+  ;    Default: true
   ;   :form-element (metamorphic-content)
   ;   :error-element (metamorphic-content)(opt)
   ;   :ghost-element (metamorphic-content)(opt)

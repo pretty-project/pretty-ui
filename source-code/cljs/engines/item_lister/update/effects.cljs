@@ -36,11 +36,12 @@
   ; @usage
   ;  [:item-lister/reorder-items! :my-lister [{...} {...}]]
   (fn [{:keys [db]} [_ lister-id reordered-items]]
-      (let [db           (r update.events/reorder-items!                    db lister-id reordered-items)
-            query        (r update.queries/get-reorder-items-query          db lister-id)
-            validator-f #(r update.validators/reorder-items-response-valid? db lister-id %)]
+      (let [db                (r update.events/reorder-items!                    db lister-id reordered-items)
+            display-progress? (r body.subs/get-body-prop                         db lister-id :display-progress?)
+            query             (r update.queries/get-reorder-items-query          db lister-id)
+            validator-f      #(r update.validators/reorder-items-response-valid? db lister-id %)]
            {:db db :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                                  {:display-progress? true
+                                                  {:display-progress? display-progress?
                                                    :on-success [:item-lister/items-reordered      lister-id]
                                                    :on-failure [:item-lister/reorder-items-failed lister-id]
                                                    :query query :validator-f validator-f}]})))
@@ -75,7 +76,8 @@
             validator-f #(r update.validators/delete-items-response-valid? db lister-id %)]
            {:db       (r update.events/delete-selected-items! db lister-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                           {:on-success [:item-lister/items-deleted       lister-id]
+                                           {:display-progress? false
+                                            :on-success [:item-lister/items-deleted       lister-id]
                                             :on-failure [:item-lister/delete-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 
@@ -158,7 +160,8 @@
            {:db         (r x.ui/fake-process! db 15)
             :dispatch-n [[:x.ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                              {:on-success [:item-lister/delete-items-undid       lister-id]
+                                              {:display-progress? false
+                                               :on-success [:item-lister/delete-items-undid       lister-id]
                                                :on-failure [:item-lister/undo-delete-items-failed lister-id]
                                                :query query :validator-f validator-f}]]})))
 
@@ -214,7 +217,8 @@
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
            {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                           {:on-success [:item-lister/items-duplicated       lister-id]
+                                           {:display-progress? false
+                                            :on-success [:item-lister/items-duplicated       lister-id]
                                             :on-failure [:item-lister/duplicate-items-failed lister-id]
                                             :query query :validator-f validator-f}]})))
 

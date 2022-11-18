@@ -46,11 +46,12 @@
       ; - Egy időben egy változtatást lehetséges az elemen végrehajtani, mert egy darab biztonsági
       ;   mentéssel nem lehetséges az időben átfedésbe kerülő változtatásokat kezelni, ezért a szerver
       ;   válaszának megérkezéséig az elem {:disabled? true} állapotban van.
-      (let [db           (r update.events/update-item!                    db browser-id item-id item-changes)
-            query        (r update.queries/get-update-item-query          db browser-id item-id)
-            validator-f #(r update.validators/update-item-response-valid? db browser-id %)]
+      (let [db                (r update.events/update-item!                    db browser-id item-id item-changes)
+            display-progress? (r body.subs/get-body-prop                       db browser-id :display-progress?)
+            query             (r update.queries/get-update-item-query          db browser-id item-id)
+            validator-f      #(r update.validators/update-item-response-valid? db browser-id %)]
            {:db db :dispatch [:pathom/send-query! :storage.media-browser/update-item!
-                                                  {:display-progress? true
+                                                  {:display-progress? display-progress?
                                                    :on-success [:item-browser/item-updated       browser-id item-id]
                                                    :on-failure [:item-browser/update-item-failed browser-id item-id]
                                                    :query query :validator-f validator-f}]})))
@@ -107,7 +108,8 @@
             validator-f #(r update.validators/delete-item-response-valid? db browser-id %)]
            {:db       (r update.events/delete-item! db browser-id item-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                           {:on-success [:item-browser/item-deleted       browser-id item-id]
+                                           {:display-progress? false
+                                            :on-success [:item-browser/item-deleted       browser-id item-id]
                                             :on-failure [:item-browser/delete-item-failed browser-id item-id]
                                             :query query :validator-f validator-f}]})))
 
@@ -197,7 +199,8 @@
            {:db       (r x.ui/fake-process! db 15)
             :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                              {:on-success [:item-browser/delete-item-undid       browser-id]
+                                              {:display-progress? false
+                                               :on-success [:item-browser/delete-item-undid       browser-id]
                                                :on-failure [:item-browser/undo-delete-item-failed browser-id]
                                                :query query :validator-f validator-f}]]})))
 
@@ -261,7 +264,8 @@
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
            {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                           {:on-success [:item-browser/item-duplicated       browser-id]
+                                           {:display-progress? false
+                                            :on-success [:item-browser/item-duplicated       browser-id]
                                             :on-failure [:item-browser/duplicate-item-failed browser-id]
                                             :query query :validator-f validator-f}]})))
 

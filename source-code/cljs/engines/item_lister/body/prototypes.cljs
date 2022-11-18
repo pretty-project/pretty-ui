@@ -29,16 +29,18 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:download-limit (integer)
+  ;  {:display-progress? (boolean)
+  ;   :download-limit (integer)
   ;   :items-path (vector)
   ;   :order-key (keyword)
   ;   :placeholder (metamorphic-content)
   ;   :transfer-id (keyword)}
   [lister-id body-props]
-  (merge {:items-path     (core.helpers/default-items-path lister-id)
-          :download-limit core.config/DEFAULT-DOWNLOAD-LIMIT
-          :order-key      :order
-          :placeholder    :no-items-to-show
+  (merge {:display-progress? true
+          :download-limit    core.config/DEFAULT-DOWNLOAD-LIMIT
+          :items-path        (core.helpers/default-items-path lister-id)
+          :order-key         :order
+          :placeholder       :no-items-to-show
           ; XXX#8173
           :transfer-id lister-id}
          (param body-props)))

@@ -30,11 +30,12 @@
   ;
   ; @param (keyword) viewer-id
   (fn [{:keys [db]} [_ viewer-id]]
-      (let [query        (r download.queries/get-request-item-query          db viewer-id)
-            validator-f #(r download.validators/request-item-response-valid? db viewer-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                          db viewer-id :display-progress?)
+            query             (r download.queries/get-request-item-query          db viewer-id)
+            validator-f      #(r download.validators/request-item-response-valid? db viewer-id %)]
            {:db       (r download.events/request-item! db viewer-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
-                                           {:display-progress? true
+                                           {:display-progress? display-progress?
                                             ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                             :on-stalled [:item-viewer/receive-item!     viewer-id]
                                             :on-failure [:item-viewer/set-engine-error! viewer-id :failed-to-request-item]

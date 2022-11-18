@@ -49,11 +49,12 @@
       ; - A {:reload-mode? true} beállítás csak a query elkészítéséhez szükséges, utána már nincs
       ;   szükség rá, hogy érvényben maradjon, ezért a set-reload-mode! függvénnyel megváltoztatott
       ;   db értéke nem kerül eltárolásra!
-      (let [db           (r core.events/set-reload-mode!                      db lister-id)
-            query        (r download.queries/get-request-items-query          db lister-id)
-            validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
+      (let [db                (r core.events/set-reload-mode!                      db lister-id)
+            display-progress? (r body.subs/get-body-prop                           db lister-id :display-progress?)
+            query             (r download.queries/get-request-items-query          db lister-id)
+            validator-f      #(r download.validators/request-items-response-valid? db lister-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                {:display-progress? true
+                                {:display-progress? display-progress?
                                  ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
                                  :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
                                  :on-failure [:item-lister/set-engine-error!       lister-id :failed-to-reload-items]
@@ -108,10 +109,11 @@
       ;   az újonnan letöltött dokumentumok már kirenderelésre kerüljenek, amíg a letöltést jelző
       ;   felirat még megjelenik a lista végén.
       (if (r core.subs/request-items? db lister-id)
-          (let [query        (r download.queries/get-request-items-query          db lister-id)
-                validator-f #(r download.validators/request-items-response-valid? db lister-id %)]
+          (let [display-progress? (r body.subs/get-body-prop                           db lister-id :display-progress?)
+                query             (r download.queries/get-request-items-query          db lister-id)
+                validator-f      #(r download.validators/request-items-response-valid? db lister-id %)]
                [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                    {:display-progress? true
+                                    {:display-progress? display-progress?
                                      :on-stalled [:item-lister/receive-items!    lister-id]
                                      :on-failure [:item-lister/set-engine-error! lister-id :failed-to-request-items]
                                      :query query :validator-f validator-f}]))))

@@ -21,7 +21,7 @@
 
 (def app-codename    "x4")
 (def app-description "Are we alone in the universe?")
-(def app-version     "4.8.6")
+(def app-version     "4.8.7")
 
 
 

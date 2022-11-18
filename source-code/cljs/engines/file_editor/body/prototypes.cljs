@@ -29,9 +29,11 @@
   ;
   ; @return (map)
   ;  {:content-path (vector)
+  ;   :display-progress? (boolean)
   ;   :transfer-id (keyword)}
   [editor-id body-props]
-  (merge {:content-path (core.helpers/default-content-path editor-id)
+  (merge {:content-path      (core.helpers/default-content-path editor-id)
+          :display-progress? true
           ; XXX#8173
           :transfer-id editor-id}
          (param body-props)))

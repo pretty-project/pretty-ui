@@ -41,7 +41,8 @@
             validator-f #(r update.validators/save-item-response-valid? db handler-id %)]
            {:db       (r x.ui/fake-process! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                           {:on-success [:item-handler/item-saved       handler-id]
+                                           {:display-progress? false
+                                            :on-success [:item-handler/item-saved       handler-id]
                                             :on-failure [:item-handler/save-item-failed handler-id]
                                             :query query :validator-f validator-f}]})))
 
@@ -113,7 +114,8 @@
             validator-f #(r update.validators/delete-item-response-valid? db handler-id %)]
            {:db       (r update.events/delete-item! db handler-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                           {:on-success [:item-handler/item-deleted       handler-id]
+                                           {:display-progress? false
+                                            :on-success [:item-handler/item-deleted       handler-id]
                                             :on-failure [:item-handler/delete-item-failed handler-id]
                                             :query query :validator-f validator-f}]})))
 
@@ -195,7 +197,8 @@
            {:db       (r x.ui/fake-process! db 15)
             :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                              {:on-success [:item-handler/delete-item-undid       handler-id item-id]
+                                              {:display-progress? false
+                                               :on-success [:item-handler/delete-item-undid       handler-id item-id]
                                                :on-failure [:item-handler/undo-delete-item-failed handler-id]
                                                :query query :validator-f validator-f}]]})))
 
@@ -255,10 +258,11 @@
   ; @usage
   ;  [:item-handler/duplicate-item! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
-      (let [query        (r update.queries/get-duplicate-item-query          db handler-id)
-            validator-f #(r update.validators/duplicate-item-response-valid? db handler-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                          db handler-id :display-progress?)
+            query             (r update.queries/get-duplicate-item-query          db handler-id)
+            validator-f      #(r update.validators/duplicate-item-response-valid? db handler-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                {:display-progress? true
+                                {:display-progress? display-progress?
                                  :on-success [:item-handler/item-duplicated       handler-id]
                                  :on-failure [:item-handler/duplicate-item-failed handler-id]
                                  :query query :validator-f validator-f}])))

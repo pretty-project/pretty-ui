@@ -14,6 +14,7 @@
 
 (ns engines.file-editor.update.effects
     (:require [engines.file-editor.backup.events     :as backup.events]
+              [engines.file-editor.body.subs         :as body.subs]
               [engines.file-editor.core.subs         :as core.subs]
               [engines.file-editor.update.queries    :as update.queries]
               [engines.file-editor.update.subs       :as update.subs]
@@ -31,10 +32,11 @@
   ; @usage
   ;  [:file-editor/save-content! :my-editor]
   (fn [{:keys [db]} [_ editor-id]]
-      (let [query        (r update.queries/get-save-content-query          db editor-id)
-            validator-f #(r update.validators/save-content-response-valid? db editor-id %)]
+      (let [display-progress? (r body.subs/get-body-prop                        db editor-id :display-progress?)
+            query             (r update.queries/get-save-content-query          db editor-id)
+            validator-f      #(r update.validators/save-content-response-valid? db editor-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db editor-id)
-                                {:display-progress? true
+                                {:display-progress? display-progress?
                                  :on-success [:file-editor/content-saved       editor-id]
                                  :on-failure [:file-editor/save-content-failed editor-id]
                                  :query query :validator-f validator-f}])))
