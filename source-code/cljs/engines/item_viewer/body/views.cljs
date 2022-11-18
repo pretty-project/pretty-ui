@@ -30,7 +30,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (if-let [ghost-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :ghost-element])]
-          [x.components/content ghost-element]))
+          [x.components/content viewer-id ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (if-let [error-element @(r/subscribe [:item-lister/get-body-prop viewer-id :error-element])]
-          [x.components/content error-element]))
+          [x.components/content viewer-id error-element]))
 
 (defn- item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) viewer-id
   [viewer-id]
   (let [item-element @(r/subscribe [:item-viewer/get-body-prop viewer-id :item-element])]
-       [x.components/content item-element]))
+       [x.components/content viewer-id item-element]))
 
 (defn- body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

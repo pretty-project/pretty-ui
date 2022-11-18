@@ -46,6 +46,7 @@
 
 ; engines.item-lister.core.events
 (def set-meta-item! core.events/set-meta-item!)
+(def set-items!     core.events/set-items!)
 
 ; engines.item-lister.core.subs
 (def get-meta-item           core.subs/get-meta-item)

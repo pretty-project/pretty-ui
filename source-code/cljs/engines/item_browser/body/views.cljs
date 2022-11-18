@@ -18,7 +18,8 @@
               [engines.item-lister.body.views       :as body.views]
               [reagent.api                          :as reagent]
               [tools.infinite-loader.api            :as infinite-loader]
-              [re-frame.api                         :as r]))
+              [re-frame.api                         :as r]
+              [x.components.api                     :as x.components]))
 
 
 
@@ -41,7 +42,7 @@
   ; @param (keyword) browser-id
   [browser-id]
   (if-let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
-          [error-element browser-id]))
+          [x.components/content browser-id error-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -94,7 +95,7 @@
   ;  [body :my-browser {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [browser-id items] [:div ...])
+  ;  (defn my-list-element [browser-id] [:div ...])
   ;  [body :my-browser {:list-element #'my-list-element
   ;                     :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]

@@ -47,6 +47,7 @@
 
 ; engines.item-browser.core.events
 (def set-meta-item! core.events/set-meta-item!)
+(def set-items!     core.events/set-items!)
 
 ; engines.item-browser.core.subs
 (def get-meta-item       core.subs/get-meta-item)

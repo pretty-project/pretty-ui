@@ -31,6 +31,7 @@
 (def set-meta-item!        engines.item-lister.core.events/set-meta-item!)
 (def remove-meta-items!    engines.item-lister.core.events/remove-meta-items!)
 (def set-engine-error!     engines.item-lister.core.events/set-engine-error!)
+(def set-items!            engines.item-lister.core.events/set-items!)
 (def reset-downloads!      engines.item-lister.core.events/reset-downloads!)
 (def use-default-order-by! engines.item-lister.core.events/use-default-order-by!)
 (def filter-items!         engines.item-lister.core.events/filter-items!)

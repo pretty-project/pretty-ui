@@ -30,7 +30,7 @@
   ; @param (keyword) handler-id
   [handler-id]
   (if-let [ghost-element @(r/subscribe [:item-handler/get-body-prop handler-id :ghost-element])]
-          [x.components/content ghost-element]))
+          [x.components/content handler-id ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) handler-id
   [handler-id]
   (if-let [error-element @(r/subscribe [:item-handler/get-body-prop handler-id :error-element])]
-          [x.components/content error-element]))
+          [x.components/content handler-id error-element]))
 
 (defn item-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) handler-id
   [handler-id]
   (let [item-element @(r/subscribe [:item-handler/get-body-prop handler-id :item-element])]
-       [x.components/content item-element]))
+       [x.components/content handler-id item-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

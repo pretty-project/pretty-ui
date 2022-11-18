@@ -90,6 +90,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn search-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  [elements/icon-button ::search-icon-button
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         ;:on-click      [:x.router/go-home!]
+                         :icon :search}])
+                        ;:badge-color :secondary
+
 (defn go-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -200,7 +210,8 @@
   [:div#surface-a--header [:div#surface-a--header-content [header-shadow]
                                                           [:div.surface-a--header-block [navigation-icon-button]]
                                                           [:div.surface-a--header-block [header-title]]
-                                                          [:div.surface-a--header-block [menu-icon-button]]]])
+                                                          [:div.surface-a--header-block [search-icon-button]
+                                                                                        [menu-icon-button]]]])
 
 (defn- header
   ; WARNING! NON-PUBLIC! DO NOT USE!

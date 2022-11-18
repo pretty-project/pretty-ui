@@ -74,6 +74,9 @@
   ;   :on-click (metamorphic-event)(opt)
   ;   :stop-propagation? (boolean)(opt)}
   [_ {:keys [disabled? on-click stop-propagation?]}]
+  ; XXX#0061
+  ; A {:disabled? true} állapotú button elemnek is szükséges megadni az on-click
+  ; tulajdonságát, a stop-propagation! függvény alkalmazása miatt!
   (if disabled? (fn [%] (if stop-propagation? (dom/stop-propagation! %)))
                 (fn [%] (if stop-propagation? (dom/stop-propagation! %))
                         (r/dispatch on-click))))
@@ -97,7 +100,7 @@
   {:data-icon-family   icon-family
    :data-icon-position icon-position})
 
-(defn button-color-attributes
+(defn button-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -168,10 +171,11 @@
   ; Az id attribútum használatával a gomb azonosítható válik a DOM műveletekhez.
   ; Pl.: Fókusz beállítása
   (merge {:data-selectable false}
-         (button-color-attributes  button-id button-props)
+         (button-style-attributes  button-id button-props)
          (button-font-attributes   button-id button-props)
          (button-layout-attributes button-id button-props)
          (if disabled? {:disabled       true
+                        ; XXX#0061
                         :on-click       (on-click-f   button-id button-props)}
                        {:id             (hiccup/value button-id "body")
                         :on-click       (on-click-f   button-id button-props)

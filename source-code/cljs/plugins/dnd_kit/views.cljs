@@ -20,7 +20,7 @@
               [plugins.dnd-kit.helpers    :as helpers]
               [plugins.dnd-kit.prototypes :as prototypes]
               [plugins.dnd-kit.state      :as state]
-              [reagent.api                :as reagent :refer [ratom]]))
+              [reagent.api                :as reagent :refer [component? ratom]]))
 
 
 
@@ -69,12 +69,11 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:common-props (map)(opt)
-  ;   :item-element (metamorphic-content)
+  ;  {:item-element (metamorphic-content)
   ;   :item-id-f (function)}
   ; @param (integer) item-dex
   ; @param (string) item-id
-  [sortable-id {:keys [common-props item-id-f item-element]} item-dex item-id]
+  [sortable-id {:keys [item-id-f item-element]} item-dex item-id]
   (let [dnd-kit-props (js->clj (useSortable (clj->js {:id item-id})) :keywordize-keys true)
         {:keys [attributes isDragging listeners setNodeRef transform transition]} dnd-kit-props
         handle-attributes (merge attributes listeners {:tab-index -1})
@@ -84,8 +83,10 @@
                            :style {:transition transition :transform (.toString (.-Transform CSS) (clj->js transform))}
                            :data-dragging isDragging}
         item (get-in @state/SORTABLE-STATE [sortable-id :sortable-items item-id])]
-       (if common-props [item-element sortable-id common-props item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}]
-                        [item-element sortable-id              item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}])))
+       (cond (component? item-element)
+             (conj       item-element item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging})
+             (fn?        item-element)
+             [           item-element item-dex item {:item-attributes item-attributes :handle-attributes handle-attributes :dragging? isDragging}])))
 
 (defn- render-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,8 +143,7 @@
 (defn body
   ; @param (keyword)(opt) sortable-id
   ; @param (map) sortable-props
-  ;  {:common-props (map)(opt)
-  ;   :item-element (metamorphic-content)
+  ;  {:item-element (component or symbol)
   ;   :item-id-f (function)(opt)
   ;    Default: return
   ;   :items (vector)
@@ -158,16 +158,15 @@
   ;  [body :my-sortable {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id item-dex item drag-props]
+  ;  (defn my-item-element [item-dex item drag-props]
   ;                        (let [{:keys [dragging? handle-attributes item-attributes]} drag-props]))
   ;  [body :my-sortable {:item-element #'my-item-element
   ;                      :items        ["My item" "Your item"]}]
   ;
   ; @usage
-  ;  (defn my-item-element [sortable-id common-props item-dex item drag-props]
+  ;  (defn my-item-element [my-param item-dex item drag-props]
   ;                        (let [{:keys [dragging? handle-attributes item-attributes]} drag-props]))
-  ;  [body :my-sortable {:common-props {...}
-  ;                      :item-element #'my-item-element
+  ;  [body :my-sortable {:item-element [my-item-element "My value"]
   ;                      :items        ["My item" "Your item"]}]
   ;
   ; @usage

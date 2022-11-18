@@ -76,7 +76,7 @@
           (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
                 data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
                (if-not (and all-items-downloaded? data-received?)
-                       [x.components/content ghost-element]))))
+                       [x.components/content lister-id ghost-element]))))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +84,7 @@
   ; @param (keyword) lister-id
   [lister-id]
   (if-let [error-element @(r/subscribe [:item-lister/get-body-prop lister-id :error-element])]
-          [x.components/content error-element]))
+          [x.components/content lister-id error-element]))
 
 (defn list-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,9 +93,8 @@
   [lister-id]
   ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét, hogy a lista-elemek
   ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
-  (let [downloaded-items @(r/subscribe [:item-lister/get-downloaded-items lister-id])
-        list-element     @(r/subscribe [:item-lister/get-body-prop        lister-id :list-element])]
-       [list-element lister-id downloaded-items]))
+  (let [list-element @(r/subscribe [:item-lister/get-body-prop lister-id :list-element])]
+       [x.components/content lister-id list-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -135,7 +134,7 @@
   ;  [body :my-lister {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [lister-id items] [:div ...])
+  ;  (defn my-list-element [lister-id] [:div ...])
   ;  [body :my-lister {:list-element #'my-list-element
   ;                    :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]

@@ -230,3 +230,19 @@
                           (r set-view-id! db engine-id view-id)
                           (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
                                (r set-view-id! db engine-id default-view-id))))))
+
+
+
+;; -- Downloaded items events -------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn set-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (vector) items
+  ;
+  ; @return (maps in vector)
+  [db [_ engine-id items]]
+  (let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+       (assoc-in db items-path items)))

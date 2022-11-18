@@ -67,7 +67,7 @@
   ;
   ; @param (keyword) content-id
   ; @param (map) content-props
-  ;  {:content (function)
+  ;  {:content (symbol)
   ;   :params (vector)(opt)}
   [content-id {:keys [content params]}]
   (if params (vector/concat-items [content content-id] params)
@@ -98,7 +98,7 @@
   ;
   ; @param (keyword) content-id
   ; @param (map) content-props
-  ;  {:content (component, function, keyword, hiccup, integer or string)}
+  ;  {:content (component, keyword, hiccup, integer, string or symbol)}
   [content-id {:keys [content] :as content-props}]
   ; #' The symbol must resolve to a var, and the Var object itself (not its value) is returned.
   ;
@@ -118,7 +118,7 @@
 (defn component
   ; @param (keyword)(opt) content-id
   ; @param (metamorphic-content) content
-  ;  {:content (component, function, keyword, hiccup, integer, number or string)(opt)
+  ;  {:content (component, keyword, hiccup, integer, number, string or symbol)(opt)
   ;   :params (vector)(opt)
   ;   :prefix (string)(opt)
   ;    W/ {:content (keyword or string)}

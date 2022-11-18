@@ -30,7 +30,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (if-let [ghost-element @(r/subscribe [:item-editor/get-body-prop editor-id :ghost-element])]
-          [x.components/content ghost-element]))
+          [x.components/content editor-id ghost-element]))
 
 (defn error-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (if-let [error-element @(r/subscribe [:item-editor/get-body-prop editor-id :error-element])]
-          [x.components/content error-element]))
+          [x.components/content editor-id error-element]))
 
 (defn form-element
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,7 +46,7 @@
   ; @param (keyword) editor-id
   [editor-id]
   (let [form-element @(r/subscribe [:item-editor/get-body-prop editor-id :form-element])]
-       [x.components/content form-element]))
+       [x.components/content editor-id form-element]))
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
