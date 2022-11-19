@@ -15,6 +15,28 @@
 
 
 
+/***** Debug *****/
+
+/* A [data-debug="true"]::after pszeudóelem használatával az egyes elemeken
+ * a debug animáció jelzi azok újrarenderelődését */
+
+[data-debug="true"]::after {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-name: opacity-1-0;
+  background-color: rgba(200, 50, 50, .3);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/***** Debug *****/
+
+
 /***** Disabled *****/
 
 /* @usage

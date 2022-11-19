@@ -16,8 +16,8 @@
     (:require [candy.api                          :refer [return]]
               [mid.x.router.route-handler.helpers :as route-handler.helpers]
               [plugins.clerk.api                  :as clerk]
-              [re-frame.api                       :as r]
-              [reagent.api                        :as reagent]))
+              [plugins.reagent.api                :as reagent]
+              [re-frame.api                       :as r]))
 
 
 

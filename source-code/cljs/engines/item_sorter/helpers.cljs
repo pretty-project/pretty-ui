@@ -14,8 +14,8 @@
 
 (ns engines.item-sorter.helpers
     (:require [engines.item-sorter.state :as state]
-              [re-frame.api              :as r]
-              [reagent.api               :as reagent]))
+              [plugins.reagent.api       :as reagent]
+              [re-frame.api              :as r]))
 
 
 

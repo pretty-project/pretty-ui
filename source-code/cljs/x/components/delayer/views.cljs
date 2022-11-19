@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.delayer.views
-    (:require [random.api                   :as random]
-              [reagent.api                  :as reagent]
+    (:require [plugins.reagent.api          :as reagent]
+              [random.api                   :as random]
               [x.components.content.views   :as content.views]
               [x.components.delayer.helpers :as delayer.helpers]
               [x.components.delayer.state   :as delayer.state]))

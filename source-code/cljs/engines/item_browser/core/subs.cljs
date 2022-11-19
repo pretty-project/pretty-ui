@@ -42,6 +42,7 @@
 (def get-current-order-by    engines.item-lister.core.subs/get-current-order-by)
 
 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -136,6 +137,12 @@
 ; @usage
 ;  [:item-browser/get-meta-item :my-browser :my-item]
 (r/reg-sub :item-browser/get-meta-item get-meta-item)
+
+; @param (keyword) browser-id
+;
+; @usage
+;  [:item-browser/get-downloaded-items :my-browser]
+(r/reg-sub :item-browser/get-downloaded-items get-downloaded-items)
 
 ; @param (keyword) browser-id
 ;

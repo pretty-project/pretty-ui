@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.delayer.helpers
-    (:require [reagent.api                :refer [ratom]]
+    (:require [plugins.reagent.api        :refer [ratom]]
               [time.api                   :as time]
               [x.components.delayer.state :as delayer.state]))
 

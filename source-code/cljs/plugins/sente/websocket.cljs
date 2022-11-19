@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns sente.websocket
+(ns plugins.sente.websocket
     (:require-macros [cljs.core.async.macros :as asyncm :refer (go go-loop)])
     (:require        [cljs.core.async        :as async  :refer (<! >! put! chan)]
                      [taoensso.sente         :as sente  :refer (cb-success?)]))

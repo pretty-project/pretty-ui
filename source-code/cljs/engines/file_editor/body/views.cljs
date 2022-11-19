@@ -15,7 +15,7 @@
 (ns engines.file-editor.body.views
     (:require [engines.file-editor.body.prototypes :as body.prototypes]
               [engines.file-editor.core.helpers    :as core.helpers]
-              [reagent.api                         :as reagent]
+              [plugins.reagent.api                 :as reagent]
               [x.components.api                    :as x.components]
               [re-frame.api                        :as r]))
 

@@ -17,7 +17,7 @@
               [engines.item-lister.body.prototypes :as body.prototypes]
               [engines.item-lister.core.helpers    :as core.helpers]
               [logical.api                         :refer [nor]]
-              [reagent.api                         :as reagent]
+              [plugins.reagent.api                 :as reagent]
               [re-frame.api                        :as r]
               [tools.infinite-loader.api           :as infinite-loader]
               [x.components.api                    :as x.components]))

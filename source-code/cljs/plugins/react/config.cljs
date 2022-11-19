@@ -12,20 +12,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.references
-    (:require [reagent.core :as core]))
+(ns plugins.react.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn arguments
-  ; @param (?) this
-  ;
-  ; @usage
-  ;  (lifecycles {:component-did-update (fn [this] (arguments this))})
-  ;
-  ; @return (*)
-  [this]
-  (-> this core/argv rest))
+; @constant (ms)
+(def DEFAULT-ANIMATION-TIMEOUT 500)

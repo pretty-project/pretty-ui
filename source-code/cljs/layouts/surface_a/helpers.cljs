@@ -14,7 +14,7 @@
 
 (ns layouts.surface-a.helpers
     (:require [layouts.surface-a.state :as state]
-              [reagent.api             :as reagent]
+              [plugins.reagent.api     :as reagent]
               [x.environment.api       :as x.environment]))
 
 

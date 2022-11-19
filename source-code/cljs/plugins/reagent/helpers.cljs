@@ -12,28 +12,27 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.atom
-    (:require [reagent.core :as reagent.core]))
+(ns plugins.reagent.helpers)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; reagent.core
-(def ratom reagent.core/atom)
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn not!
-  ; @param (atom) atom
+(defn component?
+  ; @param (*)
   ;
-  ; @usage
-  ;  (not! my-atom)
+  ; @example
+  ;  (component? [:div "..."])
+  ;  =>
+  ;  false
   ;
-  ; @return (atom)
-  [atom]
-  (swap! atom not))
+  ; @example
+  ;  (component? [my-component "..."])
+  ;  =>
+  ;  true
+  ;
+  ; @return (boolean)
+  [n]
+  (and (-> n vector?)
+       (-> n first fn?)))

@@ -13,9 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.element.side-effects
-    (:require [elements.target-handler.helpers :as target-handler.helpers]
-              [re-frame.api                    :as r]
-              [x.environment.api               :as x.environment]))
+    (:require [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 
 
@@ -27,14 +26,14 @@
   ;
   ; @param (keyword) element-id
   [element-id]
-  (-> element-id target-handler.helpers/element-id->target-id x.environment/focus-element!))
+  (-> element-id x.environment/focus-element!))
 
 (defn blur-element!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   [element-id]
-  (-> element-id target-handler.helpers/element-id->target-id x.environment/blur-element!))
+  (-> element-id x.environment/blur-element!))
 
 
 

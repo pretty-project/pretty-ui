@@ -20,8 +20,8 @@
 
 (ns x.ui.renderer.views
     (:require [hiccup.api               :as hiccup]
+              [plugins.reagent.api      :as reagent]
               [re-frame.api             :as r :refer [r]]
-              [reagent.api              :as reagent]
               [vector.api               :as vector]
               [x.ui.renderer.helpers    :as renderer.helpers]
               [x.ui.renderer.prototypes :as renderer.prototypes]))

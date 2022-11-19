@@ -26,6 +26,9 @@
            :age-n
            {:en "Age: %"
             :hu "Kor: %"}
+           :b
+           {:en "B"
+            :hu "B"}
            :cm
            {:en "cm"
             :hu "cm"}
@@ -53,6 +56,9 @@
            :dm
            {:en "dm"
             :hu "dm"}
+           :gb
+           {:en "GB"
+            :hu "GB"}
            :gr
            {:en "gr"
             :hu "gr"}
@@ -92,6 +98,9 @@
            :inner-width-n
            {:en "Inner width: %"
             :hu "Belső szélesség: %"}
+           :kb
+           {:en "KB"
+            :hu "KB"}
            :kg
            {:en "kg"
             :hu "kg"}
@@ -113,6 +122,9 @@
            :m
            {:en "m"
             :hu "m"}
+           :mb
+           {:en "MB"
+            :hu "MB"}
            :meter
            {:en "Meter"
             :hu "Méter"}
@@ -158,12 +170,15 @@
            :month-unit
            {:en "month(s)"
             :hu "hónap"}
-           :n
-           {:en "%"
-            :hu "%"}
            :ms
            {:en "ms"
             :hu "ms"}
+           :n
+           {:en "%"
+            :hu "%"}
+           :n-b
+           {:en "% B"
+            :hu "% B"}
            :n-cm
            {:en "% cm"
             :hu "% cm"}
@@ -176,6 +191,9 @@
            :n-dm
            {:en "% dm"
             :hu "% dm"}
+           :n-gb
+           {:en "% GB"
+            :hu "% GB"}
            :n-gr
            {:en "% gr"
             :hu "% gr"}
@@ -185,6 +203,9 @@
            :n-hours
            {:en "% hour(s)"
             :hu "% óra"}
+           :n-kb
+           {:en "% KB"
+            :hu "% KB"}
            :n-kg
            {:en "% kg"
             :hu "% kg"}
@@ -194,6 +215,9 @@
            :n-m
            {:en "% m"
             :hu "% m"}
+           :n-mb
+           {:en "% MB"
+            :hu "% MB"}
            :n-mg
            {:en "% mg"
             :hu "% mg"}
@@ -227,6 +251,9 @@
            :n-t
            {:en "% T"
             :hu "% T"}
+           :n-tb
+           {:en "% TB"
+            :hu "% TB"}
            :n-units
            {:en "% unit(s)"
             :hu "% egység"}
@@ -275,6 +302,9 @@
            :t
            {:en "T"
             :hu "T"}
+           :tb
+           {:en "TB"
+            :hu "TB"}
            :today
            {:en "Today"
             :hu "Ma"}

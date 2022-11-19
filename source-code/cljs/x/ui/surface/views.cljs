@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.surface.views
-    (:require [re-frame.api         :as r]
-              [reagent.api          :as reagent]
+    (:require [plugins.reagent.api  :as reagent]
+              [re-frame.api         :as r]
               [x.components.api     :as x.components]
               [x.environment.api    :as x.environment]
               [x.ui.renderer.views  :rename {component renderer}]

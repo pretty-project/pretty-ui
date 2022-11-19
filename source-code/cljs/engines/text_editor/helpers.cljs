@@ -15,8 +15,8 @@
 (ns engines.text-editor.helpers
     (:require [engines.text-editor.config :as config]
               [engines.text-editor.state  :as state]
-              [re-frame.api               :as r]
-              [reagent.api                :as reagent]))
+              [plugins.reagent.api        :as reagent]
+              [re-frame.api               :as r]))
 
 
 

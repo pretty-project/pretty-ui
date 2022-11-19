@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.image-loader.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [plugins.reagent.api :refer [ratom]]))
 
 
 

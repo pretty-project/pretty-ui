@@ -12,30 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.horizontal-separator
-    (:require [candy.api           :refer [param]]
-              [elements.engine.api :as engine]
-              [random.api          :as random]))
+(ns elements.vertical-separator.views
+    (:require [elements.vertical-separator.helpers    :as vertical-separator.helpers]
+              [elements.vertical-separator.prototypes :as vertical-separator.prototypes]
+              [random.api                             :as random]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- separator-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) separator-props
-  ;
-  ; @return (map)
-  ;  {:size (keyword)}
-  [separator-props]
-  (merge {:size :s}
-         (param separator-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn element
@@ -46,13 +30,13 @@
   ;    Default: :s}
   ;
   ; @usage
-  ;  [horizontal-separator {...}]
+  ;  [vertical-separator {...}]
   ;
   ; @usage
-  ;  [horizontal-separator :my-horizontal-separator {...}]
+  ;  [vertical-separator :my-vertical-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 
   ([separator-id separator-props]
-   (let [separator-props (separator-props-prototype separator-props)]
-        [:div.e-horizontal-separator (engine/element-attributes separator-id separator-props)])))
+   (let [separator-props (vertical-separator.prototypes/separator-props-prototype separator-props)]
+        [:div.e-vertical-separator (vertical-separator.helpers/separator-attributes separator-id separator-props)])))

@@ -12,8 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns react.transitions
-    (:require [react.config           :as config]
+(ns plugins.react.transitions
+    (:require [plugins.react.config   :as config]
               [react-transition-group :as react-transition-group]))
 
 

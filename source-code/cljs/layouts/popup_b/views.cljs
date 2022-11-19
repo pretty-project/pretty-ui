@@ -15,8 +15,8 @@
 (ns layouts.popup-b.views
     (:require [layouts.popup-b.helpers    :as helpers]
               [layouts.popup-b.prototypes :as prototypes]
+              [plugins.reagent.api        :as reagent]
               [re-frame.api               :as r]
-              [reagent.api                :as reagent]
               [x.components.api           :as x.components]))
 
 

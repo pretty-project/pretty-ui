@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.ui.popups.views
-    (:require [re-frame.api        :as r]
-              [reagent.api         :as reagent]
+    (:require [plugins.reagent.api :as reagent]
+              [re-frame.api        :as r]
               [x.components.api    :as x.components]
               [x.ui.popups.helpers :as popups.helpers]
               [x.ui.renderer.views :rename {component renderer}]))

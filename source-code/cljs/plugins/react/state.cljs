@@ -12,8 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-sorter.state
-    (:require [plugins.reagent.api :refer [ratom]]))
+(ns plugins.react.state)
 
 
 
@@ -21,4 +20,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce SORTABLE-ITEMS (ratom {}))
+(def REFERENCES (atom {}))

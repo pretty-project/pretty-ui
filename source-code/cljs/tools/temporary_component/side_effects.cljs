@@ -14,7 +14,7 @@
 
 (ns tools.temporary-component.side-effects
     (:require [dom.api                           :as dom]
-              [reagent.api                       :as reagent]
+              [plugins.reagent.api               :as reagent]
               [tools.temporary-component.helpers :as helpers]))
 
 

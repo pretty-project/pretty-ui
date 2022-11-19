@@ -12,22 +12,31 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.api
-    (:require [reagent.atom       :as atom]
-              [reagent.core       :as core]
-              [reagent.dom        :as dom]
-              [reagent.helpers    :as helpers]
-              [reagent.lifecycles :as lifecycles]
-              [reagent.references :as references]))
+(ns plugins.reagent.api
+    (:require [plugins.reagent.atom       :as atom]
+              [plugins.reagent.helpers    :as helpers]
+              [plugins.reagent.lifecycles :as lifecycles]
+              [plugins.reagent.references :as references]
+              [reagent.core               :as core]
+              [reagent.dom                :as dom]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; reagent.atom
+; plugins.reagent.atom
 (def not!  atom/not!)
 (def ratom atom/ratom)
+
+; plugins.reagent.helpers
+(def component? helpers/component?)
+
+; plugins.reagent.lifecycles
+(def lifecycles lifecycles/lifecycles)
+
+; plugins.reagent.references
+(def arguments references/arguments)
 
 ; reagent.core
 (def adapt-react-class core/adapt-react-class)
@@ -36,12 +45,3 @@
 
 ; reagent.dom
 (def render dom/render)
-
-; reagent.helpers
-(def component? helpers/component?)
-
-; reagent.lifecycles
-(def lifecycles lifecycles/lifecycles)
-
-; reagent.references
-(def arguments references/arguments)

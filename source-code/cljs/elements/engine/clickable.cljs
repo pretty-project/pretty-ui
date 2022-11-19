@@ -13,13 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.engine.clickable
-    (:require [candy.api                       :refer [param]]
-              [dom.api                         :as dom]
-              [elements.engine.element         :as element]
-              [elements.element.side-effects   :as element.side-effects]
-              [elements.target-handler.helpers :as target-handler.helpers]
-              [map.api                         :as map]
-              [re-frame.api                    :as r :refer [r]]))
+    (:require [candy.api                     :refer [param]]
+              [dom.api                       :as dom]
+              [elements.engine.element       :as element]
+              [elements.element.side-effects :as element.side-effects]
+              [hiccup.api                    :as hiccup]
+              [map.api                       :as map]
+              [re-frame.api                  :as r :refer [r]]))
 
 
 
@@ -44,8 +44,8 @@
   ;   :on-context-menu (function)
   ;   :on-mouse-up (function)}
   [element-id {:keys [disabled? href on-click on-right-click stop-propagation?]}]
-  (cond-> {; XXX#4460
-           :id (target-handler.helpers/element-id->target-id element-id)}
+  (cond-> {; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
+           :id (hiccup/value element-id "body")}
           (boolean disabled?) (merge {:disabled true
                                       :on-click #(if stop-propagation? (dom/stop-propagation! %))})
           (not     disabled?) (merge {:href         (param href)
@@ -61,45 +61,3 @@
                                      (if on-right-click {:on-context-menu #(do (.preventDefault %)
                                                                                (r/dispatch on-right-click)
                                                                                (element.side-effects/blur-element! element-id))}))))
-
-
-
-;; -- Effect events -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :elements/init-clickable!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ element-id]]
-      (if-let [keypress (r element/get-element-prop db element-id :keypress)]
-              [:x.environment/reg-keypress-event! element-id
-                                                  {:key-code   (:key-code keypress)
-                                                   :on-keydown [:elements/key-pressed  element-id]
-                                                   :on-keyup   [:elements/key-released element-id]
-                                                   :required?  (:required? keypress)}])))
-
-(r/reg-event-fx :elements/destruct-clickable!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  ; @param (map) element-props
-  (fn [{:keys [db]} [_ element-id {:keys [keypress]}]]
-      (if keypress [:x.environment/remove-keypress-event! element-id])))
-
-(r/reg-event-fx :elements/key-pressed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  (fn [_ [_ element-id]]
-      (if (target-handler.helpers/element-id->target-enabled? element-id)
-          {:fx [:elements/focus-element! element-id]})))
-
-(r/reg-event-fx :elements/key-released
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) element-id
-  (fn [{:keys [db]} [_ element-id]]
-      {:fx [:elements/blur-element! element-id]
-       :dispatch-if [(target-handler.helpers/element-id->target-enabled? element-id)
-                     (r element/get-element-prop db element-id :on-click)]}))

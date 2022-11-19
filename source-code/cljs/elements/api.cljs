@@ -69,17 +69,16 @@
               [elements.ghost.views                             :as ghost.views]
               [elements.horizontal-line.views                   :as horizontal-line.views]
               [elements.horizontal-polarity.views               :as horizontal-polarity.views]
-              [elements.element-components.horizontal-separator :as element-components.horizontal-separator]
+              [elements.horizontal-separator.views              :as horizontal-separator.views]
               [elements.icon.views                              :as icon.views]
               [elements.icon-button.views                       :as icon-button.views]
-              [elements.element-components.image                :as element-components.image]
+              [elements.image.views                             :as image.views]
               [elements.label.views                             :as label.views]
-              [elements.element-components.line-diagram         :as element-components.line-diagram]
+              [elements.line-diagram.views                      :as line-diagram.views]
               [elements.element-components.menu-bar             :as element-components.menu-bar]
               [elements.multiline-field.views                   :as multiline-field.views]
               [elements.multi-combo-box.views                   :as multi-combo-box.views]
               [elements.multi-field.views                       :as multi-field.views]
-              [elements.element-components.overlay              :as element-components.overlay]
               [elements.password-field.views                    :as password-field.views]
               [elements.element-components.point-diagram        :as element-components.point-diagram]
               [elements.radio-button.views                      :as radio-button.views]
@@ -92,9 +91,9 @@
               [elements.text-field.views                        :as text-field.views]
               [elements.thumbnail.views                         :as thumbnail.views]
               [elements.element-components.toggle               :as element-components.toggle]
-              [elements.element-components.vertical-line        :as element-components.vertical-line]
+              [elements.vertical-line.views                     :as vertical-line.views]
               [elements.vertical-polarity.views                 :as vertical-polarity.views]
-              [elements.element-components.vertical-separator   :as element-components.vertical-separator]))
+              [elements.vertical-separator.views                :as vertical-separator.views]))
 
 
 
@@ -125,17 +124,16 @@
 (def ghost                ghost.views/element)
 (def horizontal-line      horizontal-line.views/element)
 (def horizontal-polarity  horizontal-polarity.views/element)
-(def horizontal-separator element-components.horizontal-separator/element)
+(def horizontal-separator horizontal-separator.views/element)
 (def icon                 icon.views/element)
 (def icon-button          icon-button.views/element)
-(def image                element-components.image/element)
+(def image                image.views/element)
 (def label                label.views/element)
-(def line-diagram         element-components.line-diagram/element)
+(def line-diagram         line-diagram.views/element)
 (def menu-bar             element-components.menu-bar/element)
 (def multi-combo-box      multi-combo-box.views/element)
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
-(def overlay              element-components.overlay/element)
 (def password-field       password-field.views/element)
 (def point-diagram        element-components.point-diagram/element)
 (def radio-button         radio-button.views/element)
@@ -148,6 +146,6 @@
 (def text-field           text-field.views/element)
 (def thumbnail            thumbnail.views/element)
 (def toggle               element-components.toggle/element)
-(def vertical-line        element-components.vertical-line/element)
+(def vertical-line        vertical-line.views/element)
 (def vertical-polarity    vertical-polarity.views/element)
-(def vertical-separator   element-components.vertical-separator/element)
+(def vertical-separator   vertical-separator.views/element)

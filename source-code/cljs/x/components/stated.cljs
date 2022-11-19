@@ -26,8 +26,8 @@
 (ns x.components.stated
     (:require [candy.api                :refer [param return]]
               [map.api                  :refer [dissoc-in]]
+              [plugins.reagent.api      :as reagent]
               [random.api               :as random]
-              [reagent.api              :as reagent]
               [re-frame.api             :as r :refer [r]]
               [x.components.engine      :as engine]
               [x.components.subscriber  :rename {component subscriber}]

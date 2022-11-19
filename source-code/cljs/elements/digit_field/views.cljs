@@ -19,7 +19,7 @@
               [dom.api                         :as dom]
               [elements.digit-field.helpers    :as digit-field.helpers]
               [elements.digit-field.prototypes :as digit-field.prototypes]
-              [elements.target-handler.helpers :as target-handler.helpers]
+              [hiccup.api                      :as hiccup]
               [random.api                      :as random]
               [re-frame.api                    :as r]))
 
@@ -35,8 +35,8 @@
   ; @param (map) field-props
   [field-id field-props]
   [:input.e-digit-field--input {:type "text"
-                                ; XXX#4460
-                                :id (target-handler.helpers/element-id->target-id field-id)
+                                ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
+                                :id (hiccup/value field-id "input")
                                 :on-change #(let [v (dom/event->value %)]
                                                  (r/dispatch-sync [:x.db/set-item! (:value-path field-props) (str v)]))}])
 
@@ -46,7 +46,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reduce (fn [%1 %2] (conj %1 [:div.e-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (target-handler.helpers/element-id->target-id field-id)))
+  (reduce (fn [%1 %2] (conj %1 [:div.e-digit-field--cover--digit {:on-mouse-up #(dom/focus-element! (dom/get-element-by-id (hiccup/value field-id "input")))
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
                                                                  (string.api/get-nth-character (:value field-props) %2)]))

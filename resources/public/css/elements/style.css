@@ -30,34 +30,6 @@
 
 
 
-/***** Element debug *****/
-
-/* Az .e-element::after pszeudóelem használatával az egyes elemeken
- * az e-debug animáció jelzi azok újrarenderelődését */
-
-/*
-@keyframes e-debug {
-  from { transform: scale(1) }
-  to   { transform: scale(0) }}
-
-.e-element::after {
-  animation-duration: .3s;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
-  animation-name: e-debug;
-  background-color: rgba(200, 50, 50, .1);
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-*/
-
-/***** Element debug *****/
-
-
-
 /***** Element profiles *****/
 
 body {
@@ -267,7 +239,7 @@ body {
 .e-button-separator[data-color="muted"] .e-button-separator--body,
 .e-horizontal-line--body[data-color="muted"],
 .e-line-diagram--section[data-color="muted"],
-.e-vertical-line[data-color="muted"]    .e-vertical-line--body {
+.e-vertical-line--body[data-color="muted"] {
   background-color: var( --border-color-muted );
 }
 
@@ -340,7 +312,7 @@ body {
 .e-button-separator[data-color="highlight"] .e-button-separator--body,
 .e-horizontal-line--body[data-color="highlight"],
 .e-line-diagram--section[data-color="highlight"],
-.e-vertical-line[data-color="highlight"]    .e-vertical-line--body {
+.e-vertical-line--body[data-color="highlight"] {
   background-color: var( --border-color-highlight );
 }
 
@@ -452,7 +424,7 @@ body {
 
 .e-horizontal-line--body[data-color="primary"],
 .e-line-diagram--section[data-color="primary"],
-.e-vertical-line[data-color="primary"]   .e-vertical-line--body {
+.e-vertical-line--body[data-color="primary"] {
   background-color: var( --border-color-primary );
 }
 
@@ -537,7 +509,7 @@ body {
 
 .e-horizontal-line--body[data-color="secondary"],
 .e-line-diagram--section[data-color="secondary"],
-.e-vertical-line[data-color="secondary"]   .e-vertical-line--body {
+.e-vertical-line--body[data-color="secondary"] {
   background-color: var( --border-color-secondary );
 }
 
@@ -621,7 +593,7 @@ body {
 /* Line-color */
 
 .e-line-diagram--section[data-color="success"],
-.e-vertical-line[data-color="success"] .e-vertical-line--body {
+.e-vertical-line--body[data-color="success"] {
   background-color: var( --border-color-success );
 }
 
@@ -706,7 +678,7 @@ body {
 /* Line-color */
 
 .e-line-diagram--section[data-color="warning"],
-.e-vertical-line[data-color="warning"] .e-vertical-line--body {
+.e-vertical-line--body[data-color="warning"] {
   background-color: var( --border-color-warning );
 }
 
@@ -742,7 +714,7 @@ body {
 
 .e-horizontal-line--body[data-color="default"],
 .e-line-diagram--section[data-color="default"],
-.e-vertical-line[data-color="default"]    .e-vertical-line--body {
+.e-vertical-line--body[data-color="default"] {
   background-color: var( --border-color );
 }
 
@@ -3107,16 +3079,6 @@ body {
 
 
 
-/***** Overlay *****/
-
-.e-overlay[data-disabled="true"] {
-  opacity: .3;
-}
-
-/***** Overlay *****/
-
-
-
 /***** Radio button *****/
 /*** Radio button clear button ***/
 
@@ -3967,15 +3929,6 @@ textarea.e-text-field--input {
   height: 100%;
 }
 
-.e-vertical-line[data-layout="row"] {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 48px;
-  justify-content: center;
-}
-
-.e-vertical-line[data-layout="row"]
 .e-vertical-line--body {
   height: 24px;
 }

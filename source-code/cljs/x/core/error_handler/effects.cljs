@@ -41,7 +41,7 @@
   ;
   ; @usage
   ;  [:x.core/error-catched {:error "An error occured ..."
-  ;                        :cofx  {...}}]
+  ;                          :cofx  {...}}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ error-id {:keys [cofx] :as error-props}]]
       (let [error-message (r error-handler.subs/get-error-message db error-id error-props)

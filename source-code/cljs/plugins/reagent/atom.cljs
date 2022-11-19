@@ -12,30 +12,28 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns react.references
-    (:require [react.state :as state]))
+(ns plugins.reagent.atom
+    (:require [reagent.core :as reagent.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-reference
-  ; @param (keyword) element-id
-  ;
-  ; @usage
-  ;  (get-reference :my-element)
-  ;
-  ; @return (function)
-  [element-id]
-  (get @state/REFERENCES element-id))
+; reagent.core
+(def ratom reagent.core/atom)
 
-(defn set-reference!
-  ; @param (keyword) element-id
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn not!
+  ; @param (atom) atom
   ;
   ; @usage
-  ;  [:div {:ref (set-reference! :my-element)}]
+  ;  (not! my-atom)
   ;
-  ; @return (function)
-  [element-id]
-  #(swap! state/REFERENCES assoc element-id %))
+  ; @return (atom)
+  [atom]
+  (swap! atom not))

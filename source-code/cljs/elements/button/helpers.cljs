@@ -17,8 +17,8 @@
               [elements.element.helpers      :as element.helpers]
               [elements.element.side-effects :as element.side-effects]
               [hiccup.api                    :as hiccup]
-              [re-frame.api                  :as r]
-              [reagent.api                   :as reagent]))
+              [plugins.reagent.api           :as reagent]
+              [re-frame.api                  :as r]))
 
 
 

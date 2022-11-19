@@ -23,7 +23,7 @@
               [x.ui.surface.views         :rename {view app-surface}]
 
               ; TEMP
-              [reagent.api :as reagent]))
+              [plugins.reagent.api :as reagent]))
 
 
 

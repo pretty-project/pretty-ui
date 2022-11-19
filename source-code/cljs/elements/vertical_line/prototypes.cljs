@@ -26,7 +26,9 @@
   ; @param (map) line-props
   ;
   ; @return (map)
-  ;  {}
+  ;  {:color (keyword)
+  ;   :strength (px)}
   [line-props]
-  (merge {}
+  (merge {:color    :muted
+          :strength 1}
          (param line-props)))

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.vertical-line.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [css.api                  :as css]
+              [elements.element.helpers :as element.helpers]))
 
 
 
@@ -25,12 +26,17 @@
   ;
   ; @param (keyword) line-id
   ; @param (map) line-props
-  ;  {:style (map)(opt)}
+  ;  {:color (keyword or string)
+  ;   :strength (px)
+  ;   :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
+  ;  {:style (map)
+  ;    {:height (string)}}
+  [_ {:keys [color strength style] :as line-props}]
+  (-> {:style style}
+      (element.helpers/apply-dimension :height           :data-height (css/px strength))
+      (element.helpers/apply-color     :background-color :data-color          color)))
 
 (defn line-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

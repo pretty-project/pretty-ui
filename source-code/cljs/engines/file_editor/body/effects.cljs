@@ -14,7 +14,7 @@
 
 (ns engines.file-editor.body.effects
     (:require [engines.file-editor.body.events :as body.events]
-              [reagent.api                     :as reagent]
+              [plugins.reagent.api             :as reagent]
               [re-frame.api                    :as r :refer [r]]))
 
 

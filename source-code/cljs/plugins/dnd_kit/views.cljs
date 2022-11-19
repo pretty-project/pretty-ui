@@ -20,7 +20,7 @@
               [plugins.dnd-kit.helpers    :as helpers]
               [plugins.dnd-kit.prototypes :as prototypes]
               [plugins.dnd-kit.state      :as state]
-              [reagent.api                :as reagent :refer [component? ratom]]))
+              [plugins.reagent.api        :as reagent :refer [component? ratom]]))
 
 
 

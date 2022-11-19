@@ -14,7 +14,7 @@
 
 (ns engines.item-handler.body.effects
     (:require [engines.item-handler.body.events :as body.events]
-              [reagent.api                      :as reagent]
+              [plugins.reagent.api              :as reagent]
               [re-frame.api                     :as r :refer [r]]))
 
 

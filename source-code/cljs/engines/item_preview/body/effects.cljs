@@ -15,7 +15,7 @@
 (ns engines.item-preview.body.effects
     (:require [engines.item-preview.body.events :as body.events]
               [engines.item-preview.body.subs   :as body.subs]
-              [reagent.api                      :as reagent]
+              [plugins.reagent.api              :as reagent]
               [re-frame.api                     :as r :refer [r]]))
 
 

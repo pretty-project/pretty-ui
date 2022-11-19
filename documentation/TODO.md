@@ -6,6 +6,8 @@
 
 # x4.7.0
 
+- a re-frame db sokszorosan tartalmazza önmagát!!
+
 - gombok presetjei nem szükségesek
 
 - a tool-ok nem hasznánalk x-et szoval clj-tools cljs-tools vagy mitomén hogy de

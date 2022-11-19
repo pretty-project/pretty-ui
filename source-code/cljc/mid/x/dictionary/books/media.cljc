@@ -53,6 +53,12 @@
            :download-preview!
            {:en "Download preview"
             :hu "Előnézet letöltése"}
+           :downloaded
+           {:en "Downloaded"
+            :hu "Letöltve"}
+           :downloaded-at-n
+           {:en "Downloaded at: %"
+            :hu "Letöltve: %"}
            :drop-files-here-to-upload
            {:en "Drop files here to upload!"
             :hu "Húzd ide a fájlokat, amiket fel szeretnél tölteni!"}
@@ -173,6 +179,12 @@
            :upload-files!
            {:en "Upload files"
             :hu "Fájlok feltöltése"}
+           :uploaded
+           {:en "Uploaded"
+            :hu "Feltöltve"}
+           :uploaded-at-n
+           {:en "Uploaded at: %"
+            :hu "Feltöltve: %"}
            :uploading-file-count
            {:en "Uploading file count"
             :hu "Feltöltésre váró fájlok száma"}

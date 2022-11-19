@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns tools.image-preloader.views
-    (:require [candy.api    :refer [param]]
-              [random.api   :as random]
-              [reagent.api  :as reagent]
-              [re-frame.api :as r]))
+    (:require [candy.api           :refer [param]]
+              [plugins.reagent.api :as reagent]
+              [random.api          :as random]
+              [re-frame.api        :as r]))
 
 
 

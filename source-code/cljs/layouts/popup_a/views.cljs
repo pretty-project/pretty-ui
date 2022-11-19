@@ -17,8 +17,8 @@
               [layouts.popup-a.prototypes :as prototypes]
               [layouts.popup-a.state      :as state]
               [hiccup.api                 :as hiccup]
-              [react.api                  :as react]
-              [reagent.api                :as reagent]
+              [plugins.react.api          :as react]
+              [plugins.reagent.api        :as reagent]
               [re-frame.api               :as r]
               [x.components.api           :as x.components]))
 

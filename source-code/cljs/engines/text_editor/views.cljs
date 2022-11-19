@@ -19,8 +19,8 @@
               [engines.text-editor.state      :as state]
               [random.api                     :as random]
               [plugins.ckeditor5.api          :as ckeditor5]
-              [re-frame.api                   :as r]
-              [reagent.api                    :as reagent]))
+              [plugins.reagent.api            :as reagent]
+              [re-frame.api                   :as r]))
 
 
 

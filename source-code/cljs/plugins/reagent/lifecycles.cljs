@@ -12,9 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.lifecycles
-    (:require [reagent.core  :as core]
-              [reagent.state :as state]))
+(ns plugins.reagent.lifecycles
+    (:require [plugins.reagent.state :as state]
+              [reagent.core          :as core]))
 
 
 

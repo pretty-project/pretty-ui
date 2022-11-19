@@ -1,4 +1,6 @@
 
+; WARNING! NOT TESTED! DO NOT USE!
+
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -56,7 +58,6 @@
                                  :view-box              "0 0 100 100"}}
           [:polyline {:points "0,100 100,1"
                       :style  {:fill "none" :stroke "red" :stroke-width "2px"}}]]])
-
 
 (defn element
   ; @param (keyword)(opt) diagram-id

@@ -19,8 +19,8 @@
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
               [elements.engine.api        :as engine]
+              [plugins.reagent.api        :as reagent]
               [random.api                 :as random]
-              [reagent.api                :as reagent]
               [x.components.api           :as x.components]))
 
 

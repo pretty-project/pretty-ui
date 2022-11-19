@@ -12,12 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns reagent.state)
+(ns plugins.reagent.references
+    (:require [reagent.core :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (map)
-(defonce MOUNTED-COMPONENTS (atom {}))
+(defn arguments
+  ; @param (?) this
+  ;
+  ; @usage
+  ;  (lifecycles {:component-did-update (fn [this] (arguments this))})
+  ;
+  ; @return (*)
+  [this]
+  (-> this core/argv rest))

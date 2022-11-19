@@ -20,8 +20,8 @@
               [developer-tools.route-browser.views     :rename {body route-browser}]
               [elements.api                            :as elements]
               [css.api                                 :as css]
+              [plugins.reagent.api                     :refer [ratom]]
               [re-frame.api                            :as r]
-              [reagent.api                             :refer [ratom]]
               [vector.api                              :as vector]))
 
 
@@ -105,15 +105,15 @@
                               :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :event-browser]
                               :label       "Events"}]))
 
-(defn toggle-show-db-write-count-icon-button
+(defn toggle-hide-db-write-count-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [show-db-write-count? @(r/subscribe [:x.db/get-item [:developer-tools :core/meta-items :show-db-write-count?]])]
-       [elements/icon-button ::toggle-show-db-write-count-icon-button
+  (let [hide-db-write-count? @(r/subscribe [:x.db/get-item [:developer-tools :core/meta-items :hide-db-write-count?]])]
+       [elements/icon-button ::toggle-hide-db-write-count-icon-button
                              {:hover-color :highlight
                               :icon        :waterfall_chart
-                              :on-click    [:x.db/toggle-item! [:developer-tools :core/meta-items :show-db-write-count?]]
-                              :preset      (if show-db-write-count? :primary :muted)
+                              :on-click    [:x.db/toggle-item! [:developer-tools :core/meta-items :hide-db-write-count?]]
+                              :preset      (if hide-db-write-count? :muted :primary)
                               :label       "Writes"
                               :tooltip     "Display the Re-Frame DB write count"}]))
 
@@ -152,7 +152,7 @@
                                                      [route-browser-icon-button]
                                                      [re-frame-events-icon-button]]
                                  :end-content [:<> [design-mode-icon-button]
-                                                   [toggle-show-db-write-count-icon-button]
+                                                   [toggle-hide-db-write-count-icon-button]
                                                    [toggle-print-events-icon-button]
                                                    [toggle-popup-position-icon-button]
                                                    [close-icon-button]]

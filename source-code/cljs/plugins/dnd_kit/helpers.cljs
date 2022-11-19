@@ -16,7 +16,7 @@
     (:require [candy.api             :refer [return]]
               [map.api               :refer [dissoc-in]]
               [plugins.dnd-kit.state :as state]
-              [reagent.api           :as reagent]
+              [plugins.reagent.api   :as reagent]
               [time.api              :as time]
               [vector.api            :as vector]))
 

@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.slider.state
-    (:require [reagent.api :refer [ratom]]))
+    (:require [plugins.reagent.api :refer [ratom]]))
 
 
 

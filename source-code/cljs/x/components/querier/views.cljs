@@ -13,8 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.components.querier.views
-    (:require [random.api                 :as random]
-              [reagent.api                :as reagent]
+    (:require [plugins.reagent.api        :as reagent]
+              [random.api                 :as random]
               [re-frame.api               :as r]
               [x.components.content.views :as content.views]))
 

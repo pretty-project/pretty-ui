@@ -13,10 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.boot-loader.side-effects
-    (:require [dom.api      :as dom]
-              [re-frame.api :as r]
-              [reagent.api  :as reagent]
-              [x.ui.api     :as x.ui]))
+    (:require [dom.api             :as dom]
+              [plugins.reagent.api :as reagent]
+              [re-frame.api        :as r]
+              [x.ui.api            :as x.ui]))
 
 
 
