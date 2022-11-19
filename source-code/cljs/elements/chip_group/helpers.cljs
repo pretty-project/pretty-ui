@@ -31,7 +31,7 @@
   ; {}
   [_ {:keys [style]}]
   {:style style})
-    
+
 (defn chip-group-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -41,5 +41,4 @@
   ; @return (map)
   [group-id group-props]
   (merge (element.helpers/element-default-attributes group-id group-props)
-         (element.helpers/element-indent-attributes  group-id group-props)
-         {}))
+         (element.helpers/element-indent-attributes  group-id group-props)))

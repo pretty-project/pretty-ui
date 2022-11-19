@@ -12,38 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.row
-    (:require [candy.api                     :refer [param]]
-              [elements.engine.api           :as engine]
-              [elements.flex-handler.helpers :as flex-handler.helpers]
-              [random.api                    :as random]
-              [x.components.api              :as x.components]))
+(ns elements.row.views
+    (:require [elements.row.helpers    :as row.helpers]
+              [elements.row.prototypes :as row.prototypes]
+              [random.api              :as random]
+              [x.components.api        :as x.components]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- row-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) row-props
-  ;
-  ; @return (map)
-  ;  {:horizontal-align (keyword)
-  ;   :stretch-orientation (keyword)
-  ;   :vertical-align (keyword)
-  ;   :wrap-items? (boolean)}
-  [row-props]
-  (merge {:horizontal-align    :left
-          :stretch-orientation :horizontal
-          :vertical-align      :center
-          :wrap-items?         true}
-         (param row-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- row-body
@@ -53,7 +30,8 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id {:keys [content]}]
-  [:div.e-row--body [x.components/content row-id content]])
+  [:div.e-row--body (row.helpers/row-body-attributes row-id row-props)
+                    [x.components/content            row-id content]])
 
 (defn- row
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,8 +40,8 @@
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
   [row-id row-props]
-  [:div.e-row (flex-handler.helpers/flexible-attributes row-id row-props)
-              [row-body                                 row-id row-props]])
+  [:div.e-row (row.helpers/row-attributes row-id row-props)
+              [row-body                   row-id row-props]])
 
 (defn element
   ; @param (keyword)(opt) row-id
@@ -94,5 +72,5 @@
    [element (random/generate-keyword) row-props])
 
   ([row-id row-props]
-   (let [row-props (row-props-prototype row-props)]
+   (let [row-props (row.prototypes/row-props-prototype row-props)]
         [row row-id row-props])))

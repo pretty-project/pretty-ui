@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) overlay-id
   ; @param (map) overlay-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [overlay-id overlay-props]
   (merge (element.helpers/element-default-attributes overlay-id overlay-props)
-         (element.helpers/element-indent-attributes  overlay-id overlay-props)
-         {}))
+         (element.helpers/element-indent-attributes  overlay-id overlay-props)))

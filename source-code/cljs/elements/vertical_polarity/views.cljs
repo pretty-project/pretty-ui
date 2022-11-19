@@ -12,30 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.horizontal-polarity
-    (:require [candy.api           :refer [param]]
-              [elements.engine.api :as engine]
-              [random.api          :as random]
-              [x.components.api    :as x.components]))
+(ns elements.vertical-polarity.views
+    (:require [elements.vertical-polarity.helpers    :as vertical-polarity.helpers]
+              [elements.vertical-polarity.prototypes :as vertical-polarity.prototypes]
+              [random.api                            :as random]
+              [x.components.api                      :as x.components]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- polarity-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) polarity-props
-  ;
-  ; @return (map)
-  [polarity-props]
-  (merge {}
-         (param polarity-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- start-content
@@ -45,8 +30,8 @@
   ; @param (map) polarity-props
   ;  {:start-content (metamorphic-content)}
   [_ {:keys [start-content]}]
-  (if start-content [:div.e-horizontal-polarity--start-content [x.components/content start-content]]
-                    [:div.e-horizontal-polarity--placeholder]))
+  (if start-content [:div.e-vertical-polarity--start-content [x.components/content start-content]]
+                    [:div.e-vertical-polarity--placeholder]))
 
 (defn- middle-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,8 +40,8 @@
   ; @param (map) polarity-props
   ;  {:middle-content (metamorphic-content)}
   [_ {:keys [middle-content]}]
-  (if middle-content [:div.e-horizontal-polarity--middle-content [x.components/content middle-content]]
-                     [:div.e-horizontal-polarity--placeholder]))
+  (if middle-content [:div.e-vertical-polarity--middle-content [x.components/content middle-content]]
+                     [:div.e-vertical-polarity--placeholder]))
 
 (defn- end-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -65,19 +50,19 @@
   ; @param (map) polarity-props
   ;  {:end-content (metamorphic-content)}
   [_ {:keys [end-content orientation]}]
-  (if end-content [:div.e-horizontal-polarity--end-content [x.components/content end-content]]
-                  [:div.e-horizontal-polarity--placeholder]))
+  (if end-content [:div.e-vertical-polarity--end-content [x.components/content end-content]]
+                  [:div.e-vertical-polarity--placeholder]))
 
-(defn- horizontal-polarity
+(defn- vertical-polarity
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   [polarity-id polarity-props]
-  [:div.e-horizontal-polarity (engine/element-attributes polarity-id polarity-props)
-                              [start-content             polarity-id polarity-props]
-                              [middle-content            polarity-id polarity-props]
-                              [end-content               polarity-id polarity-props]])
+  [:div.e-vertical-polarity (vertical-polarity.helpers/polarity-attributes polarity-id polarity-props)
+                            [start-content                                 polarity-id polarity-props]
+                            [middle-content                                polarity-id polarity-props]
+                            [end-content                                   polarity-id polarity-props]])
 
 (defn element
   ; @param (keyword)(opt) polarity-id
@@ -98,17 +83,17 @@
   ;   :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  [horizontal-polarity {...}]
+  ;  [vertical-polarity {...}]
   ;
   ; @usage
-  ;  [horizontal-polarity :my-horizontal-polarity {...}]
+  ;  [vertical-polarity :my-vertical-polarity {...}]
   ;
   ; @usage
-  ;  [horizontal-polarity {:start-content [:<> [label {:content "My label"}]
-  ;                                            [label {:content "My label"}]]}]
+  ;  [vertical-polarity {:start-content [:<> [label {:content "My label"}]
+  ;                                          [label {:content "My label"}]]}]
   ([polarity-props]
    [element (random/generate-keyword) polarity-props])
 
   ([polarity-id polarity-props]
-   (let [];polarity-props (polarity-props-prototype polarity-props)
-        [horizontal-polarity polarity-id polarity-props])))
+   (let [];polarity-props (vertical-polarity.prototypes/polarity-props-prototype polarity-props)
+        [vertical-polarity polarity-id polarity-props])))

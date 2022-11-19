@@ -26,7 +26,13 @@
   ; @param (map) row-props
   ;
   ; @return (map)
-  ;  {}
+  ;  {:horizontal-align (keyword)
+  ;   :stretch-orientation (keyword)
+  ;   :vertical-align (keyword)
+  ;   :wrap-items? (boolean)}
   [row-props]
-  (merge {}
+  (merge {:horizontal-align    :left
+          :stretch-orientation :horizontal
+          :vertical-align      :center
+          :wrap-items?         true}
          (param row-props)))

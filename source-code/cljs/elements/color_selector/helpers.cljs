@@ -70,10 +70,10 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {}
+  ;  {:size (keyword)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-size (keyword)}
   [selector-id {:keys [size] :as selector-props}]
   (merge (element.helpers/element-default-attributes selector-id selector-props)
          (element.helpers/element-indent-attributes  selector-id selector-props)

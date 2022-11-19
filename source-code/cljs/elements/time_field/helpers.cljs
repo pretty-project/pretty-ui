@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [field-id field-props]
   (merge (element.helpers/element-default-attributes field-id field-props)
-         (element.helpers/element-indent-attributes  field-id field-props)
-         {}))
+         (element.helpers/element-indent-attributes  field-id field-props)))

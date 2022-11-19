@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [polarity-id polarity-props]
   (merge (element.helpers/element-default-attributes polarity-id polarity-props)
-         (element.helpers/element-indent-attributes  polarity-id polarity-props)
-         {}))
+         (element.helpers/element-indent-attributes  polarity-id polarity-props)))

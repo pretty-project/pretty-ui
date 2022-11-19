@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [image-id image-props]
   (merge (element.helpers/element-default-attributes image-id image-props)
-         (element.helpers/element-indent-attributes  image-id image-props)
-         {}))
+         (element.helpers/element-indent-attributes  image-id image-props)))

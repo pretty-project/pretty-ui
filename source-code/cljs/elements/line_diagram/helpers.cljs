@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [diagram-id diagram-props]
   (merge (element.helpers/element-default-attributes diagram-id diagram-props)
-         (element.helpers/element-indent-attributes  diagram-id diagram-props)
-         {}))
+         (element.helpers/element-indent-attributes  diagram-id diagram-props)))

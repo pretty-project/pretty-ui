@@ -185,12 +185,10 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {}
   [group-id group-props]
   ; Az egyes mezők is reagálnak a {:disabled? true} állapotra, ezért a mezőcsoportnak,
   ; már nem szükséges reagálni rá, különben a kétszeresen jelenne meg a sötétítő
   ; hatás (a mezőkön is és a mezőcsoporton is)!
   (let [group-props (dissoc group-props :disabled?)]
        (merge (element.helpers/element-default-attributes group-id group-props)
-              (element.helpers/element-indent-attributes  group-id group-props)
-              {})))
+              (element.helpers/element-indent-attributes  group-id group-props))))

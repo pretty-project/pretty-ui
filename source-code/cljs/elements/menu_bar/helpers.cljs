@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [bar-id bar-props]
   (merge (element.helpers/element-default-attributes bar-id bar-props)
-         (element.helpers/element-indent-attributes  bar-id bar-props)
-         {}))
+         (element.helpers/element-indent-attributes  bar-id bar-props)))

@@ -81,10 +81,8 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [card-id card-props]
   (merge (card-style-attributes  card-id card-props)
          (card-layout-attributes card-id card-props)))
@@ -94,10 +92,8 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [card-id card-props]
   (merge (element.helpers/element-default-attributes card-id card-props)
          (element.helpers/element-indent-attributes  card-id card-props)))

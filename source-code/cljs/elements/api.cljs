@@ -59,16 +59,16 @@
               [elements.color-selector.views                    :as color-selector.views]
               [elements.color-marker.views                      :as color-marker.views]
               [elements.color-stamp.views                       :as color-stamp.views]
-              [elements.element-components.column               :as element-components.column]
+              [elements.column.views                            :as column.views]
               [elements.combo-box.views                         :as combo-box.views]
               [elements.counter.views                           :as counter.views]
               [elements.date-field.views                        :as date-field.views]
-              [elements.element-components.digit-field          :as element-components.digit-field]
+              [elements.digit-field.views                       :as digit-field.views]
               [elements.expandable.views                        :as expandable.views]
               [elements.file-drop-area.views                    :as file-drop-area.views]
               [elements.ghost.views                             :as ghost.views]
               [elements.horizontal-line.views                   :as horizontal-line.views]
-              [elements.element-components.horizontal-polarity  :as element-components.horizontal-polarity]
+              [elements.horizontal-polarity.views               :as horizontal-polarity.views]
               [elements.element-components.horizontal-separator :as element-components.horizontal-separator]
               [elements.icon.views                              :as icon.views]
               [elements.icon-button.views                       :as icon-button.views]
@@ -83,7 +83,7 @@
               [elements.password-field.views                    :as password-field.views]
               [elements.element-components.point-diagram        :as element-components.point-diagram]
               [elements.radio-button.views                      :as radio-button.views]
-              [elements.element-components.row                  :as element-components.row]
+              [elements.row.views                               :as row.views]
               [elements.search-field.views                      :as search-field.views]
               [elements.select.views                            :as select.views]
               [elements.slider.views                            :as slider.views]
@@ -93,7 +93,7 @@
               [elements.thumbnail.views                         :as thumbnail.views]
               [elements.element-components.toggle               :as element-components.toggle]
               [elements.element-components.vertical-line        :as element-components.vertical-line]
-              [elements.element-components.vertical-polarity    :as element-components.vertical-polarity]
+              [elements.vertical-polarity.views                 :as vertical-polarity.views]
               [elements.element-components.vertical-separator   :as element-components.vertical-separator]))
 
 
@@ -115,16 +115,16 @@
 (def color-selector       color-selector.views/element)
 (def color-marker         color-marker.views/element)
 (def color-stamp          color-stamp.views/element)
-(def column               element-components.column/element)
+(def column               column.views/element)
 (def combo-box            combo-box.views/element)
 (def counter              counter.views/element)
 (def date-field           date-field.views/element)
-(def digit-field          element-components.digit-field/element)
+(def digit-field          digit-field.views/element)
 (def expandable           expandable.views/element)
 (def file-drop-area       file-drop-area.views/element)
 (def ghost                ghost.views/element)
 (def horizontal-line      horizontal-line.views/element)
-(def horizontal-polarity  element-components.horizontal-polarity/element)
+(def horizontal-polarity  horizontal-polarity.views/element)
 (def horizontal-separator element-components.horizontal-separator/element)
 (def icon                 icon.views/element)
 (def icon-button          icon-button.views/element)
@@ -139,7 +139,7 @@
 (def password-field       password-field.views/element)
 (def point-diagram        element-components.point-diagram/element)
 (def radio-button         radio-button.views/element)
-(def row                  element-components.row/element)
+(def row                  row.views/element)
 (def search-field         search-field.views/element)
 (def select               select.views/element)
 (def slider               slider.views/element)
@@ -149,5 +149,5 @@
 (def thumbnail            thumbnail.views/element)
 (def toggle               element-components.toggle/element)
 (def vertical-line        element-components.vertical-line/element)
-(def vertical-polarity    element-components.vertical-polarity/element)
+(def vertical-polarity    vertical-polarity.views/element)
 (def vertical-separator   element-components.vertical-separator/element)

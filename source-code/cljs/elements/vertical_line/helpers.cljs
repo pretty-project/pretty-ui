@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) line-id
   ; @param (map) line-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [line-id line-props]
   (merge (element.helpers/element-default-attributes line-id line-props)
-         (element.helpers/element-indent-attributes  line-id line-props)
-         {}))
+         (element.helpers/element-indent-attributes  line-id line-props)))

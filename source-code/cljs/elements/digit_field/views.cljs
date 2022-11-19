@@ -14,81 +14,18 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.digit-field
-    (:require [candy.api                       :refer [param]]
-              [css.api                         :as css]
+(ns elements.digit-field.views
+    (:require [css.api                         :as css]
               [dom.api                         :as dom]
-              [elements.engine.api             :as engine]
-              [elements.input.helpers          :as input.helpers]
-              ;[elements.passfield-handler.subs :as passfield-handler.subs]
+              [elements.digit-field.helpers    :as digit-field.helpers]
+              [elements.digit-field.prototypes :as digit-field.prototypes]
               [elements.target-handler.helpers :as target-handler.helpers]
               [random.api                      :as random]
-              [re-frame.api                    :as r :refer [r]]
-              [vector.api                      :as vector]))
+              [re-frame.api                    :as r]))
 
 
 
-;; -- Configuration -----------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-; @constant (px)
-(def DIGIT-WIDTH 36)
-
-; @constant (px)
-(def DIGIT-GAP 12)
-
-
-
-;; -- Helpers -----------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- field-props->digits-width
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) field-props
-  ;
-  ; @return (integer)
-  [field-props]
-  (+ (* DIGIT-WIDTH 4)
-     (* DIGIT-GAP   3)))
-
-
-
-;; -- Prototypes --------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- field-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ;  {:digit-count (integer)
-  ;   :value-path (vector)}
-  [field-id field-props]
-  (merge {:digit-count 4
-          :value-path  (input.helpers/default-value-path field-id)}
-         (param field-props)))
-
-
-
-;; -- Subscriptions -----------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- get-digit-field-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (map)
-  [db [_ field-id]])
-
-(r/reg-sub :elements/get-digit-field-props get-digit-field-props)
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- digit-field-input
@@ -122,9 +59,9 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.e-digit-field (engine/element-attributes field-id field-props)
-                      [digit-field-input         field-id field-props]
-                      [digit-field-cover         field-id field-props]])
+  [:div.e-digit-field (digit-field.helpers/field-attributes field-id field-props)
+                      [digit-field-input                    field-id field-props]
+                      [digit-field-cover                    field-id field-props]])
 
 (defn element
   ; @param (keyword)(opt) field-id
@@ -151,4 +88,4 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (field-props-prototype field-id field-props)])))
+   (let [field-props (digit-field.prototypes/field-props-prototype field-id field-props)])))

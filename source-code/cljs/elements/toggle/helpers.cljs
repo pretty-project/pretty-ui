@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [toggle-id toggle-props]
   (merge (element.helpers/element-default-attributes toggle-id toggle-props)
-         (element.helpers/element-indent-attributes  toggle-id toggle-props)
-         {}))
+         (element.helpers/element-indent-attributes  toggle-id toggle-props)))

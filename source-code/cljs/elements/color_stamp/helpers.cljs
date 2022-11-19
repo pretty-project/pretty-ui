@@ -53,10 +53,8 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [stamp-id stamp-props]
   (merge (element.helpers/element-default-attributes stamp-id stamp-props)
          (element.helpers/element-indent-attributes  stamp-id stamp-props)))

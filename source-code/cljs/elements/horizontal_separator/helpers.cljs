@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [separator-id separator-props]
   (merge (element.helpers/element-default-attributes separator-id separator-props)
-         (element.helpers/element-indent-attributes  separator-id separator-props)
-         {}))
+         (element.helpers/element-indent-attributes  separator-id separator-props)))

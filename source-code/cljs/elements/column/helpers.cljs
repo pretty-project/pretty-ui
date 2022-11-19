@@ -25,23 +25,25 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ;  {:style (map)(opt)}
+  ;  {}
   ;
   ; @return (map)
-  ;  {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
+  ;  {}
+  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?]}]
+  (cond-> {:data-gap                 gap
+           :data-horizontal-align    horizontal-align
+           :data-stretch-orientation stretch-orientation
+           :data-vertical-align      vertical-align
+           :data-wrap-items          wrap-items?
+           :style                    style}))
 
 (defn column-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [column-id column-props]
   (merge (element.helpers/element-default-attributes column-id column-props)
-         (element.helpers/element-indent-attributes  column-id column-props)
-         {}))
+         (element.helpers/element-indent-attributes  column-id column-props)))

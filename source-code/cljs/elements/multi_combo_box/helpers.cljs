@@ -59,11 +59,8 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [box-id box-props]
   (merge (element.helpers/element-default-attributes box-id box-props)
-         (element.helpers/element-indent-attributes  box-id box-props)
-         {}))
+         (element.helpers/element-indent-attributes  box-id box-props)))

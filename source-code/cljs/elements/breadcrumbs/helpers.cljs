@@ -57,14 +57,11 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [breadcrumbs-id {:keys [] :as breadcrumbs-props}]
   (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
-         (element.helpers/element-indent-attributes  breadcrumbs-id breadcrumbs-props)
-         {}))
+         (element.helpers/element-indent-attributes  breadcrumbs-id breadcrumbs-props)))
 
 (defn static-crumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

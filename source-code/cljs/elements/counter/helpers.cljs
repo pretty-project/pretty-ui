@@ -55,10 +55,10 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;  {}
+  ;  {:border-color (keyword or string)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-selectable (boolean)}
   [counter-id {:keys [border-color] :as counter-props}]
   (merge (element.helpers/element-default-attributes counter-id counter-props)
          (element.helpers/element-indent-attributes  counter-id counter-props)

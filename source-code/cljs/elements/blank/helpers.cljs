@@ -37,11 +37,8 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
   [blank-id blank-props]
   (merge (element.helpers/element-default-attributes blank-id blank-props)
-         (element.helpers/element-indent-attributes  blank-id blank-props)
-         {}))
+         (element.helpers/element-indent-attributes  blank-id blank-props)))
