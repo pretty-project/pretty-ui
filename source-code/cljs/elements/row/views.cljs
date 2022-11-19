@@ -29,7 +29,7 @@
   ; @param (keyword) row-id
   ; @param (map) row-props
   ;  {:content (metamorphic-content)(opt)}
-  [row-id {:keys [content]}]
+  [row-id {:keys [content :as row-props]}]
   [:div.e-row--body (row.helpers/row-body-attributes row-id row-props)
                     [x.components/content            row-id content]])
 

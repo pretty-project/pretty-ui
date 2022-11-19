@@ -29,7 +29,7 @@
   ; @param (keyword) column-id
   ; @param (map) column-props
   ;  {:content (metamorphic-content)}
-  [column-id {:keys [content]}]
+  [column-id {:keys [content] :as column-props}]
   [:div.e-column--body (column.helpers/column-body-attributes column-id column-props)
                        [x.components/content                  column-id content]])
 

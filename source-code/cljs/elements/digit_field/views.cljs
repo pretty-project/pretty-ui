@@ -50,7 +50,7 @@
                                                                   ; prevent selecting
                                                                   :on-mouse-down #(.preventDefault %)}
                                                                  (string.api/get-nth-character (:value field-props) %2)]))
-    [:div.e-digit-field--cover {:style {:width (-> field-props field-props->digits-width css/px)}}]
+    [:div.e-digit-field--cover {:style {:width (-> field-props digit-field.helpers/field-props->digits-width css/px)}}]
     (range 4)))
 
 (defn- digit-field
@@ -88,4 +88,4 @@
    [element (random/generate-keyword) field-props])
 
   ([field-id field-props]
-   (let [field-props (digit-field.prototypes/field-props-prototype field-id field-props)])))
+   (let [field-props (digit-field.prototypes/field-props-prototype field-props)])))

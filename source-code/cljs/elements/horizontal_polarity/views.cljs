@@ -59,10 +59,10 @@
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
   [polarity-id polarity-props]
-  [:div.e-horizontal-polarity (horizontal-polarity.helpers/element-attributes polarity-id polarity-props)
-                              [start-content                                  polarity-id polarity-props]
-                              [middle-content                                 polarity-id polarity-props]
-                              [end-content                                    polarity-id polarity-props]])
+  [:div.e-horizontal-polarity (horizontal-polarity.helpers/polarity-attributes polarity-id polarity-props)
+                              [start-content                                   polarity-id polarity-props]
+                              [middle-content                                  polarity-id polarity-props]
+                              [end-content                                     polarity-id polarity-props]])
 
 (defn element
   ; @param (keyword)(opt) polarity-id
