@@ -1237,18 +1237,6 @@ body {
   width: 6px;
 }
 
-.e-color-stamp--body[data-size="xxs"] {
-  grid-gap: 1px;
-  height: 12px;
-  width: 12px;
-}
-
-.e-color-marker[data-size="xxs"] .e-color-marker--body {
-  border-radius: 3px;
-  height: 12px;
-  width: 6px;
-}
-
 .e-thumbnail[data-height="xxs"] .e-thumbnail--body {
   height: 36px;
 }
@@ -1274,18 +1262,6 @@ body {
   width: 12px;
 }
 
-.e-color-stamp--body[data-size="xs"] {
-  grid-gap: 1px;
-  height: 18px;
-  width: 18px;
-}
-
-.e-color-marker[data-size="xs"] .e-color-marker--body {
-  border-radius: 3px;
-  height: 18px;
-  width: 6px;
-}
-
 .e-thumbnail[data-height="xs"] .e-thumbnail--body {
   height: 48px;
 }
@@ -1309,18 +1285,6 @@ body {
 
 .e-vertical-separator[data-width="s"] {
   width: 18px;
-}
-
-.e-color-stamp--body[data-size="s"] {
-  grid-gap: 1px;
-  height: 24px;
-  width: 24px;
-}
-
-.e-color-marker[data-size="s"] .e-color-marker--body {
-  border-radius: 3px;
-  height: 24px;
-  width: 6px;
 }
 
 .e-thumbnail[data-height="s"] .e-thumbnail--body {
@@ -1361,13 +1325,13 @@ body {
 
 .e-color-stamp--body[data-size="m"] {
   grid-gap: 1px;
-  height: 30px;
-  width: 30px;
+  height: 24px;
+  width: 24px;
 }
 
 .e-color-marker[data-size="m"] .e-color-marker--body {
   border-radius: 3px;
-  height: 30px;
+  height: 24px;
   width: 6px;
 }
 

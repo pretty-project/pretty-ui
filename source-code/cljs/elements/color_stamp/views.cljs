@@ -90,7 +90,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :label (metamorphic-content)(opt)
   ;   :size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :m, :l, :xl, :xxl
   ;    Default: :s
   ;   :style (map)(opt)}
   ;

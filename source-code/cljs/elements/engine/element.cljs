@@ -136,7 +136,7 @@
   (cond-> {} height     (element.helpers/apply-dimension :height    :data-height    height)
              width      (element.helpers/apply-dimension :width     :data-width     width)
              min-width  (element.helpers/apply-dimension :min-width :data-min-width min-width)
-             size       (assoc                       :data-size       size)))
+             size       (assoc                           :data-size                 size)))
 
 (defn element-generic-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

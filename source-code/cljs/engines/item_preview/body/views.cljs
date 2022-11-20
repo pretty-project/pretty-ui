@@ -28,8 +28,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
-  [preview-id]
-  (if-let [ghost-element @(r/subscribe [:item-preview/get-body-prop preview-id :ghost-element])]
+  [preview-id {:keys [ghost-element]}]
+  (if-let [ghost-element ghost-element]
           [x.components/content preview-id ghost-element]))
 
 (defn error-element
@@ -52,7 +52,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
-  [preview-id]
+  [preview-id body-props]
   (cond @(r/subscribe [:item-preview/get-meta-item preview-id :engine-error])
          [error-element preview-id]
         @(r/subscribe [:item-preview/data-received? preview-id])
@@ -60,7 +60,7 @@
         @(r/subscribe [:item-preview/no-item-id-passed? preview-id])
          [:<>]
          :data-not-received
-         [ghost-element preview-id]))
+         [ghost-element preview-id body-props]))
 
 (defn body
   ; @param (keyword) preview-id
@@ -89,4 +89,4 @@
                            {:component-did-mount    (fn []  (r/dispatch [:item-preview/body-did-mount    preview-id body-props]))
                             :component-will-unmount (fn []  (r/dispatch [:item-preview/body-will-unmount preview-id]))
                             :component-did-update   (fn [%] (r/dispatch [:item-preview/body-did-update   preview-id %]))
-                            :reagent-render         (fn []              [body-structure                  preview-id])})))
+                            :reagent-render         (fn []              [body-structure                  preview-id body-props])})))

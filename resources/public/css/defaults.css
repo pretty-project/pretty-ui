@@ -25,7 +25,7 @@
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-name: opacity-1-0;
-  background-color: rgba(200, 50, 50, .3);
+  background-color: rgba(50, 50, 200, .3);
   content: '';
   height: 100%;
   left: 0;
