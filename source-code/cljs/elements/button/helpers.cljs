@@ -141,7 +141,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {:border-radius (keyword)(opt)
-  ;   :horizontal-align (keyword)(opt)}
+  ;   :horizontal-align (keyword)}
   ;
   ; @return (map)
   ;  {:data-border-radius (keyword)
@@ -169,7 +169,7 @@
   [button-id {:keys [disabled? on-mouse-over] :as button-props}]
   ; XXX#4460
   ; Az id attribútum használatával a gomb azonosítható válik a DOM műveletekhez.
-  ; Pl.: Fókusz beállítása
+  ; (pl. Fókusz beállítása)
   (merge {:data-selectable false}
          (button-style-attributes  button-id button-props)
          (button-font-attributes   button-id button-props)

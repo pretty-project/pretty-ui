@@ -100,7 +100,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl
+  ;    :l, :xl, :xxl, :3xl
   ;    Default: :xxl
   ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning

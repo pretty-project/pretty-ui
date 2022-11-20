@@ -20,19 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn marker-color-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) marker-id
-  ; @param (map) marker-props
-  ; @param (keyword or string) color
-  ;
-  ; @return (map)
-  ;  {:data-color (keyword)
-  ;   :style (map)}
-  [_ _ color]
-  (element.helpers/apply-color {} :background-color :data-color color))
-
 (defn marker-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -56,3 +43,21 @@
   (merge (element.helpers/element-default-attributes marker-id marker-props)
          (element.helpers/element-indent-attributes  marker-id marker-props)
          {:data-size size}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn marker-color-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) marker-id
+  ; @param (map) marker-props
+  ; @param (keyword or string) color
+  ;
+  ; @return (map)
+  ;  {:data-color (keyword)
+  ;   :style (map)}
+  [_ _ color]
+  (element.helpers/apply-color {} :background-color :data-color color))

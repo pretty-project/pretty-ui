@@ -49,7 +49,7 @@
   ;  {:on-error (function)
   ;   :ref (?)
   ;   :style (map)}
-  [_ {:keys [style]}]
+  [image-id {:keys [style]}]
   {:on-error (on-error-f           image-id)
    :ref      (react/set-reference! image-id)
    :style style})

@@ -50,22 +50,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn diagram-section-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ;  {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ;  {data-color (keyword)}
-  ;   :style (map)
-  ;    {:width (string)}}
-  [_ diagram-props {:keys [color] :as section-props}]
-  (let [value-ratio (section-props->value-ratio diagram-props section-props)]
-       {:data-color color
-        :style      {:width (css/percent value-ratio)}}))
-
 (defn diagram-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,3 +72,24 @@
   [diagram-id diagram-props]
   (merge (element.helpers/element-default-attributes diagram-id diagram-props)
          (element.helpers/element-indent-attributes  diagram-id diagram-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn diagram-section-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) diagram-id
+  ; @param (map) diagram-props
+  ;  {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ;  {data-color (keyword)}
+  ;   :style (map)
+  ;    {:width (string)}}
+  [_ diagram-props {:keys [color] :as section-props}]
+  (let [value-ratio (section-props->value-ratio diagram-props section-props)]
+       {:data-color color
+        :style      {:width (css/percent value-ratio)}}))

@@ -25,8 +25,8 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ;  {:size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;  {:height (keyword)(opt)
+  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;    Default: :s}
   ;
   ; @usage

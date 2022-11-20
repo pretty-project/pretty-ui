@@ -30,7 +30,8 @@
   ; @return (map)
   ;  {:style (map)}
   [_ {:keys [style]}]
-  {:style style})
+  ; TEMP
+  {:style (merge style {:width "500px" :height "300px"})})
 
 (defn diagram-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

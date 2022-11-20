@@ -29,7 +29,7 @@
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
   ; @param (map) section-props
-  [_ diagram-props section-props]
+  [diagram-id diagram-props section-props]
   [:div.e-line-diagram--section (line-diagram.helpers/diagram-section-attributes diagram-id diagram-props section-props)])
 
 (defn- line-diagram-sections

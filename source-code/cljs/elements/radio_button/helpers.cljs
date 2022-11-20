@@ -69,6 +69,11 @@
           :data-options-orientation options-orientation
           :data-selectable          false}))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn clear-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -85,6 +90,11 @@
            :title          (x.components/content :uncheck-selected!)}
           {:data-disabled  true
            :disabled       true}))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn radio-button-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -22,23 +22,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs-item-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ;  {}
-  ; @param (map) item-props
-  ;
-  ; @return (map)
-  ;  {}
-  [breadcrumbs-id _ {:keys [disabled? href on-click]}]
-  (if disabled? {:disabled       true}
-                {:data-clickable true
-                 :href           href
-                 :on-click       #(r/dispatch on-click)
-                 :on-mouse-up    #(element.side-effects/blur-element! breadcrumbs-id)}))
-
 (defn breadcrumbs-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,6 +45,28 @@
   [breadcrumbs-id {:keys [] :as breadcrumbs-props}]
   (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
          (element.helpers/element-indent-attributes  breadcrumbs-id breadcrumbs-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn breadcrumbs-item-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;  {}
+  ; @param (map) item-props
+  ;
+  ; @return (map)
+  ;  {}
+  [breadcrumbs-id _ {:keys [disabled? href on-click]}]
+  (if disabled? {:disabled       true}
+                {:data-clickable true
+                 :href           href
+                 :on-click       #(r/dispatch on-click)
+                 :on-mouse-up    #(element.side-effects/blur-element! breadcrumbs-id)}))
 
 (defn static-crumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

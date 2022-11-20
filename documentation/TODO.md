@@ -6,6 +6,9 @@
 
 # x4.7.0
 
+- A ghost-ok, horizontal-separator-ok, indent-ek, stb. méret skálájból kimaradt
+  a 30px, mert kevés a 7 lépés 6-48px ig
+
 - a re-frame db sokszorosan tartalmazza önmagát!!
 
 - gombok presetjei nem szükségesek

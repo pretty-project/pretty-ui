@@ -220,7 +220,7 @@
   []
   (if-let [show-data? @(r/subscribe [:developer-tools.re-frame-browser/get-meta-item :show-data?])]
           (let [current-item @(r/subscribe [:developer-tools.re-frame-browser/get-current-item])]
-               [:<> [elements/horizontal-separator {:size :xxl}]
+               [:<> [elements/horizontal-separator {:height :xxl}]
                     [:pre {:style {:font-size "12px"}}
                           (pretty/mixed->string current-item)]])))
 (defn edit-item

@@ -65,6 +65,11 @@
          (element.helpers/apply-color {} :color :data-border-color border-color)
          {:data-selectable false}))
 
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn increase-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

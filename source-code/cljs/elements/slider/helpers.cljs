@@ -91,14 +91,16 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
-  [slider-id {:keys [] :as slider-props}]
+  [slider-id slider-props]
   (merge (element.helpers/element-default-attributes slider-id slider-props)
-         (element.helpers/element-indent-attributes  slider-id slider-props)
-         {}))
+         (element.helpers/element-indent-attributes  slider-id slider-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn slider-primary-thumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

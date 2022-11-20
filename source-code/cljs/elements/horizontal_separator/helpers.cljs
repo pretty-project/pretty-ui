@@ -25,14 +25,14 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ;  {:size (keyword)
+  ;  {:height (keyword)
   ;   :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-size (keyword)
+  ;  {:data-height (keyword)
   ;   :style (map)}
-  [separator-id {:keys [size style] :as separator-props}]
+  [separator-id {:keys [height style] :as separator-props}]
   (merge (element.helpers/element-default-attributes separator-id separator-props)
          (element.helpers/element-indent-attributes  separator-id separator-props)
-         {:data-size size
-          :style     style}))
+         {:data-height height
+          :style       style}))

@@ -75,12 +75,12 @@
               [elements.image.views                             :as image.views]
               [elements.label.views                             :as label.views]
               [elements.line-diagram.views                      :as line-diagram.views]
-              [elements.element-components.menu-bar             :as element-components.menu-bar]
+              [elements.menu-bar.views                          :as menu-bar.views]
               [elements.multiline-field.views                   :as multiline-field.views]
               [elements.multi-combo-box.views                   :as multi-combo-box.views]
               [elements.multi-field.views                       :as multi-field.views]
               [elements.password-field.views                    :as password-field.views]
-              [elements.element-components.point-diagram        :as element-components.point-diagram]
+              [elements.point-diagram.views                     :as point-diagram.views]
               [elements.radio-button.views                      :as radio-button.views]
               [elements.row.views                               :as row.views]
               [elements.search-field.views                      :as search-field.views]
@@ -130,12 +130,12 @@
 (def image                image.views/element)
 (def label                label.views/element)
 (def line-diagram         line-diagram.views/element)
-(def menu-bar             element-components.menu-bar/element)
+(def menu-bar             menu-bar.views/element)
 (def multi-combo-box      multi-combo-box.views/element)
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
 (def password-field       password-field.views/element)
-(def point-diagram        element-components.point-diagram/element)
+(def point-diagram        point-diagram.views/element)
 (def radio-button         radio-button.views/element)
 (def row                  row.views/element)
 (def search-field         search-field.views/element)
