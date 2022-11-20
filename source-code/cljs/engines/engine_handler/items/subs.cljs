@@ -123,14 +123,3 @@
   [db [_ engine-id item-dex]]
   (let [disabled-items (r core.subs/get-meta-item db engine-id :disabled-items)]
        (vector/contains-item? disabled-items item-dex)))
-
-(defn item-last?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (integer) item-dex
-  ;
-  ; @return (boolean)
-  [db [_ engine-id item-dex]]
-  (let [downloaded-item-count (r core.subs/get-downloaded-item-count db engine-id)]
-       (= downloaded-item-count (inc item-dex))))

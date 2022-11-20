@@ -1341,6 +1341,7 @@ body {
 
 .e-ghost[data-height="m"] .e-ghost--body,
 .e-horizontal-separator[data-height="m"],
+.e-icon-button--body[data-height="m"],
 /* XXX#9910
  * A menu-bar magasságát a menü elemeken szükséges alkalmazni,
  * így {:orientation :horizontal} és {:orientation :vertical}
@@ -1351,6 +1352,10 @@ body {
 }
 
 .e-vertical-separator[data-width="m"] {
+  width: 24px;
+}
+
+.e-icon-button--body[data-width="m"] {
   width: 24px;
 }
 
@@ -2830,6 +2835,25 @@ body {
 }
 
 /*** Icon-button wrapper ***/
+
+/*** Icon-button progress *****/
+
+.e-icon-button--progress-svg {
+  height: 24px;
+  width: 24px;
+
+  /* BUG#8801
+   * Az .e-icon-button--body::before pszeudóelem abszolút pozícionálású,
+   * ezért szükséges, hogy az .e-icon-button--progress-svg is az legyen,
+   * különben a pszeudóelem eltakarná az svg elemet! */
+  position: absolute;
+}
+
+.e-icon-button--progress-circle {
+  fill: transparent;
+}
+
+/*** Icon-button progress *****/
 
 /*** Icon-button badge ***/
 

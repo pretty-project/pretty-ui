@@ -97,17 +97,6 @@
   [db [_ lister-id item-dex]]
   (r items.subs/item-disabled? db lister-id item-dex))
 
-(defn item-last?
-  ; @param (keyword) lister-id
-  ; @param (integer) item-dex
-  ;
-  ; @usage
-  ;  (r item-last? db :my-lister 42)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id item-dex]]
-  (r items.subs/item-last? db lister-id item-dex))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -126,10 +115,3 @@
 ; @usage
 ;  [:item-lister/item-disabled? :my-lister 42]
 (r/reg-sub :item-lister/item-disabled? item-disabled?)
-
-; @param (keyword) lister-id
-; @param (integer) item-dex
-;
-; @usage
-;  [:item-lister/item-last? :my-lister 42]
-(r/reg-sub :item-lister/item-last? item-last?)

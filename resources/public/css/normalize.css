@@ -175,7 +175,7 @@ footer, header, div, label, p, span {
 
 
 /* Everything is {position: relative}. */
-a, button, footer, header, section, div, p, span, label, img {
+a, button, footer, header, section, div, p, span, label, img, td {
   position: relative;
 }
 

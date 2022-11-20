@@ -29,13 +29,13 @@
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?]}]
-  (cond-> {:data-gap                 gap
-           :data-horizontal-align    horizontal-align
-           :data-stretch-orientation stretch-orientation
-           :data-vertical-align      vertical-align
-           :data-wrap-items          wrap-items?
-           :style                    style}))
+  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as x}]
+  {:data-gap                 gap
+   :data-horizontal-align    horizontal-align
+   :data-stretch-orientation stretch-orientation
+   :data-vertical-align      vertical-align
+   :data-wrap-items          wrap-items?
+   :style                    style})
 
 (defn row-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

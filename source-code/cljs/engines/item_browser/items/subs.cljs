@@ -81,17 +81,6 @@
   [db [_ browser-id item-dex]]
   (r items.subs/item-disabled? db browser-id item-dex))
 
-(defn item-last?
-  ; @param (keyword) browser-id
-  ; @param (integer) item-dex
-  ;
-  ; @usage
-  ;  (r item-last? db :my-browser 42)
-  ;
-  ; @return (boolean)
-  [db [_ browser-id item-dex]]
-  (r items.subs/item-last? db browser-id item-dex))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -110,10 +99,3 @@
 ; @usage
 ;  [:item-browser/item-disabled? :my-browser 42]
 (r/reg-sub :item-browser/item-disabled? item-disabled?)
-
-; @param (keyword) browser-id
-; @param (integer) item-dex
-;
-; @usage
-;  [:item-browser/item-last? :my-browser 42]
-(r/reg-sub :item-browser/item-last? item-last?)

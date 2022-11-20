@@ -28,6 +28,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- icon-button-progress
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;  {:progress (percent)(opt)}
+  [button-id {:keys [progress] :as button-props}]
+  (if progress [:svg.e-icon-button--progress-svg {:view-box "0 0 24 24"}
+                 [:circle.e-icon-button--progress-circle (icon-button.helpers/progress-attributes button-id button-props)]]))
+
 (defn- icon-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -54,6 +62,7 @@
   ; @param (map) button-props
   [button-id button-props]
   [:button.e-icon-button--body (icon-button.helpers/button-body-attributes button-id button-props)
+                               [icon-button-progress                       button-id button-props]
                                [icon-button-icon                           button-id button-props]
                                [icon-button-label                          button-id button-props]
                                [engine/element-badge                       button-id button-props]])
@@ -100,7 +109,7 @@
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :height (keyword)(opt)
-  ;    :l, :xl, :xxl, :3xl
+  ;    :m, :l, :xl, :xxl, :3xl
   ;    Default: :xxl
   ;   :hover-color (keyword or string)(opt)
   ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
@@ -126,6 +135,9 @@
   ;   :on-click (metamorphic handler)(opt)
   ;   :on-mouse-over (metamorphic handler)(opt)
   ;   :preset (keyword)(opt)
+  ;   :progress (percent)(opt)
+  ;   :progress-duration (ms)(opt)
+  ;    W/ {:progress ...}
   ;   :stop-propagation? (boolean)(opt)
   ;    Default: false
   ;   :style (map)(opt)
@@ -133,7 +145,7 @@
   ;   :variant (keyword)(opt)
   ;    :placeholder
   ;   :width (keyword)(opt)
-  ;    :l, :xl, :xxl, :3xl
+  ;    :m, :l, :xl, :xxl, :3xl
   ;    Default: :xxl}
   ;
   ; @usage
