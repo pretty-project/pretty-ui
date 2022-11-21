@@ -3649,12 +3649,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .e-text--body[data-cropped="true"] {
   justify-content: flex-start;
   overflow-y: hidden;
-  text-overflow: ellipsis;
 }
 
 .e-text--body[data-cropped="true"]::after {

@@ -95,17 +95,22 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-browser/order-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) browser-id
-  ; @param (namespaced keyword) order-by
+  ; @param (keyword or namespaced keyword) order-by
+  ;
+  ; @usage
+  ;  [:item-browser/order-items! :my-browser :name]
+  ;
+  ; @usage
+  ;  [:item-browser/order-items! :my-browser :name/descending]
   (fn [{:keys [db]} [_ browser-id order-by]]
       [:item-lister/order-items! browser-id order-by]))
 
 (r/reg-event-fx :item-browser/swap-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) browser-id
+  ;
+  ; @usage
+  ;  [:item-browser/swap-items! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
       [:item-lister/swap-items! browser-id]))
 

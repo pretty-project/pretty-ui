@@ -152,6 +152,15 @@
            :loading...
            {:en "Loading ..."
             :hu "Betöltés ..."}
+           :modify!
+           {:en "Modify"
+            :hu "Módosítás"}
+           :modified
+           {:en "Modified"
+            :hu "Módosítva"}
+           :modifying...
+           {:en "Modifying ..."
+            :hu "Módosítás ..."}
            :move!
            {:en "Move"
             :hu "Áthelyezés"}

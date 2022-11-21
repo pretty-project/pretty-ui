@@ -56,18 +56,35 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-lister/order-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) lister-id
-  ; @param (namespaced keyword) order-by
+  ; @param (keyword or namespaced keyword) order-by
+  ;
+  ; @usage
+  ;  [:item-lister/order-items! :my-lister :name]
+  ;
+  ; @usage
+  ;  [:item-lister/order-items! :my-lister :name/descending]
   (fn [{:keys [db]} [_ lister-id order-by]]
-      {:db       (r core.events/order-items! db lister-id order-by)
-       :dispatch [:item-lister/request-items! lister-id]}))
+      (if-let [order-by-key (namespace order-by)]
+              ; (A)
+              {:db       (r core.events/order-items! db lister-id order-by)
+               :dispatch [:item-lister/request-items! lister-id]}
+              ; (B)
+              (let [current-order-by (r core.subs/get-meta-item db lister-id :order-by)]
+                   (if (= (namespace current-order-by) 
+                          (name              order-by))
+                       ; (B1)
+                       [:item-lister/swap-items! lister-id]
+                       ; (B2)
+                       (let [order-by (keyword (name order-by) "descending")]
+                            {:db       (r core.events/order-items! db lister-id order-by)
+                             :dispatch [:item-lister/request-items! lister-id]}))))))
 
 (r/reg-event-fx :item-lister/swap-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) lister-id
+  ;
+  ; @usage
+  ;  [:item-lister/swap-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       ; ...
       (let [current-order-by (r core.subs/get-meta-item db lister-id :order-by)
