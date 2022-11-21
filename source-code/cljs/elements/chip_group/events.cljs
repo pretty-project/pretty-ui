@@ -13,10 +13,9 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.chip-group.events
-    (:require [elements.engine.api :as engine]
-              [re-frame.api        :as r :refer [r]]
-              [vector.api          :as vector]
-              [x.db.api            :as x.db]))
+    (:require [re-frame.api :as r :refer [r]]
+              [vector.api   :as vector]
+              [x.db.api     :as x.db]))
 
 
 

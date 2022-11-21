@@ -20,7 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; XXX#NEW VERSION!
 (defn get-input-options
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -37,7 +36,6 @@
   ; található értékek alapján.
   (or options @(r/subscribe [:x.db/get-item options-path])))
 
-; XXX#NEW VERSION!
 (defn default-options-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -47,7 +45,6 @@
   [input-id]
   [:elements :element-handler/input-options input-id])
 
-; XXX#NEW VERSION!
 (defn default-value-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,7 +54,6 @@
   [input-id]
   [:elements :element-handler/input-values input-id])
 
-; XXX#NEW VERSION!
 (defn value-path->vector-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

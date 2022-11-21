@@ -14,8 +14,8 @@
 
 (ns elements.icon-button.views
     (:require [elements.button.helpers         :as button.helpers]
-              [elements.engine.api             :as engine]
               [elements.element.helpers        :as element.helpers]
+              [elements.element.views          :as element.views]
               [elements.icon-button.helpers    :as icon-button.helpers]
               [elements.icon-button.presets    :as icon-button.presets]
               [elements.icon-button.prototypes :as icon-button.prototypes]
@@ -65,7 +65,7 @@
                                [icon-button-progress                       button-id button-props]
                                [icon-button-icon                           button-id button-props]
                                [icon-button-label                          button-id button-props]
-                               [engine/element-badge                       button-id button-props]])
+                               [element.views/element-badge                button-id button-props]])
 
 (defn- icon-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

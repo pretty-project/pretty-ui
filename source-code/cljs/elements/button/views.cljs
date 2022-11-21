@@ -18,7 +18,7 @@
               [elements.button.presets    :as button.presets]
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
-              [elements.engine.api        :as engine]
+              [elements.element.views     :as element.views]
               [plugins.reagent.api        :as reagent]
               [random.api                 :as random]
               [x.components.api           :as x.components]))
@@ -60,7 +60,7 @@
                           [button-label button-id button-props]
                           (if icon (case icon-position :left  [:div.e-button--icon-placeholder]
                                                        :right [button-icon button-id button-props]))
-                          [engine/element-badge button-id button-props]])
+                          [element.views/element-badge button-id button-props]])
 
 (defn- button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!

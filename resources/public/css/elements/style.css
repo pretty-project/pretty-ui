@@ -62,14 +62,7 @@ body {
 .e-radio-button--option:active .e-radio-button--option-content,
 .e-radio-button--option:focus  .e-radio-button--option-content,
 .e-switch--option:active       .e-switch--option-content,
-.e-switch--option:focus        .e-switch--option-content,
-
-/* WARNING! DEPRECATED! USE {:data-clickable true} INSTEAD! */
-.e-toggle:active,
-.e-toggle:focus {
-/* DEPRECATED! */
-
-
+.e-switch--option:focus        .e-switch--option-content {
   opacity: .5;
 }
 
@@ -200,7 +193,7 @@ body {
 .e-color-marker--color[data-color="muted"],
 .e-chip[data-background-color="muted"] .e-chip--body,
 .e-icon-button--body[data-background-color="muted"],
-.e-toggle[data-background-color="muted"] {
+.e-toggle--body[data-background-color="muted"] {
   background-color: var( --background-color-muted );
 }
 
@@ -224,10 +217,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="muted"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="muted"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="muted"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="muted"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="muted"]:hover::before,
-.e-toggle[data-hover-color="muted"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="muted"]:hover {
   background-color: var( --hover-color-muted );
 }
 
@@ -277,7 +270,7 @@ body {
 .e-color-marker--color[data-color="highlight"],
 .e-chip[data-background-color="highlight"] .e-chip--body,
 .e-icon-button--body[data-background-color="highlight"],
-.e-toggle[data-background-color="highlight"] {
+.e-toggle--body[data-background-color="highlight"] {
   background-color: var( --background-color-highlight );
 }
 
@@ -297,10 +290,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="highlight"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="highlight"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="highlight"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="highlight"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="highlight"]:hover::before,
-.e-toggle[data-hover-color="highlight"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="highlight"]:hover {
   background-color: var( --hover-color-highlight );
 }
 
@@ -345,10 +338,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="invert"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="invert"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="invert"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="invert"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="invert"]:hover::before,
-.e-toggle[data-hover-color="invert"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="invert"]:hover {
   background-color: var( --hover-color-invert );
 }
 
@@ -377,7 +370,7 @@ body {
 .e-color-marker--color[data-color="primary"],
 .e-chip[data-background-color="primary"]        .e-chip--body,
 .e-icon-button--body[data-background-color="primary"],
-.e-toggle[data-background-color="primary"] {
+.e-toggle--body[data-background-color="primary"] {
   background-color: var( --background-color-primary );
 }
 
@@ -410,10 +403,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="primary"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="primary"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="primary"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="primary"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="primary"]:hover::before,
-.e-toggle[data-hover-color="primary"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="primary"]:hover {
   background-color: var( --hover-color-primary );
 }
 
@@ -462,7 +455,7 @@ body {
 .e-color-marker--color[data-color="secondary"],
 .e-chip[data-background-color="secondary"]        .e-chip--body,
 .e-icon-button--body[data-background-color="secondary"],
-.e-toggle[data-background-color="secondary"] {
+.e-toggle--body[data-background-color="secondary"] {
   background-color: var( --background-color-secondary );
 }
 
@@ -495,10 +488,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="secondary"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="secondary"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="secondary"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="secondary"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="secondary"]:hover::before,
-.e-toggle[data-hover-color="secondary"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="secondary"]:hover {
   background-color: var( --hover-color-secondary );
 }
 
@@ -547,7 +540,7 @@ body {
 .e-color-marker--color[data-color="success"],
 .e-chip[data-background-color="success"] .e-chip--body,
 .e-icon-button--body[data-background-color="success"],
-.e-toggle[data-background-color="success"] {
+.e-toggle--body[data-background-color="success"] {
   background-color: var( --background-color-success );
 }
 
@@ -580,10 +573,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="success"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="success"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="success"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="success"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="success"]:hover::before,
-.e-toggle[data-hover-color="success"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="success"]:hover {
   background-color: var( --hover-color-success );
 }
 
@@ -631,7 +624,7 @@ body {
 .e-color-marker--color[data-color="warning"],
 .e-chip[data-background-color="warning"] .e-chip--body,
 .e-icon-button--body[data-background-color="warning"],
-.e-toggle[data-background-color="warning"] {
+.e-toggle--body[data-background-color="warning"] {
   background-color: var( --background-color-warning );
 }
 
@@ -665,10 +658,10 @@ body {
 /* Hover-color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
-.e-button[data-disabled="false"] .e-button--body:hover[data-hover-color="warning"],
-.e-card[data-disabled="false"]   .e-card--body[data-hover-color="warning"]:hover,
+.e-button[data-disabled="false"]      .e-button--body:hover[data-hover-color="warning"],
+.e-card[data-disabled="false"]        .e-card--body[data-hover-color="warning"]:hover,
 .e-icon-button[data-disabled="false"] .e-icon-button--body[data-hover-color="warning"]:hover::before,
-.e-toggle[data-hover-color="warning"][data-disabled="false"]:hover {
+.e-toggle[data-disabled="false"]      .e-toggle--body[data-hover-color="warning"]:hover {
   background-color: var( --hover-color-warning );
 }
 
@@ -766,11 +759,17 @@ body {
 .e-button--body[data-font-size="xxs"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
+
   /* XXX#6610
    * Az XXS és XS betűméretű gomboknál fontos, hogy a sormagasság 24px legyen,
    * különben túl nagy lenne a távolság a felette elhelyezett tartalmilag hozzá
    * kapcsolódó label elemtől! */
   line-height: 24px;
+
+  /* XXX#6611
+   * Ha a gomb nem tartalmaz label feliratot csak ikon elemet, akkor a height
+   * tulajdonság állítja be az .e-button--body elem magasságát */
+  height: 24px;
 }
 
 .e-button--body[data-font-size="xxs"][data-hover-color] {
@@ -778,6 +777,9 @@ body {
    * A hover-color tulajdonsággal rendelkező button elem sormagassága minimum 36px
    * kell, hogy legyen, különben túl vékonynak néz ki! */
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="xs"] .e-label--icon {
@@ -826,11 +828,17 @@ body {
   letter-spacing: var( --letter-spacing-xs );
   /* XXX#6610 */
   line-height: 24px;
+
+  /* XXX#6611 */
+  height: 24px;
 }
 
 .e-button--body[data-font-size="xs"][data-hover-color] {
   /* XXX#0404 */
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="xs"] .e-label--icon {
@@ -885,6 +893,9 @@ body {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="s"] .e-label--icon {
@@ -930,6 +941,9 @@ body {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="m"] .e-label--icon {
@@ -968,6 +982,9 @@ body {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="l"] .e-label--icon {
@@ -1006,6 +1023,9 @@ body {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="xl"] .e-label--icon {
@@ -1044,6 +1064,9 @@ body {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
   line-height: 36px;
+
+  /* XXX#6611 */
+  height: 36px;
 }
 
 .e-label[data-font-size="xxl"] .e-label--icon {
@@ -1568,7 +1591,7 @@ body {
 .e-select[data-border-radius="xxs"] .e-select--button-body,
 .e-text-field[data-border-radius="xxs"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="xxs"] .e-thumbnail--body,
-.e-toggle[data-border-radius="xxs"] .e-toggle--body {
+.e-toggle--body[data-border-radius="xxs"] {
   border-radius: var( --border-radius-xxs );
 }
 
@@ -1587,7 +1610,7 @@ body {
 .e-select[data-border-radius="xs"] .e-select--button-body,
 .e-text-field[data-border-radius="xs"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="xs"] .e-thumbnail--body,
-.e-toggle[data-border-radius="xs"] .e-toggle--body {
+.e-toggle--body[data-border-radius="xs"] {
   border-radius: var( --border-radius-xs );
 }
 
@@ -1606,7 +1629,7 @@ body {
 .e-select[data-border-radius="s"] .e-select--button-body,
 .e-text-field[data-border-radius="s"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="s"] .e-thumbnail--body,
-.e-toggle[data-border-radius="s"] .e-toggle--body {
+.e-toggle--body[data-border-radius="s"] {
   border-radius: var( --border-radius-s );
 }
 
@@ -1625,7 +1648,7 @@ body {
 .e-select[data-border-radius="m"] .e-select--button-body,
 .e-text-field[data-border-radius="m"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="m"] .e-thumbnail--body,
-.e-toggle[data-border-radius="m"] .e-toggle--body {
+.e-toggle--body[data-border-radius="m"] {
   border-radius: var( --border-radius-m );
 }
 
@@ -1644,7 +1667,7 @@ body {
 .e-select[data-border-radius="l"] .e-select--button-body,
 .e-text-field[data-border-radius="l"] .e-text-field--input-container,
 .e-thumbnail[data-border-radius="l"] .e-thumbnail--body,
-.e-toggle[data-border-radius="l"] .e-toggle--body {
+.e-toggle--body[data-border-radius="l"] {
   border-radius: var( --border-radius-l );
 }
 
@@ -1661,7 +1684,7 @@ body {
 .e-ghost[data-border-radius="xl"] .e-ghost--body,
 .e-icon-button--body[data-border-radius="xl"]::before,
 .e-thumbnail[data-border-radius="xl"] .e-thumbnail--body,
-.e-toggle[data-border-radius="xl"] .e-toggle--body {
+.e-toggle--body[data-border-radius="xl"] {
   border-radius: var( --border-radius-xl );
 }
 
@@ -1678,7 +1701,7 @@ body {
 .e-ghost[data-border-radius="xxl"] .e-ghost--body,
 .e-icon-button--body[data-border-radius="xxl"]::before,
 .e-thumbnail[data-border-radius="xxl"] .e-thumbnail--body,
-.e-toggle[data-border-radius="xxl"] .e-toggle--body {
+.e-toggle--body[data-border-radius="xxl"] {
   border-radius: var( --border-radius-xxl );
 }
 
@@ -1893,7 +1916,6 @@ body {
   display: flex;
   flex-direction: column;
   font-size: var( --icon-size-xs );
-  height: var( --icon-size-default );
   justify-content: center;
   width: var( --icon-size-default );
 }

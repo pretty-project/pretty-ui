@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.engine.element-badge
+(ns elements.element.views
     (:require [x.components.api :as x.components]))
 
 

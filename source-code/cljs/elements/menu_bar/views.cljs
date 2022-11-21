@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.menu-bar.views
-    (:require [elements.engine.api          :as engine]
+    (:require [elements.element.views       :as element.views]
               [elements.menu-bar.helpers    :as menu-bar.helpers]
               [elements.menu-bar.prototypes :as menu-bar.prototypes]
               [random.api                   :as random]
@@ -55,7 +55,7 @@
   [:button.e-menu-bar--menu-item (menu-bar.helpers/menu-item-attributes bar-id bar-props item-props)
                                  [menu-item-icon                        bar-id bar-props item-props]
                                  [menu-item-label                       bar-id bar-props item-props]
-                                 [engine/element-badge                  bar-id           item-props]])
+                                 [element.views/element-badge           bar-id           item-props]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -13,16 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns elements.input.events
-    (:require [candy.api               :refer [return]]
-              [elements.engine.element :as element]
-              [map.api                 :refer [dissoc-in]]))
+    (:require [candy.api :refer [return]]
+              [map.api   :refer [dissoc-in]]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; XXX#NEW VERSION!
 (defn store-backup-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -35,7 +33,6 @@
   (assoc-in db [:elements :element-handler/backup-values input-id]
                (get-in db value-path)))
 
-; XXX#NEW VERSION!
 (defn use-initial-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -52,7 +49,6 @@
        (cond-> db (and      initial-options (empty? options))
                   (assoc-in options-path initial-options))))
 
-; XXX#NEW VERSION!
 (defn use-initial-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -69,7 +65,6 @@
        (cond-> db (and      initial-value (nil? stored-value))
                   (assoc-in value-path initial-value))))
 
-; XXX#NEW VERSION!
 (defn mark-as-focused!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,7 +74,6 @@
   [db [_ input-id]]
   (assoc-in db [:elements :element-handler/meta-items input-id :focused?] true))
 
-; XXX#NEW VERSION!
 (defn mark-as-blurred!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -89,7 +83,6 @@
   [db [_ input-id]]
   (dissoc-in db [:elements :element-handler/meta-items input-id :focused?]))
 
-; XXX#NEW VERSION!
 (defn mark-as-visited!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -99,7 +92,6 @@
   [db [_ input-id]]
   (assoc-in db [:elements :element-handler/meta-items input-id :visited?] true))
 
-; XXX#NEW VERSION!
 (defn unmark-as-visited!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -109,7 +101,6 @@
   [db [_ input-id]]
   (dissoc-in db [:elements :element-handler/meta-items input-id :visited?]))
 
-; XXX#NEW VERSION!
 (defn reset-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -122,7 +113,6 @@
   (let [backup-value (get-in db [:elements :element-handler/backup-values input-id])]
        (assoc-in db value-path backup-value)))
 
-; XXX#NEW VERSION!
 (defn clear-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -134,7 +124,6 @@
   [db [_ _ {:keys [value-path]}]]
   (dissoc-in db value-path))
 
-; XXX#NEW VERSION!
 (defn set-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

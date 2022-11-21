@@ -15,7 +15,7 @@
 (ns elements.card.views
     (:require [elements.card.helpers    :as card.helpers]
               [elements.card.prototypes :as card.prototypes]
-              [elements.engine.api      :as engine]
+              [elements.element.views   :as element.views]
               [random.api               :as random]
               [x.components.api         :as x.components]))
 
@@ -33,7 +33,7 @@
   [card-id {:keys [content] :as card-props}]
   [:button.e-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
                         [x.components/content                     card-id content]
-                        [engine/element-badge                     card-id card-props]])
+                        [element.views/element-badge              card-id card-props]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,7 +44,7 @@
   [card-id {:keys [content] :as card-props}]
   [:div.e-card--body (card.helpers/static-card-body-attributes card-id card-props)
                      [x.components/content                     card-id content]
-                     [engine/element-badge                     card-id card-props]])
+                     [element.views/element-badge              card-id card-props]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!

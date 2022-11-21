@@ -12,32 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.element-components.toggle
-    (:require [candy.api           :refer [param]]
-              [elements.engine.api :as engine]
-              [random.api          :as random]
-              [x.components.api    :as x.components]))
+(ns elements.toggle.views
+    (:require [elements.toggle.helpers    :as toggle.helpers]
+              [elements.toggle.prototypes :as toggle.prototypes]
+              [random.api                 :as random]
+              [x.components.api           :as x.components]))
 
 
 
-;; -- Prototypes --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- toggle-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) toggle-props
-  ;  {}
-  ;
-  ; @return (map)
-  ;  {}
-  [{:keys [] :as toggle-props}]
-  (merge {}
-         (param toggle-props)))
-
-
-
-;; -- Components --------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- toggle-body
@@ -47,9 +30,8 @@
   ; @param (map) toggle-props
   ;  {:content (metamorphic-content)(opt)}
   [toggle-id {:keys [content] :as toggle-props}]
-  ; Majd a toggle-body kapja a background-color-t és hover-color-t
-  [:button.e-toggle--body (engine/clickable-body-attributes toggle-id toggle-props)
-                          [x.components/content             toggle-id content]])
+  [:button.e-toggle--body (toggle.helpers/toggle-body-attributes toggle-id toggle-props)
+                          [x.components/content                  toggle-id content]])
 
 (defn- toggle
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -57,8 +39,8 @@
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
   [toggle-id toggle-props]
-  [:div.e-toggle (engine/element-attributes toggle-id toggle-props)
-                 [toggle-body               toggle-id toggle-props]])
+  [:div.e-toggle (toggle.helpers/toggle-attributes toggle-id toggle-props)
+                 [toggle-body                      toggle-id toggle-props]])
 
 (defn element
   ; @param (keyword)(opt) toggle-id
@@ -98,5 +80,5 @@
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [];toggle-props (toggle-props-prototype toggle-props)
+   (let [];toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)
         [toggle toggle-id toggle-props])))
