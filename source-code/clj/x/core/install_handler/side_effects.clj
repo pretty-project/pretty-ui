@@ -50,7 +50,7 @@
                           (return nil)
                           (do (println x.app-details/app-codename "installing:" installer-id)
                               (io/swap-edn-file! install-handler.config/INSTALL-LOG-FILEPATH assoc installer-id
-                                                 {:result       (installer-f)
+                                                 {:result       (boolean (installer-f))
                                                   :installed-at (time/timestamp-string)}))))]
               (reduce-kv f {} @install-handler.state/INSTALLERS))))
 
