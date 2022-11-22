@@ -86,6 +86,7 @@
               [elements.search-field.views         :as search-field.views]
               [elements.select.views               :as select.views]
               [elements.slider.views               :as slider.views]
+              [elements.stepper.views              :as stepper.views]
               [elements.switch.views               :as switch.views]
               [elements.text.views                 :as text.views]
               [elements.text-field.views           :as text-field.views]
@@ -141,6 +142,7 @@
 (def search-field         search-field.views/element)
 (def select               select.views/element)
 (def slider               slider.views/element)
+(def stepper              stepper.views/element)
 (def switch               switch.views/element)
 (def text                 text.views/element)
 (def text-field           text-field.views/element)

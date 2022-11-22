@@ -38,7 +38,6 @@
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
-  ;  {:content (metamorphic-content)(opt)}
   [row-id row-props]
   [:div.e-row (row.helpers/row-attributes row-id row-props)
               [row-body                   row-id row-props]])

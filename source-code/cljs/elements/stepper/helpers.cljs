@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns elements.row.helpers
+(ns elements.stepper.helpers
     (:require [elements.element.helpers :as element.helpers]))
 
 
@@ -20,30 +20,25 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-body-attributes
+(defn stepper-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) stepper-id
+  ; @param (map) stepper-props
   ;  {}
   ;
   ; @return (map)
   ;  {}
-  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?]}]
-  {:data-gap                 gap
-   :data-horizontal-align    horizontal-align
-   :data-stretch-orientation stretch-orientation
-   :data-vertical-align      vertical-align
-   :data-wrap-items          wrap-items?
-   :style                    style})
+  [_ _]
+  {})
 
-(defn row-attributes
+(defn stepper-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (keyword) row-id
-  ; @param (map) row-props
+  ; @param (keyword) stepper-id
+  ; @param (map) stepper-props
   ;
   ; @return (map)
-  [row-id row-props]
-  (merge (element.helpers/element-default-attributes row-id row-props)
-         (element.helpers/element-indent-attributes  row-id row-props)))
+  [stepper-id stepper-props]
+  (merge (element.helpers/element-default-attributes stepper-id stepper-props)
+         (element.helpers/element-indent-attributes  stepper-id stepper-props)))
