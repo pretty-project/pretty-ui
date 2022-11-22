@@ -28,7 +28,7 @@
   ;
   ; @return (map)
   [db [_ restart-target]]
-  (assoc-in db [:boot-loader :restart-handler/meta-items :restart-target] restart-target))
+  (assoc-in db [:x.boot-loader :restart-handler/meta-items :restart-target] restart-target))
 
 
 
@@ -36,5 +36,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:boot-loader/set-restart-target! "/my-route?var=value"]
-(r/reg-event-db :boot-loader/set-restart-target! set-restart-target!)
+;  [:x.boot-loader/set-restart-target! "/my-route?var=value"]
+(r/reg-event-db :x.boot-loader/set-restart-target! set-restart-target!)

@@ -29,6 +29,7 @@
               [x.core.config-handler.config          :as config-handler.config]
               [x.core.config-handler.subs            :as config-handler.subs]
               [x.core.debug-handler.helpers          :as debug-handler.helpers]
+              [x.core.install-handler.side-effects   :as install-handler.side-effects]
               [x.core.js-handler.config              :as js-handler.config]
               [x.core.lifecycle-handler.side-effects :as lifecycle-handler.side-effects]
               [x.core.lifecycle-handler.subs         :as lifecycle-handler.subs]
@@ -60,6 +61,9 @@
 (def get-app-config-item    config-handler.subs/get-app-config-item)
 (def get-server-config      config-handler.subs/get-server-config)
 (def get-server-config-item config-handler.subs/get-server-config-item)
+
+; x.core.install-handler.side-effects
+(def reg-installer! install-handler.side-effects/reg-installer!)
 
 ; x.core.js-handler.config
 (def DEFAULT-JS-BUILD js-handler.config/DEFAULT-JS-BUILD)

@@ -47,7 +47,7 @@
       {:db       (r login-handler.events/clear-login-failure! db)
        :dispatch [:x.sync/send-request! :x.user/authenticate!
                                         {:method       :post
-                                         :on-success   [:boot-loader/restart-app!]
+                                         :on-success   [:x.boot-loader/restart-app!]
                                          :on-failure   [:x.user/authentication-failed authenticate-props]
                                          :params       (select-keys authenticate-props [:email-address :password])
                                          :uri          "/user/authenticate"
@@ -76,7 +76,7 @@
   [:x.sync/send-request! :x.user/logout!
                          {:method     :post
                           :on-failure [:x.user/logout-failed]
-                          :on-success [:boot-loader/restart-app! {:restart-target "/login"}]
+                          :on-success [:x.boot-loader/restart-app! {:restart-target "/login"}]
                           :uri        "/user/logout"}])
 
 (r/reg-event-fx :x.user/logout-failed

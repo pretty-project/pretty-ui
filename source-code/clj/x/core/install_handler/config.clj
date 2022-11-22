@@ -12,19 +12,12 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.boot-loader.subs
-    (:require [candy.api    :refer [return]]
-              [re-frame.api :refer [r]]
-              [x.core.api   :as x.core]))
+(ns x.core.install-handler.config)
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-restart-target
-  ; @return (string)
-  [db _]
-  (if-let [restart-target (get-in db [:x.boot-loader :restart-handler/meta-items :restart-target])]
-          (return restart-target)
-          (r x.core/get-app-config-item db :app-home)))
+; @constant (string)
+(def INSTALL-LOG-FILEPATH "environment/x.install-log.edn")

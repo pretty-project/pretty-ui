@@ -56,19 +56,20 @@
    (reg-lifecycles! (lifecycle-handler.helpers/generate-life-id) lifecycles))
 
   ([life-id lifecycles]
-
-   ; - Az x4.5.1 verzióig a reg-lifecycles! függvény az életciklusok adatait közvetlenül
-   ;   (reset! függvény használatával) írta a Re-Frame adatbázisba.
-   ; - Ha a forráskódban fordításidőben meghívott adatbázis események is írnak a Re-Frame
-   ;   adatbázisba, akkor a reset! függvénnyel írt adatbázis-változások nem minden esetben
-   ;   maradnak meg, mivel a reset! függvény nem szinkronizált a Re-Frame event-queue időzítővel,
-   ;   ami a még reg-lifecycles! függény által meghívott reset! függvény végrehajtódása ELŐTT
-   ;   kiolvashatja az adatbázis tartalmát, értelmezve rajta az adatbázis-esemény által
-   ;   okozott változásokat, majd pedig a reset! f. végrehajtódása UTÁN elmenteti a megváltozott
-   ;   adatbázist a DB atomba, amiből így kimaradhat a reset! függvény által beleírt változás.
-   ; - A Re-Frame adatbázis atomot NEM szabad reset! függvénnyel írni, mert az esetlegesen
-   ;   az írással egy időben megtörténő adatbázis eseményekkel való konkurálás következtében egyes
-   ;   változások elveszhetnek!
+   ; Az x4.5.1 verzióig a reg-lifecycles! függvény az életciklusok adatait közvetlenül
+   ; (reset! függvény használatával) írta a Re-Frame adatbázisba.
+   ;
+   ; Ha a forráskódban fordításidőben meghívott adatbázis események is írnak a Re-Frame
+   ; adatbázisba, akkor a reset! függvénnyel írt adatbázis-változások nem minden esetben
+   ; maradnak meg, mivel a reset! függvény nem szinkronizált a Re-Frame event-queue időzítővel,
+   ; ami a még reg-lifecycles! függény által meghívott reset! függvény végrehajtódása ELŐTT
+   ; kiolvashatja az adatbázis tartalmát, értelmezve rajta az adatbázis-esemény által
+   ; okozott változásokat, majd pedig a reset! f. végrehajtódása UTÁN elmenteti a megváltozott
+   ; adatbázist a DB atomba, amiből így kimaradhat a reset! függvény által beleírt változás.
+   ;
+   ; A Re-Frame adatbázis atomot NEM szabad reset! függvénnyel írni, mert az esetlegesen
+   ; az írással egy időben megtörténő adatbázis eseményekkel való konkurálás következtében egyes
+   ; változások elveszhetnek!
    (let [namespace (lifecycle-handler.helpers/life-id->namespace life-id)]
         (letfn [(f [lifecycles period-id event]
                    (let [event-id (keyword namespace (name period-id))]

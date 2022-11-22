@@ -32,4 +32,4 @@
   ; @usage
   ;  (start-server! {...})
   ([]             (start-server! {}))
-  ([server-props] (r/dispatch [:boot-loader/start-server! server-props])))
+  ([server-props] (r/dispatch [:x.boot-loader/start-server! server-props])))

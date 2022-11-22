@@ -30,7 +30,7 @@
   ;  (defn app [ui-structure] [:div#my-app [ui-structure]])
   ;  (start-app! #'app)
   [app]
-  (r/dispatch-sync [:boot-loader/start-app! app]))
+  (r/dispatch-sync [:x.boot-loader/start-app! app]))
 
 (defn render-app!
   ; @param (component) app
@@ -48,5 +48,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:boot-loader/render-app! #'app]
-(r/reg-fx :boot-loader/render-app! render-app!)
+;  [:x.boot-loader/render-app! #'app]
+(r/reg-fx :x.boot-loader/render-app! render-app!)

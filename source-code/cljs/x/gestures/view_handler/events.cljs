@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.gestures.view-handler.events
-    (:require [logical.api  :refer [nonfalse?]]
-              [re-frame.api :as r]))
+    (:require [re-frame.api :as r]))
 
 
 
@@ -32,15 +31,14 @@
   ;  (r init-view-handler! db :my-view-handler {:default-view-id :my-view})
   ;
   ; @return (map)
-  [db [_ handler-id {:keys [default-view-id reinit?]}]]
+  [db [_ handler-id {:keys [default-view-id reinit?] :or {reinit? true}}]]
   ; A {:reinit? false} beállítás használatával, az init-view-handler! függvény megtartja,
   ; esetlegesen beállított view-id értékét és nem írja felül a {:default-view-id ...}
   ; tulajdonság értékével.
-  (if (nonfalse? reinit?)
-      (assoc-in db [:x.gestures :view-handler/data-items handler-id :view-id] default-view-id)
-      (assoc-in db [:x.gestures :view-handler/data-items handler-id :view-id]
-                   (or (get-in db [:x.gestures :view-handler/data-items handler-id :view-id])
-                       default-view-id))))
+  (if reinit? (assoc-in db [:x.gestures :view-handler/data-items handler-id :view-id] default-view-id)
+              (assoc-in db [:x.gestures :view-handler/data-items handler-id :view-id]
+                           (or (get-in db [:x.gestures :view-handler/data-items handler-id :view-id])
+                               default-view-id))))
 
 (defn change-view!
   ; @param (keyword) handler-id

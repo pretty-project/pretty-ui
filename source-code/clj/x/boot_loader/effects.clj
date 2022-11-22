@@ -17,14 +17,14 @@
               [x.app-details        :as x.app-details]
               [x.boot-loader.events :as events]
               [x.boot-loader.subs   :as subs]
-              [x.core.api    :as x.core]))
+              [x.core.api           :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :boot-loader/start-server!
+(r/reg-event-fx :x.boot-loader/start-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
@@ -34,14 +34,14 @@
       ; Pl.: A {:dev-mode? ...} esetleg a {:port ...} tulajdonságok értékei elérhetők legyenek
       ;      a névterek számára.
       (println x.app-details/app-codename "starting server ...")
-      {:dispatch-tick [{:tick 500 :dispatch [:boot-loader/init-server! server-props]}]
+      {:dispatch-tick [{:tick 500 :dispatch [:x.boot-loader/init-server! server-props]}]
        :dispatch      [:x.core/store-server-props! server-props]
        :fx-n          [[:x.core/import-lifecycles!]
                        [:x.core/import-app-build!]
                        [:x.core/import-app-config!]
                        [:x.core/import-server-config!]]}))
 
-(r/reg-event-fx :boot-loader/init-server!
+(r/reg-event-fx :x.boot-loader/init-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
@@ -52,9 +52,9 @@
        :dispatch   [:x.core/connect-to-database!]
        :dispatch-n (r x.core/get-period-events db :on-server-init)
        ; 2. Az inicializálási események lefutása után a szerver betöltésének folytatása
-       :dispatch-tick [{:tick 250 :dispatch [:boot-loader/boot-server! server-props]}]}))
+       :dispatch-tick [{:tick 250 :dispatch [:x.boot-loader/boot-server! server-props]}]}))
 
-(r/reg-event-fx :boot-loader/boot-server!
+(r/reg-event-fx :x.boot-loader/boot-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
@@ -64,18 +64,18 @@
        ;    (Dispatch on-server-boot events)
        :dispatch-n    (r x.core/get-period-events db :on-server-boot)
        :dispatch-tick [; 2. A szerver indítása
-                       {:tick  50 :dispatch [:boot-loader/run-server! server-props]}
+                       {:tick  50 :dispatch [:x.boot-loader/run-server! server-props]}
                        ; 4. Az indítási események lefutása után a szerver betöltésének folytatása
-                       {:tick 100 :dispatch [:boot-loader/launch-server! server-props]}]}))
+                       {:tick 100 :dispatch [:x.boot-loader/launch-server! server-props]}]}))
 
-(r/reg-event-fx :boot-loader/run-server!
+(r/reg-event-fx :x.boot-loader/run-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
   (fn [{:keys [db]} [_ server-props]]
       {:fx [:x.core/run-server! server-props]}))
 
-(r/reg-event-fx :boot-loader/launch-server!
+(r/reg-event-fx :x.boot-loader/launch-server!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props
@@ -83,10 +83,11 @@
       (println x.app-details/app-codename "launching server ...")
       {; A szerver indítása utáni események meghívása
        ; (Dispatch on-server-launch events)
-       :dispatch-n (r x.core/get-period-events db :on-server-launch)
-       :dispatch-tick [{:tick 100 :dispatch [:boot-loader/server-launched server-props]}]}))
+       :dispatch-n    (r x.core/get-period-events db :on-server-launch)
+       :dispatch-tick [{:tick 100 :dispatch [:x.boot-loader/server-launched server-props]}
+                       {:tick 500 :fx       [:x.core/install-server!]}]}))
 
-(r/reg-event-fx :boot-loader/server-launched
+(r/reg-event-fx :x.boot-loader/server-launched
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) server-props

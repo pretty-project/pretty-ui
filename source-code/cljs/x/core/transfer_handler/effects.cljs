@@ -47,4 +47,4 @@
       {:db          (r transfer-handler.events/store-transfer-data! db server-response)
        :dispatch-if [(-> server-response map/nonempty? not)
                      [:x.core/error-catched {:event event :error "Failed to synchronize app!"}]
-                     [:boot-loader/app-synchronized app]]}))
+                     [:x.boot-loader/app-synchronized app]]}))

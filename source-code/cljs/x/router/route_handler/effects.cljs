@@ -82,7 +82,7 @@
   ; @param (string) route-string
   (fn [{:keys [db]} [_ route-id route-string]]
       (let [login-screen (r x.views/get-login-screen db)]
-           {:dispatch-n [[:boot-loader/set-restart-target! route-string]
+           {:dispatch-n [[:x.boot-loader/set-restart-target! route-string]
                          login-screen]})))
 
 
