@@ -86,9 +86,10 @@
   ;
   ; @return (maps in vector)
   [db [_ browser-id]]
-  (let [current-item (r get-current-item        db browser-id)
-        path-key     (r body.subs/get-body-prop db browser-id :path-key)]
-       (-> current-item path-key vec)))
+  ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
+  (if-let [current-item (r get-current-item db browser-id)]
+          (let [path-key (r body.subs/get-body-prop db browser-id :path-key)]
+               (-> current-item path-key vec))))
 
 
 
@@ -111,8 +112,9 @@
   ;
   ; @return (boolean)
   [db [_ browser-id]]
-  (let [current-item-path (r get-current-item-path db browser-id)]
-       (empty? current-item-path)))
+  ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
+  (if-let [current-item-path (r get-current-item-path db browser-id)]
+          (empty? current-item-path)))
 
 (defn get-parent-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -121,10 +123,11 @@
   ;
   ; @return (string)
   [db [_ browser-id]]
-  (let [item-namespace    (r transfer.subs/get-transfer-item db browser-id :item-namespace)
-        current-item-path (r get-current-item-path           db browser-id)]
-       (if-let [parent-link (last current-item-path)]
-               (get parent-link (keyword/add-namespace item-namespace :id)))))
+  ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
+  (if-let [current-item-path (r get-current-item-path db browser-id)]
+          (let [item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)]
+               (if-let [parent-link (last current-item-path)]
+                       (get parent-link (keyword/add-namespace item-namespace :id))))))
 
 
 

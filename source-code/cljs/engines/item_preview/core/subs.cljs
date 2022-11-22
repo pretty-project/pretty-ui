@@ -43,7 +43,7 @@
   ;
   ; @return (boolean)
   [db [_ preview-id]]
-  ; XXX#5476
+  ; XXX#5476 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   ; Ha az item-preview engine több példányban jelenik meg, akkor szükséges
   ; a különböző példányok lekéréseinek azonosítóit megkülönböztetni egymástól!
   ; Amíg a core.subs/get-request-id függvény a lekérés azonosítójának névtereként

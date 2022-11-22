@@ -27,7 +27,7 @@
   ;
   ; @param (keyword)(opt) error-id
   ; @param (map)(opt) error-props
-  ;  {:cofx (map)(opt)
+  ;  {:event (vector)(opt)
   ;   :error (string)(opt)}
   ;
   ; @usage
@@ -41,11 +41,10 @@
   ;
   ; @usage
   ;  [:x.core/error-catched {:error "An error occured ..."
-  ;                          :cofx  {...}}]
+  ;                          :event [...]}]
   [r/event-vector<-id]
-  (fn [{:keys [db]} [_ error-id {:keys [cofx] :as error-props}]]
-      (let [error-message (r error-handler.subs/get-error-message db error-id error-props)
-            catched-event (r/cofx->event-vector cofx)]
+  (fn [{:keys [db]} [_ error-id {:keys [event] :as error-props}]]
+      (let [error-message (r error-handler.subs/get-error-message db error-id error-props)]
            {:db   (r load-handler.events/stop-loading! db)
-            :fx-n [[:x.core/print-error!    error-message catched-event]
+            :fx-n [[:x.core/print-error!    error-message event]
                    [:x.ui/set-error-shield! error-message]]})))

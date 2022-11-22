@@ -132,6 +132,9 @@
   ; @return (map)
   [db [_ engine-id]]
   ; XXX#6487
+  ; Ha egy Re-Frame feliratkozás a body komponens React-fába csatolódása előtt
+  ; alkalmazza a get-current-item függvényt, akkor az item-path tulajdonság
+  ; értéke még NIL!
   (if-let [item-path (r body.subs/get-body-prop db engine-id :item-path)]
           (get-in db item-path)))
 
@@ -153,6 +156,7 @@
   ;
   ; @return (metamorphic-content)
   [db [_ engine-id]]
+  ; XXX#6487
   (if-let [current-item (r get-current-item db engine-id)]
           (let [label-key (r body.subs/get-body-prop db engine-id :label-key)]
                (label-key current-item))))
@@ -164,16 +168,18 @@
   ;
   ; @return (string)
   [db [_ engine-id]]
-  (let [current-item (r get-current-item db engine-id)]
-       (if-let [modified-at (:modified-at current-item)]
-               (r x.activities/get-actual-timestamp db modified-at))))
+  ; XXX#6487
+  (if-let [current-item (r get-current-item db engine-id)]
+          (if-let [modified-at (:modified-at current-item)]
+                  (r x.activities/get-actual-timestamp db modified-at))))
 
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
   [db [_ engine-id]]
-  ; ...
+  ; XXX#6487
+  ; + Az auto-title? opcionális tulajdonság!
   (if-let [auto-title? (r body.subs/get-body-prop db engine-id :auto-title?)]
           (r get-current-item-label db engine-id)))
 
@@ -213,8 +219,9 @@
   ;
   ; @return (maps in vector)
   [db [_ engine-id]]
-  (let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-       (get-in db items-path)))
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (get-in db items-path)))
 
 (defn export-downloaded-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -236,9 +243,10 @@
   ;
   ; @return (map)
   [db [_ engine-id item-dex]]
-  (let [items-path (r body.subs/get-body-prop db engine-id :items-path)
-        item-path  (conj items-path item-dex)]
-       (get-in db item-path)))
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (let [item-path (conj items-path item-dex)]
+               (get-in db item-path))))
 
 (defn get-downloaded-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!

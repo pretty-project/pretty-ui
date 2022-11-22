@@ -29,10 +29,10 @@
   ;
   ; @usage
   ;  [:x.core/synchronize-app! #'app]
-  (fn [cofx [_ app]]
+  (fn [{:keys [event]} [_ app]]
       [:x.sync/send-request! :x.core/synchronize-app!
                              {:method     :get
-                              :on-failure [:x.core/error-catched {:cofx cofx :error "Failed to synchronize app!"}]
+                              :on-failure [:x.core/error-catched {:event event :error "Failed to synchronize app!"}]
                               :on-success [:x.core/app-synchronized app]
                               :uri        "/synchronize-app"}]))
 
@@ -43,8 +43,8 @@
   ;
   ; @usage
   ;  [:x.core/app-synchronized #'app {...}]
-  (fn [{:keys [db] :as cofx} [_ app server-response]]
+  (fn [{:keys [db event]} [_ app server-response]]
       {:db          (r transfer-handler.events/store-transfer-data! db server-response)
        :dispatch-if [(-> server-response map/nonempty? not)
-                     [:x.core/error-catched {:cofx cofx :error "Failed to synchronize app!"}]
+                     [:x.core/error-catched {:event event :error "Failed to synchronize app!"}]
                      [:boot-loader/app-synchronized app]]}))

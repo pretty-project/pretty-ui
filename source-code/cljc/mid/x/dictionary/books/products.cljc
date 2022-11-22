@@ -102,7 +102,7 @@
            ; kifejezésként szerepel.
            :product-description
            {:en "Product description"
-            :hu "Termék megnevezés"}
+            :hu "Termékmegnevezés"}
            :product-description-short
            {:en "Description"
             :hu "Megnevezés"}

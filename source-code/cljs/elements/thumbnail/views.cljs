@@ -56,10 +56,12 @@
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
   ;  {:background-size (keyword)
+  ;   :icon (keyword)
+  ;   :icon-family (keyword)
   ;   :uri (string)(opt)}
-  [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
+  [thumbnail-id {:keys [background-size icon icon-family uri] :as thumbnail-props}]
   [:div.e-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                          [:div.e-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
+                          [:div.e-thumbnail--icon  {:data-icon-family icon-family} icon]
                           [:div.e-thumbnail--image {:style {:background-image (css/url uri)
                                                             :background-size background-size}}]])
 
@@ -91,6 +93,10 @@
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;    Default: :s
   ;   :helper (metamorphic-content)(opt)
+  ;   :icon (keyword)(opt)
+  ;    Default: :icon
+  ;   :icon-family (keyword)(opt)
+  ;    Default: :material-icons-filled
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl

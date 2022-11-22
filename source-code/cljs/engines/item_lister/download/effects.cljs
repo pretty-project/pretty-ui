@@ -79,7 +79,8 @@
       ;     a "Törölt elemek visszaállítása" értesítés, akkor a felhasználó még a listaelemek
       ;     újratöltése közben elindíthatná a "Törölt elemek visszaállítása" folyamatot,
       ;     ami azonban nem indítaná el a lekérést, mivel a listaelemek újratöltése még folyamatban
-      ;     van és az engine egyes lekérései megegyező azonosítóval rendelkeznek (XXX#5476),
+      ;     van és az engine egyes lekérései megegyező azonosítóval rendelkeznek
+      ;    (XXX#5476 - source-code/cljs/engines/engine_handler/core/subs.cljs),
       ;     ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
       ;
       ; - Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens

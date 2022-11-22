@@ -239,5 +239,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) renderer-id
-  (fn [cofx [_ renderer-id]]
-      [:x.core/error-catched {:error renderer.config/ILLEGAL-UNMOUNTING-ERROR :cofx cofx}]))
+  (fn [{:keys [event]} [_ renderer-id]]
+      [:x.core/error-catched {:error renderer.config/ILLEGAL-UNMOUNTING-ERROR :event event}]))

@@ -25,7 +25,7 @@
   ;
   ; @param (keyword)(opt) error-id
   ; @param (map)(opt) error-props
-  ;  {:cofx (map)(opt)
+  ;  {:event (vector)(opt)
   ;   :error (string)(opt)}
   ;
   ; @usage
@@ -39,8 +39,7 @@
   ;
   ; @usage
   ;  [:x.core/error-catched {:error "An error occured ..."
-  ;                        :cofx  {...}}]
+  ;                          :event [...]}]
   [r/event-vector<-id]
-  (fn [{:keys [db]} [_ error-id {:keys [cofx error]}]]
-      (let [catched-event (r/cofx->event-vector cofx)]
-           {:fx [:x.core/print-error! error]})))
+  (fn [{:keys [db]} [_ error-id {:keys [error event]}]]
+      {:fx [:x.core/print-error! error]}))

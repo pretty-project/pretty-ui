@@ -139,8 +139,9 @@
   ;      esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
   ;      követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
   ;      lekérés tölti le megnyitás után az első elemeket.
-  ;      XXX#5476 HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
-  ;               SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
+  ;      XXX#5476 (source-code/cljs/engines/engine_handler/core/subs.cljs)
+  ;      HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
+  ;      SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-item-count!     % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)
