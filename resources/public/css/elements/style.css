@@ -3173,13 +3173,14 @@ body {
 
 .e-row--body {
   display: flex;
-  /* - Az e-row--body elem ugyanolyan magas kell legyen, mint az e-row elem, hogy minden esetben
-   *   megfelelően működjön a vertikális igazítás!
-   * - Ha az e-row komponens {:style {...}} tulajdonságával beállítod az e-row elem magasságát,
-   *   és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
-   *   a tartalom magassága kevesebb, mint az e-row elem beállított magassága, akkor a {height: 100%}
-   *   tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
-   *   és nem működne a tartalom középre igazítása! */
+  /* Az e-row--body elem ugyanolyan magas kell legyen, mint az e-row elem, hogy minden esetben
+   * megfelelően működjön a vertikális igazítás!
+   *
+   * Ha az e-row komponens {:style {...}} tulajdonságával beállítod az e-row elem magasságát,
+   * és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
+   * a tartalom magassága kevesebb, mint az e-row elem beállított magassága, akkor a {height: 100%}
+   * tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
+   * és nem működne a tartalom középre igazítása! */
   height: 100%;
   width: 100%;
 }

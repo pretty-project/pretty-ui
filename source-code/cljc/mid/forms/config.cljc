@@ -28,4 +28,4 @@
 (def EMAIL-PATTERN #"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?")
 
 ; @constant (string)
-(def PHONE-NUMBER-PATTERN #"\+\d{10,20}")
+(def PHONE-NUMBER-PATTERN #"\+\d{4,20}")
