@@ -65,8 +65,8 @@
   ; @param (map) diagram-props
   ;  {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
-  (letfn [(f [circle-diagram-sections section-props]
-             (conj circle-diagram-sections [circle-diagram-section diagram-id diagram-props section-props]))]
+  (letfn [(f [sections section-props]
+             (conj sections [circle-diagram-section diagram-id diagram-props section-props]))]
          (reduce f [:<>] sections)))
 
 (defn circle-diagram-circle

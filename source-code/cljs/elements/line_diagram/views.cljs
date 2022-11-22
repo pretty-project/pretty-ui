@@ -42,7 +42,7 @@
   [diagram-id {:keys [sections strength] :as diagram-props}]
   (letfn [(f [sections section-props]
              (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
-                  (conj line-diagram-sections [line-diagram-section diagram-id diagram-props section-props])))]
+                  (conj sections [line-diagram-section diagram-id diagram-props section-props])))]
          [:div.e-line-diagram--sections {:style {:height (css/px strength)}}
                                         (reduce f [:<>] sections)]))
 
