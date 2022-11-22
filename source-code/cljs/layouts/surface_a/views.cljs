@@ -95,10 +95,10 @@
   []
   [elements/icon-button ::search-icon-button
                         {:border-radius :s
+                         :disabled?     true
                          :hover-color   :highlight
-                         ;:on-click      [:x.router/go-home!]
-                         :icon :search}])
-                        ;:badge-color :secondary
+                         :icon          :search}])
+                        ;:on-click      []
 
 (defn go-home-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
