@@ -51,14 +51,32 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) server-response
-  (fn [_ _]))
+  (fn [_ [_ lister-id _]]
+      [:item-lister/render-items-reordered-dialog! lister-id]))
 
 (r/reg-event-fx :item-lister/reorder-items-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   ; @param (map) server-response
-  (fn [_ _]))
+  (fn [_ [_ lister-id _]]
+      [:item-lister/render-reorder-items-failed-dialog! lister-id]))
+
+(r/reg-event-fx :item-lister/render-items-reordered-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  (fn [_ [_ lister-id]]
+      [:x.ui/render-bubble! ::items-reordered-dialog
+                            {:body [update.views/items-reordered-dialog-body lister-id]}]))
+
+(r/reg-event-fx :item-lister/render-reorder-items-failed-dialog!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  (fn [_ [_ lister-id]]
+      [:x.ui/render-bubble! ::reorder-items-failed-dialog
+                            {:body [update.views/reorder-items-failed-dialog-body lister-id]}]))
 
 
 

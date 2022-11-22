@@ -41,6 +41,9 @@
            :failed-to-save
            {:en "Failed to save"
             :hu "Sikertelen mentés"}
+           :failed-to-save-changes
+           {:en "Failed to save changes"
+            :hu "A változtatások mentése sikertelen"}
            :failed-to-undo-copy
            {:en "Failed to undo copy"
             :hu "A másolás visszavonása sikertelen"}

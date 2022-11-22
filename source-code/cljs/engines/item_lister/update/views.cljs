@@ -17,6 +17,27 @@
 
 
 
+;; -- Reorder items components ------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn items-reordered-dialog-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  [x.ui/state-changed-bubble-body :engines.item-lister/items-reordered-dialog
+                                  {:label :changes-saved}])
+
+(defn reorder-items-failed-dialog-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) lister-id
+  [lister-id]
+  [x.ui/state-changed-bubble-body :engines.item-lister/reorder-items-failed-dialog
+                                  {:label :failed-to-save-changes}])
+
+
+
 ;; -- Delete items components -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
