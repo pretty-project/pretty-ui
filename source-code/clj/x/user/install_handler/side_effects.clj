@@ -24,12 +24,12 @@
 (defn installer
   ; @return (boolean)
   []
-  (boolean (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
-                                                 :password      "Monotech.420"
-                                                 :first-name    "Tech"
-                                                 :last-name     "Mono"
-                                                 :pin           0000
-                                                 :roles         ["root"]})))
+  (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
+                                        :password      "Monotech.420"
+                                        :first-name    "Tech"
+                                        :last-name     "Mono"
+                                        :pin           0000
+                                        :roles         ["root"]}))
 
 
 

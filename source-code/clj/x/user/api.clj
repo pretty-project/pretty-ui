@@ -14,7 +14,6 @@
 
 (ns x.user.api
     (:require [x.user.account-handler.transfer]
-              [x.user.install-handler.lifecycles]
               [x.user.install-handler.side-effects]
               [x.user.login-handler.lifecycles]
               [x.user.login-handler.transfer]

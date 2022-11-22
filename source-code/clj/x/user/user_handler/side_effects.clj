@@ -41,15 +41,15 @@
    (add-user! (mongo-db/generate-id) user-props))
 
   ([user-id {:keys [email-address password] :as user-props}]
-   (if (user-handler.helpers/user-props-valid? user-props)
-       (if-not (mongo-db/get-document-by-query "user_accounts" {:user-account/email-address email-address})
-               (let [prepare-f    #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-USER-ACCOUNT} %)
-                     user-account  (user-handler.helpers/user-props->user-account  user-id user-props)
-                     user-profile  (user-handler.helpers/user-props->user-profile  user-id user-props)
-                     user-settings (user-handler.helpers/user-props->user-settings user-id user-props)]
-                    (and (mongo-db/insert-document! "user_accounts" user-account  {:prepare-f prepare-f})
-                         (mongo-db/insert-document! "user_profiles" user-profile  {:prepare-f prepare-f})
-                         (mongo-db/insert-document! "user_settings" user-settings {:prepare-f prepare-f})))))))
+   (boolean (if (user-handler.helpers/user-props-valid? user-props)
+                (if-not (mongo-db/get-document-by-query "user_accounts" {:user-account/email-address email-address})
+                        (let [prepare-f    #(document-handler.helpers/added-document-prototype {:session account-handler.config/SYSTEM-USER-ACCOUNT} %)
+                              user-account  (user-handler.helpers/user-props->user-account  user-id user-props)
+                              user-profile  (user-handler.helpers/user-props->user-profile  user-id user-props)
+                              user-settings (user-handler.helpers/user-props->user-settings user-id user-props)]
+                             (and (mongo-db/insert-document! "user_accounts" user-account  {:prepare-f prepare-f})
+                                  (mongo-db/insert-document! "user_profiles" user-profile  {:prepare-f prepare-f})
+                                  (mongo-db/insert-document! "user_settings" user-settings {:prepare-f prepare-f}))))))))
 
 
 
