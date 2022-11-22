@@ -3671,6 +3671,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  word-break: break-all;
 }
 
 .e-text--body[data-cropped="true"] {
