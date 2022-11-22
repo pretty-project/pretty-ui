@@ -22,10 +22,10 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-init [:x.router/add-routes! {:user/authenticate {:route-template "/user/authenticate"
-                                                               :post {:handler login-handler.routes/authenticate}}
-                                           :user/logout       {:route-template "/user/logout"
-                                                               :post {:handler login-handler.routes/logout}}
-                                           :user/login        {:client-event   [:x.views/render-login-screen!]
-                                                               :js-build       :app
-                                                               :route-template "/login"}}]})
+  {:on-server-init [:x.router/add-routes! {:x.user/authenticate {:route-template "/user/authenticate"
+                                                                 :post {:handler login-handler.routes/authenticate}}
+                                           :x.user/logout       {:route-template "/user/logout"
+                                                                 :post {:handler login-handler.routes/logout}}
+                                           :x.user/login        {:client-event   [:x.views/render-login-screen!]
+                                                                 :js-build       :app
+                                                                 :route-template "/login"}}]})
