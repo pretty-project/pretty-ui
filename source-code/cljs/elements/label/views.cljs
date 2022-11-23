@@ -121,6 +121,8 @@
   ; Ilyenkor ha nem lenne minden esetben placeholder alkalmazva, akkor 0px magasságú lenne
   ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
   ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
+  ;
+  ; XXX#4519 (resources/public/css/elements/style.css)
   [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
                       ; BUG#3400
                       (if (-> content x.components/content str empty?)
@@ -128,7 +130,7 @@
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]
                                [label-asterisk label-id label-props]
-                               (if icon [:div.e-label--icon-placeholder])
+                              ;(if icon [:div.e-label--icon-placeholder])
                                [label-info-text-button label-id label-props]])])
 
 (defn- label

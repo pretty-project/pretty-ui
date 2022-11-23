@@ -1897,6 +1897,7 @@ body {
   align-items: center;
   cursor: pointer;
   display: flex;
+  grid-column-gap: 6px;
 
   /* */
   width: 100%;
@@ -1920,19 +1921,11 @@ body {
   width: var( --icon-size-default );
 }
 
-.e-button--icon[data-icon-position="left"] {
-  margin-right: 6px;
-}
-
-.e-button--icon[data-icon-position="right"] {
-  margin-left: 6px;
-}
-
 .e-button--icon-placeholder {
   /* XXX#4519
    * A gombon megjelenített ikon asszimetrikussá tenné a gomb szélességét, ezért szükséges
    * az ikon placeholder alkalmazása. */
- -width: 12px;
+ width: 12px;
 }
 
 /*** Button icon ***/

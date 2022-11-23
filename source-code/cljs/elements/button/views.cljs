@@ -54,11 +54,14 @@
   ; @param (map) button-props
   ;  {:icon (keyword)(opt)}
   [button-id {:keys [icon icon-position] :as button-props}]
+  ; XXX#4519 (resources/public/css/elements/style.css)
   [:button.e-button--body (button.helpers/button-body-attributes button-id button-props)
                           (if icon (case icon-position :left  [button-icon button-id button-props]
-                                                       :right [:div.e-button--icon-placeholder]))
+                                                       :right [:<>]))
+                                                      ;:right [:div.e-button--icon-placeholder]
                           [button-label button-id button-props]
-                          (if icon (case icon-position :left  [:div.e-button--icon-placeholder]
+                          (if icon (case icon-position :left  [:<>]
+                                                      ;:left  [:div.e-button--icon-placeholder]
                                                        :right [button-icon button-id button-props]))
                           [element.views/element-badge button-id button-props]])
 

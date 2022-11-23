@@ -91,14 +91,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon-family (keyword)
-  ;   :icon-position (keyword)}
+  ;  {:icon-family (keyword)}
   ;
   ; @return (map)
-  ;  {}
-  [_ {:keys [icon-family icon-position]}]
-  {:data-icon-family   icon-family
-   :data-icon-position icon-position})
+  ;  {:data-icon-family (keyword)}
+  [_ {:keys [icon-family]}]
+  {:data-icon-family icon-family})
 
 (defn button-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
