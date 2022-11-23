@@ -23,6 +23,12 @@
 (def BOOK {:brand-name
            {:en "Brand name"
             :hu "Márkanév"}
+           :company-est-year
+           {:en "Estabilished year"
+            :hu "Alapítás éve"}
+           :company-est-year-placeholder
+           {:en "The year of the company's establishment"
+            :hu "A cég alapításának éve"}
            :company-logo
            {:en "Company logo"
             :hu "Céglogó"}
@@ -35,6 +41,18 @@
            :company-name-placeholder
            {:en "The company's name"
             :hu "A cég neve"}
+           :company-reg-number
+           {:en "Registration number"
+            :hu "Cégjegyzékszám"}
+           :company-reg-number-placeholder
+           {:en "The company's registration number"
+            :hu "A cég egyedi azonosítója"}
+           :company-reg-office
+           {:en "Registered office"
+            :hu "Székhely"}
+           :company-reg-office-placeholder
+           {:en "The company's registered office"
+            :hu "A cég székhelye"}
            :company-slogan
            {:en "Slogan"
             :hu "Szlogen"}
