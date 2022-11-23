@@ -75,6 +75,12 @@
            :email-address-placeholder
            {:en "email@website.com"
             :hu "email@webhely.hu"}
+           :eu-vat-no
+           {:en "EU VAT number"
+            :hu "Közösségi adószám"}
+           :eu-vat-no-placeholder
+           {:en "xx00000000"
+            :hu "xx00000000"}
            :first-name
            {:en "First name"
             :hu "Keresztnév"}
@@ -136,7 +142,7 @@
            {:en "VAT number"
             :hu "Adószám"}
            :vat-no-placeholder
-           {:en "xx00000000"
+           {:en "00000000"
             :hu "00000000-0-00"}
            :website-link
            {:en "Website link"

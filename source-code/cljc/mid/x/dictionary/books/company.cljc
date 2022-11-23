@@ -41,10 +41,10 @@
            :company-name-placeholder
            {:en "The company's name"
             :hu "A cég neve"}
-           :company-reg-number
+           :company-reg-no
            {:en "Registration number"
             :hu "Cégjegyzékszám"}
-           :company-reg-number-placeholder
+           :company-reg-no-placeholder
            {:en "The company's registration number"
             :hu "A cég egyedi azonosítója"}
            :company-reg-office
