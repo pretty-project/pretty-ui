@@ -31,7 +31,7 @@
   [_]
   (if-let [sitemap-xml (crawler-handler.helpers/sitemap-xml)]
           (http/xml-wrap   {:body sitemap-xml})
-          (http/error-wrap {:error-message "File not found" :status 404})))
+          (http/error-wrap {:error-message ":file-not-found" :status 404})))
 
 
 
@@ -48,4 +48,4 @@
   [request]
   (if-let [robots-txt (crawler-handler.helpers/robots-txt request)]
           (http/text-wrap  {:body robots-txt})
-          (http/error-wrap {:error-message "File not found" :status 404})))
+          (http/error-wrap {:error-message ":file-not-found" :status 404})))

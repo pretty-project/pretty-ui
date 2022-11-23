@@ -141,14 +141,14 @@
   ; @return (map)
   [request]
   (if (max-login-attempt-reached? request)
-      (http/error-wrap {:error-message :max-login-attempt-reached :status 403})
+      (http/error-wrap {:error-message ":max-login-attempt-reached" :status 403})
       (let [authenticator-pattern (request->authenticator-pattern request)
             public-user-account   (mongo-db/get-document-by-query "user_accounts" authenticator-pattern account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION)]
-           (if (map/nonempty?   public-user-account)
+           (if (map/nonempty? public-user-account)
                (do (reg-successful-login! request)
                    (http/text-wrap        {:body "Speak, friend, and enter" :session public-user-account}))
                (do (reg-login-attempt!    request)
-                   (http/error-wrap       {:error-message :permission-denied :status 401}))))))
+                   (http/error-wrap       {:error-message ":permission-denied" :status 401}))))))
 
 (defn logout-f
   ; WARNING! NON PUBLIC! DO NOT USE!
