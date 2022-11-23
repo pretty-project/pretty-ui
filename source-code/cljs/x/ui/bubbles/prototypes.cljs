@@ -29,14 +29,14 @@
   ; @return (map)
   ;  {:autoclose? (boolean)
   ;   :hide-animated? (boolean)
-  ;   :on-bubble-rendered (metamorphic-event)
+  ;   :on-mount (metamorphic-event)
   ;   :reveal-animated? (boolean)
   ;   :update-animated? (boolean)
   ;   :user-close? (boolean)}
   [bubble-id bubble-props]
-  (merge {:autoclose?         true
-          :on-bubble-rendered [:x.ui/initialize-bubble! bubble-id]
-          :user-close?        true}
+  (merge {:autoclose?  true
+          :on-mount    [:x.ui/initialize-bubble! bubble-id]
+          :user-close? true}
          (param bubble-props)
          {:hide-animated?   true
           :reveal-animated? true
