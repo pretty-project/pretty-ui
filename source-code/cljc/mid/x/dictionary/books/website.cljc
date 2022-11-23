@@ -35,6 +35,9 @@
            :home-page
            {:en "Home"
             :hu "Kezdőlap"}
+           :impressum
+           {:en "Impressum"
+            :hu "Impresszum"}
            :informational-content
            {:en "Informational content"
             :hu "Információs tartalom"}
