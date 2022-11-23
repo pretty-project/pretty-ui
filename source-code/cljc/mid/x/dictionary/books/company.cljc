@@ -35,6 +35,9 @@
            :company-name-placeholder
            {:en "The company's name"
             :hu "A cég neve"}
+           :company-slogan
+           {:en "Slogan"
+            :hu "Szlogen"}
            :company-slogan-placeholder
            {:en "The company's slogan"
             :hu "A cég szlogenje"}

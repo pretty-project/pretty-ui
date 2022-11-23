@@ -77,6 +77,27 @@
            :website
            {:en "Website"
             :hu "Webhely"}
+           :website-data
+           {:en "Website data"
+            :hu "Webhely adatok"}
+           :website-name
+           {:en "Website name"
+            :hu "Webhely neve"}
+           :website-name-placeholder
+           {:en "The website's name"
+            :hu "A webhely neve"}
+           :website-logo
+           {:en "Website logo"
+            :hu "Webhely logó"}
+           :website-logo-placeholder
+           {:en "The website's logo"
+            :hu "A webhely logója"}
+           :website-slogan
+           {:en "Slogan"
+            :hu "Szlogen"}
+           :website-slogan-placeholder
+           {:en "The website's slogan"
+            :hu "A webhely szlogenje"}
            :website-menu
            {:en "Website menu"
             :hu "Webhely"}})
