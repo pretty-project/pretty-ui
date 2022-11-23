@@ -3665,7 +3665,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  word-break: break-all;
+  /* A word-break tulajdonság megtöri a szavakat! Ne használd! */
+  -word-break: break-all;
 }
 
 .e-text--body[data-cropped="true"] {
