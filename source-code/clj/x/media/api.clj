@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.media.api
-    (:require [x.media.download-handler.lifecycles]
+    (:require [x.media.core.installer]
+              [x.media.download-handler.lifecycles]
               [x.media.thumbnail-handler.lifecycles]
               [x.media.core.helpers                   :as core.helpers]
               [x.media.file-handler.side-effects      :as file-handler.side-effects]

@@ -12,17 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.core.build-handler.config)
+(ns x.core.build-handler.installer
+    (:require [plugins.git.api                     :as git]
+              [x.core.build-handler.config         :as build-handler.config]
+              [x.core.install-handler.side-effects :as install-handler.side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-;  A "resources/public" mappában elhelyezett "x.app-build.edn" fájl minden
-;  esetben a lefordított JAR fájl része!
-(def APP-BUILD-FILEPATH "resources/public/x.app-build.edn")
+(defn- installer
+  []
+  (git/ignore! build-handler.config/APP-BUILD-FILEPATH "x.core"))
 
-; @constant (string)
-(def INITIAL-APP-BUILD "0.0.1")
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(install-handler.side-effects/reg-installer! ::installer installer)

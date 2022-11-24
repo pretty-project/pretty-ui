@@ -12,26 +12,20 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.user.install-handler.side-effects
-    (:require [x.core.api                       :as x.core]
-              [x.user.user-handler.side-effects :as user-handler.side-effects]))
+(ns x.media.core.installer
+    (:require [plugins.git.api :as git]
+              [x.core.api      :as x.core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn installer
-  ; @return (boolean)
+(defn- installer
   []
-  (user-handler.side-effects/add-user! {:email-address "root@monotech.hu"
-                                        :password      "Monotech.420"
-                                        :first-name    "Tech"
-                                        :last-name     "Mono"
-                                        :pin           0000
-                                        :roles         ["root"]}))
-
-
+  (git/ignore! "environment/media/temp/*"       "x.media")
+  (git/ignore! "environment/media/storage/*"    "x.media")
+  (git/ignore! "environment/media/thumbnails/*" "x.media"))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.core.api
-    (:require [x.core.build-handler.transfer]
+    (:require [x.core.build-handler.installer]
+              [x.core.build-handler.transfer]
               [x.core.config-handler.side-effects]
               [x.core.config-handler.transfer]
               [x.core.database-handler.effects]

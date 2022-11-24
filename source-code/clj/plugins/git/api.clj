@@ -12,17 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns x.core.build-handler.config)
+(ns plugins.git.api
+    (:require [plugins.git.side-effects :as side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-;  A "resources/public" mappában elhelyezett "x.app-build.edn" fájl minden
-;  esetben a lefordított JAR fájl része!
-(def APP-BUILD-FILEPATH "resources/public/x.app-build.edn")
-
-; @constant (string)
-(def INITIAL-APP-BUILD "0.0.1")
+; plugins.git.side-effects
+(def get-gitignore side-effects/get-gitignore)
+(def ignored?      side-effects/ignored?)
+(def ignore!       side-effects/ignore!)
