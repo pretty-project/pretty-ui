@@ -64,6 +64,7 @@
               [elements.counter.views              :as counter.views]
               [elements.date-field.views           :as date-field.views]
               [elements.digit-field.views          :as digit-field.views]
+              [elements.element.helpers            :as element.helpers]
               [elements.expandable.views           :as expandable.views]
               [elements.file-drop-area.views       :as file-drop-area.views]
               [elements.ghost.views                :as ghost.views]
@@ -100,6 +101,9 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; elements.element.helpers
+(def apply-preset element.helpers/apply-preset)
 
 ; elements.*.views
 (def anchor               anchor.views/element)

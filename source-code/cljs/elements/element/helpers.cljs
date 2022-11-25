@@ -23,21 +23,24 @@
 ;; ----------------------------------------------------------------------------
 
 (defn apply-preset
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) presets
   ; @param (map) element-props
   ;  {:preset (keyword)(opt)}
   ;
   ; @usage
-  ;  (apply-preset {:preset-name {...}}
-  ;                {:preset :preset-name ...})
+  ;  (apply-preset {:my-preset {...}}
+  ;                {:preset :my-preset ...})
   ;
   ; @return (map)
   [presets {:keys [preset] :as element-props}]
   (if preset (let [preset-props (get presets preset)]
                   (merge preset-props element-props))
              (return element-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn apply-color
   ; WARNING! NON-PUBLIC! DO NOT USE!
