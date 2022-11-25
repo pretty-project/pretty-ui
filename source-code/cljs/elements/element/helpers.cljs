@@ -59,18 +59,19 @@
   ; @example
   ;  (apply-color {...} :color :data-color "#fff")
   ;  =>
-  ;  {:style {:color "fff"}}
+  ;  {:data-color :var :style {"--color" "fff"}}
   ;
   ; @example
   ;  (apply-color {:style {:padding "12px"}} :color :data-color "#fff")
   ;  =>
-  ;  {:style {:color "fff" :padding "12px"}}
+  ;  {:data-color :var :style {"--color" "fff" :padding "12px"}}
   ;
   ; @return (map)
   ;  {:style (map)}
   [element-attributes color-key color-data-key color-value]
-  (cond (keyword? color-value) (assoc    element-attributes color-data-key     color-value)
-        (string?  color-value) (assoc-in element-attributes [:style color-key] color-value)
+  (cond (keyword? color-value) (-> element-attributes (assoc-in [color-data-key]                 color-value))
+        (string?  color-value) (-> element-attributes (assoc-in [:style (css/var-key color-key)] color-value)
+                                                      (assoc-in [color-data-key]                 :var))
         :return element-attributes))
 
 (defn apply-dimension

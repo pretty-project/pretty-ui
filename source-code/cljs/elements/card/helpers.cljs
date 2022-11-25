@@ -64,17 +64,21 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {}
+  ;  {:disabled? (boolean)(opt)
+  ;   :on-click (metamorphic-event)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-clickable (boolean)
+  ;   :disabled (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
   [card-id {:keys [disabled? on-click] :as card-props}]
   (merge (card-style-attributes  card-id card-props)
          (card-layout-attributes card-id card-props)
          (if disabled? {:disabled       true}
-                       {:on-click       #(r/dispatch on-click)
-                        :on-mouse-up    #(element.side-effects/blur-element! card-id)
-                        :data-clickable true})))
+                       {:data-clickable true
+                        :on-click       #(r/dispatch on-click)
+                        :on-mouse-up    #(element.side-effects/blur-element! card-id)})))
 
 (defn static-card-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,7 +88,8 @@
   ;
   ; @return (map)
   [card-id card-props]
-  (merge (card-style-attributes  card-id card-props)
+  (merge {}
+         (card-style-attributes  card-id card-props)
          (card-layout-attributes card-id card-props)))
 
 (defn card-attributes

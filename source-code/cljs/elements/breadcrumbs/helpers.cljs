@@ -27,10 +27,11 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {}
+  ;  {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-scrollable-x (boolean)
+  ;   :style (map)}
   [_ {:keys [style]}]
   {:data-scrollable-x true
    :style             style})
@@ -73,12 +74,11 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {}
   ; @param (map) crumb
   ;
   ; @return (map)
-  ;  {}
-  [_ _ {:keys []}]
+  ;  {:data-selectable (boolean)}
+  [_ _ _]
   {:data-selectable false})
 
 (defn button-crumb-attributes
@@ -86,11 +86,14 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {}
   ; @param (map) crumb
+  ;  {:route (string)}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-clickable (boolean)
+  ;   :data-selectable (boolean)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
   [breadcrumbs-id _ {:keys [route]}]
   {:data-clickable  true
    :data-selectable false
