@@ -87,5 +87,6 @@
   ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          (mongo-db/get-document-by-id "user_accounts" user-account-id account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION)
+          (mongo-db/get-document-by-id "user_accounts" user-account-id
+                                       {:projection account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION})
           (return account-handler.config/ANONYMOUS-USER-ACCOUNT)))

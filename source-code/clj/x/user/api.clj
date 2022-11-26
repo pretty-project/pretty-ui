@@ -58,6 +58,7 @@
 (def updated-document-prototype    document-handler.helpers/updated-document-prototype)
 (def duplicated-document-prototype document-handler.helpers/duplicated-document-prototype)
 (def fill-document                 document-handler.helpers/fill-document)
+(def clean-document                document-handler.helpers/clean-document)
 
 ; x.user.login-handler.helpers
 (def user-account-id->user-login login-handler.helpers/user-account-id->user-login)

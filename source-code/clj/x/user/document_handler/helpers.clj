@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns x.user.document-handler.helpers
-    (:require [candy.api                      :refer [param]]
+    (:require [candy.api                      :refer [param return]]
               [http.api                       :as http]
               [map.api                        :as map]
               [time.api                       :as time]
@@ -105,7 +105,14 @@
   ; @param (namespaced map) document
   ;
   ; @usage
-  ;  (fill-document {} {...})
+  ;  (fill-document {...} {...})
+  ;
+  ; @example
+  ;  (fill-document {...} {:namespace/added-by {:user-account/id "my-user"}})
+  ;  =>
+  ;  {:namespace/added-by {:user-account/id         "my-user"
+  ;                        :user-profile/first-name "My"
+  ;                        :user-profile/last-name  "User"}}
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-by (map)
@@ -113,18 +120,46 @@
   ;     :user-profile/first-name (string)
   ;     :user-profile/last-name (string)}
   ;   :namespace/modified-by (map)
-  ;    {:user-account/id (string)}
+  ;    {:user-account/id (string)
   ;     :user-profile/first-name (string)
   ;     :user-profile/last-name (string)}}
   [_ document]
   (if-let [namespace (-> document map/get-namespace name)]
-          (let [added-by    (get document (keyword namespace "added-by"))
-                modified-by (get document (keyword namespace "modified-by"))]
-               (-> document (update (keyword namespace "added-by") merge
-                                    (let [user-account-id (get added-by :user-account/id)]
-                                         {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
-                                          :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)}))
-                            (update (keyword namespace "modified-by") merge
-                                    (let [user-account-id (get modified-by :user-account/id)]
-                                         {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
-                                          :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)}))))))
+          (as-> document % (if-let [user-account-id (get-in document [(keyword namespace "added-by") :user-account/id])]
+                                   (update % (keyword namespace "added-by") merge
+                                             {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
+                                              :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)})
+                                   (return %))
+                           (if-let [user-account-id (get-in document [(keyword namespace "modified-by") :user-account/id])]
+                                   (update % (keyword namespace "modified-by") merge
+                                             {:user-profile/first-name (profile-handler.helpers/user-account-id->user-profile-item user-account-id :first-name)
+                                              :user-profile/last-name  (profile-handler.helpers/user-account-id->user-profile-item user-account-id :last-name)})
+                                   (return %)))))
+
+(defn clean-document
+  ; @param (map) request
+  ; @param (namespaced map) document
+  ;
+  ; @usage
+  ;  (clean-document {...} {...})
+  ;
+  ; @example
+  ;  (clean-document {...} {:namespace/added-by {:user-account/id         "my-user"
+  ;                                              :user-profile/first-name "My"
+  ;                                              :user-profile/last-name  "User"})
+  ;  =>
+  ;  {:namespace/added-by {:user-account/id "my-user"}}
+  ;
+  ; @return (namespaced map)
+  ;  {:namespace/added-by (map)
+  ;    {:user-account/id (string)}
+  ;   :namespace/modified-by (map)
+  ;    {:user-account/id (string)}}
+  [_ document]
+  (if-let [namespace (-> document map/get-namespace name)]
+          (as-> document % (if-let [user-account-id (get-in document [(keyword namespace "added-by") :user-account/id])]
+                                   (assoc  % (keyword namespace "added-by") {:user-account/id user-account-id})
+                                   (return %))
+                           (if-let [user-account-id (get-in document [(keyword namespace "modified-by") :user-account/id])]
+                                   (assoc  % (keyword namespace "modified-by") {:user-account/id user-account-id})
+                                   (return %)))))

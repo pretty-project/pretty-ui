@@ -143,7 +143,8 @@
   (if (max-login-attempt-reached? request)
       (http/error-wrap {:error-message ":max-login-attempt-reached" :status 403})
       (let [authenticator-pattern (request->authenticator-pattern request)
-            public-user-account   (mongo-db/get-document-by-query "user_accounts" authenticator-pattern account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION)]
+            public-user-account   (mongo-db/get-document-by-query "user_accounts" authenticator-pattern
+                                                                  {:projection account-handler.config/PUBLIC-USER-ACCOUNT-PROJECTION})]
            (if (map/nonempty? public-user-account)
                (do (reg-successful-login! request)
                    (http/text-wrap        {:body "Speak, friend, and enter" :session public-user-account}))
@@ -197,4 +198,5 @@
   ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          (mongo-db/get-document-by-id "user_logins" user-account-id login-handler.config/PUBLIC-USER-LOGIN-PROJECTION)))
+          (mongo-db/get-document-by-id "user_logins" user-account-id
+                                       {:projection login-handler.config/PUBLIC-USER-LOGIN-PROJECTION})))

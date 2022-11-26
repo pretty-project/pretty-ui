@@ -73,7 +73,8 @@
   ; @return (namespaced map)
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          (mongo-db/get-document-by-id "user_profiles" user-account-id profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION)
+          (mongo-db/get-document-by-id "user_profiles" user-account-id
+                                       {:projection profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION})
           (return profile-handler.config/ANONYMOUS-USER-PROFILE)))
 
 (defn request->user-profile-item
@@ -108,4 +109,5 @@
   ;  {:user-profile/first-name (string)
   ;   :user-profile/last-name (string)}
   [{:user-account/keys [id]}]
-  (mongo-db/get-document-by-id "user_profiles" id profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION))
+  (mongo-db/get-document-by-id "user_profiles" id
+                               {:projection profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION}))

@@ -79,7 +79,8 @@
   [request]
   (if-let [user-account-id (http/request->session-param request :user-account/id)]
           (merge @(r/subscribe [:x.user/get-default-user-settings])
-                  (mongo-db/get-document-by-id "user_settings" user-account-id settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION))
+                  (mongo-db/get-document-by-id "user_settings" user-account-id
+                                               {:projection settings-handler.config/PUBLIC-USER-SETTINGS-PROJECTION}))
           (merge @(r/subscribe [:x.user/get-default-user-settings]))))
 
 (defn request->user-settings-item
