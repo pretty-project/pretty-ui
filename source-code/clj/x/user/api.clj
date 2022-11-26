@@ -73,6 +73,7 @@
 (def request->user-profile              profile-handler.helpers/request->user-profile)
 (def request->public-user-profile       profile-handler.helpers/request->public-user-profile)
 (def request->user-profile-item         profile-handler.helpers/request->user-profile-item)
+(def user-link->public-user-profile     profile-handler.helpers/user-link->public-user-profile)
 
 ; x.user.session-handler.helpers
 (def session->session-valid? session-handler.helpers/session->session-valid?)

@@ -40,6 +40,7 @@
               [mid.x.dictionary.books.law            :as books.law]
               [mid.x.dictionary.books.layout         :as books.layout]
               [mid.x.dictionary.books.media          :as books.media]
+              [mid.x.dictionary.books.menu           :as books.menu]
               [mid.x.dictionary.books.money          :as books.money]
               [mid.x.dictionary.books.network        :as books.network]
               [mid.x.dictionary.books.notifications  :as books.notifications]
@@ -96,6 +97,7 @@
                   books.law/BOOK
                   books.layout/BOOK
                   books.media/BOOK
+                  books.menu/BOOK
                   books.money/BOOK
                   books.network/BOOK
                   books.notifications/BOOK

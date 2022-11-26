@@ -17,21 +17,8 @@
               [http.api                       :as http]
               [map.api                        :as map]
               [time.api                       :as time]
+              [x.user.account-handler.helpers :as account-handler.helpers]
               [x.user.profile-handler.helpers :as profile-handler.helpers]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn request->user-link
-  ; @param (map) request
-  ;
-  ; @return (map)
-  ;  {:user-account/id (string)}
-  [request]
-  (if-let [user-account-id (http/request->session-param request :user-account/id)]
-          {:user-account/id user-account-id}))
 
 
 
@@ -55,7 +42,7 @@
   [request document]
   (if-let [namespace (-> document map/get-namespace name)]
           (let [timestamp (time/timestamp-string)
-                user-link (request->user-link request)]
+                user-link (account-handler.helpers/request->user-link request)]
                (merge document {(keyword namespace "added-at")    timestamp
                                 (keyword namespace "added-by")    user-link
                                 (keyword namespace "modified-at") timestamp
@@ -78,7 +65,7 @@
   [request document]
   (if-let [namespace (-> document map/get-namespace name)]
           (let [timestamp (time/timestamp-string)
-                user-link (request->user-link request)]
+                user-link (account-handler.helpers/request->user-link request)]
                (merge {(keyword namespace "added-at") timestamp
                        (keyword namespace "added-by") user-link}
                       (param document)
@@ -102,7 +89,7 @@
   [request document]
   (if-let [namespace (-> document map/get-namespace name)]
           (let [timestamp (time/timestamp-string)
-                user-link (request->user-link request)]
+                user-link (account-handler.helpers/request->user-link request)]
                (merge document {(keyword namespace "added-at")    timestamp
                                 (keyword namespace "added-by")    user-link
                                 (keyword namespace "modified-at") timestamp
@@ -122,13 +109,13 @@
   ;
   ; @return (namespaced map)
   ;  {:namespace/added-by (map)
-  ;    {:user/account-id (string)
-  ;     :user/first-name (string)
-  ;     :user/last-name (string)}
+  ;    {:user-account/id (string)
+  ;     :user-profile/first-name (string)
+  ;     :user-profile/last-name (string)}
   ;   :namespace/modified-by (map)
-  ;    {:user/account-id (string)}
-  ;     :user/first-name (string)
-  ;     :user/last-name (string)}}
+  ;    {:user-account/id (string)}
+  ;     :user-profile/first-name (string)
+  ;     :user-profile/last-name (string)}}
   [_ document]
   (if-let [namespace (-> document map/get-namespace name)]
           (let [added-by    (get document (keyword namespace "added-by"))

@@ -30,7 +30,7 @@
   ; @example
   ;  (user-account-id->user-account "my-account")
   ;  =>
-  ;  {:user-account/id "my-account"
+  ;  {:user-account/id       "my-account"
   ;   :user-account/password "my-password"
   ;   ...}
   ;
@@ -55,6 +55,15 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn request->user-link
+  ; @param (map) request
+  ;
+  ; @return (map)
+  ;  {:user-account/id (string)}
+  [request]
+  (if-let [user-account-id (http/request->session-param request :user-account/id)]
+          {:user-account/id user-account-id}))
 
 (defn request->user-account-id
   ; @param (map) request

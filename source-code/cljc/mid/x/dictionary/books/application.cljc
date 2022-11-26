@@ -62,9 +62,6 @@
            :loading...
            {:en "Loading ..."
             :hu "Betöltés ..."}
-           :menu
-           {:en "Menu"
-            :hu "Menü"}
            :need-help?
            {:en "Need help?"
             :hu "Súgó"}

@@ -331,19 +331,25 @@
                ;    behelyettesíti az aktuális útvonalbeli értékével (ha lehetséges),
                ;    majd a behelyettesítés után az eredménnyel újra meghívja önmagát, további
                ;    útvonal-paramétereket keresve a szövegben.
-               (f1 [n cursor]
+               (f1 [n cursor skip]
                    (if-let [pos (-> n (string/part cursor)
-                                      (string/first-dex-of "/:"))]
+                                      (string/nth-dex-of "/:" skip))]
                            ; Ha az f függvény n paramétere tartalmazza a "/:" részletet ...
                            (let [base (subs n 0 (inc pos))
                                  end  (subs n   (inc pos))
                                  [param-key trail] (f0 end)]
                                 (if-let [param-value (get path-params param-key)]
-                                        (f1 (str base param-value trail) cursor)
-                                        (f1 (str base param-key   trail) cursor)))
+                                        ; Ha a path-params térkép tartalmazza a param-key kulcsot (:my-param) ...
+                                        ; ... akkor az f1 függvény elvégzi a behelyettesítést és újra meghívja önmagát.
+                                        (f1 (str base param-value trail) cursor      skip)
+                                        ; Ha a path-params térkép NEM tartalmazza a param-key kulcsot (:my-param) ...
+                                        ; ... akkor az f1 függvény NEM végez behelyettesítést és újra meghívja önmagát.
+                                        ;     (A skip értékét növeli, különbön végtelen ciklusba kerülne, ha újra és újra
+                                        ;      megpróbálná ugyanazt a behelyettesítést eredmény nélkül!)
+                                        (f1 (str base param-key   trail) cursor (inc skip))))
                            ; Ha az f függvény n paramétere NEM tartalmazza az "/:" részletet ...
                            (return n)))]
-              (f1 uri 0))))
+              (f1 uri 0 0))))
 
 
 

@@ -120,7 +120,7 @@
       ; ...
       (let [query        (r update.queries/get-undo-delete-item-query          db viewer-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db viewer-id %)]
-           {:db       (r x.ui/fake-process! db 15)
+           {:db         (r x.ui/fake-process! db 15)
             :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db viewer-id)
                                               {:display-progress? false

@@ -29,6 +29,9 @@
   ;  {:user-account/id (string)(opt)
   ;   :user-account/roles (vector)(opt)}
   ;
+  ; @usage
+  ;  (session->session-valid? {:user-account/id "my-user" :user-account/roles ["my-user"]})
+  ;
   ; @return (boolean)
   [{:user-account/keys [id roles]}]
   (and (string/nonblank? id)
@@ -36,6 +39,9 @@
 
 (defn request->authenticated?
   ; @param (map) request
+  ;
+  ; @usage
+  ;  (request->authenticated? {:session {:user-account/id "my-user" :user-account/roles ["my-user"]}})
   ;
   ; @return (boolean)
   [request]
@@ -46,6 +52,9 @@
 
 (defn request->root-user?
   ; @param (map) request
+  ;
+  ; @usage
+  ;  (request->root-user? {:session {:user-account/id "my-user" :user-account/roles ["my-user" "root"]}})
   ;
   ; @return (boolean)
   [request]

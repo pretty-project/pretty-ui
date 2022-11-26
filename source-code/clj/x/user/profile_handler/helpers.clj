@@ -88,3 +88,24 @@
   (let [user-profile        (request->user-profile request)
         namespaced-item-key (keyword/add-namespace :user-profile item-key)]
        (get user-profile namespaced-item-key)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn user-link->public-user-profile
+  ; @param (namespaced map) user-link
+  ;  {:user-account/id (string)}
+  ;
+  ; @example
+  ;  (user-link->public-user-profile {:user-account/id "my-user"})
+  ;  =>
+  ;  {:user-profile/first-name "My"
+  ;   :user-profile/last-name  "User"}
+  ;
+  ; @return (namespaced map)
+  ;  {:user-profile/first-name (string)
+  ;   :user-profile/last-name (string)}
+  [{:user-account/keys [id]}]
+  (mongo-db/get-document-by-id "user_profiles" id profile-handler.config/PUBLIC-USER-PROFILE-PROJECTION))
