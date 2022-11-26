@@ -103,15 +103,16 @@
   [label-id {:keys [content target-id]}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
-  [:label.e-label--content {:for target-id}
-                           (x.components/content content)])
+  ;
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  [:label.e-label--content {:for target-id} content])
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:content (metamorphic-content)
+  ;  {:content (string)(opt)
   ;   :icon (keyword)(opt)
   ;   :selectable? (boolean)}
   [label-id {:keys [content icon selectable?] :as label-props}]
@@ -124,8 +125,7 @@
   ;
   ; XXX#4519 (resources/public/css/elements/style.css)
   [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
-                      ; BUG#3400
-                      (if (-> content x.components/content str empty?)
+                      (if (empty? content)
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]
@@ -156,6 +156,8 @@
   ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;    Default: :default
   ;   :content (metamorphic-content)
+  ;   :copyable? (boolean)(opt)
+  ;    Default: false
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :font-size (keyword)(opt)

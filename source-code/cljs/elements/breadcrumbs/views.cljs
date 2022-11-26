@@ -41,8 +41,7 @@
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:div.e-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                             ; BUG#3400
-                             (if (-> label       x.components/content str empty?)
+                             (if (-> label       x.components/content empty?)
                                  (-> placeholder x.components/content)
                                  (-> label       x.components/content))])
 
@@ -56,8 +55,7 @@
   ;   :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:button.e-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
-                                ; BUG#3400
-                                (if (-> label       x.components/content str empty?)
+                                (if (-> label       x.components/content empty?)
                                     (-> placeholder x.components/content)
                                     (-> label       x.components/content))])
 
@@ -129,5 +127,5 @@
    [element (random/generate-keyword) breadcrumbs-props])
 
   ([breadcrumbs-id breadcrumbs-props]
-   (let [breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)]
+   (let [];breadcrumbs-props (breadcrumbs.prototypes/breadcrumbs-props-prototype breadcrumbs-props)
         [breadcrumbs breadcrumbs-id breadcrumbs-props])))

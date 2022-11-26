@@ -63,9 +63,9 @@
   ;
   ; @return (boolean)
   [field-id]
+  ; BUG#3401
   (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
-       ; BUG#3400
-       (-> field-content str empty?)))
+       (empty? field-content)))
 
 (defn field-filled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,7 +75,7 @@
   ; @return (boolean)
   [field-id]
   (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
-       (string/nonblank? field-content)))
+       (-> field-content empty? not)))
 
 (defn field-enabled?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,9 +116,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; @param (string) content
+  ; @param (*) content
   [field-id content]
-  (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] content))
+  ; BUG#3401
+  ; A mező értékének eltárolása előtt szükséges azt string típusra alakítani!
+  ; Pl.: Előfordulhat, hogy number típusú érték íródik a mezőbe és az értéket
+  ;      vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
+  (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] (str content)))
 
 (defn resolve-field-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!

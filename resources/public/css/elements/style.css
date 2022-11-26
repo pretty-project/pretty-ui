@@ -11,7 +11,6 @@
 /***** Element profiles *****/
 /***** Active state and focused state *****/
 /***** Animations *****/
-/***** Material icons *****/
 /***** Element header *****/
 /***** Align profiles *****/
 /***** Color profiles *****/
@@ -75,7 +74,7 @@ body {
 
 .e-button--body[data-horizontal-align="left"],
 .e-card-group[data-horizontal-align="left"],
-.e-label[data-horizontal-align="left"] .e-label--body,
+.e-label--body[data-horizontal-align="left"],
 .e-menu-bar--body[data-horizontal-align="left"],
 .e-row--body[data-horizontal-align="left"] {
   justify-content: flex-start;
@@ -93,7 +92,7 @@ body {
 
 .e-button--body[data-horizontal-align="center"],
 .e-card-group[data-horizontal-align="center"],
-.e-label[data-horizontal-align="center"] .e-label--body,
+.e-label--body[data-horizontal-align="center"],
 .e-menu-bar--body[data-horizontal-align="center"],
 .e-row--body[data-horizontal-align="center"] {
   justify-content: center;
@@ -111,7 +110,7 @@ body {
 
 .e-button--body[data-horizontal-align="right"],
 .e-card-group[data-horizontal-align="right"],
-.e-label[data-horizontal-align="right"] .e-label--body,
+.e-label--body[data-horizontal-align="right"],
 .e-menu-bar--body[data-horizontal-align="right"],
 .e-row--body[data-horizontal-align="right"] {
   justify-content: flex-end;
@@ -252,7 +251,7 @@ body {
 .e-chip[data-color="var"] .e-chip--body,
 .e-icon--body[data-color="var"],
 .e-icon-button--body[data-color="var"],
-.e-label[data-color="var"],
+.e-label--body[data-color="var"],
 .e-text[data-color="var"] .e-text--body,
 .e-text-field--button-adornment[data-color="var"],
 .e-text-field--static-adornment[data-color="var"] {
@@ -329,7 +328,7 @@ body {
 .e-chip[data-color="muted"] .e-chip--body,
 .e-icon--body[data-color="muted"],
 .e-icon-button--body[data-color="muted"],
-.e-label[data-color="muted"],
+.e-label--body[data-color="muted"],
 .e-text[data-color="muted"] .e-text--body,
 .e-text-field--button-adornment[data-color="muted"],
 .e-text-field--static-adornment[data-color="muted"] {
@@ -401,7 +400,7 @@ body {
 .e-chip[data-color="highlight"] .e-chip--body,
 .e-icon--body[data-color="highlight"],
 .e-icon-button--body[data-color="highlight"],
-.e-label[data-color="highlight"],
+.e-label--body[data-color="highlight"],
 .e-text[data-color="highlight"] .e-text--body,
 .e-text-field--button-adornment[data-color="highlight"],
 .e-text-field--static-adornment[data-color="highlight"] {
@@ -429,7 +428,7 @@ body {
 .e-button--body[data-color="invert"],
 .e-icon--body[data-color="invert"],
 .e-icon-button--body[data-color="invert"],
-.e-label[data-color="invert"],
+.e-label--body[data-color="invert"],
 .e-text[data-color="invert"],
 .e-text-field--button-adornment[data-color="invert"],
 .e-text-field--static-adornment[data-color="invert"] {
@@ -514,7 +513,7 @@ body {
 .e-chip[data-color="primary"] .e-chip--body,
 .e-icon--body[data-color="primary"],
 .e-icon-button--body[data-color="primary"],
-.e-label[data-color="primary"],
+.e-label--body[data-color="primary"],
 .e-text[data-color="primary"] .e-text--body,
 .e-text-field--button-adornment[data-color="primary"],
 .e-text-field--static-adornment[data-color="primary"] {
@@ -599,7 +598,7 @@ body {
 .e-chip[data-color="secondary"] .e-chip--body,
 .e-icon--body[data-color="secondary"],
 .e-icon-button--body[data-color="secondary"],
-.e-label[data-color="secondary"],
+.e-label--body[data-color="secondary"],
 .e-text[data-color="secondary"] .e-text--body,
 .e-text-field--button-adornment[data-color="secondary"],
 .e-text-field--static-adornment[data-color="secondary"] {
@@ -683,7 +682,7 @@ body {
 .e-chip[data-color="success"] .e-chip--body,
 .e-icon--body[data-color="success"],
 .e-icon-button--body[data-color="success"],
-.e-label[data-color="success"],
+.e-label--body[data-color="success"],
 .e-text[data-color="success"] .e-text--body,
 .e-text-field--button-adornment[data-color="success"],
 .e-text-field--static-adornment[data-color="success"] {
@@ -768,7 +767,7 @@ body {
 .e-chip[data-color="warning"] .e-chip--body,
 .e-icon--body[data-color="warning"],
 .e-icon-button--body[data-color="warning"],
-.e-label[data-color="warning"],
+.e-label--body[data-color="warning"],
 .e-text[data-color="warning"] .e-text--body,
 .e-text-field--button-adornment[data-color="warning"],
 .e-text-field--static-adornment[data-color="warning"] {
@@ -818,7 +817,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xxs"][data-line-height="normal"],
-.e-label[data-font-size="xxs"][data-line-height="normal"],
+.e-label--body[data-font-size="xxs"][data-line-height="normal"],
 .e-text[data-font-size="xxs"][data-line-height="normal"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
@@ -826,7 +825,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xxs"][data-line-height="block"],
-.e-label[data-font-size="xxs"][data-line-height="block"],
+.e-label--body[data-font-size="xxs"][data-line-height="block"],
 .e-text[data-font-size="xxs"][data-line-height="block"] {
   font-size: var( --font-size-xxs );
   letter-spacing: var( --letter-spacing-xxs );
@@ -859,7 +858,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="xs"] .e-label--icon {
+.e-label--body[data-font-size="xs"] .e-label--icon {
   font-size: var( --icon-size-xxs );
 }
 
@@ -876,7 +875,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xs"][data-line-height="normal"],
-.e-label[data-font-size="xs"][data-line-height="normal"],
+.e-label--body[data-font-size="xs"][data-line-height="normal"],
 .e-text[data-font-size="xs"][data-line-height="normal"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
@@ -884,7 +883,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xs"][data-line-height="block"],
-.e-label[data-font-size="xs"][data-line-height="block"],
+.e-label--body[data-font-size="xs"][data-line-height="block"],
 .e-text[data-font-size="xs"][data-line-height="block"] {
   font-size: var( --font-size-xs );
   letter-spacing: var( --letter-spacing-xs );
@@ -918,7 +917,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="xs"] .e-label--icon {
+.e-label--body[data-font-size="xs"] .e-label--icon {
   font-size: var( --icon-size-xxs );
 }
 
@@ -942,7 +941,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="s"][data-line-height="normal"],
-.e-label[data-font-size="s"][data-line-height="normal"],
+.e-label--body[data-font-size="s"][data-line-height="normal"],
 .e-text[data-font-size="s"][data-line-height="normal"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
@@ -950,7 +949,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="s"][data-line-height="block"],
-.e-label[data-font-size="s"][data-line-height="block"],
+.e-label--body[data-font-size="s"][data-line-height="block"],
 .e-text[data-font-size="s"][data-line-height="block"] {
   font-size: var( --font-size-s );
   letter-spacing: var( --letter-spacing-s );
@@ -975,7 +974,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="s"] .e-label--icon {
+.e-label--body[data-font-size="s"] .e-label--icon {
   font-size: var( --icon-size-xs );
 }
 
@@ -999,7 +998,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="m"][data-line-height="normal"],
-.e-label[data-font-size="m"][data-line-height="normal"],
+.e-label--body[data-font-size="m"][data-line-height="normal"],
 .e-text[data-font-size="m"][data-line-height="normal"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
@@ -1007,7 +1006,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="m"][data-line-height="block"],
-.e-label[data-font-size="m"][data-line-height="block"],
+.e-label--body[data-font-size="m"][data-line-height="block"],
 .e-text[data-font-size="m"][data-line-height="block"] {
   font-size: var( --font-size-m );
   letter-spacing: var( --letter-spacing-m );
@@ -1023,7 +1022,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="m"] .e-label--icon {
+.e-label--body[data-font-size="m"] .e-label--icon {
   font-size: var( --icon-size-s );
 }
 
@@ -1040,7 +1039,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="l"][data-line-height="normal"],
-.e-label[data-font-size="l"][data-line-height="normal"],
+.e-label--body[data-font-size="l"][data-line-height="normal"],
 .e-text[data-font-size="l"][data-line-height="normal"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
@@ -1048,7 +1047,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="l"][data-line-height="block"],
-.e-label[data-font-size="l"][data-line-height="block"],
+.e-label--body[data-font-size="l"][data-line-height="block"],
 .e-text[data-font-size="l"][data-line-height="block"] {
   font-size: var( --font-size-l );
   letter-spacing: var( --letter-spacing-l );
@@ -1064,7 +1063,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="l"] .e-label--icon {
+.e-label--body[data-font-size="l"] .e-label--icon {
   font-size: var( --icon-size-m );
 }
 
@@ -1081,7 +1080,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xl"][data-line-height="normal"],
-.e-label[data-font-size="xl"][data-line-height="normal"],
+.e-label--body[data-font-size="xl"][data-line-height="normal"],
 .e-text[data-font-size="xl"][data-line-height="normal"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
@@ -1089,7 +1088,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xl"][data-line-height="block"],
-.e-label[data-font-size="xl"][data-line-height="block"],
+.e-label--body[data-font-size="xl"][data-line-height="block"],
 .e-text[data-font-size="xl"][data-line-height="block"] {
   font-size: var( --font-size-xl );
   letter-spacing: var( --letter-spacing-xl );
@@ -1105,7 +1104,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="xl"] .e-label--icon {
+.e-label--body[data-font-size="xl"] .e-label--icon {
   font-size: var( --icon-size-m );
 }
 
@@ -1122,7 +1121,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xxl"][data-line-height="normal"],
-.e-label[data-font-size="xxl"][data-line-height="normal"],
+.e-label--body[data-font-size="xxl"][data-line-height="normal"],
 .e-text[data-font-size="xxl"][data-line-height="normal"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
@@ -1130,7 +1129,7 @@ body {
 }
 
 .e-anchor--body[data-font-size="xxl"][data-line-height="block"],
-.e-label[data-font-size="xxl"][data-line-height="block"],
+.e-label--body[data-font-size="xxl"][data-line-height="block"],
 .e-text[data-font-size="xxl"][data-line-height="block"] {
   font-size: var( --font-size-xxl );
   letter-spacing: var( --letter-spacing-xxl );
@@ -1146,7 +1145,7 @@ body {
   height: 36px;
 }
 
-.e-label[data-font-size="xxl"] .e-label--icon {
+.e-label--body[data-font-size="xxl"] .e-label--icon {
   font-size: var( --icon-size-m );
 }
 
@@ -1158,7 +1157,7 @@ body {
 /***** Font weight profiles *****/
 /*** Normal ***/
 
-.e-label[data-font-weight="normal"],
+.e-label--body[data-font-weight="normal"],
 .e-text[data-font-weight="normal"] {
   font-weight: 400;
 }
@@ -1168,7 +1167,7 @@ body {
 /*** Bold ***/
 
 .e-button--body[data-font-weight="bold"],
-.e-label[data-font-weight="bold"],
+.e-label--body[data-font-weight="bold"],
 .e-text[data-font-weight="bold"] {
   font-weight: 500;
 }
@@ -1178,7 +1177,7 @@ body {
 /*** Extra bold ***/
 
 .e-button--body[data-font-weight="extra-bold"],
-.e-label[data-font-weight="extra-bold"],
+.e-label--body[data-font-weight="extra-bold"],
 .e-text[data-font-weight="extra-bold"] {
   font-weight: 600;
 }
@@ -2766,9 +2765,39 @@ body {
 
 .e-label--body {
   align-items: center;
-  display: flex}
+  display: flex;
+}
 
 /*** Label body ***/
+
+/*** Copyable label ***/
+
+.e-label--body[data-copyable="true"] {
+  cursor: pointer;
+}
+
+.e-label--body[data-copyable="true"]::after {
+  background-color: var( --fill-color );
+  border-color: var( --border-color-highlight );
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  color: var( --color-primary );
+  font-size: var( --font-size-xs );
+  line-height: 18px;
+  padding: 6px;
+  position: absolute;
+  left: 0;
+  top: calc(50% - 16px);
+  transform: translateX(calc(-100% - 6px));
+  z-index: 9999;
+}
+
+.e-label--body[data-copyable="true"]:hover::after {
+  content: attr(data-copy-label);
+}
+
+/*** Copyable label ***/
 
 /*** Label content ***/
 
@@ -2977,7 +3006,7 @@ body {
 
   /* BUG#0983
    * height, overflow, width:
-   * A material-icon font-készlet letöltődése előtt felvillan az ikon neve (FOIT/FOUT).
+   * Az ikonokat megjelenítő font-készlet letöltődése előtt felvillan az ikon neve (FOIT/FOUT).
    * A height, overflow, és width tulajdonságok beállítása nélkül az ikon méretének
    * pillanatnyi megváltozását okozná. */
   height: var( --icon-size-default );

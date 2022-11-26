@@ -62,33 +62,30 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:content (metamorphic-content)}
+  ;  {:content (string)}
   [_ {:keys [content]}]
-  (let [content (x.components/content content)]
-       (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
-                                          (conj %1 [:br] %3)))]
-              (if (string? content)
-                  (let [content-rows (string/split content "\n")]
-                       (reduce-kv f [:div.e-text--content] content-rows))
-                  ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
-                  (return content)))))
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
+                                     (conj %1 [:br] %3)))]
+         (if (string? content)
+             (let [content-rows (string/split content "\n")]
+                  (reduce-kv f [:div.e-text--content] content-rows))
+             ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
+             (return content))))
 
 (defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:content (metamorphic-content)
+  ;  {:content (string)
   ;   :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content] :as text-props}]
   ; XXX#9811
+  ;
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   [:div.e-text--body (text.helpers/text-body-attributes text-id text-props)
-                     ; BUG#3400
-                     ; Az empty? függvény alkalmazása előtt az str függvényt
-                     ; szükséges használni, különben ha a x.components/content
-                     ; függvény kimenete integer típusú, akkor az empty?
-                     ; függvény hibát dob!
-                     (if (-> content x.components/content str empty?)
+                     (if (empty? content)
                          [text-placeholder text-id text-props]
                          [text-content     text-id text-props])])
 

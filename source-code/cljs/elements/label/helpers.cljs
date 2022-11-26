@@ -15,7 +15,26 @@
 (ns elements.label.helpers
     (:require [elements.element.helpers      :as element.helpers]
               [elements.element.side-effects :as element.side-effects]
-              [elements.label.state          :as label.state]))
+              [elements.label.state          :as label.state]
+              [re-frame.api                  :as r]
+              [x.components.api              :as x.components]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn on-copy-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {:content (string)(opt)}
+  ;
+  ; @return (function)
+  [_ {:keys [content]}]
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  (fn [_] (r/dispatch [:clipboard/copy-text! content])))
 
 
 
@@ -43,53 +62,113 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn label-style-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {:color (keyword or string)
+  ;   :style (map)(opt)}
+  ;
+  ; @return (map)
+  ;  {:style (map)}
+  [_ {:keys [color style]}]
+  (-> {:style style}
+      (element.helpers/apply-color :color :data-color color)))
+
+(defn label-font-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {:font-size (keyword)
+  ;   :font-weight (keyword)
+  ;   :line-height (keyword)}
+  ;
+  ; @return (map)
+  ;  {:data-font-size (keyword)
+  ;   :data-font-weight (keyword)
+  ;   :data-line-height (keyword)}
+  [_ {:keys [font-size font-weight line-height]}]
+  {:data-font-size   font-size
+   :data-font-weight font-weight
+   :data-line-height line-height})
+
+(defn label-layout-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {:horizontal-align (keyword)
+  ;   :horizontal-position (keyword)(opt)
+  ;   :min-width (keyword)(opt)
+  ;   :vertical-position (keyword)(opt)}
+  ;
+  ; @return (map)
+  ;  {:data-horizontal-align (keyword)
+  ;   :data-horizontal-position (keyword)
+  ;   :data-min-width (keyword)
+  ;   :data-vertical-position (keyword)}
+  [_ {:keys [horizontal-align horizontal-position min-width vertical-position]}]
+  {:data-horizontal-align    horizontal-align
+   :data-horizontal-position horizontal-position
+   :data-min-width           min-width
+   :data-vertical-position   vertical-position})
+
 (defn label-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {}
+  ;  {:copyable? (boolean)(opt)
+  ;   :selectable? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {}
-  [_ {:keys [selectable? style]}]
-  {:data-selectable selectable?
-   :style           style})
+  ;  {:data-clickable (boolean)
+  ;   :data-copy-label (string)
+  ;   :data-copyable (boolean)
+  ;   :data-selectable (boolean)}
+  [label-id {:keys [copyable? selectable?] :as label-props}]
+  (merge {:data-clickable  copyable?
+          :data-copyable   copyable?
+          :data-selectable selectable?
+          :data-copy-label (if copyable? (x.components/content :copy!))
+          :on-click        (if copyable? (on-copy-f label-id label-props))}
+         (label-style-attributes  label-id label-props)
+         (label-font-attributes   label-id label-props)
+         (label-layout-attributes label-id label-props)))
 
 (defn label-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
-  [label-id {:keys [color font-size font-weight horizontal-align horizontal-position
-                    line-height min-width vertical-position] :as label-props}]
+  [label-id label-props]
   (merge (element.helpers/element-default-attributes label-id label-props)
-         (element.helpers/element-indent-attributes  label-id label-props)
-         (element.helpers/apply-color {} :color :data-color color)
-         {:data-font-size           font-size
-          :data-font-weight         font-weight
-          :data-horizontal-align    horizontal-align
-          :data-horizontal-position horizontal-position
-          :data-line-height         line-height
-          :data-min-width           min-width
-          :data-vertical-position   vertical-position}))
+         (element.helpers/element-indent-attributes  label-id label-props)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn label-info-text-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {}
   ;
   ; @return (map)
-  ;  {}
+  ;  {:data-clickable (boolean)
+  ;   :data-selectable (boolean)
+  ;   :data-icon-family (keyword)
+  ;   :on-click (function)
+  ;   :on-mouse-up (function)}
   [label-id _]
   {:data-clickable   true
    :data-selectable  false
    :data-icon-family :material-icons-filled
-   :on-click        #(toggle-info-text-visiblity! label-id)
+   :on-click        #(toggle-info-text-visiblity!        label-id)
    :on-mouse-up     #(element.side-effects/blur-element! label-id)})
