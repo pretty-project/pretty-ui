@@ -21,6 +21,7 @@
               [developer-tools.re-frame-browser.subs]
               [developer-tools.request-inspector.events]
               [developer-tools.request-inspector.subs]
+              [developer-tools.subscription-browser.effects]
               [developer-tools.database-screen.views :as database-screen.views]
               [developer-tools.magic-button.views    :as magic-button.views]))
 

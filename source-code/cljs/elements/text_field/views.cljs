@@ -256,12 +256,13 @@
   ;   :info-text (metamorphic-content)(opt)
   ;   :label (metamorphic-content)(opt)
   ;   :required? (boolean)(opt)}
-  [field-id {:keys [helper info-text label required?]}]
+  [field-id {:keys [helper info-text label marked? required?]}]
   (if label (let [input-id (hiccup/value field-id "input")]
                  [label.views/element {:content     label
                                        :helper      helper
                                        :info-text   info-text
                                        :line-height :block
+                                       :marked?     marked?
                                        :required?   required?
                                        :target-id   input-id}])))
 
@@ -343,6 +344,8 @@
   ;   :info-text (metamorphic-content)(opt)
   ;   :initial-value (string)(opt)
   ;   :label (metamorphic-content)(opt)
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :max-length (integer)(opt)
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none

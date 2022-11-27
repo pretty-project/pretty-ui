@@ -19,7 +19,6 @@
 
 
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -46,7 +45,7 @@
   ; @usage
   ;  [:file-saver/save-file! {:uri      "/images/my-image.jpg"}
   ;                           :filename "my-image.jpg"}]
-  [a/event-vector<-id]
+  [r/event-vector<-id]
   (fn [_ [_ saver-id saver-props]]
       (let [saver-props (prototypes/saver-props-prototype saver-props)]
            [:file-saver/render-dialog! saver-id saver-props])))

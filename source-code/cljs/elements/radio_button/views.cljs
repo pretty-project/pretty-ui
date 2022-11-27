@@ -104,11 +104,12 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;  {}
-  [_ {:keys [helper info-text label required?]}]
+  [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
                                   :info-text   info-text
                                   :line-height :block
+                                  :marked?     marked?
                                   :required?   required?}]))
 
 (defn- radio-button-structure
@@ -158,6 +159,8 @@
   ;   :initial-options (vector)(opt)
   ;   :initial-value (*)(opt)
   ;   :label (metamorphic-content)
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :on-select (metamorphic-event)(opt)
   ;   :option-helper-f (function)(opt)
   ;   :option-label-f (function)(opt)

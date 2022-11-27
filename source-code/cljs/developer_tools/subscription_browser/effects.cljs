@@ -12,19 +12,15 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.pdf-generator.api
-    (:require [tools.pdf-generator.config       :as config]
-              [tools.pdf-generator.side-effects :as side-effects]))
+(ns developer-tools.subscription-browser.effects
+    (:require [re-frame.api :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; tools.pdf-generator.config
-(def GENERATOR-FILEPATH config/GENERATOR-FILEPATH)
-(def BASE64-FILEPATH    config/BASE64-FILEPATH)
-
-; tools.pdf-generator.side-effects
-(def generate-pdf!       side-effects/generate-pdf!)
-(def generate-base64-pdf! side-effects/generate-base64-pdf!)
+(r/reg-event-fx :developer-tools.subscription-browser/toggle-subscription!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  (fn [{:keys [db]} _]
+      {:db (update-in db [:developer-tools :subscription-browser/meta-items :subscribed?] not)}))

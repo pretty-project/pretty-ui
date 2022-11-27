@@ -12,20 +12,19 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.clipboard.effects
-    (:require [re-frame.api          :as r]
-              [tools.clipboard.views :as views]))
+(ns tools.hiccuptopdf.api
+    (:require [tools.hiccuptopdf.config       :as config]
+              [tools.hiccuptopdf.side-effects :as side-effects]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :clipboard/copy-text!
-  ; @param (string) text
-  ;
-  ; @usage
-  ;  [:clipboard/copy-text! "My text"]
-  (fn [_ [_ text]]
-      {:dispatch [:x.ui/render-bubble! ::notification {:body [views/copied-to-clipboard-dialog-body text]}]
-       :fx       [:clipboard/copy-text! text]}))
+; tools.hiccuptopdf.config
+(def GENERATOR-FILEPATH config/GENERATOR-FILEPATH)
+(def BASE64-FILEPATH    config/BASE64-FILEPATH)
+
+; tools.hiccuptopdf.side-effects
+(def generate-pdf!        side-effects/generate-pdf!)
+(def generate-base64-pdf! side-effects/generate-base64-pdf!)

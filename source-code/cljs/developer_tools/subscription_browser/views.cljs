@@ -12,8 +12,9 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns developer-tools.event-browser.views
+(ns developer-tools.subscription-browser.views
     (:require [elements.api :as elements]
+              [reader.api   :as reader]
               [re-frame.api :as r]
               [vector.api   :as vector]))
 
@@ -22,70 +23,73 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn event-view
+(defn subscription-view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [event-id   @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :current-event]])
-        parameters @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :parameters]])]
+  (let [subscription-id @(r/subscribe [:x.db/get-item [:developer-tools :subscription-browser/meta-items :current-subscription]])
+        parameters      @(r/subscribe [:x.db/get-item [:developer-tools :subscription-browser/meta-items :parameters]])
+        subscribed?     @(r/subscribe [:x.db/get-item [:developer-tools :subscription-browser/meta-items :subscribed?]])]
        [:div {:style {:width "100%"}}
              [:div {:style {:display :flex}}
                    [elements/icon-button ::back-button
-                                         {:on-click [:x.db/remove-item! [:developer-tools :event-browser/meta-items]]
+                                         {:on-click [:x.db/remove-item! [:developer-tools :subscription-browser/meta-items]]
                                           :preset   :back}]
-                   [elements/label ::event-id
+                   [elements/label ::subscription-id
                                    {:color       :muted
-                                    :content     (str event-id)
+                                    :content     (str subscription-id)
                                     :font-size   :m
                                     :font-weight :extra-bold
                                     :line-height :block}]
                    [elements/icon-button {:variant :placeholder}]]
              [:div {:style {:padding "0 48px"}}
-                   [elements/text-field ::event-vector
+                   [elements/text-field ::subscription-vector
                                         {:indent     {:bottom :s}
                                          :label      "Parameters"
-                                         :value-path [:developer-tools :event-browser/meta-items :parameters]}]
-                   [elements/label ::event-vector
+                                         :value-path [:developer-tools :subscription-browser/meta-items :parameters]}]
+                   [elements/label ::subscription-vector
                                    {:color   :muted
-                                    :content (str "["event-id (if parameters (str " " parameters)) "]")
+                                    :content (str "["subscription-id (if parameters (str " " parameters)) "]")
                                     :font-size :xs
                                     :indent     {:bottom :s}
                                     :line-height :block}]
-                   [elements/button ::dispatch-button
+                   [elements/button ::subscribe-button
                                     {:background-color :highlight
                                      :border-radius    :xs
                                      :indent           {:bottom :m}
-                                     :label            "Dispatch"
-                                     :on-click         [:developer-tools.event-browser/dispatch-current!]
-                                     :style            {:width "240px"}}]]]))
+                                     :label            (if subscribed? "Unsubscribe" "Subscribe")
+                                     :on-click         [:developer-tools.subscription-browser/toggle-subscription!]
+                                     :style            {:width "240px"}}]
+                   (if subscribed? [:div {:style {:padding "0 0 24px 0"}}
+                                         (str @(r/subscribe (reader/string->mixed (str "["subscription-id" "parameters"]"))))])]]))
 
-(defn event-list-item
+(defn subscription-list-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
-  [event-id event-props]
+  [subscription-id subscription-props]
   [:button {:style {:display :block :text-align :left :padding "0px 12px" :width "100%"} :data-clickable true
-            :on-click #(r/dispatch [:x.db/set-item! [:developer-tools :event-browser/meta-items :current-event] event-id])}
+            :on-click #(r/dispatch [:x.db/set-item! [:developer-tools :subscription-browser/meta-items :current-subscription] subscription-id])}
            [:div {:style {:font-size "14px" :font-weight "500"}}
-                 (str "[" event-id " ...]")]])
+                 (str "[" subscription-id " ...]")]])
 
-(defn event-list
+(defn subscription-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (let [event-handlers (r/get-event-handlers :event)]
-       (letfn [(f [event-list event-id]
-                  (let [event-props (get event-handlers event-id)]
-                       (conj event-list [event-list-item event-id event-props])))]
+  (let [subscription-handlers (r/get-event-handlers :sub)]
+       (letfn [(f [subscription-list subscription-id]
+                  (let [subscription-props (get subscription-handlers subscription-id)]
+                       (conj subscription-list [subscription-list-item subscription-id subscription-props])))]
               (reduce f [:div {:style {:width "100%" :padding "0 0px"}}
                               [:div {:style {:display "flex"}}
                                     [elements/icon-button {:variant :placeholder}]
                                     [elements/label {:color       :muted
-                                                     :content     "Registrated events"
+                                                     :content     "Registrated subscriptions"
                                                      :font-size   :m
                                                      :font-weight :extra-bold
                                                      :line-height :block}]]]
-                        (-> event-handlers keys vector/abc-items)))))
+                        (-> subscription-handlers keys vector/abc-items)))))
 
 (defn body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  (if-let [current-event @(r/subscribe [:x.db/get-item [:developer-tools :event-browser/meta-items :current-event]])]
-          [event-view]
-          [event-list]))
+  (if-let [current-subscription @(r/subscribe [:x.db/get-item [:developer-tools :subscription-browser/meta-items :current-subscription]])]
+          [subscription-view]
+          [subscription-list]))

@@ -95,11 +95,12 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ;  {}
-  [_ {:keys [helper info-text label required?]}]
+  [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
                                   :info-text   info-text
                                   :line-height :block
+                                  :marked?     marked?
                                   :required?   required?}]))
 
 (defn- checkbox-structure
@@ -146,6 +147,8 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :initial-options (vector)(opt)
   ;   :initial-value (boolean)(opt)
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :on-check (metamorphic-event)(opt)
   ;   :on-uncheck (metamorphic-event)(opt)
   ;   :option-helper-f (function)(opt)

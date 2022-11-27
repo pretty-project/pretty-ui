@@ -13,16 +13,17 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.magic-widget.views
-    (:require [developer-tools.magic-widget.helpers    :as magic-widget.helpers]
-              [developer-tools.event-browser.views     :rename {body event-browser}]
-              [developer-tools.re-frame-browser.views  :rename {body re-frame-browser}]
-              [developer-tools.request-inspector.views :rename {body request-inspector}]
-              [developer-tools.route-browser.views     :rename {body route-browser}]
-              [elements.api                            :as elements]
-              [css.api                                 :as css]
-              [plugins.reagent.api                     :refer [ratom]]
-              [re-frame.api                            :as r]
-              [vector.api                              :as vector]))
+    (:require [developer-tools.magic-widget.helpers       :as magic-widget.helpers]
+              [developer-tools.event-browser.views        :rename {body event-browser}]
+              [developer-tools.re-frame-browser.views     :rename {body re-frame-browser}]
+              [developer-tools.request-inspector.views    :rename {body request-inspector}]
+              [developer-tools.route-browser.views        :rename {body route-browser}]
+              [developer-tools.subscription-browser.views :rename {body subscription-browser}]
+              [elements.api                               :as elements]
+              [css.api                                    :as css]
+              [plugins.reagent.api                        :refer [ratom]]
+              [re-frame.api                               :as r]
+              [vector.api                                 :as vector]))
 
 
 
@@ -94,6 +95,18 @@
                               :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :route-browser]
                               :label       "Routes"}]))
 
+(defn re-frame-subscriptions-icon-button
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  []
+  (let [view-selected? @(r/subscribe [:x.gestures/view-selected? :developer-tools.magic-widget/handler :subscription-browser])]
+       [elements/icon-button ::re-frame-subscriptions-icon-button
+                             {:color       (if view-selected? :default :muted)
+                              :hover-color :highlight
+                              :icon        :subscriptions
+                              :icon-family :material-icons-outlined
+                              :on-click    [:x.gestures/change-view! :developer-tools.magic-widget/handler :subscription-browser]
+                              :label       "Subs"}]))
+
 (defn re-frame-events-icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
@@ -150,7 +163,8 @@
                                 {:start-content [:<> [re-frame-browser-icon-button]
                                                      [request-browser-icon-button]
                                                      [route-browser-icon-button]
-                                                     [re-frame-events-icon-button]]
+                                                     [re-frame-events-icon-button]
+                                                     [re-frame-subscriptions-icon-button]]
                                  :end-content [:<> [design-mode-icon-button]
                                                    [toggle-hide-db-write-count-icon-button]
                                                    [toggle-print-events-icon-button]
@@ -167,10 +181,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
   (let [view-id @(r/subscribe [:x.gestures/get-current-view-id :developer-tools.magic-widget/handler])]
-       (case view-id :re-frame-browser  [re-frame-browser]
-                     :request-inspector [request-inspector]
-                     :route-browser     [route-browser]
-                     :event-browser     [event-browser])))
+       (case view-id :re-frame-browser     [re-frame-browser]
+                     :request-inspector    [request-inspector]
+                     :route-browser        [route-browser]
+                     :event-browser        [event-browser]
+                     :subscription-browser [subscription-browser])))
 
 
 

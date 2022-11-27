@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.pdf-generator.config)
+(ns tools.hiccuptopdf.config)
 
 
 
@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-(def GENERATOR-FILEPATH "environment/temp/tools.pdf-generator.output.pdf")
+(def GENERATOR-FILEPATH "environment/temp/hiccuptopdf.output.pdf")
 
 ; @constant (string)
-(def BASE64-FILEPATH "environment/temp/tools.pdf-generator.output.b64")
+(def BASE64-FILEPATH "environment/temp/hiccuptopdf.output.b64")

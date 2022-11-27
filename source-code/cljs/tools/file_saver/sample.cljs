@@ -25,7 +25,7 @@
 (def my-data-url (str "data:text/plain;charset=utf-8," text))
 
 (r/reg-event-fx :save-my-text!
-  [:file-saver/save-file! {:data-url data-url
+  [:file-saver/save-file! {:data-url my-data-url
                            :filename "My file.txt"}])
 
 

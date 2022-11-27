@@ -62,6 +62,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn copyable-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;
+  ; @return (map)
+  ;  {:data-clickable (boolean)
+  ;   :data-copy-label (string)
+  ;   :data-copyable (boolean)
+  ;   :data-selectable (boolean)
+  ;   :on-click (function)
+  [label-id label-props]
+  (merge {:data-clickable  true
+          :data-copyable   true
+          :data-copy-label (x.components/content :copy!)
+          :on-click        (on-copy-f label-id label-props)}))
+
 (defn label-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -120,20 +138,12 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:copyable? (boolean)(opt)
-  ;   :selectable? (boolean)(opt)}
+  ;  {:selectable? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-copy-label (string)
-  ;   :data-copyable (boolean)
-  ;   :data-selectable (boolean)}
-  [label-id {:keys [copyable? selectable?] :as label-props}]
-  (merge {:data-clickable  copyable?
-          :data-copyable   copyable?
-          :data-selectable selectable?
-          :data-copy-label (if copyable? (x.components/content :copy!))
-          :on-click        (if copyable? (on-copy-f label-id label-props))}
+  ;  {:data-selectable (boolean)}
+  [label-id {:keys [selectable?] :as label-props}]
+  (merge {:data-selectable selectable?}
          (label-style-attributes  label-id label-props)
          (label-font-attributes   label-id label-props)
          (label-layout-attributes label-id label-props)))

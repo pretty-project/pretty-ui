@@ -24,12 +24,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- label-marker
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;  {:marked? (boolean)(opt)}
+  [_ {:keys [marked?]}]
+  (if marked? [:span.e-label--marker "*"]))
+
 (defn- label-asterisk
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {}
+  ;  {:required? (boolean)(opt)}
   [_ {:keys [required?]}]
   ; Ha az elem {:required? ...} tulajdonságának értéke :unmarked, akkor az elem
   ; {:required? true} állapotban van, tehát többek közt az engine/input-passed?
@@ -98,14 +107,24 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:content (metamorphic-content)
+  ;  {:content (string)
+  ;   :copyable? (boolean)(opt)
   ;   :target-id (keyword)(opt)}
-  [label-id {:keys [content target-id]}]
+  [label-id {:keys [content copyable? target-id] :as label-props}]
   ; https://css-tricks.com/html-inputs-and-labels-a-love-story/
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   ;
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-  [:label.e-label--content {:for target-id} content])
+  ; XXX#7030
+  ; Ha a {:copyable? true} label elem tartalma mellett on-mouse-over hatására megjelenő
+  ; buborék feliratot megjelenítő pszedo-elem ...
+  ; ... az .e-label--body elemhez tartozik, akkor az érzékelési terület
+  ;     túl nagy, mivel az .e-label--body elem kitölti a rendelkezésre álló szélességet!
+  ; ... az .e-label--content elemhez tartozik, akkor nem látszódna, mivel az .e-label--content
+  ;     elem {overflow-x: hidden} beállítással jelenik meg.
+  (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
+                                        [:label.e-label--content {:for target-id} content]]
+                [:<>                    [:label.e-label--content {:for target-id} content]]))
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,6 +149,7 @@
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]
                                [label-asterisk label-id label-props]
+                               [label-marker   label-id label-props]
                               ;(if icon [:div.e-label--icon-placeholder])
                                [label-info-text-button label-id label-props]])])
 
@@ -189,6 +209,8 @@
   ;   :line-height (keyword)(opt)
   ;    :block, :normal
   ;    Default: :normal
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none

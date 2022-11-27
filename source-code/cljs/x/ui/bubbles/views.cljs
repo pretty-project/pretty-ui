@@ -76,6 +76,7 @@
        [:div.x-app-bubbles--element--body
          (cond (keyword? body) [elements/label bubble-id {:content body :indent {:vertical :xs} :line-height :block}]
                (string?  body) [elements/label bubble-id {:content body :indent {:vertical :xs} :line-height :block}]
+               (map?     body) [elements/label bubble-id (merge {:indent {:vertical :xs} :line-height :block} body)]
                :default        [x.components/content bubble-id body])]))
 
 (defn bubble-element-structure

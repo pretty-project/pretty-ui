@@ -55,23 +55,26 @@
   ; @param (keyword) text-id
   ; @param (map) text-props
   ;  {:content (metamorphic-content)}
-  [_ {:keys [content]}])
-
-(defn- text-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ;  {:content (string)}
   [_ {:keys [content]}]
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
                                      (conj %1 [:br] %3)))]
          (if (string? content)
              (let [content-rows (string/split content "\n")]
-                  (reduce-kv f [:div.e-text--content] content-rows))
+                  (reduce-kv f [:<>] content-rows))
              ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
              (return content))))
+
+(defn- text-content
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) text-id
+  ; @param (map) text-props
+  ;  {:copyable? (boolean)(opt)}
+  [text-id {:keys [copyable?] :as text-props}]
+  (if copyable? [:div.e-text--copyable (text.helpers/copyable-attributes text-id text-props)
+                                       [:div.e-text--content (text-content-rows text-id text-props)]]
+                [:<>                   [:div.e-text--content (text-content-rows text-id text-props)]]))
 
 (defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!

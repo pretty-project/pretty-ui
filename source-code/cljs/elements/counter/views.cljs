@@ -80,11 +80,12 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ;  {}
-  [_ {:keys [helper info-text label required?]}]
+  [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
                                   :info-text   info-text
                                   :line-height :block
+                                  :marked?     marked?
                                   :required?   required?}]))
 
 (defn- counter-structure
@@ -129,6 +130,8 @@
   ;   :initial-value (integer)(opt)
   ;    Default: 0
   ;   :label (metamorphic-content)(opt)
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :max-value (integer)(opt)
   ;   :min-value (integer)(opt)
   ;   :resetable? (boolean)(opt)

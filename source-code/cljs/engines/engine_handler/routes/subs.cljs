@@ -55,7 +55,8 @@
   ; ... és az engine kliens-oldali kezelője megkapja a {:base-route "..."} tulajdonságot.
   ; ... akkor a {:base-route "..."} tulajdonságból előállítható az extended-route útvonal.
   (if-let [base-route (r transfer.subs/get-transfer-item db engine-id :base-route)]
-          (str base-route "/" item-id)))
+          (let [extended-route (str base-route "/" item-id)]
+               (r x.router/use-path-params db extended-route))))
 
 
 

@@ -74,7 +74,6 @@
   ; @param (map) stamp-props
   ;  {:class (keyword or keywords in vector)(opt)
   ;   :colors (keywords or strings in vector)(opt)
-  ;    []
   ;   :disabled? (boolean)(opt)
   ;    Default: false
   ;   :helper (metamorphic-content)(opt)

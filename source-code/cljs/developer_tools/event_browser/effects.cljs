@@ -21,7 +21,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :developer-tools.event-browser/dispatch-current-event!
+(r/reg-event-fx :developer-tools.event-browser/dispatch-current!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   (fn [{:keys [db]} _]
       (let [event-id   (get-in db [:developer-tools :event-browser/meta-items :current-event])

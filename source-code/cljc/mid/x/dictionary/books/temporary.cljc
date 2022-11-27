@@ -222,6 +222,9 @@
            :copied-to-clipboard
            {:en "Copied to clipboard"
             :hu "Vágólapra helyezve"}
+           :copied-to-clipboard-n
+           {:en "Copied to clipboard: %"
+            :hu "Vágólapra helyezve: %"}
            :copy-link!
            {:en "Copy link"
             :hu "Hivatkozás másolása"}

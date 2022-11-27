@@ -12,7 +12,8 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.clipboard.views)
+(ns tools.clipboard.views
+    (:require [elements.api :as elements]))
 
 
 
@@ -25,3 +26,14 @@
   ; @param (string) text
   [text]
   [:input#clipboard {:defaultValue text}])
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn copied-to-clipboard-dialog-body
+  [text]
+  [:div {:style {:display "flex" :max-width "100%"}}
+        [elements/label {:content {:content :copied-to-clipboard-n :replacements [text]}
+                         :indent  {:left :s}}]])

@@ -35,9 +35,9 @@
   [{:keys [query-params]}]
   (if (and (docs/create-documentation! {:path "submodules/ajax-api"})
            (docs/create-documentation! {:path "submodules/bybit-api"})
+           (docs/create-documentation! {:path "submodules/cljc-fruits"})
            (docs/create-documentation! {:path "submodules/docs-api"})
            (docs/create-documentation! {:path "submodules/dom-api"})
-           (docs/create-documentation! {:path "submodules/fruits"})
            (docs/create-documentation! {:path "submodules/io-api"})
            (docs/create-documentation! {:path "submodules/local-db-api"})
            (docs/create-documentation! {:path "submodules/logger-api"})
@@ -82,9 +82,9 @@
        "</br>Connected libraries:"
        "</br>ajax-api"
        "</br>bybit-api"
+       "</br>cljc-fruits"
        "</br>docs-api"
        "</br>dom-api"
-       "</br>fruits"
        "</br>io-api"
        "</br>local-db-api"
        "</br>logger-api"

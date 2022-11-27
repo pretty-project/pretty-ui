@@ -205,11 +205,12 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;  {}
-  [_ {:keys [helper info-text label required?]}]
+  [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
                                   :info-text   info-text
                                   :line-height :block
+                                  :marked?     marked?
                                   :required?   required?}]))
 
 (defn- active-button-structure
@@ -317,6 +318,8 @@
   ;   :layout (keyword)(opt)
   ;    :button, :icon-button, :select
   ;    Default: :select
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :min-width (keyword)(opt)
   ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
   ;    Default: :none

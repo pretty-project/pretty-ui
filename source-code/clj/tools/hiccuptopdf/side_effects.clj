@@ -12,10 +12,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.pdf-generator.side-effects
-    (:require [clj-htmltopdf.core         :refer [->pdf]]
-              [base64.api                 :as base64]
-              [tools.pdf-generator.config :as config]))
+(ns tools.hiccuptopdf.side-effects
+    (:require [clj-htmltopdf.core       :refer [->pdf]]
+              [base64.api               :as base64]
+              [tools.hiccuptopdf.config :as config]))
 
 
 

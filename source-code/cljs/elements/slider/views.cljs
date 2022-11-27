@@ -73,11 +73,12 @@
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   ;  {}
-  [_ {:keys [helper info-text label required?]}]
+  [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
                                   :info-text   info-text
                                   :line-height :block
+                                  :marked?     marked?
                                   :required?   required?}]))
 
 (defn- slider-structure
@@ -119,6 +120,8 @@
   ;   :initial-value (vector)(opt)
   ;    Default: [0 100]
   ;   :label (metamorphic-content)(opt)
+  ;   :marked? (boolean)(opt)
+  ;    Default: false
   ;   :max-value (integer)(opt)
   ;    Default: 100
   ;   :min-value (integer)(opt)
