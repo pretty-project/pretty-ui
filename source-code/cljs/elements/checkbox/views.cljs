@@ -119,7 +119,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  (reagent/lifecycles {:component-did-mount (checkbox.helpers/checkbox-did-mount-f checkbox-id checkbox-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (checkbox.helpers/checkbox-did-mount checkbox-id checkbox-props))
                        :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
 (defn element

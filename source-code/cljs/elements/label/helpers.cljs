@@ -120,18 +120,21 @@
   ;  {:horizontal-align (keyword)
   ;   :horizontal-position (keyword)(opt)
   ;   :min-width (keyword)(opt)
+  ;   :overflow-direction (keyword)(opt)
   ;   :vertical-position (keyword)(opt)}
   ;
   ; @return (map)
   ;  {:data-horizontal-align (keyword)
   ;   :data-horizontal-position (keyword)
   ;   :data-min-width (keyword)
+  ;   :data-overflow-direction (keyword)
   ;   :data-vertical-position (keyword)}
-  [_ {:keys [horizontal-align horizontal-position min-width vertical-position]}]
+  [_ {:keys [horizontal-align horizontal-position min-width overflow-direction vertical-position]}]
   {:data-horizontal-align    horizontal-align
    :data-horizontal-position horizontal-position
    :data-min-width           min-width
-   :data-vertical-position   vertical-position})
+   :data-vertical-position   vertical-position
+   :data-overflow-direction  overflow-direction})
 
 (defn label-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

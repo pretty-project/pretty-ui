@@ -22,16 +22,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-did-mount-f
+(defn counter-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-value (integer)(opt)}
   [counter-id {:keys [initial-value] :as counter-props}]
-  #(if initial-value (r/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
+  (if initial-value (r/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
 
 
 

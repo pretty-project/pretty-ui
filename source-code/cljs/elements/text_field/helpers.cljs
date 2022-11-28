@@ -31,25 +31,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-did-mount-f
+(defn text-field-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (function)
   [field-id field-props]
-  #(r/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
+  (r/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
 
-(defn field-will-unmount-f
+(defn text-field-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;
-  ; @return (function)
   [field-id field-props]
-  #(r/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
+  (r/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
 
 
 
@@ -278,7 +274,28 @@
   ; XXX#4461
   ; A {:type :date} típusú mezők min és max dátuma beállítható
   ; a date-field date-from és date-field tulajdonságainak használatával.
-  (if disabled? {:disabled   true
+  ;
+  ; BUG#8800
+  ; 2022.11.28
+  ; Google Chrome  - Version 107.0.5304.110 (Official Build) (x86_64)
+  ; MacOS Monterey - Version 12.3.1 (21E258)
+  ;
+  ; Ha a text-field elem {:disabled? true} beállítása az input mezőt disabled állapotba
+  ; állítaná, akkor ...
+  ; ... a mező kilépne a fókuszált állapotból.
+  ; ... nem történne meg a mező on-blur eseménye az {:disabled? true} állapot beállításakor
+  ;     esetlegesen fókuszált állapotban lévő mezőn, ...
+  ;     ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
+  ;     ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
+  ; ... a {:disabled? true} állapot megszűnésekor a mező nem lépne vissza a fókuszált állapotba.
+  ;
+  ; A következő beállítások biztosítják, hogy a mező disabled állapotúnak tűnjön:
+  ; - A {:tabindex -1} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
+  ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
+  ;   és kikapcsolja a caret láthatóságát.
+  ; - Az on-change függvény nem végez műveletet.
+  (if disabled? {;:disabled true
+                 :tabindex -1
                  :max-length max-length
                  :type       type
                  :id         (hiccup/value      field-id "input")

@@ -118,7 +118,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (reagent/lifecycles {:component-did-mount (switch.helpers/switch-did-mount-f switch-id switch-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (switch.helpers/switch-did-mount switch-id switch-props))
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
 (defn element

@@ -2816,6 +2816,10 @@ body {
   white-space: nowrap;
 }
 
+.e-label--body[data-overflow-direction="reversed"] .e-label--content {
+  direction: rtl;
+}
+
 /*** Label content ***/
 
 /*** Label placeholder ***/
@@ -3854,6 +3858,7 @@ body {
 
 
 /***** Text field *****/
+
 /*** Field input-container ***/
 
 /* Az .e-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
@@ -3896,6 +3901,11 @@ body {
 textarea.e-text-field--input {
   overflow: hidden;
   resize: none;
+}
+
+.e-text-field[data-disabled="true"] .e-text-field--input {
+  /* BUG#8800 (source-code/cljs/elements/text_field/helpers.cljs) */
+  caret-color: transparent
 }
 
 /*** Field input ***/
@@ -3944,6 +3954,7 @@ textarea.e-text-field--input {
 .e-text-field--warning {
   color: var( --color-warning );
   font-size: var( --font-size-xs );
+  font-weight: 500;
   letter-spacing: var( --letter-spacing-s );
   line-height: 24px;
   text-align: right;

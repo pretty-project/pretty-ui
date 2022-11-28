@@ -286,8 +286,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reagent/lifecycles {:component-did-mount    (text-field.helpers/field-did-mount-f    field-id field-props)
-                       :component-will-unmount (text-field.helpers/field-will-unmount-f field-id field-props)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (text-field.helpers/text-field-did-mount    field-id field-props))
+                       :component-will-unmount (fn [_ _] (text-field.helpers/text-field-will-unmount field-id field-props))
                        :reagent-render         (fn [_ field-props] [text-field-structure field-id field-props])}))
 
 (defn element
@@ -356,7 +356,11 @@
   ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :on-empty (metamorphic-event)(opt)
   ;   :on-focus (metamorphic-event)(opt)
+  ;   :on-mount (metamorphic-event)(opt)
+  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :on-type-ended (metamorphic-event)(opt)
+  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   :on-unmount (metamorphic-event)(opt)
   ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;   :placeholder (metamorphic-content)(opt)
   ;   :required? (boolean or keyword)(opt)

@@ -104,7 +104,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  (reagent/lifecycles {:component-did-mount (counter.helpers/counter-did-mount-f counter-id counter-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (counter.helpers/counter-did-mount counter-id counter-props))
                        :reagent-render      (fn [_ counter-props] [counter-structure counter-id counter-props])}))
 
 (defn element

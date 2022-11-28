@@ -24,16 +24,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn slider-did-mount-f
+(defn slider-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-value (vector)(opt)}
   [slider-id {:keys [initial-value] :as slider-props}]
-  #(if initial-value (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
+  (if initial-value (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
 
 
 

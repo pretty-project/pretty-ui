@@ -96,7 +96,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (reagent/lifecycles {:component-did-mount (combo-box.helpers/component-did-mount-f box-id box-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (combo-box.helpers/combo-box-did-mount box-id box-props))
                        :reagent-render      (fn [_ box-props] [combo-box-structure box-id box-props])}))
 
 (defn element

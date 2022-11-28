@@ -28,16 +28,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn component-did-mount-f
+(defn combo-box-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-options (vector)(opt)}
   [box-id {:keys [initial-options] :as box-props}]
-  #(if initial-options (r/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
+  (if initial-options (r/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
 
 
 

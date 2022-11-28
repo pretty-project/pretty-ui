@@ -31,7 +31,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value value-path] :as field-props}]]
+  (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
       ; Az [:elements.text-field/use-initial-value! ...] esemény beállítja a kezdeti értékét
       ; az adatbázisban, majd a [:elements.text-field/hack5041 ...] esemény az adatbázisban megváltozott
       ; tárolt értéket beleírja a mezőbe.
@@ -40,7 +40,8 @@
       ; útvonalon található valamilyen érték, akkor az [:elements.text-field/use-stored-value! ...]
       ; esemény a tárolt értéket beleírja a mezőbe.
       (let [stored-value (get-in db value-path)]
-           {:dispatch-n [(cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
+           {:dispatch-n [(if on-mount (r/metamorphic-event<-params on-mount (or initial-value stored-value)))
+                         (cond initial-value [:elements.text-field/use-initial-value! field-id field-props]
                                 stored-value [:elements.text-field/use-stored-value!  field-id field-props])]
             ; Az autofocus használatakor a fókuszt késleltetve teszi rá a szövegmezőre, hogy legyen ideje
             ; a mező tartalmát beállítani és a kurzor mindenképp a tartalom végén tudjon megjelenni!
@@ -52,10 +53,12 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ;  {}
-  (fn [{:keys [db]} [_ field-id {:keys [autoclear?] :as field-props}]]
-      {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
-                                     (return                           %))
-                      (r input.events/unmark-as-visited! % field-id))}))
+  (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
+      (let [stored-value (get-in db value-path)]
+           {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
+                                          (return                           %))
+                           (r input.events/unmark-as-visited! % field-id))
+            :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]})))
 
 
 

@@ -129,7 +129,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (reagent/lifecycles {:component-did-mount (radio-button.helpers/radio-button-did-mount-f button-id button-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (radio-button.helpers/radio-button-did-mount button-id button-props))
                        :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
 (defn element

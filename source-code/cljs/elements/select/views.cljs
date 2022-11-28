@@ -230,8 +230,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:component-did-mount    (select.helpers/active-button-did-mount-f    select-id select-props)
-                       :component-will-unmount (select.helpers/active-button-will-unmount-f select-id select-props)
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (select.helpers/active-button-did-mount    select-id select-props))
+                       :component-will-unmount (fn [_ _] (select.helpers/active-button-will-unmount select-id select-props))
                        :reagent-render         (fn [_ select-props] [active-button-structure select-id select-props])}))
 
 (defn- active-button-layout

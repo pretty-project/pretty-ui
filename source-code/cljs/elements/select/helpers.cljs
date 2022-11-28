@@ -27,31 +27,27 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn active-button-did-mount-f
+(defn active-button-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-options (vector)(opt)
+  ;   :initial-value (*)(opt)}
   [select-id {:keys [initial-options initial-value] :as select-props}]
   ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
   ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/active-button-did-mount ...]
   ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
-  #(if (or initial-options initial-value)
-       (r/dispatch [:elements.select/active-button-did-mount select-id select-props])))
+  (if (or initial-options initial-value)
+      (r/dispatch [:elements.select/active-button-did-mount select-id select-props])))
 
-(defn active-button-will-unmount-f
+(defn active-button-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
-  ;
-  ; @return (function)
   [select-id select-props]
-  #(r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
+  (r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
 
 
 

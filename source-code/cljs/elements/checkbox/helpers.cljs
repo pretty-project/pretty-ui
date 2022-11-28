@@ -22,17 +22,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn checkbox-did-mount-f
+(defn checkbox-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-options (vector)(opt)
+  ;   :initial-value (boolean)(opt)}
   [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
-  #(if (or initial-options initial-value)
-       (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
+  (if (or initial-options initial-value)
+      (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
 
 
 

@@ -109,7 +109,9 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [{:keys [db]} [_ box-id box-props]]
+  ;  {:on-type-ended (metamorphic-event)(opt)
+  ;   :option-value-f (function)}
+  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
       ; XXX#4146
       ; Ha a combo-box elem surface felülete ...
       ; (A) ... látható, akkor az ENTER billentyű lenyomása a combo-box elem
@@ -128,7 +130,11 @@
                   {:db   (as-> db % (r combo-box.events/select-option! % box-id box-props highlighted-option)
                                     (r text-field.events/hide-surface! % box-id))
                    :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
-                          [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]}
+                          [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]
+                   ; XXX#4149
+                   ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!
+                   :dispatch (if on-type-ended (let [option-value (option-value-f highlighted-option)]
+                                                    (r/metamorphic-event<-params on-type-ended option-value)))}
                   ; (A2)
                   {:db   (r text-field.events/hide-surface! db box-id)})
           ; (B)
@@ -144,12 +150,18 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
+  ;  {:on-type-ended (metamorphic-event)(opt)
+  ;   :option-value-f (function)}
   ; @param (*) selected-option
-  (fn [{:keys [db]} [_ box-id box-props selected-option]]
+  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} selected-option]]
       {:db (as-> db % (r combo-box.events/select-option! % box-id box-props selected-option)
                       (r text-field.events/hide-surface! % box-id))
        :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
-              [:elements.combo-box/use-selected-option!        box-id box-props selected-option]]}))
+              [:elements.combo-box/use-selected-option!        box-id box-props selected-option]]
+       ; XXX#4149
+       ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!
+       :dispatch (if on-type-ended (let [option-value (option-value-f selected-option)]
+                                        (r/metamorphic-event<-params on-type-ended option-value)))}))
 
 
 

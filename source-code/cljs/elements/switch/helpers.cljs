@@ -22,17 +22,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-did-mount-f
+(defn switch-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {}
-  ;
-  ; @return (function)
+  ;  {:initial-options (vector)(opt)
+  ;   :initial-value (boolean)(opt)}
   [switch-id {:keys [initial-options initial-value] :as switch-props}]
-  #(if (or initial-options initial-value)
-       (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
+  (if (or initial-options initial-value)
+      (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
 
 
 

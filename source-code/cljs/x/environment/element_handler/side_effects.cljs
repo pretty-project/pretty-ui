@@ -50,6 +50,28 @@
 ;; -- Focus/blur side-effect events -------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn element-focused?
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (element-focused? "my-element")
+  ;
+  ; @return (boolean)
+  [element-id]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/element-focused? element)))
+
+(defn element-blurred?
+  ; @param (string) element-id
+  ;
+  ; @usage
+  ;  (element-blurred? "my-element")
+  ;
+  ; @return (boolean)
+  [element-id]
+  (if-let [element (dom/get-element-by-id element-id)]
+          (dom/element-blurred? element)))
+
 (defn focus-element!
   ; @param (string) element-id
   ;

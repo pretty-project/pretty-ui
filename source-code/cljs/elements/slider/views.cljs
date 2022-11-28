@@ -97,7 +97,7 @@
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
-  (reagent/lifecycles {:component-did-mount (slider.helpers/slider-did-mount-f slider-id slider-props)
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (slider.helpers/slider-did-mount slider-id slider-props))
                        :reagent-render      (fn [_ slider-props] [slider-structure slider-id slider-props])}))
 
 (defn element

@@ -74,6 +74,8 @@
 ; x.environment.element-handler.side-effects
 (def element-disabled?                     element-handler.side-effects/element-disabled?)
 (def element-enabled?                      element-handler.side-effects/element-enabled?)
+(def element-focused?                      element-handler.side-effects/element-focused?)
+(def element-blurred?                      element-handler.side-effects/element-blurred?)
 (def focus-element!                        element-handler.side-effects/focus-element!)
 (def blur-element!                         element-handler.side-effects/blur-element!)
 (def add-element-class!                    element-handler.side-effects/add-element-class!)

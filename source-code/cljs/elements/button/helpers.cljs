@@ -25,7 +25,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-did-mount-f
+(defn button-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -37,7 +37,7 @@
   ; billentyűlenyomás-vezérlője számára elérhetők lesznek az adatbázisban.
   (if keypress (r/dispatch [:elements.button/button-did-mount button-id button-props])))
 
-(defn button-did-update-f
+(defn button-did-update
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -49,7 +49,7 @@
   (let [[_ {:keys [keypress] :as button-props}] (reagent/arguments %)]
        (if keypress (r/dispatch [:elements.button/button-did-update button-id button-props]))))
 
-(defn button-will-unmount-f
+(defn button-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id

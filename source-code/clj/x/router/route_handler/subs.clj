@@ -113,18 +113,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn route-template-reserved?
-  ; @param (string) route-template
+(defn route-template-available?
+  ; @param (string) n
   ;
   ; @usage
-  ;  (r route-template-reserved? db "/my-route")
+  ;  (r route-template-available? db "/my-route")
   ;
   ; @return (boolean)
-  [db [_ route-template]]
+  [db [_ n]]
   (let [cached-routes (r get-cached-routes db)]
-       (letfn [(f [cached-route]
-                  (println (str cached-route)))]
-              (some f cached-routes))))
+       (letfn [(f [[route-template _]] (= route-template n))]
+              (not (some f cached-routes)))))
 
 
 
@@ -152,5 +151,5 @@
 (r/reg-sub :x.router/get-ordered-routes get-ordered-routes)
 
 ; @usage
-;  [:x.router/route-template-reserved? "/my-route"]
-(r/reg-sub :x.router/route-template-reserved? route-template-reserved?)
+;  [:x.router/route-template-available? "/my-route"]
+(r/reg-sub :x.router/route-template-available? route-template-available?)

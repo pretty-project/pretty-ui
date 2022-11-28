@@ -80,9 +80,9 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (button.helpers/button-did-mount-f    button-id button-props))
-                       :component-will-unmount (fn [_ _] (button.helpers/button-will-unmount-f button-id button-props))
-                       :component-did-update   (fn [%]   (button.helpers/button-did-update-f   button-id %))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (button.helpers/button-did-mount    button-id button-props))
+                       :component-will-unmount (fn [_ _] (button.helpers/button-will-unmount button-id button-props))
+                       :component-did-update   (fn [%]   (button.helpers/button-did-update   button-id %))
                        :reagent-render         (fn [_ button-props] [button-structure button-id button-props])}))
 
 (defn element

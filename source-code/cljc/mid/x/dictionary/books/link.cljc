@@ -47,6 +47,12 @@
            :open-link-in-new-tab!
            {:en "Open in new tab"
             :hu "Megnyitás új lapon"}
+           :the-given-link-is-already-in-use
+           {:en "The given link is already in use!"
+            :hu "A megadott hivatkozás már használatban van!"}
+           :the-given-link-is-available
+           {:en "The given link is available to use"
+            :hu "A megadott hivatkozás elérhető"}
            :the-link-you-followed-may-be-broken
            ; Always place a comma before or when it begins an independent clause!
            {:en "The link you followed may be broken, or the page may have been removed"
