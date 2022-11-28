@@ -98,6 +98,12 @@
            :select-items!
            {:en "Select items"
             :hu "Elemek kijelölése"}
+           :the-item-you-opened-may-be-broken
+           {:en "The item you want to open may be broken or removed"
+            :hu "Előfordulhat, hogy az elem sérült vagy már nem elérhető"}
+           :the-item-has-been-broken
+           {:en "The item has been broken or removed"
+            :hu "Az elem sérült vagy már nem elérhető"}
            :unnamed-item
            {:en "Unnamed item"
             :hu "Névtelen elem"}})

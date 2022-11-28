@@ -28,7 +28,6 @@
               [mid.x.dictionary.books.developer      :as books.developer]
               [mid.x.dictionary.books.edit           :as books.edit]
               [mid.x.dictionary.books.email          :as books.email]
-              [mid.x.dictionary.books.error-messages :as books.error-messages]
               [mid.x.dictionary.books.error-reports  :as books.error-reports]
               [mid.x.dictionary.books.errors         :as books.errors]
               [mid.x.dictionary.books.failures       :as books.failures]
@@ -39,12 +38,14 @@
               [mid.x.dictionary.books.languages      :as books.languages]
               [mid.x.dictionary.books.law            :as books.law]
               [mid.x.dictionary.books.layout         :as books.layout]
+              [mid.x.dictionary.books.link           :as books.link]
               [mid.x.dictionary.books.media          :as books.media]
               [mid.x.dictionary.books.menu           :as books.menu]
               [mid.x.dictionary.books.money          :as books.money]
               [mid.x.dictionary.books.network        :as books.network]
               [mid.x.dictionary.books.notifications  :as books.notifications]
               [mid.x.dictionary.books.order-by       :as books.order-by]
+              [mid.x.dictionary.books.page           :as books.page]
               [mid.x.dictionary.books.people         :as books.people]
               [mid.x.dictionary.books.products       :as books.products]
               [mid.x.dictionary.books.search         :as books.search]
@@ -85,7 +86,6 @@
                   books.developer/BOOK
                   books.edit/BOOK
                   books.email/BOOK
-                  books.error-messages/BOOK
                   books.error-reports/BOOK
                   books.errors/BOOK
                   books.failures/BOOK
@@ -96,12 +96,14 @@
                   books.languages/BOOK
                   books.law/BOOK
                   books.layout/BOOK
+                  books.link/BOOK
                   books.media/BOOK
                   books.menu/BOOK
                   books.money/BOOK
                   books.network/BOOK
                   books.notifications/BOOK
                   books.order-by/BOOK
+                  books.page/BOOK
                   books.people/BOOK
                   books.products/BOOK
                   books.search/BOOK

@@ -26,10 +26,10 @@
   WARNING! Lehúzással nem lehetséges frissíteni az oldalt, ha a görgetés le van tiltva!
 
 - Google Chrome for mobile 90.0 (Google Android ?, Samsung S8+)
-  TODO ...
+  TODO
 
 - Safari ? (iOS 14.3, iPhone 6s)
-  TODO ...
+  TODO
 
 
 

@@ -107,7 +107,7 @@
    ; XXX#7708 (source-code/clj/x/router/README.md)
    (let [route-path (http/request->route-path request)]
         (letfn [(f [[route-template route-props :as destructed-route]]
-                   (if (uri/path->match-template? route-path route-template)
+                   (if (uri/match-template? route-path route-template)
                        (prop-key route-props)))]
                (or (some f @(r/subscribe [:x.router/get-cached-routes]))
                    (return default-value))))))
@@ -122,7 +122,7 @@
   ; @return (boolean)
   [request route-template]
   (let [route-path (http/request->route-path request)]
-       (uri/path->match-template? route-path route-template)))
+       (uri/match-template? route-path route-template)))
 
 
 

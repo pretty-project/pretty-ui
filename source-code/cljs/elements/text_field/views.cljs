@@ -384,7 +384,7 @@
   ;   :surface (metamorphic-content)(opt)
   ;   :unemptiable? (boolean)(opt)
   ;    Default: false
-  ;    TODO ...
+  ;    TODO
   ;    A field on-blur esemény pillanatában, ha üres a value-path, akkor
   ;    az eltárolt backup-value értéket beállítja a value-path -re.
   ;   :validator (map)(opt)

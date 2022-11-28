@@ -22,6 +22,5 @@
 (defn view
   ; WARNING! NON-PUBLIC! DO NOT USE!
   []
-  [:div#x-app-locker
-   ; TODO ...
-   "ENTER PIN"])
+  ; TODO
+  [:div#x-app-locker "ENTER PIN"])

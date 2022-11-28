@@ -103,7 +103,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :label (metamorphic-content)
   ;   :on-click (metamorphic-event)(opt)
-  ;    TODO ... A chip elem egésze kattintható
+  ;    TODO A chip elem egésze kattintható
   ;   :primary-button-icon (keyword)(opt)
   ;    Default: :close
   ;   :primary-button-event (metamorphic-event)(opt)

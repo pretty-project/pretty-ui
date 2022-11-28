@@ -45,7 +45,7 @@
   ; @usage
   ;  (remove-css! "/css/filename.css")
   [uri])
-  ; TODO ...
+  ; TODO
 
 
 

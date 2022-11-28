@@ -16,22 +16,22 @@ körülvevő [:div] elem attribútumait tartalmazhatja.
 
 
 # renderer destructor
-TODO ...
+TODO
 
 
 
 # renderer initializer
-TODO ...
+TODO
 
 
 
 # element destructor
-TODO ...
+TODO
 
 
 
 # element initializer
-TODO ...
+TODO
 
 
 
@@ -98,9 +98,9 @@ kirenderelhető elemek számát, akkor az újabb elemek hozzáadása nem törté
 
 
 # rerender-same?
-TODO ...
+TODO
 
 
 
 # renderer-reserved?
-TODO ...
+TODO

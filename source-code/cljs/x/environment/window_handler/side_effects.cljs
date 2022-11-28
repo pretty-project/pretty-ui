@@ -123,7 +123,7 @@
   ;  (clear-timeout! :my-timeout)
   [timeout-id]
   (let [js-id (get-in @window-handler.state/TIMEOUTS timeout-id :js-id)]))
-       ; TODO ...
+       ; TODO
 
 
 

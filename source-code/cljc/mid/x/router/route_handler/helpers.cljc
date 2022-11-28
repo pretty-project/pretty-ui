@@ -38,7 +38,8 @@
   ;
   ; @return (boolean)
   [destructed-routes route-template]
-  ; Ha két útvonal {:route-template "..."} tulajdonságának értéke megegyezik, akkor az útvonal-konfliktusnak számít!
+  ; Ha két útvonal {:route-template "..."} tulajdonságának értéke megegyezik, 
+  ; akkor az útvonal-konfliktusnak számít!
   (letfn [(f [%] (= (first %) route-template))]
          (some f destructed-routes)))
 

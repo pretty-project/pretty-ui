@@ -48,8 +48,8 @@
   ; @return (string)
   [db [_ route-string]]
   (if-let [debug-mode (r x.core/get-debug-mode db)]
-          (uri/uri<-query-string route-string debug-mode)
-          (return                route-string)))
+          (uri/use-query-string route-string debug-mode)
+          (return               route-string)))
 
 
 
@@ -149,10 +149,10 @@
   ;
   ; @return (keyword)
   [db [_ route-string]]
-  (let [route-path     (uri/uri->path route-string)
+  (let [route-path     (uri/to-path route-string)
         ordered-routes (r get-ordered-routes db)]
        (letfn [(f [[route-template route-id]]
-                  (if (uri/path->match-template? route-path route-template)
+                  (if (uri/match-template? route-path route-template)
                       (return route-id)))]
               (or (some f ordered-routes)
                   (return :page-not-found)))))

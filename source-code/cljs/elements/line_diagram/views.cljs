@@ -72,7 +72,7 @@
   ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;       Default: primary
   ;      :label (metamorphic-content)(opt)
-  ;       TODO ...
+  ;       TODO
   ;      :value (integer)}]
   ;   :strength (px)(opt)
   ;     Default: 2

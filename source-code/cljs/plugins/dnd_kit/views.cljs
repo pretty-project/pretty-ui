@@ -69,11 +69,10 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:item-element (metamorphic-content)
-  ;   :item-id-f (function)}
+  ;  {:item-element (metamorphic-content)}
   ; @param (integer) item-dex
   ; @param (string) item-id
-  [sortable-id {:keys [item-id-f item-element]} item-dex item-id]
+  [sortable-id {:keys [item-element]} item-dex item-id]
   (let [dnd-kit-props (js->clj (useSortable (clj->js {:id item-id})) :keywordize-keys true)
         {:keys [attributes isDragging listeners setNodeRef transform transition]} dnd-kit-props
         handle-attributes (merge attributes listeners {:tab-index -1})

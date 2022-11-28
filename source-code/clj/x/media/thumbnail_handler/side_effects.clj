@@ -29,7 +29,7 @@
   ;
   ; @param (string) filename
   [filename])
-  ; TODO ...
+  ; TODO
 
 
 
@@ -50,7 +50,7 @@
   ;
   ; @param (string) filename
   [filename])
-  ; TODO ...
+  ; TODO
 
 (defn generate-thumbnail!
   ; WARNING! NON-PUBLIC! DO NOT USE!

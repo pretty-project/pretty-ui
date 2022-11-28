@@ -2258,8 +2258,8 @@ body {
 
 .e-chip-group--chips-placeholder {
   color: var( --color-highlight );
-  font-size: var( --font-size-xs );
-  letter-spacing: var( --letter-spacing-xs );
+  font-size: var( --font-size-s );
+  letter-spacing: var( --letter-spacing-s );
   /* A .e-chip-group--chips-placeholder elem magassága megegyzik az .e-chip-group--chips
    * elem magasságával */
  -line-height: 36px;

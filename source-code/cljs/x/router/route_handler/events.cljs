@@ -65,10 +65,10 @@
   ; az útvonal kezelésekor eltárolja, így az ezekre az értékekre történő Re-Frame feliratkozások
   ; kevesebb erőforrást igényelnek, mint ha a feliratkozás függvényekben történne az értékek származtatása.
   (let [route-template     (get-in db [:x.router :route-handler/client-routes route-id :route-template])
-        route-fragment     (uri/uri->fragment     route-string)
-        route-path         (uri/uri->path         route-string)
-        route-path-params  (uri/uri->path-params  route-string route-template)
-        route-query-params (uri/uri->query-params route-string)]
+        route-fragment     (uri/to-fragment     route-string)
+        route-path         (uri/to-path         route-string)
+        route-path-params  (uri/to-path-params  route-string route-template)
+        route-query-params (uri/to-query-params route-string)]
        (-> db (assoc-in [:x.router :route-handler/meta-items :route-id]           route-id)
               (assoc-in [:x.router :route-handler/meta-items :route-fragment]     route-fragment)
               (assoc-in [:x.router :route-handler/meta-items :route-path]         route-path)
@@ -86,7 +86,7 @@
               (assoc-in  [:x.router :route-handler/meta-items :parent-route]
                          (or (get-in db [:x.router :route-handler/meta-items :virtual-parent])
                              (get-in db [:x.router :route-handler/client-routes route-id :parent-route])
-                             (uri/uri->parent-uri route-string)))
+                             (uri/to-parent route-string)))
               (dissoc-in [:x.router :route-handler/meta-items :virtual-parent]))))
 
 (defn reg-to-history!

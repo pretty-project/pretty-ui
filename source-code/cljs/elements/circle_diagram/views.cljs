@@ -126,7 +126,7 @@
   ;    [{:color (keyword or string)
   ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
   ;      :label (metamorphic-content)(opt)
-  ;       TODO ...
+  ;       TODO
   ;      :value (integer)}]
   ;   :strength (px)(opt)
   ;     Default: 2

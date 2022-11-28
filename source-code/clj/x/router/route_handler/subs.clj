@@ -113,6 +113,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn route-template-reserved?
+  ; @param (string) route-template
+  ;
+  ; @usage
+  ;  (r route-template-reserved? db "/my-route")
+  ;
+  ; @return (boolean)
+  [db [_ route-template]]
+  (let [cached-routes (r get-cached-routes db)]
+       (letfn [(f [cached-route]
+                  (println (str cached-route)))]
+              (some f cached-routes))))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @usage
 ;  [:x.router/get-sitemap-routes]
 (r/reg-sub :x.router/get-sitemap-routes get-sitemap-routes)
@@ -132,3 +150,7 @@
 ; @usage
 ;  [:x.router/get-ordered-routes]
 (r/reg-sub :x.router/get-ordered-routes get-ordered-routes)
+
+; @usage
+;  [:x.router/route-template-reserved? "/my-route"]
+(r/reg-sub :x.router/route-template-reserved? route-template-reserved?)

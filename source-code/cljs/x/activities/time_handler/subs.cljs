@@ -58,7 +58,7 @@
   ;
   ; @return (string)
   [db [_ timestamp]])
-  ; TODO ...
+  ; TODO
 
 
 

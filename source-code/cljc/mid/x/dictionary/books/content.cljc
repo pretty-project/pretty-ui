@@ -80,9 +80,6 @@
            :no-content-selected
            {:en "No content selected"
             :hu "Nincs tartalom kiválasztva"}
-           :only-visible-to-editors
-           {:en "Only visible to editors"
-            :hu "Csak a szerkesztők számára látható"}
            :private-content
            {:en "Private content"
             :hu "Privát tartalom"}
@@ -101,9 +98,18 @@
            :subtitle
            {:en "Subtitle"
             :hu "Alcím"}
+           :the-content-you-opened-may-be-broken
+           {:en "The content you want to open may be broken or removed"
+            :hu "Előfordulhat, hogy a tartalom sérült vagy már nem elérhető"}
+           :the-content-has-been-broken
+           {:en "The content has been broken or removed"
+            :hu "A tartalom sérült vagy már nem elérhető"}
+           :the-content-is-not-available
+           {:en "The content is not available"
+            :hu "A tartalom nem elérhető"}
            :title
            {:en "Title"
             :hu "Cím"}
-           :visible-to-everyone
-           {:en "Visible to everyone"
-            :hu "Mindenki számára látható"}})
+           :you-do-not-have-permission-to-view-this-content
+           {:en "You do not have permission to view this content!"
+            :hu "Nincs jogosultságod a tartalom megtekintéséhez!"}})

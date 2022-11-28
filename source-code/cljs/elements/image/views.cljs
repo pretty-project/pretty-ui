@@ -37,7 +37,7 @@
   ;  {:alt (string)(opt)
   ;   :class (keyword or keywords in vector)(opt)
   ;   :error-src (string)(opt)
-  ;    TODO ...
+  ;    TODO
   ;   :height (string)(opt)
   ;   :indent (map)(opt)
   ;    {:bottom (keyword)(opt)
@@ -50,7 +50,7 @@
   ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;   :lazy-loading? (boolean)(opt)
   ;    Default: false
-  ;    TODO ...
+  ;    TODO
   ;   :src (string)(opt)
   ;   :style (map)(opt)
   ;   :width (string)(opt)}

@@ -27,7 +27,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   [_]
   (let [uri          (js-window/get-uri)
-        query-string (uri/uri->query-string uri)]
+        query-string (uri/to-query-string uri)]
        (r/dispatch [:x.db/set-item! [:x.core :debug-handler/meta-items :debug-mode]
                                     (debug-handler.helpers/query-string->debug-mode query-string)])))
 

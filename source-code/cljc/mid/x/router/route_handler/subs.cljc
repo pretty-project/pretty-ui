@@ -15,6 +15,7 @@
 (ns mid.x.router.route-handler.subs
     (:require [string.api     :as string]
               [mid.x.core.api :as x.core]
+              [normalize.api  :as normalize]
               [re-frame.api   :as r :refer [r]]
               [uri.api        :as uri]))
 
@@ -24,6 +25,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-app-home
+  ; @usage
+  ;  (r get-app-home db)
+  ;
   ; @example
   ;  (r get-app-home db)
   ;  =>
@@ -31,11 +35,14 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-home (r x.core/get-app-config-item db :app-home)]
-       (uri/valid-path app-home)))
+  ; XXX#6700 (source-code/clj/x/core/config_handler/prototypes.clj)
+  (r x.core/get-app-config-item db :app-home))
 
 (defn use-app-home
-  ; @param (string) uri
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (r use-app-home db "/@app-home")
   ;
   ; @example
   ;  (r use-app-home db "/@app-home/my-route")
@@ -48,9 +55,9 @@
   ;  "https://my-app.com/my-app/my-route"
   ;
   ; @return (string)
-  [db [_ uri]]
+  [db [_ n]]
   (let [app-home (r get-app-home db)]
-       (string/replace-part uri #"/@app-home" app-home)))
+       (string/replace-part n #"/@app-home" app-home)))
 
 
 
@@ -58,6 +65,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-app-domain
+  ; @usage
+  ;  (r get-app-domain db)
+  ;
   ; @example
   ;  (r get-app-domain db)
   ;  =>
@@ -65,11 +75,14 @@
   ;
   ; @return (string)
   [db _]
-  (let [app-domain (r x.core/get-app-config-item db :app-domain)]
-       (uri/valid-uri app-domain)))
+  ; XXX#6700 (source-code/clj/x/core/config_handler/prototypes.clj)
+  (r x.core/get-app-config-item db :app-domain))
 
 (defn use-app-domain
-  ; @param (string) uri
+  ; @param (string) n
+  ;
+  ; @usage
+  ;  (r use-app-domain db "/my-route")
   ;
   ; @example
   ;  (r use-app-domain db "/my-route")
@@ -82,10 +95,9 @@
   ;  "https://my-app.com/my-route"
   ;
   ; @return (string)
-  [db [_ uri]]
-  (let [app-domain (r get-app-domain db)
-        local-uri  (uri/uri->local-uri uri)]
-       (str app-domain (string/starts-with! local-uri "/"))))
+  [db [_ n]]
+  (let [app-domain (r get-app-domain db)]
+       (str app-domain (uri/to-relative n))))
 
 
 

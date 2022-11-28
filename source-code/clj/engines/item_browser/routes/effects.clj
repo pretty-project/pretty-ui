@@ -29,8 +29,8 @@
   ; @param (map) browser-props
   ;  {:base-route (string)}
   (fn [_ [_ browser-id {:keys [base-route]}]]
-      (let [base-route   (uri/valid-path      base-route)
-            parent-route (uri/uri->parent-uri base-route)]
+      (let [base-route   (uri/valid-path base-route)
+            parent-route (uri/to-parent  base-route)]
            [:x.router/add-route! (routes.helpers/route-id browser-id :base)
                                  {:client-event   [:item-browser/handle-route! browser-id]
                                   :js-build       :app
@@ -45,9 +45,9 @@
   ; @param (map) browser-props
   ;  {:base-route (string)}
   (fn [_ [_ browser-id {:keys [base-route]}]]
-      (let [base-route     (uri/valid-path      base-route)
-            extended-route (str                 base-route "/:item-id")
-            parent-route   (uri/uri->parent-uri base-route)]
+      (let [base-route     (uri/valid-path base-route)
+            extended-route (str            base-route "/:item-id")
+            parent-route   (uri/to-parent  base-route)]
            [:x.router/add-route! (routes.helpers/route-id browser-id :extended)
                                  {:client-event   [:item-browser/handle-route! browser-id]
                                   :js-build       :app

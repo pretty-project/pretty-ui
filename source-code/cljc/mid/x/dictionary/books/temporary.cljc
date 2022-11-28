@@ -141,17 +141,6 @@
 
 
 
-
-
-
-
-           :page
-           {:en "Page"
-            :hu "Oldal"}
-           :pages
-           {:en "Pages"
-            :hu "Oldalak"}
-
            :tag
            {:en "Tag"
             :hu "Címke"}
@@ -183,24 +172,7 @@
            :overview
            {:en "Overview"
             :hu "Áttekintés"}
-           :link
-           {:en "Link"
-            :hu "Hivatkozás"}
-           :link-label
-           {:en "Link label"
-            :hu "Hivatkozás címke"}
-           :public-link
-           {:en "Public link"
-            :hu "Nyilvános hivatkozás"}
-           :open-link!
-           {:en "Open link"
-            :hu "Hivatkozás megnyitása"}
-           :open-in-new-page!
-           {:en "Open in new page"
-            :hu "Megnyitás új oldalon"}
-           :open-in-new-tab!
-           {:en "Open in new tab"
-            :hu "Megnyitás új lapon"}
+
 
 
 
@@ -225,9 +197,7 @@
            :copied-to-clipboard-n
            {:en "Copied to clipboard: %"
             :hu "Vágólapra helyezve: %"}
-           :copy-link!
-           {:en "Copy link"
-            :hu "Hivatkozás másolása"}
+
            :create-a-backup!
            {:en "Create a backup"
             :hu "Biztonsági mentés készítése"}
@@ -392,12 +362,20 @@
            :types
            {:en "Types"
             :hu "Típusok"}
-
-
+           :only-visible-to-editors
+           {:en "Only visible to editors"
+            :hu "Csak a szerkesztők számára látható"}
+           :visible-to-everyone
+           {:en "Visible to everyone"
+            :hu "Mindenki számára látható"}
 
            :chart
            {:en "Chart"
             :hu "Grafikon"}
            :total-balance-n
            {:en "Total balance (%)"
-            :hu "Teljes egyenleg (%)"}})
+            :hu "Teljes egyenleg (%)"}
+
+           :please-check-back-soon...
+           {:en "Please check back soon ..."
+            :hu "Kérlek nézz vissza később ..."}})

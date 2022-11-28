@@ -33,6 +33,7 @@
 ;; ----------------------------------------------------------------------------
 
 (defn copied-to-clipboard-dialog-body
+  ; @param (string) text
   [text]
   [:div {:style {:display "flex" :max-width "100%"}}
         [elements/label {:content {:content :copied-to-clipboard-n :replacements [text]}
