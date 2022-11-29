@@ -22,5 +22,5 @@
          com.openhtmltopdf/openhtmltopdf-pdfbox          {:mvn/version "1.0.10"}
          com.openhtmltopdf/openhtmltopdf-rtl-support     {:mvn/version "1.0.10"}
          com.openhtmltopdf/openhtmltopdf-svg-support     {:mvn/version "1.0.10"}
-         org.jsoup/jsoup                                 {:mvn/version "1.14.3"}
-         commons-io/commons-io                           {:mvn/version "2.6"}}}
+         commons-io/commons-io                           {:mvn/version "2.6"}
+         org.jsoup/jsoup                                 {:mvn/version "1.14.3"}}}
