@@ -15,8 +15,8 @@
 (ns engines.item-editor.body.views
     (:require [engines.item-editor.body.prototypes :as body.prototypes]
               [engines.item-editor.core.helpers    :as core.helpers]
-              [plugins.reagent.api                 :as reagent]
               [re-frame.api                        :as r]
+              [reagent.api                         :as reagent]
               [x.components.api                    :as x.components]))
 
 

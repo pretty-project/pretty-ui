@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.engines.item-lister.core.helpers
+; iso.engines.item-lister.core.helpers
 (def component-id       core.helpers/component-id)
 (def default-items-path core.helpers/default-items-path)
 

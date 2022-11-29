@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-sorter.state
-    (:require [plugins.reagent.api :refer [ratom]]))
+    (:require [reagent.api :refer [ratom]]))
 
 
 

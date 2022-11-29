@@ -16,7 +16,7 @@
     (:require [dom.api                  :as dom]
               [elements.element.helpers :as element.helpers]
               [elements.image.config    :as image.config]
-              [plugins.react.api        :as react]))
+              [react.api                :as react]))
 
 
 

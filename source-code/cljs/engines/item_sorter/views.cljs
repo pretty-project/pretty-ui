@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-sorter.views
-    (:require [elements.api                   :as elements]
+    (:require [dnd-kit.api                    :as dnd-kit]
+              [elements.api                   :as elements]
               [engines.text-sorter.helpers    :as helpers]
               [engines.text-sorter.prototypes :as prototypes]
               [engines.text-sorter.state      :as state]
-              [random.api                     :as random]
-              [plugins.dnd-kit.api            :as dnd-kit]))
+              [random.api                     :as random]))
 
 
 

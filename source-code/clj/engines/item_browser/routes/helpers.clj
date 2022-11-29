@@ -20,5 +20,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.engines.item-browser.routes.helpers
+; iso.engines.item-browser.routes.helpers
 (def route-id routes.helpers/route-id)

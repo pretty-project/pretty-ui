@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (keywords in vector)
-(def SYSTEM-KEYS [:developer-tools :elements :engines :plugins
+(def SYSTEM-KEYS [:developer-tools :elements :engines
                   :x.components :x.core :x.dictionary :x.environment :x.gestures :x.locales
                   :x.router :x.sync :tools :x.user :x.ui :x.views
 

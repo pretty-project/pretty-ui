@@ -17,8 +17,8 @@
               [elements.label.views       :as label.views]
               [elements.switch.helpers    :as switch.helpers]
               [elements.switch.prototypes :as switch.prototypes]
-              [plugins.reagent.api        :as reagent]
               [random.api                 :as random]
+              [reagent.api                :as reagent]
               [x.components.api           :as x.components]))
 
 

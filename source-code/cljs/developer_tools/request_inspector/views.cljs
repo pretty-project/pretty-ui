@@ -13,12 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns developer-tools.request-inspector.views
-    (:require [elements.api        :as elements]
-              [plugins.reagent.api :refer [ratom]]
-              [pretty.print        :as pretty]
-              [re-frame.api        :as r]
-              [time.api            :as time]
-              [vector.api          :as vector]))
+    (:require [elements.api :as elements]
+              [pretty.print :as pretty]
+              [re-frame.api :as r]
+              [reagent.api  :refer [ratom]]
+              [time.api     :as time]
+              [vector.api   :as vector]))
 
 
 

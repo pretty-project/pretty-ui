@@ -14,8 +14,8 @@
 
 (ns engines.item-browser.body.effects
     (:require [engines.item-browser.body.events :as body.events]
-              [plugins.reagent.api              :as reagent]
-              [re-frame.api                     :as r :refer [r]]))
+              [re-frame.api                     :as r :refer [r]]
+              [reagent.api                      :as reagent]))
 
 
 

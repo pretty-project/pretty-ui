@@ -166,8 +166,8 @@
   ami alapján összerakná a visszaállított elem útvonalát amire irányítania kéne
 
 ; - A megfelelő hely:
-;   [:plugins :item-browser/data-items :my-browser {...}]
-;   [:plugins :item-browser/meta-items :my-browser {...}]
+;   [:engines :item-browser/data-items :my-browser {...}]
+;   [:engines :item-browser/meta-items :my-browser {...}]
 ;   (ez ahhoz is kell, hogy amikor az item-browser megkapja a szervertöl, hogy megváltozott az xy
 ;   kollekció, akkor végig megy a browserer adatain és megnézi, hogy ki van rá feliratkozva)
 ;   És amugy is ez a természetes helye

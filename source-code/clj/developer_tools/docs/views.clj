@@ -38,6 +38,8 @@
            (docs/create-documentation! {:path "submodules/cljc-fruits"})
            (docs/create-documentation! {:path "submodules/docs-api"})
            (docs/create-documentation! {:path "submodules/dom-api"})
+           (docs/create-documentation! {:path "submodules/git-api"})
+           (docs/create-documentation! {:path "submodules/image-api"})
            (docs/create-documentation! {:path "submodules/io-api"})
            (docs/create-documentation! {:path "submodules/local-db-api"})
            (docs/create-documentation! {:path "submodules/logger-api"})
@@ -85,6 +87,8 @@
        "</br>cljc-fruits"
        "</br>docs-api"
        "</br>dom-api"
+       "</br>git-api"
+       "</br>image-api"
        "</br>io-api"
        "</br>local-db-api"
        "</br>logger-api"

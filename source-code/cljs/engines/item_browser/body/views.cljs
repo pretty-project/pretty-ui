@@ -16,9 +16,9 @@
     (:require [engines.item-browser.body.prototypes :as body.prototypes]
               [engines.item-browser.core.helpers    :as core.helpers]
               [engines.item-lister.body.views       :as body.views]
-              [plugins.reagent.api                  :as reagent]
-              [tools.infinite-loader.api            :as infinite-loader]
               [re-frame.api                         :as r]
+              [reagent.api                          :as reagent]
+              [tools.infinite-loader.api            :as infinite-loader]
               [x.components.api                     :as x.components]))
 
 

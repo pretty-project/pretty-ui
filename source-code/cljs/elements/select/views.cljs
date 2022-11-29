@@ -22,9 +22,9 @@
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
               [layouts.popup-a.api        :as popup-a]
-              [plugins.reagent.api        :as reagent]
               [random.api                 :as random]
               [re-frame.api               :as r]
+              [reagent.api                :as reagent]
               [vector.api                 :as vector]
               [x.components.api           :as x.components]))
 

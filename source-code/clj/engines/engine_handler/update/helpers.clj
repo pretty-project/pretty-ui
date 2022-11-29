@@ -20,6 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.engines.engine-handler.update.helpers
+; iso.engines.engine-handler.update.helpers
 (def item-dialog-id  update.helpers/item-dialog-id)
 (def items-dialog-id update.helpers/items-dialog-id)

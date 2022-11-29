@@ -17,9 +17,9 @@
               [elements.text-field.helpers    :as text-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
               [hiccup.api                     :as hiccup]
-              [plugins.reagent.api            :as reagent]
               [random.api                     :as random]
               [re-frame.api                   :as r]
+              [reagent.api                    :as reagent]
               [string.api                     :as string]
               [vector.api                     :as vector]
               [x.components.api               :as x.components]))

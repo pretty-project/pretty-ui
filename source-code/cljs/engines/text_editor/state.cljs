@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.text-editor.state
-    (:require [plugins.reagent.api :refer [ratom]]))
+    (:require [reagent.api :refer [ratom]]))
 
 
 

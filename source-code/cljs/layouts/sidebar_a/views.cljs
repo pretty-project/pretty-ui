@@ -14,9 +14,9 @@
 
 (ns layouts.sidebar-a.views
     (:require [layouts.surface-a.helpers :as helpers]
-              [plugins.react.api         :as react]
-              [plugins.reagent.api       :as reagent]
               [re-frame.api              :as r]
+              [react.api                 :as react]
+              [reagent.api               :as reagent]
               [x.components.api          :as x.components]))
 
 

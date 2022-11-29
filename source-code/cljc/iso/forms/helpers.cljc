@@ -13,10 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns iso.forms.helpers
-    (:require [iso.forms.config :as config]
-              [mixed.api        :as mixed]
-              [regex.api        :refer [re-match?]]
-              [string.api       :as string]))
+    (:require [mixed.api  :as mixed]
+              [string.api :as string]))
 
 
 
@@ -36,52 +34,6 @@
   ; @return (string)
   [n]
   (string/trim n))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn pin?
-  ; @param (string) n
-  ;
-  ; @usage
-  ;  (pin? "0000")
-  ;
-  ; @return (boolean)
-  [n]
-  (string/length? n 4))
-
-(defn password?
-  ; @param (string) n
-  ;
-  ; @usage
-  ;  (password? "Abcde1")
-  ;
-  ; @return (boolean)
-  [n]
- ;(re-match? n PASSWORD-PATTERN))
-  (string/nonblank? n))
-
-(defn email-address?
-  ; @param (string) n
-  ;
-  ; @usage
-  ;  (email-address? "foo@bar.baz")
-  ;
-  ; @return (boolean)
-  [n]
-  (re-match? n config/EMAIL-PATTERN))
-
-(defn phone-number?
-  ; @param (string) n
-  ;
-  ; @usage
-  ;  (phone-number? "+36301234567")
-  ;
-  ; @return (boolean)
-  [n]
-  (re-match? n config/PHONE-NUMBER-PATTERN))
 
 
 

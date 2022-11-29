@@ -13,14 +13,14 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.text-editor.views
-    (:require [elements.api                   :as elements]
+    (:require [ckeditor5.api                  :as ckeditor5]
+              [elements.api                   :as elements]
               [engines.text-editor.helpers    :as helpers]
               [engines.text-editor.prototypes :as prototypes]
               [engines.text-editor.state      :as state]
               [random.api                     :as random]
-              [plugins.ckeditor5.api          :as ckeditor5]
-              [plugins.reagent.api            :as reagent]
-              [re-frame.api                   :as r]))
+              [re-frame.api                   :as r]
+              [reagent.api                    :as reagent]))
 
 
 
@@ -109,7 +109,7 @@
   ;  {:autofocus? (boolean)(opt)
   ;    Default: false
   ;   :buttons (keywords in vector)(opt)
-  ;    A tulajdonság leírását a plugins.ckeditor5.views/body dokumentációjában találod!
+  ;    A tulajdonság leírását a ckeditor5.views/body dokumentációjában találod!
   ;    Default: [:bold :italic :underline :fontColor]
   ;   :disabled? (boolean)(opt)
   ;    Default: false

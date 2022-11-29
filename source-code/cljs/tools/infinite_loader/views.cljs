@@ -15,9 +15,9 @@
 (ns tools.infinite-loader.views
     (:require [dom.api                       :as dom]
               [hiccup.api                    :as hiccup]
-              [plugins.reagent.api           :as reagent]
               [random.api                    :as random]
               [re-frame.api                  :as r]
+              [reagent.api                   :as reagent]
               [tools.infinite-loader.helpers :as helpers]
               [x.environment.api             :as x.environment]))
 

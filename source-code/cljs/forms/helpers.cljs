@@ -20,7 +20,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.forms.helpers
+; iso.forms.helpers
 (def valid-string     helpers/valid-string)
 (def pin?             helpers/pin?)
 (def password?        helpers/password?)

@@ -20,6 +20,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.engines.item-preview.core.helpers
+; iso.engines.item-preview.core.helpers
 (def component-id      core.helpers/component-id)
 (def default-item-path core.helpers/default-item-path)

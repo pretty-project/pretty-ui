@@ -19,7 +19,7 @@
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
               [elements.element.views     :as element.views]
-              [plugins.reagent.api        :as reagent]
+              [reagent.api                :as reagent]
               [random.api                 :as random]
               [x.components.api           :as x.components]))
 

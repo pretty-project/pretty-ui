@@ -20,5 +20,5 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; mid.engines.engine-handler.core.helpers
+; iso.engines.engine-handler.core.helpers
 (def component-id core.helpers/component-id)

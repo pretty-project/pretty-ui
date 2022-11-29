@@ -17,8 +17,8 @@
               [engines.item-editor.core.subs     :as core.subs]
               [engines.item-editor.backup.events :as backup.events]
               [engines.item-editor.backup.subs   :as backup.subs]
-              [plugins.reagent.api               :as reagent]
-              [re-frame.api                      :as r :refer [r]]))
+              [re-frame.api                      :as r :refer [r]]
+              [reagent.api                       :as reagent]))
 
 
 

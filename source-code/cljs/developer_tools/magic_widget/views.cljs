@@ -21,8 +21,8 @@
               [developer-tools.subscription-browser.views :rename {body subscription-browser}]
               [elements.api                               :as elements]
               [css.api                                    :as css]
-              [plugins.reagent.api                        :refer [ratom]]
               [re-frame.api                               :as r]
+              [reagent.api                                :refer [ratom]]
               [vector.api                                 :as vector]))
 
 

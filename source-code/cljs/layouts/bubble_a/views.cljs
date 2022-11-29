@@ -15,8 +15,8 @@
 (ns layouts.bubble-a.views
     (:require [layouts.bubble-a.helpers    :as helpers]
               [layouts.bubble-a.prototypes :as prototypes]
-              [plugins.reagent.api         :as reagent]
-              [re-frame.api                :as r]))
+              [re-frame.api                :as r]
+              [reagent.api                 :as reagent]))
 
 
 
