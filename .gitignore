@@ -1,14 +1,3 @@
 
-# system files
-node_modules
-resources/public/js/core
-Procfile
-system.properties
-log
-.cpcache
-.shadow-cljs
-.idea
-monoset.iml
-
 # MacOS files
 .DS_Store
