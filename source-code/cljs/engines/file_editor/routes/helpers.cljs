@@ -2,7 +2,7 @@
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Monoset Clojure/ClojureScript Library
+; Monoset Clojure/ClojureScript web application framework
 ; https://monotech.hu/monoset
 ;
 ; Copyright Adam Szűcs and other contributors - All rights reserved
@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.file-editor.routes.helpers
-    (:require [mid.engines.file-editor.routes.helpers :as routes.helpers]))
+    (:require [iso.engines.file-editor.routes.helpers :as routes.helpers]))
 
 
 

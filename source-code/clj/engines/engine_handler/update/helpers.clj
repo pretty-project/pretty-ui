@@ -2,7 +2,7 @@
 ;; -- Legal information -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; Monoset Clojure/ClojureScript Library
+; Monoset Clojure/ClojureScript web application framework
 ; https://monotech.hu/monoset
 ;
 ; Copyright Adam Szűcs and other contributors - All rights reserved
@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.update.helpers
-    (:require [mid.engines.engine-handler.update.helpers :as update.helpers]))
+    (:require [iso.engines.engine-handler.update.helpers :as update.helpers]))
 
 
 
