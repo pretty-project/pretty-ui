@@ -1,6 +1,13 @@
 
 {:paths ["deps" "plugins" "resources" "source-code"]
- :deps  {com.draines/postal        {:mvn/version "2.0.4"}
+ :deps  {com.draines/postal                           {:mvn/version "2.0.4"}
+         com.openhtmltopdf/openhtmltopdf-core         {:mvn/version "1.0.10"}
+         com.openhtmltopdf/openhtmltopdf-pdfbox       {:mvn/version "1.0.10"}
+         com.openhtmltopdf/openhtmltopdf-rtl-support  {:mvn/version "1.0.10"}
+         com.openhtmltopdf/openhtmltopdf-svg-support  {:mvn/version "1.0.10"}
+         commons-io/commons-io                        {:mvn/version "2.6"}
+         org.clojars.paul-simple-code/reagent-hickory {:mvn/version "0.3.7-no-escape-string"}
+         org.jsoup/jsoup                              {:mvn/version "1.14.3"}
          bithandshake/cljc-fruits  {:git/url "https://github.com/bithandshake/cljc-fruits"
                                     :sha     "81654bafcdf7c11790e52eb93889c05ff5157177"}
          bithandshake/dom-api      {:git/url "https://github.com/bithandshake/dom-api"
@@ -14,13 +21,4 @@
          bithandshake/time-api     {:git/url "https://github.com/bithandshake/time-api"
                                     :sha     "2de7e6867f7103b1d5a92395e4228ece667cc093"}
          monotech-hq/x5            {:git/url "https://github.com/monotech-hq/x5"
-                                    :sha     "83422c8468f2cbfc083c62df7bd09710302b0cca"}
-
-         ; clj-htmltopdf
-         ; XXX#0506 (monoset/deps/clj_htmltopdf/README.md)
-         com.openhtmltopdf/openhtmltopdf-core            {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-pdfbox          {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-rtl-support     {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-svg-support     {:mvn/version "1.0.10"}
-         commons-io/commons-io                           {:mvn/version "2.6"}
-         org.jsoup/jsoup                                 {:mvn/version "1.14.3"}}}
+                                    :sha     "83422c8468f2cbfc083c62df7bd09710302b0cca"}}}
