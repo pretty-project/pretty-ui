@@ -16,8 +16,8 @@
     (:require [candy.api                       :refer [param]]
               [elements.password-field.helpers :as password-field.helpers]
               [elements.text-field.helpers     :as text-field.helpers]
-              [forms.api                       :as forms]
-              [vector.api                      :as vector]))
+              [vector.api                      :as vector]
+              [x.user.api                      :as x.user]))
 
 
 
@@ -47,7 +47,7 @@
               (param field-props)
               ; *
               (if validate? {:helper    {:content :valid-password-rules :replacements ["8"]}
-                             :validator {:f               forms/password?
+                             :validator {:f               x.user/password?
                                          :invalid-message :password-is-too-weak}})
               ; *
               (let [show-password-adornment {;:disabled? field-empty?

@@ -290,12 +290,12 @@
   ; ... a {:disabled? true} állapot megszűnésekor a mező nem lépne vissza a fókuszált állapotba.
   ;
   ; A következő beállítások biztosítják, hogy a mező disabled állapotúnak tűnjön:
-  ; - A {:tabindex -1} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
+  ; - A {:tab-index "-1"} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
   ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
   ;   és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
   (if disabled? {;:disabled true
-                 :tabindex -1
+                 :tab-index  "-1"
                  :max-length max-length
                  :type       type
                  :id         (hiccup/value      field-id "input")
