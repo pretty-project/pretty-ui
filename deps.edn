@@ -14,7 +14,7 @@
          bithandshake/time-api     {:git/url "https://github.com/bithandshake/time-api"
                                     :sha     "2de7e6867f7103b1d5a92395e4228ece667cc093"}
          monotech-hq/x5            {:git/url "https://github.com/monotech-hq/x5"
-                                    :sha     "83422c8468f2cbfc083c62df7bd09710302b0cca}"}
+                                    :sha     "83422c8468f2cbfc083c62df7bd09710302b0cca"}
 
          ; clj-htmltopdf
          ; XXX#0506 (monoset/deps/clj_htmltopdf/README.md)
