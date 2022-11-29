@@ -10,7 +10,7 @@
        [:div (str random-uuid)]))
  ```
 
-- Az let függvényben dereferált atom a let függvény további értékeit is újraszámításra kényszeríti!
+- A let függvényben dereferált atom a let függvény további értékeit is újraszámításra kényszeríti!
 - A fenti példában, ha megváltozik a [:get-my-state] feliratkozás visszatérési értéke, akkor a ref
   értéke is megváltozik!
 

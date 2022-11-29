@@ -91,12 +91,12 @@
   ; @param (hiccup) body
   ; @param (map) request
   ; @param (map) body-props
-  ;  {:app-build (string)(opt)}
+  ;  {:build-version (string)(opt)}
   ;
   ; @return (hiccup)
-  [body request {:keys [app-build] :as body-props}]
+  [body request {:keys [build-version] :as body-props}]
   (letfn [(f [body {:keys [uri] :as js-props}]
-             (let [cache-control-uri (cache-control-uri uri app-build)
+             (let [cache-control-uri (cache-control-uri uri build-version)
                    js-props          (assoc js-props :uri cache-control-uri)]
                   (if (include-js? request body-props js-props)
                       (conj   body (include-js js-props))

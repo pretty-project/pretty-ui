@@ -222,12 +222,12 @@
   ; @param (hiccup) head
   ; @param (map) request
   ; @param (map) head-props
-  ;  {:app-build (string)(opt)}
+  ;  {:build-version (string)(opt)}
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build] :as head-props}]
+  [head request {:keys [build-version] :as head-props}]
   (letfn [(f [head {:keys [uri] :as css-props}]
-             (let [cache-control-uri (cache-control-uri uri app-build)
+             (let [cache-control-uri (cache-control-uri uri build-version)
                    css-props         (assoc css-props :uri cache-control-uri)]
                   (if (include-css? request head-props css-props)
                       (conj   head (include-css css-props))
@@ -241,16 +241,16 @@
   ; @param (hiccup) head
   ; @param (map) request
   ; @param (map) head-props
-  ;  {:app-build (string)(opt)
+  ;  {:build-version (string)(opt)
   ;   :favicon-paths (maps in vector)
   ;    [{:js-build (keyword)(opt)
   ;      :size (string)
   ;      :uri (string)}]
   ;
   ; @return (hiccup)
-  [head request {:keys [app-build favicon-paths] :as head-props}]
+  [head request {:keys [build-version favicon-paths] :as head-props}]
   (letfn [(f [head {:keys [uri] :as favicon-props}]
-             (let [cache-control-uri (cache-control-uri uri app-build)
+             (let [cache-control-uri (cache-control-uri uri build-version)
                    favicon-props     (assoc favicon-props :uri cache-control-uri)]
                   (if (include-favicon? request head-props favicon-props)
                       (conj   head (include-favicon favicon-props))

@@ -24,7 +24,7 @@
 
 (defn- installer
   []
-  (git/ignore! build-handler.config/APP-BUILD-FILEPATH "x.core"))
+  (git/ignore! build-handler.config/BUILD-VERSION-FILEPATH "x.core"))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -21,4 +21,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.x.core.build-handler.subs
-(def get-app-build build-handler.subs/get-app-build)
+(def get-build-version build-handler.subs/get-build-version)

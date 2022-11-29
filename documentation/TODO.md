@@ -29,8 +29,8 @@
   + (set ...) set függvény!
   - Egy elem egyszer fordulhat elő benne
 
-- Az xxx-ek tartalmazzák a névtereket is
-  XXX#0551 (map.api       )
+- Az xxx-ek tartalmazzák a filepath-et is
+  XXX#0551 (...)
 
 - (defn f [{:keys [] {:keys [name]} :customer}])
   (f {:customer {:name "Peti" :address "Valahol"}})

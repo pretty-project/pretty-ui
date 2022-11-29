@@ -132,8 +132,8 @@
   ; @usage
   ;  [:x.boot-loader/app-synchronized #'app {...}]
   (fn [{:keys [db] :as cofx} [_ app server-response]]
-      (let [app-build (r x.core/get-app-config-item db :app-build)]
+      (let [build-version (r x.core/get-build-version db)]
            {:dispatch-n [; 1.
-                         [:x.environment/set-cookie! :x-app-build {:value app-build}]
+                         [:x.environment/set-cookie! :x-build-version {:value build-version}]
                          ; 2.
                          [:x.boot-loader/init-app! app]]})))

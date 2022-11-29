@@ -37,7 +37,7 @@
       {:dispatch-tick [{:tick 500 :dispatch [:x.boot-loader/init-server! server-props]}]
        :dispatch      [:x.core/store-server-props! server-props]
        :fx-n          [[:x.core/import-lifecycles!]
-                       [:x.core/import-app-build!]
+                       [:x.core/import-build-version!]
                        [:x.core/import-app-config!]
                        [:x.core/import-server-config!]]}))
 

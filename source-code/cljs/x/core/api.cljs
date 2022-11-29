@@ -43,10 +43,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; x.core.build-handler.side-effects
-(def app-build build-handler.side-effects/app-build)
+(def build-version build-handler.side-effects/build-version)
 
 ; x.core.build-handler.subs
-(def get-app-build build-handler.subs/get-app-build)
+(def get-build-version build-handler.subs/get-build-version)
 
 ; x.core.cache-handler.helpers
 (def cache-control-uri cache-handler.helpers/cache-control-uri)

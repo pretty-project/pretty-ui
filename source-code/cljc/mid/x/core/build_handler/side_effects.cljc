@@ -20,12 +20,15 @@
 ;; ---------------------------------------------------------------------------
 ;; ---------------------------------------------------------------------------
 
-(defn app-build
+(defn build-version
+  ; @usage
+  ;  (build-version)
+  ;
   ; @example
-  ;  (app-build)
+  ;  (build-version)
   ;  =>
   ;  "0.4.2"
   ;
   ; @return (string)
   []
- @(r/subscribe [:x.core/get-app-build]))
+ @(r/subscribe [:x.core/get-build-version]))

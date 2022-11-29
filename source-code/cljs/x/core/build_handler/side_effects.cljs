@@ -21,4 +21,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; mid.x.core.build-handler.side-effects
-(def app-build build-handler.side-effects/app-build)
+(def build-version build-handler.side-effects/build-version)

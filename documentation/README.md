@@ -42,16 +42,3 @@ nevű paraméter van használatban.
   [{:keys [my-value]}]
   (or my-value MY-VALUE)))
 ```
-
-
-# -id
-
-```
-(defn my-function [my-item-id]
-      (let [your-item-id (get-your-item ...)]))
-```
-
-```      
-(defn my-function []
-      (let [selected-item-id (get-selected-item ...)]))      
-```

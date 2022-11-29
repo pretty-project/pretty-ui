@@ -32,10 +32,10 @@
   ; @usage
   ;  (add-css! "/css/filename.css")
   [uri options]
-  (let [head-element (dom/get-head-element)
-        app-build    (x.core/app-build)
-        filepath     (cache-control-uri (string/starts-with! uri "/") app-build)
-        link-element (css-handler.helpers/create-link-element! uri)]
+  (let [head-element  (dom/get-head-element)
+        build-version (x.core/build-version)
+        filepath      (cache-control-uri (string/starts-with! uri "/") build-version)
+        link-element  (css-handler.helpers/create-link-element! uri)]
        (if-not (css-handler.helpers/source-exists?       head-element uri)
                (css-handler.helpers/insert-link-element! head-element link-element options))))
 

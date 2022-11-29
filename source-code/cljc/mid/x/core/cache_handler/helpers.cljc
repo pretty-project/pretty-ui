@@ -21,7 +21,7 @@
 ;; ---------------------------------------------------------------------------
 
 ; A cache-control-uri függvény a szerveren tárolt fájlok útvonalához csatolja
-; az app-build aktuális értékét.
+; a build-version aktuális értékét.
 ;
 ; Ha az uri paraméterként átadott útvonal nem "/" karakterrel kezdődik, akkor
 ; a függvény visszatérési értéke a változtatás nélküli uri paraméter
@@ -33,19 +33,22 @@
 
 (defn cache-control-uri
   ; @param (string) uri
-  ; @param (string) version
+  ; @param (string) build-version
+  ;
+  ; @usage
+  ;  (cache-control-uri "my-style.css" "0.4.2.0")
   ;
   ; @example
-  ;  (cache-control-uri "https://example.com/style.css" "1.2.3")
+  ;  (cache-control-uri "my-style.css" "0.4.2.0")
+  ;  =>
+  ;  "my-style.css?v=0.4.2.0"
+  ;
+  ; @example
+  ;  (cache-control-uri "https://example.com/style.css" "0.4.2.0")
   ;  =>
   ;  "example.com/style.css"
   ;
-  ; @example
-  ;  (cache-control-uri "my-style.css" "1.2.3")
-  ;  =>
-  ;  "my-style.css?v=1.2.3"
-  ;
   ; @return (string)
-  [uri version]
-  (case (-> uri first str) "/" (str    uri "?v=" version)
+  [uri build-version]
+  (case (-> uri first str) "/" (str    uri "?v=" build-version)
                                (return uri)))

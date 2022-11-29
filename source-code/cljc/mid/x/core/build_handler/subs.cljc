@@ -20,13 +20,13 @@
 ;; ---------------------------------------------------------------------------
 ;; ---------------------------------------------------------------------------
 
-(defn get-app-build
+(defn get-build-version
   ; @usage
-  ;  (r get-app-build db)
+  ;  (r get-build-version db)
   ;
   ; @return (string)
   [db _]
-  (get-in db [:x.core :build-handler/meta-items :app-build]))
+  (get-in db [:x.core :build-handler/meta-items :build-version]))
 
 
 
@@ -34,5 +34,5 @@
 ;; ---------------------------------------------------------------------------
 
 ; @usage
-;  [:x.core/get-app-build]
-(r/reg-sub :x.core/get-app-build get-app-build)
+;  [:x.core/get-build-version]
+(r/reg-sub :x.core/get-build-version get-build-version)

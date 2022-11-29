@@ -31,14 +31,14 @@
   ; @param (map) head-props
   ;
   ; @return (map)
-  ;  {:app-build (string)
+  ;  {:build-version (string)
   ;   :crawler-rules (string)
   ;   :js-build (keyword)
   ;   :selected-language (keyword)}
   [request head-props]
   (let [app-config @(r/subscribe [:x.core/get-app-config])]
        (merge app-config head-props
-              {:app-build         (x.core/app-build)
+              {:build-version     (x.core/build-version)
                :js-build          (x.router/request->route-prop       request :js-build x.core/DEFAULT-JS-BUILD)
                :crawler-rules     (x.environment/crawler-rules        request)
                :selected-language (x.user/request->user-settings-item request :selected-language)})))

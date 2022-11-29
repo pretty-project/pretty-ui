@@ -20,14 +20,14 @@
 ;; ---------------------------------------------------------------------------
 ;; ---------------------------------------------------------------------------
 
-(defn store-app-build!
+(defn store-build-version!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (string) app-build
+  ; @param (string) build-version
   ;
   ; @return (string)
-  [db [_ app-build]]
-  (assoc-in db [:x.core :build-handler/meta-items :app-build] app-build))
+  [db [_ build-version]]
+  (assoc-in db [:x.core :build-handler/meta-items :build-version] build-version))
 
 
 
@@ -35,4 +35,4 @@
 ;; ---------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :x.core/store-app-build! store-app-build!)
+(r/reg-event-db :x.core/store-build-version! store-build-version!)

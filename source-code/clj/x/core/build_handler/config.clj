@@ -20,9 +20,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (string)
-;  A "resources/public" mappában elhelyezett "x.app-build.edn" fájl minden
+;  A "resources/public" mappában elhelyezett "x.build-version.edn" fájl minden
 ;  esetben a lefordított JAR fájl része!
-(def APP-BUILD-FILEPATH "resources/public/x.app-build.edn")
+(def BUILD-VERSION-FILEPATH "resources/public/x.build-version.edn")
 
 ; @constant (string)
-(def INITIAL-APP-BUILD "0.0.1")
+(def INITIAL-BUILD-VERSION "0.0.1")

@@ -35,6 +35,6 @@
   ;
   ; @return (boolean)
   [request]
-  (let [cached-version   (http/request->cookie request "x-app-build")
-        current-version @(r/subscribe [:x.core/get-app-config-item :app-build])]
-       (= cached-version current-version)))
+  (let [cached-build-version   (http/request->cookie request "x-build-version")
+        current-build-version @(r/subscribe [:x.core/get-build-version])]
+       (= cached-build-version current-build-version)))
