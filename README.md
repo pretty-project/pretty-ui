@@ -1,8 +1,15 @@
 
 # monoset
 
-Warning: If you are reading this then this warning is for you.
-Every word you read of this useless description is another second off your life.
+...
+
+### Overview
+
+The <strong>monoset</strong> is our Clojure/ClojureScript kit-framework made for
+developing SPA and PWA web applications.
+
+
+
 
 
 use npm install to get react packages

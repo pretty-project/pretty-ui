@@ -1,5 +1,5 @@
 
-{:paths ["deps" "plugins" "resources" "source-code"]
+{:paths ["deps" "plugins" "resources" "source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {com.draines/postal                           {:mvn/version "2.0.4"}
          com.openhtmltopdf/openhtmltopdf-core         {:mvn/version "1.0.10"}
          com.openhtmltopdf/openhtmltopdf-pdfbox       {:mvn/version "1.0.10"}
@@ -16,6 +16,8 @@
                                     :sha     "7b471dfd36cc54b2dc7cc2a73bd4b74e6b824cd4"}
          bithandshake/mongo-db-api {:git/url "https://github.com/bithandshake/mongo-db-api"
                                     :sha     "38590f915b6b478cca281a912cbc4a02b22d032d"}
+         bithandshake/pattern-api  {:git/url "git@github.com:bithandshake/pattern-api.git"
+                                    :sha     "c656a78557b31bd8ece2b78005798e5daaba3349"}
          bithandshake/re-frame-api {:git/url "https://github.com/bithandshake/re-frame-api"
                                     :sha     "3e2415e655d705161aaad95577a92a248e851392"}
          bithandshake/time-api     {:git/url "https://github.com/bithandshake/time-api"
