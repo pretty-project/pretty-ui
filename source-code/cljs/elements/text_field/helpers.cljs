@@ -176,7 +176,7 @@
   [field-id {:keys [multiline?]}]
   (let [field-content (get-field-content field-id)]
        (if multiline? ; If field is multiline ...
-                      (let [line-count (-> field-content string/count-newlines inc)]
+                      (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; A textarea element magassága minimum 2 sor magasságú kell legyen,
                            ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
