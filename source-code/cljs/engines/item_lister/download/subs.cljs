@@ -57,11 +57,11 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/data-received? :my-lister]
+; [:item-lister/data-received? :my-lister]
 (r/reg-sub :item-lister/data-received? data-received?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/first-data-received? :my-lister]
+; [:item-lister/first-data-received? :my-lister]
 (r/reg-sub :item-lister/first-data-received? first-data-received?)

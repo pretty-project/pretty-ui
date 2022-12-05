@@ -70,11 +70,11 @@
   [db [_ preview-id]]
   ; A tartalom újratöltésekor ...
   ; ... az update-item-id! függvény alkalmazása előtt szükséges törölni a
-  ;     current-item-id értéket, különben az update-item-id! függvény nem
-  ;     használná a body komponens item-id paraméterét a current-item-id
-  ;     új értékeként!
+  ;    current-item-id értéket, különben az update-item-id! függvény nem
+  ;    használná a body komponens item-id paraméterét a current-item-id
+  ;    új értékeként!
   ; ... szükséges kiléptetni a engine-t az esetlegesen beállított {:engine-error ...}
-  ;     állapotból!
+  ;    állapotból!
   (as-> db % (r remove-meta-items! % preview-id)
              (r update-item-id!    % preview-id)
              (r reset-downloads!   % preview-id)))

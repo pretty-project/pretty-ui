@@ -28,7 +28,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
        (r core.subs/use-query-params db viewer-id {:item-id current-item-id})))

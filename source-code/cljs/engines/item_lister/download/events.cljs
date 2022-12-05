@@ -131,17 +131,17 @@
   ; Az újra letöltött elemek fogadásakor is szükséges {:data-received? true} állapotba léptetni
   ; a engine-t az data-received függvény alkalmazásával!
   ; Pl.: Lassú internetkapcsolat mellett, ha a felhasználó duplikálja a kiválasztott elemeket
-  ;      és a folyamat közben elhagyja a engine-t, majd ismét megnyitja azt, akkor az újból megnyitott
-  ;      engine nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
-  ;      indított elemek újratöltése még folyamatban van.
-  ;      Az engine nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
-  ;      előfordulhat, hogy a megnyitás után az engine nem az [:item-lister/request-items! ...]
-  ;      esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
-  ;      követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
-  ;      lekérés tölti le megnyitás után az első elemeket.
-  ;      XXX#5476 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  ;      HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
-  ;      SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
+  ;     és a folyamat közben elhagyja a engine-t, majd ismét megnyitja azt, akkor az újból megnyitott
+  ;     engine nem kezdi el letölteni az elemeket, mivel az elemek duplikálása vagy az azt követően
+  ;     indított elemek újratöltése még folyamatban van.
+  ;     Az engine nem indítja el az elemek letöltését, amíg bármelyik lekérés folyamatban van így
+  ;     előfordulhat, hogy a megnyitás után az engine nem az [:item-lister/request-items! ...]
+  ;     esemény által indított lekéréssel tölti le az első elemeket, hanem a sikeres duplikálás
+  ;     követetkezményeként megtörténő [:item-lister/reload-items! ...] esemény által indított
+  ;     lekérés tölti le megnyitás után az első elemeket.
+  ;     XXX#5476 (source-code/cljs/engines/engine_handler/core/subs.cljs)
+  ;     HA A KÜLÖNBÖZŐ LEKÉRÉSEK EGYMÁSTÓL ELTÉRŐ AZONOSÍTÓT KAPNÁNAK, EZT A VISELKEDÉST
+  ;     SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
   (as-> db % (r store-reloaded-items!          % lister-id server-response)
              (r store-received-item-count!     % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)

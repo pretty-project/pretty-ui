@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) area-id
   ; @param (map) area-props
-  ;  {:label (metamorphic-content)}
+  ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
   [:div.e-file-drop-area--label (x.components/content label)])
 
@@ -54,28 +54,28 @@
 (defn element
   ; @param (keyword)(opt) area-id
   ; @param (map) area-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :label (metamorphic-content)(opt)
-  ;    Default: :drop-files-here-to-upload
-  ;   :on-click (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :label (metamorphic-content)(opt)
+  ;   Default: :drop-files-here-to-upload
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [file-drop-area {...}]
+  ; [file-drop-area {...}]
   ;
   ; @usage
-  ;  [file-drop-area :my-file-drop-area {...}]
+  ; [file-drop-area :my-file-drop-area {...}]
   ([area-props]
    [element (random/generate-keyword) area-props])
 

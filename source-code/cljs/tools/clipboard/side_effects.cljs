@@ -25,7 +25,7 @@
 
 (defn copy-text!
   ; @usage
-  ;  (copy-text! "My text")
+  ; (copy-text! "My text")
   ;
   ; @param (string) text
   [text]
@@ -38,5 +38,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:clipboard/copy-text! "My text"]
+; [:clipboard/copy-text! "My text"]
 (r/reg-fx :clipboard/copy-text! copy-text!)

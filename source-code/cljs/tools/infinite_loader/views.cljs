@@ -48,7 +48,7 @@
   ; {:on-viewport (metamorphic-event)}
   ;
   ; @usage
-  ;  [component {:on-viewport ...}]
+  ; [component {:on-viewport ...}]
   ([loader-props]
    [component (random/generate-keyword) loader-props])
 

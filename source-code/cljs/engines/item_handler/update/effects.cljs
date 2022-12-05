@@ -35,7 +35,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  [:item-handler/save-item! :my-handler]
+  ; [:item-handler/save-item! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
       (let [query        (r update.queries/get-save-item-query          db handler-id)
             validator-f #(r update.validators/save-item-response-valid? db handler-id %)]
@@ -108,7 +108,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  [:item-handler/delete-item! :my-handler]
+  ; [:item-handler/delete-item! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
       (let [query        (r update.queries/get-delete-item-query          db handler-id)
             validator-f #(r update.validators/delete-item-response-valid? db handler-id %)]
@@ -256,7 +256,7 @@
   ; @param (keyword) handler-id
   ;
   ; @usage
-  ;  [:item-handler/duplicate-item! :my-handler]
+  ; [:item-handler/duplicate-item! :my-handler]
   (fn [{:keys [db]} [_ handler-id]]
       (let [display-progress? (r body.subs/get-body-prop                          db handler-id :display-progress?)
             query             (r update.queries/get-duplicate-item-query          db handler-id)

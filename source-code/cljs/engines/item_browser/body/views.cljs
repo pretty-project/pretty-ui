@@ -65,41 +65,41 @@
 (defn body
   ; @param (keyword) browser-id
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;    Default: false
-  ;    W/ {:label-key ...}
-  ;   :default-item-id (string)
-  ;   :default-order-by (namespaced keyword)
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :download-limit (integer)(opt)
-  ;    Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-path (vector)(opt)
-  ;    Default: core.helpers/default-item-path
-  ;   :items-key (keyword)
-  ;   :items-path (vector)(opt)
-  ;    Default: core.helpers/default-items-path
-  ;   :label-key (keyword)
-  ;    W/ {:auto-title? true}
-  ;   :list-element (metamorphic-content)
-  ;   :path-key (keyword)
-  ;   :placeholder (metamorphic-content)(opt)
-  ;    Default: :no-items-to-show
-  ;   :prefilter (map)(opt)
-  ;   :query (vector)(opt)
-  ;   :search-keys (keywords in vector)(opt)
-  ;    Default: engines.item-lister.core.config/DEFAULT-SEARCH-KEYS
-  ;   :transfer-id (keyword)(opt)}
+  ; {:auto-title? (boolean)(opt)
+  ;   Default: false
+  ;   W/ {:label-key ...}
+  ;  :default-item-id (string)
+  ;  :default-order-by (namespaced keyword)
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :download-limit (integer)(opt)
+  ;   Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :item-path (vector)(opt)
+  ;   Default: core.helpers/default-item-path
+  ;  :items-key (keyword)
+  ;  :items-path (vector)(opt)
+  ;   Default: core.helpers/default-items-path
+  ;  :label-key (keyword)
+  ;   W/ {:auto-title? true}
+  ;  :list-element (metamorphic-content)
+  ;  :path-key (keyword)
+  ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: :no-items-to-show
+  ;  :prefilter (map)(opt)
+  ;  :query (vector)(opt)
+  ;  :search-keys (keywords in vector)(opt)
+  ;   Default: engines.item-lister.core.config/DEFAULT-SEARCH-KEYS
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-browser {...}]
+  ; [body :my-browser {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [browser-id] [:div ...])
-  ;  [body :my-browser {:list-element #'my-list-element
-  ;                     :prefilter    {:my-type/color "red"}}]
+  ; (defn my-list-element [browser-id] [:div ...])
+  ; [body :my-browser {:list-element #'my-list-element
+  ;                    :prefilter    {:my-type/color "red"}}]
   [browser-id body-props]
   (let [body-props (body.prototypes/body-props-prototype browser-id body-props)]
        (reagent/lifecycles (core.helpers/component-id browser-id :body)

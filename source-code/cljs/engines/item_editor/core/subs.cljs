@@ -71,7 +71,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-editor/editing-item? db :my-editor "my-item")
+  ; (r item-editor/editing-item? db :my-editor "my-item")
   ;
   ; @return (boolean)
   [db [_ editor-id item-id]]
@@ -150,47 +150,47 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-editor/get-meta-item :my-editor :my-item]
+; [:item-editor/get-meta-item :my-editor :my-item]
 (r/reg-sub :item-editor/get-meta-item get-meta-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/get-current-item-id :my-editor]
+; [:item-editor/get-current-item-id :my-editor]
 (r/reg-sub :item-editor/get-current-item-id get-current-item-id)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/get-current-item :my-editor]
+; [:item-editor/get-current-item :my-editor]
 (r/reg-sub :item-editor/get-current-item get-current-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/export-current-item :my-editor]
+; [:item-editor/export-current-item :my-editor]
 (r/reg-sub :item-editor/export-current-item export-current-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/get-current-item-label :my-editor]
+; [:item-editor/get-current-item-label :my-editor]
 (r/reg-sub :item-editor/get-current-item-label get-current-item-label)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/get-current-item-modified-at :my-editor]
+; [:item-editor/get-current-item-modified-at :my-editor]
 (r/reg-sub :item-editor/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/new-item? :my-editor]
+; [:item-editor/new-item? :my-editor]
 (r/reg-sub :item-editor/new-item? new-item?)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/editor-disabled? :my-editor]
+; [:item-editor/editor-disabled? :my-editor]
 (r/reg-sub :item-editor/editor-disabled? editor-disabled?)

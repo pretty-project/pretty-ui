@@ -28,7 +28,7 @@
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:content (map)}
+  ; {:content (map)}
   [db [_ editor-id]]
   (let [current-content (r core.subs/get-current-content db editor-id)]
        (r core.subs/use-query-params db editor-id {:content current-content})))

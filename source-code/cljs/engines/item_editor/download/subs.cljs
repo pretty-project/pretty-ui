@@ -34,5 +34,5 @@
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:item-editor/data-received? :my-editor]
+; [:item-editor/data-received? :my-editor]
 (r/reg-sub :item-editor/data-received? data-received?)

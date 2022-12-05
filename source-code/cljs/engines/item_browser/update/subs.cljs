@@ -41,9 +41,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-copy-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
-  ;  =>
-  ;  "my-item"
+  ; (r get-copy-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ browser-id server-response]]
@@ -65,7 +65,7 @@
   ; @param (map) server-response
   ;
   ; @usage
-  ;  (r parent-item-browsed? db :my-browser :delete-item! {...})
+  ; (r parent-item-browsed? db :my-browser :delete-item! {...})
   ;
   ; @return (boolean)
   [db [_ browser-id action-key server-response]]

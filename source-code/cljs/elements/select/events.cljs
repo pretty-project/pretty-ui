@@ -44,7 +44,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   ; @param (*) option
   ;
   ; @return (map)

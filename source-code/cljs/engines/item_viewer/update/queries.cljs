@@ -29,7 +29,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
        (r core.subs/use-query-params db viewer-id {:item-id current-item-id})))
@@ -57,7 +57,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ viewer-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db viewer-id item-id)]
        (r core.subs/use-query-params db viewer-id {:item backup-item})))
@@ -87,7 +87,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ viewer-id]]
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
        (r core.subs/use-query-params db viewer-id {:item-id current-item-id})))

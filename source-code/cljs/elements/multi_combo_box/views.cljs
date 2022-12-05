@@ -73,27 +73,27 @@
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ;  {:chip-label-f (function)(opt)
-  ;    Default: return
-  ;   :field-value-f (function)(opt)
-  ;    Default: return
-  ;   :initial-options (vector)(opt)
-  ;   :on-select (metamorphic-event)(opt)
-  ;   :option-label-f (function)(opt)
-  ;    Default: return
-  ;   :option-value-f (function)(opt)
-  ;    Default: return
-  ;   :option-component (component)(opt)
-  ;    Default: elements.combo-box/default-option-component
-  ;   :options (vector)(opt)
-  ;   :options-path (vector)(opt)
-  ;   :placeholder (metamorphic-content)(opt)}
+  ; {:chip-label-f (function)(opt)
+  ;   Default: return
+  ;  :field-value-f (function)(opt)
+  ;   Default: return
+  ;  :initial-options (vector)(opt)
+  ;  :on-select (metamorphic-event)(opt)
+  ;  :option-label-f (function)(opt)
+  ;   Default: return
+  ;  :option-value-f (function)(opt)
+  ;   Default: return
+  ;  :option-component (component)(opt)
+  ;   Default: elements.combo-box/default-option-component
+  ;  :options (vector)(opt)
+  ;  :options-path (vector)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [multi-combo-box {...}]
+  ; [multi-combo-box {...}]
   ;
   ; @usage
-  ;  [multi-combo-box :my-multi-combo-box {...}]
+  ; [multi-combo-box :my-multi-combo-box {...}]
   ([box-props]
    [element (random/generate-keyword) box-props])
 

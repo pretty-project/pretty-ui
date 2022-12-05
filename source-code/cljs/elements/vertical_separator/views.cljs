@@ -25,15 +25,15 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ;  {:width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    Default: :s}
+  ; {:width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :s}
   ;
   ; @usage
-  ;  [vertical-separator {...}]
+  ; [vertical-separator {...}]
   ;
   ; @usage
-  ;  [vertical-separator :my-vertical-separator {...}]
+  ; [vertical-separator :my-vertical-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

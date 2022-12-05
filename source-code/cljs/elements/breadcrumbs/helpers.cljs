@@ -27,11 +27,11 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-scrollable-x (boolean)
-  ;   :style (map)}
+  ; {:data-scrollable-x (boolean)
+  ;  :style (map)}
   [_ {:keys [style]}]
   {:data-scrollable-x true
    :style             style})
@@ -57,11 +57,11 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {}
+  ; {}
   ; @param (map) item-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [breadcrumbs-id _ {:keys [disabled? href on-click]}]
   (if disabled? {:disabled       true}
                 {:data-clickable true
@@ -77,7 +77,7 @@
   ; @param (map) crumb
   ;
   ; @return (map)
-  ;  {:data-selectable (boolean)}
+  ; {:data-selectable (boolean)}
   [_ _ _]
   {:data-selectable false})
 
@@ -87,13 +87,13 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {:route (string)}
+  ; {:route (string)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-selectable (boolean)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [breadcrumbs-id _ {:keys [route]}]
   {:data-clickable  true
    :data-selectable false

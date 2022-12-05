@@ -28,7 +28,7 @@
   ; @param (keyword) browser-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ browser-id]]
   (let [current-item-id (r core.subs/get-current-item-id db browser-id)]
        (r core.subs/use-query-params db browser-id {:item-id current-item-id})))

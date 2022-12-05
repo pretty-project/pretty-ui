@@ -36,9 +36,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r get-item-route db :my-browser "my-item")
-  ;  =>
-  ;  "/@app-home/my-browser/my-item"
+  ; (r get-item-route db :my-browser "my-item")
+  ; =>
+  ; "/@app-home/my-browser/my-item"
   ;
   ; @return (string)
   [db [_ browser-id item-id]]
@@ -53,5 +53,5 @@
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-browser/get-item-route db :my-browser "my-item"]
+; [:item-browser/get-item-route db :my-browser "my-item"]
 (r/reg-sub :item-browser/get-item-route get-item-route)

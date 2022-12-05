@@ -44,13 +44,13 @@
 (defn element
   ; @param (keyword)(opt) stepper-id
   ; @param (map) stepper-props
-  ;  {}
+  ; {}
   ;
   ; @usage
-  ;  [stepper {...}]
+  ; [stepper {...}]
   ;
   ; @usage
-  ;  [stepper :my-stepper {...}]
+  ; [stepper :my-stepper {...}]
   ([stepper-props]
    [element (random/generate-keyword) stepper-props])
 

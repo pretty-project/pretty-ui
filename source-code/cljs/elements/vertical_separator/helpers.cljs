@@ -25,12 +25,12 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ;  {:width (keyword)
-  ;   :style (map)(opt)}
+  ; {:width (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-width (keyword)
-  ;   :style (map)}
+  ; {:data-width (keyword)
+  ;  :style (map)}
   [separator-id {:keys [style width] :as separator-props}]
   (merge (element.helpers/element-default-attributes separator-id separator-props)
          (element.helpers/element-indent-attributes  separator-id separator-props)

@@ -87,7 +87,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ _ {:keys [field-value-f value-path]}]]
@@ -99,7 +99,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ; @param (string) field-content
   ;
   ; @return (map)
@@ -119,7 +119,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ; @param (string) field-content
   ;
   ; @return (map)
@@ -132,7 +132,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ field-id field-props]]
@@ -146,7 +146,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ field-id {:keys [autofocus?] :as field-props}]]

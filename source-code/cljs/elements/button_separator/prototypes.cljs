@@ -26,7 +26,7 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ;  {:color (keyword)}
+  ; {:color (keyword)}
   [separator-props]
   (merge {:color :muted}
          (param separator-props)))

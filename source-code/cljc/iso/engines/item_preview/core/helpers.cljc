@@ -35,9 +35,9 @@
   ; @param (keyword) preview-id
   ;
   ; @example
-  ;  (default-item-path :my-preview)
-  ;  =>
-  ;  [:engines :engine-handler/downloaded-items :my-preview]
+  ; (default-item-path :my-preview)
+  ; =>
+  ; [:engines :engine-handler/downloaded-items :my-preview]
   ;
   ; @return (vector)
   [preview-id]

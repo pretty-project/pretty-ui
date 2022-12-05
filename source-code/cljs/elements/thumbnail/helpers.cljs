@@ -27,10 +27,10 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [thumbnail-id {:keys [disabled? on-click style]}]
   (if disabled? {:disabled        true
                  :style           style}
@@ -44,10 +44,10 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -56,14 +56,14 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:border-radius (keyword)
-  ;   :height (keyword)
-  ;   :width (keyword)}
+  ; {:border-radius (keyword)
+  ;  :height (keyword)
+  ;  :width (keyword)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-height (keyword)
-  ;   :data-width (keyword)}
+  ; {:data-border-radius (keyword)
+  ;  :data-height (keyword)
+  ;  :data-width (keyword)}
   [thumbnail-id {:keys [background-size border-radius height width] :as thumbnail-props}]
   (merge (element.helpers/element-default-attributes thumbnail-id thumbnail-props)
          (element.helpers/element-indent-attributes  thumbnail-id thumbnail-props)

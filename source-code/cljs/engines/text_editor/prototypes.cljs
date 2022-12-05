@@ -29,8 +29,8 @@
   ; @param (map) editor-props
   ;
   ; @return (map)
-  ;  {:placeholder (metamorphic-content)
-  ;   :value-path (vector)}
+  ; {:placeholder (metamorphic-content)
+  ;  :value-path (vector)}
   [editor-id editor-props]
   (merge {:placeholder :write-something!
           :value-path  (helpers/default-value-path editor-id)}
@@ -43,7 +43,7 @@
   ; @param (map) editor-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [editor-id editor-props]
   (merge {:buttons [:bold :italic :underline :fontColor]}
          editor-props

@@ -29,16 +29,16 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:end-adornments (maps in vector)(opt)
-  ;   :validate? (boolean)}
+  ; {:end-adornments (maps in vector)(opt)
+  ;  :validate? (boolean)}
   ;
   ; @return (map)
-  ;  {:helper (metamorphic-content)
-  ;   :label (metamorphic-content)
-  ;   :type (keyword)
-  ;   :validator (map)
-  ;    {:f (function)
-  ;     :invalid-message (keyword)}}
+  ; {:helper (metamorphic-content)
+  ;  :label (metamorphic-content)
+  ;  :type (keyword)
+  ;  :validator (map)
+  ;   {:f (function)
+  ;    :invalid-message (keyword)}}
   [field-id {:keys [end-adornments validate?] :as field-props}]
   (let [field-empty?      (text-field.helpers/field-empty?          field-id)
         password-visible? (password-field.helpers/password-visible? field-id)]

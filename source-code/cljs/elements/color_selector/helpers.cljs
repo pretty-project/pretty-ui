@@ -30,7 +30,7 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ _]
   {:class :e-element})
 
@@ -39,10 +39,10 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -51,10 +51,10 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:size (keyword)}
+  ; {:size (keyword)}
   ;
   ; @return (map)
-  ;  {:data-size (keyword)}
+  ; {:data-size (keyword)}
   [selector-id {:keys [size] :as selector-props}]
   (merge (element.helpers/element-default-attributes selector-id selector-props)
          (element.helpers/element-indent-attributes  selector-id selector-props)
@@ -70,11 +70,11 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (string) option
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [selector-id {:keys [value-path] :as selector-props} option]
   (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
         selected-options @(r/subscribe [:x.db/get-item value-path])]

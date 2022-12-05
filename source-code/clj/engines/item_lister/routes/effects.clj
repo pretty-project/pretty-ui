@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) lister-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ lister-id {:keys [base-route]}]]
       (let [base-route (uri/valid-path base-route)]
            [:x.router/add-route! (routes.helpers/route-id lister-id :base)

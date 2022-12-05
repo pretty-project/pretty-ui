@@ -34,19 +34,19 @@
 (defn element
   ; @param (keyword)(opt) line-id
   ; @param (map) line-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword or string)(opt)
-  ;    :highlight, :muted, :primary, :secondary
-  ;    Default: :muted
-  ;   :strength (px)(opt)
-  ;    Default: 1
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :color (keyword or string)(opt)
+  ;   :highlight, :muted, :primary, :secondary
+  ;   Default: :muted
+  ;  :strength (px)(opt)
+  ;   Default: 1
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [horizontal-line {...}]
+  ; [horizontal-line {...}]
   ;
   ; @usage
-  ;  [horizontal-line :my-horizontal-line {...}]
+  ; [horizontal-line :my-horizontal-line {...}]
   ([line-props]
    [element (random/generate-keyword) line-props])
 

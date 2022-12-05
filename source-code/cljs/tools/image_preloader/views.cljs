@@ -26,16 +26,16 @@
 (defn component
   ; @param (keyword)(opt) preloader-id
   ; @param (map) preloader-props
-  ;  {:uri (string)}
+  ; {:uri (string)}
   ;
   ; @usage
-  ;  [component {...}]
+  ; [component {...}]
   ;
   ; @usage
-  ;  [component :my-preloader {...}]
+  ; [component :my-preloader {...}]
   ;
   ; @usage
-  ;  [component {:uri "/my-image.png"}]
+  ; [component {:uri "/my-image.png"}]
   ([preloader-props]
    [component (random/generate-keyword) preloader-props])
 

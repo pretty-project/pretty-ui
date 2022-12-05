@@ -33,7 +33,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (map) option
   [_ {:keys [option-label-f]} option]
   [:div.e-combo-box--option-label (-> option option-label-f x.components/content)])
@@ -43,14 +43,14 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:option-component (component)(opt)}
+  ; {:option-component (component)(opt)}
   ; @param (integer) option-dex
   ; @param (map) option
   [box-id {:keys [option-component] :as box-props} option-dex option]
   ; BUG#2105
-  ;  A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
-  ;  a mező on-blur eseményének triggerelésével jár, ami a surface felület
-  ;  React-fából történő lecsatolását okozná.
+  ; A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
+  ; a mező on-blur eseményének triggerelésével jár, ami a surface felület
+  ; React-fából történő lecsatolását okozná.
   [:button.e-combo-box--option {:on-mouse-down #(do (.preventDefault %))
                                 :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
                                ;:data-selected ...
@@ -106,26 +106,26 @@
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ;  {:field-content-f (function)(opt)
-  ;    Default: return
-  ;   :field-value-f (function)(opt)
-  ;    Default: return
-  ;   :initial-options (vector)(opt)
-  ;   :on-select (metamorphic-event)(opt)
-  ;   :option-component (component)(opt)
-  ;    Default: elements.combo-box.views/default-option-component
-  ;   :option-label-f (function)(opt)
-  ;    Default: return
-  ;   :option-value-f (function)(opt)
-  ;    Default: return
-  ;   :options (vector)(opt)
-  ;   :options-path (vector)(opt)}
+  ; {:field-content-f (function)(opt)
+  ;   Default: return
+  ;  :field-value-f (function)(opt)
+  ;   Default: return
+  ;  :initial-options (vector)(opt)
+  ;  :on-select (metamorphic-event)(opt)
+  ;  :option-component (component)(opt)
+  ;   Default: elements.combo-box.views/default-option-component
+  ;  :option-label-f (function)(opt)
+  ;   Default: return
+  ;  :option-value-f (function)(opt)
+  ;   Default: return
+  ;  :options (vector)(opt)
+  ;  :options-path (vector)(opt)}
   ;
   ; @usage
-  ;  [combo-box {...}]
+  ; [combo-box {...}]
   ;
   ; @usage
-  ;  [combo-box :my-combo-box {...}]
+  ; [combo-box :my-combo-box {...}]
   ([box-props]
    [element (random/generate-keyword) box-props])
 

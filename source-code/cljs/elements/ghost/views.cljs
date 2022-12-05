@@ -42,29 +42,29 @@
 (defn element
   ; @param (keyword)(opt) ghost-id
   ; @param (map) ghost-props
-  ;  {:border-radius (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :s
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    Default: :s
-  ;   :style (map)(opt)}
+  ; {:border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   Default: :s
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :s
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [ghost {...}]
+  ; [ghost {...}]
   ;
   ; @usage
-  ;  [ghost :my-ghost {...}]
+  ; [ghost :my-ghost {...}]
   ([ghost-props]
    [element (random/generate-keyword) ghost-props])
 

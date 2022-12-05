@@ -159,14 +159,14 @@
   ; forrásaiból, azok prioritása szerint aktualizálja a current-item-id értékét.
   ;
   ; (A) Ha az engine útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;     1. az aktuális útvonal :item-id útvonal-paramétere
-  ;     2. a body komponens {:item-id "..."} tulajdonsága.
-  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
+  ;    1. az aktuális útvonal :item-id útvonal-paramétere
+  ;    2. a body komponens {:item-id "..."} tulajdonsága.
+  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
   ;
   ; (B) Ha az engine NEM útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;     1. az engine eseményei vagy a engine-t használó modul eseményei által előre beállított érték.
-  ;     2. a body komponens {:item-id "..."} tulajdonsága.
-  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
+  ;    1. az engine eseményei vagy a engine-t használó modul eseményei által előre beállított érték.
+  ;    2. a body komponens {:item-id "..."} tulajdonsága.
+  ;    3. a body komponens {:default-item-id "..."} tulajdonsága.
   (if-let [route-handled? (r routes.subs/route-handled? db engine-id)]
           ; (A)
           (if-let [derived-item-id (r routes.subs/get-derived-item-id db engine-id)]

@@ -43,11 +43,11 @@
 
 (defn title-sensor
   ; @param (map) sensor-props
-  ;  {:offset (px)(opt)
-  ;   :title (metamorphic-content)}
+  ; {:offset (px)(opt)
+  ;  :title (metamorphic-content)}
   ;
   ; @usage
-  ;  [surface-a/title-sensor {...}]
+  ; [surface-a/title-sensor {...}]
   [{:keys [offset] :as sensor-props}]
   (reagent/lifecycles {:component-did-mount    (fn []  (helpers/title-sensor-did-mount-f sensor-props))
                        :component-will-unmount (fn []  (helpers/title-sensor-will-unmount-f))
@@ -239,7 +239,7 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) layout-props
-  ;  {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)}
   [surface-id {:keys [content] :as layout-props}]
   [:div#surface-a--body [:div#surface-a--body-content [x.components/content surface-id content]]])
 
@@ -264,13 +264,13 @@
 (defn layout
   ; @param (keyword) surface-id
   ; @param (map) layout-props
-  ;  {:content (metamorphic-content)
-  ;   :on-mount (metamorphic-event)(opt)
-  ;   :on-unmount (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ; {:content (metamorphic-content)
+  ;  :on-mount (metamorphic-event)(opt)
+  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [layout :my-surface {...}]
+  ; [layout :my-surface {...}]
   [surface-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [] ;layout-props (prototypes/layout-props-prototype layout-props)
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

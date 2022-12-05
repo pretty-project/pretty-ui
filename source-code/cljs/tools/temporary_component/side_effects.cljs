@@ -27,13 +27,13 @@
   ; @param (function)(opt) render-callback
   ;
   ; @usage W/O callback
-  ;  (defn my-component [])
-  ;  (append-component! [my-component])
+  ; (defn my-component [])
+  ; (append-component! [my-component])
   ;
   ; @usage W/ callback
-  ;  (defn my-button [] [:a {:href "foo/bar"}])
-  ;  (defn click-my-button! [] ...)
-  ;  (append-component! [my-button] click-my-button!)
+  ; (defn my-button [] [:a {:href "foo/bar"}])
+  ; (defn click-my-button! [] ...)
+  ; (append-component! [my-button] click-my-button!)
   ([component]
    (helpers/remove-container!)
    (helpers/create-container!)
@@ -48,6 +48,6 @@
 
 (defn remove-component!
   ; @usage
-  ;  (remove-component!)
+  ; (remove-component!)
   []
   (helpers/remove-container!))

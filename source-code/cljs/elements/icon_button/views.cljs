@@ -31,7 +31,7 @@
 (defn- icon-button-progress
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:progress (percent)(opt)}
+  ; {:progress (percent)(opt)}
   [button-id {:keys [progress] :as button-props}]
   (if progress [:svg.e-icon-button--progress-svg {:view-box "0 0 24 24"}
                  [:circle.e-icon-button--progress-circle (icon-button.helpers/progress-attributes button-id button-props)]]))
@@ -41,7 +41,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
   (if label [:div.e-icon-button--label (x.components/content label)]))
 
@@ -50,8 +50,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon (keyword)
-  ;   :icon-family (keyword)}
+  ; {:icon (keyword)
+  ;  :icon-family (keyword)}
   [_ {:keys [icon icon-family]}]
   [:i.e-icon-button--icon {:data-icon-family icon-family} icon])
 
@@ -90,72 +90,72 @@
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ;  {:badge-color (keyword or string)(opt)
-  ;    :primary, :secondary, :success, :warning
-  ;   :badge-content (metamorphic-content)(opt)
-  ;   :background-color (keyword or string)(opt)
-  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  ;    Default: :none
-  ;   :border-color (keyword or string)(opt)
-  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  ;    Default: :none
-  ;   :border-radius (keyword)(opt)
-  ;    :none, :xxs, :xs, :s, :m, :l, :xl
-  ;    Default: :xs
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :default
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :height (keyword)(opt)
-  ;    :m, :l, :xl, :xxl, :3xl
-  ;    Default: :xxl
-  ;   :hover-color (keyword or string)(opt)
-  ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  ;    Default: :none
-  ;   :icon (keyword)
-  ;   :icon-family (keyword)(opt)
-  ;    :material-icons-filled, :material-icons-outlined
-  ;    Default: :material-icons-filled
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :keypress (map)(constant)(opt)
-  ;    {:key-code (integer)
-  ;     :required? (boolean)(opt)
-  ;      Default: false}
-  ;   :label (metamorphic-content)(opt)
-  ;   :on-click (metamorphic handler)(opt)
-  ;   :on-mouse-over (metamorphic handler)(opt)
-  ;   :preset (keyword)(opt)
-  ;   :progress (percent)(opt)
-  ;   :progress-duration (ms)(opt)
-  ;    W/ {:progress ...}
-  ;   :stop-propagation? (boolean)(opt)
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :tooltip (metamorphic-content)(opt)
-  ;   :variant (keyword)(opt)
-  ;    :placeholder
-  ;   :width (keyword)(opt)
-  ;    :m, :l, :xl, :xxl, :3xl
-  ;    Default: :xxl}
+  ; {:badge-color (keyword or string)(opt)
+  ;   :primary, :secondary, :success, :warning
+  ;  :badge-content (metamorphic-content)(opt)
+  ;  :background-color (keyword or string)(opt)
+  ;   :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;   Default: :none
+  ;  :border-color (keyword or string)(opt)
+  ;   :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;   Default: :none
+  ;  :border-radius (keyword)(opt)
+  ;   :none, :xxs, :xs, :s, :m, :l, :xl
+  ;   Default: :xs
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :default
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :height (keyword)(opt)
+  ;   :m, :l, :xl, :xxl, :3xl
+  ;   Default: :xxl
+  ;  :hover-color (keyword or string)(opt)
+  ;   :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
+  ;   Default: :none
+  ;  :icon (keyword)
+  ;  :icon-family (keyword)(opt)
+  ;   :material-icons-filled, :material-icons-outlined
+  ;   Default: :material-icons-filled
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :keypress (map)(constant)(opt)
+  ;   {:key-code (integer)
+  ;    :required? (boolean)(opt)
+  ;     Default: false}
+  ;  :label (metamorphic-content)(opt)
+  ;  :on-click (metamorphic handler)(opt)
+  ;  :on-mouse-over (metamorphic handler)(opt)
+  ;  :preset (keyword)(opt)
+  ;  :progress (percent)(opt)
+  ;  :progress-duration (ms)(opt)
+  ;   W/ {:progress ...}
+  ;  :stop-propagation? (boolean)(opt)
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :tooltip (metamorphic-content)(opt)
+  ;  :variant (keyword)(opt)
+  ;   :placeholder
+  ;  :width (keyword)(opt)
+  ;   :m, :l, :xl, :xxl, :3xl
+  ;   Default: :xxl}
   ;
   ; @usage
-  ;  [icon-button {...}]
+  ; [icon-button {...}]
   ;
   ; @usage
-  ;  [icon-button :my-button {...}]
+  ; [icon-button :my-button {...}]
   ;
   ; @usage
-  ;  [icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
+  ; [icon-button {:keypress {:key-code 13} :on-click [:my-event]}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

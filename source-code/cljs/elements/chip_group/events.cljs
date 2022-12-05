@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (integer) chip-dex
   ;
   ; @return (map)

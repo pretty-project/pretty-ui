@@ -33,7 +33,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:placeholder (metamorphic-content)(opt)}
+  ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   (if placeholder [:div.e-chip-group--chips-placeholder (x.components/content placeholder)]))
 
@@ -53,7 +53,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   [group-id {:keys [value-path] :as group-props}]
   (let [chips @(r/subscribe [:x.db/get-item value-path])]
        (if (vector/nonempty? chips)
@@ -75,7 +75,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -95,32 +95,32 @@
 (defn element
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :chip-label-f (function)(opt)
-  ;    Default: return
-  ;   :deletable? (boolean)(opt)
-  ;    Default: false
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :chip-label-f (function)(opt)
+  ;   Default: return
+  ;  :deletable? (boolean)(opt)
+  ;   Default: false
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :style (map)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [chip-group {...}]
+  ; [chip-group {...}]
   ;
   ; @usage
-  ;  [chip-group :my-chip-group {...}]
+  ; [chip-group :my-chip-group {...}]
   ([group-props]
    [element (random/generate-keyword) group-props])
 

@@ -29,14 +29,14 @@
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:date-from (string)(opt)
-  ;   :date-to (string)(opt)}
+  ; {:date-from (string)(opt)
+  ;  :date-to (string)(opt)}
   ;
   ; @usage
-  ;  [date-field {...}]
+  ; [date-field {...}]
   ;
   ; @usage
-  ;  [date-field :my-date-field {...}]
+  ; [date-field :my-date-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

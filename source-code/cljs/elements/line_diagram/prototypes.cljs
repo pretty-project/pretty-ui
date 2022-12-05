@@ -28,7 +28,7 @@
   ; @param (map) section-props
   ;
   ; @return (map)
-  ;  {:color (keyword or string)}
+  ; {:color (keyword or string)}
   [section-props]
   (merge {:color :primary}
          (param section-props)))
@@ -37,11 +37,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:strength (integer)(opt)}
+  ; {:strength (integer)(opt)}
   ;
   ; @return (map)
-  ;  {:strength (px)
-  ;   :total-value (integer)}
+  ; {:strength (px)
+  ;  :total-value (integer)}
   [{:keys [strength] :as diagram-props}]
   (merge {:strength 2
           :total-value (line-diagram.helpers/diagram-props->total-value diagram-props)}

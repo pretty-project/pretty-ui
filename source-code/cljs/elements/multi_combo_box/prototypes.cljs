@@ -29,7 +29,7 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   [box-id box-props]
   ; XXX#5061
   ; XXX#5062
@@ -45,9 +45,9 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {:chip-label-f (function)
-  ;   :deletable? (boolean)
-  ;   :indent (map)}
+  ; {:chip-label-f (function)
+  ;  :deletable? (boolean)
+  ;  :indent (map)}
   [box-id box-props]
   (let [group-props (dissoc box-props :helper :label :indent :placeholder)]
        (merge {:chip-label-f return
@@ -67,13 +67,13 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {:field-value-f (function)
-  ;   :on-blur (metamorphic-event)
-  ;   :on-change (metamorphic-event)
-  ;   :on-focus (metamorphic-event)
-  ;   :option-label-f (function)
-  ;   :option-value-f (function)
-  ;   :options-path (vector)}
+  ; {:field-value-f (function)
+  ;  :on-blur (metamorphic-event)
+  ;  :on-change (metamorphic-event)
+  ;  :on-focus (metamorphic-event)
+  ;  :option-label-f (function)
+  ;  :option-value-f (function)
+  ;  :options-path (vector)}
   [box-id box-props]
   ; XXX#5067
   ; A combo-box elemhez hasonloan a multi-combo-box elem eseményeinek is szükségesek
@@ -104,7 +104,7 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [box-id box-props]
   ; HACK#3031
   ; A box-events-prototype függvényben lévő eseményeknek szükségük van a box-props-prototype

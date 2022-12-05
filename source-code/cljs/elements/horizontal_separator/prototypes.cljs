@@ -26,7 +26,7 @@
   ; @param (map) separator-props
   ;
   ; @return (map)
-  ;  {:height (keyword)}
+  ; {:height (keyword)}
   [separator-props]
   (merge {:height :s}
          (param separator-props)))

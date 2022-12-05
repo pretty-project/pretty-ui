@@ -26,9 +26,9 @@
   ; @param (keyword) component-key
   ;
   ; @example
-  ;  (component-id :my-namespace/my-engine :view)
-  ;  =>
-  ;  :my-namespace.my-engine/view
+  ; (component-id :my-namespace/my-engine :view)
+  ; =>
+  ; :my-namespace.my-engine/view
   ;
   ; @return (keyword)
   [engine-id component-key]
@@ -44,9 +44,9 @@
   ; @param (keyword) data-key
   ;
   ; @example
-  ;  (default-data-path :my-engine :suggestions)
-  ;  =>
-  ;  [:engines :engine-handler/suggestions :my-engine]
+  ; (default-data-path :my-engine :suggestions)
+  ; =>
+  ; [:engines :engine-handler/suggestions :my-engine]
   ;
   ; @return (vector)
   [engine-id data-key]

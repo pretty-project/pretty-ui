@@ -37,9 +37,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-;  [:item-browser/data-received? :my-browser]
+; [:item-browser/data-received? :my-browser]
 (r/reg-sub :item-browser/data-received? data-received?)
 
 ; @usage
-;  [:item-browser/first-data-received? :my-browser]
+; [:item-browser/first-data-received? :my-browser]
 (r/reg-sub :item-browser/first-data-received? first-data-received?)

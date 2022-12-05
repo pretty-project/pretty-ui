@@ -31,7 +31,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:option-helper-f (function)}
+  ; {:option-helper-f (function)}
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
@@ -42,7 +42,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
@@ -84,7 +84,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
+  ; {}
   [checkbox-id {:keys [style] :as checkbox-props}]
   [:div.e-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
                          [checkbox-options                          checkbox-id checkbox-props]])
@@ -94,7 +94,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -125,54 +125,54 @@
 (defn element
   ; @param (keyword)(opt) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:border-color (keyword or string)(opt)
-  ;    :default, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :default-value (boolean)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :font-size (keyword)(opt)
-  ;    :xs, :s, :inherit
-  ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :initial-options (vector)(opt)
-  ;   :initial-value (boolean)(opt)
-  ;   :marked? (boolean)(opt)
-  ;    Default: false
-  ;   :on-check (metamorphic-event)(opt)
-  ;   :on-uncheck (metamorphic-event)(opt)
-  ;   :option-helper-f (function)(opt)
-  ;   :option-label-f (function)(opt)
-  ;    Default: return
-  ;   :option-value-f (function)(opt)
-  ;    Default: return
-  ;   :options (vector)(opt)
-  ;   :options-orientation (keyword)(opt)
-  ;    :horizontal, :vertical
-  ;    Default: :vertical
-  ;   :options-path (vector)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :required? (boolean or keyword)(opt)
-  ;    true, false, :unmarked
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :default-value (boolean)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :font-size (keyword)(opt)
+  ;   :xs, :s, :inherit
+  ;   Default: :s
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :initial-options (vector)(opt)
+  ;  :initial-value (boolean)(opt)
+  ;  :marked? (boolean)(opt)
+  ;   Default: false
+  ;  :on-check (metamorphic-event)(opt)
+  ;  :on-uncheck (metamorphic-event)(opt)
+  ;  :option-helper-f (function)(opt)
+  ;  :option-label-f (function)(opt)
+  ;   Default: return
+  ;  :option-value-f (function)(opt)
+  ;   Default: return
+  ;  :options (vector)(opt)
+  ;  :options-orientation (keyword)(opt)
+  ;   :horizontal, :vertical
+  ;   Default: :vertical
+  ;  :options-path (vector)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :required? (boolean or keyword)(opt)
+  ;   true, false, :unmarked
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [checkbox {...}]
+  ; [checkbox {...}]
   ;
   ; @usage
-  ;  [checkbox :my-checkbox {...}]
+  ; [checkbox :my-checkbox {...}]
   ([checkbox-props]
    [element (random/generate-keyword) checkbox-props])
 

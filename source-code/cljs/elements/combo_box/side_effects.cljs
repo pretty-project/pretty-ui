@@ -61,7 +61,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
   (let [option-label (option-label-f selected-option)]

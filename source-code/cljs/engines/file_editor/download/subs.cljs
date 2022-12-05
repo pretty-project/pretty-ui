@@ -34,5 +34,5 @@
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:file-editor/data-received? :my-editor]
+; [:file-editor/data-received? :my-editor]
 (r/reg-sub :file-editor/data-received? data-received?)

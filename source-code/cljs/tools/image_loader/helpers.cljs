@@ -49,13 +49,13 @@
   ;
   ; @param (keyword) loader-id
   ; @param (map) loader-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :uri (string)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :uri (string)}
   ;
   ; @return (map)
-  ;  {:class (keyword or keywords in vector)
-  ;   :id (keyword)
-  ;   :style (map)}
+  ; {:class (keyword or keywords in vector)
+  ;  :id (keyword)
+  ;  :style (map)}
   [loader-id {:keys [class uri]}]
   {:class (param        class)
    :id    (hiccup/value loader-id)

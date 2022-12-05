@@ -27,12 +27,12 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:options (strings in vector)(opt)
-  ;   :options-path (vector)(opt)}
+  ; {:options (strings in vector)(opt)
+  ;  :options-path (vector)(opt)}
   ;
   ; @return (map)
-  ;  {:options (strings in vector)
-  ;   :value-path (vector)}
+  ; {:options (strings in vector)
+  ;  :value-path (vector)}
   [db [_ selector-id {:keys [options options-path] :as selector-props}]]
   ; A color-selector elem a többi opciós elemtől (checkbox, radio-button, ...)
   ; eltérően valósítja meg az initial-options, options és options-path kapcsolatát.
@@ -58,6 +58,6 @@
   ; @param (map) selector-props
   ;
   ; @return (map)
-  ;  {:on-click (metamorphic-event)}
+  ; {:on-click (metamorphic-event)}
   [selector-id selector-props]
   (assoc selector-props :on-click [:elements.color-selector/render-selector! selector-id selector-props]))

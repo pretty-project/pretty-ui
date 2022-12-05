@@ -25,8 +25,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)
-  ;   :on-click (metamorphic-event)}
+  ; {:keypress (map)(opt)
+  ;  :on-click (metamorphic-event)}
   [db [_ button-id {:keys [keypress on-click]}]]
   (-> db (assoc-in [:elements :element-handler/meta-items button-id :keypress] keypress)
          (assoc-in [:elements :element-handler/meta-items button-id :on-click] on-click)))
@@ -36,8 +36,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)
-  ;   :on-click (metamorphic-event)}
+  ; {:keypress (map)(opt)
+  ;  :on-click (metamorphic-event)}
   [db [_ button-id {:keys [keypress on-click]}]]
   (-> db (assoc-in [:elements :element-handler/meta-items button-id :keypress] keypress)
          (assoc-in [:elements :element-handler/meta-items button-id :on-click] on-click)))

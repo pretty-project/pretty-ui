@@ -29,15 +29,15 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:height (keyword)
-  ;   :label (metamorphic-content)(opt)
-  ;   :tooltip (metamorphic-content)(opt)
-  ;   :width (keyword)}
+  ; {:height (keyword)
+  ;  :label (metamorphic-content)(opt)
+  ;  :tooltip (metamorphic-content)(opt)
+  ;  :width (keyword)}
   ;
   ; @return (map)
-  ;  {:data-height (keyword)
-  ;   :data-labeled (boolean)
-  ;   :data-width (keyword)}
+  ; {:data-height (keyword)
+  ;  :data-labeled (boolean)
+  ;  :data-width (keyword)}
   [button-id {:keys [height label tooltip width] :as button-props}]
   (merge {:data-height  height
           :data-width   width
@@ -50,12 +50,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:tooltip (metamorphic-content)(opt)
-  ;   :data-variant (keyword)(opt)}
+  ; {:tooltip (metamorphic-content)(opt)
+  ;  :data-variant (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-tooltip (string)
-  ;   :data-variant (keyword)}
+  ; {:data-tooltip (string)
+  ;  :data-variant (keyword)}
   [button-id {:keys [tooltip variant] :as button-props}]
   (merge (element.helpers/element-default-attributes button-id button-props)
          (element.helpers/element-indent-attributes  button-id button-props)
@@ -70,16 +70,16 @@
 (defn progress-attributes
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {:cx (px)
-  ;   :cy (px)
-  ;   :r (px)
-  ;   :stroke (string)
-  ;   :stroke-dasharray (string)
-  ;   :stroke-width (px)
-  ;   :transition (string)}
+  ; {:cx (px)
+  ;  :cy (px)
+  ;  :r (px)
+  ;  :stroke (string)
+  ;  :stroke-dasharray (string)
+  ;  :stroke-width (px)
+  ;  :transition (string)}
   [_ {:keys [progress progress-duration]}]
   ; W:  24px
   ; H:  24px

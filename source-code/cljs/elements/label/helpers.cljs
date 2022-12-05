@@ -29,7 +29,7 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:content (string)(opt)}
+  ; {:content (string)(opt)}
   ;
   ; @return (function)
   [_ {:keys [content]}]
@@ -69,11 +69,11 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-copy-label (string)
-  ;   :data-copyable (boolean)
-  ;   :data-selectable (boolean)
-  ;   :on-click (function)
+  ; {:data-clickable (boolean)
+  ;  :data-copy-label (string)
+  ;  :data-copyable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :on-click (function)
   [label-id label-props]
   (merge {:data-clickable  true
           :data-copyable   true
@@ -85,11 +85,11 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:color (keyword or string)
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)))
@@ -99,14 +99,14 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:font-size (keyword)
-  ;   :font-weight (keyword)
-  ;   :line-height (keyword)}
+  ; {:font-size (keyword)
+  ;  :font-weight (keyword)
+  ;  :line-height (keyword)}
   ;
   ; @return (map)
-  ;  {:data-font-size (keyword)
-  ;   :data-font-weight (keyword)
-  ;   :data-line-height (keyword)}
+  ; {:data-font-size (keyword)
+  ;  :data-font-weight (keyword)
+  ;  :data-line-height (keyword)}
   [_ {:keys [font-size font-weight line-height]}]
   {:data-font-size   font-size
    :data-font-weight font-weight
@@ -117,18 +117,18 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:horizontal-align (keyword)
-  ;   :horizontal-position (keyword)(opt)
-  ;   :min-width (keyword)(opt)
-  ;   :overflow-direction (keyword)(opt)
-  ;   :vertical-position (keyword)(opt)}
+  ; {:horizontal-align (keyword)
+  ;  :horizontal-position (keyword)(opt)
+  ;  :min-width (keyword)(opt)
+  ;  :overflow-direction (keyword)(opt)
+  ;  :vertical-position (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-horizontal-align (keyword)
-  ;   :data-horizontal-position (keyword)
-  ;   :data-min-width (keyword)
-  ;   :data-overflow-direction (keyword)
-  ;   :data-vertical-position (keyword)}
+  ; {:data-horizontal-align (keyword)
+  ;  :data-horizontal-position (keyword)
+  ;  :data-min-width (keyword)
+  ;  :data-overflow-direction (keyword)
+  ;  :data-vertical-position (keyword)}
   [_ {:keys [horizontal-align horizontal-position min-width overflow-direction vertical-position]}]
   {:data-horizontal-align    horizontal-align
    :data-horizontal-position horizontal-position
@@ -141,10 +141,10 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ;  {:selectable? (boolean)(opt)}
+  ; {:selectable? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-selectable (boolean)}
+  ; {:data-selectable (boolean)}
   [label-id {:keys [selectable?] :as label-props}]
   (merge {:data-selectable selectable?}
          (label-style-attributes  label-id label-props)
@@ -174,11 +174,11 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-selectable (boolean)
-  ;   :data-icon-family (keyword)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :data-icon-family (keyword)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [label-id _]
   {:data-clickable   true
    :data-selectable  false

@@ -42,26 +42,26 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword or string)(opt)
-  ;    :highlight, :muted
-  ;    Default: :muted
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :color (keyword or string)(opt)
+  ;   :highlight, :muted
+  ;   Default: :muted
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [button-separator {...}]
+  ; [button-separator {...}]
   ;
   ; @usage
-  ;  [button-separator :my-separator {...}]
+  ; [button-separator :my-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

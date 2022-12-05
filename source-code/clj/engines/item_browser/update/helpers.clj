@@ -29,9 +29,9 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item->path :my-browser {...})
-  ;  =>
-  ;  [{:my-type/id "parent-item"}]
+  ; (item->path :my-browser {...})
+  ; =>
+  ; [{:my-type/id "parent-item"}]
   ;
   ; @return (maps in vector)
   [env browser-id item]
@@ -45,9 +45,9 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item->parent-link :my-browser {...})
-  ;  =>
-  ;  {:my-type/id "parent-item"}
+  ; (item->parent-link :my-browser {...})
+  ; =>
+  ; {:my-type/id "parent-item"}
   ;
   ; @return (namespaced map)
   [env browser-id item]
@@ -60,9 +60,9 @@
   ; @param (namespaced map) item
   ;
   ; @example
-  ;  (item->parent-id :my-browser {...})
-  ;  =>
-  ;  "parent-item"
+  ; (item->parent-id :my-browser {...})
+  ; =>
+  ; "parent-item"
   ;
   ; @return (string)
   [env browser-id item]
@@ -81,9 +81,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-id->path :my-browser "my-item")
-  ;  =>
-  ;  [{:my-type/id "parent-item"}]
+  ; (item-id->path :my-browser "my-item")
+  ; =>
+  ; [{:my-type/id "parent-item"}]
   ;
   ; @return (namespaced maps in vector)
   [env browser-id item-id]
@@ -99,9 +99,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-id->parent-link :my-browser "my-item")
-  ;  =>
-  ;  {:my-type/id "parent-item"}
+  ; (item-id->parent-link :my-browser "my-item")
+  ; =>
+  ; {:my-type/id "parent-item"}
   ;
   ; @return (namespaced map)
   [env browser-id item-id]
@@ -114,9 +114,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (item-id->parent-id :my-browser "my-item")
-  ;  =>
-  ;  "parent-item"
+  ; (item-id->parent-id :my-browser "my-item")
+  ; =>
+  ; "parent-item"
   ;
   ; @return (string)
   [env browser-id item-id]

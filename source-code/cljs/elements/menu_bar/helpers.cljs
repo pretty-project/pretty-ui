@@ -27,10 +27,10 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:font-size (keyword)}
+  ; {:font-size (keyword)}
   ;
   ; @return (map)
-  ;  {:data-font-size (keyword)}
+  ; {:data-font-size (keyword)}
   [_ {:keys [font-size font-weight]}]
   {:data-font-size font-size})
 
@@ -39,14 +39,14 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:height (keyword)
-  ;   :horizontal-align (keyword)(opt)
-  ;   :orientation (keyword)}
+  ; {:height (keyword)
+  ;  :horizontal-align (keyword)(opt)
+  ;  :orientation (keyword)}
   ;
   ; @return (map)
-  ;  {:data-height (keyword)
-  ;   :data-horizontal-align (keyword)
-  ;   :data-orientation (keyword)}
+  ; {:data-height (keyword)
+  ;  :data-horizontal-align (keyword)
+  ;  :data-orientation (keyword)}
   [_ {:keys [height horizontal-align orientation]}]
   {:data-height           height
    :data-horizontal-align horizontal-align
@@ -57,10 +57,10 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [bar-id {:keys [style] :as bar-props}]
   (merge {:data-selectable false
           :style           style}
@@ -89,18 +89,18 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:active? (boolean)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;   :href (string)(opt)
-  ;   :on-click (metamorphic-event)(opt)}
+  ; {:active? (boolean)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;  :href (string)(opt)
+  ;  :on-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:data-active (boolean)
-  ;   :data-clickable (boolean)
-  ;   :data-disabled (boolean)
-  ;   :href (string)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-active (boolean)
+  ;  :data-clickable (boolean)
+  ;  :data-disabled (boolean)
+  ;  :href (string)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [bar-id _ {:keys [active? disabled? href on-click]}]
                 ; If menu-item is disabled ...
   (if disabled? (cond-> {:data-disabled true

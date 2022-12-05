@@ -24,13 +24,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) bar-props
-  ;  {:orientation (keyword)(opt)}
+  ; {:orientation (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:font-size (keyword)
-  ;   :height (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :orientation (keyword)}
+  ; {:font-size (keyword)
+  ;  :height (keyword)
+  ;  :horizontal-align (keyword)
+  ;  :orientation (keyword)}
   [{:keys [orientation] :as bar-props}]
   (merge {:font-size   :s
           :height      :xxl
@@ -43,10 +43,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) item-props
-  ;  {:icon (keyword)(opt)}
+  ; {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:icon-family (keyword)}
+  ; {:icon-family (keyword)}
   [{:keys [icon] :as item-props}]
   (merge {}
          (if icon {:icon-family :material-icons-filled})

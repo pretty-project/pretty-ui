@@ -29,14 +29,14 @@
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:validate? (boolean)(opt)
-  ;    Default: false}
+  ; {:validate? (boolean)(opt)
+  ;   Default: false}
   ;
   ; @usage
-  ;  [password-field {...}]
+  ; [password-field {...}]
   ;
   ; @usage
-  ;  [password-field :my-password-field {...}]
+  ; [password-field :my-password-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

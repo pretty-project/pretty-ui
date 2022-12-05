@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -37,11 +37,11 @@
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
-  ;  {:height (keyword)}
+  ; {:height (keyword)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-height (keyword)}
+  ; {:data-border-radius (keyword)
+  ;  :data-height (keyword)}
   [ghost-id {:keys [border-radius height] :as ghost-props}]
   (merge (element.helpers/element-default-attributes ghost-id ghost-props)
          (element.helpers/element-indent-attributes  ghost-id ghost-props)

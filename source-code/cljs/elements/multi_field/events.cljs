@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (integer) field-dex
   ;
   ; @return (map)
@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (integer) field-dex
   ;
   ; @return (map)

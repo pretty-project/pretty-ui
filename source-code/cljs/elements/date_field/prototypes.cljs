@@ -28,8 +28,8 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:autofill-name (keyword)
-  ;   :type (keyword)}
+  ; {:autofill-name (keyword)
+  ;  :type (keyword)}
   [_ field-props]
   (merge {}
          (param field-props)

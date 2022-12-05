@@ -34,13 +34,13 @@
 (r/reg-event-fx :elements.color-selector/render-selector!
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:options (strings in vector)(opt)
-  ;   :options-label (metamorphic-content)(opt)
-  ;   :options-path (vector)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:options (strings in vector)(opt)
+  ;  :options-label (metamorphic-content)(opt)
+  ;  :options-path (vector)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [:elements.color-selector/render-selector! {...}]
+  ; [:elements.color-selector/render-selector! {...}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ selector-id selector-props]]
       (let [selector-props (r color-selector.prototypes/selector-props-prototype db selector-id selector-props)]

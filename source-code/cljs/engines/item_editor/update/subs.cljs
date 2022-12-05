@@ -61,9 +61,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
-  ;  =>
-  ;  "my-item"
+  ; (r get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ editor-id server-response]]

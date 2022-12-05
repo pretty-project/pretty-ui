@@ -36,9 +36,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r get-item-route db :my-viewer "my-item")
-  ;  =>
-  ;  "/@app-home/my-viewer/my-item"
+  ; (r get-item-route db :my-viewer "my-item")
+  ; =>
+  ; "/@app-home/my-viewer/my-item"
   ;
   ; @return (string)
   [db [_ viewer-id item-id]]
@@ -53,5 +53,5 @@
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-viewer/get-item-route db :my-viewer "my-item"]
+; [:item-viewer/get-item-route db :my-viewer "my-item"]
 (r/reg-sub :item-viewer/get-item-route get-item-route)

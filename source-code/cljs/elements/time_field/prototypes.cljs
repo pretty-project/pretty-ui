@@ -26,7 +26,7 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [field-props]
   (merge {}
          (param field-props)))

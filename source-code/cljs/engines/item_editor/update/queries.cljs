@@ -28,7 +28,7 @@
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ editor-id]]
   (let [exported-item (r core.subs/export-current-item db editor-id)]
        (r core.subs/use-query-params db editor-id {:item exported-item})))

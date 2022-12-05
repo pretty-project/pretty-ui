@@ -25,8 +25,8 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:max-input-count (integer)
-  ;   :value-path (vector)}
+  ; {:max-input-count (integer)
+  ;  :value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [max-input-count value-path]}]]
@@ -39,7 +39,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ;
   ; @return (strings in vector)
   [db [_ _ {:keys [value-path]}]]

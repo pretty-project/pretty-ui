@@ -26,7 +26,7 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [diagram-props]
   (merge {}
          (param diagram-props)))

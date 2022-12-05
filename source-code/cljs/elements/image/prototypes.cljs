@@ -26,7 +26,7 @@
   ; @param (map) image-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [image-props]
   (merge {}
          (param image-props)))

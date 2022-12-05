@@ -25,8 +25,8 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:options (vector)(opt)
-  ;   :options-path (vector)(opt)}
+  ; {:options (vector)(opt)
+  ;  :options-path (vector)(opt)}
   ;
   ; @return (vector)
   [_ {:keys [options options-path]}]
@@ -60,14 +60,14 @@
   ; @param (vector) value-path
   ;
   ; @example
-  ;  (value-path->vector-item? [:my-value])
-  ;  =>
-  ;  false
+  ; (value-path->vector-item? [:my-value])
+  ; =>
+  ; false
   ;
   ; @example
-  ;  (value-path->vector-item? [:my-value 2])
-  ;  =>
-  ;  true
+  ; (value-path->vector-item? [:my-value 2])
+  ; =>
+  ; true
   ;
   ; @return (boolean)
   [value-path]

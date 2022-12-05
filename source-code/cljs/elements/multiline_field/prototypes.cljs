@@ -28,10 +28,10 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:autofill-name (keyword)
-  ;   :max-height (integer)
-  ;   :min-height (integer)
-  ;   :multiline? (boolean)}
+  ; {:autofill-name (keyword)
+  ;  :max-height (integer)
+  ;  :min-height (integer)
+  ;  :multiline? (boolean)}
   [field-id field-props]
   (merge {:max-height 32
           :min-height 1}

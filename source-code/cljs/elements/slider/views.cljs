@@ -72,7 +72,7 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -103,42 +103,42 @@
 (defn element
   ; @param (keyword)(opt) slider-id
   ; @param (map) slider-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :initial-value (vector)(opt)
-  ;    Default: [0 100]
-  ;   :label (metamorphic-content)(opt)
-  ;   :marked? (boolean)(opt)
-  ;    Default: false
-  ;   :max-value (integer)(opt)
-  ;    Default: 100
-  ;   :min-value (integer)(opt)
-  ;    Default: 0
-  ;   :resetable? (boolean)(opt)
-  ;    Default: false
-  ;   :required? (boolean or keyword)(opt)
-  ;    true, false, :unmarked
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :initial-value (vector)(opt)
+  ;   Default: [0 100]
+  ;  :label (metamorphic-content)(opt)
+  ;  :marked? (boolean)(opt)
+  ;   Default: false
+  ;  :max-value (integer)(opt)
+  ;   Default: 100
+  ;  :min-value (integer)(opt)
+  ;   Default: 0
+  ;  :resetable? (boolean)(opt)
+  ;   Default: false
+  ;  :required? (boolean or keyword)(opt)
+  ;   true, false, :unmarked
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [slider {...}]
+  ; [slider {...}]
   ;
   ; @usage
-  ;  [slider :my-slider {...}]
+  ; [slider :my-slider {...}]
   ([slider-props]
    [element (random/generate-keyword) slider-props])
 

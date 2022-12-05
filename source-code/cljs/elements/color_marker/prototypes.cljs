@@ -26,8 +26,8 @@
   ; @param (map) marker-props
   ;
   ; @return (map)
-  ;  {:colors (keywords or strings in vector)
-  ;   :size (keyword)}
+  ; {:colors (keywords or strings in vector)
+  ;  :size (keyword)}
   [marker-props]
   (merge {:colors [:highlight]
           :size   :s}

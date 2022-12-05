@@ -66,24 +66,24 @@
 (defn element
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:digit-count (integer)
-  ;    Default: 4
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :value-path (vector)}
+  ; {:digit-count (integer)
+  ;   Default: 4
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :value-path (vector)}
   ;
   ; @usage
-  ;  [digit-field {...}]
+  ; [digit-field {...}]
   ;
   ; @usage
-  ;  [digit-field :my-digit-field {...}]
+  ; [digit-field :my-digit-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

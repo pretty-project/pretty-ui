@@ -24,9 +24,9 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})

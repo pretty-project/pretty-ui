@@ -80,10 +80,10 @@
 
 ; Az [:item-lister/reorder-items! ...] esemény ...
 ; ... a letöltött elemeket a reordered-items vektorban tárolt sorrendjük szerint
-;     ellátja a body-komponens számára :order-key paraméterként átadott kulcshoz
-;     rendelt sorrendi értékkel.
+;    ellátja a body-komponens számára :order-key paraméterként átadott kulcshoz
+;    rendelt sorrendi értékkel.
 ; ... elküldi a szerver-oldali my-handler/reorder-items! mutation függvény számára
-;     az újrarendezett elemeket.
+;    az újrarendezett elemeket.
 ;
 ; (def db {:downloaded-items [{:id "my-item"} {:id "your-item"}]})
 ; (r/dispatch [:reorder-my-items! [{:id "your-item"} {:id "my-item"}]])

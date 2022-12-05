@@ -35,7 +35,7 @@
   ; @param (map) item-changes
   ;
   ; @usage
-  ;  [:item-browser/update-item! :my-browser "my-item" {...}]
+  ; [:item-browser/update-item! :my-browser "my-item" {...}]
   (fn [{:keys [db]} [_ browser-id item-id item-changes]]
       ; - Az [:item-browser/update-item! ...] esemény az item-changes paraméterként átadott változásokat
       ;   azonnal végrahajta az elemen.
@@ -102,7 +102,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-browser/delete-item! :my-browser "my-item"]
+  ; [:item-browser/delete-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-delete-item-query          db browser-id item-id)
             validator-f #(r update.validators/delete-item-response-valid? db browser-id %)]
@@ -258,7 +258,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-browser/duplicate-item! :my-browser "my-item"]
+  ; [:item-browser/duplicate-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
       (let [query        (r update.queries/get-duplicate-item-query          db browser-id item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
@@ -334,5 +334,5 @@
   ; @param (string) destination-id
   ;
   ; @usage
-  ;  [:item-browser/move-item! :my-browser "my-item" "your-item"]
+  ; [:item-browser/move-item! :my-browser "my-item" "your-item"]
   (fn [{:keys [db]} [_ browser-id item-id destination-id]]))

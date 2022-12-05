@@ -82,12 +82,12 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (convert "<div")
+  ; (convert "<div")
   ;
   ; @example
-  ;  (convert "<div>")
-  ;  =>
-  ;  [:div]
+  ; (convert "<div>")
+  ; =>
+  ; [:div]
   ;
   ; @return (vector)
   [n]

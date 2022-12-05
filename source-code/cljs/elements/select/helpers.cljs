@@ -32,8 +32,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:initial-options (vector)(opt)
-  ;   :initial-value (*)(opt)}
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)}
   [select-id {:keys [initial-options initial-value] :as select-props}]
   ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
   ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/active-button-did-mount ...]
@@ -59,7 +59,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:option-label-f (function)(opt)}
+  ; {:option-label-f (function)(opt)}
   ; @param (*) option
   ;
   ; @return (boolean)
@@ -80,14 +80,14 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:border-radius (keyword)
-  ;   :layout (keyword)
-  ;   :min-width (keyword)}
+  ; {:border-radius (keyword)
+  ;  :layout (keyword)
+  ;  :min-width (keyword)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-layout (keyword)
-  ;   :data-min-width (keyword)}
+  ; {:data-border-radius (keyword)
+  ;  :data-layout (keyword)
+  ;  :data-min-width (keyword)}
   [select-id {:keys [border-radius layout min-width] :as select-props}]
   (merge (element.helpers/element-default-attributes select-id select-props)
          (element.helpers/element-indent-attributes  select-id select-props)
@@ -100,13 +100,13 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:disabled? (boolean)(opt)}
+  ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :disabled (boolean)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :disabled (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [select-id {:keys [disabled?] :as select-props}]
   (let [on-click          [:elements.select/render-options! select-id select-props]
         required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
@@ -127,11 +127,11 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   ; @param (*) option
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [select-id {:keys [value-path] :as select-props} option]
   (let [selected-value  @(r/subscribe [:x.db/get-item value-path])
         option-selected? (= selected-value option)

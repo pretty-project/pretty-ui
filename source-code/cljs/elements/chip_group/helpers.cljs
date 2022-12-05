@@ -25,7 +25,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   ; {}

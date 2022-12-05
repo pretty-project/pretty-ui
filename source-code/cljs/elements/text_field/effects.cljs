@@ -30,7 +30,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
       ; Az [:elements.text-field/use-initial-value! ...] esemény beállítja a kezdeti értékét
       ; az adatbázisban, majd a [:elements.text-field/hack5041 ...] esemény az adatbázisban megváltozott
@@ -52,7 +52,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
            {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
@@ -78,7 +78,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   (fn [{:keys [db]} [_ field-id {:keys [value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
            {:fx [:elements.text-field/use-stored-value! field-id field-props stored-value]})))
@@ -110,8 +110,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:emptiable? (boolean)(opt)
-  ;   :on-enter (metamorphic-event)(opt)}
+  ; {:emptiable? (boolean)(opt)
+  ;  :on-enter (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [emptiable? on-enter]}]]
       ; XXX#4156
       {:dispatch-cond [on-enter   [:x.environment/remove-keypress-event! :elements.text-field/ENTER]
@@ -127,7 +127,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:on-enter (metamorphic-event)(opt)}
+  ; {:on-enter (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-enter]}]]
       {:dispatch on-enter}))
 
@@ -136,7 +136,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:emptiable? (boolean)(opt)}
+  ; {:emptiable? (boolean)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [emptiable?] :as field-props}]]
       (if emptiable? [:elements.text-field/empty-field! field-id field-props])))
 
@@ -150,7 +150,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:on-empty (metamorphic-event)(opt)}
+  ; {:on-empty (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
       ; Az [:elements.text-field/empty-field! ...] esemény kizárólag abban az esetben
       ; törli a mező tartalmát, ha az input elem nincs disabled="true" állapotban,
@@ -183,7 +183,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ; @param (string) field-content
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props} field-content]]
       {:db       (r text-field.events/type-ended db field-id field-props field-content)
@@ -194,7 +194,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:on-blur (metamorphic-event)(opt)}
+  ; {:on-blur (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
       {:db         (r text-field.events/field-blurred db field-id field-props)
        :dispatch-n [on-blur [:elements.text-field/remove-keypress-events! field-id field-props]]}))
@@ -204,7 +204,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:on-focus (metamorphic-event)(opt)}
+  ; {:on-focus (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-focus] :as field-props}]]
       {:db         (r text-field.events/field-focused db field-id field-props)
        :dispatch-n [on-focus [:elements.text-field/reg-keypress-events! field-id field-props]]}))

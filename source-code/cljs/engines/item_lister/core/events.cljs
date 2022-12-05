@@ -72,11 +72,11 @@
   [db [_ lister-id]]
   ; Ha az item-lister engine elhagyása előtt, a {:memory-mode? true} állapot ...
   ; ... beállításra került, akkor megjegyzi a legutóbb használt keresési és rendezési beállításokat,
-  ;     így az engine újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
-  ;     így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet
-  ;     a lista legutóbbi állapotához.
+  ;    így az engine újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
+  ;    így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet
+  ;    a lista legutóbbi állapotához.
   ; ... NEM került beállításra, akkor az engine újbóli megnyitásakor a listaelemek az alapértelmezett
-  ;     beállítások szerint töltődnek majd le.
+  ;    beállítások szerint töltődnek majd le.
   (if-let [memory-mode? (r core.subs/get-meta-item db lister-id :memory-mode?)]
           (let [meta-items (get-in db [:engines :engine-handler/meta-items lister-id])]
                (as-> db % (dissoc-in % [:engines :engine-handler/meta-items lister-id])
@@ -148,7 +148,7 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) search-props
-  ;  {:search-keys (keywords in vector)}
+  ; {:search-keys (keywords in vector)}
   ; @param (string) search-term
   ;
   ; @return (map)
@@ -184,11 +184,11 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/set-memory-mode! :my-lister]
+; [:item-lister/set-memory-mode! :my-lister]
 (r/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/reset-selections! :my-lister]
+; [:item-lister/reset-selections! :my-lister]
 (r/reg-event-db :item-lister/reset-selections! reset-selections!)

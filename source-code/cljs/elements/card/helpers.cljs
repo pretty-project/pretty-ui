@@ -27,13 +27,13 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {:background-color (keyword or string)(opt)
-  ;   :border-color (keyword or string)(opt)
-  ;   :hover-color (keyword)(opt)
-  ;   :style (map)(opt)}
+  ; {:background-color (keyword or string)(opt)
+  ;  :border-color (keyword or string)(opt)
+  ;  :hover-color (keyword)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [background-color border-color hover-color style]}]
   (-> {:style style}
       (element.helpers/apply-color :background-color :data-background-color background-color)
@@ -45,14 +45,14 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {:border-radius (keyword)(opt)
-  ;   :horizontal-align (keyword)(opt)}
+  ; {:border-radius (keyword)(opt)
+  ;  :horizontal-align (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-horizontal-align (keyword)
-  ;   :data-min-width (keyword)
-  ;   :data-stretch-orientation (keyword)}
+  ; {:data-border-radius (keyword)
+  ;  :data-horizontal-align (keyword)
+  ;  :data-min-width (keyword)
+  ;  :data-stretch-orientation (keyword)}
   [_ {:keys [border-radius horizontal-align min-width stretch-orientation]}]
   {:data-border-radius       border-radius
    :data-horizontal-align    horizontal-align
@@ -64,14 +64,14 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :on-click (metamorphic-event)}
+  ; {:disabled? (boolean)(opt)
+  ;  :on-click (metamorphic-event)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :disabled (boolean)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :disabled (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [card-id {:keys [disabled? on-click] :as card-props}]
   (merge (card-style-attributes  card-id card-props)
          (card-layout-attributes card-id card-props)

@@ -68,7 +68,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {}
+  ; {}
   (fn [{:keys [db]} [_ box-id box-props]]
       ; XXX#4146
       ; Ha a multi-combo-box elem surface felülete ...

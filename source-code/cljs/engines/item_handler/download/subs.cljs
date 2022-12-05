@@ -34,5 +34,5 @@
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/data-received? :my-handler]
+; [:item-handler/data-received? :my-handler]
 (r/reg-sub :item-handler/data-received? data-received?)

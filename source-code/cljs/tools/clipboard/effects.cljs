@@ -25,7 +25,7 @@
   ; @param (string) text
   ;
   ; @usage
-  ;  [:clipboard/copy-text! "My text"]
+  ; [:clipboard/copy-text! "My text"]
   (fn [_ [_ text]]
       {:dispatch [:x.ui/render-bubble! ::notification {:body [views/copied-to-clipboard-dialog-body text]}]
        :fx       [:clipboard/copy-text! text]}))

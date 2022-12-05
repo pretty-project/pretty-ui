@@ -34,5 +34,5 @@
 ; @param (keyword) viewer-id
 ;
 ; @usage
-;  [:item-viewer/data-received? :my-viewer]
+; [:item-viewer/data-received? :my-viewer]
 (r/reg-sub :item-viewer/data-received? data-received?)

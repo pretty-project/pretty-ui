@@ -25,17 +25,17 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:sections (maps in vector)}
+  ; {:sections (maps in vector)}
   ;
   ; @example
-  ;  (diagram-props<-total-value {:sections [{:value 50} {:value 25} {:value 50}]})
-  ;  =>
-  ;  {:sections [{:value 25 :sum 0} {:value 25 :sum 25} {:value 50 :sum 50}] :total-value 100}
+  ; (diagram-props<-total-value {:sections [{:value 50} {:value 25} {:value 50}]})
+  ; =>
+  ; {:sections [{:value 25 :sum 0} {:value 25 :sum 25} {:value 50 :sum 50}] :total-value 100}
   ;
   ; @return (map)
-  ;  {:sections (maps in vector)
-  ;    [{:sum (integer)}]
-  ;   :total-value (integer)}
+  ; {:sections (maps in vector)
+  ;   [{:sum (integer)}]
+  ;  :total-value (integer)}
   [{:keys [sections] :as diagram-props}]
   ; A diagram-props térkép :sections vektorában felsorolt szekciók térképeibe írja az aktuális
   ; szekció előtti többi szekció értékeinek összegét, amelyből majd lehetséges kiszámítani
@@ -55,13 +55,13 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:diameter (px)
-  ;   :style (map)(opt)}
+  ; {:diameter (px)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)
-  ;    {:height (string)
-  ;     :width (string)}}
+  ; {:style (map)
+  ;   {:height (string)
+  ;    :width (string)}}
   [_ {:keys [diameter style]}]
   {:style (merge style {:height (css/px diameter)
                         :width  (css/px diameter)})})

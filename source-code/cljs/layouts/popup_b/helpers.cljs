@@ -24,9 +24,9 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) layout-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})

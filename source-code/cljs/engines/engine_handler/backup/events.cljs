@@ -31,11 +31,11 @@
   ; @return (map)
   [db [_ engine-id]]
   ; - Az egyes elemek aktuális változatáról készített másolatok az elem azonosítójával vannak
-  ;   tárolva. Így egy időben több elemről is lehetséges másolatot tárolni.
-  ;   Pl.: A gyors egymás utánban kitörölt elemek törlésének visszavonhatósága időbeni átfedésbe
-  ;        kerülhet egymással – egyszerre több értesítés jelenhet meg, különböző elemek törlésének
-  ;        visszavonásának lehetőségével – amiért szükséges az egyes elemekről készült másolatokat
-  ;        azonosítóval megkülönböztetve kezelni és tárolni.
+  ;  tárolva. Így egy időben több elemről is lehetséges másolatot tárolni.
+  ;  Pl.: A gyors egymás utánban kitörölt elemek törlésének visszavonhatósága időbeni átfedésbe
+  ;       kerülhet egymással – egyszerre több értesítés jelenhet meg, különböző elemek törlésének
+  ;       visszavonásának lehetőségével – amiért szükséges az egyes elemekről készült másolatokat
+  ;       azonosítóval megkülönböztetve kezelni és tárolni.
   (let [current-item-id (r core.subs/get-current-item-id db engine-id)
         current-item    (r core.subs/get-current-item    db engine-id)]
        (assoc-in db [:engines :engine-handler/backup-items engine-id current-item-id] current-item)))

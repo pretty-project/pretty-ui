@@ -30,8 +30,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:initial-value (string)
-  ;   :field-content-f (function)}
+  ; {:initial-value (string)
+  ;  :field-content-f (function)}
   [field-id {:keys [initial-value field-content-f]}]
   (let [field-content (field-content-f initial-value)]
        (text-field.helpers/set-field-content! field-id field-content)))
@@ -41,7 +41,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:field-content-f (function)}
+  ; {:field-content-f (function)}
   ; @param (string) stored-value
   [field-id {:keys [field-content-f]} stored-value]
   (let [field-content (field-content-f stored-value)]

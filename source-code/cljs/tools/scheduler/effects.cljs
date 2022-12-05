@@ -51,15 +51,15 @@
 (r/reg-event-fx :scheduler/reg-schedule!
   ; @param (keyword)(opt) schedule-id
   ; @param (map) schedule-props
-  ;  {:hour (integer)(opt)
-  ;   :minute (integer)(opt)
-  ;   :event (metamorphic-event)}
+  ; {:hour (integer)(opt)
+  ;  :minute (integer)(opt)
+  ;  :event (metamorphic-event)}
   ;
   ; @usage
-  ;  [:scheduler/reg-schedule! {:minute 10 :event [:my-event]}]
+  ; [:scheduler/reg-schedule! {:minute 10 :event [:my-event]}]
 
   ; @usage
-  ;  [:scheduler/reg-schedule! {:hour 3 :minute 10 :event [:my-event]}]
+  ; [:scheduler/reg-schedule! {:hour 3 :minute 10 :event [:my-event]}]
   [a/event-vector<-id]
   (fn [{:keys [db]} [_ schedule-id schedule-props]]
       {:db       (r events/store-schedule-props! db schedule-id schedule-props)

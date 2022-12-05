@@ -25,15 +25,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) text-props
-  ;  {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ;  {:content (string)
-  ;   :font-size (keyword)
-  ;   :font-weight (keyword)
-  ;   :horizontal-align (keyword)
-  ;   :line-height (keyword)
-  ;   :selectable? (boolean)}
+  ; {:content (string)
+  ;  :font-size (keyword)
+  ;  :font-weight (keyword)
+  ;  :horizontal-align (keyword)
+  ;  :line-height (keyword)
+  ;  :selectable? (boolean)}
   [{:keys [content] :as text-props}]
   (merge {:font-size        :s
           :font-weight      :normal

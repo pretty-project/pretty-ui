@@ -27,9 +27,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (dialog-id :my-engine :delete "my-item")
-  ;  =>
-  ;  :my-engine-delete-my-item-dialog
+  ; (dialog-id :my-engine :delete "my-item")
+  ; =>
+  ; :my-engine-delete-my-item-dialog
   ;
   ; @return (map)
   [engine-id action-key item-id]
@@ -48,9 +48,9 @@
   ; @param (strings in vector) item-ids
   ;
   ; @example
-  ;  (dialog-id :my-engine :delete ["my-item" "your-item"])
-  ;  =>
-  ;  :my-engine-delete-["my-item" "your-item"]-dialog
+  ; (dialog-id :my-engine :delete ["my-item" "your-item"])
+  ; =>
+  ; :my-engine-delete-["my-item" "your-item"]-dialog
   ;
   ; @return (map)
   [engine-id action-key item-ids]

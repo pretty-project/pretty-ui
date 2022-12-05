@@ -30,7 +30,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (env->item-links {...} :my-browser)
+  ; (env->item-links {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]
@@ -51,7 +51,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (env->sort-pattern {...} :my-browser)
+  ; (env->sort-pattern {...} :my-browser)
   ;
   ; @return (map)
   [env browser-id]
@@ -62,10 +62,10 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (env->search-pattern {...} :my-browser)
+  ; (env->search-pattern {...} :my-browser)
   ;
   ; @return (map)
-  ;  {:$or (maps in vector)}
+  ; {:$or (maps in vector)}
   [env browser-id]
   (item-lister/env->search-pattern env browser-id))
 
@@ -74,13 +74,13 @@
   ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (env->pipeline-props {...} :my-browser)
-  ;  =>
-  ;  {:max-count 20
-  ;   :skip       0
-  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
-  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
-  ;   :sort-pattern   {:my-type/name 1}}
+  ; (env->pipeline-props {...} :my-browser)
+  ; =>
+  ; {:max-count 20
+  ;  :skip       0
+  ;  :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
+  ;  :search-pattern {:$or [{:my-type/name   "..."} {...}]}
+  ;  :sort-pattern   {:my-type/name 1}}
   ;
   ; @return (map)
   [env browser-id]
@@ -99,7 +99,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (env->get-pipeline {...} :my-browser)
+  ; (env->get-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]
@@ -111,7 +111,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (env->count-pipeline {...} :my-browser)
+  ; (env->count-pipeline {...} :my-browser)
   ;
   ; @return (maps in vector)
   [env browser-id]

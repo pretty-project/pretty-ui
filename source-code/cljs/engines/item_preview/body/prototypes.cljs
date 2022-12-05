@@ -28,9 +28,9 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:display-progress? (boolean)
-  ;   :item-path (vector)
-  ;   :transfer-id (keyword)}
+  ; {:display-progress? (boolean)
+  ;  :item-path (vector)
+  ;  :transfer-id (keyword)}
   [preview-id body-props]
   (merge {:display-progress? false
           :item-path         (core.helpers/default-item-path preview-id)

@@ -29,7 +29,7 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {:initial-value (vector)(opt)}
+  ; {:initial-value (vector)(opt)}
   [slider-id {:keys [initial-value] :as slider-props}]
   (if initial-value (r/dispatch [:elements.slider/slider-did-mount slider-id slider-props])))
 
@@ -105,10 +105,10 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [slider-id {:keys []}]
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
        {:data-clickable true
@@ -121,10 +121,10 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [slider-id slider-props]
   (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
        {:data-clickable true
@@ -137,10 +137,10 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [slider-id slider-props]
   (let []
        {:data-clickable true

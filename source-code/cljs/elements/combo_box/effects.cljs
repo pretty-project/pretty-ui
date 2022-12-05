@@ -109,8 +109,8 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:on-type-ended (metamorphic-event)(opt)
-  ;   :option-value-f (function)}
+  ; {:on-type-ended (metamorphic-event)(opt)
+  ;  :option-value-f (function)}
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
       ; XXX#4146
       ; Ha a combo-box elem surface felülete ...
@@ -150,8 +150,8 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:on-type-ended (metamorphic-event)(opt)
-  ;   :option-value-f (function)}
+  ; {:on-type-ended (metamorphic-event)(opt)
+  ;  :option-value-f (function)}
   ; @param (*) selected-option
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} selected-option]]
       {:db (as-> db % (r combo-box.events/select-option! % box-id box-props selected-option)

@@ -37,11 +37,11 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:color (keyword or string)
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)))
@@ -51,14 +51,14 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:font-size (keyword)
-  ;   :font-weight (keyword)
-  ;   :line-height (keyword)}
+  ; {:font-size (keyword)
+  ;  :font-weight (keyword)
+  ;  :line-height (keyword)}
   ;
   ; @return (map)
-  ;  {:data-font-size (keyword)
-  ;   :data-font-weight (keyword)
-  ;   :data-line-height (keyword)}
+  ; {:data-font-size (keyword)
+  ;  :data-font-weight (keyword)
+  ;  :data-line-height (keyword)}
   [_ {:keys [font-size font-weight line-height]}]
   {:data-font-size   font-size
    :data-font-weight font-weight
@@ -69,12 +69,12 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:horizontal-align (keyword)
-  ;   :min-width (keyword)(opt)}
+  ; {:horizontal-align (keyword)
+  ;  :min-width (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-horizontal-align (keyword)
-  ;   :data-min-width (keyword)}
+  ; {:data-horizontal-align (keyword)
+  ;  :data-min-width (keyword)}
   [_ {:keys [horizontal-align min-width]}]
   {:data-horizontal-align horizontal-align
    :data-min-width        min-width})
@@ -84,12 +84,12 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:font-size (keyword)
-  ;   :max-lines (integer)(opt)
-  ;   :selectable? (boolean)(opt)}
+  ; {:font-size (keyword)
+  ;  :max-lines (integer)(opt)
+  ;  :selectable? (boolean)(opt)}
   ;
   ; @return (map)
-  ;  {:data-selectable (boolean)}
+  ; {:data-selectable (boolean)}
   [text-id {:keys [font-size max-lines selectable?] :as text-props}]
   (merge {:data-selectable selectable?}
          (text-style-attributes  text-id text-props)

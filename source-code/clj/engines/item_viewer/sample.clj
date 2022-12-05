@@ -28,16 +28,16 @@
 ; Az engine használatához SZÜKSÉGES megadni ...
 ; ... a {:collection-name "..."} tulajdonságot, amit az engine jelenleg nem használ (x4.7.5).
 ; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver függvények neveiben
-;     névtérként használ.
+;    névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
 ;
 ; Az engine használatához OPCIONÁLISAN megadható ...
 ; ... a {:base-route "..."} tulajdonság, ami alapján az engine regisztrálja a példa szerinti
-;     "/@app-home/my-viewer/:item-id" útvonalat.
+;    "/@app-home/my-viewer/:item-id" útvonalat.
 ; ... az {:on-route ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;     történik meg.
+;    történik meg.
 ; ... a {:route-title ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;     beállítódik az applikáció címkéjének.
+;    beállítódik az applikáció címkéjének.
 (r/reg-event-fx :init-my-viewer!
   [:item-viewer/init-viewer! :my-viewer
                              {:base-route      "/@app-home/my-viewer"

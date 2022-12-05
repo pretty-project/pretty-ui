@@ -37,7 +37,7 @@
   ;
   ; @param (keyword) loader-id
   ; @param (map) loader-props
-  ;  {:uri (string)}
+  ; {:uri (string)}
   [loader-id {:keys [uri]}]
   [:img {:on-load #(image-loader.helpers/image-loaded loader-id)
          :src      (param uri)
@@ -56,14 +56,14 @@
 (defn component
   ; @param (keyword)(opt) loader-id
   ; @param (map) loader-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :uri (string)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :uri (string)}
   ;
   ; @usage
-  ;  [component {...}]
+  ; [component {...}]
   ;
   ; @usage
-  ;  [component :my-loader {...}]
+  ; [component :my-loader {...}]
   ([loader-props]
    [component (random/generate-keyword) loader-props])
 

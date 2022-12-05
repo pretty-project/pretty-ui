@@ -60,7 +60,7 @@
   ; @param (keywords in vector) change-keys
   ;
   ; @usage
-  ;  (r form-changed? db :my-editor [:name :email-address])
+  ; (r form-changed? db :my-editor [:name :email-address])
   ;
   ; @return (boolean)
   [db [_ editor-id change-keys]]
@@ -80,12 +80,12 @@
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:file-editor/content-changed? :my-editor]
+; [:file-editor/content-changed? :my-editor]
 (r/reg-sub :file-editor/content-changed? content-changed?)
 
 ; @param (keyword) editor-id
 ; @param (keywords in vector) change-keys
 ;
 ; @usage
-;  [:file-editor/form-changed? :my-editor [:name :email-address]]
+; [:file-editor/form-changed? :my-editor [:name :email-address]]
 (r/reg-sub :file-editor/form-changed? form-changed?)

@@ -30,13 +30,13 @@
 (r/reg-event-fx :item-lister/reload-items!
   ; @param (keyword) lister-id
   ; @param (map)(opt) reload-props
-  ;  {:on-reload (metamorphic-event)(opt)}
+  ; {:on-reload (metamorphic-event)(opt)}
   ;
   ; @usage
-  ;  [:item-lister/reload-items! :my-lister]
+  ; [:item-lister/reload-items! :my-lister]
   ;
   ; @usage
-  ;  [:item-lister/reload-items! :my-lister {...}]
+  ; [:item-lister/reload-items! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id reload-props]]
       ; - Az [:item-lister/reload-items! ...] esemény újra letölti a listában található elemeket.
       ;
@@ -65,7 +65,7 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) reload-props
-  ;  {:on-reload (metamorphic-event)(opt)}
+  ; {:on-reload (metamorphic-event)(opt)}
   ; @param (map) server-response
   (fn [{:keys [db]} [_ lister-id {:keys [on-reload]} server-response]]
       ; - Az {:on-reload ...} tulajdonságként átadott esemény használatával megoldható,

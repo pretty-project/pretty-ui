@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) stepper-id
   ; @param (map) stepper-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ _]
   {})
 

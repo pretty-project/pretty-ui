@@ -39,8 +39,8 @@
   ;
   ; @param (keyword) sorter-id
   ; @param (map) sorter-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :indent (map)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :indent (map)(opt)}
   [sorter-id {:keys [disabled? indent] :as sorter-props}]
   [elements/blank sorter-id
                   {:content   [item-sorter-body sorter-id sorter-props]
@@ -50,19 +50,19 @@
 (defn body
   ; @param (keyword)(opt) sorter-id
   ; @param (map) sorter-props
-  ;  {:disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :indent (map)(opt)
-  ;    A tulajdonság leírását a elements.api/blank dokumentációjában találod!
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :value-path (vector)}
+  ; {:disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :indent (map)(opt)
+  ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :value-path (vector)}
   ;
   ; @usage
-  ;  [body {...}]
+  ; [body {...}]
   ;
   ; @usage
-  ;  [body :my-sorter {...}]
+  ; [body :my-sorter {...}]
   ([sorter-props]
    [body (random/generate-keyword) sorter-props])
 

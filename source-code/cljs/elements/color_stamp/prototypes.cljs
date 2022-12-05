@@ -26,7 +26,7 @@
   ; @param (map) stamp-props
   ;
   ; @return (map)
-  ;  {:size (keyword)}
+  ; {:size (keyword)}
   [stamp-props]
   (merge {:size :s}
          (param stamp-props)))

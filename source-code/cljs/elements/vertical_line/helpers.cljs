@@ -26,13 +26,13 @@
   ;
   ; @param (keyword) line-id
   ; @param (map) line-props
-  ;  {:color (keyword or string)
-  ;   :strength (px)
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)
+  ;  :strength (px)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)
-  ;    {:height (string)}}
+  ; {:style (map)
+  ;   {:height (string)}}
   [_ {:keys [color strength style] :as line-props}]
   (-> {:style style}
       (element.helpers/apply-dimension :height           :data-height (css/px strength))

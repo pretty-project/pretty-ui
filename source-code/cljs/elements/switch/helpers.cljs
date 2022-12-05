@@ -27,8 +27,8 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {:initial-options (vector)(opt)
-  ;   :initial-value (boolean)(opt)}
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (boolean)(opt)}
   [switch-id {:keys [initial-options initial-value] :as switch-props}]
   (if (or initial-options initial-value)
       (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props])))
@@ -43,10 +43,10 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -55,10 +55,10 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [switch-id {:keys [border-color font-size options-orientation] :as switch-props}]
   (merge (element.helpers/element-default-attributes switch-id switch-props)
          (element.helpers/element-indent-attributes  switch-id switch-props)
@@ -77,11 +77,11 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ;  {}
+  ; {}
   ; @param (*) option
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [switch-id {:keys [disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
        (if disabled? {:data-switched option-switched?

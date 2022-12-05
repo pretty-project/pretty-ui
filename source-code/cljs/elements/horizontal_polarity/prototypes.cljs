@@ -26,7 +26,7 @@
   ; @param (map) polarity-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [polarity-props]
   (merge {}
          (param polarity-props)))

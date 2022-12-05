@@ -67,7 +67,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r viewing-item? db :my-viewer "my-item")
+  ; (r viewing-item? db :my-viewer "my-item")
   ;
   ; @return (boolean)
   [db [_ viewer-id item-id]]
@@ -102,29 +102,29 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-viewer/get-meta-item :my-viewer :my-item]
+; [:item-viewer/get-meta-item :my-viewer :my-item]
 (r/reg-sub :item-viewer/get-meta-item get-meta-item)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
-;  [:item-viewer/get-current-item-id :my-viewer]
+; [:item-viewer/get-current-item-id :my-viewer]
 (r/reg-sub :item-viewer/get-current-item-id get-current-item-id)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
-;  [:item-viewer/get-current-item :my-viewer]
+; [:item-viewer/get-current-item :my-viewer]
 (r/reg-sub :item-viewer/get-current-item get-current-item)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
-;  [:item-viewer/get-current-item-modified-at :my-viewer]
+; [:item-viewer/get-current-item-modified-at :my-viewer]
 (r/reg-sub :item-viewer/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) viewer-id
 ;
 ; @usage
-;  [:item-viewer/viewer-disabled? :my-viewer]
+; [:item-viewer/viewer-disabled? :my-viewer]
 (r/reg-sub :item-viewer/viewer-disabled? viewer-disabled?)

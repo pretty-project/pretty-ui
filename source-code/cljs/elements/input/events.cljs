@@ -26,7 +26,7 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ;
   ; @return (map)
   [db [_ input-id {:keys [value-path]}]]
@@ -38,8 +38,8 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:initial-options (vector)(opt)
-  ;   :options-path (vector)}
+  ; {:initial-options (vector)(opt)
+  ;  :options-path (vector)}
   ;
   ; @return (map)
   [db [_ _ {:keys [initial-options options-path]}]]
@@ -54,8 +54,8 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:initial-value (*)(opt)
-  ;   :value-path (vector)}
+  ; {:initial-value (*)(opt)
+  ;  :value-path (vector)}
   ;
   ; @return (map)
   [db [_ _ {:keys [initial-value value-path]}]]
@@ -106,7 +106,7 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ;
   ; @return (map)
   [db [_ input-id {:keys [value-path]}]]
@@ -118,7 +118,7 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ;
   ; @return (map)
   [db [_ _ {:keys [value-path]}]]
@@ -129,7 +129,7 @@
   ;
   ; @param (keyword) input-id
   ; @param (map) input-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (*) value
   ;
   ; @return (map)

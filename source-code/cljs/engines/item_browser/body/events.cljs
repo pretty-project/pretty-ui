@@ -27,8 +27,8 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) body-props
-  ;  {:items-key (keyword)
-  ;   :path-key (keyword)}
+  ; {:items-key (keyword)
+  ;  :path-key (keyword)}
   ;
   ; @return (map)
   [db [_ browser-id {:keys [items-key path-key] :as browser-props}]]

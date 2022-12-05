@@ -29,7 +29,7 @@
   ; @param (map) filter-pattern
   ;
   ; @usage
-  ;  [:item-lister/filter-items! :my-lister {...}]
+  ; [:item-lister/filter-items! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id filter-pattern]]
       {:db       (r core.events/filter-items! db lister-id filter-pattern)
        :dispatch [:item-lister/request-items! lister-id]}))
@@ -44,7 +44,7 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) search-props
-  ;  {:search-keys (keywords in vector)}
+  ; {:search-keys (keywords in vector)}
   ; @param (string) search-term
   (fn [{:keys [db]} [_ lister-id search-props search-term]]
       {:db       (r core.events/search-items! db lister-id search-props search-term)
@@ -60,10 +60,10 @@
   ; @param (keyword or namespaced keyword) order-by
   ;
   ; @usage
-  ;  [:item-lister/order-items! :my-lister :name]
+  ; [:item-lister/order-items! :my-lister :name]
   ;
   ; @usage
-  ;  [:item-lister/order-items! :my-lister :name/descending]
+  ; [:item-lister/order-items! :my-lister :name/descending]
   (fn [{:keys [db]} [_ lister-id order-by]]
       (if-let [order-by-key (namespace order-by)]
               ; (A)
@@ -84,7 +84,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [:item-lister/swap-items! :my-lister]
+  ; [:item-lister/swap-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       ; ...
       (let [current-order-by (r core.subs/get-meta-item db lister-id :order-by)
@@ -104,7 +104,7 @@
   ;
   ; @param (keyword) lister-id
   ; @param (map) order-by-props
-  ;  {:order-by-options (namespaced keywords in vector)}
+  ; {:order-by-options (namespaced keywords in vector)}
   (fn [{:keys [db]} [_ lister-id {:keys [order-by-options]}]]
       [:elements.select/render-select! :item-lister/order-by-select
                                        {:option-label-f  core.helpers/order-by-label-f

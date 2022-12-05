@@ -23,18 +23,18 @@
 
 (defn form-block-attributes
   ; @param (map)(opt) options
-  ;  {:ratio (%)(opt)
-  ;    Default: 100}
+  ; {:ratio (%)(opt)
+  ;   Default: 100}
   ;
   ; @usage
-  ;  (form-block-attributes)
+  ; (form-block-attributes)
   ;
   ; @usage
-  ;  (form-block-attributes {...})
+  ; (form-block-attributes {...})
   ;
   ; @return (map)
-  ;  {:class (keyword)
-  ;   :style (map)}
+  ; {:class (keyword)
+  ;  :style (map)}
   ([]                (form-block-attributes {:ratio 100}))
   ([{:keys [ratio]}] (if-let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
                              {:style {:min-width (css/percent ratio)} :class :forms--form-block}
@@ -44,13 +44,13 @@
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (form-row-attributes)
+  ; (form-row-attributes)
   ;
   ; @usage
-  ;  (form-row-attributes {...})
+  ; (form-row-attributes {...})
   ;
   ; @return (map)
-  ;  {:class (keyword)}
+  ; {:class (keyword)}
   ([]           (form-row-attributes {}))
   ([{:keys []}] {:class :forms--form-row}))
 
@@ -58,12 +58,12 @@
   ; @param (map)(opt) options
   ;
   ; @usage
-  ;  (form-column-attributes)
+  ; (form-column-attributes)
   ;
   ; @usage
-  ;  (form-column-attributes {...})
+  ; (form-column-attributes {...})
   ;
   ; @return (map)
-  ;  {:class (keyword)}
+  ; {:class (keyword)}
   ([]           (form-column-attributes {}))
   ([{:keys []}] {:class :forms--form-column}))

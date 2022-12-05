@@ -25,26 +25,26 @@
 (r/reg-event-fx :file-saver/save-file!
   ; @param (keyword)(opt) saver-id
   ; @param (map) saver-props
-  ;  {:data-url (string)(opt)
-  ;    W/O {:uri ...}
-  ;   :filename (string)(opt)
-  ;    Default: DEFAULT-FILENAME
-  ;   :uri (string)(opt)
-  ;    W/O {:data-url ...}}
+  ; {:data-url (string)(opt)
+  ;   W/O {:uri ...}
+  ;  :filename (string)(opt)
+  ;   Default: DEFAULT-FILENAME
+  ;  :uri (string)(opt)
+  ;   W/O {:data-url ...}}
   ;
   ; @usage
-  ;  [:file-saver/save-file! {...}]
+  ; [:file-saver/save-file! {...}]
   ;
   ; @usage
-  ;  [:file-saver/save-file! :my-file-saver {...}]
+  ; [:file-saver/save-file! :my-file-saver {...}]
   ;
   ; @usage
-  ;  [:file-saver/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
-  ;                           :filename "my-file.edn"}]
+  ; [:file-saver/save-file! {:data-url "data:text/plain;charset=utf-8,..."}
+  ;                          :filename "my-file.edn"}]
   ;
   ; @usage
-  ;  [:file-saver/save-file! {:uri      "/images/my-image.jpg"}
-  ;                           :filename "my-image.jpg"}]
+  ; [:file-saver/save-file! {:uri      "/images/my-image.jpg"}
+  ;                          :filename "my-image.jpg"}]
   [r/event-vector<-id]
   (fn [_ [_ saver-id saver-props]]
       (let [saver-props (prototypes/saver-props-prototype saver-props)]

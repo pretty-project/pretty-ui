@@ -26,11 +26,11 @@
   ; @param (map) thumbnail-props
   ;
   ; @return (map)
-  ;  {:background-size (keyword)
-  ;   :height (keyword)
-  ;   :icon (keyword)
-  ;   :icon-family (keyword)
-  ;   :width (keyword)}
+  ; {:background-size (keyword)
+  ;  :height (keyword)
+  ;  :icon (keyword)
+  ;  :icon-family (keyword)
+  ;  :width (keyword)}
   [thumbnail-props]
   (merge {:background-size :contain
           :height          :s

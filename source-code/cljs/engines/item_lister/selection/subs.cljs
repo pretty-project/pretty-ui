@@ -25,9 +25,9 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (r export-selection db :my-lister)
-  ;  =>
-  ;  ["my-item" "your-item"]
+  ; (r export-selection db :my-lister)
+  ; =>
+  ; ["my-item" "your-item"]
   ;
   ; @return (strings in vector)
   [db [_ lister-id]]
@@ -37,9 +37,9 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (r export-single-selection db :my-lister)
-  ;  =>
-  ;  "my-item"
+  ; (r export-single-selection db :my-lister)
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ lister-id]]
@@ -54,7 +54,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r get-selected-item-count db :my-lister)
+  ; (r get-selected-item-count db :my-lister)
   ;
   ; @return (integer)
   [db [_ lister-id]]
@@ -64,7 +64,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r all-items-selected? db :my-lister)
+  ; (r all-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -74,7 +74,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r all-downloaded-items-selected? db :my-lister)
+  ; (r all-downloaded-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -84,7 +84,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r any-item-selected? db :my-lister)
+  ; (r any-item-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -94,7 +94,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r any-downloaded-item-selected? db :my-lister)
+  ; (r any-downloaded-item-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -104,7 +104,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r no-items-selected? db :my-lister)
+  ; (r no-items-selected? db :my-lister)
   ;
   ; @return (boolean)
   [db [_ lister-id]]
@@ -115,7 +115,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-selected? db :my-lister "my-item")
+  ; (r item-selected? db :my-lister "my-item")
   ;
   ; @return (boolean)
   [db [_ lister-id item-id]]
@@ -129,42 +129,42 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-selected-item-count :my-lister]
+; [:item-lister/get-selected-item-count :my-lister]
 (r/reg-sub :item-lister/get-selected-item-count get-selected-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/all-items-selected? :my-lister]
+; [:item-lister/all-items-selected? :my-lister]
 (r/reg-sub :item-lister/all-items-selected? all-items-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/all-downloaded-items-selected? :my-lister]
+; [:item-lister/all-downloaded-items-selected? :my-lister]
 (r/reg-sub :item-lister/all-downloaded-items-selected? all-downloaded-items-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/any-item-selected? :my-lister]
+; [:item-lister/any-item-selected? :my-lister]
 (r/reg-sub :item-lister/any-item-selected? any-item-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/any-downloaded-item-selected? :my-lister]
+; [:item-lister/any-downloaded-item-selected? :my-lister]
 (r/reg-sub :item-lister/any-downloaded-item-selected? any-downloaded-item-selected?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/no-items-selected? :my-lister]
+; [:item-lister/no-items-selected? :my-lister]
 (r/reg-sub :item-lister/no-items-selected? no-items-selected?)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/item-selected? :my-lister "my-item"]
+; [:item-lister/item-selected? :my-lister "my-item"]
 (r/reg-sub :item-lister/item-selected? item-selected?)

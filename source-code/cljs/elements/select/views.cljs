@@ -38,8 +38,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:extendable? (boolean)(opt)
-  ;   :option-field-placeholder (metamorphic-content)}
+  ; {:extendable? (boolean)(opt)
+  ;  :option-field-placeholder (metamorphic-content)}
   [select-id {:keys [extendable? option-field-placeholder] :as select-props}]
   (if extendable? (let [adornment-on-click [:elements.select/add-option! select-id select-props]
                         adornment-props    {:icon :add :on-click adornment-on-click :title :add!}]
@@ -58,7 +58,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (*) option
   [select-id {:keys [option-label-f] :as select-props} option]
   [:button.e-select--option (select.helpers/select-option-attributes select-id select-props option)
@@ -82,7 +82,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:options-placeholder (metamorphic-content)}
+  ; {:options-placeholder (metamorphic-content)}
   [_ {:keys [options-placeholder]}]
   [:div.e-select--options-placeholder (x.components/content options-placeholder)])
 
@@ -103,7 +103,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   [_ {:keys [options-label]}]
   (if options-label [:div.e-select--options--label (x.components/content options-label)]
                     [:div.e-select--options--label {:data-placeholder true}]))
@@ -113,7 +113,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   [select-id select-props]
   [:div.e-select--options--header {:data-selectable false}
                                   [select-options-label select-id select-props]
@@ -173,7 +173,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   [_ {:keys [option-label-f value-path]}]
   (if-let [selected-option @(r/subscribe [:x.db/get-item value-path])]
           [:div.e-select--button-label (-> selected-option option-label-f x.components/content)]
@@ -184,7 +184,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   [select-id select-props]
   [:button.e-select--button-body (select.helpers/select-button-body-attributes select-id select-props)
                                  [select-button-label                          select-id select-props]
@@ -204,7 +204,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -280,7 +280,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {:layout (keyword)}
+  ; {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
   (case layout :button      [button-layout        select-id select-props]
                :icon-button [icon-button-layout   select-id select-props]
@@ -289,69 +289,69 @@
 (defn element
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
-  ;  {:add-option-f (function)(opt)
-  ;    Default: return
-  ;   :autoclear? (boolean)(opt)
-  ;    Default: false
-  ;   :border-radius (keyword)(opt)
-  ;    :none, :xxs, :xs, :s, :m, :l
-  ;    Default: :s
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :extendable? (boolean)(opt)
-  ;    Default: false
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :initial-options (vector)(opt)
-  ;   :initial-value (*)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :layout (keyword)(opt)
-  ;    :button, :icon-button, :select
-  ;    Default: :select
-  ;   :marked? (boolean)(opt)
-  ;    Default: false
-  ;   :min-width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
-  ;   :on-select (metamorphic-event)(opt)
-  ;   :option-field-placeholder (metamorphic-content)(opt)
-  ;    Default: :add!
-  ;   :option-label-f (function)(opt)
-  ;    Default: return
-  ;   :option-value-f (function)(opt)
-  ;    Default: return
-  ;   :options (vector)(opt)
-  ;   :options-label (metamorphic-content)(opt)
-  ;   :options-path (vector)(opt)
-  ;   :options-placeholder (metamorphic-content)(opt)
-  ;    Default: :no-options
-  ;   :required? (boolean or keyword)(opt)
-  ;    true, false, :unmarked
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:add-option-f (function)(opt)
+  ;   Default: return
+  ;  :autoclear? (boolean)(opt)
+  ;   Default: false
+  ;  :border-radius (keyword)(opt)
+  ;   :none, :xxs, :xs, :s, :m, :l
+  ;   Default: :s
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :extendable? (boolean)(opt)
+  ;   Default: false
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :layout (keyword)(opt)
+  ;   :button, :icon-button, :select
+  ;   Default: :select
+  ;  :marked? (boolean)(opt)
+  ;   Default: false
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;   Default: :none
+  ;  :on-select (metamorphic-event)(opt)
+  ;  :option-field-placeholder (metamorphic-content)(opt)
+  ;   Default: :add!
+  ;  :option-label-f (function)(opt)
+  ;   Default: return
+  ;  :option-value-f (function)(opt)
+  ;   Default: return
+  ;  :options (vector)(opt)
+  ;  :options-label (metamorphic-content)(opt)
+  ;  :options-path (vector)(opt)
+  ;  :options-placeholder (metamorphic-content)(opt)
+  ;   Default: :no-options
+  ;  :required? (boolean or keyword)(opt)
+  ;   true, false, :unmarked
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [select {...}]
+  ; [select {...}]
   ;
   ; @usage
-  ;  [select :my-select {...}]
+  ; [select :my-select {...}]
   ;
   ; @usage
-  ;  [select {:icon         :sort
-  ;           :layout       :icon-button
-  ;           :options-path [:my-options]
-  ;           :value-path   [:my-selected-option]}]
+  ; [select {:icon         :sort
+  ;          :layout       :icon-button
+  ;          :options-path [:my-options]
+  ;          :value-path   [:my-selected-option]}]
   ([select-props]
    [element (random/generate-keyword) select-props])
 

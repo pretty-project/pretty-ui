@@ -29,24 +29,24 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {:field-content-f (function)
-  ;   :field-value-f (function)
-  ;   :on-blur (metamorphic-event)
-  ;   :on-change (metamorphic-event)
-  ;   :on-focus (metamorphic-event)
-  ;   :option-label-f (function)
-  ;   :option-value-f (function)
-  ;   :options-path (vector)}
+  ; {:field-content-f (function)
+  ;  :field-value-f (function)
+  ;  :on-blur (metamorphic-event)
+  ;  :on-change (metamorphic-event)
+  ;  :on-focus (metamorphic-event)
+  ;  :option-label-f (function)
+  ;  :option-value-f (function)
+  ;  :options-path (vector)}
   [box-id box-props]
   ; XXX#5067
   ; A field-content-f, field-value-f, option-label-f és option-value-f függvényeket
   ; szükséges a combo-box elem tulajdonságainak prototípusában is beállítani!
   ; Nem elég, hogy a text-field elem tulajdonságainak prototípusában be vannak állítva!
   ; Pl. A [:elements.combo-box/field-focused ...] esemény számára átadott box-props
-  ;     térképben mindenképpen szerepelnie kell a :field-value-f tulajdonságnak, mivel
-  ;     az esemény által regisztrált billentyűlenyomás-figyelő események között
-  ;     szerepel az ESC billentyű lenyomására megtörténő [:elements.text-field/empty-field! ...]
-  ;     esemény, ami az adatbázisba íráskor használja a field-value-f függvényt.
+  ;    térképben mindenképpen szerepelnie kell a :field-value-f tulajdonságnak, mivel
+  ;    az esemény által regisztrált billentyűlenyomás-figyelő események között
+  ;    szerepel az ESC billentyű lenyomására megtörténő [:elements.text-field/empty-field! ...]
+  ;    esemény, ami az adatbázisba íráskor használja a field-value-f függvényt.
 
   ; WARNING! DEPRECATED! DO NOT USE!
   (merge {:field-content-f  return
@@ -79,7 +79,7 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [box-id box-props]
 
   ; WARNING! DEPRECATED! DO NOT USE!

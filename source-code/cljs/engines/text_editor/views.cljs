@@ -71,7 +71,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {}
+  ; {}
   [_ {:keys [info-text label required?]}]
   (if label [elements/label {:content     label
                              :info-text   info-text
@@ -83,7 +83,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {}
+  ; {}
   [editor-id editor-props]
   [:<> [text-editor-label  editor-id editor-props]
        [ckeditor5          editor-id editor-props]
@@ -95,8 +95,8 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :indent (map)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :indent (map)(opt)}
   [editor-id {:keys [disabled? indent] :as editor-props}]
   [elements/blank editor-id
                   {:content   [text-editor-body editor-id editor-props]
@@ -106,28 +106,28 @@
 (defn body
   ; @param (keyword)(opt) editor-id
   ; @param (map) editor-props
-  ;  {:autofocus? (boolean)(opt)
-  ;    Default: false
-  ;   :buttons (keywords in vector)(opt)
-  ;    A tulajdonság leírását a ckeditor5.views/body dokumentációjában találod!
-  ;    Default: [:bold :italic :underline :fontColor]
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :indent (map)(opt)
-  ;    A tulajdonság leírását a elements.api/blank dokumentációjában találod!
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :placeholder (metamorphic-content)(opt)
-  ;    Default: :write-something!
-  ;   :required? (boolean)(opt)
-  ;    Default: false
-  ;   :value-path (vector)(opt)}
+  ; {:autofocus? (boolean)(opt)
+  ;   Default: false
+  ;  :buttons (keywords in vector)(opt)
+  ;   A tulajdonság leírását a ckeditor5.views/body dokumentációjában találod!
+  ;   Default: [:bold :italic :underline :fontColor]
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :indent (map)(opt)
+  ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: :write-something!
+  ;  :required? (boolean)(opt)
+  ;   Default: false
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [body {...}]
+  ; [body {...}]
   ;
   ; @usage
-  ;  [body :my-editor {...}]
+  ; [body :my-editor {...}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

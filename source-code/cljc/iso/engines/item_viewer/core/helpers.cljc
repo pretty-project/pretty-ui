@@ -35,9 +35,9 @@
   ; @param (keyword) viewer-id
   ;
   ; @example
-  ;  (default-item-path :my-viewer)
-  ;  =>
-  ;  [:engines :engine-handler/viewed-items :my-viewer]
+  ; (default-item-path :my-viewer)
+  ; =>
+  ; [:engines :engine-handler/viewed-items :my-viewer]
   ;
   ; @return (vector)
   [viewer-id]

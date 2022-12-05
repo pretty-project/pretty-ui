@@ -30,7 +30,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-handler/handle-item! :my-handler "my-item"]
+  ; [:item-handler/handle-item! :my-handler "my-item"]
   (fn [{:keys [db]} [_ handler-id item-id]]
       ; XXX#5575
       ; (A) Ha az item-handler engine útvonal-vezérelt, ...

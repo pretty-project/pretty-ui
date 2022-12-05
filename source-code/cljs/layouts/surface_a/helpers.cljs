@@ -27,10 +27,10 @@
   ;
   ; @param (keyword) surface-id
   ; @param (map) layout-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})
 
@@ -43,7 +43,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) sensor-props
-  ;  {:title (metamorphic-content)}
+  ; {:title (metamorphic-content)}
   [{:keys [title]}]
   (letfn [(f [intersecting?] (if intersecting? (reset! state/HEADER-TITLE-VISIBLE? false)
                                                (reset! state/HEADER-TITLE-VISIBLE? true)))]
@@ -63,7 +63,7 @@
   ; Ha a title-sensor komponens {:title ...} paramétere megváltozik, akkor szükséges az intersection-observer
   ; figyelőt újra létrehozni a megváltozott {:title ...} paraméter átadásával.
   ; Pl. Ha a title-sensor komponens egy Re-Frame feliratkozás kimenetét kapja meg {:title ...} paraméterként,
-  ;      ami a komponens React-fába csatolása után megváltozik.
+  ;     ami a komponens React-fába csatolása után megváltozik.
   (let [[sensor-props] (reagent/arguments %)]
        (title-sensor-will-unmount-f)
        (title-sensor-did-mount-f sensor-props)))

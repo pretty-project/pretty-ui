@@ -65,24 +65,24 @@
 (defn body
   ; @param (keyword) preview-id
   ; @param (map) body-props
-  ;  {:display-progress? (boolean)(opt)
-  ;    Default: false
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-id (string)
-  ;   :item-path (vector)(opt)
-  ;    Default: core.helpers/default-item-path
-  ;   :preview-element (metamorphic-content)
-  ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)}
+  ; {:display-progress? (boolean)(opt)
+  ;   Default: false
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :item-id (string)
+  ;  :item-path (vector)(opt)
+  ;   Default: core.helpers/default-item-path
+  ;  :preview-element (metamorphic-content)
+  ;  :query (vector)(opt)
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-preview {...}]
+  ; [body :my-preview {...}]
   ;
   ; @usage
-  ;  (defn my-preview-element [] [:div ...])
-  ;  [body :my-preview {:item-id "my-item"
-  ;                     :preview-element #'my-preview-element}]
+  ; (defn my-preview-element [] [:div ...])
+  ; [body :my-preview {:item-id "my-item"
+  ;                    :preview-element #'my-preview-element}]
   [preview-id body-props]
   (let [body-props (body.prototypes/body-props-prototype preview-id body-props)]
        (reagent/lifecycles (core.helpers/component-id preview-id :body)

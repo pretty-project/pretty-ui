@@ -31,7 +31,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-browser/browse-item! :my-browser "my-item"]
+  ; [:item-browser/browse-item! :my-browser "my-item"]
   (fn [{:keys [db]} [_ browser-id item-id]]
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db browser-id)]
@@ -45,7 +45,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  [:item-browser/go-home! :my-browser]
+  ; [:item-browser/go-home! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
       (let [default-item-id (r body.subs/get-body-prop db browser-id :default-item-id)]
            [:item-browser/browse-item! browser-id default-item-id])))
@@ -54,7 +54,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  [:item-browser/go-up! :my-browser]
+  ; [:item-browser/go-up! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
       (let [parent-item-id (r core.subs/get-parent-item-id db browser-id)]
            [:item-browser/browse-item! browser-id parent-item-id])))
@@ -69,7 +69,7 @@
   ; @param (map) filter-pattern
   ;
   ; @usage
-  ;  [:item-browser/filter-items! :my-browser {...}]
+  ; [:item-browser/filter-items! :my-browser {...}]
   (fn [{:keys [db]} [_ browser-id filter-pattern]]
       {:db       (r core.events/filter-items! db browser-id filter-pattern)
        :dispatch [:infinite-loader/reload-loader! browser-id]}))
@@ -84,7 +84,7 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) search-props
-  ;  {:search-keys (keywords in vector)}
+  ; {:search-keys (keywords in vector)}
   ; @param (string) search-term
   (fn [_ [_ browser-id search-props search-term]]
       [:item-lister/search-items! browser-id search-props search-term]))
@@ -99,10 +99,10 @@
   ; @param (keyword or namespaced keyword) order-by
   ;
   ; @usage
-  ;  [:item-browser/order-items! :my-browser :name]
+  ; [:item-browser/order-items! :my-browser :name]
   ;
   ; @usage
-  ;  [:item-browser/order-items! :my-browser :name/descending]
+  ; [:item-browser/order-items! :my-browser :name/descending]
   (fn [{:keys [db]} [_ browser-id order-by]]
       [:item-lister/order-items! browser-id order-by]))
 
@@ -110,7 +110,7 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  [:item-browser/swap-items! :my-browser]
+  ; [:item-browser/swap-items! :my-browser]
   (fn [{:keys [db]} [_ browser-id]]
       [:item-lister/swap-items! browser-id]))
 
@@ -124,7 +124,7 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) order-by-props
-  ;  {:order-by-options (namespaced keywords in vector)}
+  ; {:order-by-options (namespaced keywords in vector)}
   (fn [_ [_ browser-id order-by-props]]
       [:item-lister/choose-order-by! browser-id order-by-props]))
 

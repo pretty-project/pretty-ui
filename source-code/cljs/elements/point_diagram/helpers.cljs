@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   ; TEMP
   {:style (merge style {:width "500px" :height "300px"})})

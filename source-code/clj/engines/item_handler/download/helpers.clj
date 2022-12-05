@@ -34,10 +34,10 @@
   ; @param (keyword) handler-id
   ;
   ; @example
-  ;  (env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-handler)
-  ;  =>
-  ;  {:my-type/my-key   ["..."]
-  ;   :my-type/your-key ["..." "..."]}
+  ; (env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-handler)
+  ; =>
+  ; {:my-type/my-key   ["..."]
+  ;  :my-type/your-key ["..." "..."]}
   ;
   ; @return (map)
   [env handler-id]

@@ -28,8 +28,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:initial-options (vector)(opt)
-  ;   :initial-value (*)(opt)}
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)}
   [button-id {:keys [initial-options initial-value] :as button-props}]
   (if (or initial-options initial-value)
       (r/dispatch [:elements.radio-button/radio-button-box-did-mount button-id button-props])))
@@ -44,10 +44,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -56,10 +56,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [button-id {:keys [border-color font-size options-orientation] :as button-props}]
   (merge (element.helpers/element-default-attributes button-id button-props)
          (element.helpers/element-indent-attributes  button-id button-props)
@@ -80,7 +80,7 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [button-id button-props]
   (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
           {:data-clickable true
@@ -100,11 +100,11 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:disabled? (boolean)(opt)}
+  ; {:disabled? (boolean)(opt)}
   ; @param (*) option
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [button-id {:keys [disabled?] :as button-props} option]
   (let [option-selected? @(r/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
        (if disabled? {:data-selected option-selected?

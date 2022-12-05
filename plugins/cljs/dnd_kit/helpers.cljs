@@ -30,7 +30,7 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:items (vector)}
+  ; {:items (vector)}
   [sortable-id {:keys [item-id-f items]}]
   ; XXX#0080
   ; 1.
@@ -38,17 +38,17 @@
   ; olyan vektor kell legyen, amelynek az elemei string típusok, vagy térkép típusok
   ; :id vagy :namespace/id kulccsal, amely kulcsok értékei string típusok.
   ; Pl.: ["my-id" "your-id"]
-  ;      [{:id "my-id"} {:id "your-id"}]
-  ;      [{:namespace/id "my-id"} {:namespace/id "your-id"}]
+  ;     [{:id "my-id"} {:id "your-id"}]
+  ;     [{:namespace/id "my-id"} {:namespace/id "your-id"}]
   ;
   ; 2.
   ; A dnd-kit/body komponens ...
   ; ... számára items tulajdonságként átadott vektor elemei ezzel szemben bármilyen típusúak lehetnek.
   ; ... a React-fába csatolódásakor eltárolja a számára items tulajdonságként átadott vektor ...
-  ;     ... elemeiből az item-id-f tulajdonságként átadott függvénnyel kinyert azonosítókat
-  ;         a state/SORTABLE-STATE atomban (item-order).
-  ;     ... elemeit az item-id-f tulajdonságként átadott függvénnyel kinyert azonosítóikkal
-  ;         azonosítva a state/SORTABLE-STATE atomban (sortable-items).
+  ;    ... elemeiből az item-id-f tulajdonságként átadott függvénnyel kinyert azonosítókat
+  ;        a state/SORTABLE-STATE atomban (item-order).
+  ;    ... elemeit az item-id-f tulajdonságként átadott függvénnyel kinyert azonosítóikkal
+  ;        azonosítva a state/SORTABLE-STATE atomban (sortable-items).
   ;
   ; 3.
   ; A dnd-kit.core/sortable-context komponens számára átadott térkép items tulajdonságaként
@@ -146,7 +146,7 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:on-drag-start (function)(opt)}
+  ; {:on-drag-start (function)(opt)}
   ; @param (?) event
   [sortable-id {:keys [on-drag-start] :as sortable-props} event]
   (if on-drag-start (on-drag-start sortable-id sortable-props))
@@ -160,8 +160,8 @@
   ;
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
-  ;  {:on-drag-end (metamorphic-event)(opt)
-  ;   :on-order-changed (metamorphic-event)(opt)}
+  ; {:on-drag-end (metamorphic-event)(opt)
+  ;  :on-order-changed (metamorphic-event)(opt)}
   ; @param (?) event
   [sortable-id {:keys [on-drag-end on-order-changed] :as sortable-props} event]
   (let [origin-dex (event->origin-dex sortable-id sortable-props event)

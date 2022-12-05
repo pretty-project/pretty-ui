@@ -40,7 +40,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [validator value-path] :as field-props}]]
@@ -63,7 +63,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [field-content-f value-path]}]]
@@ -89,7 +89,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [required?] :as field-props}]]
@@ -106,7 +106,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ field-id field-props]]

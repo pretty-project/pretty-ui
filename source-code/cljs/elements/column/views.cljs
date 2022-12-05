@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ;  {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)}
   [column-id {:keys [content] :as column-props}]
   [:div.e-column--body (column.helpers/column-body-attributes column-id column-props)
                        [x.components/content                  column-id content]])
@@ -45,28 +45,28 @@
 (defn element
   ; @param (keyword)(opt) column-id
   ; @param (map) column-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :content (metamorphic-content)
-  ;   :gap (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;   :horizontal-align (keyword)(opt)
-  ;    :center, :left, :right
-  ;    Default: :center
-  ;   :style (map)(opt)
-  ;   :stretch-orientation (keyword)(opt)
-  ;    :horizontal, :vertical, :both, :none
-  ;    Default: :vertical
-  ;   :vertical-align (keyword)(opt)
-  ;    :top, :center, :bottom, :space-around, :space-between, :space-evenly
-  ;    Default: :top
-  ;   :wrap-items? (boolean)(opt)
-  ;    Default: false}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
+  ;  :gap (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;  :horizontal-align (keyword)(opt)
+  ;   :center, :left, :right
+  ;   Default: :center
+  ;  :style (map)(opt)
+  ;  :stretch-orientation (keyword)(opt)
+  ;   :horizontal, :vertical, :both, :none
+  ;   Default: :vertical
+  ;  :vertical-align (keyword)(opt)
+  ;   :top, :center, :bottom, :space-around, :space-between, :space-evenly
+  ;   Default: :top
+  ;  :wrap-items? (boolean)(opt)
+  ;   Default: false}
   ;
   ; @usage
-  ;  [elements/column {...}]
+  ; [elements/column {...}]
   ;
   ; @usage
-  ;  [elements/column :my-column {...}]
+  ; [elements/column :my-column {...}]
   ([column-props]
    [element (random/generate-keyword) column-props])
 

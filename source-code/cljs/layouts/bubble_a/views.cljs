@@ -35,14 +35,14 @@
   ;
   ; @param (keyword) bubble-id
   ; @param (map) layout-props
-  ;  {:body (metamorphic-content)
-  ;    Default: :none
-  ;   :on-mount (metamorphic-event)(opt)
-  ;   :on-unmount (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ; {:body (metamorphic-content)
+  ;   Default: :none
+  ;  :on-mount (metamorphic-event)(opt)
+  ;  :on-unmount (metamorphic-event)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [layout :my-bubble {...}]
+  ; [layout :my-bubble {...}]
   [bubble-id {:keys [on-mount on-unmount] :as layout-props}]
   (let [layout-props (prototypes/layout-props-prototype layout-props)]
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))

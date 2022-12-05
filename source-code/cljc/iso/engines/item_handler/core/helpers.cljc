@@ -35,9 +35,9 @@
   ; @param (keyword) handler-id
   ;
   ; @example
-  ;  (default-item-path :my-handler)
-  ;  =>
-  ;  [:engines :engine-handler/handled-items :my-handler]
+  ; (default-item-path :my-handler)
+  ; =>
+  ; [:engines :engine-handler/handled-items :my-handler]
   ;
   ; @return (vector)
   [handler-id]
@@ -49,9 +49,9 @@
   ; @param (keyword) handler-id
   ;
   ; @example
-  ;  (default-suggestions-path :my-handler)
-  ;  =>
-  ;  [:engines :engine-handler/suggestions :my-handler]
+  ; (default-suggestions-path :my-handler)
+  ; =>
+  ; [:engines :engine-handler/suggestions :my-handler]
   ;
   ; @return (vector)
   [handler-id]

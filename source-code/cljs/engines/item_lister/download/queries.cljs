@@ -30,13 +30,13 @@
   ; @param (keyword) lister-id
   ;
   ; @return (map)
-  ;  {:downloaded-item-count (integer)
-  ;   :download-limit (integer)
-  ;   :filter-pattern (maps in vector)
-  ;   :order-by (namespaced keyword)
-  ;   :reload-items? (boolean)
-  ;   :search-keys (keywords in vector)
-  ;   :search-term (string)}
+  ; {:downloaded-item-count (integer)
+  ;  :download-limit (integer)
+  ;  :filter-pattern (maps in vector)
+  ;  :order-by (namespaced keyword)
+  ;  :reload-items? (boolean)
+  ;  :search-keys (keywords in vector)
+  ;  :search-term (string)}
   [db [_ lister-id]]
   (r core.subs/use-query-params db lister-id {:download-limit        (r body.subs/get-body-prop             db lister-id :download-limit)
                                               :order-by              (r core.subs/get-meta-item             db lister-id :order-by)

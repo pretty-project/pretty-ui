@@ -44,7 +44,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
@@ -57,7 +57,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]

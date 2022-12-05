@@ -96,7 +96,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   [editor-id {:keys [value-path]}]
   (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        (swap! state/EDITOR-INPUT assoc editor-id stored-value)))
@@ -137,12 +137,12 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (string) editor-content
   [editor-id {:keys [value-path]} editor-content]
   ; Az on-change-f függvény a text-editor aktuális tartalmát ...
   ; ... a set-editor-content! függvénnyel az EDITOR-CONTENTS atomba írja.
   ; ... a dispatch-last függvénnyel a value-path Re-Frame adatbázis útvonalra írja,
-  ;     ha a felhasználó már befejezte a gépelést.
+  ;    ha a felhasználó már befejezte a gépelést.
   (set-editor-output! editor-id editor-content)
   (r/dispatch-last    config/TYPE-ENDED-AFTER [:x.db/set-item! value-path editor-content]))

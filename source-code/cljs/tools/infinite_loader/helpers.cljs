@@ -26,9 +26,9 @@
   ; @param (keyword) loader-id
   ;
   ; @example
-  ;  (loader-id->observer-id :my-loader)
-  ;  =>
-  ;  :my-loader--observer
+  ; (loader-id->observer-id :my-loader)
+  ; =>
+  ; :my-loader--observer
   ;
   ; @return (keyword)
   [loader-id]

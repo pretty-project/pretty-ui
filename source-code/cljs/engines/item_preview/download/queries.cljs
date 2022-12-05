@@ -28,7 +28,7 @@
   ; @param (keyword) preview-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ preview-id]]
   (let [current-item-id (r core.subs/get-current-item-id db preview-id)]
        (r core.subs/use-query-params db preview-id {:item-id current-item-id})))

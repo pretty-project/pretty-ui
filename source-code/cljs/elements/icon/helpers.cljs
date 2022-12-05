@@ -25,18 +25,18 @@
   ;
   ; @param (keyword) icon-id
   ; @param (map) icon-props
-  ;  {:color (keyword)
-  ;   icon-family (keyword)
-  ;   layout (keyword)
-  ;   size (keyword)
-  ;   :style (map)(opt)}
+  ; {:color (keyword)
+  ;  icon-family (keyword)
+  ;  layout (keyword)
+  ;  size (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-color (keyword)
-  ;   :data-icon-family (keyword)
-  ;   :data-layout (keyword)
-  ;   :data-size (keyword)
-  ;   :style (map)}
+  ; {:data-color (keyword)
+  ;  :data-icon-family (keyword)
+  ;  :data-layout (keyword)
+  ;  :data-size (keyword)
+  ;  :style (map)}
   [_ {:keys [color icon-family layout size style]}]
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)

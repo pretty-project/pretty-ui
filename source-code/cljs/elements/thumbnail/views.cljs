@@ -29,7 +29,7 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -42,8 +42,8 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:background-size (keyword)
-  ;   :uri (string)(opt)}
+  ; {:background-size (keyword)
+  ;  :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
   [:button.e-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
                              [:div.e-thumbnail--icon  {:data-icon-family :material-icons-filled} :image]
@@ -55,10 +55,10 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:background-size (keyword)
-  ;   :icon (keyword)
-  ;   :icon-family (keyword)
-  ;   :uri (string)(opt)}
+  ; {:background-size (keyword)
+  ;  :icon (keyword)
+  ;  :icon-family (keyword)
+  ;  :uri (string)(opt)}
   [thumbnail-id {:keys [background-size icon icon-family uri] :as thumbnail-props}]
   [:div.e-thumbnail--body (thumbnail.helpers/static-thumbnail-body-attributes thumbnail-id thumbnail-props)
                           [:div.e-thumbnail--icon  {:data-icon-family icon-family} icon]
@@ -70,7 +70,7 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:on-click (metamorphic-event)(opt)}
+  ; {:on-click (metamorphic-event)(opt)}
   [thumbnail-id {:keys [on-click] :as thumbnail-props}]
   [:div.e-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
                     [thumbnail-label thumbnail-id thumbnail-props]
@@ -80,48 +80,48 @@
 (defn element
   ; @param (keyword)(opt) thumbnail-id
   ; @param (map) thumbnail-props
-  ;  {:background-size (keyword)(opt)
-  ;    :contain, :cover
-  ;    Default: :contain
-  ;   :border-radius (keyword)(opt)
-  ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :none
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
-  ;   :icon (keyword)(opt)
-  ;    Default: :icon
-  ;   :icon-family (keyword)(opt)
-  ;    Default: :material-icons-filled
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :on-click (metamorphic-event)(opt)
-  ;   :required? (boolean)(opt)
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :uri (string)(opt)
-  ;   :width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    Default: :s}
+  ; {:background-size (keyword)(opt)
+  ;   :contain, :cover
+  ;   Default: :contain
+  ;  :border-radius (keyword)(opt)
+  ;   :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   Default: :none
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :s
+  ;  :helper (metamorphic-content)(opt)
+  ;  :icon (keyword)(opt)
+  ;   Default: :icon
+  ;  :icon-family (keyword)(opt)
+  ;   Default: :material-icons-filled
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :required? (boolean)(opt)
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :uri (string)(opt)
+  ;  :width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :s}
   ;
   ; @usage
-  ;  [thumbnail {...}]
+  ; [thumbnail {...}]
   ;
   ; @usage
-  ;  [thumbnail :my-thumbnail {...}]
+  ; [thumbnail :my-thumbnail {...}]
   ([thumbnail-props]
    [element (random/generate-keyword) thumbnail-props])
 

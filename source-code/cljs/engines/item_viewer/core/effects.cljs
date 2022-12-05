@@ -28,7 +28,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-viewer/view-item! :my-viewer "my-item"]
+  ; [:item-viewer/view-item! :my-viewer "my-item"]
   (fn [{:keys [db]} [_ viewer-id item-id]]
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db viewer-id)]

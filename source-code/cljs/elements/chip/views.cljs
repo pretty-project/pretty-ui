@@ -29,8 +29,8 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)}
   [_ {:keys [icon icon-family]}]
   (if icon [:i.e-chip--icon {:data-icon-family icon-family} icon]))
 
@@ -39,7 +39,7 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:label (metamorphic-content)}
+  ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
   [:div.e-chip--label (x.components/content label)])
 
@@ -48,8 +48,8 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ;  {:primary-button-event (metamorphic-event)(opt)
-  ;   :primary-button-icon (keyword)}
+  ; {:primary-button-event (metamorphic-event)(opt)
+  ;  :primary-button-icon (keyword)}
   [chip-id {:keys [primary-button-event primary-button-icon] :as chip-props}]
   (if primary-button-event [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
                                                            [:i.e-chip--primary-button-icon {:data-icon-family :material-icons-filled}
@@ -79,41 +79,41 @@
 (defn element
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ;  {:background-color (keyword or string)(opt)
-  ;    :highlight, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;   :color (keyword or string)(opt)
-  ;    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :default
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)
-  ;    :material-icons-filled, :material-icons-outlined
-  ;    Default: :material-icons-filled
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :label (metamorphic-content)
-  ;   :on-click (metamorphic-event)(opt)
-  ;    TODO A chip elem egésze kattintható
-  ;   :primary-button-icon (keyword)(opt)
-  ;    Default: :close
-  ;   :primary-button-event (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ; {:background-color (keyword or string)(opt)
+  ;   :highlight, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;  :color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :default
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)
+  ;   :material-icons-filled, :material-icons-outlined
+  ;   Default: :material-icons-filled
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :label (metamorphic-content)
+  ;  :on-click (metamorphic-event)(opt)
+  ;   TODO A chip elem egésze kattintható
+  ;  :primary-button-icon (keyword)(opt)
+  ;   Default: :close
+  ;  :primary-button-event (metamorphic-event)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [chip {...}]
+  ; [chip {...}]
   ;
   ; @usage
-  ;  [chip :my-chip {...}]
+  ; [chip :my-chip {...}]
   ([chip-props]
    [element (random/generate-keyword) chip-props])
 

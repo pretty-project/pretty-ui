@@ -34,7 +34,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @usage
-  ;  [:item-viewer/delete-item! :my-viewer]
+  ; [:item-viewer/delete-item! :my-viewer]
   (fn [{:keys [db]} [_ viewer-id]]
       (let [query        (r update.queries/get-delete-item-query          db viewer-id)
             validator-f #(r update.validators/delete-item-response-valid? db viewer-id %)]
@@ -182,7 +182,7 @@
   ; @param (keyword) viewer-id
   ;
   ; @usage
-  ;  [:item-viewer/duplicate-item! :my-viewer]
+  ; [:item-viewer/duplicate-item! :my-viewer]
   (fn [{:keys [db]} [_ viewer-id]]
       (let [display-progress? (r body.subs/get-body-prop                          db viewer-id :display-progress?)
             query             (r update.queries/get-duplicate-item-query          db viewer-id)

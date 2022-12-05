@@ -24,11 +24,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) expandable-props
-  ;  {:icon (keyword)}
+  ; {:icon (keyword)}
   ;
   ; @return (map)
-  ;  {:expanded? (boolean)
-  ;   :icon-family (keyword)}
+  ; {:expanded? (boolean)
+  ;  :icon-family (keyword)}
   [{:keys [icon] :as expandable-props}]
   (merge {:expanded? false}
          (if icon {:icon-family :material-icons-filled})

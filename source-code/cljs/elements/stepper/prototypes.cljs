@@ -26,7 +26,7 @@
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [stepper-props]
   (merge {}
          (param stepper-props)))

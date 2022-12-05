@@ -25,15 +25,15 @@
 (defn element
   ; @param (keyword)(opt) separator-id
   ; @param (map) separator-props
-  ;  {:height (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;    Default: :s}
+  ; {:height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :s}
   ;
   ; @usage
-  ;  [horizontal-separator {...}]
+  ; [horizontal-separator {...}]
   ;
   ; @usage
-  ;  [horizontal-separator :my-horizontal-separator {...}]
+  ; [horizontal-separator :my-horizontal-separator {...}]
   ([separator-props]
    [element (random/generate-keyword) separator-props])
 

@@ -35,9 +35,9 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (default-content-path :my-editor)
-  ;  =>
-  ;  [:engines :engine-handler/edited-contents :my-editor]
+  ; (default-content-path :my-editor)
+  ; =>
+  ; [:engines :engine-handler/edited-contents :my-editor]
   ;
   ; @return (vector)
   [editor-id]

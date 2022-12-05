@@ -25,8 +25,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) schedule-props
-  ;  {:hour (integer)(opt)
-  ;   :minute (integer)(opt)}
+  ; {:hour (integer)(opt)
+  ;  :minute (integer)(opt)}
   ;
   ; @return (boolean)
   [{:keys [hour minute]}]

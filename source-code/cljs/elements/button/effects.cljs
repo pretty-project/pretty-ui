@@ -26,7 +26,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ; {:keypress (map)(opt)}
   (fn [{:keys [db]} [_ button-id {:keys [keypress] :as button-props}]]
       (if keypress {:db       (r button.events/button-did-mount  db button-id button-props)
                     :dispatch [:elements.button/reg-keypress-event! button-id button-props]})))
@@ -36,7 +36,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ; {:keypress (map)(opt)}
   (fn [{:keys [db]} [_ button-id {:keys [keypress] :as button-props}]]
       (if keypress {:db (r button.events/button-did-update db button-id button-props)})))
 
@@ -45,7 +45,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ; {:keypress (map)(opt)}
   (fn [{:keys [db]} [_ button-id {:keys [keypress] :as button-props}]]
       (if keypress {:db       (r button.events/button-will-unmount  db button-id button-props)
                     :dispatch [:elements.button/remove-keypress-event! button-id button-props]})))
@@ -60,10 +60,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)
-  ;    {:key-code (integer)
-  ;     :required? (boolean)(opt)
-  ;      Default: false}}
+  ; {:keypress (map)(opt)
+  ;   {:key-code (integer)
+  ;    :required? (boolean)(opt)
+  ;     Default: false}}
   (fn [_ [_ button-id {:keys [keypress]}]]
       [:x.environment/reg-keypress-event! button-id
                                           {:key-code   (:key-code keypress)

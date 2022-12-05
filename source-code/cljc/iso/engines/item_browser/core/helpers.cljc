@@ -35,9 +35,9 @@
   ; @param (keyword) browser-id
   ;
   ; @example
-  ;  (default-item-path :my-browser)
-  ;  =>
-  ;  [:engines :engine-handler/browsed-item :my-browser]
+  ; (default-item-path :my-browser)
+  ; =>
+  ; [:engines :engine-handler/browsed-item :my-browser]
   ;
   ; @return (vector)
   [browser-id]

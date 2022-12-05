@@ -27,11 +27,11 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
-  ;  {:color (keyword or string)
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)))
@@ -41,12 +41,12 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
-  ;  {:font-size (keyword)
-  ;   :line-height (keyword)}
+  ; {:font-size (keyword)
+  ;  :line-height (keyword)}
   ;
   ; @return (map)
-  ;  {:data-font-size (keyword)
-  ;   :data-line-height (keyword)}
+  ; {:data-font-size (keyword)
+  ;  :data-line-height (keyword)}
   [_ {:keys [font-size line-height]}]
   {:data-font-size   font-size
    :data-line-height line-height})
@@ -56,10 +56,10 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [anchor-id {:keys [disabled? href on-click] :as anchor-props}]
   (merge {}
          (anchor-style-attributes anchor-id anchor-props)

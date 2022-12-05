@@ -28,12 +28,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) adornment-props
-  ;  {:icon (keyword)(opt)}
+  ; {:icon (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :icon-family (keyword)
-  ;   :tab-indexed? (boolean)}
+  ; {:color (keyword)
+  ;  :icon-family (keyword)
+  ;  :tab-indexed? (boolean)}
   [{:keys [icon] :as adornment-props}]
   (merge (if icon {:icon-family :material-icons-filled})
          {:color        :default
@@ -45,15 +45,15 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {:autofill-name (keyword)
-  ;   :border-radius (keyword)
-  ;   :field-content-f (function)
-  ;   :field-value-f (function)
-  ;   :type (keyword)
-  ;   :value-path (vector)}
+  ; {:autofill-name (keyword)
+  ;  :border-radius (keyword)
+  ;  :field-content-f (function)
+  ;  :field-value-f (function)
+  ;  :type (keyword)
+  ;  :value-path (vector)}
   [field-id field-props]
   ; BUG#6782
   ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
@@ -82,8 +82,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:emptiable? (boolean)(opt)
-  ;   :end-adornments (maps in vector)(opt)}
+  ; {:emptiable? (boolean)(opt)
+  ;  :end-adornments (maps in vector)(opt)}
   ;
   ; @return (maps in vector)
   [field-id {:keys [emptiable? end-adornments] :as field-props}]

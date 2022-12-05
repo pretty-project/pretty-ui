@@ -36,7 +36,7 @@
   ;
   ; @param (keyword) marker-id
   ; @param (map) marker-props
-  ;  {}
+  ; {}
   [marker-id {:keys [colors] :as marker-props}]
   (letfn [(f [body color] (conj body [color-marker-color marker-id marker-props color]))]
          (reduce f [:<>] colors)))
@@ -55,7 +55,7 @@
   ;
   ; @param (keyword) marker-id
   ; @param (map) marker-props
-  ;  {}
+  ; {}
   [marker-id {:keys [colors] :as marker-props}]
   [:div.e-color-marker (color-marker.helpers/marker-attributes marker-id marker-props)
                        [color-marker-body                      marker-id marker-props]])
@@ -63,30 +63,30 @@
 (defn element
   ; @param (keyword)(opt) marker-id
   ; @param (map) marker-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :colors (keywords or strings in vector)(opt)
-  ;    Default: [:highlight]
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :size (keyword)(opt)
-  ;    :m, :l, :xl, :xxl
-  ;    Default: :s
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :colors (keywords or strings in vector)(opt)
+  ;   Default: [:highlight]
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :size (keyword)(opt)
+  ;   :m, :l, :xl, :xxl
+  ;   Default: :s
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [color-marker {...}]
+  ; [color-marker {...}]
   ;
   ; @usage
-  ;  [color-marker :my-color-marker {...}]
+  ; [color-marker :my-color-marker {...}]
   ([marker-props]
    [element (random/generate-keyword) marker-props])
 

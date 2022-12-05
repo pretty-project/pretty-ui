@@ -27,10 +27,10 @@
   ;
   ; @param (keyword) area-id
   ; @param (map) area-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [card-id {:keys [disabled? on-click style]}]
   (if disabled? {:disabled        true
                  :style           style}
@@ -45,7 +45,7 @@
   ;
   ; @param (keyword) area-id
   ; @param (map) area-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [area-id {:keys [color] :as area-props}]

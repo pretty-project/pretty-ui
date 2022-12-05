@@ -26,9 +26,9 @@
   ;
   ; @param (keyword) saver-id
   ; @param (map) saver-props
-  ;  {:data-url (string)(opt)
-  ;   :filename (string)
-  ;   :uri (string)(opt)}
+  ; {:data-url (string)(opt)
+  ;  :filename (string)
+  ;  :uri (string)(opt)}
   [_ {:keys [data-url filename uri] :as saver-props}]
   [:a#file-saver (if data-url {:download filename :href data-url}
                               {:download filename :href uri})])
@@ -98,7 +98,7 @@
   ;
   ; @param (keyword) saver-id
   ; @param (map) saver-props
-  ;  {:filename (string)}
+  ; {:filename (string)}
   [_ {:keys [filename]}]
   [elements/label ::filename-label
                   {:color       :muted

@@ -44,8 +44,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:icon (keyword)(opt)
-  ;   :label (string)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/button-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:button.e-text-field--button-adornment adornment-attributes icon]
@@ -57,8 +57,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:icon (keyword)(opt)
-  ;   :label (string)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :label (string)(opt)}
   [field-id field-props {:keys [icon label] :as adornment-props}]
   (let [adornment-attributes (text-field.helpers/static-adornment-attributes field-id field-props adornment-props)]
        (cond icon  [:div.e-text-field--static-adornment adornment-attributes icon]
@@ -70,7 +70,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:on-click (metamorphic-event)(opt)}
+  ; {:on-click (metamorphic-event)(opt)}
   [field-id field-props {:keys [on-click] :as adornment-props}]
   (let [adornment-props (text-field.prototypes/adornment-props-prototype adornment-props)]
        (if on-click [button-adornment field-id field-props adornment-props]
@@ -81,7 +81,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:end-adornments (maps in vector)(opt)}
+  ; {:end-adornments (maps in vector)(opt)}
   [field-id {:keys [end-adornments] :as field-props}]
   (let [end-adornments (text-field.prototypes/end-adornments-prototype field-id field-props)]
        (if (vector/nonempty? end-adornments)
@@ -94,7 +94,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:start-adornments (maps in vector)(opt)}
+  ; {:start-adornments (maps in vector)(opt)}
   [field-id {:keys [start-adornments] :as field-props}]
   (if (vector/nonempty? start-adornments)
       (letfn [(f [% adornment-props] (conj % [field-adornment field-id field-props adornment-props]))]
@@ -111,7 +111,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:surface (metamorphic-content)(opt)}
+  ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
   (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
                       [:div.e-text-field--surface (text-field.helpers/surface-attributes field-id field-props)
@@ -137,7 +137,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   [field-id {:keys [validator] :as field-props}]
   (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
           [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
@@ -155,7 +155,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:placeholder (metamorphic-content)}
+  ; {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
   ; A placeholder elem {:on-mouse-down #(focus-element! ...)} eseménye nem adta át a fókuszt
   ; az input elem számára, ezért a placeholder elem az input elem alatt kell, hogy megjelenjen
@@ -173,7 +173,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:multiline? (boolean)(opt)}
+  ; {:multiline? (boolean)(opt)}
   [field-id {:keys [multiline?] :as field-props}]
   (if multiline? [:textarea.e-text-field--input (text-field.helpers/field-body-attributes field-id field-props)]
                  [:input.e-text-field--input    (text-field.helpers/field-body-attributes field-id field-props)]))
@@ -252,10 +252,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:helper (metamorphic-content)(opt)
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :required? (boolean)(opt)}
+  ; {:helper (metamorphic-content)(opt)
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :required? (boolean)(opt)}
   [field-id {:keys [helper info-text label marked? required?]}]
   (if label (let [input-id (hiccup/value field-id "input")]
                  [label.views/element {:content     label
@@ -294,135 +294,135 @@
   ; XXX#0711
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:autoclear? (boolean)(opt)
-  ;    Default: false
-  ;   :autofill-name (keyword)(opt)
-  ;   :autofocus? (boolean)(opt)
-  ;   :border-color (keyword or string)(opt)
-  ;    :default, :primary, :secondary, :success, :warning
-  ;    Default: :default
-  ;   :border-radius (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :none
-  ;    Default: :s
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :emptiable? (boolean)(opt)
-  ;    Default: false
-  ;   :end-adornments (maps in vector)(opt)
-  ;    [{:color (keyword)(opt)
-  ;       :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;       Default: :default
-  ;      :disabled? (boolean)(opt)
-  ;       Default: false
-  ;      :icon (keyword)
-  ;      :icon-family (keyword)(opt)
-  ;       :material-icons-filled, :material-icons-outlined
-  ;       Default: :material-icons-filled
-  ;      :label (string)(opt)
-  ;      :on-click (metamorphic-event)(opt)
-  ;      :tab-indexed? (boolean)(opt)
-  ;       Default: true
-  ;      :tooltip (metamorphic-content)(opt)}]
-  ;   :field-content-f (function)(opt)
-  ;    Default: return
-  ;   :field-value-f (function)(opt)
-  ;    Default: return
-  ;   :font-size (keyword)(opt)
-  ;    :xs, :s
-  ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :initial-value (string)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :marked? (boolean)(opt)
-  ;    Default: false
-  ;   :max-length (integer)(opt)
-  ;   :min-width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
-  ;   :modifier (function)(opt)
-  ;   :on-blur (metamorphic-event)(opt)
-  ;   :on-change (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
-  ;   :on-empty (metamorphic-event)(opt)
-  ;   :on-focus (metamorphic-event)(opt)
-  ;   :on-mount (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
-  ;   :on-type-ended (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
-  ;   :on-unmount (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   :required? (boolean or keyword)(opt)
-  ;    true, false, :unmarked
-  ;    Default: false
-  ;   :start-adornments (maps in vector)(opt)
-  ;    [{:color (keyword)(opt)
-  ;       :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;       Default: :default
-  ;      :disabled? (boolean)(opt)
-  ;       Default: false
-  ;      :icon (keyword)(opt)
-  ;      :icon-family (keyword)(opt)
-  ;       :material-icons-filled, :material-icons-outlined
-  ;       Default: :material-icons-filled
-  ;      :label (string)(opt)
-  ;      :on-click (metamorphic-event)
-  ;      :tab-indexed? (boolean)(opt)
-  ;       Default: true
-  ;      :tooltip (metamorphic-content)}]
-  ;   :stretch-orientation (keyword)(opt)
-  ;    :horizontal, :none
-  ;    Default: :none
-  ;   :style (map)(opt)
-  ;   :surface (metamorphic-content)(opt)
-  ;   :unemptiable? (boolean)(opt)
-  ;    Default: false
-  ;    TODO
-  ;    A field on-blur esemény pillanatában, ha üres a value-path, akkor
-  ;    az eltárolt backup-value értéket beállítja a value-path -re.
-  ;   :validator (map)(opt)
-  ;    {:f (function)
-  ;     :invalid-message (metamorphic-content)(opt)
-  ;     :invalid-message-f (function)(opt)
-  ;     :prevalidate? (boolean)(opt)
-  ;      A mező kitöltése közben validálja annak értékét, még mielőtt a mező
-  ;      {:visited? true} állapotba lépne.
-  ;      Default: false}
-  ;   :value-path (vector)(opt)}
+  ; {:autoclear? (boolean)(opt)
+  ;   Default: false
+  ;  :autofill-name (keyword)(opt)
+  ;  :autofocus? (boolean)(opt)
+  ;  :border-color (keyword or string)(opt)
+  ;   :default, :primary, :secondary, :success, :warning
+  ;   Default: :default
+  ;  :border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :none
+  ;   Default: :s
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :emptiable? (boolean)(opt)
+  ;   Default: false
+  ;  :end-adornments (maps in vector)(opt)
+  ;   [{:color (keyword)(opt)
+  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;      Default: :default
+  ;     :disabled? (boolean)(opt)
+  ;      Default: false
+  ;     :icon (keyword)
+  ;     :icon-family (keyword)(opt)
+  ;      :material-icons-filled, :material-icons-outlined
+  ;      Default: :material-icons-filled
+  ;     :label (string)(opt)
+  ;     :on-click (metamorphic-event)(opt)
+  ;     :tab-indexed? (boolean)(opt)
+  ;      Default: true
+  ;     :tooltip (metamorphic-content)(opt)}]
+  ;  :field-content-f (function)(opt)
+  ;   Default: return
+  ;  :field-value-f (function)(opt)
+  ;   Default: return
+  ;  :font-size (keyword)(opt)
+  ;   :xs, :s
+  ;   Default: :s
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :initial-value (string)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :marked? (boolean)(opt)
+  ;   Default: false
+  ;  :max-length (integer)(opt)
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;   Default: :none
+  ;  :modifier (function)(opt)
+  ;  :on-blur (metamorphic-event)(opt)
+  ;  :on-change (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;  :on-empty (metamorphic-event)(opt)
+  ;  :on-focus (metamorphic-event)(opt)
+  ;  :on-mount (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;  :on-type-ended (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;  :on-unmount (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :required? (boolean or keyword)(opt)
+  ;   true, false, :unmarked
+  ;   Default: false
+  ;  :start-adornments (maps in vector)(opt)
+  ;   [{:color (keyword)(opt)
+  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;      Default: :default
+  ;     :disabled? (boolean)(opt)
+  ;      Default: false
+  ;     :icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)
+  ;      :material-icons-filled, :material-icons-outlined
+  ;      Default: :material-icons-filled
+  ;     :label (string)(opt)
+  ;     :on-click (metamorphic-event)
+  ;     :tab-indexed? (boolean)(opt)
+  ;      Default: true
+  ;     :tooltip (metamorphic-content)}]
+  ;  :stretch-orientation (keyword)(opt)
+  ;   :horizontal, :none
+  ;   Default: :none
+  ;  :style (map)(opt)
+  ;  :surface (metamorphic-content)(opt)
+  ;  :unemptiable? (boolean)(opt)
+  ;   Default: false
+  ;   TODO
+  ;   A field on-blur esemény pillanatában, ha üres a value-path, akkor
+  ;   az eltárolt backup-value értéket beállítja a value-path -re.
+  ;  :validator (map)(opt)
+  ;   {:f (function)
+  ;    :invalid-message (metamorphic-content)(opt)
+  ;    :invalid-message-f (function)(opt)
+  ;    :prevalidate? (boolean)(opt)
+  ;     A mező kitöltése közben validálja annak értékét, még mielőtt a mező
+  ;     {:visited? true} állapotba lépne.
+  ;     Default: false}
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [text-field {...}]
+  ; [text-field {...}]
   ;
   ; @usage
-  ;  [text-field :my-text-field {...}]
+  ; [text-field :my-text-field {...}]
   ;
   ; @usage
-  ;  [text-field {:validator {:f               #(not (empty? %))
-  ;                           :invalid-message "Invalid value"}}]
+  ; [text-field {:validator {:f               #(not (empty? %))
+  ;                          :invalid-message "Invalid value"}}]
   ;
   ; @usage
-  ;  (defn get-invalid-message [value] "Invalid value")
-  ;  [text-field {:validator {:f                 #(not (empty? %))
-  ;                           :invalid-message-f get-invalid-message}}]
+  ; (defn get-invalid-message [value] "Invalid value")
+  ; [text-field {:validator {:f                 #(not (empty? %))
+  ;                          :invalid-message-f get-invalid-message}}]
   ;
   ; @usage
-  ;  (defn my-surface [field-id])
-  ;  [text-field {:surface {:content #'my-surface}}]
+  ; (defn my-surface [field-id])
+  ; [text-field {:surface {:content #'my-surface}}]
   ;
   ; @usage
-  ;  (defn my-surface [field-id surface-props])
-  ;  [text-field {:surface #'my-surface}]
+  ; (defn my-surface [field-id surface-props])
+  ; [text-field {:surface #'my-surface}]
   ;
   ; @usage
   ; [text-field {:modifier #(string/starts-with! % "/")}]

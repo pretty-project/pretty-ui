@@ -37,13 +37,13 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keywords in vector) buttons
-  ;  [:bold, :italic, :underline, :font, :font-size, :cut, :copy, :paste
-  ;   :link, :undo, :redo, :brush]
+  ; [:bold, :italic, :underline, :font, :font-size, :cut, :copy, :paste
+  ;  :link, :undo, :redo, :brush]
   ;
   ; @example
-  ;  (parse-buttons [:bold :italic])
-  ;  =>
-  ;  "bold, italic"
+  ; (parse-buttons [:bold :italic])
+  ; =>
+  ; "bold, italic"
   ;
   ; @result (string)
   [buttons]
@@ -61,25 +61,25 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) editor-props
-  ;  {:autofocus? (boolean)(opt)
-  ;   :buttons (keywords in vector)
-  ;   :disabled? (boolean)(opt)
-  ;   :min-height (px)
-  ;   :placeholder (metamorphic-content)}
+  ; {:autofocus? (boolean)(opt)
+  ;  :buttons (keywords in vector)
+  ;  :disabled? (boolean)(opt)
+  ;  :min-height (px)
+  ;  :placeholder (metamorphic-content)}
   ;
   ; @return (map)
-  ;  {:autofocus (boolean)
-  ;   :buttons (string)
-  ;   :cleanHTML (boolean)
-  ;   :cleanWhitespace (boolean)
-  ;   :disabled (boolean)
-  ;   :insert-as (keyword)
-  ;   :language (string)
-  ;   :minHeight (string)
-  ;   :placeholder (string)
-  ;   :showCharsCounter (boolean)
-  ;   :showWordsCounter (boolean)
-  ;   :showXPathInStatusbar (boolean)}
+  ; {:autofocus (boolean)
+  ;  :buttons (string)
+  ;  :cleanHTML (boolean)
+  ;  :cleanWhitespace (boolean)
+  ;  :disabled (boolean)
+  ;  :insert-as (keyword)
+  ;  :language (string)
+  ;  :minHeight (string)
+  ;  :placeholder (string)
+  ;  :showCharsCounter (boolean)
+  ;  :showWordsCounter (boolean)
+  ;  :showXPathInStatusbar (boolean)}
   [{:keys [autofocus? buttons disabled? insert-as min-height placeholder]}]
   (let [placeholder       @(r/subscribe [:x.dictionary/look-up placeholder])
         selected-language @(r/subscribe [:x.locales/get-selected-language])]
@@ -119,25 +119,25 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {:config (map)
-  ;   :on-blur (function)
-  ;   :on-change (function)
-  ;   :on-focus (function)
-  ;   :key (string)
-  ;   :tabIndex (integer)
-  ;   :value (string)}
+  ; {:config (map)
+  ;  :on-blur (function)
+  ;  :on-change (function)
+  ;  :on-focus (function)
+  ;  :key (string)
+  ;  :tabIndex (integer)
+  ;  :value (string)}
   [editor-id {:keys [on-blur on-change on-focus update-trigger value] :as editor-props}]
   ; A key paraméter megváltozásának hatására a szerkesztő tartalma a value paraméter aktuális
   ; értéke lesz.
   ; Pl.: Ha a value paraméter a szerkesztő React-fába csatolásakor megkapja a szerkesztő kezdeti
-  ;      tartalmát és később a felhasználó megnyomja a "Visszaállítás" gombot, hogy a szerkesztő
-  ;      tartalma újra a megnyitáskori állapot szerinti legyen, akkor szükséges megváltoztatni
-  ;      a key paraméter értékét, mivel a visszaállítás után a value paraméter "új" értéke
-  ;      megegyezik az utoljára a megnyitáskor átadott értékével ezért a szerkesztő
-  ;      component-did-update életciklusa nem triggerelődne.
+  ;     tartalmát és később a felhasználó megnyomja a "Visszaállítás" gombot, hogy a szerkesztő
+  ;     tartalma újra a megnyitáskori állapot szerinti legyen, akkor szükséges megváltoztatni
+  ;     a key paraméter értékét, mivel a visszaállítás után a value paraméter "új" értéke
+  ;     megegyezik az utoljára a megnyitáskor átadott értékével ezért a szerkesztő
+  ;     component-did-update életciklusa nem triggerelődne.
   ;
   ; A key paraméter esetleges változtatása a szerkesztő villanását okozza.
   ;

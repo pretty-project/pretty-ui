@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ editor-id {:keys [base-route]}]]
       (let [base-route (uri/valid-path base-route)]
            [:x.router/add-route! (routes.helpers/route-id editor-id :base)

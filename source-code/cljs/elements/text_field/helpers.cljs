@@ -117,7 +117,7 @@
   ; BUG#3401
   ; A mező értékének eltárolása előtt szükséges azt string típusra alakítani!
   ; Pl.: Előfordulhat, hogy number típusú érték íródik a mezőbe és az értéket
-  ;      vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
+  ;     vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
   (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] (str content)))
 
 (defn resolve-field-change!
@@ -127,14 +127,14 @@
   ; @param (map) field-props
   [field-id field-props]
   ; - A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
-  ;   és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
-  ;   értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
-  ;   Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
-  ;   on-type-ended esemény.
+  ;  és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
+  ;  értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
+  ;  Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
+  ;  on-type-ended esemény.
   ;
   ; - A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
-  ;   paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
-  ;   hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
+  ;  paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
+  ;  hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
   (let [field-content (get-field-content field-id)
         now           (time/elapsed)
         changed-at    (get-in @text-field.state/FIELD-CONTENTS [field-id :changed-at])]
@@ -146,8 +146,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:modifier (function)(opt)
-  ;   :on-change (metamorphic-event)(opt)}
+  ; {:modifier (function)(opt)
+  ;  :on-change (metamorphic-event)(opt)}
   ;
   ; @return (function)
   [field-id {:keys [modifier on-change] :as field-props}]
@@ -170,7 +170,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:multiline? (boolean)(opt)}
+  ; {:multiline? (boolean)(opt)}
   ;
   ; @return (integer)
   [field-id {:keys [multiline?]}]
@@ -191,7 +191,7 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:font-size (keyword)}
+  ; {:font-size (keyword)}
   ;
   ; @return (integer)
   [field-id {:keys [font-size] :as field-props}]
@@ -205,10 +205,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {:height (string)}
+  ; {:height (string)}
   [field-id {:keys [style] :as field-props}]
   (let [field-body-height (field-body-height field-id field-props)]
        (assoc style :height (css/px field-body-height))))
@@ -218,14 +218,14 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:border-color (keyword)
-  ;   :border-radius (keyword)
-  ;   :font-size (keyword)
-  ;   :min-width (keyword)
-  ;   :stretch-orientation (keyword)}
+  ; {:border-color (keyword)
+  ;  :border-radius (keyword)
+  ;  :font-size (keyword)
+  ;  :min-width (keyword)
+  ;  :stretch-orientation (keyword)}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [field-id {:keys [border-color border-radius font-size min-width stretch-orientation] :as field-props}]
   (let [any-warning? @(r/subscribe [:elements.text-field/any-warning? field-id field-props])]
        (merge (element.helpers/element-default-attributes field-id field-props)
@@ -242,28 +242,28 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:autofill-name (keyword)
-  ;   :date-from (string)(opt)
-  ;   :date-to (string)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;   :max-length (integer)(opt)
-  ;   :type (keyword)(opt)
-  ;    :password, :text}
+  ; {:autofill-name (keyword)
+  ;  :date-from (string)(opt)
+  ;  :date-to (string)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;  :max-length (integer)(opt)
+  ;  :type (keyword)(opt)
+  ;   :password, :text}
   ;
   ; @return (map)
-  ;  {:auto-complete (keyword)
-  ;   :disabled (boolean)
-  ;   :id (string)
-  ;   :max-length (integer)
-  ;   :min (string)
-  ;   :max (string)
-  ;   :name (keyword)
-  ;   :on-blur (function)
-  ;   :on-change (function)
-  ;   :on-focus (function)
-  ;   :style (map)
-  ;   :type (keyword)
-  ;   :value (string)}
+  ; {:auto-complete (keyword)
+  ;  :disabled (boolean)
+  ;  :id (string)
+  ;  :max-length (integer)
+  ;  :min (string)
+  ;  :max (string)
+  ;  :name (keyword)
+  ;  :on-blur (function)
+  ;  :on-change (function)
+  ;  :on-focus (function)
+  ;  :style (map)
+  ;  :type (keyword)
+  ;  :value (string)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ;
@@ -284,15 +284,15 @@
   ; állítaná, akkor ...
   ; ... a mező kilépne a fókuszált állapotból.
   ; ... nem történne meg a mező on-blur eseménye az {:disabled? true} állapot beállításakor
-  ;     esetlegesen fókuszált állapotban lévő mezőn, ...
-  ;     ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
-  ;     ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
+  ;    esetlegesen fókuszált állapotban lévő mezőn, ...
+  ;    ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
+  ;    ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
   ; ... a {:disabled? true} állapot megszűnésekor a mező nem lépne vissza a fókuszált állapotba.
   ;
   ; A következő beállítások biztosítják, hogy a mező disabled állapotúnak tűnjön:
   ; - A {:tab-index "-1"} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
   ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
-  ;   és kikapcsolja a caret láthatóságát.
+  ;  és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
   (if disabled? {;:disabled true
                  :tab-index  "-1"
@@ -328,8 +328,8 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:id (string)
-  ;   :on-mouse-down (function)}
+  ; {:id (string)
+  ;  :on-mouse-down (function)}
   [field-id _]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   {:id             (hiccup/value field-id "surface")
@@ -346,14 +346,14 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:color (keyword)
-  ;   :icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)}
+  ; {:color (keyword)
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-color (keyword)
-  ;   :data-selectable (boolean)
-  ;   :data-icon-family (keyword)}
+  ; {:data-color (keyword)
+  ;  :data-selectable (boolean)
+  ;  :data-icon-family (keyword)}
   [_ _ {:keys [color icon icon-family]}]
   (if icon {:data-color       color
             :data-selectable  false
@@ -367,20 +367,20 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
-  ;  {:color (keyword)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)
-  ;    :material-icons-filled, :material-icons-outlined
-  ;    Default: :material-icons-filled
-  ;   :on-click (metamorphic-event)
-  ;   :tab-indexed? (boolean)(opt)
-  ;    Default: true
-  ;   :tooltip (metamorphic-content)(opt)}
+  ; {:color (keyword)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)
+  ;   :material-icons-filled, :material-icons-outlined
+  ;   Default: :material-icons-filled
+  ;  :on-click (metamorphic-event)
+  ;  :tab-indexed? (boolean)(opt)
+  ;   Default: true
+  ;  :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ _ {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
   ; BUG#2105
   ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
@@ -404,7 +404,7 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {:on-mouse-down (function)}
+  ; {:on-mouse-down (function)}
   [field-id field-props]
   {:on-mouse-down (fn [e] (.preventDefault e)
                           (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
@@ -417,7 +417,7 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [field-id field-props]
   {:disabled? (field-empty? field-id)
    :icon      :close

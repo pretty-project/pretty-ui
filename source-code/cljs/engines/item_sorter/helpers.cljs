@@ -41,7 +41,7 @@
   ;
   ; @param (keyword) sorter-id
   ; @param (map) sorter-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   [_ {:keys [value-path]} items]
   (r/dispatch-sync [:x.db/set-item value-path items]))
 

@@ -56,7 +56,7 @@
   ; @param (keywords in vector) change-keys
   ;
   ; @usage
-  ;  (r form-changed? db :my-handler [:name :email-address])
+  ; (r form-changed? db :my-handler [:name :email-address])
   ;
   ; @return (boolean)
   [db [_ handler-id change-keys]]
@@ -79,12 +79,12 @@
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/item-changed? :my-handler]
+; [:item-handler/item-changed? :my-handler]
 (r/reg-sub :item-handler/item-changed? item-changed?)
 
 ; @param (keyword) handler-id
 ; @param (keywords in vector) change-keys
 ;
 ; @usage
-;  [:item-handler/form-changed? :my-handler [:name :email-address]]
+; [:item-handler/form-changed? :my-handler [:name :email-address]]
 (r/reg-sub :item-handler/form-changed? form-changed?)

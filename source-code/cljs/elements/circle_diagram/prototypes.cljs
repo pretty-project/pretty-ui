@@ -25,11 +25,11 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:strength (integer)(opt)}
+  ; {:strength (integer)(opt)}
   ;
   ; @return (map)
-  ;  {:diameter (px)
-  ;   :strength (px)}
+  ; {:diameter (px)
+  ;  :strength (px)}
   [{:keys [strength] :as diagram-props}]
   (merge {:diameter 48
           :strength  2}

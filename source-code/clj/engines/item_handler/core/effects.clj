@@ -25,15 +25,15 @@
 (r/reg-event-fx :item-handler/init-handler!
   ; @param (keyword) handler-id
   ; @param (map) handler-props
-  ;  {:base-route (string)(opt)
-  ;   :collection-name (string)
-  ;   :handler-key (keyword)
-  ;   :item-namespace (keyword)
-  ;   :on-route (metamorphic-event)(opt)
-  ;   :route-title (metamorphic-content)(opt)}
+  ; {:base-route (string)(opt)
+  ;  :collection-name (string)
+  ;  :handler-key (keyword)
+  ;  :item-namespace (keyword)
+  ;  :on-route (metamorphic-event)(opt)
+  ;  :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [:item-handler/init-handler! :my-handler {...}]
+  ; [:item-handler/init-handler! :my-handler {...}]
   (fn [{:keys [db]} [_ handler-id {:keys [base-route] :as handler-props}]]
       (let [handler-props (core.prototypes/handler-props-prototype handler-id handler-props)]
            {:db         (r core.events/init-handler! db handler-id handler-props)

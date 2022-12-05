@@ -39,7 +39,7 @@
   ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
-  ;  {:options (vector)}
+  ; {:options (vector)}
   [selector-id {:keys [options] :as selector-props}]
   (letfn [(f [option-list option] (conj option-list [color-selector-option selector-id selector-props option]))]
          (reduce f [:<>] options)))
@@ -83,18 +83,18 @@
   ;
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :options (strings in vector)(opt)
-  ;   :options-label (metamorphic-content)(opt)
-  ;   :options-path (vector)(opt)
-  ;   :style (map)(opt)
-  ;   :value-path (vector)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :options (strings in vector)(opt)
+  ;  :options-label (metamorphic-content)(opt)
+  ;  :options-path (vector)(opt)
+  ;  :style (map)(opt)
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [color-selector {...}]
+  ; [color-selector {...}]
   ;
   ; @usage
-  ;  [color-selector :my-color-selector {...}]
+  ; [color-selector :my-color-selector {...}]
   ([selector-props]
    [element (random/generate-keyword) selector-props])
 

@@ -121,31 +121,31 @@
 (defn body
   ; @param (keyword) lister-id
   ; @param (map) body-props
-  ;  {:default-order-by (namespaced keyword)
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :download-limit (integer)(opt)
-  ;    Default: core.config/DEFAULT-DOWNLOAD-LIMIT
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :items-path (vector)(opt)
-  ;    Default: core.helpers/default-items-path
-  ;   :list-element (metamorphic-content)
-  ;   :order-key (keyword)(opt)
-  ;    Default: :order
-  ;   :placeholder (metamorphic-content)(opt)
-  ;    Default: :no-items-to-show
-  ;   :prefilter (map)(opt)
-  ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)}
+  ; {:default-order-by (namespaced keyword)
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :download-limit (integer)(opt)
+  ;   Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :items-path (vector)(opt)
+  ;   Default: core.helpers/default-items-path
+  ;  :list-element (metamorphic-content)
+  ;  :order-key (keyword)(opt)
+  ;   Default: :order
+  ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: :no-items-to-show
+  ;  :prefilter (map)(opt)
+  ;  :query (vector)(opt)
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-lister {...}]
+  ; [body :my-lister {...}]
   ;
   ; @usage
-  ;  (defn my-list-element [lister-id] [:div ...])
-  ;  [body :my-lister {:list-element #'my-list-element
-  ;                    :prefilter    {:my-type/color "red"}}]
+  ; (defn my-list-element [lister-id] [:div ...])
+  ; [body :my-lister {:list-element #'my-list-element
+  ;                   :prefilter    {:my-type/color "red"}}]
   [lister-id body-props]
   (let [body-props (body.prototypes/body-props-prototype lister-id body-props)]
        (reagent/lifecycles (core.helpers/component-id lister-id :body)

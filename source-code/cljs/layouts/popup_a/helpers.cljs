@@ -27,14 +27,14 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) layout-props
-  ;  {:min-width (keyword)(opt)
-  ;   :stretch-orientation (keyword)(opt)
-  ;   :style (map)(opt)}
+  ; {:min-width (keyword)(opt)
+  ;  :stretch-orientation (keyword)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:data-min-width (keyword)
-  ;   :data-stretch-orientation (keyword)
-  ;   :style (map)}
+  ; {:data-min-width (keyword)
+  ;  :data-stretch-orientation (keyword)
+  ;  :style (map)}
   [_ {:keys [min-width stretch-orientation style]}]
   {:data-min-width           min-width
    :data-stretch-orientation stretch-orientation

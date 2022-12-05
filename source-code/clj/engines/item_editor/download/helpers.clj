@@ -34,10 +34,10 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-editor)
-  ;  =>
-  ;  {:my-type/my-key   ["..."]
-  ;   :my-type/your-key ["..." "..."]}
+  ; (env->item-suggestions {:params {:suggestion-keys [:my-key :your-key]}} :my-editor)
+  ; =>
+  ; {:my-type/my-key   ["..."]
+  ;  :my-type/your-key ["..." "..."]}
   ;
   ; @return (map)
   [env editor-id]

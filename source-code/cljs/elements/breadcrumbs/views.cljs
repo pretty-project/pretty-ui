@@ -37,8 +37,8 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {:label (metamorphic-content)(opt)
-  ;   :placeholder (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:div.e-breadcrumbs--crumb (breadcrumbs.helpers/static-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                              (if (-> label       x.components/content empty?)
@@ -51,8 +51,8 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {:label (metamorphic-content)(opt)
-  ;   :placeholder (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)
+  ;  :placeholder (metamorphic-content)(opt)}
   [breadcrumbs-id breadcrumbs-props {:keys [label placeholder] :as crumb}]
   [:button.e-breadcrumbs--crumb (breadcrumbs.helpers/button-crumb-attributes breadcrumbs-id breadcrumbs-props crumb)
                                 (if (-> label       x.components/content empty?)
@@ -65,7 +65,7 @@
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
   ; @param (map) crumb
-  ;  {:route (string)(opt)
+  ; {:route (string)(opt)
   [breadcrumbs-id breadcrumbs-props {:keys [route] :as crumb}]
   (if route [breadcrumbs-button-crumb breadcrumbs-id breadcrumbs-props crumb]
             [breadcrumbs-static-crumb breadcrumbs-id breadcrumbs-props crumb]))
@@ -75,7 +75,7 @@
   ;
   ; @param (keyword) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {:crumbs (maps in vector)}
+  ; {:crumbs (maps in vector)}
   [breadcrumbs-id {:keys [crumbs] :as breadcrumbs-props}]
   [:div.e-breadcrumbs--body (breadcrumbs.helpers/breadcrumbs-body-attributes breadcrumbs-id breadcrumbs-props)
                             (letfn [(f [crumb-list dex crumb]
@@ -97,32 +97,32 @@
 (defn element
   ; @param (keyword)(opt) breadcrumbs-id
   ; @param (map) breadcrumbs-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :crumbs (maps in vector)
-  ;    [{:label (metamorphic-content)(opt)
-  ;      :placeholder (metamorphic-content)(opt)
-  ;      :route (string)(opt)}]
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
-  ;    Default: :s
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :crumbs (maps in vector)
+  ;   [{:label (metamorphic-content)(opt)
+  ;     :placeholder (metamorphic-content)(opt)
+  ;     :route (string)(opt)}]
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :font-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   Default: :s
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [breadcrumbs {...}]
+  ; [breadcrumbs {...}]
   ;
   ; @usage
-  ;  [breadcrumbs :my-breadcrumbs {...}]
+  ; [breadcrumbs :my-breadcrumbs {...}]
   ([breadcrumbs-props]
    [element (random/generate-keyword) breadcrumbs-props])
 

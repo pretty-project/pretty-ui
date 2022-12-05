@@ -26,9 +26,9 @@
   ; @param (map) anchor-props
   ;
   ; @return (map)
-  ;  {:color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :line-height (keyword)}
+  ; {:color (keyword or string)
+  ;  :font-size (keyword)
+  ;  :line-height (keyword)}
   [anchor-props]
   (merge {:color       :primary
           :font-size   :s

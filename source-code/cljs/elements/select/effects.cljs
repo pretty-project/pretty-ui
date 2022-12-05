@@ -59,7 +59,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   (fn [{:keys [db]} [_ select-id {:keys [layout] :as select-props}]]
       ; XXX#8706
       {:db (case layout :select (r input.events/mark-as-visited! db select-id)
@@ -131,10 +131,10 @@
   ; @param (map) select-props
   ;
   ; @usage
-  ;  [:elements.select/render-select! {...}]
+  ; [:elements.select/render-select! {...}]
   ;
   ; @usage
-  ;  [:elements.select/render-select! :my-select {...}]
+  ; [:elements.select/render-select! :my-select {...}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ select-id select-props]]
       ; Az [:elements.select/render-select! ...] eseményt önállóan is lehet használni
@@ -155,7 +155,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   ; @param (*) option
   (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]
       (let [option-value (option-value-f option)]

@@ -29,7 +29,7 @@
   ; @param (keyword) lister-id
   ;
   ; @return (map)
-  ;  {:items (maps in vector)}
+  ; {:items (maps in vector)}
   [db [_ lister-id]]
   (let [reordered-items (r core.subs/export-downloaded-items db lister-id)]
        (r core.subs/use-query-params db lister-id {:items reordered-items})))
@@ -57,7 +57,7 @@
   ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  ;  {:item-ids (strings in vector)}
+  ; {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
   (r core.subs/use-query-params db lister-id {:item-ids item-ids}))
 
@@ -85,7 +85,7 @@
   ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  ;  {:items (namespaced maps in vector)}
+  ; {:items (namespaced maps in vector)}
   [db [_ lister-id item-ids]]
   (let [exported-items (r backup.subs/export-backup-items db lister-id item-ids)]
        (r core.subs/use-query-params db lister-id {:items exported-items})))
@@ -114,7 +114,7 @@
   ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  ;  {:item-ids (strings in vector)}
+  ; {:item-ids (strings in vector)}
   [db [_ lister-id item-ids]]
   (r core.subs/use-query-params db lister-id {:item-ids item-ids}))
 

@@ -26,9 +26,9 @@
   ; @param (map) area-props
   ;
   ; @return (map)
-  ;  {:color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :label (metamorphic-content)}
+  ; {:color (keyword or string)
+  ;  :font-size (keyword)
+  ;  :label (metamorphic-content)}
   [area-props]
   (merge {:color     :primary
           :font-size :s

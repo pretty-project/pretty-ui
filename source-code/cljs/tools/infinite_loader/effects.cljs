@@ -25,7 +25,7 @@
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  [:infinite-loader/reload-loader! :my-loader]
+  ; [:infinite-loader/reload-loader! :my-loader]
   (fn [{:keys [db]} [_ loader-id]]
        ; Az infinite-loader komponensben elhelyezett observer viewport-on kívülre
        ; helyezése, majd visszaállítása újra meghívja az infinite-loader komponens

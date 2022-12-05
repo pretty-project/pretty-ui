@@ -27,7 +27,7 @@
   ; @param (map) saver-props
   ;
   ; @return (map)
-  ;  {:filename (string)}
+  ; {:filename (string)}
   [saver-props]
   (merge {:filename config/DEFAULT-FILENAME}
          (param saver-props)))

@@ -69,7 +69,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r handling-item? db :my-handler "my-item")
+  ; (r handling-item? db :my-handler "my-item")
   ;
   ; @return (boolean)
   [db [_ handler-id item-id]]
@@ -142,47 +142,47 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-handler/get-meta-item :my-handler :my-item]
+; [:item-handler/get-meta-item :my-handler :my-item]
 (r/reg-sub :item-handler/get-meta-item get-meta-item)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/get-current-item-id :my-handler]
+; [:item-handler/get-current-item-id :my-handler]
 (r/reg-sub :item-handler/get-current-item-id get-current-item-id)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/get-current-item :my-handler]
+; [:item-handler/get-current-item :my-handler]
 (r/reg-sub :item-handler/get-current-item get-current-item)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/export-current-item :my-handler]
+; [:item-handler/export-current-item :my-handler]
 (r/reg-sub :item-handler/export-current-item export-current-item)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/get-current-item-label :my-handler]
+; [:item-handler/get-current-item-label :my-handler]
 (r/reg-sub :item-handler/get-current-item-label get-current-item-label)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/get-current-item-modified-at :my-handler]
+; [:item-handler/get-current-item-modified-at :my-handler]
 (r/reg-sub :item-handler/get-current-item-modified-at get-current-item-modified-at)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/new-item? :my-handler]
+; [:item-handler/new-item? :my-handler]
 (r/reg-sub :item-handler/new-item? new-item?)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-;  [:item-handler/handler-disabled? :my-handler]
+; [:item-handler/handler-disabled? :my-handler]
 (r/reg-sub :item-handler/handler-disabled? handler-disabled?)

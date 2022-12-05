@@ -63,35 +63,35 @@
 (defn body
   ; @param (keyword) editor-id
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;    Default: false
-  ;    W/ {:label-key ...}
-  ;   :default-item (map)(opt)
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :form-element (metamorphic-content)
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :initial-item (map)(opt)
-  ;   :item-id (string)(opt)
-  ;   :item-path (vector)(opt)
-  ;    Default: core.helpers/default-item-path
-  ;   :on-saved (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
-  ;   :label-key (keyword)(opt)
-  ;    W/ {:auto-title? true}
-  ;   :query (vector)(opt)
-  ;   :suggestion-keys (keywords in vector)(opt)
-  ;   :suggestions-path (vector)(opt)
-  ;    Default: core.helpers/default-suggestions-path
-  ;   :transfer-id (keyword)(opt)}
+  ; {:auto-title? (boolean)(opt)
+  ;   Default: false
+  ;   W/ {:label-key ...}
+  ;  :default-item (map)(opt)
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :form-element (metamorphic-content)
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :initial-item (map)(opt)
+  ;  :item-id (string)(opt)
+  ;  :item-path (vector)(opt)
+  ;   Default: core.helpers/default-item-path
+  ;  :on-saved (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
+  ;  :label-key (keyword)(opt)
+  ;   W/ {:auto-title? true}
+  ;  :query (vector)(opt)
+  ;  :suggestion-keys (keywords in vector)(opt)
+  ;  :suggestions-path (vector)(opt)
+  ;   Default: core.helpers/default-suggestions-path
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-editor {...}]
+  ; [body :my-editor {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [] [:div ...])
-  ;  [body :my-editor {:form-element #'my-form-element}]
+  ; (defn my-form-element [] [:div ...])
+  ; [body :my-editor {:form-element #'my-form-element}]
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)

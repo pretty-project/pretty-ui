@@ -65,7 +65,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-browser/browsing-item? db :my-browser "my-item")
+  ; (r item-browser/browsing-item? db :my-browser "my-item")
   ;
   ; @return (boolean)
   [db [_ browser-id item-id]]
@@ -80,9 +80,9 @@
   ; @param (keyword) browser-id
   ;
   ; @usage
-  ;  (r get-current-item-path db :my-browser)
-  ;  =>
-  ;  [{:my-type/id "my-item"} {...}]
+  ; (r get-current-item-path db :my-browser)
+  ; =>
+  ; [{:my-type/id "my-item"} {...}]
   ;
   ; @return (maps in vector)
   [db [_ browser-id]]
@@ -138,53 +138,53 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-browser/get-meta-item :my-browser :my-item]
+; [:item-browser/get-meta-item :my-browser :my-item]
 (r/reg-sub :item-browser/get-meta-item get-meta-item)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-downloaded-items :my-browser]
+; [:item-browser/get-downloaded-items :my-browser]
 (r/reg-sub :item-browser/get-downloaded-items get-downloaded-items)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-all-item-count :my-browser]
+; [:item-browser/get-all-item-count :my-browser]
 (r/reg-sub :item-browser/get-all-item-count get-all-item-count)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-current-item-id :my-browser]
+; [:item-browser/get-current-item-id :my-browser]
 (r/reg-sub :item-browser/get-current-item-id get-current-item-id)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-current-item :my-browser]
+; [:item-browser/get-current-item :my-browser]
 (r/reg-sub :item-browser/get-current-item get-current-item)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-current-item-label :my-browser]
+; [:item-browser/get-current-item-label :my-browser]
 (r/reg-sub :item-browser/get-current-item-label get-current-item-label)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/browser-disabled? :my-browser]
+; [:item-browser/browser-disabled? :my-browser]
 (r/reg-sub :item-browser/browser-disabled? browser-disabled?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/at-home? :my-browser]
+; [:item-browser/at-home? :my-browser]
 (r/reg-sub :item-browser/at-home? at-home?)
 
 ; @param (keyword) browser-id
 ;
 ; @usage
-;  [:item-browser/get-current-order-by :my-browser]
+; [:item-browser/get-current-order-by :my-browser]
 (r/reg-sub :item-browser/get-current-order-by get-current-order-by)

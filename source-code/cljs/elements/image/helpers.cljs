@@ -43,12 +43,12 @@
   ;
   ; @param (keyword) image-id
   ; @param (map) image-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:on-error (function)
-  ;   :ref (?)
-  ;   :style (map)}
+  ; {:on-error (function)
+  ;  :ref (?)
+  ;  :style (map)}
   [image-id {:keys [style]}]
   {:on-error (on-error-f           image-id)
    :ref      (react/set-reference! image-id)

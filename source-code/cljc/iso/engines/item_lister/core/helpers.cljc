@@ -35,9 +35,9 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (default-items-path :my-lister)
-  ;  =>
-  ;  [:engines :engine-handler/downloaded-items :my-lister]
+  ; (default-items-path :my-lister)
+  ; =>
+  ; [:engines :engine-handler/downloaded-items :my-lister]
   ;
   ; @return (vector)
   [lister-id]

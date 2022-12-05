@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ;  {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)}
   [toggle-id {:keys [content] :as toggle-props}]
   [:button.e-toggle--body (toggle.helpers/toggle-body-attributes toggle-id toggle-props)
                           [x.components/content                  toggle-id content]])
@@ -45,37 +45,37 @@
 (defn element
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ;  {:background-color (keyword)(opt)
-  ;    :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  ;    Default: :none
-  ;   :border-radius (keyword)(opt)
-  ;    :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;    Default: :none
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :content (metamorphic-content)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :hover-color (keyword or string)(opt)
-  ;    :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  ;    Default: :none
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :on-click (metamorphic-event)
-  ;   :on-right-click (metamorphic-event)(opt)
-  ;   :style (map)(opt)}
+  ; {:background-color (keyword)(opt)
+  ;   :highlight, :muted, :none, :primary, :secondary, :success, :warning
+  ;   Default: :none
+  ;  :border-radius (keyword)(opt)
+  ;   :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   Default: :none
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :hover-color (keyword or string)(opt)
+  ;   :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
+  ;   Default: :none
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :on-click (metamorphic-event)
+  ;  :on-right-click (metamorphic-event)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [toggle {...}]
+  ; [toggle {...}]
   ;
   ; @usage
-  ;  [toggle :my-toggle {...}]
+  ; [toggle :my-toggle {...}]
   ([toggle-props]
    [element (random/generate-keyword) toggle-props])
 

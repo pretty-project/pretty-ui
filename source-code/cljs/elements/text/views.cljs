@@ -31,8 +31,8 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
+  ; {:info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)}
   [_ {:keys [info-text label]}]
   (if label [label.views/element {:info-text   info-text
                                   :content     label
@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:placeholder (metamorphic-content)(opt)}
+  ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   [:div.e-text--placeholder {:data-selectable false}
                             (if placeholder (x.components/content placeholder)
@@ -54,7 +54,7 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)}
   [_ {:keys [content]}]
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
@@ -70,7 +70,7 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:copyable? (boolean)(opt)}
+  ; {:copyable? (boolean)(opt)}
   [text-id {:keys [copyable?] :as text-props}]
   (if copyable? [:div.e-text--copyable (text.helpers/copyable-attributes text-id text-props)
                                        [:div.e-text--content (text-content-rows text-id text-props)]]
@@ -81,8 +81,8 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ;  {:content (string)
-  ;   :placeholder (metamorphic-content)(opt)}
+  ; {:content (string)
+  ;  :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content] :as text-props}]
   ; XXX#9811
   ;
@@ -109,48 +109,48 @@
   ;
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :color (keyword or string)(opt)
-  ;    :default, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :default
-  ;   :content (metamorphic-content)(opt)
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
-  ;    Default: :s
-  ;   :font-weight (keyword)(opt)
-  ;    :bold, :extra-bold, :inherit, :normal
-  ;    Default: :normal
-  ;   :horizontal-align (keyword)(opt)
-  ;    :center, :left, :right
-  ;    Default: :left
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :line-height (keyword)(opt)
-  ;    :block, :normal
-  ;    Default: :normal
-  ;   :max-lines (integer)(opt)
-  ;   :min-width (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;    Default: :none
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   :selectable? (boolean)(opt)
-  ;    Default: true
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :color (keyword or string)(opt)
+  ;   :default, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :default
+  ;  :content (metamorphic-content)(opt)
+  ;  :font-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   Default: :s
+  ;  :font-weight (keyword)(opt)
+  ;   :bold, :extra-bold, :inherit, :normal
+  ;   Default: :normal
+  ;  :horizontal-align (keyword)(opt)
+  ;   :center, :left, :right
+  ;   Default: :left
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :line-height (keyword)(opt)
+  ;   :block, :normal
+  ;   Default: :normal
+  ;  :max-lines (integer)(opt)
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
+  ;   Default: :none
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :selectable? (boolean)(opt)
+  ;   Default: true
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [text {...}]
+  ; [text {...}]
   ;
   ; @usage
-  ;  [text :my-text {...}]
+  ; [text :my-text {...}]
   ([text-props]
    [element (random/generate-keyword) text-props])
 

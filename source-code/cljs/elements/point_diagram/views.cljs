@@ -49,21 +49,21 @@
 (defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ;  {:color (keyword or string)(opt)
-  ;    :default, :muted, :primary, :secondary
-  ;    Default: :default
-  ;    W/ {:label ...}
-  ;   :points (integers in vector)
-  ;   :strength (px)(opt)
-  ;     Default: 2
-  ;     Min: 1
-  ;     Max: 6}
+  ; {:color (keyword or string)(opt)
+  ;   :default, :muted, :primary, :secondary
+  ;   Default: :default
+  ;   W/ {:label ...}
+  ;  :points (integers in vector)
+  ;  :strength (px)(opt)
+  ;    Default: 2
+  ;    Min: 1
+  ;    Max: 6}
   ;
   ; @usage
-  ;  [line-diagram {...}]
+  ; [line-diagram {...}]
   ;
   ; @usage
-  ;  [point-diagram :my-point-diagram {...}]
+  ; [point-diagram :my-point-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

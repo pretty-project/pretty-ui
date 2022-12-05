@@ -30,7 +30,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ; {:keypress (map)(opt)}
   [button-id {:keys [keypress] :as button-props}]
   ; A component-did-mount életciklus eltárolja a Re-Frame adatbázisban a button elem
   ; billentyűlenyomás-általi vezérléséhez szükséges tulajdonságokat, így azok az elem
@@ -54,7 +54,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:keypress (map)(opt)}
+  ; {:keypress (map)(opt)}
   [button-id {:keys [keypress] :as button-props}]
   ; A component-will-unmount életciklus törli a Re-Frame adatbázisból a button elem
   ; eltárolt tulajdonságait.
@@ -70,9 +70,9 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :on-click (metamorphic-event)(opt)
-  ;   :stop-propagation? (boolean)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :stop-propagation? (boolean)(opt)}
   [_ {:keys [disabled? on-click stop-propagation?]}]
   ; XXX#0061
   ; A {:disabled? true} állapotú button elemnek is szükséges megadni az on-click
@@ -91,10 +91,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:icon-family (keyword)}
+  ; {:icon-family (keyword)}
   ;
   ; @return (map)
-  ;  {:data-icon-family (keyword)}
+  ; {:data-icon-family (keyword)}
   [_ {:keys [icon-family]}]
   {:data-icon-family icon-family})
 
@@ -103,14 +103,14 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:background-color (keyword or string)(opt)
-  ;   :border-color (keyword or string)(opt)
-  ;   :color (keyword or string)
-  ;   :hover-color (keyword)(opt)
-  ;   :style (map)(opt)}
+  ; {:background-color (keyword or string)(opt)
+  ;  :border-color (keyword or string)(opt)
+  ;  :color (keyword or string)
+  ;  :hover-color (keyword)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [background-color border-color color hover-color style]}]
   (-> {:style style}
       (element.helpers/apply-color :background-color :data-background-color background-color)
@@ -123,12 +123,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:font-size (keyword)
-  ;   :font-weight (keyword)}
+  ; {:font-size (keyword)
+  ;  :font-weight (keyword)}
   ;
   ; @return (map)
-  ;  {:data-font-size (keyword)
-  ;   :data-font-weight (keyword)}
+  ; {:data-font-size (keyword)
+  ;  :data-font-weight (keyword)}
   [_ {:keys [font-size font-weight]}]
   {:data-font-size   font-size
    :data-font-weight font-weight})
@@ -138,12 +138,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:border-radius (keyword)(opt)
-  ;   :horizontal-align (keyword)}
+  ; {:border-radius (keyword)(opt)
+  ;  :horizontal-align (keyword)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)
-  ;   :data-horizontal-align (keyword)}
+  ; {:data-border-radius (keyword)
+  ;  :data-horizontal-align (keyword)}
   [_ {:keys [border-radius horizontal-align]}]
   {:data-border-radius    border-radius
    :data-horizontal-align horizontal-align})
@@ -153,17 +153,17 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :on-mouse-over (metamorphic-event)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-selectable (boolean)
-  ;   :disabled (boolean)
-  ;   :id (string)
-  ;   :on-click (function)
-  ;   :on-mouse-over (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :disabled (boolean)
+  ;  :id (string)
+  ;  :on-click (function)
+  ;  :on-mouse-over (function)
+  ;  :on-mouse-up (function)}
   [button-id {:keys [disabled? on-mouse-over] :as button-props}]
   ; XXX#4460
   ; Az id attribútum használatával a gomb azonosítható válik a DOM műveletekhez.

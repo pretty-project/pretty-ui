@@ -26,7 +26,7 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [blank-props]
   (merge {}
          (param blank-props)))

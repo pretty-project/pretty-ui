@@ -26,7 +26,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r get-item db :my-browser "my-item")
+  ; (r get-item db :my-browser "my-item")
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
@@ -37,7 +37,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r export-item db :my-browser "my-item")
+  ; (r export-item db :my-browser "my-item")
   ;
   ; @return (namespaced map)
   [db [_ browser-id item-id]]
@@ -48,7 +48,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r item-downloaded? db :my-browser "my-item")
+  ; (r item-downloaded? db :my-browser "my-item")
   ;
   ; @return (boolean)
   [db [_ browser-id item-id]]
@@ -59,7 +59,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r get-item-dex db :my-browser "my-item")
+  ; (r get-item-dex db :my-browser "my-item")
   ;
   ; @return (integer)
   [db [_ browser-id item-id]]
@@ -75,7 +75,7 @@
   ; @param (integer) item-dex
   ;
   ; @usage
-  ;  (r item-disabled? db :my-browser 42)
+  ; (r item-disabled? db :my-browser 42)
   ;
   ; @return (boolean)
   [db [_ browser-id item-dex]]
@@ -90,12 +90,12 @@
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-browser/get-item :my-browser "my-item"]
+; [:item-browser/get-item :my-browser "my-item"]
 (r/reg-sub :item-browser/get-item get-item)
 
 ; @param (keyword) browser-id
 ; @param (integer) item-dex
 ;
 ; @usage
-;  [:item-browser/item-disabled? :my-browser 42]
+; [:item-browser/item-disabled? :my-browser 42]
 (r/reg-sub :item-browser/item-disabled? item-disabled?)

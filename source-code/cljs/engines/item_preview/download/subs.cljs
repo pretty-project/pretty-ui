@@ -51,5 +51,5 @@
 ; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-preview/data-received? :my-preview]
+; [:item-preview/data-received? :my-preview]
 (r/reg-sub :item-preview/data-received? data-received?)

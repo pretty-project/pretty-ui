@@ -26,7 +26,7 @@
   ; @param (map) overlay-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [overlay-props]
   (merge {}
          (param overlay-props)))

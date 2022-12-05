@@ -33,13 +33,13 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:diameter (px)
-  ;   :strength (px)
-  ;   :total-value (integer)}
+  ; {:diameter (px)
+  ;  :strength (px)
+  ;  :total-value (integer)}
   ; @param (map) section-props
-  ;  {:color (keyword or string)
-  ;   :sub (integer)
-  ;   :value (integer)}
+  ; {:color (keyword or string)
+  ;  :sub (integer)
+  ;  :value (integer)}
   [_ {:keys [diameter strength total-value] :as diagram-props} {:keys [color sum value]}]
   (let [x  (/ diameter 2)
         y  (/ diameter 2)
@@ -63,7 +63,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:sections (maps in vector)}
+  ; {:sections (maps in vector)}
   [diagram-id {:keys [sections] :as diagram-props}]
   (letfn [(f [sections section-props]
              (conj sections [circle-diagram-section diagram-id diagram-props section-props]))]
@@ -74,7 +74,7 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:diameter (px)}
+  ; {:diameter (px)}
   [diagram-id {:keys [diameter] :as diagram-props}]
   [:div.e-circle-diagram--body (circle-diagram.helpers/diagram-body-attributes diagram-id diagram-props)
                                [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
@@ -85,9 +85,9 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:helper (metamorphic-content)(opt)
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)}
+  ; {:helper (metamorphic-content)(opt)
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)}
   [_ {:keys [helper info-text label]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -107,38 +107,38 @@
 (defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :diameter (px)(opt)
-  ;    Default: 48
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :label (metamorphic-content)(opt)
-  ;   :sections (maps in vector)}
-  ;    [{:color (keyword or string)
-  ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
-  ;      :label (metamorphic-content)(opt)
-  ;       TODO
-  ;      :value (integer)}]
-  ;   :strength (px)(opt)
-  ;     Default: 2
-  ;     Min: 1
-  ;     Max: 6
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :diameter (px)(opt)
+  ;   Default: 48
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :label (metamorphic-content)(opt)
+  ;  :sections (maps in vector)}
+  ;   [{:color (keyword or string)
+  ;      :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;     :label (metamorphic-content)(opt)
+  ;      TODO
+  ;     :value (integer)}]
+  ;  :strength (px)(opt)
+  ;    Default: 2
+  ;    Min: 1
+  ;    Max: 6
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [circle-diagram {...}]
+  ; [circle-diagram {...}]
   ;
   ; @usage
-  ;  [circle-diagram :my-circle-diagram {...}]
+  ; [circle-diagram :my-circle-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

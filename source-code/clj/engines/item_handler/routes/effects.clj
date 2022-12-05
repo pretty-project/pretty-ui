@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) handler-id
   ; @param (map) handler-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ handler-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id")]

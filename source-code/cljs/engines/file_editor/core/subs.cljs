@@ -93,11 +93,11 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:file-editor/get-meta-item :my-editor :my-item]
+; [:file-editor/get-meta-item :my-editor :my-item]
 (r/reg-sub :file-editor/get-meta-item get-meta-item)
 
 ; @param (keyword) editor-id
 ;
 ; @usage
-;  [:file-editor/editor-disabled? :my-editor]
+; [:file-editor/editor-disabled? :my-editor]
 (r/reg-sub :file-editor/editor-disabled? editor-disabled?)

@@ -28,13 +28,13 @@
   ; @param (map) checkbox-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :option-label-f (function)
-  ;   :option-value-f (function)
-  ;   :options-orientation (keyword)
-  ;   :options-path (vector)
-  ;   :value-path (vector)}
+  ; {:border-color (keyword or string)
+  ;  :font-size (keyword)
+  ;  :option-label-f (function)
+  ;  :option-value-f (function)
+  ;  :options-orientation (keyword)
+  ;  :options-path (vector)
+  ;  :value-path (vector)}
   [checkbox-id checkbox-props]
   (merge {:border-color        :primary
           :font-size           :s

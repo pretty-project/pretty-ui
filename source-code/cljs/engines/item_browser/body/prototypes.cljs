@@ -28,7 +28,7 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:item-path (vector)}
+  ; {:item-path (vector)}
   [browser-id body-props]
   ; XXX#6177
   ; A body-props térképen az item-lister engine body-props-prototype függvénye

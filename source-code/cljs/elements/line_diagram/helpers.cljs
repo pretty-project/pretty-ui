@@ -26,7 +26,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:sections (maps in vector)}
+  ; {:sections (maps in vector)}
   ;
   ; @return (integer)
   [{:keys [sections]}]
@@ -37,9 +37,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) diagram-props
-  ;  {:total-value (integer)}
+  ; {:total-value (integer)}
   ; @param (map) section-props
-  ;  {:value (integer)}
+  ; {:value (integer)}
   ;
   ; @return (integer)
   [{:keys [total-value]} {:keys [value]}]
@@ -55,10 +55,10 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})
 
@@ -83,12 +83,12 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {data-color (keyword)}
-  ;   :style (map)
-  ;    {:width (string)}}
+  ; {data-color (keyword)}
+  ;  :style (map)
+  ;   {:width (string)}}
   [_ diagram-props {:keys [color] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
        {:data-color color

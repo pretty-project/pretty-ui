@@ -30,8 +30,8 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)}
   [_ _ {:keys [icon icon-family]}]
   (if icon [:div.e-menu-bar--menu-item--icon {:data-icon-family icon-family} icon]))
 
@@ -41,7 +41,7 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)}
   [_ _ {:keys [label]}]
   (if label [:div.e-menu-bar--menu-item--label (x.components/content label)]))
 
@@ -74,8 +74,8 @@
   ; @param (keyword) bar-id
   ; @param (map) bar-props
   ; @param (map) item-props
-  ;  {:href (string)(opt)
-  ;   :on-click (metamorphic-event)(opt)}
+  ; {:href (string)(opt)
+  ;  :on-click (metamorphic-event)(opt)}
   [bar-id bar-props {:keys [href on-click] :as item-props}]
   (let [item-props (menu-bar.prototypes/item-props-prototype item-props)]
        (cond (some? href)     [anchor-item bar-id bar-props item-props]
@@ -86,8 +86,8 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ;  {:menu-items (maps in vector)
-  ;   :orientation (keyword)}
+  ; {:menu-items (maps in vector)
+  ;  :orientation (keyword)}
   [bar-id {:keys [menu-items orientation] :as bar-props}]
   (letfn [(f [item-list item-props] (conj item-list [menu-bar-item bar-id bar-props item-props]))]
          [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-scrollable-x true})
@@ -119,56 +119,56 @@
 (defn element
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :horizontal-align (keyword)(opt)
-  ;    :center, :left, :right
-  ;    Default: :left
-  ;    (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
-  ;    W/ {:orientation :horizontal}
-  ;   :font-size (keyword)(opt)
-  ;    :xs, :s
-  ;    Default: :s
-  ;   :height (keyword)(opt)
-  ;    :m, :l, :xl, :xxl
-  ;    Default: :xxl
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :menu-items (maps in vector)
-  ;    [{:active? (boolean)(opt)
-  ;       Default: false
-  ;      :badge-color (keyword)(opt)
-  ;       :primary, :secondary, :success, :warning
-  ;      :badge-content (metamorphic-content)(opt)
-  ;      :disabled? (boolean)(opt)
-  ;       Default: false
-  ;      :href (string)(opt)
-  ;       XXX#7004
-  ;       A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
-  ;       renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}
-  ;       tulajdonságok figyelmen kívűl hagyódnak!
-  ;      :icon (keyword)(opt)
-  ;      :icon-family (keyword)(opt)
-  ;       :material-icons-filled, :material-icons-outlined
-  ;       Default: :material-icons-filled
-  ;      :label (metamorphic-content)(opt)
-  ;      :on-click (metamorphic-event)(opt)}]
-  ;   :orientation (keyword)(opt)
-  ;    :horizontal, :vertical
-  ;    Default: :horizontal
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :horizontal-align (keyword)(opt)
+  ;   :center, :left, :right
+  ;   Default: :left
+  ;   (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
+  ;   W/ {:orientation :horizontal}
+  ;  :font-size (keyword)(opt)
+  ;   :xs, :s
+  ;   Default: :s
+  ;  :height (keyword)(opt)
+  ;   :m, :l, :xl, :xxl
+  ;   Default: :xxl
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :menu-items (maps in vector)
+  ;   [{:active? (boolean)(opt)
+  ;      Default: false
+  ;     :badge-color (keyword)(opt)
+  ;      :primary, :secondary, :success, :warning
+  ;     :badge-content (metamorphic-content)(opt)
+  ;     :disabled? (boolean)(opt)
+  ;      Default: false
+  ;     :href (string)(opt)
+  ;      XXX#7004
+  ;      A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
+  ;      renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}
+  ;      tulajdonságok figyelmen kívűl hagyódnak!
+  ;     :icon (keyword)(opt)
+  ;     :icon-family (keyword)(opt)
+  ;      :material-icons-filled, :material-icons-outlined
+  ;      Default: :material-icons-filled
+  ;     :label (metamorphic-content)(opt)
+  ;     :on-click (metamorphic-event)(opt)}]
+  ;  :orientation (keyword)(opt)
+  ;   :horizontal, :vertical
+  ;   Default: :horizontal
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [menu-bar {...}]
+  ; [menu-bar {...}]
   ;
   ; @usage
-  ;  [menu-bar :my-menu-bar {...}]
+  ; [menu-bar :my-menu-bar {...}]
   ([bar-props]
    [element (random/generate-keyword) bar-props])
 

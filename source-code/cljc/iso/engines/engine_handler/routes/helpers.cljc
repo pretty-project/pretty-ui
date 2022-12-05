@@ -26,9 +26,9 @@
   ; @param (keyword) route-key
   ;
   ; @example
-  ;  (route-id :my-namespace/my-engine :extended)
-  ;  =>
-  ;  :my-namespace.my-engine/extended-route
+  ; (route-id :my-namespace/my-engine :extended)
+  ; =>
+  ; :my-namespace.my-engine/extended-route
   ;
   ; @return (keyword)
   [engine-id route-key]

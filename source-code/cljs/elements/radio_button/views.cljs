@@ -31,7 +31,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:option-helper-f (function)}
+  ; {:option-helper-f (function)}
   ; @param (*) option
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
@@ -42,7 +42,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (*) option
   [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
@@ -93,7 +93,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:unselectable? (boolean)(opt)}
+  ; {:unselectable? (boolean)(opt)}
   [button-id {:keys [unselectable?] :as button-props}]
   (if unselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
                                                          ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
@@ -103,7 +103,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label marked? required?]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -135,59 +135,59 @@
 (defn element
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:border-color (keyword or string)(opt)
-  ;    :default, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :default-value (*)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :font-size (keyword)(opt)
-  ;    :xs, :s, :inherit
-  ;    Default: :s
-  ;   :helper (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :initial-options (vector)(opt)
-  ;   :initial-value (*)(opt)
-  ;   :label (metamorphic-content)
-  ;   :marked? (boolean)(opt)
-  ;    Default: false
-  ;   :on-select (metamorphic-event)(opt)
-  ;   :option-helper-f (function)(opt)
-  ;   :option-label-f (function)(opt)
-  ;    Default: return
-  ;   :option-value-f (function)(opt)
-  ;    Default: return
-  ;   :options (vector)(opt)
-  ;   :options-orientation (keyword)(opt)
-  ;    :horizontal, :vertical
-  ;    Default: :vertical
-  ;   :options-path (vector)(opt)
-  ;   :required? (boolean or keyword)(opt)
-  ;    true, false, :unmarked
-  ;    Default: false
-  ;   :style (map)(opt)
-  ;   :unselectable? (boolean)(opt)
-  ;    Default: false
-  ;   :value-path (vector)(opt)}
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :default-value (*)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :font-size (keyword)(opt)
+  ;   :xs, :s, :inherit
+  ;   Default: :s
+  ;  :helper (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)
+  ;  :label (metamorphic-content)
+  ;  :marked? (boolean)(opt)
+  ;   Default: false
+  ;  :on-select (metamorphic-event)(opt)
+  ;  :option-helper-f (function)(opt)
+  ;  :option-label-f (function)(opt)
+  ;   Default: return
+  ;  :option-value-f (function)(opt)
+  ;   Default: return
+  ;  :options (vector)(opt)
+  ;  :options-orientation (keyword)(opt)
+  ;   :horizontal, :vertical
+  ;   Default: :vertical
+  ;  :options-path (vector)(opt)
+  ;  :required? (boolean or keyword)(opt)
+  ;   true, false, :unmarked
+  ;   Default: false
+  ;  :style (map)(opt)
+  ;  :unselectable? (boolean)(opt)
+  ;   Default: false
+  ;  :value-path (vector)(opt)}
   ;
   ; @usage
-  ;  [radio-button {...}]
+  ; [radio-button {...}]
   ;
   ; @usage
-  ;  [radio-button :my-radio-button {...}]
+  ; [radio-button :my-radio-button {...}]
   ;
   ; @usage
-  ;  [radio-button :my-radio-button {:options [{:value :foo :label "Foo"} {:value :bar :label "Bar"}]}]
+  ; [radio-button :my-radio-button {:options [{:value :foo :label "Foo"} {:value :bar :label "Bar"}]}]
   ([button-props]
    [element (random/generate-keyword) button-props])
 

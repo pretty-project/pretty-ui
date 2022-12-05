@@ -26,7 +26,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ select-id {:keys [value-path]}]]
@@ -40,7 +40,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ;  {}
+  ; {}
   ;
   ; @return (boolean)
   [db [_ select-id {:keys [required?] :as select-props}]]

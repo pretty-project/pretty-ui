@@ -63,25 +63,25 @@
 (defn body
   ; @param (keyword) editor-id
   ; @param (map) body-props
-  ;  {:content-path (vector)(opt)
-  ;    Default: core.helpers/default-content-path
-  ;   :default-content (map)(opt)
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :form-element (metamorphic-content)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :on-saved (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a szervertől visszaérkező tartalmat.
-  ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)}
+  ; {:content-path (vector)(opt)
+  ;   Default: core.helpers/default-content-path
+  ;  :default-content (map)(opt)
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :form-element (metamorphic-content)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :on-saved (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a szervertől visszaérkező tartalmat.
+  ;  :query (vector)(opt)
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-editor {...}]
+  ; [body :my-editor {...}]
   ;
   ; @usage
-  ;  (defn my-form-element [] [:div ...])
-  ;  [body :my-editor {:form-element #'my-form-element}]
+  ; (defn my-form-element [] [:div ...])
+  ; [body :my-editor {:form-element #'my-form-element}]
   [editor-id body-props]
   (let [body-props (body.prototypes/body-props-prototype editor-id body-props)]
        (reagent/lifecycles (core.helpers/component-id editor-id :body)

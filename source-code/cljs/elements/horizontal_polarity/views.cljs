@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:start-content (metamorphic-content)}
+  ; {:start-content (metamorphic-content)}
   [_ {:keys [start-content]}]
   (if start-content [:div.e-horizontal-polarity--start-content [x.components/content start-content]]
                     [:div.e-horizontal-polarity--placeholder]))
@@ -38,7 +38,7 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:middle-content (metamorphic-content)}
+  ; {:middle-content (metamorphic-content)}
   [_ {:keys [middle-content]}]
   (if middle-content [:div.e-horizontal-polarity--middle-content [x.components/content middle-content]]
                      [:div.e-horizontal-polarity--placeholder]))
@@ -48,7 +48,7 @@
   ;
   ; @param (keyword) polarity-id
   ; @param (map) polarity-props
-  ;  {:end-content (metamorphic-content)}
+  ; {:end-content (metamorphic-content)}
   [_ {:keys [end-content orientation]}]
   (if end-content [:div.e-horizontal-polarity--end-content [x.components/content end-content]]
                   [:div.e-horizontal-polarity--placeholder]))
@@ -67,30 +67,30 @@
 (defn element
   ; @param (keyword)(opt) polarity-id
   ; @param (map) polarity-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :end-content (metamorphic-content)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :middle-content (metamorphic-content)
-  ;   :style (map)(opt)
-  ;   :start-content (metamorphic-content)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :end-content (metamorphic-content)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :middle-content (metamorphic-content)
+  ;  :style (map)(opt)
+  ;  :start-content (metamorphic-content)(opt)
   ;
   ; @usage
-  ;  [horizontal-polarity {...}]
+  ; [horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [horizontal-polarity :my-horizontal-polarity {...}]
+  ; [horizontal-polarity :my-horizontal-polarity {...}]
   ;
   ; @usage
-  ;  [horizontal-polarity {:start-content [:<> [label {:content "My label"}]
-  ;                                            [label {:content "My label"}]]}]
+  ; [horizontal-polarity {:start-content [:<> [label {:content "My label"}]
+  ;                                           [label {:content "My label"}]]}]
   ([polarity-props]
    [element (random/generate-keyword) polarity-props])
 

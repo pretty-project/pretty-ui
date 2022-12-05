@@ -27,18 +27,18 @@
 
 ; Az engine használatához SZÜKSÉGES megadni ...
 ; ... a {:collection-name "..."} tulajdonságot, amit az engine az ajánlott értékek (suggestions)
-;     letöltésekor használ.
+;    letöltésekor használ.
 ; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver függvények neveiben
-;     névtérként használ.
+;    névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
 ;
 ; Az engine használatához OPCIONÁLISAN megadható ...
 ; ... a {:base-route "..."} tulajdonság, ami alapján az engine regisztrálja a példa szerinti
-;     "/@app-home/my-handler/:item-id/edit" útvonalat.
+;    "/@app-home/my-handler/:item-id/edit" útvonalat.
 ; ... az {:on-route ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;     történik meg.
+;    történik meg.
 ; ... a {:route-title ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;     beállítódik az applikáció címkéjének.
+;    beállítódik az applikáció címkéjének.
 (r/reg-event-fx :init-my-handler!
   [:item-handler/init-handler! :my-handler
                                {:base-route      "/@app-home/my-handler"

@@ -39,9 +39,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
-  ;  =>
-  ;  "my-item"
+  ; (r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ viewer-id server-response]]
@@ -59,9 +59,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
-  ;  =>
-  ;  "my-item"
+  ; (r get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ viewer-id server-response]]

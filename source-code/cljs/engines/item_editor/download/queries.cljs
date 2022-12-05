@@ -29,8 +29,8 @@
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:editor-id (keyword)
-  ;   :suggestion-keys (keywords in vector)}
+  ; {:editor-id (keyword)
+  ;  :suggestion-keys (keywords in vector)}
   [db [_ editor-id]]
   (let [suggestion-keys (r body.subs/get-body-prop db editor-id :suggestion-keys)]
        (r core.subs/use-query-params db editor-id {:editor-id       editor-id
@@ -42,7 +42,7 @@
   ; @param (keyword) editor-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ editor-id]]
   (let [current-item-id (r core.subs/get-current-item-id db editor-id)]
        (r core.subs/use-query-params db editor-id {:item-id current-item-id})))

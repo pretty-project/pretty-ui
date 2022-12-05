@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) column-id
   ; @param (map) column-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?]}]
   (cond-> {:data-gap                 gap
            :data-horizontal-align    horizontal-align

@@ -28,14 +28,14 @@
   ; @param (map) select-props
   ;
   ; @return (map)
-  ;  {:add-option-f (function)
-  ;   :border-radius (keyword)
-  ;   :option-field-placeholder (metamorphic-content)
-  ;   :layout (keyword)
-  ;   :option-label-f (function)
-  ;   :option-value-f (function)
-  ;   :options-placeholder (metamorphic-content)
-  ;   :value-path (vector)}
+  ; {:add-option-f (function)
+  ;  :border-radius (keyword)
+  ;  :option-field-placeholder (metamorphic-content)
+  ;  :layout (keyword)
+  ;  :option-label-f (function)
+  ;  :option-value-f (function)
+  ;  :options-placeholder (metamorphic-content)
+  ;  :value-path (vector)}
   [select-id select-props]
   (merge {:border-radius            :s
           :add-option-f             return

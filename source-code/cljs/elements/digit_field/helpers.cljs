@@ -41,10 +41,10 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})
 

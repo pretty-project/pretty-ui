@@ -54,7 +54,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:max-input-count (integer)}
+  ; {:max-input-count (integer)}
   ; @param (integer) field-dex
   ;
   ; @return (boolean)
@@ -67,7 +67,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:label (metamorphic-content)}
+  ; {:label (metamorphic-content)}
   ; @param (integer) field-dex
   ;
   ; @return (metamorphic-content)
@@ -101,7 +101,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:end-adornments (maps in vector)(opt)}
+  ; {:end-adornments (maps in vector)(opt)}
   ; @param (integer) field-dex
   ;
   ; @return (maps in vector)
@@ -113,7 +113,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:autofocus? (boolean)(opt)}
+  ; {:autofocus? (boolean)(opt)}
   ; @param (integer) field-dex
   ;
   ; @return (vector)
@@ -133,7 +133,7 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ; @param (integer) field-dex
   ;
   ; @return (vector)
@@ -148,9 +148,9 @@
   ; @param (integer) field-dex
   ;
   ; @example
-  ;  (field-dex->react-key :my-group {...} 3)
-  ;  =>
-  ;  "my-group--3"
+  ; (field-dex->react-key :my-group {...} 3)
+  ; =>
+  ; "my-group--3"
   ;
   ; @return (string)
   [group-id _ field-dex]
@@ -164,9 +164,9 @@
   ; @param (integer) field-dex
   ;
   ; @example
-  ;  (field-dex->field-id :my-group {...} 3)
-  ;  =>
-  ;  :my-group--3
+  ; (field-dex->field-id :my-group {...} 3)
+  ; =>
+  ; :my-group--3
   ;
   ; @return (string)
   [group-id _ field-dex]

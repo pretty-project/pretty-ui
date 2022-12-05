@@ -207,53 +207,53 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-lister/get-meta-item :my-lister :my-item]
+; [:item-lister/get-meta-item :my-lister :my-item]
 (r/reg-sub :item-lister/get-meta-item get-meta-item)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-downloaded-item-count :my-lister]
+; [:item-lister/get-downloaded-item-count :my-lister]
 (r/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/all-items-downloaded? :my-lister]
+; [:item-lister/all-items-downloaded? :my-lister]
 (r/reg-sub :item-lister/all-items-downloaded? all-items-downloaded?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-downloaded-items :my-lister]
+; [:item-lister/get-downloaded-items :my-lister]
 (r/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-all-item-count :my-lister]
+; [:item-lister/get-all-item-count :my-lister]
 (r/reg-sub :item-lister/get-all-item-count get-all-item-count)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/no-items-to-show? :my-lister]
+; [:item-lister/no-items-to-show? :my-lister]
 (r/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/downloading-items? :my-lister]
+; [:item-lister/downloading-items? :my-lister]
 (r/reg-sub :item-lister/downloading-items? downloading-items?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/lister-disabled? :my-lister]
+; [:item-lister/lister-disabled? :my-lister]
 (r/reg-sub :item-lister/lister-disabled? lister-disabled?)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/get-current-order-by :my-lister]
+; [:item-lister/get-current-order-by :my-lister]
 (r/reg-sub :item-lister/get-current-order-by get-current-order-by)

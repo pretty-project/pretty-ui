@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) row-id
   ; @param (map) row-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?]}]
   {:data-gap                 gap
    :data-horizontal-align    horizontal-align

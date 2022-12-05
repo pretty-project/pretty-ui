@@ -27,9 +27,9 @@
   ; @param (string) n
   ;
   ; @usage
-  ;  (valid-string " abCd12 ")
-  ;  =>
-  ;  "abCd12"
+  ; (valid-string " abCd12 ")
+  ; =>
+  ; "abCd12"
   ;
   ; @return (string)
   [n]
@@ -46,36 +46,36 @@
   ; @param (vector) keys
   ;
   ; @usage
-  ;  (items-different? {...} {...})
+  ; (items-different? {...} {...})
   ;
   ; @usage
-  ;  (items-different? {...} {...} [...])
+  ; (items-different? {...} {...} [...])
   ;
   ; @example
-  ;  (items-different? {:color "Red"   :size "XL"}
-  ;                    {:color "Green" :size "XL"})
-  ;  =>
-  ;  true
+  ; (items-different? {:color "Red"   :size "XL"}
+  ;                   {:color "Green" :size "XL"})
+  ; =>
+  ; true
   ;
   ; @example
-  ;  (items-different? {:color "Red"}
-  ;                    {:color "Red" :size "XL"})
-  ;  =>
-  ;  false
+  ; (items-different? {:color "Red"}
+  ;                   {:color "Red" :size "XL"})
+  ; =>
+  ; false
   ;
   ; @example
-  ;  (items-different? {:color "Red"   :size "XL"}
-  ;                    {:color "Green" :size "XL"}
-  ;                    [:color])
-  ;  =>
-  ;  true
+  ; (items-different? {:color "Red"   :size "XL"}
+  ;                   {:color "Green" :size "XL"}
+  ;                   [:color])
+  ; =>
+  ; true
   ;
   ; @example
-  ;  (items-different? {:color "Red"   :size "XL"}
-  ;                    {:color "Green" :size "XL"}
-  ;                    [:size])
-  ;  =>
-  ;  false
+  ; (items-different? {:color "Red"   :size "XL"}
+  ;                   {:color "Green" :size "XL"}
+  ;                   [:size])
+  ; =>
+  ; false
   ;
   ; @return (boolean)
   ([a b]

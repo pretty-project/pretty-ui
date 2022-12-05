@@ -26,7 +26,7 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [toggle-props]
   (merge {}
          (param toggle-props)))

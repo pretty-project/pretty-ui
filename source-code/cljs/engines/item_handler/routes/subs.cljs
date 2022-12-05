@@ -37,9 +37,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r get-item-route db :my-handler "my-item")
-  ;  =>
-  ;  "/@app-home/my-handler/my-item"
+  ; (r get-item-route db :my-handler "my-item")
+  ; =>
+  ; "/@app-home/my-handler/my-item"
   ;
   ; @return (string)
   [db [_ handler-id item-id]]
@@ -55,5 +55,5 @@
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-handler/get-item-route db :my-handler "my-item"]
+; [:item-handler/get-item-route db :my-handler "my-item"]
 (r/reg-sub :item-handler/get-item-route get-item-route)

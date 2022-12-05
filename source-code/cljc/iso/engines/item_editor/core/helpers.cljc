@@ -35,9 +35,9 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (default-item-path :my-editor)
-  ;  =>
-  ;  [:engines :engine-handler/edited-items :my-editor]
+  ; (default-item-path :my-editor)
+  ; =>
+  ; [:engines :engine-handler/edited-items :my-editor]
   ;
   ; @return (vector)
   [editor-id]
@@ -49,9 +49,9 @@
   ; @param (keyword) editor-id
   ;
   ; @example
-  ;  (default-suggestions-path :my-editor)
-  ;  =>
-  ;  [:engines :engine-handler/suggestions :my-editor]
+  ; (default-suggestions-path :my-editor)
+  ; =>
+  ; [:engines :engine-handler/suggestions :my-editor]
   ;
   ; @return (vector)
   [editor-id]

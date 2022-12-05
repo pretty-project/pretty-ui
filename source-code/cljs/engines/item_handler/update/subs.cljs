@@ -61,9 +61,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-saved-item-id :my-handler {my-handler/save-item! {:my-type/id "my-item"}})
-  ;  =>
-  ;  "my-item"
+  ; (r get-saved-item-id :my-handler {my-handler/save-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
@@ -85,9 +85,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-deleted-item-id :my-handler {my-handler/delete-item! "my-item"})
-  ;  =>
-  ;  "my-item"
+  ; (r get-deleted-item-id :my-handler {my-handler/delete-item! "my-item"})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
@@ -105,9 +105,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
-  ;  =>
-  ;  "my-item"
+  ; (r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
   ;
   ; @return (string)
   [db [_ handler-id server-response]]

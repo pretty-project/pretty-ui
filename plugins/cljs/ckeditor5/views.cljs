@@ -59,37 +59,37 @@
 (defn body
   ; @param (keyword)(opt) editor-id
   ; @param (map) editor-props
-  ;  {:autofocus? (boolean)(opt)
-  ;    Default: false
-  ;   :background-colors (maps in vector)(opt)
-  ;    [{:color (string)
-  ;      :label (string)}]
-  ;   :buttons (keywords in vector)(opt)
-  ;    [:fontColor, :fontBackgroundColor, :heading, :bold, :italic, :underline, :link, ...]
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :font-colors (maps in vector)(opt)
-  ;    [{:color (string)
-  ;      :label (string)}]
-  ;   :on-blur (function)(opt)
-  ;   :on-change (function)(opt)
-  ;   :on-focus (function)(opt)
-  ;   :placeholder (metamorphic-content)(opt)
-  ;   :value (string)(opt)}
+  ; {:autofocus? (boolean)(opt)
+  ;   Default: false
+  ;  :background-colors (maps in vector)(opt)
+  ;   [{:color (string)
+  ;     :label (string)}]
+  ;  :buttons (keywords in vector)(opt)
+  ;   [:fontColor, :fontBackgroundColor, :heading, :bold, :italic, :underline, :link, ...]
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :font-colors (maps in vector)(opt)
+  ;   [{:color (string)
+  ;     :label (string)}]
+  ;  :on-blur (function)(opt)
+  ;  :on-change (function)(opt)
+  ;  :on-focus (function)(opt)
+  ;  :placeholder (metamorphic-content)(opt)
+  ;  :value (string)(opt)}
   ;
   ; @usage
-  ;  [body {...}]
+  ; [body {...}]
   ;
   ; @usage
-  ;  [body :my-editor {...}]
+  ; [body :my-editor {...}]
   ;
   ; @usage
-  ;  (defn on-blur-f   [editor-id editor-props])
-  ;  (defn on-focus-f  [editor-id editor-props])
-  ;  (defn on-change-f [editor-id editor-props value])
-  ;  [body :my-editor {:on-blur   on-blur-f
-  ;                    :on-focus  on-focus-f
-  ;                    :on-change on-change-f}]
+  ; (defn on-blur-f   [editor-id editor-props])
+  ; (defn on-focus-f  [editor-id editor-props])
+  ; (defn on-change-f [editor-id editor-props value])
+  ; [body :my-editor {:on-blur   on-blur-f
+  ;                   :on-focus  on-focus-f
+  ;                   :on-change on-change-f}]
   ([editor-props]
    [body (random/generate-keyword) editor-props])
 

@@ -20,10 +20,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (ms)
-;  Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
+; Az utolsó karakter leütése után mennyi idő elteltével számít befejezettnek a gépelés
 (def TYPE-ENDED-AFTER 450)
-;                 ... 350) <- De ennyire? :)
-;                 ... 250) <- Nem mindenki programozó! :)
+;                ... 350) <- De ennyire? :)
+;                ... 250) <- Nem mindenki programozó! :)
 
 ; @constant (px)
 (def LINE-HEIGHT-XS 21)

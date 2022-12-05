@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ browser-id {:keys [base-route]}]]
       (let [base-route   (uri/valid-path base-route)
             parent-route (uri/to-parent  base-route)]
@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) browser-id
   ; @param (map) browser-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ browser-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id")

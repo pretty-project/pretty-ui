@@ -26,9 +26,9 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  ;  {:color (keyword)
-  ;   :icon-family (keyword)
-  ;   :size (keyword)}
+  ; {:color (keyword)
+  ;  :icon-family (keyword)
+  ;  :size (keyword)}
   [icon-props]
   (merge {:color       :default
           :icon-family :material-icons-filled

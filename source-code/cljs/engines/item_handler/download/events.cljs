@@ -48,9 +48,9 @@
   ; az engine-t {:data-received? false} állapotba, hogy a letöltés idejére újra
   ; megjelenjen a letöltésjelző!
   ; Pl.: Ha a felhasználó egy elem megtekintése közben duplikálja az elemet, majd
-  ;      a megjelenő értesítésen a "Másolat megtekintése" gombra kattint, akkor
-  ;      az item-handler engine letölti a másolat-elemet és a letöltés idejére
-  ;      szükséges újra megjeleníteni a letöltésjelzőt!
+  ;     a megjelenő értesítésen a "Másolat megtekintése" gombra kattint, akkor
+  ;     az item-handler engine letölti a másolat-elemet és a letöltés idejére
+  ;     szükséges újra megjeleníteni a letöltésjelzőt!
   (r core.events/reset-downloads! db handler-id))
 
 (defn store-received-suggestions!

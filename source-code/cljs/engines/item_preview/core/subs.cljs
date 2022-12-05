@@ -91,23 +91,23 @@
 ; @param (keyword) item-key
 ;
 ; @usage
-;  [:item-preview/get-meta-item :my-preview :my-item]
+; [:item-preview/get-meta-item :my-preview :my-item]
 (r/reg-sub :item-preview/get-meta-item get-meta-item)
 
 ; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-preview/get-current-item-id :my-preview]
+; [:item-preview/get-current-item-id :my-preview]
 (r/reg-sub :item-preview/get-current-item-id get-current-item-id)
 
 ; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-preview/no-item-id-passed? :my-preview]
+; [:item-preview/no-item-id-passed? :my-preview]
 (r/reg-sub :item-preview/no-item-id-passed? no-item-id-passed?)
 
 ; @param (keyword) preview-id
 ;
 ; @usage
-;  [:item-preview/get-current-item :my-preview]
+; [:item-preview/get-current-item :my-preview]
 (r/reg-sub :item-preview/get-current-item get-current-item)

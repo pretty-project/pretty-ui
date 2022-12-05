@@ -29,8 +29,8 @@
   ; @param (keyword) handler-id
   ;
   ; @return (map)
-  ;  {:handler-id (keyword)
-  ;   :suggestion-keys (keywords in vector)}
+  ; {:handler-id (keyword)
+  ;  :suggestion-keys (keywords in vector)}
   [db [_ handler-id]]
   (let [suggestion-keys (r body.subs/get-body-prop db handler-id :suggestion-keys)]
        (r core.subs/use-query-params db handler-id {:handler-id      handler-id
@@ -42,7 +42,7 @@
   ; @param (keyword) handler-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ handler-id]]
   (let [current-item-id (r core.subs/get-current-item-id db handler-id)]
        (r core.subs/use-query-params db handler-id {:item-id current-item-id})))

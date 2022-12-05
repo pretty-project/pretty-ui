@@ -30,7 +30,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  [:item-editor/edit-item! :my-editor "my-item"]
+  ; [:item-editor/edit-item! :my-editor "my-item"]
   (fn [{:keys [db]} [_ editor-id item-id]]
       ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
       (if-let [route-handled? (r routes.subs/route-handled? db editor-id)]

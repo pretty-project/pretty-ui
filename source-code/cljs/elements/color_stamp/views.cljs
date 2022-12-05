@@ -29,7 +29,7 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {:colors (strings in vector)(opt)}
+  ; {:colors (strings in vector)(opt)}
   [stamp-id {:keys [colors] :as stamp-props}]
   (if (vector/nonempty? colors)
       (letfn [(f [color-stamp color]
@@ -52,7 +52,7 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {}
+  ; {}
   [_ {:keys [helper info-text label]}]
   (if label [label.views/element {:content     label
                                   :helper      helper
@@ -72,35 +72,35 @@
 (defn element
   ; @param (keyword)(opt) stamp-id
   ; @param (map) stamp-props
-  ;  {:class (keyword or keywords in vector)(opt)
-  ;   :colors (keywords or strings in vector)(opt)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :helper (metamorphic-content)(opt)
-  ;   :info-text (metamorphic-content)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :label (metamorphic-content)(opt)
-  ;   :size (keyword)(opt)
-  ;    :m, :l, :xl, :xxl
-  ;    Default: :s
-  ;   :style (map)(opt)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :colors (keywords or strings in vector)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :helper (metamorphic-content)(opt)
+  ;  :info-text (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :label (metamorphic-content)(opt)
+  ;  :size (keyword)(opt)
+  ;   :m, :l, :xl, :xxl
+  ;   Default: :s
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [color-stamp {...}]
+  ; [color-stamp {...}]
   ;
   ; @usage
-  ;  [color-stamp :my-color-stamp {...}]
+  ; [color-stamp :my-color-stamp {...}]
   ;
   ; @usage
-  ;  [color-stamp :my-color-stamp {:colors ["red" "green" "blue"]}]
+  ; [color-stamp :my-color-stamp {:colors ["red" "green" "blue"]}]
   ([stamp-props]
    [element (random/generate-keyword) stamp-props])
 

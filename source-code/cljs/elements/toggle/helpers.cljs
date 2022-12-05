@@ -29,12 +29,12 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ;  {:background-color (keyword or string)(opt)
-  ;   :hover-color (keyword)(opt)
-  ;   :style (map)(opt)}
+  ; {:background-color (keyword or string)(opt)
+  ;  :hover-color (keyword)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [background-color border-color color hover-color style]}]
   (-> {:style style}
       (element.helpers/apply-color :background-color :data-background-color background-color)
@@ -45,10 +45,10 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) button-props
-  ;  {:border-radius (keyword)(opt)}
+  ; {:border-radius (keyword)(opt)}
   ;
   ; @return (map)
-  ;  {:data-border-radius (keyword)}
+  ; {:data-border-radius (keyword)}
   [_ {:keys [border-radius]}]
   {:data-border-radius border-radius})
 
@@ -57,17 +57,17 @@
   ;
   ; @param (keyword) toggle-id
   ; @param (map) toggle-props
-  ;  {:disabled? (boolean)(opt)
-  ;   :on-mouse-over (metamorphic-event)(opt)}
+  ; {:disabled? (boolean)(opt)
+  ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ;  {:data-clickable (boolean)
-  ;   :data-selectable (boolean)
-  ;   :disabled (boolean)
-  ;   :id (string)
-  ;   :on-click (function)
-  ;   :on-mouse-over (function)
-  ;   :on-mouse-up (function)}
+  ; {:data-clickable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :disabled (boolean)
+  ;  :id (string)
+  ;  :on-click (function)
+  ;  :on-mouse-over (function)
+  ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-mouse-over] :as toggle-props}]
   ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
   (merge {:data-selectable false}

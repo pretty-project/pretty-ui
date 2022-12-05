@@ -22,24 +22,24 @@
 
 (defn send-email!
   ; @param (map) email-props
-  ;  {:body (string)
-  ;   :email-address (string)
-  ;   :host (string)
-  ;   :password (string)
-  ;   :port (integer or string)
-  ;   :sender-name (string)(opt)
-  ;   :subject (string)(opt)
-  ;   :username (string)}
+  ; {:body (string)
+  ;  :email-address (string)
+  ;  :host (string)
+  ;  :password (string)
+  ;  :port (integer or string)
+  ;  :sender-name (string)(opt)
+  ;  :subject (string)(opt)
+  ;  :username (string)}
   ;
   ; @usage
-  ;  (send-email! {:body          "Hello World!"
-  ;                :email-address "receiver@email.com"
-  ;                :host          "smtp.my-host.com"
-  ;                :password      "..."
-  ;                :port          465
-  ;                :sender-name   "My User"
-  ;                :subject       "Greatings"
-  ;                :username      "my-user@my-host.com"})
+  ; (send-email! {:body          "Hello World!"
+  ;               :email-address "receiver@email.com"
+  ;               :host          "smtp.my-host.com"
+  ;               :password      "..."
+  ;               :port          465
+  ;               :sender-name   "My User"
+  ;               :subject       "Greatings"
+  ;               :username      "my-user@my-host.com"})
   [{:keys [body email-address host password port sender-name subject username] :as email-props}]
   (if (and body email-address host password port username)
       (try (postal.core/send-message {:host host

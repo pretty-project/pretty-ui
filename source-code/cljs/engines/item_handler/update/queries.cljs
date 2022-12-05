@@ -29,7 +29,7 @@
   ; @param (keyword) handler-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ handler-id]]
   (let [exported-item (r core.subs/export-current-item db handler-id)]
        (r core.subs/use-query-params db handler-id {:item exported-item})))
@@ -57,7 +57,7 @@
   ; @param (keyword) handler-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ handler-id]]
   (let [current-item-id (r core.subs/get-current-item-id db handler-id)]
        (r core.subs/use-query-params db handler-id {:item-id current-item-id})))
@@ -85,7 +85,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ handler-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db handler-id item-id)]
        (r core.subs/use-query-params db handler-id {:item backup-item})))
@@ -115,7 +115,7 @@
   ; @param (keyword) handler-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ handler-id]]
   (let [current-item-id (r core.subs/get-current-item-id db handler-id)]
        (r core.subs/use-query-params db handler-id {:item-id current-item-id})))

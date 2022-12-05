@@ -26,9 +26,9 @@
   ; @param (map) column-props
   ;
   ; @return (map)
-  ;  {:horizontal-align (keyword)
-  ;   :stretch-orientation (keyword)
-  ;   :vertical-align (keyword)}
+  ; {:horizontal-align (keyword)
+  ;  :stretch-orientation (keyword)
+  ;  :vertical-align (keyword)}
   [column-props]
   (merge {:horizontal-align    :center
           :stretch-orientation :vertical

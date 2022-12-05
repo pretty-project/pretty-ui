@@ -51,9 +51,9 @@
   ; @param (keyword) request-key
   ;
   ; @example
-  ;  (r get-request-id db :my-engine :browser)
-  ;  =>
-  ;  :my-handler/synchronize-browser!
+  ; (r get-request-id db :my-engine :browser)
+  ; =>
+  ; :my-handler/synchronize-browser!
   ;
   ; @return (keyword)
   [db [_ engine-id request-key]]
@@ -66,10 +66,10 @@
   ;
   ; A request-key kifejezés használata megkülönbözteti az egyes engine-ek lekéréseit egymástól.
   ; Pl.: Az item-browser engine request-item! lekérése és az item-browser engine által indított
-  ;      de az item-lister engine request-items! lekérése előfordul, hogy egyszerre történik.
-  ;      Ha a két engine lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
-  ;      folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister
-  ;      engine tévésen úgy érzékelné, hogy az elemek letöltése már folyamatban van.
+  ;     de az item-lister engine request-items! lekérése előfordul, hogy egyszerre történik.
+  ;     Ha a két engine lekésérei nem lennének megkülönböztetve és a request-item! lekérés már
+  ;     folyamatban lenne, akkor a request-items! lekérés nem indulna el, mert az item-lister
+  ;     engine tévésen úgy érzékelné, hogy az elemek letöltése már folyamatban van.
   (if-let [handler-key (r transfer.subs/get-transfer-item db engine-id :handler-key)]
           (keyword (str                (name handler-key))
                    (str "synchronize-" (name request-key) "!"))
@@ -82,7 +82,7 @@
   ; @param (keyword) request-key
   ;
   ; @usage
-  ;  (r engine-synchronizing? db :my-engine :browser)
+  ; (r engine-synchronizing? db :my-engine :browser)
   ;
   ; @return (boolean)
   [db [_ engine-id request-key]]
@@ -270,20 +270,20 @@
   ; @param (vector) query
   ;
   ; @usage
-  ;  [body :my-engine {:query [:my-query]}]
-  ;  (r use-query-prop db :my-engine [...])
+  ; [body :my-engine {:query [:my-query]}]
+  ; (r use-query-prop db :my-engine [...])
   ;
   ; @return (vector)
-  ;  [:my-query ...]
+  ; [:my-query ...]
   [db [_ engine-id query]]
   ; Az egyes engine-ek body komponensének {:query [...]} tulajdonságaként esetlegesen
   ; átadott ...
   ; ... Pathom lekérés vektort összefűzi a use-query-prop függvény számára
-  ;     query paraméterként átadott Pathom lekérés vektorral.
+  ;    query paraméterként átadott Pathom lekérés vektorral.
   ; ... Pathom lekérés vektort az elem(ek) letöltésekor elküldött Pathom lekéréssel
-  ;     összefűzve elküldi a szervernek, így megoldható, hogy az egyes engine-ek
-  ;     használatához szükséges kiegészítő adatokat az elem(ek) letöltésekor
-  ;     töltse le.
+  ;    összefűzve elküldi a szervernek, így megoldható, hogy az egyes engine-ek
+  ;    használatához szükséges kiegészítő adatokat az elem(ek) letöltésekor
+  ;    töltse le.
   (if-let [query-prop (r body.subs/get-body-prop db engine-id :query)]
           (vector/concat-items query-prop query)
           (return                         query)))
@@ -295,7 +295,7 @@
   ; @param (map) query-props
   ;
   ; @usage
-  ;  (r download.subs/use-query-params db :my-engine {...})
+  ; (r download.subs/use-query-params db :my-engine {...})
   ;
   ; @return (map)
   [db [_ engine-id query-props]]

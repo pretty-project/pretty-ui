@@ -37,9 +37,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r get-item-route db :my-editor "my-item")
-  ;  =>
-  ;  "/@app-home/my-editor/my-item"
+  ; (r get-item-route db :my-editor "my-item")
+  ; =>
+  ; "/@app-home/my-editor/my-item"
   ;
   ; @return (string)
   [db [_ editor-id item-id]]
@@ -51,9 +51,9 @@
   ; @param (string) item-id
   ;
   ; @example
-  ;  (r get-edit-route db :my-editor "my-item")
-  ;  =>
-  ;  "/@app-home/my-editor/my-item/edit"
+  ; (r get-edit-route db :my-editor "my-item")
+  ; =>
+  ; "/@app-home/my-editor/my-item/edit"
   ;
   ; @return (string)
   [db [_ editor-id item-id]]
@@ -69,12 +69,12 @@
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-editor/get-item-route db :my-editor "my-item"]
+; [:item-editor/get-item-route db :my-editor "my-item"]
 (r/reg-sub :item-editor/get-item-route get-item-route)
 
 ; @param (keyword) editor-id
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-editor/get-edit-route db :my-editor "my-item"]
+; [:item-editor/get-edit-route db :my-editor "my-item"]
 (r/reg-sub :item-editor/get-edit-route get-edit-route)

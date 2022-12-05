@@ -25,14 +25,14 @@
   ; @param (keyword) engine-id
   ;
   ; @example
-  ;  (transfer.helpers/transfer-id :my-engine)
-  ;  =>
-  ;  :my-engine/transfer-engine-props
+  ; (transfer.helpers/transfer-id :my-engine)
+  ; =>
+  ; :my-engine/transfer-engine-props
   ;
   ; @example
-  ;  (transfer.helpers/transfer-id :my-namespace/my-engine)
-  ;  =>
-  ;  :my-namespace.my-engine/transfer-engine-props
+  ; (transfer.helpers/transfer-id :my-namespace/my-engine)
+  ; =>
+  ; :my-namespace.my-engine/transfer-engine-props
   ;
   ; @return (keyword)
   [engine-id]

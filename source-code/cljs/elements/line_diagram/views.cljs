@@ -37,8 +37,8 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ;  {:sections (maps in vector)
-  ;   :strength (px)}
+  ; {:sections (maps in vector)
+  ;  :strength (px)}
   [diagram-id {:keys [sections strength] :as diagram-props}]
   (letfn [(f [sections section-props]
              (let [section-props (line-diagram.prototypes/section-props-prototype section-props)]
@@ -58,34 +58,34 @@
 (defn element
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
-  ;  {:indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :sections (maps in vector)}
-  ;    [{:color (keyword or string)(opt)
-  ;       :default, :highlight, :muted, :primary, :secondary, :success, :warning
-  ;       Default: primary
-  ;      :label (metamorphic-content)(opt)
-  ;       TODO
-  ;      :value (integer)}]
-  ;   :strength (px)(opt)
-  ;     Default: 2
-  ;     Min: 1
-  ;     Max: 6
-  ;   :total-value (integer)(opt)
-  ;    Default: A szakaszok aktuális értékének összege}
+  ; {:indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :sections (maps in vector)}
+  ;   [{:color (keyword or string)(opt)
+  ;      :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;      Default: primary
+  ;     :label (metamorphic-content)(opt)
+  ;      TODO
+  ;     :value (integer)}]
+  ;  :strength (px)(opt)
+  ;    Default: 2
+  ;    Min: 1
+  ;    Max: 6
+  ;  :total-value (integer)(opt)
+  ;   Default: A szakaszok aktuális értékének összege}
   ;
   ; @usage
-  ;  [line-diagram {...}]
+  ; [line-diagram {...}]
   ;
   ; @usage
-  ;  [line-diagram :my-line-diagram {...}]
+  ; [line-diagram :my-line-diagram {...}]
   ([diagram-props]
    [element (random/generate-keyword) diagram-props])
 

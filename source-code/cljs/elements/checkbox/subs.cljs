@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:option-value-f (function)}
+  ; {:option-value-f (function)}
   ; @param (*) option
   ;
   ; @return (boolean)

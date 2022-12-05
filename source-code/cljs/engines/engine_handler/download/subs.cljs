@@ -29,9 +29,9 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r get-resolver-id db :my-engine :get-items)
-  ;  =>
-  ;  :my-handler/get-items
+  ; (r get-resolver-id db :my-engine :get-items)
+  ; =>
+  ; :my-handler/get-items
   ;
   ; @return (keyword)
   [db [_ engine-id action-key]]
@@ -48,9 +48,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-resolver-answer db :my-engine :get-items {...})
-  ;  =>
-  ;  [{...} {...}]
+  ; (r get-resolver-answer db :my-engine :get-items {...})
+  ; =>
+  ; [{...} {...}]
   ;
   ; @return (*)
   [db [_ engine-id action-key server-response]]

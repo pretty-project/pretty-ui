@@ -34,7 +34,7 @@
   ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  [:item-editor/save-item! :my-editor]
+  ; [:item-editor/save-item! :my-editor]
   (fn [{:keys [db]} [_ editor-id]]
       (let [query        (r update.queries/get-save-item-query          db editor-id)
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]

@@ -63,27 +63,27 @@
 (defn body
   ; @param (keyword) viewer-id
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;    Default: false
-  ;    W/ {:label-key ...}
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :item-element (metamorphic-content)
-  ;   :item-id (string)(opt)
-  ;   :item-path (vector)(opt)
-  ;    Default: core.helpers/default-item-path
-  ;   :label-key (keyword)(opt)
-  ;    W/ {:auto-title? true}
-  ;   :query (vector)(opt)
-  ;   :transfer-id (keyword)(opt)}
+  ; {:auto-title? (boolean)(opt)
+  ;   Default: false
+  ;   W/ {:label-key ...}
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :item-element (metamorphic-content)
+  ;  :item-id (string)(opt)
+  ;  :item-path (vector)(opt)
+  ;   Default: core.helpers/default-item-path
+  ;  :label-key (keyword)(opt)
+  ;   W/ {:auto-title? true}
+  ;  :query (vector)(opt)
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-viewer {...}]
+  ; [body :my-viewer {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [] [:div ...])
-  ;  [body :my-viewer {:item-element #'my-item-element}]
+  ; (defn my-item-element [] [:div ...])
+  ; [body :my-viewer {:item-element #'my-item-element}]
   [viewer-id body-props]
   (let [body-props (body.prototypes/body-props-prototype viewer-id body-props)]
        (reagent/lifecycles (core.helpers/component-id viewer-id :body)

@@ -63,35 +63,35 @@
 (defn body
   ; @param (keyword) handler-id
   ; @param (map) body-props
-  ;  {:auto-title? (boolean)(opt)
-  ;    Default: false
-  ;    W/ {:label-key ...}
-  ;   :default-item (map)(opt)
-  ;   :display-progress? (boolean)(opt)
-  ;    Default: true
-  ;   :error-element (metamorphic-content)(opt)
-  ;   :ghost-element (metamorphic-content)(opt)
-  ;   :initial-item (map)(opt)
-  ;   :item-element (metamorphic-content)
-  ;   :item-id (string)(opt)
-  ;   :item-path (vector)(opt)
-  ;    Default: core.helpers/default-item-path
-  ;   :on-saved (metamorphic-event)(opt)
-  ;    Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
-  ;   :label-key (keyword)(opt)
-  ;    W/ {:auto-title? true}
-  ;   :query (vector)(opt)
-  ;   :suggestion-keys (keywords in vector)(opt)
-  ;   :suggestions-path (vector)(opt)
-  ;    Default: core.helpers/default-suggestions-path
-  ;   :transfer-id (keyword)(opt)}
+  ; {:auto-title? (boolean)(opt)
+  ;   Default: false
+  ;   W/ {:label-key ...}
+  ;  :default-item (map)(opt)
+  ;  :display-progress? (boolean)(opt)
+  ;   Default: true
+  ;  :error-element (metamorphic-content)(opt)
+  ;  :ghost-element (metamorphic-content)(opt)
+  ;  :initial-item (map)(opt)
+  ;  :item-element (metamorphic-content)
+  ;  :item-id (string)(opt)
+  ;  :item-path (vector)(opt)
+  ;   Default: core.helpers/default-item-path
+  ;  :on-saved (metamorphic-event)(opt)
+  ;   Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
+  ;  :label-key (keyword)(opt)
+  ;   W/ {:auto-title? true}
+  ;  :query (vector)(opt)
+  ;  :suggestion-keys (keywords in vector)(opt)
+  ;  :suggestions-path (vector)(opt)
+  ;   Default: core.helpers/default-suggestions-path
+  ;  :transfer-id (keyword)(opt)}
   ;
   ; @usage
-  ;  [body :my-handler {...}]
+  ; [body :my-handler {...}]
   ;
   ; @usage
-  ;  (defn my-item-element [] [:div ...])
-  ;  [body :my-handler {:item-element #'my-item-element}]
+  ; (defn my-item-element [] [:div ...])
+  ; [body :my-handler {:item-element #'my-item-element}]
   [handler-id body-props]
   (let [body-props (body.prototypes/body-props-prototype handler-id body-props)]
        (reagent/lifecycles (core.helpers/component-id handler-id :body)

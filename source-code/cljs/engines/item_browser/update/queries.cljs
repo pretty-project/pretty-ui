@@ -31,7 +31,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item-id (string)}
+  ; {:item-id (string)}
   [db [_ browser-id item-id]]
   (r core.subs/use-query-params db browser-id {:item-id item-id}))
 
@@ -59,7 +59,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [backup-item (r backup.subs/export-backup-item db browser-id item-id)]
        (r core.subs/use-query-params db browser-id {:item backup-item})))
@@ -88,7 +88,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ browser-id item-id]]
   ; Az item-browser engine az item-editor engine-hez hasonlóan duplikáláskor az elem azonosítója
   ; helyett az elemet küldi el a szerver számára, hogy a két engine mutation függvényei hasonló
@@ -121,7 +121,7 @@
   ; @param (string) item-id
   ;
   ; @return (map)
-  ;  {:item (namespaced map)}
+  ; {:item (namespaced map)}
   [db [_ browser-id item-id]]
   (let [exported-item (r items.subs/export-item db browser-id item-id)]
        (r core.subs/use-query-params db browser-id {:item exported-item})))

@@ -29,20 +29,20 @@
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
-  ;  {:max-height (integer)(opt)
-  ;    TODO
-  ;    Max lines count
-  ;    Default: 32
-  ;   :min-height (integer)(opt)
-  ;    TODO
-  ;    Min lines count
-  ;    Default: 1}
+  ; {:max-height (integer)(opt)
+  ;   TODO
+  ;   Max lines count
+  ;   Default: 32
+  ;  :min-height (integer)(opt)
+  ;   TODO
+  ;   Min lines count
+  ;   Default: 1}
   ;
   ; @usage
-  ;  [multiline-field {...}]
+  ; [multiline-field {...}]
   ;
   ; @usage
-  ;  [multiline-field :my-multiline-field {...}]
+  ; [multiline-field :my-multiline-field {...}]
   ([field-props]
    [element (random/generate-keyword) field-props])
 

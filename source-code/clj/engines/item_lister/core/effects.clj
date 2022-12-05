@@ -25,15 +25,15 @@
 (r/reg-event-fx :item-lister/init-lister!
   ; @param (keyword) lister-id
   ; @param (map) lister-props
-  ;  {:base-route (string)(opt)
-  ;   :collection-name (string)
-  ;   :handler-key (keyword)
-  ;   :item-namespace (keyword)
-  ;   :on-route (metamorphic-event)(opt)
-  ;   :route-title (metamorphic-content)(opt)}
+  ; {:base-route (string)(opt)
+  ;  :collection-name (string)
+  ;  :handler-key (keyword)
+  ;  :item-namespace (keyword)
+  ;  :on-route (metamorphic-event)(opt)
+  ;  :route-title (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [:item-lister/init-lister! :my-lister {...}]
+  ; [:item-lister/init-lister! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id {:keys [base-route] :as lister-props}]]
       (let [lister-props (core.prototypes/lister-props-prototype lister-id lister-props)]
            {:db         (r core.events/init-lister! db lister-id lister-props)

@@ -28,10 +28,10 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  ;  {:border-color (keyword or string)
-  ;   :font-size (keyword)
-  ;   :initial-value (integer)
-  ;   :value-path (vector)}
+  ; {:border-color (keyword or string)
+  ;  :font-size (keyword)
+  ;  :initial-value (integer)
+  ;  :value-path (vector)}
   [counter-id counter-props]
   (merge {:border-color  :primary
           :font-size     :s

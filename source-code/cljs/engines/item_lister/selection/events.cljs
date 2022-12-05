@@ -25,7 +25,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r select-all-items! :my-lister)
+  ; (r select-all-items! :my-lister)
   ;
   ; @return (map)
   [db [_ lister-id]]
@@ -36,7 +36,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r toggle-item-selection! :my-lister "my-item")
+  ; (r toggle-item-selection! :my-lister "my-item")
   ;
   ; @return (map)
   [db [_ lister-id item-id]]
@@ -47,7 +47,7 @@
   ; @param (string) item-id
   ;
   ; @usage
-  ;  (r toggle-single-item-selection! :my-lister "my-item")
+  ; (r toggle-single-item-selection! :my-lister "my-item")
   ;
   ; @return (map)
   [db [_ lister-id item-id]]
@@ -59,7 +59,7 @@
   ; @param (integer) selection-limit
   ;
   ; @usage
-  ;  (r toggle-limited-item-selection! :my-lister "my-item" 8)
+  ; (r toggle-limited-item-selection! :my-lister "my-item" 8)
   ;
   ; @return (map)
   [db [_ lister-id item-id selection-limit]]
@@ -69,7 +69,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r discard-selection! :my-lister)
+  ; (r discard-selection! :my-lister)
   ;
   ; @return (map)
   [db [_ lister-id]]
@@ -79,7 +79,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (r disable-selected-items! :my-lister)
+  ; (r disable-selected-items! :my-lister)
   ;
   ; @return (map)
   [db [_ lister-id]]
@@ -95,7 +95,7 @@
   ; @param (strings in vector) selected-item-ids
   ;
   ; @usage
-  ;  (r import-selection! db :my-lister ["my-item" "your-item"])
+  ; (r import-selection! db :my-lister ["my-item" "your-item"])
   ;
   ; @return (map)
   [db [_ lister-id selected-item-ids]]
@@ -106,7 +106,7 @@
   ; @param (string) selected-item-id
   ;
   ; @usage
-  ;  (r import-single-selection! db :my-lister "my-item")
+  ; (r import-single-selection! db :my-lister "my-item")
   ;
   ; @return (map)
   [db [_ lister-id selected-item-id]]
@@ -120,21 +120,21 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/select-all-items! :my-lister]
+; [:item-lister/select-all-items! :my-lister]
 (r/reg-event-db :item-lister/select-all-items! select-all-items!)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/toggle-item-selection! :my-lister "my-item"]
+; [:item-lister/toggle-item-selection! :my-lister "my-item"]
 (r/reg-event-db :item-lister/toggle-item-selection! toggle-item-selection!)
 
 ; @param (keyword) lister-id
 ; @param (string) item-id
 ;
 ; @usage
-;  [:item-lister/toggle-single-item-selection! :my-lister "my-item"]
+; [:item-lister/toggle-single-item-selection! :my-lister "my-item"]
 (r/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
 
 
@@ -143,11 +143,11 @@
 ; @param (integer) selection-limit
 ;
 ; @usage
-;  [:item-lister/toggle-limited-item-selection! :my-lister "my-item" 8]
+; [:item-lister/toggle-limited-item-selection! :my-lister "my-item" 8]
 (r/reg-event-db :item-lister/toggle-limited-item-selection! toggle-limited-item-selection!)
 
 ; @param (keyword) lister-id
 ;
 ; @usage
-;  [:item-lister/discard-selection! :my-lister]
+; [:item-lister/discard-selection! :my-lister]
 (r/reg-event-db :item-lister/discard-selection! discard-selection!)

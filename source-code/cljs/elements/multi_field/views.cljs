@@ -71,14 +71,14 @@
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props
-  ;  {:max-field-count (integer)(opt)
-  ;    Default: 8}
+  ; {:max-field-count (integer)(opt)
+  ;   Default: 8}
   ;
   ; @usage
-  ;  [multi-field {...}]
+  ; [multi-field {...}]
   ;
   ; @usage
-  ;  [multi-field :my-multi-field {...}]
+  ; [multi-field :my-multi-field {...}]
   ([group-props]
    [element (random/generate-keyword) group-props])
 

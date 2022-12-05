@@ -25,12 +25,12 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {:size (keyword)
-  ;   :style (map)}
+  ; {:size (keyword)
+  ;  :style (map)}
   ;
   ; @return (map)
-  ;  {:data-size (keyword)
-  ;   :style (map)}
+  ; {:data-size (keyword)
+  ;  :style (map)}
   [_ {:keys [size style]}]
   {:data-size size
    :style     style})
@@ -56,10 +56,10 @@
   ;
   ; @param (keyword) stamp-id
   ; @param (map) stamp-props
-  ;  {}
+  ; {}
   ; @param (keyword or string) color
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ stamp-props color]
   (element.helpers/apply-color {} :background-color :data-color color))

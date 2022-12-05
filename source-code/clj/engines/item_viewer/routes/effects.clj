@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) viewer-id
   ; @param (map) viewer-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ viewer-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id")]

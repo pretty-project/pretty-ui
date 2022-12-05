@@ -29,9 +29,9 @@
   ; @param (keyword) action-key
   ;
   ; @example
-  ;  (r get-mutation-name db :my-engine :delete-items)
-  ;  =>
-  ;  :my-handler/delete-items!
+  ; (r get-mutation-name db :my-engine :delete-items)
+  ; =>
+  ; :my-handler/delete-items!
   ;
   ; @return (keyword)
   [db [_ engine-id action-key]]
@@ -48,9 +48,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-mutation-answer db :my-engine :delete-items {...})
-  ;  =>
-  ;  ["my-item" "your-item"]
+  ; (r get-mutation-answer db :my-engine :delete-items {...})
+  ; =>
+  ; ["my-item" "your-item"]
   ;
   ; @return (*)
   [db [_ engine-id action-key server-response]]

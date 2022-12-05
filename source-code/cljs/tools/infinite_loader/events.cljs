@@ -47,7 +47,7 @@
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r pause-loader! db :my-loader)
+  ; (r pause-loader! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]
@@ -57,7 +57,7 @@
   ; @param (keyword) loader-id
   ;
   ; @usage
-  ;  (r restart-loader! db :my-loader)
+  ; (r restart-loader! db :my-loader)
   ;
   ; @return (map)
   [db [_ loader-id]]
@@ -75,9 +75,9 @@
 (r/reg-event-db :infinite-loader/show-observer! show-observer!)
 
 ; @usage
-;  [:infinite-loader/pause-loader! :my-loader]
+; [:infinite-loader/pause-loader! :my-loader]
 (r/reg-event-db :infinite-loader/pause-loader! pause-loader!)
 
 ; @usage
-;  [:infinite-loader/restart-loader! :my-loader]
+; [:infinite-loader/restart-loader! :my-loader]
 (r/reg-event-db :infinite-loader/restart-loader! restart-loader!)

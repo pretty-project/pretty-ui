@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:expanded? (boolean)}
+  ; {:expanded? (boolean)}
   [expandable-id {:keys [expanded?]}]
   (if (expandable.helpers/expanded? expandable-id)
       [:i.e-expandable--expand-icon {:data-icon-family :material-icons-filled} :expand_less]
@@ -39,8 +39,8 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)}
   [_ {:keys [icon icon-family]}]
   (if icon [:i.e-expandable--icon {:data-icon-family icon-family} icon]))
 
@@ -49,7 +49,7 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:label (metamorphic-content)(opt)}
+  ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
   (if label [:div.e-expandable--label (x.components/content label)]))
 
@@ -69,7 +69,7 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ;  {:content (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)(opt)}
   [expandable-id {:keys [content]}]
   (if (expandable.helpers/expanded? expandable-id)
       [:div.e-expandable--body [x.components/content expandable-id content]]))
@@ -87,31 +87,31 @@
 (defn element
   ; @param (keyword)(opt) expandable-id
   ; @param (map) expandable-props
-  ;  {:content (metamorphic-content)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :expanded? (boolean)(opt)
-  ;    Default: true
-  ;   :icon (keyword)(opt)
-  ;   :icon-family (keyword)(opt)
-  ;    :material-icons-filled, :material-icons-outlined
-  ;    Default: :material-icons-filled
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :label (metamorphic-content)(opt)}
+  ; {:content (metamorphic-content)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :expanded? (boolean)(opt)
+  ;   Default: true
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)
+  ;   :material-icons-filled, :material-icons-outlined
+  ;   Default: :material-icons-filled
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :label (metamorphic-content)(opt)}
   ;
   ; @usage
-  ;  [expandable {...}]
+  ; [expandable {...}]
   ;
   ; @usage
-  ;  [expandable :my-expandable {...}]
+  ; [expandable :my-expandable {...}]
   ([expandable-props]
    [element (random/generate-keyword) expandable-props])
 

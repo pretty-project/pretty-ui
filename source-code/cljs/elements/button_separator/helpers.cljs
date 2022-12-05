@@ -25,11 +25,11 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ;  {:color (keyword or string)
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)))

@@ -45,8 +45,8 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:option-value-f (function)
-  ;   :value-path (vector)}
+  ; {:option-value-f (function)
+  ;  :value-path (vector)}
   ; @param (*) option
   ;
   ; @return (map)
@@ -54,9 +54,9 @@
   ; XXX#7234
   ; Ha a checkbox elem ...
   ; ... több opciót jelenít meg, akkor az egyes kiválaszott opciók értéke
-  ;     egy vektorban felsorolva kerül a value-path Re-Frame adatbázis útvonalra.
+  ;    egy vektorban felsorolva kerül a value-path Re-Frame adatbázis útvonalra.
   ; ... egy opciót jelenít meg, akkor az egy opció esetlegesen kiválasztott
-  ;     értéke kerül a value-path Re-Frame adatbázis útvonalra.
+  ;    értéke kerül a value-path Re-Frame adatbázis útvonalra.
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         option-value (option-value-f option)]
        (as-> db % (r input.events/mark-as-visited! % checkbox-id)

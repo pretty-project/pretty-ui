@@ -42,7 +42,7 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ slider-id {:keys [value-path] :as slider-props}]])
@@ -52,7 +52,7 @@
   ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
   [db [_ slider-id {:keys [value-path] :as slider-props}]])

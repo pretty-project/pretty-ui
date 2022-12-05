@@ -28,7 +28,7 @@
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
-  ;  {:content (metamorphic-content)}
+  ; {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
   [:a.e-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
                      [x.components/content content]])
@@ -54,39 +54,39 @@
   ;
   ; @param (keyword)(opt) anchor-id
   ; @param (map) anchor-props
-  ;  {:color (keyword or string)(opt)
-  ;    :default, :muted, :primary, :secondary, :success, :warning
-  ;    Default: :primary
-  ;   :class (keyword or keywords in vector)(opt)
-  ;   :content (metamorphic-content)
-  ;   :disabled? (boolean)(opt)
-  ;    Default: false
-  ;   :font-size (keyword)(opt)
-  ;    :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
-  ;    Default: :s
-  ;   :href (string)(opt)
-  ;   :indent (map)(opt)
-  ;    {:bottom (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :left (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :right (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;     :top (keyword)(opt)
-  ;      :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;   :line-height (keyword)(opt)
-  ;    :block, :normal
-  ;    Default: :normal
-  ;   :on-click (metamorphic-event)(opt)
-  ;   :stop-propagation? (boolean)(opt)
-  ;    Default: false
-  ;   :style (map)(opt)}
+  ; {:color (keyword or string)(opt)
+  ;   :default, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;  :class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :font-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   Default: :s
+  ;  :href (string)(opt)
+  ;  :indent (map)(opt)
+  ;   {:bottom (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :left (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :right (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;    :top (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :line-height (keyword)(opt)
+  ;   :block, :normal
+  ;   Default: :normal
+  ;  :on-click (metamorphic-event)(opt)
+  ;  :stop-propagation? (boolean)(opt)
+  ;   Default: false
+  ;  :style (map)(opt)}
   ;
   ; @usage
-  ;  [anchor {...}]
+  ; [anchor {...}]
   ;
   ; @usage
-  ;  [anchor :my-anchor {...}]
+  ; [anchor :my-anchor {...}]
   ([anchor-props]
    [element (random/generate-keyword) anchor-props])
 

@@ -29,12 +29,12 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ;  {:display-progress? (boolean)
-  ;   :download-limit (integer)
-  ;   :items-path (vector)
-  ;   :order-key (keyword)
-  ;   :placeholder (metamorphic-content)
-  ;   :transfer-id (keyword)}
+  ; {:display-progress? (boolean)
+  ;  :download-limit (integer)
+  ;  :items-path (vector)
+  ;  :order-key (keyword)
+  ;  :placeholder (metamorphic-content)
+  ;  :transfer-id (keyword)}
   [lister-id body-props]
   (merge {:display-progress? true
           :download-limit    core.config/DEFAULT-DOWNLOAD-LIMIT

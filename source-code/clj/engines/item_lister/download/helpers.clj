@@ -34,9 +34,9 @@
   ; @param (namespaced keyword) order-by
   ;
   ; @example
-  ;  (sort-pattern :my-lister :name/ascending)
-  ;  =>
-  ;  {:my-type/name 1}
+  ; (sort-pattern :my-lister :name/ascending)
+  ; =>
+  ; {:my-type/name 1}
   ;
   ; @return (map)
   [lister-id order-by]
@@ -57,18 +57,18 @@
   ; @param (map) env
   ;
   ; @example
-  ;  (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                   :download-limit        20
-  ;                                   :reload-items?         false}})
-  ;  =>
-  ;  20
+  ; (env->max-count {... .../params {:downloaded-item-count 24
+  ;                                  :download-limit        20
+  ;                                  :reload-items?         false}})
+  ; =>
+  ; 20
   ;
   ; @example
-  ;  (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                   :download-limit        20
-  ;                                   :reload-items?         true}})
-  ;  =>
-  ;  40
+  ; (env->max-count {... .../params {:downloaded-item-count 24
+  ;                                  :download-limit        20
+  ;                                  :reload-items?         true}})
+  ; =>
+  ; 40
   ;
   ; @return (integer)
   [env]
@@ -108,9 +108,9 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->sort-pattern {...} :my-lister)
-  ;  =>
-  ;  {:my-type/name 1}
+  ; (env->sort-pattern {...} :my-lister)
+  ; =>
+  ; {:my-type/name 1}
   ;
   ; @return (map)
   [env lister-id]
@@ -122,12 +122,12 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->search-pattern {...} :my-lister)
-  ;  =>
-  ;  {:$or [{:my-type/name "..."} {...}]}
+  ; (env->search-pattern {...} :my-lister)
+  ; =>
+  ; {:$or [{:my-type/name "..."} {...}]}
   ;
   ; @return (map)
-  ;  {:$or (maps in vector)}
+  ; {:$or (maps in vector)}
   [env lister-id]
   (let [item-namespace @(r/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
         search-keys     (pathom/env->param env :search-keys)
@@ -140,23 +140,23 @@
   ; @param (keyword) lister-id
   ;
   ; @example
-  ;  (env->pipeline-props {...} :my-lister)
-  ;  =>
-  ;  {:max-count 20
-  ;   :skip       0
-  ;   :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
-  ;   :search-pattern {:$or [{:my-type/name   "..."} {...}]}
-  ;   :sort-pattern   {:my-type/name 1}
-  ;   :unset-pattern  [:my-type/my-key]}
+  ; (env->pipeline-props {...} :my-lister)
+  ; =>
+  ; {:max-count 20
+  ;  :skip       0
+  ;  :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
+  ;  :search-pattern {:$or [{:my-type/name   "..."} {...}]}
+  ;  :sort-pattern   {:my-type/name 1}
+  ;  :unset-pattern  [:my-type/my-key]}
   ;
   ; @return (map)
-  ;  {:field-pattern (map)
-  ;   :filter-pattern (map)
-  ;   :max-count (integer)
-  ;   :search-pattern (map)
-  ;   :skip (integer)
-  ;   :sort-pattern (map)
-  ;   :unset-pattern (namespaced keywords in vector)}
+  ; {:field-pattern (map)
+  ;  :filter-pattern (map)
+  ;  :max-count (integer)
+  ;  :search-pattern (map)
+  ;  :skip (integer)
+  ;  :sort-pattern (map)
+  ;  :unset-pattern (namespaced keywords in vector)}
   [env lister-id]
   {:max-count      (env->max-count      env)
    :skip           (env->skip           env)
@@ -171,7 +171,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (env->get-pipeline {...} :my-lister)
+  ; (env->get-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
   [env lister-id]
@@ -183,7 +183,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  (env->count-pipeline {...} :my-lister)
+  ; (env->count-pipeline {...} :my-lister)
   ;
   ; @return (maps in vector)
   [env lister-id]

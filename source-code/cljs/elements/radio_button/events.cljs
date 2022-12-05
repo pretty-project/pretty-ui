@@ -42,7 +42,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {}
+  ; {}
   ; @param (*) option
   ;
   ; @return (map)

@@ -35,10 +35,10 @@
   ;
   ; @param (keyword) marker-id
   ; @param (map) marker-props
-  ;  {:size (keyword)}
+  ; {:size (keyword)}
   ;
   ; @return (map)
-  ;  {:data-size (keyword)}
+  ; {:data-size (keyword)}
   [marker-id {:keys [size] :as marker-props}]
   (merge (element.helpers/element-default-attributes marker-id marker-props)
          (element.helpers/element-indent-attributes  marker-id marker-props)
@@ -57,7 +57,7 @@
   ; @param (keyword or string) color
   ;
   ; @return (map)
-  ;  {:data-color (keyword)
-  ;   :style (map)}
+  ; {:data-color (keyword)
+  ;  :style (map)}
   [_ _ color]
   (element.helpers/apply-color {} :background-color :data-color color))

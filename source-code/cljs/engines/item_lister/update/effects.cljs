@@ -34,7 +34,7 @@
   ; @param (maps in vector) reordered-items
   ;
   ; @usage
-  ;  [:item-lister/reorder-items! :my-lister [{...} {...}]]
+  ; [:item-lister/reorder-items! :my-lister [{...} {...}]]
   (fn [{:keys [db]} [_ lister-id reordered-items]]
       (let [db                (r update.events/reorder-items!                    db lister-id reordered-items)
             display-progress? (r body.subs/get-body-prop                         db lister-id :display-progress?)
@@ -87,7 +87,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [:item-lister/delete-selected-items! :my-lister]
+  ; [:item-lister/delete-selected-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       (let [item-ids     (r selection.subs/export-selection                db lister-id)
             query        (r update.queries/get-delete-items-query          db lister-id item-ids)
@@ -171,7 +171,7 @@
   ; @param (strings in vector) item-ids
   ;
   ; @usage
-  ;  [:item-lister/undo-delete-items! :my-lister ["my-item" "your-item"]]
+  ; [:item-lister/undo-delete-items! :my-lister ["my-item" "your-item"]]
   (fn [{:keys [db]} [_ lister-id item-ids]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
@@ -228,7 +228,7 @@
   ; @param (keyword) lister-id
   ;
   ; @usage
-  ;  [:item-lister/duplicate-selected-items! :my-lister]
+  ; [:item-lister/duplicate-selected-items! :my-lister]
   (fn [{:keys [db]} [_ lister-id]]
       (let [item-ids     (r selection.subs/export-selection                   db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)

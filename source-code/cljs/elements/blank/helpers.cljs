@@ -25,10 +25,10 @@
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  ;  {:style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ;  {:style (map)}
+  ; {:style (map)}
   [_ {:keys [style]}]
   {:style style})
 

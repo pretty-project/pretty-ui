@@ -25,7 +25,7 @@
 (defn editor-event
   ; @param (?) editor
   ; @param (string) event
-  ;  https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_view_document-Document.html#events
+  ; https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_view_document-Document.html#events
   ; @param (function) f
   [editor event f]
   (let [document (-> editor .-editing .-view .-document)]
@@ -60,10 +60,10 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [background-colors buttons font-colors]}]
   {:toolbar               buttons
    :font-background-color {:colors background-colors}
@@ -72,22 +72,22 @@
 
   ;:toolbar [:heading ...]
   ;:heading {:options [{:model "paragraph"           :title "Paragraph" :class "ck-heading_paragraph"}
-  ;                    {:model "heading1" :view "h1" :title "Custom #1" :class "ck-heading_heading1"}}
+  ;                   {:model "heading1" :view "h1" :title "Custom #1" :class "ck-heading_heading1"}}
 
 (defn ckeditor-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {:editor (?)
-  ;   :config (map)
-  ;   :data (string)
-  ;   :on-blur (function)
-  ;   :on-change (function)
-  ;   :on-focus (function)}
+  ; {:editor (?)
+  ;  :config (map)
+  ;  :data (string)
+  ;  :on-blur (function)
+  ;  :on-change (function)
+  ;  :on-focus (function)}
   [editor-id {:keys [on-blur on-focus on-change value] :as editor-props}]
   {:editor    ckeditor5-build-decoupled-document
    :config    (ckeditor-config editor-id editor-props)

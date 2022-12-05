@@ -30,7 +30,7 @@
   ; @param (keyword) editor-id
   ;
   ; @usage
-  ;  [:file-editor/save-content! :my-editor]
+  ; [:file-editor/save-content! :my-editor]
   (fn [{:keys [db]} [_ editor-id]]
       (let [display-progress? (r body.subs/get-body-prop                        db editor-id :display-progress?)
             query             (r update.queries/get-save-content-query          db editor-id)

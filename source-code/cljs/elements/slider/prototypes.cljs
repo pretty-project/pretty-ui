@@ -28,10 +28,10 @@
   ; @param (map) slider-props
   ;
   ; @return (map)
-  ;  {:max-value (integer)
-  ;   :min-value (integer)
-  ;   :initial-value (vector)
-  ;   :value-path (vector)}
+  ; {:max-value (integer)
+  ;  :min-value (integer)
+  ;  :initial-value (vector)
+  ;  :value-path (vector)}
   [slider-id slider-props]
   (merge {:max-value     100
           :min-value     0

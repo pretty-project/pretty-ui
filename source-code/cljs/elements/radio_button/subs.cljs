@@ -25,8 +25,8 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:option-value-f (function)
-  ;   :value-path (vector)}
+  ; {:option-value-f (function)
+  ;  :value-path (vector)}
   ; @param (*) option
   ;
   ; @return (boolean)
@@ -40,7 +40,7 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ;  {:value-path (vector)}
+  ; {:value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [value-path]}]]

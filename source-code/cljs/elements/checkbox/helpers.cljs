@@ -27,8 +27,8 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:initial-options (vector)(opt)
-  ;   :initial-value (boolean)(opt)}
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (boolean)(opt)}
   [checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]
   (if (or initial-options initial-value)
       (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props])))
@@ -43,10 +43,10 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [_ {:keys [style]}]
   {:style style})
 
@@ -55,10 +55,10 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {}
+  ; {}
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [checkbox-id {:keys [border-color font-size options-orientation] :as checkbox-props}]
   (merge (element.helpers/element-default-attributes checkbox-id checkbox-props)
          (element.helpers/element-indent-attributes  checkbox-id checkbox-props)
@@ -77,13 +77,13 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ;  {:disabled? (boolean)(opt)}
+  ; {:disabled? (boolean)(opt)}
   ; @param (*) option
   ;
   ; @return (map)
-  ;  {:disabled (boolean)
-  ;   :on-click (function)
-  ;   :on-mouse-up (function)}
+  ; {:disabled (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
   [checkbox-id {:keys [disabled? value-path] :as checkbox-props} option]
   (let [option-checked? @(r/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
        (if disabled? {:data-checked option-checked?

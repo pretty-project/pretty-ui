@@ -27,15 +27,15 @@
 ; Az engine használatához SZÜKSÉGES megadni ...
 ; ... a {:collection-name "..."} tulajdonságot, amit az engine jelenleg nem használ (x4.7.5).
 ; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver függvények neveiben
-;     névtérként használ.
+;    névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
 ;
 ; Az engine használatához OPCIONÁLISAN megadható ...
 ; ... az {:on-route ...} tulajdonság, ami az engine által a példában regisztrált "/@app-home/my-lister"
-;     útvonal használatakor történik meg.
+;    útvonal használatakor történik meg.
 ; ... a {:base-route "..."} tulajdonságot, ami alapján az engine regisztrálja a példa szerinti útvonalat.
 ; ... a {:route-title ...} tulajdonságot, ami az engine által a példában regisztrált útvonalak
-;     használatakor beállítódik az applikáció címkéjének.
+;    használatakor beállítódik az applikáció címkéjének.
 (r/reg-event-fx :init-my-lister!
   [:item-lister/init-lister! :my-lister
                              {:base-route      "/@app-home/my-lister"
@@ -60,8 +60,8 @@
   ; @param (map) resolver-props
   ;
   ; @return (map)
-  ;  {:document-count (integer)
-  ;   :documents (namespaced maps in vector)}}
+  ; {:document-count (integer)
+  ;  :documents (namespaced maps in vector)}}
   [env _]
   (let [get-pipeline   (item-lister/env->get-pipeline   env :my-lister)
         count-pipeline (item-lister/env->count-pipeline env :my-lister)]

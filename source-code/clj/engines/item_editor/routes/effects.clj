@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ editor-id {:keys [base-route]}]]
       (let [base-route     (uri/valid-path base-route)
             extended-route (str            base-route "/:item-id/edit")]
@@ -43,7 +43,7 @@
   ;
   ; @param (keyword) editor-id
   ; @param (map) editor-props
-  ;  {:base-route (string)}
+  ; {:base-route (string)}
   (fn [_ [_ editor-id {:keys [base-route]}]]
       (let [base-route    (uri/valid-path base-route)
             creator-route (str            base-route "/create")]

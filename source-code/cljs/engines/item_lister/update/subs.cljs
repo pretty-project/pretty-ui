@@ -40,9 +40,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-deleted-item-ids :my-lister {my-handler/delete-items! ["my-item"]})
-  ;  =>
-  ;  ["my-item"]
+  ; (r get-deleted-item-ids :my-lister {my-handler/delete-items! ["my-item"]})
+  ; =>
+  ; ["my-item"]
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
@@ -60,9 +60,9 @@
   ; @param (map) server-response
   ;
   ; @example
-  ;  (r get-duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
-  ;  =>
-  ;  ["my-item"]
+  ; (r get-duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
+  ; =>
+  ; ["my-item"]
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]

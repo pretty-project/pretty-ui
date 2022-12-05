@@ -33,7 +33,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:initial-options (vector)(opt)}
+  ; {:initial-options (vector)(opt)}
   [box-id {:keys [initial-options] :as box-props}]
   (if initial-options (r/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
 
@@ -66,7 +66,7 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ;  {:option-label-f (function)(opt)}
+  ; {:option-label-f (function)(opt)}
   ; @param (*) option
   ;
   ; @return (boolean)
@@ -135,23 +135,23 @@
   ;
   ; Lehetséges megoldások:
   ; 1. A surface felületen mindig megjelenne első (muted) elemként a mező tartalma.
-  ;    (Nem jó, hogy ha abban az esetben is megjelenik a surface felület, amikor
-  ;     nincsenek választható opciók és a beírt szöveget duplán látja a felhasználó!)
+  ;   (Nem jó, hogy ha abban az esetben is megjelenik a surface felület, amikor
+  ;    nincsenek választható opciók és a beírt szöveget duplán látja a felhasználó!)
   ;
   ; 2. A surface felületen megjelenne egy options-placeholder felirat, amikor nincsenek
-  ;    opciók kirenderelve.
-  ;    (Nem jó, hogy ha csak abban az esetben is megjelenik a surface felület,
-  ;     amikor nincsenek választható opciók!)
+  ;   opciók kirenderelve.
+  ;   (Nem jó, hogy ha csak abban az esetben is megjelenik a surface felület,
+  ;    amikor nincsenek választható opciók!)
   ;
   ; 3. A combo-box a google.com kereső mezőjéhez hasonlóan működjön és az első
-  ;    választható opció mindig a beírt érték legyen, a mező tartalma pedig előnézetben
-  ;    mutassa a highlighted opció értékét, ami csak íródna a value-path útvonalra,
-  ;    amikor ténylegesen ki lesz választva az adott opció.
-  ;    (Nem lenne egyértelmű a felhasználó számára!)
+  ;   választható opció mindig a beírt érték legyen, a mező tartalma pedig előnézetben
+  ;   mutassa a highlighted opció értékét, ami csak íródna a value-path útvonalra,
+  ;   amikor ténylegesen ki lesz választva az adott opció.
+  ;   (Nem lenne egyértelmű a felhasználó számára!)
   ;
   ; 4. Az [:elements.combo-box/ESC-pressed ...] esemény vizsgálná meg, hogy vannak
-  ;    ténylegesen kirenderelve választható opciók.
-  ;    (Tökéletes!)
+  ;   ténylegesen kirenderelve választható opciók.
+  ;   (Tökéletes!)
   (boolean (let [surface-id (hiccup/value box-id "surface")]
                 (if-let [surface-element (dom/get-element-by-id surface-id)]
                         (dom/get-element-by-query surface-element "[data-options-rendered=\"true\"]")))))

@@ -29,8 +29,8 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  ;  {:max-input-count (integer)
-  ;   :value-path (vector)}
+  ; {:max-input-count (integer)
+  ;  :value-path (vector)}
   [group-id group-props]
   (merge {:max-input-count 8
           :value-path (input.helpers/default-value-path group-id)}
@@ -49,7 +49,7 @@
   ; @param (integer) field-dex
   ;
   ; @return (map)
-  ;  {}
+  ; {}
   [group-id group-props field-dex]
   (merge (dissoc group-props :indent)
          {:autofocus?     (multi-field.helpers/field-dex->autofocus?     group-id group-props field-dex)
