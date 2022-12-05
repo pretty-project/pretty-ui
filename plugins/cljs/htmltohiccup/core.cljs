@@ -12,7 +12,7 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.htmltohiccup.core
+(ns htmltohiccup.core
     (:require [clojure.string]
               [clojure.walk]
               [goog.string]

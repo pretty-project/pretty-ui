@@ -12,10 +12,10 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.hiccuptopdf.side-effects
-    (:require [clj-htmltopdf.core       :refer [->pdf]]
-              [base64.api               :as base64]
-              [tools.hiccuptopdf.config :as config]))
+(ns hiccuptopdf.side-effects
+    (:require [base64.api         :as base64]
+              [clj-htmltopdf.core :refer [->pdf]]
+              [hiccuptopdf.config :as config]))
 
 
 
@@ -70,15 +70,32 @@
                           :size        (or page-size   :A4)
                           :orientation (or orientation :portrait)}}]
         ; https://github.com/gered/clj-htmltopdf#usage
-        (->pdf n config/GENERATOR-FILEPATH config))))
+        (try (->pdf n config/GENERATOR-FILEPATH config)
+             (catch Exception e (println e))))))
 
 (defn generate-base64-pdf!
   ; @param (hiccup) n
   ; @param (map)(opt) options
-  ; {...}
+  ; {:author (string)(opt)
+  ;  :base-uri (string)(opt)
+  ;  :css-paths (strings in vector)(opt)
+  ;   [(string) css-path]
+  ;  :font-paths (maps in vector)(opt)
+  ;   [{:font-family (string)
+  ;     :src (string)}]
+  ;  :orientation (keyword)(opt)
+  ;   :landscape, :portrait
+  ;   Default: :portrait
+  ;  :page-size (keyword)(opt)
+  ;   Default: :A4
+  ;  :subject (string)(opt)
+  ;  :title (string)(opt)}
   ;
   ; @usage
   ; (generate-base64-pdf! [:html ...])
+  ;
+  ; @usage
+  ; (generate-base64-pdf! [:html ...] {...})
   ;
   ; @return (string)
   ([n]

@@ -12,13 +12,13 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns tools.htmltohiccup.api
-    (:require [tools.htmltohiccup.core :as core]))
+(ns htmltohiccup.api
+    (:require [htmltohiccup.core :as core]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; tools.htmltohiccup.core
+; htmltohiccup.core
 (def convert core/convert)

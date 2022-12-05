@@ -12,7 +12,6 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 * [engines.item-editor.api](clj/engines/item-editor/API.md)
 * [engines.item-handler.api](clj/engines/item-handler/API.md)
 * [engines.item-lister.api](clj/engines/item-lister/API.md)
-* [tools.hiccuptopdf.api](clj/tools/hiccuptopdf/API.md)
 
 ### Isomorphic namespaces
 
@@ -37,7 +36,6 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 * [layouts.sidebar-a.api](cljs/layouts/sidebar-a/API.md)
 * [layouts.surface-a.api](cljs/layouts/surface-a/API.md)
 * [tools.clipboard.api](cljs/tools/clipboard/API.md)
-* [tools.htmltohiccup.api](cljs/tools/htmltohiccup/API.md)
 * [tools.image-loader.api](cljs/tools/image-loader/API.md)
 * [tools.image-preloader.api](cljs/tools/image-preloader/API.md)
 * [tools.infinite-loader.api](cljs/tools/infinite-loader/API.md)
