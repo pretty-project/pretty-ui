@@ -35,18 +35,6 @@
  :style (map)}
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [forms.api :refer [form-block-attributes]]))
-
-(forms.api/form-block-attributes ...)
-(form-block-attributes           ...)
-```
-
-</details>
-
 ---
 
 ### form-column-attributes
@@ -70,18 +58,6 @@
 {:class (keyword)}
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [forms.api :refer [form-column-attributes]]))
-
-(forms.api/form-column-attributes ...)
-(form-column-attributes           ...)
-```
-
-</details>
-
 ---
 
 ### form-row-attributes
@@ -104,18 +80,6 @@
 @return (map)
 {:class (keyword)}
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [forms.api :refer [form-row-attributes]]))
-
-(forms.api/form-row-attributes ...)
-(form-row-attributes           ...)
-```
-
-</details>
 
 ---
 

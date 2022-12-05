@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 
 ; Monoset Clojure/ClojureScript web application framework
-; https://monotech.hu/monoset
+; https://monotech-hq.github.io/monoset
 ;
 ; Copyright Adam Szűcs and other contributors - All rights reserved
 

@@ -25,18 +25,6 @@
 [layout :my-surface {...}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [layouts.surface-a.api :refer [layout]]))
-
-(layouts.surface-a.api/layout ...)
-(layout                       ...)
-```
-
-</details>
-
 ---
 
 ### title-sensor
@@ -51,18 +39,6 @@
 @usage
 [surface-a/title-sensor {...}]
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [layouts.surface-a.api :refer [title-sensor]]))
-
-(layouts.surface-a.api/title-sensor ...)
-(title-sensor                       ...)
-```
-
-</details>
 
 ---
 

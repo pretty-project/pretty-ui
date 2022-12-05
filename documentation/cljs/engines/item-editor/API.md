@@ -55,18 +55,6 @@
 [body :my-editor {:form-element #'my-form-element}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-editor.api :refer [body]]))
-
-(engines.item-editor.api/body ...)
-(body                         ...)
-```
-
-</details>
-
 ---
 
 ### editing-item?
@@ -85,18 +73,6 @@
 @return (boolean)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-editor.api :refer [editing-item?]]))
-
-(engines.item-editor.api/editing-item? ...)
-(editing-item?                         ...)
-```
-
-</details>
-
 ---
 
 ### form-changed?
@@ -114,18 +90,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-editor.api :refer [form-changed?]]))
-
-(engines.item-editor.api/form-changed? ...)
-(form-changed?                         ...)
-```
-
-</details>
 
 ---
 
@@ -147,18 +111,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-editor.api :refer [get-edit-route]]))
-
-(engines.item-editor.api/get-edit-route ...)
-(get-edit-route                         ...)
-```
-
-</details>
-
 ---
 
 ### get-item-route
@@ -178,18 +130,6 @@
 ```
 @return (string)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-editor.api :refer [get-item-route]]))
-
-(engines.item-editor.api/get-item-route ...)
-(get-item-route                         ...)
-```
-
-</details>
 
 ---
 

@@ -77,18 +77,6 @@
                    :prefilter    {:my-type/color "red"}}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [body]]))
-
-(engines.item-browser.api/body ...)
-(body                          ...)
-```
-
-</details>
-
 ---
 
 ### browsing-item?
@@ -106,18 +94,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [browsing-item?]]))
-
-(engines.item-browser.api/browsing-item? ...)
-(browsing-item?                          ...)
-```
-
-</details>
 
 ---
 
@@ -138,18 +114,6 @@
 @return (strings in vector)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [export-selection]]))
-
-(engines.item-browser.api/export-selection ...)
-(export-selection                          ...)
-```
-
-</details>
-
 ---
 
 ### export-single-selection
@@ -169,18 +133,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [export-single-selection]]))
-
-(engines.item-browser.api/export-single-selection ...)
-(export-single-selection                          ...)
-```
-
-</details>
-
 ---
 
 ### get-item
@@ -198,18 +150,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [get-item]]))
-
-(engines.item-browser.api/get-item ...)
-(get-item                          ...)
-```
-
-</details>
 
 ---
 
@@ -231,18 +171,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [get-item-route]]))
-
-(engines.item-browser.api/get-item-route ...)
-(get-item-route                          ...)
-```
-
-</details>
-
 ---
 
 ### get-selected-item-count
@@ -259,18 +187,6 @@
 ```
 @return (integer)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [get-selected-item-count]]))
-
-(engines.item-browser.api/get-selected-item-count ...)
-(get-selected-item-count                          ...)
-```
-
-</details>
 
 ---
 
@@ -290,18 +206,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [import-selection!]]))
-
-(engines.item-browser.api/import-selection! ...)
-(import-selection!                          ...)
-```
-
-</details>
-
 ---
 
 ### import-single-selection!
@@ -319,18 +223,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [import-single-selection!]]))
-
-(engines.item-browser.api/import-single-selection! ...)
-(import-single-selection!                          ...)
-```
-
-</details>
 
 ---
 
@@ -350,18 +242,6 @@
 @return (boolean)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item-selected?]]))
-
-(engines.item-browser.api/item-selected? ...)
-(item-selected?                          ...)
-```
-
-</details>
-
 ---
 
 ### toggle-item-selection!
@@ -379,18 +259,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [toggle-item-selection!]]))
-
-(engines.item-browser.api/toggle-item-selection! ...)
-(toggle-item-selection!                          ...)
-```
-
-</details>
 
 ---
 
@@ -411,18 +279,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [toggle-limited-item-selection!]]))
-
-(engines.item-browser.api/toggle-limited-item-selection! ...)
-(toggle-limited-item-selection!                          ...)
-```
-
-</details>
-
 ---
 
 ### toggle-single-item-selection!
@@ -440,18 +296,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [toggle-single-item-selection!]]))
-
-(engines.item-browser.api/toggle-single-item-selection! ...)
-(toggle-single-item-selection!                          ...)
-```
-
-</details>
 
 ---
 

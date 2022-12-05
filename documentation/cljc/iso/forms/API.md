@@ -65,18 +65,6 @@ false
 @return (boolean)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [iso.forms.api :refer [items-different?]]))
-
-(iso.forms.api/items-different? ...)
-(items-different?               ...)
-```
-
-</details>
-
 ---
 
 ### valid-string
@@ -95,18 +83,6 @@ false
 ```
 @return (string)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [iso.forms.api :refer [valid-string]]))
-
-(iso.forms.api/valid-string ...)
-(valid-string               ...)
-```
-
-</details>
 
 ---
 

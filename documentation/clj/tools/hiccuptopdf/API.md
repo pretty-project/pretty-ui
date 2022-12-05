@@ -26,18 +26,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [tools.hiccuptopdf.api :refer [generate-base64-pdf!]]))
-
-(tools.hiccuptopdf.api/generate-base64-pdf! ...)
-(generate-base64-pdf!                       ...)
-```
-
-</details>
-
 ---
 
 ### generate-pdf!
@@ -82,18 +70,6 @@
 ```
 @return (?)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [tools.hiccuptopdf.api :refer [generate-pdf!]]))
-
-(tools.hiccuptopdf.api/generate-pdf! ...)
-(generate-pdf!                       ...)
-```
-
-</details>
 
 ---
 

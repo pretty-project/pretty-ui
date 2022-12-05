@@ -39,18 +39,6 @@
 [body :my-editor {:form-element #'my-form-element}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.file-editor.api :refer [body]]))
-
-(engines.file-editor.api/body ...)
-(body                         ...)
-```
-
-</details>
-
 ---
 
 ### form-changed?
@@ -68,18 +56,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.file-editor.api :refer [form-changed?]]))
-
-(engines.file-editor.api/form-changed? ...)
-(form-changed?                         ...)
-```
-
-</details>
 
 ---
 

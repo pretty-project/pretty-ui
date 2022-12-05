@@ -29,18 +29,6 @@
 (append-component! [my-button] click-my-button!)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [tools.temporary-component.api :refer [append-component!]]))
-
-(tools.temporary-component.api/append-component! ...)
-(append-component!                               ...)
-```
-
-</details>
-
 ---
 
 ### remove-component!
@@ -49,18 +37,6 @@
 @usage
 (remove-component!)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [tools.temporary-component.api :refer [remove-component!]]))
-
-(tools.temporary-component.api/remove-component!)
-(remove-component!)
-```
-
-</details>
 
 ---
 

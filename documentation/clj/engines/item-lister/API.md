@@ -31,18 +31,6 @@
 @return (maps in vector)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [env->count-pipeline]]))
-
-(engines.item-lister.api/env->count-pipeline ...)
-(env->count-pipeline                         ...)
-```
-
-</details>
-
 ---
 
 ### env->get-pipeline
@@ -60,18 +48,6 @@
 ```
 @return (maps in vector)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [env->get-pipeline]]))
-
-(engines.item-lister.api/env->get-pipeline ...)
-(env->get-pipeline                         ...)
-```
-
-</details>
 
 ---
 
@@ -105,18 +81,6 @@
  :unset-pattern (namespaced keywords in vector)}
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [env->pipeline-props]]))
-
-(engines.item-lister.api/env->pipeline-props ...)
-(env->pipeline-props                         ...)
-```
-
-</details>
-
 ---
 
 ### env->search-pattern
@@ -138,18 +102,6 @@
 {:$or (maps in vector)}
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [env->search-pattern]]))
-
-(engines.item-lister.api/env->search-pattern ...)
-(env->search-pattern                         ...)
-```
-
-</details>
-
 ---
 
 ### env->sort-pattern
@@ -169,18 +121,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [env->sort-pattern]]))
-
-(engines.item-lister.api/env->sort-pattern ...)
-(env->sort-pattern                         ...)
-```
-
-</details>
 
 ---
 

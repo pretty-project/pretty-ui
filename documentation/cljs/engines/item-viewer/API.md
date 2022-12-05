@@ -43,18 +43,6 @@
 [body :my-viewer {:item-element #'my-item-element}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-viewer.api :refer [body]]))
-
-(engines.item-viewer.api/body ...)
-(body                         ...)
-```
-
-</details>
-
 ---
 
 ### get-item-route
@@ -75,18 +63,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-viewer.api :refer [get-item-route]]))
-
-(engines.item-viewer.api/get-item-route ...)
-(get-item-route                         ...)
-```
-
-</details>
-
 ---
 
 ### viewing-item?
@@ -104,18 +80,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-viewer.api :refer [viewing-item?]]))
-
-(engines.item-viewer.api/viewing-item? ...)
-(viewing-item?                         ...)
-```
-
-</details>
 
 ---
 

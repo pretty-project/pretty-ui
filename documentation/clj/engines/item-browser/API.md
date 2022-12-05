@@ -45,18 +45,6 @@
 @return (maps in vector)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->count-pipeline]]))
-
-(engines.item-browser.api/env->count-pipeline ...)
-(env->count-pipeline                          ...)
-```
-
-</details>
-
 ---
 
 ### env->get-pipeline
@@ -75,18 +63,6 @@
 @return (maps in vector)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->get-pipeline]]))
-
-(engines.item-browser.api/env->get-pipeline ...)
-(env->get-pipeline                          ...)
-```
-
-</details>
-
 ---
 
 ### env->item-links
@@ -104,18 +80,6 @@
 ```
 @return (maps in vector)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->item-links]]))
-
-(engines.item-browser.api/env->item-links ...)
-(env->item-links                          ...)
-```
-
-</details>
 
 ---
 
@@ -141,18 +105,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->pipeline-props]]))
-
-(engines.item-browser.api/env->pipeline-props ...)
-(env->pipeline-props                          ...)
-```
-
-</details>
-
 ---
 
 ### env->search-pattern
@@ -172,18 +124,6 @@
 {:$or (maps in vector)}
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->search-pattern]]))
-
-(engines.item-browser.api/env->search-pattern ...)
-(env->search-pattern                          ...)
-```
-
-</details>
-
 ---
 
 ### env->sort-pattern
@@ -201,18 +141,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [env->sort-pattern]]))
-
-(engines.item-browser.api/env->sort-pattern ...)
-(env->sort-pattern                          ...)
-```
-
-</details>
 
 ---
 
@@ -235,18 +163,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item->parent-id]]))
-
-(engines.item-browser.api/item->parent-id ...)
-(item->parent-id                          ...)
-```
-
-</details>
-
 ---
 
 ### item->parent-link
@@ -267,18 +183,6 @@
 ```
 @return (namespaced map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item->parent-link]]))
-
-(engines.item-browser.api/item->parent-link ...)
-(item->parent-link                          ...)
-```
-
-</details>
 
 ---
 
@@ -301,18 +205,6 @@
 @return (maps in vector)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item->path]]))
-
-(engines.item-browser.api/item->path ...)
-(item->path                          ...)
-```
-
-</details>
-
 ---
 
 ### item-id->parent-id
@@ -333,18 +225,6 @@
 ```
 @return (string)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item-id->parent-id]]))
-
-(engines.item-browser.api/item-id->parent-id ...)
-(item-id->parent-id                          ...)
-```
-
-</details>
 
 ---
 
@@ -367,18 +247,6 @@
 @return (namespaced map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item-id->parent-link]]))
-
-(engines.item-browser.api/item-id->parent-link ...)
-(item-id->parent-link                          ...)
-```
-
-</details>
-
 ---
 
 ### item-id->path
@@ -399,18 +267,6 @@
 ```
 @return (namespaced maps in vector)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-browser.api :refer [item-id->path]]))
-
-(engines.item-browser.api/item-id->path ...)
-(item-id->path                          ...)
-```
-
-</details>
 
 ---
 

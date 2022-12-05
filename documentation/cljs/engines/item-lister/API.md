@@ -63,18 +63,6 @@
                   :prefilter    {:my-type/color "red"}}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [body]]))
-
-(engines.item-lister.api/body ...)
-(body                         ...)
-```
-
-</details>
-
 ---
 
 ### export-selection
@@ -93,18 +81,6 @@
 ```
 @return (strings in vector)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [export-selection]]))
-
-(engines.item-lister.api/export-selection ...)
-(export-selection                         ...)
-```
-
-</details>
 
 ---
 
@@ -125,18 +101,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [export-single-selection]]))
-
-(engines.item-lister.api/export-single-selection ...)
-(export-single-selection                         ...)
-```
-
-</details>
-
 ---
 
 ### get-item
@@ -155,18 +119,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [get-item]]))
-
-(engines.item-lister.api/get-item ...)
-(get-item                         ...)
-```
-
-</details>
-
 ---
 
 ### get-selected-item-count
@@ -183,18 +135,6 @@
 ```
 @return (integer)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [get-selected-item-count]]))
-
-(engines.item-lister.api/get-selected-item-count ...)
-(get-selected-item-count                         ...)
-```
-
-</details>
 
 ---
 
@@ -214,18 +154,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [import-selection!]]))
-
-(engines.item-lister.api/import-selection! ...)
-(import-selection!                         ...)
-```
-
-</details>
-
 ---
 
 ### import-single-selection!
@@ -243,18 +171,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [import-single-selection!]]))
-
-(engines.item-lister.api/import-single-selection! ...)
-(import-single-selection!                         ...)
-```
-
-</details>
 
 ---
 
@@ -274,18 +190,6 @@
 @return (boolean)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [item-selected?]]))
-
-(engines.item-lister.api/item-selected? ...)
-(item-selected?                         ...)
-```
-
-</details>
-
 ---
 
 ### toggle-item-selection!
@@ -303,18 +207,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [toggle-item-selection!]]))
-
-(engines.item-lister.api/toggle-item-selection! ...)
-(toggle-item-selection!                         ...)
-```
-
-</details>
 
 ---
 
@@ -335,18 +227,6 @@
 @return (map)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [toggle-limited-item-selection!]]))
-
-(engines.item-lister.api/toggle-limited-item-selection! ...)
-(toggle-limited-item-selection!                         ...)
-```
-
-</details>
-
 ---
 
 ### toggle-single-item-selection!
@@ -364,18 +244,6 @@
 ```
 @return (map)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-lister.api :refer [toggle-single-item-selection!]]))
-
-(engines.item-lister.api/toggle-single-item-selection! ...)
-(toggle-single-item-selection!                         ...)
-```
-
-</details>
 
 ---
 

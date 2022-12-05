@@ -55,18 +55,6 @@
 [body :my-handler {:item-element #'my-item-element}]
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-handler.api :refer [body]]))
-
-(engines.item-handler.api/body ...)
-(body                          ...)
-```
-
-</details>
-
 ---
 
 ### form-changed?
@@ -84,18 +72,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-handler.api :refer [form-changed?]]))
-
-(engines.item-handler.api/form-changed? ...)
-(form-changed?                          ...)
-```
-
-</details>
 
 ---
 
@@ -117,18 +93,6 @@
 @return (string)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-handler.api :refer [get-item-route]]))
-
-(engines.item-handler.api/get-item-route ...)
-(get-item-route                          ...)
-```
-
-</details>
-
 ---
 
 ### handling-item?
@@ -147,18 +111,6 @@
 @return (boolean)
 ```
 
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-handler.api :refer [handling-item?]]))
-
-(engines.item-handler.api/handling-item? ...)
-(handling-item?                          ...)
-```
-
-</details>
-
 ---
 
 ### item-changed?
@@ -170,18 +122,6 @@
 ```
 @return (boolean)
 ```
-
-<details>
-<summary>Require</summary>
-
-```
-(ns my-namespace (:require [engines.item-handler.api :refer [item-changed?]]))
-
-(engines.item-handler.api/item-changed? ...)
-(item-changed?                          ...)
-```
-
-</details>
 
 ---
 
