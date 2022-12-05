@@ -1,5 +1,8 @@
 
-{:paths ["deps" "plugins" "resources" "source-code/clj" "source-code/cljc" "source-code/cljs"]
+{:paths ["deps/clj"
+         "plugins/clj" "plugins/cljs"
+         "resources"
+         "source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {com.draines/postal                           {:mvn/version "2.0.4"}
          com.openhtmltopdf/openhtmltopdf-core         {:mvn/version "1.0.10"}
          com.openhtmltopdf/openhtmltopdf-pdfbox       {:mvn/version "1.0.10"}
