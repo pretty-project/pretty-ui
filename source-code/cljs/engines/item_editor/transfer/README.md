@@ -1,8 +1,8 @@
 
-# XXX#1467 (source-code/clj/engines/engine_handler/transfer/README.md)
-# Milyen adatokat fogad az engine transfer modulja?
+### What kind of data is sent by the transfer.clj files?
 
+###### XXX#1467 (source-code/clj/engines/engine_handler/transfer/README.md)  
 
+### Mire való az engine body komponensének transfer-id tulajdonsága?
 
-# Mire való az engine body komponensének transfer-id tulajdonsága?
-# XXX#8173 (source-code/cljs/engines/engine_handler/transfer/README.md)  
+###### XXX#8173 (source-code/cljs/engines/engine_handler/transfer/README.md)  

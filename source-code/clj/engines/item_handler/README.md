@@ -1,3 +1,4 @@
 
-# XXX#2045
-# Miért szerver-oldali paraméter a {:handler-key ...} tulajdonság?
+### Why the {:handler-key ...} property is a server-side setting?
+
+###### XXX#2045

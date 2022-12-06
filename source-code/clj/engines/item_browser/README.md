@@ -1,10 +1,10 @@
 
-# XXX#2045
-# Miért szerver-oldali paraméter a {:handler-key ...} tulajdonság?
+### Why the {:handler-key ...} property is a server-side setting?
 
+###### XXX#2045
 
+### engines.item-browser.update.helpers (x4.6.8#1)
 
-# engines.item-browser.update.helpers (x4.6.8#1)
 - Az item->path és item-id->path függvények használják a kliens-oldali body komponens
   :path-key paraméterének értékét, amit a kliens-oldali item-browser engine minden lekéréskor
   elküld a szerver-számára, ezért az elérhető az összes resolver és mutation függvény számára.
