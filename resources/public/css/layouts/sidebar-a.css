@@ -11,9 +11,10 @@
 /* Sidebar A */
 
 #sidebar-a {
-  background-color: var( --background-color-invert );
-  background-color: var( --fill-color-invert );
-  background-color: #535353;
+  -background-color: var( --background-color-invert );
+  -background-color: var( --fill-color-invert );
+  -background-color: #535353;
+  padding: 15px;
   height: 100vh;
   position: sticky;
   top: 0;
@@ -24,6 +25,8 @@
 /* Content */
 
 #sidebar-a--content {
+  background-color: #4a5661;
+  border-radius: var( --border-radius-m );
   height: 100%;
   overflow-y: hidden;
 }
