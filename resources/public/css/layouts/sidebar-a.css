@@ -14,10 +14,10 @@
   -background-color: var( --background-color-invert );
   -background-color: var( --fill-color-invert );
   -background-color: #535353;
-  padding: 15px;
-  height: 100vh;
+  padding:  15px;
+  height:   100vh;
   position: sticky;
-  top: 0;
+  top:      0;
 }
 
 /* Sidebar A */

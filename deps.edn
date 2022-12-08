@@ -12,4 +12,4 @@
          org.clojars.paul-simple-code/reagent-hickory {:mvn/version "0.3.7-no-escape-string"}
          org.jsoup/jsoup                              {:mvn/version "1.14.3"}
          monotech-hq/x5 {:git/url "git@github.com:monotech-hq/x5"
-                         :sha     "21d490f17e110ffad5cba529908d886aad3416e7"}}}
+                         :sha     "4addc9cd242c70f5821489160dc1a8f04f7fe52b"}}}
