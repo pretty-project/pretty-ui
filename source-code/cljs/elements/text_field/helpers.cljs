@@ -284,15 +284,15 @@
   ; állítaná, akkor ...
   ; ... a mező kilépne a fókuszált állapotból.
   ; ... nem történne meg a mező on-blur eseménye az {:disabled? true} állapot beállításakor
-  ;    esetlegesen fókuszált állapotban lévő mezőn, ...
-  ;    ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
-  ;    ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
+  ;     esetlegesen fókuszált állapotban lévő mezőn, ...
+  ;     ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
+  ;     ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
   ; ... a {:disabled? true} állapot megszűnésekor a mező nem lépne vissza a fókuszált állapotba.
   ;
   ; A következő beállítások biztosítják, hogy a mező disabled állapotúnak tűnjön:
   ; - A {:tab-index "-1"} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
   ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
-  ;  és kikapcsolja a caret láthatóságát.
+  ;   és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
   (if disabled? {;:disabled true
                  :tab-index  "-1"

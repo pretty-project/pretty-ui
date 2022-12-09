@@ -2796,9 +2796,9 @@ body {
   line-height: 18px;
   padding: 6px;
   position: absolute;
-  left: 0;
+  right: 0;
   top: calc(50% - 16px);
-  transform: translateX(calc(-100% - 6px));
+  transform: translateX(calc(100% + 6px));
   z-index: 9999;
 }
 
