@@ -1,7 +1,6 @@
 
 {:paths ["dependencies/clj"
          "plugins/clj" "plugins/cljs"
-         "resources"
          "source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {com.draines/postal                           {:mvn/version "2.0.4"}
          com.openhtmltopdf/openhtmltopdf-core         {:mvn/version "1.0.10"}
@@ -12,4 +11,4 @@
          org.clojars.paul-simple-code/reagent-hickory {:mvn/version "0.3.7-no-escape-string"}
          org.jsoup/jsoup                              {:mvn/version "1.14.3"}
          monotech-hq/x5 {:git/url "git@github.com:monotech-hq/x5"
-                         :sha     "c14411b52d0219a4daa83e7f46dd512482967dad"}}}
+                         :sha     "19be78696ead9500c09a3ecf4a87f285f4b97f17"}}}
