@@ -34,12 +34,12 @@
   [sortable-id {:keys [item-id-f items]}]
   ; XXX#0080
   ; 1.
-  ; A dnd-kit.core/sortable-context komponens számára átadott térkép items tulajdonsága
+  ; A 'dnd-kit.core/sortable-context' komponens számára átadott térkép items tulajdonsága
   ; olyan vektor kell legyen, amelynek az elemei string típusok, vagy térkép típusok
-  ; :id vagy :namespace/id kulccsal, amely kulcsok értékei string típusok.
+  ; ':id' vagy ':namespace/id' kulccsal, amely kulcsok értékei string típusok.
   ; Pl.: ["my-id" "your-id"]
-  ;     [{:id "my-id"} {:id "your-id"}]
-  ;     [{:namespace/id "my-id"} {:namespace/id "your-id"}]
+  ;      [{:id "my-id"} {:id "your-id"}]
+  ;      [{:namespace/id "my-id"} {:namespace/id "your-id"}]
   ;
   ; 2.
   ; A dnd-kit/body komponens ...

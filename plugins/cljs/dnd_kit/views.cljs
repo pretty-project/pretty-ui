@@ -93,7 +93,7 @@
   ; @param (keyword) sortable-id
   ; @param (map) sortable-props
   [sortable-id sortable-props]
-  ; :f> needed cause useSortable hook
+  ; ':f>' needed cause useSortable hook
   (letfn [(f [item-list item-dex item-id]
              (conj item-list [:f> sortable-item sortable-id sortable-props item-dex item-id]))]
          (reduce-kv f [:<>] (get-in @state/SORTABLE-STATE [sortable-id :item-order]))))
