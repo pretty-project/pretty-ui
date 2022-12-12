@@ -13,13 +13,8 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 * [engines.item-handler.api](clj/engines/item-handler/API.md)
 * [engines.item-lister.api](clj/engines/item-lister/API.md)
 
-### Isomorphic namespaces
-
-* [iso.forms.api](cljc/iso/forms/API.md)
-
 ### ClojureScript namespaces
 
-* [elements.api](cljs/elements/API.md)
 * [engines.file-editor.api](cljs/engines/file-editor/API.md)
 * [engines.item-browser.api](cljs/engines/item-browser/API.md)
 * [engines.item-editor.api](cljs/engines/item-editor/API.md)
@@ -29,17 +24,6 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 * [engines.item-sorter.api](cljs/engines/item-sorter/API.md)
 * [engines.item-viewer.api](cljs/engines/item-viewer/API.md)
 * [engines.text-editor.api](cljs/engines/text-editor/API.md)
-* [forms.api](cljs/forms/API.md)
-* [layouts.bubble-a.api](cljs/layouts/bubble-a/API.md)
-* [layouts.popup-a.api](cljs/layouts/popup-a/API.md)
-* [layouts.popup-b.api](cljs/layouts/popup-b/API.md)
-* [layouts.sidebar-a.api](cljs/layouts/sidebar-a/API.md)
-* [layouts.surface-a.api](cljs/layouts/surface-a/API.md)
-* [tools.clipboard.api](cljs/tools/clipboard/API.md)
-* [tools.image-loader.api](cljs/tools/image-loader/API.md)
-* [tools.image-preloader.api](cljs/tools/image-preloader/API.md)
-* [tools.infinite-loader.api](cljs/tools/infinite-loader/API.md)
-* [tools.temporary-component.api](cljs/tools/temporary-component/API.md)
 
 ---
 
