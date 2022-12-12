@@ -1,4 +1,4 @@
 
 {:paths ["source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {monotech-hq/x5 {:git/url "git@github.com:monotech-hq/x5"
-                         :sha     "cbbea674baedf08f17da9eace94feda9f6c561fd"}}}
+                         :sha     "85d4beab6d83ae994fca74cb0fe50ca1a043a1a2"}}}
