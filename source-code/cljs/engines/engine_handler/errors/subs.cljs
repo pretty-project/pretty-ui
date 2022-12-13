@@ -30,7 +30,7 @@
   [db [_ engine-id]]
   (let [transfer-id (r body.subs/get-body-prop db engine-id :transfer-id)]
        (println "Missing handler-key!\nengine-id:"engine-id"\ntransfer-id:"transfer-id)
-       (println "The handler-key property is important for the engines to make mutation"
+       (println "The handler-key property is important for the engine to make mutation"
                 "and resolver queries!"
                 "\nThis property should transferred with the engine properties during the"
                 "application's boot progress!"
