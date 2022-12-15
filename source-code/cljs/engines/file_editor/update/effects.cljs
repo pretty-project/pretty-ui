@@ -55,7 +55,7 @@
       ; ... megtörténik a body komponens számára esetlegesen átadott on-saved esemény.
       {:db          (r backup.events/backup-current-content! db editor-id)
        :dispatch-n [(r update.subs/get-on-saved-event db editor-id server-response)
-                    [:x.ui/render-bubble! ::content-saved-dialog {:body :saved}]]}))
+                    [:x.ui/render-bubble! ::content-saved-dialog {:body :changes-saved}]]}))
 
 (r/reg-event-fx :file-editor/save-content-failed
   ; WARNING! NON-PUBLIC! DO NOT USE!
