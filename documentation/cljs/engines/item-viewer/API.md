@@ -7,6 +7,10 @@
 
 - [body](#body)
 
+- [get-deleted-item-id](#get-deleted-item-id)
+
+- [get-duplicated-item-id](#get-duplicated-item-id)
+
 - [get-item-route](#get-item-route)
 
 - [viewing-item?](#viewing-item)
@@ -41,6 +45,46 @@
 @usage
 (defn my-item-element [] [:div ...])
 [body :my-viewer {:item-element #'my-item-element}]
+```
+
+---
+
+### get-deleted-item-id
+
+```
+@param (keyword) viewer-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
+=>
+"my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-duplicated-item-id
+
+```
+@param (keyword) viewer-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
+=>
+"my-item"
+```
+
+```
+@return (string)
 ```
 
 ---

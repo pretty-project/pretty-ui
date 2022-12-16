@@ -34,14 +34,14 @@
 ;; -- Duplicate item subscriptions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-copy-id
+(defn get-duplicated-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
   ; @param (map) server-response
   ;
   ; @example
-  ; (r get-copy-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ; (r get-duplicated-item-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ; =>
   ; "my-item"
   ;

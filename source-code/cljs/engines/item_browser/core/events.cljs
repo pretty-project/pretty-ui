@@ -96,6 +96,9 @@
   ; alapján vannak {:disabled? true} állapotban, ezért ha megváltozik az aktuálisan böngészett elem,
   ; akkor a letöltött listaelemek lecserélődése után az egyes indexekhez más listaelemek fognak tartozni.
   ;
+  ; TODO
+  ; Még most is az indexük szerint vannak {:disabled? true} állapotban?
+  ;
   ; BUG#1329
   ; Ha a felhasználó egy folyamat közben elhagyja az aktuálisan böngészett elemet, akkor nem valószínű,
   ; hogy vissza tud térni mielőtt a folyamat befejeződne, így elméletileg nem jelent problémát,

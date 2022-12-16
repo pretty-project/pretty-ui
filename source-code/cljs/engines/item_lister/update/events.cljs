@@ -57,25 +57,3 @@
   (as-> db % (r backup.events/backup-selected-items!     % lister-id)
              (r selection.events/disable-selected-items! % lister-id)
              (r x.ui/fake-process!                       % 15)))
-
-(defn delete-items-failed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r items.events/enable-all-items! db lister-id))
-
-
-
-;; -- Duplicate items events --------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn duplicate-items-failed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]])

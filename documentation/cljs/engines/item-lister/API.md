@@ -11,6 +11,10 @@
 
 - [export-single-selection](#export-single-selection)
 
+- [get-deleted-item-ids](#get-deleted-item-ids)
+
+- [get-duplicated-item-ids](#get-duplicated-item-ids)
+
 - [get-item](#get-item)
 
 - [get-selected-item-count](#get-selected-item-count)
@@ -99,6 +103,46 @@
 
 ```
 @return (string)
+```
+
+---
+
+### get-deleted-item-ids
+
+```
+@param (keyword) lister-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-deleted-item-ids :my-lister {my-handler/delete-items! ["my-item"]})
+=>
+["my-item"]
+```
+
+```
+@return (strings in vector)
+```
+
+---
+
+### get-duplicated-item-ids
+
+```
+@param (keyword) lister-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-duplicated-item-ids :my-lister {my-handler/duplicate-items! [{:my-type/id "my-item"}]})
+=>
+["my-item"]
+```
+
+```
+@return (strings in vector)
 ```
 
 ---

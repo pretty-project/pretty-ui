@@ -13,9 +13,15 @@
 
 - [export-single-selection](#export-single-selection)
 
+- [get-default-item-id](#get-default-item-id)
+
+- [get-duplicated-item-id](#get-duplicated-item-id)
+
 - [get-item](#get-item)
 
 - [get-item-route](#get-item-route)
+
+- [get-parent-item-id](#get-parent-item-id)
 
 - [get-selected-item-count](#get-selected-item-count)
 
@@ -23,7 +29,11 @@
 
 - [import-single-selection!](#import-single-selection)
 
+- [item-downloaded?](#item-downloaded)
+
 - [item-selected?](#item-selected)
+
+- [parent-item-browsed?](#parent-item-browsed)
 
 - [toggle-item-selection!](#toggle-item-selection)
 
@@ -135,6 +145,43 @@
 
 ---
 
+### get-default-item-id
+
+```
+@param (keyword) browser-id
+```
+
+```
+@usage
+(r get-default-item-id db :my-browser)
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-duplicated-item-id
+
+```
+@param (keyword) browser-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-duplicated-item-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+=>
+"my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
 ### get-item
 
 ```
@@ -165,6 +212,23 @@
 (r get-item-route db :my-browser "my-item")
 =>
 "/@app-home/my-browser/my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-parent-item-id
+
+```
+@param (keyword) browser-id
+```
+
+```
+@usage
+(r get-parent-item-id db :my-browser)
 ```
 
 ```
@@ -226,6 +290,24 @@
 
 ---
 
+### item-downloaded?
+
+```
+@param (keyword) browser-id
+@param (string) item-id
+```
+
+```
+@usage
+(r item-downloaded? db :my-browser "my-item")
+```
+
+```
+@return (boolean)
+```
+
+---
+
 ### item-selected?
 
 ```
@@ -236,6 +318,25 @@
 ```
 @usage
 (r item-selected? db :my-browser "my-item")
+```
+
+```
+@return (boolean)
+```
+
+---
+
+### parent-item-browsed?
+
+```
+@param (keyword) browser-id
+@param (keyword) action-key
+@param (map) server-response
+```
+
+```
+@usage
+(r parent-item-browsed? db :my-browser :delete-item! {...})
 ```
 
 ```

@@ -14,7 +14,7 @@
 
 (ns engines.item-lister.items.events
     (:require [engines.engine-handler.items.events :as items.events]
-              [re-frame.api                        :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
@@ -52,3 +52,20 @@
   ; @return (map)
   [db [_ lister-id]]
   (r items.events/enable-all-items! db lister-id))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+; [:item-lister/disable-items! :my-lister [0 1 4]]
+(r/reg-event-db :item-lister/disable-items! disable-items!)
+
+; @usage
+; [:item-lister/enable-items! :my-lister [0 1 4]]
+(r/reg-event-db :item-lister/enable-items! enable-items!)
+
+; @usage
+; [:item-lister/enable-all-items! :my-lister]
+(r/reg-event-db :item-lister/enable-all-items! enable-all-items!)

@@ -18,7 +18,6 @@
               [engines.item-lister.backup.subs]
               [engines.item-lister.body.effects]
               [engines.item-lister.body.events]
-              [engines.item-lister.body.subs]
               [engines.item-lister.core.effects]
               [engines.item-lister.download.effects]
               [engines.item-lister.download.events]
@@ -29,17 +28,22 @@
               [engines.item-lister.update.effects]
               [engines.item-lister.update.events]
               [engines.item-lister.update.subs]
+              [engines.item-lister.body.subs        :as body.subs]
               [engines.item-lister.body.views       :as body.views]
               [engines.item-lister.core.events      :as core.events]
               [engines.item-lister.core.subs        :as core.subs]
               [engines.item-lister.items.subs       :as items.subs]
               [engines.item-lister.selection.events :as selection.events]
-              [engines.item-lister.selection.subs   :as selection.subs]))
+              [engines.item-lister.selection.subs   :as selection.subs]
+              [engines.item-lister.update.subs      :as update.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-lister.body.subs
+(def body-did-mount? body.subs/body-did-mount?)
 
 ; engines.item-lister.body.views
 (def body body.views/body)
@@ -68,3 +72,7 @@
 (def item-selected?          selection.subs/item-selected?)
 (def export-selection        selection.subs/export-selection)
 (def export-single-selection selection.subs/export-single-selection)
+
+; engines.item-lister.update.subs
+(def get-deleted-item-ids    update.subs/get-deleted-item-ids)
+(def get-duplicated-item-ids update.subs/get-duplicated-item-ids)

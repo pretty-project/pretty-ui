@@ -18,7 +18,6 @@
               [engines.item-browser.backup.subs]
               [engines.item-browser.body.effects]
               [engines.item-browser.body.events]
-              [engines.item-browser.body.subs]
               [engines.item-browser.core.effects]
               [engines.item-browser.download.effects]
               [engines.item-browser.download.events]
@@ -29,34 +28,43 @@
               [engines.item-browser.update.effects]
               [engines.item-browser.update.events]
               [engines.item-browser.update.subs]
+              [engines.item-browser.body.subs        :as body.subs]
               [engines.item-browser.body.views       :as body.views]
               [engines.item-browser.core.events      :as core.events]
               [engines.item-browser.core.subs        :as core.subs]
               [engines.item-browser.items.subs       :as items.subs]
               [engines.item-browser.routes.subs      :as routes.subs]
               [engines.item-browser.selection.events :as selection.events]
-              [engines.item-browser.selection.subs   :as selection.subs]))
+              [engines.item-browser.selection.subs   :as selection.subs]
+              [engines.item-browser.update.subs      :as update.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-browser.body.subs
+(def body-did-mount? body.subs/body-did-mount?)
 
 ; engines.item-browser.body.views
 (def body body.views/body)
 
 ; engines.item-browser.core.events
 (def set-meta-item! core.events/set-meta-item!)
+(def set-item-id!   core.events/set-item-id!)
 (def set-items!     core.events/set-items!)
 
 ; engines.item-browser.core.subs
 (def get-meta-item       core.subs/get-meta-item)
 (def get-current-item-id core.subs/get-current-item-id)
 (def get-current-item    core.subs/get-current-item)
+(def get-default-item-id core.subs/get-default-item-id)
+(def get-parent-item-id  core.subs/get-parent-item-id)
 (def browsing-item?      core.subs/browsing-item?)
 
 ; engines.item-browser.items.subs
-(def get-item items.subs/get-item)
+(def get-item         items.subs/get-item)
+(def item-downloaded? items.subs/item-downloaded?)
 
 ; engines.item-browser.routes.subs
 (def get-item-route routes.subs/get-item-route)
@@ -73,3 +81,7 @@
 (def item-selected?          selection.subs/item-selected?)
 (def export-selection        selection.subs/export-selection)
 (def export-single-selection selection.subs/export-single-selection)
+
+; engines.item-browser.update.subs
+(def get-duplicated-item-id update.subs/get-duplicated-item-id)
+(def parent-item-browsed?   update.subs/parent-item-browsed?)

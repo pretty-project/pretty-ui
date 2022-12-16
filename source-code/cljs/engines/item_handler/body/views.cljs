@@ -76,8 +76,6 @@
   ;  :item-id (string)(opt)
   ;  :item-path (vector)(opt)
   ;   Default: core.helpers/default-item-path
-  ;  :on-saved (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
   ;  :label-key (keyword)(opt)
   ;   W/ {:auto-title? true}
   ;  :query (vector)(opt)

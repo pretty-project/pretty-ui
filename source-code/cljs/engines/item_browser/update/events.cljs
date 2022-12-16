@@ -18,7 +18,7 @@
               [engines.item-browser.body.subs     :as body.subs]
               [engines.item-browser.items.events  :as items.events]
               [engines.item-browser.items.subs    :as items.subs]
-              [re-frame.api                       :refer [r]]
+              [re-frame.api                       :as r :refer [r]]
               [x.ui.api                           :as x.ui]))
 
 
@@ -69,16 +69,6 @@
              (r items.events/disable-item! % browser-id item-id)
              (r x.ui/fake-process!         % 15)))
 
-(defn delete-item-failed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ browser-id item-id]]
-  (r items.events/enable-item! db browser-id item-id))
-
 
 
 ;; -- Update item events ------------------------------------------------------
@@ -97,23 +87,10 @@
              (r items.events/disable-item! % browser-id item-id)
              (r apply-changes!             % browser-id item-id item-changes)))
 
-(defn item-updated
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ browser-id item-id]]
-  (r items.events/enable-item! db browser-id item-id))
 
-(defn update-item-failed
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ; @param (string) item-id
-  ;
-  ; @return (map)
-  [db [_ browser-id item-id]]
-  (as-> db % (r revert-changes!           % browser-id item-id)
-             (r items.events/enable-item! % browser-id item-id)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; WARNING! NON-PUBLIC! DO NOT USE!
+(r/reg-event-db :item-browser/revert-changes! revert-changes!)

@@ -43,15 +43,6 @@
 
 
 
-;; -- Az [:item-viewer/view-item! "..."] esemény hanszálata -------------------
-;; ----------------------------------------------------------------------------
-
-; ...
-(r/reg-event-fx :view-my-item!
-  [:item-viewer/view-item! :my-viewer "my-item"])
-
-
-
 ;; -- Pathom lekérés használata az elem letöltésekor --------------------------
 ;; ----------------------------------------------------------------------------
 

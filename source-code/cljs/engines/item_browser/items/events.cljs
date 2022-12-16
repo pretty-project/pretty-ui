@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.items.events
-    (:require [engines.engine-handler.items.events :as items.events]
+    (:require [candy.api                           :refer [return]]
+              [engines.engine-handler.items.events :as items.events]
               [engines.item-browser.items.subs     :as items.subs]
-              [re-frame.api                        :refer [r]]))
+              [re-frame.api                        :as r :refer [r]]))
 
 
 
@@ -68,8 +69,11 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
-  (let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
-       (r disable-items! db browser-id [item-dex])))
+  ; Only operates if the item is downloaded!
+  (if-let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
+          (r disable-items! db browser-id [item-dex])
+          (return           db)))
+
 
 (defn enable-item!
   ; @param (keyword) browser-id
@@ -80,5 +84,32 @@
   ;
   ; @return (map)
   [db [_ browser-id item-id]]
-  (let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
-       (r enable-items! db browser-id [item-dex])))
+  ; Only operates if the item is downloaded!
+  (if-let [item-dex (r items.subs/get-item-dex db browser-id item-id)]
+          (r enable-items! db browser-id [item-dex])
+          (return          db)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+; [:item-browser/disable-items! :my-browser [0 1 4]]
+(r/reg-event-db :item-browser/disable-items! disable-items!)
+
+; @usage
+; [:item-browser/enable-items! :my-browser [0 1 4]]
+(r/reg-event-db :item-browser/enable-items! enable-items!)
+
+; @usage
+; [:item-browser/enable-all-items! :my-browser]
+(r/reg-event-db :item-browser/enable-all-items! enable-all-items!)
+
+; @usage
+; [:item-browser/disable-item! :my-browser "my-item"]
+(r/reg-event-db :item-browser/disable-item! disable-item!)
+
+; @usage
+; [:item-browser/enable-item! :my-browser "my-item"]
+(r/reg-event-db :item-browser/enable-item! enable-item!)

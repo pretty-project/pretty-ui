@@ -116,10 +116,23 @@
   (if-let [current-item-path (r get-current-item-path db browser-id)]
           (empty? current-item-path)))
 
-(defn get-parent-item-id
+(defn get-default-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
+  ;
+  ; @usage
+  ; (r get-default-item-id db :my-browser)
+  ;
+  ; @return (string)
+  [db [_ browser-id]]
+  (r body.subs/get-body-prop db browser-id :default-item-id))
+
+(defn get-parent-item-id
+  ; @param (keyword) browser-id
+  ;
+  ; @usage
+  ; (r get-parent-item-id db :my-browser)
   ;
   ; @return (string)
   [db [_ browser-id]]

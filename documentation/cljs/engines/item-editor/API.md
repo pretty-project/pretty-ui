@@ -15,6 +15,8 @@
 
 - [get-item-route](#get-item-route)
 
+- [get-saved-item-id](#get-saved-item-id)
+
 ### body
 
 ```
@@ -33,8 +35,6 @@
  :item-id (string)(opt)
  :item-path (vector)(opt)
   Default: core.helpers/default-item-path
- :on-saved (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
  :label-key (keyword)(opt)
   W/ {:auto-title? true}
  :query (vector)(opt)
@@ -125,6 +125,26 @@
 (r get-item-route db :my-editor "my-item")
 =>
 "/@app-home/my-editor/my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-saved-item-id
+
+```
+@param (keyword) editor-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-saved-item-id :my-editor {my-handler/save-item! {:my-type/id "my-item"}})
+=>
+"my-item"
 ```
 
 ```

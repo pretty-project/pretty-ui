@@ -17,7 +17,6 @@
               [engines.item-handler.backup.events]
               [engines.item-handler.body.effects]
               [engines.item-handler.body.events]
-              [engines.item-handler.body.subs]
               [engines.item-handler.core.effects]
               [engines.item-handler.download.effects]
               [engines.item-handler.download.events]
@@ -26,16 +25,21 @@
               [engines.item-handler.transfer.subs]
               [engines.item-handler.update.effects]
               [engines.item-handler.update.subs]
+              [engines.item-handler.body.subs   :as body.subs]
               [engines.item-handler.backup.subs :as backup.subs]
               [engines.item-handler.body.views  :as body.views]
               [engines.item-handler.core.events :as core.events]
               [engines.item-handler.core.subs   :as core.subs]
-              [engines.item-handler.routes.subs :as routes.subs]))
+              [engines.item-handler.routes.subs :as routes.subs]
+              [engines.item-handler.update.subs :as update.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-handler.body.subs
+(def body-did-mount? body.subs/body-did-mount?)
 
 ; engines.item-handler.backup.subs
 (def item-changed? backup.subs/item-changed?)
@@ -46,6 +50,7 @@
 
 ; engines.item-handler.core.events
 (def set-meta-item! core.events/set-meta-item!)
+(def set-item-id!   core.events/set-item-id!)
 
 ; engines.item-handler.core.subs
 (def get-meta-item       core.subs/get-meta-item)
@@ -56,3 +61,7 @@
 
 ; engines.item-handler.routes.subs
 (def get-item-route routes.subs/get-item-route)
+
+; engines.item-handler.update.subs
+(def get-deleted-item-id    update.subs/get-deleted-item-id)
+(def get-duplicated-item-id update.subs/get-duplicated-item-id)

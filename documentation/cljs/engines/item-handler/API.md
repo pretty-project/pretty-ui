@@ -9,6 +9,10 @@
 
 - [form-changed?](#form-changed)
 
+- [get-deleted-item-id](#get-deleted-item-id)
+
+- [get-duplicated-item-id](#get-duplicated-item-id)
+
 - [get-item-route](#get-item-route)
 
 - [handling-item?](#handling-item)
@@ -33,8 +37,6 @@
  :item-id (string)(opt)
  :item-path (vector)(opt)
   Default: core.helpers/default-item-path
- :on-saved (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a szervertől visszaérkező elemet.
  :label-key (keyword)(opt)
   W/ {:auto-title? true}
  :query (vector)(opt)
@@ -71,6 +73,46 @@
 
 ```
 @return (boolean)
+```
+
+---
+
+### get-deleted-item-id
+
+```
+@param (keyword) handler-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-deleted-item-id :my-handler {my-handler/delete-item! "my-item"})
+=>
+"my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-duplicated-item-id
+
+```
+@param (keyword) handler-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+=>
+"my-item"
+```
+
+```
+@return (string)
 ```
 
 ---

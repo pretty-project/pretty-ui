@@ -13,51 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.core.effects
-    (:require [engines.item-browser.body.subs    :as body.subs]
-              [engines.item-browser.core.events  :as core.events]
-              [engines.item-browser.core.subs    :as core.subs]
-              [engines.item-browser.items.events :as items.events]
-              [engines.item-browser.items.subs   :as items.subs]
-              [engines.item-browser.routes.subs  :as routes.subs]
-              [re-frame.api                      :as r :refer [r]]))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :item-browser/browse-item!
-  ; @param (keyword) browser-id
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ; [:item-browser/browse-item! :my-browser "my-item"]
-  (fn [{:keys [db]} [_ browser-id item-id]]
-      ; XXX#5575 (source-code/cljs/engines/item_handler/core/effects.cljs)
-      (if-let [route-handled? (r routes.subs/route-handled? db browser-id)]
-              (let [item-route (r routes.subs/get-item-route db browser-id item-id)]
-                   {:dispatch [:x.router/go-to! item-route]})
-              (if (r body.subs/body-did-mount? db browser-id)
-                  {:db       (r core.events/set-item-id! db browser-id item-id)
-                   :dispatch [:item-browser/load-browser! browser-id]}))))
-
-(r/reg-event-fx :item-browser/go-home!
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; [:item-browser/go-home! :my-browser]
-  (fn [{:keys [db]} [_ browser-id]]
-      (let [default-item-id (r body.subs/get-body-prop db browser-id :default-item-id)]
-           [:item-browser/browse-item! browser-id default-item-id])))
-
-(r/reg-event-fx :item-browser/go-up!
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; [:item-browser/go-up! :my-browser]
-  (fn [{:keys [db]} [_ browser-id]]
-      (let [parent-item-id (r core.subs/get-parent-item-id db browser-id)]
-           [:item-browser/browse-item! browser-id parent-item-id])))
+    (:require [engines.item-browser.core.events :as core.events]
+              [re-frame.api                     :as r :refer [r]]))
 
 
 

@@ -32,25 +32,6 @@
 
 
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-on-saved-event
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ; @param (map) server-response
-  ;
-  ; @return (metamorphic-event)
-  [db [_ handler-id server-response]]
-  ; XXX#6077
-  (if-let [on-saved (r body.subs/get-body-prop db handler-id :on-saved)]
-          (let [new-item?  (r core.subs/new-item? db handler-id)
-                saved-item (r get-mutation-answer db handler-id (if new-item? :add-item! :save-item!) server-response)]
-               (r/metamorphic-event<-params on-saved (map/remove-namespace saved-item)))))
-
-
-
 ;; -- Save item subscriptions -------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

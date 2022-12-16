@@ -17,7 +17,6 @@
               [engines.item-editor.backup.events]
               [engines.item-editor.body.effects]
               [engines.item-editor.body.events]
-              [engines.item-editor.body.subs]
               [engines.item-editor.core.effects]
               [engines.item-editor.download.effects]
               [engines.item-editor.download.events]
@@ -26,16 +25,21 @@
               [engines.item-editor.transfer.subs]
               [engines.item-editor.update.effects]
               [engines.item-editor.update.subs]
-              [engines.item-editor.backup.subs :as backup.subs]
-              [engines.item-editor.body.views  :as body.views]
-              [engines.item-editor.core.events :as core.events]
-              [engines.item-editor.core.subs   :as core.subs]
-              [engines.item-editor.routes.subs :as routes.subs]))
+              [engines.item-editor.backup.subs   :as backup.subs]
+              [engines.item-editor.body.subs     :as body.subs]
+              [engines.item-editor.body.views    :as body.views]
+              [engines.item-editor.core.events   :as core.events]
+              [engines.item-editor.core.subs     :as core.subs]
+              [engines.item-editor.routes.subs   :as routes.subs]
+              [engines.item-editor.update.subs   :as update.subs]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-editor.body.subs
+(def body-did-mount? body.subs/body-did-mount?)
 
 ; engines.item-editor.backup.subs
 (def form-changed? backup.subs/form-changed?)
@@ -45,6 +49,7 @@
 
 ; engines.item-editor.core.events
 (def set-meta-item! core.events/set-meta-item!)
+(def set-item-id!   core.events/set-item-id!)
 
 ; engines.item-editor.core.subs
 (def get-meta-item       core.subs/get-meta-item)
@@ -56,3 +61,6 @@
 ; engines.item-editor.routes.subs
 (def get-item-route routes.subs/get-item-route)
 (def get-edit-route routes.subs/get-edit-route)
+
+; engines.item-editor.update.subs
+(def get-saved-item-id update.subs/get-saved-item-id)
