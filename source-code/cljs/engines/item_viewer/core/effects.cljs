@@ -28,3 +28,11 @@
   (fn [{:keys [db]} [_ viewer-id]]
       {:db       (r core.events/load-viewer! db viewer-id)
        :dispatch [:item-viewer/request-item! viewer-id]}))
+
+(r/reg-event-fx :item-viewer/reload-viewer!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  (fn [{:keys [db]} [_ viewer-id]]
+      {:db       (r core.events/reload-viewer! db viewer-id)
+       :dispatch [:item-viewer/request-item! viewer-id]}))

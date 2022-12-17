@@ -98,3 +98,12 @@
       {:db         (r core.events/load-browser! db browser-id)
        :dispatch-n [[:item-browser/request-items! browser-id]
                     [:item-browser/request-item!  browser-id]]}))
+
+(r/reg-event-fx :item-browser/reload-browser!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) browser-id
+  (fn [{:keys [db]} [_ browser-id]]
+      {:db         (r core.events/reload-browser! db browser-id)
+       :dispatch-n [[:item-browser/request-items! browser-id]
+                    [:item-browser/request-item!  browser-id]]}))

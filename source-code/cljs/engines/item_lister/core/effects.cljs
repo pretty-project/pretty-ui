@@ -71,7 +71,7 @@
                :dispatch [:item-lister/request-items! lister-id]}
               ; (B)
               (let [current-order-by (r core.subs/get-meta-item db lister-id :order-by)]
-                   (if (= (namespace current-order-by) 
+                   (if (= (namespace current-order-by)
                           (name              order-by))
                        ; (B1)
                        [:item-lister/swap-items! lister-id]
@@ -100,11 +100,12 @@
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-lister/choose-order-by!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) lister-id
   ; @param (map) order-by-props
-  ; {:order-by-options (namespaced keywords in vector)}
+  ; {:order-by-options (keywords or namespaced keywords in vector)}
+  ;
+  ; @usage
+  ; [:item-lister/choose-order-by! :my-lister {...}]
   (fn [{:keys [db]} [_ lister-id {:keys [order-by-options]}]]
       [:elements.select/render-select! :item-lister/order-by-select
                                        {:option-label-f  core.helpers/order-by-label-f

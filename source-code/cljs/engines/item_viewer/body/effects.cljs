@@ -14,6 +14,7 @@
 
 (ns engines.item-viewer.body.effects
     (:require [engines.item-viewer.body.events :as body.events]
+              [engines.item-viewer.core.subs   :as core.subs]
               [re-frame.api                    :as r :refer [r]]
               [reagent.api                     :as reagent]))
 
@@ -45,4 +46,7 @@
   ; @param (?) %
   (fn [{:keys [db]} [_ viewer-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           {:db (r body.events/body-did-update db viewer-id body-props)})))
+           (if (r core.subs/reload-item? db viewer-id body-props)
+               {:dispatch [:item-viewer/reload-viewer! viewer-id]
+                :db       (r body.events/body-did-update db viewer-id body-props)}
+               {:db       (r body.events/body-did-update db viewer-id body-props)}))))

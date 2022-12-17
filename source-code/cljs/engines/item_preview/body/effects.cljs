@@ -15,6 +15,7 @@
 (ns engines.item-preview.body.effects
     (:require [engines.item-preview.body.events :as body.events]
               [engines.item-preview.body.subs   :as body.subs]
+              [engines.item-preview.core.subs   :as core.subs]
               [re-frame.api                     :as r :refer [r]]
               [reagent.api                      :as reagent]))
 
@@ -46,5 +47,7 @@
   ; @param (?) %
   (fn [{:keys [db]} [_ preview-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           {:db       (r body.events/body-did-update db preview-id body-props)
-            :dispatch [:item-preview/reload-preview! preview-id]})))
+           (if (r core.subs/reload-item? db preview-id body-props)
+               {:dispatch [:item-preview/reload-preview! preview-id]
+                :db       (r body.events/body-did-update db preview-id body-props)}
+               {:db       (r body.events/body-did-update db preview-id body-props)}))))

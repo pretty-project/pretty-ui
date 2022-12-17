@@ -62,6 +62,17 @@
   [db [_ viewer-id]]
   (r update-item-id! db viewer-id))
 
+(defn reload-viewer!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ;
+  ; @return (map)
+  [db [_ viewer-id]]
+  ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
+  (as-> db % (r clear-item-id!  % viewer-id)
+             (r update-item-id! % viewer-id)))
+
 
 
 ;; ----------------------------------------------------------------------------

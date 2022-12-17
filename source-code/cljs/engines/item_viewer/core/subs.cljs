@@ -26,6 +26,7 @@
 (def get-meta-item                core.subs/get-meta-item)
 (def engine-synchronizing?        core.subs/engine-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
+(def reload-item?                 core.subs/reload-item?)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
 (def get-current-item-label       core.subs/get-current-item-label)

@@ -14,6 +14,7 @@
 
 (ns engines.item-browser.body.effects
     (:require [engines.item-browser.body.events :as body.events]
+              [engines.item-browser.core.subs   :as core.subs]
               [re-frame.api                     :as r :refer [r]]
               [reagent.api                      :as reagent]))
 
@@ -46,6 +47,8 @@
   (fn [{:keys [db]} [_ browser-id %]]
       ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
       (let [[_ body-props] (reagent/arguments %)]
-           {:db         (r body.events/body-did-update db browser-id body-props)
-            :dispatch-n [[:item-browser/request-item!  browser-id]
-                         [:item-browser/request-items! browser-id]]})))
+           ; According to the XXX#1249 the item-browser has to reload when
+           ; the body component get updated!
+           ; (if (r core.subs/reload-item? db browser-id body-props) ...)
+           {:dispatch [:item-browser/reload-browser! browser-id]
+            :db       (r body.events/body-did-update db browser-id body-props)})))

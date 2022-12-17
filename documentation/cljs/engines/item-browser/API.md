@@ -15,8 +15,6 @@
 
 - [get-copy-item-id](#get-copy-item-id)
 
-- [get-default-item-id](#get-default-item-id)
-
 - [get-deleted-item-id](#get-deleted-item-id)
 
 - [get-item](#get-item)
@@ -162,23 +160,6 @@
 (r get-duplicated-item-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
 =>
 "my-item"
-```
-
-```
-@return (string)
-```
-
----
-
-### get-default-item-id
-
-```
-@param (keyword) browser-id
-```
-
-```
-@usage
-(r get-default-item-id db :my-browser)
 ```
 
 ```

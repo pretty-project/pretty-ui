@@ -95,6 +95,15 @@
 ;; -- Current-item subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-default-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (string)
+  [db [_ engine-id]]
+  (r body.subs/get-body-prop db engine-id :default-item-id))
+
 (defn get-current-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -113,6 +122,27 @@
   [db [_ engine-id]]
   (let [current-item-id (r get-meta-item db engine-id :item-id)]
        (nil? current-item-id)))
+
+(defn reload-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (map) body-props
+  ; {:item-id (string)(opt)}
+  ;
+  ; @return (boolean)
+  [db [_ engine-id {:keys [item-id]}]]
+  ; When the body-props get updated, it has to be checked whether
+  ; the item has to reload or not.
+  ;
+  ; The item has to reload when ...
+  ; ... the body component's item-id parameter has been changed.
+  ; ... the new item-id is not nil or the default-item-id has been set.
+  (let [current-item-id (r get-current-item-id     db engine-id)
+        default-item-id (r get-default-item-id     db engine-id)
+        stored-item-id  (r body.subs/get-body-prop db engine-id :item-id)]
+       (and (not= item-id stored-item-id)
+            (or   item-id default-item-id))))
 
 (defn current-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -187,6 +217,15 @@
 
 ;; -- Current view subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+(defn get-default-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (string)
+  [db [_ engine-id]]
+  (r body.subs/get-body-prop db engine-id :default-view-id))
 
 (defn get-current-view-id
   ; WARNING! NON-PUBLIC! DO NOT USE!

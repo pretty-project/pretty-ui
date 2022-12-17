@@ -28,7 +28,9 @@
 ; engines.engine-handler.core.subs
 (def get-meta-item          core.subs/get-meta-item)
 (def engine-synchronizing?  core.subs/engine-synchronizing?)
+(def get-default-item-id    core.subs/get-default-item-id)
 (def get-current-item-id    core.subs/get-current-item-id)
+(def reload-item?           core.subs/reload-item?)
 (def get-current-item       core.subs/get-current-item)
 (def get-current-item-label core.subs/get-current-item-label)
 (def get-auto-title         core.subs/get-auto-title)
@@ -115,18 +117,6 @@
   ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   (if-let [current-item-path (r get-current-item-path db browser-id)]
           (empty? current-item-path)))
-
-(defn get-default-item-id
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; (r get-default-item-id db :my-browser)
-  ;
-  ; @return (string)
-  [db [_ browser-id]]
-  (r body.subs/get-body-prop db browser-id :default-item-id))
 
 (defn get-parent-item-id
   ; @param (keyword) browser-id
