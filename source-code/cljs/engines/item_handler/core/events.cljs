@@ -32,6 +32,7 @@
 (def set-mode!          core.events/set-mode!)
 (def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
+(def clear-item-id!     core.events/clear-item-id!)
 (def update-item-id!    core.events/update-item-id!)
 
 

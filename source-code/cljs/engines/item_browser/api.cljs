@@ -83,5 +83,7 @@
 (def export-single-selection selection.subs/export-single-selection)
 
 ; engines.item-browser.update.subs
-(def get-duplicated-item-id update.subs/get-duplicated-item-id)
-(def parent-item-browsed?   update.subs/parent-item-browsed?)
+(def get-deleted-item-id   update.subs/get-deleted-item-id)
+(def get-copy-item-id      update.subs/get-copy-item-id)
+(def get-recovered-item-id update.subs/get-recovered-item-id)
+(def parent-item-browsed?  update.subs/parent-item-browsed?)

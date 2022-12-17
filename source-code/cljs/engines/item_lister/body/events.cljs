@@ -62,6 +62,7 @@
   ;
   ; @return (map)
   [db [_ lister-id body-props]]
+  ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
   (as-> db % (r core.events/reset-downloads!  % lister-id)
              (r core.events/reset-selections! % lister-id)
              (r update-body-props!            % lister-id body-props)))

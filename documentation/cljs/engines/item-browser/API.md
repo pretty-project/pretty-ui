@@ -13,15 +13,19 @@
 
 - [export-single-selection](#export-single-selection)
 
+- [get-copy-item-id](#get-copy-item-id)
+
 - [get-default-item-id](#get-default-item-id)
 
-- [get-duplicated-item-id](#get-duplicated-item-id)
+- [get-deleted-item-id](#get-deleted-item-id)
 
 - [get-item](#get-item)
 
 - [get-item-route](#get-item-route)
 
 - [get-parent-item-id](#get-parent-item-id)
+
+- [get-recovered-item-id](#get-recovered-item-id)
 
 - [get-selected-item-count](#get-selected-item-count)
 
@@ -57,6 +61,7 @@
   Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
  :error-element (metamorphic-content)(opt)
  :ghost-element (metamorphic-content)(opt)
+ :item-id (string)(opt)
  :item-path (vector)(opt)
   Default: core.helpers/default-item-path
  :items-key (keyword)
@@ -145,6 +150,26 @@
 
 ---
 
+### get-copy-item-id
+
+```
+@param (keyword) browser-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-duplicated-item-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+=>
+"my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
 ### get-default-item-id
 
 ```
@@ -162,7 +187,7 @@
 
 ---
 
-### get-duplicated-item-id
+### get-deleted-item-id
 
 ```
 @param (keyword) browser-id
@@ -171,7 +196,7 @@
 
 ```
 @example
-(r get-duplicated-item-id :my-browser {my-handler/duplicate-item! {:my-type/id "my-item"}})
+(r get-deleted-item-id :my-browser {my-handler/delete-item! "my-item"})
 =>
 "my-item"
 ```
@@ -229,6 +254,26 @@
 ```
 @usage
 (r get-parent-item-id db :my-browser)
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-recovered-item-id
+
+```
+@param (keyword) browser-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-recovered-item-id :my-browser {my-handler/undo-delete-item! {:my-type/id "my-item"}})
+=>
+"my-item"
 ```
 
 ```

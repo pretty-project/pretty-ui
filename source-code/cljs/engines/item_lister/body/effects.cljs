@@ -44,6 +44,13 @@
   ; @param (keyword) lister-id
   ; @param (?) %
   (fn [{:keys [db]} [_ lister-id %]]
+      ; XXX#1249
+      ; When the body component get updated, the 'body.events/body-did-update'
+      ; function removes the downloaded data and the engine steps back into
+      ; the {:data-received? false} state.
+      ; In this state the body component doesn't render the infinite-loader,
+      ; therefore the reloading of the new data has to be triggered by
+      ; the [:item-lister/request-items! ...] event!
       (let [[_ body-props] (reagent/arguments %)]
            {:db       (r body.events/body-did-update db lister-id body-props)
             :dispatch [:item-lister/request-items! lister-id]})))

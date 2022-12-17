@@ -7,11 +7,13 @@
 
 - [body](#body)
 
+- [get-copy-item-id](#get-copy-item-id)
+
 - [get-deleted-item-id](#get-deleted-item-id)
 
-- [get-duplicated-item-id](#get-duplicated-item-id)
-
 - [get-item-route](#get-item-route)
+
+- [get-recovered-item-id](#get-recovered-item-id)
 
 - [viewing-item?](#viewing-item)
 
@@ -49,7 +51,7 @@
 
 ---
 
-### get-deleted-item-id
+### get-copy-item-id
 
 ```
 @param (keyword) viewer-id
@@ -58,7 +60,7 @@
 
 ```
 @example
-(r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
+(r get-copy-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
 =>
 "my-item"
 ```
@@ -69,7 +71,7 @@
 
 ---
 
-### get-duplicated-item-id
+### get-deleted-item-id
 
 ```
 @param (keyword) viewer-id
@@ -78,7 +80,7 @@
 
 ```
 @example
-(r get-duplicated-item-id :my-viewer {my-handler/duplicate-item! {:my-type/id "my-item"}})
+(r get-deleted-item-id :my-viewer {my-handler/delete-item! "my-item"})
 =>
 "my-item"
 ```
@@ -101,6 +103,26 @@
 (r get-item-route db :my-viewer "my-item")
 =>
 "/@app-home/my-viewer/my-item"
+```
+
+```
+@return (string)
+```
+
+---
+
+### get-recovered-item-id
+
+```
+@param (keyword) viewer-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-recovered-item-id :my-viewer {my-handler/undo-delete-item! {:my-type/id "my-item"}})
+=>
+"my-item"
 ```
 
 ```

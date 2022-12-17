@@ -28,8 +28,8 @@
   ; @usage
   ; [:item-browser/filter-items! :my-browser {...}]
   (fn [{:keys [db]} [_ browser-id filter-pattern]]
-      {:db       (r core.events/filter-items! db browser-id filter-pattern)
-       :dispatch [:infinite-loader/reload-loader! browser-id]}))
+      {:db (r core.events/filter-items! db browser-id filter-pattern)
+       :fx [:infinite-loader/reload-loader! browser-id]}))
 
 
 

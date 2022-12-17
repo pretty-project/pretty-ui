@@ -39,6 +39,7 @@
 ; engines.engine-handler.core.events
 (def set-query-param! core.events/set-query-param!)
 (def set-item-id!     core.events/set-item-id!)
+(def clear-item-id!   core.events/clear-item-id!)
 (def update-item-id!  core.events/update-item-id!)
 
 
@@ -53,6 +54,7 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
+  ; XXX#0168
   ; Az aktuálisan böngészett elem azonosítójának eltárolásakor az engine query-params
   ; térképében is szükséges eltárolni az elem azonosítóját, mert az item-browser engine az
   ; item-lister engine letöltő funkciójával tölti le az elemeket, de az item-lister engine

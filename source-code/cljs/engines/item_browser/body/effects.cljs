@@ -44,6 +44,8 @@
   ; @param (keyword) browser-id
   ; @param (?) %
   (fn [{:keys [db]} [_ browser-id %]]
+      ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
       (let [[_ body-props] (reagent/arguments %)]
-           {:db       (r body.events/body-did-update db browser-id body-props)
-            :dispatch [:infinite-loader/reload-loader! browser-id]})))
+           {:db         (r body.events/body-did-update db browser-id body-props)
+            :dispatch-n [[:item-browser/request-item!  browser-id]
+                         [:item-browser/request-items! browser-id]]})))

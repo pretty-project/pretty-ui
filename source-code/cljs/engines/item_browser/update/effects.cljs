@@ -37,15 +37,15 @@
   ; @usage
   ; [:item-browser/update-item! :my-browser "my-item" {...}]
   (fn [{:keys [db]} [_ browser-id item-id item-changes {:keys [on-failure on-success]}]]
-      ; - Az [:item-browser/update-item! ...] esemény az item-changes paraméterként átadott változásokat
-      ;   azonnal végrahajta az elemen.
+      ; Az [:item-browser/update-item! ...] esemény az item-changes paraméterként átadott változásokat
+      ; azonnal végrahajta az elemen.
       ;
-      ; - Ha az elem szerver-oldali változatának felülírása sikertelen volt, akkor a kliens-oldali
-      ;   változat a tárolt biztonsági mentésből helyreállítódik.
+      ; Ha az elem szerver-oldali változatának felülírása sikertelen volt, akkor a kliens-oldali
+      ; változat a tárolt biztonsági mentésből helyreállítódik.
       ;
-      ; - Egy időben egy változtatást lehetséges az elemen végrehajtani, mert egy darab biztonsági
-      ;   mentéssel nem lehetséges az időben átfedésbe kerülő változtatásokat kezelni, ezért a szerver
-      ;   válaszának megérkezéséig az elem {:disabled? true} állapotban van.
+      ; Egy időben egy változtatást lehetséges az elemen végrehajtani, mert egy darab biztonsági
+      ; mentéssel nem lehetséges az időben átfedésbe kerülő változtatásokat kezelni, ezért a szerver
+      ; válaszának megérkezéséig az elem {:disabled? true} állapotban van.
       (let [db                (r update.events/update-item!                    db browser-id item-id item-changes)
             display-progress? (r body.subs/get-body-prop                       db browser-id :display-progress?)
             query             (r update.queries/get-update-item-query          db browser-id item-id)

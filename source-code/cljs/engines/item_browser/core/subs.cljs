@@ -201,3 +201,9 @@
 ; @usage
 ; [:item-browser/get-current-order-by :my-browser]
 (r/reg-sub :item-browser/get-current-order-by get-current-order-by)
+
+; @param (keyword) browser-id
+;
+; @usage
+; [:item-browser/get-parent-item-id :my-browser]
+(r/reg-sub :item-browser/get-parent-item-id get-parent-item-id)

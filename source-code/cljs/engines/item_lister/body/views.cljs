@@ -47,10 +47,10 @@
   ; @param (keyword) lister-id
   [lister-id]
   ; Szükséges a data-received? értékét is vizsgálni, hogy az adatok letöltésének elkezdése
-  ; előtti pillanatban ne villanjon fel a no-items-to-show-label felirat!
+  ; előtti pillanatban ne villanjon fel a 'placeholder' komponens!
   ;
-  ; Szükséges a downloading-items? értékét is vizsgálni, hogy az adatok letöltése közben
-  ; ne jelenjen meg a no-items-to-show-label felirat!
+  ; Szükséges a 'downloading-items?' értékét is vizsgálni, hogy az adatok letöltése közben
+  ; ne jelenjen meg a 'placeholder' komponens!
   (let [downloading-items? @(r/subscribe [:item-lister/downloading-items? lister-id])
         data-received?     @(r/subscribe [:item-lister/data-received?     lister-id])
         no-items-to-show?  @(r/subscribe [:item-lister/no-items-to-show?  lister-id])]
@@ -69,9 +69,10 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; Az adatok letöltésének megkezdése előtti pillanatban is szükséges megjeleníteni
-  ; a downloading-items komponenst, hogy ne a body komponens megjelenése után
-  ; villanjon fel!
+  ; Why {:data-received? false} state causes the rendering of the 'ghost-element' component?
+  ; - Before start downloading the data, the 'ghost-element' component has to be shown,
+  ;   otherwise it will only shown up after the body component get rendered and it
+  ;   would be shown up after a short flicker.
   (if-let [ghost-element @(r/subscribe [:item-lister/get-body-prop lister-id :ghost-element])]
           (let [all-items-downloaded? @(r/subscribe [:item-lister/all-items-downloaded? lister-id])
                 data-received?        @(r/subscribe [:item-lister/data-received?        lister-id])]
@@ -91,8 +92,9 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
-  ; A lista-elemek React-kulcsának tartalmaznia kell az adott elem indexét, hogy a lista-elemek
-  ; törlésekor a megmaradó elemek alkalmazkodjanak az új indexükhöz!
+  ; WARNING!
+  ; Every list item has to contain it's index in it's React key!
+  ; When a list item removed, an other list item will replace it (in the React tree).
   (let [list-element @(r/subscribe [:item-lister/get-body-prop lister-id :list-element])]
        [x.components/content lister-id list-element]))
 
@@ -108,6 +110,7 @@
   ;
   ; @param (keyword) lister-id
   [lister-id]
+  ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
   (cond @(r/subscribe [:item-lister/get-meta-item lister-id :engine-error])
          [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])

@@ -49,7 +49,8 @@
   ;
   ; @param (keyword) browser-id
   [browser-id]
-  ; XXX#6177
+  ; XXX#6177 (source-code/cljs/engines/item_browser/body/effects.cljs)
+  ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
   (cond @(r/subscribe [:item-browser/get-meta-item browser-id :engine-error])
          [error-element browser-id]
        ;@(r/subscribe [:x.environment/browser-offline?])
@@ -76,6 +77,7 @@
   ;   Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
   ;  :error-element (metamorphic-content)(opt)
   ;  :ghost-element (metamorphic-content)(opt)
+  ;  :item-id (string)(opt)
   ;  :item-path (vector)(opt)
   ;   Default: core.helpers/default-item-path
   ;  :items-key (keyword)

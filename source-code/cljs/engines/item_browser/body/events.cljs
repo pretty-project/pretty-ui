@@ -62,4 +62,17 @@
   ; @return (map)
   [db [_ browser-id body-props]]
   ; XXX#6177
-  (r body.events/body-did-update db browser-id body-props))
+  ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
+  ;
+  ; When the body component's :item-id parameter has been changed ...
+  ; ... the clear-item-id! function has to be applied, otherwise the
+  ;     update-item-id! function would ignores the updating if it sees
+  ;     an id already set in the engine.
+  ; ... the update-item-id! function derives the current id from the
+  ;     body component's parameters.
+  ; ... the use-item-id! function has to be applied according to:
+  ;     XXX#0168 (source-code/cljs/engines/item_browser/core/events.cljs)
+  (as-> db % (r body.events/body-did-update % browser-id body-props)
+             (r core.events/clear-item-id!  % browser-id)
+             (r core.events/update-item-id! % browser-id)
+             (r core.events/use-item-id!    % browser-id)))

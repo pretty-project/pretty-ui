@@ -58,5 +58,6 @@
 (def get-item-route routes.subs/get-item-route)
 
 ; engines.item-viewer.update.subs
-(def get-deleted-item-id    update.subs/get-deleted-item-id)
-(def get-duplicated-item-id update.subs/get-duplicated-item-id)
+(def get-deleted-item-id   update.subs/get-deleted-item-id)
+(def get-copy-item-id      update.subs/get-copy-item-id)
+(def get-recovered-item-id update.subs/get-recovered-item-id)
