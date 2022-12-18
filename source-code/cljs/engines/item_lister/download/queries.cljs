@@ -61,7 +61,7 @@
        ; átadott Pathom lekérés vektort csak abban az esetben fűzi össze az elemek
        ; letöltéséhez készített lekérés vektorral, ha még nem töltődött le egyetlen
        ; elem sem, tehát a {:query [...]} tulajdonság csak az elemek első letöltésekor
-       ; van elküldve!
+       ; kerül elküldésre!
        (if (r download.subs/first-data-received? db lister-id)
            (return query)
            (r core.subs/use-query-prop db lister-id query))))

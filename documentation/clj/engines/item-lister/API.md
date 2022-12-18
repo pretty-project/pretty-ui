@@ -9,6 +9,8 @@
 
 - [env->get-pipeline](#env-get-pipeline)
 
+- [env->pipeline-options](#env-pipeline-options)
+
 - [env->pipeline-props](#env-pipeline-props)
 
 - [env->search-pattern](#env-search-pattern)
@@ -47,6 +49,27 @@
 
 ```
 @return (maps in vector)
+```
+
+---
+
+### env->pipeline-options
+
+```
+@param (map) env
+@param (keyword) lister-id
+```
+
+```
+@example
+(env->pipeline-options {...} :my-lister)
+=>
+{:locale "en"}
+```
+
+```
+@return (map)
+{:locale (string)}
 ```
 
 ---

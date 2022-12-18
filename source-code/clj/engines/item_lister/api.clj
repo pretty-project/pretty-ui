@@ -26,8 +26,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.item-lister.download.helpers
-(def env->sort-pattern   download.helpers/env->sort-pattern)
-(def env->search-pattern download.helpers/env->search-pattern)
-(def env->pipeline-props download.helpers/env->pipeline-props)
-(def env->get-pipeline   download.helpers/env->get-pipeline)
-(def env->count-pipeline download.helpers/env->count-pipeline)
+(def env->sort-pattern     download.helpers/env->sort-pattern)
+(def env->search-pattern   download.helpers/env->search-pattern)
+(def env->pipeline-options download.helpers/env->pipeline-options)
+(def env->pipeline-props   download.helpers/env->pipeline-props)
+(def env->get-pipeline     download.helpers/env->get-pipeline)
+(def env->count-pipeline   download.helpers/env->count-pipeline)

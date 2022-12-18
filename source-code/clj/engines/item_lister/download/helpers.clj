@@ -20,7 +20,8 @@
               [mongo-db.api :as mongo-db]
               [pathom.api   :as pathom]
               [re-frame.api :as r]
-              [vector.api   :as vector]))
+              [vector.api   :as vector]
+              [x.user.api   :as x.user]))
 
 
 
@@ -40,11 +41,17 @@
   ;
   ; @return (map)
   [lister-id order-by]
+  ; https://www.mongodb.com/docs/manual/reference/method/cursor.sort/#sort-cursor-stable-sorting
+  ; To avoid getting repeated results, a key has to be added which points to unique values!
+  ;
+  ; The sort-pattern function adds the :id key to the sort-pattern, which solves the problem,
+  ; but if any other key added which points to unique values that's unnecessary.
   (let [item-namespace @(r/subscribe [:item-lister/get-lister-prop lister-id :item-namespace])
         order-key       (namespace order-by)
         direction       (name      order-by)]
        {(keyword/add-namespace item-namespace order-key)
-        (case direction "ascending" 1 "descending" -1)}))
+        (case direction "ascending" 1 "descending" -1)
+        (keyword/add-namespace item-namespace :id)  1}))
 
 
 
@@ -134,6 +141,21 @@
         search-term     (pathom/env->param env :search-term)]
        (if (string/nonblank? search-term)
            {:$or (vector/->items search-keys #(return {(keyword/add-namespace item-namespace %) search-term}))})))
+
+(defn env->pipeline-options
+  ; @param (map) env
+  ; @param (keyword) lister-id
+  ;
+  ; @example
+  ; (env->pipeline-options {...} :my-lister)
+  ; =>
+  ; {:locale "en"}
+  ;
+  ; @return (map)
+  ; {:locale (string)}
+  [{:keys [request]} lister-id]
+  (let [selected-language (x.user/request->user-settings-item request :selected-language)]
+       {:locale (name selected-language)}))
 
 (defn env->pipeline-props
   ; @param (map) env
