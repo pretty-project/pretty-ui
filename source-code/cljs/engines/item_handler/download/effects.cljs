@@ -62,4 +62,4 @@
   ; @param (keyword) handler-id
   (fn [{:keys [db]} [_ handler-id]]
       (if-let [auto-title (r core.subs/get-auto-title db handler-id)]
-              [:x.ui/set-window-title! auto-title])))
+              [:x.ui/set-tab-title! auto-title])))

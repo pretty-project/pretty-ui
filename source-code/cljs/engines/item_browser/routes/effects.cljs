@@ -33,4 +33,4 @@
             route-title     (r transfer.subs/get-transfer-item db browser-id :route-title)]
            {:dispatch   on-route
             :dispatch-n [(if body-did-mount? [:item-browser/load-browser! browser-id])
-                         (if route-title     [:x.ui/set-window-title!     route-title])]})))
+                         (if route-title     [:x.ui/set-tab-title!        route-title])]})))

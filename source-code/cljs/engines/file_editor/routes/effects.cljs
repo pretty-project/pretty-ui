@@ -33,4 +33,4 @@
             route-title     (r transfer.subs/get-transfer-item db editor-id :route-title)]
            {:dispatch   on-route
             :dispatch-n [(if body-did-mount? [:file-editor/load-editor! editor-id])
-                         (if route-title     [:x.ui/set-window-title!   route-title])]})))
+                         (if route-title     [:x.ui/set-tab-title!      route-title])]})))
