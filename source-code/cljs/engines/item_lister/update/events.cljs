@@ -56,4 +56,4 @@
   [db [_ lister-id]]
   (as-> db % (r backup.events/backup-selected-items!     % lister-id)
              (r selection.events/disable-selected-items! % lister-id)
-             (r x.ui/fake-process!                       % 15)))
+             (r x.ui/fake-progress!                      % 15)))

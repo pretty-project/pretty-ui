@@ -26,6 +26,7 @@
 
 ; engines.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-item!  core.events/remove-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
@@ -70,8 +71,9 @@
   ; @return (map)
   [db [_ viewer-id]]
   ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
-  (as-> db % (r clear-item-id!  % viewer-id)
-             (r update-item-id! % viewer-id)))
+  (as-> db % (r remove-meta-item! % viewer-id :engine-error)
+             (r clear-item-id!    % viewer-id)
+             (r update-item-id!   % viewer-id)))
 
 
 

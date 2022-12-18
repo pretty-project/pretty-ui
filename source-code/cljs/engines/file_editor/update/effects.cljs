@@ -28,21 +28,27 @@
 (r/reg-event-fx :file-editor/save-content!
   ; @param (keyword) editor-id
   ; @param (map) action-props
-  ; {:on-failure (metamorphic-event)(opt)
-  ;  :on-success (metamorphic-event)(opt)}
+  ; {:display-progress? (boolean)(opt)
+  ;   Default: false
+  ;  :on-failure (metamorphic-event)(opt)
+  ;  :on-success (metamorphic-event)(opt)
+  ;  :progress-behaviour (keyword)(opt)
+  ;   :keep-faked, :normal
+  ;   Default: :normal
+  ;   W/ {:display-progress? true}}
+  ;  :progress-max (percent)(opt)
+  ;   Default: 100
+  ;   W/ {:display-progress? true}}
   ;
   ; @usage
   ; [:file-editor/save-content! :my-editor]
-  (fn [{:keys [db]} [_ editor-id {:keys [on-failure on-success]}]]
+  (fn [{:keys [db]} [_ editor-id {:keys [on-success] :as action-props}]]
       (let [display-progress? (r body.subs/get-body-prop                        db editor-id :display-progress?)
             query             (r update.queries/get-save-content-query          db editor-id)
-            validator-f      #(r update.validators/save-content-response-valid? db editor-id %)]
+            validator-f      #(r update.validators/save-content-response-valid? db editor-id %)
+            on-success        {:dispatch-n [on-success [:file-editor/backup-saved-content! editor-id]]}]
            [:pathom/send-query! (r core.subs/get-request-id db editor-id)
-                                {:display-progress? display-progress?
-                                 :on-success        {:dispatch-n [on-success [:file-editor/backup-saved-content! editor-id]]}
-                                 :on-failure        on-failure
-                                 :query             query
-                                 :validator-f       validator-f}])))
+                                (assoc action-props :query query :validator-f :on-success on-success)])))
 
 (r/reg-event-fx :file-editor/backup-saved-content
   ; @param (keyword) editor-id

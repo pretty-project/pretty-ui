@@ -27,18 +27,24 @@
 (r/reg-event-fx :item-editor/save-item!
   ; @param (keyword) editor-id
   ; @param (map) action-props
-  ; {:on-failure (metamorphic-event)(opt)
-  ;  :on-success (metamorphic-event)(opt)}
+  ; {:display-progress? (boolean)(opt)
+  ;   Default: false
+  ;  :on-failure (metamorphic-event)(opt)
+  ;  :on-success (metamorphic-event)(opt)
+  ;  :on-stalled (metamorphic-event)(opt)
+  ;  :progress-behaviour (keyword)(opt)
+  ;   :keep-faked, :normal
+  ;   Default: :normal
+  ;   W/ {:display-progress? true}}
+  ;  :progress-max (percent)(opt)
+  ;   Default: 100
+  ;   W/ {:display-progress? true}}
   ;
   ; @usage
   ; [:item-editor/save-item! :my-editor]
-  (fn [{:keys [db]} [_ editor-id {:keys [on-failure on-success]}]]
+  (fn [{:keys [db]} [_ editor-id action-props]]
       (let [query        (r update.queries/get-save-item-query          db editor-id)
             validator-f #(r update.validators/save-item-response-valid? db editor-id %)]
-           {:db       (r x.ui/fake-process! db 15)
+           {:db       (r x.ui/fake-progress! db 15)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db editor-id)
-                                           {:display-progress? false
-                                            :on-success        on-success
-                                            :on-failure        on-failure
-                                            :query             query
-                                            :validator-f       validator-f}]})))
+                                           (assoc action-props :query query :validator-f)]})))

@@ -29,6 +29,7 @@
 
 ; engines.item-lister.core.events
 (def set-meta-item!        engines.item-lister.core.events/set-meta-item!)
+(def remove-meta-item!     engines.item-lister.core.events/remove-meta-item!)
 (def remove-meta-items!    engines.item-lister.core.events/remove-meta-items!)
 (def set-engine-error!     engines.item-lister.core.events/set-engine-error!)
 (def set-items!            engines.item-lister.core.events/set-items!)
@@ -126,10 +127,11 @@
   ;     an id already set in the engine.
   ; ... the update-item-id! function derives the current id from the
   ;     body component's parameters.
-  ; ... the use-item-id! function has to be applied according to: XXX#0168
-  (as-> db % (r clear-item-id!  % browser-id)
-             (r update-item-id! % browser-id)
-             (r use-item-id!    % browser-id)))
+  ; ... the use-item-id! function has to be applied according to: XXX#0168.
+  (as-> db % (r remove-meta-item! % browser-id :engine-error)
+             (r clear-item-id!    % browser-id)
+             (r update-item-id!   % browser-id)
+             (r use-item-id!      % browser-id)))
 
 
 

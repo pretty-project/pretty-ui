@@ -36,6 +36,16 @@
   [db [_ engine-id item-key item-value]]
   (assoc-in db [:engines :engine-handler/meta-items engine-id item-key] item-value))
 
+(defn remove-meta-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (keyword) item-key
+  ;
+  ; @return (map)
+  [db [_ engine-id item-key]]
+  (dissoc-in db [:engines :engine-handler/meta-items engine-id item-key]))
+
 (defn remove-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

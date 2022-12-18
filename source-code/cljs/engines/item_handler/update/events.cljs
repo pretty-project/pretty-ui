@@ -34,4 +34,4 @@
   ; visszaállításához.
   (let [current-item-id (r core.subs/get-current-item-id db handler-id)]
        (as-> db % (r backup.events/backup-current-item! % handler-id current-item-id)
-                  (r x.ui/fake-process!                 % 15))))
+                  (r x.ui/fake-progress!                % 15))))

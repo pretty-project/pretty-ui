@@ -25,6 +25,7 @@
 
 ; engines.engine-handler.core.events
 (def set-meta-item!     core.events/set-meta-item!)
+(def remove-meta-item!  core.events/remove-meta-item!)
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-engine-error!  core.events/set-engine-error!)
@@ -69,16 +70,11 @@
   ;
   ; @return (map)
   [db [_ preview-id]]
-  ; A tartalom újratöltésekor ...
-  ; ... az update-item-id! függvény alkalmazása előtt szükséges törölni a
-  ;     current-item-id értéket, különben az update-item-id! függvény nem
-  ;     használná a body komponens item-id paraméterét a current-item-id
-  ;     új értékeként!
-  ; ... szükséges kiléptetni a engine-t az esetlegesen beállított {:engine-error ...}
-  ;     állapotból!
-  (as-> db % (r remove-meta-items! % preview-id)
-             (r update-item-id!    % preview-id)
-             (r reset-downloads!   % preview-id)))
+  ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
+  (as-> db % (r remove-meta-item! % preview-id :engine-error)
+             (r clear-item-id!    % preview-id)
+             (r update-item-id!   % preview-id)
+             (r reset-downloads!  % preview-id)))
 
 
 

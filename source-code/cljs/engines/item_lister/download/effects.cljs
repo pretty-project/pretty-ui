@@ -30,14 +30,27 @@
 (r/reg-event-fx :item-lister/reload-items!
   ; @param (keyword) lister-id
   ; @param (map)(opt) reload-props
-  ; {:on-reload (metamorphic-event)(opt)}
+  ; {:display-progress? (boolean)(opt)
+  ;   Default: false
+  ;  :on-failure (metamorphic-event)(opt)
+  ;  :on-success (metamorphic-event)(opt)
+  ;  :on-stalled (metamorphic-event)(opt)
+  ;  :progress-behaviour (keyword)(opt)
+  ;   :keep-faked, :normal
+  ;   Default: :normal
+  ;   W/ {:display-progress? true}}
+  ;  :progress-max (percent)(opt)
+  ;   Default: 100
+  ;   W/ {:display-progress? true}}
   ;
   ; @usage
   ; [:item-lister/reload-items! :my-lister]
   ;
   ; @usage
   ; [:item-lister/reload-items! :my-lister {...}]
-  (fn [{:keys [db]} [_ lister-id reload-props]]
+  (fn [{:keys [db]} [_ lister-id {:keys [on-failure on-stalled] :as reload-props}]]
+      ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
+      ;
       ; Az [:item-lister/reload-items! ...] esemény újra letölti a listában található elemeket.
       ;
       ; Ha a szerver-oldalon az elemeket tartalmazó kollekció megváltozott, akkor nem feltétlenül
@@ -49,25 +62,25 @@
       ; A {:reload-mode? true} beállítás csak a query elkészítéséhez szükséges, utána már nincs
       ; szükség rá, hogy érvényben maradjon, ezért a set-reload-mode! függvénnyel megváltoztatott
       ; db értéke nem kerül eltárolásra!
-      (let [db                (r core.events/set-reload-mode!                      db lister-id)
-            display-progress? (r body.subs/get-body-prop                           db lister-id :display-progress?)
-            query             (r download.queries/get-request-items-query          db lister-id)
-            validator-f      #(r download.validators/request-items-response-valid? db lister-id %)]
-           [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                {:display-progress? display-progress?
-                                 ; XXX#4057 (source-code/cljs/engines/item_handler/download/effects.cljs)
-                                 :on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]
-                                 :on-failure [:item-lister/set-engine-error!       lister-id :failed-to-reload-items]
-                                 :query query :validator-f validator-f}])))
+      ;
+      ; Ha az esemény megtörténésekor a body komponens már nincs a React-fába csatolva,
+      ; akkor tölti le újra az elemeket!
+      (if (r body.subs/body-did-mount? db lister-id)
+          (let [db           (r core.events/set-reload-mode!                      db lister-id)
+                query        (r download.queries/get-request-items-query          db lister-id)
+                validator-f #(r download.validators/request-items-response-valid? db lister-id %)
+                on-failure   {:dispatch-n [on-failure [:item-lister/set-engine-error!       lister-id :failed-to-reload-items]]}
+                on-stalled   {:dispatch-n [on-stalled [:item-lister/receive-reloaded-items! lister-id reload-props]]}]
+               [:pathom/send-query! (r core.subs/get-request-id db lister-id)
+                                    (assoc reload-props :query query :validator-f validator-f :on-failure on-failure :on-stalled on-stalled)]))))
 
 (r/reg-event-fx :item-lister/receive-reloaded-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) lister-id
   ; @param (map) reload-props
-  ; {:on-reload (metamorphic-event)(opt)}
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ lister-id {:keys [on-reload]} server-response]]
+  (fn [{:keys [db]} [_ lister-id _ server-response]]
       ; Az {:on-reload ...} tulajdonságként átadott esemény használatával megoldható,
       ; hogy a listaelemeken végzett műveletek záró-eseményei a listaelemek sikeres újratöltése
       ; után történjenek meg.
@@ -83,13 +96,10 @@
       ;      (XXX#5476 - source-code/cljs/engines/engine_handler/core/subs.cljs),
       ;      ami megakadályozza, hogy párhuzamosan több lekérés történjen (x4.6.8).
       ;
-      ; Ha az [:item-lister/receive-reloaded-items! ...] esemény megtörténésekor a body komponens
-      ; már nincs a React-fába csatolva (pl. a felhasználó kilépett az engine-ből), akkor
-      ; nem tárolja el a letöltött elemeket.
+      ; Ha az esemény megtörténésekor a body komponens már nincs a React-fába csatolva,
+      ; akkor nem tárolja el a letöltött elemeket!
       (if (r body.subs/body-did-mount? db lister-id)
-          {:db (r download.events/receive-reloaded-items! db lister-id server-response)
-           :dispatch on-reload}
-          {:dispatch on-reload})))
+          {:db (r download.events/receive-reloaded-items! db lister-id server-response)})))
 
 
 

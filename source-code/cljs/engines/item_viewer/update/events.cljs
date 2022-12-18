@@ -15,8 +15,7 @@
 (ns engines.item-viewer.update.events
     (:require [engines.item-viewer.backup.events :as backup.events]
               [engines.item-viewer.core.subs     :as core.subs]
-              [re-frame.api                      :refer [r]]
-              [x.ui.api                          :as x.ui]))
+              [re-frame.api                      :refer [r]]))
 
 
 
@@ -33,5 +32,4 @@
   ; Az elem törlése előtt szükséges az elemről másolatot készíteni a kitörölt elem esetleges
   ; visszaállításához.
   (let [current-item-id (r core.subs/get-current-item-id db viewer-id)]
-       (as-> db % (r backup.events/backup-current-item! % viewer-id current-item-id)
-                  (r x.ui/fake-process!                 % 15))))
+       (r backup.events/backup-current-item! db viewer-id current-item-id)))

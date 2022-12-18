@@ -67,7 +67,7 @@
   [db [_ browser-id item-id]]
   (as-> db % (r backup.events/backup-item! % browser-id item-id)
              (r items.events/disable-item! % browser-id item-id)
-             (r x.ui/fake-process!         % 15)))
+             (r x.ui/fake-progress!        % 15)))
 
 
 
