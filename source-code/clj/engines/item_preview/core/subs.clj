@@ -30,10 +30,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-preview-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) preview-id
   ; @param (keyword) item-key
+  ;
+  ; @usage
+  ; (r get-preview-prop db :my-preview :my-prop)
   ;
   ; @return (map)
   [db [_ preview-id item-key]]
@@ -44,5 +45,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @usage
+; [:item-preview/get-preview-prop :my-preview :my-prop]
 (r/reg-sub :item-preview/get-preview-prop get-preview-prop)

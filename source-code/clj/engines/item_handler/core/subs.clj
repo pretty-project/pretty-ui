@@ -30,10 +30,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-handler-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) handler-id
   ; @param (keyword) item-key
+  ;
+  ; @usage
+  ; (r get-handler-prop db :my-handler :my-prop)
   ;
   ; @return (map)
   [db [_ handler-id item-key]]
@@ -44,5 +45,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @usage
+; [:item-handler/get-handler-prop :my-handler :my-prop]
 (r/reg-sub :item-handler/get-handler-prop get-handler-prop)

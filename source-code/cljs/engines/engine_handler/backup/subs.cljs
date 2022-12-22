@@ -41,8 +41,7 @@
   ;
   ; @return (namespaced map)
   [db [_ engine-id item-id]]
-  ; Az export-backup-item függvény az item-id tulajdonságként átadott azonosítójú
-  ; elem névtérrel ellátott változatával tér vissza.
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
   (let [item-namespace (r transfer.subs/get-transfer-item db engine-id :item-namespace)
         backup-item    (r get-backup-item                 db engine-id item-id)]
        (map/add-namespace backup-item item-namespace)))
@@ -69,8 +68,5 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ engine-id item-ids]]
-  ; Az export-backup-items függvény az item-ids vektorban átadott azonosítójú
-  ; elemek névtérrel ellátott változatával tér vissza.
-  (let [item-namespace (r transfer.subs/get-transfer-item db engine-id :item-namespace)]
-       (vector/->items item-ids #(let [backup-item (r get-backup-item db engine-id %)]
-                                      (map/add-namespace backup-item item-namespace)))))
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
+  (vector/->items item-ids (fn [%] (r export-backup-item db engine-id %))))

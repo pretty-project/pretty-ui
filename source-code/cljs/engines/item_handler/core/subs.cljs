@@ -28,7 +28,6 @@
 (def engine-synchronizing?        core.subs/engine-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item-path        core.subs/get-current-item-path)
-(def reload-item?                 core.subs/reload-item?)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
 (def get-current-item-value       core.subs/get-current-item-value)
@@ -76,7 +75,8 @@
   ; @return (boolean)
   [db [_ handler-id item-id]]
   ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (r core.subs/current-item? db handler-id item-id))
+  (as-> db % (r core.subs/current-item?   % handler-id item-id)
+             (r body.subs/body-did-mount? % handler-id item-id)))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!

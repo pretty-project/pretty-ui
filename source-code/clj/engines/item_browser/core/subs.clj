@@ -30,10 +30,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-browser-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) browser-id
   ; @param (keyword) item-key
+  ;
+  ; @usage
+  ; (r get-browser-prop db :my-browser :my-prop)
   ;
   ; @return (map)
   [db [_ browser-id item-key]]
@@ -44,5 +45,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @usage
+; [:item-browser/get-browser-prop :my-browser :my-prop]
 (r/reg-sub :item-browser/get-browser-prop get-browser-prop)

@@ -31,7 +31,7 @@
   ;
   ; @usage
   ; [:item-handler/init-handler! :my-handler {...}]
-  (fn [{:keys [db]} [_ handler-id {:keys [base-route] :as handler-props}]]
+  (fn [{:keys [db]} [_ handler-id handler-props]]
       (let [handler-props (core.prototypes/handler-props-prototype handler-id handler-props)]
            {:db       (r core.events/init-handler! db handler-id handler-props)
             :dispatch [:item-handler/reg-transfer-handler-props! handler-id handler-props]})))

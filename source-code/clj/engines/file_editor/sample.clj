@@ -26,8 +26,7 @@
 
 ; Az engine használatához SZÜKSÉGES megadni ...
 ; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver
-;     függvények neveiben
-;     névtérként használ.
+;     függvények neveiben névtérként használ.
 ;
 ; Az engine használatához OPCIONÁLISAN megadható ...
 ; ...
@@ -45,7 +44,7 @@
   ; @param (map) resolver-props
   ;
   ; @return (map)
-  [env _]
+  [_ _]
   (io/read-edn-file "my-file.edn"))
 
 (defresolver get-content
@@ -53,7 +52,7 @@
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:my-handler/get-content (map)}
+             ; {:my-handler/get-content (map)}
              [env resolver-props]
              {:my-handler/get-content (get-content-f env resolver-props)})
 
@@ -66,10 +65,10 @@
 (defmutation save-content!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:content (map)}
+             ; {:content (map)}
              ;
              ; @return (map)
-             [env {:keys [content]}]
+             [_ {:keys [content]}]
              {::pathom.co/op-name 'my-handler/save-content!}
              (io/write-edn-file! "my-file.edn" content)
              (return content))

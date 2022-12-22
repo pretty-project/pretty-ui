@@ -38,7 +38,25 @@
 
 
 
-;; -- Downloaded items events -------------------------------------------------
+;; -- Single item events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn store-received-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ; @param (map) server-response
+  ;
+  ; @return (map)
+  [db [_ handler-id server-response]]
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
+  (let [received-item     (r download.subs/get-resolver-answer db handler-id :get-item server-response)
+        current-item-path (r core.subs/get-current-item-path   db handler-id)]
+       (assoc-in db current-item-path (map/remove-namespace received-item))))
+
+
+
+;; -- Multiple items events ---------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn store-received-item-count!
@@ -57,7 +75,7 @@
   ; than the received all-item-count value, that means something was wrong and
   ; somehow there are documents left on the server which fit the conditions
   ; but didn't arrive.
-  ; To determine this kind of errors the received-item-count value has to be stored!
+  ; To determine these kind of errors the received-item-count value has to be stored!
   (let [resolver-answer     (r download.subs/get-resolver-answer db engine-id :get-items server-response)
         all-item-count      (:all-item-count resolver-answer)
         received-items      (:items          resolver-answer)
@@ -86,19 +104,6 @@
                                                    (return   db)
                                                    (assoc-in db (conj items-path id) received-item))))]
                    (reduce f db received-items)))))
-
-(defn store-received-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ; @param (map) server-response
-  ;
-  ; @return (map)
-  [db [_ handler-id server-response]]
-  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
-  (let [received-item     (r download.subs/get-resolver-answer db handler-id :get-item server-response)
-        current-item-path (r core.subs/get-current-item-path   db handler-id)]
-       (assoc-in db current-item-path (map/remove-namespace received-item))))
 
 
 

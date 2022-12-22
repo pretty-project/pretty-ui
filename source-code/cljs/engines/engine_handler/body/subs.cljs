@@ -20,6 +20,15 @@
 ;; -- Body-props subscriptions ------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-body-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (*)
+  [db [_ engine-id]]
+  (get-in db [:engines :engine-handler/body-props engine-id]))
+
 (defn get-body-prop
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -37,7 +46,8 @@
   ;
   ; @return (boolean)
   [db [_ engine-id]]
-  (some? (get-in db [:engines :engine-handler/body-props engine-id])))
+  (let [body-props (r get-body-props db engine-id)]
+       (boolean body-props)))
 
 
 

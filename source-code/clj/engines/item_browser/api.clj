@@ -15,8 +15,8 @@
 (ns engines.item-browser.api
     (:require [engines.item-browser.core.effects]
               [engines.item-browser.core.events]
-              [engines.item-browser.core.subs]
               [engines.item-browser.transfer.effects]
+              [engines.item-browser.core.subs        :as core.subs]
               [engines.item-browser.download.helpers :as download.helpers]
               [engines.item-browser.update.helpers   :as update.helpers]))
 
@@ -24,6 +24,9 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-browser.core.subs
+(def get-browser-prop core.subs/get-browser-prop)
 
 ; engines.item-browser.download.helpers
 (def env->item-links       download.helpers/env->item-links)

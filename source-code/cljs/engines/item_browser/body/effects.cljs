@@ -47,8 +47,5 @@
   (fn [{:keys [db]} [_ browser-id %]]
       ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
       (let [[_ body-props] (reagent/arguments %)]
-           ; According to the XXX#1249 the item-browser has to reload when
-           ; the body component get updated!
-           ; (if (r core.subs/reload-item? db browser-id body-props) ...)
            {:dispatch [:item-browser/reload-browser! browser-id]
             :db       (r body.events/body-did-update db browser-id body-props)})))

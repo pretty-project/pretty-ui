@@ -57,10 +57,10 @@
 (defresolver get-item
              ; @param (map) env
              ; @param (map) resolver-props
-             ;  {:item-id (string)}
+             ; {:item-id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-handler/get-item (namespaced map)}
+             ; {:my-handler/get-item (namespaced map)}
              [env resolver-props]
              {:my-handler/get-item (get-item-f env resolver-props)})
 
@@ -73,20 +73,53 @@
 (defmutation add-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item (namespaced map)}
+             ; {:item (namespaced map)}
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-handler/add-item!}
              (return {}))
 
+; Sikeres törlés esetén a dokumentum azonosítójával szükséges visszatérni!
+(defmutation delete-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ; {:item-id (string)}
+             ;
+             ; @return (string)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-handler/delete-item!}
+             (return item-id))
+
+; Sikeres duplikálás esetén a dokumentum azonosítójával szükséges visszatérni!
+(defmutation duplicate-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ; {:item-id (string)}
+             ;
+             ; @return (string)
+             [env {:keys [item-id]}]
+             {::pathom.co/op-name 'my-handler/duplicate-item!}
+             (return item-id))
+
 ; Sikeres mentés esetén a dokumentummal szükséges visszatérni!
 (defmutation save-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item (namespaced map)}
+             ; {:item (namespaced map)}
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
              {::pathom.co/op-name 'my-handler/save-item!}
+             (return {}))
+
+; Sikeres visszavonás esetén a visszaállított dokumentummal szükséges visszatérni!
+(defmutation undo-delete-item!
+             ; @param (map) env
+             ; @param (map) mutation-props
+             ; {:item (namespaced map)}
+             ;
+             ; @return (namespaced map)
+             [env {:keys [item]}]
+             {::pathom.co/op-name 'my-handler/undo-delete-item!}
              (return {}))

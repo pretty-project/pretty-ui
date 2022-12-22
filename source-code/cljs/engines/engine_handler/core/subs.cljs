@@ -94,19 +94,8 @@
 
 
 
-;; -- Downloaded items subscriptions ------------------------------------------
+;; -- Single item subscriptions -----------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-downloaded-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ;
-  ; @return (map)
-  [db [_ engine-id]]
-  ; XXX#6487
-  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (get-in db items-path)))
 
 (defn get-downloaded-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,6 +118,7 @@
   ; @return (namespaced map)
   [db [_ engine-id item-id]]
   ; XXX#6487
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
   (if-let [item (r get-downloaded-item db engine-id item-id)]
           (let [item-namespace (r transfer.subs/get-transfer-item db engine-id :item-namespace)]
                (map/add-namespace item item-namespace))))
@@ -144,9 +134,21 @@
   (let [item (r get-downloaded-item db engine-id item-id)]
        (boolean item)))
 
+(defn get-item-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (vector)
+  [db [_ engine-id item-id]]
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (conj items-path item-id)))
 
 
-;; -- Current-item subscriptions ----------------------------------------------
+
+;; -- Current item subscriptions ----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-default-item-id
@@ -189,16 +191,15 @@
   (let [current-item-id (r get-meta-item db engine-id :item-id)]
        (nil? current-item-id)))
 
-(defn download-current-item?
+(defn current-item-downloaded?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
   ;
   ; @return (boolean)
   [db [_ handler-id]]
-  (let [current-item-id  (r get-current-item-id db handler-id)
-        item-downloaded? (r item-downloaded?    db handler-id current-item-id)]
-       (not item-downloaded?)))
+  (let [current-item-id (r get-current-item-id db handler-id)]
+       (r item-downloaded? db handler-id current-item-id)))
 
 (defn current-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -213,7 +214,6 @@
   ;
   ; Returns true if ...
   ; ... the item with the given item-id is currently loaded into the engine.
-  ; ... the engine's body component is mounted into the React tree.
   (= item-id (r get-meta-item db engine-id :item-id)))
 
 (defn get-current-item
@@ -228,7 +228,7 @@
   ; E.g. If a Reagent component subscribes before the engine's body component mounted
   ;      into the React tree, the body component's properties cannot accessible.
   ;
-  ; In this case, when the items-path isn't accessible and its value is NIL,
+  ; In a case like that, when the items-path isn't accessible and its value is NIL,
   ; the get-in function takes a NIL as the path and its return value would
   ; be the whole db!
   (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
@@ -243,9 +243,9 @@
   ; @return (namespaced map)
   [db [_ engine-id]]
   ; XXX#6487
-  (if-let [current-item (r get-current-item db engine-id)]
-          (let [item-namespace (r transfer.subs/get-transfer-item db engine-id :item-namespace)]
-               (map/add-namespace current-item item-namespace))))
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
+  (if-let [current-item-id (r get-current-item-id db engine-id)]
+          (r export-downloaded-item db engine-id current-item-id)))
 
 (defn get-current-item-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -290,8 +290,7 @@
   ;
   ; @param (keyword) engine-id
   [db [_ engine-id]]
-  ; XXX#6487
-  ; + The 'auto-title?' is an optional property.
+  ; XXX#6487 + the 'auto-title?' is an optional property.
   (if-let [auto-title? (r body.subs/get-body-prop db engine-id :auto-title?)]
           (r get-current-item-label db engine-id)))
 
@@ -330,45 +329,7 @@
 
 
 
-;; -- Single item subscriptions -----------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn reload-item?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (map) body-props
-  ; {:item-id (string)(opt)}
-  ;
-  ; @return (boolean)
-  [db [_ engine-id {:keys [item-id]}]]
-  ; When the body-props gets updated, it has to be checked whether
-  ; the item has to reload or not.
-  ;
-  ; The item has to reload when ...
-  ; ... the body component's item-id parameter has been changed.
-  ; ... the default-item-id has been set or the new item-id is not nil.
-  (let [current-item-id (r get-current-item-id     db engine-id)
-        default-item-id (r get-default-item-id     db engine-id)
-        stored-item-id  (r body.subs/get-body-prop db engine-id :item-id)]
-       (and (not= item-id stored-item-id)
-            (or   item-id default-item-id))))
-
-(defn get-item-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (string) item-id
-  ;
-  ; @return (vector)
-  [db [_ engine-id item-id]]
-  ; XXX#6487
-  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (conj items-path item-id)))
-
-
-
-;; -- Listed items subscriptions ----------------------------------------------
+;; -- Multiple items subscriptions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn get-item-order
@@ -382,6 +343,17 @@
   ; @return (strings in vector)
   [db [_ engine-id]]
   (r get-meta-item db engine-id :item-order))
+
+(defn get-downloaded-items
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (get-in db items-path)))
 
 (defn get-listed-items
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -417,11 +389,9 @@
   ;
   ; @return (namespaced maps in vector)
   [db [_ engine-id]]
-  (let [item-namespace   (r transfer.subs/get-transfer-item db engine-id :item-namespace)
-        item-order       (r get-meta-item                   db engine-id :item-order)
-        downloaded-items (r get-downloaded-items            db engine-id)]
-       (letfn [(f [item-id] (map/add-namespace (item-id downloaded-items) item-namespace))]
-              (vector/->items item-order f))))
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
+  (let [item-order (r get-item-order db engine-id)]
+       (vector/->items item-order (fn [%] (r export-downloaded-item db engine-id %)))))
 
 (defn item-listed?
   ; WARNING! NON-PUBLIC! DO NOT USE!

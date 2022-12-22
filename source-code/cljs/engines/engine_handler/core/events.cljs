@@ -24,6 +24,25 @@
 ;; -- Meta-item events --------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn remove-meta-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  (dissoc-in db [:engines :engine-handler/meta-items engine-id]))
+
+(defn reset-meta-items!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (keywords in vector) keep-keys
+  ;
+  ; @return (map)
+  [db [_ engine-id keep-keys]]
+  (update-in db [:engines :engine-handler/meta-items] select-keys keep-keys))
+
 (defn set-meta-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -44,25 +63,6 @@
   ; @return (map)
   [db [_ engine-id item-key]]
   (dissoc-in db [:engines :engine-handler/meta-items engine-id item-key]))
-
-(defn remove-meta-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ;
-  ; @return (map)
-  [db [_ engine-id]]
-  (dissoc-in db [:engines :engine-handler/meta-items engine-id]))
-
-(defn reset-meta-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (keywords in vector) keep-keys
-  ;
-  ; @return (map)
-  [db [_ engine-id keep-keys]]
-  (update-in db [:engines :engine-handler/meta-items] select-keys keep-keys))
 
 
 
@@ -106,7 +106,7 @@
 
 
 
-;; -- Query-param events ------------------------------------------------------
+;; -- Query events ------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn set-query-param!

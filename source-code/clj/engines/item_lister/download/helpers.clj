@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.download.helpers
-    (:require [candy.api    :refer [param return]]
+    (:require [candy.api    :refer [return]]
               [keyword.api  :as keyword]
               [math.api     :as math]
               [string.api   :as string]

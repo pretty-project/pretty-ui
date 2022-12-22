@@ -39,7 +39,6 @@ Pl. Nem szükséges minden engine-ben megírni a get-meta-item subscription füg
 
 ### XXX#3907
 
-Az engine-ek a letöltött dokumentumokat/tartalmat névtér nélkül tárolják,
-így az egyes Re-Frame feliratkozásokban az értékek olvasása kevesebb
-erőforrást igényel, mivel nem szükséges azok kulcsaihoz az aktuális
-névteret hozzáfűzni/eltávolítani.
+The engines store the downloaded items without their namespace, therefore
+its easier and more efficient to read values from a downloaded item
+especially in subscriptions.

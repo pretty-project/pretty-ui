@@ -30,10 +30,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-lister-prop
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) lister-id
   ; @param (keyword) item-key
+  ;
+  ; @usage
+  ; (r get-lister-prop db :my-lister :my-prop)
   ;
   ; @return (map)
   [db [_ lister-id item-key]]
@@ -44,5 +45,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; WARNING! NON-PUBLIC! DO NOT USE!
+; @usage
+; [:item-lister/get-lister-prop :my-lister :my-prop]
 (r/reg-sub :item-lister/get-lister-prop get-lister-prop)

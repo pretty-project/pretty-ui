@@ -35,6 +35,9 @@
   ; @param (keyword) editor-id
   ; @param (keyword) item-key
   ;
+  ; @usage
+  ; (r get-editor-prop db :my-editor :my-prop)
+  ;
   ; @return (map)
   [db [_ editor-id item-key]]
   (r get-engine-prop db editor-id item-key))

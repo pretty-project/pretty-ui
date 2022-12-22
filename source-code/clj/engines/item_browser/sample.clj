@@ -71,7 +71,7 @@
              ;  {:my-type/id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-handler/get-item (namespaced map)}
+             ; {:my-handler/get-item (namespaced map)}
              [env resolver-props]
              {:my-handler/get-item (get-item-f env resolver-props)})
 
@@ -82,9 +82,9 @@
              ; @param (map) resolver-props
              ;
              ; @return (namespaced map)
-             ;  {:my-handler/get-items (map)
-             ;    {:document-count (integer)
-             ;     :documents (namespaced maps in vector)}}
+             ; {:my-handler/get-items (map)
+             ;   {:all-item-count (integer)
+             ;    :items (namespaced maps in vector)}}
              [env resolver-props]
              {:my-handler/get-items (fn [env resolver-props])})
 
@@ -97,7 +97,7 @@
 (defmutation delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
+             ; {:item-ids (strings in vector)}
              ;
              ; @return (strings in vector)
              [env {:keys [item-ids]}]
@@ -108,7 +108,7 @@
 (defmutation undo-delete-items!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:items (namespaced maps in vector)}
+             ; {:items (namespaced maps in vector)}
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [items]}]
@@ -119,7 +119,7 @@
 (defmutation duplicate-items!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-ids (strings in vector)}
+             ; {:item-ids (strings in vector)}
              ;
              ; @return (namespaced maps in vector)
              [env {:keys [item-ids]}]
@@ -130,7 +130,7 @@
 (defmutation delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-id (strings in vector)}
+             ; {:item-id (strings in vector)}
              ;
              ; @return (string)
              [env {:keys [item-id]}]
@@ -141,7 +141,7 @@
 (defmutation undo-delete-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item (namespaced map)}
+             ; {:item (namespaced map)}
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
@@ -152,7 +152,7 @@
 (defmutation duplicate-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-id (string)}
+             ; {:item-id (string)}
              ;
              ; @return (namespaced map)
              [env {:keys [item-id]}]
@@ -163,7 +163,7 @@
 (defmutation update-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item (namespaced map)}
+             ; {:item (namespaced map)}
              ;
              ; @return (namespaced map)
              [env {:keys [item]}]
@@ -174,8 +174,8 @@
 (defmutation move-item!
              ; @param (map) env
              ; @param (map) mutation-props
-             ;  {:item-id (string)
-             ;   :? (?)}
+             ; {:item-id (string)
+             ;  :? (?)}
              ;
              ; @return (namespaced map)
              [env {:keys [item-id]}]

@@ -15,5 +15,13 @@
 (ns engines.file-editor.api
     (:require [engines.file-editor.core.effects]
               [engines.file-editor.core.events]
-              [engines.file-editor.core.subs]
-              [engines.file-editor.transfer.effects]))
+              [engines.file-editor.transfer.effects]
+              [engines.file-editor.core.subs :as core.subs]))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; engines.file-editor.core.subs
+(def get-editor-prop core.subs/get-editor-prop)

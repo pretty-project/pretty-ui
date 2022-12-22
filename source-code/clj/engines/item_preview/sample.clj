@@ -13,7 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-preview.sample
-    (:require [engines.item-editor.api]
+    (:require [engines.item-preview.api]
               [com.wsscode.pathom3.connect.operation :as pathom.co :refer [defresolver]]
               [mongo-db.api                          :as mongo-db]
               [pathom.api                            :as pathom]
@@ -52,9 +52,9 @@
 (defresolver get-item
              ; @param (map) env
              ; @param (map) resolver-props
-             ;  {:item-id (string)}
+             ; {:item-id (string)}
              ;
              ; @return (namespaced map)
-             ;  {:my-handler/get-item (namespaced map)}
+             ; {:my-handler/get-item (namespaced map)}
              [env resolver-props]
              {:my-handler/get-item (get-item-f env resolver-props)})

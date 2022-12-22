@@ -26,11 +26,12 @@
   ; @param (keyword) browser-id
   ; @param (map) browser-props
   ; {:collection-name (string)
-  ;  :handler-key (keyword)}
+  ;  :handler-key (keyword)
+  ;  :item-namespace (keyword)}
   ;
   ; @usage
   ; [:item-browser/init-browser! :my-browser {...}]
-  (fn [{:keys [db]} [_ browser-id {:keys [base-route] :as browser-props}]]
+  (fn [{:keys [db]} [_ browser-id browser-props]]
       (let [browser-props (core.prototypes/browser-props-prototype browser-id browser-props)]
            {:db       (r core.events/init-browser! db browser-id browser-props)
             :dispatch [:item-browser/reg-transfer-browser-props! browser-id browser-props]})))

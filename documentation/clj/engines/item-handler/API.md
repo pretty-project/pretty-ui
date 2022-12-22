@@ -7,6 +7,8 @@
 
 - [env->item-suggestions](#env-item-suggestions)
 
+- [get-handler-prop](#get-handler-prop)
+
 ### env->item-suggestions
 
 ```
@@ -20,6 +22,24 @@
 =>
 {:my-type/my-key   ["..."]
  :my-type/your-key ["..." "..."]}
+```
+
+```
+@return (map)
+```
+
+---
+
+### get-handler-prop
+
+```
+@param (keyword) handler-id
+@param (keyword) item-key
+```
+
+```
+@usage
+(r get-handler-prop db :my-handler :my-prop)
 ```
 
 ```

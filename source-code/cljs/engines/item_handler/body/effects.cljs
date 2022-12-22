@@ -14,7 +14,6 @@
 
 (ns engines.item-handler.body.effects
     (:require [engines.item-handler.body.events :as body.events]
-              [engines.item-handler.core.subs   :as core.subs]
               [re-frame.api                     :as r :refer [r]]
               [reagent.api                      :as reagent]))
 
@@ -46,7 +45,5 @@
   ; @param (?) %
   (fn [{:keys [db]} [_ handler-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           (if (r core.subs/reload-item? db handler-id body-props)
-               {:dispatch [:item-handler/reload-handler! handler-id]
-                :db       (r body.events/body-did-update db handler-id body-props)}
-               {:db       (r body.events/body-did-update db handler-id body-props)}))))
+           {:dispatch [:item-handler/reload-handler! handler-id]
+            :db       (r body.events/body-did-update db handler-id body-props)})))

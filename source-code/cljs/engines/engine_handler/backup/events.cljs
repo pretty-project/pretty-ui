@@ -19,22 +19,6 @@
 
 
 
-;; -- Current item events -----------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn backup-current-item!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ;
-  ; @return (map)
-  [db [_ engine-id]]
-  (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
-       (assoc-in db [:engines :engine-handler/backup-items engine-id current-item-id]
-                    (r core.subs/get-current-item db engine-id))))
-
-
-
 ;; -- Single item events ------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -46,8 +30,8 @@
   ;
   ; @return (map)
   [db [_ engine-id item-id]]
-  (let [stored-item (r core.subs/get-downloaded-item db engine-id item-id)]
-       (assoc-in db [:engines :engine-handler/backup-items engine-id item-id] stored-item)))
+  (let [downloaded-item (r core.subs/get-downloaded-item db engine-id item-id)]
+       (assoc-in db [:engines :engine-handler/backup-items engine-id item-id] downloaded-item)))
 
 (defn clean-backup-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,6 +42,21 @@
   ; @return (map)
   [db [_ engine-id item-id]]
   (dissoc-in db [:engines :engine-handler/backup-items engine-id item-id]))
+
+
+
+;; -- Current item events -----------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn backup-current-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
+       (r backup-item! db engine-id current-item-id)))
 
 (defn clean-current-item-backup!
   ; WARNING! NON-PUBLIC! DO NOT USE!

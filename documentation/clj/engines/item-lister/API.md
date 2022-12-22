@@ -17,6 +17,8 @@
 
 - [env->sort-pattern](#env-sort-pattern)
 
+- [get-lister-prop](#get-lister-prop)
+
 ### env->count-pipeline
 
 ```
@@ -139,6 +141,24 @@
 (env->sort-pattern {...} :my-lister)
 =>
 {:my-type/name 1}
+```
+
+```
+@return (map)
+```
+
+---
+
+### get-lister-prop
+
+```
+@param (keyword) lister-id
+@param (keyword) item-key
+```
+
+```
+@usage
+(r get-lister-prop db :my-lister :my-prop)
 ```
 
 ```

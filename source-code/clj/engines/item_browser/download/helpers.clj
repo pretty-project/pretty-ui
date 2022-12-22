@@ -13,20 +13,20 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.download.helpers
-    (:require [candy.api               :refer [return]]
-              [keyword.api             :as keyword]
-              [mongo-db.api            :as mongo-db]
-              [pathom.api              :as pathom]
-              [engines.item-lister.api :as item-lister]
-              [re-frame.api            :as r]))
+    (:require [candy.api                            :refer [return]]
+              [engines.item-lister.download.helpers :as download.helpers]
+              [keyword.api                          :as keyword]
+              [mongo-db.api                         :as mongo-db]
+              [pathom.api                           :as pathom]
+              [re-frame.api                         :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; engines.item-lister.api
-(def env->pipeline-options item-lister/env->pipeline-options)
+; engines.item-lister.download.helpers
+(def env->pipeline-options download.helpers/env->pipeline-options)
 
 
 

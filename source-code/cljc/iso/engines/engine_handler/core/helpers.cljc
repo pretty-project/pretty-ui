@@ -43,9 +43,9 @@
   ; @param (keyword) data-key
   ;
   ; @example
-  ; (default-data-path :my-engine :suggestions)
+  ; (default-data-path :my-engine :downloaded-items)
   ; =>
-  ; [:engines :engine-handler/suggestions :my-engine]
+  ; [:engines :engine-handler/downloaded-items :my-engine]
   ;
   ; @return (vector)
   [engine-id data-key]

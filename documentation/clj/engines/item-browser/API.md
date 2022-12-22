@@ -17,6 +17,8 @@
 
 - [env->sort-pattern](#env-sort-pattern)
 
+- [get-browser-prop](#get-browser-prop)
+
 - [item->parent-id](#item-parent-id)
 
 - [item->parent-link](#item-parent-link)
@@ -136,6 +138,24 @@
 ```
 @usage
 (env->sort-pattern {...} :my-browser)
+```
+
+```
+@return (map)
+```
+
+---
+
+### get-browser-prop
+
+```
+@param (keyword) browser-id
+@param (keyword) item-key
+```
+
+```
+@usage
+(r get-browser-prop db :my-browser :my-prop)
 ```
 
 ```

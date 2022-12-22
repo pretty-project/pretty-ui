@@ -24,9 +24,9 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.engine-handler.core.events
+(def remove-meta-items! core.events/remove-meta-items!)
 (def set-meta-item!     core.events/set-meta-item!)
 (def remove-meta-item!  core.events/remove-meta-item!)
-(def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-engine-error!  core.events/set-engine-error!)
 

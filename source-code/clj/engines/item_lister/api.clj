@@ -15,14 +15,17 @@
 (ns engines.item-lister.api
     (:require [engines.item-lister.core.effects]
               [engines.item-lister.core.events]
-              [engines.item-lister.core.subs]
               [engines.item-lister.transfer.effects]
+              [engines.item-lister.core.subs        :as core.subs]
               [engines.item-lister.download.helpers :as download.helpers]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
+; engines.item-lister.core.subs
+(def get-lister-prop core.subs/get-lister-prop)
 
 ; engines.item-lister.download.helpers
 (def env->sort-pattern     download.helpers/env->sort-pattern)

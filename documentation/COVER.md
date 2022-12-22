@@ -8,9 +8,11 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 
 ### Clojure namespaces
 
+* [engines.file-editor.api](clj/engines/file-editor/API.md)
 * [engines.item-browser.api](clj/engines/item-browser/API.md)
 * [engines.item-handler.api](clj/engines/item-handler/API.md)
 * [engines.item-lister.api](clj/engines/item-lister/API.md)
+* [engines.item-preview.api](clj/engines/item-preview/API.md)
 
 ### ClojureScript namespaces
 

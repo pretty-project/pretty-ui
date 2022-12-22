@@ -24,5 +24,5 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) editor-id
-  (fn [{:keys [db]} [_ editor-id]]
+  (fn [_ [_ editor-id]]
       [:file-editor/request-content! editor-id]))

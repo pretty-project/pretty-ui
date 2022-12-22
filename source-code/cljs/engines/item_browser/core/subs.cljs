@@ -31,7 +31,6 @@
 (def get-default-item-id    core.subs/get-default-item-id)
 (def get-current-item-id    core.subs/get-current-item-id)
 (def get-current-item-path  core.subs/get-current-item-path)
-(def reload-item?           core.subs/reload-item?)
 (def get-current-item       core.subs/get-current-item)
 (def get-current-item-label core.subs/get-current-item-label)
 (def get-auto-title         core.subs/get-auto-title)
@@ -77,7 +76,8 @@
   ; @return (boolean)
   [db [_ browser-id item-id]]
   ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (r core.subs/current-item? db browser-id item-id))
+  (as-> db % (r core.subs/current-item?   % browser-id item-id)
+             (r body.subs/body-did-mount? % browser-id item-id)))
 
 
 
