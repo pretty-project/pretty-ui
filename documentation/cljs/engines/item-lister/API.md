@@ -7,29 +7,11 @@
 
 - [body](#body)
 
-- [export-selection](#export-selection)
-
-- [export-single-selection](#export-single-selection)
+- [first-data-received?](#first-data-received)
 
 - [get-deleted-item-ids](#get-deleted-item-ids)
 
 - [get-duplicated-item-ids](#get-duplicated-item-ids)
-
-- [get-item](#get-item)
-
-- [get-selected-item-count](#get-selected-item-count)
-
-- [import-selection!](#import-selection)
-
-- [import-single-selection!](#import-single-selection)
-
-- [item-selected?](#item-selected)
-
-- [toggle-item-selection!](#toggle-item-selection)
-
-- [toggle-limited-item-selection!](#toggle-limited-item-selection)
-
-- [toggle-single-item-selection!](#toggle-single-item-selection)
 
 ### body
 
@@ -39,6 +21,9 @@
 {:default-order-by (namespaced keyword)
  :display-progress? (boolean)(opt)
   Default: true
+ :clear-behaviour (keyword)(opt)
+  :none, :on-leave, :on-item-change
+  Default: :none
  :download-limit (integer)(opt)
   Default: core.config/DEFAULT-DOWNLOAD-LIMIT
  :error-element (metamorphic-content)(opt)
@@ -69,40 +54,14 @@
 
 ---
 
-### export-selection
+### first-data-received?
 
 ```
 @param (keyword) lister-id
 ```
 
 ```
-@example
-(r export-selection db :my-lister)
-=>
-["my-item" "your-item"]
-```
-
-```
-@return (strings in vector)
-```
-
----
-
-### export-single-selection
-
-```
-@param (keyword) lister-id
-```
-
-```
-@example
-(r export-single-selection db :my-lister)
-=>
-"my-item"
-```
-
-```
-@return (string)
+@return (boolean)
 ```
 
 ---
@@ -143,150 +102,6 @@
 
 ```
 @return (strings in vector)
-```
-
----
-
-### get-item
-
-```
-@param (keyword) lister-id
-@param (string) item-id
-```
-
-```
-@usage
-(r get-item db :my-lister "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### get-selected-item-count
-
-```
-@param (keyword) lister-id
-```
-
-```
-@usage
-(r get-selected-item-count db :my-lister)
-```
-
-```
-@return (integer)
-```
-
----
-
-### import-selection!
-
-```
-@param (keyword) lister-id
-@param (strings in vector) selected-item-ids
-```
-
-```
-@usage
-(r import-selection! db :my-lister ["my-item" "your-item"])
-```
-
-```
-@return (map)
-```
-
----
-
-### import-single-selection!
-
-```
-@param (keyword) lister-id
-@param (string) selected-item-id
-```
-
-```
-@usage
-(r import-single-selection! db :my-lister "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### item-selected?
-
-```
-@param (keyword) lister-id
-@param (string) item-id
-```
-
-```
-@usage
-(r item-selected? db :my-lister "my-item")
-```
-
-```
-@return (boolean)
-```
-
----
-
-### toggle-item-selection!
-
-```
-@param (keyword) lister-id
-@param (string) item-id
-```
-
-```
-@usage
-(r toggle-item-selection! :my-lister "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### toggle-limited-item-selection!
-
-```
-@param (keyword) lister-id
-@param (string) item-id
-@param (integer) selection-limit
-```
-
-```
-@usage
-(r toggle-limited-item-selection! :my-lister "my-item" 8)
-```
-
-```
-@return (map)
-```
-
----
-
-### toggle-single-item-selection!
-
-```
-@param (keyword) lister-id
-@param (string) item-id
-```
-
-```
-@usage
-(r toggle-single-item-selection! :my-lister "my-item")
-```
-
-```
-@return (map)
 ```
 
 ---

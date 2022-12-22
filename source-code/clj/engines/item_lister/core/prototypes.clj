@@ -27,6 +27,6 @@
   ; @param (map) lister-props
   ;
   ; @return (map)
-  [lister-id {:keys [route-template] :as lister-props}]
+  [lister-id {:keys [] :as lister-props}]
   (merge {}
          (param lister-props)))

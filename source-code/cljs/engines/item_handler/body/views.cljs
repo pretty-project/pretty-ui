@@ -66,6 +66,9 @@
   ; {:auto-title? (boolean)(opt)
   ;   Default: false
   ;   W/ {:label-key ...}
+  ;  :clear-behaviour (keyword)(opt)
+  ;   :none, :on-leave, :on-item-change
+  ;   Default: :none
   ;  :default-item (map)(opt)
   ;  :display-progress? (boolean)(opt)
   ;   Default: true
@@ -74,11 +77,12 @@
   ;  :initial-item (map)(opt)
   ;  :item-element (metamorphic-content)
   ;  :item-id (string)(opt)
-  ;  :item-path (vector)(opt)
-  ;   Default: core.helpers/default-item-path
+  ;  :items-path (vector)(opt)
+  ;   Default: core.helpers/default-items-path
   ;  :label-key (keyword)(opt)
   ;   W/ {:auto-title? true}
   ;  :query (vector)(opt)
+  ;   XXX#7059 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   ;  :suggestion-keys (keywords in vector)(opt)
   ;  :suggestions-path (vector)(opt)
   ;   Default: core.helpers/default-suggestions-path

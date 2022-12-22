@@ -37,13 +37,13 @@
              ; WARNING! NON-PUBLIC! DO NOT USE!
              ;
              ; @param (map) env
-             ;  {:params (map)
-             ;    {:handler-id (keyword)
-             ;     :suggestion-keys (keywords in vector)}}
+             ; {:params (map)
+             ;   {:handler-id (keyword)
+             ;    :suggestion-keys (keywords in vector)}}
              ; @param (map) resolver-props
              ;
              ; @return (map)
-             ;  {:item-handler/get-item-suggestions (map)
+             ; {:item-handler/get-item-suggestions (map)
              [env resolver-props]
              {:item-handler/get-item-suggestions (get-item-suggestions-f env resolver-props)})
 

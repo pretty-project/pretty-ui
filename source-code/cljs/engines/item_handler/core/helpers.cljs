@@ -22,5 +22,5 @@
 
 ; iso.engines.item-handler.core.helpers
 (def component-id             core.helpers/component-id)
-(def default-item-path        core.helpers/default-item-path)
+(def default-items-path       core.helpers/default-items-path)
 (def default-suggestions-path core.helpers/default-suggestions-path)

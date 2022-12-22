@@ -13,13 +13,12 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.update.effects
-    (:require [engines.item-handler.body.subs         :as body.subs]
+    (:require [engines.item-handler.backup.events     :as backup.events]
+              [engines.item-handler.body.subs         :as body.subs]
               [engines.item-handler.core.subs         :as core.subs]
-              [engines.item-handler.update.events     :as update.events]
               [engines.item-handler.update.queries    :as update.queries]
               [engines.item-handler.update.validators :as update.validators]
-              [re-frame.api                           :as r :refer [r]]
-              [x.ui.api                               :as x.ui]))
+              [re-frame.api                           :as r :refer [r]]))
 
 
 
@@ -47,9 +46,8 @@
   (fn [{:keys [db]} [_ handler-id action-props]]
       (let [query        (r update.queries/get-save-item-query          db handler-id)
             validator-f #(r update.validators/save-item-response-valid? db handler-id %)]
-           {:db       (r x.ui/fake-progress! db 15)
-            :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                           (assoc action-props :query query :validator-f)]})))
+           [:pathom/send-query! (r core.subs/get-request-id db handler-id)
+                                (assoc action-props :query query :validator-f)])))
 
 
 
@@ -77,7 +75,7 @@
   (fn [{:keys [db]} [_ handler-id action-props]]
       (let [query        (r update.queries/get-delete-item-query          db handler-id)
             validator-f #(r update.validators/delete-item-response-valid? db handler-id %)]
-           {:db       (r update.events/delete-item! db handler-id)
+           {:db       (r backup.events/backup-current-item! db handler-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
                                            (assoc action-props :query query :validator-f)]})))
 
@@ -110,8 +108,7 @@
       ; ...
       (let [query        (r update.queries/get-undo-delete-item-query          db handler-id item-id)
             validator-f #(r update.validators/undo-delete-item-response-valid? db handler-id %)]
-           {:db       (r x.ui/fake-progress! db 15)
-            :dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
+           {:dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db handler-id)
                                               (assoc action-props :query query :validator-f)]]})))
 

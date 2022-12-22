@@ -29,13 +29,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn default-item-path
+(defn default-items-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) preview-id
   ;
   ; @example
-  ; (default-item-path :my-preview)
+  ; (default-items-path :my-preview)
   ; =>
   ; [:engines :engine-handler/downloaded-items :my-preview]
   ;

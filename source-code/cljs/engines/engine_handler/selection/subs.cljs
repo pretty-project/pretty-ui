@@ -31,8 +31,6 @@
   ; @return (strings in vector)
   [db [_ engine-id]]
   ; XXX#8891 (source-code/cljs/engines/engine_handler/selection/README.md)
-  ; Az export-selection függvény visszatérési értéke a kijelölt listaelemek
-  ; azonosítói egy vektorban felsorolva.
   (r core.subs/get-meta-item db engine-id :selected-items))
 
 (defn export-single-selection
@@ -61,30 +59,18 @@
   (let [selected-items (r core.subs/get-meta-item db engine-id :selected-items)]
        (count selected-items)))
 
-(defn all-items-selected?
+(defn all-listed-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
   ;
   ; @return (boolean)
   [db [_ engine-id]]
-  (let [selected-items-count  (r get-selected-item-count             db engine-id)
-        downloaded-item-count (r core.subs/get-downloaded-item-count db engine-id)]
-       (and (not= downloaded-item-count 0)
-            (= selected-items-count downloaded-item-count))))
-
-(defn all-downloaded-items-selected?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ;
-  ; @return (boolean)
-  [db [_ engine-id]]
-  (let [downloaded-items (r core.subs/get-downloaded-items db engine-id)
-        selected-items   (r core.subs/get-meta-item        db engine-id :selected-items)]
+  (let [listed-items   (r core.subs/get-listed-items db engine-id)
+        selected-items (r core.subs/get-meta-item    db engine-id :selected-items)]
        (letfn [(f [{:keys [id]}] (not (vector/contains-item? selected-items id)))]
-              (if (vector/min? downloaded-items 1)
-                  (not (some f downloaded-items))))))
+              (if (vector/min? listed-items 1)
+                  (not (some f listed-items))))))
 
 (defn any-item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,17 +82,17 @@
   (let [selected-items (r core.subs/get-meta-item db engine-id :selected-items)]
        (vector/nonempty? selected-items)))
 
-(defn any-downloaded-item-selected?
+(defn any-listed-item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
   ;
   ; @return (boolean)
   [db [_ engine-id]]
-  (let [downloaded-items (r core.subs/get-downloaded-items db engine-id)
-        selected-items   (r core.subs/get-meta-item        db engine-id :selected-items)]
+  (let [listed-items   (r core.subs/get-listed-items db engine-id)
+        selected-items (r core.subs/get-meta-item    db engine-id :selected-items)]
        (letfn [(f [{:keys [id]}] (vector/contains-item? selected-items id))]
-              (some f downloaded-items))))
+              (some f listed-items))))
 
 (defn no-items-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -116,7 +102,7 @@
   ; @return (boolean)
   [db [_ engine-id]]
   (let [selected-items (r core.subs/get-meta-item db engine-id :selected-items)]
-       (-> selected-items vector/nonempty? not)))
+       (empty? selected-items)))
 
 (defn item-selected?
   ; WARNING! NON-PUBLIC! DO NOT USE!

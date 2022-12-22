@@ -25,7 +25,5 @@
   ;
   ; @param (keyword) engine-id
   ; @param (map) engine-props
-  (fn [_ [_ engine-id {:keys [base-route extended-route] :as engine-props}]]
-      {:dispatch-n [[:engine-handler/reg-transfer-engine-props! engine-id engine-props]
-                    (if base-route     [:view-selector/add-base-route!     engine-id engine-props])
-                    (if extended-route [:view-selector/add-extended-route! engine-id engine-props])]}))
+  (fn [_ [_ engine-id engine-props]]
+      [:engine-handler/reg-transfer-engine-props! engine-id engine-props]))

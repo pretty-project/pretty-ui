@@ -41,6 +41,6 @@
           :items-path        (core.helpers/default-items-path lister-id)
           :order-key         :order
           :placeholder       :no-items-to-show
-          ; XXX#8173
+          ; XXX#8173 (source-code/cljs/engines/engine_handler/transfer/README.md)
           :transfer-id lister-id}
          (param body-props)))

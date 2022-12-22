@@ -13,25 +13,22 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.api
-    (:require [pathom.api]
-              [engines.item-handler.backup.events]
-              [engines.item-handler.body.effects]
+    (:require [engines.item-handler.body.effects]
               [engines.item-handler.body.events]
               [engines.item-handler.core.effects]
               [engines.item-handler.download.effects]
               [engines.item-handler.download.events]
               [engines.item-handler.download.subs]
-              [engines.item-handler.routes.effects]
               [engines.item-handler.transfer.subs]
               [engines.item-handler.update.effects]
               [engines.item-handler.update.subs]
-              [engines.item-handler.body.subs   :as body.subs]
-              [engines.item-handler.backup.subs :as backup.subs]
-              [engines.item-handler.body.views  :as body.views]
-              [engines.item-handler.core.events :as core.events]
-              [engines.item-handler.core.subs   :as core.subs]
-              [engines.item-handler.routes.subs :as routes.subs]
-              [engines.item-handler.update.subs :as update.subs]))
+              [engines.item-handler.backup.events :as backup.events]
+              [engines.item-handler.backup.subs   :as backup.subs]
+              [engines.item-handler.body.subs     :as body.subs]
+              [engines.item-handler.body.views    :as body.views]
+              [engines.item-handler.core.events   :as core.events]
+              [engines.item-handler.core.subs     :as core.subs]
+              [engines.item-handler.update.subs   :as update.subs]))
 
 
 
@@ -41,9 +38,12 @@
 ; engines.item-handler.body.subs
 (def body-did-mount? body.subs/body-did-mount?)
 
+; engines.item-handler.backup.events
+(def revert-current-item! backup.events/revert-current-item!)
+(def current-item-changed backup.events/current-item-changed)
+
 ; engines.item-handler.backup.subs
-(def item-changed? backup.subs/item-changed?)
-(def form-changed? backup.subs/form-changed?)
+(def current-item-changed? backup.subs/current-item-changed?)
 
 ; engines.item-handler.body.views
 (def body body.views/body)
@@ -53,15 +53,15 @@
 (def set-item-id!   core.events/set-item-id!)
 
 ; engines.item-handler.core.subs
-(def get-meta-item       core.subs/get-meta-item)
-(def get-current-item-id core.subs/get-current-item-id)
-(def get-current-item    core.subs/get-current-item)
-(def export-current-item core.subs/export-current-item)
-(def handling-item?      core.subs/handling-item?)
-
-; engines.item-handler.routes.subs
-(def get-item-route routes.subs/get-item-route)
+(def get-meta-item          core.subs/get-meta-item)
+(def get-current-item-id    core.subs/get-current-item-id)
+(def get-current-item       core.subs/get-current-item)
+(def get-current-item-value core.subs/get-current-item-value)
+(def export-current-item    core.subs/export-current-item)
+(def handling-item?         core.subs/handling-item?)
 
 ; engines.item-handler.update.subs
-(def get-deleted-item-id    update.subs/get-deleted-item-id)
-(def get-duplicated-item-id update.subs/get-duplicated-item-id)
+(def get-saved-item-id     update.subs/get-saved-item-id)
+(def get-deleted-item-id   update.subs/get-deleted-item-id)
+(def get-copy-item-id      update.subs/get-copy-item-id)
+(def get-recovered-item-id update.subs/get-recovered-item-id)

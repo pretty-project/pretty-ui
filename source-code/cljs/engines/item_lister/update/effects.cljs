@@ -19,8 +19,7 @@
               [engines.item-lister.update.events     :as update.events]
               [engines.item-lister.update.queries    :as update.queries]
               [engines.item-lister.update.validators :as update.validators]
-              [re-frame.api                          :as r :refer [r]]
-              [x.ui.api                              :as x.ui]))
+              [re-frame.api                          :as r :refer [r]]))
 
 
 
@@ -113,8 +112,7 @@
   (fn [{:keys [db]} [_ lister-id item-ids action-props]]
       (let [query        (r update.queries/get-undo-delete-items-query          db lister-id item-ids)
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
-           {:db         (r x.ui/fake-progress! db 15)
-            :dispatch-n [[:x.ui/remove-bubble! ::items-deleted-dialog]
+           {:dispatch-n [[:x.ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
                                               (assoc action-props :query query :validator-f)]]})))
 
@@ -145,6 +143,5 @@
       (let [item-ids     (r selection.subs/export-selection                   db lister-id)
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
-           {:db       (r x.ui/fake-progress! db 15)
-            :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                           (assoc action-props :query query :validator-f)]})))
+           [:pathom/send-query! (r core.subs/get-request-id db lister-id)
+                                (assoc action-props :query query :validator-f)])))

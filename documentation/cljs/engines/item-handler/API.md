@@ -7,17 +7,21 @@
 
 - [body](#body)
 
-- [form-changed?](#form-changed)
+- [current-item-changed](#current-item-changed)
+
+- [current-item-changed?](#current-item-changed)
+
+- [get-copy-item-id](#get-copy-item-id)
 
 - [get-deleted-item-id](#get-deleted-item-id)
 
-- [get-duplicated-item-id](#get-duplicated-item-id)
+- [get-recovered-item-id](#get-recovered-item-id)
 
-- [get-item-route](#get-item-route)
+- [get-saved-item-id](#get-saved-item-id)
 
 - [handling-item?](#handling-item)
 
-- [item-changed?](#item-changed)
+- [revert-current-item!](#revert-current-item)
 
 ### body
 
@@ -27,6 +31,9 @@
 {:auto-title? (boolean)(opt)
   Default: false
   W/ {:label-key ...}
+ :clear-behaviour (keyword)(opt)
+  :none, :on-leave, :on-item-change
+  Default: :none
  :default-item (map)(opt)
  :display-progress? (boolean)(opt)
   Default: true
@@ -35,11 +42,12 @@
  :initial-item (map)(opt)
  :item-element (metamorphic-content)
  :item-id (string)(opt)
- :item-path (vector)(opt)
-  Default: core.helpers/default-item-path
+ :items-path (vector)(opt)
+  Default: core.helpers/default-items-path
  :label-key (keyword)(opt)
   W/ {:auto-title? true}
  :query (vector)(opt)
+  XXX#7059 (source-code/cljs/engines/engine_handler/core/subs.cljs)
  :suggestion-keys (keywords in vector)(opt)
  :suggestions-path (vector)(opt)
   Default: core.helpers/default-suggestions-path
@@ -59,20 +67,62 @@
 
 ---
 
-### form-changed?
+### current-item-changed
+
+```
+@description
+Checks whether the item really changed, if yes the function stores the
+{:changed? true} meta-item in the item.
+```
 
 ```
 @param (keyword) handler-id
-@param (keywords in vector) change-keys
 ```
 
 ```
 @usage
-(r form-changed? db :my-handler [:name :email-address])
+(r current-item-changed! db handler-id)
+```
+
+```
+@return (map)
+```
+
+---
+
+### current-item-changed?
+
+```
+@param (keyword) handler-id
+```
+
+```
+@usage
+(r current-item-changed? db :my-handler)
 ```
 
 ```
 @return (boolean)
+```
+
+---
+
+### get-copy-item-id
+
+```
+@param (keyword) handler-id
+@param (map) server-response
+```
+
+```
+@example
+(r get-copy-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+=>
+"my-item"
+```
+
+```
+@return (string)
 ```
 
 ---
@@ -97,16 +147,16 @@
 
 ---
 
-### get-duplicated-item-id
+### get-recovered-item-id
 
 ```
-@param (keyword) handler-id
+@param (keyword) viewer-id
 @param (map) server-response
 ```
 
 ```
 @example
-(r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+(r get-recovered-item-id :my-viewer {my-handler/undo-delete-item! {:my-type/id "my-item"}})
 =>
 "my-item"
 ```
@@ -117,18 +167,18 @@
 
 ---
 
-### get-item-route
+### get-saved-item-id
 
 ```
 @param (keyword) handler-id
-@param (string) item-id
+@param (map) server-response
 ```
 
 ```
 @example
-(r get-item-route db :my-handler "my-item")
+(r get-saved-item-id :my-handler {my-handler/save-item! {:my-type/id "my-item"}})
 =>
-"/@app-home/my-handler/my-item"
+"my-item"
 ```
 
 ```
@@ -155,14 +205,19 @@
 
 ---
 
-### item-changed?
+### revert-current-item!
 
 ```
 @param (keyword) handler-id
 ```
 
 ```
-@return (boolean)
+@usage
+(r revert-current-item! db handler-id)
+```
+
+```
+@return (map)
 ```
 
 ---

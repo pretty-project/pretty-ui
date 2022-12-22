@@ -94,7 +94,7 @@
   [env browser-id]
   ; Az item-lister engine env->pipeline-props függvényét kiegészíti a kollekció elemeinek
   ; szűrésével, hogy a csak azok az elemek jelenjenek meg a item-browser böngészőben, amelyek
-  ; az aktuálisan böngészett elem :namespace/items vektorában fel vannak sorolva.
+  ; az aktuálisan böngészett elem items-key kulcshoz tartozó vektorában fel vannak sorolva.
   (let [item-links     (env->item-links env browser-id)
         filter-pattern (if-let [filter-pattern (pathom/env->param env :filter-pattern)]
                                {:$and [filter-pattern {:$or item-links}]}

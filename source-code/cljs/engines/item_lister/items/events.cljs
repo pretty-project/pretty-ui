@@ -14,56 +14,29 @@
 
 (ns engines.item-lister.items.events
     (:require [engines.engine-handler.items.events :as items.events]
-              [re-frame.api                        :as r :refer [r]]))
+              [re-frame.api                        :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn disable-items!
-  ; @param (keyword) lister-id
-  ; @param (integers in vector) item-dexes
-  ;
-  ; @usage
-  ; (r disable-items! db :my-lister [0 1 4])
-  ;
-  ; @return (map)
-  [db [_ lister-id item-dexes]]
-  (r items.events/disable-items! db lister-id item-dexes))
+; engines.engine-handler.items.events
+(def disable-items!    items.events/disable-items!)
+(def enable-items!     items.events/enable-items!)
+(def enable-all-items! items.events/enable-all-items!)
 
-(defn enable-items!
-  ; @param (keyword) lister-id
-  ; @param (integers in vector) item-dexes
-  ;
-  ; @usage
-  ; (r enable-items! db :my-lister [0 1 4])
-  ;
-  ; @return (map)
-  [db [_ lister-id item-dexes]]
-  (r items.events/enable-items! db lister-id item-dexes))
-
-(defn enable-all-items!
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r enable-all-items! db :my-lister)
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r items.events/enable-all-items! db lister-id))
-
-
+ 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @usage
-; [:item-lister/disable-items! :my-lister [0 1 4]]
+; [:item-lister/disable-items! :my-lister ["my-item" "your-item"]]
 (r/reg-event-db :item-lister/disable-items! disable-items!)
 
 ; @usage
-; [:item-lister/enable-items! :my-lister [0 1 4]]
+; [:item-lister/enable-items! :my-lister ["my-item" "your-item"]]
 (r/reg-event-db :item-lister/enable-items! enable-items!)
 
 ; @usage

@@ -69,6 +69,9 @@
   ; {:auto-title? (boolean)(opt)
   ;   Default: false
   ;   W/ {:label-key ...}
+  ;  :clear-behaviour (keyword)(opt)
+  ;   :none, :on-leave, :on-item-change
+  ;   Default: :none
   ;  :default-item-id (string)
   ;  :default-order-by (namespaced keyword)
   ;  :display-progress? (boolean)(opt)
@@ -78,8 +81,6 @@
   ;  :error-element (metamorphic-content)(opt)
   ;  :ghost-element (metamorphic-content)(opt)
   ;  :item-id (string)(opt)
-  ;  :item-path (vector)(opt)
-  ;   Default: core.helpers/default-item-path
   ;  :items-key (keyword)
   ;  :items-path (vector)(opt)
   ;   Default: core.helpers/default-items-path

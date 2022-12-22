@@ -49,7 +49,8 @@
   ; @return (string)
   [db [_ handler-id server-response]]
   (let [new-item?      (r core.subs/new-item? db handler-id)
-        saved-item     (r get-mutation-answer db handler-id (if new-item? :add-item! :save-item!) server-response)
+        action-key     (if new-item? :add-item! :save-item!)
+        saved-item     (r get-mutation-answer db handler-id action-key server-response)
         item-namespace (r transfer.subs/get-transfer-item db handler-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
        (id-key saved-item)))
@@ -79,20 +80,43 @@
 ;; -- Duplicate item subscriptions --------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-duplicated-item-id
+(defn get-copy-item-id
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
   ; @param (map) server-response
   ;
   ; @example
-  ; (r get-duplicated-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
+  ; (r get-copy-item-id :my-handler {my-handler/duplicate-item! {:my-type/id "my-item"}})
   ; =>
   ; "my-item"
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
-  (let [duplicated-item (r update.subs/get-mutation-answer db handler-id :duplicate-item! server-response)
-        item-namespace  (r transfer.subs/get-transfer-item db handler-id :item-namespace)
+  (let [copy-item      (r update.subs/get-mutation-answer db handler-id :duplicate-item! server-response)
+        item-namespace (r transfer.subs/get-transfer-item db handler-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
-       (id-key duplicated-item)))
+       (id-key copy-item)))
+
+
+
+;; -- Undo delete item subscriptions ------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-recovered-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) viewer-id
+  ; @param (map) server-response
+  ;
+  ; @example
+  ; (r get-recovered-item-id :my-viewer {my-handler/undo-delete-item! {:my-type/id "my-item"}})
+  ; =>
+  ; "my-item"
+  ;
+  ; @return (string)
+  [db [_ viewer-id server-response]]
+  (let [recovered-item (r update.subs/get-mutation-answer db viewer-id :undo-delete-item! server-response)
+        item-namespace (r transfer.subs/get-transfer-item db viewer-id :item-namespace)
+        id-key         (keyword/add-namespace item-namespace :id)]
+       (id-key recovered-item)))

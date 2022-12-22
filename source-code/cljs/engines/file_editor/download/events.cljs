@@ -52,13 +52,7 @@
   ;
   ; @return (map)
   [db [_ editor-id server-response]]
-  ; XXX#3907
-  ; A többi engine-nel megegyezően az file-editor engine is névtér nélkül
-  ; tárolja a letöltött tartalmat.
-  ;
-  ; XXX#3400
-  ; A tartalomról letöltéskor másolat készül, hogy a "Visszaállítás (revert)" gomb
-  ; használatával a tartalom letöltéskori állapota visszaállítható legyen.
+  ; XXX#3907 (source-code/cljs/engines/engine_handler/README.md)
   (let [received-content (r download.subs/get-resolver-answer db editor-id :get-content server-response)
         content-path     (r body.subs/get-body-prop           db editor-id :content-path)]
        (assoc-in db content-path (map/remove-namespace received-content))))

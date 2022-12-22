@@ -33,10 +33,7 @@
 (r/reg-event-fx :init-my-browser!
   [:item-browser/init-browser! :my-browser
                                {:collection-name "my_collection"
-                                :handler-key     :my-handler
-                                :on-route        [:my-event]
-                                :route-template  "/@app-home/my-browser"
-                                :route-title     "My browser"}])
+                                :handler-key     :my-handler}])
 
 
 

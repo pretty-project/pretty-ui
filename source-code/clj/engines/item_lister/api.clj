@@ -16,7 +16,6 @@
     (:require [engines.item-lister.core.effects]
               [engines.item-lister.core.events]
               [engines.item-lister.core.subs]
-              [engines.item-lister.routes.effects]
               [engines.item-lister.transfer.effects]
               [engines.item-lister.download.helpers :as download.helpers]))
 

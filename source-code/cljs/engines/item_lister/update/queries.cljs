@@ -31,7 +31,7 @@
   ; @return (map)
   ; {:items (maps in vector)}
   [db [_ lister-id]]
-  (let [reordered-items (r core.subs/export-downloaded-items db lister-id)]
+  (let [reordered-items (r core.subs/export-listed-items db lister-id)]
        (r core.subs/use-query-params db lister-id {:items reordered-items})))
 
 (defn get-reorder-items-query

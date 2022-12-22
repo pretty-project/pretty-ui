@@ -31,7 +31,6 @@
 (def remove-meta-items! core.events/remove-meta-items!)
 (def set-mode!          core.events/set-mode!)
 (def set-engine-error!  core.events/set-engine-error!)
-(def set-items!         core.events/set-items!)
 
 
 

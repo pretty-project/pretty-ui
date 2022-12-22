@@ -9,39 +9,15 @@
 
 - [browsing-item?](#browsing-item)
 
-- [export-selection](#export-selection)
-
-- [export-single-selection](#export-single-selection)
-
 - [get-copy-item-id](#get-copy-item-id)
 
 - [get-deleted-item-id](#get-deleted-item-id)
-
-- [get-item](#get-item)
-
-- [get-item-route](#get-item-route)
 
 - [get-parent-item-id](#get-parent-item-id)
 
 - [get-recovered-item-id](#get-recovered-item-id)
 
-- [get-selected-item-count](#get-selected-item-count)
-
-- [import-selection!](#import-selection)
-
-- [import-single-selection!](#import-single-selection)
-
-- [item-downloaded?](#item-downloaded)
-
-- [item-selected?](#item-selected)
-
 - [parent-item-browsed?](#parent-item-browsed)
-
-- [toggle-item-selection!](#toggle-item-selection)
-
-- [toggle-limited-item-selection!](#toggle-limited-item-selection)
-
-- [toggle-single-item-selection!](#toggle-single-item-selection)
 
 ### body
 
@@ -51,6 +27,9 @@
 {:auto-title? (boolean)(opt)
   Default: false
   W/ {:label-key ...}
+ :clear-behaviour (keyword)(opt)
+  :none, :on-leave, :on-item-change
+  Default: :none
  :default-item-id (string)
  :default-order-by (namespaced keyword)
  :display-progress? (boolean)(opt)
@@ -60,8 +39,6 @@
  :error-element (metamorphic-content)(opt)
  :ghost-element (metamorphic-content)(opt)
  :item-id (string)(opt)
- :item-path (vector)(opt)
-  Default: core.helpers/default-item-path
  :items-key (keyword)
  :items-path (vector)(opt)
   Default: core.helpers/default-items-path
@@ -110,44 +87,6 @@
 
 ---
 
-### export-selection
-
-```
-@param (keyword) browser-id
-```
-
-```
-@example
-(r export-selection db :my-browser)
-=>
-["my-item" "your-item"]
-```
-
-```
-@return (strings in vector)
-```
-
----
-
-### export-single-selection
-
-```
-@param (keyword) browser-id
-```
-
-```
-@example
-(r export-single-selection db :my-browser)
-=>
-"my-item"
-```
-
-```
-@return (string)
-```
-
----
-
 ### get-copy-item-id
 
 ```
@@ -180,44 +119,6 @@
 (r get-deleted-item-id :my-browser {my-handler/delete-item! "my-item"})
 =>
 "my-item"
-```
-
-```
-@return (string)
-```
-
----
-
-### get-item
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@usage
-(r get-item db :my-browser "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### get-item-route
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@example
-(r get-item-route db :my-browser "my-item")
-=>
-"/@app-home/my-browser/my-item"
 ```
 
 ```
@@ -263,95 +164,6 @@
 
 ---
 
-### get-selected-item-count
-
-```
-@param (keyword) browser-id
-```
-
-```
-@usage
-(r get-selected-item-count db :my-browser)
-```
-
-```
-@return (integer)
-```
-
----
-
-### import-selection!
-
-```
-@param (keyword) browser-id
-@param (strings in vector) selected-item-ids
-```
-
-```
-@usage
-(r import-selection! db :my-browser ["my-item" "your-item"])
-```
-
-```
-@return (map)
-```
-
----
-
-### import-single-selection!
-
-```
-@param (keyword) browser-id
-@param (string) selected-item-id
-```
-
-```
-@usage
-(r import-single-selection! db :my-browser "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### item-downloaded?
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@usage
-(r item-downloaded? db :my-browser "my-item")
-```
-
-```
-@return (boolean)
-```
-
----
-
-### item-selected?
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@usage
-(r item-selected? db :my-browser "my-item")
-```
-
-```
-@return (boolean)
-```
-
----
-
 ### parent-item-browsed?
 
 ```
@@ -367,61 +179,6 @@
 
 ```
 @return (boolean)
-```
-
----
-
-### toggle-item-selection!
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@usage
-(r toggle-item-selection! :my-browser "my-item")
-```
-
-```
-@return (map)
-```
-
----
-
-### toggle-limited-item-selection!
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-@param (integer) selection-limit
-```
-
-```
-@usage
-(r toggle-limited-item-selection! :my-browser "my-item" 8)
-```
-
-```
-@return (map)
-```
-
----
-
-### toggle-single-item-selection!
-
-```
-@param (keyword) browser-id
-@param (string) item-id
-```
-
-```
-@usage
-(r toggle-single-item-selection! :my-browser "my-item")
-```
-
-```
-@return (map)
 ```
 
 ---

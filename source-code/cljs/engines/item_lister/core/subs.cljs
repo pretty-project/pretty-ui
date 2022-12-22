@@ -25,13 +25,17 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.engine-handler.core.subs
-(def get-meta-item             core.subs/get-meta-item)
-(def engine-synchronizing?     core.subs/engine-synchronizing?)
-(def get-downloaded-items      core.subs/get-downloaded-items)
-(def export-downloaded-items   core.subs/export-downloaded-items)
-(def get-downloaded-item-count core.subs/get-downloaded-item-count)
-(def use-query-prop            core.subs/use-query-prop)
-(def use-query-params          core.subs/use-query-params)
+(def get-meta-item         core.subs/get-meta-item)
+(def engine-synchronizing? core.subs/engine-synchronizing?)
+(def get-item-path         core.subs/get-item-path)
+(def get-downloaded-item   core.subs/get-downloaded-item)
+(def get-item-order        core.subs/get-item-order)
+(def get-listed-items      core.subs/get-listed-items)
+(def get-listed-item-count core.subs/get-listed-item-count)
+(def export-listed-items   core.subs/export-listed-items)
+(def item-listed?          core.subs/item-listed?)
+(def use-query-prop        core.subs/use-query-prop)
+(def use-query-params      core.subs/use-query-params)
 
 
 
@@ -68,8 +72,8 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (let [downloaded-items (r get-downloaded-items db lister-id)]
-       (empty? downloaded-items)))
+  (let [item-order (r get-item-order db lister-id)]
+       (empty? item-order)))
 
 (defn get-all-item-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,10 +97,10 @@
   ; = vizsgálat helyett szükséges >= vizsgálatot alkalmazni, hogy ha hibásan
   ; nagyobb a downloaded-item-count értéke, mint az all-item-count értéke,
   ; akkor ne próbáljon további feltételezett elemeket letölteni.
-  (let [       all-item-count (r        get-all-item-count    db lister-id)
-        downloaded-item-count (r get-downloaded-item-count    db lister-id)
-        data-received?        (r download.subs/data-received? db lister-id)]
-       (and data-received? (>= downloaded-item-count all-item-count))))
+  (let [   all-item-count (r    get-all-item-count        db lister-id)
+        listed-item-count (r get-listed-item-count        db lister-id)
+        data-received?    (r download.subs/data-received? db lister-id)]
+       (and data-received? (>= listed-item-count all-item-count))))
 
 (defn no-items-received?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -213,8 +217,8 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-; [:item-lister/get-downloaded-item-count :my-lister]
-(r/reg-sub :item-lister/get-downloaded-item-count get-downloaded-item-count)
+; [:item-lister/get-listed-item-count :my-lister]
+(r/reg-sub :item-lister/get-listed-item-count get-listed-item-count)
 
 ; @param (keyword) lister-id
 ;
@@ -225,8 +229,8 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-; [:item-lister/get-downloaded-items :my-lister]
-(r/reg-sub :item-lister/get-downloaded-items get-downloaded-items)
+; [:item-lister/get-listed-items :my-lister]
+(r/reg-sub :item-lister/get-listed-items get-listed-items)
 
 ; @param (keyword) lister-id
 ;

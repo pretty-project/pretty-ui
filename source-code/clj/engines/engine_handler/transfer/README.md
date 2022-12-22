@@ -1,5 +1,5 @@
 
-### What kind of data is sent by the transfer.clj files?
+### What kind of data is sent by the transfer.clj file?
 
 ###### XXX#1467
 

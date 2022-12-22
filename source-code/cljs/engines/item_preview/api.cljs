@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-preview.api
-    (:require [pathom.api]
-              [engines.item-preview.body.effects]
+    (:require [engines.item-preview.body.effects]
               [engines.item-preview.body.events]
               [engines.item-preview.body.subs]
               [engines.item-preview.core.effects]

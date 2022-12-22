@@ -16,7 +16,6 @@
     (:require [engines.item-browser.core.effects]
               [engines.item-browser.core.events]
               [engines.item-browser.core.subs]
-              [engines.item-browser.routes.effects]
               [engines.item-browser.transfer.effects]
               [engines.item-browser.download.helpers :as download.helpers]
               [engines.item-browser.update.helpers   :as update.helpers]))

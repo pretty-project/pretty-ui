@@ -12,15 +12,21 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-editor.core.helpers
-    (:require [iso.engines.item-editor.core.helpers :as core.helpers]))
+(ns engines.engine-handler.download.helpers
+    (:require [keyword.api :as keyword]
+              [map.api     :as map]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; iso.engines.item-editor.core.helpers
-(def component-id             core.helpers/component-id)
-(def default-item-path        core.helpers/default-item-path)
-(def default-suggestions-path core.helpers/default-suggestions-path)
+(defn received-item->item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (namespaced map) received-item
+  ;
+  ; @return (string)
+  [received-item]
+  (let [namespace (map/get-namespace received-item)]
+       ((keyword/add-namespace namespace :id) received-item)))

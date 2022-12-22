@@ -29,19 +29,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn default-item-path
+(defn default-items-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
   ;
   ; @example
-  ; (default-item-path :my-handler)
+  ; (default-items-path :my-handler)
   ; =>
-  ; [:engines :engine-handler/handled-items :my-handler]
+  ; [:engines :engine-handler/downloaded-items :my-handler]
   ;
   ; @return (vector)
   [handler-id]
-  (default-data-path handler-id :handled-items))
+  (default-data-path handler-id :downloaded-items))
 
 (defn default-suggestions-path
   ; WARNING! NON-PUBLIC! DO NOT USE!

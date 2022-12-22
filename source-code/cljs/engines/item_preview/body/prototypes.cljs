@@ -29,11 +29,11 @@
   ;
   ; @return (map)
   ; {:display-progress? (boolean)
-  ;  :item-path (vector)
+  ;  :items-path (vector)
   ;  :transfer-id (keyword)}
   [preview-id body-props]
   (merge {:display-progress? false
-          :item-path         (core.helpers/default-item-path preview-id)
-          ; XXX#8173
+          :items-path        (core.helpers/default-items-path preview-id)
+          ; XXX#8173 (source-code/cljs/engines/engine_handler/transfer/README.md)
           :transfer-id preview-id}
          (param body-props)))

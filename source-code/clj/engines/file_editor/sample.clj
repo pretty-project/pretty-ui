@@ -25,22 +25,15 @@
 ;; ----------------------------------------------------------------------------
 
 ; Az engine használatához SZÜKSÉGES megadni ...
-; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver függvények neveiben
-;    névtérként használ.
+; ... a {:handler-key ...} tulajdonságot, amit az engine a mutation és resolver
+;     függvények neveiben
+;     névtérként használ.
 ;
 ; Az engine használatához OPCIONÁLISAN megadható ...
-; ... a {:base-route "..."} tulajdonság, ami alapján az engine regisztrálja a példa szerinti
-;    "/@app-home/my-editor" útvonalat.
-; ... az {:on-route ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;    történik meg.
-; ... a {:route-title ...} tulajdonság, ami az engine által a példában regisztrált útvonalak használatakor
-;    beállítódik az applikáció címkéjének.
+; ...
 (r/reg-event-fx :init-my-editor!
   [:file-editor/init-editor! :my-editor
-                             {:base-route  "/@app-home/my-editor"
-                              :handler-key :my-handler
-                              :on-route    [:my-event]
-                              :route-title "My editor"}])
+                             {:handler-key :my-handler}])
 
 
 

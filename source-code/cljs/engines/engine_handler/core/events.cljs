@@ -13,12 +13,11 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.core.events
-    (:require [candy.api                          :refer [return]]
-              [engines.engine-handler.body.subs   :as body.subs]
-              [engines.engine-handler.core.subs   :as core.subs]
-              [engines.engine-handler.routes.subs :as routes.subs]
-              [map.api                            :refer [dissoc-in]]
-              [re-frame.api                       :refer [r]]))
+    (:require [candy.api                        :refer [return]]
+              [engines.engine-handler.body.subs :as body.subs]
+              [engines.engine-handler.core.subs :as core.subs]
+              [map.api                          :refer [dissoc-in]]
+              [re-frame.api                     :refer [r]]))
 
 
 
@@ -119,7 +118,7 @@
   ;
   ; @return (map)
   [db [_ engine-id param-key param-value]]
-  ; XXX#7061
+  ; XXX#7061 (source-code/cljs/engines/engine_handler/README.md)
   (assoc-in db [:engines :engine-handler/meta-items engine-id :query-params param-key] param-value))
 
 (defn remove-query-param!
@@ -130,7 +129,7 @@
   ;
   ; @return (map)
   [db [_ engine-id param-key]]
-  ; XXX#7061
+  ; XXX#7061 (source-code/cljs/engines/engine_handler/README.md)
   (dissoc-in db [:engines :engine-handler/meta-items engine-id :query-params param-key]))
 
 
@@ -165,33 +164,16 @@
   ; @return (map)
   [db [_ engine-id]]
   ; XXX#9143
-  ; Az engine által aktuálisan kezelt elem azonosítójának különböző lehetséges
-  ; forrásaiból, azok prioritása szerint aktualizálja a current-item-id értékét.
-  ;
-  ; (A) Ha az engine útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;     1. az aktuális útvonal :item-id útvonal-paramétere
-  ;     2. a body komponens {:item-id "..."} tulajdonsága.
-  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
-  ;
-  ; (B) Ha az engine NEM útvonal-vezérelt, akkor az aktuális elem azonosítójának forrása ...
-  ;     1. az engine eseményei vagy a engine-t használó modul eseményei által előre beállított érték.
-  ;     2. a body komponens {:item-id "..."} tulajdonsága.
-  ;     3. a body komponens {:default-item-id "..."} tulajdonsága.
-  (if-let [route-handled? (r routes.subs/route-handled? db engine-id)]
-          ; (A)
-          (if-let [derived-item-id (r routes.subs/get-derived-item-id db engine-id)]
-                  (r set-item-id! db engine-id derived-item-id)
-                  (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
-                          (r set-item-id! db engine-id item-id)
-                          (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
-                               (r set-item-id! db engine-id default-item-id))))
-          ; (B)
-          (if-let [current-item-id (r core.subs/get-current-item-id db engine-id)]
-                  (return db)
-                  (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
-                          (r set-item-id! db engine-id item-id)
-                          (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
-                               (r set-item-id! db engine-id default-item-id))))))
+  ; The current item's id derived from ...
+  ; 1. the previously set value, set by the engine or a module which uses the engine.
+  ; 2. the body component's {:item-id "..."} property.
+  ; 3. the body component's {:default-item-id "..."} property.
+  (if-let [current-item-id (r core.subs/get-current-item-id db engine-id)]
+          (return db)
+          (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
+                  (r set-item-id! db engine-id item-id)
+                  (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
+                       (r set-item-id! db engine-id default-item-id)))))
 
 
 
@@ -225,34 +207,9 @@
   ; @return (map)
   [db [_ engine-id]]
   ; XXX#9143
-  (if-let [route-handled? (r routes.subs/route-handled? db engine-id)]
-          ; (A)
-          (if-let [derived-view-id (r routes.subs/get-derived-view-id db engine-id)]
-                  (r set-view-id! db engine-id derived-view-id)
-                  (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]
-                          (r set-view-id! db engine-id view-id)
-                          (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
-                               (r set-view-id! db engine-id default-view-id))))
-          ; (B)
-          (if-let [current-view-id (r core.subs/get-current-view-id db engine-id)]
-                  (return db)
-                  (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]
-                          (r set-view-id! db engine-id view-id)
-                          (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
-                               (r set-view-id! db engine-id default-view-id))))))
-
-
-
-;; -- Downloaded items events -------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn set-items!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (vector) items
-  ;
-  ; @return (maps in vector)
-  [db [_ engine-id items]]
-  (let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-       (assoc-in db items-path items)))
+  (if-let [current-view-id (r core.subs/get-current-view-id db engine-id)]
+          (return db)
+          (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]
+                  (r set-view-id! db engine-id view-id)
+                  (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
+                       (r set-view-id! db engine-id default-view-id)))))

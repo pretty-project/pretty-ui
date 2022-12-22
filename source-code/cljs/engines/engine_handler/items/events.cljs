@@ -13,34 +13,33 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.items.events
-    (:require [map.api      :refer [dissoc-in]]
-              [re-frame.api :refer [r]]
-              [vector.api   :as vector]))
+    (:require [map.api    :refer [dissoc-in]]
+              [vector.api :as vector]))
 
 
 
-;; ----------------------------------------------------------------------------
+;; -- Multiple item events ----------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn disable-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
-  ; @param (integers in vector) item-dexes
+  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ engine-id item-dexes]]
-  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/concat-items item-dexes))
+  [db [_ engine-id item-ids]]
+  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/concat-items-once item-ids))
 
 (defn enable-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
-  ; @param (integers in vector) item-dexes
+  ; @param (strings in vector) item-ids
   ;
   ; @return (map)
-  [db [_ engine-id item-dexes]]
-  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/remove-items item-dexes))
+  [db [_ engine-id item-ids]]
+  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/remove-items item-ids))
 
 (defn enable-all-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -50,3 +49,28 @@
   ; @return (map)
   [db [_ engine-id]]
   (dissoc-in db [:engines :engine-handler/meta-items engine-id :disabled-items]))
+
+
+
+;; -- Single item events ------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn disable-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ engine-id item-id]]
+  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/conj-item-once item-id))
+
+(defn enable-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (map)
+  [db [_ engine-id item-id]]
+  (update-in db [:engines :engine-handler/meta-items engine-id :disabled-items] vector/remove-item item-id))

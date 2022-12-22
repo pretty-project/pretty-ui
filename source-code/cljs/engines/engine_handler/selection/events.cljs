@@ -33,8 +33,8 @@
   ;
   ; @return (map)
   [db [_ engine-id]]
-  (let [downloaded-items (r core.subs/get-downloaded-items db engine-id)
-        item-selections  (vector/->items downloaded-items :id)]
+  (let [listed-items    (r core.subs/get-listed-items db engine-id)
+        item-selections (vector/->items listed-items :id)]
        (assoc-in db [:engines :engine-handler/meta-items engine-id :selected-items] item-selections)))
 
 (defn select-item!
@@ -65,7 +65,7 @@
   ;
   ; @return (map)
   [db [_ engine-id item-id]]
-  ; Azokban az esetekben, amikor legfeljebb egy elemet lehetséges kiválasztani a listából, ...
+  ; For those cases when the selection can contains only one item ...
   (let [selected-items (get-in db [:engines :engine-handler/meta-items engine-id :selected-items])]
        (if (= selected-items [item-id])
            (dissoc-in db [:engines :engine-handler/meta-items engine-id :selected-items])
@@ -80,7 +80,7 @@
   ;
   ; @return (map)
   [db [_ engine-id item-id selection-limit]]
-  ; Azokban az esetekben, amikor legfeljebb X elemet lehetséges kiválasztani a listából, ...
+  ; For those cases when the selection can contains only limited number of items ...
   (let [selected-items      (get-in db [:engines :engine-handler/meta-items engine-id :selected-items])
         selected-item-count (r selection.subs/get-selected-item-count db engine-id)]
        (if (< selected-item-count selection-limit)
@@ -130,3 +130,15 @@
   ; @return (map)
   [db [_ engine-id selected-item-id]]
   (assoc-in db [:engines :engine-handler/meta-items engine-id :selected-items] [selected-item-id]))
+
+(defn import-limited-selection!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (strings in vector) selected-item-ids
+  ; @param (integer) selection-limit
+  ;
+  ; @return (map)
+  [db [_ engine-id selected-item-ids selection-limit]]
+  (assoc-in db [:engines :engine-handler/meta-items engine-id :selected-items]
+               (vector/trim selected-item-ids selection-limit)))

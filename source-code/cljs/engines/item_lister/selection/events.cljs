@@ -14,103 +14,24 @@
 
 (ns engines.item-lister.selection.events
     (:require [engines.engine-handler.selection.events :as selection.events]
-              [re-frame.api                            :as r :refer [r]]))
+              [re-frame.api                            :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-all-items!
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r select-all-items! :my-lister)
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r selection.events/select-all-items! db lister-id))
-
-(defn toggle-item-selection!
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ; (r toggle-item-selection! :my-lister "my-item")
-  ;
-  ; @return (map)
-  [db [_ lister-id item-id]]
-  (r selection.events/toggle-item-selection! db lister-id item-id))
-
-(defn toggle-single-item-selection!
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ; (r toggle-single-item-selection! :my-lister "my-item")
-  ;
-  ; @return (map)
-  [db [_ lister-id item-id]]
-  (r selection.events/toggle-single-item-selection! db lister-id item-id))
-
-(defn toggle-limited-item-selection!
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ; @param (integer) selection-limit
-  ;
-  ; @usage
-  ; (r toggle-limited-item-selection! :my-lister "my-item" 8)
-  ;
-  ; @return (map)
-  [db [_ lister-id item-id selection-limit]]
-  (r selection.events/toggle-limited-item-selection! db lister-id item-id selection-limit))
-
-(defn discard-selection!
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r discard-selection! :my-lister)
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r selection.events/discard-selection! db lister-id))
-
-(defn disable-selected-items!
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r disable-selected-items! :my-lister)
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  (r selection.events/disable-selected-items! db lister-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn import-selection!
-  ; @param (keyword) lister-id
-  ; @param (strings in vector) selected-item-ids
-  ;
-  ; @usage
-  ; (r import-selection! db :my-lister ["my-item" "your-item"])
-  ;
-  ; @return (map)
-  [db [_ lister-id selected-item-ids]]
-  (r selection.events/import-selection! db lister-id selected-item-ids))
-
-(defn import-single-selection!
-  ; @param (keyword) lister-id
-  ; @param (string) selected-item-id
-  ;
-  ; @usage
-  ; (r import-single-selection! db :my-lister "my-item")
-  ;
-  ; @return (map)
-  [db [_ lister-id selected-item-id]]
-  (r selection.events/import-single-selection! db lister-id selected-item-id))
+; engines.engine-handler.selection.events
+(def select-all-items!              selection.events/select-all-items!)
+(def select-item!                   selection.events/select-item!)
+(def toggle-item-selection!         selection.events/toggle-item-selection!)
+(def toggle-single-item-selection!  selection.events/toggle-single-item-selection!)
+(def toggle-limited-item-selection! selection.events/toggle-limited-item-selection!)
+(def discard-selection!             selection.events/discard-selection!)
+(def disable-selected-items!        selection.events/disable-selected-items!)
+(def import-selection!              selection.events/import-selection!)
+(def import-single-selection!       selection.events/import-single-selection!)
+(def import-limited-selection!      selection.events/import-limited-selection!)
 
 
 
@@ -136,7 +57,6 @@
 ; @usage
 ; [:item-lister/toggle-single-item-selection! :my-lister "my-item"]
 (r/reg-event-db :item-lister/toggle-single-item-selection! toggle-single-item-selection!)
-
 
 ; @param (keyword) lister-id
 ; @param (string) item-id

@@ -13,17 +13,13 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.api
-    (:require [pathom.api]
-              [engines.item-lister.backup.events]
+    (:require [engines.item-lister.backup.events]
               [engines.item-lister.backup.subs]
               [engines.item-lister.body.effects]
               [engines.item-lister.body.events]
               [engines.item-lister.core.effects]
               [engines.item-lister.download.effects]
               [engines.item-lister.download.events]
-              [engines.item-lister.download.subs]
-              [engines.item-lister.items.events]
-              [engines.item-lister.routes.effects]
               [engines.item-lister.transfer.subs]
               [engines.item-lister.update.effects]
               [engines.item-lister.update.events]
@@ -32,6 +28,8 @@
               [engines.item-lister.body.views       :as body.views]
               [engines.item-lister.core.events      :as core.events]
               [engines.item-lister.core.subs        :as core.subs]
+              [engines.item-lister.download.subs    :as download.subs]
+              [engines.item-lister.items.events     :as items.events]
               [engines.item-lister.items.subs       :as items.subs]
               [engines.item-lister.selection.events :as selection.events]
               [engines.item-lister.selection.subs   :as selection.subs]
@@ -50,28 +48,48 @@
 
 ; engines.item-lister.core.events
 (def set-meta-item! core.events/set-meta-item!)
-(def set-items!     core.events/set-items!)
 
 ; engines.item-lister.core.subs
-(def get-meta-item           core.subs/get-meta-item)
-(def get-downloaded-items    core.subs/get-downloaded-items)
-(def export-downloaded-items core.subs/export-downloaded-items)
+(def get-meta-item       core.subs/get-meta-item)
+(def get-downloaded-item core.subs/get-downloaded-item)
+(def get-item-order      core.subs/get-item-order)
+(def get-listed-items    core.subs/get-listed-items)
+(def export-listed-items core.subs/export-listed-items)
+(def item-listed?        core.subs/item-listed?)
+
+; engines.item-lister.download.subs
+(def data-received?       download.subs/data-received?)
+(def first-data-received? download.subs/first-data-received?)
+
+; engines.item-lister.items.events
+(def disable-items!    items.events/disable-items!)
+(def enable-items!     items.events/enable-items!)
+(def enable-all-items! items.events/enable-all-items!)
 
 ; engines.item-lister.items.subs
-(def get-item items.subs/get-item)
+(def item-disabled? items.subs/item-disabled?)
 
 ; engines.item-lister.selection.events
+(def select-all-items!              selection.events/select-all-items!)
+(def select-item!                   selection.events/select-item!)
 (def toggle-item-selection!         selection.events/toggle-item-selection!)
 (def toggle-single-item-selection!  selection.events/toggle-single-item-selection!)
 (def toggle-limited-item-selection! selection.events/toggle-limited-item-selection!)
+(def discard-selection!             selection.events/discard-selection!)
+(def disable-selected-items!        selection.events/disable-selected-items!)
 (def import-selection!              selection.events/import-selection!)
 (def import-single-selection!       selection.events/import-single-selection!)
+(def import-limited-selection!      selection.events/import-limited-selection!)
 
 ; engines.item-lister.selection.subs
-(def get-selected-item-count selection.subs/get-selected-item-count)
-(def item-selected?          selection.subs/item-selected?)
-(def export-selection        selection.subs/export-selection)
-(def export-single-selection selection.subs/export-single-selection)
+(def export-selection           selection.subs/export-selection)
+(def export-single-selection    selection.subs/export-single-selection)
+(def get-selected-item-count    selection.subs/get-selected-item-count)
+(def all-listed-items-selected? selection.subs/all-listed-items-selected?)
+(def any-item-selected?         selection.subs/any-item-selected?)
+(def any-listed-item-selected?  selection.subs/any-listed-item-selected?)
+(def no-items-selected?         selection.subs/no-items-selected?)
+(def item-selected?             selection.subs/item-selected?)
 
 ; engines.item-lister.update.subs
 (def get-deleted-item-ids    update.subs/get-deleted-item-ids)

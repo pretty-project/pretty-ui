@@ -30,18 +30,23 @@
 (def engine-synchronizing?  core.subs/engine-synchronizing?)
 (def get-default-item-id    core.subs/get-default-item-id)
 (def get-current-item-id    core.subs/get-current-item-id)
+(def get-current-item-path  core.subs/get-current-item-path)
 (def reload-item?           core.subs/reload-item?)
 (def get-current-item       core.subs/get-current-item)
 (def get-current-item-label core.subs/get-current-item-label)
 (def get-auto-title         core.subs/get-auto-title)
+(def get-item-path          core.subs/get-item-path)
+(def export-downloaded-item core.subs/export-downloaded-item)
+(def get-item-order         core.subs/get-item-order)
+(def item-listed?           core.subs/item-listed?)
 (def use-query-params       core.subs/use-query-params)
 
 ; engines.item-lister.core.subs
-(def get-all-item-count      engines.item-lister.core.subs/get-all-item-count)
-(def lister-disabled?        engines.item-lister.core.subs/lister-disabled?)
-(def get-downloaded-items    engines.item-lister.core.subs/get-downloaded-items)
-(def export-downloaded-items engines.item-lister.core.subs/export-downloaded-items)
-(def get-current-order-by    engines.item-lister.core.subs/get-current-order-by)
+(def get-all-item-count   engines.item-lister.core.subs/get-all-item-count)
+(def lister-disabled?     engines.item-lister.core.subs/lister-disabled?)
+(def get-listed-items     engines.item-lister.core.subs/get-listed-items)
+(def export-listed-items  engines.item-lister.core.subs/export-listed-items)
+(def get-current-order-by engines.item-lister.core.subs/get-current-order-by)
 
 
 
@@ -71,27 +76,8 @@
   ;
   ; @return (boolean)
   [db [_ browser-id item-id]]
-  ; A browsing-item? függvény visszatérési értéke akkor TRUE, ...
-  ; ... ha az item-browser engine body komponense a React-fába van csatolva.
-  ; ... ha az item-id paraméterként átadott azonosító az aktuálisan böngészett elem azonosítója.
+  ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   (r core.subs/current-item? db browser-id item-id))
-
-(defn get-current-item-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; (r get-current-item-path db :my-browser)
-  ; =>
-  ; [{:my-type/id "my-item"} {...}]
-  ;
-  ; @return (maps in vector)
-  [db [_ browser-id]]
-  ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (if-let [current-item (r get-current-item db browser-id)]
-          (let [path-key (r body.subs/get-body-prop db browser-id :path-key)]
-               (-> current-item path-key vec))))
 
 
 
@@ -115,8 +101,9 @@
   ; @return (boolean)
   [db [_ browser-id]]
   ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (if-let [current-item-path (r get-current-item-path db browser-id)]
-          (empty? current-item-path)))
+  (if-let [current-item (r get-current-item db browser-id)]
+          (let [path-key (r body.subs/get-body-prop db browser-id :path-key)]
+               (-> current-item path-key empty?))))
 
 (defn get-parent-item-id
   ; @param (keyword) browser-id
@@ -127,10 +114,10 @@
   ; @return (string)
   [db [_ browser-id]]
   ; XXX#6487 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (if-let [current-item-path (r get-current-item-path db browser-id)]
-          (let [item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)]
-               (if-let [parent-link (last current-item-path)]
-                       (get parent-link (keyword/add-namespace item-namespace :id))))))
+  (if-let [current-item (r get-current-item db browser-id)]
+          (let [path-key       (r body.subs/get-body-prop         db browser-id :path-key)
+                item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)]
+               (-> current-item path-key last (keyword/add-namespace item-namespace :id)))))
 
 
 
@@ -147,8 +134,8 @@
 ; @param (keyword) browser-id
 ;
 ; @usage
-; [:item-browser/get-downloaded-items :my-browser]
-(r/reg-sub :item-browser/get-downloaded-items get-downloaded-items)
+; [:item-browser/get-listed-items :my-browser]
+(r/reg-sub :item-browser/get-listed-items get-listed-items)
 
 ; @param (keyword) browser-id
 ;

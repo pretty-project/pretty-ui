@@ -1,14 +1,14 @@
 
-### Az elemek az azonosítójuk alapján vannak kijelölve
+### The items are selected by its id-s
 
 ###### XXX#8891
 
-Az x4.7.5 verzióig, a több elemet kezelő engine-ek a kijelölt elemek indexeit
-tárolták az elemek azonosítói helyett, mert az indexekkel dolgozni kevesebb
-erőforrást igényel, mint az elemek azonosítóival való számítások.
+Until the x.4.7.5 version, those engines which handle multiple item selections,
+stored the selected items' indexes because it was easier to handle the indexes
+instead of the id-s.
 
-Az x4.7.5 verziótól, a több elemet kezelő engine-ek a kijelölt elemek azonosítóit
-tárolják, így az item-browser engine a különböző böngészhető elemek alelemeinek
-kijelöléseit egyszerre képes kezelni.
-Pl.: Egy fájlkezelőben egyszerre több mappában lehetséges fájlokat kijelölni,
-     ezért az elemek indexei nem alkalmasak a kijelölések kezelésére.
+From the x4.7.5 version, those engines which handle multiple item selections,
+store the id-s because it makes possible to handle more complex selection methods.
+
+E.g. It's necessary for a file browser to be capable of select items in different
+     folders and its only feasible when the items are selected by it's id-s.

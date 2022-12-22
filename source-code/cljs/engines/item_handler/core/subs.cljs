@@ -16,8 +16,7 @@
     (:require [engines.engine-handler.core.subs   :as core.subs]
               [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.download.subs :as download.subs]
-              [re-frame.api                       :as r :refer [r]]
-              [vector.api                         :as vector]))
+              [re-frame.api                       :as r :refer [r]]))
 
 
 
@@ -28,8 +27,11 @@
 (def get-meta-item                core.subs/get-meta-item)
 (def engine-synchronizing?        core.subs/engine-synchronizing?)
 (def get-current-item-id          core.subs/get-current-item-id)
+(def get-current-item-path        core.subs/get-current-item-path)
+(def reload-item?                 core.subs/reload-item?)
 (def get-current-item             core.subs/get-current-item)
 (def export-current-item          core.subs/export-current-item)
+(def get-current-item-value       core.subs/get-current-item-value)
 (def get-current-item-label       core.subs/get-current-item-label)
 (def get-current-item-modified-at core.subs/get-current-item-modified-at)
 (def get-auto-title               core.subs/get-auto-title)
@@ -73,9 +75,7 @@
   ;
   ; @return (boolean)
   [db [_ handler-id item-id]]
-  ; A handling-item? függvény visszatérési értéke akkor TRUE, ...
-  ; ... ha az item-id paraméterként átadott azonosítójú elem van megnyitva kezelésre.
-  ; ... ha az item-handler engine body komponense a React-fába van csatolva.
+  ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   (r core.subs/current-item? db handler-id item-id))
 
 (defn new-item?
@@ -87,31 +87,6 @@
   [db [_ handler-id]]
   (let [current-item-id (r get-current-item-id db handler-id)]
        (= "create" current-item-id)))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn download-suggestions?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (boolean)
-  [db [_ handler-id]]
-  (let [suggestion-keys (r body.subs/get-body-prop db handler-id :suggestion-keys)]
-       (vector/nonempty? suggestion-keys)))
-
-(defn download-item?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (boolean)
-  [db [_ handler-id]]
-  (let [new-item? (r new-item? db handler-id)]
-       (not new-item?)))
 
 
 

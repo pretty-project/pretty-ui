@@ -94,7 +94,7 @@
   ; helyett az elemet küldi el a szerver számára, hogy a két engine mutation függvényei hasonló
   ; paraméterezéssel működjenek.
   ; (az item-browser engine működéséhez elegendő lenne az elem azonosítóját elküldni duplikáláskor)
-  (let [exported-item (r items.subs/export-item db browser-id item-id)]
+  (let [exported-item (r core.subs/export-downloaded-item db browser-id item-id)]
        (r core.subs/use-query-params db browser-id {:item exported-item})))
 
 (defn get-duplicate-item-query
@@ -123,7 +123,7 @@
   ; @return (map)
   ; {:item (namespaced map)}
   [db [_ browser-id item-id]]
-  (let [exported-item (r items.subs/export-item db browser-id item-id)]
+  (let [exported-item (r core.subs/export-downloaded-item db browser-id item-id)]
        (r core.subs/use-query-params db browser-id {:item exported-item})))
 
 (defn get-update-item-query

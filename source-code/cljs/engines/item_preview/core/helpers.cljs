@@ -21,5 +21,5 @@
 ;; ----------------------------------------------------------------------------
 
 ; iso.engines.item-preview.core.helpers
-(def component-id      core.helpers/component-id)
-(def default-item-path core.helpers/default-item-path)
+(def component-id       core.helpers/component-id)
+(def default-items-path core.helpers/default-items-path)

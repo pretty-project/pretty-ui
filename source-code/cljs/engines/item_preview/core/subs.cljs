@@ -26,6 +26,7 @@
 (def get-meta-item         core.subs/get-meta-item)
 (def engine-synchronizing? core.subs/engine-synchronizing?)
 (def get-current-item-id   core.subs/get-current-item-id)
+(def get-current-item-path core.subs/get-current-item-path)
 (def reload-item?          core.subs/reload-item?)
 (def no-item-id-passed?    core.subs/no-item-id-passed?)
 (def get-current-item      core.subs/get-current-item)

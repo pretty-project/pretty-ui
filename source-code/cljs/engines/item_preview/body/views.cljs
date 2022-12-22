@@ -65,13 +65,16 @@
 (defn body
   ; @param (keyword) preview-id
   ; @param (map) body-props
-  ; {:display-progress? (boolean)(opt)
+  ; {:clear-behaviour (keyword)(opt)
+  ;   :none, :on-leave, :on-item-change
+  ;   Default: :none
+  ;  :display-progress? (boolean)(opt)
   ;   Default: false
   ;  :error-element (metamorphic-content)(opt)
   ;  :ghost-element (metamorphic-content)(opt)
   ;  :item-id (string)
-  ;  :item-path (vector)(opt)
-  ;   Default: core.helpers/default-item-path
+  ;  :items-path (vector)(opt)
+  ;   Default: core.helpers/default-items-path
   ;  :preview-element (metamorphic-content)
   ;  :query (vector)(opt)
   ;  :transfer-id (keyword)(opt)}

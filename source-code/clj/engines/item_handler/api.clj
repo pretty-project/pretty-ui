@@ -17,7 +17,6 @@
               [engines.item-handler.core.events]
               [engines.item-handler.core.subs]
               [engines.item-handler.download.resolvers]
-              [engines.item-handler.routes.effects]
               [engines.item-handler.transfer.effects]
               [engines.item-handler.download.helpers :as download.helpers]))
 

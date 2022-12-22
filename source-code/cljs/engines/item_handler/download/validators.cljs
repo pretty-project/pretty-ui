@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.download.validators
-    (:require [engines.item-handler.core.subs     :as core.subs]
-              [engines.item-handler.download.subs :as download.subs]
+    (:require [engines.item-handler.download.subs :as download.subs]
               [map.api                            :as map]
               [re-frame.api                       :refer [r]]))
 
@@ -31,9 +30,5 @@
   ;
   ; @return (boolean)
   [db [_ handler-id server-response]]
-  (let [received-item        (r download.subs/get-resolver-answer db handler-id :get-item server-response)
-        received-suggestions (get server-response :item-handler/get-item-suggestions)]
-       (and (or (map? received-suggestions)
-                (not (r core.subs/download-suggestions? db handler-id)))
-            (or (map/namespaced? received-item)
-                (not (r core.subs/download-item? db handler-id))))))
+  (let [received-item (r download.subs/get-resolver-answer db handler-id :get-item server-response)]
+       (map/namespaced? received-item)))

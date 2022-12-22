@@ -64,16 +64,16 @@
   ; @param (map) env
   ;
   ; @example
-  ; (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                  :download-limit        20
-  ;                                  :reload-items?         false}})
+  ; (env->max-count {... .../params {:download-limit    20
+  ;                                  :listed-item-count 24
+  ;                                  :reload-items?     false}})
   ; =>
   ; 20
   ;
   ; @example
-  ; (env->max-count {... .../params {:downloaded-item-count 24
-  ;                                  :download-limit        20
-  ;                                  :reload-items?         true}})
+  ; (env->max-count {... .../params {:download-limit    20
+  ;                                  :listed-item-count 24
+  ;                                  :reload-items?     true}})
   ; =>
   ; 40
   ;
@@ -83,13 +83,13 @@
        (if-let [reload-items? (pathom/env->param env :reload-items?)]
                ; Ha az item-lister {:reload-items? true} állapotban van, akkor a mongo-db aggregation pipeline
                ; számára átadott max-count tulajdonság értéke a download-limit értékének legkisebb olyan többszöröse,
-               ; ami nagyobb, mint a downloaded-item-count értéke ...
-               (let [downloaded-item-count (pathom/env->param env :downloaded-item-count)
-                     ; Ha a downloaded-item-count értéke 0, akkor matematikai szempontból nem tartozik
+               ; ami nagyobb, mint a listed-item-count értéke ...
+               (let [listed-item-count (pathom/env->param env :listed-item-count)
+                     ; Ha a listed-item-count értéke 0, akkor matematikai szempontból nem tartozik
                      ; az első tartományba (pl. 1-20 elem) és a math/domain-ceil függvény visszatérési
                      ; értéke 0 lenne!
-                     downloaded-item-count (max downloaded-item-count 1)]
-                    (math/domain-ceil downloaded-item-count download-limit))
+                     listed-item-count (max listed-item-count 1)]
+                    (math/domain-ceil listed-item-count download-limit))
                ; Ha az item-lister NINCS {:reload-items? true} állapotban, akkor a mongo-db aggregation pipeline
                ; számára átadott max-count tulajdonság értéke megegyezik az item-lister engine download-limit értékével ...
                (return download-limit))))
@@ -103,7 +103,7 @@
   [env]
   (if-let [reload-items? (pathom/env->param env :reload-items?)]
           (return 0)
-          (pathom/env->param env :downloaded-item-count)))
+          (pathom/env->param env :listed-item-count)))
 
 
 

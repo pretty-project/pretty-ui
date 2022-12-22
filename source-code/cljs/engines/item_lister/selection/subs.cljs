@@ -14,112 +14,22 @@
 
 (ns engines.item-lister.selection.subs
     (:require [engines.engine-handler.selection.subs :as selection.subs]
-              [re-frame.api                          :as r :refer [r]]))
+              [re-frame.api                          :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn export-selection
-  ; @param (keyword) lister-id
-  ;
-  ; @example
-  ; (r export-selection db :my-lister)
-  ; =>
-  ; ["my-item" "your-item"]
-  ;
-  ; @return (strings in vector)
-  [db [_ lister-id]]
-  (r selection.subs/export-selection db lister-id))
-
-(defn export-single-selection
-  ; @param (keyword) lister-id
-  ;
-  ; @example
-  ; (r export-single-selection db :my-lister)
-  ; =>
-  ; "my-item"
-  ;
-  ; @return (string)
-  [db [_ lister-id]]
-  (r selection.subs/export-single-selection db lister-id))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-selected-item-count
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r get-selected-item-count db :my-lister)
-  ;
-  ; @return (integer)
-  [db [_ lister-id]]
-  (r selection.subs/get-selected-item-count db lister-id))
-
-(defn all-items-selected?
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r all-items-selected? db :my-lister)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (r selection.subs/all-items-selected? db lister-id))
-
-(defn all-downloaded-items-selected?
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r all-downloaded-items-selected? db :my-lister)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (r selection.subs/all-downloaded-items-selected? db lister-id))
-
-(defn any-item-selected?
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r any-item-selected? db :my-lister)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (r selection.subs/any-item-selected? db lister-id))
-
-(defn any-downloaded-item-selected?
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r any-downloaded-item-selected? db :my-lister)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (r selection.subs/any-downloaded-item-selected? db lister-id))
-
-(defn no-items-selected?
-  ; @param (keyword) lister-id
-  ;
-  ; @usage
-  ; (r no-items-selected? db :my-lister)
-  ;
-  ; @return (boolean)
-  [db [_ lister-id]]
-  (r selection.subs/no-items-selected? db lister-id))
-
-(defn item-selected?
-  ; @param (keyword) lister-id
-  ; @param (string) item-id
-  ;
-  ; @usage
-  ; (r item-selected? db :my-lister "my-item")
-  ;
-  ; @return (boolean)
-  [db [_ lister-id item-id]]
-  (r selection.subs/item-selected? db lister-id item-id))
+; engines.engine-handler.selection.subs
+(def export-selection           selection.subs/export-selection)
+(def export-single-selection    selection.subs/export-single-selection)
+(def get-selected-item-count    selection.subs/get-selected-item-count)
+(def all-listed-items-selected? selection.subs/all-listed-items-selected?)
+(def any-item-selected?         selection.subs/any-item-selected?)
+(def any-listed-item-selected?  selection.subs/any-listed-item-selected?)
+(def no-items-selected?         selection.subs/no-items-selected?)
+(def item-selected?             selection.subs/item-selected?)
 
 
 
@@ -135,14 +45,8 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-; [:item-lister/all-items-selected? :my-lister]
-(r/reg-sub :item-lister/all-items-selected? all-items-selected?)
-
-; @param (keyword) lister-id
-;
-; @usage
-; [:item-lister/all-downloaded-items-selected? :my-lister]
-(r/reg-sub :item-lister/all-downloaded-items-selected? all-downloaded-items-selected?)
+; [:item-lister/all-listed-items-selected? :my-lister]
+(r/reg-sub :item-lister/all-listed-items-selected? all-listed-items-selected?)
 
 ; @param (keyword) lister-id
 ;
@@ -153,8 +57,8 @@
 ; @param (keyword) lister-id
 ;
 ; @usage
-; [:item-lister/any-downloaded-item-selected? :my-lister]
-(r/reg-sub :item-lister/any-downloaded-item-selected? any-downloaded-item-selected?)
+; [:item-lister/any-listed-item-selected? :my-lister]
+(r/reg-sub :item-lister/any-listed-item-selected? any-listed-item-selected?)
 
 ; @param (keyword) lister-id
 ;

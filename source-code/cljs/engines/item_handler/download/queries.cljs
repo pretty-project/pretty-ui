@@ -54,14 +54,10 @@
   ;
   ; @return (vector)
   [db [_ handler-id]]
-  (let [query [(if (r core.subs/download-item? db handler-id)
-                   ; If download item ...
-                   (let [resolver-id    (r download.subs/get-resolver-id   db handler-id :get-item)
-                         resolver-props (r get-request-item-resolver-props db handler-id)]
-                       `(~resolver-id ~resolver-props)))
-               (if (r core.subs/download-suggestions? db handler-id)
-                   ; If download suggestions ...
-                   (let [resolver-id    :item-handler/get-item-suggestions
-                         resolver-props (r get-request-suggestions-resolver-props db handler-id)]
-                       `(~resolver-id ~resolver-props)))]]
+  (let [query [(let [resolver-id    (r download.subs/get-resolver-id   db handler-id :get-item)
+                     resolver-props (r get-request-item-resolver-props db handler-id)]
+                   `(~resolver-id ~resolver-props))
+               (let [resolver-id    :item-handler/get-item-suggestions
+                     resolver-props (r get-request-suggestions-resolver-props db handler-id)]
+                   `(~resolver-id ~resolver-props))]]
        (r core.subs/use-query-prop db handler-id query)))

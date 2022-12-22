@@ -30,7 +30,7 @@
   ;
   ; @param (keyword) handler-id
   (fn [{:keys [db]} [_ handler-id]]
-      (let [display-progress? (r body.subs/get-body-prop                          db editor-id :display-progress?)
+      (let [display-progress? (r body.subs/get-body-prop                          db handler-id :display-progress?)
             query             (r download.queries/get-request-item-query          db handler-id)
             validator-f      #(r download.validators/request-item-response-valid? db handler-id %)]
            {:db       (r download.events/request-item! db handler-id)

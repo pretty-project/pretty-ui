@@ -27,7 +27,7 @@
 ; Az engine használatához SZÜKSÉGES megadni ...
 ; ... a {:collection-name "..."} tulajdonságot, amit az engine jelenleg nem használ (x4.7.5).
 ; ... a {:handler-key ...} tulajdonságot, amit az engine a resolver függvények neveiben
-;    névtérként használ.
+;     névtérként használ.
 ; ... az {:item-namespace ...} tulajdonságot.
 (r/reg-event-fx :init-my-preview!
   [:item-preview/init-preview! :my-preview

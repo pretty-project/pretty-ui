@@ -48,10 +48,10 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  (let [item-path        (r body.subs/get-body-prop db handler-id :item-path)
-        suggestions-path (r body.subs/get-body-prop db handler-id :suggestions-path)]
+  (let [current-item-path (r core.subs/get-current-item-path db handler-id)
+        suggestions-path  (r body.subs/get-body-prop         db handler-id :suggestions-path)]
        (-> db (dissoc-in [:engines :engine-handler/meta-items handler-id :data-received?])
-              (dissoc-in item-path)
+              (dissoc-in current-item-path)
               (dissoc-in suggestions-path))))
 
 
@@ -67,9 +67,9 @@
   ; @return (map)
   [db [_ handler-id]]
   ; XXX#5067 (source-code/cljs/engines/item_handler/core/events.cljs)
-  (let [default-item (r body.subs/get-body-prop db handler-id :default-item)
-        item-path    (r body.subs/get-body-prop db handler-id :item-path)]
-       (update-in db item-path map/reversed-merge default-item)))
+  (let [default-item      (r body.subs/get-body-prop         db handler-id :default-item)
+        current-item-path (r core.subs/get-current-item-path db handler-id)]
+       (update-in db current-item-path map/reversed-merge default-item)))
 
 (defn use-initial-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,9 +79,9 @@
   ; @return (map)
   [db [_ handler-id]]
   (if (r core.subs/new-item? db handler-id)
-      (let [initial-item (r body.subs/get-body-prop db handler-id :initial-item)
-            item-path    (r body.subs/get-body-prop db handler-id :item-path)]
-           (assoc-in db item-path initial-item))
+      (let [initial-item      (r body.subs/get-body-prop         db handler-id :initial-item)
+            current-item-path (r core.subs/get-current-item-path db handler-id)]
+           (assoc-in db current-item-path initial-item))
       (return db)))
 
 
@@ -98,7 +98,17 @@
   [db [_ handler-id]]
   (r update-item-id! db handler-id))
 
-
+(defn reload-handler!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ;
+  ; @return (map)
+  [db [_ handler-id]]
+  ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
+  (as-> db % (r remove-meta-item! % handler-id :engine-error)
+             (r clear-item-id!    % handler-id)
+             (r update-item-id!   % handler-id)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

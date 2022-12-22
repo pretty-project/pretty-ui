@@ -41,8 +41,9 @@
   ;
   ; @return (vector)
   [db [_ handler-id]]
-  (let [new-item?      (r core.subs/new-item?           db handler-id)
-        mutation-name  (r update.subs/get-mutation-name db handler-id (if new-item? :add-item! :save-item!))
+  (let [new-item?      (r core.subs/new-item? db handler-id)
+        action-key     (if new-item? :add-item! :save-item!)
+        mutation-name  (r update.subs/get-mutation-name db handler-id action-key)
         mutation-props (r get-save-item-mutation-props  db handler-id)]
        [`(~(symbol mutation-name) ~mutation-props)]))
 

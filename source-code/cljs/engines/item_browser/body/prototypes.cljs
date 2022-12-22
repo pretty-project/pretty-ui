@@ -13,8 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-browser.body.prototypes
-    (:require [engines.item-browser.core.helpers   :as core.helpers]
-              [engines.item-lister.body.prototypes :as body.prototypes]))
+    (:require [engines.item-lister.body.prototypes :as body.prototypes]))
 
 
 
@@ -28,11 +27,10 @@
   ; @param (map) body-props
   ;
   ; @return (map)
-  ; {:item-path (vector)}
   [browser-id body-props]
   ; XXX#6177
   ; A body-props térképen az item-lister engine body-props-prototype függvénye
   ; is alkalmazva van, emiatt az ott beállított tulajdonságokat nem szükséges
   ; itt is beállítani!
-  (merge {:item-path (core.helpers/default-item-path browser-id)}
+  (merge {}
          (body.prototypes/body-props-prototype browser-id body-props)))

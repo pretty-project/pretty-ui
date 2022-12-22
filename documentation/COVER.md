@@ -9,7 +9,6 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 ### Clojure namespaces
 
 * [engines.item-browser.api](clj/engines/item-browser/API.md)
-* [engines.item-editor.api](clj/engines/item-editor/API.md)
 * [engines.item-handler.api](clj/engines/item-handler/API.md)
 * [engines.item-lister.api](clj/engines/item-lister/API.md)
 
@@ -17,12 +16,10 @@ Documentation of the [monoset](https://monotech-hq.github.io/monoset) Clojure / 
 
 * [engines.file-editor.api](cljs/engines/file-editor/API.md)
 * [engines.item-browser.api](cljs/engines/item-browser/API.md)
-* [engines.item-editor.api](cljs/engines/item-editor/API.md)
 * [engines.item-handler.api](cljs/engines/item-handler/API.md)
 * [engines.item-lister.api](cljs/engines/item-lister/API.md)
 * [engines.item-preview.api](cljs/engines/item-preview/API.md)
 * [engines.item-sorter.api](cljs/engines/item-sorter/API.md)
-* [engines.item-viewer.api](cljs/engines/item-viewer/API.md)
 * [engines.text-editor.api](cljs/engines/text-editor/API.md)
 
 ---

@@ -13,11 +13,7 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.body.events
-    (:require [engines.engine-handler.body.subs   :as body.subs]
-              [engines.engine-handler.core.events :as core.events]
-              [engines.engine-handler.core.subs   :as core.subs]
-              [map.api                            :refer [dissoc-in]]))
-             ;[re-frame.api                       :refer [r]]
+    (:require [map.api :refer [dissoc-in]]))
 
 
 

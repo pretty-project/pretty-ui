@@ -16,6 +16,9 @@
 @param (map) body-props
 {:content-path (vector)(opt)
   Default: core.helpers/default-content-path
+ :clear-behaviour (keyword)(opt)
+  :none, :on-leave
+  Default: :none
  :default-content (map)(opt)
  :display-progress? (boolean)(opt)
   Default: true

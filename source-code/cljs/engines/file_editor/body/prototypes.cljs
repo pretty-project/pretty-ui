@@ -34,6 +34,6 @@
   [editor-id body-props]
   (merge {:content-path      (core.helpers/default-content-path editor-id)
           :display-progress? true
-          ; XXX#8173
+          ; XXX#8173 (source-code/cljs/engines/engine_handler/transfer/README.md)
           :transfer-id editor-id}
          (param body-props)))

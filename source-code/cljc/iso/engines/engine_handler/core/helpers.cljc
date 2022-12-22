@@ -32,7 +32,6 @@
   ;
   ; @return (keyword)
   [engine-id component-key]
-  ; XXX#5467
   (if-let [namespace (namespace engine-id)]
           (keyword (str namespace "." (name engine-id)) (name component-key))
           (keyword (str               (name engine-id)) (name component-key))))

@@ -45,7 +45,7 @@
   ;
   ; @return (map)
   [db [_ editor-id]]
-  ; A revert-item! függvény visszaállítja az aktuálisan szerkesztett tartalmat
+  ; A revert-content! függvény visszaállítja az aktuálisan szerkesztett tartalmat
   ; a megnyitáskori állapotára a tartalom letöltésekor eltárolt másolat alapján.
   (let [content-path   (r body.subs/get-body-prop        db editor-id :content-path)
         backup-content (r backup.subs/get-backup-content db editor-id)]

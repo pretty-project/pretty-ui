@@ -127,6 +127,9 @@
   ; {:default-order-by (namespaced keyword)
   ;  :display-progress? (boolean)(opt)
   ;   Default: true
+  ;  :clear-behaviour (keyword)(opt)
+  ;   :none, :on-leave, :on-item-change
+  ;   Default: :none
   ;  :download-limit (integer)(opt)
   ;   Default: core.config/DEFAULT-DOWNLOAD-LIMIT
   ;  :error-element (metamorphic-content)(opt)
