@@ -110,7 +110,7 @@
 ;; -- Item order events -------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-item-order!
+(defn replace-item-order!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id

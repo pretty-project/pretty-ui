@@ -22,10 +22,10 @@
  :display-progress? (boolean)(opt)
   Default: true
  :clear-behaviour (keyword)(opt)
-  :none, :on-leave, :on-item-change
+  :none, :on-leave
   Default: :none
  :download-limit (integer)(opt)
-  Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  Default: 20
  :error-element (metamorphic-content)(opt)
  :ghost-element (metamorphic-content)(opt)
  :items-path (vector)(opt)

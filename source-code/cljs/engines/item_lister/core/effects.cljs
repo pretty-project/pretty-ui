@@ -16,7 +16,7 @@
     (:require [engines.item-lister.core.events  :as core.events]
               [engines.item-lister.core.helpers :as core.helpers]
               [engines.item-lister.core.subs    :as core.subs]
-              [logical.api                      :refer [swap]]
+              [logic.api                        :refer [swap]]
               [re-frame.api                     :as r :refer [r]]))
 
 

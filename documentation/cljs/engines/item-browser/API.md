@@ -35,7 +35,7 @@
  :display-progress? (boolean)(opt)
   Default: true
  :download-limit (integer)(opt)
-  Default: engines.item-lister.core.config/DEFAULT-DOWNLOAD-LIMIT
+  Default: 20
  :error-element (metamorphic-content)(opt)
  :ghost-element (metamorphic-content)(opt)
  :item-id (string)(opt)

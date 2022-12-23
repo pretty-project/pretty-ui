@@ -130,13 +130,13 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  (and ; BUG#4506
-       ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
-       ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
-       ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
-       ; Ezért szükséges vizsgálni a lister-synchronizing? függvény kimenetét, hogy ha már elindult
-       ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
-            (r download-more-items?  db lister-id)
+  ; BUG#4506
+  ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
+  ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
+  ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
+  ; Ezért szükséges vizsgálni a lister-synchronizing? függvény kimenetét, hogy ha már elindult
+  ; az első lekérés, akkor több ne induljon, amíg az első be nem fejeződik!
+  (and      (r download-more-items?  db lister-id)
        (not (r lister-synchronizing? db lister-id))))
 
 (defn downloading-items?

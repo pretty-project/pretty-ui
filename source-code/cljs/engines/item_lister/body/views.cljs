@@ -16,7 +16,7 @@
     (:require [elements.api                        :as elements]
               [engines.item-lister.body.prototypes :as body.prototypes]
               [engines.item-lister.core.helpers    :as core.helpers]
-              [logical.api                         :refer [nor]]
+              [logic.api                           :refer [nor]]
               [re-frame.api                        :as r]
               [reagent.api                         :as reagent]
               [tools.infinite-loader.api           :as infinite-loader]
@@ -93,7 +93,7 @@
   ; @param (keyword) lister-id
   [lister-id]
   ; WARNING!
-  ; Every list item has to contain it's index in it's React key!
+  ; Every list item has to contain its index in its React key!
   ; When a list item removed, an other list item will replace it (in the React tree).
   (let [list-element @(r/subscribe [:item-lister/get-body-prop lister-id :list-element])]
        [x.components/content lister-id list-element]))
@@ -115,7 +115,7 @@
          [error-element lister-id]
         @(r/subscribe [:item-lister/data-received? lister-id])
          [:<> [list-element    lister-id]
-              [infinite-loader lister-id]
+              ;[infinite-loader lister-id]
               [placeholder     lister-id]
               [ghost-element   lister-id]]
          :data-not-received
@@ -128,10 +128,10 @@
   ;  :display-progress? (boolean)(opt)
   ;   Default: true
   ;  :clear-behaviour (keyword)(opt)
-  ;   :none, :on-leave, :on-item-change
+  ;   :none, :on-leave
   ;   Default: :none
   ;  :download-limit (integer)(opt)
-  ;   Default: core.config/DEFAULT-DOWNLOAD-LIMIT
+  ;   Default: 20
   ;  :error-element (metamorphic-content)(opt)
   ;  :ghost-element (metamorphic-content)(opt)
   ;  :items-path (vector)(opt)

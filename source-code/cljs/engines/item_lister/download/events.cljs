@@ -26,6 +26,8 @@
 (def data-received              download.events/data-received)
 (def store-received-item-count! download.events/store-received-item-count!)
 (def store-received-items!      download.events/store-received-items!)
+(def replace-item-order!        download.events/replace-item-order!)
+(def update-item-order!         download.events/update-item-order!)
 
 
 
@@ -42,6 +44,7 @@
   [db [_ lister-id server-response]]
   (as-> db % (r store-received-items!      % lister-id server-response)
              (r store-received-item-count! % lister-id server-response)
+             (r update-item-order!         % lister-id server-response)
              (r data-received              % lister-id)
 
              ; TEMP#4681

@@ -97,6 +97,18 @@
 ;; -- Single item subscriptions -----------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-item-path
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (vector)
+  [db [_ engine-id item-id]]
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (conj items-path item-id)))
+
 (defn get-downloaded-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -106,8 +118,8 @@
   ; @return (map)
   [db [_ engine-id item-id]]
   ; XXX#6487
-  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (item-id (get-in db items-path))))
+  (if-let [item-path (r get-item-path db engine-id item-id)]
+          (get-in db item-path)))
 
 (defn export-downloaded-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -133,18 +145,6 @@
   [db [_ engine-id item-id]]
   (let [item (r get-downloaded-item db engine-id item-id)]
        (boolean item)))
-
-(defn get-item-path
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ; @param (string) item-id
-  ;
-  ; @return (vector)
-  [db [_ engine-id item-id]]
-  ; XXX#6487
-  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (conj items-path item-id)))
 
 
 
@@ -366,7 +366,7 @@
   ; @return (maps in vector)
   [db [_ engine-id]]
   (let [item-order (r get-item-order db engine-id)]
-       (letfn [(f [item-id] (item-id (r get-downloaded-items db engine-id)))]
+       (letfn [(f [item-id] (r get-downloaded-item db engine-id item-id))]
               (vector/->items item-order f))))
 
 (defn get-listed-item-count
