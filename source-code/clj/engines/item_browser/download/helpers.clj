@@ -27,6 +27,8 @@
 
 ; engines.item-lister.download.helpers
 (def env->pipeline-options download.helpers/env->pipeline-options)
+(def env->sort-pattern     download.helpers/env->sort-pattern)
+(def env->search-pattern   download.helpers/env->search-pattern)
 
 
 
@@ -54,29 +56,6 @@
                ; ... nem lehet NIL, különben az adatbázis a kollekció összes dokumentumát kiszolgálná eredményként!
                (return []))))
 
-(defn env->sort-pattern
-  ; @param (map) env
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; (env->sort-pattern {...} :my-browser)
-  ;
-  ; @return (map)
-  [env browser-id]
-  (item-lister/env->sort-pattern env browser-id))
-
-(defn env->search-pattern
-  ; @param (map) env
-  ; @param (keyword) browser-id
-  ;
-  ; @usage
-  ; (env->search-pattern {...} :my-browser)
-  ;
-  ; @return (map)
-  ; {:$or (maps in vector)}
-  [env browser-id]
-  (item-lister/env->search-pattern env browser-id))
-
 (defn env->pipeline-props
   ; @param (map) env
   ; @param (keyword) browser-id
@@ -100,7 +79,7 @@
                                {:$and [filter-pattern {:$or item-links}]}
                                {:$or item-links})
         env            (pathom/env<-param env :filter-pattern filter-pattern)]
-       (item-lister/env->pipeline-props env browser-id)))
+       (download.helpers/env->pipeline-props env browser-id)))
 
 (defn env->get-pipeline
   ; @param (map) env

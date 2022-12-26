@@ -45,5 +45,5 @@
   ; @param (?) %
   (fn [{:keys [db]} [_ handler-id %]]
       (let [[_ body-props] (reagent/arguments %)]
-           {:dispatch [:item-handler/reload-handler! handler-id]
-            :db       (r body.events/body-did-update db handler-id body-props)})))
+           {:db       (r body.events/body-did-update db handler-id body-props)
+            :dispatch [:item-handler/reload-handler! handler-id]})))

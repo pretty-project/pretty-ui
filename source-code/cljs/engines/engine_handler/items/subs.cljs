@@ -14,6 +14,7 @@
 
 (ns engines.engine-handler.items.subs
     (:require [candy.api                        :refer [return]]
+              [engines.engine-handler.body.subs :as body.subs]
               [engines.engine-handler.core.subs :as core.subs]
               [loop.api                         :refer [some-indexed]]
               [re-frame.api                     :refer [r]]
@@ -87,3 +88,15 @@
   [db [_ engine-id item-id]]
   (let [disabled-items (r core.subs/get-meta-item db engine-id :disabled-items)]
        (vector/contains-item? disabled-items item-id)))
+
+(defn item-changed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (boolean)
+  [db [_ engine-id item-id]]
+  ; XXX#6487
+  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
+          (get-in db (conj items-path item-id :meta-items :changed?))))

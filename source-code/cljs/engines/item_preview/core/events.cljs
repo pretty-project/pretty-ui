@@ -31,7 +31,7 @@
 (def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
 (def clear-item-id!     core.events/clear-item-id!)
-(def update-item-id!    core.events/update-item-id!)
+(def derive-item-id!    core.events/derive-item-id!)
 
 
 
@@ -61,7 +61,7 @@
   ;
   ; @return (map)
   [db [_ preview-id]]
-  (r update-item-id! db preview-id))
+  (r derive-item-id! db preview-id))
 
 (defn reload-preview!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -72,8 +72,7 @@
   [db [_ preview-id]]
   ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
   (as-> db % (r remove-meta-item! % preview-id :engine-error)
-             (r clear-item-id!    % preview-id)
-             (r update-item-id!   % preview-id)
+             (r derive-item-id!   % preview-id)
              (r reset-downloads!  % preview-id)))
 
 

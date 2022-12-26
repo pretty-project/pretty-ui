@@ -35,7 +35,7 @@
  :display-progress? (boolean)(opt)
   Default: true
  :download-limit (integer)(opt)
-  Default: 20
+  Default: 15
  :error-element (metamorphic-content)(opt)
  :ghost-element (metamorphic-content)(opt)
  :item-id (string)(opt)
@@ -44,7 +44,6 @@
   Default: core.helpers/default-items-path
  :label-key (keyword)
   W/ {:auto-title? true}
- :list-element (metamorphic-content)
  :path-key (keyword)
  :placeholder (metamorphic-content)(opt)
   Default: :no-items-to-show

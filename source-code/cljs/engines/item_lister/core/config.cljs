@@ -20,4 +20,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @constant (integer)
-(def DEFAULT-DOWNLOAD-LIMIT 10)
+(def DEFAULT-DOWNLOAD-LIMIT 15)

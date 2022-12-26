@@ -14,6 +14,7 @@
 
 (ns engines.item-handler.core.effects
     (:require [engines.item-handler.core.events :as core.events]
+              [engines.item-handler.core.subs   :as core.subs]
               [re-frame.api                     :as r :refer [r]]))
 
 

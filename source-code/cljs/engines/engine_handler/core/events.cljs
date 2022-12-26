@@ -28,20 +28,23 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
+  ; @param (keywords in vector)(opt) remove-keys
   ;
   ; @return (map)
-  [db [_ engine-id]]
-  (dissoc-in db [:engines :engine-handler/meta-items engine-id]))
+  [db [_ engine-id remove-keys]]
+  (if remove-keys (update-in db [:engines :engine-handler/meta-items] apply dissoc remove-keys)
+                  (dissoc-in db [:engines :engine-handler/meta-items engine-id])))
 
 (defn reset-meta-items!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
-  ; @param (keywords in vector) keep-keys
+  ; @param (keywords in vector)(opt) keep-keys
   ;
   ; @return (map)
   [db [_ engine-id keep-keys]]
-  (update-in db [:engines :engine-handler/meta-items] select-keys keep-keys))
+  (if keep-keys (update-in db [:engines :engine-handler/meta-items] select-keys keep-keys)
+                (dissoc-in db [:engines :engine-handler/meta-items])))
 
 (defn set-meta-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -156,24 +159,15 @@
   [db [_ engine-id]]
   (dissoc-in db [:engines :engine-handler/meta-items engine-id :item-id]))
 
-(defn update-item-id!
+(defn derive-item-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
   ;
   ; @return (map)
   [db [_ engine-id]]
-  ; XXX#9143
-  ; The current item's id derived from ...
-  ; 1. the previously set value, set by the engine or a module which uses the engine.
-  ; 2. the body component's {:item-id "..."} property.
-  ; 3. the body component's {:default-item-id "..."} property.
-  (if-let [current-item-id (r core.subs/get-current-item-id db engine-id)]
-          (return db)
-          (if-let [item-id (r body.subs/get-body-prop db engine-id :item-id)]
-                  (r set-item-id! db engine-id item-id)
-                  (let [default-item-id (r body.subs/get-body-prop db engine-id :default-item-id)]
-                       (r set-item-id! db engine-id default-item-id)))))
+  (let [derived-item-id (r core.subs/get-derived-item-id db engine-id)]
+       (r set-item-id! db engine-id derived-item-id)))
 
 
 
@@ -199,17 +193,12 @@
   [db [_ engine-id]]
   (dissoc-in db [:engines :engine-handler/meta-items engine-id :view-id]))
 
-(defn update-view-id!
+(defn derive-view-id!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) engine-id
   ;
   ; @return (map)
   [db [_ engine-id]]
-  ; XXX#9143
-  (if-let [current-view-id (r core.subs/get-current-view-id db engine-id)]
-          (return db)
-          (if-let [view-id (r body.subs/get-body-prop db engine-id :view-id)]
-                  (r set-view-id! db engine-id view-id)
-                  (let [default-view-id (r body.subs/get-body-prop db engine-id :default-view-id)]
-                       (r set-view-id! db engine-id default-view-id)))))
+  (let [derived-view-id (r core.subs/get-derived-view-id db engine-id)]
+       (r set-view-id! db engine-id derived-view-id)))

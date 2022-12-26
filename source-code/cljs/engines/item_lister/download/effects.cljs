@@ -64,7 +64,7 @@
       ; db értéke nem kerül eltárolásra!
       ;
       ; Ha az esemény megtörténésekor a body komponens már nincs a React-fába csatolva,
-      ; akkor NEM tölti le újra az elemeket!
+      ; akkor NEM történik meg az elemek újratöltése!
       (if (r body.subs/body-did-mount? db lister-id)
           (let [db           (r core.events/set-reload-mode!                      db lister-id)
                 query        (r download.queries/get-request-items-query          db lister-id)

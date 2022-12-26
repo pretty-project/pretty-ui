@@ -46,7 +46,7 @@
 (def current-item-changed? backup.subs/current-item-changed?)
 
 ; engines.item-handler.body.views
-(def body body.views/body)
+(def downloader body.views/body)
 
 ; engines.item-handler.core.events
 (def set-meta-item! core.events/set-meta-item!)

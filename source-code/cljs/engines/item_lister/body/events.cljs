@@ -52,7 +52,7 @@
   ; @return (map)
   [db [_ lister-id]]
   (let [clear-behaviour (r body.subs/get-body-prop db lister-id :clear-behaviour)]
-       (as-> db % ;(r core.events/reset-meta-items! % lister-id)
+       (as-> db % (r core.events/remove-meta-item! % lister-id :engine-error)
                   (r remove-body-props!            % lister-id))))
 
 (defn body-did-update

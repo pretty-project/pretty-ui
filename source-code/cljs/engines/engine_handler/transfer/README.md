@@ -8,7 +8,7 @@
 ###### XXX#8173
 
 Az engine body komponensének transfer-id tulajdonságának használatával, lehetséges
-az egyes engine-ekat egy időben, több példányban is megjeleníteni, úgy,
+az egyes engine-eket egy időben, több példányban is megjeleníteni, úgy,
 hogy mindössze egy darab szerver-oldali kezelőt szükséges inicializálni
 az eltérő azonosítójú és más-más kliens-oldali tulajdonságokkal használt
 példányok mellé.

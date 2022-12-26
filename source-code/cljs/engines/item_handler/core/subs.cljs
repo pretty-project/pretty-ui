@@ -26,14 +26,16 @@
 ; engines.engine-handler.core.subs
 (def get-meta-item                core.subs/get-meta-item)
 (def engine-synchronizing?        core.subs/engine-synchronizing?)
+(def item-downloaded?             core.subs/item-downloaded?)
 (def get-current-item-id          core.subs/get-current-item-id)
 (def get-current-item-path        core.subs/get-current-item-path)
 (def get-current-item             core.subs/get-current-item)
-(def export-current-item          core.subs/export-current-item)
 (def get-current-item-value       core.subs/get-current-item-value)
 (def get-current-item-label       core.subs/get-current-item-label)
 (def get-current-item-modified-at core.subs/get-current-item-modified-at)
 (def get-auto-title               core.subs/get-auto-title)
+(def current-item-downloaded?     core.subs/current-item-downloaded?)
+(def export-current-item          core.subs/export-current-item)
 (def use-query-prop               core.subs/use-query-prop)
 (def use-query-params             core.subs/use-query-params)
 
@@ -76,7 +78,7 @@
   [db [_ handler-id item-id]]
   ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
   (as-> db % (r core.subs/current-item?   % handler-id item-id)
-             (r body.subs/body-did-mount? % handler-id item-id)))
+             (r body.subs/body-did-mount? % handler-id)))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -84,9 +86,9 @@
   ; @param (keyword) handler-id
   ;
   ; @return (boolean)
-  [db [_ handler-id]]
-  (let [current-item-id (r get-current-item-id db handler-id)]
-       (= "create" current-item-id)))
+  [db [_ handler-id]])
+  ;(let [current-item-id (r get-current-item-id db handler-id)]
+  ;     (= "create" current-item-id)]])
 
 
 
@@ -113,12 +115,32 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn display-error?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ;
+  ; @return (boolean)
+  [db [_ handler-id]]
+  (r get-meta-item db handler-id :engine-error))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 ; @param (keyword) handler-id
 ; @param (keyword) item-key
 ;
 ; @usage
 ; [:item-handler/get-meta-item :my-handler :my-item]
 (r/reg-sub :item-handler/get-meta-item get-meta-item)
+
+; @param (keyword) handler-id
+;
+; @usage
+; [:item-handler/item-downloaded? :my-handler]
+(r/reg-sub :item-handler/item-downloaded? item-downloaded?)
 
 ; @param (keyword) handler-id
 ;
@@ -153,6 +175,12 @@
 ; @param (keyword) handler-id
 ;
 ; @usage
+; [:item-handler/current-item-downloaded? :my-handler]
+(r/reg-sub :item-handler/current-item-downloaded? current-item-downloaded?)
+
+; @param (keyword) handler-id
+;
+; @usage
 ; [:item-handler/new-item? :my-handler]
 (r/reg-sub :item-handler/new-item? new-item?)
 
@@ -161,3 +189,9 @@
 ; @usage
 ; [:item-handler/handler-disabled? :my-handler]
 (r/reg-sub :item-handler/handler-disabled? handler-disabled?)
+
+; @param (keyword) handler-id
+;
+; @usage
+; [:item-handler/display-error? :my-handler]
+(r/reg-sub :item-handler/display-error? display-error?)

@@ -31,7 +31,7 @@
 (def set-query-param! core.events/set-query-param!)
 (def set-item-id!     core.events/set-item-id!)
 (def clear-item-id!   core.events/clear-item-id!)
-(def update-item-id!  core.events/update-item-id!)
+(def derive-item-id!  core.events/derive-item-id!)
 
 ; engines.item-lister.core.events
 (def set-meta-item!        engines.item-lister.core.events/set-meta-item!)
@@ -76,7 +76,7 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  (as-> db % (r update-item-id! % browser-id)
+  (as-> db % (r derive-item-id! % browser-id)
              (r use-item-id!    % browser-id)))
 
 (defn reload-browser!
@@ -95,8 +95,7 @@
   ;     body component's parameters.
   ; ... the use-item-id! function has to be applied according to: XXX#0168.
   (as-> db % (r remove-meta-item! % browser-id :engine-error)
-             (r clear-item-id!    % browser-id)
-             (r update-item-id!   % browser-id)
+             (r derive-item-id!   % browser-id)
              (r use-item-id!      % browser-id)))
 
 

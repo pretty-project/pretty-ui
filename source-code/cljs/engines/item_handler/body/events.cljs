@@ -50,9 +50,9 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  (as-> db % (r core.events/remove-meta-items!           % handler-id)
+  (as-> db % (r core.events/remove-meta-item! % handler-id :engine-error)
             ;(r core.events/reset-downloads!             % handler-id)
-             (r backup.events/clean-current-item-backup! % handler-id)
+            ;(r backup.events/clean-current-item-backup! % handler-id)
              (r remove-body-props!                       % handler-id)))
 
 (defn body-did-update

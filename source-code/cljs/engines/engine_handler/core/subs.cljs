@@ -169,6 +169,16 @@
   [db [_ engine-id]]
   (r get-meta-item db engine-id :item-id))
 
+(defn get-derived-item-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (string)
+  [db [_ engine-id]]
+  (or (r body.subs/get-body-prop db engine-id :item-id)
+      (r body.subs/get-body-prop db engine-id :default-item-id)))
+
 (defn get-current-item-path
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -177,9 +187,16 @@
   ; @return (vector)
   [db [_ engine-id]]
   ; XXX#6487
+  ; In subscriptions it's important to check the accessibility of the used body properties!
+  ; E.g. If a Reagent component subscribes before the engine's body component mounted
+  ;      into the React tree, the body component's properties cannot accessible.
+  ;
+  ; In a case like that, when the items-path isn't accessible and its value is NIL,
+  ; the get-in function takes a NIL as the path and its return value would
+  ; be the whole db!
   (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (let [current-item-id (r get-current-item-id db engine-id)]
-               (conj items-path current-item-id))))
+          (if-let [current-item-id (r get-current-item-id db engine-id)]
+                  (conj items-path current-item-id))))
 
 (defn no-item-id-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -224,16 +241,8 @@
   ; @return (map)
   [db [_ engine-id]]
   ; XXX#6487
-  ; In subscriptions it's important to check the accessibility of the used body properties!
-  ; E.g. If a Reagent component subscribes before the engine's body component mounted
-  ;      into the React tree, the body component's properties cannot accessible.
-  ;
-  ; In a case like that, when the items-path isn't accessible and its value is NIL,
-  ; the get-in function takes a NIL as the path and its return value would
-  ; be the whole db!
-  (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
-          (let [item-id (r get-current-item-id db engine-id)]
-               (item-id (get-in db items-path)))))
+  (if-let [current-item-path (r get-current-item-path db engine-id)]
+          (get-in db current-item-path)))
 
 (defn export-current-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -316,6 +325,16 @@
   ; @return (keyword)
   [db [_ engine-id]]
   (r get-meta-item db engine-id :view-id))
+
+(defn get-derived-view-id
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  (or (r body.subs/get-body-prop db engine-id :view-id)
+      (r body.subs/get-body-prop db engine-id :default-view-id)))
 
 (defn no-view-id-passed?
   ; WARNING! NON-PUBLIC! DO NOT USE!

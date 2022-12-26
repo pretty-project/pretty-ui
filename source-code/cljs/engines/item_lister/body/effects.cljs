@@ -28,8 +28,8 @@
   ; @param (keyword) lister-id
   ; @param (map) body-props
   (fn [{:keys [db]} [_ lister-id body-props]]
-      {:db       (r body.events/body-did-mount db lister-id body-props)
-       :dispatch [:item-lister/request-items! lister-id]}))
+      {:db       (r body.events/body-did-mount db lister-id body-props)}))
+       ;:dispatch [:item-lister/request-items! lister-id]}))
 
 (r/reg-event-fx :item-lister/body-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,5 +52,5 @@
       ; therefore the reloading of the new data has to be triggered by
       ; the [:item-lister/request-items! ...] event!
       (let [[_ body-props] (reagent/arguments %)]
-           {:db       (r body.events/body-did-update db lister-id body-props)
-            :dispatch [:item-lister/request-items! lister-id]})))
+           {:db       (r body.events/body-did-update db lister-id body-props)})))
+            ;:dispatch [:item-lister/request-items! lister-id]})))

@@ -34,7 +34,7 @@
 (def set-engine-error!  core.events/set-engine-error!)
 (def set-item-id!       core.events/set-item-id!)
 (def clear-item-id!     core.events/clear-item-id!)
-(def update-item-id!    core.events/update-item-id!)
+(def derive-item-id!    core.events/derive-item-id!)
 
 
 
@@ -96,7 +96,7 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  (r update-item-id! db handler-id))
+  (r derive-item-id! db handler-id))
 
 (defn reload-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,8 +107,7 @@
   [db [_ handler-id]]
   ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
   (as-> db % (r remove-meta-item! % handler-id :engine-error)
-             (r clear-item-id!    % handler-id)
-             (r update-item-id!   % handler-id)))
+             (r derive-item-id!   % handler-id)))
 
 
 

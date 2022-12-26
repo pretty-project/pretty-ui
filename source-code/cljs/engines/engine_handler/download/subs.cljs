@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.download.subs
-    (:require [engines.engine-handler.errors.subs   :as errors.subs]
+    (:require [engines.engine-handler.core.subs     :as core.subs]
+              [engines.engine-handler.errors.subs   :as errors.subs]
               [engines.engine-handler.transfer.subs :as transfer.subs]
               [re-frame.api                         :refer [r]]))
 
@@ -70,3 +71,12 @@
   ; @return (boolean)
   [db [_ engine-id]]
   (get-in db [:engines :engine-handler/meta-items engine-id :data-received?]))
+
+(defn request-current-item?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ;
+  ; @return (boolean)
+  [db [_ handler-id]]
+  (not (r core.subs/current-item-downloaded? db handler-id)))

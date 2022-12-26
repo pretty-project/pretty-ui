@@ -22,9 +22,10 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.engine-handler.download.subs
-(def get-resolver-id     download.subs/get-resolver-id)
-(def get-resolver-answer download.subs/get-resolver-answer)
-(def data-received?      download.subs/data-received?)
+(def get-resolver-id       download.subs/get-resolver-id)
+(def get-resolver-answer   download.subs/get-resolver-answer)
+(def data-received?        download.subs/data-received?)
+(def request-current-item? download.subs/request-current-item?)
 
 
 

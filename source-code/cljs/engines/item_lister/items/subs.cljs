@@ -23,6 +23,7 @@
 
 ; engines.engine-handler.items.subs
 (def item-disabled? items.subs/item-disabled?)
+(def item-changed?  items.subs/item-changed?)
 
 
 
@@ -35,3 +36,10 @@
 ; @usage
 ; [:item-lister/item-disabled? :my-lister "my-item"]
 (r/reg-sub :item-lister/item-disabled? item-disabled?)
+
+; @param (keyword) lister-id
+; @param (string) item-id
+;
+; @usage
+; [:item-lister/item-changed? :my-lister "my-item"]
+(r/reg-sub :item-lister/item-changed? item-changed?)

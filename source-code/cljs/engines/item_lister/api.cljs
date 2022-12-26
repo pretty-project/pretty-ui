@@ -44,7 +44,7 @@
 (def body-did-mount? body.subs/body-did-mount?)
 
 ; engines.item-lister.body.views
-(def body body.views/body)
+(def downloader body.views/body)
 
 ; engines.item-lister.core.events
 (def set-meta-item! core.events/set-meta-item!)

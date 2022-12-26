@@ -27,9 +27,8 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.item-lister.body.views
-(def list-element  body.views/list-element)
-(def placeholder   body.views/placeholder)
-(def ghost-element body.views/ghost-element)
+;(def placeholder   body.views/placeholder)
+;(def ghost-element body.views/ghost-element)
 
 
 
@@ -40,9 +39,9 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) browser-id
-  [browser-id]
-  (if-let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
-          [x.components/content browser-id error-element]))
+  [browser-id])
+  ;(if-let [error-element @(r/subscribe [:item-browser/get-body-prop browser-id :error-element])]
+  ;        [x.components/content browser-id error-element]])
 
 (defn body-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -53,15 +52,12 @@
   ; XXX#1249 (source-code/cljs/engines/item_lister/body/effects.cljs)
   (cond @(r/subscribe [:item-browser/get-meta-item browser-id :engine-error])
          [error-element browser-id]
-       ;@(r/subscribe [:x.environment/browser-offline?])
-       ; [offline-body browser-id]
         @(r/subscribe [:item-browser/data-received? browser-id])
-         [:<> [list-element              browser-id]
-              [infinite-loader/component browser-id {:on-viewport [:item-browser/request-items! browser-id]}]
-              [placeholder               browser-id]
-              [ghost-element             browser-id]]
-         :data-not-received
-         [ghost-element browser-id]))
+         [:<> [infinite-loader/component browser-id {:on-intersect [:item-browser/request-items! browser-id]}]]))
+              ;[placeholder               browser-id]
+              ;[ghost-element             browser-id]]
+         ;:data-not-received
+         ;[ghost-element browser-id]))
 
 (defn body
   ; @param (keyword) browser-id
@@ -77,7 +73,7 @@
   ;  :display-progress? (boolean)(opt)
   ;   Default: true
   ;  :download-limit (integer)(opt)
-  ;   Default: 20
+  ;   Default: 15
   ;  :error-element (metamorphic-content)(opt)
   ;  :ghost-element (metamorphic-content)(opt)
   ;  :item-id (string)(opt)
@@ -86,7 +82,6 @@
   ;   Default: core.helpers/default-items-path
   ;  :label-key (keyword)
   ;   W/ {:auto-title? true}
-  ;  :list-element (metamorphic-content)
   ;  :path-key (keyword)
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :no-items-to-show

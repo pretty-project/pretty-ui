@@ -5,7 +5,7 @@
 
 ### Index
 
-- [body](#body)
+- [downloader](#downloader)
 
 - [first-data-received?](#first-data-received)
 
@@ -13,7 +13,7 @@
 
 - [get-duplicated-item-ids](#get-duplicated-item-ids)
 
-### body
+### downloader
 
 ```
 @param (keyword) lister-id
@@ -25,16 +25,11 @@
   :none, :on-leave
   Default: :none
  :download-limit (integer)(opt)
-  Default: 20
- :error-element (metamorphic-content)(opt)
- :ghost-element (metamorphic-content)(opt)
+  Default: 15
  :items-path (vector)(opt)
   Default: core.helpers/default-items-path
- :list-element (metamorphic-content)
  :order-key (keyword)(opt)
   Default: :order
- :placeholder (metamorphic-content)(opt)
-  Default: :no-items-to-show
  :prefilter (map)(opt)
  :query (vector)(opt)
  :transfer-id (keyword)(opt)}
@@ -47,9 +42,7 @@
 
 ```
 @usage
-(defn my-list-element [lister-id] [:div ...])
-[body :my-lister {:list-element #'my-list-element
-                  :prefilter    {:my-type/color "red"}}]
+[body :my-lister {:prefilter {:my-type/color "red"}}]
 ```
 
 ---

@@ -13,10 +13,6 @@
 
 - [env->pipeline-props](#env-pipeline-props)
 
-- [env->search-pattern](#env-search-pattern)
-
-- [env->sort-pattern](#env-sort-pattern)
-
 - [get-browser-prop](#get-browser-prop)
 
 - [item->parent-id](#item-parent-id)
@@ -101,43 +97,6 @@
  :filter-pattern {:$or [{:my-type/my-key "..."} {...}]}
  :search-pattern {:$or [{:my-type/name   "..."} {...}]}
  :sort-pattern   {:my-type/name 1}}
-```
-
-```
-@return (map)
-```
-
----
-
-### env->search-pattern
-
-```
-@param (map) env
-@param (keyword) browser-id
-```
-
-```
-@usage
-(env->search-pattern {...} :my-browser)
-```
-
-```
-@return (map)
-{:$or (maps in vector)}
-```
-
----
-
-### env->sort-pattern
-
-```
-@param (map) env
-@param (keyword) browser-id
-```
-
-```
-@usage
-(env->sort-pattern {...} :my-browser)
 ```
 
 ```
