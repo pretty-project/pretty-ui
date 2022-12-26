@@ -96,12 +96,14 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   ; {:disabled? (boolean)(opt)
-  ;  :indent (map)(opt)}
-  [editor-id {:keys [disabled? indent] :as editor-props}]
+  ;  :indent (map)(opt)
+  ;  :outdent (map)(opt)}
+  [editor-id {:keys [disabled? indent outdent] :as editor-props}]
   [elements/blank editor-id
                   {:content   [text-editor-body editor-id editor-props]
                    :disabled? disabled?
-                   :indent    indent}])
+                   :indent    indent
+                   :outdent   outdent}])
 
 (defn body
   ; @param (keyword)(opt) editor-id
@@ -117,6 +119,8 @@
   ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :outdent (map)(opt)
+  ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :write-something!
   ;  :required? (boolean)(opt)

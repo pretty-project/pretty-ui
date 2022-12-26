@@ -17,6 +17,7 @@
               [engines.item-lister.body.subs     :as body.subs]
               [engines.item-lister.core.subs     :as core.subs]
               [engines.item-lister.download.subs :as download.subs]
+              [map.api                           :as map]
               [re-frame.api                      :refer [r]]))
 
 
@@ -38,13 +39,14 @@
   ;  :search-keys (keywords in vector)
   ;  :search-term (string)}
   [db [_ lister-id]]
-  (r core.subs/use-query-params db lister-id {:download-limit    (r body.subs/get-body-prop         db lister-id :download-limit)
-                                              :order-by          (r core.subs/get-meta-item         db lister-id :order-by)
-                                              :reload-items?     (r core.subs/get-meta-item         db lister-id :reload-mode?)
-                                              :search-keys       (r core.subs/get-meta-item         db lister-id :search-keys)
-                                              :search-term       (r core.subs/get-meta-item         db lister-id :search-term)
-                                              :listed-item-count (r core.subs/get-listed-item-count db lister-id)
-                                              :filter-pattern    (r core.subs/get-filter-pattern    db lister-id)}))
+  (as-> {} % (map/assoc-some % :download-limit    (r body.subs/get-body-prop         db lister-id :download-limit))
+             (map/assoc-some % :order-by          (r core.subs/get-meta-item         db lister-id :order-by))
+             (map/assoc-some % :reload-items?     (r core.subs/get-meta-item         db lister-id :reload-items?))
+             (map/assoc-some % :search-keys       (r core.subs/get-meta-item         db lister-id :search-keys))
+             (map/assoc-some % :search-term       (r core.subs/get-meta-item         db lister-id :search-term))
+             (map/assoc-some % :listed-item-count (r core.subs/get-listed-item-count db lister-id))
+             (map/assoc-some % :filter-pattern    (r core.subs/get-filter-pattern    db lister-id))
+             (r core.subs/use-query-params db lister-id %)))
 
 (defn get-request-items-query
   ; WARNING! NON-PUBLIC! DO NOT USE!

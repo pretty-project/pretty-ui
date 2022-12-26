@@ -46,18 +46,6 @@
   [db [_ lister-id]]
   (r set-mode! db lister-id :reload-mode?))
 
-(defn set-memory-mode!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) lister-id
-  ;
-  ; @return (map)
-  [db [_ lister-id]]
-  ; Ha az item-lister engine elhagyása előtt a set-memory-mode! függvény alkalmazásával
-  ; a {:memory-mode? true} állapot beállításra kerül, akkor az item-lister engine legközelebbi
-  ; megnyitásakor a listaelemek a legutóbbi keresési és rendezési beállítások szerint töltődnek majd le.
-  (r set-mode! db lister-id :memory-mode?))
-
 
 
 ;; ----------------------------------------------------------------------------
@@ -70,19 +58,7 @@
   ;
   ; @return (map)
   [db [_ lister-id]]
-  ; Ha az item-lister engine elhagyása előtt, a {:memory-mode? true} állapot ...
-  ; ... beállításra került, akkor megjegyzi a legutóbb használt keresési és rendezési beállításokat,
-  ;    így az engine újbóli megnyitásakor, a listaelemek a legutolsó állapot szerint töltődnek majd le,
-  ;    így a felhasználó az egyes elemek megtekintése/szerkesztése/... után visszatérhet
-  ;    a lista legutóbbi állapotához.
-  ; ... NEM került beállításra, akkor az engine újbóli megnyitásakor a listaelemek az alapértelmezett
-  ;    beállítások szerint töltődnek majd le.
-  (if-let [memory-mode? (r core.subs/get-meta-item db lister-id :memory-mode?)]
-          (let [meta-items (get-in db [:engines :engine-handler/meta-items lister-id])]
-               (as-> db % (dissoc-in % [:engines :engine-handler/meta-items lister-id])
-                          (assoc-in  % [:engines :engine-handler/meta-items lister-id]
-                                       (select-keys meta-items [:order-by :search-term]))))
-          (dissoc-in db [:engines :engine-handler/meta-items lister-id])))
+  (dissoc-in db [:engines :engine-handler/meta-items lister-id]))
 
 (defn reset-selections!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,10 +77,11 @@
   ; @return (map)
   [db [_ lister-id]]
   (let [items-path (r body.subs/get-body-prop db lister-id :items-path)]
-       (-> db (dissoc-in items-path)
+       (-> db ;(dissoc-in items-path)
               (dissoc-in [:engines :engine-handler/meta-items lister-id :all-item-count])
               (dissoc-in [:engines :engine-handler/meta-items lister-id :received-item-count])
-              (dissoc-in [:engines :engine-handler/meta-items lister-id :data-received?]))))
+              (dissoc-in [:engines :engine-handler/meta-items lister-id :data-received?])
+              (dissoc-in [:engines :engine-handler/meta-items lister-id :item-order]))))
 
 
 
@@ -180,12 +157,6 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :item-lister/set-engine-error! set-engine-error!)
-
-; @param (keyword) lister-id
-;
-; @usage
-; [:item-lister/set-memory-mode! :my-lister]
-(r/reg-event-db :item-lister/set-memory-mode! set-memory-mode!)
 
 ; @param (keyword) lister-id
 ;

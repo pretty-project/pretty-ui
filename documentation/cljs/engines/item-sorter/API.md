@@ -18,6 +18,8 @@
   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
+ :outdent (map)(opt)
+  A tulajdonság leírását a elements.api/blank dokumentációjában találod!
  :value-path (vector)}
 ```
 

@@ -40,12 +40,14 @@
   ; @param (keyword) sorter-id
   ; @param (map) sorter-props
   ; {:disabled? (boolean)(opt)
-  ;  :indent (map)(opt)}
-  [sorter-id {:keys [disabled? indent] :as sorter-props}]
+  ;  :indent (map)(opt)
+  ;  :outdent (map)(opt)}
+  [sorter-id {:keys [disabled? indent outdent] :as sorter-props}]
   [elements/blank sorter-id
                   {:content   [item-sorter-body sorter-id sorter-props]
                    :disabled? disabled?
-                   :indent    indent}])
+                   :indent    indent
+                   :outdent   outdent}])
 
 (defn body
   ; @param (keyword)(opt) sorter-id
@@ -56,6 +58,8 @@
   ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :outdent (map)(opt)
+  ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;  :value-path (vector)}
   ;
   ; @usage
