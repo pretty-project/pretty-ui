@@ -282,18 +282,6 @@
           (let [label-key (r body.subs/get-body-prop db engine-id :label-key)]
                (label-key current-item))))
 
-(defn get-current-item-modified-at
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) engine-id
-  ;
-  ; @return (string)
-  [db [_ engine-id]]
-  ; XXX#6487
-  (if-let [current-item (r get-current-item db engine-id)]
-          (if-let [modified-at (:modified-at current-item)]
-                  (r x.activities/get-actual-timestamp db modified-at))))
-
 (defn get-auto-title
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

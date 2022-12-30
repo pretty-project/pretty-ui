@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-handler.api
-    (:require [engines.item-handler.body.effects]
+    (:require [engines.item-handler.backup.subs]
+              [engines.item-handler.body.effects]
               [engines.item-handler.body.events]
               [engines.item-handler.core.effects]
               [engines.item-handler.download.effects]
@@ -23,11 +24,12 @@
               [engines.item-handler.update.effects]
               [engines.item-handler.update.subs]
               [engines.item-handler.backup.events :as backup.events]
-              [engines.item-handler.backup.subs   :as backup.subs]
               [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.body.views    :as body.views]
               [engines.item-handler.core.events   :as core.events]
               [engines.item-handler.core.subs     :as core.subs]
+              [engines.item-handler.items.events  :as items.events]
+              [engines.item-handler.items.subs    :as items.subs]
               [engines.item-handler.update.subs   :as update.subs]))
 
 
@@ -41,9 +43,6 @@
 ; engines.item-handler.backup.events
 (def revert-current-item! backup.events/revert-current-item!)
 (def current-item-changed backup.events/current-item-changed)
-
-; engines.item-handler.backup.subs
-(def current-item-changed? backup.subs/current-item-changed?)
 
 ; engines.item-handler.body.views
 (def downloader body.views/body)
@@ -59,6 +58,13 @@
 (def get-current-item-value core.subs/get-current-item-value)
 (def export-current-item    core.subs/export-current-item)
 (def handling-item?         core.subs/handling-item?)
+
+; engines.item-handler.items.events
+(def mark-item-as-changed!   items.events/mark-item-as-changed!)
+(def unmark-item-as-changed! items.events/unmark-item-as-changed!)
+
+; engines.item-handler.items.subs
+(def current-item-changed? items.subs/current-item-changed?)
 
 ; engines.item-handler.update.subs
 (def get-saved-item-id     update.subs/get-saved-item-id)

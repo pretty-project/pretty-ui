@@ -7,8 +7,6 @@
 
 - [current-item-changed](#current-item-changed)
 
-- [current-item-changed?](#current-item-changed)
-
 - [downloader](#downloader)
 
 - [get-copy-item-id](#get-copy-item-id)
@@ -20,8 +18,6 @@
 - [get-saved-item-id](#get-saved-item-id)
 
 - [handling-item?](#handling-item)
-
-- [revert-current-item!](#revert-current-item)
 
 ### current-item-changed
 
@@ -42,23 +38,6 @@ Checks whether the item really changed, if yes the function stores the
 
 ```
 @return (map)
-```
-
----
-
-### current-item-changed?
-
-```
-@param (keyword) handler-id
-```
-
-```
-@usage
-(r current-item-changed? db :my-handler)
-```
-
-```
-@return (boolean)
 ```
 
 ---
@@ -192,23 +171,6 @@ Checks whether the item really changed, if yes the function stores the
 
 ```
 @return (boolean)
-```
-
----
-
-### revert-current-item!
-
-```
-@param (keyword) handler-id
-```
-
-```
-@usage
-(r revert-current-item! db handler-id)
-```
-
-```
-@return (map)
 ```
 
 ---

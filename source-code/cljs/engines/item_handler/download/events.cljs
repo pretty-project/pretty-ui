@@ -50,7 +50,8 @@
   ;      a megjelenő értesítésen a "Másolat megtekintése" gombra kattint, akkor
   ;      az item-handler engine letölti a másolat-elemet és a letöltés idejére
   ;      szükséges újra megjeleníteni a letöltésjelzőt!
-  (r core.events/reset-downloads! db handler-id))
+  ;(r core.events/reset-downloads! db handler-id))
+  db)
 
 (defn store-received-suggestions!
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -100,3 +100,18 @@
   ; XXX#6487
   (if-let [items-path (r body.subs/get-body-prop db engine-id :items-path)]
           (get-in db (conj items-path item-id :meta-items :changed?))))
+
+
+
+;; -- Current item subscriptions ----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn current-item-changed?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ;
+  ; @return (boolean)
+  [db [_ engine-id]]
+  (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
+       (r item-changed? db engine-id current-item-id)))

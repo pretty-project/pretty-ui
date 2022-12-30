@@ -12,15 +12,14 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-handler.backup.subs
-    (:require [engines.engine-handler.backup.subs :as backup.subs]))
+(ns engines.item-handler.items.events
+    (:require [engines.engine-handler.items.events :as items.events]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; engines.engine-handler.backup.subs
-(def get-backup-item         backup.subs/get-backup-item)
-(def export-backup-item      backup.subs/export-backup-item)
-(def current-item-backed-up? backup.subs/current-item-backed-up?)
+; engines.engine-handler.items.events
+(def mark-item-as-changed!   items.events/mark-item-as-changed!)
+(def unmark-item-as-changed! items.events/unmark-item-as-changed!)

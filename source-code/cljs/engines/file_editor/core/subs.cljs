@@ -57,23 +57,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn editor-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (boolean)
-  [db [_ editor-id]]
-  ; XXX#3219
-  (let [data-received?        (r download.subs/data-received? db editor-id)
-        editor-synchronizing? (r editor-synchronizing?        db editor-id)]
-       (or editor-synchronizing? (not data-received?))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn get-current-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -95,9 +78,3 @@
 ; @usage
 ; [:file-editor/get-meta-item :my-editor :my-item]
 (r/reg-sub :file-editor/get-meta-item get-meta-item)
-
-; @param (keyword) editor-id
-;
-; @usage
-; [:file-editor/editor-disabled? :my-editor]
-(r/reg-sub :file-editor/editor-disabled? editor-disabled?)

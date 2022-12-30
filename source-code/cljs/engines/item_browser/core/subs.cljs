@@ -42,7 +42,6 @@
 
 ; engines.item-lister.core.subs
 (def get-all-item-count   engines.item-lister.core.subs/get-all-item-count)
-(def lister-disabled?     engines.item-lister.core.subs/lister-disabled?)
 (def get-listed-items     engines.item-lister.core.subs/get-listed-items)
 (def export-listed-items  engines.item-lister.core.subs/export-listed-items)
 (def get-current-order-by engines.item-lister.core.subs/get-current-order-by)
@@ -83,15 +82,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn browser-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) browser-id
-  ;
-  ; @return (boolean)
-  [db [_ browser-id]]
-  (r lister-disabled? db browser-id))
 
 (defn at-home?
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -160,12 +150,6 @@
 ; @usage
 ; [:item-browser/get-current-item-label :my-browser]
 (r/reg-sub :item-browser/get-current-item-label get-current-item-label)
-
-; @param (keyword) browser-id
-;
-; @usage
-; [:item-browser/browser-disabled? :my-browser]
-(r/reg-sub :item-browser/browser-disabled? browser-disabled?)
 
 ; @param (keyword) browser-id
 ;

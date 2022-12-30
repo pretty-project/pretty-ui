@@ -51,7 +51,7 @@
             query             (r update.queries/get-reorder-items-query          db lister-id)
             validator-f      #(r update.validators/reorder-items-response-valid? db lister-id %)]
            {:db db :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                                  (assoc action-props :query query :validator-f)]})))
+                                                  (assoc action-props :query query :validator-f validator-f)]})))
 
 
 
@@ -83,7 +83,7 @@
             on-failure   {:dispatch-n [on-failure [:item-lister/enable-items! lister-id item-ids]]}]
            {:db       (r update.events/delete-selected-items! db lister-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                           (assoc action-props :query query :validator-f :on-failure on-failure)]})))
+                                           (assoc action-props :query query :validator-f validator-f :on-failure on-failure)]})))
 
 
 
@@ -114,7 +114,7 @@
             validator-f #(r update.validators/undo-delete-items-response-valid? db lister-id %)]
            {:dispatch-n [[:x.ui/remove-bubble! ::items-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                              (assoc action-props :query query :validator-f)]]})))
+                                              (assoc action-props :query query :validator-f validator-f)]]})))
 
 
 
@@ -144,4 +144,4 @@
             query        (r update.queries/get-duplicate-items-query          db lister-id item-ids)
             validator-f #(r update.validators/duplicate-items-response-valid? db lister-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db lister-id)
-                                (assoc action-props :query query :validator-f)])))
+                                (assoc action-props :query query :validator-f validator-f)])))

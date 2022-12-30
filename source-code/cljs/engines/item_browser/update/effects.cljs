@@ -63,7 +63,7 @@
                                                        [:item-browser/enable-item!    browser-id item-id]]}
             on-success        {:dispatch-n [on-success [:item-browser/enable-item!    browser-id item-id]]}]
            {:db db :dispatch [:pathom/send-query! :storage.media-browser/update-item!
-                                                  (assoc action-props :query query :validator-f :on-failure on-failure :on-success on-success)]})))
+                                                  (assoc action-props :query query :validator-f validator-f :on-failure on-failure :on-success on-success)]})))
 
 
 
@@ -95,7 +95,7 @@
             on-failure   {:dispatch-n [on-failure [:item-browser/enable-item! browser-id item-id]]}]
            {:db       (r update.events/delete-item! db browser-id item-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                           (assoc action-props :query query :validator-f :on-failure on-failure)]})))
+                                           (assoc action-props :query query :validator-f validator-f :on-failure on-failure)]})))
 
 
 
@@ -126,7 +126,7 @@
             validator-f #(r update.validators/undo-delete-item-response-valid? db browser-id %)]
            {:dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                              (assoc action-props :query query :validator-f)]]})))
+                                              (assoc action-props :query query :validator-f validator-f)]]})))
 
 
 
@@ -156,7 +156,7 @@
       (let [query        (r update.queries/get-duplicate-item-query          db browser-id item-id)
             validator-f #(r update.validators/duplicate-item-response-valid? db browser-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db browser-id)
-                                (assoc action-props :query query :validator-f)])))
+                                (assoc action-props :query query :validator-f validator-f)])))
 
 
 

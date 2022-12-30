@@ -12,15 +12,24 @@
 ;; -- Namespace ---------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(ns engines.item-handler.backup.subs
-    (:require [engines.engine-handler.backup.subs :as backup.subs]))
+(ns engines.item-handler.items.subs
+    (:require [engines.engine-handler.items.subs :as items.subs]
+              [re-frame.api                      :as r]))
 
 
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; engines.engine-handler.backup.subs
-(def get-backup-item         backup.subs/get-backup-item)
-(def export-backup-item      backup.subs/export-backup-item)
-(def current-item-backed-up? backup.subs/current-item-backed-up?)
+; engines.engine-handler.items.subs
+(def item-changed?         items.subs/item-changed?)
+(def current-item-changed? items.subs/current-item-changed?)
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @usage
+; [:item-handler/current-item-changed? :my-handler]
+(r/reg-sub :item-handler/current-item-changed? current-item-changed?)

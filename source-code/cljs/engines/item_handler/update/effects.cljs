@@ -47,7 +47,7 @@
       (let [query        (r update.queries/get-save-item-query          db handler-id)
             validator-f #(r update.validators/save-item-response-valid? db handler-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                (assoc action-props :query query :validator-f)])))
+                                (assoc action-props :query query :validator-f validator-f)])))
 
 
 
@@ -77,7 +77,7 @@
             validator-f #(r update.validators/delete-item-response-valid? db handler-id %)]
            {:db       (r backup.events/backup-current-item! db handler-id)
             :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                           (assoc action-props :query query :validator-f)]})))
+                                           (assoc action-props :query query :validator-f validator-f)]})))
 
 
 
@@ -110,7 +110,7 @@
             validator-f #(r update.validators/undo-delete-item-response-valid? db handler-id %)]
            {:dispatch-n [[:x.ui/remove-bubble! ::item-deleted-dialog]
                          [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                              (assoc action-props :query query :validator-f)]]})))
+                                              (assoc action-props :query query :validator-f validator-f)]]})))
 
 
 
@@ -140,4 +140,4 @@
             query             (r update.queries/get-duplicate-item-query          db handler-id)
             validator-f      #(r update.validators/duplicate-item-response-valid? db handler-id %)]
            [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                (assoc action-props :query query :validator-f)])))
+                                (assoc action-props :query query :validator-f validator-f)])))

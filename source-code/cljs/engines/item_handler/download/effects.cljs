@@ -17,7 +17,6 @@
               [engines.item-handler.core.subs           :as core.subs]
               [engines.item-handler.download.events     :as download.events]
               [engines.item-handler.download.queries    :as download.queries]
-              [engines.item-handler.download.subs       :as download.subs]
               [engines.item-handler.download.validators :as download.validators]
               [re-frame.api                             :as r :refer [r]]))
 
@@ -31,20 +30,20 @@
   ;
   ; @param (keyword) handler-id
   (fn [{:keys [db]} [_ handler-id]]
-      (if (r download.subs/request-current-item? db handler-id)
-          (let [display-progress? (r body.subs/get-body-prop                          db handler-id :display-progress?)
-                query             (r download.queries/get-request-item-query          db handler-id)
-                validator-f      #(r download.validators/request-item-response-valid? db handler-id %)]
-               {:db       (r download.events/request-item! db handler-id)
-                :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
-                                               {:display-progress? display-progress?
-                                                ; XXX#4057
-                                                ; Az on-success helyett on-stalled időzítéssel a UI változásai
-                                                ; egyszerre történnek meg a lekérés okozta {:handler-disabled? true}
-                                                ; állapot megszűnésével.
-                                                :on-stalled [:item-handler/receive-item!     handler-id]
-                                                :on-failure [:item-handler/set-engine-error! handler-id :failed-to-request-item]
-                                                :query query :validator-f validator-f}]}))))
+      ; XXX#4057
+      ; Az on-success helyett on-stalled időzítéssel a UI változásai
+      ; egyszerre történnek meg a lekérés okozta {:handler-disabled? true}
+      ; állapot megszűnésével.
+      (let [display-progress? (r body.subs/get-body-prop                          db handler-id :display-progress?)
+            query             (r download.queries/get-request-item-query          db handler-id)
+            validator-f      #(r download.validators/request-item-response-valid? db handler-id %)]
+           {:db       (r download.events/request-item! db handler-id)
+            :dispatch [:pathom/send-query! (r core.subs/get-request-id db handler-id)
+                                           {:display-progress? display-progress?
+                                            :on-stalled [:item-handler/receive-item!     handler-id]
+                                            :on-failure [:item-handler/set-engine-error! handler-id :failed-to-request-item]
+                                            :query query :validator-f validator-f}]})))
+
 
 (r/reg-event-fx :item-handler/receive-item!
   ; WARNING! NON-PUBLIC! DO NOT USE!

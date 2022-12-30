@@ -71,12 +71,3 @@
   ; @return (boolean)
   [db [_ engine-id]]
   (get-in db [:engines :engine-handler/meta-items engine-id :data-received?]))
-
-(defn request-current-item?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (boolean)
-  [db [_ handler-id]]
-  (not (r core.subs/current-item-downloaded? db handler-id)))

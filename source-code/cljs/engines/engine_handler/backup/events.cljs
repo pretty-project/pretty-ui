@@ -13,9 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.backup.events
-    (:require [engines.engine-handler.core.subs :as core.subs]
-              [map.api                          :as map :refer [dissoc-in]]
-              [re-frame.api                     :refer [r]]))
+    (:require [engines.engine-handler.backup.subs :as backup.subs]
+              [engines.engine-handler.core.subs   :as core.subs]
+              [map.api                            :as map :refer [dissoc-in]]
+              [re-frame.api                       :refer [r]]))
 
 
 
@@ -57,6 +58,18 @@
   [db [_ engine-id]]
   (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
        (r backup-item! db engine-id current-item-id)))
+
+(defn revert-current-item!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (map)
+  [db [_ engine-id]]
+  (let [current-item-id   (r core.subs/get-current-item-id   db engine-id)
+        current-item-path (r core.subs/get-current-item-path db engine-id)
+        backup-item       (r backup.subs/get-backup-item     db engine-id current-item-id)]
+       (assoc-in db current-item-path backup-item)))
 
 (defn clean-current-item-backup!
   ; WARNING! NON-PUBLIC! DO NOT USE!

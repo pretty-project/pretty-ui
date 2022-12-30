@@ -13,7 +13,8 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.engine-handler.backup.subs
-    (:require [engines.engine-handler.transfer.subs :as transfer.subs]
+    (:require [engines.engine-handler.core.subs     :as core.subs]
+              [engines.engine-handler.transfer.subs :as transfer.subs]
               [map.api                              :as map]
               [re-frame.api                         :refer [r]]
               [vector.api                           :as vector]))
@@ -45,6 +46,32 @@
   (let [item-namespace (r transfer.subs/get-transfer-item db engine-id :item-namespace)
         backup-item    (r get-backup-item                 db engine-id item-id)]
        (map/add-namespace backup-item item-namespace)))
+
+(defn item-backed-up?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ; @param (string) item-id
+  ;
+  ; @return (boolean)
+  [db [_ engine-id item-id]]
+  (let [backup-item (r get-backup-item db engine-id item-id)]
+       (some? backup-item)))
+
+
+
+;; -- Current item subscriptions ----------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn current-item-backed-up?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) engine-id
+  ;
+  ; @return (boolean)
+  [db [_ engine-id]]
+  (let [current-item-id (r core.subs/get-current-item-id db engine-id)]
+       (r item-backed-up? db engine-id current-item-id)))
 
 
 

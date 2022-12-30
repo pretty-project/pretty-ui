@@ -86,14 +86,7 @@
   ;
   ; @return (map)
   [db [_ browser-id]]
-  ; XXX#1400
-  ; When the body component's :item-id parameter has been changed ...
-  ; ... the clear-item-id! function has to be applied, otherwise the
-  ;     update-item-id! function would ignores the updating if it sees
-  ;     an id already set in the engine.
-  ; ... the update-item-id! function derives the current id from the
-  ;     body component's parameters.
-  ; ... the use-item-id! function has to be applied according to: XXX#0168.
+  ; The use-item-id! function has to be applied according to: XXX#0168.
   (as-> db % (r remove-meta-item! % browser-id :engine-error)
              (r derive-item-id!   % browser-id)
              (r use-item-id!      % browser-id)))

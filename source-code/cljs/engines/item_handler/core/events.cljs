@@ -16,6 +16,7 @@
     (:require [candy.api                          :refer [return]]
               [engines.engine-handler.core.events :as core.events]
               [engines.item-handler.backup.events :as backup.events]
+              [engines.item-handler.backup.subs   :as backup.subs]
               [engines.item-handler.body.subs     :as body.subs]
               [engines.item-handler.core.subs     :as core.subs]
               [map.api                            :as map :refer [dissoc-in]]
@@ -96,7 +97,15 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  (r derive-item-id! db handler-id))
+  ; XXX#1309 (source-code/cljs/engines/item_handler/core/effects.cljs)
+  ;
+  ; XXX#1310
+  ; If the current item is already downloaded (possibly by another engine),
+  ; the item has to be backed up, because the 'backup-current-item!' function
+  ; will not be applied by the 'receive-item!' function.
+  (if (r backup.subs/current-item-backed-up? db handler-id)
+      (return                                db)
+      (r backup.events/backup-current-item!  db handler-id)))
 
 (defn reload-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,9 +114,12 @@
   ;
   ; @return (map)
   [db [_ handler-id]]
-  ; XXX#1400 (source-code/cljs/engines/item_browser/core/events.cljs)
-  (as-> db % (r remove-meta-item! % handler-id :engine-error)
-             (r derive-item-id!   % handler-id)))
+  ; XXX#1309 (source-code/cljs/engines/item_handler/core/effects.cljs)
+  ; XXX#1310
+  (if (r backup.subs/current-item-backed-up? db handler-id)
+      (as-> db % (r remove-meta-item!                  % handler-id :engine-error))
+      (as-> db % (r remove-meta-item!                  % handler-id :engine-error)
+                 (r backup.events/backup-current-item! % handler-id))))
 
 
 

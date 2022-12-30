@@ -24,20 +24,20 @@
 ;; ----------------------------------------------------------------------------
 
 ; engines.engine-handler.core.subs
-(def get-meta-item                core.subs/get-meta-item)
-(def engine-synchronizing?        core.subs/engine-synchronizing?)
-(def item-downloaded?             core.subs/item-downloaded?)
-(def get-current-item-id          core.subs/get-current-item-id)
-(def get-current-item-path        core.subs/get-current-item-path)
-(def get-current-item             core.subs/get-current-item)
-(def get-current-item-value       core.subs/get-current-item-value)
-(def get-current-item-label       core.subs/get-current-item-label)
-(def get-current-item-modified-at core.subs/get-current-item-modified-at)
-(def get-auto-title               core.subs/get-auto-title)
-(def current-item-downloaded?     core.subs/current-item-downloaded?)
-(def export-current-item          core.subs/export-current-item)
-(def use-query-prop               core.subs/use-query-prop)
-(def use-query-params             core.subs/use-query-params)
+(def get-meta-item            core.subs/get-meta-item)
+(def engine-synchronizing?    core.subs/engine-synchronizing?)
+(def item-downloaded?         core.subs/item-downloaded?)
+(def get-current-item-id      core.subs/get-current-item-id)
+(def get-current-item-path    core.subs/get-current-item-path)
+(def get-current-item         core.subs/get-current-item)
+(def get-current-item-value   core.subs/get-current-item-value)
+(def get-current-item-label   core.subs/get-current-item-label)
+(def get-auto-title           core.subs/get-auto-title)
+(def no-item-id-passed?       core.subs/no-item-id-passed?)
+(def current-item-downloaded? core.subs/current-item-downloaded?)
+(def export-current-item      core.subs/export-current-item)
+(def use-query-prop           core.subs/use-query-prop)
+(def use-query-params         core.subs/use-query-params)
 
 
 
@@ -95,52 +95,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn handler-disabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (boolean)
-  [db [_ handler-id]]
-  ; XXX#3219
-  ; Azért szükséges vizsgálni az {:data-received? ...} tulajdonság értékét, hogy
-  ; a kezelő {:disabled? true} állapotban legyen, amíg még NEM kezdődött el az
-  ; adatok letöltése!
-  (let [data-received?         (r download.subs/data-received? db handler-id)
-        handler-synchronizing? (r handler-synchronizing?       db handler-id)]
-       (or handler-synchronizing? (not data-received?))))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn display-error?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (boolean)
-  [db [_ handler-id]]
-  (r get-meta-item db handler-id :engine-error))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 ; @param (keyword) handler-id
 ; @param (keyword) item-key
 ;
 ; @usage
 ; [:item-handler/get-meta-item :my-handler :my-item]
 (r/reg-sub :item-handler/get-meta-item get-meta-item)
-
-; @param (keyword) handler-id
-;
-; @usage
-; [:item-handler/item-downloaded? :my-handler]
-(r/reg-sub :item-handler/item-downloaded? item-downloaded?)
 
 ; @param (keyword) handler-id
 ;
@@ -169,29 +129,11 @@
 ; @param (keyword) handler-id
 ;
 ; @usage
-; [:item-handler/get-current-item-modified-at :my-handler]
-(r/reg-sub :item-handler/get-current-item-modified-at get-current-item-modified-at)
-
-; @param (keyword) handler-id
-;
-; @usage
-; [:item-handler/current-item-downloaded? :my-handler]
-(r/reg-sub :item-handler/current-item-downloaded? current-item-downloaded?)
-
-; @param (keyword) handler-id
-;
-; @usage
 ; [:item-handler/new-item? :my-handler]
 (r/reg-sub :item-handler/new-item? new-item?)
 
 ; @param (keyword) handler-id
 ;
 ; @usage
-; [:item-handler/handler-disabled? :my-handler]
-(r/reg-sub :item-handler/handler-disabled? handler-disabled?)
-
-; @param (keyword) handler-id
-;
-; @usage
-; [:item-handler/display-error? :my-handler]
-(r/reg-sub :item-handler/display-error? display-error?)
+; [:item-handler/current-item-downloaded? :my-handler]
+(r/reg-sub :item-handler/current-item-downloaded? current-item-downloaded?)
