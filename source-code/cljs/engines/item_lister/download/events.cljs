@@ -86,6 +86,7 @@
   ;      SZÜKSÉGES LESZ FELÜLVIZSGÁLNI!
   (as-> db % (r store-received-items!          % lister-id server-response)
              (r store-received-item-count!     % lister-id server-response)
+             (r replace-item-order!            % lister-id server-response)
              (r items.events/enable-all-items! % lister-id)
              (r data-received                  % lister-id)
 

@@ -77,8 +77,8 @@
   ; @return (boolean)
   [db [_ handler-id item-id]]
   ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (as-> db % (r core.subs/current-item?   % handler-id item-id)
-             (r body.subs/body-did-mount? % handler-id)))
+  (and (r core.subs/current-item?   db handler-id item-id)
+       (r body.subs/body-did-mount? db handler-id)))
 
 (defn new-item?
   ; WARNING! NON-PUBLIC! DO NOT USE!

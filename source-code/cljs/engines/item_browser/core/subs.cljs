@@ -75,8 +75,8 @@
   ; @return (boolean)
   [db [_ browser-id item-id]]
   ; XXX#0079 (source-code/cljs/engines/engine_handler/core/subs.cljs)
-  (as-> db % (r core.subs/current-item?   % browser-id item-id)
-             (r body.subs/body-did-mount? % browser-id item-id)))
+  (and (r core.subs/current-item?   db browser-id item-id)
+       (r body.subs/body-did-mount? db browser-id item-id)))
 
 
 

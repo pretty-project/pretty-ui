@@ -41,7 +41,7 @@
   [db [_ lister-id]]
   (as-> {} % (map/assoc-some % :download-limit    (r body.subs/get-body-prop         db lister-id :download-limit))
              (map/assoc-some % :order-by          (r core.subs/get-meta-item         db lister-id :order-by))
-             (map/assoc-some % :reload-items?     (r core.subs/get-meta-item         db lister-id :reload-items?))
+             (map/assoc-some % :reload-items?     (r core.subs/get-meta-item         db lister-id :reload-mode?))
              (map/assoc-some % :search-keys       (r core.subs/get-meta-item         db lister-id :search-keys))
              (map/assoc-some % :search-term       (r core.subs/get-meta-item         db lister-id :search-term))
              (map/assoc-some % :listed-item-count (r core.subs/get-listed-item-count db lister-id))
