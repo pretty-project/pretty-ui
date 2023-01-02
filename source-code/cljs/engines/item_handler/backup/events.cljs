@@ -51,12 +51,19 @@
   [db [_ handler-id]]
   ; XXX#6000 (source-code/cljc/iso/forms/helpers.cljc)
   ; XXX#6001 (source-code/cljc/iso/forms/helpers.cljc)
+  ;
+  ; The meta data of the item has to be removed before comparing the backup state
+  ; with the current state!
+  ;
+  ; If the item changed and the new state is equal to the backup state, the change
+  ; marker has to be removed!
   (let [current-item-id (r core.subs/get-current-item-id db handler-id)
         current-item    (r core.subs/get-current-item    db handler-id)
         backup-item     (r backup.subs/get-backup-item   db handler-id current-item-id)]
-       (if (forms/items-different? current-item backup-item)
-           (r items.events/mark-item-as-changed! db handler-id current-item-id)
-           (return db))))
+       (if (forms/items-different? (dissoc current-item :meta-items)
+                                   (dissoc backup-item  :meta-items))
+           (r items.events/mark-item-as-changed!   db handler-id current-item-id)
+           (r items.events/unmark-item-as-changed! db handler-id current-item-id))))
 
 
 

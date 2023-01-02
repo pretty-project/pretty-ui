@@ -104,19 +104,6 @@
   ; the item has to be backed up, because the 'backup-current-item!' function
   ; will not be applied by the 'receive-item!' function.
   (if (r backup.subs/current-item-backed-up? db handler-id)
-      (return                                db)
-      (r backup.events/backup-current-item!  db handler-id)))
-
-(defn reload-handler!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) handler-id
-  ;
-  ; @return (map)
-  [db [_ handler-id]]
-  ; XXX#1309 (source-code/cljs/engines/item_handler/core/effects.cljs)
-  ; XXX#1310
-  (if (r backup.subs/current-item-backed-up? db handler-id)
       (as-> db % (r remove-meta-item!                  % handler-id :engine-error))
       (as-> db % (r remove-meta-item!                  % handler-id :engine-error)
                  (r backup.events/backup-current-item! % handler-id))))

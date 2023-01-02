@@ -130,7 +130,6 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  ; BUG#4506
   ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
   ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
   ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
@@ -151,6 +150,10 @@
   ; feltétlenül azt jelenti, hogy elemek letöltése történik. Ezért szükséges az elemek letöltése
   ; állapot megállapításához a lister-synchronizing? és download-more-items? függvényt
   ; együtt alkalmazni.
+  ;
+  ; WARNING!
+  ; Az, hogy vannak még letöltendő elemek és az engine éppen szinkronizál,
+  ; még nem jelenti azt, hogy éppen elemeket tölt le!
   (and (r download-more-items?  db lister-id)
        (r lister-synchronizing? db lister-id)))
 
@@ -226,12 +229,6 @@
 ; @usage
 ; [:item-lister/no-items-to-show? :my-lister]
 (r/reg-sub :item-lister/no-items-to-show? no-items-to-show?)
-
-; @param (keyword) lister-id
-;
-; @usage
-; [:item-lister/downloading-items? :my-lister]
-(r/reg-sub :item-lister/downloading-items? downloading-items?)
 
 ; @param (keyword) lister-id
 ;

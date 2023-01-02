@@ -36,6 +36,23 @@
        (r core.subs/use-query-params db handler-id {:handler-id      handler-id
                                                     :suggestion-keys suggestion-keys})))
 
+(defn get-request-suggestions-query
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) handler-id
+  ;
+  ; @return (vector)
+  [db [_ handler-id]]
+  (let [resolver-id    :item-handler/get-item-suggestions
+        resolver-props (r get-request-suggestions-resolver-props db handler-id)
+        query          [`(~resolver-id ~resolver-props)]]
+       (r core.subs/use-query-prop db handler-id query)))
+
+
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn get-request-item-resolver-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

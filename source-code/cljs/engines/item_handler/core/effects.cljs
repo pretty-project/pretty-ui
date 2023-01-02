@@ -31,21 +31,18 @@
       ; The current item's ID has to be derived before any other function applied,
       ; otherwise the functions might use the previous item's ID.
       (let [db (r core.events/derive-item-id! db handler-id)]
-           (if (or (r core.subs/current-item-downloaded? db handler-id)
-                   (r core.subs/no-item-id-passed?       db handler-id))
-               {:db       (r core.events/load-handler! db handler-id)}
-               {:db       (r core.events/load-handler! db handler-id)
-                :dispatch [:item-handler/request-item! handler-id]}))))
+           (cond (r core.subs/no-item-id-passed? db handler-id)
+                 {}
+                 (r core.subs/current-item-downloaded? db handler-id)
+                 {:db       (r core.events/load-handler! db handler-id)
+                  :dispatch [:item-handler/request-suggestions! handler-id]}
+                 :current-item-not-downloaded
+                 {:db       (r core.events/load-handler! db handler-id)
+                  :dispatch [:item-handler/request-item! handler-id]}))))
 
 (r/reg-event-fx :item-handler/reload-handler!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) handler-id
-  (fn [{:keys [db]} [_ handler-id]]
-      ; XXX#1309
-      (let [db (r core.events/derive-item-id! db handler-id)]
-           (if (or (r core.subs/current-item-downloaded? db handler-id)
-                   (r core.subs/no-item-id-passed?       db handler-id))
-               {:db       (r core.events/reload-handler! db handler-id)}
-               {:db       (r core.events/reload-handler! db handler-id)
-                :dispatch [:item-handler/request-item! handler-id]}))))
+  (fn [_ [_ handler-id]]
+      [:item-handler/load-handler! handler-id]))
