@@ -141,8 +141,8 @@
   ; @param (string) editor-content
   [editor-id {:keys [value-path]} editor-content]
   ; Az on-change-f függvény a text-editor aktuális tartalmát ...
-  ; ... a set-editor-content! függvénnyel az EDITOR-CONTENTS atomba írja.
+  ; ... a set-editor-output! függvénnyel az EDITOR-OUTPUTS atomba írja.
   ; ... a dispatch-last függvénnyel a value-path Re-Frame adatbázis útvonalra írja,
-  ;    ha a felhasználó már befejezte a gépelést.
+  ;     miután a felhasználó befejezte a gépelést.
   (set-editor-output! editor-id editor-content)
   (r/dispatch-last    config/TYPE-ENDED-AFTER [:x.db/set-item! value-path editor-content]))
