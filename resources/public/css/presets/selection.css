@@ -1,0 +1,17 @@
+
+/***** Selection presets *****/
+/*** Selectable ***/
+
+/* @usage
+ * [:p {:data-selectable false} "My unselectable text"] */
+
+[data-selectable="false"] {
+  /* user-select not supperted properly in all browsers */
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/*** Selectable ***/
+/***** Selection presets *****/

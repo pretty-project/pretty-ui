@@ -1,0 +1,50 @@
+
+/***** Icon presets *****/
+/*** Icon size ***/
+
+[data-icon-size] {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* BUG#0983
+   * height, line-height, overflow, width:
+   * Az ikonokat megjelenítő font-készlet letöltődése előtt felvillan az ikon neve (FOIT/FOUT).
+   * A height, line-height, overflow, és width tulajdonságok beállítása nélkül az ikon méretének
+   * pillanatnyi megváltozását okozná. */
+  overflow: hidden;
+}
+
+/* BUG#0983 */
+[data-icon-size="xxs"] { font-size:   var( --icon-size-xxs );
+                         height:      24px;
+                         line-height: 24px;
+                         width:       24px; }
+[data-icon-size="xs"]  { font-size:   var( --icon-size-xs );
+                         height:      24px;
+                         line-height: 24px;
+                         width:       24px; }
+[data-icon-size="s"]   { font-size:   var( --icon-size-s );
+                         height:      24px;
+                         line-height: 24px;
+                         width:       24px; }
+[data-icon-size="m"]   { font-size:   var( --icon-size-m );
+                         height:      24px;
+                         line-height: 24px;
+                         width:       24px; }
+[data-icon-size="l"]   { font-size:   var( --icon-size-l );
+                         height:      36px;
+                         line-height: 36px;
+                         width:       36px; }
+[data-icon-size="xl"]  { font-size:   var( --icon-size-xl );
+                         height:      36px;
+                         line-height: 36px;
+                         width:       36px; }
+[data-icon-size="xxl"] { font-size:   var( --icon-size-xxl );
+                         height:      48px;
+                         line-height: 48px;
+                         width:       48px; }
+
+/*** Icon size ***/
+/***** Icon presets *****/

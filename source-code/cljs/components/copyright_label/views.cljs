@@ -1,0 +1,46 @@
+
+(ns components.copyright-label.views
+    (:require [components.copyright-label.prototypes :as copyright-label.prototypes]
+              [elements.api                          :as elements]
+              [random.api                            :as random]
+              [re-frame.api                          :as r]
+              [x.app-details                         :as x.app-details]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn- copyright-label
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ; {:font-size (keyword)}
+  [_ {:keys [font-size]}]
+  (let [server-year    @(r/subscribe [:x.core/get-server-year])
+        copyright-label (x.app-details/copyright-label server-year)]
+       [elements/label ::copyright-label
+                       {:color            :muted
+                        :content          copyright-label
+                        :font-size        font-size
+                        :horizontal-align :center
+                        :icon             :copyright
+                        :indent           {:horizontal :xs}}]))
+
+(defn component
+  ; @param (keyword)(opt) label-id
+  ; @param (map) label-props
+  ; {:font-size (keyword)(opt)
+  ;   Default: :xxs}
+  ;
+  ; @usage
+  ; [copyright-label {...}]
+  ;
+  ; @usage
+  ; [copyright-label :my-copyright-label {...}]
+  ;
+  ; @usage
+  ; [copyright-label {...}]
+  ([label-props]
+   [component (random/generate-keyword) label-props])
+
+  ([label-id label-props]
+   (let [label-props (copyright-label.prototypes/label-props-prototype label-props)]
+        [copyright-label label-id label-props])))

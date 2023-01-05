@@ -1,0 +1,23 @@
+
+/***** State presets *****/
+/*** Disabled ***/
+
+/* @usage
+ * [:button {:data-disabled true} "My button"] */
+
+[data-disabled="true"]::after {
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+[data-disabled="true"] {
+  cursor:  default !important;
+  opacity: .5      !important;
+}
+
+/*** Disabled ***/
+/***** State presets *****/

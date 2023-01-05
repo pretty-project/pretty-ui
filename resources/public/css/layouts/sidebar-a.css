@@ -1,0 +1,22 @@
+
+/* Sidebar A */
+
+#l-sidebar-a {
+  padding:  15px;
+  height:   100vh;
+  position: sticky;
+  top:      0;
+}
+
+/* Sidebar A */
+
+/* Content */
+
+#l-sidebar-a--content {
+  background-color: var( --sidebar-background-color );
+  border-radius:    var( --border-radius-m );
+  height: 100%;
+  overflow-y: hidden;
+}
+
+/* Content */

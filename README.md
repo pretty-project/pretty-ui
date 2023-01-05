@@ -1,15 +1,15 @@
 
-# monoset
+# project-engine
 
 ### Overview
 
-The <strong>monoset</strong> is our Clojure/ClojureScript kit-framework made for
-developing SPA and PWA web applications.
-It's based on the [x5 web application engine](https://monotech-hq.github.io/x5).
+The <strong>project-engine</strong> is our Clojure/ClojureScript kit-framework
+made for developing SPA and PWA web applications, based on the
+[x5 web application engine](https://monotech-hq.github.io/x5).
 
 ### Documentation
 
-The <strong>monoset</strong> functional documentation is [available here](documentation/COVER.md).
+The <strong>project-engine</strong> functional documentation is [available here](documentation/COVER.md).
 
 #### What's in this kit?
 

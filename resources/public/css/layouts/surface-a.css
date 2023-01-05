@@ -1,0 +1,23 @@
+
+/* Surface A */
+
+#l-surface-a {
+}
+
+/* Surface A */
+
+/* Body */
+
+#l-surface-a--body {
+  display: flex;
+}
+
+#l-surface-a--body[data-content-orientation="horizontal"] {
+  flex-direction: row;
+}
+
+#l-surface-a--body[data-content-orientation="vertical"] {
+  flex-direction: column;
+}
+
+/* Body */

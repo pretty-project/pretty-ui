@@ -1,0 +1,33 @@
+
+/***** Scroll presets *****/
+/*** Scrollable ***/
+
+/* @usage
+ * [:div {:data-scrollable-y true} "My scroll-container"] */
+
+[data-scrollable-x="true"],
+[data-scrollable-y="true"],
+[data-hide-scrollbar="true"] {
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+}
+
+[data-scrollable-x="true"]::-webkit-scrollbar,
+[data-scrollable-y="true"]::-webkit-scrollbar,
+[data-hide-scrollbar="true"]::-webkit-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none;
+}
+
+[data-scrollable-x="true"] {
+  overflow-x: auto;
+}
+
+[data-scrollable-y="true"] {
+  overflow-y: auto;
+}
+
+/*** Scrollable ***/
+/***** Scroll presets *****/

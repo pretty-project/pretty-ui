@@ -1,0 +1,73 @@
+
+/***** Theme variables *****/
+
+body[data-theme="light"] {
+  /* App background */
+  --app-background-color:         #fcfdff;
+  --app-background-pattern-color: var( --white-light );
+  /* App overlay */
+  --app-overlay-color:            var( --white-semi-transparent );
+  /* Sidebar background */
+  --sidebar-background-color:     #4a5661;
+  /* Fill color */
+  --fill-color:                   var( --white-xx-light );
+  --fill-color-invert:            var( --black-x-light );
+  /* Ghost color */
+  --ghost-color:                  var( --white );
+  --ghost-color:                  #e0e1f4;
+  /* Scroll-shadow */
+  --scroll-shadow-bottom:         0  6px 6px -6px #bcbcbc;
+  --scroll-shadow-top:            0 -6px 6px -6px #bcbcbc;
+  /* Background color */
+  --background-color:             var( --white-xx-light );
+  --background-color-muted:       var( --grey-x-light );
+  --background-color-highlight:   var( --white-light );
+  --background-color-invert:      var( --black-light );
+  --background-color-primary:     var( --soft-blue );
+  --background-color-secondary:   var( --soft-purple );
+  --background-color-success:     var( --soft-green );
+  --background-color-warning:     var( --soft-red );
+  /* Border color */
+  --border-color:                 var( --grey-x-light );
+  --border-color-muted:           var( --grey-xx-light );
+  --border-color-highlight:       var( --white );
+
+  /* xxx */
+  --border-color-highlight:       var( --white-x-dark );
+  --border-color-invert:          var( --black-x-light );
+  --border-color-primary:         var( --hard-blue );
+  --border-color-secondary:       var( --hard-purple );
+  --border-color-success:         var( --soft-green );
+  --border-color-warning:         var( --soft-red );
+  /* Color */
+  --color:                        var( --black-xx-light );
+  --color-muted:                  var( --grey );
+  --color-highlight:              var( --grey-x-light );
+  --color-invert:                 var( --white-xx-dark );
+  --color-primary:                var( --hard-blue-xx-dark );
+  --color-secondary:              var( --hard-purple-xx-dark );
+  --color-success:                var( --hard-green-xx-dark );
+  --color-warning:                var( --hard-red-xx-dark );
+  /* Hover color */
+  --hover-color:                  var( --white-xx-light );
+  --hover-color-muted:            var( --grey-xx-light );
+  --hover-color-highlight:        var( --white );
+  --hover-color-invert:           var( --black-xx-light );
+  --hover-color-primary:          var( --soft-blue-light );
+  --hover-color-secondary:        var( --soft-purple-light );
+  --hover-color-success:          var( --soft-green-light );
+  --hover-color-warning:          var( --soft-red-light );
+}
+
+/***** Theme variables *****/
+
+
+
+/***** Body container *****/
+
+body[data-theme="light"] {
+  background-color: var( --app-background-color );
+  color:            var( --color );
+}
+
+/***** Body container *****/

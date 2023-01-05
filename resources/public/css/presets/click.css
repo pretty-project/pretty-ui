@@ -1,0 +1,44 @@
+
+/*****  *****/
+/*** Hoverable ***/
+
+/* @usage
+ * [:button {:data-hoverable true} "My button"]
+ *
+ * @usage
+ * [:button {:data-clickable true :data-hoverable true} "My button"]
+ *
+ * The hoverable preset must be placed above the clickable preset (because of the CSS cascade)!
+ * The clickable must be more opaquer than the hoverable! */
+
+[data-hoverable="true"]:hover {
+  opacity: .7 !important;
+}
+
+/*** Hoverable ***/
+
+/*** Clickable ***/
+
+/* @usage
+ * [:button {:data-clickable true} "My button"]
+ *
+ * @usage
+ * [:button {:data-clickable true :data-hoverable true} "My button"]
+ *
+ * Don't forget to set up an on-mouse-up event to blur the element
+ * after clicking! */
+
+[data-clickable="true"],
+[data-clickable="targeted"] {
+  cursor: pointer;
+}
+
+[data-clickable="true"]:active,
+[data-clickable="true"]:focus,
+[data-clickable="targeted"]:active [data-clickable-target],
+[data-clickable="targeted"]:focus  [data-clickable-target] {
+  opacity: .5 !important;
+}
+
+/*** Clickable ***/
+/*****  *****/

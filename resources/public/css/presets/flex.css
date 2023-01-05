@@ -1,0 +1,57 @@
+
+/***** Flex presets *****/
+/*** Column gap ***/
+
+[data-column-gap="xxs"] { column-gap:  6px; }
+[data-column-gap="xs"]  { column-gap: 12px; }
+[data-column-gap="s"]   { column-gap: 18px; }
+[data-column-gap="m"]   { column-gap: 24px; }
+[data-column-gap="l"]   { column-gap: 36px; }
+[data-column-gap="xl"]  { column-gap: 42px; }
+[data-column-gap="xxl"] { column-gap: 48px; }
+
+/*** Column gap ***/
+
+/*** Orientation ***/
+
+[data-orientation="horizontal"] { display:        flex;
+                                  flex-direction: row;    }
+[data-orientation="vertical"]   { display:        flex;
+                                  flex-direction: column; }
+
+/*** Orientation ***/
+
+/*** Position profiles ***/
+
+[data-horizontal-position="left"]   { align-self: flex-start; }
+[data-horizontal-position="center"] { align-self: center;     }
+[data-horizontal-position="right"]  { align-self: flex-end;   }
+
+/*** Position profiles ***/
+
+/*** Row gap ***/
+
+[data-row-gap="xxs"] { row-gap:     6px; }
+[data-row-gap="xs"]  { row-gap:    12px; }
+[data-row-gap="s"]   { row-gap:    18px; }
+[data-row-gap="m"]   { row-gap:    24px; }
+[data-row-gap="l"]   { row-gap:    36px; }
+[data-row-gap="xl"]  { row-gap:    42px; }
+[data-row-gap="xxl"] { row-gap:    48px; }
+
+/*** Row gap ***/
+
+/*** Stretch ***/
+
+[data-stretch-orientation="both"],
+[data-stretch-orientation="horizontal"] {
+  width: 100%;
+}
+
+[data-stretch-orientation="both"],
+[data-stretch-orientation="vertical"] {
+  height: 100%;
+}
+
+/*** Stretch ***/
+/***** Flex presets *****/

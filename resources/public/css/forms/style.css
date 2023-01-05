@@ -1,0 +1,72 @@
+
+/***** Forms *****/
+
+/* A .forms--form-row sorok százalék alapú felosztása (pl.: 30/30/40, ...),
+ * csak gap távolságok használata nélkül lehetséges.
+ *
+ * Update x4.6.9 #17
+ * SE VÍZSZINTES SE FÜGGŐLEGES GAP NEM ALKALMAZHATÓ?
+ * VAGY EZ CSAK A FÜGGŐLEGESRE VONATKOZIK?
+ * A {grid-row-gap: ...} beállítás hozzáadva ...
+ *
+ * A .forms--form-row sorokban felsorolt .forms--form-block elemekben
+ * kell megoldalni az esztétikai távolságok beállítását! */
+
+.forms--form-row {
+  /* XXX#0051
+   * A .forms--form-row elem a 4.9.0.3 verzióig {width: 100%} beállítással
+   * volt alkalmazva.
+   * Ha egy .forms--form-row elem mellett egy fix szélességű elem jelenik meg,
+   * (pl. sorba helyezett text-field elemek mellett megjelenő drag-handle),
+   * akkor a .forms--form-row elem nem lehet 100% széles mivel a drag-handle
+   * nem lehet a .forms--form-row elem része (mert a drag-handle fix szélességű,
+   * nem pedig százalék alapú) tehát egy közös szülő elemben szükséges a drag-handle
+   * elemet és a .forms--form-row elemet elhelyezni, ahol a .forms--form-row elem
+   * már nem lehet 100% szélességű! */
+  -width: 100%;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.forms--form-column {
+ -max-width: 800px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.forms--form-block {
+  /* */
+ -padding: 12px;
+
+  /* A flex-grow tulajdonság értéke az x4.7.6 verzióig {flex-grow: 1} volt.
+   *
+   * Az egy .forms--form-row elemben felsorolt .forms--form-block osztályú elemek
+   * azonos flex-grow értékkel kell, hogy rendelkezzenek, különben az elemek
+   * inline-style stílusként beállított min-width tulajdonságának értéke helyett
+   * az elemek tartalmainak szélessége határozná meg az elemek szélességének
+   * egymáshoz viszonyított arányát!
+   *
+   * Az x4.7.6 verzió óta a flex-grow tulajdonság értéke {flex-grow: 0}.
+   * Ezért, ha egy elem tartalma szélesebb, mint amilyen széles az elem lenne
+   * a min-width tulajdonsága szerint, és emiatt az egyik elem a sorban,
+   * a .forms--form-row elem {flex-wrap: wrap} beállításának köszönhetően
+   * új sorba törik, akkor a sorban maradt elemek szélessége nem kezdi el elvenni,
+   * a sorból kikerült elem után fenmaradó helyet, hanem megtartják az eredeti
+   * arányaikat.
+   *
+   * Pl.: Ha egy elem tartalmához tartozó info-text szélessebb, mint az elem
+   *      a min-width tulajdonsága alapján lenne, akkor az info-text bekapcsolásakor
+   *      a sor utolsó eleme megtörik a sor többi eleme alá, és ilyenkor a sorban
+   *      maradó elemek szélessének arányai megváltoznának az eredeti {flex-grow: 1}
+   *      beállítással! */
+ -flex-grow: 1;
+  flex-grow: 0;
+}
+
+/***** Forms *****/

@@ -1,0 +1,94 @@
+
+/***** Color presets *****/
+/* Background color */
+
+[data-background-color="var"]       { background-color: var( --background-color           ); }
+[data-background-color="muted"]     { background-color: var( --background-color-muted     ); }
+[data-background-color="highlight"] { background-color: var( --background-color-highlight ); }
+[data-background-color="invert"]    { background-color: var( --background-color-invert    ); }
+[data-background-color="primary"]   { background-color: var( --background-color-primary   ); }
+[data-background-color="secondary"] { background-color: var( --background-color-secondary ); }
+[data-background-color="success"]   { background-color: var( --background-color-success   ); }
+[data-background-color="warning"]   { background-color: var( --background-color-warning   ); }
+
+/* Background color */
+
+/* Badge color */
+
+[data-badge-color="var"]       { background-color: var( --badge-color            ); }
+[data-badge-color="muted"]     { background-color: var( --border-color-muted     ); }
+[data-badge-color="highlight"] { background-color: var( --border-color-highlight ); }
+[data-badge-color="invert"]    { background-color: var( --border-color-invert    ); }
+[data-badge-color="primary"]   { background-color: var( --border-color-primary   ); }
+[data-badge-color="secondary"] { background-color: var( --border-color-secondary ); }
+[data-badge-color="success"]   { background-color: var( --border-color-success   ); }
+[data-badge-color="warning"]   { background-color: var( --border-color-warning   ); }
+
+/* Badge color */
+
+/* Border color */
+
+[data-border-color="var"]         { border-color: var( --border-color           ); }
+[data-border-color="muted"]       { border-color: var( --border-color-muted     ); }
+[data-border-color="highlight"]   { border-color: var( --border-color-highlight ); }
+[data-border-color="invert"]      { border-color: var( --border-color-invert    ); }
+[data-border-color="transparent"] { border-color: transparent                      }
+[data-border-color="primary"]     { border-color: var( --border-color-primary   ); }
+[data-border-color="secondary"]   { border-color: var( --border-color-secondary ); }
+[data-border-color="success"]     { border-color: var( --border-color-success   ); }
+[data-border-color="warning"]     { border-color: var( --border-color-warning   ); }
+
+/* Border color */
+
+/* Hover color */
+
+/* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
+[data-disabled="false"] [data-hover-color="var"]:hover       { background-color: var( --hover-color           ); }
+[data-disabled="false"] [data-hover-color="muted"]:hover     { background-color: var( --hover-color-muted     ); }
+[data-disabled="false"] [data-hover-color="highlight"]:hover { background-color: var( --hover-color-highlight ); }
+[data-disabled="false"] [data-hover-color="invert"]:hover    { background-color: var( --hover-color-invert    ); }
+[data-disabled="false"] [data-hover-color="primary"]:hover   { background-color: var( --hover-color-primary   ); }
+[data-disabled="false"] [data-hover-color="secondary"]:hover { background-color: var( --hover-color-secondary ); }
+[data-disabled="false"] [data-hover-color="success"]:hover   { background-color: var( --hover-color-success   ); }
+[data-disabled="false"] [data-hover-color="warning"]:hover   { background-color: var( --hover-color-warning   ); }
+
+/* Hover color */
+
+/* Icon color */
+
+[data-icon-color="var"]       { color: var( --icon-color      ); }
+[data-icon-color="muted"]     { color: var( --color-muted     ); }
+[data-icon-color="highlight"] { color: var( --color-highlight ); }
+[data-icon-color="invert"]    { color: var( --color-invert    ); }
+[data-icon-color="primary"]   { color: var( --color-primary   ); }
+[data-icon-color="secondary"] { color: var( --color-secondary ); }
+[data-icon-color="success"]   { color: var( --color-success   ); }
+[data-icon-color="warning"]   { color: var( --color-warning   ); }
+
+/* Icon color */
+
+/* Stroke color */
+
+[data-stroke-color="var"]       { stroke: var( --stroke-color           ); }
+[data-stroke-color="muted"]     { stroke: var( --border-color-muted     ); }
+[data-stroke-color="highlight"] { stroke: var( --border-color-highlight ); }
+[data-stroke-color="primary"]   { stroke: var( --border-color-primary   ); }
+[data-stroke-color="secondary"] { stroke: var( --border-color-secondary ); }
+[data-stroke-color="success"]   { stroke: var( --border-color-success   ); }
+[data-stroke-color="warning"]   { stroke: var( --border-color-warning   ); }
+
+/* Stroke color */
+
+/* Text color */
+
+[data-color="var"]       { color: var( --color           ); }
+[data-color="muted"]     { color: var( --color-muted     ); }
+[data-color="highlight"] { color: var( --color-highlight ); }
+[data-color="invert"]    { color: var( --color-invert    ); }
+[data-color="primary"]   { color: var( --color-primary   ); }
+[data-color="secondary"] { color: var( --color-secondary ); }
+[data-color="success"]   { color: var( --color-success   ); }
+[data-color="warning"]   { color: var( --color-warning   ); }
+
+/* Text color */
+/***** Color presets *****/

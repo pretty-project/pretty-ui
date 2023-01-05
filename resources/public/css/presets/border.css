@@ -1,0 +1,14 @@
+
+/***** Border presets *****/
+/*** Border radius ***/
+
+[data-border-radius="xxs"] { border-radius: var( --border-radius-xxs ); }
+[data-border-radius="xs"]  { border-radius: var( --border-radius-xs  ); }
+[data-border-radius="s"]   { border-radius: var( --border-radius-s   ); }
+[data-border-radius="m"]   { border-radius: var( --border-radius-m   ); }
+[data-border-radius="l"]   { border-radius: var( --border-radius-l   ); }
+[data-border-radius="xl"]  { border-radius: var( --border-radius-xl  ); }
+[data-border-radius="xxl"] { border-radius: var( --border-radius-xxl ); }
+
+/*** Border radius ***/
+/***** Border presets *****/

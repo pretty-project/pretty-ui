@@ -1,0 +1,1886 @@
+
+/***** Active state and focused state *****/
+/***** Element badge *****/
+/***** Elements ... *****/
+
+
+
+/***** Active state and focused state *****/
+
+/* A checkbox, radio-button és switch elemnek csak a felirata és a helper
+ * változik az elemre való kattintáskor */
+.e-checkbox--option:active     .e-checkbox--option-content,
+.e-checkbox--option:focus      .e-checkbox--option-content,
+.e-radio-button--option:active .e-radio-button--option-content,
+.e-radio-button--option:focus  .e-radio-button--option-content,
+.e-switch--option:active       .e-switch--option-content,
+.e-switch--option:focus        .e-switch--option-content {
+  opacity: .5;
+}
+
+/***** Active state and focused state *****/
+
+
+
+/***** Element badge *****/
+
+.e-element-badge {
+  border-radius: 4px;
+  position: absolute;
+
+  /* A badge mérete bange-content megjelenítésekor: 18x18px */
+  min-height: 8px;
+  min-width: 8px;
+}
+
+.e-element-badge--content {
+  /* TEMP */
+  background-color: #4668ff;
+  color: white;
+
+  border-radius: 4px;
+  height: 18px;
+  line-height: 18px;
+  min-width: 18px;
+  padding: 0 6px;
+}
+
+/***** Element badge *****/
+
+
+
+/***** Anchor *****/
+/*** Anchor body ***/
+
+.e-anchor--body {
+  cursor: pointer;
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+/*** Anchor body ***/
+/***** Anchor *****/
+
+
+
+/***** Breadcrumbs *****/
+/*** Breadcrumbs body ***/
+
+.e-breadcrumbs--body {
+  display: flex;
+  grid-column-gap: 9px;
+}
+
+/*** Breadcrumbs body ***/
+
+/*** Breadcrumbs crumb ***/
+
+.e-breadcrumbs--crumb {
+  color:         var( --color-muted );
+  max-width:     160px;
+  overflow-x:    hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.e-breadcrumbs--separator {
+  align-items: center;
+  display: flex;
+  height: 24px;
+}
+
+.e-breadcrumbs--separator::after {
+  background-color: var( --border-color-muted );
+  border-radius:    3px;
+  content:          '';
+  height:           6px;
+  opacity:          .6;
+  width:            6px;
+}
+
+.e-breadcrumbs--crumb[data-clickable] {
+  font-weight: 600;
+}
+
+/*** Breadcrumbs crumb ***/
+/***** Breadcrumbs *****/
+
+
+
+/***** Button *****/
+/*** Button body ***/
+
+.e-button--body {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  grid-column-gap: 6px;
+
+  /* */
+  width: 100%;
+}
+
+.e-button--body[data-border-color] {
+  border-style: solid;
+  border-width: 1px;
+}
+
+/*** Button body ***/
+
+/*** Button label ***/
+
+.e-button--label {
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+/*** Button label ***/
+/***** Button *****/
+
+
+
+/***** Card *****/
+/*** Card wrapper ***/
+
+.e-card {
+  /* A stretch-orientation tulajdonság használatával egyes esetekben
+   * az egymás melletti card elemek magassága megegyzik.
+   * (100% - 2x horizontal-margin) */
+ -height: calc(100% - 24px);
+}
+
+/*** Card wrapper ***/
+
+/*** Button badge ***/
+
+.e-card .e-element-badge {
+  right: 6px;
+  top:   6px;
+}
+
+/*** Button badge ***/
+
+/*** Card body ***/
+
+.e-card--body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.e-card--body[data-border-color] {
+  border-style: solid;
+  border-width: 1px;
+}
+
+/*** Card body ***/
+/***** Card *****/
+
+
+
+/***** Card-group *****/
+/*** Card-group wrapper ***/
+
+.e-card-group {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 12px;
+}
+
+/*** Card-group wrapper ***/
+/***** Card-group *****/
+
+
+
+/***** Checkbox *****/
+/*** Checkbox options ***/
+
+.e-checkbox--body[data-options-orientation="horizontal"] {
+  display: flex;
+  grid-column-gap: 24px;
+}
+
+/*** Checkbox options ***/
+
+/*** Checkbox option ***/
+
+.e-checkbox--option {
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.e-checkbox--option-button {
+  background-color: var( --fill-color );
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  margin-right: 8px;
+  margin-top: 2px;
+}
+
+.e-checkbox--option-label {
+  /* XXX#5050 */
+  text-align: left;
+}
+
+.e-checkbox--option-helper {
+  /* XXX#5050 */
+  color:      var( --color-muted );
+  text-align: left;
+}
+
+/*** Checkbox option ***/
+
+/*** Checkbox marker ***/
+
+.e-checkbox--option-button::after {
+  font-size: 16px;
+  height: 16px;
+  left: 0;
+  line-height: 16px;
+  position: absolute;
+  top: 0;
+  width: 16px;
+}
+
+.e-checkbox--option[data-checked="true"] .e-checkbox--option-button::after {
+  content: 'done';
+}
+
+/*** Checkbox marker ***/
+/***** Checkbox *****/
+
+
+
+/***** Checkbox-group *****/
+/***** Checkbox-group *****/
+
+
+
+/***** Chip *****/
+/*** Chip body ***/
+
+.e-chip--body {
+  border-radius: 6px 12px 12px 6px;
+  display: flex;
+  height: 24px;
+  padding-left: 12px;
+}
+
+/*** Chip body ***/
+
+/*** Chip label ***/
+
+.e-chip--label {
+  white-space: nowrap;
+}
+
+/*** Chip label ***/
+
+/*** Chip primary button ***/
+
+.e-chip--primary-button {
+  background-color: rgba(255, 255, 255, .65);
+  border-radius: 10px;
+  color: var( --color );
+  height: 20px;
+  margin: 2px 2px 0 12px;
+  width: 20px;
+}
+
+.e-chip--primary-button-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center;
+  line-height: 20px;
+}
+
+.e-chip--primary-button--placeholder {
+  width: 12px;
+}
+
+/*** Chip primary button ***/
+/***** Chip *****/
+
+
+
+/***** Chip-group *****/
+/*** Chip-group wrapper ***/
+
+.e-chip-group {}
+
+/*** Chip-group wrapper ***/
+
+/*** Chip-group chips ***/
+
+.e-chip-group--chips {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 12px;
+ -padding: 6px 0;
+}
+
+/*** Chip-group chips ***/
+
+/*** Chip-group no-chips label ***/
+
+.e-chip-group--chips-placeholder {
+  color: var( --color-highlight );
+}
+
+/*** Chip-group no-chips label ***/
+/***** Chip-group *****/
+
+
+
+/***** Circle diagram *****/
+/*** Circle diagram wrapper ***/
+
+.e-circle-diagram {
+  align-items:     center;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: center;
+}
+
+/*** Circle diagram wrapper ***/
+
+/*** Circle diagram sections ***/
+/*** Circle diagram sections ***/
+
+/*** Circle diagram section ***/
+
+.e-circle-diagram--section {
+  /* A transition tulajdonság használatával a szekciók darabosan
+     animálva változtatták a méretüket!
+ -transition: stroke-dasharray .5s ease-out; */
+
+  fill: transparent;
+  transform-origin: center;
+}
+
+/*** Circle diagram section ***/
+/***** Circle diagram *****/
+
+
+
+/***** Color-selector *****/
+/*** Color-selector options ***/
+
+.e-color-selector--body {
+  display: flex;
+  grid-column-gap: 12px;
+  padding: 12px;
+}
+
+/*** Color-selector options ***/
+
+/*** Color-selector option ***/
+
+.e-color-selector--option[data-collected="true"]::after {
+  align-items: center;
+  background-color: var( --fill-color );
+  border-radius: 12px;
+  color: var( --color );
+  content: 'check';
+  display: flex;
+  font-size: var( --icon-size-xs );
+  font-weight: 600;
+  height: 20px;
+  justify-content: center;
+  left: 14px;
+  line-height: 20px;
+  position: absolute;
+  top: 14px;
+  width: 20px;
+}
+
+.e-color-selector--option--color {
+  border-radius: var( --border-radius-m );
+  height: 48px;
+  width: 48px;
+}
+
+/*** Color-selector option ***/
+/***** Color-selector *****/
+
+
+
+/***** Column *****/
+/*** Column wrapper ***/
+
+.e-column--body {
+  display: flex;
+  flex-direction: column;
+  /* BUG
+   * Az .e-column--body nem lehet {height: 100%} magas, mert akkor mindig akkora, mint a szülő elem
+   * ha azt akarod, hogy kitöltse a rendelkezésre álló helyet, akkor flex-grow tulajdonságot kell
+   * beállítani. A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!! */
+  /* BUG
+   * Vissza kellett állítani a {height: 100%} beállítás használatát, mert enélkül az .e-column--body
+   * elem nem vette fel a .e-column elem magasságát, ezért nem működött a benne megjelenített tartalom
+   * középre igazítása. Tényleg meg lehet oldali flex-grow tulajdonság használatával, de az előző
+   * leírás szerint a {height: 100%} beállítás használatával akkor van probléma, ha:
+   * "A {height: 100%} nem jó, amikor nem egyedül van a szülő elemben!!!"
+   * De az .e-column--body mindig egyedül van a szülő elemben (.e-column)! (Vagy melyik elem van egyedül, miben?)
+   */
+  height: 100%;
+}
+
+.e-column--body[data-wrap-items="true"] {
+  flex-wrap: wrap;
+}
+
+/*** Column wrapper ***/
+/***** Column *****/
+
+
+
+/***** Combo-box *****/
+/*** Combo-box options ***/
+
+.e-combo-box--options {
+  display: flex;
+  flex-direction: column;
+  max-height: 340px;
+}
+
+/*** Combo-box options ***/
+
+/*** Combo-box option ***/
+
+.e-combo-box--field-content-option,
+.e-combo-box--option {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  padding: 8px 8px;
+  text-align: left;
+  width: 100%;
+}
+
+.e-combo-box--option[data-highlighted="true"] {
+  background-color: var( --background-color-highlight );
+}
+
+.e-combo-box--option:hover {
+  background-color: var( --hover-color-highlight );
+}
+
+.e-combo-box--field-content-option {
+  color: var( --color-muted )}
+
+/*** Combo-box option ***/
+/***** Combo-box *****/
+
+
+
+/***** Counter *****/
+/*** Counter body ***/
+
+.e-counter--body {
+  align-items: center;
+  display: flex;
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+/*** Counter body ***/
+
+/*** Counter value ***/
+
+.e-counter--value {
+  font-weight: 500;
+  line-height: 24px;
+  min-width: 64px;
+  text-align: center;
+}
+
+/*** Counter value ***/
+
+/*** Counter button ***/
+
+.e-counter--decrease-button,
+.e-counter--increase-button,
+.e-counter--reset-button {
+  background-color: var( --fill-color );
+  border-color: inherit;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  height: 20px;
+  width: 20px;
+}
+
+.e-counter--decrease-button::before,
+.e-counter--increase-button::before,
+.e-counter--increase-button::after,
+.e-counter--reset-button::before,
+.e-counter--reset-button::after {
+  background-color: var( --color );
+  border-radius: 1px;
+  content: '';
+  position: absolute;
+}
+
+.e-counter--decrease-button::before,
+.e-counter--increase-button::before,
+.e-counter--reset-button::before {
+  height: 2px;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+}
+
+.e-counter--increase-button::after,
+.e-counter--reset-button::after {
+  height: 8px;
+  left: 7px;
+  top: 4px;
+  width: 2px;
+}
+
+.e-counter--reset-button {
+  border-color: var( --color );
+  margin-left: 12px;
+}
+
+.e-counter--reset-button::before,
+.e-counter--reset-button::after {
+  transform: rotateZ( -45deg );
+}
+
+.e-counter--decrease-button[data-disabled="true"],
+.e-counter--increase-button[data-disabled="true"],
+.e-counter--reset-button[data-disabled="true"] {
+  cursor: default;
+  opacity: .5;
+}
+
+/*** Counter button ***/
+/***** Counter *****/
+
+
+
+/***** Digit field *****/
+/***** Digit field wrapper *****/
+
+.e-digit-field {
+  height: 48px;
+}
+
+/***** Digit field wrapper *****/
+
+/***** Digit field input *****/
+
+.e-digit-field--input {
+  color: var( --fill-color );
+  height: 100%;
+  width: 100%;
+}
+
+/***** Digit field input *****/
+
+/***** Digit field cover *****/
+
+.e-digit-field--cover {
+  display: flex;
+  grid-column-gap: 12px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.e-digit-field--cover--digit {
+  align-items: center;
+  border-color: var( --color-highlight );
+  border-radius: var( --border-radius-s );
+  border-style: solid;
+  border-width: 1px;
+  cursor: text;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  justify-content: center;
+  height: 100%;
+  width: 36px;
+}
+
+/***** Digit field cover *****/
+/***** Digit field *****/
+
+
+
+/***** Expandable *****/
+/*** Expandable header ***/
+
+.e-expandable--header {
+  align-items: center;
+  display: flex;
+  justify-content: left;
+}
+
+/*** Expandable header ***/
+
+/*** Expandable icon ***/
+
+.e-expandable--icon {
+  margin-right: 6px;
+}
+
+/*** Expandable icon ***/
+
+/*** Expandable label ***/
+
+.e-expandable--label {
+  padding-right: 6px;
+}
+
+/*** Expandable header ***/
+/***** Expandable *****/
+
+
+
+/***** File drop area *****/
+/*** File drop area body ***/
+
+.e-file-drop-area--body {
+  align-items: center;
+  background-color: var( --background-color-highlight );
+  border-radius: var( --border-radius-xxl );
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  justify-content: center;
+  padding: 0 24px;
+  width: 280px;
+}
+
+.e-file-drop-area--label {
+  color: var( --color-muted );
+}
+
+/*** File drop area body ***/
+/***** File drop area *****/
+
+
+
+/***** Ghost *****/
+
+.e-ghost {
+  /* XXX#5577
+   * A {:size ...} tulajdonság nélkül használt ghost elem magassága beállítható
+   * a {:style {:height "..."}} beállítás használatával, ilyenkor az .e-ghost--body
+   * elem magassága alkalmazkodik az .e-ghost elem magasságához */
+  display: flex;
+  flex-direction: column;
+}
+
+.e-ghost--body {
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+  animation-name: opacity-1-05-1;
+  background-color: var( --ghost-color );
+  /* XXX#5577 */
+  flex-grow: 1;
+}
+
+/***** Ghost *****/
+
+
+
+/***** Icon *****/
+/*** Icon layout ***/
+
+.e-icon--body[data-layout="touch-target"] {
+  height: 48px;
+  width: 48px;
+}
+
+/*** Icon layout ***/
+/***** Icon *****/
+
+
+
+/***** Label *****/
+/*** Label wrapper ***/
+
+.e-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* TEMP
+   * 2022.11.26
+   * A bubble elemen megjelenített hosszu feliratok kilogtak a bubble elemből.
+   * Ha nem okoz máshol gondot, akkor a max-width beállítása maradhat véglegesen is majd! */
+  max-width: 100%;
+}
+
+/*** Label wrapper ***/
+
+/*** Label body ***/
+
+.e-label--body {
+  align-items: center;
+  display: flex;
+}
+
+/*** Label body ***/
+
+/*** Copyable label ***/
+
+.e-label--copyable {
+  display: flex;
+  max-width: 100%;
+}
+
+/*** Copyable label ***/
+
+/*** Label content ***/
+
+.e-label--content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.e-label--body[data-overflow-direction="reversed"] .e-label--content {
+  direction: rtl;
+}
+
+/*** Label content ***/
+
+/*** Label placeholder ***/
+
+/* Az elemekben megjelenített, a tartalom hiányát jelző feliratok (placeholder-ek),
+ * mindegyike highlight színnel van kiírva, ezért a label elem tartalmának hiányát
+ * jelző placeholder felirat is highlight színt kap! */
+.e-label--placeholder {
+  color: var( --color-highlight );
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*** Label placeholder ***/
+
+/*** Label asterisk ***/
+
+.e-label--asterisk {
+  color: var( --color-warning );
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+/*** Label asterisk ***/
+
+/*** Label marker ***/
+
+.e-label--marker {
+  color: var( --color-primary );
+  font-weight: 600;
+  padding-left: 2px;
+}
+
+/*** Label marker ***/
+
+/*** Label icon ***/
+
+.e-label--icon {
+  margin-right: 6px;
+}
+
+/*** Label icon ***/
+
+/*** Label helper, info-text ***/
+
+.e-label--helper,
+.e-label--info-text {
+  color: var( --color-muted );
+}
+
+/*** Label helper, info-text ***/
+
+/*** Label info-text button ***/
+
+.e-label--info-text-button {
+  color: var( --color-muted );
+}
+
+/*** Label info-text button ***/
+/***** Label *****/
+
+
+
+/***** Line diagram *****/
+/*** Line diagram wrapper ***/
+
+.e-line-diagram {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*** Line diagram wrapper ***/
+
+/*** Line diagram sections ***/
+
+.e-line-diagram--sections {
+  display: flex;
+}
+
+/*** Line diagram sections ***/
+
+/*** Line diagram section ***/
+
+.e-line-diagram--section {
+  transition: width .5s ease-out;
+  height: 100%;
+}
+
+/*** Line diagram section ***/
+/***** Line diagram *****/
+
+
+
+/***** Icon-button *****/
+/*** Icon-button wrapper ***/
+
+.e-icon-button--body[data-border-color] {
+  border-style: solid;
+  border-width: 1px;
+}
+
+/*** Icon-button wrapper ***/
+
+/*** Icon-button progress *****/
+
+.e-icon-button--progress-svg {
+  height: 24px;
+  width: 24px;
+
+  /* BUG#8801
+   * Az .e-icon-button--body::before pszeudóelem abszolút pozícionálású,
+   * ezért szükséges, hogy az .e-icon-button--progress-svg is az legyen,
+   * különben a pszeudóelem eltakarná az svg elemet! */
+  position: absolute;
+}
+
+.e-icon-button--progress-circle {
+  fill: transparent;
+}
+
+/*** Icon-button progress *****/
+
+/*** Icon-button badge ***/
+
+.e-icon-button .e-element-badge {
+  right: 6px;
+  top:   6px;
+}
+
+/*** Icon-button badge ***/
+
+/*** Icon-button body ***/
+
+.e-icon-button--body {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* XXX#0990 (source-code/cljs/elements/icon_button/helpers.cljs) */
+  width: 100%;
+}
+
+.e-icon-button--body[data-hover-color]:hover {
+  /* XXX#0017
+   * Az ikon gomb elem hover-color színe nem az .e-icon-button--body elemen jelenik
+   * meg, hanem annak pszeudó-elemén! */
+  background-color: transparent;
+}
+
+/* XXX#0017 */
+.e-icon-button--body[data-border-radius="xxs"]::before { border-radius: var( --border-radius-xxs ); }
+.e-icon-button--body[data-border-radius="xs"]::before  { border-radius: var( --border-radius-xs  ); }
+.e-icon-button--body[data-border-radius="s"]::before   { border-radius: var( --border-radius-s   ); }
+.e-icon-button--body[data-border-radius="m"]::before   { border-radius: var( --border-radius-m   ); }
+.e-icon-button--body[data-border-radius="l"]::before   { border-radius: var( --border-radius-l   ); }
+.e-icon-button--body[data-border-radius="xl"]::before  { border-radius: var( --border-radius-xl  ); }
+.e-icon-button--body[data-border-radius="xxl"]::before { border-radius: var( --border-radius-xxl ); }
+
+/* XXX#0017 */
+[data-disabled="false"] [data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
+[data-disabled="false"] [data-hover-color="muted"].e-icon-button--body:hover::before     { background-color: var( --hover-color-muted     ); }
+[data-disabled="false"] [data-hover-color="highlight"].e-icon-button--body:hover::before { background-color: var( --hover-color-highlight ); }
+[data-disabled="false"] [data-hover-color="invert"].e-icon-button--body:hover::before    { background-color: var( --hover-color-invert    ); }
+[data-disabled="false"] [data-hover-color="primary"].e-icon-button--body:hover::before   { background-color: var( --hover-color-primary   ); }
+[data-disabled="false"] [data-hover-color="secondary"].e-icon-button--body:hover::before { background-color: var( --hover-color-secondary ); }
+[data-disabled="false"] [data-hover-color="success"].e-icon-button--body:hover::before   { background-color: var( --hover-color-success   ); }
+[data-disabled="false"] [data-hover-color="warning"].e-icon-button--body:hover::before   { background-color: var( --hover-color-warning   ); }
+
+/*** Icon-button body ***/
+
+/*** Icon-button hover ***/
+
+.e-icon-button--body::before {
+  content: '';
+  left: 6px;
+  position: absolute;
+  top: 6px;
+
+  /* Azért calc(100% - 12px) magas és széles a hover-background az ikon-button
+   * elemen, mert így az érzékelési terület szélétől 6px távolságra van, ami
+   * megegyezik a legkisebb outdent méretével (XXS outdent: 6px) */
+  width: calc(100% - 12px);
+
+  /* XXX#6610
+   * Az ikon-gomb magassága a data-height attributtummal változik ezért szükséges
+   * a calc függvénnyel számítani a pszeudo-elem magasságát! */
+  height: calc(100% - 12px);
+}
+
+.e-icon-button--body[data-labeled="true"]::before {
+  /* TEMP
+   * Teszt: hover-color & label együtt */
+  top: 12px;
+  height: calc(100% - 24px);
+}
+
+/*** Icon-button hover ***/
+
+/*** Icon-button icon ***/
+
+.e-icon-button--icon {
+  /* BUG#0984
+   * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal
+   * rendelkező pszeudo-elem eltakarná az ikont, ha az nem abszolút pozícionálással
+   * jellene meg, mert a pszeudo-elem a {position: absolute} beállítása miatt
+   * az ikon felett jelenne meg! */
+  left: calc(50% - 12px);
+  position: absolute;
+
+  /* XXX#6610
+   * Mi az kalkulált top érték, ami különböző data-height értékek mellett is működik?
+   *  */
+ -top: calc()}
+
+/*** Icon-button icon ***/
+
+/*** Icon-button label ***/
+
+.e-icon-button--label {
+  font-size: 9px;
+  font-weight: 600;
+  height: 12px;
+  letter-spacing: var( --letter-spacing-xxs );
+  line-height: 12px;
+  opacity: .75;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+
+  /* BUG#0984 */
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+/*** Icon-button label ***/
+/***** Icon-button *****/
+
+
+
+/***** Menu bar *****/
+/*** Menu wrapper ***/
+/*** Menu wrapper ***/
+
+/*** Menu items ***/
+/*** Menu items ***/
+
+/*** Menu item ***/
+
+/* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
+ * meg kell feleljenek a felsorolt felhasználási módoknak:
+ *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
+ *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
+ *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
+/* TODO
+ * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
+.e-menu-bar--menu-item {
+  align-items: center;
+  color: var( --color-highlight );
+
+  /* Ha az .e-menu-bar--menu-item elem egyszerre feliratot és ikont is megjelenít,
+   * akkor a felirat és az ikon közötti esztétikai távolságot a column-gap
+   * tulajdonság határozza meg */
+  column-gap: 6px;
+  display: flex;
+
+  /* Ha az .e-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
+   * akkor az ikon-gombként jelenik meg (12px + 24px + 12px = 48px szélesség) */
+  padding: 0 12px;
+}
+
+.e-menu-bar--menu-item[data-active="true"]::after {
+  background-color: var( --border-color-primary );
+ -border-radius: 1.5px;
+  bottom: 0;
+
+  /* Az indicator megjelenítése ki van kapcsolva ... */
+  content: '';
+  content: none;
+
+  height: 1px;
+  left: 30%;
+  position: absolute;
+  width: 40%;
+}
+
+.e-menu-bar--menu-item[data-active="true"] {
+  color: var( --color );
+}
+
+.e-menu-bar--menu-item--label {
+  white-space: nowrap;
+}
+
+/*** Menu item ***/
+
+/*** Menu item badge ***/
+
+.e-menu-bar--menu-item .e-element-badge {
+  min-height: 6px;
+  right: 6px;
+  top: 12px;
+  min-width: 6px;
+}
+
+/*** Menu item badge ***/
+/***** Menu bar *****/
+
+
+
+/***** Multi field *****/
+
+.e-multi-field {
+  /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
+   * text-field alkomponensei */
+  display: flex;
+  flex-direction: column;
+  grid-row-gap: 8px;
+}
+
+/***** Multi field *****/
+
+
+
+/***** Radio button *****/
+/*** Radio button clear button ***/
+
+.e-radio-button--clear-button {
+  background-color: var( --fill-color );
+  border-color: var( --color );
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  margin-bottom: 6px;
+  margin-left: 2px;
+  margin-top: 6px;
+  height: 20px;
+  width: 20px;
+}
+
+.e-radio-button--clear-button::before,
+.e-radio-button--clear-button::after {
+  background-color: var( --color );
+  border-radius: 1px;
+  content: '';
+  position: absolute;
+  transform: rotateZ( -45deg );
+}
+
+.e-radio-button--clear-button::before {
+  height: 2px;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+}
+
+.e-radio-button--clear-button::after {
+  height: 8px;
+  left: 7px;
+  top: 4px;
+  width: 2px;
+}
+
+.e-radio-button--clear-button[data-disabled="true"] {
+  cursor: default;
+  opacity: .5;
+}
+
+/*** Radio button clear button ***/
+
+/*** Radio button options ***/
+
+.e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
+  display: flex;
+  grid-column-gap: 24px;
+}
+
+/*** Radio button options ***/
+
+/*** Radio button option ***/
+
+.e-radio-button--option {
+  border-color: inherit;
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.e-radio-button--option-label {
+  /* XXX#5050
+   * A {text-align: left} beállítás biztosítja, hogy a label és a helper
+   * feliratok közül bármelyik lehet hosszabb a másiknál, mind a kettő
+   * balraigazítottan jelenjen meg */
+  text-align: left;
+}
+
+.e-radio-button--option-helper {
+  /* XXX#5050 */
+  color:      var( --color-muted );
+  text-align: left;
+}
+
+/*** Radio button option ***/
+
+/*** Radio button option button ***/
+
+.e-radio-button--option-button {
+  background-color: var( --fill-color );
+  border-color:     inherit;
+  border-radius:    50%;
+  border-style:     solid;
+  border-width:     2px;
+  height:           20px;
+  margin-bottom:    2px;
+  margin-left:      2px;
+  margin-right:     8px;
+  margin-top:       2px;
+  width:            20px;
+}
+
+/*** Radio button option button ***/
+
+/*** Radio button option marker ***/
+
+.e-radio-button--option[data-selected="true"]
+.e-radio-button--option-button::before {
+  animation-name: opacity-0-1;
+  animation-duration: .1s;
+  background-color: var( --color );
+  border-radius: 50%;
+  content: '';
+  height: 8px;
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  width: 8px;
+}
+
+/*** Radio button option marker ***/
+/***** Radio button *****/
+
+
+
+/***** Row *****/
+/*** Row body ***/
+
+.e-row--body {
+  display: flex;
+  /* Az e-row--body elem ugyanolyan magas kell legyen, mint az e-row elem, hogy minden esetben
+   * megfelelően működjön a vertikális igazítás!
+   *
+   * Ha az e-row komponens {:style {...}} tulajdonságával beállítod az e-row elem magasságát,
+   * és {:vertical-align :center} vagy {:vertical-align :bottom} beállítást használsz, miközben
+   * a tartalom magassága kevesebb, mint az e-row elem beállított magassága, akkor a {height: 100%}
+   * tulajdonság nélkül az .e-row--body elem magassága a tartalom magasságával lenne egyenlő
+   * és nem működne a tartalom középre igazítása! */
+  height: 100%;
+  width: 100%;
+}
+
+.e-row--body[data-wrap-items="true"] {
+  flex-wrap: wrap;
+}
+
+/*** Row body ***/
+/***** Row *****/
+
+
+
+/***** Polarity *****/
+
+.e-horizontal-polarity {
+  /* WARNING! DEPRECATED! DO NOT USE! */
+ -height: 100%;
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  width: 100%;
+}
+
+.e-horizontal-polarity--body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.e-horizontal-polarity--start-content,
+.e-horizontal-polarity--middle-content,
+.e-horizontal-polarity--end-content {
+  display: flex;
+}
+
+.e-horizontal-polarity--start-content {
+ -position: absolute;
+}
+.e-horizontal-polarity--end-content {
+ -position: absolute;
+}
+.e-horizontal-polarity--middle-content {
+ -justify-content: center;
+ -position: absolute;
+ -width: 100%;
+}
+
+.e-vertical-polarity {
+  /* WARNING! DEPRECATED! DO NOT USE! */
+ -width: 100%;
+  /* WARNING! DEPRECATED! DO NOT USE! */
+  height: 100%;
+}
+
+.e-vertical-polarity--body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.e-vertical-polarity--start-content,
+.e-vertical-polarity--middle-content,
+.e-vertical-polarity--end-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/***** Polarity *****/
+
+
+
+/***** Select *****/
+/*** Select button ***/
+
+.e-select--button-body {
+  align-items: center;
+  background: var( --fill-color );
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  height: 36px;
+  justify-content: space-between;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.e-select--button-label {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+/*** Select button ***/
+
+/*** Select warning ***/
+
+.e-select--warning {
+  color: var( --color-warning );
+  text-align: right;
+}
+
+/*** Select warning ***/
+
+/*** Select options ***/
+
+.e-select--option-list {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+}
+
+.e-select--options-placeholder {
+  align-self: center;
+  color: var( --color-highlight );
+}
+
+/*** Select options ***/
+
+/*** Select option ***/
+
+.e-select--option {
+  display: flex;
+  padding: 6px 24px;
+  width: 100%;
+}
+
+.e-select--option:hover,
+.e-select--option[data-selected="true"]:hover {
+  background-color: var( --hover-color-highlight );
+}
+
+/*** Select option ***/
+
+/*** Select option label ***/
+
+.e-select--option[data-selected="true"] {
+  background-color: var( --background-color-highlight );
+}
+
+.e-select--option[data-selected="true"]::before {
+  background-color: var( --color-primary );
+  border-radius: 50%;
+  content: '';
+  height: 4px;
+  left: 10px;
+  position: absolute;
+  top: 16px;
+  width: 4px;
+}
+
+/*** Select option label ***/
+
+/*** Select options header ***/
+
+.e-select--options--label {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+}
+
+.e-select--options--label[data-placeholder="true"] {
+  height: 12px;
+}
+
+/*** Select options header ***/
+/***** Select *****/
+
+
+
+/***** Separator *****/
+
+.e-horizontal-separator,
+.e-vertical-separator {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/***** Separator *****/
+
+
+
+/***** Slider *****/
+/*** Slider body ***/
+
+.e-slider--body {
+  height: 20px;
+}
+
+/*** Slider body ***/
+
+/*** Slider track ***/
+
+.e-slider--track {
+  background-color: var( --background-color-highlight );
+  border-radius: 2px;
+  height: 4px;
+  left: 0;
+  position: absolute;
+  top: 8px;
+  width: 100%;
+}
+
+/*** Slider track ***/
+
+/*** Slider line ***/
+
+.e-slider--line {
+  cursor: grab;
+  height: 10px;
+  opacity: .3;
+  position: absolute;
+  top: 5px;
+}
+
+.e-slider--line::after {
+  background-color: var( --border-color-primary );
+  border-radius: 2px;
+  content: '';
+  height: 4px;
+  position: absolute;
+  top: 3px;
+  width: 100%;
+}
+
+/*** Slider line ***/
+
+/*** Slider thumb ***/
+
+.e-slider--thumb {
+  background-color: var( --border-color-primary );
+  border-radius: 6px;
+  cursor: grab;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  width: 12px;
+}
+
+/*** Slider thumb ***/
+/***** Slider *****/
+
+
+
+/***** Slideshow *****/
+/*** Slideshow steps wrapper ***/
+
+.e-slideshow--steps {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+/*** Slideshow steps wrapper ***/
+
+/*** Slideshow steps ***/
+
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow--temp-step,
+.e-slideshow--next-step {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.e-slideshow--prev-step,
+.e-slideshow--next-step,
+.e-slideshow--temp-step {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow--next-step {
+  transition: transform .25s ease-in-out;
+}
+
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--prev-step,
+.e-slideshow--current-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--next-step {
+  transform: translateX( 0 );
+}
+
+.e-slideshow--prev-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--current-step {
+  transform: translateX( -100% );
+}
+
+.e-slideshow--next-step,
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--current-step {
+  transform: translateX( 100% );
+}
+
+.e-slideshow[data-animation="slide-in-bwd"]
+.e-slideshow--temp-step,
+.e-slideshow[data-animation="slide-in-fwd"]
+.e-slideshow--temp-step {
+  opacity: 0;
+}
+
+/*** Slideshow steps ***/
+
+/*** Slideshow controls ***/
+
+.e-slideshow--controls {
+  animation-fill-mode: both;
+  animation-name: opacity-1-0;
+  animation-duration: .3s;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.e-slideshow--controls:hover {
+  animation-name: none;
+}
+
+.e-slideshow--controls--go-bwd,
+.e-slideshow--controls--go-fwd {
+  height: 80px;
+  position: absolute;
+  top: calc( 50% - 40px );
+  width: 80px;
+}
+
+.e-slideshow--controls--go-bwd {
+  left: 0;
+}
+
+.e-slideshow--controls--go-fwd {
+  right: 0;
+}
+
+.e-slideshow--controls--go-bwd::before,
+.e-slideshow--controls--go-fwd::before {
+  color: var( --white );
+  font-size: 64px;
+  height: 64px;
+  left: 8px;
+  line-height: 64px;
+  position: absolute;
+  top: 8px;
+  width: 64px;
+}
+
+.e-slideshow--controls--go-bwd::before {
+  content: 'chevron_left';
+}
+
+.e-slideshow--controls--go-fwd::before {
+  content: 'chevron_right';
+}
+
+/*** Slideshow controls ***/
+/***** Slideshow *****/
+
+
+
+/***** Switch *****/
+/*** Switch options ***/
+
+.e-switch--body[data-options-orientation="horizontal"] {
+  display: flex;
+  grid-column-gap: 24px;
+}
+
+/*** Switch options ***/
+
+/*** Switch option ***/
+
+.e-switch--option {
+  align-items:    center;
+  border-color:   inherit;
+  display:        flex;
+  padding-bottom: 6px;
+  padding-top:    6px;
+}
+
+.e-switch--option-track {
+  background-color: var( --fill-color );
+  border-color: inherit;
+  border-radius: 10px;
+  border-style:  solid;
+  border-width:  2px;
+  margin-right:  6px;
+  height:        20px;
+  width:         40px;
+}
+
+.e-switch--option-label {
+  /* XXX#5050 */
+  text-align: left;
+}
+
+.e-switch--option-helper {
+  /* XXX#5050 */
+  color:      var( --color-muted );
+  text-align: left;
+}
+
+/*** Switch option ***/
+
+/*** Switch thumb ***/
+
+.e-switch--option-track::before {
+  background-color: var( --color );
+  border-radius: 50%;
+  content: '';
+  height: 12px;
+  left: 2px;
+  position: absolute;
+  transition: transform .1s ease-out;
+  top: 2px;
+  width: 12px;
+}
+
+.e-switch--option[data-switched="true"] .e-switch--option-track::before {
+  transform: translateX( 20px );
+}
+
+/*** Switch thumb ***/
+/***** Switch *****/
+
+
+
+/***** Text *****/
+/*** Text wrapper ***/
+
+.e-text {}
+
+/*** Text wrapper ***/
+
+/*** Text body ***/
+
+.e-text--body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* A word-break tulajdonság megtöri a szavakat! Ne használd! */
+  -word-break: break-all;
+}
+
+.e-text--body[data-cropped="true"] {
+  justify-content: flex-start;
+  overflow-y: hidden;
+}
+
+.e-text--body[data-cropped="true"]::after {
+  background-image: linear-gradient(0deg, white, transparent);
+  bottom: 0;
+ -content: '';
+  height: 10px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+/*** Text body ***/
+
+/*** Copyable text ***/
+
+.e-text--copyable {
+  display: flex;
+  max-width: 100%;
+}
+
+/*** Copyable text ***/
+
+/*** Text placeholder ***/
+
+.e-text--placeholder {
+  color: var( --color-highlight );
+}
+
+/*** Text placeholder ***/
+/***** Text *****/
+
+
+
+/***** Text field *****/
+/*** Field input-container ***/
+
+/* Az .e-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
+ * pl.: adornment ikonok, feliratok és gombok, placeholder elem ... */
+.e-text-field--input-container {
+  background-color: var( --fill-color );
+  border-style: solid;
+  border-width: 1px;
+  /* A {padding: 1px} beállítás használatával a text-field elem más elemekhez hasonlóan 36px
+   * magasságú lesz */
+  padding: 1px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/*** Field input-container ***/
+
+/*** Field input ***/
+
+.e-text-field--input-structure {
+  flex-grow: 1;
+}
+
+.e-text-field--input-emphasize {
+  height: 100%;
+  width: 100%;
+}
+
+.e-text-field--input {
+  color: var( --color );
+  padding: 4px 0;
+  width: 100%;
+}
+
+.e-text-field--input[type="date"] {
+  cursor: text;
+}
+
+textarea.e-text-field--input {
+  overflow: hidden;
+  resize: none;
+}
+
+.e-text-field[data-disabled="true"] .e-text-field--input {
+  /* BUG#8800 (source-code/cljs/elements/text_field/helpers.cljs) */
+  caret-color: transparent
+}
+
+/*** Field input ***/
+
+/*** Field adornments ***/
+
+.e-text-field--adornments {
+  align-items: center;
+  display: flex;
+  padding: 0 4px;
+}
+
+.e-text-field--adornments-placeholder {
+  cursor: text;
+  width: 8px;
+}
+
+.e-text-field--button-adornment[data-disabled="true"] {
+  cursor: default;
+  opacity: .5;
+}
+
+.e-text-field--button-adornment:not([data-icon-family]),
+.e-text-field--static-adornment:not([data-icon-family]) {
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+
+  /* (24px - 18px) / 2 = 3px */
+  padding: 0 3px;
+}
+
+/*** Field adornments ***/
+
+/*** Field warning ***/
+
+.e-text-field--warning {
+  color: var( --color-warning );
+  text-align: right;
+}
+
+/*** Field warning ***/
+
+/*** Field placeholder ***/
+
+.e-text-field--placeholder {
+  color: var( --color-muted);
+  left: 0;
+  padding: 4px 0;
+  position: absolute;
+  top: 0;
+
+  /* Kis méretű kijelzőkön a hosszabb placeholder szövegek több sorba törnének ... */
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*** Field placeholder ***/
+
+/*** Field surface ***/
+
+.e-text-field--surface {
+  background-color: var( --background-color );
+  border-radius: var( --border-radius-s );
+  box-shadow: var( --box-shadow-black-xx-light );
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 36px;
+  width: 100%;
+  /* XXX#0567
+   * Az #x-app-bubbles elem alatt szükséges megjeleníteni! */
+  z-index: 996;
+}
+
+/*** Field surface ***/
+/***** Text field *****/
+
+
+
+/***** Thumbnail *****/
+
+.e-thumbnail--body {
+  overflow: hidden;
+}
+
+.e-thumbnail--image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.e-thumbnail--icon {
+  background-color: var( --background-color-highlight );
+  color: var( --color-highlight );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/***** Thumbnail *****/
+
+
+
+/***** Toggle *****/
+/*** Toggle body ***/
+
+.e-toggle--body {
+  cursor: pointer;
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  width: 100%;
+  word-wrap: normal;
+
+  /* Overwriting user-agent rule */
+  text-align: left;
+}
+
+/*** Toggle body ***/
+/***** Toggle *****/

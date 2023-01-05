@@ -1,0 +1,76 @@
+
+/***** Material Design icons *****/
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons__';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/icons/material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Outlined__';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('...') format('woff');
+}
+
+/***** Material Design icons *****/
+
+
+
+/***** ... *****/
+
+[data-icon-family="material-icons-filled"] {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing: antialiased }
+
+[data-icon-family="material-icons-outlined"] {
+  font-family: 'Material Icons Outlined';
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  overflow: hidden;
+  text-transform: none;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing: antialiased }
+
+/* [data-icon-family="material-icons-filled"], */
+[data-icon-family="material-symbols-filled"] {
+  direction: ltr;
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing: antialiased }
+
+/* [data-icon-family="material-icons-outlined"], */
+[data-icon-family="material-symbols-outlined"] {
+  direction: ltr;
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing: antialiased }
+
+/***** ... *****/

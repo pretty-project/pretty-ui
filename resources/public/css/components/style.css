@@ -1,0 +1,319 @@
+
+/***** Ghost view *****/
+/*** Body ***/
+
+.c-ghost-view[data-layout="box-surface"] {
+  width: 100%;
+}
+
+/*** Body ***/
+/***** Ghost view *****/
+
+
+
+/***** Item list header *****/
+
+.c-item-list-header {
+  background-color: var( --fill-color );
+  display: grid;
+  opacity: .98;
+}
+
+.c-item-list-header[data-border="both"] {
+  border-bottom: 1px solid var( --border-color-highlight );
+  border-top:    1px solid var( --border-color-highlight );
+}
+
+.c-item-list-header[data-border="bottom"] {
+  border-bottom: 1px solid var( --border-color-highlight );
+}
+
+.c-item-list-header[data-border="top"] {
+  border-top: 1px solid var( --border-color-highlight );
+}
+
+.c-item-list-header > div:not(:last-child):after {
+  background-color: var( --border-color-highlight );
+  -content: '';
+  position: absolute;
+  right: 0;
+  width: 1px;
+  top: 12px;
+  height: calc( 100% - 24px );
+}
+
+.c-item-list-header--cell[data-clickable="true"] {
+  cursor: pointer;
+}
+
+.c-item-list-header--cell[data-clickable="true"]:hover::before {
+  background-color: var( --background-color-highlight );
+  border-radius: var(--border-radius-xs);
+  content: '';
+  height: calc(100% - 8px);
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  width: calc(100% - 8px);
+}
+
+/***** Item list header *****/
+
+
+
+/***** Item list row *****/
+
+.c-item-list-row {
+  display: grid;
+}
+
+.c-item-list-row[data-border="both"] {
+  border-bottom: 1px solid var( --border-color-highlight );
+  border-top:    1px solid var( --border-color-highlight );
+}
+
+.c-item-list-row[data-border="bottom"] {
+  border-bottom: 1px solid var( --border-color-highlight );
+}
+
+.c-item-list-row[data-border="top"] {
+  border-top: 1px solid var( --border-color-highlight );
+}
+
+.c-item-list-row > div:not(:last-child):after {
+  background-color: var( --border-color-highlight );
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1px;
+  top: 18px;
+  height: calc( 100% - 36px );
+}
+
+.c-item-list-row[data-highlighted="true"] {
+  background-color: var( --background-color-highlight );
+}
+
+.c-item-list-row[data-marked="true"]::after {
+  background-color: var( --border-color-primary );
+  border-radius: 4px;
+  content: '';
+  height: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 10px;
+}
+
+/***** Item list row *****/
+
+
+
+/***** List item avatar *****/
+
+.c-list-item-avatar {
+  align-items: center;
+  display: flex;
+  height: 72px;
+  justify-content: center;
+  width: 78px;
+}
+
+/***** List item avatar *****/
+
+
+
+/***** List item button *****/
+
+.c-list-item-button {
+  align-items: center;
+  display: flex;
+  padding: 0 12px;
+}
+
+.c-list-item-button--body {
+  flex-grow: 1;
+}
+
+/***** List item button *****/
+
+
+
+/***** List item cell *****/
+
+.c-list-item-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.c-list-item-cell[data-clickable="true"]:hover::before {
+  background-color: var( --background-color-highlight );
+  border-radius: var(--border-radius-xs);
+  content: '';
+  height: calc(100% - 8px);
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  width: calc(100% - 8px);
+}
+
+/***** List item cell *****/
+
+
+
+/***** List item drag handle *****/
+
+.c-list-item-drag-handle {
+  align-items: center;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  width: 48px;
+}
+
+/***** List item drag handle *****/
+
+
+
+/***** List item thumbnail *****/
+
+.c-list-item-thumbnail {
+  padding: 0 12px;
+  width: 108px;
+}
+
+.c-list-item-thumbnail--icon {
+  padding: 24px 30px;
+}
+
+/***** List item thumbnail *****/
+
+
+
+/***** Menu table *****/
+
+.c-menu-table--label {
+  border-bottom: 1px solid var( --border-color-highlight );
+  padding-bottom: 6px;
+}
+
+.c-menu-table--body {
+  padding-top: 12px;
+}
+
+/***** Menu table *****/
+
+
+
+/***** Side menu *****/
+
+.c-side-menu {
+  /* Holds place for the sidebar sensor */
+  padding-left: 10px;
+}
+
+/*** Body ***/
+
+.c-side-menu--body {
+  background-color: var( --fill-color );
+  border-right: 1px solid var( --border-color-highlight );
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 48px);
+  min-width: 250px;
+  position: sticky;
+  top: 48px;
+}
+
+/*** Body ***/
+/***** Side menu *****/
+
+
+
+/***** Side menu button *****/
+/*** Body ***/
+
+.c-side-menu-button--body {
+  display: flex;
+}
+
+/*** Body ***/
+/***** Side menu button *****/
+
+
+
+/***** Side menu footer *****/
+/*** Wrapper ***/
+
+.c-side-menu-footer {
+  align-items: flex-end;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+/*** Wrapper ***/
+/***** Side menu footer *****/
+
+
+
+/***** Sidebar button *****/
+/*** Body ***/
+
+.c-sidebar-button--body {
+  display: flex;
+}
+
+/*** Body ***/
+/***** Sidebar button *****/
+
+
+/***** User avatar *****/
+/***** Initials *****/
+
+.c-user-avatar--initials {
+  align-items: center;
+  background-color: var( --background-color-highlight );
+  border-radius: 50%;
+  display: flex;
+  font-size: var( --font-size-s );
+  font-weight: 600;
+  height: 100%;
+  justify-content: center;
+  letter-spacing: var( --letter-spacing-s );
+  line-height: var( --line-height-s );
+  width: 100%;
+}
+
+/***** Initials *****/
+
+/***** Icon *****/
+
+.c-user-avatar--icon {
+  align-items: center;
+  background-color: var( --background-color-highlight );
+  border-radius: 50%;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+/***** Icon *****/
+
+/***** Colors *****/
+
+.c-user-avatar--colors {
+  position: absolute;
+  top: 0;
+}
+
+.c-user-avatar--color {
+  fill: transparent;
+  transform-origin: center;
+}
+
+/***** Colors *****/
+/***** User avatar *****/
