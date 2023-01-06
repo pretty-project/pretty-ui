@@ -9,11 +9,15 @@
   ; @param (map) description-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
+  ; {:color (keyword)
+  ;  :font-size (keyword)
   ;  :horizontal-align (keyword)
-  ;  :indent (map)}
+  ;  :indent (map)
+  ;  :line-height (keyword)}
   [description-props]
-  (merge {:font-size        :xxs
-          :horizontal-align :center
+  (merge {:horizontal-align :center
           :indent           {:horizontal :xs :vertical :xs}}
-         (param description-props)))
+         (param description-props)
+         {:color       :muted
+          :font-size   :xxs
+          :line-height :block}))

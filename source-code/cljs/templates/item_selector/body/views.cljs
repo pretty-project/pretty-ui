@@ -35,7 +35,7 @@
   ; @param (map) body-props
   ; {:engine (keyword)(opt)}
   [selector-id {:keys [engine] :as body-props}]
-  (let [body-props (assoc body-props :error-element [components/error-content {:error  :the-content-you-opened-may-be-broken}]
+  (let [body-props (assoc body-props :error-element [components/error-content {:content :the-content-you-opened-may-be-broken}]
                                      :ghost-element [components/ghost-view    {:layout :item-list :item-count 3}]
                                      :list-element  [item-list selector-id body-props])]))
        ;(case engine :item-browser [item-browser/body selector-id body-props]

@@ -116,6 +116,9 @@
   ;  :icon-position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left
+  ;  :icon-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   Default: :s
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl

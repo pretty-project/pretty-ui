@@ -83,7 +83,7 @@
         ;                 {:default-order-by  :modified-at/descending
         ;                  :display-progress? false
         ;                  :items-path        items-path
-        ;                  :error-element     [components/error-content {:error :the-content-you-opened-may-be-broken}]
+        ;                  :error-element     [components/error-content {:content :the-content-you-opened-may-be-broken}]
         ;                  :ghost-element     [downloading-label picker-id picker-props]
         ;;                  :list-element      [item-list picker-id picker-props]
           ;;                :prefilter         {:$or item-filters}

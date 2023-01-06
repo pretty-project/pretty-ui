@@ -8,21 +8,19 @@
 ;; ----------------------------------------------------------------------------
 
 (defn component
+  ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
+  ; The side-menu-label component is based on the label element.
+  ; Check out the documentation of the label element for more information.
+  ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
-  ;  :font-size (keyword)(opt)
-  ;   Default: :xs
-  ;  :font-weight (keyword)(opt)
   ;  :icon (keyword)
-  ;  :icon-color (string or keyword)
   ;  :icon-family (keyword)(opt)
   ;   Default: :material-icons-filled
-  ;   Default: {:left :s :horizontal :xs}
-  ;  :label (metamorphic-content)
   ;  :style (map)(opt)}
   ;
   ; @usage

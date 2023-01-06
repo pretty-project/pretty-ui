@@ -16,7 +16,7 @@
   [handler-id {:keys [item-element item-id] :as body-props}]
   [:<> [item-handler/downloader handler-id body-props]
        (cond @(r/subscribe [:item-handler/display-error? handler-id])
-              [components/error-content {:error :the-item-you-opened-may-be-broken}]
+              [components/error-content {:content :the-item-you-opened-may-be-broken}]
              @(r/subscribe [:item-handler/display-ghost? handler-id body-props])
               [components/ghost-view {:layout :box-surface-body}]
               :item-downloaded

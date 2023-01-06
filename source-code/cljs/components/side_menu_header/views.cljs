@@ -20,14 +20,15 @@
                                           :icon        :polymer
                                           :icon-color "var(--soft-blue-xx-dark)"
                                           :label (string/to-uppercase app-title)
-                                          :on-click []}]))
+                                          :on-click []
+                                          :outdent {:top :xs}}]))
 
 (defn- side-menu-header
   ; @param (keyword) header-id
   ; @param (map) header-props
   [header-id header-props]
   [:<> [elements/horizontal-separator {:height :xs}]
-       [app-home-button  header-id header-props]])
+       [app-home-button header-id header-props]])
 
 (defn component
   ; @param (keyword)(opt) header-id
@@ -43,5 +44,5 @@
    [component (random/generate-keyword) header-props])
 
   ([header-id header-props]
-   (let [] ; header-props (side-menu-header.prototypes/header-props-prototype header-props)]
+   (let [] ; header-props (side-menu-header.prototypes/header-props-prototype header-props)
         [side-menu-header header-id header-props])))

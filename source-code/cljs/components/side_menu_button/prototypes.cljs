@@ -9,11 +9,13 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:font-size (keyword)
-  ;  :hover-color (keyword)
-  ;  :icon-family (keyword)}
-  [{:keys [] :as button-props}]
-  (merge {:font-size   :xs
-          :hover-color :highlight
-          :icon-family :material-icons-filled}
-         (param button-props)))
+  ; {}
+  [button-props]
+  (merge {:icon-family :material-icons-filled}
+         (param button-props)
+         {:font-size        :xs
+          :hover-color      :highlight
+          :horizontal-align :left
+          :icon-size        :s
+          :indent           {:horizontal :xs :left :s :right :xl}
+          :line-height      :block}))

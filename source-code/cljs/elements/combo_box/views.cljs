@@ -88,8 +88,8 @@
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
-  ; A combo-box elem alapkomponense a text-field elem.
-  ; A combo-box elem további paraméterezését a text-field elem dokumentációjában találod.
+  ; The combo-box element is based on the text-field element.
+  ; Check out the documentation of the text-field element for more information.
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props

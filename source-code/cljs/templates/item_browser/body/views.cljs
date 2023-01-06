@@ -36,7 +36,7 @@
   ; @param (keyword) browser-id
   ; @param (map) body-props
   [browser-id body-props]
-  (let [body-props (assoc body-props :error-element [components/error-content {:error :the-content-you-opened-may-be-broken}]
+  (let [body-props (assoc body-props :error-element [components/error-content {:content :the-content-you-opened-may-be-broken}]
                                      :ghost-element [components/ghost-view    {:layout :item-list :item-count 3}]
                                      :list-element  [item-list browser-id body-props])]
        [item-browser/body browser-id body-props]))

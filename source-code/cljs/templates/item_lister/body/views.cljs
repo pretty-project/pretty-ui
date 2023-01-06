@@ -92,7 +92,7 @@
   [:<> [item-list              lister-id body-props]
        [item-lister/downloader lister-id body-props]
        (if @(r/subscribe [:item-lister/display-error? lister-id])
-            [components/error-content {:error :the-content-you-opened-may-be-broken}])
+            [components/error-content {:content :the-content-you-opened-may-be-broken}])
        (if @(r/subscribe [:item-lister/display-placeholder? lister-id])
             [placeholder-label lister-id body-props])
        (if @(r/subscribe [:item-lister/display-ghost? lister-id])

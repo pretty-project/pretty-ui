@@ -15,12 +15,12 @@
   ;  :icon (keyword)
   ;  :icon-family (keyword)
   ;  :indent (map)}
-  [{:keys [] :as label-props}]
-  (merge {:color            :muted
+  [label-props]
+  (merge {:icon-family :material-icons-filled
+          :style       {:max-width "248px"}}
+         (param label-props)
+         {:color            :muted
           :font-size        :xs
           :horizontal-align :left
-          :icon-family      :material-icons-filled
           :indent           {:horizontal :xs :vertical :s}
-          :line-height :block
-          :style {:max-width "248px"}}
-         (param label-props)))
+          :line-height      :block}))

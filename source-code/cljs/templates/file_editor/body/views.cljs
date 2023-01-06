@@ -11,7 +11,7 @@
   ; @param (keyword) editor-id
   ; @param (map) body-props
   [editor-id body-props]
-  (let [body-props (assoc body-props :error-element [components/error-content {:error  :the-item-you-opened-may-be-broken}]
+  (let [body-props (assoc body-props :error-element [components/error-content {:content :the-item-you-opened-may-be-broken}]
                                      :ghost-element [components/ghost-view    {:layout :box-surface-body}])]
        [file-editor/body editor-id body-props]))
 

@@ -30,5 +30,5 @@
    [component (random/generate-keyword) footer-props])
 
   ([footer-id footer-props]
-   (let [] ; footer-props (side-menu-footer.prototypes/footer-props-prototype footer-props)]
+   (let [] ; footer-props (side-menu-footer.prototypes/footer-props-prototype footer-props)
         [side-menu-footer footer-id footer-props])))

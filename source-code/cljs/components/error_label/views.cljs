@@ -7,25 +7,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- error-message-label
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  [_ {:keys [error]}]
-  [elements/label {:color       :warning
-                   :content     error
-                   :font-size   :xs
-                   :lincomponentse-height :block}])
-
-(defn- error-label
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  [label-id label-props]
-  [error-message-label label-id label-props])
-
 (defn component
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:error (metamorphic-content)}
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
+  ;  :indent (map)(opt)
+  ;  :outdent (map)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @usage
   ; [error-label {...}]
@@ -36,5 +25,5 @@
    [component (random/generate-keyword) label-props])
 
   ([label-id label-props]
-   (let [];label-props (error-label.prototypes/label-props-prototype label-props)
-        [error-label label-id label-props])))
+   (let [label-props (error-label.prototypes/label-props-prototype label-props)]
+        [elements/label label-id label-props])))

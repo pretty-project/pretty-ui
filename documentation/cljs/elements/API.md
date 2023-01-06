@@ -255,6 +255,9 @@
  :icon-position (keyword)(opt)
   :left, :right
   Default: :left
+ :icon-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  Default: :s
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -1101,6 +1104,9 @@ XXX#3240
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
+ :icon-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  Default: :s
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl

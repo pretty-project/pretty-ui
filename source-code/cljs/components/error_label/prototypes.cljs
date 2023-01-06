@@ -5,12 +5,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn element-props-prototype
-  ; @param (map) element-props
-  ; {}
+(defn label-props-prototype
+  ; @param (map) label-props
   ;
   ; @return (map)
   ; {}
-  [element-props]
-  (merge {}
-         (param element-props)))
+  [label-props]
+  (merge label-props {:color       :warning
+                      :font-size   :xs
+                      :line-height :block}))

@@ -5,11 +5,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn refer-props-prototype
-  ; @param (map) refer-props
+(defn header-props-prototype
+  ; @param (map) header-props
   ;
   ; @return (map)
   ; {}
-  [{:keys [] :as refer-props}]
+  [{:keys [] :as header-props}]
   (merge {}
-         (param refer-props)))
+         (param header-props)))

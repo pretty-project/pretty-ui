@@ -152,16 +152,16 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:font-size (keyword)
-  ;  :icon-color (keyword or string)
-  ;  :icon-family (keyword)}
+  ; {:icon-color (keyword or string)
+  ;  :icon-family (keyword)
+  ;  :icon-size (keyword)}
   ;
   ; @return (map)
   ; {:data-icon-family (keyword)
   ;  :data-icon-size (keyword)}
-  [_ {:keys [font-size icon-color icon-family]}]
+  [_ {:keys [icon-color icon-family icon-size]}]
   (-> {:data-icon-family icon-family
-       :data-icon-size   font-size}
+       :data-icon-size   icon-size}
       (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
 
 (defn label-info-text-button-attributes

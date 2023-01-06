@@ -1,16 +1,18 @@
 
 (ns components.surface-title.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [candy.api    :refer [param]]
+              [re-frame.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn title-props-prototype
   ; @param (map) title-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [] :as title-props}]
-  (merge {}
-         (param title-props)))
+  [title-props]
+  (let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
+       (merge title-props {:font-size   (if viewport-large? :3xl :l)
+                           :font-weight :extra-bold
+                           :line-height :block})))

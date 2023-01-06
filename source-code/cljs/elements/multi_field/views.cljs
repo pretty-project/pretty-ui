@@ -47,12 +47,12 @@
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
-  ; A multi-field elem alapkomponense a text-field vagy a combo-box elem.
-  ; A multi-field elem további paraméterezését a text-field vagy a combo-box
-  ; elem dokumentációjában találod.
-  ; Abban az esetben, amikor a combo-box elem :initial-options, :options vagy :options-path
-  ; tulajdonságát használod egy multi-field elemnél, akkor a mezők text-field elem
-  ; helyett combo-box elemként jelennek meg.
+  ; The multi-field element is based on the text-field element or the combo-box element.
+  ; Check out the documentation of the text-field or the combo-box element for more information.
+  ;
+  ; In case of using the :initial-options, :options or :options-path properties,
+  ; the multi-field element implements the combo-box element, otherwise it implements
+  ; the text-field element.
   ;
   ; @param (keyword)(opt) group-id
   ; @param (map) group-props

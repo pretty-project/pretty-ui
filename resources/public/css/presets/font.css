@@ -2,6 +2,7 @@
 /***** Font presets *****/
 /*** Line height ***/
 
+[data-font-size="3xs"][data-line-height="normal"] { line-height: var( --line-height-3xs ); }
 [data-font-size="xxs"][data-line-height="normal"] { line-height: var( --line-height-xxs ); }
 [data-font-size="xs"][data-line-height="normal"]  { line-height: var( --line-height-xs  ); }
 [data-font-size="s"][data-line-height="normal"]   { line-height: var( --line-height-s   ); }
@@ -9,19 +10,24 @@
 [data-font-size="l"][data-line-height="normal"]   { line-height: var( --line-height-l   ); }
 [data-font-size="xl"][data-line-height="normal"]  { line-height: var( --line-height-xl  ); }
 [data-font-size="xxl"][data-line-height="normal"] { line-height: var( --line-height-xxl ); }
+[data-font-size="3xl"][data-line-height="normal"] { line-height: var( --line-height-3xl ); }
 
+[data-font-size="3xs"][data-line-height="block"] { line-height: 24px; }
 [data-font-size="xxs"][data-line-height="block"] { line-height: 24px; }
 [data-font-size="xs"][data-line-height="block"]  { line-height: 24px; }
 [data-font-size="s"][data-line-height="block"]   { line-height: 24px; }
 [data-font-size="m"][data-line-height="block"]   { line-height: 24px; }
 [data-font-size="l"][data-line-height="block"]   { line-height: 36px; }
 [data-font-size="xl"][data-line-height="block"]  { line-height: 36px; }
-[data-font-size="xxl"][data-line-height="block"] { line-height: 48px; }
+[data-font-size="xxl"][data-line-height="block"] { line-height: 36px; }
+[data-font-size="3xl"][data-line-height="block"] { line-height: 36px; }
 
 /*** Line height ***/
 
 /*** Font size ***/
 
+[data-font-size="3xs"] { font-size:      var( --font-size-3xs      );
+                         letter-spacing: var( --letter-spacing-3xs ); }
 [data-font-size="xxs"] { font-size:      var( --font-size-xxs      );
                          letter-spacing: var( --letter-spacing-xxs ); }
 [data-font-size="xs"]  { font-size:      var( --font-size-xs       );
@@ -36,6 +42,8 @@
                          letter-spacing: var( --letter-spacing-xl  ); }
 [data-font-size="xxl"] { font-size:      var( --font-size-xxl      );
                          letter-spacing: var( --letter-spacing-xxl ); }
+[data-font-size="3xl"] { font-size:      var( --font-size-3xl      );
+                         letter-spacing: var( --letter-spacing-3xl ); }
 
 /*** Font size ***/
 

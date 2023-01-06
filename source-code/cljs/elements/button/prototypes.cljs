@@ -9,8 +9,7 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ; {:background-color (keyword or string)(opt)
-  ;  :hover-color (keyword or string)(opt)
+  ; {:font-size (keyword)(opt)
   ;  :icon (keyword)(opt)}
   ;
   ; @return (map)
@@ -21,15 +20,15 @@
   ;  :horizontal-align (keyword)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
+  ;  :icon-size (keyword)
   ;  :line-height (keyword)}
-  [{:keys [background-color hover-color icon] :as button-props}]
+  [{:keys [font-size icon] :as button-props}]
   (merge {:color            :default
           :font-size        :s
           :font-weight      :bold
           :horizontal-align :center
           :line-height      :normal}
-         ;(if background-color {:border-radius :s})
-         ;(if hover-color      {:border-radius :s})
-         (if icon             {:icon-family   :material-icons-filled
-                               :icon-position :left})
+         (if icon           {:icon-family   :material-icons-filled
+                             :icon-position :left
+                             :icon-size (or font-size :s)})
          (param button-props)))

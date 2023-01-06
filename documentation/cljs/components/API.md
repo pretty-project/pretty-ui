@@ -229,7 +229,7 @@
 ```
 @param (keyword)(opt) content-id
 @param (map) content-props
-{:error (metamorphic-content)}
+{:content (metamorphic-content)}
 ```
 
 ```
@@ -249,7 +249,11 @@
 ```
 @param (keyword)(opt) label-id
 @param (map) label-props
-{:error (metamorphic-content)}
+{:class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
+ :indent (map)(opt)
+ :outdent (map)(opt)
+ :style (map)(opt)}
 ```
 
 ```
@@ -724,20 +728,15 @@
 @param (keyword)(opt) button-id
 @param (map) button-props
 {:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  Default: :xs
- :font-weight (keyword)(opt)
- :hover-color (keyword or string)(opt)
-  Default: :highlight
  :icon (keyword)
  :icon-color (string or keyword)
  :icon-family (keyword)(opt)
   Default: :material-icons-filled
  :label (metamorphic-content)
  :on-click (metamorphic-event)
+ :preset (keyword)(opt)
  :style (map)(opt)}
 ```
 
@@ -802,15 +801,9 @@
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  Default: :xs
- :font-weight (keyword)(opt)
  :icon (keyword)
- :icon-color (string or keyword)
  :icon-family (keyword)(opt)
   Default: :material-icons-filled
-  Default: {:left :s :horizontal :xs}
- :label (metamorphic-content)
  :style (map)(opt)}
 ```
 
@@ -832,13 +825,8 @@
 @param (keyword)(opt) button-id
 @param (map) button-props
 {:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  Default: :xs
- :font-weight (keyword)(opt)
-  Default: :bold
  :hover-color (keyword or string)(opt)
   Default: :invert
  :icon (keyword)
@@ -904,16 +892,16 @@
 ```
 @param (keyword)(opt) description-id
 @param (map) description-props
-{:content (metamorphic-content)
+{:class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
  :disabled? (boolean)(opt)
- :font-size (keyword)(opt)
-  Default: :xxs
  :horizontal-align (keyword)(opt)
   :left, :center, :right
   Default: :center
  :indent (map)(opt)
-  Default: {:horizontal :xxs}
- :outdent (map)(opt)}
+  Default: {:horizontal :xs :vertical :xs}
+ :outdent (map)(opt)
+ :style (map)(opt)}
 ```
 
 ```
@@ -934,7 +922,7 @@
 @param (keyword)(opt) title-id
 @param (map) title-props
 {:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
+ :content (metamorphic-content)(opt)
  :disabled? (boolean)(opt)
   Default: false
  :indent (map)(opt)

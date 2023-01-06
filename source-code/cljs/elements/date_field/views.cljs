@@ -9,8 +9,8 @@
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
-  ; A date-field elem alapkomponense a text-field elem.
-  ; A date-field elem további paraméterezését a text-field elem dokumentációjában találod.
+  ; The date-field element is based on the text-field element.
+  ; Check out the documentation of the text-field element for more information.
   ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props

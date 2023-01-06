@@ -45,7 +45,7 @@
   ; elveszítené a kapcsolatot a letöltött adatokkal!
   (let [id (import-id-f item-link)]
        [item-preview/body preview-id
-                          {:error-element   [components/error-label {:error :the-content-has-been-broken}]
+                          {:error-element   [components/error-label {:content :the-content-has-been-broken}]
                            :ghost-element   [downloading-label preview-id preview-props]
                            :preview-element [preview-element   preview-id preview-props]
                            :item-id         id

@@ -15,18 +15,19 @@
                    :content          :an-error-occured
                    :font-size        :m
                    :horizontal-align :center
-                   :indent           {:top :xxl}
-                   :line-height      :block}])
+                   :line-height      :block
+                   :outdent          {:top :xxl}}])
 
 (defn- error-message-label
   ; @param (keyword) content-id
   ; @param (map) content-props
-  [_ {:keys [error]}]
+  ; {:content (metamorphic-content)}
+  [_ {:keys [content]}]
   [elements/label {:color            :muted
-                   :content          error
+                   :content          content
                    :horizontal-align :center
-                   :indent           {:bottom :xxl}
-                   :line-height      :block}])
+                   :line-height      :block
+                   :outdent          {:bottom :xxl}}])
 
 (defn- error-content
   ; @param (keyword) content-id
@@ -38,7 +39,7 @@
 (defn component
   ; @param (keyword)(opt) content-id
   ; @param (map) content-props
-  ; {:error (metamorphic-content)}
+  ; {:content (metamorphic-content)}
   ;
   ; @usage
   ; [error-content {...}]
@@ -49,5 +50,5 @@
    [component (random/generate-keyword) content-props])
 
   ([content-id content-props]
-   (let [];content-props (error-content.prototypes/content-props-prototype content-props)
+   (let [] ; content-props (error-content.prototypes/content-props-prototype content-props)
         [error-content content-id content-props])))
