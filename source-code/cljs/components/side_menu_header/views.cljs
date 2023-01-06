@@ -20,8 +20,7 @@
                                           :icon        :polymer
                                           :icon-color "var(--soft-blue-xx-dark)"
                                           :label (string/to-uppercase app-title)
-                                          :on-click []
-                                          :outdent {:top :xs}}]))
+                                          :on-click []}]))
 
 (defn- side-menu-header
   ; @param (keyword) header-id

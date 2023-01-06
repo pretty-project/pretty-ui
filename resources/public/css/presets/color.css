@@ -1,24 +1,12 @@
 
 /***** Color presets *****/
-/* Background color */
-
-[data-background-color="var"]       { background-color: var( --background-color           ); }
-[data-background-color="muted"]     { background-color: var( --background-color-muted     ); }
-[data-background-color="highlight"] { background-color: var( --background-color-highlight ); }
-[data-background-color="invert"]    { background-color: var( --background-color-invert    ); }
-[data-background-color="primary"]   { background-color: var( --background-color-primary   ); }
-[data-background-color="secondary"] { background-color: var( --background-color-secondary ); }
-[data-background-color="success"]   { background-color: var( --background-color-success   ); }
-[data-background-color="warning"]   { background-color: var( --background-color-warning   ); }
-
-/* Background color */
-
 /* Badge color */
 
 [data-badge-color="var"]       { background-color: var( --badge-color            ); }
-[data-badge-color="muted"]     { background-color: var( --border-color-muted     ); }
+[data-badge-color="default"]   { background-color: var( --border-color-default   ); }
 [data-badge-color="highlight"] { background-color: var( --border-color-highlight ); }
 [data-badge-color="invert"]    { background-color: var( --border-color-invert    ); }
+[data-badge-color="muted"]     { background-color: var( --border-color-muted     ); }
 [data-badge-color="primary"]   { background-color: var( --border-color-primary   ); }
 [data-badge-color="secondary"] { background-color: var( --border-color-secondary ); }
 [data-badge-color="success"]   { background-color: var( --border-color-success   ); }
@@ -29,10 +17,10 @@
 /* Border color */
 
 [data-border-color="var"]         { border-color: var( --border-color           ); }
-[data-border-color="muted"]       { border-color: var( --border-color-muted     ); }
-[data-border-color="highlight"]   { border-color: var( --border-color-highlight ); }
+[data-border-color="default"]     { border-color: var( --border-color-default   ); }
 [data-border-color="invert"]      { border-color: var( --border-color-invert    ); }
-[data-border-color="transparent"] { border-color: transparent                      }
+[data-border-color="highlight"]   { border-color: var( --border-color-highlight ); }
+[data-border-color="muted"]       { border-color: var( --border-color-muted     ); }
 [data-border-color="primary"]     { border-color: var( --border-color-primary   ); }
 [data-border-color="secondary"]   { border-color: var( --border-color-secondary ); }
 [data-border-color="success"]     { border-color: var( --border-color-success   ); }
@@ -40,13 +28,28 @@
 
 /* Border color */
 
+/* Fill color */
+
+[data-fill-color="var"]       { background-color: var( --fill-color           ); }
+[data-fill-color="default"]   { background-color: var( --fill-color-default   ); }
+[data-fill-color="highlight"] { background-color: var( --fill-color-highlight ); }
+[data-fill-color="invert"]    { background-color: var( --fill-color-invert    ); }
+[data-fill-color="muted"]     { background-color: var( --fill-color-muted     ); }
+[data-fill-color="primary"]   { background-color: var( --fill-color-primary   ); }
+[data-fill-color="secondary"] { background-color: var( --fill-color-secondary ); }
+[data-fill-color="success"]   { background-color: var( --fill-color-success   ); }
+[data-fill-color="warning"]   { background-color: var( --fill-color-warning   ); }
+
+/* Fill color */
+
 /* Hover color */
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
 [data-disabled="false"] [data-hover-color="var"]:hover       { background-color: var( --hover-color           ); }
-[data-disabled="false"] [data-hover-color="muted"]:hover     { background-color: var( --hover-color-muted     ); }
+[data-disabled="false"] [data-hover-color="default"]:hover   { background-color: var( --hover-color-default   ); }
 [data-disabled="false"] [data-hover-color="highlight"]:hover { background-color: var( --hover-color-highlight ); }
 [data-disabled="false"] [data-hover-color="invert"]:hover    { background-color: var( --hover-color-invert    ); }
+[data-disabled="false"] [data-hover-color="muted"]:hover     { background-color: var( --hover-color-muted     ); }
 [data-disabled="false"] [data-hover-color="primary"]:hover   { background-color: var( --hover-color-primary   ); }
 [data-disabled="false"] [data-hover-color="secondary"]:hover { background-color: var( --hover-color-secondary ); }
 [data-disabled="false"] [data-hover-color="success"]:hover   { background-color: var( --hover-color-success   ); }
@@ -57,9 +60,10 @@
 /* Icon color */
 
 [data-icon-color="var"]       { color: var( --icon-color      ); }
-[data-icon-color="muted"]     { color: var( --color-muted     ); }
+[data-icon-color="default"]   { color: var( --color-default   ); }
 [data-icon-color="highlight"] { color: var( --color-highlight ); }
 [data-icon-color="invert"]    { color: var( --color-invert    ); }
+[data-icon-color="muted"]     { color: var( --color-muted     ); }
 [data-icon-color="primary"]   { color: var( --color-primary   ); }
 [data-icon-color="secondary"] { color: var( --color-secondary ); }
 [data-icon-color="success"]   { color: var( --color-success   ); }
@@ -70,8 +74,10 @@
 /* Stroke color */
 
 [data-stroke-color="var"]       { stroke: var( --stroke-color           ); }
-[data-stroke-color="muted"]     { stroke: var( --border-color-muted     ); }
+[data-stroke-color="default"]   { stroke: var( --border-color-default   ); }
 [data-stroke-color="highlight"] { stroke: var( --border-color-highlight ); }
+[data-stroke-color="invert"]    { stroke: var( --border-color-invert    ); }
+[data-stroke-color="muted"]     { stroke: var( --border-color-muted     ); }
 [data-stroke-color="primary"]   { stroke: var( --border-color-primary   ); }
 [data-stroke-color="secondary"] { stroke: var( --border-color-secondary ); }
 [data-stroke-color="success"]   { stroke: var( --border-color-success   ); }
@@ -82,9 +88,10 @@
 /* Text color */
 
 [data-color="var"]       { color: var( --color           ); }
-[data-color="muted"]     { color: var( --color-muted     ); }
+[data-color="default"]   { color: var( --color-default   ); }
 [data-color="highlight"] { color: var( --color-highlight ); }
 [data-color="invert"]    { color: var( --color-invert    ); }
+[data-color="muted"]     { color: var( --color-muted     ); }
 [data-color="primary"]   { color: var( --color-primary   ); }
 [data-color="secondary"] { color: var( --color-secondary ); }
 [data-color="success"]   { color: var( --color-success   ); }

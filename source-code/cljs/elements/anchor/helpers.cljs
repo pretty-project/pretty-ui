@@ -27,13 +27,16 @@
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
   ; {:font-size (keyword)
+  ;  :font-weight (keyword)
   ;  :line-height (keyword)}
   ;
   ; @return (map)
   ; {:data-font-size (keyword)
+  ;  :data-font-weight (keyword)
   ;  :data-line-height (keyword)}
-  [_ {:keys [font-size line-height]}]
+  [_ {:keys [font-size font-weight line-height]}]
   {:data-font-size   font-size
+   :data-font-weight font-weight
    :data-line-height line-height})
 
 (defn anchor-body-attributes

@@ -113,6 +113,7 @@
   ;  :min-value (integer)(opt)
   ;   Default: 0
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :required? (boolean or keyword)(opt)

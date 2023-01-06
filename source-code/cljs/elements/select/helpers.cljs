@@ -91,7 +91,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {:border-radius (keyword)
+  ; {:border-color (keyword)
+  ;  :border-radius (keyword)
   ;  :disabled? (boolean)(opt)}
   ;
   ; @return (map)
@@ -100,17 +101,14 @@
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [select-id {:keys [border-radius disabled?] :as select-props}]
-  (let [on-click          [:elements.select/render-options! select-id select-props]
-        required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
-       (if disabled? {:data-border-radius border-radius
-                      :data-border-color (if required-warning? :warning :highlight)
-                      :disabled          true}
-                     {:data-border-radius border-radius
-                      :data-border-color (if required-warning? :warning :highlight)
-                      :data-clickable    true
-                      :on-click          #(r/dispatch on-click)
-                      :on-mouse-up       #(element.side-effects/blur-element! select-id)})))
+  [select-id {:keys [border-color border-radius disabled?] :as select-props}]
+  (let [on-click [:elements.select/render-options! select-id select-props]]
+       (merge {:data-border-radius border-radius
+               :data-border-color  border-color}
+              (if disabled? {:disabled       true}
+                            {:data-clickable true
+                             :on-click       #(r/dispatch on-click)
+                             :on-mouse-up    #(element.side-effects/blur-element! select-id)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

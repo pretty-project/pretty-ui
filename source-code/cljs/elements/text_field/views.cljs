@@ -171,13 +171,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; BUG#3445
-  ; A {:multiline? true} beállítással használt mező textarea komponensénél valamiért
-  ; 6.5px-el magasabb az .e-text-field--input-emphasize elem, ezért szükséges az .e-...-emphasize
-  ; elemnek is beállítani a textarea elem magasságát!
-  ; Google Chrome 101.0.4951.64
-  [:div.e-text-field--input-emphasize {:style (text-field.helpers/field-body-style field-id field-props)}
-                                      [text-field-input field-id field-props]])
+  [:div.e-text-field--input-emphasize (text-field.helpers/input-emphasize-attributes field-id field-props)
+                                      [text-field-input                              field-id field-props]])
 
 (defn- text-field-input-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -283,11 +278,9 @@
   ;  :autofill-name (keyword)(opt)
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
-  ;   :highlight, :primary, :secondary, :success, :transparent, :warning
-  ;   Default: :highlight
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :none
-  ;   Default: :s
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
@@ -313,7 +306,7 @@
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :font-size (keyword)(opt)
-  ;   :xs, :s
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
@@ -328,12 +321,14 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-value (string)(opt)
   ;  :label (metamorphic-content)(opt)
+  ;  :line-height (keyword or px)(opt)
+  ;   :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :block
   ;  :marked? (boolean)(opt)
   ;   Default: false
   ;  :max-length (integer)(opt)
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :modifier (function)(opt)
   ;  :on-blur (metamorphic-event)(opt)
   ;  :on-changed (metamorphic-event)(opt)
@@ -350,25 +345,13 @@
   ;  :on-unmount (metamorphic-event)(opt)
   ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;  :required? (boolean or keyword)(opt)
   ;   true, false, :unmarked
   ;   Default: false
   ;  :start-adornments (maps in vector)(opt)
-  ;   [{:color (keyword)(opt)
-  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;      Default: :default
-  ;     :disabled? (boolean)(opt)
-  ;      Default: false
-  ;     :icon (keyword)(opt)
-  ;     :icon-family (keyword)(opt)
-  ;      :material-icons-filled, :material-icons-outlined
-  ;      Default: :material-icons-filled
-  ;     :label (string)(opt)
-  ;     :on-click (metamorphic-event)
-  ;     :tab-indexed? (boolean)(opt)
-  ;      Default: true
-  ;     :tooltip (metamorphic-content)}]
+  ;   Same as the :end-adornments property.
   ;  :stretch-orientation (keyword)(opt)
   ;   :horizontal, :none
   ;   Default: :none

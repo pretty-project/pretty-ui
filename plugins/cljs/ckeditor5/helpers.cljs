@@ -56,9 +56,9 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [background-colors buttons font-colors]}]
+  [_ {:keys [fill-colors buttons font-colors]}]
   {:toolbar               buttons
-   :font-background-color {:colors background-colors}
+   :font-background-color {:colors fill-colors}
    :font-color            {:colors font-colors}})
                           ;:columns 3
 

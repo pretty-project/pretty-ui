@@ -11,9 +11,7 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  ; {:border-radius (keyword)
-  ;  :height (keyword)}
+  ; {:height (keyword)}
   [ghost-props]
-  (merge {:border-radius :s
-          :height        :s}
+  (merge {:height :s}
          (param ghost-props)))

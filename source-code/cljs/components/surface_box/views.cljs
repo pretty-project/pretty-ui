@@ -67,10 +67,10 @@
 (defn- surface-box-body
   ; @param (keyword) box-id
   ; @param (map) box-props
-  ; {:background-color (string)}
-  [box-id {:keys [background-color content overflow] :as box-props}]
+  ; {:fill-color (string)}
+  [box-id {:keys [fill-color content overflow] :as box-props}]
   (let [viewport-small? @(r/subscribe [:x.environment/viewport-small?])]
-       [:div {:style {;:background-color background-color
+       [:div {:style {;:fill-color fill-color
                       ;:border           "1px solid var( --border-color-highlight )"
                       ;:border-bottom-color "transparent"
                       ;:border-style "solid none"
@@ -98,8 +98,8 @@
 (defn component
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ; {:background-color (string)(opt)
-  ;   Default: "var( --fill-color )"
+  ; {:fill-color (string)(opt)
+  ;   Default: "var( --fill-color-default )"
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)

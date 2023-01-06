@@ -11,7 +11,7 @@
   ; @return (map)
   ; {}
   [button-props]
-  (merge {:background-color :highlight
-          :font-size        :xs
-          :hover-color      :highlight}
+  (merge {:fill-color  :highlight
+          :font-size   :xs
+          :hover-color :highlight}
          (param button-props)))

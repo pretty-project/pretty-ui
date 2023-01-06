@@ -38,11 +38,10 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
-  ;  :layout (keyword)(opt)
-  ;   :touch-target Az ikont tartalmazó elem méretei megegyeznek az icon-button típus méreteivel
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :m
   ;  :style (map)(opt)}
   ;

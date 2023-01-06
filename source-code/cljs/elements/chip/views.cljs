@@ -65,15 +65,15 @@
 (defn element
   ; @param (keyword)(opt) chip-id
   ; @param (map) chip-props
-  ; {:background-color (keyword or string)(opt)
-  ;   :highlight, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :primary
-  ;  :color (keyword or string)(opt)
+  ; {:color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
@@ -91,6 +91,7 @@
   ;  :on-click (metamorphic-event)(opt)
   ;   TODO A chip elem egésze kattintható
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :primary-button-icon (keyword)(opt)
   ;   Default: :close
   ;  :primary-button-event (metamorphic-event)(opt)

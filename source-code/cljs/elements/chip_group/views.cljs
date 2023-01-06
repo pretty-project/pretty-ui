@@ -100,6 +100,7 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}

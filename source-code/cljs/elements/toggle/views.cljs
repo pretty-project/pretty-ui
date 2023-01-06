@@ -30,18 +30,18 @@
 (defn element
   ; @param (keyword)(opt) toggle-id
   ; @param (map) toggle-props
-  ; {:background-color (keyword)(opt)
-  ;   :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  ;   Default: :none
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-color (keyword or string)(opt)
-  ;   :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   ;   Default: :none
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -55,6 +55,7 @@
   ;  :on-click (metamorphic-event)
   ;  :on-right-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

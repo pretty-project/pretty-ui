@@ -9,25 +9,13 @@ body[data-theme="dark"] {
   --app-overlay-color:            var( --black-semi-transparent );
   /* Sidebar background */
   --sidebar-background-color:     #4a5661;
-  /* Fill color */
-  --fill-color:                   var( --black-x-light );
-  --fill-color-invert:            var( --white-xx-light );
   /* Ghost color */
   --ghost-color:                  var( --black );
   /* Scroll-shadow */
   --scroll-shadow-bottom:         0  6px 6px -6px #5c5c5c;
   --scroll-shadow-top:            0 -6px 6px -6px #5c5c5c;
-  /* Background color */
-  --background-color:             var( --black-light );
-  --background-color-muted:       var( --grey-x-dark );
-  --background-color-highlight:   var( --black-light );
-  --background-color-invert:      var( --white-xx-light );
-  --background-color-primary:     var( --soft-blue-xx-dark );
-  --background-color-secondary:   var( --soft-purple-xx-dark );
-  --background-color-success:     var( --soft-green-xx-dark );
-  --background-color-warning:     var( --soft-red-xx-dark );
   /* Border color */
-  --border-color:                 var( --black-x-light );
+  --border-color-default:         var( --black-x-light );
   --border-color-muted:           var( --black-xx-light );
   --border-color-highlight:       var( --grey-xx-dark );
   --border-color-invert:          var( --grey-x-light );
@@ -36,7 +24,7 @@ body[data-theme="dark"] {
   --border-color-success:         var( --hard-green );
   --border-color-warning:         var( --hard-red );
   /* Color */
-  --color:                        var( --white-xx-dark );
+  --color-default:                var( --white-xx-dark );
   --color-muted:                  var( --grey-light );
   --color-highlight:              var( --grey-x-light );
   --color-invert:                 var( --black-xx-light );
@@ -44,8 +32,17 @@ body[data-theme="dark"] {
   --color-secondary:              var( --hard-purple-xx-dark );
   --color-success:                var( --hard-green-xx-dark );
   --color-warning:                var( --hard-red-xx-dark );
+  /* Fill color */
+  --fill-color-default:           var( --black-x-light );
+  --fill-color-muted:             var( --grey-x-dark );
+  --fill-color-highlight:         var( --black-light );
+  --fill-color-invert:            var( --white-xx-light );
+  --fill-color-primary:           var( --soft-blue-xx-dark );
+  --fill-color-secondary:         var( --soft-purple-xx-dark );
+  --fill-color-success:           var( --soft-green-xx-dark );
+  --fill-color-warning:           var( --soft-red-xx-dark );
   /* Hover color */
-  --hover-color:                  var( --black-xx-light );
+  --hover-color-default:          var( --black-xx-light );
   --hover-color-muted:            var( --grey );
   --hover-color-highlight:        var( --grey-x-light );
   --hover-color-invert:           var( --white-xx-light );
@@ -63,7 +60,7 @@ body[data-theme="dark"] {
 
 body[data-theme="dark"] {
   background-color: var( --app-background-color );
-  color:            var( --color );
+  color:            var( --color-default );
 }
 
 /***** Body container *****/

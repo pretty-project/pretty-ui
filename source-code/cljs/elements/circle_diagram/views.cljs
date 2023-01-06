@@ -108,9 +108,10 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)
-  ;      :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;     :label (metamorphic-content)(opt)
   ;      TODO
   ;     :value (integer)}]

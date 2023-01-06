@@ -65,7 +65,7 @@
   ; @param (map) box-props
   [box-id box-props]
   [:div.e-combo-box--surface {:data-font-size   :s
-                              :data-line-height :normal}
+                              :data-line-height :block}
                              [combo-box-options box-id box-props]])
 
 (defn- combo-box-structure

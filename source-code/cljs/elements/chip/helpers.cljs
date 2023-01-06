@@ -16,10 +16,10 @@
   ;
   ; @return (map)
   ; {}
-  [chip-id {:keys [background-color color style] :as chip-props}]
+  [chip-id {:keys [color fill-color style] :as chip-props}]
   (-> {:style style}
-      (element.helpers/apply-color :background-color :data-background-color background-color)
-      (element.helpers/apply-color            :color            :data-color            color)))
+      (element.helpers/apply-color :color      :data-color      color)
+      (element.helpers/apply-color :fill-color :data-fill-color fill-color)))
 
 (defn chip-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

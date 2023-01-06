@@ -21,7 +21,7 @@
 /******* ALL VIEWPORT SIZE *******/
 body {
 /***** Background, border, color and shadow *****/
-/*** Border size ***/
+/*** Border radius ***/
 
 --border-radius-xxs:  2px;
 --border-radius-xs:   4px;
@@ -31,15 +31,19 @@ body {
 --border-radius-xl:  24px;
 --border-radius-xxl: 36px;
 
---border-width-xxs: 1.000px;
---border-width-xs:  1.000px;
---border-width-s:   1.000px;
---border-width-m:   2.000px;
---border-width-l:   2.000px;
---border-width-xl:  2.000px;
---border-width-xxl: 2.000px;
+/*** Border radius ***/
 
-/*** Border size ***/
+/*** Border width ***/
+
+--border-width-xxs:  1px;
+--border-width-xs:   2px;
+--border-width-s:    4px;
+--border-width-m:    6px;
+--border-width-l:    8px;
+--border-width-xl:  10px;
+--border-width-xxl: 12px;
+
+/*** Border width ***/
 
 /*** Box shadow ***/
 
@@ -194,9 +198,10 @@ body {
  * Extending the size range with extra sizes seemed a bit more sophisticated
  * solution than modifing the standardized step values. */
 
+/*** Font size ***/
+
 --font-size-rem: 16px;
 
---font-size-3xs:  8.000px;
 --font-size-xxs: 10.000px;
 --font-size-xs:  12.000px;
 --font-size-s:   14.000px;
@@ -205,8 +210,13 @@ body {
 --font-size-xl:  20.000px;
 --font-size-xxl: 22.000px;
 --font-size-3xl: 24.000px;
+--font-size-4xl: 26.000px;
+--font-size-5xl: 28.000px;
 
---letter-spacing-3xs: 0.400px;
+/*** Font size ***/
+
+/*** Letter spacing ***/
+
 --letter-spacing-xxs: 0.500px;
 --letter-spacing-xs:  0.600px;
 --letter-spacing-s:   0.700px;
@@ -215,8 +225,13 @@ body {
 --letter-spacing-xl:  1.000px;
 --letter-spacing-xxl: 1.100px;
 --letter-spacing-3xl: 1.200px;
+--letter-spacing-4xl: 1.300px;
+--letter-spacing-5xl: 1.400px;
 
---line-height-3xs: 12.0px;
+/*** Letter spacing ***/
+
+/*** Line height ***/
+
 --line-height-xxs: 15.0px;
 --line-height-xs:  18.0px;
 --line-height-s:   21.0px;
@@ -225,17 +240,35 @@ body {
 --line-height-xl:  30.0px;
 --line-height-xxl: 33.0px;
 --line-height-3xl: 36.0px;
+--line-height-4xl: 39.0px;
+--line-height-5xl: 42.0px;
 
+/*** Line height ***/
 /***** Font *****/
 
 
 
 /***** Layout *****/
+/*** Block height ***/
+
+/*** Block height ***/
+
+/* XXX#0062 */
+--block-height-xxs: 24px;
+--block-height-xs:  24px;
+--block-height-s:   24px;
+--block-height-m:   24px;
+--block-height-l:   36px;
+--block-height-xl:  36px;
+--block-height-xxl: 48px;
+--block-height-3xl: 48px;
+--block-height-4xl: 48px;
+--block-height-5xl: 48px;
+
 /*** Icon size ***/
 
 /* XXX#0661 */
 /* XXX#0062 */
---icon-size-3xs:  9px;
 --icon-size-xxs: 12px;
 --icon-size-xs:  15px;
 --icon-size-s:   18px;
@@ -243,7 +276,9 @@ body {
 --icon-size-l:   24px;
 --icon-size-xl:  27px;
 --icon-size-xxl: 30px;
---icon-size-3xl: 36px;
+--icon-size-3xl: 33px;
+--icon-size-4xl: 36px;
+--icon-size-5xl: 39px;
 
 /*** Icon size ***/
 /***** Layout *****/

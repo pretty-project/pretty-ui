@@ -102,6 +102,7 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

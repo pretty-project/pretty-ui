@@ -144,25 +144,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input-container-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [field-id {:keys [border-color border-radius style] :as field-props}]
-  (let [any-warning? @(r/subscribe [:elements.text-field/any-warning? field-id field-props])]
-       (-> {:data-border-radius border-radius
-            :style              style}
-           (element.helpers/apply-color :border-color :data-border-color (if any-warning? :warning border-color)))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-body-line-count
+(defn field-line-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -172,7 +154,7 @@
   ; @return (integer)
   [field-id {:keys [multiline?]}]
   (let [field-content (get-field-content field-id)]
-       (if multiline? ; If field is multiline ...
+       (if multiline? ; If the field is multiline ...
                       (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; A textarea element magassága minimum 2 sor magasságú kell legyen,
@@ -180,25 +162,63 @@
                            ; szöveg nem törik meg automatikusan
                            ; Google Chrome Version 89.0.4389.114
                            (inc line-count))
-                      ; If field is NOT multiline ...
+                      ; If the field is NOT multiline ...
                       (return 1))))
 
-(defn field-body-height
+(defn field-auto-height
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:font-size (keyword)}
+  ; {:font-size (keyword)
+  ;  :line-height (keyword)}
   ;
-  ; @return (integer)
-  [field-id {:keys [font-size] :as field-props}]
-  ; XXX#0789
-  (case font-size :xs (+ (* text-field.config/LINE-HEIGHT-XS (field-body-line-count field-id field-props))
-                         (* text-field.config/FIELD-HORIZONTAL-PADDING 2))
-                  :s  (+ (* text-field.config/LINE-HEIGHT-S (field-body-line-count field-id field-props))
-                         (* text-field.config/FIELD-HORIZONTAL-PADDING 2))))
+  ; @example
+  ; (field-auto-height :my-field {:font-size :s :line-height :normal})
+  ; =>
+  ; "calc(var( --line-height-s ) * 1)"
+  ;
+  ; @example
+  ; (field-auto-height :my-field {:font-size :s :line-height :block})
+  ; =>
+  ; "calc(var( --block-height-s ) * 1)"
+  ;
+  ; @example
+  ; (field-auto-height :my-field {:font-size :s :line-height :xxl})
+  ; =>
+  ; "calc(var( --line-height-xxl ) * 1)"
+  ;
+  ; @example
+  ; (field-auto-height :my-field {:font-size :s :line-height 48})
+  ; =>
+  ; "calc(48px * 1)"
+  ;
+  ; @return (string)
+  [field-id {:keys [font-size line-height] :as field-props}]
+  ; XXX#0886 (resources/css/presets/font.css)
+  ; XXX#6618 (resources/css/elements/style.css)
+  (let [line-count (field-line-count field-id field-props)]
+       (case line-height :block  (str "calc(var( --block-height-" (name font-size)   " ) * "line-count" + 12px)")
+                         :normal (str "calc(var( --line-height-"  (name font-size)   " ) * "line-count" + 12px)")
+                                 (str "calc(var( --line-height-"  (name line-height) " ) * "line-count" + 12px)"))))
 
-(defn field-body-style
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn input-emphasize-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  [field-id field-props]
+  {:style {:height (field-auto-height field-id field-props)}})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn input-container-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -206,10 +226,29 @@
   ; {}
   ;
   ; @return (map)
-  ; {:height (string)}
-  [field-id field-props]
-  (let [field-body-height (field-body-height field-id field-props)]
-       {:height (css/px field-body-height)}))
+  ; {}
+  [_ {:keys [border-color border-radius style]}]
+  (-> {:data-border-radius border-radius
+       :style              style}
+      (element.helpers/apply-color :border-color :data-border-color border-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-font-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; {:font-size (keyword)
+  ;  :line-height (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-font-size (keyword)
+  ;  :data-line-height (keyword)}
+  [_ {:keys [font-size line-height]}]
+  {:data-font-size   font-size
+   :data-line-height line-height})
 
 (defn field-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -220,15 +259,13 @@
   ;  :date-from (string)(opt)
   ;  :date-to (string)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :font-size (keyword)
   ;  :max-length (integer)(opt)
   ;  :type (keyword)(opt)
   ;   :password, :text}
   ;
   ; @return (map)
   ; {:auto-complete (keyword)
-  ;  :data-font-size (keyword)
-  ;  :data-line-height (keyword)
+  ;  :data-fillable (boolean)
   ;  :disabled (boolean)
   ;  :id (string)
   ;  :max-length (integer)
@@ -238,10 +275,9 @@
   ;  :on-blur (function)
   ;  :on-change (function)
   ;  :on-focus (function)
-  ;  :style (map)
   ;  :type (keyword)
   ;  :value (string)}
-  [field-id {:keys [autofill-name date-from date-to disabled? font-size max-length type] :as field-props}]
+  [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ;
   ; BUG#8809
@@ -272,31 +308,28 @@
   ;   és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
   (merge (element.helpers/element-indent-attributes field-id field-props)
+         (field-font-attributes                     field-id field-props)
          (if disabled? {;:disabled true
-                        :data-font-size   font-size
-                        :data-line-height :block
-                        :tab-index  "-1"
-                        :max-length max-length
-                        :type       type
-                        :id         (hiccup/value      field-id "input")
-                        :style      (field-body-style  field-id field-props)
-                        :value      (get-field-content field-id)
-                        :on-change #(let [])}
-                       {:auto-complete    autofill-name
-                        :data-font-size   font-size
-                        :data-line-height :block
-                        :max-length     max-length
-                        :min            date-from
-                        :max            date-to
-                        :name           autofill-name
-                        :type           type
-                        :id             (hiccup/value      field-id "input")
-                        :style          (field-body-style  field-id field-props)
-                        :value          (get-field-content field-id)
+                        :data-fillable true
+                        :tab-index     "-1"
+                        :max-length    max-length
+                        :type          type
+                        :id            (hiccup/value      field-id "input")
+                        :value         (get-field-content field-id)
+                        :on-change     (fn [])}
+                       {:auto-complete autofill-name
+                        :data-fillable true
+                        :max-length    max-length
+                        :min           date-from
+                        :max           date-to
+                        :name          autofill-name
+                        :type          type
+                        :id            (hiccup/value      field-id "input")
+                        :value         (get-field-content field-id)
                         :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
                         :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
                         :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
-                        :on-change      (on-change-f field-id field-props)})))
+                        :on-change     (on-change-f field-id field-props)})))
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

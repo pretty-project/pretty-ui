@@ -18,7 +18,7 @@
 (defn component
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:background-color (keyword)(opt)
+  ; {:fill-color (keyword)(opt)
   ;   Default: :highlight
   ;  :hover-color (keyword)(opt)
   ;   Default: :highlight

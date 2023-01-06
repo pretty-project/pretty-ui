@@ -24,31 +24,25 @@
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
   [anchor-id anchor-props]
-  ; Az anchor elemet azért szükséges felosztani anchor és anchor-body komponensekre,
-  ; hogy a disabled állapotot megfelelően lehessen alkalmazni.
-  ; Az elemet disabled állapotában eltakaró overlay az elem kattintható komponensének
-  ; vagy a kattintható komponens valamely ősének szomszédos eleme kell legyen.
   [:div.e-anchor (anchor.helpers/anchor-attributes anchor-id anchor-props)
                  [anchor-body                      anchor-id anchor-props]])
 
 (defn element
-  ; XXX#9085
-  ; Az anchor elem {:on-click [:x.router/go-to! "..."]} paraméterezés helyett
-  ; {:href "..."} paraméterezéssel való használata lehetővé teszi az útvonal új lapon
-  ; történő megnyitását.
-  ;
   ; @param (keyword)(opt) anchor-id
   ; @param (map) anchor-props
   ; {:color (keyword or string)(opt)
-  ;   :default, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :primary
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :inherit
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
+  ;  :font-weight (keyword)(opt)
+  ;   :bold, :extra-bold, :inherit, :normal
+  ;   Default: :bold
   ;  :href (string)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -60,10 +54,11 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :line-height (keyword)(opt)
-  ;   :block, :normal
-  ;   Default: :normal
+  ;   :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :block
   ;  :on-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

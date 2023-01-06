@@ -18,8 +18,9 @@
   ; @param (map) button-props
   ; {:progress (percent)(opt)}
   [button-id {:keys [progress] :as button-props}]
-  (if progress [:svg.e-icon-button--progress-svg {:view-box "0 0 24 24"}
-                                                 [:circle.e-icon-button--progress-circle (icon-button.helpers/progress-attributes button-id button-props)]]))
+  (if progress (let [progress-attributes (icon-button.helpers/progress-attributes button-id button-props)]
+                    [:svg.e-icon-button--progress-svg {:view-box "0 0 24 24"}
+                                                      [:circle.e-icon-button--progress-circle progress-attributes]])))
 
 (defn- icon-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,7 +29,8 @@
   ; @param (map) button-props
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.e-icon-button--label (x.components/content label)]))
+  (if label [:div.e-icon-button--label {:data-color :default}
+                                       (x.components/content label)]))
 
 (defn- icon-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -36,9 +38,11 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)
+  ;  :icon-color (keyword)
   ;  :icon-family (keyword)}
-  [_ {:keys [icon icon-family]}]
-  [:i.e-icon-button--icon {:data-icon-family icon-family :data-icon-size :m} icon])
+  [_ {:keys [icon icon-color icon-family]}]
+  [:i.e-icon-button--icon {:data-icon-color icon-color :data-icon-family icon-family :data-icon-size :m}
+                          icon])
 
 (defn- icon-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -76,24 +80,22 @@
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:badge-color (keyword or string)(opt)
-  ;   :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :badge-content (metamorphic-content)(opt)
   ;  :border-radius (keyword)(opt)
-  ;   :none, :xxs, :xs, :s, :m, :l, :xl
-  ;   Default: :xs
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
-  ;  :color (keyword or string)(opt)
-  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :height (keyword)(opt)
-  ;   :m, :l, :xl, :xxl, :3xl
+  ;   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxl
   ;  :hover-color (keyword or string)(opt)
-  ;   :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  ;   Default: :none
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :icon (keyword)
+  ;  :icon-color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
   ;   Default: :material-icons-filled
@@ -114,6 +116,7 @@
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :preset (keyword)(opt)
   ;  :progress (percent)(opt)
   ;  :progress-duration (ms)(opt)
@@ -121,7 +124,7 @@
   ;  :style (map)(opt)
   ;  :tooltip (metamorphic-content)(opt)
   ;  :width (keyword)(opt)
-  ;   :m, :l, :xl, :xxl, :3xl
+  ;   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxl}
   ;
   ; @usage
@@ -135,7 +138,7 @@
   ([button-props]
    [element (random/generate-keyword) button-props])
 
-  ([button-id {:keys [keypress] :as button-props}]
+  ([button-id button-props]
    (let [button-props (element.helpers/apply-preset icon-button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (icon-button.prototypes/button-props-prototype button-props)]
         [icon-button button-id button-props])))

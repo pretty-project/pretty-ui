@@ -53,6 +53,26 @@
   (merge (element.helpers/element-default-attributes expandable-id expandable-props)
          (element.helpers/element-outdent-attributes expandable-id expandable-props)))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn expandable-icon-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) expandable-id
+  ; @param (map) expandable-props
+  ; {:icon-color (keyword or string)
+  ;  :icon-family (keyword)
+  ;  :font-size (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-icon-family (keyword)
+  ;  :data-icon-size (keyword)}
+  [_ {:keys [icon-color icon-family icon-size]}]
+  (-> {:data-icon-family icon-family
+       :data-icon-size   icon-size}
+      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+
 (defn expandable-header-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

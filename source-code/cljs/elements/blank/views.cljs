@@ -44,6 +44,7 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}:style (map)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

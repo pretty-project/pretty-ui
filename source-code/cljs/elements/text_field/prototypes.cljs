@@ -37,6 +37,7 @@
   ;  :border-radius (keyword)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
+  ;  :line-height (keyword)
   ;  :type (keyword)
   ;  :value-path (vector)}
   [field-id field-props]
@@ -54,11 +55,10 @@
   ; akkor az egy véletlenszerűen generált értéket fog kapni, amihez az autofill
   ; funkció nem fog ajánlani értékeket.
   (merge {:autofill-name   (random/generate-keyword)
-          :border-color    :highlight
-          :border-radius   :s
           :field-content-f return
           :field-value-f   return
           :font-size       :s
+          :line-height     :block
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
          (param field-props)))

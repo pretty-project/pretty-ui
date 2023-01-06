@@ -7,7 +7,7 @@
 }
 
 [data-copyable]::after {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-color: var( --border-color-highlight );
   border-radius: 5px;
   border-style: solid;

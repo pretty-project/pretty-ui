@@ -24,10 +24,10 @@
   ;
   ; @param (keyword) expandable-id
   ; @param (map) expandable-props
-  ; {:icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)}
-  [_ {:keys [icon icon-family]}]
-  (if icon [:i.e-expandable--icon {:data-icon-family icon-family :data-icon-size :s} icon]))
+  ; {:icon (keyword)(opt)}
+  [expandable-id {:keys [icon] :as expandable-props}]
+  (if icon [:i.e-expandable--icon (expandable.helpers/expandable-icon-attributes expandable-id expandable-props)
+                                  icon]))
 
 (defn- expandable-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -38,7 +38,7 @@
   [_ {:keys [label]}]
   (if label [:div.e-expandable--label {:data-font-size   :s
                                        :data-font-weight :bold
-                                       :data-line-height :normal}
+                                       :data-line-height :block}
                                       (x.components/content label)]))
 
 (defn- expandable-header
@@ -83,6 +83,9 @@
   ;  :expanded? (boolean)(opt)
   ;   Default: true
   ;  :icon (keyword)(opt)
+  ;  :icon-color (keyword or string)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
   ;   Default: :material-icons-filled
@@ -97,6 +100,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

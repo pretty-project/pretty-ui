@@ -53,10 +53,10 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
+  ; {:height (keyword)}
   ; @param (map) item-props
   ; {:active? (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;  :height (keyword)(opt)
   ;  :href (string)(opt)
   ;  :on-click (metamorphic-event)(opt)}
   ;
@@ -68,7 +68,7 @@
   ;  :href (string)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [bar-id _ {:keys [active? disabled? height href on-click]}]
+  [bar-id {:keys [height]} {:keys [active? disabled? href on-click]}]
   ; XXX#9910
   ; A menu-bar magasságát a menü elemeken szükséges alkalmazni,
   ; így {:orientation :horizontal} és {:orientation :vertical}

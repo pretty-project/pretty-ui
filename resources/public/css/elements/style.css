@@ -55,7 +55,6 @@
 .e-anchor--body {
   cursor: pointer;
   display: block;
-  font-weight: 500;
   white-space: nowrap;
   word-wrap: normal;
 }
@@ -213,7 +212,7 @@
 }
 
 .e-checkbox--option-button {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-radius: 4px;
   border-style: solid;
   border-width: 2px;
@@ -289,7 +288,7 @@
 .e-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
   border-radius: 10px;
-  color: var( --color );
+  color: var( --color-default );
   height: 20px;
   margin: 2px 2px 0 12px;
   width: 20px;
@@ -388,9 +387,9 @@
 
 .e-color-selector--option[data-collected="true"]::after {
   align-items: center;
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-radius: 12px;
-  color: var( --color );
+  color: var( --color-default );
   content: 'check';
   display: flex;
   font-size: var( --icon-size-xs );
@@ -469,7 +468,7 @@
 }
 
 .e-combo-box--option[data-highlighted="true"] {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
 }
 
 .e-combo-box--option:hover {
@@ -512,7 +511,7 @@
 .e-counter--decrease-button,
 .e-counter--increase-button,
 .e-counter--reset-button {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-color: inherit;
   border-radius: 50%;
   border-style: solid;
@@ -526,7 +525,7 @@
 .e-counter--increase-button::after,
 .e-counter--reset-button::before,
 .e-counter--reset-button::after {
-  background-color: var( --color );
+  background-color: var( --color-default );
   border-radius: 1px;
   content: '';
   position: absolute;
@@ -550,7 +549,7 @@
 }
 
 .e-counter--reset-button {
-  border-color: var( --color );
+  border-color: var( --color-default );
   margin-left: 12px;
 }
 
@@ -583,7 +582,7 @@
 /***** Digit field input *****/
 
 .e-digit-field--input {
-  color: var( --fill-color );
+  color: var( --fill-color-default );
   height: 100%;
   width: 100%;
 }
@@ -657,7 +656,7 @@
 
 .e-file-drop-area--body {
   align-items: center;
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: var( --border-radius-xxl );
   cursor: pointer;
   display: flex;
@@ -702,14 +701,6 @@
 
 
 /***** Icon *****/
-/*** Icon layout ***/
-
-.e-icon--body[data-layout="touch-target"] {
-  height: 48px;
-  width: 48px;
-}
-
-/*** Icon layout ***/
 /***** Icon *****/
 
 
@@ -925,6 +916,7 @@
 
 /* XXX#0017 */
 [data-disabled="false"] [data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
+[data-disabled="false"] [data-hover-color="default"].e-icon-button--body:hover::before   { background-color: var( --hover-color-default   ); }
 [data-disabled="false"] [data-hover-color="muted"].e-icon-button--body:hover::before     { background-color: var( --hover-color-muted     ); }
 [data-disabled="false"] [data-hover-color="highlight"].e-icon-button--body:hover::before { background-color: var( --hover-color-highlight ); }
 [data-disabled="false"] [data-hover-color="invert"].e-icon-button--body:hover::before    { background-color: var( --hover-color-invert    ); }
@@ -1008,9 +1000,6 @@
 
 
 /***** Menu bar *****/
-/*** Menu wrapper ***/
-/*** Menu wrapper ***/
-
 /*** Menu items ***/
 /*** Menu items ***/
 
@@ -1054,7 +1043,7 @@
 }
 
 .e-menu-bar--menu-item[data-active="true"] {
-  color: var( --color );
+  color: var( --color-default );
 }
 
 .e-menu-bar--menu-item--label {
@@ -1095,8 +1084,8 @@
 /*** Radio button clear button ***/
 
 .e-radio-button--clear-button {
-  background-color: var( --fill-color );
-  border-color: var( --color );
+  background-color: var( --fill-color-default );
+  border-color: var( --color-default );
   border-radius: 50%;
   border-style: solid;
   border-width: 2px;
@@ -1109,7 +1098,7 @@
 
 .e-radio-button--clear-button::before,
 .e-radio-button--clear-button::after {
-  background-color: var( --color );
+  background-color: var( --color-default );
   border-radius: 1px;
   content: '';
   position: absolute;
@@ -1174,7 +1163,7 @@
 /*** Radio button option button ***/
 
 .e-radio-button--option-button {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-color:     inherit;
   border-radius:    50%;
   border-style:     solid;
@@ -1195,7 +1184,7 @@
 .e-radio-button--option-button::before {
   animation-name: opacity-0-1;
   animation-duration: .1s;
-  background-color: var( --color );
+  background-color: var( --color-default );
   border-radius: 50%;
   content: '';
   height: 8px;
@@ -1297,14 +1286,18 @@
 
 .e-select--button-body {
   align-items: center;
-  background: var( --fill-color );
-  border-style: solid;
-  border-width: 1px;
+  background: var( --fill-color-default );
   display: flex;
   height: 36px;
   justify-content: space-between;
-  padding: 0 12px;
   width: 100%;
+  /* XXX#0617 */
+  padding: 0 12px;
+}
+
+.e-select--button-body[data-border-color] {
+  border-style: solid;
+  border-width: 1px;
 }
 
 .e-select--button-label {
@@ -1330,6 +1323,8 @@
 .e-select--option-list {
   display: flex;
   flex-direction: column;
+
+  /* XXX#6667 */
   padding-bottom: 12px;
 }
 
@@ -1358,7 +1353,7 @@
 /*** Select option label ***/
 
 .e-select--option[data-selected="true"] {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
 }
 
 .e-select--option[data-selected="true"]::before {
@@ -1379,11 +1374,11 @@
 .e-select--options--label {
   display: flex;
   justify-content: center;
-  padding: 12px;
-}
 
-.e-select--options--label[data-placeholder="true"] {
-  height: 12px;
+  /* XXX#6667
+   * The height of this label without content is 12px (horizontal padding x 2),
+   * that's the same as the bottom padding of the option list. */
+  padding: 6px 12px;
 }
 
 /*** Select options header ***/
@@ -1415,7 +1410,7 @@
 /*** Slider track ***/
 
 .e-slider--track {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: 2px;
   height: 4px;
   left: 0;
@@ -1611,7 +1606,7 @@
 }
 
 .e-switch--option-track {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-color: inherit;
   border-radius: 10px;
   border-style:  solid;
@@ -1637,7 +1632,7 @@
 /*** Switch thumb ***/
 
 .e-switch--option-track::before {
-  background-color: var( --color );
+  background-color: var( --color-default );
   border-radius: 50%;
   content: '';
   height: 12px;
@@ -1717,14 +1712,14 @@
 /* Az .e-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
  * pl.: adornment ikonok, feliratok és gombok, placeholder elem ... */
 .e-text-field--input-container {
-  background-color: var( --fill-color );
-  border-style: solid;
-  border-width: 1px;
-  /* A {padding: 1px} beállítás használatával a text-field elem más elemekhez hasonlóan 36px
-   * magasságú lesz */
-  padding: 1px;
+  background-color: var( --fill-color-default );
   display: flex;
   justify-content: space-between;
+}
+
+.e-text-field--input-container[data-border-color] {
+  border-style: solid;
+  border-width: 1px;
 }
 
 /*** Field input-container ***/
@@ -1741,9 +1736,10 @@
 }
 
 .e-text-field--input {
-  color: var( --color );
-  padding: 4px 0;
-  width: 100%;
+  color:   var( --color-default );
+  height:  100%;
+  padding: 6px 0;
+  width:   100%;
 }
 
 .e-text-field--input[type="date"] {
@@ -1767,12 +1763,14 @@ textarea.e-text-field--input {
 .e-text-field--adornments {
   align-items: center;
   display: flex;
-  padding: 0 4px;
+  /* XXX#0617 The text-field element has standard padding (12px) */
+  padding: 0 12px;
 }
 
 .e-text-field--adornments-placeholder {
   cursor: text;
-  width: 8px;
+  /* XXX#0617 */
+  width: 12px;
 }
 
 .e-text-field--button-adornment[data-disabled="true"] {
@@ -1786,8 +1784,11 @@ textarea.e-text-field--input {
   min-width: 24px;
   text-align: center;
 
-  /* (24px - 18px) / 2 = 3px */
-  padding: 0 3px;
+  /* XXX#0617
+   * The label adornment's padding and the adornment wrapper's padding adds up,
+   * therefore the label adornments are 16px far from the edge, but this isn't
+   * a problem, because the icon adornments with no padding looks the same! */
+  padding: 0 4px;
 }
 
 /*** Field adornments ***/
@@ -1806,11 +1807,11 @@ textarea.e-text-field--input {
 .e-text-field--placeholder {
   color: var( --color-muted);
   left: 0;
-  padding: 4px 0;
+  padding: 6px 0;
   position: absolute;
   top: 0;
 
-  /* Kis méretű kijelzőkön a hosszabb placeholder szövegek több sorba törnének ... */
+  /* On small screens the longer placeholders can wrap into multiple lines. */
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -1821,7 +1822,7 @@ textarea.e-text-field--input {
 /*** Field surface ***/
 
 .e-text-field--surface {
-  background-color: var( --background-color );
+  background-color: var( --fill-color-default );
   border-radius: var( --border-radius-s );
   box-shadow: var( --box-shadow-black-xx-light );
   left: 0;
@@ -1854,7 +1855,7 @@ textarea.e-text-field--input {
 }
 
 .e-thumbnail--icon {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   color: var( --color-highlight );
   height: 100%;
   left: 0;

@@ -53,9 +53,10 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :sections (maps in vector)}
   ;   [{:color (keyword or string)(opt)
-  ;      :default, :highlight, :muted, :primary, :secondary, :success, :warning
+  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;      Default: primary
   ;     :label (metamorphic-content)(opt)
   ;      TODO

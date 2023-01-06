@@ -21,6 +21,8 @@
 
 - [ghost-view](#ghost-view)
 
+- [input-row](#input-row)
+
 - [item-list-header](#item-list-header)
 
 - [item-list-row](#item-list-row)
@@ -298,6 +300,33 @@
 
 ---
 
+### input-row
+
+```
+@param (keyword)(opt) row-id
+@param (map) row-props
+{:border (keyword)
+  :both, :bottom, :top
+ :cells (maps in vector)
+  [{:label (metamorphic-content)
+    :input (metamorphic-content)
+    :target-id (keyword)(opt)
+    :template (string)(opt)}]
+ :template (string)}
+```
+
+```
+@usage
+[input-row {...}]
+```
+
+```
+@usage
+[input-row :my-input-row {...}]
+```
+
+---
+
 ### item-list-header
 
 ```
@@ -392,7 +421,7 @@
 ```
 @param (keyword)(opt) button-id
 @param (map) button-props
-{:background-color (keyword)(opt)
+{:fill-color (keyword)(opt)
   Default: :highlight
  :hover-color (keyword)(opt)
   Default: :highlight
@@ -663,12 +692,12 @@
 ```
 @param (keyword)(opt) indicator-id
 @param (map) indicator-props
-{:background-color (string)(opt)
-  Default: "var( --fill-color )"
- :class (keyword or keywords in vector)(opt)
+{:class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
+ :fill-color (string)(opt)
+  Default: "var( --fill-color-default )"
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
  :info-text (metamorphic-content)(opt)
@@ -706,6 +735,9 @@
   Default: false
  :indent (map)(opt)
  :outdent (map)(opt)
+ :position (keyword)(opt)
+  :left, :right
+  Default: :left
  :style (map)(opt)
  :threshold (px)(opt)}
 ```
@@ -855,8 +887,8 @@
 ```
 @param (keyword)(opt) box-id
 @param (map) box-props
-{:background-color (string)(opt)
-  Default: "var( --fill-color )"
+{:fill-color (string)(opt)
+  Default: "var( --fill-color-default )"
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)

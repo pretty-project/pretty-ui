@@ -77,6 +77,7 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :middle-content (metamorphic-content)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :start-content (metamorphic-content)(opt)
   ;

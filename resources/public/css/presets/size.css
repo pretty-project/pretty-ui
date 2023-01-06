@@ -1,7 +1,20 @@
 
-
-
 /***** Size presets *****/
+/*** Block height ***/
+
+[data-block-height="xxs"] { height: var( --block-height-xxs ); }
+[data-block-height="xs"]  { height: var( --block-height-xs  ); }
+[data-block-height="s"]   { height: var( --block-height-s   ); }
+[data-block-height="m"]   { height: var( --block-height-m   ); }
+[data-block-height="l"]   { height: var( --block-height-l   ); }
+[data-block-height="xl"]  { height: var( --block-height-xl  ); }
+[data-block-height="xxl"] { height: var( --block-height-xxl ); }
+[data-block-height="3xl"] { height: var( --block-height-3xl ); }
+[data-block-height="4xl"] { height: var( --block-height-4xl ); }
+[data-block-height="5xl"] { height: var( --block-height-5xl ); }
+
+/*** Block height ***/
+
 /*** Element width ***/
 
 /*  320px (legkisebb támogatott képernyő-szélesség)

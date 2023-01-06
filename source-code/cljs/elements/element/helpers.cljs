@@ -66,14 +66,14 @@
   ; @param (keyword, px or string) dimension-value
   ;
   ; @example
-  ; (apply-dimension {...} :width :data-width 128)
+  ; (apply-dimension {...} :width :data-width 42)
   ; =>
-  ; {:style {:width "128px"}}
+  ; {:style {:width "42px"}}
   ;
   ; @example
-  ; (apply-dimension {...} :width :data-width "128px")
+  ; (apply-dimension {...} :width :data-width "42%")
   ; =>
-  ; {:style {:width "128px"}}
+  ; {:style {:width "42%"}}
   ;
   ; @example
   ; (apply-dimension {...} :width :data-width :s)

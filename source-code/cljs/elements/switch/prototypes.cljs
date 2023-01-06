@@ -14,7 +14,6 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
-  ;  :font-size (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
@@ -22,7 +21,6 @@
   ;  :value-path (vector)}
   [switch-id switch-props]
   (merge {:border-color        :primary
-          :font-size           :s
           :option-label-f      return
           :option-value-f      return
           :options-orientation :vertical

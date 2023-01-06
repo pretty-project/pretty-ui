@@ -35,7 +35,7 @@
   ; @param (keyword)(opt) diagram-id
   ; @param (map) diagram-props
   ; {:color (keyword or string)(opt)
-  ;   :default, :muted, :primary, :secondary
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;   W/ {:label ...}
   ;  :indent (map)(opt)
@@ -48,6 +48,7 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :points (integers in vector)
   ;  :strength (px)(opt)
   ;    Default: 2

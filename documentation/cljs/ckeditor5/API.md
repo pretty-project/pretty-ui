@@ -14,14 +14,14 @@
 @param (map) editor-props
 {:autofocus? (boolean)(opt)
   Default: false
- :background-colors (maps in vector)(opt)
-  [{:color (string)
-    :label (string)}]
  :buttons (keywords in vector)(opt)
   [:fontColor, :fontBackgroundColor, :heading, :bold, :italic, :underline, :link, ...]
  :disabled? (boolean)(opt)
   Default: false
  :font-colors (maps in vector)(opt)
+  [{:color (string)
+    :label (string)}]
+ :fill-colors (maps in vector)(opt)
   [{:color (string)
     :label (string)}]
  :on-blur (function)(opt)

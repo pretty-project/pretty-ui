@@ -7,10 +7,9 @@
 
 (defn menu-props-prototype
   ; @param (map) menu-props
-  ; {}
   ;
   ; @return (map)
   ; {}
-  [{:keys [] :as menu-props}]
-  (merge {}
+  [menu-props]
+  (merge {:position :left}
          (param menu-props)))

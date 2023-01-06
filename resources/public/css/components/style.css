@@ -11,10 +11,74 @@
 
 
 
+/***** Input cell *****/
+
+.c-input-cell {
+  align-items: center;
+  background-color: var( --fill-color-default );
+}
+
+.c-input-cell--label::after {
+  background-color: var( --border-color-highlight );
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+}
+
+@media only screen and (min-width: 1024px) {
+.c-input-cell {
+  display: grid;
+}
+
+.c-input-cell--label::after {
+  content: '';
+}
+}
+
+/***** Input cell *****/
+
+
+
+/***** Input row *****/
+/*** Body ***/
+
+.c-input-row--body {
+  background-color: var( --border-color-highlight );
+  display: grid;
+  grid-gap: 1px;
+}
+
+.c-input-row--body[data-border="bottom"],
+.c-input-row--body[data-border="both"] {
+  border-bottom: 1px solid var( --border-color-highlight );
+}
+
+.c-input-row--body[data-border="both"],
+.c-input-row--body[data-border="top"] {
+  border-top: 1px solid var( --border-color-highlight );
+}
+
+.c-input-row--body > :not(:first-child)::after {
+  background-color: var( --border-color-highlight );
+  -content: '';
+  height: 100%;
+  left: -1px;
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+/*** Body ***/
+/***** Input row *****/
+
+
+
 /***** Item list header *****/
 
 .c-item-list-header {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   display: grid;
   opacity: .98;
 }
@@ -47,7 +111,7 @@
 }
 
 .c-item-list-header--cell[data-clickable="true"]:hover::before {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: var(--border-radius-xs);
   content: '';
   height: calc(100% - 8px);
@@ -91,7 +155,7 @@
 }
 
 .c-item-list-row[data-highlighted="true"] {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
 }
 
 .c-item-list-row[data-marked="true"]::after {
@@ -149,7 +213,7 @@
 }
 
 .c-list-item-cell[data-clickable="true"]:hover::before {
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: var(--border-radius-xs);
   content: '';
   height: calc(100% - 8px);
@@ -208,23 +272,30 @@
 
 
 /***** Side menu *****/
-
-.c-side-menu {
-  /* Holds place for the sidebar sensor */
-  padding-left: 10px;
-}
-
 /*** Body ***/
 
 .c-side-menu--body {
-  background-color: var( --fill-color );
-  border-right: 1px solid var( --border-color-highlight );
+  background-color: var( --fill-color-default );
   display: flex;
   flex-direction: column;
   height: calc(100vh - 48px);
   min-width: 250px;
   position: sticky;
   top: 48px;
+}
+
+.c-side-menu--body[data-position="left"] {
+  border-right: 1px solid var( --border-color-highlight );
+
+  /* Holds place for the sidebar sensor */
+  padding-left: 10px;
+}
+
+.c-side-menu--body[data-position="right"] {
+  border-left: 1px solid var( --border-color-highlight );
+
+  /* Holds place for the sidebar sensor */
+  padding-right: 10px;
 }
 
 /*** Body ***/
@@ -264,7 +335,7 @@
 
 .c-user-avatar--initials {
   align-items: center;
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: 50%;
   display: flex;
   font-size: var( --font-size-s );
@@ -282,7 +353,7 @@
 
 .c-user-avatar--icon {
   align-items: center;
-  background-color: var( --background-color-highlight );
+  background-color: var( --fill-color-highlight );
   border-radius: 50%;
   display: flex;
   height: 100%;

@@ -11,4 +11,16 @@
 [data-border-radius="xxl"] { border-radius: var( --border-radius-xxl ); }
 
 /*** Border radius ***/
+
+/*** Border width ***/
+
+[data-border-width="xxs"]::after { border-width: var( --border-width-xxs ); }
+[data-border-width="xs"]::after  { border-width: var( --border-width-xs  ); }
+[data-border-width="s"]::after   { border-width: var( --border-width-s   ); }
+[data-border-width="m"]::after   { border-width: var( --border-width-m   ); }
+[data-border-width="l"]::after   { border-width: var( --border-width-l   ); }
+[data-border-width="xl"]::after  { border-width: var( --border-width-xl  ); }
+[data-border-width="xxl"]::after { border-width: var( --border-width-xxl ); }
+
+/*** Border width ***/
 /***** Border presets *****/

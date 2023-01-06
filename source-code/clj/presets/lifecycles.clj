@@ -17,6 +17,7 @@
                                                            "public/css/presets/font.css"
                                                            "public/css/presets/icon.css"
                                                            "public/css/presets/indent.css"
+                                                           "public/css/presets/input.css"
                                                            "public/css/presets/markers.css"
                                                            "public/css/presets/outdent.css"
                                                            "public/css/presets/scroll.css"

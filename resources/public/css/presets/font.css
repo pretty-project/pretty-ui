@@ -2,7 +2,22 @@
 /***** Font presets *****/
 /*** Line height ***/
 
-[data-font-size="3xs"][data-line-height="normal"] { line-height: var( --line-height-3xs ); }
+/* XXX#0886
+ * The basic line height presets are based on ...
+ * The normal line height presets are based on which font size is set.
+ * The block line height presets are based on ... */
+
+[data-line-height="xxs"] { line-height: var( --line-height-xxs ); }
+[data-line-height="xs"]  { line-height: var( --line-height-xs  ); }
+[data-line-height="s"]   { line-height: var( --line-height-s   ); }
+[data-line-height="m"]   { line-height: var( --line-height-m   ); }
+[data-line-height="l"]   { line-height: var( --line-height-l   ); }
+[data-line-height="xl"]  { line-height: var( --line-height-xl  ); }
+[data-line-height="xxl"] { line-height: var( --line-height-xxl ); }
+[data-line-height="3xl"] { line-height: var( --line-height-3xl ); }
+[data-line-height="4xl"] { line-height: var( --line-height-4xl ); }
+[data-line-height="5xl"] { line-height: var( --line-height-5xl ); }
+
 [data-font-size="xxs"][data-line-height="normal"] { line-height: var( --line-height-xxs ); }
 [data-font-size="xs"][data-line-height="normal"]  { line-height: var( --line-height-xs  ); }
 [data-font-size="s"][data-line-height="normal"]   { line-height: var( --line-height-s   ); }
@@ -11,23 +26,24 @@
 [data-font-size="xl"][data-line-height="normal"]  { line-height: var( --line-height-xl  ); }
 [data-font-size="xxl"][data-line-height="normal"] { line-height: var( --line-height-xxl ); }
 [data-font-size="3xl"][data-line-height="normal"] { line-height: var( --line-height-3xl ); }
+[data-font-size="4xl"][data-line-height="normal"] { line-height: var( --line-height-4xl ); }
+[data-font-size="5xl"][data-line-height="normal"] { line-height: var( --line-height-5xl ); }
 
-[data-font-size="3xs"][data-line-height="block"] { line-height: 24px; }
-[data-font-size="xxs"][data-line-height="block"] { line-height: 24px; }
-[data-font-size="xs"][data-line-height="block"]  { line-height: 24px; }
-[data-font-size="s"][data-line-height="block"]   { line-height: 24px; }
-[data-font-size="m"][data-line-height="block"]   { line-height: 24px; }
-[data-font-size="l"][data-line-height="block"]   { line-height: 36px; }
-[data-font-size="xl"][data-line-height="block"]  { line-height: 36px; }
-[data-font-size="xxl"][data-line-height="block"] { line-height: 36px; }
-[data-font-size="3xl"][data-line-height="block"] { line-height: 36px; }
+[data-font-size="xxs"][data-line-height="block"] { line-height: var( --block-height-xxs ); }
+[data-font-size="xs"][data-line-height="block"]  { line-height: var( --block-height-xs  ); }
+[data-font-size="s"][data-line-height="block"]   { line-height: var( --block-height-s   ); }
+[data-font-size="m"][data-line-height="block"]   { line-height: var( --block-height-m   ); }
+[data-font-size="l"][data-line-height="block"]   { line-height: var( --block-height-l   ); }
+[data-font-size="xl"][data-line-height="block"]  { line-height: var( --block-height-xl  ); }
+[data-font-size="xxl"][data-line-height="block"] { line-height: var( --block-height-xxl ); }
+[data-font-size="3xl"][data-line-height="block"] { line-height: var( --block-height-3xl ); }
+[data-font-size="4xl"][data-line-height="block"] { line-height: var( --block-height-4xl ); }
+[data-font-size="5xl"][data-line-height="block"] { line-height: var( --block-height-5xl ); }
 
 /*** Line height ***/
 
 /*** Font size ***/
 
-[data-font-size="3xs"] { font-size:      var( --font-size-3xs      );
-                         letter-spacing: var( --letter-spacing-3xs ); }
 [data-font-size="xxs"] { font-size:      var( --font-size-xxs      );
                          letter-spacing: var( --letter-spacing-xxs ); }
 [data-font-size="xs"]  { font-size:      var( --font-size-xs       );
@@ -44,6 +60,10 @@
                          letter-spacing: var( --letter-spacing-xxl ); }
 [data-font-size="3xl"] { font-size:      var( --font-size-3xl      );
                          letter-spacing: var( --letter-spacing-3xl ); }
+[data-font-size="4xl"] { font-size:      var( --font-size-4xl      );
+                         letter-spacing: var( --letter-spacing-4xl ); }
+[data-font-size="5xl"] { font-size:      var( --font-size-5xl      );
+                         letter-spacing: var( --letter-spacing-5xl ); }
 
 /*** Font size ***/
 

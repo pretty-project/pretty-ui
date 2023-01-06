@@ -28,6 +28,9 @@
   ;   Default: false
   ;  :indent (map)(opt)
   ;  :outdent (map)(opt)
+  ;  :position (keyword)(opt)
+  ;   :left, :right
+  ;   Default: :left
   ;  :style (map)(opt)
   ;  :threshold (px)(opt)}
   ;
@@ -40,6 +43,6 @@
    [component (random/generate-keyword) menu-props])
 
   ([menu-id {:keys [threshold] :as menu-props}]
-   (let [] ; menu-props (side-menu.prototypes/menu-props-prototype menu-props)
+   (let [menu-props (side-menu.prototypes/menu-props-prototype menu-props)]
         (if (or (not threshold) @(r/subscribe [:x.environment/viewport-min? threshold]))
             [side-menu menu-id menu-props]))))

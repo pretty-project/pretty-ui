@@ -97,15 +97,18 @@
 @param (keyword)(opt) anchor-id
 @param (map) anchor-props
 {:color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :inherit
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
  :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
+ :font-weight (keyword)(opt)
+  :bold, :extra-bold, :inherit, :normal
+  Default: :bold
  :href (string)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -117,10 +120,11 @@
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :line-height (keyword)(opt)
-  :block, :normal
-  Default: :normal
+  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :block
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -155,6 +159,7 @@
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}:style (map)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -195,6 +200,7 @@
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -216,39 +222,35 @@
 @param (keyword)(opt) button-id
 @param (map) button-props
 {:badge-color (keyword or string)(opt)
-  :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :badge-content (metamorphic-content)(opt)
- :background-color (keyword or string)(opt)
-  :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
  :border-color (keyword or string)(opt)
-  :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
+  Default: :inherit
  :disabled? (boolean)(opt)
   Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
-  :bold, :extra-bold, :inherit
+  :bold, :extra-bold, :inherit, :normal
   Default: :bold
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
  :hover-color (keyword or string)(opt)
-  :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :icon (keyword)(opt)
  :icon-color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
+  Default: :inherit
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
@@ -256,7 +258,7 @@
   :left, :right
   Default: :left
  :icon-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -273,11 +275,12 @@
     Default: false}
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :normal
-  Default: :normal
+  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :block
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :preset (keyword)(opt)
  :style (map)(opt)}
 ```
@@ -305,28 +308,24 @@
 @param (keyword)(opt) card-id
 @param (map) card-props
 XXX#3240
-{:background-color (keyword or string)(opt)
-  :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
- :badge-color (keyword or string)(opt)
-  :primary, :secondary, :success, :warning
+{:badge-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :badge-content (metamorphic-content)(opt)
  :border-color (keyword or string)(opt)
-  :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :horizontal-align (keyword)(opt)
   :center, :left, :right
-  Default: :center
+  Default: :left
  :hover-color (keyword or string)(opt)
-  :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -337,13 +336,12 @@ XXX#3240
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :stretch-orientation (keyword)(opt)
-  :horizontal, :vertical, :both, :none
-  Default: :vertical
+  :horizontal, :vertical, :both
  :style (map)(opt)}
 ```
 
@@ -365,15 +363,12 @@ XXX#3240
 @param (keyword)(opt) checkbox-id
 @param (map) checkbox-props
 {:border-color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  :xs, :s, :inherit
-  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -402,6 +397,7 @@ XXX#3240
  :options-path (vector)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :required? (boolean or keyword)(opt)
   true, false, :unmarked
   Default: false
@@ -426,15 +422,15 @@ XXX#3240
 ```
 @param (keyword)(opt) chip-id
 @param (map) chip-props
-{:background-color (keyword or string)(opt)
-  :highlight, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
- :color (keyword or string)(opt)
+{:color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :primary
  :icon (keyword)(opt)
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
@@ -452,6 +448,7 @@ XXX#3240
  :on-click (metamorphic-event)(opt)
   TODO A chip elem egésze kattintható
  :outdent (map)(opt)
+  Same as the :indent property.
  :primary-button-icon (keyword)(opt)
   Default: :close
  :primary-button-event (metamorphic-event)(opt)
@@ -493,6 +490,7 @@ XXX#3240
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
  :style (map)(opt)
  :value-path (vector)(opt)}
@@ -531,9 +529,10 @@ XXX#3240
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :sections (maps in vector)}
   [{:color (keyword or string)
-     :default, :highlight, :muted, :primary, :secondary, :success, :warning
+     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
     :label (metamorphic-content)(opt)
      TODO
     :value (integer)}]
@@ -576,6 +575,7 @@ XXX#3240
  :options-label (metamorphic-content)(opt)
  :options-path (vector)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -614,6 +614,7 @@ XXX#3240
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)
  :stretch-orientation (keyword)(opt)
   :horizontal, :vertical, :both, :none
@@ -676,7 +677,7 @@ XXX#3240
 @param (keyword)(opt) counter-id
 @param (map) counter-props
 {:border-color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -700,6 +701,7 @@ XXX#3240
  :max-value (integer)(opt)
  :min-value (integer)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :resetable? (boolean)(opt)
   Default: false
  :required? (boolean or keyword)(opt)
@@ -785,6 +787,9 @@ XXX#3240
  :expanded? (boolean)(opt)
   Default: true
  :icon (keyword)(opt)
+ :icon-color (keyword or string)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :inherit
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
@@ -799,6 +804,7 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -821,7 +827,6 @@ XXX#3240
 @param (map) ghost-props
 {:border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :s
  :class (keyword or keywords in vector)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -836,6 +841,7 @@ XXX#3240
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -869,6 +875,7 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
  :vertical-align (keyword)(opt)
@@ -938,11 +945,10 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
- :layout (keyword)(opt)
-  :touch-target Az ikont tartalmazó elem méretei megegyeznek az icon-button típus méreteivel
  :outdent (map)(opt)
+  Same as the :indent property.
  :size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :m
  :style (map)(opt)}
 ```
@@ -965,24 +971,22 @@ XXX#3240
 @param (keyword)(opt) button-id
 @param (map) button-props
 {:badge-color (keyword or string)(opt)
-  :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :badge-content (metamorphic-content)(opt)
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l, :xl
-  Default: :xs
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
- :color (keyword or string)(opt)
-  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
  :disabled? (boolean)(opt)
   Default: false
  :height (keyword)(opt)
-  :m, :l, :xl, :xxl, :3xl
+  :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxl
  :hover-color (keyword or string)(opt)
-  :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :icon (keyword)
+ :icon-color (keyword or string)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :inherit
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
@@ -1003,6 +1007,7 @@ XXX#3240
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :preset (keyword)(opt)
  :progress (percent)(opt)
  :progress-duration (ms)(opt)
@@ -1010,7 +1015,7 @@ XXX#3240
  :style (map)(opt)
  :tooltip (metamorphic-content)(opt)
  :width (keyword)(opt)
-  :m, :l, :xl, :xxl, :3xl
+  :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxl}
 ```
 
@@ -1054,6 +1059,7 @@ XXX#3240
   Default: false
   TODO
  :outdent (map)(opt)
+  Same as the :indent property.
  :src (string)(opt)
  :style (map)(opt)
  :width (string)(opt)}
@@ -1079,14 +1085,14 @@ XXX#3240
 {:class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
+  Default: :inherit
  :content (metamorphic-content)
  :copyable? (boolean)(opt)
   Default: false
  :disabled? (boolean)(opt)
   Default: false
  :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
   :bold, extra-bold, :inherit, :normal
@@ -1095,17 +1101,16 @@ XXX#3240
   :center, :left, :right
   Default: :left
  :horizontal-position (keyword)(opt)
-  :center, :left, :none, :right
-  Default: :none
+  :center, :left, :right
  :icon (keyword)(opt)
  :icon-color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :default
+  Default: :inherit
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
  :icon-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1118,14 +1123,14 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :info-text (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :normal
-  Default: :normal
+  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :block
  :marked? (boolean)(opt)
   Default: false
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :outdent (map)(opt)
+  Same as the :indent property.
  :overflow-direction (keyword)(opt)
   :normal, :reversed
   Default :normal
@@ -1138,8 +1143,7 @@ XXX#3240
  :target-id (keyword)(opt)
   The input element's id, that you want to connect with the label.
  :vertical-position (keyword)(opt)
-  :bottom, :center, :none, :top
-  Default: :none}
+  :bottom, :center, :top}
 ```
 
 ```
@@ -1169,9 +1173,10 @@ XXX#3240
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
+  Same as the :indent property.
  :sections (maps in vector)}
   [{:color (keyword or string)(opt)
-     :default, :highlight, :muted, :primary, :secondary, :success, :warning
+     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
      Default: primary
     :label (metamorphic-content)(opt)
      TODO
@@ -1208,10 +1213,13 @@ XXX#3240
   (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   W/ {:orientation :horizontal}
  :font-size (keyword)(opt)
-  :xs, :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
+ :font-weight (keyword)(opt)
+  :bold, extra-bold, :inherit, :normal
+  Default :bold
  :height (keyword)(opt)
-  :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxl
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1226,7 +1234,7 @@ XXX#3240
   [{:active? (boolean)(opt)
      Default: false
     :badge-color (keyword)(opt)
-     :primary, :secondary, :success, :warning
+     :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
     :badge-content (metamorphic-content)(opt)
     :disabled? (boolean)(opt)
      Default: false
@@ -1245,6 +1253,7 @@ XXX#3240
   :horizontal, :vertical
   Default: :horizontal
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -1369,7 +1378,7 @@ XXX#3240
 @param (keyword)(opt) diagram-id
 @param (map) diagram-props
 {:color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
   W/ {:label ...}
  :indent (map)(opt)
@@ -1382,6 +1391,7 @@ XXX#3240
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
+  Same as the :indent property.
  :points (integers in vector)
  :strength (px)(opt)
    Default: 2
@@ -1407,15 +1417,12 @@ XXX#3240
 @param (keyword) button-id
 @param (map) button-props
 {:border-color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
  :class (keyword or keywords in vector)(opt)
  :default-value (*)(opt)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  :xs, :s, :inherit
-  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1444,6 +1451,7 @@ XXX#3240
   Default: :vertical
  :options-path (vector)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :required? (boolean or keyword)(opt)
   true, false, :unmarked
   Default: false
@@ -1492,6 +1500,7 @@ XXX#3240
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)
  :stretch-orientation (keyword)(opt)
   :horizontal, :vertical, :both, :none
@@ -1543,9 +1552,10 @@ XXX#3240
   Default: return
  :autoclear? (boolean)(opt)
   Default: false
+ :border-color (keyword)(opt)
+  :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l
-  Default: :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1571,8 +1581,7 @@ XXX#3240
  :marked? (boolean)(opt)
   Default: false
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :on-select (metamorphic-event)(opt)
  :option-field-placeholder (metamorphic-content)(opt)
   Default: :add!
@@ -1586,6 +1595,7 @@ XXX#3240
  :options-placeholder (metamorphic-content)(opt)
   Default: :no-options
  :outdent (map)(opt)
+  Same as the :indent property.
  :required? (boolean or keyword)(opt)
   true, false, :unmarked
   Default: false
@@ -1642,6 +1652,7 @@ XXX#3240
  :min-value (integer)(opt)
   Default: 0
  :outdent (map)(opt)
+  Same as the :indent property.
  :resetable? (boolean)(opt)
   Default: false
  :required? (boolean or keyword)(opt)
@@ -1689,15 +1700,12 @@ XXX#3240
 @param (keyword)(opt) switch-id
 @param (map) switch-props
 {:border-color (keyword or string)(opt)
-  :default, :muted, :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
   Default: false
- :font-size (keyword)(opt)
-  :xs, :s, :inherit
-  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1727,6 +1735,7 @@ XXX#3240
   Default: :vertical
  :options-path (vector)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :required? (boolean or keyword)(opt)
   true, false, :unmarked
   Default: false
@@ -1753,11 +1762,11 @@ XXX#3240
 @param (map) text-props
 {:class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
-  :default, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :content (metamorphic-content)(opt)
  :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :font-weight (keyword)(opt)
   :bold, :extra-bold, :inherit, :normal
@@ -1777,13 +1786,13 @@ XXX#3240
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :normal
-  Default: :normal
+  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :block
  :max-lines (integer)(opt)
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :outdent (map)(opt)
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
  :selectable? (boolean)(opt)
   Default: true
@@ -1812,11 +1821,9 @@ XXX#3240
  :autofill-name (keyword)(opt)
  :autofocus? (boolean)(opt)
  :border-color (keyword or string)(opt)
-  :highlight, :primary, :secondary, :success, :transparent, :warning
-  Default: :highlight
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :none
-  Default: :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1842,7 +1849,7 @@ XXX#3240
  :field-value-f (function)(opt)
   Default: return
  :font-size (keyword)(opt)
-  :xs, :s
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
@@ -1857,12 +1864,14 @@ XXX#3240
  :info-text (metamorphic-content)(opt)
  :initial-value (string)(opt)
  :label (metamorphic-content)(opt)
+ :line-height (keyword or px)(opt)
+  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :block
  :marked? (boolean)(opt)
   Default: false
  :max-length (integer)(opt)
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :modifier (function)(opt)
  :on-blur (metamorphic-event)(opt)
  :on-changed (metamorphic-event)(opt)
@@ -1879,25 +1888,13 @@ XXX#3240
  :on-unmount (metamorphic-event)(opt)
   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
  :outdent (map)(opt)
+  Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
  :required? (boolean or keyword)(opt)
   true, false, :unmarked
   Default: false
  :start-adornments (maps in vector)(opt)
-  [{:color (keyword)(opt)
-     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-     Default: :default
-    :disabled? (boolean)(opt)
-     Default: false
-    :icon (keyword)(opt)
-    :icon-family (keyword)(opt)
-     :material-icons-filled, :material-icons-outlined
-     Default: :material-icons-filled
-    :label (string)(opt)
-    :on-click (metamorphic-event)
-    :tab-indexed? (boolean)(opt)
-     Default: true
-    :tooltip (metamorphic-content)}]
+  Same as the :end-adornments property.
  :stretch-orientation (keyword)(opt)
   :horizontal, :none
   Default: :none
@@ -1970,8 +1967,7 @@ XXX#3240
   :contain, :cover
   Default: :contain
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1996,6 +1992,7 @@ XXX#3240
  :label (metamorphic-content)(opt)
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :required? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -2022,18 +2019,18 @@ XXX#3240
 ```
 @param (keyword)(opt) toggle-id
 @param (map) toggle-props
-{:background-color (keyword)(opt)
-  :highlight, :muted, :none, :primary, :secondary, :success, :warning
-  Default: :none
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  Default: :none
+  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :hover-color (keyword or string)(opt)
-  :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
+  :default, :highlight, :invert, :muted, :none, :primary, :secondary, :success, :warning
   Default: :none
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -2047,6 +2044,7 @@ XXX#3240
  :on-click (metamorphic-event)
  :on-right-click (metamorphic-event)(opt)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)}
 ```
 
@@ -2083,6 +2081,7 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :middle-content (metamorphic-content)
  :outdent (map)(opt)
+  Same as the :indent property.
  :style (map)(opt)
  :start-content (metamorphic-content)(opt)
 ```

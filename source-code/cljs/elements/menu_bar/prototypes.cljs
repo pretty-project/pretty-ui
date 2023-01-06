@@ -13,11 +13,13 @@
   ;
   ; @return (map)
   ; {:font-size (keyword)
+  ;  :font-weight (keyword)
   ;  :height (keyword)
   ;  :horizontal-align (keyword)
   ;  :orientation (keyword)}
   [{:keys [orientation] :as bar-props}]
   (merge {:font-size   :s
+          :font-weight :bold
           :height      :xxl
           :orientation :horizontal}
          (if-not (= orientation :vertical)

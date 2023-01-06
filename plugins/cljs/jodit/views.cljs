@@ -13,7 +13,7 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id editor-props]
-  [:div [:style {:type "text/css"} ".jodit-wysiwyg {background-color: var( --fill-color ); cursor: text}"]
+  [:div [:style {:type "text/css"} ".jodit-wysiwyg {background-color: var( --fill-color-default ); cursor: text}"]
         [:> JoditEditor (helpers/jodit-attributes editor-id editor-props)]])
 
 (defn body

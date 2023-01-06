@@ -34,12 +34,12 @@
 (defn component
   ; @param (keyword)(opt) indicator-id
   ; @param (map) indicator-props
-  ; {:background-color (string)(opt)
-  ;   Default: "var( --fill-color )"
-  ;  :class (keyword or keywords in vector)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
+  ;  :fill-color (string)(opt)
+  ;   Default: "var( --fill-color-default )"
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;  :info-text (metamorphic-content)(opt)
@@ -62,5 +62,5 @@
    [component (random/generate-keyword) indicator-props])
 
   ([indicator-id indicator-props]
-   (let [];indicator-props (popup-progress-indicator.prototypes/indicator-props-prototype indicator-props)
+   (let [] ; indicator-props (popup-progress-indicator.prototypes/indicator-props-prototype indicator-props)
         [popup-progress-indicator indicator-id indicator-props])))

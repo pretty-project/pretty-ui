@@ -69,8 +69,7 @@
   ;   :contain, :cover
   ;   Default: :contain
   ;  :border-radius (keyword)(opt)
-  ;   :none, :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
@@ -95,6 +94,7 @@
   ;  :label (metamorphic-content)(opt)
   ;  :on-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :required? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)

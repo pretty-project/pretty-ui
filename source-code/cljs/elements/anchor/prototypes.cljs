@@ -11,11 +11,11 @@
   ; @param (map) anchor-props
   ;
   ; @return (map)
-  ; {:color (keyword or string)
-  ;  :font-size (keyword)
+  ; {:font-size (keyword)
+  ;   :font-weight (keyword)
   ;  :line-height (keyword)}
   [anchor-props]
-  (merge {:color       :primary
-          :font-size   :s
-          :line-height :normal}
+  (merge {:font-size   :s
+          :font-weight :bold
+          :line-height :block}
          (param anchor-props)))

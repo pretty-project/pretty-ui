@@ -26,12 +26,13 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:font-size (keyword)}
+  ; {:font-size (keyword)
+  ;  :font-weight (keyword)}
   ; @param (map) item-props
   ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [font-size]} {:keys [label]}]
+  [_ {:keys [font-size font-weight]} {:keys [label]}]
   (if label [:div.e-menu-bar--menu-item--label {:data-font-size   font-size
-                                                :data-font-weight :extra-bold
+                                                :data-font-weight font-weight
                                                 :data-line-height :block}
                                                (x.components/content label)]))
 
@@ -118,10 +119,13 @@
   ;   (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   ;   W/ {:orientation :horizontal}
   ;  :font-size (keyword)(opt)
-  ;   :xs, :s
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
+  ;  :font-weight (keyword)(opt)
+  ;   :bold, extra-bold, :inherit, :normal
+  ;   Default :bold
   ;  :height (keyword)(opt)
-  ;   :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxl
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -136,7 +140,7 @@
   ;   [{:active? (boolean)(opt)
   ;      Default: false
   ;     :badge-color (keyword)(opt)
-  ;      :primary, :secondary, :success, :warning
+  ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;     :badge-content (metamorphic-content)(opt)
   ;     :disabled? (boolean)(opt)
   ;      Default: false
@@ -155,6 +159,7 @@
   ;   :horizontal, :vertical
   ;   Default: :horizontal
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

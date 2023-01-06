@@ -33,7 +33,8 @@
   ; {:menu-items (maps in vector)}
   [handler-id {:keys [menu-items] :as bar-props}]
   (letfn [(f [menu-items menu-item] (conj menu-items (menu-item-props handler-id bar-props menu-item)))]
-         [elements/menu-bar ::menu-bar {:menu-items (reduce f [] menu-items)}]))
+         [elements/menu-bar ::menu-bar {:menu-items (reduce f [] menu-items)
+                                        :line-height :5xl}]))
 
 (defn menu-bar
   ; @param (keyword) handler-id

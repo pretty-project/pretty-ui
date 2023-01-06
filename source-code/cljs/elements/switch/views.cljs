@@ -29,12 +29,11 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:font-size (keyword)
-  ;  :option-label-f (function)}
+  ; {:option-label-f (function)}
   ; @param (*) option
-  [_ {:keys [font-size option-label-f]} option]
+  [_ {:keys [option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.e-switch--option-label {:data-font-size   font-size
+       [:div.e-switch--option-label {:data-font-size   :s
                                      :data-font-weight :bold
                                      :data-line-height :block}
                                     (x.components/content option-label)]))
@@ -116,15 +115,12 @@
   ; @param (keyword)(opt) switch-id
   ; @param (map) switch-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :muted, :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
-  ;  :font-size (keyword)(opt)
-  ;   :xs, :s, :inherit
-  ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -154,6 +150,7 @@
   ;   Default: :vertical
   ;  :options-path (vector)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :required? (boolean or keyword)(opt)
   ;   true, false, :unmarked
   ;   Default: false

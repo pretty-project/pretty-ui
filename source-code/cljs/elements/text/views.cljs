@@ -96,11 +96,11 @@
   ; @param (map) text-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
-  ;   :default, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :content (metamorphic-content)(opt)
   ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
   ;   :bold, :extra-bold, :inherit, :normal
@@ -120,13 +120,13 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :block, :normal
-  ;   Default: :normal
+  ;   :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :block
   ;  :max-lines (integer)(opt)
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: true

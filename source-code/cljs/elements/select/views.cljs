@@ -92,7 +92,8 @@
   ; {}
   [_ {:keys [options-label]}]
   (if options-label [:div.e-select--options--label {:data-font-size   :s
-                                                    :data-font-weight :bold}
+                                                    :data-font-weight :bold
+                                                    :data-line-height :block}
                                                    (x.components/content options-label)]
                     [:div.e-select--options--label {:data-placeholder true}]))
 
@@ -164,7 +165,7 @@
   (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
           [:div.e-select--button-label {:data-font-size :s :data-font-weight :bold :data-line-height :block}
                                        (-> selected-option-label x.components/content)]
-          [:div.e-select--button-label {:data-font-size :s :data-font-weight :bold :data-line-height :block}
+          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :bold :data-line-height :block}
                                        (-> :select! x.components/content)]))
 
 (defn- select-button-body
@@ -284,9 +285,10 @@
   ;   Default: return
   ;  :autoclear? (boolean)(opt)
   ;   Default: false
+  ;  :border-color (keyword)(opt)
+  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :none, :xxs, :xs, :s, :m, :l
-  ;   Default: :s
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
@@ -312,8 +314,7 @@
   ;  :marked? (boolean)(opt)
   ;   Default: false
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :on-select (metamorphic-event)(opt)
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!
@@ -327,6 +328,7 @@
   ;  :options-placeholder (metamorphic-content)(opt)
   ;   Default: :no-options
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :required? (boolean or keyword)(opt)
   ;   true, false, :unmarked
   ;   Default: false

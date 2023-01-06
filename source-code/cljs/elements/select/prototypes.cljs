@@ -14,7 +14,6 @@
   ;
   ; @return (map)
   ; {:add-option-f (function)
-  ;  :border-radius (keyword)
   ;  :option-field-placeholder (metamorphic-content)
   ;  :layout (keyword)
   ;  :option-label-f (function)
@@ -22,8 +21,7 @@
   ;  :options-placeholder (metamorphic-content)
   ;  :value-path (vector)}
   [select-id select-props]
-  (merge {:border-radius            :s
-          :add-option-f             return
+  (merge {:add-option-f             return
           :option-field-placeholder :add!
           :option-label-f           return
           :option-value-f           return

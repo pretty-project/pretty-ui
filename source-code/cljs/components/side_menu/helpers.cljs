@@ -8,12 +8,16 @@
 (defn menu-body-attributes
   ; @param (keyword) menu-id
   ; @param (map) menu-props
-  ; {:style (map)(opt)}
+  ; {:position (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
+  ; {:data-position (keyword)
+  ;  :style (map)}
+  [menu-id {:keys [position style] :as menu-props}]
+  (merge (component.helpers/component-indent-attributes menu-id menu-props)
+         {:data-position position
+          :style         style}))
 
 (defn menu-attributes
   ; @param (keyword) menu-id
@@ -22,4 +26,4 @@
   ; @return (map)
   [menu-id menu-props]
   (merge (component.helpers/component-default-attributes menu-id menu-props)
-         (component.helpers/component-indent-attributes  menu-id menu-props)))
+         (component.helpers/component-outdent-attributes menu-id menu-props)))

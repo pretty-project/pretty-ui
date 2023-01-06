@@ -96,7 +96,7 @@
   ; @param (keyword)(opt) counter-id
   ; @param (map) counter-props
   ; {:border-color (keyword or string)(opt)
-  ;   :default, :muted, :primary, :secondary, :success, :warning
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
@@ -120,6 +120,7 @@
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
   ;   Default: false
   ;  :required? (boolean or keyword)(opt)

@@ -26,20 +26,17 @@
   ; @param (keyword) icon-id
   ; @param (map) icon-props
   ; {:icon-family (keyword)
-  ;  :layout (keyword)
   ;  :size (keyword)}
   ;
   ; @return (map)
   ; {:data-icon-family (keyword)
   ;  :data-icon-size (keyword)
-  ;  :data-layout (keyword)
   ;  :data-selectable (boolean)}
-  [icon-id {:keys [icon-family layout size] :as icon-props}]
+  [icon-id {:keys [icon-family size] :as icon-props}]
   (merge (element.helpers/element-indent-attributes icon-id icon-props)
          (icon-style-attributes                     icon-id icon-props)
          {:data-icon-family icon-family
           :data-icon-size   size
-          :data-layout      layout
           :data-selectable  false}))
 
 (defn icon-attributes

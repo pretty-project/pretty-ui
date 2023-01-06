@@ -12,18 +12,18 @@
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
-  ; {:background-color (keyword or string)(opt)
-  ;  :border-color (keyword or string)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;  :fill-color (keyword or string)(opt)
   ;  :hover-color (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {:style (map)}
-  [_ {:keys [background-color border-color hover-color style]}]
+  [_ {:keys [border-color fill-color hover-color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :background-color :data-background-color background-color)
-      (element.helpers/apply-color :border-color     :data-border-color         border-color)
-      (element.helpers/apply-color :hover-color      :data-hover-color           hover-color)))
+      (element.helpers/apply-color :border-color :data-border-color border-color)
+      (element.helpers/apply-color :fill-color   :data-fill-color   fill-color)
+      (element.helpers/apply-color :hover-color  :data-hover-color  hover-color)))
 
 (defn card-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

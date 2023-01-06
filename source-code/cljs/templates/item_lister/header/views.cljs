@@ -20,7 +20,9 @@
   [lister-id {:keys [on-search search-placeholder]}]
   [elements/search-field ::search-field
                          {;:autofocus?   true
+                          :border-color  :highlight
                           :border-radius :l
+                          :font-size :s
                           :on-empty      on-search
                           :on-type-ended on-search
                           :placeholder   search-placeholder}])

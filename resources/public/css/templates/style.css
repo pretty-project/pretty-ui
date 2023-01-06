@@ -31,7 +31,7 @@
 
 #t-item-handler--control-bar {
   align-items: center;
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
   border-top:    1px solid var( --border-color-highlight );
   display: flex;
@@ -52,7 +52,7 @@
 /*** Body ***/
 
 #t-item-handler--body {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
   border-top:    1px solid var( --border-color-highlight );
 }
@@ -90,7 +90,7 @@
 
 #t-item-lister--search-bar {
   align-items: center;
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
   border-top:    1px solid var( --border-color-highlight );
   display: flex;
@@ -105,7 +105,7 @@
   /* XXX#5505 */
   align-items: center;
   border-bottom: 1px solid var( --border-color-highlight );
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   display: flex;
   gap: 12px;
   padding: 6px 12px 6px 6px;
@@ -118,7 +118,7 @@
 
 #t-item-lister[data-layout="compact"] #t-item-lister--list-header {
   -border-bottom: 1px solid var( --border-color-highlight );
-  -background-color: var( --fill-color );
+  -background-color: var( --fill-color-default );
   -opacity: .98;
   -display: flex;
   -position: sticky;
@@ -146,13 +146,13 @@
 }
 
 #t-item-lister[data-layout="wide"] #t-item-lister--body {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
   -border-top:    1px solid var( --border-color-highlight );
 }
 
 #t-item-lister[data-layout="compact"] #t-item-lister--body {
-  background-color: var( --fill-color );
+  background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
 }
 

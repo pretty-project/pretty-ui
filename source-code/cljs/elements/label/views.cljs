@@ -164,14 +164,14 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
+  ;   Default: :inherit
   ;  :content (metamorphic-content)
   ;  :copyable? (boolean)(opt)
   ;   Default: false
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :font-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
   ;   :bold, extra-bold, :inherit, :normal
@@ -180,17 +180,16 @@
   ;   :center, :left, :right
   ;   Default: :left
   ;  :horizontal-position (keyword)(opt)
-  ;   :center, :left, :none, :right
-  ;   Default: :none
+  ;   :center, :left, :right
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :default
+  ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
   ;   Default: :material-icons-filled
   ;  :icon-size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -203,14 +202,14 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :info-text (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :block, :normal
-  ;   Default: :normal
+  ;   :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :block
   ;  :marked? (boolean)(opt)
   ;   Default: false
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :none
-  ;   Default: :none
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :overflow-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
@@ -223,8 +222,7 @@
   ;  :target-id (keyword)(opt)
   ;   The input element's id, that you want to connect with the label.
   ;  :vertical-position (keyword)(opt)
-  ;   :bottom, :center, :none, :top
-  ;   Default: :none}
+  ;   :bottom, :center, :top}
   ;
   ; @usage
   ; [label {...}]

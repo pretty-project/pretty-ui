@@ -29,7 +29,6 @@
   ; @param (map) ghost-props
   ; {:border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
-  ;   Default: :s
   ;  :class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -44,6 +43,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :s
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)}
   ;
   ; @usage

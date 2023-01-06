@@ -10,7 +10,7 @@
   ; {}
   ;
   ; @return (map)
-  ; {:background-color (string)}
+  ; {:fill-color (string)}
   [{:keys [] :as box-props}]
-  (merge {:background-color "var( --fill-color )"}
+  (merge {:fill-color "var( --fill-color-default )"}
          (param box-props)))

@@ -13,6 +13,6 @@
   ; {}
   [title-props]
   (let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
-       (merge title-props {:font-size   (if viewport-large? :3xl :l)
+       (merge title-props {:font-size   (if viewport-large? :5xl :l)
                            :font-weight :extra-bold
                            :line-height :block})))

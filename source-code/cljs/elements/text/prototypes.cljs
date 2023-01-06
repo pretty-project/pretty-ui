@@ -23,7 +23,7 @@
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
-          :line-height      :normal
+          :line-height      :block
           :selectable?      true}
          (param text-props)
          ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)

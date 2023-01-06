@@ -81,6 +81,7 @@
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (vector)(opt)
   ;  :outdent (map)(opt)
+  ;   Same as the :indent property.
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

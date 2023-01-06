@@ -37,11 +37,10 @@
   ; Pl.: Az elem tartalmának ürességét több helyen szükséges vizsgálni, amihez szükséges
   ;      lenne több helyen alkalmazni az x.components/content függvényt.
   (let [content (x.components/content content)]
-       (merge {:color            :default
-               :font-size        :s
+       (merge {:font-size        :s
                :font-weight      :bold
                :horizontal-align :left
-               :line-height      :normal
+               :line-height      :block
                :selectable?      false}
               (if icon {:icon-color :default :icon-family :material-icons-filled
                         :icon-size (or font-size :s)})
