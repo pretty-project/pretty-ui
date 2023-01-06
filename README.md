@@ -3,8 +3,8 @@
 
 ### Overview
 
-The <strong>project-engine</strong> is our Clojure/ClojureScript kit-framework
-made for developing SPA and PWA web applications, based on the
+The <strong>project-engine</strong> is our Clojure/ClojureScript web application
+framework made for developing SPA and PWA web applications based on the
 [x5 web application engine](https://monotech-hq.github.io/x5).
 
 ### Documentation
