@@ -6,4 +6,11 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:x.environment/add-css! {:uri "/css/profiles/default.css" :compress? true :weight 0}]})
+  {:on-server-boot [:x.environment/merge-css! :profiles/style.css
+                                              {:resources ["public/css/profiles/border.css"
+                                                           "public/css/profiles/color.css"
+                                                           "public/css/profiles/font.css"
+                                                           "public/css/profiles/icon.css"
+                                                           "public/css/profiles/layout.css"
+                                                           "public/css/profiles/shadow.css"]
+                                               :weight 0}]})

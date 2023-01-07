@@ -1,0 +1,21 @@
+
+/***** Icon *****/
+/*** Icon size ***/
+
+body {
+  /* XXX#0661 (resources/public/css/profiles/font.css) */
+  /* XXX#0662 (resources/css/profiles/font.css) */
+  --icon-size-xxs: 12px;
+  --icon-size-xs:  15px;
+  --icon-size-s:   18px;
+  --icon-size-m:   21px;
+  --icon-size-l:   24px;
+  --icon-size-xl:  27px;
+  --icon-size-xxl: 30px;
+  --icon-size-3xl: 33px;
+  --icon-size-4xl: 36px;
+  --icon-size-5xl: 39px;
+}
+
+/*** Icon size ***/
+/***** Icon *****/

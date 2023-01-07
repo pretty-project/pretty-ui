@@ -1,10 +1,9 @@
 
+/***** Letter magic *****/
 /* @usage
  * [:div.lm-1-10 [:span "X"]
  *               [:span "Y"]
  *               [:span "Z"]] */
-
-/***** Letter magic *****/
 
 /* 10 letter/sec = 0.05 sec/letter */
 .lm-1-10 span:nth-child(1)  { transition-delay: 0.1s }

@@ -1,0 +1,30 @@
+
+/***** Border *****/
+/*** Border radius ***/
+
+body {
+  --border-radius-xxs:  2px;
+  --border-radius-xs:   4px;
+  --border-radius-s:    6px;
+  --border-radius-m:   12px;
+  --border-radius-l:   18px;
+  --border-radius-xl:  24px;
+  --border-radius-xxl: 36px;
+}
+
+/*** Border radius ***/
+
+/*** Border width ***/
+
+body {
+  --border-width-xxs:  1px;
+  --border-width-xs:   2px;
+  --border-width-s:    4px;
+  --border-width-m:    6px;
+  --border-width-l:    8px;
+  --border-width-xl:  10px;
+  --border-width-xxl: 12px;
+}
+
+/*** Border width ***/
+/***** Border *****/

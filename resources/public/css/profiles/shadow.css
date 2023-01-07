@@ -1,0 +1,16 @@
+
+/***** Box shadow *****/
+/*** Black ***/
+
+body {
+  --box-shadow-black-xx-light: 0 0 005px 0 rgba(030, 050, 100, 0.10);
+  --box-shadow-black-x-light:  0 0 005px 0 rgba(030, 050, 100, 0.25);
+  --box-shadow-black-light:    0 0 005px 0 rgba(030, 050, 100, 0.40);
+  --box-shadow-black:          0 0 005px 0 rgba(030, 050, 100, 0.55);
+  --box-shadow-black-dark:     0 0 005px 0 rgba(030, 050, 100, 0.70);
+  --box-shadow-black-x-dark:   0 0 005px 0 rgba(030, 050, 100, 0.85);
+  --box-shadow-black-xx-dark:  0 0 005px 0 rgba(030, 050, 100, 1.00);
+}
+
+/*** Black ***/
+/***** Box shadow *****/

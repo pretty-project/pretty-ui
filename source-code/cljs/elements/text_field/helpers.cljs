@@ -174,7 +174,7 @@
   ;  :line-height (keyword)}
   ;
   ; @example
-  ; (field-auto-height :my-field {:font-size :s :line-height :normal})
+  ; (field-auto-height :my-field {:font-size :s :line-height :native})
   ; =>
   ; "calc(var( --line-height-s ) * 1)"
   ;
@@ -195,11 +195,11 @@
   ;
   ; @return (string)
   [field-id {:keys [font-size line-height] :as field-props}]
-  ; XXX#0886 (resources/css/presets/font.css)
-  ; XXX#6618 (resources/css/elements/style.css)
+  ; XXX#0886 (resources/public/css/presets/font.css)
+  ; XXX#6618 (resources/public/css/elements/style.css)
   (let [line-count (field-line-count field-id field-props)]
        (case line-height :block  (str "calc(var( --block-height-" (name font-size)   " ) * "line-count" + 12px)")
-                         :normal (str "calc(var( --line-height-"  (name font-size)   " ) * "line-count" + 12px)")
+                         :native (str "calc(var( --line-height-"  (name font-size)   " ) * "line-count" + 12px)")
                                  (str "calc(var( --line-height-"  (name line-height) " ) * "line-count" + 12px)"))))
 
 ;; ----------------------------------------------------------------------------

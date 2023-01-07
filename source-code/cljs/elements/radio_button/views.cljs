@@ -21,7 +21,7 @@
   [_ {:keys [option-helper-f]} option]
   (if option-helper-f (let [option-helper (option-helper-f option)]
                            [:div.e-radio-button--option-helper {:data-font-size   :xs
-                                                                :data-line-height :normal}
+                                                                :data-line-height :native}
                                                                (x.components/content option-helper)])))
 
 (defn- radio-button-option-label

@@ -120,7 +120,7 @@
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :line-height (keyword)(opt)
-  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
@@ -275,7 +275,7 @@
     Default: false}
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
@@ -1123,7 +1123,7 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :info-text (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :marked? (boolean)(opt)
   Default: false
@@ -1786,7 +1786,7 @@ XXX#3240
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :max-lines (integer)(opt)
  :min-width (keyword)(opt)
@@ -1865,7 +1865,7 @@ XXX#3240
  :initial-value (string)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword or px)(opt)
-  :block, :inherit, :normal, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :marked? (boolean)(opt)
   Default: false
