@@ -51,5 +51,5 @@
    [element (random/generate-keyword) image-props])
 
   ([image-id image-props]
-   (let [];image-props (image.prototypes/image-props-prototype image-id image-props)
+   (let [] ; image-props (image.prototypes/image-props-prototype image-id image-props)
         [image image-id image-props])))

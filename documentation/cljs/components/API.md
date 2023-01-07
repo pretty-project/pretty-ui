@@ -21,7 +21,7 @@
 
 - [ghost-view](#ghost-view)
 
-- [input-row](#input-row)
+- [input-table](#input-table)
 
 - [item-list-header](#item-list-header)
 
@@ -300,29 +300,38 @@
 
 ---
 
-### input-row
+### input-table
 
 ```
-@param (keyword)(opt) row-id
-@param (map) row-props
-{:border (keyword)
+@param (keyword)(opt) table-id
+@param (map) table-props
+{:border (keyword)(opt)
   :both, :bottom, :top
- :cells (maps in vector)
-  [{:label (metamorphic-content)
-    :input (metamorphic-content)
-    :target-id (keyword)(opt)
-    :template (string)(opt)}]
- :template (string)}
+ :rows (vectors in vectors in vector)
+  [[(string) template
+    [(metamorphic-content) label
+     (keyword) input-id
+     (metamorphic-content) input]]]}
 ```
 
 ```
 @usage
-[input-row {...}]
+[input-table {...}]
 ```
 
 ```
 @usage
-[input-row :my-input-row {...}]
+[input-table :my-input-table {...}]
+```
+
+```
+@usage
+(defn my-name-field  [] [text-field ::my-name-field  {...}])
+(defn my-color-field [] [text-field ::my-color-field {...}])
+(defn my-age-field   [] [text-field ::my-age-field   {...}])
+[input-table {:rows [["160px 1fr 160px 1fr" [:name  ::my-name-field  #'my-name-field]
+                                            [:color ::my-color-field #'my-color-field]]
+                     ["160px 1fr"           [:age   ::my-age-field   #'my-age-field]]]}]
 ```
 
 ---

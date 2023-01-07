@@ -9,9 +9,7 @@
   ; @param (map) cell-props
   ;
   ; @return (map)
-  [cell-props]
-  (merge {}
-         (param cell-props)))
+  [_])
 
 (defn row-props-prototype
   ; @param (map) cell-props

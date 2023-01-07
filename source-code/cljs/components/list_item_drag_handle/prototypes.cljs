@@ -1,6 +1,5 @@
 
-(ns components.list-item-drag-handle.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.list-item-drag-handle.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,6 +8,4 @@
   ; @param (map) handle-props
   ;
   ; @return (map)
-  [handle-props]
-  (merge {}
-         (param handle-props)))
+  [_])

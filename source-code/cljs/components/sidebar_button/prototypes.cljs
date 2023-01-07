@@ -10,7 +10,7 @@
   ;
   ; @return (map)
   ; {}
-  [{:keys [] :as button-props}]
+  [button-props]
   (merge {:hover-color :invert
           :icon-family :material-icons-filled}
          (param button-props)

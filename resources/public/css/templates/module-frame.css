@@ -1,0 +1,21 @@
+
+/***** Module frame *****/
+
+#t-module-frame {
+  display: flex;
+}
+
+/*** Wrapper ***/
+
+#t-module-frame--wrapper {
+  -flex-grow: 1;
+}
+
+/*** Wrapper ***/
+
+/*** Header ***/
+/*** Header ***/
+
+/*** Body ***/
+/*** Body ***/
+/***** Module frame *****/

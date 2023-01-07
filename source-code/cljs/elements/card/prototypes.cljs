@@ -1,6 +1,5 @@
 
-(ns elements.card.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.card.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) card-props
   ;
   ; @return (map)
-  ; {}
-  [card-props]
-  (merge {}
-         (param card-props)))
+  [_])

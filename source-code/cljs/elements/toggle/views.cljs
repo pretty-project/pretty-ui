@@ -67,5 +67,5 @@
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [];toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)
+   (let [] ; toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)
         [toggle toggle-id toggle-props])))

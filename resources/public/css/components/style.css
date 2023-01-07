@@ -11,58 +11,48 @@
 
 
 
-/***** Input cell *****/
-
-.c-input-cell {
-  align-items: center;
-  background-color: var( --fill-color-default );
-}
-
-.c-input-cell--label::after {
-  background-color: var( --border-color-highlight );
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 1px;
-}
-
-@media only screen and (min-width: 1024px) {
-.c-input-cell {
-  display: grid;
-}
-
-.c-input-cell--label::after {
-  content: '';
-}
-}
-
-/***** Input cell *****/
-
-
-
-/***** Input row *****/
+/***** Input table *****/
 /*** Body ***/
 
-.c-input-row--body {
+.c-input-table--body {
   background-color: var( --border-color-highlight );
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-gap: 1px;
 }
 
-.c-input-row--body[data-border="bottom"],
-.c-input-row--body[data-border="both"] {
+.c-input-table--body[data-border="bottom"],
+.c-input-table--body[data-border="both"] {
   border-bottom: 1px solid var( --border-color-highlight );
 }
 
-.c-input-row--body[data-border="both"],
-.c-input-row--body[data-border="top"] {
+.c-input-table--body[data-border="top"],
+.c-input-table--body[data-border="both"] {
   border-top: 1px solid var( --border-color-highlight );
 }
 
-.c-input-row--body > :not(:first-child)::after {
+/*** Body ***/
+
+/*** Row ***/
+
+.c-input-table--row {
+  display: grid;
+}
+
+/*** Row ***/
+
+/*** Input label ***/
+
+.c-input-table--input-label {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  display: flex;
+  min-height: 48px;
+}
+
+.c-input-table--input-label:not(:first-child)::after {
   background-color: var( --border-color-highlight );
-  -content: '';
+  content: '';
   height: 100%;
   left: -1px;
   position: absolute;
@@ -70,8 +60,29 @@
   width: 1px;
 }
 
-/*** Body ***/
-/***** Input row *****/
+/*** Input label ***/
+
+/*** Input body ***/
+
+.c-input-table--input-body {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  display: grid;
+  height: 100%;
+}
+
+.c-input-table--input-body:not(:first-child)::after {
+  background-color: var( --border-color-highlight );
+  content: '';
+  height: calc(100% - 24px);
+  left: -1px;
+  position: absolute;
+  top: 12px;
+  width: 1px;
+}
+
+/*** Input body ***/
+/***** Input table *****/
 
 
 

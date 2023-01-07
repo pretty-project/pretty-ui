@@ -17,17 +17,16 @@
 
 /*** Element width ***/
 
-/*  320px (legkisebb támogatott képernyő-szélesség)
- * - 96px (kettő ikon-gomb szélessége) */
-[data-element-width="xxs"] { min-width: 224px; }
-/*  320px (legkisebb támogatott képernyő-szélesség)
- * - 48px (egy ikon-gomb szélessége) */
-[data-element-width="xs"]  { min-width: 272px; }
-[data-element-width="s"]   { min-width: 272px; }
-[data-element-width="m"]   { min-width: 272px; }
-[data-element-width="l"]   { min-width: 272px; }
-[data-element-width="xl"]  { min-width: 272px; }
-[data-element-width="xxl"] { min-width: 272px; }
+[data-element-width="xxs"] { min-width:  60px; }
+[data-element-width="xs"]  { min-width: 120px; }
+[data-element-width="s"]   { min-width: 180px; }
+[data-element-width="m"]   { min-width: 240px; }
+[data-element-width="l"]   { min-width: 300px; }
+[data-element-width="xl"]  { min-width: 360px; }
+[data-element-width="xxl"] { min-width: 420px; }
+[data-element-width="3xl"] { min-width: 420px; }
+[data-element-width="4xl"] { min-width: 480px; }
+[data-element-width="5xl"] { min-width: 540px; }
 
 /*** Element width ***/
 

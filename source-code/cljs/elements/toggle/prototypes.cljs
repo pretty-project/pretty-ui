@@ -1,6 +1,5 @@
 
-(ns elements.toggle.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.toggle.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
-  ; {}
-  [toggle-props]
-  (merge {}
-         (param toggle-props)))
+  [_])

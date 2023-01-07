@@ -9,6 +9,4 @@
   ; @param (map) row-props
   ;
   ; @return (map)
-  [gap-props]
-  (merge {}
-         (param gap-props)))
+  [_])

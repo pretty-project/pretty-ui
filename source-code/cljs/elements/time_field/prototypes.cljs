@@ -1,6 +1,5 @@
 
-(ns elements.time-field.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.time-field.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ; {}
-  [field-props]
-  (merge {}
-         (param field-props)))
+  [_])

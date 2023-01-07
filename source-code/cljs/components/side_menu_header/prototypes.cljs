@@ -1,6 +1,5 @@
 
-(ns components.side-menu-header.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.side-menu-header.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,7 +8,4 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {}
-  [{:keys [] :as header-props}]
-  (merge {}
-         (param header-props)))
+  [_])

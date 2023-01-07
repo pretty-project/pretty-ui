@@ -1,6 +1,5 @@
 
-(ns components.side-menu-footer.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.side-menu-footer.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,7 +8,4 @@
   ; @param (map) footer-props
   ;
   ; @return (map)
-  ; {}
-  [{:keys [] :as footer-props}]
-  (merge {}
-         (param footer-props)))
+  [_])

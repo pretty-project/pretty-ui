@@ -1,6 +1,5 @@
 
-(ns elements.point-diagram.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.point-diagram.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  ; {}
-  [diagram-props]
-  (merge {}
-         (param diagram-props)))
+  [_])

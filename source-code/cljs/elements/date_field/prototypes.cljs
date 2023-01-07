@@ -1,7 +1,6 @@
 
 (ns elements.date-field.prototypes
-    (:require [candy.api  :refer [param]]
-              [random.api :as random]))
+    (:require [random.api :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,8 +15,6 @@
   ; {:autofill-name (keyword)
   ;  :type (keyword)}
   [_ field-props]
-  (merge {}
-         (param field-props)
-         {; XXX#6782 (source-code/cljs/elements/text-field/prototypes.cljs)
-          :autofill-name (random/generate-keyword)
-          :type          :date}))
+  ; XXX#6782 (source-code/cljs/elements/text-field/prototypes.cljs)
+  (merge field-props {:autofill-name (random/generate-keyword)
+                      :type          :date}))

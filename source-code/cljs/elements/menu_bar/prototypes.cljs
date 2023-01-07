@@ -35,6 +35,5 @@
   ; @return (map)
   ; {:icon-family (keyword)}
   [{:keys [icon] :as item-props}]
-  (merge {}
-         (if icon {:icon-family :material-icons-filled})
+  (merge (if icon {:icon-family :material-icons-filled})
          (param item-props)))

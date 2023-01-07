@@ -56,5 +56,5 @@
    [element (random/generate-keyword) blank-props])
 
   ([blank-id blank-props]
-   (let [];blank-props (blank.prototypes/blank-props-prototype blank-props)
+   (let [] ; blank-props (blank.prototypes/blank-props-prototype blank-props)
         [blank blank-id blank-props])))

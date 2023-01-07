@@ -1,6 +1,5 @@
 
-(ns elements.image.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.image.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) image-props
   ;
   ; @return (map)
-  ; {}
-  [image-props]
-  (merge {}
-         (param image-props)))
+  [_])

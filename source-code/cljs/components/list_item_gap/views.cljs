@@ -27,4 +27,5 @@
    [component (random/generate-keyword) gap-props])
 
   ([gap-id gap-props]
-   [list-item-gap gap-id gap-props]))
+   (let [] ; gap-props (list-item-gap.prototypes/gap-props-prototype gap-props)
+        [list-item-gap gap-id gap-props])))

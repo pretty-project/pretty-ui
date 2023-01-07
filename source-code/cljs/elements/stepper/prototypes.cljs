@@ -1,6 +1,5 @@
 
-(ns elements.stepper.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.stepper.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  ; {}
-  [stepper-props]
-  (merge {}
-         (param stepper-props)))
+  [_])

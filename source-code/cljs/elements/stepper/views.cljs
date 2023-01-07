@@ -40,5 +40,5 @@
    [element (random/generate-keyword) stepper-props])
 
   ([stepper-id stepper-props]
-   (let [stepper-props (stepper.prototypes/stepper-props-prototype stepper-props)]
+   (let [] ; stepper-props (stepper.prototypes/stepper-props-prototype stepper-props)
         [stepper stepper-id stepper-props])))

@@ -64,5 +64,5 @@
    [element (random/generate-keyword) diagram-props])
 
   ([diagram-id diagram-props]
-   (let [];diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)
+   (let [] ; diagram-props (point-diagram.prototypes/diagram-props-prototype diagram-props)
         [point-diagram diagram-id diagram-props])))

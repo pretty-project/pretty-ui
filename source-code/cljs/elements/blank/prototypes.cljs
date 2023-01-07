@@ -1,6 +1,5 @@
 
-(ns elements.blank.prototypes
-    (:require [candy.api :refer [param]]))
+(ns elements.blank.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,7 +10,4 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  ; {}
-  [blank-props]
-  (merge {}
-         (param blank-props)))
+  [_])

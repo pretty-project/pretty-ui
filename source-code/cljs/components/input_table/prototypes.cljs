@@ -1,13 +1,11 @@
 
-(ns elements.breadcrumbs.prototypes)
+(ns components.input-table.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn breadcrumbs-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (map) breadcrumbs-props
+(defn table-props-prototype
+  ; @param (map) table-props
   ;
   ; @return (map)
   [_])

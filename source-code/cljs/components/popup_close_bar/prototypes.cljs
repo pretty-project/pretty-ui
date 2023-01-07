@@ -1,6 +1,5 @@
 
-(ns components.popup-close-bar.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.popup-close-bar.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -9,6 +8,4 @@
   ; @param (map) bar-props
   ;
   ; @return (map)
-  [{:keys [] :as bar-props}]
-  (merge {}
-         (param bar-props)))
+  [_])

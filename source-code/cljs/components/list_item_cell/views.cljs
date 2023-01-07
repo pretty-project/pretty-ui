@@ -55,5 +55,5 @@
    [component (random/generate-keyword) cell-props])
 
   ([cell-id cell-props]
-   (let [];cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
+   (let [] ; cell-props (list-item-cell.prototypes/cell-props-prototype cell-props)
         [list-item-cell cell-id cell-props])))

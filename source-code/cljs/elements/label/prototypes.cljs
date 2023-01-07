@@ -11,7 +11,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) label-props
-  ; {:content (metamorphic-content)(opt)
+  ; {:color (keyword)(opt)
+  ;  :content (metamorphic-content)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
   ;  :target-id (keyword)(opt)}
@@ -29,7 +30,7 @@
   ;  :line-height (keyword)
   ;  :selectable? (boolean)
   ;  :target-id (string)}
-  [{:keys [content font-size icon target-id] :as label-props}]
+  [{:keys [color content font-size icon target-id] :as label-props}]
   ; XXX#7009
   ; A label elem prototípus függvénye alkalmazza az elem tartalmán az x.components/content
   ; függvényt, így azt elég egyszer alkalmazni és nem szükséges a különböző vizsgálatok
@@ -42,8 +43,8 @@
                :horizontal-align :left
                :line-height      :block
                :selectable?      false}
-              (if icon {:icon-color :default :icon-family :material-icons-filled
-                        :icon-size (or font-size :s)})
+              (if icon {:icon-family :material-icons-filled
+                        :icon-color color :icon-size (or font-size :s)})
               (param label-props)
               {:content content}
               (if target-id {:target-id (hiccup/value target-id "input")})

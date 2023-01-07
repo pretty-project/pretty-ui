@@ -1,16 +1,11 @@
 
-(ns components.ghost-view.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.ghost-view.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn view-props-prototype
   ; @param (map) view-props
-  ; {}
   ;
   ; @return (map)
-  ; {}
-  [view-props]
-  (merge {}
-         (param view-props)))
+  [_])

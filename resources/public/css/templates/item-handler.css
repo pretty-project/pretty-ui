@@ -1,0 +1,65 @@
+
+/***** Item handler *****/
+
+#t-item-handler {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+/*** Wrapper ***/
+
+#t-item-handler--wrapper {
+  flex-grow: 1;
+}
+
+/*** Wrapper ***/
+
+/*** Header ***/
+
+#t-item-handler--header {
+}
+
+#t-item-handler--label-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  grid-row-gap: 24px;
+  padding: 24px 36px;
+}
+
+#t-item-handler--control-bar {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  border-bottom: 1px solid var( --border-color-highlight );
+  border-top:    1px solid var( --border-color-highlight );
+  display: flex;
+ -justify-content: flex-end;
+  margin-bottom: 12px;
+  position: sticky;
+
+  width: 480px;
+  border-right: 1px solid var( --border-color-highlight );
+  border-radius: 0 18px 18px 0;
+
+  /* By using 47px top value instead of 48px, the control bar's top border slips
+   * under the application header, otherwise the control bar's top border and
+   * the application header's bottom border adds up to a 2px thick border instead
+   * of 1px. */
+ -top: 48px;
+  top: 47px;
+}
+
+/*** Header ***/
+
+/*** Body ***/
+
+#t-item-handler--body {
+  background-color: var( --fill-color-default );
+  border-bottom: 1px solid var( --border-color-highlight );
+  border-top:    1px solid var( --border-color-highlight );
+}
+
+/*** Body ***/
+/***** Item handler *****/
