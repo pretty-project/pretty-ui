@@ -1,7 +1,6 @@
 
 (ns elements.menu-bar.views
-    (:require [elements.element.views       :as element.views]
-              [elements.menu-bar.helpers    :as menu-bar.helpers]
+    (:require [elements.menu-bar.helpers    :as menu-bar.helpers]
               [elements.menu-bar.prototypes :as menu-bar.prototypes]
               [random.api                   :as random]
               [x.components.api             :as x.components]))
@@ -45,8 +44,7 @@
   [bar-id bar-props item-props]
   [:button.e-menu-bar--menu-item (menu-bar.helpers/menu-item-attributes bar-id bar-props item-props)
                                  [menu-item-icon                        bar-id bar-props item-props]
-                                 [menu-item-label                       bar-id bar-props item-props]
-                                 [element.views/element-badge           bar-id           item-props]])
+                                 [menu-item-label                       bar-id bar-props item-props]])
 
 (defn- anchor-item
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -141,7 +139,13 @@
   ;      Default: false
   ;     :badge-color (keyword)(opt)
   ;      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;      Default: :primary
+  ;      W/ {:badge-content ...}
   ;     :badge-content (metamorphic-content)(opt)
+  ;     :badge-position (keyword)(opt)
+  ;      :tl, :tr, :br, :bl
+  ;      Default: :tr
+  ;      W/ {:badge-content ...}
   ;     :disabled? (boolean)(opt)
   ;      Default: false
   ;     :href (string)(opt)
@@ -154,6 +158,12 @@
   ;      :material-icons-filled, :material-icons-outlined
   ;      Default: :material-icons-filled
   ;     :label (metamorphic-content)(opt)
+  ;     :marker-color (keyword)(opt)
+  ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;     :marker-position (keyword)(opt)
+  ;      :tl, :tr, :br, :bl
+  ;      Default: :tr
+  ;      W/ {:marker-color ...}
   ;     :on-click (metamorphic-event)(opt)}]
   ;  :orientation (keyword)(opt)
   ;   :horizontal, :vertical

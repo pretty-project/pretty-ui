@@ -39,7 +39,12 @@
   ;  :drag-attributes (map)(opt)
   ;  :highlighted? (boolean)(opt)
   ;   Default: false
-  ;  :marked? (boolean)(opt)
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;    Default: :tr
+  ;    W/ {:marker-color ...}
   ;  :template (string)}
   ;
   ; @usage

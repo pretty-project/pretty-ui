@@ -1,16 +1,25 @@
 
-/***** Indent *****/
-
 /* XXX#7006
  * The 'indent' property of DOM elements has to use padding instead of using
  * margin because the browser merges the margins in certain cases! */
-[data-indent-all="xxs"]        { padding:         6px; }
-[data-indent-all="xs"]         { padding:        12px; }
-[data-indent-all="s"]          { padding:        18px; }
-[data-indent-all="m"]          { padding:        24px; }
-[data-indent-all="l"]          { padding:        36px; }
-[data-indent-all="xl"]         { padding:        42px; }
-[data-indent-all="xxl"]        { padding:        48px; }
+
+
+
+/***** Indent presets *****/
+/*** All ***/
+
+[data-indent-all="xxs"] { padding:         6px; }
+[data-indent-all="xs"]  { padding:        12px; }
+[data-indent-all="s"]   { padding:        18px; }
+[data-indent-all="m"]   { padding:        24px; }
+[data-indent-all="l"]   { padding:        36px; }
+[data-indent-all="xl"]  { padding:        42px; }
+[data-indent-all="xxl"] { padding:        48px; }
+
+/*** All ***/
+
+/*** Horizontal ***/
+
 [data-indent-horizontal="xxs"] { padding-bottom:  6px;
                                  padding-top:     6px; }
 [data-indent-horizontal="xs"]  { padding-bottom: 12px;
@@ -25,47 +34,73 @@
                                  padding-top:    42px; }
 [data-indent-horizontal="xxl"] { padding-bottom: 48px;
                                  padding-top:    48px; }
-[data-indent-vertical="xxs"]   { padding-left:    6px;
-                                 padding-right:   6px; }
-[data-indent-vertical="xs"]    { padding-left:   12px;
-                                 padding-right:  12px; }
-[data-indent-vertical="s"]     { padding-left:   18px;
-                                 padding-right:  18px; }
-[data-indent-vertical="m"]     { padding-left:   24px;
-                                 padding-right:  24px; }
-[data-indent-vertical="l"]     { padding-left:   36px;
-                                 padding-right:  36px; }
-[data-indent-vertical="xl"]    { padding-left:   42px;
-                                 padding-right:  42px; }
-[data-indent-vertical="xxl"]   { padding-left:   48px;
-                                 padding-right:  48px; }
-[data-indent-bottom="xxs"]     { padding-bottom:  6px; }
-[data-indent-bottom="xs"]      { padding-bottom: 12px; }
-[data-indent-bottom="s"]       { padding-bottom: 18px; }
-[data-indent-bottom="m"]       { padding-bottom: 24px; }
-[data-indent-bottom="l"]       { padding-bottom: 36px; }
-[data-indent-bottom="xl"]      { padding-bottom: 42px; }
-[data-indent-bottom="xxl"]     { padding-bottom: 48px; }
-[data-indent-left="xxs"]       { padding-left:    6px; }
-[data-indent-left="xs"]        { padding-left:   12px; }
-[data-indent-left="s"]         { padding-left:   18px; }
-[data-indent-left="m"]         { padding-left:   24px; }
-[data-indent-left="l"]         { padding-left:   36px; }
-[data-indent-left="xl"]        { padding-left:   42px; }
-[data-indent-left="xxl"]       { padding-left:   48px; }
-[data-indent-right="xxs"]      { padding-right:   6px; }
-[data-indent-right="xs"]       { padding-right:  12px; }
-[data-indent-right="s"]        { padding-right:  18px; }
-[data-indent-right="m"]        { padding-right:  24px; }
-[data-indent-right="l"]        { padding-right:  36px; }
-[data-indent-right="xl"]       { padding-right:  42px; }
-[data-indent-right="xxl"]      { padding-right:  48px; }
-[data-indent-top="xxs"]        { padding-top:     6px; }
-[data-indent-top="xs"]         { padding-top:    12px; }
-[data-indent-top="s"]          { padding-top:    18px; }
-[data-indent-top="m"]          { padding-top:    24px; }
-[data-indent-top="l"]          { padding-top:    36px; }
-[data-indent-top="xl"]         { padding-top:    42px; }
-[data-indent-top="xxl"]        { padding-top:    48px; }
 
-/***** Indent *****/
+/*** Horizontal ***/
+
+/*** Vertical ***/
+
+[data-indent-vertical="xxs"] { padding-left:    6px;
+                               padding-right:   6px; }
+[data-indent-vertical="xs"]  { padding-left:   12px;
+                               padding-right:  12px; }
+[data-indent-vertical="s"]   { padding-left:   18px;
+                               padding-right:  18px; }
+[data-indent-vertical="m"]   { padding-left:   24px;
+                               padding-right:  24px; }
+[data-indent-vertical="l"]   { padding-left:   36px;
+                               padding-right:  36px; }
+[data-indent-vertical="xl"]  { padding-left:   42px;
+                               padding-right:  42px; }
+[data-indent-vertical="xxl"] { padding-left:   48px;
+                               padding-right:  48px; }
+
+/*** Vertical ***/
+
+/*** Bottom ***/
+
+[data-indent-bottom="xxs"] { padding-bottom:  6px; }
+[data-indent-bottom="xs"]  { padding-bottom: 12px; }
+[data-indent-bottom="s"]   { padding-bottom: 18px; }
+[data-indent-bottom="m"]   { padding-bottom: 24px; }
+[data-indent-bottom="l"]   { padding-bottom: 36px; }
+[data-indent-bottom="xl"]  { padding-bottom: 42px; }
+[data-indent-bottom="xxl"] { padding-bottom: 48px; }
+
+/*** Bottom ***/
+
+/*** Left ***/
+
+[data-indent-left="xxs"] { padding-left:    6px; }
+[data-indent-left="xs"]  { padding-left:   12px; }
+[data-indent-left="s"]   { padding-left:   18px; }
+[data-indent-left="m"]   { padding-left:   24px; }
+[data-indent-left="l"]   { padding-left:   36px; }
+[data-indent-left="xl"]  { padding-left:   42px; }
+[data-indent-left="xxl"] { padding-left:   48px; }
+
+/*** Left ***/
+
+/*** Right ***/
+
+[data-indent-right="xxs"] { padding-right:   6px; }
+[data-indent-right="xs"]  { padding-right:  12px; }
+[data-indent-right="s"]   { padding-right:  18px; }
+[data-indent-right="m"]   { padding-right:  24px; }
+[data-indent-right="l"]   { padding-right:  36px; }
+[data-indent-right="xl"]  { padding-right:  42px; }
+[data-indent-right="xxl"] { padding-right:  48px; }
+
+/*** Right ***/
+
+/*** Top ***/
+
+[data-indent-top="xxs"] { padding-top:     6px; }
+[data-indent-top="xs"]  { padding-top:    12px; }
+[data-indent-top="s"]   { padding-top:    18px; }
+[data-indent-top="m"]   { padding-top:    24px; }
+[data-indent-top="l"]   { padding-top:    36px; }
+[data-indent-top="xl"]  { padding-top:    42px; }
+[data-indent-top="xxl"] { padding-top:    48px; }
+
+/*** Top ***/
+/***** Indent presets *****/

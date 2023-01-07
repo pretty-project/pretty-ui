@@ -36,6 +36,23 @@ body {
 }
 
 /*** Block height ***/
+
+/*** Element width ***/
+
+body {
+  --data-element-width-xxs:  60px;
+  --data-element-width-xs:  120px;
+  --data-element-width-s:   180px;
+  --data-element-width-m:   240px;
+  --data-element-width-l:   300px;
+  --data-element-width-xl:  360px;
+  --data-element-width-xxl: 420px;
+  --data-element-width-3xl: 420px;
+  --data-element-width-4xl: 480px;
+  --data-element-width-5xl: 540px;
+}
+
+/*** Element width ***/
 /***** Layout *****/
 
 

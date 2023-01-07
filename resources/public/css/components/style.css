@@ -165,10 +165,6 @@
   height: calc( 100% - 36px );
 }
 
-.c-item-list-row[data-highlighted="true"] {
-  background-color: var( --fill-color-highlight );
-}
-
 .c-item-list-row[data-marked="true"]::after {
   background-color: var( --border-color-primary );
   border-radius: 4px;
@@ -290,7 +286,6 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 48px);
-  min-width: 250px;
   position: sticky;
   top: 48px;
 }

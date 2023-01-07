@@ -14,6 +14,16 @@ body[data-theme="dark"] {
   /* Scroll-shadow */
   --scroll-shadow-bottom:         0  6px 6px -6px #5c5c5c;
   --scroll-shadow-top:            0 -6px 6px -6px #5c5c5c;
+  /* Badge color */
+  --badge-color-default:          var( --black-x-light );
+  --badge-color-muted:            var( --black-xx-light );
+  --badge-color-highlight:        var( --grey-xx-dark );
+  --badge-color-invert:           var( --grey-xx-light );
+  --badge-color-primary:          var( --soft-blue-xx-light );
+  --badge-color-secondary:        var( --soft-purple-xx-light );
+  --badge-color-success:          var( --soft-green-xx-light );
+  --badge-color-warning:          var( --soft-red-xx-light );
+  
   /* Border color */
   --border-color-default:         var( --black-x-light );
   --border-color-muted:           var( --black-xx-light );

@@ -1,6 +1,6 @@
 
-/***** Input *****/
-/*** Autofill rules ***/
+/***** Input presets *****/
+/*** Autofill ***/
 
 [data-fillable]:-webkit-autofill,
 [data-fillable]:-webkit-autofill:hover,
@@ -10,5 +10,5 @@
   transition: background-color 9999s ease-in-out 0s;
 }
 
-/*** Autofill rules ***/
-/***** Input *****/
+/*** Autofill ***/
+/***** Input presets *****/

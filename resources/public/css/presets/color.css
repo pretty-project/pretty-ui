@@ -1,20 +1,20 @@
 
 /***** Color presets *****/
-/* Badge color */
+/*** Badge color ***/
 
-[data-badge-color="var"]       { background-color: var( --badge-color            ); }
-[data-badge-color="default"]   { background-color: var( --border-color-default   ); }
-[data-badge-color="highlight"] { background-color: var( --border-color-highlight ); }
-[data-badge-color="invert"]    { background-color: var( --border-color-invert    ); }
-[data-badge-color="muted"]     { background-color: var( --border-color-muted     ); }
-[data-badge-color="primary"]   { background-color: var( --border-color-primary   ); }
-[data-badge-color="secondary"] { background-color: var( --border-color-secondary ); }
-[data-badge-color="success"]   { background-color: var( --border-color-success   ); }
-[data-badge-color="warning"]   { background-color: var( --border-color-warning   ); }
+[data-badge-color="var"]::after       { background-color: var( --badge-color           ); }
+[data-badge-color="default"]::after   { background-color: var( --badge-color-default   ); }
+[data-badge-color="highlight"]::after { background-color: var( --badge-color-highlight ); }
+[data-badge-color="invert"]::after    { background-color: var( --badge-color-invert    ); }
+[data-badge-color="muted"]::after     { background-color: var( --badge-color-muted     ); }
+[data-badge-color="primary"]::after   { background-color: var( --badge-color-primary   ); }
+[data-badge-color="secondary"]::after { background-color: var( --badge-color-secondary ); }
+[data-badge-color="success"]::after   { background-color: var( --badge-color-success   ); }
+[data-badge-color="warning"]::after   { background-color: var( --badge-color-warning   ); }
 
-/* Badge color */
+/*** Badge color ***/
 
-/* Border color */
+/*** Border color ***/
 
 [data-border-color="var"]         { border-color: var( --border-color           ); }
 [data-border-color="default"]     { border-color: var( --border-color-default   ); }
@@ -26,9 +26,9 @@
 [data-border-color="success"]     { border-color: var( --border-color-success   ); }
 [data-border-color="warning"]     { border-color: var( --border-color-warning   ); }
 
-/* Border color */
+/*** Border color ***/
 
-/* Fill color */
+/*** Fill color ***/
 
 [data-fill-color="var"]       { background-color: var( --fill-color           ); }
 [data-fill-color="default"]   { background-color: var( --fill-color-default   ); }
@@ -40,9 +40,9 @@
 [data-fill-color="success"]   { background-color: var( --fill-color-success   ); }
 [data-fill-color="warning"]   { background-color: var( --fill-color-warning   ); }
 
-/* Fill color */
+/*** Fill color ***/
 
-/* Hover color */
+/*** Hover color ***/
 
 /* XXX#4005 (source-code/cljs/elements/element/helpers.cljs) */
 [data-disabled="false"] [data-hover-color="var"]:hover       { background-color: var( --hover-color           ); }
@@ -55,9 +55,9 @@
 [data-disabled="false"] [data-hover-color="success"]:hover   { background-color: var( --hover-color-success   ); }
 [data-disabled="false"] [data-hover-color="warning"]:hover   { background-color: var( --hover-color-warning   ); }
 
-/* Hover color */
+/*** Hover color ***/
 
-/* Icon color */
+/*** Icon color ***/
 
 [data-icon-color="var"]       { color: var( --icon-color      ); }
 [data-icon-color="default"]   { color: var( --color-default   ); }
@@ -69,9 +69,23 @@
 [data-icon-color="success"]   { color: var( --color-success   ); }
 [data-icon-color="warning"]   { color: var( --color-warning   ); }
 
-/* Icon color */
+/*** Icon color ***/
 
-/* Stroke color */
+/*** Marker color ***/
+
+[data-marker-color="var"]::after       { background-color: var( --marker-color           ); }
+[data-marker-color="default"]::after   { background-color: var( --border-color-default   ); }
+[data-marker-color="muted"]::after     { background-color: var( --border-color-muted     ); }
+[data-marker-color="highlight"]::after { background-color: var( --border-color-highlight ); }
+[data-marker-color="invert"]::after    { background-color: var( --border-color-invert    ); }
+[data-marker-color="primary"]::after   { background-color: var( --border-color-primary   ); }
+[data-marker-color="secondary"]::after { background-color: var( --border-color-secondary ); }
+[data-marker-color="success"]::after   { background-color: var( --border-color-success   ); }
+[data-marker-color="warning"]::after   { background-color: var( --border-color-warning   ); }
+
+/*** Marker color ***/
+
+/*** Stroke color ***/
 
 [data-stroke-color="var"]       { stroke: var( --stroke-color           ); }
 [data-stroke-color="default"]   { stroke: var( --border-color-default   ); }
@@ -83,9 +97,9 @@
 [data-stroke-color="success"]   { stroke: var( --border-color-success   ); }
 [data-stroke-color="warning"]   { stroke: var( --border-color-warning   ); }
 
-/* Stroke color */
+/*** Stroke color ***/
 
-/* Text color */
+/*** Text color ***/
 
 [data-color="var"]       { color: var( --color           ); }
 [data-color="default"]   { color: var( --color-default   ); }
@@ -97,5 +111,5 @@
 [data-color="success"]   { color: var( --color-success   ); }
 [data-color="warning"]   { color: var( --color-warning   ); }
 
-/* Text color */
+/*** Text color ***/
 /***** Color presets *****/

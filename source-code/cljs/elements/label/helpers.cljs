@@ -128,6 +128,7 @@
   ; {:data-selectable (boolean)}
   [label-id {:keys [selectable?] :as label-props}]
   (merge (element.helpers/element-indent-attributes label-id label-props)
+         (element.helpers/element-marker-attributes label-id label-props)
          (label-style-attributes                    label-id label-props)
          (label-font-attributes                     label-id label-props)
          (label-layout-attributes                   label-id label-props)

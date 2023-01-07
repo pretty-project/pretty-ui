@@ -68,19 +68,18 @@
   ;  :href (string)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [bar-id {:keys [height]} {:keys [active? disabled? href on-click]}]
+  [bar-id {:keys [height]} {:keys [active? disabled? href on-click] :as item-props}]
   ; XXX#9910
   ; A menu-bar magasságát a menü elemeken szükséges alkalmazni,
   ; így {:orientation :horizontal} és {:orientation :vertical}
   ; beállítással használva egyaránt a menü elemek érzékelő területének
   ; magasságát szabályozza!
-  (if disabled? (cond-> {:data-disabled true
-                         :data-height   height
-                         :on-mouse-up  #(element.side-effects/blur-element! bar-id)}
-                        (some? active?) (assoc :data-active (boolean active?)))
-                (cond-> {:data-clickable true
-                         :data-height    height
-                         :on-mouse-up   #(element.side-effects/blur-element! bar-id)}
-                        (some? href)     (assoc :href        (str        href))
-                        (some? on-click) (assoc :on-click   #(r/dispatch on-click))
-                        (some? active?)  (assoc :data-active (boolean    active?)))))
+  (merge (element.helpers/element-badge-attributes bar-id item-props)
+         {:data-height height
+          :on-mouse-up #(element.side-effects/blur-element! bar-id)}
+         (if disabled? (cond-> {:data-disabled true}
+                               (some? active?) (assoc :data-active (boolean active?)))
+                       (cond-> {:data-clickable true}
+                               (some? href)     (assoc :href        (str        href))
+                               (some? on-click) (assoc :on-click   #(r/dispatch on-click))
+                               (some? active?)  (assoc :data-active (boolean    active?))))))

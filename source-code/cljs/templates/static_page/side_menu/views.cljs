@@ -14,6 +14,7 @@
                         {:content [:<> [components/side-menu-header {}]
                                        [x.components/content page-id content]
                                        [components/side-menu-footer {}]]
+                         :min-width :m
                          :threshold threshold}])
 
 (defn side-menu

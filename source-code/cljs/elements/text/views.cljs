@@ -123,8 +123,6 @@
   ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :block
   ;  :max-lines (integer)(opt)
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)

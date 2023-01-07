@@ -1,0 +1,38 @@
+
+/***** Marker presets *****/
+/*** Marker ***/
+
+[data-marker-color]::after {
+  border-radius: 2px;
+  content:       '';
+  height:        6px;
+  position:      absolute;
+  width:         6px;
+}
+
+/*** Marker ***/
+
+/*** Position ***/
+
+[data-marker-position="tl"]::after {
+  left: 8px;
+  top:  8px;
+}
+
+[data-marker-position="tr"]::after {
+  right: 8px;
+  top:   8px;
+}
+
+[data-marker-position="br"]::after {
+  bottom: 8px;
+  right:  8px;
+}
+
+[data-marker-position="bl"]::after {
+  bottom: 8px;
+  left:   8px;
+}
+
+/*** Position ***/
+/***** Marker presets *****/

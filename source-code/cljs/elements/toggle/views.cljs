@@ -52,6 +52,12 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :on-click (metamorphic-event)
   ;  :on-right-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
@@ -67,5 +73,5 @@
    [element (random/generate-keyword) toggle-props])
 
   ([toggle-id toggle-props]
-   (let [] ; toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)
+   (let [toggle-props (toggle.prototypes/toggle-props-prototype toggle-props)]
         [toggle toggle-id toggle-props])))

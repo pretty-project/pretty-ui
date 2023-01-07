@@ -65,13 +65,12 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
+  [_ {:keys [helper info-text label marker-color]}]
+  (if label [label.views/element {:content      label
+                                  :helper       helper
+                                  :info-text    info-text
+                                  :line-height  :block
+                                  :marker-color marker-color}]))
 
 (defn- counter-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,16 +114,13 @@
   ;  :initial-value (integer)(opt)
   ;   Default: 0
   ;  :label (metamorphic-content)(opt)
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :max-value (integer)(opt)
   ;  :min-value (integer)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
-  ;   Default: false
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
   ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}

@@ -1,5 +1,5 @@
 
-/***** Marker presets *****/
+/***** Copy presets *****/
 /*** Copyable ***/
 
 [data-copyable] {
@@ -28,18 +28,4 @@
 }
 
 /*** Copyable ***/
-
-/*** Marked ***/
-
-[data-marked]::before {}
-
-[data-marked="muted"]::before     {}
-[data-marked="highlight"]::before {}
-[data-marked="invert"]::before    {}
-[data-marked="primary"]::before   {}
-[data-marked="secondary"]::before {}
-[data-marked="success"]::before   {}
-[data-marked="warning"]::before   {}
-
-/*** Marked ***/
-/***** Marker presets *****/
+/***** Copy presets *****/

@@ -54,16 +54,13 @@
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  ; {:horizontal-align (keyword)
-  ;  :min-width (keyword)(opt)}
+  ; {:horizontal-align (keyword)}
   ;
   ; @return (map)
-  ; {:data-element-width (keyword)
-  ;  :data-horizontal-column-align (keyword)
+  ; {:data-horizontal-column-align (keyword)
   ;  :data-horizontal-text-align (keyword)}
-  [_ {:keys [horizontal-align min-width]}]
-  {:data-element-width           min-width
-   :data-horizontal-column-align horizontal-align
+  [_ {:keys [horizontal-align]}]
+  {:data-horizontal-column-align horizontal-align
    :data-horizontal-text-align   horizontal-align})
 
 (defn text-body-attributes

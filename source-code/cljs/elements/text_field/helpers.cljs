@@ -218,23 +218,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input-container-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [_ {:keys [border-color border-radius style]}]
-  (-> {:data-border-radius border-radius
-       :style              style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn field-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -249,6 +232,26 @@
   [_ {:keys [font-size line-height]}]
   {:data-font-size   font-size
    :data-line-height line-height})
+
+(defn input-container-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [field-id {:keys [border-color border-radius style] :as field-props}]
+  (merge (element.helpers/element-indent-attributes field-id field-props)
+         (element.helpers/element-marker-attributes field-id field-props)
+         (field-font-attributes                     field-id field-props)
+         (-> {:data-border-radius border-radius
+              :style              style}
+             (element.helpers/apply-color :border-color :data-border-color border-color))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn field-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -307,29 +310,27 @@
   ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
   ;   és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
-  (merge (element.helpers/element-indent-attributes field-id field-props)
-         (field-font-attributes                     field-id field-props)
-         (if disabled? {;:disabled true
-                        :data-fillable true
-                        :tab-index     "-1"
-                        :max-length    max-length
-                        :type          type
-                        :id            (hiccup/value      field-id "input")
-                        :value         (get-field-content field-id)
-                        :on-change     (fn [])}
-                       {:auto-complete autofill-name
-                        :data-fillable true
-                        :max-length    max-length
-                        :min           date-from
-                        :max           date-to
-                        :name          autofill-name
-                        :type          type
-                        :id            (hiccup/value      field-id "input")
-                        :value         (get-field-content field-id)
-                        :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
-                        :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
-                        :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
-                        :on-change     (on-change-f field-id field-props)})))
+  (if disabled? {;:disabled true
+                 :data-fillable true
+                 :tab-index     "-1"
+                 :max-length    max-length
+                 :type          type
+                 :id            (hiccup/value      field-id "input")
+                 :value         (get-field-content field-id)
+                 :on-change     (fn [])}
+                {:auto-complete autofill-name
+                 :data-fillable true
+                 :max-length    max-length
+                 :min           date-from
+                 :max           date-to
+                 :name          autofill-name
+                 :type          type
+                 :id            (hiccup/value      field-id "input")
+                 :value         (get-field-content field-id)
+                 :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
+                 :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
+                 :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
+                 :on-change     (on-change-f field-id field-props)}))
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

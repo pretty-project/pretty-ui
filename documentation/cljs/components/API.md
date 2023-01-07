@@ -380,7 +380,12 @@
  :drag-attributes (map)(opt)
  :highlighted? (boolean)(opt)
   Default: false
- :marked? (boolean)(opt)
+ :marker-color (keyword)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+   Default: :tr
+   W/ {:marker-color ...}
  :template (string)}
 ```
 
@@ -743,6 +748,8 @@
  :disabled? (boolean)(opt)
   Default: false
  :indent (map)(opt)
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
  :position (keyword)(opt)
   :left, :right

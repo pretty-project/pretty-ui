@@ -71,13 +71,15 @@
   ; @param (*) option
   ;
   ; @return (map)
-  ; {:disabled (boolean)
+  ; {:data-checked (boolean)
+  ;  :data-clickable (keyword)
+  ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [checkbox-id {:keys [disabled? value-path] :as checkbox-props} option]
   (let [option-checked? @(r/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
-       (if disabled? {:data-checked option-checked?
-                      :disabled     true}
-                     {:data-checked option-checked?
-                      :on-click     #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
-                      :on-mouse-up  #(element.side-effects/blur-element! checkbox-id)})))
+       (merge {:data-checked   option-checked?
+               :data-clickable :targeted}
+              (if disabled? {:disabled     true}
+                            {:on-click     #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
+                             :on-mouse-up  #(element.side-effects/blur-element! checkbox-id)}))))

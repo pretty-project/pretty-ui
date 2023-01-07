@@ -221,9 +221,15 @@
 ```
 @param (keyword)(opt) button-id
 @param (map) button-props
-{:badge-color (keyword or string)(opt)
+{:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :primary
+  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
+ :badge-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:badge-content ...}
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
@@ -277,6 +283,12 @@
  :line-height (keyword)(opt)
   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
@@ -308,9 +320,15 @@
 @param (keyword)(opt) card-id
 @param (map) card-props
 XXX#3240
-{:badge-color (keyword or string)(opt)
+{:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :primary
+  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
+ :badge-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:badge-content ...}
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
@@ -335,8 +353,14 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
@@ -381,8 +405,8 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :initial-options (vector)(opt)
  :initial-value (boolean)(opt)
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :on-check (metamorphic-event)(opt)
  :on-uncheck (metamorphic-event)(opt)
  :option-helper-f (function)(opt)
@@ -398,9 +422,6 @@ XXX#3240
  :label (metamorphic-content)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
-  Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -696,16 +717,13 @@ XXX#3240
  :initial-value (integer)(opt)
   Default: 0
  :label (metamorphic-content)(opt)
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :max-value (integer)(opt)
  :min-value (integer)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
  :resetable? (boolean)(opt)
-  Default: false
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
   Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
@@ -970,9 +988,15 @@ XXX#3240
 ```
 @param (keyword)(opt) button-id
 @param (map) button-props
-{:badge-color (keyword or string)(opt)
+{:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :primary
+  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
+ :badge-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:badge-content ...}
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
  :class (keyword or keywords in vector)(opt)
@@ -1004,6 +1028,12 @@ XXX#3240
    :required? (boolean)(opt)
     Default: false}
  :label (metamorphic-content)(opt)
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
@@ -1125,18 +1155,20 @@ XXX#3240
  :line-height (keyword)(opt)
   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
   Same as the :indent property.
  :overflow-direction (keyword)(opt)
   :normal, :reversed
   Default :normal
  :placeholder (metamorphic-content)(opt)
- :required? (boolean)(opt)
-  Default: false
  :selectable? (boolean)(opt)
   Default: false
  :style (map)(opt)
@@ -1235,7 +1267,13 @@ XXX#3240
      Default: false
     :badge-color (keyword)(opt)
      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+     Default: :primary
+     W/ {:badge-content ...}
     :badge-content (metamorphic-content)(opt)
+    :badge-position (keyword)(opt)
+     :tl, :tr, :br, :bl
+     Default: :tr
+     W/ {:badge-content ...}
     :disabled? (boolean)(opt)
      Default: false
     :href (string)(opt)
@@ -1248,6 +1286,12 @@ XXX#3240
      :material-icons-filled, :material-icons-outlined
      Default: :material-icons-filled
     :label (metamorphic-content)(opt)
+    :marker-color (keyword)(opt)
+     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+    :marker-position (keyword)(opt)
+     :tl, :tr, :br, :bl
+     Default: :tr
+     W/ {:marker-color ...}
     :on-click (metamorphic-event)(opt)}]
  :orientation (keyword)(opt)
   :horizontal, :vertical
@@ -1437,8 +1481,8 @@ XXX#3240
  :initial-options (vector)(opt)
  :initial-value (*)(opt)
  :label (metamorphic-content)
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :on-select (metamorphic-event)(opt)
  :option-helper-f (function)(opt)
  :option-label-f (function)(opt)
@@ -1452,9 +1496,6 @@ XXX#3240
  :options-path (vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
-  Default: false
  :style (map)(opt)
  :unselectable? (boolean)(opt)
   Default: false
@@ -1578,10 +1619,10 @@ XXX#3240
  :layout (keyword)(opt)
   :button, :icon-button, :select
   Default: :select
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-select (metamorphic-event)(opt)
  :option-field-placeholder (metamorphic-content)(opt)
   Default: :add!
@@ -1596,9 +1637,6 @@ XXX#3240
   Default: :no-options
  :outdent (map)(opt)
   Same as the :indent property.
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
-  Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -1720,8 +1758,8 @@ XXX#3240
  :initial-options (vector)(opt)
  :initial-value (boolean)(opt)
  :label (metamorphic-content)(opt)
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :on-check (metamorphic-event)(opt)
  :on-uncheck (metamorphic-event)(opt)
  :option-helper-f (function)(opt)
@@ -1736,9 +1774,6 @@ XXX#3240
  :options-path (vector)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
-  Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -1789,8 +1824,6 @@ XXX#3240
   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
  :max-lines (integer)(opt)
- :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
  :outdent (map)(opt)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
@@ -1867,11 +1900,15 @@ XXX#3240
  :line-height (keyword or px)(opt)
   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :block
- :marked? (boolean)(opt)
-  Default: false
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :max-length (integer)(opt)
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :modifier (function)(opt)
  :on-blur (metamorphic-event)(opt)
  :on-changed (metamorphic-event)(opt)
@@ -1890,9 +1927,6 @@ XXX#3240
  :outdent (map)(opt)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
-  Default: false
  :start-adornments (maps in vector)(opt)
   Same as the :end-adornments property.
  :stretch-orientation (keyword)(opt)
@@ -2041,6 +2075,12 @@ XXX#3240
     :xxs, :xs, :s, :m, :l, :xl, :xxl
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+ :marker-color (keyword)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+ :marker-position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :tr
+  W/ {:marker-color ...}
  :on-click (metamorphic-event)
  :on-right-click (metamorphic-event)(opt)
  :outdent (map)(opt)

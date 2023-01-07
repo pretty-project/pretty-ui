@@ -45,7 +45,8 @@
   ; @param (map) button-props
   ; @param (*) option
   [button-id button-props option]
-  [:div.e-radio-button--option-content [radio-button-option-label  button-id button-props option]
+  [:div.e-radio-button--option-content {:data-clickable-target true}
+                                       [radio-button-option-label  button-id button-props option]
                                        [radio-button-option-helper button-id button-props option]])
 
 (defn- radio-button-option
@@ -94,13 +95,12 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
+  [_ {:keys [helper info-text label marker-color]}]
+  (if label [label.views/element {:content      label
+                                  :helper       helper
+                                  :info-text    info-text
+                                  :line-height  :block
+                                  :marker-color marker-color}]))
 
 (defn- radio-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -146,8 +146,8 @@
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
   ;  :label (metamorphic-content)
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-select (metamorphic-event)(opt)
   ;  :option-helper-f (function)(opt)
   ;  :option-label-f (function)(opt)
@@ -161,9 +161,6 @@
   ;  :options-path (vector)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :unselectable? (boolean)(opt)
   ;   Default: false

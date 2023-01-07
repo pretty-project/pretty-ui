@@ -1,5 +1,7 @@
 
+/***** Animation presets *****/
 /*** Position ***/
+
 /* A mozgató animációk 100vh és 100vw érték helyett 110vh és 110vw értékekkel
  * mozgatják az elemet, hogy az adott elem esetleges border és más kiegészítő
  * elemei is eltűnjenek a viewport-ból */
@@ -156,3 +158,4 @@
   to   { opacity: 0.98 }}
 
 /*** Visibility ***/
+/***** Animation presets *****/

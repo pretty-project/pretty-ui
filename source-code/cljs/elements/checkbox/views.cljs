@@ -45,7 +45,8 @@
   ; @param (map) checkbox-props
   ; @param (*) option
   [checkbox-id checkbox-props option]
-  [:div.e-checkbox--option-content [checkbox-option-label  checkbox-id checkbox-props option]
+  [:div.e-checkbox--option-content {:data-clickable-target true}
+                                   [checkbox-option-label  checkbox-id checkbox-props option]
                                    [checkbox-option-helper checkbox-id checkbox-props option]])
 
 (defn- checkbox-option
@@ -85,13 +86,12 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
+  [_ {:keys [helper info-text label marker-color]}]
+  (if label [label.views/element {:content      label
+                                  :helper       helper
+                                  :info-text    info-text
+                                  :line-height  :block
+                                  :marker-color marker-color}]))
 
 (defn- checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -134,8 +134,8 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :initial-options (vector)(opt)
   ;  :initial-value (boolean)(opt)
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-check (metamorphic-event)(opt)
   ;  :on-uncheck (metamorphic-event)(opt)
   ;  :option-helper-f (function)(opt)
@@ -151,9 +151,6 @@
   ;  :label (metamorphic-content)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

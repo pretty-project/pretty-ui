@@ -2,7 +2,6 @@
 (ns elements.icon-button.views
     (:require [elements.button.helpers         :as button.helpers]
               [elements.element.helpers        :as element.helpers]
-              [elements.element.views          :as element.views]
               [elements.icon-button.helpers    :as icon-button.helpers]
               [elements.icon-button.presets    :as icon-button.presets]
               [elements.icon-button.prototypes :as icon-button.prototypes]
@@ -53,8 +52,7 @@
   [:button.e-icon-button--body (icon-button.helpers/button-body-attributes button-id button-props)
                                [icon-button-progress                       button-id button-props]
                                [icon-button-icon                           button-id button-props]
-                               [icon-button-label                          button-id button-props]
-                               [element.views/element-badge                button-id button-props]])
+                               [icon-button-label                          button-id button-props]])
 
 (defn- icon-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -79,9 +77,15 @@
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:badge-color (keyword or string)(opt)
+  ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
+  ;  :badge-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:badge-content ...}
   ;  :border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;  :class (keyword or keywords in vector)(opt)
@@ -113,6 +117,12 @@
   ;    :required? (boolean)(opt)
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)

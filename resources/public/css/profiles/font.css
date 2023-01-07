@@ -13,8 +13,8 @@
  * the same size. */
 
 /* XXX#0662
- * The basic range from :xxs to :xxl wasn't enough for fonts and icons.
- * One of the solutions was that the step value between sizes has to be increased
+ * The normal range from :xxs to :xxl wasn't enough for fonts and icons.
+ * One of the solutions was that the step value (between sizes) has to be increased
  * or the step value has to be unstandardized.
  * Extending the size range with extra sizes seemed a bit more sophisticated
  * solution than modifing the standardized step values. */

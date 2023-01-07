@@ -15,6 +15,15 @@ body[data-theme="light"] {
   /* Scroll-shadow */
   --scroll-shadow-bottom:         0  6px 6px -6px #bcbcbc;
   --scroll-shadow-top:            0 -6px 6px -6px #bcbcbc;
+  /* Badge color */
+  --badge-color-default:          var( --grey-x-light );
+  --badge-color-muted:            var( --grey-xx-light );
+  --badge-color-highlight:        var( --white-x-dark );
+  --badge-color-invert:           var( --black-xx-light );
+  --badge-color-primary:          var( --soft-blue-xx-light );
+  --badge-color-secondary:        var( --soft-purple-xx-light );
+  --badge-color-success:          var( --soft-green-xx-light );
+  --badge-color-warning:          var( --soft-red-xx-light );
   /* Border color */
   --border-color-default:         var( --grey-x-light );
   --border-color-muted:           var( --grey-xx-light );

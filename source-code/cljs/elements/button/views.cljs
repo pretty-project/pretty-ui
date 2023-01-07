@@ -4,7 +4,6 @@
               [elements.button.presets    :as button.presets]
               [elements.button.prototypes :as button.prototypes]
               [elements.element.helpers   :as element.helpers]
-              [elements.element.views     :as element.views]
               [reagent.api                :as reagent]
               [random.api                 :as random]
               [x.components.api           :as x.components]))
@@ -48,8 +47,7 @@
                           [button-label button-id button-props]
                           (if icon (case icon-position :left  [:<>]
                                                        ;:left  (if label [:div.e-button--icon-placeholder])
-                                                       :right [button-icon button-id button-props]))
-                          [element.views/element-badge button-id button-props]])
+                                                       :right [button-icon button-id button-props]))])
 
 (defn- button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -75,9 +73,15 @@
   ; XXX#0714
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:badge-color (keyword or string)(opt)
+  ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
+  ;  :badge-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:badge-content ...}
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
@@ -131,6 +135,12 @@
   ;  :line-height (keyword)(opt)
   ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :block
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)

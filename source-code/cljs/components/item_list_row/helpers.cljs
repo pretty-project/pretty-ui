@@ -1,5 +1,6 @@
 
-(ns components.item-list-row.helpers)
+(ns components.item-list-row.helpers
+    (:require [components.component.helpers :as component.helpers]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,18 +12,15 @@
   ;  :disabled? (boolean)(opt)
   ;  :drag-attributes (map)(opt)
   ;  :highlighted? (boolean)(opt)
-  ;  :marked? (boolean)(opt)
   ;  :template (string)}
   ;
   ; @return (map)
   ; {:data-border (keyword)
-  ;  :data-highlighted (boolean)
-  ;  :data-marked (boolean)
+  ;  :data-fill-color (boolean)
   ;  :style (map)}
-  [_ {:keys [border disabled? drag-attributes highlighted? marked? template]}]
-  (if drag-attributes (-> drag-attributes (update :style merge {:grid-template-columns template})
-                                          (assoc  :data-border border :data-highlighted highlighted?))
-                      {:data-border      border
-                       :data-highlighted highlighted?
-                       :data-marked      marked?
-                       :style {:grid-template-columns template :opacity (if disabled? ".5")}}))
+  [row-id {:keys [border disabled? drag-attributes highlighted? template] :as row-props}]
+  (merge (component.helpers/component-marker-attributes row-id row-props)
+         {:data-border     border
+          :data-fill-color (if highlighted? :highlight)}
+         (if drag-attributes (-> drag-attributes (update :style merge {:grid-template-columns template}))
+                             {:style {:grid-template-columns template :opacity (if disabled? ".5")}})))

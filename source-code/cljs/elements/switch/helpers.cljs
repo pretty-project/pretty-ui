@@ -75,8 +75,8 @@
   ; {}
   [switch-id {:keys [disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
-       (if disabled? {:data-switched option-switched?
-                      :disabled      true}
-                     {:data-switched option-switched?
-                      :on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
-                      :on-mouse-up  #(element.side-effects/blur-element! switch-id)})))
+       (merge {:data-clickable :targeted
+               :data-switched  option-switched?}
+              (if disabled? {:disabled     true}
+                            {:on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
+                             :on-mouse-up  #(element.side-effects/blur-element! switch-id)}))))

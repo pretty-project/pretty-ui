@@ -30,10 +30,15 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) item-props
-  ; {:icon (keyword)(opt)}
+  ; {:badge-content (metamorphic-content)(opt)
+  ;  :icon (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:icon-family (keyword)}
-  [{:keys [icon] :as item-props}]
-  (merge (if icon {:icon-family :material-icons-filled})
+  ; {:badge-color (keyword)
+  ;  :badge-position (keyword)
+  ;  :icon-family (keyword)}
+  [{:keys [badge-content icon marker-color] :as item-props}]
+  (merge (if badge-content {:badge-color :primary :badge-position :tr})
+         (if marker-color  {:marker-position :tr})
+         (if icon          {:icon-family :material-icons-filled})
          (param item-props)))

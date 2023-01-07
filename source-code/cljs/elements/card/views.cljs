@@ -2,7 +2,6 @@
 (ns elements.card.views
     (:require [elements.card.helpers    :as card.helpers]
               [elements.card.prototypes :as card.prototypes]
-              [elements.element.views   :as element.views]
               [random.api               :as random]
               [x.components.api         :as x.components]))
 
@@ -17,8 +16,7 @@
   ; {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
   [:button.e-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
-                        [x.components/content                     card-id content]
-                        [element.views/element-badge              card-id card-props]])
+                        [x.components/content                     card-id content]])
 
 (defn- static-card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,8 +26,7 @@
   ; {:content (metamorphic-content)}
   [card-id {:keys [content] :as card-props}]
   [:div.e-card--body (card.helpers/static-card-body-attributes card-id card-props)
-                     [x.components/content                     card-id content]
-                     [element.views/element-badge              card-id card-props]])
+                     [x.components/content                     card-id content]])
 
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -46,9 +43,15 @@
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
   ; XXX#3240
-  ; {:badge-color (keyword or string)(opt)
+  ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :primary
+  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
+  ;  :badge-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:badge-content ...}
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
@@ -73,8 +76,14 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
@@ -91,5 +100,5 @@
    [element (random/generate-keyword) card-props])
 
   ([card-id card-props]
-   (let [] ; card-props (card.prototypes/card-props-prototype card-props)
+   (let [card-props (card.prototypes/card-props-prototype card-props)]
         [card card-id card-props])))

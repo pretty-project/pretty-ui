@@ -1,5 +1,5 @@
 
-/*****  *****/
+/***** Click presets *****/
 /*** Hoverable ***/
 
 /* @usage
@@ -8,10 +8,15 @@
  * @usage
  * [:button {:data-clickable true :data-hoverable true} "My button"]
  *
+ * @usage
+ * [:button {:data-hoverable :targeted}
+ *          [:div {:data-hoverable-target true} "Only the child element affected!"]]
+ *
  * The hoverable preset must be placed above the clickable preset (because of the CSS cascade)!
  * The clickable must be more opaquer than the hoverable! */
 
-[data-hoverable="true"]:hover {
+[data-hoverable="true"]:hover,
+[data-hoverable="targeted"]:hover [data-hoverable-target] {
   opacity: .7 !important;
 }
 
@@ -25,8 +30,11 @@
  * @usage
  * [:button {:data-clickable true :data-hoverable true} "My button"]
  *
- * Don't forget to set up an on-mouse-up event to blur the element
- * after clicking! */
+ * @usage
+ * [:button {:data-clickable :targeted}
+ *          [:div {:data-clickable-target true} "Only the child element affected!"]]
+ *
+ * Don't forget to set up an on-mouse-up event to blur the element after clicking! */
 
 [data-clickable="true"],
 [data-clickable="targeted"] {
@@ -41,4 +49,4 @@
 }
 
 /*** Clickable ***/
-/*****  *****/
+/***** Click presets *****/

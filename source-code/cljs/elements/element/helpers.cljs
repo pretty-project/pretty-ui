@@ -1,8 +1,9 @@
 
 (ns elements.element.helpers
-    (:require [candy.api  :refer [param return]]
-              [css.api    :as css]
-              [hiccup.api :as hiccup]))
+    (:require [candy.api        :refer [param return]]
+              [css.api          :as css]
+              [hiccup.api       :as hiccup]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,6 +86,42 @@
   (cond (keyword? dimension-value) (assoc    element-attributes dimension-data-key dimension-value)
         (integer? dimension-value) (assoc-in element-attributes [:style dimension-key] (css/px dimension-value))
         (string?  dimension-value) (assoc-in element-attributes [:style dimension-key] (param  dimension-value))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn element-badge-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ; {:badge-color (keyword)
+  ;  :badge-content (metamorphic-content)
+  ;  :badge-position (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-badge-color (keyword)
+  ;  :data-badge-content (string)
+  ;  :data-badge-position (keyword)}
+  [_ {:keys [badge-color badge-content badge-position]}]
+  {:data-badge-content  (x.components/content badge-content)
+   :data-badge-color    badge-color
+   :data-badge-position badge-position})
+
+(defn element-marker-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) element-id
+  ; @param (map) element-props
+  ; {:marker-color (keyword)
+  ;  :marker-position (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-marker-color (keyword)
+  ;  :data-marker-position (keyword)}
+  [_ {:keys [marker-color marker-position]}]
+  {:data-marker-color    marker-color
+   :data-marker-position marker-position})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

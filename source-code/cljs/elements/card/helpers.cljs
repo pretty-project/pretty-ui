@@ -59,6 +59,7 @@
   ;  :on-mouse-up (function)}
   [card-id {:keys [disabled? on-click] :as card-props}]
   (merge (element.helpers/element-indent-attributes card-id card-props)
+         (element.helpers/element-badge-attributes  card-id card-props)
          (card-style-attributes                     card-id card-props)
          (card-layout-attributes                    card-id card-props)
          (if disabled? {:disabled       true}

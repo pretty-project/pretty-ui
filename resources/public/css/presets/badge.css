@@ -1,0 +1,43 @@
+
+/***** Badge presets *****/
+/*** Content ***/
+
+[data-badge-content]::after {
+  border-radius: 4px;
+  color:         rgb(0, 0, 0);
+  content:       attr(data-badge-content);
+  font-size:     0.9rem;
+  font-weight:   500;
+  height:        18px;
+  line-height:   18px;
+  min-width:     18px;
+  padding:       0 6px;
+  position:      absolute;
+}
+
+/*** Content ***/
+
+/*** Position ***/
+
+[data-badge-position="tl"]::after {
+  left: 4px;
+  top:  4px;
+}
+
+[data-badge-position="tr"]::after {
+  right: 4px;
+  top:   4px;
+}
+
+[data-badge-position="br"]::after {
+  bottom: 4px;
+  right:  4px;
+}
+
+[data-badge-position="bl"]::after {
+  bottom: 4px;
+  left:   4px;
+}
+
+/*** Position ***/
+/***** Badge presets *****/

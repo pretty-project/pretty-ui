@@ -96,8 +96,8 @@
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
   (let [option-selected? @(r/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
-       (if disabled? {:data-selected option-selected?
-                      :disabled      true}
-                     {:data-selected option-selected?
-                      :on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
-                      :on-mouse-up  #(element.side-effects/blur-element! button-id)})))
+       (merge {:data-clickable :targeted
+               :data-selected  option-selected?}
+              (if disabled? {:disabled      true}
+                            {:on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
+                             :on-mouse-up  #(element.side-effects/blur-element! button-id)}))))

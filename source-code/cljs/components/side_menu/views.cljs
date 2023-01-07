@@ -27,6 +27,8 @@
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :indent (map)(opt)
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;  :position (keyword)(opt)
   ;   :left, :right

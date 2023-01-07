@@ -45,7 +45,8 @@
   ; @param (map) switch-props
   ; @param (*) option
   [switch-id switch-props option]
-  [:div.e-switch--option-content [switch-option-label  switch-id switch-props option]
+  [:div.e-switch--option-content {:data-clickable-target true}
+                                 [switch-option-label  switch-id switch-props option]
                                  [switch-option-helper switch-id switch-props option]])
 
 (defn- switch-option
@@ -135,8 +136,8 @@
   ;  :initial-options (vector)(opt)
   ;  :initial-value (boolean)(opt)
   ;  :label (metamorphic-content)(opt)
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :on-check (metamorphic-event)(opt)
   ;  :on-uncheck (metamorphic-event)(opt)
   ;  :option-helper-f (function)(opt)
@@ -151,9 +152,6 @@
   ;  :options-path (vector)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

@@ -1,5 +1,6 @@
 
-(ns elements.toggle.prototypes)
+(ns elements.toggle.prototypes
+    (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,6 +9,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) toggle-props
+  ; {}
   ;
   ; @return (map)
-  [_])
+  ; {}
+  [{:keys [marker-color] :as toggle-props}]
+  (merge (if marker-color {:marker-position :tr})
+         (param toggle-props)))

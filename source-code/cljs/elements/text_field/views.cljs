@@ -324,11 +324,15 @@
   ;  :line-height (keyword or px)(opt)
   ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :block
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :max-length (integer)(opt)
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :modifier (function)(opt)
   ;  :on-blur (metamorphic-event)(opt)
   ;  :on-changed (metamorphic-event)(opt)
@@ -347,9 +351,6 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
-  ;   Default: false
   ;  :start-adornments (maps in vector)(opt)
   ;   Same as the :end-adornments property.
   ;  :stretch-orientation (keyword)(opt)

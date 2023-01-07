@@ -194,13 +194,12 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
+  [_ {:keys [helper info-text label marker-color]}]
+  (if label [label.views/element {:content      label
+                                  :helper       helper
+                                  :info-text    info-text
+                                  :line-height  :block
+                                  :marker-color marker-color}]))
 
 (defn- active-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -311,10 +310,10 @@
   ;  :layout (keyword)(opt)
   ;   :button, :icon-button, :select
   ;   Default: :select
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-select (metamorphic-event)(opt)
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!
@@ -329,9 +328,6 @@
   ;   Default: :no-options
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

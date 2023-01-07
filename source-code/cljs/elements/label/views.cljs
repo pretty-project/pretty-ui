@@ -9,34 +9,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- label-marker
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:marked? (boolean)(opt)}
-  [_ {:keys [marked?]}]
-  (if marked? [:span.e-label--marker {:data-selectable false} "*"]))
-
-(defn- label-asterisk
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:required? (boolean)(opt)}
-  [_ {:keys [required?]}]
-  ; Ha az elem {:required? ...} tulajdonságának értéke :unmarked, akkor az elem
-  ; {:required? true} állapotban van, tehát többek közt az engine/input-passed?
-  ; függvény kötelező inputnak tekinti, de közben a {:required? true} állapotot jelölő
-  ; piros csillag és az input kitöltésésére figyelmeztető piros szöveg nem jelenik meg.
-  ;
-  ; Pl.: A bejelentkező képernyőn lévő email-address és password mezők {:required? true}
-  ;     állapotban kell, hogy legyenek, hogy a login submit-button {:disabled? true}
-  ;     állapotban lehessen mindaddig, amíg a mezők nincsenek kitöltve, miközben
-  ;     a mezőkön nem jelennek meg {:required? true} állapotra utaló jelölések.
-  (if (true? required?)
-      [:span.e-label--asterisk {:data-selectable false} "*"]))
-
 (defn- label-helper
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -138,8 +110,6 @@
                           [label-placeholder label-id label-props]
                           [:<> (if icon [label-icon label-id label-props])
                                [label-content  label-id label-props]
-                               [label-asterisk label-id label-props]
-                               [label-marker   label-id label-props]
                               ;(if icon [:div.e-label--icon-placeholder])
                                [label-info-text-button label-id label-props]])])
 
@@ -204,18 +174,20 @@
   ;  :line-height (keyword)(opt)
   ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :block
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
+  ;  :marker-color (keyword)(opt)
+  ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :marker-position (keyword)(opt)
+  ;   :tl, :tr, :br, :bl
+  ;   Default: :tr
+  ;   W/ {:marker-color ...}
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :overflow-direction (keyword)(opt)
   ;   :normal, :reversed
   ;   Default :normal
   ;  :placeholder (metamorphic-content)(opt)
-  ;  :required? (boolean)(opt)
-  ;   Default: false
   ;  :selectable? (boolean)(opt)
   ;   Default: false
   ;  :style (map)(opt)

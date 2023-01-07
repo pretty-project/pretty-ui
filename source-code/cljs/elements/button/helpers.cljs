@@ -137,9 +137,10 @@
   ;  :on-mouse-up (function)}
   [button-id {:keys [disabled? on-click on-mouse-over] :as button-props}]
   ; XXX#4460
-  ; Az id attribútum használatával a gomb azonosítható válik a DOM műveletekhez.
-  ; (pl. fókusz beállítása)
+  ; By setting the :id attribute the body component becomes targetable for
+  ; DOM actions. (setting focus/blur, etc.)
   (merge (element.helpers/element-indent-attributes button-id button-props)
+         (element.helpers/element-badge-attributes  button-id button-props)
          (button-style-attributes                   button-id button-props)
          (button-font-attributes                    button-id button-props)
          (button-layout-attributes                  button-id button-props)

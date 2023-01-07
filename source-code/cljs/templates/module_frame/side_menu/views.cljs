@@ -26,4 +26,5 @@
                                        [workspace-button]
                                        [x.components/content module-id content]
                                        [components/side-menu-footer {}]]
+                         :min-width :m
                          :threshold threshold}])
