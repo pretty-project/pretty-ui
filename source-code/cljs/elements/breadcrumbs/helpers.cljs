@@ -1,37 +1,8 @@
 
 (ns elements.breadcrumbs.helpers
-    (:require [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [re-frame.api                  :as r]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn breadcrumbs-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-scrollable-x (boolean)
-  ;  :style (map)}
-  [breadcrumbs-id {:keys [style] :as breadcrumbs-props}]
-  (merge (element.helpers/element-indent-attributes breadcrumbs-id breadcrumbs-props)
-         {:data-scrollable-x true
-          :style             style}))
-
-(defn breadcrumbs-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) breadcrumbs-id
-  ; @param (map) breadcrumbs-props
-  ;
-  ; @return (map)
-  [breadcrumbs-id breadcrumbs-props]
-  (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
-         (element.helpers/element-outdent-attributes breadcrumbs-id breadcrumbs-props)))
+    (:require [elements.element.helpers :as element.helpers]
+              [re-frame.api             :as r]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -73,4 +44,36 @@
    :data-line-height :block
    :data-selectable false
    :on-click    #(r/dispatch [:x.router/go-to! route])
-   :on-mouse-up #(element.side-effects/blur-element! breadcrumbs-id)})
+   :on-mouse-up #(x.environment/blur-element! breadcrumbs-id)})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn breadcrumbs-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ; {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ; {:data-scrollable-x (boolean)
+  ;  :style (map)}
+  [breadcrumbs-id {:keys [style] :as breadcrumbs-props}]
+  (merge (element.helpers/element-indent-attributes breadcrumbs-id breadcrumbs-props)
+         {:data-scrollable-x true
+          :style             style}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn breadcrumbs-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) breadcrumbs-id
+  ; @param (map) breadcrumbs-props
+  ;
+  ; @return (map)
+  [breadcrumbs-id breadcrumbs-props]
+  (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
+         (element.helpers/element-outdent-attributes breadcrumbs-id breadcrumbs-props)))

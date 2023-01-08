@@ -3,7 +3,6 @@
     (:require [candy.api              :refer [param return]]
               [elements.input.helpers :as input.helpers]))
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -28,10 +27,10 @@
   ; szükséges a combo-box elem tulajdonságainak prototípusában is beállítani!
   ; Nem elég, hogy a text-field elem tulajdonságainak prototípusában be vannak állítva!
   ; Pl. A [:elements.combo-box/field-focused ...] esemény számára átadott box-props
-  ;    térképben mindenképpen szerepelnie kell a :field-value-f tulajdonságnak, mivel
-  ;    az esemény által regisztrált billentyűlenyomás-figyelő események között
-  ;    szerepel az ESC billentyű lenyomására megtörténő [:elements.text-field/empty-field! ...]
-  ;    esemény, ami az adatbázisba íráskor használja a field-value-f függvényt.
+  ;     térképben mindenképpen szerepelnie kell a :field-value-f tulajdonságnak, mivel
+  ;     az esemény által regisztrált billentyűlenyomás-figyelő események között
+  ;     szerepel az ESC billentyű lenyomására megtörténő [:elements.text-field/empty-field! ...]
+  ;     esemény, ami az adatbázisba íráskor használja a field-value-f függvényt.
 
   ; WARNING! DEPRECATED! DO NOT USE!
   (merge {:field-content-f  return
@@ -54,6 +53,7 @@
                      :on-change [:elements.combo-box/field-changed box-id %]
                      :on-focus  [:elements.combo-box/field-focused box-id %]}
                     (param %))))
+
 ; WARNING! DEPRECATED! DO NOT USE!
 (defn box-events-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -1,13 +1,13 @@
 
 (ns elements.select.helpers
-    (:require [candy.api                     :refer [return]]
-              [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [elements.select.config        :as select.config]
-              [elements.text-field.helpers   :as text-field.helpers]
-              [re-frame.api                  :as r]
-              [string.api                    :as string]
-              [x.components.api              :as x.components]))
+    (:require [candy.api                   :refer [return]]
+              [elements.element.helpers    :as element.helpers]
+              [elements.select.config      :as select.config]
+              [elements.text-field.helpers :as text-field.helpers]
+              [re-frame.api                :as r]
+              [string.api                  :as string]
+              [x.components.api            :as x.components]
+              [x.environment.api           :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -108,7 +108,7 @@
               (if disabled? {:disabled       true}
                             {:data-clickable true
                              :on-click       #(r/dispatch on-click)
-                             :on-mouse-up    #(element.side-effects/blur-element! select-id)}))))
+                             :on-mouse-up    #(x.environment/blur-element! select-id)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -132,5 +132,5 @@
         :data-font-size   :s
         :data-font-weight (if option-selected? :extra-bold :bold)
         :data-selected    option-selected?
-        :on-click     #(r/dispatch on-click)
-        :on-mouse-up  #(element.side-effects/blur-element! select-id)}))
+        :on-click         #(r/dispatch on-click)
+        :on-mouse-up      #(x.environment/blur-element! select-id)}))

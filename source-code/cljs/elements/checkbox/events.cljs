@@ -35,23 +35,21 @@
   ; @return (map)
   [db [_ checkbox-id {:keys [option-value-f value-path] :as checkbox-props} option]]
   ; XXX#7234
-  ; Ha a checkbox elem ...
-  ; ... több opciót jelenít meg, akkor az egyes kiválaszott opciók értéke
-  ;    egy vektorban felsorolva kerül a value-path Re-Frame adatbázis útvonalra.
-  ; ... egy opciót jelenít meg, akkor az egy opció esetlegesen kiválasztott
-  ;    értéke kerül a value-path Re-Frame adatbázis útvonalra.
+  ; If a checkbox element ...
+  ; ... displays more than one option, then the selected options' values
+  ;     will be listed in a vector (and stored in the application state).
+  ;     {:my-value ["Selected option #1" "Selected option #2"]}
+  ; ... displays only one option, then the selected option's value
+  ;     will be stored as a single value (in the application state).
+  ;     {:my-value "Selected option"}
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         option-value (option-value-f option)]
-       (as-> db % (r input.events/mark-as-visited! % checkbox-id)
-                  (if (vector/min? options 2)
-                      (r x.db/apply-item!        % value-path vector/toggle-item option-value)
-                      (r x.db/toggle-item-value! % value-path                    option-value)))))
+       (if (vector/min? options 2)
+           (r x.db/apply-item!        db value-path vector/toggle-item option-value)
+           (r x.db/toggle-item-value! db value-path                    option-value))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :elements.checkbox/checkbox-did-mount checkbox-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.checkbox/toggle-option! toggle-option!)

@@ -1,7 +1,6 @@
 
 (ns elements.label.views
-    (:require [candy.api                 :refer [param]]
-              [elements.label.helpers    :as label.helpers]
+    (:require [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
               [random.api                :as random]
               [x.components.api          :as x.components]))
@@ -40,7 +39,7 @@
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text] :as label-props}]
   (if info-text [:button.e-label--info-text-button (label.helpers/label-info-text-button-attributes label-id label-props)
-                                                   (param :info_outline)]))
+                                                   :info_outline]))
 
 (defn- label-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -60,6 +59,18 @@
   ; @param (map) label-props
   ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
+  ; BUG#9811
+  ; In some cases the content is an empty string for a short while before it
+  ; gets its value (e.g. from a subscription or a HTTP request, etc.),
+  ; therefore the placeholder has to be the same height even if it's empty!
+  ;
+  ; Otherwise an empty placeholder and a delayed content would cause a short
+  ; flickering by the inconsistent element height!
+  ;
+  ; Solution:
+  ; In the case of the placeholder is an empty string too, the "\u00A0" white
+  ; character provides the consistent height for the element until the content
+  ; gets its value.
   [:div.e-label--placeholder {:data-selectable false}
                              (if placeholder (x.components/content placeholder)
                                              "\u00A0")])
@@ -77,13 +88,19 @@
   ; ... it is always the best idea to use an explicit label instead of an implicit label.
   ;
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-  ; XXX#7030
-  ; Ha a {:copyable? true} label elem tartalma mellett on-mouse-over hatására megjelenő
-  ; buborék feliratot megjelenítő pszedo-elem ...
-  ; ... az .e-label--body elemhez tartozik, akkor az érzékelési terület
-  ;    túl nagy, mivel az .e-label--body elem kitölti a rendelkezésre álló szélességet!
-  ; ... az .e-label--content elemhez tartozik, akkor nem látszódna, mivel az .e-label--content
-  ;    elem {overflow-x: hidden} beállítással jelenik meg.
+  ;
+  ; XXX#7030 Why the {:copyable? true} setting needs the .e-label--copyable element?
+  ; 1. By using the 'label' element with {:copyable? true} setting, ...
+  ;    ... the content will be a clickable sensor and copies the content to clipboard
+  ;        when clicked.
+  ;    ... when the user moves the pointer over the sensor a bubble shown up with the
+  ;        label 'Copy' (as a pseudo-element).
+  ;    ... The bubble is implemented by the {:data-copyable true} CSS preset,
+  ;        which has to be applied on the sensor element.
+  ; 2. The .e-label--content element has {overflow: hidden} setting, therefore it's
+  ;    not capable to be applied with the {:data-copyable true} preset.
+  ; 3. The .e-label--body element always fits with its environment in width, therefore
+  ;    it's too wide to be the sensor element.
   (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
                                         [:label.e-label--content {:for target-id} content]]
                 [:<>                    [:label.e-label--content {:for target-id} content]]))
@@ -97,20 +114,11 @@
   ;  :icon (keyword)(opt)
   ;  :selectable? (boolean)}
   [label-id {:keys [content icon selectable?] :as label-props}]
-  ; XXX#9811
-  ; Egyes esetekben a megjelenített szöveg értéke egy üres string, amíg
-  ; a tényleges érték, nem töltődik le vagy nem töltődik be.
-  ; Ilyenkor ha nem lenne minden esetben placeholder alkalmazva, akkor 0px magasságú lenne
-  ; a label elem a letöltődés/betöltődés idejére, ami az alatta megjelenített tartalom
-  ; esetleges ugrását okozná (a szöveg tényleges megjelenésekor)!
-  ;
-  ; XXX#4519 (resources/public/css/elements/style.css)
   [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
                       (if (empty? content)
                           [label-placeholder label-id label-props]
-                          [:<> (if icon [label-icon label-id label-props])
-                               [label-content  label-id label-props]
-                              ;(if icon [:div.e-label--icon-placeholder])
+                          [:<> (if icon    [label-icon label-id label-props])
+                               [label-content          label-id label-props]
                                [label-info-text-button label-id label-props]])])
 
 (defn- label

@@ -6,4 +6,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce EXPANDS (ratom {}))
+(defonce EXPANDED-ELEMENTS (ratom {}))

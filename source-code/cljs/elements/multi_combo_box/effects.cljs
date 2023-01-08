@@ -6,7 +6,6 @@
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
               [elements.text-field.events          :as text-field.events]
               [elements.text-field.helpers         :as text-field.helpers]
-              [elements.text-field.subs            :as text-field.subs]
               [re-frame.api                        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -32,7 +31,7 @@
                          [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
                          [:x.environment/reg-keypress-event! :elements.text-field/COMMA on-comma-props]]})))
 
-(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!
+(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!_
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -65,20 +64,20 @@
       ; (A2) ... egyik opció sincs kiválasztva, akkor
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-           (if (r text-field.subs/surface-visible? db field-id field-props)
+           (if (text-field.helpers/surface-visible? field-id)
                ; (A)
                (if-let [highlighted-option (combo-box.helpers/get-highlighted-option field-id field-props)]
                        ; (A1)
-                       {:db (as-> db % (r multi-combo-box.events/use-option! % box-id box-props highlighted-option)
-                                       (r text-field.events/hide-surface!    % field-id))
-                        :fx [:elements.combo-box/discard-option-highlighter! field-id field-props]}
+                       {:db   (r multi-combo-box.events/use-option! db box-id box-props highlighted-option)
+                        :fx-n [[:elements.text-field/hide-surface!              field-id]
+                               [:elements.combo-box/discard-option-highlighter! field-id field-props]]}
                        ; (A2)
                        (if (text-field.helpers/field-empty? field-id)
-                           {:db (r text-field.events/hide-surface! db field-id)}
+                           {:fx [:elements.text-field/hide-surface! field-id]}
                            (let [field-content (text-field.helpers/get-field-content field-id)]
-                                {:db (as-> db % (r text-field.events/hide-surface! % field-id)
-                                                (r multi-combo-box.events/use-field-content! % box-id box-props field-content))
-                                 :dispatch [:elements.text-field/empty-field! field-id field-props]})))
+                                {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
+                                 :dispatch [:elements.text-field/empty-field!  field-id field-props]
+                                 :fx       [:elements.text-field/hide-surface! field-id]})))
                ; (B)
                (if (text-field.helpers/field-empty? field-id)
                    ; (B1)

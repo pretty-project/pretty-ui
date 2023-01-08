@@ -7,26 +7,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn input-visited?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ;
-  ; @param (boolean)
-  [db [_ input-id _]]
-  (get-in db [:elements :element-handler/meta-items input-id :visited?]))
-
-(defn input-focused?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ; @param (map) input-props
-  ;
-  ; @param (boolean)
-  [db [_ input-id _]]
-  (get-in db [:elements :element-handler/meta-items input-id :focused?]))
-
 (defn get-input-value
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -86,6 +66,11 @@
   ;
   ; @return (boolean)
   [db [_ input-id input-props]]
+  ; XXX#4410
+  ; - Integers and keywords aren't seqable values.
+  ; - NIL, string, vector, map, list, etc. are seqable values.
+  ; - The following examples are both seqable and empty values:
+  ;   nil, "", [], {}, ()
   (let [input-value (r get-input-value db input-id input-props)]
        (and (seqable? input-value)
             (empty?   input-value))))
@@ -98,56 +83,10 @@
   ;
   ; @return (boolean)
   [db [_ input-id input-props]]
+  ; XXX#4410
   (let [input-value (r get-input-value db input-id input-props)]
        (or (-> input-value seqable? not)
            (-> input-value empty?   not))))
-
-; WARNING! OUTDATED! DO NOT USE!
-(defn get-invalid-message
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (metamorphic-content)
-  [db [_ input-id]])
-  ;(let [input-validator (r get-input-validator db input-id)]
-  ;    (if-let [invalid-message-f (get input-validator :invalid-message-f)]
-  ;            ; Use {:validator {:invalid-message-f ...}}
-  ;            (let [input-value (r get-input-value db input-id)]
-  ;                 (invalid-message-f input-value)
-  ;            ; Use {:validator {:invalid-message ...}}
-  ;            (get input-validator :invalid-message)]])
-; WARNING! OUTDATED! DO NOT USE!
-
-; WARNING! OUTDATED! DO NOT USE!
-(defn input-passed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (boolean)
-  ; Az input-passed? függvény visszatérési értéke TRUE, ha az input-value
-  ; értéke nem NIL, FALSE vagy "" (vagy nem required), és ha az inputot
-  ; validálni kell, akkor az input-value értéke valid-e
-  [db [_ input-id]])
-  ;(and (or (r input-value-passed?        db input-id)
-  ;        (not (r input-required?       db input-id))
-  ;    (or (not (r validate-input-value? db input-id))
-  ;        (r input-value-valid?         db input-id)]])
-; WARNING! OUTDATED! DO NOT USE!
-
-; WARNING! OUTDATED! DO NOT USE!
-(defn inputs-passed?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keywords in vector) input-ids
-  ;
-  ; @return (boolean)
-  ; Az inputs-passed? függvény visszatérési értéke TRUE, ha az input-ids vektorban
-  ; felsorolt inputok értékei nem NIL, FALSE vagy "" értékek
-  [db [_ input-ids]])
-  ;(vector/all-items-match? [(last input-ids)] #(r input-passed? db %)))
-; WARNING! OUTDATED! DO NOT USE!
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 
 (ns elements.radio-button.helpers
-    (:require [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [re-frame.api                  :as r]
-              [x.components.api              :as x.components]))
+    (:require [elements.element.helpers :as element.helpers]
+              [re-frame.api             :as r]
+              [x.components.api         :as x.components]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,7 +76,7 @@
   (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
           {:data-clickable true
            :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
-           :on-mouse-up   #(element.side-effects/blur-element! button-id)
+           :on-mouse-up   #(x.environment/blur-element! button-id)
            :title          (x.components/content :uncheck-selected!)}
           {:data-disabled  true
            :disabled       true}))
@@ -100,4 +100,4 @@
                :data-selected  option-selected?}
               (if disabled? {:disabled      true}
                             {:on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
-                             :on-mouse-up  #(element.side-effects/blur-element! button-id)}))))
+                             :on-mouse-up  #(x.environment/blur-element! button-id)}))))

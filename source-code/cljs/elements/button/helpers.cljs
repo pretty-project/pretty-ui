@@ -1,11 +1,11 @@
 
 (ns elements.button.helpers
-    (:require [dom.api                       :as dom]
-              [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [hiccup.api                    :as hiccup]
-              [re-frame.api                  :as r]
-              [reagent.api                   :as reagent]))
+    (:require [dom.api                  :as dom]
+              [elements.element.helpers :as element.helpers]
+              [hiccup.api               :as hiccup]
+              [re-frame.api             :as r]
+              [reagent.api              :as reagent]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,23 +47,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn button-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon-color (keyword or string)
-  ;  :icon-family (keyword)
-  ;  :font-size (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-icon-family (keyword)
-  ;  :data-icon-size (keyword)}
-  [_ {:keys [icon-color icon-family icon-size]}]
-  (-> {:data-icon-family icon-family
-       :data-icon-size   icon-size}
-      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
 
 (defn button-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -118,6 +101,29 @@
   {:data-border-radius        border-radius
    :data-horizontal-row-align horizontal-align})
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn button-icon-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:icon-color (keyword or string)
+  ;  :icon-family (keyword)
+  ;  :font-size (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-icon-family (keyword)
+  ;  :data-icon-size (keyword)}
+  [_ {:keys [icon-color icon-family icon-size]}]
+  (-> {:data-icon-family icon-family
+       :data-icon-size   icon-size}
+      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn button-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -149,8 +155,11 @@
                        {:id             (hiccup/value button-id "body")
                         :on-click       #(r/dispatch  on-click)
                         :on-mouse-over  #(r/dispatch  on-mouse-over)
-                        :on-mouse-up    #(element.side-effects/blur-element! button-id)
+                        :on-mouse-up    #(x.environment/blur-element! button-id)
                         :data-clickable true})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

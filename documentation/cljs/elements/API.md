@@ -319,7 +319,6 @@
 ```
 @param (keyword)(opt) card-id
 @param (map) card-props
-XXX#3240
 {:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
@@ -1242,7 +1241,6 @@ XXX#3240
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :left
-  (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   W/ {:orientation :horizontal}
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -1277,10 +1275,6 @@ XXX#3240
     :disabled? (boolean)(opt)
      Default: false
     :href (string)(opt)
-     XXX#7004
-     A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
-     renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}
-     tulajdonságok figyelmen kívűl hagyódnak!
     :icon (keyword)(opt)
     :icon-family (keyword)(opt)
      :material-icons-filled, :material-icons-outlined
@@ -1944,8 +1938,6 @@ XXX#3240
    :invalid-message (metamorphic-content)(opt)
    :invalid-message-f (function)(opt)
    :prevalidate? (boolean)(opt)
-    A mező kitöltése közben validálja annak értékét, még mielőtt a mező
-    {:visited? true} állapotba lépne.
     Default: false}
  :value-path (vector)(opt)}
 ```

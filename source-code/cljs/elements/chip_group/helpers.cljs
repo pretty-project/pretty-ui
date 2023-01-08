@@ -10,13 +10,16 @@
   ;
   ; @param (keyword) group-id
   ; @param (map) group-props
-  ; {}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {}
+  ; {:style (map)}
   [group-id {:keys [style] :as group-props}]
   (merge (element.helpers/element-indent-attributes group-id group-props)
          {:style style}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn chip-group-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

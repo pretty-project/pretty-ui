@@ -53,16 +53,15 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  [:div.e-color-selector--options (color-selector.helpers/color-selector-options-attributes selector-id selector-props)
-                                  [color-selector-options-structure                         selector-id selector-props]])
+  [:div.e-color-selector--options [color-selector-options-structure selector-id selector-props]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
-  ; A color-selector elem alapkomponense a button elem.
-  ; A color-selector elem további paraméterezését a button elem dokumentációjában találod.
+  ; The color-selector element is based on the button element.
+  ; For more information check out the documentation of the button element.
   ;
   ; @param (keyword)(opt) selector-id
   ; @param (map) selector-props

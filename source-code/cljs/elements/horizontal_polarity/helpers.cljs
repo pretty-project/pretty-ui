@@ -21,6 +21,9 @@
          {:data-vertical-align vertical-align
           :style               style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn polarity-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

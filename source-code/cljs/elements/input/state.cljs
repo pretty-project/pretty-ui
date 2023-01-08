@@ -1,12 +1,12 @@
 
-(ns elements.text-field.state
+(ns elements.input.state
     (:require [reagent.api :refer [ratom]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
-(defonce FIELD-STATES (ratom {}))
+(def FOCUSED-INPUTS (ratom {}))
 
-; @atom (keyword)
-(defonce VISIBLE-SURFACE (ratom nil))
+; @atom (map)
+(def VISITED-INPUTS (ratom {}))

@@ -96,9 +96,9 @@
   ; @param (map) field-props
   ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
-  (if surface (if-let [surface-visible? @(r/subscribe [:elements.text-field/surface-visible? field-id])]
-                      [:div.e-text-field--surface (text-field.helpers/surface-attributes field-id field-props)
-                                                  [x.components/content field-id surface]])))
+  (if surface (if (text-field.helpers/surface-visible? field-id)
+                  [:div.e-text-field--surface (text-field.helpers/surface-attributes field-id field-props)
+                                              [x.components/content                  field-id surface]])))
 
 ;; -- Field warning components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -108,13 +108,13 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  [field-id field-props]
-  (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
-          [:div.e-text-field--warning {:data-font-size   :xs
-                                       :data-font-weight :bold
-                                       :data-line-height :block
-                                       :data-selectable  false}
-                                      (x.components/content :please-fill-out-this-field)]))
+  [field-id field-props])
+  ;(if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
+  ;        [:div.e-text-field--warning {:data-font-size   :xs
+  ;                                     :data-font-weight :bold
+  ;                                     :data-line-height :block
+  ;                                     :data-selectable  false
+  ;                                    (x.components/content :please-fill-out-this-field)])
 
 (defn- text-field-invalid-warning
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -122,15 +122,15 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {}
-  [field-id {:keys [validator] :as field-props}]
-  (if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
-          [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
-          (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
-                  [:div.e-text-field--warning {:data-font-size   :xs
-                                               :data-font-weight :bold
-                                               :data-line-height :block
-                                               :data-selectable  false}
-                                              (-> validator :invalid-message x.components/content)])))
+  [field-id {:keys [validator] :as field-props}])
+  ;(if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
+  ;        [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
+  ;        (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
+  ;                [:div.e-text-field--warning {:data-font-size   :xs
+  ;                                             :data-font-weight :bold
+  ;                                             :data-line-height :block
+  ;                                             :data-selectable  false
+  ;                                            (-> validator :invalid-message x.components/content)}])
 
 ;; -- Field structure components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -368,8 +368,6 @@
   ;    :invalid-message (metamorphic-content)(opt)
   ;    :invalid-message-f (function)(opt)
   ;    :prevalidate? (boolean)(opt)
-  ;     A mező kitöltése közben validálja annak értékét, még mielőtt a mező
-  ;     {:visited? true} állapotba lépne.
   ;     Default: false}
   ;  :value-path (vector)(opt)}
   ;

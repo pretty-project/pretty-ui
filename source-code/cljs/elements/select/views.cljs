@@ -137,12 +137,12 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  [select-id select-props]
-  (if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
-          [:div.e-select--warning {:data-font-size   :xs
-                                   :data-line-height :block
-                                   :data-selectable  false}
-                                  (x.components/content :please-select-an-option)]))
+  [select-id select-props])
+  ;(if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
+  ;        [:div.e-select--warning {:data-font-size   :xs
+  ;                                 :data-line-height :block
+  ;                                 :data-selectable  false
+  ;                                (x.components/content :please-select-an-option)])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

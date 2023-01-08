@@ -1,10 +1,9 @@
 
 (ns elements.combo-box.effects
-    (:require [elements.combo-box.events  :as combo-box.events]
-              [elements.combo-box.helpers :as combo-box.helpers]
-              [elements.text-field.events :as text-field.events]
-              [elements.text-field.subs   :as text-field.subs]
-              [re-frame.api               :as r :refer [r]]))
+    (:require [elements.combo-box.events   :as combo-box.events]
+              [elements.combo-box.helpers  :as combo-box.helpers]
+              [elements.text-field.helpers :as text-field.helpers]
+              [re-frame.api                :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,25 +53,25 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [{:keys [db]} [_ box-id box-props]]
-      {:db (r text-field.events/show-surface!       db box-id)
-       :fx [:elements.combo-box/highlight-next-option! box-id box-props]}))
+  (fn [_ [_ box-id box-props]]
+      {:fx-n [[:elements.text-field/show-surface!         box-id]
+              [:elements.combo-box/highlight-next-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/UP-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [{:keys [db]} [_ box-id box-props]]
-      {:db (r text-field.events/show-surface!       db box-id)
-       :fx [:elements.combo-box/highlight-prev-option! box-id box-props]}))
+  (fn [_ [_ box-id box-props]]
+      {:fx-n [[:elements.text-field/show-surface!         box-id]
+              [:elements.combo-box/highlight-prev-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/ESC-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  (fn [{:keys [db]} [_ box-id box-props]]
+  (fn [_ [_ box-id box-props]]
       ; Ha a combo-box elem surface felülete ...
       ; (A) ... megjelenít opciókat, akkor az ESC billentyű lenyomása a combo-box
       ;         elem saját működését valósítja meg.
@@ -82,8 +81,8 @@
       ; HACK#1450 (source-code/cljs/elements/combo-box/helpers.cljs)
       (if (combo-box.helpers/any-option-rendered? box-id box-props)
           ; (A)
-          {:db (r text-field.events/hide-surface!            db box-id)
-           :fx [:elements.combo-box/discard-option-highlighter! box-id]}
+          {:fx-n [[:elements.text-field/hide-surface!              box-id]
+                  [:elements.combo-box/discard-option-highlighter! box-id]]}
           ; (B)
           [:elements.text-field/ESC-pressed box-id box-props])))
 
@@ -106,20 +105,20 @@
       ; (A1) ... valamelyik opció ki van választva, akkor a kiválasztott opciót,
       ;          eltárolja a value-path útvonalra és a szövegmező értékének is beállítja.
       ; (A2) ... egyik opció sincs kiválasztva, akkor eltünteti a surface felületet.
-      (if (r text-field.subs/surface-visible? db box-id box-props)
+      (if (text-field.helpers/surface-visible? box-id)
           ; (A)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
                   ; (A1)
-                  {:db   (as-> db % (r combo-box.events/select-option! % box-id box-props highlighted-option)
-                                    (r text-field.events/hide-surface! % box-id))
-                   :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
+                  {:db   (r combo-box.events/select-option! db box-id box-props highlighted-option)
+                   :fx-n [[:elements.text-field/hide-surface!              box-id]
+                          [:elements.combo-box/discard-option-highlighter! box-id]
                           [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]
                    ; XXX#4149
                    ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!
                    :dispatch (if on-type-ended (let [option-value (option-value-f highlighted-option)]
                                                     (r/metamorphic-event<-params on-type-ended option-value)))}
                   ; (A2)
-                  {:db   (r text-field.events/hide-surface! db box-id)})
+                  {:fx [:elements.text-field/hide-surface! box-id]})
           ; (B)
           [:elements.text-field/ENTER-pressed box-id box-props])))
 
@@ -135,9 +134,9 @@
   ;  :option-value-f (function)}
   ; @param (*) selected-option
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} selected-option]]
-      {:db (as-> db % (r combo-box.events/select-option! % box-id box-props selected-option)
-                      (r text-field.events/hide-surface! % box-id))
-       :fx-n [[:elements.combo-box/discard-option-highlighter! box-id]
+      {:db   (r combo-box.events/select-option! db box-id box-props selected-option)
+       :fx-n [[:elements.text-field/hide-surface!              box-id]
+              [:elements.combo-box/discard-option-highlighter! box-id]
               [:elements.combo-box/use-selected-option!        box-id box-props selected-option]]
        ; XXX#4149
        ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!

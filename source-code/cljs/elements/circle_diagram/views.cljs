@@ -1,11 +1,8 @@
 
 (ns elements.circle-diagram.views
-    (:require [css.api                            :as css]
-              [elements.circle-diagram.config     :as circle-diagram.config]
-              [elements.circle-diagram.helpers    :as circle-diagram.helpers]
+    (:require [elements.circle-diagram.helpers    :as circle-diagram.helpers]
               [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
               [elements.label.views               :as label.views]
-              [math.api                           :as math]
               [random.api                         :as random]
               [svg.api                            :as svg]
               [vector.api                         :as vector]))
@@ -18,30 +15,9 @@
   ;
   ; @param (keyword) diagram-id
   ; @param (map) diagram-props
-  ; {:diameter (px)
-  ;  :strength (px)
-  ;  :total-value (integer)}
   ; @param (map) section-props
-  ; {:color (keyword or string)
-  ;  :sub (integer)
-  ;  :value (integer)}
-  [_ {:keys [diameter strength total-value] :as diagram-props} {:keys [color sum value]}]
-  (let [x  (/ diameter 2)
-        y  (/ diameter 2)
-        r  (/ (- diameter strength) 2)
-        cf (* 2 r math/PI)
-        value-ratio      (math/percent total-value value)
-        dash-filled      (* cf (/ value-ratio 100))
-        dash-empty       (- cf dash-filled)
-        rotation-percent (math/percent total-value sum)
-        rotation-angle   (math/percent->angle rotation-percent)
-        rotation         (+ rotation-angle circle-diagram.config/ANGLE-CORRECTION)]
-       [:circle {:cx x :cy y :r r
-                 :class :e-circle-diagram--section
-                 :data-stroke-color color
-                 :style {:stroke-dasharray (str dash-filled " " dash-empty)
-                         :stroke-width     (css/px     strength)
-                         :transform        (css/rotate rotation)}}]))
+  [diagram-id diagram-props section-props]
+  [:circle.e-circle-diagram--section (circle-diagram.helpers/section-attributes diagram-id diagram-props section-props)])
 
 (defn- circle-diagram-sections
   ; WARNING! NON-PUBLIC! DO NOT USE!

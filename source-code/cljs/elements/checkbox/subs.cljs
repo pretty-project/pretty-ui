@@ -17,7 +17,7 @@
   ;
   ; @return (boolean)
   [db [_ checkbox-id {:keys [option-value-f] :as checkbox-props} option]]
-  ; XXX#7234
+  ; XXX#7234 (source-code/cljs/elements/checkbox/events.cljs)
   (let [options      (r input.subs/get-input-options db checkbox-id checkbox-props)
         stored-value (r input.subs/get-input-value   db checkbox-id checkbox-props)
         option-value (option-value-f option)]

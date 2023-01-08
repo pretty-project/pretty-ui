@@ -40,9 +40,12 @@
                      (nil?  on-click) [static-card card-id card-props])])
 
 (defn element
+  ; XXX#3240
+  ; Some other elements based on the card element and their documentations are
+  ; linked to here.
+  ;
   ; @param (keyword)(opt) card-id
   ; @param (map) card-props
-  ; XXX#3240
   ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary

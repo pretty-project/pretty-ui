@@ -20,6 +20,9 @@
   (-> {:style style}
       (element.helpers/apply-color :color :data-color color)))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn icon-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -38,6 +41,9 @@
          {:data-icon-family icon-family
           :data-icon-size   size
           :data-selectable  false}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn icon-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

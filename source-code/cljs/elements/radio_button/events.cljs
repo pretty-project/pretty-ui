@@ -31,8 +31,7 @@
   ; @return (map)
   [db [_ button-id {:keys [option-value-f value-path]} option]]
   (let [option-value (option-value-f option)]
-       (as-> db % (r input.events/mark-as-visited! % button-id)
-                  (assoc-in % value-path option-value))))
+       (assoc-in db value-path option-value)))
 
 (defn clear-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!

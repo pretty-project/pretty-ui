@@ -17,7 +17,7 @@
   [box-id box-props]
   (let [highlighted-option-dex (combo-box.helpers/get-highlighted-option-dex box-id)
         rendered-options       (combo-box.helpers/get-rendered-options       box-id box-props)]
-       ; Ha nincs opció kiválasztva, akkor először az első opciót kell kijelölni ...
+       ; If no option selected, then the first option has to be selected first ...
        (if (nil? highlighted-option-dex)
            (swap! combo-box.state/OPTION-HIGHLIGHTS assoc box-id 0)
            (let [next-option-dex (vector/next-dex rendered-options highlighted-option-dex)]

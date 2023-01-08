@@ -1,9 +1,10 @@
 
 (ns elements.button.side-effects
-    (:require [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [hiccup.api                    :as hiccup]
-              [re-frame.api                  :as r]))
+    (:require [elements.element.helpers :as element.helpers]
+              [hiccup.api               :as hiccup]
+              [re-frame.api             :as r]
+              [x.environment.api        :as x.environment]))
+
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,7 +15,7 @@
   ; @param (keyword) button-id
   [button-id]
   (let [button-body-id (hiccup/value button-id "body")]
-       (-> button-body-id element.side-effects/focus-element!)))
+       (-> button-body-id x.environment/focus-element!)))
 
 (defn blur-button!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -22,7 +23,7 @@
   ; @param (keyword) button-id
   [button-id]
   (let [button-body-id (hiccup/value button-id "body")]
-       (-> button-body-id element.side-effects/blur-element!)))
+       (-> button-body-id x.environment/blur-element!)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

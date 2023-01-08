@@ -2,7 +2,7 @@
 (ns elements.element.helpers
     (:require [candy.api        :refer [param return]]
               [css.api          :as css]
-              [hiccup.api       :as hiccup]
+             ;[hiccup.api       :as hiccup]
               [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
@@ -167,45 +167,56 @@
   ; XXX#4005
   ; A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
   ; attribútumot alkalmazni!
-  {:class         (hiccup/join-class :e-element class)
+  {:class         class
    :data-disabled (boolean disabled?)})
-  ;:id            (hiccup/value      element-id)
-  ;:key           (hiccup/value      element-id)
+
+  ;:id            (hiccup/value element-id)
+  ;:key           (hiccup/value element-id)
 
 (defn element-indent-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ; {:indent (map)(opt)
-  ;   {}}
+  ; {:indent (map)(opt)}
   ;
   ; @return (map)
-  ; {}
   [_ {:keys [indent]}]
+
+  ; WARNING! DEPRECATED! DO NOT USE!
   (cond-> {} (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
              (:left       indent) (assoc :data-indent-left       (:left       indent))
              (:right      indent) (assoc :data-indent-right      (:right      indent))
              (:top        indent) (assoc :data-indent-top        (:top        indent))
              (:horizontal indent) (assoc :data-indent-horizontal (:horizontal indent))
              (:vertical   indent) (assoc :data-indent-vertical   (:vertical   indent))
-             (:all        indent) (assoc :data-indent-all        (:all        indent))))
+             (:all        indent) (assoc :data-indent-all        (:all        indent)))
+  ; WARNING! DEPRECATED! DO NOT USE!
+
+  (letfn [(f [result key value]
+             (assoc result (keyword (str "data-indent-" (name key))) value))]
+         (reduce-kv f {} indent)))
 
 (defn element-outdent-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) element-id
   ; @param (map) element-props
-  ; {:outdent (map)(opt)
-  ;   {}}
+  ; {:outdent (map)(opt)}
   ;
   ; @return (map)
-  ; {}
   [_ {:keys [outdent]}]
+
+  ; WARNING! DEPRECATED! DO NOT USE!
   (cond-> {} (:bottom     outdent) (assoc :data-outdent-bottom     (:bottom     outdent))
              (:left       outdent) (assoc :data-outdent-left       (:left       outdent))
              (:right      outdent) (assoc :data-outdent-right      (:right      outdent))
              (:top        outdent) (assoc :data-outdent-top        (:top        outdent))
              (:horizontal outdent) (assoc :data-outdent-horizontal (:horizontal outdent))
              (:vertical   outdent) (assoc :data-outdent-vertical   (:vertical   outdent))
-             (:all        outdent) (assoc :data-outdent-all        (:all        outdent))))
+             (:all        outdent) (assoc :data-outdent-all        (:all        outdent)))
+  ; WARNING! DEPRECATED! DO NOT USE!
+
+  (letfn [(f [result key value]
+             (assoc result (keyword (str "data-outdent-" (name key))) value))]
+         (reduce-kv f {} outdent)))

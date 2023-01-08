@@ -22,8 +22,10 @@
                                                            "public/css/presets/input.css"
                                                            "public/css/presets/marker.css"
                                                            "public/css/presets/outdent.css"
+                                                           "public/css/presets/position.css"
                                                            "public/css/presets/scroll.css"
                                                            "public/css/presets/selection.css"
+                                                           "public/css/presets/shadow.css"
                                                            "public/css/presets/size.css"
                                                            "public/css/presets/state.css"]
                                                :weight 1}]})

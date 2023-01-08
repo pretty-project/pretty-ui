@@ -39,15 +39,12 @@
   ;  :icon-position (keyword)(opt)
   ;  :label (string)(opt)}
   [button-id {:keys [icon icon-position label] :as button-props}]
-  ; XXX#4519 (resources/public/css/elements/style.css)
   [:button.e-button--body (button.helpers/button-body-attributes button-id button-props)
-                          (if icon (case icon-position :left  [button-icon button-id button-props]
-                                                       :right [:<>]))
-                                                       ;:right (if label [:div.e-button--icon-placeholder])
-                          [button-label button-id button-props]
-                          (if icon (case icon-position :left  [:<>]
-                                                       ;:left  (if label [:div.e-button--icon-placeholder])
-                                                       :right [button-icon button-id button-props]))])
+                          (if icon (case icon-position :left  [:<> [button-icon  button-id button-props]
+                                                                   [button-label button-id button-props]]
+                                                       :right [:<> [button-icon  button-id button-props]
+                                                                   [button-label button-id button-props]])
+                                   [button-label button-id button-props])])
 
 (defn- button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -71,6 +68,9 @@
 
 (defn element
   ; XXX#0714
+  ; Some other elements based on the button element and their documentations are
+  ; linked to here.
+  ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:badge-color (keyword)(opt)

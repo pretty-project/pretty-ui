@@ -91,10 +91,12 @@
   ; @param (map) bar-props
   [bar-id bar-props]
   ; XXX#5406
-  ; A {:orientation :horizontal} menük esetén az overflow-x: scroll tulajdonság
-  ; és a display: flex tulajdonság kizárólag akkor használhatók egyszerre
-  ; (hibamentesen), ha scroll-container elem (.e-menu-bar--body)
-  ; szélessége nem nagyobb, mint a benne lévő elemek összes szélessége.
+  ; For a menu bar with a horizontal orientation, the {overflow-x: scroll}
+  ; and {display: flex} properties can only be used together (without errors)
+  ; if the width of the scroll container element (.e-menu-bar--body) is not greater
+  ; than the total width of the elements inside it.
+  ; Therefore the {:horizontal-align :space-between} setting cannot be implemented,
+  ; while keeping the {overflow-x: scroll} property.
   [:div.e-menu-bar--body (menu-bar.helpers/menu-bar-body-attributes bar-id bar-props)
                          [menu-bar-items                            bar-id bar-props]])
 
@@ -114,7 +116,6 @@
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
-  ;   (XXX#5406 overflow-x: scroll & {:horizontal-align :space-between} nem lehetséges)
   ;   W/ {:orientation :horizontal}
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
@@ -149,10 +150,6 @@
   ;     :disabled? (boolean)(opt)
   ;      Default: false
   ;     :href (string)(opt)
-  ;      XXX#7004
-  ;      A {:href "..."} tulajdonság használata esetén a menu elemek [:a] elemként
-  ;      renderelődnek és az {:on-click ...} valamint az {:on-mouse-over ...}
-  ;      tulajdonságok figyelmen kívűl hagyódnak!
   ;     :icon (keyword)(opt)
   ;     :icon-family (keyword)(opt)
   ;      :material-icons-filled, :material-icons-outlined

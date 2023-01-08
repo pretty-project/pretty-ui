@@ -6,7 +6,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn store-backup-value!
+(defn backup-stored-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) input-id
@@ -18,6 +18,9 @@
   (assoc-in db [:elements :element-handler/backup-values input-id]
                (get-in db value-path)))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn use-initial-options!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -28,10 +31,10 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [initial-options options-path]}]]
-  ; Az use-initial-options! függvény csak abban az esetben alkalmazza
-  ; az initial-options értékét, ha az options-path útvonalon tárolt érték még üres!
+  ; The 'use-initial-options!' function stores the initial options of an element
+  ; in the application state, but only if no options have been set yet.
   (let [options (get-in db options-path)]
-       (cond-> db (and      initial-options (empty? options))
+       (cond-> db (and initial-options (empty? options))
                   (assoc-in options-path initial-options))))
 
 (defn use-initial-value!
@@ -44,47 +47,14 @@
   ;
   ; @return (map)
   [db [_ _ {:keys [initial-value value-path]}]]
-  ; Az use-initial-value! függvény csak abban az esetben alkalmazza
-  ; az initial-value értékét, ha a value-path útvonalon tárolt érték még üres!
+  ; The 'use-initial-value!' function stores the initial value of an element
+  ; in the application state, but only if no value have been set yet.
   (let [stored-value (get-in db value-path)]
-       (cond-> db (and      initial-value (nil? stored-value))
+       (cond-> db (and initial-value (nil? stored-value))
                   (assoc-in value-path initial-value))))
 
-(defn mark-as-focused!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (assoc-in db [:elements :element-handler/meta-items input-id :focused?] true))
-
-(defn mark-as-blurred!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (dissoc-in db [:elements :element-handler/meta-items input-id :focused?]))
-
-(defn mark-as-visited!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (assoc-in db [:elements :element-handler/meta-items input-id :visited?] true))
-
-(defn unmark-as-visited!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) input-id
-  ;
-  ; @return (map)
-  [db [_ input-id]]
-  (dissoc-in db [:elements :element-handler/meta-items input-id :visited?]))
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn reset-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -118,5 +88,5 @@
   ; @param (*) value
   ;
   ; @return (map)
-  [db [_ input-id {:keys [value-path]} value]]
+  [db [_ _ {:keys [value-path]} value]]
   (assoc-in db value-path value))

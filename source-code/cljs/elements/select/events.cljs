@@ -31,15 +31,9 @@
   ; @param (*) option
   ;
   ; @return (map)
-  [db [_ select-id {:keys [layout option-value-f value-path] :as select-props} option]]
-  ; XXX#8706
-  ; A {:layout :select :required? true} beállítással használt select elem esetlegesen
-  ; megjeleníti a select-required-warning komponenst, amiért szükséges beállítani
-  ; a {:visited? ...} tulajdonságot!
+  [db [_ _ {:keys [option-value-f value-path]} option]]
   (let [option-value (option-value-f option)]
-       (as-> db % (case layout :select (r input.events/mark-as-visited! % select-id)
-                                       (return                          %))
-                  (assoc-in % value-path option-value))))
+       (assoc-in db value-path option-value)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

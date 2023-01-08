@@ -27,7 +27,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {}
+  ; {:value-path (vector)}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
@@ -40,7 +40,7 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
-  ; {}
+  ; {:value-path (vector)}
   ;
   ; @return (map)
   [db [_ counter-id {:keys [value-path] :as counter-props}]]
@@ -53,9 +53,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :elements.counter/counter-box-did-mount counter-box-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.counter/decrease-value! decrease-value!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.counter/increase-value! increase-value!)

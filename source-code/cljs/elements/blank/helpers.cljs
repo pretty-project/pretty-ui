@@ -18,6 +18,9 @@
   (merge (element.helpers/element-indent-attributes blank-id blank-props)
          {:style style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn blank-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

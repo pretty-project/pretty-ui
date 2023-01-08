@@ -1,10 +1,10 @@
 
 (ns elements.label.helpers
-    (:require [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [elements.label.state          :as label.state]
-              [re-frame.api                  :as r]
-              [x.components.api              :as x.components]))
+    (:require [elements.element.helpers :as element.helpers]
+              [elements.label.state     :as label.state]
+              [re-frame.api             :as r]
+              [x.components.api         :as x.components]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,6 +43,49 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn label-icon-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ; {:icon-color (keyword or string)
+  ;  :icon-family (keyword)
+  ;  :icon-size (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-icon-family (keyword)
+  ;  :data-icon-size (keyword)}
+  [_ {:keys [icon-color icon-family icon-size]}]
+  (-> {:data-icon-family icon-family
+       :data-icon-size   icon-size}
+      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn label-info-text-button-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ;
+  ; @return (map)
+  ; {:data-clickable (boolean)
+  ;  :data-selectable (boolean)
+  ;  :data-icon-family (keyword)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
+  [label-id _]
+  {:data-clickable   true
+   :data-selectable  false
+   :data-icon-family :material-icons-filled
+   :data-icon-size   :xs
+   :on-click        #(toggle-info-text-visiblity! label-id)
+   :on-mouse-up     #(x.environment/blur-element! label-id)})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn copyable-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -60,6 +103,9 @@
    :data-copyable   true
    :data-copy-label (x.components/content :copy!)
    :on-click        (on-copy-f label-id label-props)})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn label-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -117,6 +163,9 @@
    :data-vertical-position    vertical-position
    :data-overflow-direction   overflow-direction})
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn label-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -134,6 +183,9 @@
          (label-layout-attributes                   label-id label-props)
          {:data-selectable selectable?}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn label-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -144,43 +196,3 @@
   [label-id label-props]
   (merge (element.helpers/element-default-attributes label-id label-props)
          (element.helpers/element-outdent-attributes label-id label-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn label-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:icon-color (keyword or string)
-  ;  :icon-family (keyword)
-  ;  :icon-size (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-icon-family (keyword)
-  ;  :data-icon-size (keyword)}
-  [_ {:keys [icon-color icon-family icon-size]}]
-  (-> {:data-icon-family icon-family
-       :data-icon-size   icon-size}
-      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
-
-(defn label-info-text-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ;
-  ; @return (map)
-  ; {:data-clickable (boolean)
-  ;  :data-selectable (boolean)
-  ;  :data-icon-family (keyword)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [label-id _]
-  {:data-clickable   true
-   :data-selectable  false
-   :data-icon-family :material-icons-filled
-   :data-icon-size   :xs
-   :on-click        #(toggle-info-text-visiblity!        label-id)
-   :on-mouse-up     #(element.side-effects/blur-element! label-id)})

@@ -43,7 +43,7 @@
   ; @return (boolean)
   [field-id]
   ; BUG#3401
-  (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
+  (let [field-content (get-in @text-field.state/FIELD-STATES [field-id :content])]
        (empty? field-content)))
 
 (defn field-filled?
@@ -53,7 +53,7 @@
   ;
   ; @return (boolean)
   [field-id]
-  (let [field-content (get-in @text-field.state/FIELD-CONTENTS [field-id :content])]
+  (let [field-content (get-in @text-field.state/FIELD-STATES [field-id :content])]
        (-> field-content empty? not)))
 
 (defn field-enabled?
@@ -76,6 +76,15 @@
   (and (field-enabled? field-id)
        (field-filled?  field-id)))
 
+(defn surface-visible?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ;
+  ; @return (boolean)
+  [field-id]
+  (= field-id @text-field.state/VISIBLE-SURFACE))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -86,7 +95,7 @@
   ;
   ; @return (string)
   [field-id]
-  (get-in @text-field.state/FIELD-CONTENTS [field-id :content]))
+  (get-in @text-field.state/FIELD-STATES [field-id :content]))
 
 (defn set-field-content!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -98,8 +107,8 @@
   ; BUG#3401
   ; A mező értékének eltárolása előtt szükséges azt string típusra alakítani!
   ; Pl.: Előfordulhat, hogy number típusú érték íródik a mezőbe és az értéket
-  ;     vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
-  (swap! text-field.state/FIELD-CONTENTS assoc-in [field-id :content] (str content)))
+  ;      vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
+  (swap! text-field.state/FIELD-STATES assoc-in [field-id :content] (str content)))
 
 (defn resolve-field-change!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -107,20 +116,22 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; - A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
-  ;  és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
-  ;  értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
-  ;  Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
-  ;  on-type-ended esemény.
+  ; The 'resolve-field-change!' function called by the 'on-change-f' function
+  ; after a field changed.
   ;
-  ; - A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
-  ;  paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
-  ;  hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
-  (let [field-content (get-field-content field-id)
-        now           (time/elapsed)
-        changed-at    (get-in @text-field.state/FIELD-CONTENTS [field-id :changed-at])]
-       (when (> now (+ changed-at text-field.config/TYPE-ENDED-AFTER))
-             (r/dispatch-sync [:elements.text-field/type-ended field-id field-props field-content]))))
+  ; A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
+  ; és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
+  ; értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
+  ; Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
+  ; on-type-ended esemény.
+  ;
+  ; A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
+  ; paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
+  ; hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
+  (let [timestamp  (time/elapsed)
+        changed-at (get-in @text-field.state/FIELD-STATES [field-id :changed-at])]
+       (when (> timestamp (+ changed-at text-field.config/TYPE-ENDED-AFTER))
+             (r/dispatch-sync [:elements.text-field/type-ended field-id field-props]))))
 
 (defn on-change-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -129,17 +140,18 @@
   ; @param (map) field-props
   ; {:modifier (function)(opt)
   ;  :on-changed (metamorphic-event)(opt)}
+  ; @param (DOM-event) event
   ;
   ; @return (function)
-  [field-id {:keys [modifier on-changed] :as field-props}]
-  #(let [now           (time/elapsed)
-         field-content (if modifier (-> % dom/event->value modifier)
-                                    (-> % dom/event->value))]
-        (swap! text-field.state/FIELD-CONTENTS assoc field-id {:changed-at now :content field-content})
-        (letfn [(f [] (resolve-field-change! field-id field-props))]
-               (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
-        (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
-                            (r/dispatch-sync on-changed)))))
+  [field-id {:keys [modifier on-changed] :as field-props} event]
+  (let [timestamp     (time/elapsed)
+        field-content (if modifier (-> event dom/event->value modifier)
+                                   (-> event dom/event->value))]
+       (swap! text-field.state/FIELD-STATES assoc field-id {:changed-at timestamp :content field-content})
+       (letfn [(f [] (resolve-field-change! field-id field-props))]
+              (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
+       (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
+                           (r/dispatch-sync on-changed)))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -310,27 +322,23 @@
   ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
   ;   és kikapcsolja a caret láthatóságát.
   ; - Az on-change függvény nem végez műveletet.
-  (if disabled? {;:disabled true
-                 :data-fillable true
-                 :tab-index     "-1"
-                 :max-length    max-length
-                 :type          type
-                 :id            (hiccup/value      field-id "input")
-                 :value         (get-field-content field-id)
-                 :on-change     (fn [])}
-                {:auto-complete autofill-name
-                 :data-fillable true
-                 :max-length    max-length
-                 :min           date-from
-                 :max           date-to
-                 :name          autofill-name
-                 :type          type
-                 :id            (hiccup/value      field-id "input")
-                 :value         (get-field-content field-id)
-                 :on-mouse-down #(r/dispatch [:elements.text-field/show-surface! field-id])
-                 :on-blur       #(r/dispatch [:elements.text-field/field-blurred field-id field-props])
-                 :on-focus      #(r/dispatch [:elements.text-field/field-focused field-id field-props])
-                 :on-change     (on-change-f field-id field-props)}))
+  (merge {:data-fillable true
+          :max-length    max-length
+          :type          type
+          :value         (get-field-content field-id)}
+         (if disabled? {;:disabled true
+                        :tab-index     "-1"
+                        :id            (hiccup/value      field-id "input")
+                        :on-change     (fn [])}
+                       {:auto-complete autofill-name
+                        :min           date-from
+                        :max           date-to
+                        :name          autofill-name
+                        :id            (hiccup/value field-id "input")
+                        :on-mouse-down #(r/dispatch-fx [:elements.text-field/show-surface! field-id])
+                        :on-blur       #(r/dispatch    [:elements.text-field/field-blurred field-id field-props])
+                        :on-focus      #(r/dispatch    [:elements.text-field/field-focused field-id field-props])
+                        :on-change     #(on-change-f field-id field-props %)})))
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -441,7 +449,7 @@
   [field-id field-props]
   {:on-mouse-down (fn [e] (.preventDefault e)
                           (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
-                          (r/dispatch    [:elements.text-field/show-surface! field-id]))})
+                          (r/dispatch-fx [:elements.text-field/show-surface! field-id]))})
 
 (defn empty-field-adornment-props
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -16,7 +16,7 @@
   ; {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
   [:a.e-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
-                     [x.components/content content]])
+                     [x.components/content                  anchor-id content]])
 
 (defn- anchor
   ; WARNING! NON-PUBLIC! DO NOT USE!

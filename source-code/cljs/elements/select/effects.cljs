@@ -2,7 +2,7 @@
 (ns elements.select.effects
     (:require [candy.api                      :refer [return]]
               [elements.input.events          :as input.events]
-              [elements.input.subs            :as input.subs]
+              [elements.input.helpers         :as input.helpers]
               [elements.select.config         :as select.config]
               [elements.select.events         :as select.events]
               [elements.select.prototypes     :as select.prototypes]
@@ -27,9 +27,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  (fn [{:keys [db]} [_ select-id _]]
-      ; XXX#8706 (source-code/cljs/elements/select/events.cljs)
-      {:db (r input.events/unmark-as-visited! db select-id)}))
+  (fn [_ _]))
 
 (r/reg-event-fx :elements.select/select-options-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -44,12 +42,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {}
-  (fn [{:keys [db]} [_ select-id {:keys [layout] :as select-props}]]
-      ; XXX#8706 (source-code/cljs/elements/select/events.cljs)
-      {:db (case layout :select (r input.events/mark-as-visited! db select-id)
-                                (return                          db))
-       :dispatch [:elements.select/remove-keypress-events! select-id select-props]}))
+  (fn [_ [_ select-id select-props]]
+      [:elements.select/remove-keypress-events! select-id select-props]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,8 +60,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  (fn [{:keys [db]} [_ select-id select-props]]
-      (if-let [option-field-focused? (r input.subs/input-focused? db :elements.select/option-field)]
+  (fn [_ [_ select-id select-props]]
+      (if-let [option-field-focused? (input.helpers/input-focused? :elements.select/option-field)]
               [:elements.select/add-option! select-id select-props])))
 
 ;; ----------------------------------------------------------------------------

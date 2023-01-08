@@ -59,7 +59,7 @@
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
   ; The multi-combo-box element is based on the text-field element.
-  ; Check out the documentation of the text-field element for more information.
+  ; For more information check out the documentation of the text-field element.
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props

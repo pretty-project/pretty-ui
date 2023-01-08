@@ -1,4 +1,47 @@
 
+
+/***** Color-selector *****/
+/*** Color-selector options ***/
+
+.c-color-selector--body {
+  display: flex;
+  grid-column-gap: 12px;
+  padding: 12px;
+}
+
+/*** Color-selector options ***/
+
+/*** Color-selector option ***/
+
+.c-color-selector--option[data-collected="true"]::after {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  border-radius: 12px;
+  color: var( --color-default );
+  content: 'check';
+  display: flex;
+  font-size: var( --icon-size-xs );
+  font-weight: 600;
+  height: 20px;
+  justify-content: center;
+  left: 14px;
+  line-height: 20px;
+  position: absolute;
+  top: 14px;
+  width: 20px;
+}
+
+.c-color-selector--option--color {
+  border-radius: var( --border-radius-m );
+  height: 48px;
+  width: 48px;
+}
+
+/*** Color-selector option ***/
+/***** Color-selector *****/
+
+
+
 /***** Ghost view *****/
 /*** Body ***/
 

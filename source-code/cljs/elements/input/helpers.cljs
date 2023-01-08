@@ -1,6 +1,59 @@
 
 (ns elements.input.helpers
-    (:require [re-frame.api :as r]))
+    (:require [elements.input.state :as input.state]
+              [re-frame.api         :as r]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn mark-input-as-focused!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/FOCUSED-INPUTS assoc input-id true))
+
+(defn unmark-input-as-focused!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/FOCUSED-INPUTS dissoc input-id))
+
+(defn input-focused?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (boolean)
+  [input-id]
+  (-> @input.state/FOCUSED-INPUTS input-id))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn mark-input-as-visited!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/VISITED-INPUTS assoc input-id true))
+
+(defn unmark-input-as-visited!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  [input-id]
+  (swap! input.state/VISITED-INPUTS dissoc input-id))
+
+(defn input-visited?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) input-id
+  ;
+  ; @return (boolean)
+  [input-id]
+  (-> @input.state/VISITED-INPUTS input-id))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,9 +69,10 @@
   ; @return (vector)
   [_ {:keys [options options-path]}]
   ; XXX#2781
-  ; Az egyes elemek opciói elsődlegesen a paraméterkén kapott options vektor
-  ; értékei alapján kerülnek felsorolásra, annak hiányában az options-path útvonalon
-  ; található értékek alapján.
+  ; (A) In selectable elements the selectable options derived from the element's
+  ;     :options property.
+  ; (B) If the :options property hasn't been set, the options derived from the
+  ;     application state by using the :options-path property.
   (or options @(r/subscribe [:x.db/get-item options-path])))
 
 (defn default-options-path

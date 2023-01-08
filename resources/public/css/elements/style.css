@@ -102,15 +102,6 @@
 
 /*** Card wrapper ***/
 
-/*** Button badge ***/
-
-.e-card .e-element-badge {
-  right: 6px;
-  top:   6px;
-}
-
-/*** Button badge ***/
-
 /*** Card body ***/
 
 .e-card--body {
@@ -319,48 +310,6 @@
 
 /*** Circle diagram section ***/
 /***** Circle diagram *****/
-
-
-
-/***** Color-selector *****/
-/*** Color-selector options ***/
-
-.e-color-selector--body {
-  display: flex;
-  grid-column-gap: 12px;
-  padding: 12px;
-}
-
-/*** Color-selector options ***/
-
-/*** Color-selector option ***/
-
-.e-color-selector--option[data-collected="true"]::after {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  border-radius: 12px;
-  color: var( --color-default );
-  content: 'check';
-  display: flex;
-  font-size: var( --icon-size-xs );
-  font-weight: 600;
-  height: 20px;
-  justify-content: center;
-  left: 14px;
-  line-height: 20px;
-  position: absolute;
-  top: 14px;
-  width: 20px;
-}
-
-.e-color-selector--option--color {
-  border-radius: var( --border-radius-m );
-  height: 48px;
-  width: 48px;
-}
-
-/*** Color-selector option ***/
-/***** Color-selector *****/
 
 
 
@@ -806,15 +755,6 @@
 
 /*** Icon-button progress *****/
 
-/*** Icon-button badge ***/
-
-.e-icon-button .e-element-badge {
-  right: 6px;
-  top:   6px;
-}
-
-/*** Icon-button badge ***/
-
 /*** Icon-button body ***/
 
 .e-icon-button--body {
@@ -981,17 +921,6 @@
 }
 
 /*** Menu item ***/
-
-/*** Menu item badge ***/
-
-.e-menu-bar--menu-item .e-element-badge {
-  min-height: 6px;
-  right: 6px;
-  top: 12px;
-  min-width: 6px;
-}
-
-/*** Menu item badge ***/
 /***** Menu bar *****/
 
 

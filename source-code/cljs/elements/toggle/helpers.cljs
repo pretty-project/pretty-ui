@@ -1,10 +1,10 @@
 
 (ns elements.toggle.helpers
-    (:require [elements.button.helpers       :as button.helpers]
-              [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [hiccup.api                    :as hiccup]
-              [re-frame.api                  :as r]))
+    (:require [elements.button.helpers  :as button.helpers]
+              [elements.element.helpers :as element.helpers]
+              [hiccup.api               :as hiccup]
+              [re-frame.api             :as r]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,7 +66,7 @@
                        {:id             (hiccup/value toggle-id "body")
                         :on-click       #(r/dispatch on-click)
                         :on-mouse-over  #(r/dispatch on-mouse-over)
-                        :on-mouse-up    #(element.side-effects/blur-element! toggle-id)
+                        :on-mouse-up    #(x.environment/blur-element! toggle-id)
                         :data-clickable true})))
 
 (defn toggle-attributes

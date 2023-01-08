@@ -39,6 +39,9 @@
    :data-font-weight font-weight
    :data-line-height line-height})
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn anchor-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -57,6 +60,9 @@
                         :href           href
                         :on-click       #(r/dispatch on-click)
                         :on-mouse-up    #(x.environment/blur-element!)})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn anchor-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

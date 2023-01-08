@@ -1,50 +1,9 @@
 
 (ns elements.color-selector.helpers
-    (:require [elements.element.helpers      :as element.helpers]
-              [elements.element.side-effects :as element.side-effects]
-              [re-frame.api                  :as r]
-              [vector.api                    :as vector]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn color-selector-options-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (map) selector-props
-  ;
-  ; @return (map)
-  ; {}
-  [_ _]
-  {:class :e-element})
-
-(defn color-selector-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (map) selector-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [selector-id {:keys [style] :as selector-props}]
-  (merge (element.helpers/element-indent-attributes selector-id selector-props)
-         {:style style}))
-
-(defn color-selector-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) selector-id
-  ; @param (map) selector-props
-  ; {:size (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-size (keyword)}
-  [selector-id {:keys [size] :as selector-props}]
-  (merge (element.helpers/element-default-attributes selector-id selector-props)
-         (element.helpers/element-outdent-attributes selector-id selector-props)
-         {:data-size size}))
+    (:require [elements.element.helpers :as element.helpers]
+              [re-frame.api             :as r]
+              [vector.api               :as vector]
+              [x.environment.api        :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,5 +24,38 @@
        {:data-clickable   true
         :data-collected   (vector/contains-item? selected-options option)
         :data-icon-family :material-icons-filled
-        :on-click        #(r/dispatch on-click)
-        :on-mouse-up     #(element.side-effects/blur-element! selector-id)}))
+        :on-click         #(r/dispatch on-click)
+        :on-mouse-up      #(x.environment/blur-element! selector-id)}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn color-selector-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ; {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ; {:style (map)}
+  [selector-id {:keys [style] :as selector-props}]
+  (merge (element.helpers/element-indent-attributes selector-id selector-props)
+         {:style style}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn color-selector-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) selector-id
+  ; @param (map) selector-props
+  ; {:size (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-size (keyword)}
+  [selector-id {:keys [size] :as selector-props}]
+  (merge (element.helpers/element-default-attributes selector-id selector-props)
+         (element.helpers/element-outdent-attributes selector-id selector-props)
+         {:data-size size}))

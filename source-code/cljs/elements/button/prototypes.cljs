@@ -11,7 +11,8 @@
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :font-size (keyword)(opt)
-  ;  :icon (keyword)(opt)}
+  ;  :icon (keyword)(opt)
+  ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)

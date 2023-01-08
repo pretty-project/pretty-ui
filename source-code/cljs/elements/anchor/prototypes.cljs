@@ -12,7 +12,7 @@
   ;
   ; @return (map)
   ; {:font-size (keyword)
-  ;   :font-weight (keyword)
+  ;  :font-weight (keyword)
   ;  :line-height (keyword)}
   [anchor-props]
   (merge {:font-size   :s

@@ -34,11 +34,9 @@
   ;  :target-id (string)}
   [{:keys [color content font-size icon marker-color target-id] :as label-props}]
   ; XXX#7009
-  ; A label elem prototípus függvénye alkalmazza az elem tartalmán az x.components/content
-  ; függvényt, így azt elég egyszer alkalmazni és nem szükséges a különböző vizsgálatok
-  ; előtt több helyen is használni!
-  ; Pl.: Az elem tartalmának ürességét több helyen szükséges vizsgálni, amihez szükséges
-  ;      lenne több helyen alkalmazni az x.components/content függvényt.
+  ; The 'label-props-prototype' function applies the 'x.components/content' function
+  ; on the 'content' value. By using this solution no need to apply the 'x.components/content'
+  ; function in multiple places.
   (let [content (x.components/content content)]
        (merge {:font-size        :s
                :font-weight      :bold
@@ -50,6 +48,5 @@
                                 :icon-color color :icon-size (or font-size :s)})
               (param label-props)
               {:content content}
-              (if target-id {:target-id (hiccup/value target-id "input")})
-              (if (empty? content)
-                  {:copyable? false}))))
+              (if target-id        {:target-id (hiccup/value target-id "input")})
+              (if (empty? content) {:copyable? false}))))

@@ -1,7 +1,7 @@
 
 (ns elements.text-field.effects
-    (:require [candy.api                   :refer [return]]
-              [elements.input.events       :as input.events]
+    (:require [elements.input.events       :as input.events]
+              [elements.input.helpers      :as input.helpers]
               [elements.text-field.events  :as text-field.events]
               [elements.text-field.helpers :as text-field.helpers]
               [re-frame.api                :as r :refer [r]]
@@ -40,10 +40,9 @@
   ; {}
   (fn [{:keys [db]} [_ field-id {:keys [autoclear? on-unmount value-path] :as field-props}]]
       (let [stored-value (get-in db value-path)]
-           {:db (as-> db % (if autoclear? (r text-field.events/clear-value! % field-id field-props)
-                                          (return                           %))
-                           (r input.events/unmark-as-visited! % field-id))
-            :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]})))
+           (if autoclear? {:db         (r text-field.events/clear-value! db field-id field-props)
+                           :dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]}
+                          {:dispatch-n [(if on-unmount (r/metamorphic-event<-params on-unmount stored-value))]}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -75,7 +74,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  (fn [{:keys [db]} [_ field-id field-props]]
+  ; {}
+  (fn [{:keys [db]} [_ field-id {:keys [emptiable? on-enter] :as field-props}]]
       ; XXX#4156
       ; Az :elements.text-field/ENTER és :elements.text-field/ESC azonosítók használatával más
       ; a text-field elemre épülő elemek felülírhatják a text-field elem ENTER és ESC billentyűlenyomás-figyelőit,
@@ -83,8 +83,8 @@
       ; kell, hogy megvalósítsák a text-field elem eredeti billentyűlenyomás-figyelő eseményeinek működését!
       (let [on-enter-props {:key-code 13 :on-keydown [:elements.text-field/ENTER-pressed field-id field-props] :required? true}
             on-esc-props   {:key-code 27 :on-keydown [:elements.text-field/ESC-pressed   field-id field-props] :required? true}]
-           {:dispatch-n [[:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
-                         [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
+           {:dispatch-cond [on-enter   [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
+                            emptiable? [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
 
 (r/reg-event-fx :elements.text-field/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,7 +93,7 @@
   ; @param (map) field-props
   ; {:emptiable? (boolean)(opt)
   ;  :on-enter (metamorphic-event)(opt)}
-  (fn [{:keys [db]} [_ field-id {:keys [emptiable? on-enter]}]]
+  (fn [_ [_ field-id {:keys [emptiable? on-enter]}]]
       ; XXX#4156
       {:dispatch-cond [on-enter   [:x.environment/remove-keypress-event! :elements.text-field/ENTER]
                        emptiable? [:x.environment/remove-keypress-event! :elements.text-field/ESC]]}))
@@ -158,11 +158,14 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {}
-  ; @param (string) field-content
-  (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props} field-content]]
-      {:db       (r text-field.events/type-ended db field-id field-props field-content)
-       :dispatch (if on-type-ended (r/metamorphic-event<-params on-type-ended field-content))}))
+  ; {:on-type-ended (metamorphic-event)(opt)}
+  (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
+      ; BUG#6071 (source-code/cljs/elements/text_field/events.cljs)
+      (let [field-content  (text-field.helpers/get-field-content field-id)
+            field-focused? (input.helpers/input-focused?         field-id)]
+           {:dispatch (if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))
+            :fx       (if field-focused? [:elements.text-field/show-surface! field-id])
+            :db       (r text-field.events/store-value! db field-id field-props field-content)})))
 
 (r/reg-event-fx :elements.text-field/field-blurred
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -171,8 +174,10 @@
   ; @param (map) field-props
   ; {:on-blur (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-blur] :as field-props}]]
-      {:db         (r text-field.events/field-blurred db field-id field-props)
-       :dispatch-n [on-blur [:elements.text-field/remove-keypress-events! field-id field-props]]}))
+      {:dispatch-n [on-blur [:elements.text-field/remove-keypress-events! field-id field-props]]
+       :fx-n       [[:elements.text-field/hide-surface!       field-id]
+                    [:elements.input/unmark-input-as-focused! field-id]
+                    [:x.environment/quit-type-mode!]]}))
 
 (r/reg-event-fx :elements.text-field/field-focused
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -180,6 +185,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:on-focus (metamorphic-event)(opt)}
-  (fn [{:keys [db]} [_ field-id {:keys [on-focus] :as field-props}]]
-      {:db         (r text-field.events/field-focused db field-id field-props)
-       :dispatch-n [on-focus [:elements.text-field/reg-keypress-events! field-id field-props]]}))
+  (fn [_ [_ field-id {:keys [on-focus] :as field-props}]]
+      {:dispatch-n [on-focus [:elements.text-field/reg-keypress-events! field-id field-props]]
+       :fx-n       [[:elements.text-field/show-surface!     field-id]
+                    [:elements.input/mark-input-as-focused! field-id]
+                    [:x.environment/set-type-mode!]]}))

@@ -9,6 +9,8 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
+  ; {:min-value (integer)(opt)
+  ;  :value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [min-value value-path]}]]
@@ -22,6 +24,8 @@
   ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
+  ; {:max-value (integer)(opt)
+  ;  :value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ _ {:keys [max-value value-path]}]]

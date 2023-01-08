@@ -30,6 +30,7 @@
   ; @param (map) text-props
   ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
+  ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
   [:div.e-text--placeholder {:data-selectable false}
                             (if placeholder (x.components/content placeholder)
                                             "\u00A0")])
@@ -69,8 +70,6 @@
   ; {:content (string)
   ;  :placeholder (metamorphic-content)(opt)}
   [text-id {:keys [content] :as text-props}]
-  ; XXX#9811
-  ;
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
   [:div.e-text--body (text.helpers/text-body-attributes text-id text-props)
                      (if (empty? content)

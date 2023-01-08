@@ -1,7 +1,6 @@
 
 (ns elements.chip.views
-    (:require [candy.api                :refer [param]]
-              [elements.chip.helpers    :as chip.helpers]
+    (:require [elements.chip.helpers    :as chip.helpers]
               [elements.chip.prototypes :as chip.prototypes]
               [random.api               :as random]
               [x.components.api         :as x.components]))
@@ -39,7 +38,7 @@
   [chip-id {:keys [primary-button-event primary-button-icon] :as chip-props}]
   (if primary-button-event [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
                                                            [:i.e-chip--primary-button-icon {:data-icon-family :material-icons-filled}
-                                                                                           (param primary-button-icon)]]
+                                                                                           primary-button-icon]]
                            [:div.e-chip--primary-button--placeholder]))
 
 (defn- chip-body

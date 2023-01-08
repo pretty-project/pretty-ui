@@ -33,9 +33,9 @@
   ; @param (map) option
   [box-id {:keys [option-component] :as box-props} option-dex option]
   ; BUG#2105
-  ; A combo-box elemhez tartozó surface felületen történő on-mouse-down esemény
-  ; a mező on-blur eseményének triggerelésével jár, ami a surface felület
-  ; React-fából történő lecsatolását okozná.
+  ; An on-mouse-down event fired on the combo-box surface would cause the on-blur
+  ; event of the field, therefore the surface would dissapear unless the on-mouse-down
+  ; event prevented.
   [:button.e-combo-box--option {:on-mouse-down #(do (.preventDefault %))
                                 :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
                                ;:data-selected ...
@@ -89,7 +89,7 @@
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
   ; The combo-box element is based on the text-field element.
-  ; Check out the documentation of the text-field element for more information.
+  ; For more information check out the documentation of the text-field element.
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
@@ -119,5 +119,5 @@
   ([box-id box-props]
    (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)]
         ; WARNING! DEPRECATED! DO NOT USE!
-        ;box-props (combo-box.prototypes/box-events-prototype box-id box-props)
+        ; box-props (combo-box.prototypes/box-events-prototype box-id box-props)
         [combo-box box-id box-props])))
