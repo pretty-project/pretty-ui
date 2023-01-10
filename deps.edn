@@ -12,6 +12,6 @@
          org.clojars.paul-simple-code/reagent-hickory {:mvn/version "0.3.7-no-escape-string"}
          org.jsoup/jsoup                              {:mvn/version "1.14.3"}
          bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
-                                  :sha     "d0847739fc1525de013ea19cfefe7f04bef302c7"}
+                                  :sha     "d756a2bb5d2a2ac2dd72bbb13149b74cec51aed9"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
-                                  :sha     "63c959fd53dbe294d72ce996987ba5eb29cf4f6e"}}}
+                                  :sha     "b21ed270b235a70a7949dcd3d1d7454c3144dbfb"}}}
