@@ -156,6 +156,101 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn static-adornment-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; @param (map) adornment-props
+  ; {:color (keyword)
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)}
+  ;
+  ; @return (map)
+  ; {:data-color (keyword)
+  ;  :data-font-size (keyword)
+  ;  :data-line-height (keyword)
+  ;  :data-selectable (boolean)
+  ;  :data-icon-family (keyword)}
+  [_ _ {:keys [color icon icon-family]}]
+  (merge {:data-font-size   :xs
+          :data-line-height :block
+          :data-selectable  false}
+         (if icon {:data-icon-family icon-family})
+         (if icon {:data-icon-size   :s})))
+
+(defn button-adornment-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; @param (map) adornment-props
+  ; {:color (keyword)
+  ;  :disabled? (boolean)(opt)
+  ;   Default: false
+  ;  :icon (keyword)(opt)
+  ;  :icon-family (keyword)(opt)
+  ;   :material-icons-filled, :material-icons-outlined
+  ;   Default: :material-icons-filled
+  ;  :on-click (metamorphic-event)
+  ;  :tab-indexed? (boolean)(opt)
+  ;   Default: true
+  ;  :tooltip (metamorphic-content)(opt)}
+  ;
+  ; @return (map)
+  ; {}
+  [_ _ {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
+  ; BUG#2105
+  ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
+  ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
+  ; felület React-fából történő lecsatolását okozná.
+  (merge {:data-color        color
+          :data-click-effect :opacity
+          :data-font-size    :xs
+          :data-line-height  :block
+          :data-selectable   false
+          :on-mouse-down     #(.preventDefault %)
+          :title             (x.components/content tooltip)}
+         (if     icon         {:data-icon-family icon-family})
+         (if     icon         {:data-icon-size   :s})
+         (if     disabled?    {:disabled   "1" :data-disabled true})
+         (if-not tab-indexed? {:tab-index "-1"})
+         (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
+                                                 (x.environment/blur-element!))})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn adornment-placeholder-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {:on-mouse-down (function)}
+  [field-id field-props]
+  {:on-mouse-down (fn [e] (.preventDefault e)
+                          (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
+                          (r/dispatch-fx [:elements.text-field/show-surface! field-id]))})
+
+(defn empty-field-adornment-props
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {}
+  [field-id field-props]
+  {:disabled? (field-empty? field-id)
+   :icon      :close
+   :on-click  [:elements.text-field/empty-field! field-id field-props]
+   :tooltip   :empty-field!})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn field-line-count
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -166,14 +261,14 @@
   ; @return (integer)
   [field-id {:keys [multiline?]}]
   (let [field-content (get-field-content field-id)]
-       (if multiline? ; If the field is multiline ...
-                      (let [line-count (-> field-content string/line-count inc)]
+       (if multiline? (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
                            ; A textarea element magassága minimum 2 sor magasságú kell legyen,
                            ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
-                           ; szöveg nem törik meg automatikusan
+                           ; szöveg nem törne meg automatikusan
                            ; Google Chrome Version 89.0.4389.114
                            (inc line-count))
+
                       ; If the field is NOT multiline ...
                       (return 1))))
 
@@ -226,6 +321,23 @@
   ; @return (map)
   [field-id field-props]
   {:style {:height (field-auto-height field-id field-props)}})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-surface-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {:id (string)
+  ;  :on-mouse-down (function)}
+  [field-id _]
+  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
+  {:id (hiccup/value field-id "surface")
+   :on-mouse-down #(.preventDefault %)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -295,9 +407,7 @@
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
   ;
-  ; BUG#8809
-  ; Ha a mező disabled állapotba lépéskor elveszítené az on-change tulajdonságát,
-  ; akkor a React figyelmeztetne, hogy controlled elemből uncontrolled elemmé változott!
+  ; BUG#8809 (cljs/elements/plain_text/helpers.cljs)
   ;
   ; XXX#4461
   ; A {:type :date} típusú mezők min és max dátuma beállítható
@@ -308,37 +418,26 @@
   ; Google Chrome  - Version 107.0.5304.110 (Official Build) (x86_64)
   ; MacOS Monterey - Version 12.3.1 (21E258)
   ;
-  ; Ha a text-field elem {:disabled? true} beállítása az input mezőt disabled állapotba
-  ; állítaná, akkor ...
-  ; ... a mező kilépne a fókuszált állapotból.
-  ; ... nem történne meg a mező on-blur eseménye az {:disabled? true} állapot beállításakor
-  ;     esetlegesen fókuszált állapotban lévő mezőn, ...
-  ;     ... ezért a mező Re-Frame adatbázisban tárolt állapota {:focused? true} beállításon maradna.
-  ;     ... az x.environment.keypress-handler {:type-mode? true} beállításon maradna.
-  ; ... a {:disabled? true} állapot megszűnésekor a mező nem lépne vissza a fókuszált állapotba.
-  ;
-  ; A következő beállítások biztosítják, hogy a mező disabled állapotúnak tűnjön:
-  ; - A {:tab-index "-1"} beállítás miatt nem reagál a billentyűzet általi fókuszálásra.
-  ; - A [data-disabled="true"] attribútum letiltott állapotúként jeleníti meg a mezőt
-  ;   és kikapcsolja a caret láthatóságát.
-  ; - Az on-change függvény nem végez műveletet.
-  (merge {:data-fillable true
+  ; BUG#8806 (cljs/elements/plain_text/helpers.cljs)
+  (merge {:data-autofill :remove-style
           :max-length    max-length
           :type          type
+          :id            (hiccup/value      field-id "input")
           :value         (get-field-content field-id)}
-         (if disabled? {;:disabled true
-                        :tab-index     "-1"
-                        :id            (hiccup/value      field-id "input")
-                        :on-change     (fn [])}
+         (if disabled? {:data-caret-color :hidden
+                        :tab-index        -1
+                        :on-change        (fn [])}
                        {:auto-complete autofill-name
                         :min           date-from
                         :max           date-to
                         :name          autofill-name
-                        :id            (hiccup/value field-id "input")
                         :on-mouse-down #(r/dispatch-fx [:elements.text-field/show-surface! field-id])
                         :on-blur       #(r/dispatch    [:elements.text-field/field-blurred field-id field-props])
                         :on-focus      #(r/dispatch    [:elements.text-field/field-focused field-id field-props])
                         :on-change     #(on-change-f field-id field-props %)})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn field-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -355,112 +454,3 @@
          (element.helpers/element-outdent-attributes field-id field-props)
          {:data-element-width       min-width
           :data-stretch-orientation stretch-orientation}))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn surface-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:id (string)
-  ;  :on-mouse-down (function)}
-  [field-id _]
-  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  {:id             (hiccup/value field-id "surface")
-   :on-mouse-down #(.preventDefault %)})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn static-adornment-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (map) adornment-props
-  ; {:color (keyword)
-  ;  :icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-color (keyword)
-  ;  :data-font-size (keyword)
-  ;  :data-line-height (keyword)
-  ;  :data-selectable (boolean)
-  ;  :data-icon-family (keyword)}
-  [_ _ {:keys [color icon icon-family]}]
-  (merge {:data-font-size   :xs
-          :data-line-height :block
-          :data-selectable  false}
-         (if icon {:data-icon-family icon-family})
-         (if icon {:data-icon-size   :s})))
-
-(defn button-adornment-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (map) adornment-props
-  ; {:color (keyword)
-  ;  :disabled? (boolean)(opt)
-  ;   Default: false
-  ;  :icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
-  ;  :on-click (metamorphic-event)
-  ;  :tab-indexed? (boolean)(opt)
-  ;   Default: true
-  ;  :tooltip (metamorphic-content)(opt)}
-  ;
-  ; @return (map)
-  ; {}
-  [_ _ {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
-  ; BUG#2105
-  ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
-  ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
-  ; felület React-fából történő lecsatolását okozná.
-  (merge {:data-color       color
-          :data-clickable   true
-          :data-font-size   :xs
-          :data-line-height :block
-          :data-selectable  false
-          :on-mouse-down    #(.preventDefault %)
-          :title             (x.components/content tooltip)}
-         (if     icon         {:data-icon-family icon-family})
-         (if     icon         {:data-icon-size   :s})
-         (if     disabled?    {:disabled   "1" :data-disabled true})
-         (if-not tab-indexed? {:tab-index "-1"})
-         (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
-                                                 (x.environment/blur-element!))})))
-
-(defn adornment-placeholder-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:on-mouse-down (function)}
-  [field-id field-props]
-  {:on-mouse-down (fn [e] (.preventDefault e)
-                          (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
-                          (r/dispatch-fx [:elements.text-field/show-surface! field-id]))})
-
-(defn empty-field-adornment-props
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {}
-  [field-id field-props]
-  {:disabled? (field-empty? field-id)
-   :icon      :close
-   :on-click  [:elements.text-field/empty-field! field-id field-props]
-   :tooltip   :empty-field!})

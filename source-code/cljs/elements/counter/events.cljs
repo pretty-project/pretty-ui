@@ -9,7 +9,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-box-did-mount
+(defn counter-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
@@ -52,4 +52,4 @@
 ;; ----------------------------------------------------------------------------
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.counter/counter-box-did-mount counter-box-did-mount)
+(r/reg-event-db :elements.counter/counter-did-mount counter-did-mount)

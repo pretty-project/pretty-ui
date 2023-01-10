@@ -13,5 +13,5 @@
   ; @return (map)
   ; {}
   [_ {:keys [on-click]}]
-  (if on-click {:data-clickable true
+  (if on-click {:data-click-effect :opacity
                 :on-click #(r/dispatch on-click)}))

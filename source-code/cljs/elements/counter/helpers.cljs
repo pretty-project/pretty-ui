@@ -15,7 +15,7 @@
   ; @param (map) counter-props
   ; {:initial-value (integer)(opt)}
   [counter-id {:keys [initial-value] :as counter-props}]
-  (if initial-value (r/dispatch [:elements.counter/counter-box-did-mount counter-id counter-props])))
+  (if initial-value (r/dispatch [:elements.counter/counter-did-mount counter-id counter-props])))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,7 +30,7 @@
   ;  :value-path (vector)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-disabled (boolean)
   ;  :disabled (boolean)
   ;  :on-click (function)
@@ -38,11 +38,11 @@
   [counter-id {:keys [disabled? max-value value-path] :as counter-props}]
   (let [value @(r/subscribe [:x.db/get-item value-path])]
        (if (or disabled? (= max-value value))
-           {:disabled       true
-            :data-disabled  true}
-           {:data-clickable true
-            :on-click    #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
-            :on-mouse-up #(x.environment/blur-element! counter-id)})))
+           {:disabled          true
+            :data-disabled     true}
+           {:data-click-effect :opacity
+            :on-click          #(r/dispatch [:elements.counter/increase-value! counter-id counter-props])
+            :on-mouse-up       #(x.environment/blur-element! counter-id)})))
 
 (defn decrease-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -54,7 +54,7 @@
   ;  :value-path (vector)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-disabled (boolean)
   ;  :disabled (boolean)
   ;  :on-click (function)
@@ -62,9 +62,9 @@
   [counter-id {:keys [disabled? min-value value-path] :as counter-props}]
   (let [value @(r/subscribe [:x.db/get-item value-path])]
        (if (or disabled? (= min-value value))
-           {:disabled       true
-            :data-disabled  true}
-           {:data-clickable true
+           {:disabled          true
+            :data-disabled     true}
+           {:data-click-effect :opacity
             :on-click    #(r/dispatch [:elements.counter/decrease-value! counter-id counter-props])
             :on-mouse-up #(x.environment/blur-element! counter-id)})))
 

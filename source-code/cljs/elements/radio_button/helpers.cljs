@@ -22,48 +22,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-style-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [button-id {:keys [border-color style] :as button-props}]
-  (-> {:style style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
-
-(defn radio-button-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [button-id {:keys [border-color options-orientation] :as button-props}]
-  (merge (element.helpers/element-indent-attributes button-id button-props)
-         (radio-button-style-attributes             button-id button-props)
-         {:data-options-orientation options-orientation
-          :data-selectable          false}))
-
-(defn radio-button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ;
-  ; @return (map)
-  [button-id button-props]
-  (merge (element.helpers/element-default-attributes button-id button-props)
-         (element.helpers/element-outdent-attributes button-id button-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn clear-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -74,7 +32,7 @@
   ; {}
   [button-id button-props]
   (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
-          {:data-clickable true
+          {:data-click-effect :opacity
            :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
            :on-mouse-up   #(x.environment/blur-element! button-id)
            :title          (x.components/content :uncheck-selected!)}
@@ -96,8 +54,56 @@
   ; {}
   [button-id {:keys [disabled?] :as button-props} option]
   (let [option-selected? @(r/subscribe [:elements.radio-button/option-selected? button-id button-props option])]
-       (merge {:data-clickable :targeted
-               :data-selected  option-selected?}
+       (merge {:data-click-effect :targeted
+               :data-selected option-selected?}
               (if disabled? {:disabled      true}
                             {:on-click     #(r/dispatch [:elements.radio-button/select-option! button-id button-props option])
                              :on-mouse-up  #(x.environment/blur-element! button-id)}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn radio-button-style-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [button-id {:keys [border-color style] :as button-props}]
+  (-> {:style style}
+      (element.helpers/apply-color :border-color :data-border-color border-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn radio-button-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [button-id {:keys [border-color options-orientation] :as button-props}]
+  (merge (element.helpers/element-indent-attributes button-id button-props)
+         (radio-button-style-attributes             button-id button-props)
+         {:data-options-orientation options-orientation
+          :data-selectable          false}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn radio-button-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ;
+  ; @return (map)
+  [button-id button-props]
+  (merge (element.helpers/element-default-attributes button-id button-props)
+         (element.helpers/element-outdent-attributes button-id button-props)))

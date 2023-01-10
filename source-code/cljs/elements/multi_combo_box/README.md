@@ -1,24 +1,27 @@
 
 ### chip-label-f
 
-A multi-combo-box elem a chip-group elem számára adja át a chip-label-f függvényt,
-amit az adatbázisban tárolt értékek chip elemeken való megjelenítéséhez használ.
+The multi-combo-box element pass the 'chip-label-f' function to the implemented
+chip-group element.
+For more information check out the chip-group element's README!
 
 ### field-content-f
 
-A multi-combo-box elem nem használ field-content-f függvényt, mert az elemben
-használt szövegmező az alapértelmezett value-path útvonalat és az alapértelmezett
-field-content-f függvényt használja, amit text-field elem prototípusában kap.
+The multi-combo-box element doesn't defines the 'field-content-f' function
+because it's defined in the implemented combo-box element.
+For more information check out the combo-box element's README!
 
 ### field-value-f
 
-A multi-combo-box elem a field-value-f függvényt ugyanarra használja, mint a text-field elem.
+The multi-combo-box element uses the 'field-value-f' in the same way as the
+text-field element.
+For more information check out the text-field element's README!
 
 ### option-label-f  
 
-A kiválasztható opciók az option-label-f függvény alkalmazásával jelennek meg az opciók listájában.
+The option list applies the 'option-label-f' function on the displayed selectable options.
 
 ### option-value-f
 
-A kiválasztott opció értéke a option-value-f függvény alkalmazásával kerül a value-path
-útvonalon található vektor elembe.
+The 'option-value-f' function will be applied on the selected option before it
+will be written into the application state.

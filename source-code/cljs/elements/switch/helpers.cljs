@@ -21,29 +21,59 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-option-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; {:disabled? (boolean)(opt)}
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {:data-click-effect (keyword)
+  ;  :data-switched (boolean)
+  ;  :disabled (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
+  [switch-id {:keys [disabled?] :as switch-props} option]
+  (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
+       (merge {:data-click-effect :targeted
+               :data-switched  option-switched?}
+              (if disabled? {:disabled     true}
+                            {:on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
+                             :on-mouse-up  #(x.environment/blur-element! switch-id)}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn switch-style-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {}
+  ; {:border-color (keyword or string)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {}
+  ; {:style (map)}
   [_ {:keys [border-color style]}]
   (-> {:style style}
       (element.helpers/apply-color :border-color :data-border-color border-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn switch-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {}
+  ; {:options-orientation (keyword)}
   ;
   ; @return (map)
-  ; {}
-  [switch-id {:keys [border-color options-orientation] :as switch-props}]
+  ; {data-options-orientation (keyword)
+  ;  :data-selectable (boolean)}
+  [switch-id {:keys [options-orientation] :as switch-props}]
   (merge (element.helpers/element-indent-attributes switch-id switch-props)
          (switch-style-attributes                   switch-id switch-props)
          {:data-options-orientation options-orientation
@@ -59,24 +89,3 @@
   [switch-id switch-props]
   (merge (element.helpers/element-default-attributes switch-id switch-props)
          (element.helpers/element-outdent-attributes switch-id switch-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn switch-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; {}
-  ; @param (*) option
-  ;
-  ; @return (map)
-  ; {}
-  [switch-id {:keys [disabled?] :as switch-props} option]
-  (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
-       (merge {:data-clickable :targeted
-               :data-switched  option-switched?}
-              (if disabled? {:disabled     true}
-                            {:on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
-                             :on-mouse-up  #(x.environment/blur-element! switch-id)}))))

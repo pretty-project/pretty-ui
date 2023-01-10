@@ -17,7 +17,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      ; XXX#4156
+      ; XXX#4156 (source-code/cljs/elements/combo_box/effects.cljs)
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)
             on-down-props  {:key-code  40 :on-keydown [:elements.combo-box/DOWN-pressed    field-id field-props] :required? true :prevent-default? true}
@@ -31,11 +31,12 @@
                          [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
                          [:x.environment/reg-keypress-event! :elements.text-field/COMMA on-comma-props]]})))
 
-(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!_
+(r/reg-event-fx :elements.multi-combo-box/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
+  ; XXX#4156 (source-code/cljs/elements/combo_box/effects.cljs)
   {:dispatch-n [[:x.environment/remove-keypress-event! :elements.text-field/DOWN]
                 [:x.environment/remove-keypress-event! :elements.text-field/UP]
                 [:x.environment/remove-keypress-event! :elements.text-field/ESC]
@@ -52,40 +53,18 @@
   ; @param (map) box-props
   ; {}
   (fn [{:keys [db]} [_ box-id box-props]]
-      ; XXX#4146
-      ; Ha a multi-combo-box elem surface felülete ...
-      ; (A) ... látható, akkor az ENTER billentyű lenyomása a multi-combo-box elem
-      ;         saját működését valósítja meg.
-      ; (B) ... nem látható és a mező tartalma nem üres, akkor az ENTER billentyű
-      ;         lenyomása
-      ;
-      ; Ha a surface felületen ...
-      ; (A1) ... valamelyik opció ki van választva, akkor
-      ; (A2) ... egyik opció sincs kiválasztva, akkor
+      ; XXX#4146 (source-code/cljs/elements/combo_box/effects.cljs)
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            (if (text-field.helpers/surface-visible? field-id)
-               ; (A)
                (if-let [highlighted-option (combo-box.helpers/get-highlighted-option field-id field-props)]
-                       ; (A1)
-                       {:db   (r multi-combo-box.events/use-option! db box-id box-props highlighted-option)
-                        :fx-n [[:elements.text-field/hide-surface!              field-id]
-                               [:elements.combo-box/discard-option-highlighter! field-id field-props]]}
-                       ; (A2)
+                       [:elements.multi-combo-box/use-option! box-id box-props highlighted-option]
                        (if (text-field.helpers/field-empty? field-id)
-                           {:fx [:elements.text-field/hide-surface! field-id]}
-                           (let [field-content (text-field.helpers/get-field-content field-id)]
-                                {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
-                                 :dispatch [:elements.text-field/empty-field!  field-id field-props]
-                                 :fx       [:elements.text-field/hide-surface! field-id]})))
-               ; (B)
-               (if (text-field.helpers/field-empty? field-id)
-                   ; (B1)
-                   {}
-                   ; (B2)
-                   (let [field-content (text-field.helpers/get-field-content field-id)]
-                        {:dispatch [:elements.text-field/empty-field! field-id field-props]
-                         :db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)}))))))
+                           {:fx       [:elements.text-field/hide-surface! field-id]}
+                           {:fx       [:elements.text-field/hide-surface! field-id]
+                            :dispatch [:elements.multi-combo-box/use-field-content! box-id box-props]}))
+               (if (text-field.helpers/field-filled? field-id)
+                   [:elements.multi-combo-box/use-field-content! box-id box-props])))))
 
 (r/reg-event-fx :elements.multi-combo-box/COMMA-pressed
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -93,12 +72,37 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
+      (let [field-id (multi-combo-box.helpers/box-id->field-id box-id)]
+           (if (text-field.helpers/field-filled? field-id)
+               [:elements.multi-combo-box/use-field-content! box-id box-props]))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(r/reg-event-fx :elements.multi-combo-box/use-field-content!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  (fn [{:keys [db]} [_ box-id box-props]]
+      (let [field-id      (multi-combo-box.helpers/box-id->field-id         box-id)
+            field-props   (multi-combo-box.prototypes/field-props-prototype box-id box-props)
+            field-content (text-field.helpers/get-field-content             field-id)]
+           {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
+            :dispatch [:elements.text-field/empty-field! field-id field-props]})))
+
+(r/reg-event-fx :elements.multi-combo-box/use-option!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  ; @param (*) option
+  (fn [{:keys [db]} [_ box-id box-props option]]
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-           (if (text-field.helpers/field-filled? field-id)
-               (let [field-content (text-field.helpers/get-field-content field-id)]
-                    {:db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
-                     :dispatch [:elements.text-field/empty-field! field-id field-props]})))))
+           {:db   (r multi-combo-box.events/use-option! db box-id box-props option)
+            :fx-n [[:elements.text-field/hide-surface!              field-id]
+                   [:elements.combo-box/discard-option-highlighter! field-id field-props]]})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -133,11 +137,8 @@
       ; Különben a felhasználó azt feltételezné, hogy kitölött egy mezőt és ha nem
       ; adódik hozzá az értékek vektorához a mező tartalma, akkor az adat elveszne.
       ; Szóval ez most egy UX teszt.
-      (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
-            field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
+      (let [field-id (multi-combo-box.helpers/box-id->field-id box-id)]
            (if (text-field.helpers/field-empty? field-id)
-               [:elements.multi-combo-box/remove-keypress-events! box-id box-props]
-               (let [field-content (text-field.helpers/get-field-content field-id)]
-                    {:db (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
-                     :dispatch-n [[:elements.text-field/empty-field! field-id field-props]
-                                  [:elements.multi-combo-box/remove-keypress-events! box-id box-props]]})))))
+               {:dispatch    [:elements.multi-combo-box/remove-keypress-events! box-id box-props]}
+               {:dispatch-n [[:elements.multi-combo-box/remove-keypress-events! box-id box-props]
+                             [:elements.multi-combo-box/use-field-content!      box-id box-props]]}))))

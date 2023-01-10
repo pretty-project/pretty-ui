@@ -20,9 +20,6 @@
   ; {:initial-options (vector)(opt)
   ;  :initial-value (*)(opt)}
   [select-id {:keys [initial-options initial-value] :as select-props}]
-  ; A {:layout :select} beállítással megjelenített select elem megjeleníti az aktuálisan kiválasztott
-  ; értékét, ezért az elem React-fába csatolásakor szükséges meghívni az [:elements.select/active-button-did-mount ...]
-  ; eseményt, hogy esetlegesen a Re-Frame adatbázisba írja az {:initial-value ...} kezdeti értéket!
   (if (or initial-options initial-value)
       (r/dispatch [:elements.select/active-button-did-mount select-id select-props])))
 
@@ -56,6 +53,65 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn select-option-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {:option-value-f (function)
+  ;  :value-path (vector)}
+  ; @param (*) option
+  ;
+  ; @return (map)
+  ; {:data-click-effect (keyword)
+  ;  :data-font-size (keyword)
+  ;  :data-font-weight (keyword)
+  ;  :data-selected (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
+  [select-id {:keys [option-value-f value-path] :as select-props} option]
+  (let [selected-value  @(r/subscribe [:x.db/get-item value-path])
+        option-value     (option-value-f option)
+        option-selected? (= selected-value option-value)
+        on-click         [:elements.select/select-option! select-id select-props option]]
+       {:data-click-effect :opacity
+        :data-font-size    :s
+        :data-font-weight  (if option-selected? :extra-bold :bold)
+        :data-selected     option-selected?
+        :on-click          #(r/dispatch on-click)
+        :on-mouse-up       #(x.environment/blur-element! select-id)}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn select-button-body-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  ; {:border-color (keyword)
+  ;  :border-radius (keyword)
+  ;  :disabled? (boolean)(opt)}
+  ;
+  ; @return (map)
+  ; {:data-border-color (keyword)
+  ;  :data-border-radius (keyword)
+  ;  :data-click-effect (keyword)
+  ;  :disabled (boolean)
+  ;  :on-click (function)
+  ;  :on-mouse-up (function)}
+  [select-id {:keys [border-color border-radius disabled?] :as select-props}]
+  (let [on-click [:elements.select/render-options! select-id select-props]]
+       (merge {:data-border-color  border-color
+               :data-border-radius border-radius}
+              (if disabled? {:disabled          true}
+                            {:data-click-effect :opacity
+                             :on-click    #(r/dispatch on-click)
+                             :on-mouse-up #(x.environment/blur-element! select-id)}))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn select-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -75,6 +131,9 @@
           :data-layout        layout
           :style              style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn select-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -85,52 +144,3 @@
   [select-id select-props]
   (merge (element.helpers/element-default-attributes select-id select-props)
          (element.helpers/element-outdent-attributes select-id select-props)))
-
-(defn select-button-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:border-color (keyword)
-  ;  :border-radius (keyword)
-  ;  :disabled? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-clickable (boolean)
-  ;  :disabled (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [select-id {:keys [border-color border-radius disabled?] :as select-props}]
-  (let [on-click [:elements.select/render-options! select-id select-props]]
-       (merge {:data-border-radius border-radius
-               :data-border-color  border-color}
-              (if disabled? {:disabled       true}
-                            {:data-clickable true
-                             :on-click       #(r/dispatch on-click)
-                             :on-mouse-up    #(x.environment/blur-element! select-id)}))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn select-option-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  ; @param (*) option
-  ;
-  ; @return (map)
-  ; {}
-  [select-id {:keys [option-value-f value-path] :as select-props} option]
-  (let [selected-value  @(r/subscribe [:x.db/get-item value-path])
-        option-value     (option-value-f option)
-        option-selected? (= selected-value option-value)
-        on-click         [:elements.select/select-option! select-id select-props option]]
-       {:data-clickable   true
-        :data-font-size   :s
-        :data-font-weight (if option-selected? :extra-bold :bold)
-        :data-selected    option-selected?
-        :on-click         #(r/dispatch on-click)
-        :on-mouse-up      #(x.environment/blur-element! select-id)}))

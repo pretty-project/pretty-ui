@@ -97,40 +97,8 @@
   ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
   (if surface (if (text-field.helpers/surface-visible? field-id)
-                  [:div.e-text-field--surface (text-field.helpers/surface-attributes field-id field-props)
-                                              [x.components/content                  field-id surface]])))
-
-;; -- Field warning components ------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- text-field-required-warning
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props])
-  ;(if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
-  ;        [:div.e-text-field--warning {:data-font-size   :xs
-  ;                                     :data-font-weight :bold
-  ;                                     :data-line-height :block
-  ;                                     :data-selectable  false
-  ;                                    (x.components/content :please-fill-out-this-field)])
-
-(defn- text-field-invalid-warning
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {}
-  [field-id {:keys [validator] :as field-props}])
-  ;(if-let [required-warning? @(r/subscribe [:elements.text-field/required-warning? field-id field-props])]
-  ;        [:<>] ; Ha a mező {:required-warning? true} állapotban van, akkor nem szükséges validálni a mező tartalmát ...
-  ;        (if-let [invalid-warning? @(r/subscribe [:elements.text-field/invalid-warning? field-id field-props])]
-  ;                [:div.e-text-field--warning {:data-font-size   :xs
-  ;                                             :data-font-weight :bold
-  ;                                             :data-line-height :block
-  ;                                             :data-selectable  false
-  ;                                            (-> validator :invalid-message x.components/content)}])
+                  [:div.e-text-field--surface (text-field.helpers/field-surface-attributes field-id field-props)
+                                              [x.components/content                        field-id surface]])))
 
 ;; -- Field structure components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -254,8 +222,6 @@
   [:div.e-text-field (text-field.helpers/field-attributes field-id field-props)
                      [text-field-label                    field-id field-props]
                      [text-field-input-container          field-id field-props]
-                     [text-field-required-warning         field-id field-props]
-                     [text-field-invalid-warning          field-id field-props]
                      ; HACK#5041
                      [hack5041 field-id field-props]])
 
@@ -336,8 +302,8 @@
   ;  :modifier (function)(opt)
   ;  :on-blur (metamorphic-event)(opt)
   ;  :on-changed (metamorphic-event)(opt)
-  ;   It happens before the actual value get updated in the Re-Frame DB!
-  ;   If you have to get the actual value from the Re-Frame DB, use the
+  ;   It happens BEFORE the application state get updated with the actual value!
+  ;   If you have to get the ACTUAL value from the application state, use the
   ;   :on-type-ended lifecycle instead!
   ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
   ;  :on-empty (metamorphic-event)(opt)
@@ -358,11 +324,6 @@
   ;   Default: :none
   ;  :style (map)(opt)
   ;  :surface (metamorphic-content)(opt)
-  ;  :unemptiable? (boolean)(opt)
-  ;   Default: false
-  ;   TODO
-  ;   A field on-blur esemény pillanatában, ha üres a value-path, akkor
-  ;   az eltárolt backup-value értéket beállítja a value-path -re.
   ;  :validator (map)(opt)
   ;   {:f (function)
   ;    :invalid-message (metamorphic-content)(opt)

@@ -1,3 +1,4 @@
 
 (ns components.api
-    (:require [components.lifecycles]))
+    (:require [components.lifecycles]
+              [pretty-css.api]))

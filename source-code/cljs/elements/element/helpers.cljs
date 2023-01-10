@@ -2,13 +2,14 @@
 (ns elements.element.helpers
     (:require [candy.api        :refer [param return]]
               [css.api          :as css]
-             ;[hiccup.api       :as hiccup]
               [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn apply-preset
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (map) presets
   ; @param (map) element-props
   ; {:preset (keyword)(opt)}
@@ -16,6 +17,13 @@
   ; @usage
   ; (apply-preset {:my-preset {...}}
   ;               {:preset :my-preset ...})
+  ;
+  ; @example
+  ; (apply-preset {:my-preset {:hover-color :highlight}}
+  ;               {:preset :my-preset})
+  ; =>
+  ; {:hover-color :highlight
+  ;  :preset      :my-preset}
   ;
   ; @return (map)
   [presets {:keys [preset] :as element-props}]
@@ -163,15 +171,10 @@
   ; Az x4.7.6 verzióig egyetlen esetben sem volt rá szükség, hogy egy element rendelkezzen
   ; DOM azonosítóval.
   ; + Talán könnyebb a böngészőnek, ha kevesebb az azonosítóval rendelkező elem ...
-  ;
-  ; XXX#4005
-  ; A {:hover-color ...} tulajdonság használatához, minden esetben szükséges a {:data-disabled ...}
-  ; attribútumot alkalmazni!
   {:class         class
-   :data-disabled (boolean disabled?)})
-
-  ;:id            (hiccup/value element-id)
-  ;:key           (hiccup/value element-id)
+   :data-disabled disabled?})
+  ;:id  (hiccup/value element-id)
+  ;:key (hiccup/value element-id)
 
 (defn element-indent-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -182,17 +185,6 @@
   ;
   ; @return (map)
   [_ {:keys [indent]}]
-
-  ; WARNING! DEPRECATED! DO NOT USE!
-  (cond-> {} (:bottom     indent) (assoc :data-indent-bottom     (:bottom     indent))
-             (:left       indent) (assoc :data-indent-left       (:left       indent))
-             (:right      indent) (assoc :data-indent-right      (:right      indent))
-             (:top        indent) (assoc :data-indent-top        (:top        indent))
-             (:horizontal indent) (assoc :data-indent-horizontal (:horizontal indent))
-             (:vertical   indent) (assoc :data-indent-vertical   (:vertical   indent))
-             (:all        indent) (assoc :data-indent-all        (:all        indent)))
-  ; WARNING! DEPRECATED! DO NOT USE!
-
   (letfn [(f [result key value]
              (assoc result (keyword (str "data-indent-" (name key))) value))]
          (reduce-kv f {} indent)))
@@ -206,17 +198,6 @@
   ;
   ; @return (map)
   [_ {:keys [outdent]}]
-
-  ; WARNING! DEPRECATED! DO NOT USE!
-  (cond-> {} (:bottom     outdent) (assoc :data-outdent-bottom     (:bottom     outdent))
-             (:left       outdent) (assoc :data-outdent-left       (:left       outdent))
-             (:right      outdent) (assoc :data-outdent-right      (:right      outdent))
-             (:top        outdent) (assoc :data-outdent-top        (:top        outdent))
-             (:horizontal outdent) (assoc :data-outdent-horizontal (:horizontal outdent))
-             (:vertical   outdent) (assoc :data-outdent-vertical   (:vertical   outdent))
-             (:all        outdent) (assoc :data-outdent-all        (:all        outdent)))
-  ; WARNING! DEPRECATED! DO NOT USE!
-
   (letfn [(f [result key value]
              (assoc result (keyword (str "data-outdent-" (name key))) value))]
          (reduce-kv f {} outdent)))

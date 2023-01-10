@@ -5,4 +5,5 @@
               [engines.item-handler.api]
               [engines.item-lister.api]
               [engines.item-preview.api]
+              [pretty-css.api]
               [templates.lifecycles]))

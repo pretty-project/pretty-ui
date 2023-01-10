@@ -24,6 +24,10 @@
               [elements.multi-field.events]
               [elements.multi-field.subs]
               [elements.password-field.side-effects]
+              [elements.plain-field.effects]
+              [elements.plain-field.events]
+              [elements.plain-field.side-effects]
+              [elements.radio-button.effects]
               [elements.radio-button.events]
               [elements.radio-button.subs]
               [elements.select.effects]
@@ -32,6 +36,7 @@
               [elements.slider.effects]
               [elements.slider.events]
               [elements.slider.subs]
+              [elements.switch.effects]
               [elements.switch.events]
               [elements.switch.subs]
               [elements.text-field.effects]
@@ -67,6 +72,7 @@
               [elements.multi-combo-box.views      :as multi-combo-box.views]
               [elements.multi-field.views          :as multi-field.views]
               [elements.password-field.views       :as password-field.views]
+              [elements.plain-field.views          :as plain-field.views]
               [elements.point-diagram.views        :as point-diagram.views]
               [elements.radio-button.views         :as radio-button.views]
               [elements.row.views                  :as row.views]
@@ -115,6 +121,7 @@
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
 (def password-field       password-field.views/element)
+(def plain-field          plain-field.views/element)
 (def point-diagram        point-diagram.views/element)
 (def radio-button         radio-button.views/element)
 (def row                  row.views/element)

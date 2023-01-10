@@ -21,7 +21,7 @@
   ;
   ; @return (map)
   ; {:data-active (boolean)
-  ;  :data-clickable (boolean)
+  ;  :data-click-effect (keyword)
   ;  :data-disabled (boolean)
   ;  :data-height (keyword)
   ;  :href (string)
@@ -29,7 +29,7 @@
   ;  :on-mouse-up (function)}
   [bar-id {:keys [height]} {:keys [active? disabled? href on-click] :as item-props}]
   ; XXX#9910
-  ; The height of the menu bar has to set on the menu items! 
+  ; The height of the menu bar has to set on the menu items!
   ; This way the items' height is consistent and independent of the :orientation
   ; property of the menu bar.
   (merge (element.helpers/element-badge-attributes bar-id item-props)
@@ -37,7 +37,7 @@
           :on-mouse-up #(x.environment/blur-element! bar-id)}
          (if disabled? (cond-> {:data-disabled true}
                                (some? active?) (assoc :data-active (boolean active?)))
-                       (cond-> {:data-clickable true}
+                       (cond-> {:data-click-effect :opacity}
                                (some? href)     (assoc :href        (str        href))
                                (some? on-click) (assoc :on-click   #(r/dispatch on-click))
                                (some? active?)  (assoc :data-active (boolean    active?))))))

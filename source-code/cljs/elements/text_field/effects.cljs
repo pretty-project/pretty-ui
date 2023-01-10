@@ -65,7 +65,6 @@
       (let [stored-value (get-in db value-path)]
            {:fx [:elements.text-field/use-stored-value! field-id field-props stored-value]})))
 
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -83,8 +82,8 @@
       ; kell, hogy megvalósítsák a text-field elem eredeti billentyűlenyomás-figyelő eseményeinek működését!
       (let [on-enter-props {:key-code 13 :on-keydown [:elements.text-field/ENTER-pressed field-id field-props] :required? true}
             on-esc-props   {:key-code 27 :on-keydown [:elements.text-field/ESC-pressed   field-id field-props] :required? true}]
-           {:dispatch-cond [on-enter   [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props]
-                            emptiable? [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props]]})))
+           {:dispatch-n [(if on-enter   [:x.environment/reg-keypress-event! :elements.text-field/ENTER on-enter-props])
+                         (if emptiable? [:x.environment/reg-keypress-event! :elements.text-field/ESC     on-esc-props])]})))
 
 (r/reg-event-fx :elements.text-field/remove-keypress-events!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -95,8 +94,8 @@
   ;  :on-enter (metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [emptiable? on-enter]}]]
       ; XXX#4156
-      {:dispatch-cond [on-enter   [:x.environment/remove-keypress-event! :elements.text-field/ENTER]
-                       emptiable? [:x.environment/remove-keypress-event! :elements.text-field/ESC]]}))
+      {:dispatch-n [(if on-enter   [:x.environment/remove-keypress-event! :elements.text-field/ENTER])
+                    (if emptiable? [:x.environment/remove-keypress-event! :elements.text-field/ESC])]}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -160,7 +159,7 @@
   ; @param (map) field-props
   ; {:on-type-ended (metamorphic-event)(opt)}
   (fn [{:keys [db]} [_ field-id {:keys [on-type-ended] :as field-props}]]
-      ; BUG#6071 (source-code/cljs/elements/text_field/events.cljs)
+      ; BUG#6071 (source-code/cljs/elements/text_field/side_effects.cljs)
       (let [field-content  (text-field.helpers/get-field-content field-id)
             field-focused? (input.helpers/input-focused?         field-id)]
            {:dispatch (if on-type-ended  (r/metamorphic-event<-params on-type-ended field-content))

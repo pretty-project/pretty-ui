@@ -59,8 +59,10 @@
   ; {:copyable? (boolean)(opt)}
   [text-id {:keys [copyable?] :as text-props}]
   (if copyable? [:div.e-text--copyable (text.helpers/copyable-attributes text-id text-props)
-                                       [:div.e-text--content (text-content-rows text-id text-props)]]
-                [:<>                   [:div.e-text--content (text-content-rows text-id text-props)]]))
+                                       [:div.e-text--content (text.helpers/content-attributes text-id text-props)
+                                                             (text-content-rows               text-id text-props)]]
+                [:<>                   [:div.e-text--content (text.helpers/content-attributes text-id text-props)
+                                                             (text-content-rows               text-id text-props)]]))
 
 (defn- text-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,10 +89,6 @@
                [text-body                    text-id text-props]])
 
 (defn element
-  ; XXX#0439
-  ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
-  ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
-  ;
   ; @param (keyword)(opt) text-id
   ; @param (map) text-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -127,7 +125,13 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: true
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :text-direction (keyword)(opt)
+  ;   :normal, :reversed
+  ;   Default :normal
+  ;  :text-overflow (keyword)(opt)
+  ;   :ellipsis, :wrap
+  ;   Default: :wrap}
   ;
   ; @usage
   ; [text {...}]

@@ -10,6 +10,7 @@
   ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
+  ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
   ;  :marker-color (keyword)(opt)}
@@ -20,11 +21,12 @@
   ;  :font-size (keyword)
   ;  :font-weight (keyword)
   ;  :horizontal-align (keyword)
+  ;  :hover-color (keyword)
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
   ;  :icon-size (keyword)
   ;  :line-height (keyword)}
-  [{:keys [badge-content font-size icon marker-color] :as button-props}]
+  [{:keys [badge-content disabled? font-size icon marker-color] :as button-props}]
   (merge {:font-size        :s
           :font-weight      :bold
           :horizontal-align :center
@@ -34,4 +36,5 @@
          (if icon          {:icon-family   :material-icons-filled
                             :icon-position :left
                             :icon-size (or font-size :s)})
-         (param button-props)))
+         (param button-props)
+         (if disabled? {:hover-color :none})))

@@ -1,17 +1,4 @@
 
-;; -- Legal information -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Monoset Clojure/ClojureScript web application framework
-; https://monotech-hq.github.io/monoset
-;
-; Copyright Adam Szűcs and other contributors - All rights reserved
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns engines.text-editor.views
     (:require [ckeditor5.api                  :as ckeditor5]
               [elements.api                   :as elements]
@@ -22,8 +9,6 @@
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]))
 
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -33,7 +18,6 @@
   (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        [:div [:br] "output:  " (get @engines.text-editor.state/EDITOR-OUTPUT  editor-id)
              [:br] "input:   " (get @engines.text-editor.state/EDITOR-INPUT   editor-id)
-             [:br] "trigger: " (get @engines.text-editor.state/EDITOR-TRIGGER editor-id)
              [:br] "stored:  " stored-value]))
 
 (defn synchronizer-sensor
@@ -51,8 +35,6 @@
   ; HACK#9910
   (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
        [synchronizer-sensor editor-id editor-props stored-value]))
-
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

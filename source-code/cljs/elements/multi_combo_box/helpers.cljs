@@ -50,6 +50,9 @@
   (merge (element.helpers/element-indent-attributes box-id box-props)
          {:style style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn box-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

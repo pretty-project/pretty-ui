@@ -28,11 +28,11 @@
   ; @param (map) box-props
   ; {:option-value-f (function)
   ;  :value-path (vector)}
-  ; @param (*) selected-option
+  ; @param (*) option
   ;
   ; @return (map)
-  [db [_ _ {:keys [option-value-f value-path]} selected-option]]
-  (let [option-value (option-value-f selected-option)]
+  [db [_ _ {:keys [option-value-f value-path]} option]]
+  (let [option-value (option-value-f option)]
        (if (input.helpers/value-path->vector-item? value-path)
            (r x.db/set-vector-item! db value-path option-value)
            (r x.db/set-item!        db value-path option-value))))

@@ -17,10 +17,10 @@
   [_ {{:menu/keys [id]} :menu-link}]
   (let [menu-items @(r/subscribe [:website-menus.handler/get-menu-items id])]
        (letfn [(f [menu-items {:keys [link label style target]}]
-                  (conj menu-items [:a {:data-clickable true
+                  (conj menu-items [:a {:data-click-effect :opacity}
                                         :class [:mt-menu--menu-item :mt-effect--underline]
                                         :style style :href link :target (case target :self "_self" :blank "_blank" "_self")
-                                        :on-mouse-up #(x.environment/blur-element!)}
+                                        :on-mouse-up #(x.environment/blur-element!)
                                        (x.components/content label)]))]
               [:div {:class :mt-menu--menu-items}
                     (reduce f [:<>] menu-items)])))

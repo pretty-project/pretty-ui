@@ -6,6 +6,12 @@
 ;; ----------------------------------------------------------------------------
 
 ; @atom (map)
+(defonce FIELD-INPUTS (ratom {}))
+
+; @atom (map)
+(defonce FIELD-OUTPUTS (ratom {}))
+
+; @atom (map)
 (defonce FIELD-STATES (ratom {}))
 
 ; @atom (keyword)

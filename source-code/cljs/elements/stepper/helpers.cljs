@@ -18,6 +18,9 @@
   (merge (element.helpers/element-indent-attributes stepper-id stepper-props)
          {:style style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn stepper-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

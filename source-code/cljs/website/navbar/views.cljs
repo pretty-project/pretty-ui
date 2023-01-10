@@ -19,9 +19,9 @@
   ; {:on-menu (metamorphic-event)(opt)}
   [component-id {:keys [on-menu]}]
   (if on-menu [:button {:id :mt-navbar--menu-button
-                        :data-clickable true
+                        :data-click-effect :opacity}
                         :on-click    #(r/dispatch on-menu)
-                        :on-mouse-up #(x.environment/blur-element!)}
+                        :on-mouse-up #(x.environment/blur-element!)
                        [:span]]))
 
 (defn- navbar-menu-items

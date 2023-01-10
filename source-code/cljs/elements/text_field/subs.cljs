@@ -40,18 +40,3 @@
   [db [_ field-id {:keys [field-content-f value-path]}]]
   (let [stored-value (get-in db value-path)]
        (-> stored-value field-content-f str empty?)))
-
-(defn invalid-warning?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (boolean)
-  [db [_ field-id field-props]])
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-sub :elements.text-field/invalid-warning? invalid-warning?)

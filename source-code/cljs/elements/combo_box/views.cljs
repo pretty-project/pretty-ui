@@ -34,7 +34,7 @@
   [box-id {:keys [option-component] :as box-props} option-dex option]
   ; BUG#2105
   ; An on-mouse-down event fired on the combo-box surface would cause the on-blur
-  ; event of the field, therefore the surface would dissapear unless the on-mouse-down
+  ; event of the field, therefore the surface would dissapear unless if the on-mouse-down
   ; event prevented.
   [:button.e-combo-box--option {:on-mouse-down #(do (.preventDefault %))
                                 :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
@@ -49,7 +49,8 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  ; XXX#3270 (source-code/cljs/elements/combo-box/helpers.cljs)
+  ; Why the :data-options-renderer attribute has to be added?
+  ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
   (let [options (combo-box.helpers/get-rendered-options box-id box-props)]
        (letfn [(f [option-list option-dex option]
                   ;^{:key (random/generate-react-key)}
@@ -118,6 +119,4 @@
 
   ([box-id box-props]
    (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)]
-        ; WARNING! DEPRECATED! DO NOT USE!
-        ; box-props (combo-box.prototypes/box-events-prototype box-id box-props)
         [combo-box box-id box-props])))

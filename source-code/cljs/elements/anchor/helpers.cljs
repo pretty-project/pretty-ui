@@ -55,11 +55,11 @@
   (merge (element.helpers/element-indent-attributes anchor-id anchor-props)
          (anchor-style-attributes                   anchor-id anchor-props)
          (anchor-font-attributes                    anchor-id anchor-props)
-         (if disabled? {:disabled       true}
-                       {:data-clickable true
-                        :href           href
-                        :on-click       #(r/dispatch on-click)
-                        :on-mouse-up    #(x.environment/blur-element!)})))
+         (if disabled? {:disabled          true}
+                       {:data-click-effect :opacity
+                        :href              href
+                        :on-click          #(r/dispatch on-click)
+                        :on-mouse-up       #(x.environment/blur-element!)})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

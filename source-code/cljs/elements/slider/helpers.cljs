@@ -65,6 +65,58 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn slider-primary-thumb-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [slider-id {:keys []}]
+  (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
+       {:data-click-effect :opacity
+        :on-mouse-down     #(start-sliding! % slider-id :primary)
+        :style             {:left      (->           0 css/px)
+                            :transform (-> translate-x css/px css/translate-x)}}))
+
+(defn slider-secondary-thumb-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [slider-id slider-props]
+  (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
+       {:data-click-effect :opacity
+        :on-mouse-down     #(start-sliding! % slider-id :secondary)
+        :style             {:right     (->           0 css/px)
+                            :transform (-> translate-x css/px css/translate-x)}}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn slider-line-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) slider-id
+  ; @param (map) slider-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [slider-id slider-props]
+  (let []
+       {:data-click-effect :opacity
+        :style {:width "200px"}}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn slider-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -78,6 +130,9 @@
   (merge (element.helpers/element-indent-attributes slider-id slider-props)
          {:style style}))
 
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn slider-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -88,52 +143,3 @@
   [slider-id slider-props]
   (merge (element.helpers/element-default-attributes slider-id slider-props)
          (element.helpers/element-outdent-attributes slider-id slider-props)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn slider-primary-thumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [slider-id {:keys []}]
-  (let [translate-x (get-in @slider.state/THUMBS [slider-id :primary :current-translate-x] 0)]
-       {:data-clickable true
-        :on-mouse-down  #(start-sliding! % slider-id :primary)
-        :style          {:left      (->           0 css/px)
-                         :transform (-> translate-x css/px css/translate-x)}}))
-
-(defn slider-secondary-thumb-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [slider-id slider-props]
-  (let [translate-x (get-in @slider.state/THUMBS [slider-id :secondary :current-translate-x] 0)]
-       {:data-clickable true
-        :on-mouse-down  #(start-sliding! % slider-id :secondary)
-        :style          {:right     (->           0 css/px)
-                         :transform (-> translate-x css/px css/translate-x)}}))
-
-(defn slider-line-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  ; {}
-  ;
-  ; @return (map)
-  ; {}
-  [slider-id slider-props]
-  (let []
-       {:data-clickable true
-        :style {:width "200px"}}))

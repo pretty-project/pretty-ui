@@ -45,7 +45,7 @@
   ; @param (map) button-props
   ; @param (*) option
   [button-id button-props option]
-  [:div.e-radio-button--option-content {:data-clickable-target true}
+  [:div.e-radio-button--option-content {:data-click-target :opacity}
                                        [radio-button-option-label  button-id button-props option]
                                        [radio-button-option-helper button-id button-props option]])
 

@@ -1,24 +1,9 @@
 
-;; -- Legal information -------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; Monoset Clojure/ClojureScript web application framework
-; https://monotech-hq.github.io/monoset
-;
-; Copyright Adam Szűcs and other contributors - All rights reserved
-
-
-
-;; -- Namespace ---------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (ns engines.text-editor.helpers
     (:require [engines.text-editor.config :as config]
               [engines.text-editor.state  :as state]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]))
-
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -31,8 +16,6 @@
   ; @return (vector)
   [editor-id]
   [:engines :text-editor/editor-content editor-id])
-
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,16 +40,6 @@
   ; HACK#9910
   (get @state/EDITOR-OUTPUT editor-id))
 
-(defn get-editor-trigger
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ;
-  ; @return (string)
-  [editor-id]
-  ; HACK#9910
-  (get @state/EDITOR-TRIGGER editor-id))
-
 (defn set-editor-output!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -75,8 +48,6 @@
   [editor-id editor-content]
   ; HACK#9910
   (swap! state/EDITOR-OUTPUT assoc editor-id editor-content))
-
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -107,11 +78,8 @@
   ; @param (keyword) editor-id
   ; @param (map) editor-props
   [editor-id _]
-  (swap! state/EDITOR-INPUT   dissoc editor-id)
-  (swap! state/EDITOR-OUTPUT  dissoc editor-id)
-  (swap! state/EDITOR-TRIGGER dissoc editor-id))
-
-
+  (swap! state/EDITOR-INPUT  dissoc editor-id)
+  (swap! state/EDITOR-OUTPUT dissoc editor-id))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

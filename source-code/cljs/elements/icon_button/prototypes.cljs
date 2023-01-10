@@ -9,18 +9,23 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) button-props
-  ; {:badge-content (metamorphic-content)(opt)}
+  ; {:badge-content (metamorphic-content)(opt)
+  ;  :disabled? (boolean)(opt)
+  ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)
   ;  :badge-position (keyword)
   ;  :height (keyword)
+  ;  :hover-color (keyword)
   ;  :icon-family (keyword)
+  ;  :marker-position (keyword)
   ;  :width (keyword)}
-  [{:keys [badge-content marker-color] :as button-props}]
+  [{:keys [badge-content disabled? marker-color] :as button-props}]
   (merge {:icon-family :material-icons-filled
           :height      :xxl
           :width       :xxl}
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
-         (param button-props)))
+         (param button-props)
+         (if disabled? {:hover-color :none})))

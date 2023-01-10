@@ -23,6 +23,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :elements.switch/switch-did-mount switch-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.switch/toggle-option! checkbox.events/toggle-option!)

@@ -160,11 +160,7 @@
   height: calc( 100% - 24px );
 }
 
-.c-item-list-header--cell[data-clickable="true"] {
-  cursor: pointer;
-}
-
-.c-item-list-header--cell[data-clickable="true"]:hover::before {
+.c-item-list-header--cell[data-click-effect]:hover::before {
   background-color: var( --fill-color-highlight );
   border-radius: var(--border-radius-xs);
   content: '';
@@ -262,7 +258,7 @@
   overflow-x: hidden;
 }
 
-.c-list-item-cell[data-clickable="true"]:hover::before {
+.c-list-item-cell[data-click-effect]:hover::before {
   background-color: var( --fill-color-highlight );
   border-radius: var(--border-radius-xs);
   content: '';

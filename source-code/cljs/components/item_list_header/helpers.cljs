@@ -23,7 +23,7 @@
   ; {:on-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)}
+  ; {:data-click-effect (keyword)}
   [{:keys [on-click]}]
-  (if on-click {:data-clickable true
+  (if on-click {:data-click-effect :opacity
                 :on-click #(r/dispatch on-click)}))

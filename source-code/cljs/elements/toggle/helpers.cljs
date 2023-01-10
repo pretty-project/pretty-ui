@@ -49,7 +49,7 @@
   ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
   ;  :id (string)
@@ -62,12 +62,12 @@
          (toggle-style-attributes                   toggle-id toggle-props)
          (toggle-layout-attributes                  toggle-id toggle-props)
          {:data-selectable false}
-         (if disabled? {:disabled       true}
-                       {:id             (hiccup/value toggle-id "body")
-                        :on-click       #(r/dispatch on-click)
-                        :on-mouse-over  #(r/dispatch on-mouse-over)
-                        :on-mouse-up    #(x.environment/blur-element! toggle-id)
-                        :data-clickable true})))
+         (if disabled? {:disabled          true}
+                       {:id                (hiccup/value toggle-id "body")
+                        :on-click          #(r/dispatch on-click)
+                        :on-mouse-over     #(r/dispatch on-mouse-over)
+                        :on-mouse-up       #(x.environment/blur-element! toggle-id)
+                        :data-click-effect :opacity})))
 
 (defn toggle-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

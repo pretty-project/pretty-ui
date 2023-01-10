@@ -110,7 +110,7 @@
   ; Az x4.7.7 verzióig a további mezők {:autofocus? true} beállítással jelentek meg,
   ; ezért ha egy multi-field elem a React-fába csatolódásakor már több értékkel rendelkezett,
   ; akkor az első mezőt leszámítva az összes többi mező {:autofocus? true} beállítással jelent meg!
-  (if (=      field-dex 0)
+  (if (= field-dex 0)
       (return autofocus?)))
 
 (defn field-dex->value-path
@@ -173,6 +173,9 @@
   [group-id {:keys [style] :as group-props}]
   (merge (element.helpers/element-indent-attributes group-id group-props)
          {:style style}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn group-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -134,7 +134,7 @@
   ;  :on-mouse-over (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
   ;  :id (string)
@@ -151,12 +151,12 @@
          (button-font-attributes                    button-id button-props)
          (button-layout-attributes                  button-id button-props)
          {:data-selectable false}
-         (if disabled? {:disabled       true}
-                       {:id             (hiccup/value button-id "body")
-                        :on-click       #(r/dispatch  on-click)
-                        :on-mouse-over  #(r/dispatch  on-mouse-over)
-                        :on-mouse-up    #(x.environment/blur-element! button-id)
-                        :data-clickable true})))
+         (if disabled? {:disabled          true}
+                       {:id                (hiccup/value button-id "body")
+                        :on-click          #(r/dispatch  on-click)
+                        :on-mouse-over     #(r/dispatch  on-mouse-over)
+                        :on-mouse-up       #(x.environment/blur-element! button-id)
+                        :data-click-effect :opacity})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -70,18 +70,18 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :data-icon-family (keyword)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [label-id _]
-  {:data-clickable   true
-   :data-selectable  false
-   :data-icon-family :material-icons-filled
-   :data-icon-size   :xs
-   :on-click        #(toggle-info-text-visiblity! label-id)
-   :on-mouse-up     #(x.environment/blur-element! label-id)})
+  {:data-click-effect :opacity
+   :data-selectable   false
+   :data-icon-family  :material-icons-filled
+   :data-icon-size    :xs
+   :on-click    #(toggle-info-text-visiblity! label-id)
+   :on-mouse-up #(x.environment/blur-element! label-id)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -93,16 +93,38 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
-  ;  :data-copy-label (string)
-  ;  :data-copyable (boolean)
+  ; {:data-bubble-color (keyword)
+  ;  :data-bubble-content (string)
+  ;  :data-bubble-position (keyword)
+  ;  :data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :on-click (function)
   [label-id label-props]
-  {:data-clickable  true
-   :data-copyable   true
-   :data-copy-label (x.components/content :copy!)
-   :on-click        (on-copy-f label-id label-props)})
+  {:data-bubble-color    :primary
+   :data-bubble-position :right
+   :data-click-effect    :opacity
+   :data-bubble-content  (x.components/content :copy!)
+   :on-click             (on-copy-f label-id label-props)})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn content-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) label-id
+  ; @param (map) label-props
+  ; {:target-id (keyword)
+  ;  :text-direction (keyword)(opt)
+  ;  :text-overflow (keyword)(opt)}
+  ;
+  ; @return (map)
+  ; {:data-text-direction (keyword)
+  ;  :data-text-overflow (keyword)}
+  [_ {:keys [target-id text-direction text-overflow]}]
+  {:data-text-direction text-direction
+   :data-text-overflow  text-overflow
+   :for                 target-id})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -147,21 +169,18 @@
   ; {:horizontal-align (keyword)
   ;  :horizontal-position (keyword)(opt)
   ;  :min-width (keyword)(opt)
-  ;  :overflow-direction (keyword)(opt)
   ;  :vertical-position (keyword)(opt)}
   ;
   ; @return (map)
   ; {:data-element-width (keyword)
   ;  :data-horizontal-position (keyword)
   ;  :data-horizontal-row-align (keyword)
-  ;  :data-overflow-direction (keyword)
   ;  :data-vertical-position (keyword)}
-  [_ {:keys [horizontal-align horizontal-position min-width overflow-direction vertical-position]}]
+  [_ {:keys [horizontal-align horizontal-position min-width vertical-position]}]
   {:data-horizontal-position  horizontal-position
    :data-horizontal-row-align horizontal-align
    :data-element-width        min-width
-   :data-vertical-position    vertical-position
-   :data-overflow-direction   overflow-direction})
+   :data-vertical-position    vertical-position})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

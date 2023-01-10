@@ -34,15 +34,15 @@
   ;  :primary-button-event (metamorphic-event)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [chip-id {:keys [disabled? primary-button-event] :as chip-props}]
-  (if disabled? {:disabled       true}
-                {:data-clickable true
-                 :on-click       #(r/dispatch primary-button-event)
-                 :on-mouse-up    #(x.environment/blur-element! chip-id)}))
+  (if disabled? {:disabled          true}
+                {:data-click-effect :opacity
+                 :on-click          #(r/dispatch primary-button-event)
+                 :on-mouse-up       #(x.environment/blur-element! chip-id)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,13 +55,13 @@
   ; {:on-click (metamorphic-event)(opt)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)}
   [chip-id {:keys [on-click] :as chip-props}]
   (merge (element.helpers/element-indent-attributes chip-id chip-props)
          (chip-style-attributes                     chip-id chip-props)
          {:data-selectable false}
-         (if on-click {:data-clickable true})))
+         (if on-click {:data-click-effect :opacity})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

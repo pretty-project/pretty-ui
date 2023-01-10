@@ -45,7 +45,7 @@
   ; @param (map) switch-props
   ; @param (*) option
   [switch-id switch-props option]
-  [:div.e-switch--option-content {:data-clickable-target true}
+  [:div.e-switch--option-content {:data-click-target :opacity}
                                  [switch-option-label  switch-id switch-props option]
                                  [switch-option-helper switch-id switch-props option]])
 

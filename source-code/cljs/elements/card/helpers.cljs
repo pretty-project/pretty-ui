@@ -56,7 +56,7 @@
   ;  :on-click (metamorphic-event)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (keyword)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
@@ -65,10 +65,10 @@
          (element.helpers/element-badge-attributes  card-id card-props)
          (card-style-attributes                     card-id card-props)
          (card-layout-attributes                    card-id card-props)
-         (if disabled? {:disabled       true}
-                       {:data-clickable true
-                        :on-click       #(r/dispatch on-click)
-                        :on-mouse-up    #(x.environment/blur-element! card-id)})))
+         (if disabled? {:disabled          true}
+                       {:data-click-effect :opacity
+                        :on-click          #(r/dispatch on-click)
+                        :on-mouse-up       #(x.environment/blur-element! card-id)})))
 
 (defn static-card-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

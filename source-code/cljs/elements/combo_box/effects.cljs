@@ -15,16 +15,12 @@
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
       ; XXX#4156
-      ; Az :elements.text-field/ESC és :elements.text-field/ENTER azonosítók használatával
-      ; a combo-box elem által regisztrált billentyűlenyomás-figyelők felülírják a text-field
-      ; elem ESC és ENTER billentyűlenyomás-figyelőit, hogy azok működése ne zavarja a combo-box
-      ; elem működését.
-      ; A felülírt események eredeti funkcionalitását a combo-box elem billentyűlenyomás-figyelő
-      ; eseményei természetesen megvalósítják ...
+      ; Overwrites the default ESC and ENTER keypress events of the field by using
+      ; the :elements.text-field/ESC and :elements.text-field/ENTER keypress event IDs.
+      ; The overwritten keypress events' functionality is implemented in the combo-box
+      ; field keypress events.
       ;
-      ; Az UP és DOWN billentyűlenyomás-figyelők az említett másik két eseményhez hasonlóan
-      ; :elements.text-field/... azonosítót kapnak :elements.combo-box/... azonosító helyett,
-      ; hogy az elnevezések konzisztensek maradjanak.
+      ; The UP and DOWN keypress events has similar names (for keeping consistency).
       (let [on-down-props  {:key-code 40 :on-keydown [:elements.combo-box/DOWN-pressed  box-id box-props] :required? true :prevent-default? true}
             on-up-props    {:key-code 38 :on-keydown [:elements.combo-box/UP-pressed    box-id box-props] :required? true :prevent-default? true}
             on-esc-props   {:key-code 27 :on-keydown [:elements.combo-box/ESC-pressed   box-id box-props] :required? true}
@@ -72,18 +68,17 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      ; Ha a combo-box elem surface felülete ...
-      ; (A) ... megjelenít opciókat, akkor az ESC billentyű lenyomása a combo-box
-      ;         elem saját működését valósítja meg.
-      ; (B) ... nem jelenít meg opciókat, akkor az ESC billentyű lenyomása a text-field
-      ;         elem működését valósítja meg.
+      ; If the surface of the combo-box ...
+      ; ... displays options, pressing the ESC button:
+      ;     - hides the surface.
+      ;     - discards the highlight on the highlighted option.
+      ; ... doesn't display any options, pressing the ESC button:
+      ;     - fires the original ESC event of the text-field.
       ;
-      ; HACK#1450 (source-code/cljs/elements/combo-box/helpers.cljs)
+      ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
       (if (combo-box.helpers/any-option-rendered? box-id box-props)
-          ; (A)
           {:fx-n [[:elements.text-field/hide-surface!              box-id]
                   [:elements.combo-box/discard-option-highlighter! box-id]]}
-          ; (B)
           [:elements.text-field/ESC-pressed box-id box-props])))
 
 (r/reg-event-fx :elements.combo-box/ENTER-pressed
@@ -94,32 +89,24 @@
   ; {:on-type-ended (metamorphic-event)(opt)
   ;  :option-value-f (function)}
   (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props}]]
-      ; XXX#4146
-      ; Ha a combo-box elem surface felülete ...
-      ; (A) ... látható, akkor az ENTER billentyű lenyomása a combo-box elem
-      ;         saját működését valósítja meg.
-      ; (B) ... nem látható, akkor az ENTER billentyű lenyomása a text-field elem
-      ;         működését valósítja meg.
+      ; XXX#4146 (source-code/cljs/elements/multi_combo_box/effects.cljs)
+      ; If the surface of the combo-box is visible ...
+      ; ... and an option is highlighted, pressing the ENTER button:
+      ;     - hides the surface.
+      ;     - discards the highlight on the highlighted option.
+      ;     - stores the highlighted option into the application state.
+      ;     - uses the highlighted option as the field content.
+      ;     - dispatches the :on-type-ended event.
+      ; ... and no option is highlight, pressing the ENTER button:
+      ;     - hides the surface.
       ;
-      ; Ha a surface felületen ...
-      ; (A1) ... valamelyik opció ki van választva, akkor a kiválasztott opciót,
-      ;          eltárolja a value-path útvonalra és a szövegmező értékének is beállítja.
-      ; (A2) ... egyik opció sincs kiválasztva, akkor eltünteti a surface felületet.
+      ; If the surface of the combo-box isn't visible ...
+      ; ... pressing the ENTER button:
+      ;     - fires the original ENTER event of the text-field.
       (if (text-field.helpers/surface-visible? box-id)
-          ; (A)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
-                  ; (A1)
-                  {:db   (r combo-box.events/select-option! db box-id box-props highlighted-option)
-                   :fx-n [[:elements.text-field/hide-surface!              box-id]
-                          [:elements.combo-box/discard-option-highlighter! box-id]
-                          [:elements.combo-box/use-selected-option!        box-id box-props highlighted-option]]
-                   ; XXX#4149
-                   ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!
-                   :dispatch (if on-type-ended (let [option-value (option-value-f highlighted-option)]
-                                                    (r/metamorphic-event<-params on-type-ended option-value)))}
-                  ; (A2)
-                  {:fx [:elements.text-field/hide-surface! box-id]})
-          ; (B)
+                  {:dispatch [:elements.combo-box/select-option! box-id box-props highlighted-option]}
+                  {:fx       [:elements.text-field/hide-surface! box-id]})
           [:elements.text-field/ENTER-pressed box-id box-props])))
 
 ;; ----------------------------------------------------------------------------
@@ -132,15 +119,22 @@
   ; @param (map) box-props
   ; {:on-type-ended (metamorphic-event)(opt)
   ;  :option-value-f (function)}
-  ; @param (*) selected-option
-  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} selected-option]]
-      {:db   (r combo-box.events/select-option! db box-id box-props selected-option)
+  ; @param (*) option
+  (fn [{:keys [db]} [_ box-id {:keys [on-type-ended option-value-f] :as box-props} option]]
+      ; The :on-type-ended event has to be dispatched even if the user didn't
+      ; typed and the option is selected by the pointer or a button event!
+      ;
+      ; Selecting an option:
+      ; - hides the surface.
+      ; - discards the highlight on the highlighted option.
+      ; - stores the highlighted option into the application state.
+      ; - uses the highlighted option as the field content.
+      ; - dispatches the :on-type-ended event.
+      {:db   (r combo-box.events/select-option! db box-id box-props option)
        :fx-n [[:elements.text-field/hide-surface!              box-id]
               [:elements.combo-box/discard-option-highlighter! box-id]
-              [:elements.combo-box/use-selected-option!        box-id box-props selected-option]]
-       ; XXX#4149
-       ; Az on-type-ended eseménynek szükséges megtörténni a mező értékének manuális kiválasztásakor is!
-       :dispatch (if on-type-ended (let [option-value (option-value-f selected-option)]
+              [:elements.combo-box/use-selected-option!        box-id box-props option]]
+       :dispatch (if on-type-ended (let [option-value (option-value-f option)]
                                         (r/metamorphic-event<-params on-type-ended option-value)))}))
 
 ;; ----------------------------------------------------------------------------

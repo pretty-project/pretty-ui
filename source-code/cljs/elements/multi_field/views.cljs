@@ -47,7 +47,7 @@
 
 (defn element
   ; XXX#0714 (source-code/cljs/elements/text_field/views.cljs)
-  ; The multi-field element is based on the text-field element or the combo-box element.
+  ; The multi-field element is based on the text-field or the combo-box element.
   ; For more information check out the documentation of the text-field or the combo-box element.
   ;
   ; In case of using the :initial-options, :options or :options-path properties,

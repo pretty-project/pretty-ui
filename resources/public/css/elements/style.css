@@ -27,11 +27,7 @@
 /*** Breadcrumbs crumb ***/
 
 .e-breadcrumbs--crumb {
-  color:         var( --color-muted );
   max-width:     160px;
-  overflow-x:    hidden;
-  text-overflow: ellipsis;
-  white-space:   nowrap;
 }
 
 .e-breadcrumbs--separator {
@@ -49,7 +45,7 @@
   width:            6px;
 }
 
-.e-breadcrumbs--crumb[data-clickable] {
+.e-breadcrumbs--crumb[data-click-effect] {
   font-weight: 600;
 }
 
@@ -639,34 +635,6 @@
 
 /*** Copyable label ***/
 
-/*** Label content ***/
-
-.e-label--content {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.e-label--body[data-overflow-direction="reversed"] .e-label--content {
-  direction: rtl;
-}
-
-/*** Label content ***/
-
-/*** Label placeholder ***/
-
-/* Az elemekben megjelenített, a tartalom hiányát jelző feliratok (placeholder-ek),
- * mindegyike highlight színnel van kiírva, ezért a label elem tartalmának hiányát
- * jelző placeholder felirat is highlight színt kap! */
-.e-label--placeholder {
-  color: var( --color-highlight );
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/*** Label placeholder ***/
-
 /*** Label icon ***/
 
 .e-label--icon {
@@ -785,15 +753,15 @@
 .e-icon-button--body[data-border-radius="xxl"]::before { border-radius: var( --border-radius-xxl ); }
 
 /* XXX#0017 */
-[data-disabled="false"] [data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
-[data-disabled="false"] [data-hover-color="default"].e-icon-button--body:hover::before   { background-color: var( --hover-color-default   ); }
-[data-disabled="false"] [data-hover-color="muted"].e-icon-button--body:hover::before     { background-color: var( --hover-color-muted     ); }
-[data-disabled="false"] [data-hover-color="highlight"].e-icon-button--body:hover::before { background-color: var( --hover-color-highlight ); }
-[data-disabled="false"] [data-hover-color="invert"].e-icon-button--body:hover::before    { background-color: var( --hover-color-invert    ); }
-[data-disabled="false"] [data-hover-color="primary"].e-icon-button--body:hover::before   { background-color: var( --hover-color-primary   ); }
-[data-disabled="false"] [data-hover-color="secondary"].e-icon-button--body:hover::before { background-color: var( --hover-color-secondary ); }
-[data-disabled="false"] [data-hover-color="success"].e-icon-button--body:hover::before   { background-color: var( --hover-color-success   ); }
-[data-disabled="false"] [data-hover-color="warning"].e-icon-button--body:hover::before   { background-color: var( --hover-color-warning   ); }
+[data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
+[data-hover-color="default"].e-icon-button--body:hover::before   { background-color: var( --hover-color-default   ); }
+[data-hover-color="muted"].e-icon-button--body:hover::before     { background-color: var( --hover-color-muted     ); }
+[data-hover-color="highlight"].e-icon-button--body:hover::before { background-color: var( --hover-color-highlight ); }
+[data-hover-color="invert"].e-icon-button--body:hover::before    { background-color: var( --hover-color-invert    ); }
+[data-hover-color="primary"].e-icon-button--body:hover::before   { background-color: var( --hover-color-primary   ); }
+[data-hover-color="secondary"].e-icon-button--body:hover::before { background-color: var( --hover-color-secondary ); }
+[data-hover-color="success"].e-icon-button--body:hover::before   { background-color: var( --hover-color-success   ); }
+[data-hover-color="warning"].e-icon-button--body:hover::before   { background-color: var( --hover-color-warning   ); }
 
 /*** Icon-button body ***/
 
@@ -847,15 +815,11 @@
 
 .e-icon-button--label {
   font-size: 9px;
-  font-weight: 600;
   height: 12px;
   letter-spacing: var( --letter-spacing-xxs );
   line-height: 12px;
   opacity: .75;
-  overflow: hidden;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   width: 100%;
 
   /* BUG#0984 */
@@ -1167,15 +1131,6 @@
 }
 
 /*** Select button ***/
-
-/*** Select warning ***/
-
-.e-select--warning {
-  color: var( --color-warning );
-  text-align: right;
-}
-
-/*** Select warning ***/
 
 /*** Select options ***/
 
@@ -1512,12 +1467,6 @@
 
 
 /***** Text *****/
-/*** Text wrapper ***/
-
-.e-text {}
-
-/*** Text wrapper ***/
-
 /*** Text body ***/
 
 .e-text--body {
@@ -1610,11 +1559,6 @@ textarea.e-text-field--input {
   resize: none;
 }
 
-.e-text-field[data-disabled="true"] .e-text-field--input {
-  /* BUG#8800 (source-code/cljs/elements/text_field/helpers.cljs) */
-  caret-color: transparent
-}
-
 /*** Field input ***/
 
 /*** Field adornments ***/
@@ -1651,15 +1595,6 @@ textarea.e-text-field--input {
 }
 
 /*** Field adornments ***/
-
-/*** Field warning ***/
-
-.e-text-field--warning {
-  color: var( --color-warning );
-  text-align: right;
-}
-
-/*** Field warning ***/
 
 /*** Field placeholder ***/
 

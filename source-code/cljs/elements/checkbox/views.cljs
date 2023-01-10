@@ -45,7 +45,7 @@
   ; @param (map) checkbox-props
   ; @param (*) option
   [checkbox-id checkbox-props option]
-  [:div.e-checkbox--option-content {:data-clickable-target true}
+  [:div.e-checkbox--option-content {:data-click-target :opacity}
                                    [checkbox-option-label  checkbox-id checkbox-props option]
                                    [checkbox-option-helper checkbox-id checkbox-props option]])
 

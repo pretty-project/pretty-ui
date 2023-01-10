@@ -18,13 +18,15 @@
   ;  :font-weight (keyword)
   ;  :horizontal-align (keyword)
   ;  :line-height (keyword)
-  ;  :selectable? (boolean)}
+  ;  :selectable? (boolean)
+  ;  :text-overflow (keyword)}
   [{:keys [content] :as text-props}]
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
           :line-height      :block
-          :selectable?      true}
+          :selectable?      true
+          :text-overflow    :wrap}
          (param text-props)
          ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
          {:content (x.components/content content)}))

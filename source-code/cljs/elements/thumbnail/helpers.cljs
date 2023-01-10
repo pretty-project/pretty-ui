@@ -34,14 +34,12 @@
   [thumbnail-id {:keys [disabled? on-click style] :as thumbnail-props}]
   (merge (element.helpers/element-indent-attributes thumbnail-id thumbnail-props)
          (thumbnail-layout-attributes               thumbnail-id thumbnail-props)
-         (if disabled? {:data-selectable false
-                        :disabled        true
-                        :style           style}
-                       {:data-clickable  true
-                        :data-selectable false
-                        :on-click        #(r/dispatch on-click)
-                        :on-mouse-up     #(x.environment/blur-element! thumbnail-id)
-                        :style           style})))
+         {:data-selectable false
+          :style           style}
+         (if disabled? {:disabled          true}
+                       {:data-click-effect :opacity
+                        :on-click          #(r/dispatch on-click)
+                        :on-mouse-up       #(x.environment/blur-element! thumbnail-id)})))
 
 (defn static-thumbnail-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

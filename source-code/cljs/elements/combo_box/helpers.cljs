@@ -54,7 +54,6 @@
   ;
   ; @return (boolean)
   [box-id {:keys [option-label-f] :as box-props} option]
-  ; XXX#51910
   (let [field-content (text-field.helpers/get-field-content box-id)
         option-label  (option-label-f option)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
@@ -97,42 +96,30 @@
   ;
   ; @return (boolean)
   [box-id _]
-  ; XXX#3270
-  ;
   ; HACK#1450
-  ; Amikor a text-field elem input mezője fókuszált állapotban van, akkor a mező alatt
-  ; megjelenő surface felület minden esetben {:visible? true} állapotba lép,
-  ; még akkor is, amikor az opciók listája nem tartalmazna elemet.
-  ; A {:visible? true} állapotban lévő felület, ha nem jelenít meg sem választható
-  ; opciót, sem pedig a options-placeholder feliratot (ki lett kapcsolva), akkor
-  ; a felhasználó számára nem lenne látható, miközben az állapota mégis {:visible? true}.
-  ; Ilyen esetben előfordulhatna, ha az [:elements.combo-box/ESC-pressed ...]
-  ; esemény, mivel azt érzékelné, hogy a felület {:visible? true} állapotban van,
-  ; ezért az ESC billentyű első lenyomására a felületet {:visible? false} állapotba
-  ; állítaná, majd csak a második lenyomásra ürítené ki a mezőt, de mivel a felület
-  ; a felhasználó számára nem lenne látható, ezért az ESC billentyű első lenyomása
-  ; nem okozna látható változást és úgy tűnne, mintha a mező kiürítéséhez kettőször
-  ; kellene megnyomni az ESC billentyűt.
+  ; When the text-field is focused the surface below the field is always visible,
+  ; even if it doesn't display any options.
+  ; When the surface is visible without displaying options it's mounted into the
+  ; React tree but invisible for the user because it has no content.
+  ; The problem is when the user presses the ESC button when the surface is mounted
+  ; but not really visible (it has {:visible? true} state but not displaying any options),
+  ; pressing the ESC button set the {:visible? false} state to the surface and
+  ; that causes no noticeable changes on the UI.
   ;
-  ; Lehetséges megoldások:
-  ; 1. A surface felületen mindig megjelenne első (muted) elemként a mező tartalma.
-  ;   (Nem jó, hogy ha abban az esetben is megjelenik a surface felület, amikor
-  ;    nincsenek választható opciók és a beírt szöveget duplán látja a felhasználó!)
+  ; After the surface stepped into the {:visible? false} state, the second press
+  ; of the ESC button implements the original ESC event of the text-field and
+  ; everything gets OK.
   ;
-  ; 2. A surface felületen megjelenne egy options-placeholder felirat, amikor nincsenek
-  ;   opciók kirenderelve.
-  ;   (Nem jó, hogy ha csak abban az esetben is megjelenik a surface felület,
-  ;    amikor nincsenek választható opciók!)
-  ;
-  ; 3. A combo-box a google.com kereső mezőjéhez hasonlóan működjön és az első
-  ;   választható opció mindig a beírt érték legyen, a mező tartalma pedig előnézetben
-  ;   mutassa a highlighted opció értékét, ami csak íródna a value-path útvonalra,
-  ;   amikor ténylegesen ki lesz választva az adott opció.
-  ;   (Nem lenne egyértelmű a felhasználó számára!)
-  ;
-  ; 4. Az [:elements.combo-box/ESC-pressed ...] esemény vizsgálná meg, hogy vannak
-  ;   ténylegesen kirenderelve választható opciók.
-  ;   (Tökéletes!)
-  (boolean (let [surface-id (hiccup/value box-id "surface")]
-                (if-let [surface-element (dom/get-element-by-id surface-id)]
-                        (dom/get-element-by-query surface-element "[data-options-rendered=\"true\"]")))))
+  ; To solve the problem there are several solutions:
+  ; 1. The surface always has to display content.
+  ;    E.g. It can displays the actual content of the field (with muted color,
+  ;         above the selectable options). But it's a bit annoying to see the
+  ;         content double.
+  ;    E.g. It can displays a placeholder label when no option displayed.
+  ;         But it doesn't seen OK if the surface is visible when there are no
+  ;         selectable options for the combo-box.
+  ; 2. The ESC event has to check whether any option is rendered on the surface
+  ;    or not. (That's the perfect solution!)
+  (let [surface-id (hiccup/value box-id "surface")]
+       (if-let [surface-element (dom/get-element-by-id surface-id)]
+               (dom/get-element-by-query surface-element "[data-options-rendered=\"true\"]"))))

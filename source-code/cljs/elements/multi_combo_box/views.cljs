@@ -88,7 +88,6 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (multi-combo-box.prototypes/box-props-prototype  box-id box-props)
-         box-props (multi-combo-box.prototypes/box-events-prototype box-id box-props)
+   (let [box-props (multi-combo-box.prototypes/box-props-prototype box-id box-props)
          box-props (assoc box-props :surface [combo-box.views/combo-box-surface box-id box-props])]
         [multi-combo-box box-id box-props])))

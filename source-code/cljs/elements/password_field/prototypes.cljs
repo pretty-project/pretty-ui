@@ -9,6 +9,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn visibility-adornment-prototype
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {}
+  [field-id _]
+  (let [password-visible? (password-field.helpers/password-visible? field-id)]
+       {:icon      (if password-visible? :visibility_off :visibility)
+        :tooltip   (if password-visible? :hide-password! :show-password!)
+        :on-click  {:fx [:elements.password-field/toggle-password-visibility! field-id]}}))
+
 (defn field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -30,13 +44,12 @@
        (merge {:label :password
                :type  (if password-visible? :text :password)}
               (param field-props)
-              ; *
+
+              ; ...
               (if validate? {:helper    {:content :valid-password-rules :replacements ["8"]}
-                             :validator {:f               x.user/password?
+                             :validator {:f x.user/password?
                                          :invalid-message :password-is-too-weak}})
-              ; *
-              (let [show-password-adornment {;:disabled? field-empty?
-                                             :icon      (if password-visible? :visibility_off :visibility)
-                                             :tooltip   (if password-visible? :hide-password! :show-password!)
-                                             :on-click  {:fx [:elements.password-field/toggle-password-visibility! field-id]}}]
-                   {:end-adornments (vector/conj-item end-adornments show-password-adornment)}))))
+
+              ; ...
+              (let [visibility-adornment (visibility-adornment-prototype field-id field-props)]
+                   {:end-adornments (vector/conj-item end-adornments visibility-adornment)}))))

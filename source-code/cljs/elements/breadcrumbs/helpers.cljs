@@ -15,13 +15,17 @@
   ; @param (map) crumb
   ;
   ; @return (map)
-  ; {:data-font-size (keyword)
+  ; {:data-color (keyword)
+  ;  :data-font-size (keyword)
   ;  :data-line-height (keyword)
-  ;  :data-selectable (boolean)}
+  ;  :data-selectable (boolean)
+  ;  :data-text-overflow (keyword)}
   [_ _ _]
-  {:data-font-size   :xs
-   :data-line-height :block
-   :data-selectable  false})
+  {:data-color         :muted
+   :data-font-size     :xs
+   :data-line-height   :block
+   :data-selectable    false
+   :data-text-overflow :ellipsis})
 
 (defn button-crumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -32,17 +36,21 @@
   ; {:route (string)}
   ;
   ; @return (map)
-  ; {:data-clickable (boolean)
+  ; {:data-click-effect (boolean)
+  ;  :data-color (keyword)
   ;  :data-font-size (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :on-click (function)
-  ;  :on-mouse-up (function)}
+  ;  :on-mouse-up (function)
+  ;  :data-text-overflow (keyword)}
   [breadcrumbs-id _ {:keys [route]}]
-  {:data-clickable  true
-   :data-font-size   :xs
-   :data-line-height :block
-   :data-selectable false
+  {:data-click-effect  :opacity
+   :data-color         :muted
+   :data-font-size     :xs
+   :data-line-height   :block
+   :data-selectable    false
+   :data-text-overflow :ellipsis
    :on-click    #(r/dispatch [:x.router/go-to! route])
    :on-mouse-up #(x.environment/blur-element! breadcrumbs-id)})
 

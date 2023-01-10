@@ -48,9 +48,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :elements.radio-button/radio-button-box-did-mount radio-button-box-did-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.radio-button/select-option! select-option!)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.radio-button/clear-value! clear-value!)

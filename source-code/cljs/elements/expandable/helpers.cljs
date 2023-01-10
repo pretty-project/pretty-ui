@@ -59,9 +59,9 @@
   ;
   ; @return (map)
   [expandable-id {:keys [disabled?]}]
-  (if disabled? {:disabled        true}
-                {:data-clickable  true
-                 :data-selectable false
+  (if disabled? {:disabled          true}
+                {:data-click-effect :opacity
+                 :data-selectable   false
                  :on-click    #(toggle! expandable-id)
                  :on-mouse-up #(x.environment/blur-element! expandable-id)}))
 

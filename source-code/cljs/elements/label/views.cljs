@@ -71,7 +71,9 @@
   ; In the case of the placeholder is an empty string too, the "\u00A0" white
   ; character provides the consistent height for the element until the content
   ; gets its value.
-  [:div.e-label--placeholder {:data-selectable false}
+  [:div.e-label--placeholder {:data-color         :highlight
+                              :data-selectable    false
+                              :data-text-overflow :ellipsis}
                              (if placeholder (x.components/content placeholder)
                                              "\u00A0")])
 
@@ -102,8 +104,10 @@
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's too wide to be the sensor element.
   (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
-                                        [:label.e-label--content {:for target-id} content]]
-                [:<>                    [:label.e-label--content {:for target-id} content]]))
+                                        [:label.e-label--content (label.helpers/content-attributes label-id label-props)
+                                                                 content]]
+                [:<>                    [:label.e-label--content (label.helpers/content-attributes label-id label-props)
+                                                                 content]]))
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -133,10 +137,6 @@
                 [label-helper                   label-id label-props]])
 
 (defn element
-  ; XXX#0439
-  ; A label elemen megjelenített szöveg nem törik meg akkor sem, ha nincs elegendő hely.
-  ; A text elemen megjelenített szöveg megtörik, ha nincs elegendő hely.
-  ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -192,9 +192,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :overflow-direction (keyword)(opt)
-  ;   :normal, :reversed
-  ;   Default :normal
   ;  :placeholder (metamorphic-content)(opt)
   ;  :selectable? (boolean)(opt)
   ;   Default: false
@@ -202,7 +199,13 @@
   ;  :target-id (keyword)(opt)
   ;   The input element's id, that you want to connect with the label.
   ;  :vertical-position (keyword)(opt)
-  ;   :bottom, :center, :top}
+  ;   :bottom, :center, :top
+  ;  :text-direction (keyword)(opt)
+  ;   :normal, :reversed
+  ;   Default :normal
+  ;  :text-overflow (keyword)(opt)
+  ;   :ellipsis, :wrap
+  ;   Default: :ellipsis}
   ;
   ; @usage
   ; [label {...}]

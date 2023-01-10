@@ -110,13 +110,14 @@
   ; [:elements.select/render-select! :my-select {...}]
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ select-id select-props]]
-      ; Az [:elements.select/render-select! ...] eseményt önállóan is lehet használni
-      ; a select komponens használata nélkül, ezért ...
-      ; ... alkalmazza a select-props-prototype függvényt.
-      ; ... alkalmazza az init-element! függvényt.
+      ; The [:elements.select/render-select! ...] event can be used independently
+      ; of the elements.api/select component.
+      ; Therefore the 'select-props-prototype' and the 'select-will-mount'
+      ; functions has to be applied here too.
       (let [select-props (select.prototypes/select-props-prototype select-id select-props)]
-           {:db       (r select.events/select-will-mount  db select-id select-props)
-            :dispatch [:elements.select/render-options! select-id select-props]})))
+           {:db       (r select.events/select-will-mount db select-id select-props)
+            :fx       [:elements.input/mark-input-as-visited! select-id]
+            :dispatch [:elements.select/render-options!       select-id select-props]})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -126,7 +127,9 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {}
+  ; {:autoclear? (boolean)(opt)
+  ;  :on-select (metamorphic-event)(opt)
+  ;  :option-value-f (function)}
   ; @param (*) option
   (fn [{:keys [db]} [_ select-id {:keys [autoclear? option-value-f on-select] :as select-props} option]]
       (let [option-value (option-value-f option)]
@@ -134,6 +137,15 @@
             :dispatch-later [               {:ms select.config/CLOSE-POPUP-DELAY     :dispatch [:x.ui/remove-popup! :elements.select/options]}
                              (if autoclear? {:ms select.config/AUTOCLEAR-VALUE-DELAY :dispatch [:elements.select/clear-value! select-id select-props]})
                              (if on-select  {:ms select.config/ON-SELECT-DELAY       :dispatch (r/metamorphic-event<-params on-select option-value)})]})))
+
+(r/reg-event-fx :elements.select/clear-value!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  (fn [{:keys [db]} [_ select-id select-props]]
+      {:db (r select.events/clear-value! db select-id select-props)
+       :fx [:elements.input/mark-input-as-visited! select-id]}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -143,6 +155,7 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
+  ; {:add-option-f (function)}
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
       (if-let [option-field-filled? (text-field.helpers/field-filled? :elements.select/option-field)]
               (let [field-id      :elements.select/option-field

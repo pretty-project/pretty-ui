@@ -27,7 +27,8 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  ; {}
+  ; {:option-value-f (function)
+  ;  :value-path (vector)}
   ; @param (*) option
   ;
   ; @return (map)
@@ -67,6 +68,3 @@
 
 ; WARNING! NON-PUBLIC! DO NOT USE!
 (r/reg-event-db :elements.select/select-will-mount select-will-mount)
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.select/clear-value! clear-value!)

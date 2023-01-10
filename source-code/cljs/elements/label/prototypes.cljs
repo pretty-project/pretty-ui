@@ -31,18 +31,20 @@
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :selectable? (boolean)
-  ;  :target-id (string)}
+  ;  :target-id (string)
+  ;  :text-overflow (keyword)}
   [{:keys [color content font-size icon marker-color target-id] :as label-props}]
   ; XXX#7009
   ; The 'label-props-prototype' function applies the 'x.components/content' function
-  ; on the 'content' value. By using this solution no need to apply the 'x.components/content'
+  ; on the 'content' value. Therefore no need to apply the 'x.components/content'
   ; function in multiple places.
   (let [content (x.components/content content)]
        (merge {:font-size        :s
                :font-weight      :bold
                :horizontal-align :left
                :line-height      :block
-               :selectable?      false}
+               :selectable?      false
+               :text-overflow   :ellipsis}
               (if marker-color {:marker-position :tr})
               (if icon         {:icon-family :material-icons-filled
                                 :icon-color color :icon-size (or font-size :s)})

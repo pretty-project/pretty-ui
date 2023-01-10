@@ -132,21 +132,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- select-required-warning
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props])
-  ;(if-let [required-warning? @(r/subscribe [:elements.select/required-warning? select-id select-props])]
-  ;        [:div.e-select--warning {:data-font-size   :xs
-  ;                                 :data-line-height :block
-  ;                                 :data-selectable  false
-  ;                                (x.components/content :please-select-an-option)])
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn- select-button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -209,8 +194,7 @@
   [select-id select-props]
   [:div.e-select--body (select.helpers/select-body-attributes select-id select-props)
                        [active-button-label                   select-id select-props]
-                       [select-button                         select-id select-props]
-                       [select-required-warning               select-id select-props]])
+                       [select-button                         select-id select-props]])
 
 (defn- active-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
