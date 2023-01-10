@@ -6,8 +6,5 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot {:dispatch-n [[:x.environment/add-css! {:uri "/plugins/full-calendar/common.css"    :js-build :app}]
-                                 [:x.environment/add-css! {:uri "/plugins/full-calendar/daygrid.css"   :js-build :app}]
-                                 [:x.environment/add-css! {:uri "/plugins/full-calendar/list.css"      :js-build :app}]
-                                 [:x.environment/add-css! {:uri "/plugins/full-calendar/timegrid.css"  :js-build :app}]
-                                 [:x.environment/add-css! {:uri "/plugins/full-calendar/CUSTOM.css"    :js-build :app}]]}})
+  {:on-server-boot [:x.environment/add-css! {:uri "/plugins/full-calendar.min.css" :js-build :app
+                                             :dev-resources ["public/plugins/full-calendar"]}]})

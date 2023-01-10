@@ -6,4 +6,5 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:x.environment/add-css! {:uri "/plugins/carousel/carousel.min.css" :js-build :site}]})
+  {:on-server-boot [:x.environment/add-css! {:uri "/plugins/carousel.min.css" :js-build :site
+                                             :dev-resources ["public/plugins/carousel"]}]})

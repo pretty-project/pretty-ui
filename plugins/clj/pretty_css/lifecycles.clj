@@ -6,5 +6,5 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:x.environment/add-css! {:uri "pretty-css.min.css" :weight 1
-                                             :resources ["public/pretty-css"]}]})
+  {:on-server-boot [:x.environment/add-css! {:uri "/pretty-css.min.css" :weight 1
+                                             :dev-resources ["public/pretty-css"]}]})

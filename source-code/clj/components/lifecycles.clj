@@ -6,4 +6,5 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:x.environment/add-css! {:uri "/css/components/style.css" :compress? true}]})
+  {:on-server-boot [:x.environment/add-css! {:uri "/css/components.min.css"
+                                             :dev-resources ["public/css/components"]}]})

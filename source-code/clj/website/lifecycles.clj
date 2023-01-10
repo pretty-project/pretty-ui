@@ -6,5 +6,5 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot {:dispatch-n [[:x.environment/add-css! {:uri "/css/website/components.css"}]
-                                 [:x.environment/add-css! {:uri "/css/website/effects.css"}]]}})
+  {:on-server-boot [:x.environment/add-css! {:uri "/css/website.min.css"
+                                             :dev-resources ["public/css/website"]}]})

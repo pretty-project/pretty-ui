@@ -6,4 +6,4 @@
 ;; ----------------------------------------------------------------------------
 
 (x.core/reg-lifecycles! ::lifecycles
-  {:on-server-boot [:x.environment/add-css! {:uri "/css/forms/style.css" :compress? true}]})
+  {:on-server-boot [:x.environment/add-css! {:uri "/css/forms/style.css"}]})
