@@ -100,14 +100,14 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-element-width (keyword)
+  ; {:data-element-min-width (keyword)
   ;  :data-layout (keyword)
   ;  :style (map)}
   [select-id {:keys [border-radius layout min-width style] :as select-props}]
   (merge (element.helpers/element-indent-attributes select-id select-props)
-         {:data-element-width min-width
-          :data-layout        layout
-          :style              style}))
+         {:data-element-min-width min-width
+          :data-layout            layout
+          :style                  style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -13,7 +13,7 @@
   ; @return (map)
   ; {:cells (vector)}
   [{:keys [cells] :as header-props}]
-  ; XXX#0561 (source-code/app/components/frontend/item-list-row/prototypes.cljs)
+  ; XXX#0561 (source-code/app/components/frontend/item_list_row/prototypes.cljs)
   (merge {}
          (param header-props)
          {:cells (vector/remove-items-by cells nil?)}))
@@ -30,7 +30,6 @@
                :icon          (if order-by? (case (name order-by) "descending" :arrow_drop_down "ascending" :arrow_drop_up))
                :indent        (if order-by? {:horizontal :xs} {:all :xs})
                :horizontal-align :left
-               :font-size        :xs
-               :line-height      :block}
+               :font-size        :xs}
               (param cell-props)
               {:content label})))

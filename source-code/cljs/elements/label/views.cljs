@@ -16,7 +16,7 @@
   ; {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
   (if helper [:div.e-label--helper {:data-font-size   :xs
-                                    :data-line-height :block}
+                                    :data-line-height :text-block}
                                    (x.components/content helper)]))
 
 (defn label-info-text
@@ -28,7 +28,7 @@
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.helpers/info-text-visible? label-id)]
                         [:div.e-label--info-text {:data-font-size   :xs
-                                                  :data-line-height :block}
+                                                  :data-line-height :text-block}
                                                  (x.components/content info-text)])))
 
 (defn label-info-text-button
@@ -180,8 +180,8 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :info-text (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :block
+  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :text-block
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)

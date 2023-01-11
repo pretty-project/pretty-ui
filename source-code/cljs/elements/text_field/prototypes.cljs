@@ -80,7 +80,7 @@
           :field-content-f return
           :field-value-f   return
           :font-size       :s
-          :line-height     :block
+          :line-height     :text-block
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
          (if marker-color  {:marker-position :tr})

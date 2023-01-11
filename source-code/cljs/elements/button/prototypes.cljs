@@ -30,7 +30,7 @@
   (merge {:font-size        :s
           :font-weight      :bold
           :horizontal-align :center
-          :line-height      :block}
+          :line-height      :text-block}
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
          (if icon          {:icon-family   :material-icons-filled

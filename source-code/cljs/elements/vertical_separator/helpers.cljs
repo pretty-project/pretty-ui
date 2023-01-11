@@ -10,13 +10,13 @@
   ;
   ; @param (keyword) separator-id
   ; @param (map) separator-props
-  ; {:width (keyword)
-  ;  :style (map)(opt)}
+  ; {:style (map)(opt)
+  ;  :width (keyword)}
   ;
   ; @return (map)
-  ; {:data-width (keyword)
+  ; {:data-block-width (keyword)
   ;  :style (map)}
   [separator-id {:keys [style width] :as separator-props}]
   (merge (element.helpers/element-default-attributes separator-id separator-props)
-         {:data-width width
-          :style      style}))
+         {:data-block-width width
+          :style            style}))

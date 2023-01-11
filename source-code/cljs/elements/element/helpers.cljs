@@ -75,19 +75,19 @@
   ; @param (keyword, px or string) dimension-value
   ;
   ; @example
-  ; (apply-dimension {...} :width :data-width 42)
+  ; (apply-dimension {...} :width :data-block-width 42)
   ; =>
   ; {:style {:width "42px"}}
   ;
   ; @example
-  ; (apply-dimension {...} :width :data-width "42%")
+  ; (apply-dimension {...} :width :data-block-width "42%")
   ; =>
   ; {:style {:width "42%"}}
   ;
   ; @example
-  ; (apply-dimension {...} :width :data-width :s)
+  ; (apply-dimension {...} :width :data-block-width :s)
   ; =>
-  ; {:data-min-width :s}
+  ; {:data-block-width :s}
   ;
   ; @return (map)
   [element-attributes dimension-key dimension-data-key dimension-value]

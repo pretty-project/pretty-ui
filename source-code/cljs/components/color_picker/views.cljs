@@ -13,9 +13,8 @@
   ; {:disabled? (boolean)(opt)
   ;  :label (metamorphic-content)(opt)}
   [_ {:keys [disabled? label]}]
-  (if label [elements/label {:content     :color
-                             :disabled?   disabled?
-                             :line-height :block}]))
+  (if label [elements/label {:content   :color
+                             :disabled? disabled?}]))
 
 (defn color-picker-button
   ; @param (keyword) picker-id

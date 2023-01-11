@@ -13,9 +13,8 @@
   ;  :label (metamorphic-content)}
   [_ {:keys [color label]}]
   [elements/label ::popup-progress-label
-                  {:color       (or color :muted)
-                   :content     label
-                   :line-height :block}])
+                  {:color   (or color :muted)
+                   :content label}])
 
 (defn- popup-progress-indicator
   ; @param (keyword) indicator-id

@@ -23,8 +23,8 @@
   ;  :width (keyword)}
   [{:keys [badge-content disabled? marker-color] :as button-props}]
   (merge {:icon-family :material-icons-filled
-          :height      :xxl
-          :width       :xxl}
+          :height      :3xl
+          :width       :3xl}
          (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
          (param button-props)

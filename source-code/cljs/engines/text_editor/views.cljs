@@ -48,18 +48,6 @@
   (let [ckeditor5-props (prototypes/ckeditor5-props-prototype editor-id editor-props)]
        [ckeditor5/body editor-id ckeditor5-props]))
 
-(defn- text-editor-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) editor-id
-  ; @param (map) editor-props
-  ; {}
-  [_ {:keys [info-text label required?]}]
-  (if label [elements/label {:content     label
-                             :info-text   info-text
-                             :line-height :block
-                             :required?   required?}]))
-
 (defn- text-editor-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -67,10 +55,10 @@
   ; @param (map) editor-props
   ; {}
   [editor-id editor-props]
-  [:<> [text-editor-label  editor-id editor-props]
-       [ckeditor5          editor-id editor-props]
-      ;[synchronizer-debug editor-id editor-props]
-       [synchronizer       editor-id editor-props]])
+  [:<> [elements/element-label editor-id editor-props]
+       [ckeditor5              editor-id editor-props]
+      ;[synchronizer-debug     editor-id editor-props]
+       [synchronizer           editor-id editor-props]])
 
 (defn- text-editor
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -105,8 +93,6 @@
   ;   A tulajdonság leírását a elements.api/blank dokumentációjában találod!
   ;  :placeholder (metamorphic-content)(opt)
   ;   Default: :write-something!
-  ;  :required? (boolean)(opt)
-  ;   Default: false
   ;  :value-path (vector)(opt)}
   ;
   ; @usage

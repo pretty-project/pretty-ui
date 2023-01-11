@@ -51,6 +51,7 @@
   ; @return (map)
   ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)
+  ;  :data-text-overflow (keyword)
   ;  :disabled (boolean)
   ;  :id (string)
   ;  :on-click (function)
@@ -61,7 +62,8 @@
   (merge (element.helpers/element-indent-attributes toggle-id toggle-props)
          (toggle-style-attributes                   toggle-id toggle-props)
          (toggle-layout-attributes                  toggle-id toggle-props)
-         {:data-selectable false}
+         {:data-selectable    false
+          :data-text-overflow :no-wrap}
          (if disabled? {:disabled          true}
                        {:id                (hiccup/value toggle-id "body")
                         :on-click          #(r/dispatch on-click)

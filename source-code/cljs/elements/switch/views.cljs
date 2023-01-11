@@ -36,7 +36,7 @@
   (let [option-label (option-label-f option)]
        [:div.e-switch--option-label {:data-font-size   :s
                                      :data-font-weight :bold
-                                     :data-line-height :block}
+                                     :data-line-height :text-block}
                                     (x.components/content option-label)]))
 
 (defn- switch-option-content

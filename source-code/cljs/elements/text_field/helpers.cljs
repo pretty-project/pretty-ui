@@ -30,11 +30,11 @@
   [field-id field-props {:keys [color icon icon-family]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-font-size   :xs
-          :data-line-height :block
-          :data-selectable  false}
+         {:data-line-height :text-block
+          :data-selectable false}
          (if icon {:data-icon-family icon-family})
-         (if icon {:data-icon-size   :s})))
+         (if icon {:data-icon-size :s}
+                  {:data-font-size :xs})))
 
 (defn button-adornment-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,13 +61,13 @@
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
          {:data-color        color
           :data-click-effect :opacity
-          :data-font-size    :xs
-          :data-line-height  :block
+          :data-line-height  :text-block
           :data-selectable   false
           :title             (x.components/content tooltip)}
-         (if     icon         {:data-icon-family icon-family})
-         (if     icon         {:data-icon-size :s})
-         (if     disabled?    {:disabled   "1" :data-disabled true})
+         (if icon             {:data-icon-family icon-family
+                               :data-icon-size :s}
+                              {:data-font-size :xs})
+         (if disabled?        {:disabled   "1" :data-disabled true})
          (if-not tab-indexed? {:tab-index "-1"})
          (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
                                                  (x.environment/blur-element!))})))
@@ -130,9 +130,9 @@
   ; "calc(var( --line-height-s ) * 1)"
   ;
   ; @example
-  ; (field-auto-height :my-field {:font-size :s :line-height :block})
+  ; (field-auto-height :my-field {:font-size :s :line-height :text-block})
   ; =>
-  ; "calc(var( --block-height-s ) * 1)"
+  ; "calc(var( --text-block-height-s ) * 1)"
   ;
   ; @example
   ; (field-auto-height :my-field {:font-size :s :line-height :xxl})
@@ -148,9 +148,9 @@
   [field-id {:keys [font-size line-height] :as field-props}]
   ; XXX#0886 (bithandshake/pretty-css)
   (let [line-count (field-line-count field-id field-props)]
-       (case line-height :block  (str "calc(var( --block-height-" (name font-size)   " ) * "line-count" + 12px)")
-                         :native (str "calc(var( --line-height-"  (name font-size)   " ) * "line-count" + 12px)")
-                                 (str "calc(var( --line-height-"  (name line-height) " ) * "line-count" + 12px)"))))
+       (case line-height :text-block (str "calc(var( --text-block-height-" (name font-size)   " ) * "line-count" + 12px)")
+                         :native     (str "calc(var( --line-height-"       (name font-size)   " ) * "line-count" + 12px)")
+                                     (str "calc(var( --line-height-"       (name line-height) " ) * "line-count" + 12px)"))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -248,10 +248,10 @@
   ;  :stretch-orientation (keyword)}
   ;
   ; @return (map)
-  ; {:data-element-width (keyword)
+  ; {:data-element-min-width (keyword)
   ;  :data-stretch-orientation (keyword)}
   [field-id {:keys [min-width stretch-orientation] :as field-props}]
   (merge (element.helpers/element-default-attributes field-id field-props)
          (element.helpers/element-outdent-attributes field-id field-props)
-         {:data-element-width       min-width
+         {:data-element-min-width   min-width
           :data-stretch-orientation stretch-orientation}))

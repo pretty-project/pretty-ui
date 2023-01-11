@@ -172,14 +172,14 @@
   ;  :vertical-position (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:data-element-width (keyword)
+  ; {:data-element-min-width (keyword)
   ;  :data-horizontal-position (keyword)
   ;  :data-horizontal-row-align (keyword)
   ;  :data-vertical-position (keyword)}
   [_ {:keys [horizontal-align horizontal-position min-width vertical-position]}]
   {:data-horizontal-position  horizontal-position
    :data-horizontal-row-align horizontal-align
-   :data-element-width        min-width
+   :data-element-min-width    min-width
    :data-vertical-position    vertical-position})
 
 ;; ----------------------------------------------------------------------------

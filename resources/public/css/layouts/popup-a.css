@@ -17,40 +17,6 @@
 
 
 
-/***** Size profiles *****/
-
-[data-min-width="xxs"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-xxs );
-}
-
-[data-min-width="xs"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-xs );
-}
-
-[data-min-width="s"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-s );
-}
-
-[data-min-width="m"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-m );
-}
-
-[data-min-width="l"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-l );
-}
-
-[data-min-width="xl"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-xl );
-}
-
-[data-min-width="xxl"] .l-popup-a--layout-structure {
-  min-width: var( --content-width-xxl );
-}
-
-/***** Size profiles *****/
-
-
-
 /* */
 
 .l-popup-a {
@@ -132,16 +98,6 @@
 
 .l-popup-a--body-content {
   height: 100%;
-
- /* WARNING! DEPRECATED!
-  * Az x4.7.9 #9 verzió óta az --app-width értéke nem 100vw, hanem 100%,
-  * mert az app-surface mellett már az app-sidebar is megjelenik, ami miatt
-  * az app tartalmának szélessége már nem lehet 100vw!
-  * Emiatt a --content-width-* értéke (ami kis képernyőkön megegyezik az
-  * --app-width értékével) már nem alkalmas rá hogy méretet korlátozzon
-  * egy .l-popup-a--body-content féle elemen!
-  * Nem lehet {max-width: calc(100% - 24px)}! */
- -max-width: var( --content-width-l );
 }
 
 /* */

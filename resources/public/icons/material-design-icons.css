@@ -1,76 +1,49 @@
 
-/***** Material Design icons *****/
+/***** Material Design Icons / Symbols *****/
 
-/* fallback */
-@font-face {
-  font-family: 'Material Icons__';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url('/icons/material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff');
+[data-icon-family="material-icons-filled"],
+[data-icon-family="material-icons-outlined"],
+[data-icon-family="material-symbols-filled"],
+[data-icon-family="material-symbols-outlined"] {
+  font-style:                   normal;
+  font-weight:                  normal;
+  letter-spacing:               normal;
+  text-transform:               none;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing:        antialiased;
+
+  /* By default the Material Icons / Symbols are selectable elements,
+   * therefore the selection has to be turned off. */
+ -ms-user-select:     none;
+ -moz-user-select:    none;
+ -webkit-user-select: none;
+  user-select:        none;
 }
-
-/* fallback */
-@font-face {
-  font-family: 'Material Icons Outlined__';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url('...') format('woff');
-}
-
-/***** Material Design icons *****/
-
-
-
-/***** ... *****/
 
 [data-icon-family="material-icons-filled"] {
   font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
- -webkit-font-feature-settings: 'liga';
- -webkit-font-smoothing: antialiased }
+  overflow:    hidden;
+}
 
 [data-icon-family="material-icons-outlined"] {
   font-family: 'Material Icons Outlined';
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  overflow: hidden;
-  text-transform: none;
- -webkit-font-feature-settings: 'liga';
- -webkit-font-smoothing: antialiased }
+  overflow:    hidden;
+}
 
-/* [data-icon-family="material-icons-filled"], */
 [data-icon-family="material-symbols-filled"] {
-  direction: ltr;
-  font-family: 'Material Symbols Outlined';
+  direction:               ltr;
+  font-family:             'Material Symbols Outlined';
   font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
- -webkit-font-feature-settings: 'liga';
- -webkit-font-smoothing: antialiased }
+  white-space:             nowrap;
+  word-wrap:               normal;
+}
 
-/* [data-icon-family="material-icons-outlined"], */
 [data-icon-family="material-symbols-outlined"] {
-  direction: ltr;
-  font-family: 'Material Symbols Outlined';
+  direction:               ltr;
+  font-family:             'Material Symbols Outlined';
   font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
- -webkit-font-feature-settings: 'liga';
- -webkit-font-smoothing: antialiased }
+  white-space:             nowrap;
+  word-wrap:               normal;
+}
 
-/***** ... *****/
+/***** Material Design Icons / Symbols *****/

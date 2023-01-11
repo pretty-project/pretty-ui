@@ -30,9 +30,10 @@
   ; @param (map) item-props
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [font-size font-weight]} {:keys [label]}]
-  (if label [:div.e-menu-bar--menu-item--label {:data-font-size   font-size
-                                                :data-font-weight font-weight
-                                                :data-line-height :block}
+  (if label [:div.e-menu-bar--menu-item--label {:data-font-size     font-size
+                                                :data-font-weight   font-weight
+                                                :data-line-height   :text-block
+                                                :data-text-overflow :no-wrap}
                                                (x.components/content label)]))
 
 (defn- toggle-item

@@ -112,9 +112,10 @@
   ; {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
   (if placeholder (if-let [field-empty? (plain-field.helpers/field-empty? field-id)]
-                          [:div.e-text-field--placeholder {:data-font-size   :xs
-                                                           :data-line-height :block
-                                                           :data-selectable  false}
+                          [:div.e-text-field--placeholder {:data-font-size     :xs
+                                                           :data-line-height   :text-block
+                                                           :data-selectable    false
+                                                           :data-text-overflow :hidden}
                                                           (x.components/content placeholder)])))
 
 (defn- text-field-input
@@ -196,7 +197,7 @@
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
@@ -238,8 +239,8 @@
   ;  :initial-value (string)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword or px)(opt)
-  ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :block
+  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :text-block
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)

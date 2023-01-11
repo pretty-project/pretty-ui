@@ -14,9 +14,9 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-height (keyword)
+  ; {:data-block-height (keyword)
   ;  :style (map)}
   [separator-id {:keys [height style] :as separator-props}]
   (merge (element.helpers/element-default-attributes separator-id separator-props)
-         {:data-height height
-          :style       style}))
+         {:data-block-height height
+          :style             style}))

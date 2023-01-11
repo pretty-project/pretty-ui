@@ -55,6 +55,7 @@
               [elements.counter.views              :as counter.views]
               [elements.date-field.views           :as date-field.views]
               [elements.digit-field.views          :as digit-field.views]
+              [elements.element.views              :as element.views]
               [elements.expandable.views           :as expandable.views]
               [elements.ghost.views                :as ghost.views]
               [elements.horizontal-polarity.views  :as horizontal-polarity.views]
@@ -104,6 +105,7 @@
 (def counter              counter.views/element)
 (def date-field           date-field.views/element)
 (def digit-field          digit-field.views/element)
+(def element-label        element.views/element-label)
 (def expandable           expandable.views/element)
 (def ghost                ghost.views/element)
 (def horizontal-polarity  horizontal-polarity.views/element)

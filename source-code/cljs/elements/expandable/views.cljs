@@ -38,7 +38,7 @@
   [_ {:keys [label]}]
   (if label [:div.e-expandable--label {:data-font-size   :s
                                        :data-font-weight :bold
-                                       :data-line-height :block}
+                                       :data-line-height :text-block}
                                       (x.components/content label)]))
 
 (defn- expandable-header

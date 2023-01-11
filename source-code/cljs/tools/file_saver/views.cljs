@@ -86,7 +86,6 @@
                    :content     filename
                    :font-weight :bold
                    :icon        :insert_drive_file
-                   :line-height :block
                    :outdent     {:bottom :s :top :xs :vertical :xs}
                    :selectable? true}])
 

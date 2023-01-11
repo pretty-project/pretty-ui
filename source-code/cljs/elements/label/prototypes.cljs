@@ -42,7 +42,7 @@
        (merge {:font-size        :s
                :font-weight      :bold
                :horizontal-align :left
-               :line-height      :block
+               :line-height      :text-block
                :selectable?      false
                :text-overflow   :ellipsis}
               (if marker-color {:marker-position :tr})

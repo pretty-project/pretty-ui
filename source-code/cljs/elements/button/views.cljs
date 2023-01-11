@@ -19,7 +19,8 @@
   ; @param (map) button-props
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [:div.e-button--label (x.components/content label)]))
+  (if label [:div.e-button--label {:data-text-overflow :no-wrap}
+                                  (x.components/content label)]))
 
 (defn- button-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -86,7 +87,7 @@
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -134,8 +135,8 @@
   ;     Default: false}
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :block
+  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :text-block
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)

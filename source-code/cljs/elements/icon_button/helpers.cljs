@@ -58,20 +58,20 @@
   ;  :width (keyword)}
   ;
   ; @return (map)
-  ; {:data-height (keyword)
-  ;  :data-labeled (boolean)
-  ;  :data-min-width (keyword)}
+  ; {:data-block-height (keyword)
+  ;  :data-block-min-width (keyword)
+  ;  :data-labeled (boolean)}
   [button-id {:keys [height label tooltip width] :as button-props}]
   ; XXX#0990
-  ; By using the :data-min-width preset instead of using the :data-width preset,
-  ; the icon-button element can expands horizontaly when its label doesn't fit
-  ; into the width of the button.
+  ; By using the :data-block-min-width preset instead of using the :data-block-width
+  ; preset, the icon-button element can expands horizontaly when its label doesn't
+  ; fit into the width of the button.
   (merge (element.helpers/element-indent-attributes button-id button-props)
          (button.helpers/button-body-attributes     button-id button-props)
-         {:data-height    height
-          :data-min-width width
-          :data-labeled   (boolean label)
-          :title          (x.components/content tooltip)}))
+         {:data-block-height    height
+          :data-block-min-width width
+          :data-labeled (boolean label)
+          :title        (x.components/content tooltip)}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

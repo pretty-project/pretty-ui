@@ -22,5 +22,4 @@
          {:color            :muted
           :font-size        :xs
           :horizontal-align :left
-          :indent           {:horizontal :xs :vertical :s}
-          :line-height      :block}))
+          :indent           {:horizontal :xs :vertical :s}}))

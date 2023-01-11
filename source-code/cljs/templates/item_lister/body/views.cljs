@@ -26,7 +26,6 @@
                    :font-size        :xs
                    :font-weight      :bold
                    :horizontal-align :center
-                   :line-height      :block
                    :outdent          {:all :xs}}])
 
 ;; ----------------------------------------------------------------------------

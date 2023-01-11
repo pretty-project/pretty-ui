@@ -25,7 +25,6 @@
                              :horizontal-position :left
                              :info-text           info-text
                              :marked?             marked?
-                             :line-height         :block
                              :selectable?         false}]))
 
 (defn- data-element-value
@@ -43,7 +42,7 @@
                   :disabled?           disabled?
                   :font-size           font-size
                   :horizontal-position :left
-                  :line-height         :block
+                  :line-height         :text-block
                   :placeholder         placeholder
                   :selectable?         true}])
 

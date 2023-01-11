@@ -33,7 +33,7 @@
   ; {:border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)

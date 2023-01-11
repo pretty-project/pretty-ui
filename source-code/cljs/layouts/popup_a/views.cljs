@@ -90,8 +90,10 @@
   ;
   ; @param (keyword) popup-id
   ; @param (map) layout-props
-  [popup-id layout-props]
-  [:div.l-popup-a--layout-structure [:div.l-popup-a--layout-hack [body   popup-id layout-props]
+  ; {:min-width (keyword)}
+  [popup-id {:keys [min-width] :as layout-props}]
+  [:div.l-popup-a--layout-structure {:data-content-min-width min-width}
+                                    [:div.l-popup-a--layout-hack [body   popup-id layout-props]
                                                                  [header popup-id layout-props]]
                                     [footer popup-id layout-props]])
 
@@ -101,8 +103,11 @@
   ; @param (keyword) popup-id
   ; @param (map) layout-props
   ; {:close-by-cover? (boolean)(opt)}
-  [popup-id {:keys [close-by-cover?] :as layout-props}]
-  [:div.l-popup-a (helpers/layout-attributes popup-id layout-props)
+  ;  :stretch-orientation (keyword)(opt)
+  ;  :style (map)(opt)}
+  [popup-id {:keys [close-by-cover? stretch-orientation style] :as layout-props}]
+  [:div.l-popup-a {:data-stretch-orientation stretch-orientation
+                   :style                    style}
                   [:div.l-popup-a--cover (if close-by-cover? {:on-click #(r/dispatch [:x.ui/remove-popup! popup-id])})]
                   [layout-structure popup-id layout-props]])
 
@@ -117,7 +122,7 @@
   ;  :footer (metamorphic-content)(opt)
   ;  :header (metamorphic-content)(opt)
   ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :none
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)

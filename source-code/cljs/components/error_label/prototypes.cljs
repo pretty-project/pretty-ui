@@ -1,6 +1,5 @@
 
-(ns components.error-label.prototypes
-    (:require [candy.api :refer [param]]))
+(ns components.error-label.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -11,6 +10,5 @@
   ; @return (map)
   ; {}
   [label-props]
-  (merge label-props {:color       :warning
-                      :font-size   :xs
-                      :line-height :block}))
+  (merge label-props {:color     :warning
+                      :font-size :xs}))

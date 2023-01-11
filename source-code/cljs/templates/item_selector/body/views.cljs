@@ -24,11 +24,7 @@
   ; @param (keyword) selector-id
   ; @param (map) body-props
   [selector-id body-props]
-  ; BUG#7610
-  ; A {width: 100%} tulajdonságú table elem popup elemen megjelenítve, megnövelte
-  ; a popup elem szélességét!
-  [:div {:style {:max-width "var( --content-width-m )"}}
-        [:div#t-item-lister--list-body [item-list-body selector-id body-props]]])
+  [:div#t-item-lister--list-body [item-list-body selector-id body-props]])
 
 (defn- item-selector
   ; @param (keyword) selector-id

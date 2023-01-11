@@ -12,9 +12,8 @@
   ; @param (map) bar-props
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
-  (if label [elements/label {:content     label
-                             :indent      {:horizontal :xs}
-                             :line-height :block}]))
+  (if label [elements/label {:content label
+                             :indent  {:horizontal :xs}}]))
 
 (defn- popup-secondary-button
   ; @param (keyword) bar-id

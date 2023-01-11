@@ -7,27 +7,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) popup-id
-  ; @param (map) layout-props
-  ; {:min-width (keyword)(opt)
-  ;  :stretch-orientation (keyword)(opt)
-  ;  :style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-min-width (keyword)
-  ;  :data-stretch-orientation (keyword)
-  ;  :style (map)}
-  [_ {:keys [min-width stretch-orientation style]}]
-  {:data-min-width           min-width
-   :data-stretch-orientation stretch-orientation
-   :style                    style})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn header-did-mount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -5,8 +5,6 @@
 .e-anchor--body {
   cursor: pointer;
   display: block;
-  white-space: nowrap;
-  word-wrap: normal;
 }
 
 /*** Anchor body ***/
@@ -19,7 +17,6 @@
 
 .e-breadcrumbs--body {
   display: flex;
-  grid-column-gap: 9px;
 }
 
 /*** Breadcrumbs body ***/
@@ -27,7 +24,7 @@
 /*** Breadcrumbs crumb ***/
 
 .e-breadcrumbs--crumb {
-  max-width:     160px;
+  max-width: 160px;
 }
 
 .e-breadcrumbs--separator {
@@ -45,10 +42,6 @@
   width:            6px;
 }
 
-.e-breadcrumbs--crumb[data-click-effect] {
-  font-weight: 600;
-}
-
 /*** Breadcrumbs crumb ***/
 /***** Breadcrumbs *****/
 
@@ -61,7 +54,7 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  grid-column-gap: 6px;
+  column-gap: 6px;
 
   /* */
   width: 100%;
@@ -73,15 +66,6 @@
 }
 
 /*** Button body ***/
-
-/*** Button label ***/
-
-.e-button--label {
-  white-space: nowrap;
-  word-wrap: normal;
-}
-
-/*** Button label ***/
 /***** Button *****/
 
 
@@ -113,20 +97,6 @@
 
 /*** Card body ***/
 /***** Card *****/
-
-
-
-/***** Card-group *****/
-/*** Card-group wrapper ***/
-
-.e-card-group {
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 12px;
-}
-
-/*** Card-group wrapper ***/
-/***** Card-group *****/
 
 
 
@@ -211,14 +181,6 @@
 }
 
 /*** Chip body ***/
-
-/*** Chip label ***/
-
-.e-chip--label {
-  white-space: nowrap;
-}
-
-/*** Chip label ***/
 
 /*** Chip primary button ***/
 
@@ -779,7 +741,7 @@
   width: calc(100% - 12px);
 
   /* XXX#6610
-   * Az ikon-gomb magassága a data-height attributtummal változik ezért szükséges
+   * Az ikon-gomb magassága a data-block-height attributtummal változik ezért szükséges
    * a calc függvénnyel számítani a pszeudo-elem magasságát! */
   height: calc(100% - 12px);
 }
@@ -799,13 +761,13 @@
   /* BUG#0984
    * Az .e-icon-button--body::before {background-color: ...} tulajdonsággal
    * rendelkező pszeudo-elem eltakarná az ikont, ha az nem abszolút pozícionálással
-   * jellene meg, mert a pszeudo-elem a {position: absolute} beállítása miatt
+   * jelenne meg, mert a pszeudo-elem a {position: absolute} beállítása miatt
    * az ikon felett jelenne meg! */
   left: calc(50% - 12px);
   position: absolute;
 
   /* XXX#6610
-   * Mi az kalkulált top érték, ami különböző data-height értékek mellett is működik?
+   * Mi az kalkulált top érték, ami különböző data-block-height értékek mellett is működik?
    *  */
  -top: calc()}
 
@@ -878,10 +840,6 @@
 
 .e-menu-bar--menu-item[data-active="true"] {
   color: var( --color-default );
-}
-
-.e-menu-bar--menu-item--label {
-  white-space: nowrap;
 }
 
 /*** Menu item ***/
@@ -1601,14 +1559,10 @@ textarea.e-text-field--input {
 .e-text-field--placeholder {
   color: var( --color-muted);
   left: 0;
+  max-width: 100%;
   padding: 6px 0;
   position: absolute;
   top: 0;
-
-  /* On small screens the longer placeholders can wrap into multiple lines. */
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 /*** Field placeholder ***/
@@ -1669,9 +1623,7 @@ textarea.e-text-field--input {
   cursor: pointer;
   display: block;
   font-weight: 500;
-  white-space: nowrap;
   width: 100%;
-  word-wrap: normal;
 
   /* Overwriting user-agent rule */
   text-align: left;

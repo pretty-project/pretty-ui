@@ -54,8 +54,8 @@
   ;    :top (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :line-height (keyword)(opt)
-  ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :block
+  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :text-block
   ;  :on-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.

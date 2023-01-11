@@ -14,10 +14,9 @@
   ; @param (keyword) preview-id
   ; @param (map) preview-props
   [_ _]
-  [elements/label {:color       :muted
-                   :content     :downloading...
-                   :font-size   :xs
-                   :line-height :block}])
+  [elements/label {:color     :muted
+                   :content   :downloading...
+                   :font-size :xs}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -55,18 +54,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- item-preview-label
-  ; @param (keyword) preview-id
-  ; @param (map) preview-props
-  ; {:disabled? (boolean)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [_ {:keys [disabled? info-text label]}]
-  (if label [elements/label {:content     label
-                             :disabled?   disabled?
-                             :info-text   info-text
-                             :line-height :block}]))
-
 (defn- item-preview-placeholder
   ; @param (keyword) preview-id
   ; @param (map) preview-props
@@ -82,7 +69,6 @@
                                                   :content     placeholder
                                                   :disabled?   disabled?
                                                   :font-size   :xs
-                                                  :line-height :block
                                                   :selectable? true}]))
 
 (defn- item-preview
@@ -98,7 +84,7 @@
   ; az id kulcsot, így ha az item-link értéke nil, vagy hibás/hiányos, akkor a placeholder
   ; felirat jelenik meg.
   [elements/blank preview-id
-                  {:content [:<> [item-preview-label preview-id preview-props]
+                  {:content [:<> [elements/element-label preview-id preview-props]
                                  (if-let [id (import-id-f item-link)]
                                          [item-preview-body        preview-id preview-props]
                                          [item-preview-placeholder preview-id preview-props])]

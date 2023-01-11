@@ -35,6 +35,8 @@
 
 - [digit-field](#digit-field)
 
+- [element-label](#element-label)
+
 - [expandable](#expandable)
 
 - [ghost](#ghost)
@@ -122,8 +124,8 @@
    :top (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :line-height (keyword)(opt)
-  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :block
+  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :text-block
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
@@ -235,7 +237,7 @@
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -283,8 +285,8 @@
     Default: false}
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :block
+  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
@@ -333,7 +335,7 @@
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -794,6 +796,19 @@
 
 ---
 
+### element-label
+
+```
+@param (keyword) element-id
+@param (map) element-props
+{:helper (metamorphic-content)(opt)
+ :info-text (metamorphic-content)(opt)
+ :label (metamorphic-content)(opt)
+ :marker-color (keyword)(opt)}
+```
+
+---
+
 ### expandable
 
 ```
@@ -999,13 +1014,13 @@
   Default: :tr
   W/ {:badge-content ...}
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
  :height (keyword)(opt)
   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxl
+  Default: :3xl
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :icon (keyword)
@@ -1047,7 +1062,7 @@
  :tooltip (metamorphic-content)(opt)
  :width (keyword)(opt)
   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxl}
+  Default: :3xl}
 ```
 
 ```
@@ -1154,8 +1169,8 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :info-text (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :block
+  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
@@ -1654,7 +1669,7 @@
  :border-color (keyword)(opt)
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1874,8 +1889,8 @@
  :info-text (metamorphic-content)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword)(opt)
-  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :block
+  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :text-block
  :max-lines (integer)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
@@ -1915,7 +1930,7 @@
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1957,8 +1972,8 @@
  :initial-value (string)(opt)
  :label (metamorphic-content)(opt)
  :line-height (keyword or px)(opt)
-  :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :block
+  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :text-block
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
@@ -2057,7 +2072,7 @@
   :contain, :cover
   Default: :contain
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -2110,7 +2125,7 @@
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)

@@ -19,6 +19,5 @@
   (if label [label.views/element {:content      label
                                   :helper       helper
                                   :info-text    info-text
-                                  :line-height  :block
                                   :marker-color marker-color
                                   :target-id    element-id}]))

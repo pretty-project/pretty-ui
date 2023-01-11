@@ -24,7 +24,7 @@
   (merge {:font-size        :s
           :font-weight      :normal
           :horizontal-align :left
-          :line-height      :block
+          :line-height      :text-block
           :selectable?      true
           :text-overflow    :wrap}
          (param text-props)

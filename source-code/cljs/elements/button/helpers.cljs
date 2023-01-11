@@ -96,6 +96,7 @@
   ;
   ; @return (map)
   ; {:data-click-effect (keyword)
+  ;  :data-column-gap (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
   ;  :id (string)

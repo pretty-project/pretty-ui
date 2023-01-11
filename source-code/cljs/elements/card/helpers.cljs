@@ -35,12 +35,12 @@
   ;
   ; @return (map)
   ; {:data-border-radius (keyword)
-  ;  :data-element-width (keyword)
+  ;  :data-element-min-width (keyword)
   ;  :data-horizontal-column-align (keyword)
   ;  :data-stretch-orientation (keyword)}
   [_ {:keys [border-radius horizontal-align min-width stretch-orientation]}]
   {:data-border-radius           border-radius
-   :data-element-width           min-width
+   :data-element-min-width       min-width
    :data-horizontal-column-align horizontal-align
    :data-stretch-orientation     stretch-orientation})
 

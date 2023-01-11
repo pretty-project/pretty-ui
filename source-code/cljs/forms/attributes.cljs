@@ -21,7 +21,7 @@
   ; {:class (keyword)
   ;  :style (map)}
   ([]                (form-block-attributes {:ratio 100}))
-  ([{:keys [ratio]}] (if-let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
+  ([{:keys [ratio]}] (if-let [viewport-min? @(r/subscribe [:x.environment/viewport-min? 720])]
                              {:style {:min-width (css/percent ratio)} :class :forms--form-block}
                              {:style {:min-width (css/percent 100)}   :class :forms--form-block})))
 

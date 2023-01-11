@@ -21,7 +21,7 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   (if placeholder [:div.e-chip-group--chips-placeholder {:data-font-size   :s
-                                                         :data-line-height :block}
+                                                         :data-line-height :text-block}
                                                         (x.components/content placeholder)]))
 
 (defn- chip-group-chip

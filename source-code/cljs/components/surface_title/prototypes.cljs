@@ -1,7 +1,6 @@
 
 (ns components.surface-title.prototypes
-    (:require [candy.api    :refer [param]]
-              [re-frame.api :as r]))
+    (:require [re-frame.api :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,7 +11,6 @@
   ; @return (map)
   ; {}
   [title-props]
-  (let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
-       (merge title-props {:font-size   (if viewport-large? :5xl :l)
-                           :font-weight :extra-bold
-                           :line-height :block})))
+  (let [viewport-min? @(r/subscribe [:x.environment/viewport-min? 720])]
+       (merge title-props {:font-size (if viewport-min? :5xl :xl)
+                           :font-weight :extra-bold})))

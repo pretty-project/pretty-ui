@@ -17,10 +17,9 @@
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   [_ _]
-  [elements/label {:color       :muted
-                   :content     :downloading...
-                   :font-size   :xs
-                   :line-height :block}])
+  [elements/label {:color     :muted
+                   :content   :downloading...
+                   :font-size :xs}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -114,7 +113,6 @@
                                    :content     placeholder
                                    :disabled?   disabled?
                                    :font-size   :s
-                                   :line-height :block
                                    :selectable? true}]))
 
 (defn- item-picker-button
@@ -134,20 +132,6 @@
                                   :on-click  on-select
                                   :outdent   {:bottom :m}}]]))
 
-(defn- item-picker-label
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
-  ; {:disabled? (boolean)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :required? (boolean)(opt)}
-  [_ {:keys [disabled? info-text label required?]}]
-  (if label [elements/label {:content     label
-                             :disabled?   disabled?
-                             :info-text   info-text
-                             :line-height :block
-                             :required?   required?}]))
-
 (defn- item-picker-body
   ; @param (keyword) picker-id
   ; @param (map) picker-props
@@ -155,8 +139,8 @@
   ;  :value-path (vector)}
   [picker-id {:keys [multi-select? value-path] :as picker-props}]
   (let [picked-items @(r/subscribe [:x.db/get-item value-path])]
-       [:<> [item-picker-label    picker-id picker-props]
-            [item-picker-button   picker-id picker-props]
+       [:<> [elements/element-label picker-id picker-props]
+            [item-picker-button     picker-id picker-props]
             (cond (empty? picked-items)  [item-placeholder picker-id picker-props]
                   (not    multi-select?) [item-preview     picker-id picker-props]
                   :multi-select?         [item-lister      picker-id picker-props])]))

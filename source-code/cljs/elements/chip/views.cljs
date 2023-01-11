@@ -25,7 +25,10 @@
   ; @param (map) chip-props
   ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
-  [:div.e-chip--label {:data-font-size :xs :data-font-weight :bold :data-line-height :block}
+  [:div.e-chip--label {:data-font-size     :xs
+                       :data-font-weight   :bold
+                       :data-line-height   :text-block
+                       :data-text-overflow :no-wrap}
                       (x.components/content label)])
 
 (defn- chip-primary-button

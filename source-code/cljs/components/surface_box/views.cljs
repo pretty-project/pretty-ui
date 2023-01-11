@@ -16,8 +16,7 @@
                    :content          :downloading...
                    :font-size        :xs
                    :horizontal-align :center
-                   :indent           {:bottom :s}
-                   :line-height      :block}])
+                   :indent           {:bottom :s}}])
 
 (defn- surface-box-query-content
   ; @param (keyword) box-id
@@ -55,30 +54,27 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)}
   [_ {:keys [disabled? helper info-text label]}]
-  (if label (let [viewport-large? @(r/subscribe [:x.environment/viewport-large?])]
-                 [elements/label {:content     label
-                                  :disabled?   disabled?
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :indent      {:top :xs :vertical :s}
-                                  :font-size   (if viewport-large? :l :m)
-                                  :line-height :block}])))
+  (if label [elements/label {:content     label
+                             :disabled?   disabled?
+                             :helper      helper
+                             :info-text   info-text
+                             :indent      {:top :xs :vertical :s}
+                             :font-size   :l}]))
 
 (defn- surface-box-body
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:fill-color (string)}
   [box-id {:keys [fill-color content overflow] :as box-props}]
-  (let [viewport-small? @(r/subscribe [:x.environment/viewport-small?])]
-       [:div {:style {;:fill-color fill-color
-                      ;:border           "1px solid var( --border-color-highlight )"
-                      ;:border-bottom-color "transparent"
-                      ;:border-style "solid none"
-                      ;:border-radius    (if viewport-small? "0" "var( --border-radius-m )")
-                      ;:box-shadow       "var( --box-shadow-black-xx-light )"
-                      :overflow         overflow}}
-             [surface-box-label   box-id box-props]
-             [surface-box-content box-id box-props]]))
+  [:div {:style {;:fill-color fill-color
+                 ;:border           "1px solid var( --border-color-highlight )"
+                 ;:border-bottom-color "transparent"
+                 ;:border-style "solid none"
+                 ;:border-radius    (if viewport-small? "0" "var( --border-radius-m )")
+                 ;:box-shadow       "var( --box-shadow-black-xx-light )"
+                 :overflow         overflow}}
+        [surface-box-label   box-id box-props]
+        [surface-box-content box-id box-props]])
 
 (defn- surface-box
   ; @param (keyword) box-id

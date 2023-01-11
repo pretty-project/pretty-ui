@@ -16,12 +16,12 @@
   ;
   ; @return (map)
   ; {:data-border-radius (keyword)
-  ;  :data-height (keyword)
+  ;  :data-block-height (keyword)
   ;  :style (map)}
   [ghost-id {:keys [border-radius height style] :as ghost-props}]
   (merge (element.helpers/element-indent-attributes ghost-id ghost-props)
          {:data-border-radius border-radius
-          :data-height        height
+          :data-block-height  height
           :style              style}))
 
 ;; ----------------------------------------------------------------------------

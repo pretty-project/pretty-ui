@@ -17,5 +17,4 @@
           :hover-color      :highlight
           :horizontal-align :left
           :icon-size        :s
-          :indent           {:horizontal :xs :left :s :right :xl}
-          :line-height      :block}))
+          :indent           {:horizontal :xs :left :s :right :xl}}))

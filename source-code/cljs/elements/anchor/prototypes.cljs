@@ -17,5 +17,5 @@
   [anchor-props]
   (merge {:font-size   :s
           :font-weight :bold
-          :line-height :block}
+          :line-height :text-block}
          (param anchor-props)))

@@ -69,7 +69,7 @@
   [_ {:keys [options-placeholder]}]
   [:div.e-select--options-placeholder {:data-font-size   :s
                                        :data-font-weight :bold
-                                       :data-line-height :block}
+                                       :data-line-height :text-block}
                                       (x.components/content options-placeholder)])
 
 (defn- select-option-list
@@ -93,7 +93,7 @@
   [_ {:keys [options-label]}]
   (if options-label [:div.e-select--options--label {:data-font-size   :s
                                                     :data-font-weight :bold
-                                                    :data-line-height :block}
+                                                    :data-line-height :text-block}
                                                    (x.components/content options-label)]
                     [:div.e-select--options--label {:data-placeholder true}]))
 
@@ -148,9 +148,9 @@
   ; {}
   [select-id select-props]
   (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
-          [:div.e-select--button-label {:data-font-size :s :data-font-weight :bold :data-line-height :block}
+          [:div.e-select--button-label {:data-font-size :s :data-font-weight :bold :data-line-height :text-block}
                                        (-> selected-option-label x.components/content)]
-          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :bold :data-line-height :block}
+          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :bold :data-line-height :text-block}
                                        (-> :select! x.components/content)]))
 
 (defn- select-button-body
@@ -258,7 +258,7 @@
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false

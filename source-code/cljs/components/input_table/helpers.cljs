@@ -20,6 +20,6 @@
    :data-font-size   :xs
    :data-font-weight :bold
    :data-indent-left :xs
-   :data-line-height :block
+   :data-line-height :text-block
    :data-selectable  false
    :for (hiccup/value input-id "input")})

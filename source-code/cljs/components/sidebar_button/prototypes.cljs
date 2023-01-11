@@ -17,7 +17,6 @@
          {:color            :invert
           :font-size        :xs
           :font-weight      :bold
-          :line-height      :block
           :horizontal-align :left
           :icon-size        :s
           :indent {:left :s :right :xl :horizontal :xs}}))

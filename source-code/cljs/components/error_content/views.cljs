@@ -15,7 +15,6 @@
                    :content          :an-error-occured
                    :font-size        :m
                    :horizontal-align :center
-                   :line-height      :block
                    :outdent          {:top :xxl}}])
 
 (defn- error-message-label
@@ -26,7 +25,6 @@
   [elements/label {:color            :muted
                    :content          content
                    :horizontal-align :center
-                   :line-height      :block
                    :outdent          {:bottom :xxl}}])
 
 (defn- error-content

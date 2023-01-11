@@ -18,6 +18,5 @@
   (merge {:horizontal-align :center
           :indent           {:horizontal :xs :vertical :xs}}
          (param description-props)
-         {:color       :muted
-          :font-size   :xxs
-          :line-height :block}))
+         {:color     :muted
+          :font-size :xxs}))

@@ -23,7 +23,7 @@
   [_ _ _]
   {:data-color         :muted
    :data-font-size     :xs
-   :data-line-height   :block
+   :data-line-height   :text-block
    :data-selectable    false
    :data-text-overflow :ellipsis})
 
@@ -39,6 +39,7 @@
   ; {:data-click-effect (boolean)
   ;  :data-color (keyword)
   ;  :data-font-size (keyword)
+  ;  :data-font-weight (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :on-click (function)
@@ -48,7 +49,8 @@
   {:data-click-effect  :opacity
    :data-color         :muted
    :data-font-size     :xs
-   :data-line-height   :block
+   :data-font-weight   :extra-bold
+   :data-line-height   :text-block
    :data-selectable    false
    :data-text-overflow :ellipsis
    :on-click    #(r/dispatch [:x.router/go-to! route])
@@ -65,11 +67,13 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-scrollable-x (boolean)
+  ; {:data-column-gap (keyword)
+  ;  :data-scrollable-x (boolean)
   ;  :style (map)}
   [breadcrumbs-id {:keys [style] :as breadcrumbs-props}]
   (merge (element.helpers/element-indent-attributes breadcrumbs-id breadcrumbs-props)
-         {:data-scrollable-x true
+         {:data-column-gap   :xs
+          :data-scrollable-x true
           :style             style}))
 
 ;; ----------------------------------------------------------------------------

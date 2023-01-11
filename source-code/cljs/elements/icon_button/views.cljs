@@ -89,13 +89,13 @@
   ;   Default: :tr
   ;   W/ {:badge-content ...}
   ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :height (keyword)(opt)
   ;   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxl
+  ;   Default: :3xl
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :icon (keyword)
@@ -137,7 +137,7 @@
   ;  :tooltip (metamorphic-content)(opt)
   ;  :width (keyword)(opt)
   ;   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxl}
+  ;   Default: :3xl}
   ;
   ; @usage
   ; [icon-button {...}]

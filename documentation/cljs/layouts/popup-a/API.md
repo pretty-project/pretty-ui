@@ -18,7 +18,7 @@
  :footer (metamorphic-content)(opt)
  :header (metamorphic-content)(opt)
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :none
  :on-mount (metamorphic-event)(opt)
  :on-unmount (metamorphic-event)(opt)

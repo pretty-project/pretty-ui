@@ -35,9 +35,8 @@
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
   [elements/label ::header-label
-                  {:content     label
-                   :indent      {:horizontal :xs :left :s}
-                   :line-height :block}])
+                  {:content label
+                   :indent  {:horizontal :xs :left :s}}])
 
 (defn- consent-dialog-header
   ; @param (keyword) dialog-id

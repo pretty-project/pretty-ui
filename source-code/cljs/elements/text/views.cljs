@@ -1,7 +1,7 @@
 
 (ns elements.text.views
     (:require [candy.api                :refer [return]]
-              [elements.label.views     :as label.views]
+              [elements.element.views   :as element.views]
               [elements.text.helpers    :as text.helpers]
               [elements.text.prototypes :as text.prototypes]
               [random.api               :as random]
@@ -10,18 +10,6 @@
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- text-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ; {:info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [_ {:keys [info-text label]}]
-  (if label [label.views/element {:info-text   info-text
-                                  :content     label
-                                  :line-height :block}]))
 
 (defn- text-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,7 +73,7 @@
   ; @param (map) text-props
   [text-id text-props]
   [:div.e-text (text.helpers/text-attributes text-id text-props)
-               [text-label                   text-id text-props]
+               [element.views/element-label  text-id text-props]
                [text-body                    text-id text-props]])
 
 (defn element
@@ -117,8 +105,8 @@
   ;  :info-text (metamorphic-content)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :line-height (keyword)(opt)
-  ;   :block, :inherit, :native, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :block
+  ;   :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :text-block
   ;  :max-lines (integer)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
