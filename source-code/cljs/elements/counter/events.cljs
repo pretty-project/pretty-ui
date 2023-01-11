@@ -3,7 +3,7 @@
     (:require [candy.api             :refer [return]]
               [elements.counter.subs :as counter.subs]
               [elements.input.events :as input.events]
-              [re-frame.api          :as r :refer [r]]
+              [re-frame.api          :refer [r]]
               [x.db.api              :as x.db]))
 
 ;; ----------------------------------------------------------------------------
@@ -47,9 +47,3 @@
   (if (r counter.subs/value-increasable? db counter-id counter-props)
       (r x.db/apply-item!                db value-path inc)
       (return                            db)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.counter/counter-did-mount counter-did-mount)

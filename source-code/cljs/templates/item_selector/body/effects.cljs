@@ -23,9 +23,9 @@
   ;   Default: (fn [{:keys [id] :as item-link}] id)
   ;  :multi-select? (boolean)(opt)
   ;  :on-change (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a kiválasztott elem(ek)et.
+  ;   This event takes the selected item(s) as its last parameter
   ;  :on-save (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a kiválasztott elem(ek)et.
+  ;   This event takes the selected item(s) as its last parameter
   ;  :value-path (vector)}
   ;
   ; @usage

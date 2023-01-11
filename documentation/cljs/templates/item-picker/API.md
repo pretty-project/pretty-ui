@@ -40,9 +40,9 @@
  :multi-select? (boolean)(opt)
   Default: false
  :on-change (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a kiválasztott elemet.
+  This event takes the selected item(s) as its last parameter
  :on-save (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a kiválasztott elemet.
+  This event takes the selected item(s) as its last parameter
  :on-select (metamorphic-event)
  :outdent (map)(opt)
  :required? (boolean)(opt)

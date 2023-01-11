@@ -1,26 +1,13 @@
 
 (ns elements.combo-box.helpers
-    (:require [candy.api                   :refer [return]]
-              [dom.api                     :as dom]
-              [elements.combo-box.state    :as combo-box.state]
-              [elements.input.helpers      :as input.helpers]
-              [elements.text-field.helpers :as text-field.helpers]
-              [hiccup.api                  :as hiccup]
-              [re-frame.api                :as r]
-              [string.api                  :as string]
-              [vector.api                  :as vector]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn combo-box-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) box-id
-  ; @param (map) box-props
-  ; {:initial-options (vector)(opt)}
-  [box-id {:keys [initial-options] :as box-props}]
-  (if initial-options (r/dispatch [:elements.combo-box/combo-box-did-mount box-id box-props])))
+    (:require [candy.api                    :refer [return]]
+              [dom.api                      :as dom]
+              [elements.combo-box.state     :as combo-box.state]
+              [elements.input.helpers       :as input.helpers]
+              [elements.plain-field.helpers :as plain-field.helpers]
+              [hiccup.api                   :as hiccup]
+              [string.api                   :as string]
+              [vector.api                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,7 +41,7 @@
   ;
   ; @return (boolean)
   [box-id {:keys [option-label-f] :as box-props} option]
-  (let [field-content (text-field.helpers/get-field-content box-id)
+  (let [field-content (plain-field.helpers/get-field-content box-id)
         option-label  (option-label-f option)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
             (string/starts-with?   option-label field-content {:case-sensitive? false}))))

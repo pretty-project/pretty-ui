@@ -1,11 +1,11 @@
 
 (ns elements.icon-button.views
-    (:require [elements.button.helpers         :as button.helpers]
-              [elements.element.helpers        :as element.helpers]
+    (:require [elements.element.helpers        :as element.helpers]
               [elements.icon-button.helpers    :as icon-button.helpers]
               [elements.icon-button.presets    :as icon-button.presets]
               [elements.icon-button.prototypes :as icon-button.prototypes]
               [random.api                      :as random]
+              [re-frame.api                    :as r]
               [reagent.api                     :as reagent]
               [x.components.api                :as x.components]))
 
@@ -71,9 +71,9 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (button.helpers/button-did-mount    button-id button-props))
-                       :component-will-unmount (fn [_ _] (button.helpers/button-will-unmount button-id button-props))
-                       :component-did-update   (fn [%]   (button.helpers/button-did-update   button-id %))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.button/button-did-mount    button-id button-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.button/button-will-unmount button-id button-props]))
+                       :component-did-update   (fn [%]   (r/dispatch [:elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
 (defn element

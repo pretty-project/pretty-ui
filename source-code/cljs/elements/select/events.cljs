@@ -2,7 +2,7 @@
 (ns elements.select.events
     (:require [candy.api             :refer [return]]
               [elements.input.events :as input.events]
-              [re-frame.api          :as r :refer [r]]
+              [re-frame.api          :refer [r]]
               [vector.api            :as vector]))
 
 ;; ----------------------------------------------------------------------------
@@ -62,9 +62,3 @@
   ; @return (map)
   [db [_ _ {:keys [options-path]} option]]
   (update-in db options-path vector/cons-item-once option))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.select/select-will-mount select-will-mount)

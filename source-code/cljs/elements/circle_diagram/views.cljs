@@ -2,7 +2,7 @@
 (ns elements.circle-diagram.views
     (:require [elements.circle-diagram.helpers    :as circle-diagram.helpers]
               [elements.circle-diagram.prototypes :as circle-diagram.prototypes]
-              [elements.label.views               :as label.views]
+              [elements.element.views             :as element.views]
               [random.api                         :as random]
               [svg.api                            :as svg]
               [vector.api                         :as vector]))
@@ -41,20 +41,6 @@
                                [:svg (svg/wrapper-attributes  {:height diameter :width diameter})
                                      (circle-diagram-sections diagram-id diagram-props)]])
 
-(defn- circle-diagram-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) diagram-id
-  ; @param (map) diagram-props
-  ; {:helper (metamorphic-content)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [_ {:keys [helper info-text label]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block}]))
-
 (defn circle-diagram
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -62,7 +48,7 @@
   ; @param (map) diagram-props
   [diagram-id diagram-props]
   [:div.e-circle-diagram (circle-diagram.helpers/diagram-attributes diagram-id diagram-props)
-                         [circle-diagram-label                      diagram-id diagram-props]
+                         [element.views/element-label               diagram-id diagram-props]
                          [circle-diagram-circle                     diagram-id diagram-props]])
 
 (defn element

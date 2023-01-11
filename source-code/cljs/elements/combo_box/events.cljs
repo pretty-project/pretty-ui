@@ -2,13 +2,13 @@
 (ns elements.combo-box.events
     (:require [elements.input.events  :as input.events]
               [elements.input.helpers :as input.helpers]
-              [re-frame.api           :as r :refer [r]]
+              [re-frame.api           :refer [r]]
               [x.db.api               :as x.db]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn combo-box-did-mount
+(defn box-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) box-id
@@ -36,9 +36,3 @@
        (if (input.helpers/value-path->vector-item? value-path)
            (r x.db/set-vector-item! db value-path option-value)
            (r x.db/set-item!        db value-path option-value))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.combo-box/combo-box-did-mount combo-box-did-mount)

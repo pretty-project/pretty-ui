@@ -1,26 +1,14 @@
 
 ### field-content-f
 
-Az adatbázisban tárolt érték a field-content-f függvény alkalmazásával kerül a mezőbe.
+When the stored value (in the application state) or the initial value derived into
+the field, the 'field-content-f' is applied on the value.
 
-Pl.: A text-field elem React-fába csatolásakor a value-path útvonal tárolt érték a
-     mezőbe íródik és a tárolt értéket a field-content-f függvény alkalmazásával írja
-     a mezőbe.
-
-     A text-field elem React-fába csatolásakor az initial-value érték a mezőbe és a
-     value-path útvonalra íródik és az initial-value értéket a field-content-f függvény
-     alkalmazásával írja a mezőbe.
-
-     A {:required? true} beállítással használt mező kitöltöttségének vizsgálatakor
-     a value-path útvonalon tárolt értéket a field-content-f függvény alkalmazása után
-     vizsgálja meg.
+Application state (value-path) --> field-content-f --> The field's content
 
 ### field-value-f
 
-A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül az adatbázisba.
+When the application state gets updated with the field content, the 'field-value-f'
+function is applied on the content.
 
-Pl.: A mezőbe írt szöveg a field-value-f függvény alkalmazásával kerül a value-path
-     útvonalra
-
-     A mező kiürítésekor az üres string érték a field-value-f függvény alkalmazásával
-     kerül a value-path útvonalra
+The field's content --> field-value-f --> Application state (value-path)

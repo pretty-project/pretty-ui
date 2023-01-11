@@ -4,8 +4,7 @@
               [elements.multi-combo-box.events     :as multi-combo-box.events]
               [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [elements.text-field.events          :as text-field.events]
-              [elements.text-field.helpers         :as text-field.helpers]
+              [elements.plain-field.helpers        :as plain-field.helpers]
               [re-frame.api                        :as r :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
@@ -56,14 +55,14 @@
       ; XXX#4146 (source-code/cljs/elements/combo_box/effects.cljs)
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
-           (if (text-field.helpers/surface-visible? field-id)
+           (if (plain-field.helpers/surface-visible? field-id)
                (if-let [highlighted-option (combo-box.helpers/get-highlighted-option field-id field-props)]
                        [:elements.multi-combo-box/use-option! box-id box-props highlighted-option]
-                       (if (text-field.helpers/field-empty? field-id)
+                       (if (plain-field.helpers/field-empty? field-id)
                            {:fx       [:elements.text-field/hide-surface! field-id]}
                            {:fx       [:elements.text-field/hide-surface! field-id]
                             :dispatch [:elements.multi-combo-box/use-field-content! box-id box-props]}))
-               (if (text-field.helpers/field-filled? field-id)
+               (if (plain-field.helpers/field-filled? field-id)
                    [:elements.multi-combo-box/use-field-content! box-id box-props])))))
 
 (r/reg-event-fx :elements.multi-combo-box/COMMA-pressed
@@ -73,7 +72,7 @@
   ; @param (map) box-props
   (fn [{:keys [db]} [_ box-id box-props]]
       (let [field-id (multi-combo-box.helpers/box-id->field-id box-id)]
-           (if (text-field.helpers/field-filled? field-id)
+           (if (plain-field.helpers/field-filled? field-id)
                [:elements.multi-combo-box/use-field-content! box-id box-props]))))
 
 ;; ----------------------------------------------------------------------------
@@ -87,7 +86,7 @@
   (fn [{:keys [db]} [_ box-id box-props]]
       (let [field-id      (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props   (multi-combo-box.prototypes/field-props-prototype box-id box-props)
-            field-content (text-field.helpers/get-field-content             field-id)]
+            field-content (plain-field.helpers/get-field-content            field-id)]
            {:db       (r multi-combo-box.events/use-field-content! db box-id box-props field-content)
             :dispatch [:elements.text-field/empty-field! field-id field-props]})))
 
@@ -138,7 +137,7 @@
       ; adódik hozzá az értékek vektorához a mező tartalma, akkor az adat elveszne.
       ; Szóval ez most egy UX teszt.
       (let [field-id (multi-combo-box.helpers/box-id->field-id box-id)]
-           (if (text-field.helpers/field-empty? field-id)
+           (if (plain-field.helpers/field-empty? field-id)
                {:dispatch    [:elements.multi-combo-box/remove-keypress-events! box-id box-props]}
                {:dispatch-n [[:elements.multi-combo-box/remove-keypress-events! box-id box-props]
                              [:elements.multi-combo-box/use-field-content!      box-id box-props]]}))))

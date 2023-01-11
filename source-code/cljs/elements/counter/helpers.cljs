@@ -8,18 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {:initial-value (integer)(opt)}
-  [counter-id {:keys [initial-value] :as counter-props}]
-  (if initial-value (r/dispatch [:elements.counter/counter-did-mount counter-id counter-props])))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn increase-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -1,12 +1,12 @@
 
 (ns elements.radio-button.events
     (:require [elements.input.events :as input.events]
-              [re-frame.api          :as r :refer [r]]))
+              [re-frame.api          :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-box-did-mount
+(defn button-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -42,9 +42,3 @@
   ; @return (map)
   [db [_ button-id button-props]]
   (r input.events/clear-value! db button-id button-props))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.radio-button/radio-button-box-did-mount radio-button-box-did-mount)

@@ -6,6 +6,20 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(r/reg-event-fx :elements.radio-button/button-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)}
+  (fn [{:keys [db]} [_ button-id {:keys [initial-options initial-value] :as button-props}]]
+      (if (or initial-options initial-value)
+          {:db (r radio-button.events/button-did-mount db button-id button-props)})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (r/reg-event-fx :elements.radio-button/select-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

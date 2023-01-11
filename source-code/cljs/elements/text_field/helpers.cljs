@@ -1,157 +1,12 @@
 
 (ns elements.text-field.helpers
-    (:require [candy.api                  :refer [return]]
-              [css.api                    :as css]
-              [dom.api                    :as dom]
-              [elements.element.helpers   :as element.helpers]
-              [elements.text-field.config :as text-field.config]
-              [elements.text-field.state  :as text-field.state]
-              [hiccup.api                 :as hiccup]
-              [re-frame.api               :as r]
-              [string.api                 :as string]
-              [time.api                   :as time]
-              [x.components.api           :as x.components]
-              [x.environment.api          :as x.environment]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn text-field-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  (r/dispatch [:elements.text-field/text-field-did-mount field-id field-props]))
-
-(defn text-field-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  (r/dispatch [:elements.text-field/text-field-will-unmount field-id field-props]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-empty?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  ; BUG#3401
-  (let [field-content (get-in @text-field.state/FIELD-STATES [field-id :content])]
-       (empty? field-content)))
-
-(defn field-filled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [field-content (get-in @text-field.state/FIELD-STATES [field-id :content])]
-       (-> field-content empty? not)))
-
-(defn field-enabled?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (let [field-input-id (hiccup/value field-id "input")]
-       (x.environment/element-enabled? field-input-id)))
-
-(defn field-emptiable?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (and (field-enabled? field-id)
-       (field-filled?  field-id)))
-
-(defn surface-visible?
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (boolean)
-  [field-id]
-  (= field-id @text-field.state/VISIBLE-SURFACE))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn get-field-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ;
-  ; @return (string)
-  [field-id]
-  (get-in @text-field.state/FIELD-STATES [field-id :content]))
-
-(defn set-field-content!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; @param (*) content
-  [field-id content]
-  ; BUG#3401
-  ; A mező értékének eltárolása előtt szükséges azt string típusra alakítani!
-  ; Pl.: Előfordulhat, hogy number típusú érték íródik a mezőbe és az értéket
-  ;      vizsgáló empty? függvény hibát dobna egy number típus vizsgálatakor!
-  (swap! text-field.state/FIELD-STATES assoc-in [field-id :content] (str content)))
-
-(defn resolve-field-change!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  [field-id field-props]
-  ; The 'resolve-field-change!' function called by the 'on-change-f' function
-  ; after a field changed.
-  ;
-  ; A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
-  ; és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
-  ; értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
-  ; Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
-  ; on-type-ended esemény.
-  ;
-  ; A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
-  ; paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
-  ; hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
-  (let [timestamp  (time/elapsed)
-        changed-at (get-in @text-field.state/FIELD-STATES [field-id :changed-at])]
-       (when (> timestamp (+ changed-at text-field.config/TYPE-ENDED-AFTER))
-             (r/dispatch-sync [:elements.text-field/type-ended field-id field-props]))))
-
-(defn on-change-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:modifier (function)(opt)
-  ;  :on-changed (metamorphic-event)(opt)}
-  ; @param (DOM-event) event
-  ;
-  ; @return (function)
-  [field-id {:keys [modifier on-changed] :as field-props} event]
-  (let [timestamp     (time/elapsed)
-        field-content (if modifier (-> event dom/event->value modifier)
-                                   (-> event dom/event->value))]
-       (swap! text-field.state/FIELD-STATES assoc field-id {:changed-at timestamp :content field-content})
-       (letfn [(f [] (resolve-field-change! field-id field-props))]
-              (time/set-timeout! f text-field.config/TYPE-ENDED-AFTER))
-       (if on-changed (let [on-changed (r/metamorphic-event<-params on-changed field-content)]
-                           (r/dispatch-sync on-changed)))))
+    (:require [candy.api                    :refer [return]]
+              [elements.element.helpers     :as element.helpers]
+              [elements.plain-field.helpers :as plain-field.helpers]
+              [re-frame.api                 :as r]
+              [string.api                   :as string]
+              [x.components.api             :as x.components]
+              [x.environment.api            :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -172,8 +27,10 @@
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :data-icon-family (keyword)}
-  [_ _ {:keys [color icon icon-family]}]
-  (merge {:data-font-size   :xs
+  [field-id field-props {:keys [color icon icon-family]}]
+  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
+  (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
+         {:data-font-size   :xs
           :data-line-height :block
           :data-selectable  false}
          (if icon {:data-icon-family icon-family})
@@ -199,20 +56,17 @@
   ;
   ; @return (map)
   ; {}
-  [_ _ {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
-  ; BUG#2105
-  ; A *-field elemhez adott field-adornment-button gombon történő on-mouse-down esemény
-  ; a mező on-blur eseményének triggerelésével jár, ami a mezőhöz esetlegesen használt surface
-  ; felület React-fából történő lecsatolását okozná.
-  (merge {:data-color        color
+  [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
+  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
+  (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
+         {:data-color        color
           :data-click-effect :opacity
           :data-font-size    :xs
           :data-line-height  :block
           :data-selectable   false
-          :on-mouse-down     #(.preventDefault %)
           :title             (x.components/content tooltip)}
          (if     icon         {:data-icon-family icon-family})
-         (if     icon         {:data-icon-size   :s})
+         (if     icon         {:data-icon-size :s})
          (if     disabled?    {:disabled   "1" :data-disabled true})
          (if-not tab-indexed? {:tab-index "-1"})
          (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
@@ -221,19 +75,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn adornment-placeholder-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:on-mouse-down (function)}
-  [field-id field-props]
-  {:on-mouse-down (fn [e] (.preventDefault e)
-                          (r/dispatch-fx [:elements.text-field/focus-field!  field-id field-props])
-                          (r/dispatch-fx [:elements.text-field/show-surface! field-id]))})
-
 (defn empty-field-adornment-props
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -241,9 +82,12 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  ; {}
+  ; {disabled? (boolean)
+  ;  :icon (keyword)
+  ;  :on-click (metamorphic-event)
+  ;  :tooltip (metamorphic-content)}
   [field-id field-props]
-  {:disabled? (field-empty? field-id)
+  {:disabled? (plain-field.helpers/field-empty? field-id)
    :icon      :close
    :on-click  [:elements.text-field/empty-field! field-id field-props]
    :tooltip   :empty-field!})
@@ -260,13 +104,13 @@
   ;
   ; @return (integer)
   [field-id {:keys [multiline?]}]
-  (let [field-content (get-field-content field-id)]
+  (let [field-content (plain-field.helpers/get-field-content field-id)]
        (if multiline? (let [line-count (-> field-content string/line-count inc)]
                            ; BUG#1481
-                           ; A textarea element magassága minimum 2 sor magasságú kell legyen,
-                           ; különben az egy sorba írt - a textarea szélességébe ki nem férő -
-                           ; szöveg nem törne meg automatikusan
                            ; Google Chrome Version 89.0.4389.114
+                           ; The height of a textarea element has to be min. 2 rows!
+                           ; Otherwise the browsers doesn't wraps the content in
+                           ; every case.
                            (inc line-count))
 
                       ; If the field is NOT multiline ...
@@ -302,8 +146,7 @@
   ;
   ; @return (string)
   [field-id {:keys [font-size line-height] :as field-props}]
-  ; XXX#0886 (resources/public/css/presets/font.css)
-  ; XXX#6618 (resources/public/css/elements/style.css)
+  ; XXX#0886 (bithandshake/pretty-css)
   (let [line-count (field-line-count field-id field-props)]
        (case line-height :block  (str "calc(var( --block-height-" (name font-size)   " ) * "line-count" + 12px)")
                          :native (str "calc(var( --line-height-"  (name font-size)   " ) * "line-count" + 12px)")
@@ -319,25 +162,10 @@
   ; @param (map) field-props
   ;
   ; @return (map)
+  ; {:style (map)
+  ;   {:height (string)}}
   [field-id field-props]
   {:style {:height (field-auto-height field-id field-props)}})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-surface-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ;
-  ; @return (map)
-  ; {:id (string)
-  ;  :on-mouse-down (function)}
-  [field-id _]
-  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  {:id (hiccup/value field-id "surface")
-   :on-mouse-down #(.preventDefault %)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -377,7 +205,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn field-body-attributes
+(defn field-input-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -392,49 +220,21 @@
   ;
   ; @return (map)
   ; {:auto-complete (keyword)
-  ;  :data-fillable (boolean)
-  ;  :disabled (boolean)
-  ;  :id (string)
+  ;  :max (string)
   ;  :max-length (integer)
   ;  :min (string)
-  ;  :max (string)
   ;  :name (keyword)
-  ;  :on-blur (function)
-  ;  :on-change (function)
-  ;  :on-focus (function)
-  ;  :type (keyword)
-  ;  :value (string)}
+  ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
-  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
-  ;
-  ; BUG#8809 (cljs/elements/plain_text/helpers.cljs)
-  ;
-  ; XXX#4461
-  ; A {:type :date} típusú mezők min és max dátuma beállítható
-  ; a date-field date-from és date-field tulajdonságainak használatával.
-  ;
-  ; BUG#8800
-  ; 2022.11.28
-  ; Google Chrome  - Version 107.0.5304.110 (Official Build) (x86_64)
-  ; MacOS Monterey - Version 12.3.1 (21E258)
-  ;
-  ; BUG#8806 (cljs/elements/plain_text/helpers.cljs)
-  (merge {:data-autofill :remove-style
-          :max-length    max-length
-          :type          type
-          :id            (hiccup/value      field-id "input")
-          :value         (get-field-content field-id)}
-         (if disabled? {:data-caret-color :hidden
-                        :tab-index        -1
-                        :on-change        (fn [])}
+  ; The {:type :date} fields range could being set by the :min and :max properties.
+  (merge (plain-field.helpers/field-input-attributes field-id field-props)
+         {:max-length max-length
+          :type       type}
+         (if disabled? {}
                        {:auto-complete autofill-name
                         :min           date-from
                         :max           date-to
-                        :name          autofill-name
-                        :on-mouse-down #(r/dispatch-fx [:elements.text-field/show-surface! field-id])
-                        :on-blur       #(r/dispatch    [:elements.text-field/field-blurred field-id field-props])
-                        :on-focus      #(r/dispatch    [:elements.text-field/field-focused field-id field-props])
-                        :on-change     #(on-change-f field-id field-props %)})))
+                        :name          autofill-name})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -448,7 +248,8 @@
   ;  :stretch-orientation (keyword)}
   ;
   ; @return (map)
-  ; {}
+  ; {:data-element-width (keyword)
+  ;  :data-stretch-orientation (keyword)}
   [field-id {:keys [min-width stretch-orientation] :as field-props}]
   (merge (element.helpers/element-default-attributes field-id field-props)
          (element.helpers/element-outdent-attributes field-id field-props)

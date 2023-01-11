@@ -2,9 +2,9 @@
 (ns elements.multi-combo-box.views
     (:require [elements.chip-group.views           :as chip-group.views]
               [elements.combo-box.views            :as combo-box.views]
+              [elements.element.views              :as element.views]
               [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [elements.text-field.views           :as text-field.views]
               [random.api                          :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -43,7 +43,7 @@
   ; @param (map) box-props
   [box-id box-props]
   [:div.e-multi-combo-box--body (multi-combo-box.helpers/box-body-attributes box-id box-props)
-                                [text-field.views/text-field-label           box-id box-props]
+                                [element.views/element-label                 box-id box-props]
                                 [multi-combo-box-chip-group                  box-id box-props]
                                 [multi-combo-box-field                       box-id box-props]])
 

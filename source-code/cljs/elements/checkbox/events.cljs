@@ -2,7 +2,7 @@
 (ns elements.checkbox.events
     (:require [elements.input.events :as input.events]
               [elements.input.subs   :as input.subs]
-              [re-frame.api          :as r :refer [r]]
+              [re-frame.api          :refer [r]]
               [vector.api            :as vector]
               [x.db.api              :as x.db]))
 
@@ -47,9 +47,3 @@
        (if (vector/min? options 2)
            (r x.db/apply-item!        db value-path vector/toggle-item option-value)
            (r x.db/toggle-item-value! db value-path                    option-value))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-; WARNING! NON-PUBLIC! DO NOT USE!
-(r/reg-event-db :elements.checkbox/checkbox-did-mount checkbox-did-mount)

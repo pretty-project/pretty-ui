@@ -1,35 +1,13 @@
 
 (ns elements.select.helpers
-    (:require [candy.api                   :refer [return]]
-              [elements.element.helpers    :as element.helpers]
-              [elements.select.config      :as select.config]
-              [elements.text-field.helpers :as text-field.helpers]
-              [re-frame.api                :as r]
-              [string.api                  :as string]
-              [x.components.api            :as x.components]
-              [x.environment.api           :as x.environment]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn active-button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:initial-options (vector)(opt)
-  ;  :initial-value (*)(opt)}
-  [select-id {:keys [initial-options initial-value] :as select-props}]
-  (if (or initial-options initial-value)
-      (r/dispatch [:elements.select/active-button-did-mount select-id select-props])))
-
-(defn active-button-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props]
-  (r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
+    (:require [candy.api                    :refer [return]]
+              [elements.element.helpers     :as element.helpers]
+              [elements.plain-field.helpers :as plain-field.helpers]
+              [elements.select.config       :as select.config]
+              [re-frame.api                 :as r]
+              [string.api                   :as string]
+              [x.components.api             :as x.components]
+              [x.environment.api            :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,7 +23,7 @@
   ; @return (boolean)
   [select-id {:keys [option-label-f] :as select-props} option]
   ; XXX#0714 (source-code/cljs/elements/combo_box/helpers.cljs)
-  (let [field-content (text-field.helpers/get-field-content :elements.select/option-field)
+  (let [field-content (plain-field.helpers/get-field-content :elements.select/option-field)
         option-label  (-> option option-label-f x.components/content)]
        (and (string/not-pass-with? option-label field-content {:case-sensitive? false})
             (string/starts-with?   option-label field-content {:case-sensitive? false}))))

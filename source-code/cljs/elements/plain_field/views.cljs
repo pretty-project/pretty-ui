@@ -36,8 +36,8 @@
   (reagent/lifecycles {:component-will-unmount (fn [_ _ _] (plain-field.helpers/synchronizer-will-unmount-f field-id field-props))
                        :component-did-mount    (fn [_ _ _] (plain-field.helpers/synchronizer-did-mount-f    field-id field-props))
                        :component-did-update   (fn [%]     (plain-field.helpers/synchronizer-did-update-f   field-id %))
-                       :reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                  field-id field-props])}))
-                      ;:reagent-render         (fn [_ _ _])
+                      ;:reagent-render         (fn [_ _ _] [plain-field-synchronizer-debug                  field-id field-props])
+                       :reagent-render         (fn [_ _ _])}))
 
 (defn- plain-field-synchronizer
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -89,6 +89,7 @@
   [field-id field-props]
   [:div.e-plain-field (plain-field.helpers/field-attributes field-id field-props)
                       [plain-field-body                     field-id field-props]
+                      [plain-field-surface                  field-id field-props]
                       [plain-field-synchronizer             field-id field-props]])
 
 (defn- plain-field
@@ -97,8 +98,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.plain-field/plain-field-did-mount    field-id field-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.plain-field/plain-field-will-unmount field-id field-props]))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.plain-field/field-did-mount    field-id field-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.plain-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [plain-field-structure field-id field-props])}))
 
 (defn element
@@ -131,18 +132,18 @@
   ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you have to get the ACTUAL value from the application state, use the
   ;   :on-type-ended event instead!
-  ;   This event gets the field content as its last parameter
-  ;  :on-empty (metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-focus (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
-  ;   This event gets the field content as its last parameter
+  ;   This event takes the field content as its last parameter
   ;  :on-type-ended (metamorphic-event)(opt)
-  ;   This event gets the field content as its last parameter
+  ;   This event takes the field content as its last parameter
   ;  :on-unmount (metamorphic-event)(opt)
-  ;   This event gets the field content as its last parameter
+  ;   This event takes the field content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :style (map)(opt)
+  ;  :surface (metamorphic-content)(opt)
   ;  :value-path (vector)(opt)}
   ;
   ; @usage

@@ -32,12 +32,9 @@
   ; @param (integer) option-dex
   ; @param (map) option
   [box-id {:keys [option-component] :as box-props} option-dex option]
-  ; BUG#2105
-  ; An on-mouse-down event fired on the combo-box surface would cause the on-blur
-  ; event of the field, therefore the surface would dissapear unless if the on-mouse-down
-  ; event prevented.
-  [:button.e-combo-box--option {:on-mouse-down #(do (.preventDefault %))
-                                :on-mouse-up   #(do (r/dispatch [:elements.combo-box/select-option! box-id box-props option]))
+  ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
+  [:button.e-combo-box--option {:on-mouse-down #(.preventDefault %)
+                                :on-mouse-up   #(r/dispatch [:elements.combo-box/select-option! box-id box-props option])
                                ;:data-selected ...
                                 :data-highlighted (= option-dex (combo-box.helpers/get-highlighted-option-dex box-id))}
                                (if option-component [option-component         box-id box-props option]
@@ -84,7 +81,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (combo-box.helpers/combo-box-did-mount box-id box-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.combo-box/box-did-mount box-id box-props]))
                        :reagent-render      (fn [_ box-props] [combo-box-structure box-id box-props])}))
 
 (defn element

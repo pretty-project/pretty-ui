@@ -25,4 +25,4 @@
   (fn [{:keys [db]} [_ group-id group-props field-dex]]
       (let [field-id (multi-field.helpers/field-dex->field-id group-id group-props (inc field-dex))]
            {:db (r multi-field.events/increase-field-count! db group-id group-props field-dex)
-            :dispatch-later [{:ms 100 :fx [:elements.text-field/focus-field! field-id]}]})))
+            :dispatch-later [{:ms 100 :fx [:elements.plain-field/focus-field! field-id]}]})))

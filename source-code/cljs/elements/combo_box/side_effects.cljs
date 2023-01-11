@@ -1,10 +1,10 @@
 
 (ns elements.combo-box.side-effects
-    (:require [elements.combo-box.helpers  :as combo-box.helpers]
-              [elements.combo-box.state    :as combo-box.state]
-              [elements.text-field.helpers :as text-field.helpers]
-              [re-frame.api                :as r]
-              [vector.api                  :as vector]))
+    (:require [elements.combo-box.helpers   :as combo-box.helpers]
+              [elements.combo-box.state     :as combo-box.state]
+              [elements.plain-field.helpers :as plain-field.helpers]
+              [re-frame.api                 :as r]
+              [vector.api                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -50,7 +50,7 @@
   ; @param (*) selected-option
   [box-id {:keys [option-label-f] :as box-props} selected-option]
   (let [option-label (option-label-f selected-option)]
-       (text-field.helpers/set-field-content! box-id option-label)))
+       (plain-field.helpers/set-field-content! box-id option-label)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

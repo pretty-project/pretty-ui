@@ -2,9 +2,9 @@
 (ns elements.select.views
     (:require [candy.api                  :refer [return]]
               [elements.button.views      :as button.views]
+              [elements.element.views     :as element.views]
               [elements.icon-button.views :as icon-button.views]
               [elements.input.helpers     :as input.helpers]
-              [elements.label.views       :as label.views]
               [elements.select.helpers    :as select.helpers]
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
@@ -173,19 +173,6 @@
   [:div.e-select--button {:data-selectable false}
                          [select-button-body select-id select-props]])
 
-(defn- active-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  [_ {:keys [helper info-text label marker-color]}]
-  (if label [label.views/element {:content      label
-                                  :helper       helper
-                                  :info-text    info-text
-                                  :line-height  :block
-                                  :marker-color marker-color}]))
-
 (defn- active-button-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -193,7 +180,7 @@
   ; @param (map) select-props
   [select-id select-props]
   [:div.e-select--body (select.helpers/select-body-attributes select-id select-props)
-                       [active-button-label                   select-id select-props]
+                       [element.views/element-label           select-id select-props]
                        [select-button                         select-id select-props]])
 
 (defn- active-button-structure
@@ -211,8 +198,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (select.helpers/active-button-did-mount    select-id select-props))
-                       :component-will-unmount (fn [_ _] (select.helpers/active-button-will-unmount select-id select-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.select/active-button-did-mount    select-id select-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
                        :reagent-render         (fn [_ select-props] [active-button-structure select-id select-props])}))
 
 (defn- active-button-layout

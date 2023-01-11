@@ -8,20 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:initial-options (vector)(opt)
-  ;  :initial-value (*)(opt)}
-  [button-id {:keys [initial-options initial-value] :as button-props}]
-  (if (or initial-options initial-value)
-      (r/dispatch [:elements.radio-button/radio-button-box-did-mount button-id button-props])))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn clear-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

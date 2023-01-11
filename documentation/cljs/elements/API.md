@@ -1447,18 +1447,18 @@
   It happens BEFORE the application state gets updated with the actual value!
   If you have to get the ACTUAL value from the application state, use the
   :on-type-ended event instead!
-  This event gets the field content as its last parameter
- :on-empty (metamorphic-event)(opt)
+  This event takes the field content as its last parameter
  :on-focus (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
-  This event gets the field content as its last parameter
+  This event takes the field content as its last parameter
  :on-type-ended (metamorphic-event)(opt)
-  This event gets the field content as its last parameter
+  This event takes the field content as its last parameter
  :on-unmount (metamorphic-event)(opt)
-  This event gets the field content as its last parameter
+  This event takes the field content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property.
  :style (map)(opt)
+ :surface (metamorphic-content)(opt)
  :value-path (vector)(opt)}
 ```
 
@@ -1741,8 +1741,6 @@
  :initial-value (vector)(opt)
   Default: [0 100]
  :label (metamorphic-content)(opt)
- :marked? (boolean)(opt)
-  Default: false
  :max-value (integer)(opt)
   Default: 100
  :min-value (integer)(opt)
@@ -1750,9 +1748,6 @@
  :outdent (map)(opt)
   Same as the :indent property.
  :resetable? (boolean)(opt)
-  Default: false
- :required? (boolean or keyword)(opt)
-  true, false, :unmarked
   Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
@@ -1976,18 +1971,22 @@
  :modifier (function)(opt)
  :on-blur (metamorphic-event)(opt)
  :on-changed (metamorphic-event)(opt)
-  It happens BEFORE the application state get updated with the actual value!
+  It happens BEFORE the application state gets updated with the actual value!
   If you have to get the ACTUAL value from the application state, use the
-  :on-type-ended lifecycle instead!
-  Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  :on-type-ended event instead!
+  It happens BEFORE the application state gets updated with the actual value!
+  This event takes the field content as its last parameter
  :on-empty (metamorphic-event)(opt)
+  This event takes the field content as its last parameter
+ :on-enter (metamorphic-event)(opt)
+  This event takes the field content as its last parameter
  :on-focus (metamorphic-event)(opt)
  :on-mount (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  This event takes the field content as its last parameter
  :on-type-ended (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  This event takes the field content as its last parameter
  :on-unmount (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  This event takes the field content as its last parameter
  :outdent (map)(opt)
   Same as the :indent property.
  :placeholder (metamorphic-content)(opt)
@@ -2019,27 +2018,27 @@
 
 ```
 @usage
-[text-field {:validator {:f               #(not (empty? %))
+[text-field {:validator {:f #(not (empty? %))
                          :invalid-message "Invalid value"}}]
 ```
 
 ```
 @usage
 (defn get-invalid-message [value] "Invalid value")
-[text-field {:validator {:f                 #(not (empty? %))
+[text-field {:validator {:f #(not (empty? %))
                          :invalid-message-f get-invalid-message}}]
 ```
 
 ```
 @usage
 (defn my-surface [field-id])
-[text-field {:surface {:content #'my-surface}}]
+[text-field {:surface #'my-surface}]
 ```
 
 ```
 @usage
-(defn my-surface [field-id surface-props])
-[text-field {:surface #'my-surface}]
+(defn my-surface [field-id])
+[text-field {:surface {:content #'my-surface}}]
 ```
 
 ```
@@ -2084,8 +2083,6 @@
  :on-click (metamorphic-event)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :required? (boolean)(opt)
-  Default: false
  :style (map)(opt)
  :uri (string)(opt)
  :width (keyword)(opt)

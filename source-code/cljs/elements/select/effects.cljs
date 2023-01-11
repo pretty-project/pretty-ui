@@ -7,7 +7,7 @@
               [elements.select.events         :as select.events]
               [elements.select.prototypes     :as select.prototypes]
               [elements.select.views          :as select.views]
-              [elements.text-field.helpers    :as text-field.helpers]
+              [elements.plain-field.helpers   :as plain-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
               [re-frame.api                   :as r :refer [r]]))
 
@@ -19,8 +19,11 @@
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
-  (fn [{:keys [db]} [_ select-id select-props]]
-      {:db (r select.events/select-will-mount db select-id select-props)}))
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)}
+  (fn [{:keys [db]} [_ select-id {:keys [initial-options initial-value] :as select-props}]]
+      (if (or initial-options initial-value)
+          {:db (r select.events/select-will-mount db select-id select-props)})))
 
 (r/reg-event-fx :elements.select/active-button-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -157,10 +160,10 @@
   ; @param (map) select-props
   ; {:add-option-f (function)}
   (fn [{:keys [db]} [_ select-id {:keys [add-option-f] :as select-props}]]
-      (if-let [option-field-filled? (text-field.helpers/field-filled? :elements.select/option-field)]
+      (if-let [option-field-filled? (plain-field.helpers/field-filled? :elements.select/option-field)]
               (let [field-id      :elements.select/option-field
                     field-props   (text-field.prototypes/field-props-prototype field-id {})
-                    field-content (text-field.helpers/get-field-content        field-id)
+                    field-content (plain-field.helpers/get-field-content       field-id)
                     option        (add-option-f field-content)]
                    {:db       (r select.events/add-option! db select-id select-props option)
                     :dispatch [:elements.text-field/empty-field! field-id field-props]}))))

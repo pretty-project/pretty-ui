@@ -1,7 +1,8 @@
 
 (ns elements.button.effects
     (:require [elements.button.events :as button.events]
-              [re-frame.api           :as r :refer [r]]))
+              [re-frame.api           :as r :refer [r]]
+              [reagent.api            :as reagent]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,10 +21,10 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:keypress (map)(opt)}
-  (fn [{:keys [db]} [_ button-id {:keys [keypress] :as button-props}]]
-      (if keypress {:db (r button.events/button-did-update db button-id button-props)})))
+  ; @param (?) %
+  (fn [{:keys [db]} [_ button-id %]]
+      (let [[_ {:keys [keypress] :as button-props}] (reagent/arguments %)]
+           (if keypress {:db (r button.events/button-did-update db button-id button-props)}))))
 
 (r/reg-event-fx :elements.button/button-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!

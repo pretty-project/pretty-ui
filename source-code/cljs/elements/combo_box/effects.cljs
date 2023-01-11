@@ -1,9 +1,21 @@
 
 (ns elements.combo-box.effects
-    (:require [elements.combo-box.events   :as combo-box.events]
-              [elements.combo-box.helpers  :as combo-box.helpers]
-              [elements.text-field.helpers :as text-field.helpers]
-              [re-frame.api                :as r :refer [r]]))
+    (:require [elements.combo-box.events    :as combo-box.events]
+              [elements.combo-box.helpers   :as combo-box.helpers]
+              [elements.plain-field.helpers :as plain-field.helpers]
+              [re-frame.api                 :as r :refer [r]]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(r/reg-event-fx :elements.combo-box/box-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) box-id
+  ; @param (map) box-props
+  ; {:initial-options (vector)(opt)}
+  (fn [{:keys [db]} [_ box-id {:keys [initial-options] :as box-props}]]
+      (if initial-options {:db (r combo-box.events/box-did-mount db box-id box-props)})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,7 +27,7 @@
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
       ; XXX#4156
-      ; Overwrites the default ESC and ENTER keypress events of the field by using
+      ; Overwrites the default ESC and ENTER keypress events of the text-field by using
       ; the :elements.text-field/ESC and :elements.text-field/ENTER keypress event IDs.
       ; The overwritten keypress events' functionality is implemented in the combo-box
       ; field keypress events.
@@ -103,7 +115,7 @@
       ; If the surface of the combo-box isn't visible ...
       ; ... pressing the ENTER button:
       ;     - fires the original ENTER event of the text-field.
-      (if (text-field.helpers/surface-visible? box-id)
+      (if (plain-field.helpers/surface-visible? box-id)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
                   {:dispatch [:elements.combo-box/select-option! box-id box-props highlighted-option]}
                   {:fx       [:elements.text-field/hide-surface! box-id]})

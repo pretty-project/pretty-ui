@@ -6,6 +6,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(r/reg-event-fx :elements.counter/counter-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) counter-id
+  ; @param (map) counter-props
+  ; {:initial-value (integer)(opt)}
+  (fn [{:keys [db]} [_ counter-id {:keys [initial-value] :as counter-props}]]
+      (if initial-value {:db (r counter.events/counter-did-mount db counter-id counter-props)})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (r/reg-event-fx :elements.counter/increase-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

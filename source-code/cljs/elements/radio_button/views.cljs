@@ -1,10 +1,11 @@
 
 (ns elements.radio-button.views
-    (:require [elements.input.helpers           :as input.helpers]
-              [elements.label.views             :as label.views]
+    (:require [elements.element.views           :as element.views]
+              [elements.input.helpers           :as input.helpers]
               [elements.radio-button.helpers    :as radio-button.helpers]
               [elements.radio-button.prototypes :as radio-button.prototypes]
               [random.api                       :as random]
+              [re-frame.api                     :as r]
               [reagent.api                      :as reagent]
               [x.components.api                 :as x.components]))
 
@@ -89,19 +90,6 @@
   (if unselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
                                                          ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
 
-(defn- radio-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {}
-  [_ {:keys [helper info-text label marker-color]}]
-  (if label [label.views/element {:content      label
-                                  :helper       helper
-                                  :info-text    info-text
-                                  :line-height  :block
-                                  :marker-color marker-color}]))
-
 (defn- radio-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -109,7 +97,7 @@
   ; @param (map) button-props
   [button-id button-props]
   [:div.e-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
-                       [radio-button-label                           button-id button-props]
+                       [element.views/element-label                  button-id button-props]
                        [radio-button-unselect-button                 button-id button-props]
                        [radio-button-body                            button-id button-props]])
 
@@ -119,7 +107,7 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (radio-button.helpers/radio-button-did-mount button-id button-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.radio-button/button-did-mount button-id button-props]))
                        :reagent-render      (fn [_ button-props] [radio-button-structure button-id button-props])}))
 
 (defn element

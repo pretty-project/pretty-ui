@@ -39,7 +39,13 @@
   ; @param (string) field-content
   [field-id field-content]
   ; HACK#9910
-  (swap! plain-field.state/FIELD-CONTENTS assoc field-id field-content))
+  ;
+  ; BUG#3401
+  ; The 'field-content' has to be converted to string type!
+  ; It may occur, that a non-seqable type (e.g. integer) being written into
+  ; the field and the empty? function may throws an error in case of taking
+  ; a non-seqable value as its argument.
+  (swap! plain-field.state/FIELD-CONTENTS assoc field-id (str field-content)))
 
 (defn set-field-output!
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -85,6 +91,19 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn synchronizer-did-mount-f
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ; {:field-content-f (function)
+  ;  :value-path (vector)}
+  [field-id {:keys [field-content-f value-path]}]
+  ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
+  (let [stored-value  @(r/subscribe [:x.db/get-item value-path])
+        stored-content (field-content-f stored-value)]
+       (set-field-content! field-id stored-content)))
+
 (defn synchronizer-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,19 +119,6 @@
        (let [stored-content (field-content-f stored-value)]
             (when (not= stored-content (get-field-content field-id))
                   (set-field-content! field-id stored-content)))))
-
-(defn synchronizer-did-mount-f
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:field-content-f (function)
-  ;  :value-path (vector)}
-  [field-id {:keys [field-content-f value-path]}]
-  ; HACK#9910 (source-code/cljs/elements/plain_field/views.cljs)
-  (let [stored-value  @(r/subscribe [:x.db/get-item value-path])
-        stored-content (field-content-f stored-value)]
-       (set-field-content! field-id stored-content)))
 
 (defn synchronizer-will-unmount-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -142,18 +148,16 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; The 'resolve-field-change!' function called by the 'on-change-f' function
-  ; after the field's content changed.
+  ; The 'resolve-field-change!' function is called by the 'on-change-f' function
+  ; with a timeout after the field's content has been changed.
+  ; If the field's content hasn't changed again during the timeout, ...
+  ; ... the type considered as ended.
+  ; ... the application state gets updated with the field's content.
+  ; ... the :on-type-ended event being dispatched.
   ;
-  ; A resolve-field-change! függvény a mező megváltozása után késleltetve fut le,
-  ; és ha a mező megváltozása és a függvény késleltetett lefutása között a mező
-  ; értékében újabb változás már nem történt, akkor a gépelés befejezettnek tekinthető.
-  ; Ekkor a mező értéke a Re-Frame adatbázisba íródik és lefut az esetlegesen beállított
-  ; on-type-ended esemény.
-  ;
-  ; A resolve-field-change! függvény az on-change-f függvénytől NEM kapja meg
-  ; paraméterként a mező aktuális értékét, mert a késleltetett futás miatt előfordulhat,
-  ; hogy a mező értéke időközben megváltozik (pl. az ESC billentyű lenyomása kiüríti a mezőt)
+  ; This function doesn't takes the field's content as its argument, because
+  ; it's called with a timeout and the field's content can changes again during
+  ; the timeout.
   (let [timestamp  (time/elapsed)
         changed-at (get-in @plain-field.state/FIELD-STATES [field-id :changed-at])]
        (when (> timestamp (+ changed-at plain-field.config/TYPE-ENDED-AFTER))
@@ -190,8 +194,18 @@
   ; {:disabled? (boolean)(opt)}
   ;
   ; @return (map)
-  ; {}
+  ; {:data-autofill (keyword)
+  ;  :data-caret-color (keyword)
+  ;  :id (string)
+  ;  :on-blur (function)
+  ;  :on-change (function)
+  ;  :on-focus (function)
+  ;  :tab-index (integer)
+  ;  :type (keyword)
+  ;  :value (string)}
   [field-id {:keys [disabled?] :as field-props}]
+  ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
+  ;
   ; BUG#8806
   ; If the {:disabled? true} state of the plain-field element would set the
   ; disabled="true" attribute on the input DOM element ...
@@ -204,10 +218,10 @@
   ; Therefore, the input DOM element doesn't get the disabled="true" attribute!
   ;
   ; BUG#8809
-  ; If the {:disabled? true} state of the plain-field element would remove the
+  ; If the {:disabled? true} state of the plain-field element removes the
   ; :on-change property of the input DOM element ...
   ; ... the React warns that the input stepped into uncontrolled state.
-  ; Therefore, the input DOM element doesn't loses its :on-change property
+  ; Therefore, the input DOM element must keeps its :on-change property
   ; in {:disabled? true} state!
   (merge {:data-autofill :remove-style
           :type          :text
@@ -234,8 +248,31 @@
   ;  :on-mouse-down (function)}
   [field-id _]
   ; XXX#4460 (source-code/cljs/elements/button/views.cljs)
+  ; BUG#2105
   {:id (hiccup/value field-id "surface")
    :on-mouse-down #(.preventDefault %)})
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-accessory-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  ; {:on-mouse-down (function)}
+  [field-id _]
+  ; BUG#2105
+  ; An on-mouse-down event fired on anywhere out of the input triggers the
+  ; on-blur event of the field, therefore the surface would dissapears unless
+  ; if the on-mouse-down event prevented.
+  ;
+  ; If the user clicks on a field accessory (adornment, surface, placeholder, etc.)
+  ; the field has been focused!
+  {:on-mouse-down (fn [e] (.preventDefault e)
+                          (r/dispatch-fx [:elements.plain-field/focus-field! field-id]))})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -248,12 +285,10 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-fill-color (keyword)
-  ;  :style (map)}
+  ; {:style (map)}
   [field-id {:keys [style] :as field-props}]
   (merge (element.helpers/element-indent-attributes field-id field-props)
-         {:data-fill-color :highlight
-          :style           style}))
+         {:style style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

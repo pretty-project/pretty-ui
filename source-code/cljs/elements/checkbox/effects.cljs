@@ -6,6 +6,17 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(r/reg-event-fx :elements.checkbox/checkbox-did-mount
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) checkbox-id
+  ; @param (map) checkbox-props
+  ; {:initial-options (vector)(opt)
+  ;  :initial-value (*)(opt)}
+  (fn [{:keys [db]} [_ checkbox-id {:keys [initial-options initial-value] :as checkbox-props}]]
+      (if (or initial-options initial-value)
+          {:db (r checkbox.events/checkbox-did-mount db checkbox-id checkbox-props)})))
+
 (r/reg-event-fx :elements.checkbox/toggle-option!
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

@@ -2,7 +2,7 @@
 (ns elements.counter.views
     (:require [elements.counter.helpers    :as counter.helpers]
               [elements.counter.prototypes :as counter.prototypes]
-              [elements.label.views        :as label.views]
+              [elements.element.views      :as element.views]
               [random.api                  :as random]
               [re-frame.api                :as r]
               [reagent.api                 :as reagent]))
@@ -59,19 +59,6 @@
                         [counter-increase-button                 counter-id counter-props]
                         [counter-reset-button                    counter-id counter-props]])
 
-(defn- counter-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ; {}
-  [_ {:keys [helper info-text label marker-color]}]
-  (if label [label.views/element {:content      label
-                                  :helper       helper
-                                  :info-text    info-text
-                                  :line-height  :block
-                                  :marker-color marker-color}]))
-
 (defn- counter-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -79,7 +66,7 @@
   ; @param (map) counter-props
   [counter-id counter-props]
   [:div.e-counter (counter.helpers/counter-attributes counter-id counter-props)
-                  [counter-label                      counter-id counter-props]
+                  [element.views/element-label        counter-id counter-props]
                   [counter-body                       counter-id counter-props]])
 
 (defn- counter
@@ -88,7 +75,7 @@
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (counter.helpers/counter-did-mount counter-id counter-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter-structure counter-id counter-props])}))
 
 (defn element

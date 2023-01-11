@@ -1,4 +1,7 @@
 
 ### chip-label-f
 
-The chips apply the 'chip-label-f' function on its values before displaying them.
+Every chip applies the 'chip-label-f' function on its value before displaying
+as its label.
+
+Application state (value path) --> chip-label-f --> The chip's label

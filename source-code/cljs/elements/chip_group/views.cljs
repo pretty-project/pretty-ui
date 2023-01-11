@@ -3,7 +3,7 @@
     (:require [elements.chip-group.helpers    :as chip-group.helpers]
               [elements.chip-group.prototypes :as chip-group.prototypes]
               [elements.chip.views            :as chip.views]
-              [elements.label.views           :as label.views]
+              [elements.element.views         :as element.views]
               [loop.api                       :refer [reduce-indexed]]
               [random.api                     :as random]
               [re-frame.api                   :as r]
@@ -57,18 +57,6 @@
   [:div.e-chip-group--body (chip-group.helpers/chip-group-body-attributes group-id group-props)
                            [chip-group-chips                              group-id group-props]])
 
-(defn- chip-group-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) group-id
-  ; @param (map) group-props
-  ; {}
-  [_ {:keys [helper info-text label]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block}]))
-
 (defn- chip-group
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -76,7 +64,7 @@
   ; @param (map) group-props
   [group-id group-props]
   [:div.e-chip-group (chip-group.helpers/chip-group-attributes group-id group-props)
-                     [chip-group-label                         group-id group-props]
+                     [element.views/element-label              group-id group-props]
                      [chip-group-body                          group-id group-props]])
 
 (defn element

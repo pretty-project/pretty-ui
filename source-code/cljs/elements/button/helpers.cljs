@@ -4,46 +4,7 @@
               [elements.element.helpers :as element.helpers]
               [hiccup.api               :as hiccup]
               [re-frame.api             :as r]
-              [reagent.api              :as reagent]
               [x.environment.api        :as x.environment]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn button-did-mount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:keypress (map)(opt)}
-  [button-id {:keys [keypress] :as button-props}]
-  ; A component-did-mount életciklus eltárolja a Re-Frame adatbázisban a button elem
-  ; billentyűlenyomás-általi vezérléséhez szükséges tulajdonságokat, így azok az elem
-  ; billentyűlenyomás-vezérlője számára elérhetők lesznek az adatbázisban.
-  (if keypress (r/dispatch [:elements.button/button-did-mount button-id button-props])))
-
-(defn button-did-update
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (?) %
-  [button-id %]
-  ; A component-did-update életciklus aktualizálja a Re-Frame adatbázisban a button
-  ; elem eltárolt tulajdonságait, így azok követik a button elem számára paraméterként
-  ; átadott button-props térkép változásait.
-  (let [[_ {:keys [keypress] :as button-props}] (reagent/arguments %)]
-       (if keypress (r/dispatch [:elements.button/button-did-update button-id button-props]))))
-
-(defn button-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:keypress (map)(opt)}
-  [button-id {:keys [keypress] :as button-props}]
-  ; A component-will-unmount életciklus törli a Re-Frame adatbázisból a button elem
-  ; eltárolt tulajdonságait.
-  (if keypress (r/dispatch [:elements.button/button-will-unmount button-id button-props])))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

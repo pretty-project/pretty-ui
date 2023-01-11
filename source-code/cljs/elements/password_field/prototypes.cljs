@@ -2,7 +2,7 @@
 (ns elements.password-field.prototypes
     (:require [candy.api                       :refer [param]]
               [elements.password-field.helpers :as password-field.helpers]
-              [elements.text-field.helpers     :as text-field.helpers]
+              [elements.plain-field.helpers    :as plain-field.helpers]
               [vector.api                      :as vector]
               [x.user.api                      :as x.user]))
 
@@ -39,7 +39,7 @@
   ;   {:f (function)
   ;    :invalid-message (keyword)}}
   [field-id {:keys [end-adornments validate?] :as field-props}]
-  (let [field-empty?      (text-field.helpers/field-empty?          field-id)
+  (let [field-empty?      (plain-field.helpers/field-empty?         field-id)
         password-visible? (password-field.helpers/password-visible? field-id)]
        (merge {:label :password
                :type  (if password-visible? :text :password)}

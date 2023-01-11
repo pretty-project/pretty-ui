@@ -1,26 +1,13 @@
 
 (ns elements.thumbnail.views
     (:require [css.api                       :as css]
-              [elements.label.views          :as label.views]
+              [elements.element.views        :as element.views]
               [elements.thumbnail.helpers    :as thumbnail.helpers]
               [elements.thumbnail.prototypes :as thumbnail.prototypes]
               [random.api                    :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn- thumbnail-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) thumbnail-id
-  ; @param (map) thumbnail-props
-  ; {}
-  [_ {:keys [helper info-text label required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :required?   required?}]))
 
 (defn- toggle-thumbnail
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -58,7 +45,7 @@
   ; {:on-click (metamorphic-event)(opt)}
   [thumbnail-id {:keys [on-click] :as thumbnail-props}]
   [:div.e-thumbnail (thumbnail.helpers/thumbnail-attributes thumbnail-id thumbnail-props)
-                    [thumbnail-label thumbnail-id thumbnail-props]
+                    [element.views/element-label thumbnail-id thumbnail-props]
                     (cond (some? on-click) [toggle-thumbnail thumbnail-id thumbnail-props]
                           (nil?  on-click) [static-thumbnail thumbnail-id thumbnail-props])])
 
@@ -95,8 +82,6 @@
   ;  :on-click (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :required? (boolean)(opt)
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :uri (string)(opt)
   ;  :width (keyword)(opt)

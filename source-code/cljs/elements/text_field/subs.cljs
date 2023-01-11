@@ -11,7 +11,9 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {}
+  ; {:validator (map)
+  ;   {:f (function)}
+  ;  :value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [validator value-path] :as field-props}]]
@@ -34,7 +36,8 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {}
+  ; {:field-content-f (function)
+  ;  :value-path (vector)}
   ;
   ; @return (boolean)
   [db [_ field-id {:keys [field-content-f value-path]}]]

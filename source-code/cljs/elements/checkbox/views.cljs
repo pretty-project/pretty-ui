@@ -2,9 +2,10 @@
 (ns elements.checkbox.views
     (:require [elements.checkbox.helpers    :as checkbox.helpers]
               [elements.checkbox.prototypes :as checkbox.prototypes]
+              [elements.element.views       :as element.views]
               [elements.input.helpers       :as input.helpers]
-              [elements.label.views         :as label.views]
               [random.api                   :as random]
+              [re-frame.api                 :as r]
               [reagent.api                  :as reagent]
               [x.components.api             :as x.components]))
 
@@ -80,19 +81,6 @@
   [:div.e-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
                          [checkbox-options                          checkbox-id checkbox-props]])
 
-(defn- checkbox-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) checkbox-id
-  ; @param (map) checkbox-props
-  ; {}
-  [_ {:keys [helper info-text label marker-color]}]
-  (if label [label.views/element {:content      label
-                                  :helper       helper
-                                  :info-text    info-text
-                                  :line-height  :block
-                                  :marker-color marker-color}]))
-
 (defn- checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,7 +88,7 @@
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
   [:div.e-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
-                   [checkbox-label                       checkbox-id checkbox-props]
+                   [element.views/element-label          checkbox-id checkbox-props]
                    [checkbox-body                        checkbox-id checkbox-props]])
 
 (defn- checkbox
@@ -109,7 +97,7 @@
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (checkbox.helpers/checkbox-did-mount checkbox-id checkbox-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.checkbox/checkbox-did-mount checkbox-id checkbox-props]))
                        :reagent-render      (fn [_ checkbox-props] [checkbox-structure checkbox-id checkbox-props])}))
 
 (defn element

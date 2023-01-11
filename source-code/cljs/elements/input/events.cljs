@@ -1,7 +1,9 @@
 
 (ns elements.input.events
-    (:require [candy.api :refer [return]]
-              [map.api   :refer [dissoc-in]]))
+    (:require [candy.api           :refer [return]]
+              [elements.input.subs :as input.subs]
+              [map.api             :refer [dissoc-in]]
+              [re-frame.api        :refer [r]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,7 +34,7 @@
   ; @return (map)
   [db [_ _ {:keys [initial-options options-path]}]]
   ; The 'use-initial-options!' function stores the initial options of an element
-  ; in the application state, but only if no options have been set yet.
+  ; in the application state, but only if no options has been set.
   (let [options (get-in db options-path)]
        (cond-> db (and initial-options (empty? options))
                   (assoc-in options-path initial-options))))
@@ -46,12 +48,11 @@
   ;  :value-path (vector)}
   ;
   ; @return (map)
-  [db [_ _ {:keys [initial-value value-path]}]]
+  [db [_ input-id {:keys [initial-value value-path] :as input-props}]]
   ; The 'use-initial-value!' function stores the initial value of an element
-  ; in the application state, but only if no value have been set yet.
-  (let [stored-value (get-in db value-path)]
-       (cond-> db (and initial-value (nil? stored-value))
-                  (assoc-in value-path initial-value))))
+  ; in the application state, but only if no value has been set.
+  (cond-> db (and initial-value (r input.subs/input-empty? db input-id input-props))
+             (assoc-in value-path initial-value)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

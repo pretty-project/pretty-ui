@@ -1,10 +1,11 @@
 
 (ns elements.switch.views
-    (:require [elements.input.helpers     :as input.helpers]
-              [elements.label.views       :as label.views]
+    (:require [elements.element.views     :as element.views]
+              [elements.input.helpers     :as input.helpers]
               [elements.switch.helpers    :as switch.helpers]
               [elements.switch.prototypes :as switch.prototypes]
               [random.api                 :as random]
+              [re-frame.api               :as r]
               [reagent.api                :as reagent]
               [x.components.api           :as x.components]))
 
@@ -79,20 +80,6 @@
   [:div.e-switch--body (switch.helpers/switch-body-attributes switch-id switch-props)
                        [switch-options                        switch-id switch-props]])
 
-(defn- switch-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
-
 (defn- switch-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -100,7 +87,7 @@
   ; @param (map) switch-props
   [switch-id switch-props]
   [:div.e-switch (switch.helpers/switch-attributes switch-id switch-props)
-                 [switch-label                     switch-id switch-props]
+                 [element.views/element-label      switch-id switch-props]
                  [switch-body                      switch-id switch-props]])
 
 (defn- switch
@@ -109,7 +96,7 @@
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
-  (reagent/lifecycles {:component-did-mount (fn [_ _] (switch.helpers/switch-did-mount switch-id switch-props))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.switch/switch-did-mount switch-id switch-props]))
                        :reagent-render      (fn [_ switch-props] [switch-structure switch-id switch-props])}))
 
 (defn element

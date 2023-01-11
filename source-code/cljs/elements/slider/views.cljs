@@ -1,8 +1,8 @@
 
 (ns elements.slider.views
-    (:require [elements.slider.helpers    :as slider.helpers]
+    (:require [elements.element.views     :as element.views]
+              [elements.slider.helpers    :as slider.helpers]
               [elements.slider.prototypes :as slider.prototypes]
-              [elements.label.views       :as label.views]
               [random.api                 :as random]
               [reagent.api                :as reagent]))
 
@@ -53,20 +53,6 @@
                        [slider-primary-thumb                  slider-id slider-props]
                        [slider-secondary-thumb                slider-id slider-props]])
 
-(defn- slider-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) slider-id
-  ; @param (map) slider-props
-  ; {}
-  [_ {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?}]))
-
 (defn- slider-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -74,7 +60,7 @@
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.e-slider (slider.helpers/slider-attributes slider-id slider-props)
-                 [slider-label                     slider-id slider-props]
+                 [element.views/element-label      slider-id slider-props]
                  [slider-body                      slider-id slider-props]])
 
 (defn- slider
@@ -106,8 +92,6 @@
   ;  :initial-value (vector)(opt)
   ;   Default: [0 100]
   ;  :label (metamorphic-content)(opt)
-  ;  :marked? (boolean)(opt)
-  ;   Default: false
   ;  :max-value (integer)(opt)
   ;   Default: 100
   ;  :min-value (integer)(opt)
@@ -115,9 +99,6 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
-  ;   Default: false
-  ;  :required? (boolean or keyword)(opt)
-  ;   true, false, :unmarked
   ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}

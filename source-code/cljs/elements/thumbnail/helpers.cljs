@@ -12,10 +12,16 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ; {}
+  ; {:background-size (keyword)
+  ;  :border-radius (keyword)
+  ;  :height (keyword)
+  ;  :width (keyword)}
   ;
   ; @return (map)
-  ; {}
+  ; {:data-background-size (keyword)
+  ;  :data-border-radius (keyword)
+  ;  :data-thumbnail-height (keyword)
+  ;  :data-thumbnail-width (keyword)}
   [_ {:keys [background-size border-radius height width]}]
   {:data-background-size  background-size
    :data-border-radius    border-radius
@@ -46,10 +52,11 @@
   ;
   ; @param (keyword) thumbnail-id
   ; @param (map) thumbnail-props
-  ; {}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {}
+  ; {:data-selectable (boolean)
+  ;  :style (map)}
   [thumbnail-id {:keys [style] :as thumbnail-props}]
   (merge (element.helpers/element-indent-attributes thumbnail-id thumbnail-props)
          (thumbnail-layout-attributes               thumbnail-id thumbnail-props)

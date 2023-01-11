@@ -1,9 +1,10 @@
 
 (ns elements.text-field.views
-    (:require [elements.label.views           :as label.views]
+    (:require [elements.element.views         :as element.views]
+              [elements.plain-field.helpers   :as plain-field.helpers]
+              [elements.plain-field.views     :as plain-field.views]
               [elements.text-field.helpers    :as text-field.helpers]
               [elements.text-field.prototypes :as text-field.prototypes]
-              [hiccup.api                     :as hiccup]
               [random.api                     :as random]
               [re-frame.api                   :as r]
               [reagent.api                    :as reagent]
@@ -20,7 +21,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (let [placeholder-attributes (text-field.helpers/adornment-placeholder-attributes field-id field-props)]
+  (let [placeholder-attributes (plain-field.helpers/field-accessory-attributes field-id field-props)]
        [:div.e-text-field--adornments-placeholder placeholder-attributes]))
 
 (defn button-adornment
@@ -96,9 +97,9 @@
   ; @param (map) field-props
   ; {:surface (metamorphic-content)(opt)}
   [field-id {:keys [surface] :as field-props}]
-  (if surface (if (text-field.helpers/surface-visible? field-id)
-                  [:div.e-text-field--surface (text-field.helpers/field-surface-attributes field-id field-props)
-                                              [x.components/content                        field-id surface]])))
+  (if surface (if (plain-field.helpers/surface-visible? field-id)
+                  [:div.e-text-field--surface (plain-field.helpers/field-surface-attributes field-id field-props)
+                                              [x.components/content                         field-id surface]])))
 
 ;; -- Field structure components ----------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -110,18 +111,11 @@
   ; @param (map) field-props
   ; {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
-  ; A placeholder elem {:on-mouse-down #(focus-element! ...)} eseménye nem adta át a fókuszt
-  ; az input elem számára, ezért a placeholder elem az input elem alatt kell, hogy megjelenjen
-  ; Google Chrome 98.0.4758.80
-  ;
-  ; Az input elemek az on-mouse-down esemény hatására kapnak fókuszt
-  (if placeholder (let [field-content (text-field.helpers/get-field-content field-id)]
-                       ; BUG#3401 (source-code/cljs/elements/text_field/helpers.cljs)
-                       (if (empty? field-content)
-                           [:div.e-text-field--placeholder {:data-font-size   :xs
-                                                            :data-line-height :block
-                                                            :data-selectable  false}
-                                                           (x.components/content placeholder)]))))
+  (if placeholder (if-let [field-empty? (plain-field.helpers/field-empty? field-id)]
+                          [:div.e-text-field--placeholder {:data-font-size   :xs
+                                                           :data-line-height :block
+                                                           :data-selectable  false}
+                                                          (x.components/content placeholder)])))
 
 (defn- text-field-input
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -130,8 +124,8 @@
   ; @param (map) field-props
   ; {:multiline? (boolean)(opt)}
   [field-id {:keys [multiline?] :as field-props}]
-  (if multiline? [:textarea.e-text-field--input (text-field.helpers/field-body-attributes field-id field-props)]
-                 [:input.e-text-field--input    (text-field.helpers/field-body-attributes field-id field-props)]))
+  (if multiline? [:textarea.e-text-field--input (text-field.helpers/field-input-attributes field-id field-props)]
+                 [:input.e-text-field--input    (text-field.helpers/field-input-attributes field-id field-props)]))
 
 (defn- text-field-input-emphasize
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -148,15 +142,10 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  ; XXX#3415
-  ; Az .e-text-field--input-structure elem tartalmazza az input elemet és az abszolút pozícionálású
-  ; placeholder elemet, amely elhelyezéséhez szükséges, hogy közös elemben legyen az input elemmel.
-  ;
-  ; BUG#3418
-  ; A DOM-fában az .e-text-field--input (input) elem ELŐTT elhelyezett .e-text-field--placeholder (div)
-  ; elem valamiért az .e-text-field--input elem FELETT jelent meg ezért az .e-text-field--input elem
-  ; az .e-text-field--input-emphasize (div) elembe került, így a placeholder elem az input elem alatt jelenik meg.
-  ; Google Chrome 98.0.4758.80
+  ; The placeholder element has an absolute position, therefore ...
+  ; ... it has to be placed in the same ancestor element as the input element!
+  ; ... but it cannot be in the very same parent element as the input element!
+  ;     (otherwise it covers the input no matter what's their order)
   [:div.e-text-field--input-structure [text-field-placeholder     field-id field-props]
                                       [text-field-input-emphasize field-id field-props]])
 
@@ -175,55 +164,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.text-field/hack5041
-  (fn [{:keys [db]} [_ field-id {:keys [field-content-f value-path]}]]
-      (let [field-content  (text-field.helpers/get-field-content field-id)
-            stored-value   (get-in db value-path)
-            stored-content (field-content-f stored-value)]
-           (if (not= field-content stored-content)
-               (text-field.helpers/set-field-content! field-id stored-content))
-           {})))
-
-(defn- hack5041
-  [field-id {:keys [value-path] :as field-props}]
-  ; HACK#5041
-  ; Yes! This is what it seems like! Sorry for that :(
-  (let [stored-value @(r/subscribe [:x.db/get-item value-path])]
-       (r/dispatch [:elements.text-field/hack5041 field-id field-props])))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn- text-field-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:helper (metamorphic-content)(opt)
-  ;  :info-text (metamorphic-content)(opt)
-  ;  :label (metamorphic-content)(opt)
-  ;  :marked? (boolean)(opt)
-  ;  :required? (boolean)(opt)}
-  [field-id {:keys [helper info-text label marked? required?]}]
-  (if label [label.views/element {:content     label
-                                  :helper      helper
-                                  :info-text   info-text
-                                  :line-height :block
-                                  :marked?     marked?
-                                  :required?   required?
-                                  :target-id   field-id}]))
-
 (defn- text-field-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  [:div.e-text-field (text-field.helpers/field-attributes field-id field-props)
-                     [text-field-label                    field-id field-props]
-                     [text-field-input-container          field-id field-props]
-                     ; HACK#5041
-                     [hack5041 field-id field-props]])
+  [:div.e-text-field (text-field.helpers/field-attributes        field-id field-props)
+                     [element.views/element-label                field-id field-props]
+                     [text-field-input-container                 field-id field-props]
+                     [plain-field.views/plain-field-synchronizer field-id field-props]])
 
 (defn- text-field
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -231,8 +181,8 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (text-field.helpers/text-field-did-mount    field-id field-props))
-                       :component-will-unmount (fn [_ _] (text-field.helpers/text-field-will-unmount field-id field-props))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.text-field/field-did-mount    field-id field-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.text-field/field-will-unmount field-id field-props]))
                        :reagent-render         (fn [_ field-props] [text-field-structure field-id field-props])}))
 
 (defn element
@@ -302,18 +252,22 @@
   ;  :modifier (function)(opt)
   ;  :on-blur (metamorphic-event)(opt)
   ;  :on-changed (metamorphic-event)(opt)
-  ;   It happens BEFORE the application state get updated with the actual value!
+  ;   It happens BEFORE the application state gets updated with the actual value!
   ;   If you have to get the ACTUAL value from the application state, use the
-  ;   :on-type-ended lifecycle instead!
-  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   :on-type-ended event instead!
+  ;   It happens BEFORE the application state gets updated with the actual value!
+  ;   This event takes the field content as its last parameter
   ;  :on-empty (metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
+  ;  :on-enter (metamorphic-event)(opt)
+  ;   This event takes the field content as its last parameter
   ;  :on-focus (metamorphic-event)(opt)
   ;  :on-mount (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   This event takes the field content as its last parameter
   ;  :on-type-ended (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   This event takes the field content as its last parameter
   ;  :on-unmount (metamorphic-event)(opt)
-  ;   Az esemény utolsó paraméterként megkapja a mező aktuális értékét.
+  ;   This event takes the field content as its last parameter
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :placeholder (metamorphic-content)(opt)
@@ -339,21 +293,21 @@
   ; [text-field :my-text-field {...}]
   ;
   ; @usage
-  ; [text-field {:validator {:f               #(not (empty? %))
+  ; [text-field {:validator {:f #(not (empty? %))
   ;                          :invalid-message "Invalid value"}}]
   ;
   ; @usage
   ; (defn get-invalid-message [value] "Invalid value")
-  ; [text-field {:validator {:f                 #(not (empty? %))
+  ; [text-field {:validator {:f #(not (empty? %))
   ;                          :invalid-message-f get-invalid-message}}]
   ;
   ; @usage
   ; (defn my-surface [field-id])
-  ; [text-field {:surface {:content #'my-surface}}]
+  ; [text-field {:surface #'my-surface}]
   ;
   ; @usage
-  ; (defn my-surface [field-id surface-props])
-  ; [text-field {:surface #'my-surface}]
+  ; (defn my-surface [field-id])
+  ; [text-field {:surface {:content #'my-surface}}]
   ;
   ; @usage
   ; [text-field {:modifier #(string/starts-with! % "/")}]

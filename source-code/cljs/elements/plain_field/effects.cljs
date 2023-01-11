@@ -8,7 +8,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.plain-field/plain-field-did-mount
+(r/reg-event-fx :elements.plain-field/field-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -18,13 +18,13 @@
   ;  :on-mount (metamorphic-event)(opt)
   ;  :value-path (vector)}
   (fn [{:keys [db]} [_ field-id {:keys [autofocus? initial-value on-mount value-path] :as field-props}]]
-      ; The autofocus has to be delayed, otherwise the carent doesn't shown up at the end of the content.
+      ; The autofocus has to be delayed, otherwise the caret shown up at not at the end of the content.
       (let [stored-value (get-in db value-path)]
-           {:dispatch-later [(if autofocus?    {:ms 50 :fx [:elements.plain-field/focus-field! field-id field-props]})]
+           {:dispatch-later [(if autofocus?    {:ms 50 :fx [:elements.plain-field/focus-field! field-id]})]
             :dispatch-n     [(if on-mount      (r/metamorphic-event<-params on-mount (or initial-value stored-value)))
                              (if initial-value [:elements.plain-field/use-initial-value! field-id field-props])]})))
 
-(r/reg-event-fx :elements.plain-field/plain-field-will-unmount
+(r/reg-event-fx :elements.plain-field/field-will-unmount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
@@ -52,21 +52,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.plain-field/empty-field!
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:on-empty (metamorphic-event)(opt)}
-  (fn [{:keys [db]} [_ field-id {:keys [on-empty] :as field-props}]]
-      (if (plain-field.helpers/field-filled? field-id)
-          {:dispatch (if on-empty (r/metamorphic-event<-params on-empty ""))
-           :db       (r plain-field.events/empty-field! db field-id field-props)
-           :fx       [:elements.plain-field/empty-field! field-id]})))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (r/reg-event-fx :elements.plain-field/type-ended
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -89,7 +74,8 @@
   ; {:on-blur (metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-blur]}]]
       {:dispatch-n [on-blur]
-       :fx-n       [[:elements.input/unmark-input-as-focused! field-id]
+       :fx-n       [[:elements.plain-field/hide-surface!      field-id]
+                    [:elements.input/unmark-input-as-focused! field-id]
                     [:x.environment/quit-type-mode!]]}))
 
 (r/reg-event-fx :elements.plain-field/field-focused
@@ -100,5 +86,6 @@
   ; {:on-focus (metamorphic-event)(opt)}
   (fn [_ [_ field-id {:keys [on-focus]}]]
       {:dispatch-n [on-focus]
-       :fx-n       [[:elements.input/mark-input-as-focused! field-id]
+       :fx-n       [[:elements.plain-field/show-surface!    field-id]
+                    [:elements.input/mark-input-as-focused! field-id]
                     [:x.environment/set-type-mode!]]}))

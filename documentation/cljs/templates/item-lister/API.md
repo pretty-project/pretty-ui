@@ -42,7 +42,7 @@
  :list-item-header (component or symbol)(opt)
  :items-path (vector)
  :on-order-changed (metamorphic-event)(opt)
-  Az esemény utolsó paraméterként megkapja az újrarendezett elemeket.
+  This event takes the reordered items as its last parameter
   W/ {:sortable? true}
  :sortable? (boolean)(opt)
   Default: false}
