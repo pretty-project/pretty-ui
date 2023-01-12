@@ -18,7 +18,7 @@
   [_ _ [_ input-id _]]
   {:data-color       :muted
    :data-font-size   :xs
-   :data-font-weight :bold
+   :data-font-weight :medium
    :data-indent-left :xs
    :data-line-height :text-block
    :data-selectable  false

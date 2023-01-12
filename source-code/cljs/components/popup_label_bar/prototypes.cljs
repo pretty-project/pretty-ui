@@ -18,13 +18,13 @@
          (param bar-props)
          (if primary-button   {:primary-button   (merge {:color       :primary
                                                          :font-size   :xs
-                                                        ;:font-weight :extra-bold
+                                                        ;:font-weight :bold
                                                          :hover-color :highlight
                                                          :indent      {:horizontal :xxs :vertical :xxs}
                                                          :keypress    {:key-code 13}}
                                                         (param primary-button))})
          (if secondary-button {:secondary-button (merge {:font-size   :xs
-                                                        ;:font-weight :extra-bold
+                                                        ;:font-weight :bold
                                                          :hover-color :highlight
                                                          :indent      {:horizontal :xxs :vertical :xxs}
                                                          :keypress    {:key-code 27}}

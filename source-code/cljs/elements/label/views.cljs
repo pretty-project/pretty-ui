@@ -152,8 +152,8 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
   ;  :font-weight (keyword)(opt)
-  ;   :bold, extra-bold, :inherit, :normal
-  ;   Default :bold
+  ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  ;   Default :medium
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left

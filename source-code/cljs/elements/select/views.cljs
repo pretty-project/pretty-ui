@@ -68,7 +68,7 @@
   ; {:options-placeholder (metamorphic-content)}
   [_ {:keys [options-placeholder]}]
   [:div.e-select--options-placeholder {:data-font-size   :s
-                                       :data-font-weight :bold
+                                       :data-font-weight :medium
                                        :data-line-height :text-block}
                                       (x.components/content options-placeholder)])
 
@@ -92,7 +92,7 @@
   ; {}
   [_ {:keys [options-label]}]
   (if options-label [:div.e-select--options--label {:data-font-size   :s
-                                                    :data-font-weight :bold
+                                                    :data-font-weight :medium
                                                     :data-line-height :text-block}
                                                    (x.components/content options-label)]
                     [:div.e-select--options--label {:data-placeholder true}]))
@@ -148,9 +148,9 @@
   ; {}
   [select-id select-props]
   (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
-          [:div.e-select--button-label {:data-font-size :s :data-font-weight :bold :data-line-height :text-block}
+          [:div.e-select--button-label {:data-font-size :s :data-font-weight :medium :data-line-height :text-block}
                                        (-> selected-option-label x.components/content)]
-          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :bold :data-line-height :text-block}
+          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :medium :data-line-height :text-block}
                                        (-> :select! x.components/content)]))
 
 (defn- select-button-body

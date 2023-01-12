@@ -29,7 +29,7 @@
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
   (if label [:div.e-icon-button--label {:data-color         :default
-                                        :data-font-weight   :extra-bold
+                                        :data-font-weight   :bold
                                         :data-text-overflow :ellipsis}
                                        (x.components/content label)]))
 

@@ -40,7 +40,7 @@
   ; function in multiple places.
   (let [content (x.components/content content)]
        (merge {:font-size        :s
-               :font-weight      :bold
+               :font-weight      :medium
                :horizontal-align :left
                :line-height      :text-block
                :selectable?      false

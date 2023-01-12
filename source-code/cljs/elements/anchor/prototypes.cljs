@@ -16,6 +16,6 @@
   ;  :line-height (keyword)}
   [anchor-props]
   (merge {:font-size   :s
-          :font-weight :bold
+          :font-weight :medium
           :line-height :text-block}
          (param anchor-props)))

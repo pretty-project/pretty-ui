@@ -133,7 +133,7 @@
   ; [menu-table :my-menu-table {...}]
   ;
   ; @usage
-  ; [menu-table {:rows [[{:content "Row #1"   :font-weight :extra-bold}
+  ; [menu-table {:rows [[{:content "Row #1"   :font-weight :bold}
   ;                      {:content "Value #1" :color :muted}
   ;                      {:content "Value #2" :color :muted}]
   ;                     [{...} {...}]]}]

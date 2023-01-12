@@ -49,7 +49,7 @@
   {:data-click-effect  :opacity
    :data-color         :muted
    :data-font-size     :xs
-   :data-font-weight   :extra-bold
+   :data-font-weight   :bold
    :data-line-height   :text-block
    :data-selectable    false
    :data-text-overflow :ellipsis

@@ -96,7 +96,7 @@
   ; [data-table :my-data-table {...}]
   ;
   ; @usage
-  ; [data-table {:rows [[{:content "Row #1"   :font-weight :extra-bold}
+  ; [data-table {:rows [[{:content "Row #1"   :font-weight :bold}
   ;                      {:content "Value #1" :color :muted}
   ;                      {:content "Value #2" :color :muted}]
   ;                     [{...} {...}]]}]

@@ -13,4 +13,4 @@
   [title-props]
   (let [viewport-min? @(r/subscribe [:x.environment/viewport-min? 720])]
        (merge title-props {:font-size (if viewport-min? :5xl :xl)
-                           :font-weight :extra-bold})))
+                           :font-weight :bold})))

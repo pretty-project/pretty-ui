@@ -71,17 +71,6 @@
 
 
 /***** Card *****/
-/*** Card wrapper ***/
-
-.e-card {
-  /* A stretch-orientation tulajdonság használatával egyes esetekben
-   * az egymás melletti card elemek magassága megegyzik.
-   * (100% - 2x horizontal-margin) */
- -height: calc(100% - 24px);
-}
-
-/*** Card wrapper ***/
-
 /*** Card body ***/
 
 .e-card--body {
@@ -104,8 +93,8 @@
 /*** Checkbox options ***/
 
 .e-checkbox--body[data-options-orientation="horizontal"] {
-  display: flex;
-  grid-column-gap: 24px;
+  display:    flex;
+  column-gap: 24px;
 }
 
 /*** Checkbox options ***/
@@ -120,25 +109,26 @@
 
 .e-checkbox--option-button {
   background-color: var( --fill-color-default );
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 2px;
-  height: 20px;
-  width: 20px;
-  margin-bottom: 2px;
-  margin-left: 2px;
-  margin-right: 8px;
-  margin-top: 2px;
+  border-radius:    4px;
+  border-style:     solid;
+  border-width:     2px;
+  height:           20px;
+  width:            20px;
+  margin-bottom:    2px;
+  margin-left:      2px;
+  margin-right:     8px;
+  margin-top:       2px;
 }
 
 .e-checkbox--option-label {
-  /* XXX#5050 */
+  /* XXX#5049 */
   text-align: left;
 }
 
 .e-checkbox--option-helper {
-  /* XXX#5050 */
-  color:      var( --color-muted );
+  color: var( --color-muted );
+
+  /* XXX#5049 */
   text-align: left;
 }
 
@@ -147,13 +137,13 @@
 /*** Checkbox marker ***/
 
 .e-checkbox--option-button::after {
-  font-size: 16px;
-  height: 16px;
-  left: 0;
+  font-size:   16px;
+  height:      16px;
+  left:        0;
   line-height: 16px;
-  position: absolute;
-  top: 0;
-  width: 16px;
+  position:    absolute;
+  top:         0;
+  width:       16px;
 }
 
 .e-checkbox--option[data-checked="true"] .e-checkbox--option-button::after {
@@ -165,19 +155,14 @@
 
 
 
-/***** Checkbox-group *****/
-/***** Checkbox-group *****/
-
-
-
 /***** Chip *****/
 /*** Chip body ***/
 
 .e-chip--body {
-  border-radius: 6px 12px 12px 6px;
-  display: flex;
-  height: 24px;
-  padding-left: 12px;
+  border-radius: 3px;
+  display:       flex;
+  height:        24px;
+  padding-left:  12px;
 }
 
 /*** Chip body ***/
@@ -186,20 +171,20 @@
 
 .e-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
-  border-radius: 10px;
-  color: var( --color-default );
-  height: 20px;
-  margin: 2px 2px 0 12px;
-  width: 20px;
+  border-radius:    10px;
+  color:            var( --color-default );
+  height:           20px;
+  margin:           2px 2px 0 12px;
+  width:            20px;
 }
 
 .e-chip--primary-button-icon {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 12px;
+  align-items:     center;
+  display:         flex;
+  flex-direction:  column;
+  font-size:       12px;
   justify-content: center;
-  line-height: 20px;
+  line-height:     20px;
 }
 
 .e-chip--primary-button--placeholder {
@@ -212,19 +197,12 @@
 
 
 /***** Chip-group *****/
-/*** Chip-group wrapper ***/
-
-.e-chip-group {}
-
-/*** Chip-group wrapper ***/
-
 /*** Chip-group chips ***/
 
 .e-chip-group--chips {
-  display: flex;
+  display:   flex;
   flex-wrap: wrap;
-  grid-gap: 12px;
- -padding: 6px 0;
+  gap:       12px;
 }
 
 /*** Chip-group chips ***/
@@ -252,14 +230,10 @@
 
 /*** Circle diagram wrapper ***/
 
-/*** Circle diagram sections ***/
-/*** Circle diagram sections ***/
-
 /*** Circle diagram section ***/
 
 .e-circle-diagram--section {
-  /* A transition tulajdonság használatával a szekciók darabosan
-     animálva változtatták a méretüket!
+  /* By using the transition property the animations lagged :(
  -transition: stroke-dasharray .5s ease-out; */
 
   fill: transparent;
@@ -415,13 +389,6 @@
   transform: rotateZ( -45deg );
 }
 
-.e-counter--decrease-button[data-disabled="true"],
-.e-counter--increase-button[data-disabled="true"],
-.e-counter--reset-button[data-disabled="true"] {
-  cursor: default;
-  opacity: .5;
-}
-
 /*** Counter button ***/
 /***** Counter *****/
 
@@ -450,7 +417,7 @@
 
 .e-digit-field--cover {
   display: flex;
-  grid-column-gap: 12px;
+  column-gap: 12px;
   height: 100%;
   left: 0;
   position: absolute;
@@ -535,30 +502,14 @@
 
 /***** Ghost *****/
 
-.e-ghost {
-  /* XXX#5577
-   * A {:size ...} tulajdonság nélkül használt ghost elem magassága beállítható
-   * a {:style {:height "..."}} beállítás használatával, ilyenkor az .e-ghost--body
-   * elem magassága alkalmazkodik az .e-ghost elem magasságához */
-  display: flex;
-  flex-direction: column;
-}
-
 .e-ghost--body {
   animation-iteration-count: infinite;
   animation-duration: 2s;
   animation-name: opacity-1-05-1;
   background-color: var( --ghost-color );
-  /* XXX#5577 */
-  flex-grow: 1;
 }
 
 /***** Ghost *****/
-
-
-
-/***** Icon *****/
-/***** Icon *****/
 
 
 
@@ -713,6 +664,9 @@
 .e-icon-button--body[data-border-radius="l"]::before   { border-radius: var( --border-radius-l   ); }
 .e-icon-button--body[data-border-radius="xl"]::before  { border-radius: var( --border-radius-xl  ); }
 .e-icon-button--body[data-border-radius="xxl"]::before { border-radius: var( --border-radius-xxl ); }
+.e-icon-button--body[data-border-radius="3xl"]::before { border-radius: var( --border-radius-3xl ); }
+.e-icon-button--body[data-border-radius="4xl"]::before { border-radius: var( --border-radius-4xl ); }
+.e-icon-button--body[data-border-radius="5xl"]::before { border-radius: var( --border-radius-5xl ); }
 
 /* XXX#0017 */
 [data-hover-color="var"].e-icon-button--body:hover::before       { background-color: var( --hover-color           ); }
@@ -803,9 +757,9 @@
 
 /* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
  * meg kell feleljenek a felsorolt felhasználási módoknak:
- *   1. A menü-elemek kizárólag ikonokat jelenítenek meg
- *   2. A menü-elemek kizárólag feliratokat jelenítenek meg
- *   3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
+ * 1. A menü-elemek kizárólag ikonokat jelenítenek meg
+ * 2. A menü-elemek kizárólag feliratokat jelenítenek meg
+ * 3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
 /* TODO
  * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
 .e-menu-bar--menu-item {
@@ -850,11 +804,11 @@
 /***** Multi field *****/
 
 .e-multi-field {
-  /* Távolság nélkül túlságosan közel lennének egymáshoz a multi-field komponens
-   * text-field alkomponensei */
   display: flex;
   flex-direction: column;
-  grid-row-gap: 8px;
+
+  /* Without using a gap, the text-fields might be placed too close to each other. */
+  row-gap: 8px;
 }
 
 /***** Multi field *****/
@@ -900,18 +854,13 @@
   width: 2px;
 }
 
-.e-radio-button--clear-button[data-disabled="true"] {
-  cursor: default;
-  opacity: .5;
-}
-
 /*** Radio button clear button ***/
 
 /*** Radio button options ***/
 
 .e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
   display: flex;
-  grid-column-gap: 24px;
+  column-gap: 24px;
 }
 
 /*** Radio button options ***/
@@ -926,16 +875,16 @@
 }
 
 .e-radio-button--option-label {
-  /* XXX#5050
-   * A {text-align: left} beállítás biztosítja, hogy a label és a helper
-   * feliratok közül bármelyik lehet hosszabb a másiknál, mind a kettő
-   * balraigazítottan jelenjen meg */
+  /* XXX#5049
+   * By using the {text-align: left} setting, no matter if the label or the helper
+   * is longer, both of them are aligned to the left. */
   text-align: left;
 }
 
 .e-radio-button--option-helper {
-  /* XXX#5050 */
-  color:      var( --color-muted );
+  color: var( --color-muted );
+
+  /* XXX#5049 */
   text-align: left;
 }
 
@@ -1072,6 +1021,7 @@
   height: 36px;
   justify-content: space-between;
   width: 100%;
+
   /* XXX#0617 */
   padding: 0 12px;
 }
@@ -1082,9 +1032,9 @@
 }
 
 .e-select--button-label {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display:         flex;
+  flex-direction:  column;
+  height:          100%;
   justify-content: center;
 }
 
@@ -1232,137 +1182,12 @@
 
 
 
-/***** Slideshow *****/
-/*** Slideshow steps wrapper ***/
-
-.e-slideshow--steps {
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-}
-
-/*** Slideshow steps wrapper ***/
-
-/*** Slideshow steps ***/
-
-.e-slideshow--prev-step,
-.e-slideshow--current-step,
-.e-slideshow--temp-step,
-.e-slideshow--next-step {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-}
-
-.e-slideshow--prev-step,
-.e-slideshow--next-step,
-.e-slideshow--temp-step {
-  left: 0;
-  position: absolute;
-  top: 0;
-}
-
-.e-slideshow--prev-step,
-.e-slideshow--current-step,
-.e-slideshow--next-step {
-  transition: transform .25s ease-in-out;
-}
-
-.e-slideshow[data-animation="slide-in-bwd"]
-.e-slideshow--prev-step,
-.e-slideshow--current-step,
-.e-slideshow[data-animation="slide-in-fwd"]
-.e-slideshow--next-step {
-  transform: translateX( 0 );
-}
-
-.e-slideshow--prev-step,
-.e-slideshow[data-animation="slide-in-fwd"]
-.e-slideshow--current-step {
-  transform: translateX( -100% );
-}
-
-.e-slideshow--next-step,
-.e-slideshow[data-animation="slide-in-bwd"]
-.e-slideshow--current-step {
-  transform: translateX( 100% );
-}
-
-.e-slideshow[data-animation="slide-in-bwd"]
-.e-slideshow--temp-step,
-.e-slideshow[data-animation="slide-in-fwd"]
-.e-slideshow--temp-step {
-  opacity: 0;
-}
-
-/*** Slideshow steps ***/
-
-/*** Slideshow controls ***/
-
-.e-slideshow--controls {
-  animation-fill-mode: both;
-  animation-name: opacity-1-0;
-  animation-duration: .3s;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.e-slideshow--controls:hover {
-  animation-name: none;
-}
-
-.e-slideshow--controls--go-bwd,
-.e-slideshow--controls--go-fwd {
-  height: 80px;
-  position: absolute;
-  top: calc( 50% - 40px );
-  width: 80px;
-}
-
-.e-slideshow--controls--go-bwd {
-  left: 0;
-}
-
-.e-slideshow--controls--go-fwd {
-  right: 0;
-}
-
-.e-slideshow--controls--go-bwd::before,
-.e-slideshow--controls--go-fwd::before {
-  color: var( --white );
-  font-size: 64px;
-  height: 64px;
-  left: 8px;
-  line-height: 64px;
-  position: absolute;
-  top: 8px;
-  width: 64px;
-}
-
-.e-slideshow--controls--go-bwd::before {
-  content: 'chevron_left';
-}
-
-.e-slideshow--controls--go-fwd::before {
-  content: 'chevron_right';
-}
-
-/*** Slideshow controls ***/
-/***** Slideshow *****/
-
-
-
 /***** Switch *****/
 /*** Switch options ***/
 
 .e-switch--body[data-options-orientation="horizontal"] {
   display: flex;
-  grid-column-gap: 24px;
+  column-gap: 24px;
 }
 
 /*** Switch options ***/
@@ -1379,23 +1204,24 @@
 
 .e-switch--option-track {
   background-color: var( --fill-color-default );
-  border-color: inherit;
-  border-radius: 10px;
-  border-style:  solid;
-  border-width:  2px;
-  margin-right:  6px;
-  height:        20px;
-  width:         40px;
+  border-color:     inherit;
+  border-radius:    10px;
+  border-style:     solid;
+  border-width:     2px;
+  margin-right:     6px;
+  height:           20px;
+  width:            40px;
 }
 
 .e-switch--option-label {
-  /* XXX#5050 */
+  /* XXX#5049 */
   text-align: left;
 }
 
 .e-switch--option-helper {
-  /* XXX#5050 */
-  color:      var( --color-muted );
+  color: var( --color-muted );
+
+  /* XXX#5049 */
   text-align: left;
 }
 
@@ -1431,7 +1257,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* A word-break tulajdonság megtöri a szavakat! Ne használd! */
+
+  /* The word-break property can split words into chunks! Don't use it! */
   -word-break: break-all;
 }
 
@@ -1475,8 +1302,8 @@
 /***** Text field *****/
 /*** Field input-container ***/
 
-/* Az .e-text-field--input-container elem tartalmazza az input elemet és a hozzá tartózó segéd elemeket
- * pl.: adornment ikonok, feliratok és gombok, placeholder elem ... */
+/* The input container element contains the input and its accessories
+ * (adornments, placeholder, etc.) */
 .e-text-field--input-container {
   background-color: var( --fill-color-default );
   display: flex;
@@ -1514,7 +1341,7 @@
 
 textarea.e-text-field--input {
   overflow: hidden;
-  resize: none;
+  resize:   none;
 }
 
 /*** Field input ***/
@@ -1524,19 +1351,16 @@ textarea.e-text-field--input {
 .e-text-field--adornments {
   align-items: center;
   display: flex;
-  /* XXX#0617 The text-field element has standard padding (12px) */
+
+  /* XXX#0617 The text-field element has the same padding as the standard (12px) */
   padding: 0 12px;
 }
 
 .e-text-field--adornments-placeholder {
   cursor: text;
+
   /* XXX#0617 */
   width: 12px;
-}
-
-.e-text-field--button-adornment[data-disabled="true"] {
-  cursor: default;
-  opacity: .5;
 }
 
 .e-text-field--button-adornment:not([data-icon-family]),
@@ -1548,7 +1372,7 @@ textarea.e-text-field--input {
   /* XXX#0617
    * The label adornment's padding and the adornment wrapper's padding adds up,
    * therefore the label adornments are 16px far from the edge, but this isn't
-   * a problem, because the icon adornments with no padding looks the same! */
+   * a problem, because the icon adornments (with no padding) look the same! */
   padding: 0 4px;
 }
 
@@ -1578,8 +1402,10 @@ textarea.e-text-field--input {
   position: absolute;
   top: 36px;
   width: 100%;
-  /* XXX#0567
-   * Az #x-app-bubbles elem alatt szükséges megjeleníteni! */
+
+  /* XXX#4376 (monotech-hq/x5)
+   * The field surface has to be shown under (Z axis) the #x-app-bubbles element.
+   * (x5 UI bubbles renderer) */
   z-index: 996;
 }
 
@@ -1596,20 +1422,20 @@ textarea.e-text-field--input {
 
 .e-thumbnail--image {
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
+  background-repeat:   no-repeat;
+  background-size:     cover;
+  height:              100%;
+  width:               100%;
 }
 
 .e-thumbnail--icon {
   background-color: var( --fill-color-highlight );
-  color: var( --color-highlight );
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  color:            var( --color-highlight );
+  height:           100%;
+  left:             0;
+  position:         absolute;
+  top:              0;
+  width:            100%;
 }
 
 /***** Thumbnail *****/
@@ -1625,7 +1451,7 @@ textarea.e-text-field--input {
   font-weight: 500;
   width: 100%;
 
-  /* Overwriting user-agent rule */
+  /* Overwriting the user-agent rule */
   text-align: left;
 }
 

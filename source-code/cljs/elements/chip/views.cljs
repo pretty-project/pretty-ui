@@ -26,7 +26,7 @@
   ; {:label (metamorphic-content)}
   [_ {:keys [label]}]
   [:div.e-chip--label {:data-font-size     :xs
-                       :data-font-weight   :bold
+                       :data-font-weight   :medium
                        :data-line-height   :text-block
                        :data-text-overflow :no-wrap}
                       (x.components/content label)])

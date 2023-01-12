@@ -16,7 +16,7 @@
          (param button-props)
          {:color            :invert
           :font-size        :xs
-          :font-weight      :bold
+          :font-weight      :medium
           :horizontal-align :left
           :icon-size        :s
           :indent {:left :s :right :xl :horizontal :xs}}))

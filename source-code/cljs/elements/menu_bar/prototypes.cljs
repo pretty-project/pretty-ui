@@ -19,7 +19,7 @@
   ;  :orientation (keyword)}
   [{:keys [orientation] :as bar-props}]
   (merge {:font-size   :s
-          :font-weight :bold
+          :font-weight :medium
           :height      :xxl
           :orientation :horizontal}
          (if-not (= orientation :vertical)

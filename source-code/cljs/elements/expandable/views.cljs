@@ -37,7 +37,7 @@
   ; {:label (metamorphic-content)(opt)}
   [_ {:keys [label]}]
   (if label [:div.e-expandable--label {:data-font-size   :s
-                                       :data-font-weight :bold
+                                       :data-font-weight :medium
                                        :data-line-height :text-block}
                                       (x.components/content label)]))
 

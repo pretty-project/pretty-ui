@@ -71,7 +71,7 @@
   [_ _]
   [elements/text ::save-file-text
                  {:content     :save-file?
-                  :font-weight :bold
+                  :font-weight :medium
                   :outdent     {:vertical :xs}}])
 
 (defn- filename-label
@@ -84,7 +84,7 @@
   [elements/label ::filename-label
                   {:color       :muted
                    :content     filename
-                   :font-weight :bold
+                   :font-weight :medium
                    :icon        :insert_drive_file
                    :outdent     {:bottom :s :top :xs :vertical :xs}
                    :selectable? true}])

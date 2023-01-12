@@ -39,8 +39,6 @@
   ;     :font-size (keyword)(opt)
   ;       Default: :s
   ;     :font-weight (keyword)(opt)
-  ;      :bold, extra-bold, :normal
-  ;      Default: :bold
   ;     :placeholder (metamorphic-content)(opt)}]}
   ;
   ; @usage

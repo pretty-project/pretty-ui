@@ -28,7 +28,7 @@
   ;  :line-height (keyword)}
   [{:keys [badge-content disabled? font-size icon marker-color] :as button-props}]
   (merge {:font-size        :s
-          :font-weight      :bold
+          :font-weight      :medium
           :horizontal-align :center
           :line-height      :text-block}
          (if badge-content {:badge-color :primary :badge-position :tr})

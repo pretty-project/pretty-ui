@@ -24,7 +24,7 @@
                   {:color            :highlight
                    :content          :no-items-to-show
                    :font-size        :xs
-                   :font-weight      :bold
+                   :font-weight      :medium
                    :horizontal-align :center
                    :outdent          {:all :xs}}])
 

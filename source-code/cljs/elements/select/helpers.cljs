@@ -54,7 +54,7 @@
         on-click         [:elements.select/select-option! select-id select-props option]]
        {:data-click-effect :opacity
         :data-font-size    :s
-        :data-font-weight  (if option-selected? :extra-bold :bold)
+        :data-font-weight  (if option-selected? :bold :medium)
         :data-selected     option-selected?
         :on-click          #(r/dispatch on-click)
         :on-mouse-up       #(x.environment/blur-element! select-id)}))

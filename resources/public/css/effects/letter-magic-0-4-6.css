@@ -6,6 +6,7 @@
  *               [:span "Z"]] */
 
 /* 10 letter/sec = 0.05 sec/letter */
+
 .lm-1-10 span:nth-child(1)  { transition-delay: 0.1s }
 .lm-1-10 span:nth-child(2)  { transition-delay: 0.2s }
 .lm-1-10 span:nth-child(3)  { transition-delay: 0.3s }
@@ -37,7 +38,10 @@
 .lm-1-10 span:nth-child(29) { transition-delay: 2.9s }
 .lm-1-10 span:nth-child(30) { transition-delay: 3.0s }
 
+/* 10 letter/sec = 0.05 sec/letter */
+
 /* 20 letter/sec = 0.05 sec/letter */
+
 .lm-1-20 span:nth-child(1)  { transition-delay: 0.05s }
 .lm-1-20 span:nth-child(2)  { transition-delay: 0.10s }
 .lm-1-20 span:nth-child(3)  { transition-delay: 0.15s }
@@ -69,7 +73,10 @@
 .lm-1-20 span:nth-child(29) { transition-delay: 1.45s }
 .lm-1-20 span:nth-child(30) { transition-delay: 1.50s }
 
+/* 20 letter/sec = 0.05 sec/letter */
+
 /* 40 letter/sec = 0.025 sec/letter */
+
 .lm-1-40 span:nth-child(1)  { transition-delay: 0.025s }
 .lm-1-40 span:nth-child(2)  { transition-delay: 0.050s }
 .lm-1-40 span:nth-child(3)  { transition-delay: 0.075s }
@@ -96,7 +103,10 @@
 .lm-1-40 span:nth-child(24) { transition-delay: 0.600s }
 .lm-1-40 span:nth-child(25) { transition-delay: 0.625s }
 
+/* 40 letter/sec = 0.025 sec/letter */
+
 /* 60 letter/sec = 0.016 sec/letter */
+
 .lm-1-60 span:nth-child(1)  { transition-delay: 0.016s }
 .lm-1-60 span:nth-child(2)  { transition-delay: 0.033s }
 .lm-1-60 span:nth-child(3)  { transition-delay: 0.050s }
@@ -123,4 +133,5 @@
 .lm-1-60 span:nth-child(24) { transition-delay: 0.400s }
 .lm-1-60 span:nth-child(25) { transition-delay: 0.416s }
 
+/* 60 letter/sec = 0.016 sec/letter */
 /***** Letter magic *****/
