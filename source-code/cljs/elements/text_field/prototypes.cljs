@@ -51,19 +51,19 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:marker-color (keyword)(opt)}
+  ; {:border-color (keyword)(opt)
+  ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:autofill-name (keyword)
-  ;  :border-color (keyword)
-  ;  :border-radius (keyword)
+  ;  :border-width (keyword)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :type (keyword)
   ;  :value-path (vector)}
-  [field-id {:keys [marker-color] :as field-props}]
+  [field-id {:keys [border-color marker-color] :as field-props}]
   ; BUG#6782
   ; https://stackoverflow.com/questions/12374442/chrome-ignores-autocomplete-off
   ;
@@ -83,5 +83,6 @@
           :line-height     :text-block
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
+         (if border-color  {:border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (param field-props)))

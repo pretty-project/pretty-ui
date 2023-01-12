@@ -14,13 +14,17 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
   ;  :options-path (vector)
   ;  :value-path (vector)}
   [switch-id switch-props]
-  (merge {:border-color        :primary
+  (merge {:border-color        :default
+          :border-radius       :m
+          :border-width        :xs
           :option-label-f      return
           :option-value-f      return
           :options-orientation :vertical

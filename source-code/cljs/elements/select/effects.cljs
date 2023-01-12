@@ -14,7 +14,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements.select/active-button-did-mount
+(r/reg-event-fx :elements.select/select-button-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -24,13 +24,6 @@
   (fn [{:keys [db]} [_ select-id {:keys [initial-options initial-value] :as select-props}]]
       (if (or initial-options initial-value)
           {:db (r select.events/select-will-mount db select-id select-props)})))
-
-(r/reg-event-fx :elements.select/active-button-will-unmount
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  (fn [_ _]))
 
 (r/reg-event-fx :elements.select/select-options-did-mount
   ; WARNING! NON-PUBLIC! DO NOT USE!

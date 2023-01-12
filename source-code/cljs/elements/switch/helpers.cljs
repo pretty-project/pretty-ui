@@ -7,6 +7,26 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-option-track-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; {:border-color (keyword)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)}
+  ;
+  ; @return (map)
+  ; {:data-border-radius (keyword)
+  ;  :data-border-width (keyword)}
+  [_ {:keys [border-color border-radius border-width]}]
+  (-> {:data-border-radius border-radius
+       :data-border-width  border-width}
+      (element.helpers/apply-color :border-color :data-border-color border-color)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn switch-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -24,10 +44,10 @@
   [switch-id {:keys [disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
        (merge {:data-click-effect :targeted
-               :data-switched  option-switched?}
-              (if disabled? {:disabled     true}
-                            {:on-click     #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
-                             :on-mouse-up  #(x.environment/blur-element! switch-id)}))))
+               :data-switched option-switched?}
+              (if disabled? {:disabled    true}
+                            {:on-click    #(r/dispatch [:elements.switch/toggle-option! switch-id switch-props option])
+                             :on-mouse-up #(x.environment/blur-element! switch-id)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -37,14 +57,12 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:border-color (keyword or string)
-  ;  :style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
   ; {:style (map)}
-  [_ {:keys [border-color style]}]
-  (-> {:style style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
+  [_ {:keys [style]}]
+  {:style style})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -18,4 +18,4 @@
           (let [all-item-count    @(r/subscribe [:item-lister/get-all-item-count    lister-id])
                 listed-item-count @(r/subscribe [:item-lister/get-listed-item-count lister-id])
                 download-info      {:content :npn-items-downloaded :replacements [listed-item-count all-item-count]}]
-               [:div#t-item-lister--footer [components/surface-description {:content download-info}]])))
+               [:div#t-item-lister--footer [components/section-description {:content download-info}]])))

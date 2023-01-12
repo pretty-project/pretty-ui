@@ -14,6 +14,8 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
@@ -21,6 +23,8 @@
   ;  :value-path (vector)}
   [checkbox-id checkbox-props]
   (merge {:border-color        :default
+          :border-radius       :xs
+          :border-width        :xs
           :option-label-f      return
           :option-value-f      return
           :options-orientation :vertical

@@ -31,9 +31,9 @@
               [components.side-menu-label.views          :as side-menu-label.views]
               [components.side-menu.views                :as side-menu.views]
               [components.sidebar-button.views           :as sidebar-button.views]
+              [components.section-description.views      :as section-description.views]
+              [components.section-title.views            :as section-title.views]
               [components.surface-box.views              :as surface-box.views]
-              [components.surface-description.views      :as surface-description.views]
-              [components.surface-title.views            :as surface-title.views]
               [components.user-avatar.views              :as user-avatar.views]))
 
 ;; ----------------------------------------------------------------------------
@@ -69,7 +69,7 @@
 (def side-menu-header         side-menu-header.views/component)
 (def side-menu-label          side-menu-label.views/component)
 (def sidebar-button           sidebar-button.views/component)
+(def section-description      section-description.views/component)
+(def section-title            section-title.views/component)
 (def surface-box              surface-box.views/component)
-(def surface-description      surface-description.views/component)
-(def surface-title            surface-title.views/component)
 (def user-avatar              user-avatar.views/component)

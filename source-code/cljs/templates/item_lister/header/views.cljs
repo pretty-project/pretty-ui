@@ -34,7 +34,7 @@
   (let [search-term    @(r/subscribe [:item-lister/get-meta-item      lister-id :search-term])
         all-item-count @(r/subscribe [:item-lister/get-all-item-count lister-id])
         description     (x.components/content {:content :search-results-n :replacements [all-item-count]})]
-       [components/surface-description {:content (if-not (empty? search-term) description)
+       [components/section-description {:content (if-not (empty? search-term) description)
                                         :horizontal-align :right}]))
 
 (defn search-bar
@@ -90,7 +90,7 @@
   ; {:placeholder (metamorphic-content)(opt)
   ;  :title (metamorphic-content)(opt)}
   [lister-id {:keys [placeholder title]}]
-  [components/surface-title ::title
+  [components/section-title ::title
                             {:content     title
                              :placeholder placeholder}])
 

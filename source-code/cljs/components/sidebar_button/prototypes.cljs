@@ -7,16 +7,16 @@
 
 (defn button-props-prototype
   ; @param (map) button-props
+  ; {:icon (keyword)(opt)}
   ;
   ; @return (map)
   ; {}
-  [button-props]
-  (merge {:hover-color :invert
-          :icon-family :material-icons-filled}
+  [{:keys [icon] :as button-props}]
+  (merge {:hover-color :invert}
          (param button-props)
+         (if icon {:icon-size :s})
          {:color            :invert
           :font-size        :xs
           :font-weight      :medium
           :horizontal-align :left
-          :icon-size        :s
           :indent {:left :s :right :xl :horizontal :xs}}))

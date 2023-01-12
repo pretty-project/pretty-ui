@@ -58,7 +58,7 @@
   ; @param (*) option
   [switch-id switch-props option]
   [:button.e-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                            [:div.e-switch--option-track]
+                            [:div.e-switch--option-track (switch.helpers/switch-option-track-attributes switch-id switch-props)]
                             [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options
@@ -104,7 +104,13 @@
   ; @param (map) switch-props
   ; {:border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :primary
+  ;   Default: :default
+  ;  :border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :m
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)

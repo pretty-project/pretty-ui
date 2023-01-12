@@ -10,16 +10,19 @@
   ;
   ; @param (map) card-props
   ; {:badge-content (metamorphic-content)(opt)
+  ;  :border-color (keyword)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)
   ;  :badge-position (keyword)
+  ;  :border-width (keyword)
   ;  :hover-color (keyword)
   ;  :marker-color (keyword)}
-  [{:keys [badge-content disabled? marker-color] :as card-props}]
+  [{:keys [badge-content border-color disabled? marker-color] :as card-props}]
   (merge (if badge-content {:badge-color :primary :badge-position :tr})
+         (if border-color  {:border-width :xxs})
          (if marker-color  {:marker-position :tr})
          (param card-props)
          (if disabled? {:hover-color :none})))

@@ -34,7 +34,7 @@
   ; @param (map) header-props
   ; {:item-info (metamorphic-content)(opt)}
   [browser-id {:keys [item-info]}]
-  (if item-info [components/surface-description ::item-info
+  (if item-info [components/section-description ::item-info
                                                 {:content          item-info
                                                  :horizontal-align :right
                                                  :outdent          {:top :m :right :xs}}]))
@@ -75,7 +75,7 @@
   [browser-id {:keys [title]}]
   (let [browser-disabled? @(r/subscribe [:item-browser/browser-disabled?      browser-id])
         item-label        @(r/subscribe [:item-browser/get-current-item-label browser-id])]
-       [components/surface-title ::title
+       [components/section-title ::title
                                  {:content   (or item-label title)
                                   :disabled? browser-disabled?}]))
 

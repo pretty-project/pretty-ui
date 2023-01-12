@@ -17,4 +17,4 @@
           (let [all-item-count        @(r/subscribe [:item-lister/get-all-item-count        browser-id])
                 downloaded-item-count @(r/subscribe [:item-lister/get-downloaded-item-count browser-id])
                 download-info          {:content :npn-items-downloaded :replacements [downloaded-item-count all-item-count]}]
-               [:div#t-item-lister--footer [components/surface-description {:content download-info}]])))
+               [:div#t-item-lister--footer [components/section-description {:content download-info}]])))

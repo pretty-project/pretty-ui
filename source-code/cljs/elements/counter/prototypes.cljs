@@ -14,11 +14,15 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)
   ;  :font-size (keyword)
   ;  :initial-value (integer)
   ;  :value-path (vector)}
   [counter-id counter-props]
-  (merge {:border-color  :primary
+  (merge {:border-color  :default
+          :border-radius :m
+          :border-width  :xs
           :font-size     :s
           :initial-value 0
           :value-path    (input.helpers/default-value-path counter-id)}

@@ -17,7 +17,7 @@
   ;  :indent (map)}
   [label-props]
   (merge {:icon-family :material-icons-filled
-          :style       {:max-width "248px"}}
+          :style {:max-width "var(--element-size-m)"}}
          (param label-props)
          {:color            :muted
           :font-size        :xs

@@ -12,13 +12,19 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:border-color (keyword or string)}
+  ; {:border-color (keyword or string)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)}
   ; @param (*) option
   ;
   ; @return (map)
-  ; {:data-icon-family (keyword)}
-  [_ {:keys [border-color]} _]
-  (-> {:data-icon-family :material-icons-filled}
+  ; {:data-border-radius (keyword)
+  ;  :data-border-width (keyword)
+  ;  :data-icon-family (keyword)}
+  [_ {:keys [border-color border-radius border-width]} _]
+  (-> {:data-border-radius border-radius
+       :data-border-width  border-width
+       :data-icon-family   :material-icons-filled}
       (element.helpers/apply-color :border-color :data-border-color border-color)))
 
 (defn checkbox-option-attributes

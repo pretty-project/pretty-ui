@@ -194,11 +194,12 @@
   ;
   ; @return (map)
   ; {}
-  [field-id {:keys [border-color border-radius style] :as field-props}]
+  [field-id {:keys [border-color border-radius border-width style] :as field-props}]
   (merge (element.helpers/element-indent-attributes field-id field-props)
          (element.helpers/element-marker-attributes field-id field-props)
          (field-font-attributes                     field-id field-props)
          (-> {:data-border-radius border-radius
+              :data-border-width  border-width
               :style              style}
              (element.helpers/apply-color :border-color :data-border-color border-color))))
 

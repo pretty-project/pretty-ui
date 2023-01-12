@@ -1,9 +1,6 @@
 
 (ns elements.select.helpers
-    (:require [candy.api                    :refer [return]]
-              [elements.element.helpers     :as element.helpers]
-              [elements.plain-field.helpers :as plain-field.helpers]
-              [elements.select.config       :as select.config]
+    (:require [elements.plain-field.helpers :as plain-field.helpers]
               [re-frame.api                 :as r]
               [string.api                   :as string]
               [x.components.api             :as x.components]
@@ -62,63 +59,14 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn select-button-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:border-color (keyword)
-  ;  :border-radius (keyword)
-  ;  :disabled? (boolean)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-border-color (keyword)
-  ;  :data-border-radius (keyword)
-  ;  :data-click-effect (keyword)
-  ;  :disabled (boolean)
-  ;  :on-click (function)
-  ;  :on-mouse-up (function)}
-  [select-id {:keys [border-color border-radius disabled?] :as select-props}]
-  (let [on-click [:elements.select/render-options! select-id select-props]]
-       (merge {:data-border-color  border-color
-               :data-border-radius border-radius}
-              (if disabled? {:disabled          true}
-                            {:data-click-effect :opacity
-                             :on-click    #(r/dispatch on-click)
-                             :on-mouse-up #(x.environment/blur-element! select-id)}))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn select-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {:layout (keyword)
-  ;  :min-width (keyword)
-  ;  :style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-element-min-width (keyword)
-  ;  :data-layout (keyword)
-  ;  :style (map)}
-  [select-id {:keys [border-radius layout min-width style] :as select-props}]
-  (merge (element.helpers/element-indent-attributes select-id select-props)
-         {:data-element-min-width min-width
-          :data-layout            layout
-          :style                  style}))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn select-attributes
+(defn select-button-label
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ;
-  ; @return (map)
+  ; @return (metamorphic-content)
   [select-id select-props]
-  (merge (element.helpers/element-default-attributes select-id select-props)
-         (element.helpers/element-outdent-attributes select-id select-props)))
+  (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
+          (-> selected-option-label x.components/content)
+          (-> :select!              x.components/content)))

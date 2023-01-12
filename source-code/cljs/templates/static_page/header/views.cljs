@@ -34,7 +34,7 @@
   ;  :placeholder (metamorphic-content)(opt)
   ;  :title (metamorphic-content)(opt)}
   [_ {:keys [disabled? placeholder title]}]
-  [components/surface-title ::title
+  [components/section-title ::title
                             {:content     title
                              :disabled?   disabled?
                              :placeholder placeholder}])

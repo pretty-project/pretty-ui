@@ -31,15 +31,18 @@
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:border-radius (keyword)(opt)
+  ;  :border-width (keyword)(opt)
   ;  :horizontal-align (keyword)(opt)}
   ;
   ; @return (map)
   ; {:data-border-radius (keyword)
+  ;  :data-border-width (keyword)
   ;  :data-element-min-width (keyword)
   ;  :data-horizontal-column-align (keyword)
   ;  :data-stretch-orientation (keyword)}
-  [_ {:keys [border-radius horizontal-align min-width stretch-orientation]}]
+  [_ {:keys [border-radius border-width horizontal-align min-width stretch-orientation]}]
   {:data-border-radius           border-radius
+   :data-border-width            border-width
    :data-element-min-width       min-width
    :data-horizontal-column-align horizontal-align
    :data-stretch-orientation     stretch-orientation})

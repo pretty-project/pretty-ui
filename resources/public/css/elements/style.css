@@ -62,7 +62,6 @@
 
 .e-button--body[data-border-color] {
   border-style: solid;
-  border-width: 1px;
 }
 
 /*** Button body ***/
@@ -81,7 +80,6 @@
 
 .e-card--body[data-border-color] {
   border-style: solid;
-  border-width: 1px;
 }
 
 /*** Card body ***/
@@ -109,13 +107,7 @@
 
 .e-checkbox--option-button {
   background-color: var( --fill-color-default );
-  border-radius:    4px;
   border-style:     solid;
-  border-width:     2px;
-  height:           20px;
-  width:            20px;
-  margin-bottom:    2px;
-  margin-left:      2px;
   margin-right:     8px;
   margin-top:       2px;
 }
@@ -137,12 +129,10 @@
 /*** Checkbox marker ***/
 
 .e-checkbox--option-button::after {
+  content: '';
   font-size:   16px;
   height:      16px;
-  left:        0;
   line-height: 16px;
-  position:    absolute;
-  top:         0;
   width:       16px;
 }
 
@@ -343,12 +333,8 @@
 .e-counter--increase-button,
 .e-counter--reset-button {
   background-color: var( --fill-color-default );
-  border-color: inherit;
-  border-radius: 50%;
   border-style: solid;
-  border-width: 2px;
-  height: 20px;
-  width: 20px;
+  padding: 8px;
 }
 
 .e-counter--decrease-button::before,
@@ -380,7 +366,6 @@
 }
 
 .e-counter--reset-button {
-  border-color: var( --color-default );
   margin-left: 12px;
 }
 
@@ -449,8 +434,8 @@
 /*** Expandable header ***/
 
 .e-expandable--header {
-  align-items: center;
-  display: flex;
+  align-items:     center;
+  display:         flex;
   justify-content: left;
 }
 
@@ -551,6 +536,7 @@
 /*** Label icon ***/
 
 .e-label--icon {
+  flex-shrink:  0;
   margin-right: 6px;
 }
 
@@ -820,38 +806,34 @@
 
 .e-radio-button--clear-button {
   background-color: var( --fill-color-default );
-  border-color: var( --color-default );
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 2px;
-  margin-bottom: 6px;
-  margin-left: 2px;
-  margin-top: 6px;
-  height: 20px;
-  width: 20px;
+  border-color:     var( --color-default );
+  border-style:     solid;
+  margin-bottom:    6px;
+  margin-top:       6px;
+  padding:          8px;
 }
 
 .e-radio-button--clear-button::before,
 .e-radio-button--clear-button::after {
   background-color: var( --color-default );
-  border-radius: 1px;
-  content: '';
-  position: absolute;
-  transform: rotateZ( -45deg );
+  border-radius:    1px;
+  content:          '';
+  position:         absolute;
+  transform:        rotateZ( -45deg );
 }
 
 .e-radio-button--clear-button::before {
   height: 2px;
-  left: 4px;
-  top: 7px;
-  width: 8px;
+  left:   4px;
+  top:    7px;
+  width:  8px;
 }
 
 .e-radio-button--clear-button::after {
   height: 8px;
-  left: 7px;
-  top: 4px;
-  width: 2px;
+  left:   7px;
+  top:    4px;
+  width:  2px;
 }
 
 /*** Radio button clear button ***/
@@ -859,7 +841,7 @@
 /*** Radio button options ***/
 
 .e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
-  display: flex;
+  display:    flex;
   column-gap: 24px;
 }
 
@@ -868,7 +850,6 @@
 /*** Radio button option ***/
 
 .e-radio-button--option {
-  border-color: inherit;
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px;
@@ -894,16 +875,11 @@
 
 .e-radio-button--option-button {
   background-color: var( --fill-color-default );
-  border-color:     inherit;
-  border-radius:    50%;
   border-style:     solid;
-  border-width:     2px;
-  height:           20px;
   margin-bottom:    2px;
-  margin-left:      2px;
   margin-right:     8px;
   margin-top:       2px;
-  width:            20px;
+  padding:          8px;
 }
 
 /*** Radio button option button ***/
@@ -912,16 +888,17 @@
 
 .e-radio-button--option[data-selected="true"]
 .e-radio-button--option-button::before {
-  animation-name: opacity-0-1;
+  animation-name:     opacity-0-1;
   animation-duration: .1s;
-  background-color: var( --color-default );
-  border-radius: 50%;
-  content: '';
-  height: 8px;
-  left: 4px;
-  position: absolute;
-  top: 4px;
-  width: 8px;
+  background-color:   var( --color-default );
+  border-radius:      50%;
+  content:            '';
+  display:            block;
+  height:             8px;
+  left:               4px;
+  position:           absolute;
+  top:                4px;
+  width:              8px;
 }
 
 /*** Radio button option marker ***/
@@ -1014,28 +991,16 @@
 /***** Select *****/
 /*** Select button ***/
 
-.e-select--button-body {
-  align-items: center;
-  background: var( --fill-color-default );
-  display: flex;
-  height: 36px;
+.e-select-button .e-button--body {
   justify-content: space-between;
-  width: 100%;
-
-  /* XXX#0617 */
-  padding: 0 12px;
 }
 
-.e-select--button-body[data-border-color] {
-  border-style: solid;
-  border-width: 1px;
+.e-select-button .e-button--label {
+  padding-left: 12px;
 }
 
-.e-select--button-label {
-  display:         flex;
-  flex-direction:  column;
-  height:          100%;
-  justify-content: center;
+.e-select-button .e-button--icon {
+  padding-right: 12px;
 }
 
 /*** Select button ***/
@@ -1062,7 +1027,7 @@
 .e-select--option {
   display: flex;
   padding: 6px 24px;
-  width: 100%;
+  width:   100%;
 }
 
 .e-select--option:hover,
@@ -1186,7 +1151,7 @@
 /*** Switch options ***/
 
 .e-switch--body[data-options-orientation="horizontal"] {
-  display: flex;
+  display:    flex;
   column-gap: 24px;
 }
 
@@ -1196,7 +1161,6 @@
 
 .e-switch--option {
   align-items:    center;
-  border-color:   inherit;
   display:        flex;
   padding-bottom: 6px;
   padding-top:    6px;
@@ -1204,13 +1168,9 @@
 
 .e-switch--option-track {
   background-color: var( --fill-color-default );
-  border-color:     inherit;
-  border-radius:    10px;
   border-style:     solid;
-  border-width:     2px;
   margin-right:     6px;
-  height:           20px;
-  width:            40px;
+  padding:          8px 18px;
 }
 
 .e-switch--option-label {
@@ -1231,14 +1191,15 @@
 
 .e-switch--option-track::before {
   background-color: var( --color-default );
-  border-radius: 50%;
-  content: '';
-  height: 12px;
-  left: 2px;
-  position: absolute;
-  transition: transform .1s ease-out;
-  top: 2px;
-  width: 12px;
+  border-radius:    50%;
+  content:          '';
+  display:          block;
+  height:           12px;
+  left:             2px;
+  position:         absolute;
+  top:              2px;
+  transition:       transform .1s ease-out;
+  width:            12px;
 }
 
 .e-switch--option[data-switched="true"] .e-switch--option-track::before {
@@ -1312,7 +1273,6 @@
 
 .e-text-field--input-container[data-border-color] {
   border-style: solid;
-  border-width: 1px;
 }
 
 /*** Field input-container ***/
@@ -1453,6 +1413,10 @@ textarea.e-text-field--input {
 
   /* Overwriting the user-agent rule */
   text-align: left;
+}
+
+.e-toggle--body[data-border-color] {
+  border-style: solid;
 }
 
 /*** Toggle body ***/

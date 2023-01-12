@@ -238,6 +238,9 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -336,6 +339,9 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -392,6 +398,12 @@
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xs
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xs
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
@@ -702,7 +714,13 @@
 @param (map) counter-props
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
+  Default: :default
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1535,9 +1553,17 @@
 @param (map) button-props
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
+  Default: :default
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xs
  :class (keyword or keywords in vector)(opt)
  :default-value (*)(opt)
+ :deselectable? (boolean)(opt)
+  Default: false
  :disabled? (boolean)(opt)
   Default: false
  :helper (metamorphic-content)(opt)
@@ -1570,8 +1596,6 @@
  :outdent (map)(opt)
   Same as the :indent property.
  :style (map)(opt)
- :unselectable? (boolean)(opt)
-  Default: false
  :value-path (vector)(opt)}
 ```
 
@@ -1670,6 +1694,9 @@
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1807,7 +1834,13 @@
 @param (map) switch-props
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :primary
+  Default: :default
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xs
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
@@ -1931,6 +1964,9 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false

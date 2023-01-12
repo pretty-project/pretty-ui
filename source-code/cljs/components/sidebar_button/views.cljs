@@ -19,10 +19,9 @@
   ;   Default: false
   ;  :hover-color (keyword or string)(opt)
   ;   Default: :invert
-  ;  :icon (keyword)
-  ;  :icon-color (string or keyword)
+  ;  :icon (keyword)(opt)
+  ;  :icon-color (string or keyword)(opt)
   ;  :icon-family (keyword)(opt)
-  ;   Default: :material-icons-filled
   ;  :label (metamorphic-content)
   ;  :on-click (metamorphic-event)
   ;  :style (map)(opt)}

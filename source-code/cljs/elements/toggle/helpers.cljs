@@ -23,21 +23,24 @@
   ; {:style (map)}
   [_ {:keys [border-color fill-color hover-color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :border-color :border-hover-color border-color)
-      (element.helpers/apply-color :fill-color   :data-fill-color    fill-color)
-      (element.helpers/apply-color :hover-color  :data-hover-color   hover-color)))
+      (element.helpers/apply-color :border-color :data-border-color border-color)
+      (element.helpers/apply-color :fill-color   :data-fill-color   fill-color)
+      (element.helpers/apply-color :hover-color  :data-hover-color  hover-color)))
 
 (defn toggle-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) toggle-id
   ; @param (map) button-props
-  ; {:border-radius (keyword)(opt)}
+  ; {:border-radius (keyword)(opt)
+  ;  :border-width (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:data-border-radius (keyword)}
-  [_ {:keys [border-radius]}]
-  {:data-border-radius border-radius})
+  ; {:data-border-radius (keyword)
+  ;  :data-border-width (keyword)}
+  [_ {:keys [border-radius border-width]}]
+  {:data-border-radius border-radius
+   :data-border-width  border-width})
 
 (defn toggle-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

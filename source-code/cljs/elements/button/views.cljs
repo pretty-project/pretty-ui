@@ -44,8 +44,8 @@
   [:button.e-button--body (button.helpers/button-body-attributes button-id button-props)
                           (if icon (case icon-position :left  [:<> [button-icon  button-id button-props]
                                                                    [button-label button-id button-props]]
-                                                       :right [:<> [button-icon  button-id button-props]
-                                                                   [button-label button-id button-props]])
+                                                       :right [:<> [button-label button-id button-props]
+                                                                   [button-icon  button-id button-props]])
                                    [button-label button-id button-props])])
 
 (defn- button-structure
@@ -88,6 +88,9 @@
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning

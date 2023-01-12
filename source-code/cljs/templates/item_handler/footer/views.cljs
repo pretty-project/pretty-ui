@@ -22,5 +22,5 @@
         timestamp      @(r/subscribe [:x.activities/get-actual-timestamp modified-at])
         modified        (string/join [user-full-name timestamp] ", " {:join-empty? false})
         modified        {:content :last-modified-n :replacements [modified]}]
-       [components/surface-description ::footer
+       [components/section-description ::footer
                                        {:content modified}]))

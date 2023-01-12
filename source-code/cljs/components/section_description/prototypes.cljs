@@ -1,5 +1,5 @@
 
-(ns components.surface-description.prototypes
+(ns components.section-description.prototypes
     (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------

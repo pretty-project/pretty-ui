@@ -14,13 +14,17 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
+  ;  :border-radius (keyword)
+  ;  :border-width (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
   ;  :options-path (vector)
   ;  :value-path (vector)}
   [button-id button-props]
-  (merge {:border-color        :primary
+  (merge {:border-color        :default
+          :border-radius       :m
+          :border-width        :xs
           :options-orientation :vertical
           :options-path        (input.helpers/default-options-path button-id)
           :value-path          (input.helpers/default-value-path   button-id)

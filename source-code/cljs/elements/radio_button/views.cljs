@@ -58,7 +58,7 @@
   ; @param (*) option
   [button-id button-props option]
   [:button.e-radio-button--option (radio-button.helpers/radio-button-option-attributes button-id button-props option)
-                                  [:div.e-radio-button--option-button]
+                                  [:div.e-radio-button--option-button (radio-button.helpers/radio-button-option-button-attributes button-id button-props)]
                                   [radio-button-option-content button-id button-props option]])
 
 (defn- radio-button-options
@@ -80,14 +80,14 @@
   [:div.e-radio-button--body (radio-button.helpers/radio-button-body-attributes button-id button-props)
                              [radio-button-options                              button-id button-props]])
 
-(defn- radio-button-unselect-button
+(defn- radio-button-deselect-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:unselectable? (boolean)(opt)}
-  [button-id {:keys [unselectable?] :as button-props}]
-  (if unselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
+  ; {:deselectable? (boolean)(opt)}
+  [button-id {:keys [deselectable?] :as button-props}]
+  (if deselectable? [:button.e-radio-button--clear-button (radio-button.helpers/clear-button-attributes button-id button-props)]))
                                                          ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
 
 (defn- radio-button-structure
@@ -98,7 +98,7 @@
   [button-id button-props]
   [:div.e-radio-button (radio-button.helpers/radio-button-attributes button-id button-props)
                        [element.views/element-label                  button-id button-props]
-                       [radio-button-unselect-button                 button-id button-props]
+                       [radio-button-deselect-button                 button-id button-props]
                        [radio-button-body                            button-id button-props]])
 
 (defn- radio-button
@@ -115,9 +115,17 @@
   ; @param (map) button-props
   ; {:border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;   Default: :primary
+  ;   Default: :default
+  ;  :border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :m
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (*)(opt)
+  ;  :deselectable? (boolean)(opt)
+  ;   Default: false
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :helper (metamorphic-content)(opt)
@@ -150,8 +158,6 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :style (map)(opt)
-  ;  :unselectable? (boolean)(opt)
-  ;   Default: false
   ;  :value-path (vector)(opt)}
   ;
   ; @usage

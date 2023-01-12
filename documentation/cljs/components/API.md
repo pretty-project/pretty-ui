@@ -51,6 +51,10 @@
 
 - [popup-progress-indicator](#popup-progress-indicator)
 
+- [section-description](#section-description)
+
+- [section-title](#section-title)
+
 - [side-menu](#side-menu)
 
 - [side-menu-button](#side-menu-button)
@@ -64,10 +68,6 @@
 - [sidebar-button](#sidebar-button)
 
 - [surface-box](#surface-box)
-
-- [surface-description](#surface-description)
-
-- [surface-title](#surface-title)
 
 - [user-avatar](#user-avatar)
 
@@ -736,6 +736,62 @@
 
 ---
 
+### section-description
+
+```
+@param (keyword)(opt) description-id
+@param (map) description-props
+{:class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
+ :disabled? (boolean)(opt)
+ :horizontal-align (keyword)(opt)
+  :left, :center, :right
+  Default: :center
+ :indent (map)(opt)
+  Default: {:horizontal :xs :vertical :xs}
+ :outdent (map)(opt)
+ :style (map)(opt)}
+```
+
+```
+@usage
+[section-description {...}]
+```
+
+```
+@usage
+[section-description :my-section-description {...}]
+```
+
+---
+
+### section-title
+
+```
+@param (keyword)(opt) title-id
+@param (map) title-props
+{:class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)(opt)
+ :disabled? (boolean)(opt)
+  Default: false
+ :indent (map)(opt)
+ :outdent (map)(opt)
+ :placeholder (metamorphic-content)(opt)
+ :style (map)(opt)}
+```
+
+```
+@usage
+[section-title {...}]
+```
+
+```
+@usage
+[section-title :my-section-title {...}]
+```
+
+---
+
 ### side-menu
 
 ```
@@ -875,10 +931,9 @@
   Default: false
  :hover-color (keyword or string)(opt)
   Default: :invert
- :icon (keyword)
- :icon-color (string or keyword)
+ :icon (keyword)(opt)
+ :icon-color (string or keyword)(opt)
  :icon-family (keyword)(opt)
-  Default: :material-icons-filled
  :label (metamorphic-content)
  :on-click (metamorphic-event)
  :style (map)(opt)}
@@ -929,62 +984,6 @@
 ```
 @usage
 [surface-box :my-surface-box {...}]
-```
-
----
-
-### surface-description
-
-```
-@param (keyword)(opt) description-id
-@param (map) description-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
- :horizontal-align (keyword)(opt)
-  :left, :center, :right
-  Default: :center
- :indent (map)(opt)
-  Default: {:horizontal :xs :vertical :xs}
- :outdent (map)(opt)
- :style (map)(opt)}
-```
-
-```
-@usage
-[surface-description {...}]
-```
-
-```
-@usage
-[surface-description :my-surface-description {...}]
-```
-
----
-
-### surface-title
-
-```
-@param (keyword)(opt) title-id
-@param (map) title-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)(opt)
- :disabled? (boolean)(opt)
-  Default: false
- :indent (map)(opt)
- :outdent (map)(opt)
- :placeholder (metamorphic-content)(opt)
- :style (map)(opt)}
-```
-
-```
-@usage
-[surface-title {...}]
-```
-
-```
-@usage
-[surface-title :my-surface-title {...}]
 ```
 
 ---

@@ -53,13 +53,16 @@
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:border-radius (keyword)(opt)
+  ;  :border-width (keyword)(opt)
   ;  :horizontal-align (keyword)}
   ;
   ; @return (map)
   ; {:data-border-radius (keyword)
+  ;  :data-border-width (keyword)
   ;  :data-horizontal-row-align (keyword)}
-  [_ {:keys [border-radius horizontal-align]}]
+  [_ {:keys [border-radius border-width horizontal-align]}]
   {:data-border-radius        border-radius
+   :data-border-width         border-width
    :data-horizontal-row-align horizontal-align})
 
 ;; ----------------------------------------------------------------------------

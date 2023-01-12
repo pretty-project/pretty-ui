@@ -4,7 +4,6 @@
               [components.user-avatar.prototypes :as user-avatar.prototypes]
               [css.api                           :as css]
               [elements.api                      :as elements]
-              [math.api                          :as math]
               [random.api                        :as random]
               [string.api                        :as string]
               [svg.api                           :as svg]
@@ -16,33 +15,10 @@
 (defn- user-avatar-color
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
-  ; {:colors (strings in vector)
-  ;  :size (px)}
   ; @param (integer) dex
   ; @param (string) color
-  [_ {:keys [colors size]} dex color]
-  ; W:  60px
-  ; H:  120px
-  ; Do: W                 = 60px
-  ; Di: W - 2stroke-width = 56px
-  ; Ro: Do / 2            = 30px
-  ; Ri: Di / 2            = 28px
-  ; Rc: (Do + Di) / 2     = 29px
-  ; CIRCUM: 2Rc * Pi      = 185.35
-  (let [radius-center    (dec (/ size 2))
-        circum           (math/circum radius-center)
-        percent          (/ 100 (count colors))
-        percent-result   (math/percent-result circum        percent)
-        percent-rem      (math/percent-result circum (- 100 percent))
-        stroke-dasharray (str percent-result" "percent-rem)
-        rotation-angle   (+ 30 (* dex (/ 360 (count colors))))]
-       [:circle.c-user-avatar--color {:style {:transform (css/rotate-z rotation-angle)}
-                                      :r                radius-center
-                                      :stroke           color
-                                      :stroke-dasharray stroke-dasharray
-                                      :stroke-width     2
-                                      :cx (/ size 2)
-                                      :cy (/ size 2)}]))
+  [avatar-id avatar-props dex color]
+  [:circle.c-user-avatar--color (user-avatar.helpers/avatar-color-attributes avatar-id avatar-props dex color)])
 
 (defn- user-avatar-colors
   ; @param (keyword) avatar-id
@@ -59,7 +35,9 @@
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   [_ _]
-  [:div.c-user-avatar--icon [elements/icon {:icon :person}]])
+  [:div.c-user-avatar--icon {:data-icon-family :material-icons-outlined
+                             :data-icon-size   :m}
+                            :person])
 
 (defn- user-avatar-initials
   ; @param (keyword) avatar-id

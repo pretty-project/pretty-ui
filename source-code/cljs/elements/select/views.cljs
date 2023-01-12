@@ -132,67 +132,21 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- select-button-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [_ _]
-  [:i.e-select--button-icon {:data-icon-family :material-icons-filled :data-icon-size :s} :unfold_more])
-
-(defn- select-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  [select-id select-props]
-  (if-let [selected-option-label @(r/subscribe [:elements.select/get-selected-option-label select-id select-props])]
-          [:div.e-select--button-label {:data-font-size :s :data-font-weight :medium :data-line-height :text-block}
-                                       (-> selected-option-label x.components/content)]
-          [:div.e-select--button-label {:data-font-size :xs :data-font-weight :medium :data-line-height :text-block}
-                                       (-> :select! x.components/content)]))
-
-(defn- select-button-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  ; {}
-  [select-id select-props]
-  [:button.e-select--button-body (select.helpers/select-button-body-attributes select-id select-props)
-                                 [select-button-label                          select-id select-props]
-                                 [select-button-icon                           select-id select-props]])
-
 (defn- select-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [:div.e-select--button {:data-selectable false}
-                         [select-button-body select-id select-props]])
+  (let [on-click [:elements.select/render-options!   select-id select-props]
+        label    (select.helpers/select-button-label select-id select-props)]
+       [button.views/element select-id (assoc select-props :class         :e-select-button
+                                                           :icon          :unfold_more
+                                                           :icon-position :right
+                                                           :label         label
+                                                           :on-click      on-click)]))
 
-(defn- active-button-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props]
-  [:div.e-select--body (select.helpers/select-body-attributes select-id select-props)
-                       [element.views/element-label           select-id select-props]
-                       [select-button                         select-id select-props]])
-
-(defn- active-button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props]
-  [:div.e-select (select.helpers/select-attributes select-id select-props)
-                 [active-button-body               select-id select-props]])
-
-(defn- active-button
+(defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) select-id
@@ -200,15 +154,7 @@
   [select-id select-props]
   (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.select/active-button-did-mount    select-id select-props]))
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
-                       :reagent-render         (fn [_ select-props] [active-button-structure select-id select-props])}))
-
-(defn- active-button-layout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) select-id
-  ; @param (map) select-props
-  [select-id select-props]
-  [active-button select-id select-props])
+                       :reagent-render         (fn [_ select-props] [select-button select-id select-props])}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -244,9 +190,9 @@
   ; @param (map) select-props
   ; {:layout (keyword)}
   [select-id {:keys [layout] :as select-props}]
-  (case layout :button      [button-layout        select-id select-props]
-               :icon-button [icon-button-layout   select-id select-props]
-               :select      [active-button-layout select-id select-props]))
+  (case layout :button      [button-layout      select-id select-props]
+               :icon-button [icon-button-layout select-id select-props]
+               :select      [select-layout      select-id select-props]))
 
 (defn element
   ; @param (keyword)(opt) select-id
@@ -259,6 +205,9 @@
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false

@@ -318,6 +318,24 @@
 
 
 /***** Side menu *****/
+/*** Wrapper ***/
+
+.c-side-menu[data-position="left"] {
+  border-right: 1px solid var( --border-color-highlight );
+
+  /* Holds place for the sidebar sensor */
+  padding-left: 10px;
+}
+
+.c-side-menu[data-position="right"] {
+  border-left: 1px solid var( --border-color-highlight );
+
+  /* Holds place for the sidebar sensor */
+  padding-right: 10px;
+}
+
+/*** Wrapper ***/
+
 /*** Body ***/
 
 .c-side-menu--body {
@@ -327,20 +345,6 @@
   height: calc(100vh - 48px);
   position: sticky;
   top: 48px;
-}
-
-.c-side-menu--body[data-position="left"] {
-  border-right: 1px solid var( --border-color-highlight );
-
-  /* Holds place for the sidebar sensor */
-  padding-left: 10px;
-}
-
-.c-side-menu--body[data-position="right"] {
-  border-left: 1px solid var( --border-color-highlight );
-
-  /* Holds place for the sidebar sensor */
-  padding-right: 10px;
 }
 
 /*** Body ***/

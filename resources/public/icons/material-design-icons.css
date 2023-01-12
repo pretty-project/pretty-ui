@@ -18,6 +18,11 @@
  -moz-user-select:    none;
  -webkit-user-select: none;
   user-select:        none;
+
+  /* By default the Material Icons / Symbols has no positioning rules. */
+  align-items:     center;
+  display:         flex;
+  justify-content: center;
 }
 
 [data-icon-family="material-icons-filled"] {
