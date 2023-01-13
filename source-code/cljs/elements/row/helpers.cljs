@@ -1,6 +1,6 @@
 
 (ns elements.row.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,8 +24,8 @@
   ;  :data-vertical-row-align (keyword)
   ;  :data-wrap-items (boolean)
   ;  :style (map)}
-  [row-id {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as row-props}]
-  (merge (element.helpers/element-indent-attributes row-id row-props)
+  [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as row-props}]
+  (merge (pretty-css/indent-attributes row-props)
          {:data-column-gap           gap
           :data-horizontal-row-align horizontal-align
           :data-stretch-orientation  stretch-orientation
@@ -43,6 +43,6 @@
   ; @param (map) row-props
   ;
   ; @return (map)
-  [row-id row-props]
-  (merge (element.helpers/element-default-attributes row-id row-props)
-         (element.helpers/element-outdent-attributes row-id row-props)))
+  [_ row-props]
+  (merge (pretty-css/default-attributes row-props)
+         (pretty-css/outdent-attributes row-props)))

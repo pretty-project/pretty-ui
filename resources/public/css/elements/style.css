@@ -60,10 +60,6 @@
   width: 100%;
 }
 
-.e-button--body[data-border-color] {
-  border-style: solid;
-}
-
 /*** Button body ***/
 /***** Button *****/
 
@@ -76,10 +72,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-.e-card--body[data-border-color] {
-  border-style: solid;
 }
 
 /*** Card body ***/
@@ -107,7 +99,6 @@
 
 .e-checkbox--option-button {
   background-color: var( --fill-color-default );
-  border-style:     solid;
   margin-right:     8px;
   margin-top:       2px;
 }
@@ -333,8 +324,7 @@
 .e-counter--increase-button,
 .e-counter--reset-button {
   background-color: var( --fill-color-default );
-  border-style: solid;
-  padding: 8px;
+  padding:          8px;
 }
 
 .e-counter--decrease-button::before,
@@ -594,15 +584,6 @@
 
 
 /***** Icon-button *****/
-/*** Icon-button wrapper ***/
-
-.e-icon-button--body[data-border-color] {
-  border-style: solid;
-  border-width: 1px;
-}
-
-/*** Icon-button wrapper ***/
-
 /*** Icon-button progress *****/
 
 .e-icon-button--progress-svg {
@@ -807,7 +788,6 @@
 .e-radio-button--clear-button {
   background-color: var( --fill-color-default );
   border-color:     var( --color-default );
-  border-style:     solid;
   margin-bottom:    6px;
   margin-top:       6px;
   padding:          8px;
@@ -875,7 +855,6 @@
 
 .e-radio-button--option-button {
   background-color: var( --fill-color-default );
-  border-style:     solid;
   margin-bottom:    2px;
   margin-right:     8px;
   margin-top:       2px;
@@ -1168,7 +1147,6 @@
 
 .e-switch--option-track {
   background-color: var( --fill-color-default );
-  border-style:     solid;
   margin-right:     6px;
   padding:          8px 18px;
 }
@@ -1269,10 +1247,6 @@
   background-color: var( --fill-color-default );
   display: flex;
   justify-content: space-between;
-}
-
-.e-text-field--input-container[data-border-color] {
-  border-style: solid;
 }
 
 /*** Field input-container ***/
@@ -1413,10 +1387,6 @@ textarea.e-text-field--input {
 
   /* Overwriting the user-agent rule */
   text-align: left;
-}
-
-.e-toggle--body[data-border-color] {
-  border-style: solid;
 }
 
 /*** Toggle body ***/

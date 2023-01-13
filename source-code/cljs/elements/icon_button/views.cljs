@@ -1,9 +1,9 @@
 
 (ns elements.icon-button.views
-    (:require [elements.element.helpers        :as element.helpers]
-              [elements.icon-button.helpers    :as icon-button.helpers]
+    (:require [elements.icon-button.helpers    :as icon-button.helpers]
               [elements.icon-button.presets    :as icon-button.presets]
               [elements.icon-button.prototypes :as icon-button.prototypes]
+              [pretty-css.api                  :as pretty-css]
               [random.api                      :as random]
               [re-frame.api                    :as r]
               [reagent.api                     :as reagent]
@@ -151,6 +151,6 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (element.helpers/apply-preset icon-button.presets/BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (pretty-css/apply-preset icon-button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (icon-button.prototypes/button-props-prototype button-props)]
         [icon-button button-id button-props])))

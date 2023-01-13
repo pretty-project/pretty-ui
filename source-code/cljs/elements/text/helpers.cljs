@@ -1,8 +1,8 @@
 
 (ns elements.text.helpers
-    (:require [css.api                  :as css]
-              [elements.element.helpers :as element.helpers]
-              [elements.label.helpers   :as label.helpers]))
+    (:require [css.api                :as css]
+              [pretty-css.api         :as pretty-css]
+              [elements.label.helpers :as label.helpers]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -45,7 +45,7 @@
   ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :color :data-color color)))
+      (pretty-css/apply-color :color :data-color color)))
 
 (defn text-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -96,10 +96,10 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [text-id {:keys [font-size max-lines selectable?] :as text-props}]
-  (merge (element.helpers/element-indent-attributes text-id text-props)
-         (text-style-attributes                     text-id text-props)
-         (text-font-attributes                      text-id text-props)
-         (text-layout-attributes                    text-id text-props)
+  (merge (pretty-css/indent-attributes   text-props)
+         (text-style-attributes  text-id text-props)
+         (text-font-attributes   text-id text-props)
+         (text-layout-attributes text-id text-props)
          {:data-selectable selectable?}
          (if max-lines (let [line-height-var (css/var  (str "line-height-" (name font-size)))
                              height-calc     (css/calc (str max-lines" * "line-height-var))]
@@ -116,6 +116,6 @@
   ; @param (map) text-props
   ;
   ; @return (map)
-  [text-id text-props]
-  (merge (element.helpers/element-default-attributes text-id text-props)
-         (element.helpers/element-outdent-attributes text-id text-props)))
+  [_ text-props]
+  (merge (pretty-css/default-attributes text-props)
+         (pretty-css/outdent-attributes text-props)))

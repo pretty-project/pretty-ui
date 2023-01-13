@@ -1,9 +1,9 @@
 
 (ns elements.radio-button.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.components.api         :as x.components]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.components.api  :as x.components]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +23,7 @@
   [_ {:keys [border-color border-radius border-width]}]
   (-> {:data-border-radius border-radius
        :data-border-width  border-width}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)))
 
 (defn clear-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -77,21 +77,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn radio-button-style-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [button-id {:keys [style] :as button-props}]
-  {:style style})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn radio-button-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -101,11 +86,11 @@
   ;
   ; @return (map)
   ; {}
-  [button-id {:keys [options-orientation] :as button-props}]
-  (merge (element.helpers/element-indent-attributes button-id button-props)
-         (radio-button-style-attributes             button-id button-props)
+  [_ {:keys [options-orientation style] :as button-props}]
+  (merge (pretty-css/indent-attributes button-props)
          {:data-options-orientation options-orientation
-          :data-selectable          false}))
+          :data-selectable          false
+          :style                    style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -117,6 +102,6 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  [button-id button-props]
-  (merge (element.helpers/element-default-attributes button-id button-props)
-         (element.helpers/element-outdent-attributes button-id button-props)))
+  [_ button-props]
+  (merge (pretty-css/default-attributes button-props)
+         (pretty-css/outdent-attributes button-props)))

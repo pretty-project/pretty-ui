@@ -1,7 +1,7 @@
 
 (ns elements.multi-combo-box.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [keyword.api              :as keyword]))
+    (:require [keyword.api    :as keyword]
+              [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,8 +46,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [box-id {:keys [style] :as box-props}]
-  (merge (element.helpers/element-indent-attributes box-id box-props)
+  [_ {:keys [style] :as box-props}]
+  (merge (pretty-css/indent-attributes box-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -60,6 +60,6 @@
   ; @param (map) box-props
   ;
   ; @return (map)
-  [box-id box-props]
-  (merge (element.helpers/element-default-attributes box-id box-props)
-         (element.helpers/element-outdent-attributes box-id box-props)))
+  [_ box-props]
+  (merge (pretty-css/default-attributes box-props)
+         (pretty-css/outdent-attributes box-props)))

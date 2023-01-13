@@ -1,10 +1,10 @@
 
 (ns elements.label.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [elements.label.state     :as label.state]
-              [re-frame.api             :as r]
-              [x.components.api         :as x.components]
-              [x.environment.api        :as x.environment]))
+    (:require [elements.label.state :as label.state]
+              [pretty-css.api       :as pretty-css]
+              [re-frame.api         :as r]
+              [x.components.api     :as x.components]
+              [x.environment.api    :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@
   [_ {:keys [icon-color icon-family icon-size]}]
   (-> {:data-icon-family icon-family
        :data-icon-size   icon-size}
-      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+      (pretty-css/apply-color :icon-color :data-icon-color icon-color)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -141,7 +141,7 @@
   ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :color :data-color color)))
+      (pretty-css/apply-color :color :data-color color)))
 
 (defn label-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -195,11 +195,11 @@
   ; @return (map)
   ; {:data-selectable (boolean)}
   [label-id {:keys [selectable?] :as label-props}]
-  (merge (element.helpers/element-indent-attributes label-id label-props)
-         (element.helpers/element-marker-attributes label-id label-props)
-         (label-style-attributes                    label-id label-props)
-         (label-font-attributes                     label-id label-props)
-         (label-layout-attributes                   label-id label-props)
+  (merge (pretty-css/indent-attributes     label-props)
+         (pretty-css/marker-attributes     label-props)
+         (label-style-attributes  label-id label-props)
+         (label-font-attributes   label-id label-props)
+         (label-layout-attributes label-id label-props)
          {:data-selectable selectable?}))
 
 ;; ----------------------------------------------------------------------------
@@ -212,6 +212,6 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  [label-id label-props]
-  (merge (element.helpers/element-default-attributes label-id label-props)
-         (element.helpers/element-outdent-attributes label-id label-props)))
+  [_ label-props]
+  (merge (pretty-css/default-attributes label-props)
+         (pretty-css/outdent-attributes label-props)))

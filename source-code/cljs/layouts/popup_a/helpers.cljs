@@ -1,7 +1,8 @@
 
 (ns layouts.popup-a.helpers
-    (:require [layouts.popup-a.state :as state]
+    (:require [layouts.popup-a.state :as popup-a.state]
               [hiccup.api            :as hiccup]
+              [pretty-css.api        :as pretty-css]
               [x.environment.api     :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
@@ -12,8 +13,8 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (letfn [(f [intersecting?] (if intersecting? (swap! state/HEADER-SHADOW-VISIBLE? dissoc popup-id)
-                                               (swap! state/HEADER-SHADOW-VISIBLE? assoc  popup-id true)))]
+  (letfn [(f [intersecting?] (if intersecting? (swap! popup-a.state/HEADER-SHADOW-VISIBLE? dissoc popup-id)
+                                               (swap! popup-a.state/HEADER-SHADOW-VISIBLE? assoc  popup-id true)))]
          (x.environment/setup-intersection-observer! (hiccup/value popup-id "header-sensor") f)))
 
 (defn header-will-unmount-f
@@ -31,8 +32,8 @@
   ;
   ; @param (keyword) popup-id
   [popup-id]
-  (letfn [(f [intersecting?] (if intersecting? (swap! state/FOOTER-SHADOW-VISIBLE? dissoc popup-id)
-                                               (swap! state/FOOTER-SHADOW-VISIBLE? assoc  popup-id true)))]
+  (letfn [(f [intersecting?] (if intersecting? (swap! popup-a.state/FOOTER-SHADOW-VISIBLE? dissoc popup-id)
+                                               (swap! popup-a.state/FOOTER-SHADOW-VISIBLE? assoc  popup-id true)))]
          (x.environment/setup-intersection-observer! (hiccup/value popup-id "footer-sensor") f)))
 
 (defn footer-will-unmount-f
@@ -41,3 +42,23 @@
   ; @param (keyword) popup-id
   [popup-id]
   (x.environment/remove-intersection-observer! (hiccup/value popup-id "footer-sensor")))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn popup-structure-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) popup-id
+  ; {:border-radius (keyword)(opt)
+  ;  :fill-color (keyword or string)(opt)
+  ;  :min-width (keyword)(opt)
+  ;  :style (map)(opt)}
+  ;
+  ; @return (map)
+  ; {}
+  [_ {:keys [border-radius fill-color min-width style]}]
+  (-> {:data-content-min-width min-width
+       :data-border-radius     border-radius
+       :style                  style}
+      (pretty-css/apply-color :fill-color :data-fill-color fill-color)))

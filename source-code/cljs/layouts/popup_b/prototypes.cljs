@@ -5,10 +5,10 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-props-prototype
+(defn popup-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) layout-props
-  [layout-props]
+  ; @param (map) popup-props
+  [popup-props]
   (merge {:close-by-cover? true}
-         (param layout-props)))
+         (param popup-props)))

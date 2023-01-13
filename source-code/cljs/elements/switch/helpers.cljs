@@ -1,8 +1,8 @@
 
 (ns elements.switch.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
   [_ {:keys [border-color border-radius border-width]}]
   (-> {:data-border-radius border-radius
        :data-border-width  border-width}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -78,8 +78,8 @@
   ; {data-options-orientation (keyword)
   ;  :data-selectable (boolean)}
   [switch-id {:keys [options-orientation] :as switch-props}]
-  (merge (element.helpers/element-indent-attributes switch-id switch-props)
-         (switch-style-attributes                   switch-id switch-props)
+  (merge (pretty-css/indent-attributes      switch-props)
+         (switch-style-attributes switch-id switch-props)
          {:data-options-orientation options-orientation
           :data-selectable          false}))
 
@@ -90,6 +90,6 @@
   ; @param (map) switch-props
   ;
   ; @return (map)
-  [switch-id switch-props]
-  (merge (element.helpers/element-default-attributes switch-id switch-props)
-         (element.helpers/element-outdent-attributes switch-id switch-props)))
+  [_ switch-props]
+  (merge (pretty-css/default-attributes switch-props)
+         (pretty-css/outdent-attributes switch-props)))

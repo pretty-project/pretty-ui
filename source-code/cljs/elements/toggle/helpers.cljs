@@ -1,10 +1,10 @@
 
 (ns elements.toggle.helpers
-    (:require [elements.button.helpers  :as button.helpers]
-              [elements.element.helpers :as element.helpers]
-              [hiccup.api               :as hiccup]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [elements.button.helpers :as button.helpers]
+              [pretty-css.api          :as pretty-css]
+              [hiccup.api              :as hiccup]
+              [re-frame.api            :as r]
+              [x.environment.api       :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,9 +23,9 @@
   ; {:style (map)}
   [_ {:keys [border-color fill-color hover-color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)
-      (element.helpers/apply-color :fill-color   :data-fill-color   fill-color)
-      (element.helpers/apply-color :hover-color  :data-hover-color  hover-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)
+      (pretty-css/apply-color :fill-color   :data-fill-color   fill-color)
+      (pretty-css/apply-color :hover-color  :data-hover-color  hover-color)))
 
 (defn toggle-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -62,9 +62,9 @@
   ;  :on-mouse-up (function)}
   [toggle-id {:keys [disabled? on-click on-mouse-over] :as toggle-props}]
   ; XXX#4460 (source-code/cljs/elements/button/helpers.cljs)
-  (merge (element.helpers/element-indent-attributes toggle-id toggle-props)
-         (toggle-style-attributes                   toggle-id toggle-props)
-         (toggle-layout-attributes                  toggle-id toggle-props)
+  (merge (pretty-css/indent-attributes       toggle-props)
+         (toggle-style-attributes  toggle-id toggle-props)
+         (toggle-layout-attributes toggle-id toggle-props)
          {:data-selectable    false
           :data-text-overflow :no-wrap}
          (if disabled? {:disabled          true}
@@ -81,6 +81,6 @@
   ; @param (map) toggle-props
   ;
   ; @return (map)
-  [toggle-id toggle-props]
-  (merge (element.helpers/element-default-attributes toggle-id toggle-props)
-         (element.helpers/element-outdent-attributes toggle-id toggle-props)))
+  [_ toggle-props]
+  (merge (pretty-css/default-attributes toggle-props)
+         (pretty-css/outdent-attributes toggle-props)))

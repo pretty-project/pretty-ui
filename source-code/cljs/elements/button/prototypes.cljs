@@ -1,6 +1,7 @@
 
 (ns elements.button.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [candy.api        :refer [param]]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,6 +19,7 @@
   ;
   ; @return (map)
   ; {:badge-color (keyword)
+  ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :border-width (keyword)
   ;  :font-size (keyword)
@@ -40,4 +42,5 @@
                             :icon-position :left
                             :icon-size (or font-size :s)})
          (param button-props)
-         (if disabled? {:hover-color :none})))
+         (if badge-content {:badge-content (x.components/content badge-content)})
+         (if disabled?     {:hover-color :none})))

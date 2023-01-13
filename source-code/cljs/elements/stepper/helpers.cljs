@@ -1,6 +1,6 @@
 
 (ns elements.stepper.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +14,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [stepper-id {:keys [style] :as stepper-props}]
-  (merge (element.helpers/element-indent-attributes stepper-id stepper-props)
+  [_ {:keys [style] :as stepper-props}]
+  (merge (pretty-css/indent-attributes stepper-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,6 @@
   ; @param (map) stepper-props
   ;
   ; @return (map)
-  [stepper-id stepper-props]
-  (merge (element.helpers/element-default-attributes stepper-id stepper-props)
-         (element.helpers/element-outdent-attributes stepper-id stepper-props)))
+  [_ stepper-props]
+  (merge (pretty-css/default-attributes stepper-props)
+         (pretty-css/outdent-attributes stepper-props)))

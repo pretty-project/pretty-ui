@@ -1,7 +1,7 @@
 
 (ns elements.plain-field.helpers
     (:require [dom.api                     :as dom]
-              [elements.element.helpers    :as element.helpers]
+              [pretty-css.api              :as pretty-css]
               [elements.plain-field.config :as plain-field.config]
               [elements.plain-field.state  :as plain-field.state]
               [hiccup.api                  :as hiccup]
@@ -286,8 +286,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [field-id {:keys [style] :as field-props}]
-  (merge (element.helpers/element-indent-attributes field-id field-props)
+  [_ {:keys [style] :as field-props}]
+  (merge (pretty-css/indent-attributes field-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -300,6 +300,6 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  [field-id field-props]
-  (merge (element.helpers/element-default-attributes field-id field-props)
-         (element.helpers/element-outdent-attributes field-id field-props)))
+  [_ field-props]
+  (merge (pretty-css/default-attributes field-props)
+         (pretty-css/outdent-attributes field-props)))

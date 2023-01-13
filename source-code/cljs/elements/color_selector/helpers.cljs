@@ -1,9 +1,9 @@
 
 (ns elements.color-selector.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [vector.api               :as vector]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]
+              [vector.api        :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -39,8 +39,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [selector-id {:keys [style] :as selector-props}]
-  (merge (element.helpers/element-indent-attributes selector-id selector-props)
+  [_ {:keys [style] :as selector-props}]
+  (merge (pretty-css/indent-attributes selector-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -55,7 +55,7 @@
   ;
   ; @return (map)
   ; {:data-size (keyword)}
-  [selector-id {:keys [size] :as selector-props}]
-  (merge (element.helpers/element-default-attributes selector-id selector-props)
-         (element.helpers/element-outdent-attributes selector-id selector-props)
+  [_ {:keys [size] :as selector-props}]
+  (merge (pretty-css/default-attributes selector-props)
+         (pretty-css/outdent-attributes selector-props)
          {:data-size size}))

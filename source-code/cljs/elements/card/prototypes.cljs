@@ -1,6 +1,7 @@
 
 (ns elements.card.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [candy.api        :refer [param]]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,6 +17,7 @@
   ;
   ; @return (map)
   ; {:badge-color (keyword)
+  ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :border-width (keyword)
   ;  :hover-color (keyword)
@@ -25,4 +27,5 @@
          (if border-color  {:border-width :xxs})
          (if marker-color  {:marker-position :tr})
          (param card-props)
-         (if disabled? {:hover-color :none})))
+         (if badge-content {:badge-content (x.components/content badge-content)})
+         (if disabled?     {:hover-color :none})))

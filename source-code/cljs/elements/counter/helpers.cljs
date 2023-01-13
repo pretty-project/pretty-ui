@@ -1,9 +1,8 @@
 
 (ns elements.counter.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
-
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -23,7 +22,7 @@
   [_ {:keys [border-color border-radius border-width]}]
   (-> {:data-border-radius border-radius
        :data-border-width  border-width}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)))
 
 (defn increase-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -90,7 +89,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn counter-style-attributes
+(defn counter-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) counter-id
@@ -98,25 +97,12 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn counter-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) counter-id
-  ; @param (map) counter-props
-  ;
-  ; @return (map)
-  ; {:data-selectable (boolean)}
-  [counter-id counter-props]
-  (merge (element.helpers/element-indent-attributes counter-id counter-props)
-         (counter-style-attributes                  counter-id counter-props)
-         {:data-selectable false}))
+  ; {:data-selectable (boolean)
+  ;  :style (map)}
+  [_ {:keys [style] :as counter-props}]
+  (merge (pretty-css/indent-attributes counter-props)
+         {:data-selectable false
+          :style           style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -128,6 +114,6 @@
   ; @param (map) counter-props
   ;
   ; @return (map)
-  [counter-id counter-props]
-  (merge (element.helpers/element-default-attributes counter-id counter-props)
-         (element.helpers/element-outdent-attributes counter-id counter-props)))
+  [_ counter-props]
+  (merge (pretty-css/default-attributes counter-props)
+         (pretty-css/outdent-attributes counter-props)))

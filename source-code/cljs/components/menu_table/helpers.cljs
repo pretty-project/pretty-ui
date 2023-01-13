@@ -1,6 +1,6 @@
 
 (ns components.menu-table.helpers
-    (:require [components.component.helpers :as component.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,8 +12,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [table-id {:keys [style] :as table-props}]
-  (merge (component.helpers/component-indent-attributes table-id table-props)
+  [_ {:keys [style] :as table-props}]
+  (merge (pretty-css/indent-attributes table-props)
          {:style style}))
 
 (defn table-attributes
@@ -21,6 +21,6 @@
   ; @param (map) table-props
   ;
   ; @return (map)
-  [table-id table-props]
-  (merge (component.helpers/component-default-attributes table-id table-props)
-         (component.helpers/component-outdent-attributes table-id table-props)))
+  [_ table-props]
+  (merge (pretty-css/default-attributes table-props)
+         (pretty-css/outdent-attributes table-props)))

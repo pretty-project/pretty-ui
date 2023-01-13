@@ -1,6 +1,6 @@
 
 (ns components.side-menu.helpers
-    (:require [components.component.helpers :as component.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +14,8 @@
   ; @return (map)
   ; {:data-element-min-width (keyword)
   ;  :style (map)}
-  [menu-id {:keys [min-width style] :as menu-props}]
-  (merge (component.helpers/component-indent-attributes menu-id menu-props)
+  [_ {:keys [min-width style] :as menu-props}]
+  (merge (pretty-css/indent-attributes menu-props)
          {:data-element-min-width min-width
           :style                  style}))
 
@@ -26,7 +26,7 @@
   ;
   ; @return (map)
   ; {:data-position (keyword)}
-  [menu-id {:keys [position] :as menu-props}]
-  (merge (component.helpers/component-default-attributes menu-id menu-props)
-         (component.helpers/component-outdent-attributes menu-id menu-props)
+  [_ {:keys [position] :as menu-props}]
+  (merge (pretty-css/default-attributes menu-props)
+         (pretty-css/outdent-attributes menu-props)
          {:data-position position}))

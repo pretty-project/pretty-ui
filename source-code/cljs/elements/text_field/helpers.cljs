@@ -1,8 +1,8 @@
 
 (ns elements.text-field.helpers
     (:require [candy.api                    :refer [return]]
-              [elements.element.helpers     :as element.helpers]
               [elements.plain-field.helpers :as plain-field.helpers]
+              [pretty-css.api               :as pretty-css]
               [re-frame.api                 :as r]
               [string.api                   :as string]
               [x.components.api             :as x.components]
@@ -195,13 +195,13 @@
   ; @return (map)
   ; {}
   [field-id {:keys [border-color border-radius border-width style] :as field-props}]
-  (merge (element.helpers/element-indent-attributes field-id field-props)
-         (element.helpers/element-marker-attributes field-id field-props)
-         (field-font-attributes                     field-id field-props)
+  (merge (pretty-css/indent-attributes   field-props)
+         (pretty-css/marker-attributes   field-props)
+         (field-font-attributes field-id field-props)
          (-> {:data-border-radius border-radius
               :data-border-width  border-width
               :style              style}
-             (element.helpers/apply-color :border-color :data-border-color border-color))))
+             (pretty-css/apply-color :border-color :data-border-color border-color))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -251,8 +251,8 @@
   ; @return (map)
   ; {:data-element-min-width (keyword)
   ;  :data-stretch-orientation (keyword)}
-  [field-id {:keys [min-width stretch-orientation] :as field-props}]
-  (merge (element.helpers/element-default-attributes field-id field-props)
-         (element.helpers/element-outdent-attributes field-id field-props)
+  [_ {:keys [min-width stretch-orientation] :as field-props}]
+  (merge (pretty-css/default-attributes field-props)
+         (pretty-css/outdent-attributes field-props)
          {:data-element-min-width   min-width
           :data-stretch-orientation stretch-orientation}))

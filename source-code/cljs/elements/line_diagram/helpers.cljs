@@ -1,8 +1,8 @@
 
 (ns elements.line-diagram.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [css.api                  :as css]
-              [math.api                 :as math]))
+    (:require [pretty-css.api :as pretty-css]
+              [css.api        :as css]
+              [math.api       :as math]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,8 +61,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [diagram-id {:keys [style] :as diagram-props}]
-  (merge (element.helpers/element-indent-attributes diagram-id diagram-props)
+  [_ {:keys [style] :as diagram-props}]
+  (merge (pretty-css/indent-attributes diagram-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -75,6 +75,6 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  [diagram-id diagram-props]
-  (merge (element.helpers/element-default-attributes diagram-id diagram-props)
-         (element.helpers/element-outdent-attributes diagram-id diagram-props)))
+  [_ diagram-props]
+  (merge (pretty-css/default-attributes diagram-props)
+         (pretty-css/outdent-attributes diagram-props)))

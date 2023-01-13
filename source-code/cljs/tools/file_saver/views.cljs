@@ -1,7 +1,7 @@
 
 (ns tools.file-saver.views
-    (:require [elements.api        :as elements]
-              [layouts.popup-a.api :as popup-a]))
+    (:require [elements.api :as elements]
+              [layouts.api  :as layouts]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -109,6 +109,6 @@
   ; @param (keyword) saver-id
   ; @param (map) saver-props
   [saver-id saver-props]
-  [popup-a/layout :file-saver/view
-                  {:body   [body   saver-id saver-props]
-                   :header [header saver-id saver-props]}])
+  [layouts/popup-a :file-saver/view
+                   {:body   [body   saver-id saver-props]
+                    :header [header saver-id saver-props]}])

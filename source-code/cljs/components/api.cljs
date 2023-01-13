@@ -20,6 +20,7 @@
               [components.list-item-gap.views            :as list-item-gap.views]
               [components.list-item-thumbnail.views      :as list-item-thumbnail.views]
               [components.menu-table.views               :as menu-table.views]
+              [components.notification-bubble.views      :as notification-bubble.views]
               [components.pdf-preview.views              :as pdf-preview.views]
               [components.popup-close-bar.views          :as popup-close-bar.views]
               [components.popup-label-bar.views          :as popup-label-bar.views]
@@ -58,6 +59,7 @@
 (def list-item-gap            list-item-gap.views/component)
 (def list-item-thumbnail      list-item-thumbnail.views/component)
 (def menu-table               menu-table.views/component)
+(def notification-bubble      notification-bubble.views/component)
 (def pdf-preview              pdf-preview.views/component)
 (def popup-close-bar          popup-close-bar.views/component)
 (def popup-label-bar          popup-label-bar.views/component)

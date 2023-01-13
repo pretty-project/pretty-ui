@@ -1,10 +1,10 @@
 
 (ns elements.icon-button.helpers
-    (:require [css.api                  :as css]
-              [elements.button.helpers  :as button.helpers]
-              [elements.element.helpers :as element.helpers]
-              [math.api                 :as math]
-              [x.components.api         :as x.components]))
+    (:require [css.api                 :as css]
+              [elements.button.helpers :as button.helpers]
+              [math.api                :as math]
+              [pretty-css.api          :as pretty-css]
+              [x.components.api        :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,8 +66,8 @@
   ; By using the :data-block-min-width preset instead of using the :data-block-width
   ; preset, the icon-button element can expands horizontaly when its label doesn't
   ; fit into the width of the button.
-  (merge (element.helpers/element-indent-attributes button-id button-props)
-         (button.helpers/button-body-attributes     button-id button-props)
+  (merge (pretty-css/indent-attributes                    button-props)
+         (button.helpers/button-body-attributes button-id button-props)
          {:data-block-height    height
           :data-block-min-width width
           :data-labeled (boolean label)
@@ -85,7 +85,7 @@
   ;
   ; @return (map)
   ; {:data-tooltip (string)}
-  [button-id {:keys [tooltip] :as button-props}]
-  (merge (element.helpers/element-default-attributes button-id button-props)
-         (element.helpers/element-outdent-attributes button-id button-props)
+  [_ {:keys [tooltip] :as button-props}]
+  (merge (pretty-css/default-attributes button-props)
+         (pretty-css/outdent-attributes button-props)
          (if tooltip {:data-tooltip (x.components/content {:content tooltip})})))

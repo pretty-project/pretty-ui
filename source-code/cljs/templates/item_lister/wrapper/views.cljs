@@ -17,7 +17,7 @@
   [lister-id {:keys [body footer header]}]
   [:div#t-item-lister {:data-layout :compact}
                       [x.components/content lister-id header]
-                      [:div#t-item-lister--scroll-container {:data-scrollable-y true}
+                      [:div#t-item-lister--scroll-container {:data-scroll-axis :y}
                                                             [x.components/content lister-id body]
                                                             [x.components/content lister-id footer]]])
 

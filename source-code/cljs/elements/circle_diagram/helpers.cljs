@@ -3,7 +3,8 @@
     (:require [css.api                        :as css]
               [math.api                       :as math]
               [elements.circle-diagram.config :as circle-diagram.config]
-              [elements.element.helpers       :as element.helpers]))
+              [pretty-css.api                 :as pretty-css]))
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -88,8 +89,8 @@
   ; {:style (map)
   ;   {:height (string)
   ;    :width (string)}}
-  [diagram-id {:keys [diameter style] :as diagram-props}]
-  (merge (element.helpers/element-indent-attributes diagram-id diagram-props)
+  [_ {:keys [diameter style] :as diagram-props}]
+  (merge (pretty-css/indent-attributes diagram-props)
          {:style (merge style {:height (css/px diameter)
                                :width  (css/px diameter)})}))
 
@@ -103,6 +104,6 @@
   ; @param (map) diagram-props
   ;
   ; @return (map)
-  [diagram-id diagram-props]
-  (merge (element.helpers/element-default-attributes diagram-id diagram-props)
-         (element.helpers/element-outdent-attributes diagram-id diagram-props)))
+  [_ diagram-props]
+  (merge (pretty-css/default-attributes diagram-props)
+         (pretty-css/outdent-attributes diagram-props)))

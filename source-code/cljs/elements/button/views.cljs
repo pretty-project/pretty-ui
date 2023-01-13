@@ -3,7 +3,7 @@
     (:require [elements.button.helpers    :as button.helpers]
               [elements.button.presets    :as button.presets]
               [elements.button.prototypes :as button.prototypes]
-              [elements.element.helpers   :as element.helpers]
+              [pretty-css.api             :as pretty-css]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
               [random.api                 :as random]
@@ -165,6 +165,6 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (element.helpers/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (pretty-css/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (button.prototypes/button-props-prototype button-props)]
         [button button-id button-props])))

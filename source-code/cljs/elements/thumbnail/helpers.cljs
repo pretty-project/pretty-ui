@@ -1,8 +1,8 @@
 
 (ns elements.thumbnail.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -38,8 +38,8 @@
   ; @return (map)
   ; {}
   [thumbnail-id {:keys [disabled? on-click style] :as thumbnail-props}]
-  (merge (element.helpers/element-indent-attributes thumbnail-id thumbnail-props)
-         (thumbnail-layout-attributes               thumbnail-id thumbnail-props)
+  (merge (pretty-css/indent-attributes             thumbnail-props)
+         (thumbnail-layout-attributes thumbnail-id thumbnail-props)
          {:data-selectable false
           :style           style}
          (if disabled? {:disabled          true}
@@ -58,8 +58,8 @@
   ; {:data-selectable (boolean)
   ;  :style (map)}
   [thumbnail-id {:keys [style] :as thumbnail-props}]
-  (merge (element.helpers/element-indent-attributes thumbnail-id thumbnail-props)
-         (thumbnail-layout-attributes               thumbnail-id thumbnail-props)
+  (merge (pretty-css/indent-attributes             thumbnail-props)
+         (thumbnail-layout-attributes thumbnail-id thumbnail-props)
          {:data-selectable false
           :style           style}))
 
@@ -70,6 +70,6 @@
   ; @param (map) thumbnail-props
   ;
   ; @return (map)
-  [thumbnail-id thumbnail-props]
-  (merge (element.helpers/element-default-attributes thumbnail-id thumbnail-props)
-         (element.helpers/element-outdent-attributes thumbnail-id thumbnail-props)))
+  [_ thumbnail-props]
+  (merge (pretty-css/default-attributes thumbnail-props)
+         (pretty-css/outdent-attributes thumbnail-props)))

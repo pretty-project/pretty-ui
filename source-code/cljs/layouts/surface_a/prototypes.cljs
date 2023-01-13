@@ -5,11 +5,11 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-props-prototype
+(defn surface-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) layout-props
+  ; @param (map) surface-props
   ; {:content-orientation (keyword)}
-  [layout-props]
+  [surface-props]
   (merge {:content-orientation :vertical}
-         (param layout-props)))
+         (param surface-props)))

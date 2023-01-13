@@ -26,5 +26,6 @@
                                        [workspace-button]
                                        [x.components/content module-id content]
                                        [components/side-menu-footer {}]]
+                         :indent    {:left :xs}
                          :min-width :m
                          :threshold threshold}])

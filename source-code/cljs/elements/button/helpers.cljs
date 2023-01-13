@@ -1,10 +1,10 @@
 
 (ns elements.button.helpers
-    (:require [dom.api                  :as dom]
-              [elements.element.helpers :as element.helpers]
-              [hiccup.api               :as hiccup]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [dom.api           :as dom]
+              [hiccup.api        :as hiccup]
+              [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,10 +24,10 @@
   ; {:style (map)}
   [_ {:keys [border-color color fill-color hover-color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)
-      (element.helpers/apply-color :color        :data-color        color)
-      (element.helpers/apply-color :fill-color   :data-fill-color   fill-color)
-      (element.helpers/apply-color :hover-color  :data-hover-color  hover-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)
+      (pretty-css/apply-color :color        :data-color        color)
+      (pretty-css/apply-color :fill-color   :data-fill-color   fill-color)
+      (pretty-css/apply-color :hover-color  :data-hover-color  hover-color)))
 
 (defn button-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -83,7 +83,7 @@
   [_ {:keys [icon-color icon-family icon-size]}]
   (-> {:data-icon-family icon-family
        :data-icon-size   icon-size}
-      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+      (pretty-css/apply-color :icon-color :data-icon-color icon-color)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -110,11 +110,11 @@
   ; XXX#4460
   ; By setting the :id attribute the body component becomes targetable for
   ; DOM actions. (setting focus/blur, etc.)
-  (merge (element.helpers/element-indent-attributes button-id button-props)
-         (element.helpers/element-badge-attributes  button-id button-props)
-         (button-style-attributes                   button-id button-props)
-         (button-font-attributes                    button-id button-props)
-         (button-layout-attributes                  button-id button-props)
+  (merge (pretty-css/indent-attributes       button-props)
+         (pretty-css/badge-attributes        button-props)
+         (button-style-attributes  button-id button-props)
+         (button-font-attributes   button-id button-props)
+         (button-layout-attributes button-id button-props)
          {:data-selectable false}
          (if disabled? {:disabled          true}
                        {:id                (hiccup/value button-id "body")
@@ -133,6 +133,6 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  [button-id button-props]
-  (merge (element.helpers/element-default-attributes button-id button-props)
-         (element.helpers/element-outdent-attributes button-id button-props)))
+  [_ button-props]
+  (merge (pretty-css/default-attributes button-props)
+         (pretty-css/outdent-attributes button-props)))

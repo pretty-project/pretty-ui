@@ -5,13 +5,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-props-prototype
+(defn sidebar-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) layout-props
+  ; @param (map) sidebar-props
+  ;
+  ; @return (map)
   ; {:position (keyword)
   ;  :viewport-min (px)}
-  [layout-props]
+  [sidebar-props]
   (merge {:position     :left
           :viewport-min 720}
-         (param layout-props)))
+         (param sidebar-props)))

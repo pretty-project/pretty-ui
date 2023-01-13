@@ -1,10 +1,9 @@
 
 (ns elements.expandable.helpers
-    (:require [elements.element.helpers  :as element.helpers]
-              [elements.expandable.state :as expandable.state]
+    (:require [elements.expandable.state :as expandable.state]
               [logic.api                 :refer [nonfalse?]]
+              [pretty-css.api            :as pretty-css]
               [x.environment.api         :as x.environment]))
-
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -46,7 +45,7 @@
   [_ {:keys [icon-color icon-family icon-size]}]
   (-> {:data-icon-family icon-family
        :data-icon-size   icon-size}
-      (element.helpers/apply-color :icon-color :data-icon-color icon-color)))
+      (pretty-css/apply-color :icon-color :data-icon-color icon-color)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,8 +75,9 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  [expandable-id {:keys [style] :as expandable-props}]
-  (merge (element.helpers/element-indent-attributes expandable-id expandable-props)
+  ; {:style (map)}
+  [_ {:keys [style] :as expandable-props}]
+  (merge (pretty-css/indent-attributes expandable-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -90,6 +90,6 @@
   ; @param (map) expandable-props
   ;
   ; @return (map)
-  [expandable-id expandable-props]
-  (merge (element.helpers/element-default-attributes expandable-id expandable-props)
-         (element.helpers/element-outdent-attributes expandable-id expandable-props)))
+  [_ expandable-props]
+  (merge (pretty-css/default-attributes expandable-props)
+         (pretty-css/outdent-attributes expandable-props)))

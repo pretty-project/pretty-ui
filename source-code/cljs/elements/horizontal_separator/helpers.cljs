@@ -1,6 +1,6 @@
 
 (ns elements.horizontal-separator.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; @return (map)
   ; {:data-block-height (keyword)
   ;  :style (map)}
-  [separator-id {:keys [height style] :as separator-props}]
-  (merge (element.helpers/element-default-attributes separator-id separator-props)
+  [_ {:keys [height style] :as separator-props}]
+  (merge (pretty-css/default-attributes separator-props)
          {:data-block-height height
           :style             style}))

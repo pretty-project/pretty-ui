@@ -1,6 +1,6 @@
 
 (ns elements.vertical-polarity.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,8 +16,8 @@
   ; @return (map)
   ; {:data-horizontal-align (keyword)
   ;  :style (map)}
-  [polarity-id {:keys [horizontal-align style] :as polarity-props}]
-  (merge (element.helpers/element-indent-attributes polarity-id polarity-props)
+  [_ {:keys [horizontal-align style] :as polarity-props}]
+  (merge (pretty-css/indent-attributes polarity-props)
          {:data-horizontal-align horizontal-align
           :style                 style}))
 
@@ -28,6 +28,6 @@
   ; @param (map) polarity-props
   ;
   ; @return (map)
-  [polarity-id polarity-props]
-  (merge (element.helpers/element-default-attributes polarity-id polarity-props)
-         (element.helpers/element-outdent-attributes polarity-id polarity-props)))
+  [_ polarity-props]
+  (merge (pretty-css/default-attributes polarity-props)
+         (pretty-css/outdent-attributes polarity-props)))

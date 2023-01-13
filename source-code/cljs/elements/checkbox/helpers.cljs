@@ -1,8 +1,8 @@
 
 (ns elements.checkbox.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -25,7 +25,7 @@
   (-> {:data-border-radius border-radius
        :data-border-width  border-width
        :data-icon-family   :material-icons-filled}
-      (element.helpers/apply-color :border-color :data-border-color border-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)))
 
 (defn checkbox-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -61,8 +61,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [checkbox-id {:keys [style] :as checkbox-props}]
-  (merge (element.helpers/element-indent-attributes checkbox-id checkbox-props)
+  [_ {:keys [style] :as checkbox-props}]
+  (merge (pretty-css/indent-attributes checkbox-props)
          {:style style}))
 
 (defn checkbox-attributes
@@ -72,6 +72,6 @@
   ; @param (map) checkbox-props
   ;
   ; @return (map)
-  [checkbox-id checkbox-props]
-  (merge (element.helpers/element-default-attributes checkbox-id checkbox-props)
-         (element.helpers/element-outdent-attributes checkbox-id checkbox-props)))
+  [_ checkbox-props]
+  (merge (pretty-css/default-attributes checkbox-props)
+         (pretty-css/outdent-attributes checkbox-props)))

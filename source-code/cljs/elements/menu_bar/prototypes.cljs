@@ -1,6 +1,7 @@
 
 (ns elements.menu-bar.prototypes
-    (:require [candy.api :refer [param]]))
+    (:require [candy.api        :refer [param]]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,10 +36,12 @@
   ;
   ; @return (map)
   ; {:badge-color (keyword)
+  ;  :badge-content (string)
   ;  :badge-position (keyword)
   ;  :icon-family (keyword)}
   [{:keys [badge-content icon marker-color] :as item-props}]
   (merge (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
          (if icon          {:icon-family :material-icons-filled})
-         (param item-props)))
+         (param item-props)
+         (if badge-content {:badge-content (x.components/content badge-content)})))

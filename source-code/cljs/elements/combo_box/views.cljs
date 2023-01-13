@@ -53,7 +53,7 @@
                   ;^{:key (random/generate-react-key)}
                   (conj option-list [combo-box-option box-id box-props option-dex option]))]
               [:div.e-combo-box--options {:data-options-rendered (-> options empty? not)
-                                          :data-scrollable-y     true}
+                                          :data-scroll-axis :y}
                                          (reduce-indexed f [:<>] options)])))
 
 (defn- combo-box-surface

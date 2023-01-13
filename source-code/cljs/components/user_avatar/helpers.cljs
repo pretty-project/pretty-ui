@@ -1,6 +1,6 @@
 
 (ns components.user-avatar.helpers
-    (:require [components.component.helpers :as component.helpers]
+    (:require [pretty-css.api :as pretty-css]
               [css.api                      :as css]
               [math.api                     :as math]))
 
@@ -52,8 +52,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [avatar-id {:keys [size style] :as avatar-props}]
-  (merge (component.helpers/component-indent-attributes avatar-id avatar-props)
+  [_ {:keys [size style] :as avatar-props}]
+  (merge (pretty-css/indent-attributes avatar-props)
          {:style (merge style {:height (css/px size)
                                :width  (css/px size)})}))
 
@@ -65,6 +65,6 @@
   ; @param (map) avatar-props
   ;
   ; @return (map)
-  [avatar-id avatar-props]
-  (merge (component.helpers/component-default-attributes avatar-id avatar-props)
-         (component.helpers/component-outdent-attributes avatar-id avatar-props)))
+  [_ avatar-props]
+  (merge (pretty-css/default-attributes avatar-props)
+         (pretty-css/outdent-attributes avatar-props)))

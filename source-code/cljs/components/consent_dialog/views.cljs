@@ -2,7 +2,7 @@
 (ns components.consent-dialog.views
     (:require [components.consent-dialog.prototypes :as consent-dialog.prototypes]
               [elements.api                         :as elements]
-              [layouts.popup-a.api                  :as popup-a]
+              [layouts.api                          :as layouts]
               [random.api                           :as random]
               [x.components.api                     :as x.components]))
 
@@ -54,10 +54,10 @@
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
   [dialog-id dialog-props]
-  [popup-a/layout :components.consent-dialog/view
-                  {:body   [consent-dialog-body   dialog-id dialog-props]
-                   :header [consent-dialog-header dialog-id dialog-props]
-                   :min-width :xs}])
+  [layouts/popup-a :components.consent-dialog/view
+                   {:body   [consent-dialog-body   dialog-id dialog-props]
+                    :header [consent-dialog-header dialog-id dialog-props]
+                    :min-width :xs}])
 
 (defn component
   ; @param (keyword)(opt) dialog-id

@@ -1,98 +1,70 @@
 
-/***** Hide scrollbar *****/
-
-.l-popup-a--body {
-  /* Hide scrollbar for IE and Edge */
-  -ms-overflow-style: none;
-  /* Hide scrollbar for Firefox */
-  scrollbar-width: none;
-}
-
-.l-popup-a--body::-webkit-scrollbar {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  display: none;
-}
-
-/***** Hide scrollbar *****/
-
-
-
-/* */
+/***** Popup A *****/
+/*** Wrapper ***/
 
 .l-popup-a {
-  align-items: center;
-  display: flex;
-  height: 100vh;
+  align-items:     center;
+  display:         flex;
+  height:          100vh;
   justify-content: center;
+  left:            0;
+  position:        fixed;
+  top:             0;
+  width:           100%;
 }
 
-/* */
+/*** Wrapper ***/
 
-/* */
+/*** Cover ***/
 
 .l-popup-a--cover {
   background-color: var( --black-semi-transparent );
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
+  height:           100%;
+  left:             0;
+  position:         absolute;
+  top:              0;
+  width:            100%;
 }
 
-/* */
+/*** Cover ***/
 
-/* */
+/*** Structure ***/
 
-.l-popup-a--layout-structure {
-  border-radius: var( --border-radius-m );
-  display: flex;
+.l-popup-a--structure {
+  display:        flex;
   flex-direction: column;
-  max-height: calc(100% - 96px);
-  max-width:  calc(100% - 96px);
-  overflow: hidden;
+  max-height:     calc(100% - 96px);
+  max-width:      calc(100% - 96px);
+  overflow:       hidden;
 }
 
-[data-stretch-orientation="both"]       .l-popup-a--layout-structure,
-[data-stretch-orientation="horizontal"] .l-popup-a--layout-structure {
+[data-stretch-orientation="both"]       .l-popup-a--structure,
+[data-stretch-orientation="horizontal"] .l-popup-a--structure {
   width: calc(100% - 96px);
 }
 
-[data-stretch-orientation="both"]     .l-popup-a--layout-structure,
-[data-stretch-orientation="vertical"] .l-popup-a--layout-structure {
+[data-stretch-orientation="both"]     .l-popup-a--structure,
+[data-stretch-orientation="vertical"] .l-popup-a--structure {
   height: calc(100vh - 96px);
 }
 
-.l-popup-a--layout-hack {
-  /* A popup-a layouton megjeleneített header és footer tartalmakat a body tartalom felett szükséges,
+.l-popup-a--hack {
+  /* A popup-a layouton megjelenített header és footer tartalmakat a body tartalom felett szükséges,
    * megjeleníteni (a DOM-fában későbbi elemekként), hogy a header és footer tartalmakon esetlegesen
    * megjelenített scroll-shadow árnyékot ne takarja el a body tartalom!
    * A body és header tartalmakat fordított sorrendben (body után header) szükséges a DOM-fába
-   * csatolni, és az .l-popup-a--layout-hack elem jeleníti meg őket visszafordítva. */
-  display: flex;
+   * csatolni, és az .l-popup-a--hack elem jeleníti meg őket visszafordítva. */
+  display:        flex;
   flex-direction: column-reverse;
-  flex-grow: 1;
-  overflow: hidden;
+  flex-grow:      1;
+  overflow:       hidden;
 }
 
-/* */
+/*** Structure ***/
 
-/* */
-
-.l-popup-a--header {
-  background-color: var( --fill-color-default );
-}
-
-.l-popup-a--header[data-shadow-visible="true"] {
-  box-shadow: var( --scroll-shadow-bottom );
-}
-
-/* */
-
-/* */
+/*** Body ***/
 
 .l-popup-a--body {
-  background-color: var( --fill-color-default );
-  overflow-y: scroll;
   flex-grow: 1;
 }
 
@@ -100,16 +72,5 @@
   height: 100%;
 }
 
-/* */
-
-/* */
-
-.l-popup-a--footer {
-  background-color: var( --fill-color-default );
-}
-
-.l-popup-a--footer[data-shadow-visible="true"] {
-  box-shadow: var( --scroll-shadow-top );
-}
-
-/* */
+/*** Body ***/
+/***** Popup A *****/

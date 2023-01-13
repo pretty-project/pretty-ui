@@ -1,6 +1,6 @@
 
 (ns elements.blank.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +14,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [blank-id {:keys [style] :as blank-props}]
-  (merge (element.helpers/element-indent-attributes blank-id blank-props)
+  [_ {:keys [style] :as blank-props}]
+  (merge (pretty-css/indent-attributes blank-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,6 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
-  [blank-id blank-props]
-  (merge (element.helpers/element-default-attributes blank-id blank-props)
-         (element.helpers/element-outdent-attributes blank-id blank-props)))
+  [_ blank-props]
+  (merge (pretty-css/default-attributes blank-props)
+         (pretty-css/outdent-attributes blank-props)))

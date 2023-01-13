@@ -1,11 +1,11 @@
 
 (ns elements.multi-field.helpers
-    (:require [candy.api                :refer [return]]
-              [elements.element.helpers :as element.helpers]
-              [hiccup.api               :as hiccup]
-              [re-frame.api             :as r]
-              [vector.api               :as vector]
-              [x.components.api         :as x.components]))
+    (:require [candy.api        :refer [return]]
+              [hiccup.api       :as hiccup]
+              [pretty-css.api   :as pretty-css]
+              [re-frame.api     :as r]
+              [vector.api       :as vector]
+              [x.components.api :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -170,8 +170,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [group-id {:keys [style] :as group-props}]
-  (merge (element.helpers/element-indent-attributes group-id group-props)
+  [_ {:keys [style] :as group-props}]
+  (merge (pretty-css/indent-attributes group-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -184,10 +184,9 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  [group-id group-props]
-  ; Az egyes mezők is reagálnak a {:disabled? true} állapotra, ezért a mezőcsoportnak,
-  ; már nem szükséges reagálni rá, különben a kétszeresen jelenne meg a sötétítő
-  ; hatás (a mezőkön is és a mezőcsoporton is)!
+  [_ group-props]
+  ; The fields are separatelly reacts to the disabled state, therefore no need
+  ; to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
-       (merge (element.helpers/element-default-attributes group-id group-props)
-              (element.helpers/element-outdent-attributes group-id group-props))))
+       (merge (pretty-css/default-attributes group-props)
+              (pretty-css/outdent-attributes group-props))))

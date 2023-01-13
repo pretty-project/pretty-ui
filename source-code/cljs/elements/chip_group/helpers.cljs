@@ -1,6 +1,6 @@
 
 (ns elements.chip-group.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -14,8 +14,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [group-id {:keys [style] :as group-props}]
-  (merge (element.helpers/element-indent-attributes group-id group-props)
+  [_ {:keys [style] :as group-props}]
+  (merge (pretty-css/indent-attributes group-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -28,6 +28,6 @@
   ; @param (map) group-props
   ;
   ; @return (map)
-  [group-id group-props]
-  (merge (element.helpers/element-default-attributes group-id group-props)
-         (element.helpers/element-outdent-attributes group-id group-props)))
+  [_ group-props]
+  (merge (pretty-css/default-attributes group-props)
+         (pretty-css/outdent-attributes group-props)))

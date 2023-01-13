@@ -1,8 +1,8 @@
 
 (ns elements.menu-bar.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,30 +32,15 @@
   ; The height of the menu bar has to set on the menu items!
   ; This way the items' height is consistent and independent of the :orientation
   ; property of the menu bar.
-  (merge (element.helpers/element-badge-attributes bar-id item-props)
+  (merge (pretty-css/badge-attributes item-props)
          {:data-block-height height
           :on-mouse-up #(x.environment/blur-element! bar-id)}
          (if disabled? (cond-> {:data-disabled true}
                                (some? active?) (assoc :data-active (boolean active?)))
                        (cond-> {:data-click-effect :opacity}
-                               (some? href)     (assoc :href        (str        href))
-                               (some? on-click) (assoc :on-click   #(r/dispatch on-click))
-                               (some? active?)  (assoc :data-active (boolean    active?))))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn menu-bar-layout-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) bar-id
-  ; @param (map) bar-props
-  ; {:horizontal-align (keyword)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-horizontal-align (keyword)}
-  [_ {:keys [horizontal-align]}]
-  {:data-horizontal-align horizontal-align})
+                               (some? href)     (assoc :href (str href))
+                               (some? on-click) (assoc :on-click #(r/dispatch on-click))
+                               (some? active?)  (assoc :data-active (boolean active?))))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -65,15 +50,18 @@
   ;
   ; @param (keyword) bar-id
   ; @param (map) bar-props
-  ; {:style (map)(opt)}
+  ; {:horizontal-align (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [bar-id {:keys [style] :as bar-props}]
-  (merge (element.helpers/element-indent-attributes bar-id bar-props)
-         (menu-bar-layout-attributes                bar-id bar-props)
-         {:data-selectable false
-          :style           style}))
+  ; {:data-horizontal-align (keyword)
+  ;  :data-selectable (boolean)
+  ;  :style (map)}
+  [_ {:keys [horizontal-align style] :as bar-props}]
+  (merge (pretty-css/indent-attributes bar-props)
+         {:data-horizontal-align horizontal-align
+          :data-selectable       false
+          :style                 style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,6 +73,6 @@
   ; @param (map) bar-props
   ;
   ; @return (map)
-  [bar-id bar-props]
-  (merge (element.helpers/element-default-attributes bar-id bar-props)
-         (element.helpers/element-outdent-attributes bar-id bar-props)))
+  [_ bar-props]
+  (merge (pretty-css/default-attributes bar-props)
+         (pretty-css/outdent-attributes bar-props)))

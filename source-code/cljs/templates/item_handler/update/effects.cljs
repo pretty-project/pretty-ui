@@ -146,8 +146,21 @@
   ; @param (string) copy-id
   ; @param (map) action-props
   (fn [_ [_ handler-id copy-id action-props]]
-      [:x.ui/render-bubble! :item-handler/item-duplicated-dialog
-                            {:body [update.views/item-duplicated-dialog-body handler-id copy-id action-props]}]))
+      {:dispatch-n [[:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
+                    [:x.ui/render-bubble! :item-handler/item-duplicated-dialog
+                                          {:body [update.views/item-duplicated-dialog-body handler-id copy-id action-props]
+                                           :autoclose? false}]]}))
 
 (r/reg-event-fx :item-handler/view-duplicated-item!
   ; @param (keyword) handler-id

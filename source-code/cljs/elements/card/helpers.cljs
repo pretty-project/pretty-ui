@@ -1,8 +1,8 @@
 
 (ns elements.card.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,9 +21,9 @@
   ; {:style (map)}
   [_ {:keys [border-color fill-color hover-color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :border-color :data-border-color border-color)
-      (element.helpers/apply-color :fill-color   :data-fill-color   fill-color)
-      (element.helpers/apply-color :hover-color  :data-hover-color  hover-color)))
+      (pretty-css/apply-color :border-color :data-border-color border-color)
+      (pretty-css/apply-color :fill-color   :data-fill-color   fill-color)
+      (pretty-css/apply-color :hover-color  :data-hover-color  hover-color)))
 
 (defn card-layout-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -64,10 +64,10 @@
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [card-id {:keys [disabled? on-click] :as card-props}]
-  (merge (element.helpers/element-indent-attributes card-id card-props)
-         (element.helpers/element-badge-attributes  card-id card-props)
-         (card-style-attributes                     card-id card-props)
-         (card-layout-attributes                    card-id card-props)
+  (merge (pretty-css/indent-attributes   card-props)
+         (pretty-css/badge-attributes    card-props)
+         (card-style-attributes  card-id card-props)
+         (card-layout-attributes card-id card-props)
          (if disabled? {:disabled          true}
                        {:data-click-effect :opacity
                         :on-click          #(r/dispatch on-click)
@@ -81,9 +81,9 @@
   ;
   ; @return (map)
   [card-id card-props]
-  (merge (element.helpers/element-indent-attributes card-id card-props)
-         (card-style-attributes                     card-id card-props)
-         (card-layout-attributes                    card-id card-props)))
+  (merge (pretty-css/indent-attributes   card-props)
+         (card-style-attributes  card-id card-props)
+         (card-layout-attributes card-id card-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -95,6 +95,6 @@
   ; @param (map) card-props
   ;
   ; @return (map)
-  [card-id card-props]
-  (merge (element.helpers/element-default-attributes card-id card-props)
-         (element.helpers/element-outdent-attributes card-id card-props)))
+  [_ card-props]
+  (merge (pretty-css/default-attributes card-props)
+         (pretty-css/outdent-attributes card-props)))

@@ -1,9 +1,9 @@
 
 (ns components.side-menu-button.views
-    (:require [components.component.helpers           :as component.helpers]
-              [components.side-menu-button.presets    :as side-menu-button.presets]
+    (:require [components.side-menu-button.presets    :as side-menu-button.presets]
               [components.side-menu-button.prototypes :as side-menu-button.prototypes]
               [elements.api                           :as elements]
+              [pretty-css.api                         :as pretty-css]
               [random.api                             :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -37,6 +37,6 @@
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (component.helpers/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+   (let [button-props (pretty-css/apply-preset side-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
          button-props (side-menu-button.prototypes/button-props-prototype button-props)]
         [elements/button button-id button-props])))

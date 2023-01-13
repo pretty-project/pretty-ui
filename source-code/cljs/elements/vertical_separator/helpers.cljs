@@ -1,6 +1,6 @@
 
 (ns elements.vertical-separator.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
   ; @return (map)
   ; {:data-block-width (keyword)
   ;  :style (map)}
-  [separator-id {:keys [style width] :as separator-props}]
-  (merge (element.helpers/element-default-attributes separator-id separator-props)
+  [_ {:keys [style width] :as separator-props}]
+  (merge (pretty-css/default-attributes separator-props)
          {:data-block-width width
           :style            style}))

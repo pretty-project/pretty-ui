@@ -1,32 +1,46 @@
 
 (ns layouts.sidebar-b.views
-    (:require [layouts.sidebar-b.helpers    :as helpers]
-              [layouts.sidebar-b.prototypes :as prototypes]
+    (:require [layouts.sidebar-b.helpers    :as sidebar-b.helpers]
+              [layouts.sidebar-b.prototypes :as sidebar-b.prototypes]
               [re-frame.api                 :as r]
-              [react.api                    :as react]
               [reagent.api                  :as reagent]
               [x.components.api             :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- sidebar-body
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) sidebar-id
+  ; @param (map) sidebar-props
+  ; {:content (metamorphic-content)}
+  [sidebar-id {:keys [content] :as sidebar-props}]
+  [:div#l-sidebar-b--wrapper [:div#l-sidebar-b--body (sidebar-b.helpers/sidebar-body-attributes sidebar-id sidebar-props)
+                                                     [x.components/content                      sidebar-id content]]])
+
 (defn- sidebar-b
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) sidebar-id
-  ; @param (map) layout-props
-  ; {:content (metamorphic-content)
-  ;  :viewport-min (px)}
-  [sidebar-id {:keys [content viewport-min] :as layout-props}]
+  ; @param (map) sidebar-props
+  ; {:viewport-min (px)}
+  [sidebar-id {:keys [viewport-min] :as sidebar-props}]
   (if @(r/subscribe [:x.environment/viewport-min? viewport-min])
-       [:div#l-sidebar-b (helpers/layout-attributes sidebar-id layout-props)
-                         [:div#l-sidebar-b--sensor]
-                         [:div#l-sidebar-b--body [:div#l-sidebar-b--content [x.components/content sidebar-id content]]]]))
+       [:div#l-sidebar-b (sidebar-b.helpers/sidebar-attributes sidebar-id sidebar-props)
+                         [:div#l-sidebar-b--sensor (sidebar-b.helpers/sidebar-sensor-attributes sidebar-id sidebar-props)]
+                         [sidebar-body sidebar-id sidebar-props]]))
 
 (defn layout
   ; @param (keyword) sidebar-id
-  ; @param (map) layout-props
-  ; {:content (metamorphic-content)
+  ; @param (map) sidebar-props
+  ; {:border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :content (metamorphic-content)
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :min-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-mount (metamorphic-event)(opt)
   ;  :on-unmount (metamorphic-event)(opt)
   ;  :position (keyword)(opt)
@@ -37,9 +51,9 @@
   ;   Default: 720}
   ;
   ; @usage
-  ; [layout :my-sidebar {...}]
-  [sidebar-id {:keys [on-mount on-unmount] :as layout-props}]
-  (let [layout-props (prototypes/layout-props-prototype layout-props)]
+  ; [sidebar-b :my-sidebar {...}]
+  [sidebar-id {:keys [on-mount on-unmount] :as sidebar-props}]
+  (let [sidebar-props (sidebar-b.prototypes/sidebar-props-prototype sidebar-props)]
        (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch on-mount))
                             :component-will-unmount (fn [_ _] (r/dispatch on-unmount))
-                            :reagent-render         (fn [_ _] [sidebar-b sidebar-id layout-props])})))
+                            :reagent-render         (fn [_ _] [sidebar-b sidebar-id sidebar-props])})))

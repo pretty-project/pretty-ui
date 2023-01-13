@@ -1,6 +1,6 @@
 
 (ns elements.ghost.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,8 +18,8 @@
   ; {:data-border-radius (keyword)
   ;  :data-block-height (keyword)
   ;  :style (map)}
-  [ghost-id {:keys [border-radius height style] :as ghost-props}]
-  (merge (element.helpers/element-indent-attributes ghost-id ghost-props)
+  [_ {:keys [border-radius height style] :as ghost-props}]
+  (merge (pretty-css/indent-attributes ghost-props)
          {:data-border-radius border-radius
           :data-block-height  height
           :style              style}))
@@ -34,6 +34,6 @@
   ; @param (map) ghost-props
   ;
   ; @return (map)
-  [ghost-id ghost-props]
-  (merge (element.helpers/element-default-attributes ghost-id ghost-props)
-         (element.helpers/element-outdent-attributes ghost-id ghost-props)))
+  [_ ghost-props]
+  (merge (pretty-css/default-attributes ghost-props)
+         (pretty-css/outdent-attributes ghost-props)))

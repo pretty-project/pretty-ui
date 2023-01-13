@@ -8,7 +8,7 @@
               [elements.select.helpers    :as select.helpers]
               [elements.select.prototypes :as select.prototypes]
               [elements.text-field.views  :as text-field.views]
-              [layouts.popup-a.api        :as popup-a]
+              [layouts.api                :as layouts]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
@@ -124,10 +124,10 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [popup-a/layout :elements.select/options
-                  {:body      [select-options-body   select-id select-props]
-                   :header    [select-options-header select-id select-props]
-                   :min-width :xxs}])
+  [layouts/popup-a :elements.select/options
+                   {:body      [select-options-body   select-id select-props]
+                    :header    [select-options-header select-id select-props]
+                    :min-width :xxs}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -152,8 +152,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.select/active-button-did-mount    select-id select-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/active-button-will-unmount select-id select-props]))
+  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount    select-id select-props]))
+                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-button-will-unmount select-id select-props]))
                        :reagent-render         (fn [_ select-props] [select-button select-id select-props])}))
 
 ;; ----------------------------------------------------------------------------

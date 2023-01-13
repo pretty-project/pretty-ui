@@ -1,14 +1,14 @@
 
-(ns layouts.bubble-a.prototypes
+(ns components.notification-bubble.prototypes
     (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-props-prototype
+(defn bubble-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
-  ; @param (map) layout-props
-  [layout-props]
+  ; @param (map) bubble-props
+  [bubble-props]
   (merge {}
-         (param layout-props)))
+         (param bubble-props)))

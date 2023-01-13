@@ -1,6 +1,6 @@
 
 (ns templates.item-lister.update.views
-    (:require [x.ui.api :as x.ui]))
+    (:require [components.api :as components]))
 
 ;; -- Reorder items components ------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,13 +8,13 @@
 (defn items-reordered-dialog-body
   ; @param (keyword) lister-id
   [lister-id]
-  [x.ui/state-changed-bubble-body :item-lister/items-reordered-dialog
+  [components/notification-bubble :item-lister/items-reordered-dialog
                                   {:label :changes-saved}])
 
 (defn reorder-items-failed-dialog-body
   ; @param (keyword) lister-id
   [lister-id]
-  [x.ui/state-changed-bubble-body :item-lister/reorder-items-failed-dialog
+  [components/notification-bubble :item-lister/reorder-items-failed-dialog
                                   {:label :failed-to-save-changes}])
 
 ;; -- Delete items components -------------------------------------------------
@@ -28,7 +28,7 @@
         on-success [:item-lister/delete-items-undid       lister-id]
         undo-event [:item-lister/undo-delete-items!       lister-id item-ids
                                                           {:on-failure on-failure :on-success on-success}]]
-       [x.ui/state-changed-bubble-body :item-lister/items-deleted-dialog
+       [components/notification-bubble :item-lister/items-deleted-dialog
                                        {:label          {:content :n-items-deleted :replacements [(count item-ids)]}
                                         :primary-button {:label :recover! :on-click undo-event}}]))
 
@@ -40,5 +40,5 @@
   ; @param (strings in vector) copy-ids
   [lister-id copy-ids]
   ; XXX#7002 (source-code/cljs/templates/item_lister/update/README.md)
-  [x.ui/state-changed-bubble-body :item-lister/items-duplicated-dialog
+  [components/notification-bubble :item-lister/items-duplicated-dialog
                                   {:label {:content :n-items-duplicated :replacements [(count copy-ids)]}}])

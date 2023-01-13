@@ -1,7 +1,7 @@
 
 (ns elements.digit-field.helpers
     (:require [elements.digit-field.config :as digit-field.config]
-              [elements.element.helpers    :as element.helpers]))
+              [pretty-css.api              :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [field-id {:keys [style] :as field-props}]
-  (merge (element.helpers/element-indent-attributes field-id field-props)
+  [_ {:keys [style] :as field-props}]
+  (merge (pretty-css/indent-attributes field-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -42,6 +42,6 @@
   ; @param (map) field-props
   ;
   ; @return (map)
-  [field-id field-props]
-  (merge (element.helpers/element-default-attributes field-id field-props)
-         (element.helpers/element-outdent-attributes field-id field-props)))
+  [_ field-props]
+  (merge (pretty-css/default-attributes field-props)
+         (pretty-css/outdent-attributes field-props)))

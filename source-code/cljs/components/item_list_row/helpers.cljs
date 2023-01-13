@@ -1,6 +1,6 @@
 
 (ns components.item-list-row.helpers
-    (:require [components.component.helpers :as component.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,9 +18,9 @@
   ; {:data-border (keyword)
   ;  :data-fill-color (boolean)
   ;  :style (map)}
-  [row-id {:keys [border disabled? drag-attributes highlighted? template] :as row-props}]
-  (merge (component.helpers/component-marker-attributes row-id row-props)
-         {:data-border     border
+  [_ {:keys [border disabled? drag-attributes highlighted? template] :as row-props}]
+  (merge (pretty-css/marker-attributes row-props)
+         {:data-border border
           :data-fill-color (if highlighted? :highlight)}
          (if drag-attributes (-> drag-attributes (update :style merge {:grid-template-columns template}))
                              {:style {:grid-template-columns template :opacity (if disabled? ".5")}})))

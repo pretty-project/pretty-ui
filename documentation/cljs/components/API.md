@@ -41,6 +41,8 @@
 
 - [menu-table](#menu-table)
 
+- [notification-bubble](#notification-bubble)
+
 - [pdf-preview](#pdf-preview)
 
 - [popup-close-bar](#popup-close-bar)
@@ -605,6 +607,43 @@
                      {:content "Value #1" :color :muted}
                      {:content "Value #2" :color :muted}]
                     [{...} {...}]]}]
+```
+
+---
+
+### notification-bubble
+
+```
+@param (keyword) bubble-id
+@param (map) bubble-props
+{:border-color (keyword)(opt)
+  :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxs
+ :class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
+ :disabled? (boolean)(opt)
+  Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :indent (map)(opt)
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :outdent (map)(opt)
+ :style (map)(opt)}
+```
+
+```
+@usage
+[notification-bubble {...}]
+```
+
+```
+@usage
+[notification-bubble :my-notification-bubble {...}]
 ```
 
 ---

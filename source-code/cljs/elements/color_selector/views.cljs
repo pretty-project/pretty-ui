@@ -3,7 +3,7 @@
     (:require [elements.button.views              :as button.views]
               [elements.color-selector.helpers    :as color-selector.helpers]
               [elements.color-selector.prototypes :as color-selector.prototypes]
-              [layouts.popup-a.api                :as popup-a]
+              [layouts.api                        :as layouts]
               [random.api                         :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -44,8 +44,8 @@
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   [selector-id selector-props]
-  [popup-a/layout :elements.color-selector/options
-                  {:body [color-selector-body selector-id selector-props]}])
+  [layouts/popup-a :elements.color-selector/options
+                   {:body [color-selector-body selector-id selector-props]}])
 
 (defn color-selector-options
   ; WARNING! NON-PUBLIC! DO NOT USE!

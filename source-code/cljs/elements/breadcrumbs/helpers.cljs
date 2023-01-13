@@ -1,8 +1,8 @@
 
 (ns elements.breadcrumbs.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -68,13 +68,13 @@
   ;
   ; @return (map)
   ; {:data-column-gap (keyword)
-  ;  :data-scrollable-x (boolean)
+  ;  :data-scroll-axis (boolean)
   ;  :style (map)}
-  [breadcrumbs-id {:keys [style] :as breadcrumbs-props}]
-  (merge (element.helpers/element-indent-attributes breadcrumbs-id breadcrumbs-props)
-         {:data-column-gap   :xs
-          :data-scrollable-x true
-          :style             style}))
+  [_ {:keys [style] :as breadcrumbs-props}]
+  (merge (pretty-css/indent-attributes breadcrumbs-props)
+         {:data-column-gap  :xs
+          :data-scroll-axis :x
+          :style            style}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -86,6 +86,6 @@
   ; @param (map) breadcrumbs-props
   ;
   ; @return (map)
-  [breadcrumbs-id breadcrumbs-props]
-  (merge (element.helpers/element-default-attributes breadcrumbs-id breadcrumbs-props)
-         (element.helpers/element-outdent-attributes breadcrumbs-id breadcrumbs-props)))
+  [_ breadcrumbs-props]
+  (merge (pretty-css/default-attributes breadcrumbs-props)
+         (pretty-css/outdent-attributes breadcrumbs-props)))

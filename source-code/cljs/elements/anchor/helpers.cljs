@@ -1,8 +1,8 @@
 
 (ns elements.anchor.helpers
-    (:require [elements.element.helpers :as element.helpers]
-              [re-frame.api             :as r]
-              [x.environment.api        :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
   ; {:style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :color :data-color color)))
+      (pretty-css/apply-color :color :data-color color)))
 
 (defn anchor-font-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -52,9 +52,9 @@
   ; @return (map)
   ; {}
   [anchor-id {:keys [disabled? href on-click] :as anchor-props}]
-  (merge (element.helpers/element-indent-attributes anchor-id anchor-props)
-         (anchor-style-attributes                   anchor-id anchor-props)
-         (anchor-font-attributes                    anchor-id anchor-props)
+  (merge (pretty-css/indent-attributes      anchor-props)
+         (anchor-style-attributes anchor-id anchor-props)
+         (anchor-font-attributes  anchor-id anchor-props)
          (if disabled? {:data-text-overflow :no-wrap
                         :disabled           true}
                        {:data-click-effect  :opacity
@@ -73,6 +73,6 @@
   ; @param (map) anchor-props
   ;
   ; @return (map)
-  [anchor-id anchor-props]
-  (merge (element.helpers/element-default-attributes anchor-id anchor-props)
-         (element.helpers/element-outdent-attributes anchor-id anchor-props)))
+  [_ anchor-props]
+  (merge (pretty-css/default-attributes anchor-props)
+         (pretty-css/outdent-attributes anchor-props)))

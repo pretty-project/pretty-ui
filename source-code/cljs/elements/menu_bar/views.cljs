@@ -80,9 +80,9 @@
   ;  :orientation (keyword)}
   [bar-id {:keys [menu-items orientation] :as bar-props}]
   (letfn [(f [item-list item-props] (conj item-list [menu-bar-item bar-id bar-props item-props]))]
-         [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-orientation  :horizontal
-                                                                     :data-scrollable-x true}
-                                                                    {:data-orientation  :vertical})
+         [:div.e-menu-bar--menu-items (case orientation :horizontal {:data-orientation :horizontal
+                                                                     :data-scroll-axis :x}
+                                                                    {:data-orientation :vertical})
                                       (reduce f [:<>] menu-items)]))
 
 (defn- menu-bar-body

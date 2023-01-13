@@ -1,6 +1,6 @@
 
 (ns templates.item-handler.update.views
-    (:require [x.ui.api :as x.ui]))
+    (:require [components.api :as components]))
 
 ;; -- Delete item components --------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -16,7 +16,7 @@
                                                            {:on-failure on-failure :on-success on-success
                                                             :display-progress? true :progress-max 50}]
         close-event [:x.ui/remove-bubble! :item-handler/item-deleted-dialog]]
-       [x.ui/state-changed-bubble-body :item-handler/item-deleted-dialog
+       [components/notification-bubble :item-handler/item-deleted-dialog
                                        {:label          :item-deleted
                                         :primary-button {:label :recover! :on-click {:dispatch-n [close-event undo-event]}}}]))
 
@@ -35,7 +35,7 @@
                                                             :display-progress? true :progress-max 50}]
         close-event [:x.ui/remove-bubble! :item-handler/undo-delete-item-failed-dialog]]
        ; BUG#6170 (source-code/cljs/templates/item_browser/update/views.cljs)
-       [x.ui/state-changed-bubble-body :item-handler/undo-delete-item-failed-dialog
+       [components/notification-bubble :item-handler/undo-delete-item-failed-dialog
                                        {:label          :failed-to-undo-delete
                                         :primary-button {:label :retry! :on-click retry-event}}]))
 
@@ -48,6 +48,6 @@
   ; @param (map) action-props
   [handler-id copy-id action-props]
   (let [view-event [:item-handler/view-duplicated-item! handler-id copy-id action-props]]
-       [x.ui/state-changed-bubble-body :item-handler/item-duplicated-dialog
+       [components/notification-bubble :item-handler/item-duplicated-dialog
                                        {:label          :item-duplicated
                                         :primary-button {:label :view-copy! :on-click view-event}}]))

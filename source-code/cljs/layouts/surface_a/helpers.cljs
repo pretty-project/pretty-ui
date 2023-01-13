@@ -1,30 +1,23 @@
 
-(ns layouts.surface-a.helpers)
+(ns layouts.surface-a.helpers
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn layout-body-attributes
+(defn surface-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) surface-id
-  ; @param (map) layout-props
+  ; @param (map) surface-props
   ; {:content-orientation (keyword)
+  ;  :fill-color (keyword or string)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {:data-content-orientation (keyword)
   ;  :style (map)}
-  [_ {:keys [content-orientation style]}]
-  {:data-content-orientation content-orientation
-   :style                    style})
-
-(defn layout-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) surface-id
-  ; @param (map) layout-props
-  ;
-  ; @return (map)
-  [_ _]
-  {})
+  [_ {:keys [content-orientation fill-color style]}]
+  (-> {:data-orientation content-orientation
+       :style            style}
+      (pretty-css/apply-color :fill-color :data-fill-color fill-color)))

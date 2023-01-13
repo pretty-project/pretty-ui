@@ -1,6 +1,6 @@
 
 (ns elements.icon.helpers
-    (:require [elements.element.helpers :as element.helpers]))
+    (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@
   ;  :style (map)}
   [_ {:keys [color style]}]
   (-> {:style style}
-      (element.helpers/apply-color :color :data-color color)))
+      (pretty-css/apply-color :color :data-color color)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,8 +36,8 @@
   ;  :data-icon-size (keyword)
   ;  :data-selectable (boolean)}
   [icon-id {:keys [icon-family size] :as icon-props}]
-  (merge (element.helpers/element-indent-attributes icon-id icon-props)
-         (icon-style-attributes                     icon-id icon-props)
+  (merge (pretty-css/indent-attributes  icon-props)
+         (icon-style-attributes icon-id icon-props)
          {:data-icon-family icon-family
           :data-icon-size   size
           :data-selectable  false}))
@@ -52,6 +52,6 @@
   ; @param (map) icon-props
   ;
   ; @return (map)
-  [icon-id icon-props]
-  (merge (element.helpers/element-default-attributes icon-id icon-props)
-         (element.helpers/element-outdent-attributes icon-id icon-props)))
+  [_ icon-props]
+  (merge (pretty-css/default-attributes icon-props)
+         (pretty-css/outdent-attributes icon-props)))

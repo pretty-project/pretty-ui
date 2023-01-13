@@ -1,10 +1,10 @@
 
 (ns elements.slider.helpers
-    (:require [css.api                  :as css]
-              [dom.api                  :as dom]
-              [elements.element.helpers :as element.helpers]
-              [elements.slider.state    :as slider.state]
-              [re-frame.api             :as r]))
+    (:require [css.api               :as css]
+              [dom.api               :as dom]
+              [pretty-css.api        :as pretty-css]
+              [elements.slider.state :as slider.state]
+              [re-frame.api          :as r]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -126,8 +126,8 @@
   ;
   ; @return (map)
   ; {:style (map)}
-  [slider-id {:keys [style] :as slider-props}]
-  (merge (element.helpers/element-indent-attributes slider-id slider-props)
+  [_ {:keys [style] :as slider-props}]
+  (merge (pretty-css/indent-attributes slider-props)
          {:style style}))
 
 ;; ----------------------------------------------------------------------------
@@ -140,6 +140,6 @@
   ; @param (map) slider-props
   ;
   ; @return (map)
-  [slider-id slider-props]
-  (merge (element.helpers/element-default-attributes slider-id slider-props)
-         (element.helpers/element-outdent-attributes slider-id slider-props)))
+  [_ slider-props]
+  (merge (pretty-css/default-attributes slider-props)
+         (pretty-css/outdent-attributes slider-props)))
