@@ -41,7 +41,6 @@
   ; @param (map) bar-props
   ; {:menu-items (maps in vector)
   ;   [{:disabled? (boolean)(opt)
-  ;      Default: false
   ;     :label (metamorphic-content)}]}
   ;
   ; @usage

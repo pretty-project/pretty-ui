@@ -1,6 +1,7 @@
 
 (ns tools.clipboard.views
-    (:require [components.api :as components]))
+    (:require [components.api :as components]
+              [elements.api   :as elements]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -19,5 +20,4 @@
   ; @param (string) text
   [text]
   [components/notification-bubble :clipboard/copied-to-clipboard-dialog
-                                  {:content {:content :copied-to-clipboard-n :replacements [text]}}])
-  
+                                  {:content [elements/label {:content text :icon :content_copy}]}])

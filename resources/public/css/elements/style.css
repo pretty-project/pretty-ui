@@ -874,7 +874,7 @@
 
 /*** Options ***/
 
-.e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
+.e-radio-button--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
@@ -923,8 +923,8 @@
 .e-radio-button--option-button::before {
   animation-name:     opacity-0-1;
   animation-duration: .1s;
-  background-color:   var( --color-default );
-  border-radius:      50%;
+  background-color:   var( --color-default          );
+  border-radius:      var( --adaptive-border-radius );
   content:            '';
   display:            block;
   height:             8px;
@@ -1365,12 +1365,12 @@ textarea.e-text-field--input {
 /*** Placeholder ***/
 
 .e-text-field--placeholder {
-  color: var( --color-muted);
-  left: 0;
+  color:     var( --color-muted);
+  left:      0;
   max-width: 100%;
-  padding: 6px 0;
-  position: absolute;
-  top: 0;
+  padding:   6px 0;
+  position:  absolute;
+  top:       0;
 }
 
 /*** Placeholder ***/

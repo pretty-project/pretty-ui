@@ -30,8 +30,9 @@
   [field-id field-props {:keys [color icon icon-family]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-line-height :text-block
-          :data-selectable false}
+         {:data-line-height   :text-block
+          :data-reveal-effect :delayed
+          :data-selectable    false}
          (if icon {:data-icon-family icon-family})
          (if icon {:data-icon-size :s}
                   {:data-font-size :xs})))
@@ -44,7 +45,6 @@
   ; @param (map) adornment-props
   ; {:color (keyword)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
@@ -59,10 +59,11 @@
   [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-color        color
-          :data-click-effect :opacity
-          :data-line-height  :text-block
-          :data-selectable   false
+         {:data-color         color
+          :data-click-effect  :opacity
+          :data-line-height   :text-block
+          :data-reveal-effect :delayed
+          :data-selectable    false
           :title             (x.components/content tooltip)}
          (if icon             {:data-icon-family icon-family
                                :data-icon-size :s}
@@ -71,6 +72,24 @@
          (if-not tab-indexed? {:tab-index "-1"})
          (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
                                                  (x.environment/blur-element!))})))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn field-placeholder-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) field-id
+  ; @param (map) field-props
+  ;
+  ; @return (map)
+  [field-id field-props]
+  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
+  {:data-font-size     :xs
+   :data-line-height   :text-block
+   :data-reveal-effect :delayed
+   :data-selectable    false
+   :data-text-overflow :hidden})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -207,10 +226,13 @@
   ;  :name (keyword)
   ;  :type (keyword)}
   [field-id {:keys [autofill-name date-from date-to disabled? max-length type] :as field-props}]
+  ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
+  ;
   ; The {:type :date} fields range could being set by the :min and :max properties.
   (merge (plain-field.helpers/field-input-attributes field-id field-props)
-         {:max-length max-length
-          :type       type}
+         {:data-reveal-effect :delayed
+          :max-length         max-length
+          :type               type}
          (if disabled? {}
                        {:auto-complete autofill-name
                         :min           date-from
@@ -236,4 +258,3 @@
        :data-stretch-orientation stretch-orientation}
       (pretty-css/default-attributes field-props)
       (pretty-css/outdent-attributes field-props)))
-         

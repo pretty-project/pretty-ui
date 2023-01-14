@@ -51,14 +51,27 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- hide-bar-icon-button
+  ; @param (keyword) lister-id
+  ; @param (map) bar-props
+  [lister-id bar-props]
+  [elements/icon-button ::hide-bar-icon-button
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         :icon          :menu_open
+                         ;:on-click      [:item-lister/choose-order-by! lister-id bar-props]}])
+                         :tooltip :hide-sidebar!}])
+
 (defn- order-select
   ; @param (keyword) lister-id
   ; @param (map) bar-props
   [lister-id bar-props]
   [elements/icon-button ::order-select
-                        {:hover-color :highlight
-                         :icon        :sort
-                         :on-click    [:item-lister/choose-order-by! lister-id bar-props]}])
+                        {:border-radius :s
+                         :hover-color   :highlight
+                         :icon          :sort
+                         :on-click      [:item-lister/choose-order-by! lister-id bar-props]
+                         :tooltip :item-order}])
 
 (defn compact-bar
   ; @param (keyword) lister-id
@@ -70,8 +83,9 @@
   ; @usage
   ; [compact-bar :my-lister {...}]
   [lister-id bar-props]
-  [:div#t-item-lister--compact-bar [order-select lister-id bar-props]
-                                   [search-field lister-id bar-props]])
+  [:div#t-item-lister--compact-bar [order-select         lister-id bar-props]
+                                   [search-field         lister-id bar-props]
+                                   [hide-bar-icon-button lister-id bar-props]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

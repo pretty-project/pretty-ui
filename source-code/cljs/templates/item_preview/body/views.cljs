@@ -99,7 +99,6 @@
   ; @param (keyword)(opt) preview-id
   ; @param (map) preview-props
   ; {:disabled? (boolean)(opt)
-  ;   Default: false
   ;  :import-id-f (function)(opt)
   ;   Default: (fn [{:keys [id] :as item-link}] id)
   ;  :indent (map)(opt)

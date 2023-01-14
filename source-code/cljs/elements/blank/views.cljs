@@ -33,7 +33,6 @@
   ; {:content (metamorphic-content)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl

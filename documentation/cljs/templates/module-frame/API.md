@@ -76,8 +76,6 @@
 ```
 @param (keyword) module-id
 @param (map) menu-props
-{:content (metamorphic content)
- :threshold (px)(opt)}
 ```
 
 ---

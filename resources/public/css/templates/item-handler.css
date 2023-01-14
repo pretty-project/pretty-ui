@@ -56,9 +56,9 @@
 /*** Body ***/
 
 #t-item-handler--body {
-  background-color: var( --fill-color-default );
-  border-bottom: 1px solid var( --border-color-highlight );
-  border-top:    1px solid var( --border-color-highlight );
+  -background-color: var( --fill-color-default );
+  -border-bottom: 1px solid var( --border-color-highlight );
+  -border-top:    1px solid var( --border-color-highlight );
 }
 
 /*** Body ***/

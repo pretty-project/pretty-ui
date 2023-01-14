@@ -21,6 +21,8 @@
        :data-vertical-column-align   vertical-align
        :data-wrap-items              wrap-items?
        :style                        style}
+      (pretty-css/border-attributes column-props)
+      (pretty-css/color-attributes  column-props)
       (pretty-css/indent-attributes column-props)))
 
 ;; ----------------------------------------------------------------------------

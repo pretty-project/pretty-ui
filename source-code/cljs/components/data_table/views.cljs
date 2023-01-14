@@ -78,7 +78,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :columns (label-props maps in vectors in vector)(opt)
   ;  :disabled? (boolean)(opt)}
-  ;   Default: false
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   Default: :s

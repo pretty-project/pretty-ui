@@ -12,7 +12,6 @@
   ; @param (keyword) selector-id
   ; @param (map) bar-props
   ; {:disabled? (boolean)(opt)
-  ;   Default: false
   ;  :search-field-placeholder (metamorphic-content)(opt)
   ;  :search-keys (keywords in vector)}
   [selector-id {:keys [disabled? search-field-placeholder search-keys]}]
@@ -30,7 +29,6 @@
   ; @param (keyword) selector-id
   ; @param (map) bar-props
   ; {:disabled? (boolean)(opt)
-  ;   Default: false
   ;  :order-by-options (namespaced keywords in vector)}
   [selector-id {:keys [disabled? order-by-options]}]
   [elements/icon-button ::order-by-icon-button
@@ -44,7 +42,6 @@
   ; @param (keyword) selector-id
   ; @param (map) bar-props
   ; {:disabled? (boolean)(opt)
-  ;   Default: false
   ;  :order-by-options (namespaced keywords in vector)
   ;  :search-field-placeholder (metamorphic-content)(opt)
   ;  :search-keys (keywords in vector)}

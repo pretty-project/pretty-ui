@@ -180,7 +180,7 @@
     ;(println "origin-dex:" origin-dex)
     ;(println "target-dex:" target-dex)
     (if (not= origin-dex target-dex)
-        (let [item-order (vector/move-item (get-in @state/SORTABLE-STATE [sortable-id :item-order]) origin-dex target-dex)]
+        (let [item-order (vector/move-nth-item (get-in @state/SORTABLE-STATE [sortable-id :item-order]) origin-dex target-dex)]
              (swap! state/SORTABLE-STATE assoc-in [sortable-id :item-order] item-order)
              (if on-order-changed (let [reordered-items (get-ordered-items sortable-id sortable-props)]
                                        (on-order-changed sortable-id sortable-props reordered-items)))))

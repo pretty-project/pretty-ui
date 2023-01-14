@@ -75,13 +75,16 @@
 
 - [user-avatar](#user-avatar)
 
+- [vector-item-controls](#vector-item-controls)
+
+- [vector-items-header](#vector-items-header)
+
 ### action-bar
 
 ```
 @param (keyword)(opt) bar-id
 @param (map) bar-props
 {:disabled? (boolean)(opt)}
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
   Default: :s
@@ -161,9 +164,7 @@
 @param (keyword)(opt) element-id
 @param (map) element-props
 {:copyable? (boolean)(opt)
-  Default: false
  :disabled? (boolean)(opt)
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
   Default: :s
@@ -198,7 +199,6 @@
 {:class (keyword or keywords in vector)(opt)
  :columns (label-props maps in vectors in vector)(opt)
  :disabled? (boolean)(opt)}
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
   Default: :s
@@ -337,13 +337,25 @@
 ```
 @param (keyword)(opt) table-id
 @param (map) table-props
-{:border (keyword)(opt)
-  :both, :bottom, :top
- :rows (vectors in vectors in vector)
-  [[(string) template
-    [(metamorphic-content) label
-     (keyword) input-id
-     (metamorphic-content) input]]]}
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
+ :disabled? (boolean)(opt)
+ :indent (map)(opt)
+ :input-params (vector)(opt)
+ :label (metamorphic-content)(opt)
+ :outdent (map)(opt)
+ :rows (vectors in vector)
+  [[(string) row-template
+    (list of metamorphic-contents or vectors) row-blocks
+     [(metamorphic-content) input-label
+      (keyword) input-id
+      (metamorphic-content) input]]]
+ :style (map)(opt)}
 ```
 
 ```
@@ -364,6 +376,13 @@
 [input-table {:rows [["160px 1fr 160px 1fr" [:name  ::my-name-field  #'my-name-field]
                                             [:color ::my-color-field #'my-color-field]]
                      ["160px 1fr"           [:age   ::my-age-field   #'my-age-field]]]}]
+```
+
+```
+@usage
+(defn my-name-field [my-param] [text-field ::my-name-field  {...}])
+[input-table {:input-params ["My param"]
+              :rows [["160px 1fr" [:name ::my-name-field #'my-name-field]]]}]
 ```
 
 ---
@@ -412,7 +431,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :cells (metamorphic-contents in vector)
  :disabled? (boolean)(opt)
-  Default: false
  :drag-attributes (map)(opt)
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
@@ -609,7 +627,6 @@
 @param (map) table-props
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)}
-  Default: false
  :indent (map)(opt)
  :items (maps in vector)(opt)
  [{:label (metamorphic-content)(opt)
@@ -660,7 +677,6 @@
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
@@ -799,7 +815,6 @@
 {:class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (string)(opt)
   Default: "var( --fill-color-default )"
  :helper (metamorphic-content)(opt)
@@ -865,7 +880,6 @@
 {:class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :indent (map)(opt)
  :outdent (map)(opt)
  :placeholder (metamorphic-content)(opt)
@@ -889,10 +903,18 @@
 ```
 @param (keyword)(opt) menu-id
 @param (map) menu-props
-{:class (keyword or keywords in vector)(opt)
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
- :disabled? (boolean)(opt)
-  Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :indent (map)(opt)
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -923,7 +945,6 @@
 @param (map) button-props
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :icon (keyword)
  :icon-color (string or keyword)
  :icon-family (keyword)(opt)
@@ -994,7 +1015,6 @@
 {:class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :icon (keyword)
  :icon-family (keyword)(opt)
   Default: :material-icons-filled
@@ -1020,7 +1040,6 @@
 @param (map) button-props
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :hover-color (keyword or string)(opt)
   Default: :invert
  :icon (keyword)(opt)
@@ -1053,7 +1072,6 @@
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
  :info-text (metamorphic-content)(opt)
@@ -1088,7 +1106,6 @@
 {:class (keyword or keywords in vector)(opt)
  :colors (strings in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :first-name (string)(opt)
  :indent (map)(opt)
  :outdent (map)(opt)
@@ -1107,4 +1124,54 @@
 ```
 @usage
 [user-avatar :my-user-avatar {...}]
+```
+
+---
+
+### vector-item-controls
+
+```
+@param (keyword)(opt) controls-id
+@param (map) controls-props
+{:disabled? (boolean)(opt)
+ :item-dex (integer)
+ :value-path (vector)}
+```
+
+```
+@usage
+[vector-item-controls {...}]
+```
+
+```
+@usage
+[vector-item-controls :my-vector-item-controls {...}]
+```
+
+---
+
+### vector-items-header
+
+```
+@param (keyword)(opt) header-id
+@param (map) header-props
+{:class (keyword or keywords in vector)(opt)
+ :disabled? (boolean)(opt)
+ :indent (map)(opt)
+ :initial-item (*)(opt)
+  Default: {}
+ :label (metamorphic-content)
+ :outdent (map)(opt)
+ :style (map)(opt)
+ :value-path (vector)}
+```
+
+```
+@usage
+[vector-items-header {...}]
+```
+
+```
+@usage
+[vector-items-header :my-vector-items-header {...}]
 ```

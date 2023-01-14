@@ -65,7 +65,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :s

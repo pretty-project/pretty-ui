@@ -88,7 +88,6 @@
   ;     :placeholder (metamorphic-content)(opt)
   ;     :route (string)(opt)}]
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   ;   Default: :s

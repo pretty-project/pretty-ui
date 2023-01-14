@@ -80,7 +80,6 @@
   ; {:class (keywords or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :expanded? (boolean)(opt)
   ;   Default: true
   ;  :icon (keyword)(opt)

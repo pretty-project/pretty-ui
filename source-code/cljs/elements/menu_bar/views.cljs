@@ -149,7 +149,6 @@
   ;      Default: :tr
   ;      W/ {:badge-content ...}
   ;     :disabled? (boolean)(opt)
-  ;      Default: false
   ;     :href (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :icon-family (keyword)(opt)

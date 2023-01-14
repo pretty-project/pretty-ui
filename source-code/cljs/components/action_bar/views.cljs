@@ -34,7 +34,6 @@
   ; @param (keyword)(opt) bar-id
   ; @param (map) bar-props
   ; {:disabled? (boolean)(opt)}
-  ;   Default: false
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   Default: :s

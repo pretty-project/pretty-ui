@@ -39,16 +39,6 @@
   grid-gap: 1px;
 }
 
-.c-input-table--body[data-border="bottom"],
-.c-input-table--body[data-border="both"] {
-  border-bottom: 1px solid var( --border-color-highlight );
-}
-
-.c-input-table--body[data-border="top"],
-.c-input-table--body[data-border="both"] {
-  border-top: 1px solid var( --border-color-highlight );
-}
-
 /*** Body ***/
 
 /*** Row ***/
@@ -269,22 +259,6 @@
 
 
 /***** Side menu *****/
-/*** Wrapper ***/
-
-.c-side-menu {
-  background-color: var( --fill-color-default );
-}
-
-.c-side-menu[data-position="left"] {
-  border-right: 1px solid var( --border-color-highlight );
-}
-
-.c-side-menu[data-position="right"] {
-  border-left: 1px solid var( --border-color-highlight );
-}
-
-/*** Wrapper ***/
-
 /*** Body ***/
 
 .c-side-menu--body {
@@ -374,3 +348,28 @@
 
 /***** Colors *****/
 /***** User avatar *****/
+
+
+
+/***** Vector item controls *****/
+/*** Body ***/
+
+.c-vector-item-controls--body {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*** Body ***/
+/***** Vector item controls *****/
+
+
+
+/***** Vector items header *****/
+/*** Body ***/
+
+.c-vector-items-header--body {
+  display: flex;
+}
+
+/*** Body ***/
+/***** Vector items header *****/

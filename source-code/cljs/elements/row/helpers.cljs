@@ -31,6 +31,8 @@
        :data-vertical-row-align   vertical-align
        :data-wrap-items           wrap-items?
        :style                     style}
+      (pretty-css/border-attributes row-props)
+      (pretty-css/color-attributes  row-props)
       (pretty-css/indent-attributes row-props)))
 
 ;; ----------------------------------------------------------------------------

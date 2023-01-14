@@ -34,6 +34,18 @@
   (let [single-field? (group-props->single-field? group-id group-props field-dex)]
        (not single-field?)))
 
+(defn group-props->min-field-count-reached?
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) group-id
+  ; @param (map) group-props
+  ; @param (integer) field-dex
+  ;
+  ; @return (boolean)
+  [group-id group-props _]
+  (let [group-value @(r/subscribe [:elements.multi-field/get-group-value group-id group-props])]
+       (vector/count? group-value 1)))
+
 (defn group-props->max-field-count-reached?
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -77,9 +89,10 @@
     :disabled? (group-props->max-field-count-reached?       group-id group-props field-dex)
     :on-click  [:elements.multi-field/increase-field-count! group-id group-props field-dex]
     :tooltip   :add-field!}
-   {:icon      :close
+   {:disabled? (group-props->min-field-count-reached?       group-id group-props field-dex)
+    :icon      :close
     :on-click  [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
-    :tooltip   :delete-field!}])
+    :tooltip   :remove-field!}])
 
 (defn field-dex->end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!

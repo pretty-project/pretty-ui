@@ -106,11 +106,9 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
-  ;   Default: false
   ;  :autofocus? (boolean)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :field-content-f (function)(opt)
   ;   Default: return
   ;  :field-value-f (function)(opt)

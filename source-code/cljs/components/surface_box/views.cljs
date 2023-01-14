@@ -99,7 +99,6 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;  :info-text (metamorphic-content)(opt)

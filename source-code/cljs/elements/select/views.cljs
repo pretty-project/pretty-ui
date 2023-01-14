@@ -147,6 +147,15 @@
                                                            :label         label
                                                            :on-click      on-click)]))
 
+(defn- select-button-structure
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) select-id
+  ; @param (map) select-props
+  [select-id select-props]
+  [:div.e-select-button {:data-reveal-effect :delayed}
+                        [select-button select-id select-props]])
+
 (defn- select-layout
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -154,7 +163,7 @@
   ; @param (map) select-props
   [select-id select-props]
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount select-id select-props]))
-                       :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
+                       :reagent-render      (fn [_ select-props] [select-button-structure select-id select-props])}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -200,7 +209,6 @@
   ; {:add-option-f (function)(opt)
   ;   Default: return
   ;  :autoclear? (boolean)(opt)
-  ;   Default: false
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-radius (keyword)(opt)
@@ -209,9 +217,7 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :extendable? (boolean)(opt)
-  ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

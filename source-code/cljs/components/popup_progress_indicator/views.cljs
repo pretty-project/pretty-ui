@@ -36,7 +36,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :fill-color (string)(opt)
   ;   Default: "var( --fill-color-default )"
   ;  :helper (metamorphic-content)(opt)

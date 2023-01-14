@@ -1,11 +1,17 @@
 
-(ns components.input-table.prototypes)
+(ns components.input-table.prototypes
+    (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn table-props-prototype
   ; @param (map) table-props
+  ; {}
   ;
   ; @return (map)
-  [_])
+  ; {}
+  [{:keys [border-color] :as table-props}]
+  (merge (if border-color {:border-position :all
+                           :border-width    :xxs})
+         (param table-props)))

@@ -46,8 +46,7 @@
   ; @param (map) button-props
   ; {:keypress (map)(opt)
   ;   {:key-code (integer)
-  ;    :required? (boolean)(opt)
-  ;     Default: false}}
+  ;    :required? (boolean)(opt)}}
   (fn [_ [_ button-id {:keys [keypress]}]]
       [:x.environment/reg-keypress-event! button-id
                                           {:key-code   (:key-code keypress)

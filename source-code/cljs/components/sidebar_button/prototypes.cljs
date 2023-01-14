@@ -12,11 +12,11 @@
   ; @return (map)
   ; {}
   [{:keys [icon] :as button-props}]
-  (merge {:hover-color :invert}
-         (param button-props)
-         (if icon {:icon-size :s})
-         {:color            :invert
+  (merge {:color            :invert
           :font-size        :xs
           :font-weight      :medium
           :horizontal-align :left
-          :indent {:left :s :right :xl :horizontal :xs}}))
+          :hover-color      :invert
+          :indent {:left :s :right :xl :horizontal :xs}}
+         (if icon {:icon-size :m})
+         (param button-props)))

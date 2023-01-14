@@ -21,8 +21,7 @@
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
-  (let [placeholder-attributes (plain-field.helpers/field-accessory-attributes field-id field-props)]
-       [:div.e-text-field--adornments-placeholder placeholder-attributes]))
+  [:div.e-text-field--adornments-placeholder (plain-field.helpers/field-accessory-attributes field-id field-props)])
 
 (defn button-adornment
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -112,10 +111,7 @@
   ; {:placeholder (metamorphic-content)}
   [field-id {:keys [placeholder] :as field-props}]
   (if placeholder (if-let [field-empty? (plain-field.helpers/field-empty? field-id)]
-                          [:div.e-text-field--placeholder {:data-font-size     :xs
-                                                           :data-line-height   :text-block
-                                                           :data-selectable    false
-                                                           :data-text-overflow :hidden}
+                          [:div.e-text-field--placeholder (text-field.helpers/field-placeholder-attributes field-id field-props)
                                                           (x.components/content placeholder)])))
 
 (defn- text-field-input
@@ -191,7 +187,6 @@
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
-  ;   Default: false
   ;  :autofill-name (keyword)(opt)
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
@@ -202,15 +197,12 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :emptiable? (boolean)(opt)
-  ;   Default: false
   ;  :end-adornments (maps in vector)(opt)
   ;   [{:color (keyword)(opt)
   ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;      Default: :default
   ;     :disabled? (boolean)(opt)
-  ;      Default: false
   ;     :icon (keyword)
   ;     :icon-family (keyword)(opt)
   ;      :material-icons-filled, :material-icons-outlined
@@ -283,8 +275,7 @@
   ;   {:f (function)
   ;    :invalid-message (metamorphic-content)(opt)
   ;    :invalid-message-f (function)(opt)
-  ;    :prevalidate? (boolean)(opt)
-  ;     Default: false}
+  ;    :prevalidate? (boolean)(opt)}
   ;  :value-path (vector)(opt)}
   ;
   ; @usage

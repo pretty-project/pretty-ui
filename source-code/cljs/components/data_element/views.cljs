@@ -68,9 +68,7 @@
   ; @param (keyword)(opt) element-id
   ; @param (map) element-props
   ; {:copyable? (boolean)(opt)
-  ;   Default: false
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;   Default: :s

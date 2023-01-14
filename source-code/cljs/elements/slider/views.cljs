@@ -77,7 +77,6 @@
   ; @param (map) slider-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
@@ -99,7 +98,6 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :resetable? (boolean)(opt)
-  ;   Default: false
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

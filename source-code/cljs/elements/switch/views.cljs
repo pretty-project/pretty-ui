@@ -59,7 +59,7 @@
   ; @param (*) option
   [switch-id switch-props option]
   [:button.e-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                            [:div.e-switch--option-track (pretty-css/border-attributes {} switch-props)]
+                            [:div.e-switch--option-track (switch.helpers/switch-option-track-attributes switch-id switch-props)]
                             [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options
@@ -115,7 +115,6 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

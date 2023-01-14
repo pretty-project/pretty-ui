@@ -8,23 +8,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn button-border-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:border-color (keyword)
-  ;  :border-radius (keyword)
-  ;  :border-width (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-border-width (keyword)}
-  [_ {:keys [border-color border-radius border-width]}]
-  (-> {:data-border-radius border-radius
-       :data-border-width  border-width}
-      (pretty-css/apply-color :border-color :data-border-color border-color)))
-
 (defn clear-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -53,8 +36,9 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  [_ button-props]
-  (-> {} (pretty-css/border-attributes button-props)))
+  [button-id {:keys [border-radius] :as button-props}]
+  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius border-radius 0.3)}}
+      (pretty-css/border-attributes button-props)))
 
 (defn radio-button-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

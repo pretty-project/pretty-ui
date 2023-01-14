@@ -25,10 +25,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; {:on-select (metamorphic-event)(opt)}
   ; @param (*) option
-  (fn [{:keys [db]} [_ button-id button-props option]]
+  (fn [{:keys [db]} [_ button-id {:keys [on-select] :as button-props} option]]
       {:db (r radio-button.events/select-option! db button-id button-props option)
-       :fx [:elements.input/mark-input-as-visited! button-id]}))
+       :fx [:elements.input/mark-input-as-visited! button-id]
+       :dispatch on-select}))
 
 (r/reg-event-fx :elements.radio-button/clear-value!
   ; WARNING! NON-PUBLIC! DO NOT USE!

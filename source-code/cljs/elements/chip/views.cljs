@@ -72,7 +72,6 @@
   ;   Default: :default
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary

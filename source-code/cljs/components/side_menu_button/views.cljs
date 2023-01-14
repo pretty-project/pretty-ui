@@ -18,7 +18,6 @@
   ; @param (map) button-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :icon (keyword)
   ;  :icon-color (string or keyword)
   ;  :icon-family (keyword)(opt)

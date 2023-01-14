@@ -15,7 +15,6 @@
 {:autosave? (boolean)(opt)
   Default: false
  :disabled? (boolean)(opt)
-  Default: false
  :export-filter-f (function)(opt)
   Default: (fn [item-id] {:id item-id})
   W/ {:multi-select? true}

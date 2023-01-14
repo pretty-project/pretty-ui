@@ -29,7 +29,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :indent (map)(opt)
   ;  :outdent (map)(opt)
   ;  :placeholder (metamorphic-content)(opt)

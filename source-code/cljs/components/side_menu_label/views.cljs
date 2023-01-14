@@ -17,7 +17,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :icon (keyword)
   ;  :icon-family (keyword)(opt)
   ;   Default: :material-icons-filled

@@ -104,6 +104,11 @@
         stored-content (field-content-f stored-value)]
        (set-field-content! field-id stored-content)))
 
+       ; HACK#9760
+       ; This war an experimental solution for avoiding flickering of input contents.
+       ; (letfn [(f [] (set-field-content! field-id stored-content))]
+       ;        (time/set-timeout! f 350)]))
+
 (defn synchronizer-did-update-f
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;

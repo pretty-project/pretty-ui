@@ -113,7 +113,6 @@
   ; @param (map) table-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)}
-  ;   Default: false
   ;  :indent (map)(opt)
   ;  :items (maps in vector)(opt)
   ;  [{:label (metamorphic-content)(opt)

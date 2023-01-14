@@ -7,6 +7,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn switch-option-track-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) switch-id
+  ; @param (map) switch-props
+  ; {:border-radius (keyword)}
+  ;
+  ; @return (map)
+  [_ {:keys [border-radius] :as switch-props}]
+  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius border-radius 0.75)}}
+      (pretty-css/border-attributes switch-props)))
+
 (defn switch-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -21,7 +33,7 @@
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [switch-id {:keys [disabled?] :as switch-props} option]
+  [switch-id {:keys [border-radius disabled?] :as switch-props} option]
   (let [option-switched? @(r/subscribe [:elements.switch/option-switched? switch-id switch-props option])]
        (merge {:data-click-effect :targeted
                :data-switched option-switched?}

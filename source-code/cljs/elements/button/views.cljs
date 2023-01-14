@@ -95,7 +95,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :font-size (keyword)(opt)

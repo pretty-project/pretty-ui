@@ -71,7 +71,6 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :colors (strings in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :first-name (string)(opt)
   ;  :indent (map)(opt)
   ;  :outdent (map)(opt)

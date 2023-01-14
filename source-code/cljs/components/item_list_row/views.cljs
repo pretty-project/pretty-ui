@@ -39,7 +39,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :cells (metamorphic-contents in vector)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :drag-attributes (map)(opt)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning

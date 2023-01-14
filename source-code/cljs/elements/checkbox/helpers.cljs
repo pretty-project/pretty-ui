@@ -12,18 +12,12 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:border-color (keyword or string)
-  ;  :border-radius (keyword)
-  ;  :border-width (keyword)}
   ; @param (*) option
   ;
   ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-border-width (keyword)
-  ;  :data-icon-family (keyword)}
   [_ checkbox-props _]
-  (-> {} (pretty-css/border-attributes checkbox-props)
-         (pretty-css/icon-attributes   checkbox-props)))
+  (-> {:data-icon-family :material-icons-filled}
+      (pretty-css/border-attributes checkbox-props)))
 
 (defn checkbox-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -55,12 +49,15 @@
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
-  ; {:style (map)(opt)}
+  ; {:options-orientation (keyword)(opt)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as checkbox-props}]
-  (-> {:style style}
+  ; {:data-options-orientation (keyword)
+  ;  :style (map)}
+  [_ {:keys [options-orientation style] :as checkbox-props}]
+  (-> {:data-options-orientation options-orientation
+       :style                    style}
       (pretty-css/indent-attributes checkbox-props)))
 
 ;; ----------------------------------------------------------------------------

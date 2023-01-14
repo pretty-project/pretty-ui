@@ -16,7 +16,6 @@
   ; @param (map) button-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :hover-color (keyword or string)(opt)
   ;   Default: :invert
   ;  :icon (keyword)(opt)

@@ -49,7 +49,6 @@
 @param (keyword) selector-id
 @param (map) bar-props
 {:disabled? (boolean)(opt)
-  Default: false
  :order-by-options (namespaced keywords in vector)
  :search-field-placeholder (metamorphic-content)(opt)
  :search-keys (keywords in vector)}

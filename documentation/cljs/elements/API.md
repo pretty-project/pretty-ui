@@ -108,7 +108,6 @@
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -154,7 +153,6 @@
 {:content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -192,7 +190,6 @@
     :placeholder (metamorphic-content)(opt)
     :route (string)(opt)}]
  :disabled? (boolean)(opt)
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :inherit
   Default: :s
@@ -247,7 +244,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :font-size (keyword)(opt)
@@ -343,7 +339,6 @@
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :horizontal-align (keyword)(opt)
@@ -403,7 +398,6 @@
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -459,7 +453,6 @@
   Default: :default
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
@@ -629,8 +622,18 @@
 ```
 @param (keyword)(opt) column-id
 @param (map) column-props
-{:class (keyword or keywords in vector)(opt)
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
  :horizontal-align (keyword)(opt)
@@ -719,7 +722,6 @@
   Default: :xs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -831,7 +833,6 @@
 {:class (keywords or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :expanded? (boolean)(opt)
   Default: true
  :icon (keyword)(opt)
@@ -1031,7 +1032,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :height (keyword)(opt)
   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :3xl
@@ -1148,7 +1148,6 @@
  :copyable? (boolean)(opt)
   Default: false
  :disabled? (boolean)(opt)
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -1303,7 +1302,6 @@
      Default: :tr
      W/ {:badge-content ...}
     :disabled? (boolean)(opt)
-     Default: false
     :href (string)(opt)
     :icon (keyword)(opt)
     :icon-family (keyword)(opt)
@@ -1436,7 +1434,6 @@
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -1510,11 +1507,9 @@
 @param (keyword)(opt) field-id
 @param (map) field-props
 {:autoclear? (boolean)(opt)
-  Default: false
  :autofocus? (boolean)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :field-content-f (function)(opt)
   Default: return
  :field-value-f (function)(opt)
@@ -1619,9 +1614,7 @@
  :class (keyword or keywords in vector)(opt)
  :default-value (*)(opt)
  :deselectable? (boolean)(opt)
-  Default: false
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1677,8 +1670,18 @@
 ```
 @param (keyword)(opt) row-id
 @param (map) row-props
-{:class (keyword or keywords in vector)(opt)
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)(opt)
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl
  :horizontal-align (keyword)(opt)
@@ -1745,7 +1748,6 @@
 {:add-option-f (function)(opt)
   Default: return
  :autoclear? (boolean)(opt)
-  Default: false
  :border-color (keyword)(opt)
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
  :border-radius (keyword)(opt)
@@ -1754,9 +1756,7 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :extendable? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1823,7 +1823,6 @@
 @param (map) slider-props
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1845,7 +1844,6 @@
  :outdent (map)(opt)
   Same as the :indent property.
  :resetable? (boolean)(opt)
-  Default: false
  :style (map)(opt)
  :value-path (vector)(opt)}
 ```
@@ -1899,7 +1897,6 @@
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -2012,7 +2009,6 @@
 @param (keyword)(opt) field-id
 @param (map) field-props
 {:autoclear? (boolean)(opt)
-  Default: false
  :autofill-name (keyword)(opt)
  :autofocus? (boolean)(opt)
  :border-color (keyword or string)(opt)
@@ -2023,15 +2019,12 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :emptiable? (boolean)(opt)
-  Default: false
  :end-adornments (maps in vector)(opt)
   [{:color (keyword)(opt)
      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
      Default: :default
     :disabled? (boolean)(opt)
-     Default: false
     :icon (keyword)
     :icon-family (keyword)(opt)
      :material-icons-filled, :material-icons-outlined
@@ -2104,8 +2097,7 @@
   {:f (function)
    :invalid-message (metamorphic-content)(opt)
    :invalid-message-f (function)(opt)
-   :prevalidate? (boolean)(opt)
-    Default: false}
+   :prevalidate? (boolean)(opt)}
  :value-path (vector)(opt)}
 ```
 
@@ -2169,7 +2161,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
-  Default: false
  :height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :s
@@ -2225,7 +2216,6 @@
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
-  Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :hover-color (keyword or string)(opt)

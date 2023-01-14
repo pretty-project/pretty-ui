@@ -115,7 +115,6 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

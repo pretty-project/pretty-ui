@@ -39,7 +39,6 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
-  ;   Default: false
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :hover-color (keyword or string)(opt)

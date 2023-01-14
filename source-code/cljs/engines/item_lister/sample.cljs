@@ -92,7 +92,7 @@
 (r/reg-event-fx :reorder-my-items!
   (fn [_ _]
       (let [downloaded-items (r item-lister/get-downloaded-items db :my-lister)
-            reordered-items  (vector/move-item downloaded-items 0 5)]
+            reordered-items  (vector/move-nth-item downloaded-items 0 5)]
            [:item-lister/reorder-items! :my-lister reordered-items])))
 
 
