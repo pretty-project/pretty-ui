@@ -14,6 +14,7 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
+  ;  :border-position (keyword)
   ;  :border-radius (keyword)
   ;  :border-width (keyword)
   ;  :option-label-f (function)
@@ -23,6 +24,7 @@
   ;  :value-path (vector)}
   [checkbox-id checkbox-props]
   (merge {:border-color        :default
+          :border-position     :all
           :border-radius       :xs
           :border-width        :xs
           :option-label-f      return

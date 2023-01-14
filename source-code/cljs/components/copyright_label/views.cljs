@@ -16,13 +16,26 @@
   [_ {:keys [font-size]}]
   (let [server-year    @(r/subscribe [:x.core/get-server-year])
         copyright-label (x.app-details/copyright-label server-year)]
-       [elements/label ::copyright-label
-                       {:color            :muted
-                        :content          copyright-label
-                        :font-size        font-size
-                        :horizontal-align :center
-                        :icon             :copyright
-                        :indent           {:horizontal :xs}}]))
+       [:div.c-copyright-label {:data-color :muted
+                                :data-selectable false}
+        [:a.c-copyright-label--anchor {:data-font-weight :medium
+                                       :data-font-size :xxs
+                                       :data-line-height :text-block
+                                       :style {:text-transform :uppercase}
+                                       :href "https://monogo.app"
+                                       :data-click-effect :opacity
+                                       :data-orientation :horizontal}
+                                      [:i.c-copyright-label--icon {:data-icon-family :material-icons-filled
+                                                                   :data-icon-size :xs}
+                                                                  :copyright]
+                                      copyright-label]]))
+       ;[elements/label ::copyright-label
+        ;               {:color            :muted
+        ;                :content          copyright-label
+        ;                :font-size        font-size
+        ;                :horizontal-align :center
+        ;                :icon             :copyright
+        ;                :indent           {:horizontal :xs}]))
 
 (defn component
   ; @param (keyword)(opt) label-id

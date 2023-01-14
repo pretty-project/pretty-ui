@@ -11,13 +11,12 @@
   ; @param (keyword) surface-id
   ; @param (map) surface-props
   ; {:content-orientation (keyword)
-  ;  :fill-color (keyword or string)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {:data-content-orientation (keyword)
   ;  :style (map)}
-  [_ {:keys [content-orientation fill-color style]}]
+  [_ {:keys [content-orientation style] :as surface-props}]
   (-> {:data-orientation content-orientation
        :style            style}
-      (pretty-css/apply-color :fill-color :data-fill-color fill-color)))
+      (pretty-css/color-attributes surface-props)))

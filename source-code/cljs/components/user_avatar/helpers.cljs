@@ -53,9 +53,9 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [size style] :as avatar-props}]
-  (merge (pretty-css/indent-attributes avatar-props)
-         {:style (merge style {:height (css/px size)
-                               :width  (css/px size)})}))
+  (-> {:style (merge style {:height (css/px size)
+                            :width  (css/px size)})}
+      (pretty-css/indent-attributes avatar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -66,5 +66,5 @@
   ;
   ; @return (map)
   [_ avatar-props]
-  (merge (pretty-css/default-attributes avatar-props)
+  (-> {} (pretty-css/default-attributes avatar-props)
          (pretty-css/outdent-attributes avatar-props)))

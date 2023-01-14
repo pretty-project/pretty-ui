@@ -63,6 +63,8 @@
 
 - [multiline-field](#multiline-field)
 
+- [notification-bubble](#notification-bubble)
+
 - [password-field](#password-field)
 
 - [plain-field](#plain-field)
@@ -240,7 +242,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -294,8 +295,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
@@ -341,7 +340,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxs
  :content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -366,8 +364,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-click (metamorphic-event)(opt)
@@ -981,13 +977,16 @@
 @param (keyword)(opt) icon-id
 @param (map) icon-props
 {:class (keyword or keywords in vector)(opt)
- :color (keyword or string)(opt)
+ :icon (keyword)
+ :icon-color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
- :icon (keyword)
  :icon-family (keyword)(opt)
   :material-icons-filled, :material-icons-outlined
   Default: :material-icons-filled
+ :icon-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -999,9 +998,6 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :outdent (map)(opt)
   Same as the :indent property.
- :size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :m
  :style (map)(opt)}
 ```
 
@@ -1066,8 +1062,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :on-click (metamorphic handler)(opt)
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
@@ -1193,8 +1187,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
@@ -1423,6 +1415,70 @@
 ```
 @usage
 [multiline-field :my-multiline-field {...}]
+```
+
+---
+
+### notification-bubble
+
+```
+@param (keyword) bubble-id
+@param (map) bubble-props
+{:border-color (keyword)(opt)
+  :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+ :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :color (keyword or string)(opt)
+  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
+ :class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
+ :disabled? (boolean)(opt)
+  Default: false
+ :font-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  Default: :s
+ :font-weight (keyword)(opt)
+  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  Default :medium
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :indent (map)(opt)
+  {:bottom (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl
+   :left (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl
+   :right (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl
+   :top (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl}
+ :min-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :outdent (map)(opt)
+  Same as the :indent property.
+ :primary-button (map)(opt)
+  {:layout (keyword)
+    :button, :icon-button
+    Default: :icon-button}
+ :secondary-button (map)(opt)
+  {:layout (keyword)
+    :button, :icon-button
+    Default: :icon-button}
+ :selectable? (boolean)(opt)
+  Default: false
+ :style (map)(opt)}
+```
+
+```
+@usage
+[notification-bubble {...}]
+```
+
+```
+@usage
+[notification-bubble :my-notification-bubble {...}]
 ```
 
 ---
@@ -1696,7 +1752,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -1966,7 +2021,6 @@
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxs
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
   Default: false
@@ -2014,8 +2068,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :max-length (integer)(opt)
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -2107,7 +2159,13 @@
 {:background-size (keyword)(opt)
   :contain, :cover
   Default: :contain
+ :border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
  :border-radius (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
+ :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
@@ -2162,6 +2220,8 @@
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
@@ -2184,8 +2244,6 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-  Default: :tr
-  W/ {:marker-color ...}
  :on-click (metamorphic-event)
  :on-right-click (metamorphic-event)(opt)
  :outdent (map)(opt)

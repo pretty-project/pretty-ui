@@ -14,7 +14,8 @@
   ; @param (keyword) footer-id
   ; @param (map) footer-props
   [footer-id footer-props]
-  [:div.c-side-menu-footer [copyright-label.views/component {}]])
+  [:div.c-side-menu-footer {:data-indent-bottom :xxs}
+                           [copyright-label.views/component {}]])
 
 (defn component
   ; @param (keyword)(opt) footer-id

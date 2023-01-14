@@ -90,9 +90,9 @@
   ;   {:height (string)
   ;    :width (string)}}
   [_ {:keys [diameter style] :as diagram-props}]
-  (merge (pretty-css/indent-attributes diagram-props)
-         {:style (merge style {:height (css/px diameter)
-                               :width  (css/px diameter)})}))
+  (-> {:style (merge style {:height (css/px diameter)
+                            :width  (css/px diameter)})}
+      (pretty-css/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -105,5 +105,5 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (merge (pretty-css/default-attributes diagram-props)
+  (-> {} (pretty-css/default-attributes diagram-props)
          (pretty-css/outdent-attributes diagram-props)))

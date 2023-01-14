@@ -15,8 +15,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as stepper-props}]
-  (merge (pretty-css/indent-attributes stepper-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes stepper-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,5 +29,5 @@
   ;
   ; @return (map)
   [_ stepper-props]
-  (merge (pretty-css/default-attributes stepper-props)
+  (-> {} (pretty-css/default-attributes stepper-props)
          (pretty-css/outdent-attributes stepper-props)))

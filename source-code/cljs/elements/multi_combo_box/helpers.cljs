@@ -47,8 +47,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as box-props}]
-  (merge (pretty-css/indent-attributes box-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes box-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -61,5 +61,5 @@
   ;
   ; @return (map)
   [_ box-props]
-  (merge (pretty-css/default-attributes box-props)
+  (-> {} (pretty-css/default-attributes box-props)
          (pretty-css/outdent-attributes box-props)))

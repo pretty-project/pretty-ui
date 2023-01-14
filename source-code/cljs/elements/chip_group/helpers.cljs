@@ -15,8 +15,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as group-props}]
-  (merge (pretty-css/indent-attributes group-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -29,5 +29,5 @@
   ;
   ; @return (map)
   [_ group-props]
-  (merge (pretty-css/default-attributes group-props)
+  (-> {} (pretty-css/default-attributes group-props)
          (pretty-css/outdent-attributes group-props)))

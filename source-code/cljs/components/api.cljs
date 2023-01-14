@@ -10,6 +10,7 @@
               [components.error-content.views            :as error-content.views]
               [components.error-label.views              :as error-label.views]
               [components.ghost-view.views               :as ghost-view.views]
+              [components.illustration.views             :as illustration.views]
               [components.input-table.views              :as input-table.views]
               [components.item-list-header.views         :as item-list-header.views]
               [components.item-list-row.views            :as item-list-row.views]
@@ -49,6 +50,7 @@
 (def error-content            error-content.views/component)
 (def error-label              error-label.views/component)
 (def ghost-view               ghost-view.views/component)
+(def illustration             illustration.views/component)
 (def input-table              input-table.views/component)
 (def item-list-header         item-list-header.views/component)
 (def item-list-row            item-list-row.views/component)

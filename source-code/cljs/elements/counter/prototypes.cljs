@@ -15,15 +15,17 @@
   ; @return (map)
   ; {:border-color (keyword or string)
   ;  :border-radius (keyword)
+  ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :font-size (keyword)
   ;  :initial-value (integer)
   ;  :value-path (vector)}
   [counter-id counter-props]
-  (merge {:border-color  :default
-          :border-radius :m
-          :border-width  :xs
-          :font-size     :s
-          :initial-value 0
-          :value-path    (input.helpers/default-value-path counter-id)}
+  (merge {:border-color    :default
+          :border-position :all
+          :border-radius   :m
+          :border-width    :xs
+          :font-size       :s
+          :initial-value   0
+          :value-path      (input.helpers/default-value-path counter-id)}
          (param counter-props)))

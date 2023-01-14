@@ -17,9 +17,9 @@
   ; {:data-vertical-align (keyword)
   ;  :style (map)}
   [_ {:keys [style vertical-align] :as polarity-props}]
-  (merge (pretty-css/indent-attributes polarity-props)
-         {:data-vertical-align vertical-align
-          :style               style}))
+  (-> {:data-vertical-align vertical-align
+       :style               style}
+      (pretty-css/indent-attributes polarity-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -32,5 +32,5 @@
   ;
   ; @return (map)
   [_ polarity-props]
-  (merge (pretty-css/default-attributes polarity-props)
+  (-> {} (pretty-css/default-attributes polarity-props)
          (pretty-css/outdent-attributes polarity-props)))

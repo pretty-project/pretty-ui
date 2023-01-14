@@ -47,6 +47,7 @@
   ;
   ; @return (string)
   [db [_ browser-id server-response]]
+  ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
   (r update.subs/get-mutation-answer db browser-id :delete-item! server-response))
 
 
@@ -67,6 +68,7 @@
   ;
   ; @return (string)
   [db [_ browser-id server-response]]
+  ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
   (let [item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)
         copy-item      (r get-mutation-answer             db browser-id :duplicate-item! server-response)
         id-key         (keyword/add-namespace item-namespace :id)]
@@ -90,6 +92,7 @@
   ;
   ; @return (string)
   [db [_ browser-id server-response]]
+  ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
   (let [item-namespace (r transfer.subs/get-transfer-item db browser-id :item-namespace)
         restored-item  (r get-mutation-answer             db browser-id :undo-delete-item! server-response)
         id-key         (keyword/add-namespace item-namespace :id)]

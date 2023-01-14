@@ -46,6 +46,7 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
+  ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
   (r get-mutation-answer db lister-id :delete-items! server-response))
 
 
@@ -66,6 +67,7 @@
   ;
   ; @return (strings in vector)
   [db [_ lister-id server-response]]
+  ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
   (let [item-namespace   (r transfer.subs/get-transfer-item db lister-id :item-namespace)
         duplicated-items (r get-mutation-answer             db lister-id :duplicate-items! server-response)
         id-key           (keyword/add-namespace item-namespace :id)]

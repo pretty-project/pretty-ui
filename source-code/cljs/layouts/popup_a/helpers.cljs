@@ -50,15 +50,14 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) popup-id
-  ; {:border-radius (keyword)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :min-width (keyword)(opt)
+  ; @param (map) popup-props
+  ; {:min-width (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [border-radius fill-color min-width style]}]
+  [_ {:keys [min-width style] :as popup-props}]
   (-> {:data-content-min-width min-width
-       :data-border-radius     border-radius
        :style                  style}
-      (pretty-css/apply-color :fill-color :data-fill-color fill-color)))
+      (pretty-css/border-attributes popup-props)
+      (pretty-css/color-attributes  popup-props)))

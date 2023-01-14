@@ -5,27 +5,43 @@
               [templates.item-handler.update.subs  :as update.subs]
               [templates.item-handler.update.views :as update.views]))
 
-;; -- Save item effects -------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-handler/item-saved
   ; @param (keyword) handler-id
   ; @param (map) action-props
   ; @param (map) server-response
-  (fn [{:keys [db]} [_ handler-id _ server-response]]
+  (fn [{:keys [db]} [_ handler-id action-props server-response]]
       (let [item-id (r item-handler/get-saved-item-id db handler-id server-response)]
            {:db       (r item-handler/unmark-item-as-changed! db handler-id item-id)
-            :dispatch [:x.ui/render-bubble! :item-handler/item-saved-dialog {:body :changes-saved}]})))
+            :dispatch [:item-handler/render-item-saved-dialog! handler-id item-id action-props]})))
 
 (r/reg-event-fx :item-handler/save-item-failed
   ; @param (keyword) handler-id
   ; @param (map) action-props
   ; @param (map) server-response
-  (fn [_ [_ _ _ _]]
-      {:dispatch-n [[:x.ui/render-bubble! :item-handler/save-item-failed-dialog {:body :failed-to-save}]
+  (fn [_ [_ handler-id action-props _]]
+      {:dispatch-n [[:item-handler/render-save-item-failed-dialog! handler-id nil action-props]
                     [:x.ui/end-listening-to-process!]]}))
 
-;; -- Delete item effects -----------------------------------------------------
+(r/reg-event-fx :item-handler/render-item-saved-dialog!
+  ; @param (keyword) handler-id
+  ; @param (string) item-id
+  ; @param (map) action-props
+  (fn [_ [_ handler-id item-id action-props]]
+      [:x.ui/render-bubble! :item-handler/item-saved-dialog
+                            {:content [update.views/item-saved-dialog handler-id item-id action-props]}]))
+
+(r/reg-event-fx :item-handler/render-save-item-failed-dialog!
+  ; @param (keyword) handler-id
+  ; @param (string) item-id
+  ; @param (map) action-props
+  (fn [_ [_ handler-id item-id action-props]]
+      [:x.ui/render-bubble! :item-handler/save-item-failed-dialog
+                            {:content [update.views/save-item-failed-dialog handler-id item-id action-props]}]))
+
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-handler/item-deleted
@@ -35,7 +51,7 @@
   ;  :lister-id (keyword)}
   ; @param (map) server-response
   (fn [{:keys [db]} [_ handler-id {:keys [base-route lister-id] :as action-props} server-response]]
-      ; If the deleted item doesn't loaded in the item-handler ...
+      ; If the deleted item doesn't currently loaded in the item-handler ...
       ; ... reloads the related item-lister.
       ;
       ; If the deleted item currently loaded in the item-handler and other items
@@ -72,17 +88,17 @@
   ; @param (map) action-props
   (fn [_ [_ handler-id item-id action-props]]
       [:x.ui/render-bubble! :item-handler/item-deleted-dialog
-                            {:body [update.views/item-deleted-dialog-body handler-id item-id action-props]}]))
+                            {:content [update.views/item-deleted-dialog handler-id item-id action-props]}]))
 
 (r/reg-event-fx :item-handler/render-delete-item-failed-dialog!
   ; @param (keyword) handler-id
   ; @param (string) item-id
   ; @param (map) action-props
-  (fn [_ [_ _ _ _]]
+  (fn [_ [_ handler-id item-id action-props]]
       [:x.ui/render-bubble! :item-handler/delete-item-failed-dialog
-                            {:body :failed-to-delete}]))
+                            {:content [update.views/delete-item-failed-dialog handler-id item-id action-props]}]))
 
-;; -- Undo delete item effects ------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-handler/delete-item-undid
@@ -103,11 +119,12 @@
   ; @param (map) action-props
   ; @param (map) server-response
   (fn [_ [_ handler-id item-id action-props _]]
+      ; XXX#0409 (source-code/cljs/engines/item_handler/update/subs.cljs)
       ; XXX#0409
-      ; The [:item-handler/undo-delete-item-failed ...] event has to get the item-id
-      ; as a parameter, because the server-response could be nil or deficient!
-      ; This case is common in failured recovering events, therefore every failured
-      ; recovering event has to get the item-id as a parameter.
+      ; The [:item-handler/undo-delete-item-failed ...] event has to get the item ID
+      ; as a parameter, because the server response could be nil or deficient!
+      ; This case is common in failured recovery events, therefore every failured
+      ; recovery event has to get the item ID as a parameter.
       {:dispatch-n [[:item-handler/render-undo-delete-item-failed-dialog! handler-id item-id action-props]
                     [:x.ui/end-listening-to-process!]]}))
 
@@ -117,9 +134,9 @@
   ; @param (map) action-props
   (fn [_ [_ handler-id item-id action-props]]
       [:x.ui/render-bubble! :item-handler/undo-delete-item-failed-dialog
-                            {:body [update.views/undo-delete-item-failed-dialog-body handler-id item-id action-props]}]))
+                            {:content [update.views/undo-delete-item-failed-dialog handler-id item-id action-props]}]))
 
-;; -- Duplicate item effects --------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (r/reg-event-fx :item-handler/item-duplicated
@@ -136,31 +153,25 @@
   ; @param (keyword) handler-id
   ; @param (map) action-props
   ; @param (map) server-response
-  (fn [_ [_ _ _ _]]
-      ; There is no copy-id if the duplication failed!
-      [:x.ui/render-bubble! :item-handler/duplicate-item-failed-dialog
-                            {:body :failed-to-duplicate}]))
+  (fn [_ [_ handler-id action-props _]]
+      ; There is no copy-id if the duplication is failed!
+      [:item-handler/render-duplicate-item-failed-dialog! handler-id nil action-props]))
 
 (r/reg-event-fx :item-handler/render-item-duplicated-dialog!
   ; @param (keyword) handler-id
   ; @param (string) copy-id
   ; @param (map) action-props
   (fn [_ [_ handler-id copy-id action-props]]
-      {:dispatch-n [[:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! {:body "xx" :autoclose? false}]
-                    [:x.ui/render-bubble! :item-handler/item-duplicated-dialog
-                                          {:body [update.views/item-duplicated-dialog-body handler-id copy-id action-props]
-                                           :autoclose? false}]]}))
+      [:x.ui/render-bubble! :item-handler/item-duplicated-dialog
+                            {:content [update.views/item-duplicated-dialog handler-id copy-id action-props]}]))
+
+(r/reg-event-fx :item-handler/render-duplicate-item-failed-dialog!
+  ; @param (keyword) handler-id
+  ; @param (string) copy-id
+  ; @param (map) action-props
+  (fn [_ [_ handler-id copy-id action-props]]
+      [:x.ui/render-bubble! :item-handler/duplicate-item-failed-dialog
+                            {:content [update.views/duplicate-item-failed-dialog handler-id copy-id action-props]}]))
 
 (r/reg-event-fx :item-handler/view-duplicated-item!
   ; @param (keyword) handler-id

@@ -40,8 +40,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as selector-props}]
-  (merge (pretty-css/indent-attributes selector-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes selector-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -56,6 +56,6 @@
   ; @return (map)
   ; {:data-size (keyword)}
   [_ {:keys [size] :as selector-props}]
-  (merge (pretty-css/default-attributes selector-props)
-         (pretty-css/outdent-attributes selector-props)
-         {:data-size size}))
+  (-> {:data-size size}
+      (pretty-css/default-attributes selector-props)
+      (pretty-css/outdent-attributes selector-props)))

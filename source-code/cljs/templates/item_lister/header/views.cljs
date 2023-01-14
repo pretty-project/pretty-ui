@@ -22,10 +22,10 @@
                          {;:autofocus?   true
                           :border-color  :highlight
                           :border-radius :l
-                          :font-size :s
-                          :on-empty      on-search
-                          :on-type-ended on-search
-                          :placeholder   search-placeholder}])
+                          :font-size     :s
+                          :on-empty       on-search
+                          :on-type-ended  on-search
+                          :placeholder    search-placeholder}])
 
 (defn- search-description
   ; @param (keyword) lister-id

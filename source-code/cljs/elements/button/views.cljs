@@ -29,7 +29,7 @@
   ; @param (map) button-props
   ; {:icon (keyword)(opt)}
   [button-id {:keys [icon] :as button-props}]
-  [:i.e-button--icon (button.helpers/button-icon-attributes button-id button-props)
+  [:i.e-button--icon (pretty-css/icon-attributes {} button-props)
                      icon])
 
 (defn- button-body
@@ -90,7 +90,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -144,8 +143,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;   Default: :tr
-  ;   W/ {:marker-color ...}
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)

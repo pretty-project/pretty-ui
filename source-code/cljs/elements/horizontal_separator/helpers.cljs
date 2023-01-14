@@ -17,6 +17,6 @@
   ; {:data-block-height (keyword)
   ;  :style (map)}
   [_ {:keys [height style] :as separator-props}]
-  (merge (pretty-css/default-attributes separator-props)
-         {:data-block-height height
-          :style             style}))
+  (-> {:data-block-height height
+       :style             style}
+      (pretty-css/default-attributes separator-props)))

@@ -4,6 +4,7 @@
               [elements.input.helpers     :as input.helpers]
               [elements.switch.helpers    :as switch.helpers]
               [elements.switch.prototypes :as switch.prototypes]
+              [pretty-css.api             :as pretty-css]
               [random.api                 :as random]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
@@ -58,7 +59,7 @@
   ; @param (*) option
   [switch-id switch-props option]
   [:button.e-switch--option (switch.helpers/switch-option-attributes switch-id switch-props option)
-                            [:div.e-switch--option-track (switch.helpers/switch-option-track-attributes switch-id switch-props)]
+                            [:div.e-switch--option-track (pretty-css/border-attributes {} switch-props)]
                             [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options

@@ -21,6 +21,8 @@
 
 - [ghost-view](#ghost-view)
 
+- [illustration](#illustration)
+
 - [input-table](#input-table)
 
 - [item-list-header](#item-list-header)
@@ -302,6 +304,34 @@
 
 ---
 
+### illustration
+
+```
+@param (keyword)(opt) illustration-id
+@param (map) illustration-props
+{:class (keyword or keywords in vector)(opt)
+ :illustration (keyword)
+ :position (keyword)(opt)
+  :tl, :tr, :br, :bl
+  Default: :br
+ :size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxl
+ :style (map)(opt)}
+```
+
+```
+@usage
+[illustration {...}]
+```
+
+```
+@usage
+[illustration :my-illustration {...}]
+```
+
+---
+
 ### input-table
 
 ```
@@ -374,20 +404,22 @@
 ```
 @param (keyword)(opt) row-id
 @param (map) row-props
-{:border (keyword)(opt)
-  :bottom, :top}
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :cells (metamorphic-contents in vector)
  :disabled? (boolean)(opt)
   Default: false
  :drag-attributes (map)(opt)
- :highlighted? (boolean)(opt)
-  Default: false
+ :fill-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
-   Default: :tr
-   W/ {:marker-color ...}
  :template (string)}
 ```
 
@@ -618,21 +650,42 @@
 @param (map) bubble-props
 {:border-color (keyword)(opt)
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  Default: :secondary
  :border-radius (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxs
+  Default: :xs
  :class (keyword or keywords in vector)(opt)
  :content (metamorphic-content)
  :disabled? (boolean)(opt)
   Default: false
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  Default: :default
  :indent (map)(opt)
+  Default: {:horizontal :xs :vertical :xs}
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :m
  :outdent (map)(opt)
+  Default: {:bottom :xs :vertical :xs}
+ :primary-button (map)(opt)
+  {:layout (keyword)(opt)
+    :button, :icon-button
+    Default: :icon-button}
+  Default: {:border-radius :s
+            :icon          :close
+            :hover-color   :highlight
+            :layout        :icon-button
+            :on-click      [:x.ui/remove-bubble! :my-bubble]}
+ :secondary-button (map)(opt)
+  {:layout (keyword)(opt)
+    :button, :icon-button
+    Default: :icon-button}
+ :selectable? (boolean)(opt)
+  Default: false
  :style (map)(opt)}
 ```
 

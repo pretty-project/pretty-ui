@@ -2,6 +2,7 @@
 (ns elements.expandable.views
     (:require [elements.expandable.helpers    :as expandable.helpers]
               [elements.expandable.prototypes :as expandable.prototypes]
+              [pretty-css.api                 :as pretty-css]
               [random.api                     :as random]
               [x.components.api               :as x.components]))
 
@@ -26,7 +27,7 @@
   ; @param (map) expandable-props
   ; {:icon (keyword)(opt)}
   [expandable-id {:keys [icon] :as expandable-props}]
-  (if icon [:i.e-expandable--icon (expandable.helpers/expandable-icon-attributes expandable-id expandable-props)
+  (if icon [:i.e-expandable--icon (pretty-css/icon-attributes {} expandable-props)
                                   icon]))
 
 (defn- expandable-label

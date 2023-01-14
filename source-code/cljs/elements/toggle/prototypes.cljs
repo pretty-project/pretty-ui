@@ -9,13 +9,18 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) toggle-props
-  ; {:disabled? (boolean)(opt)
+  ; {:border-color (keyword or string)(opt)}
+  ;  :disabled? (boolean)(opt)
   ;  :marker-color (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:hover-color (keyword)
+  ; {:border-position (keyword)
+  ;  :border-width (keyword)
+  ;  :hover-color (keyword)
   ;  :marker-position (keyword)}
-  [{:keys [disabled? marker-color] :as toggle-props}]
+  [{:keys [border-color disabled? marker-color] :as toggle-props}]
   (merge (if marker-color {:marker-position :tr})
+         (if border-color {:border-position :all
+                           :border-width    :xxs})
          (param toggle-props)
          (if disabled? {:hover-color :none})))

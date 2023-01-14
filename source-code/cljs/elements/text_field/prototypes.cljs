@@ -56,6 +56,7 @@
   ;
   ; @return (map)
   ; {:autofill-name (keyword)
+  ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
@@ -83,6 +84,7 @@
           :line-height     :text-block
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}
-         (if border-color  {:border-width    :xxs})
+         (if border-color  {:border-position :all
+                            :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (param field-props)))

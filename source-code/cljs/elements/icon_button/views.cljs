@@ -123,8 +123,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;   Default: :tr
-  ;   W/ {:marker-color ...}
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)

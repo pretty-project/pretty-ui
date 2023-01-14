@@ -15,9 +15,9 @@
   ; {:data-element-min-width (keyword)
   ;  :style (map)}
   [_ {:keys [min-width style] :as menu-props}]
-  (merge (pretty-css/indent-attributes menu-props)
-         {:data-element-min-width min-width
-          :style                  style}))
+  (-> {:data-element-min-width min-width
+       :style                  style}
+      (pretty-css/indent-attributes menu-props)))
 
 (defn menu-attributes
   ; @param (keyword) menu-id
@@ -27,6 +27,6 @@
   ; @return (map)
   ; {:data-position (keyword)}
   [_ {:keys [position] :as menu-props}]
-  (merge (pretty-css/default-attributes menu-props)
-         (pretty-css/outdent-attributes menu-props)
-         {:data-position position}))
+  (-> {:data-position position}
+      (pretty-css/default-attributes menu-props)
+      (pretty-css/outdent-attributes menu-props)))

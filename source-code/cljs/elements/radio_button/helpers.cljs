@@ -34,14 +34,14 @@
   ; @return (map)
   ; {}
   [button-id button-props]
-  (merge (button-border-attributes button-id button-props)
-         (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
-                 {:data-click-effect :opacity
-                  :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
-                  :on-mouse-up   #(x.environment/blur-element! button-id)
-                  :title          (x.components/content :uncheck-selected!)}
-                 {:data-disabled  true
-                  :disabled       true})))
+  (-> (if-let [any-option-selected? @(r/subscribe [:elements.radio-button/any-option-selected? button-id button-props])]
+              {:data-click-effect :opacity
+               :on-click      #(r/dispatch [:elements.radio-button/clear-value! button-id button-props])
+               :on-mouse-up   #(x.environment/blur-element! button-id)
+               :title          (x.components/content :uncheck-selected!)}
+              {:data-disabled  true
+               :disabled       true})
+      (pretty-css/border-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -53,8 +53,8 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  [button-id button-props]
-  (button-border-attributes button-id button-props))
+  [_ button-props]
+  (-> {} (pretty-css/border-attributes button-props)))
 
 (defn radio-button-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,10 +87,10 @@
   ; @return (map)
   ; {}
   [_ {:keys [options-orientation style] :as button-props}]
-  (merge (pretty-css/indent-attributes button-props)
-         {:data-options-orientation options-orientation
-          :data-selectable          false
-          :style                    style}))
+  (-> {:data-options-orientation options-orientation
+       :data-selectable          false
+       :style                    style}
+      (pretty-css/indent-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -103,5 +103,5 @@
   ;
   ; @return (map)
   [_ button-props]
-  (merge (pretty-css/default-attributes button-props)
+  (-> {} (pretty-css/default-attributes button-props)
          (pretty-css/outdent-attributes button-props)))

@@ -48,6 +48,9 @@
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
+  ; XXX#0409
+  ; In case of error, the server response could be nil or deficient and might not
+  ; contains the the item ID!
   (let [new-item?      (r core.subs/new-item? db handler-id)
         action-key     (if new-item? :add-item! :save-item!)
         saved-item     (r get-mutation-answer db handler-id action-key server-response)
@@ -73,6 +76,7 @@
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
+  ; XXX#0409
   (r update.subs/get-mutation-answer db handler-id :delete-item! server-response))
 
 
@@ -93,6 +97,7 @@
   ;
   ; @return (string)
   [db [_ handler-id server-response]]
+  ; XXX#0409
   (let [copy-item      (r update.subs/get-mutation-answer db handler-id :duplicate-item! server-response)
         item-namespace (r transfer.subs/get-transfer-item db handler-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]
@@ -116,6 +121,7 @@
   ;
   ; @return (string)
   [db [_ viewer-id server-response]]
+  ; XXX#0409
   (let [recovered-item (r update.subs/get-mutation-answer db viewer-id :undo-delete-item! server-response)
         item-namespace (r transfer.subs/get-transfer-item db viewer-id :item-namespace)
         id-key         (keyword/add-namespace item-namespace :id)]

@@ -75,7 +75,7 @@
   ; ... because the sensors have to be scrolled with the body content.
   ;
   ; The body content element has to be stretched vertically to its wrapper
-  ; (the body element) to provide the center alignment ability for the content.
+  ; (to the body element) to provide the center alignment ability for the content.
   [:div.l-popup-a--body {:data-scroll-axis :y}
                         [:div.l-popup-a--body-content (if header [:div {:id (hiccup/value popup-id "header-sensor")}])
                                                       [x.components/content popup-id body]
@@ -113,8 +113,13 @@
   ; @param (keyword) popup-id
   ; @param (map) popup-props
   ; {:body (metamorphic-content)
+  ;  :border-color (keyword)(opt)
+  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   ;  :border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxs
   ;  :close-by-cover? (boolean)(opt)
   ;   Default: true
   ;  :fill-color (keyword or string)(opt)

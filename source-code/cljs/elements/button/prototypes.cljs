@@ -21,6 +21,7 @@
   ; {:badge-color (keyword)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
+  ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :font-size (keyword)
   ;  :font-weight (keyword)
@@ -36,7 +37,8 @@
           :horizontal-align :center
           :line-height      :text-block}
          (if badge-content {:badge-color :primary :badge-position :tr})
-         (if border-color  {:border-width :xxs})
+         (if border-color  {:border-position :all
+                            :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (if icon          {:icon-family   :material-icons-filled
                             :icon-position :left

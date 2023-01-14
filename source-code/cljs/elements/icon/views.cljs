@@ -22,13 +22,16 @@
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :color (keyword or string)(opt)
+  ;  :icon (keyword)
+  ;  :icon-color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
-  ;  :icon (keyword)
   ;  :icon-family (keyword)(opt)
   ;   :material-icons-filled, :material-icons-outlined
   ;   Default: :material-icons-filled
+  ;  :icon-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :m
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -40,9 +43,6 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :size (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :m
   ;  :style (map)(opt)}
   ;
   ; @usage

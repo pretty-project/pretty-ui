@@ -29,8 +29,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as field-props}]
-  (merge (pretty-css/indent-attributes field-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -43,5 +43,5 @@
   ;
   ; @return (map)
   [_ field-props]
-  (merge (pretty-css/default-attributes field-props)
+  (-> {} (pretty-css/default-attributes field-props)
          (pretty-css/outdent-attributes field-props)))

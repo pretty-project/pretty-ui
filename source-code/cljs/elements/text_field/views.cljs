@@ -200,7 +200,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
@@ -248,8 +247,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;   Default: :tr
-  ;   W/ {:marker-color ...}
   ;  :max-length (integer)(opt)
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl

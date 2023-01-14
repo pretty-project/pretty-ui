@@ -33,10 +33,10 @@
   ;  :ref (?)
   ;  :style (map)}
   [image-id {:keys [style] :as image-props}]
-  (merge (pretty-css/indent-attributes image-props)
-         {:on-error (on-error-f           image-id)
-          :ref      (react/set-reference! image-id)
-          :style    style}))
+  (-> {:on-error (on-error-f           image-id)
+       :ref      (react/set-reference! image-id)
+       :style    style}
+      (pretty-css/indent-attributes image-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -49,5 +49,5 @@
   ;
   ; @return (map)
   [_ image-props]
-  (merge (pretty-css/default-attributes image-props)
+  (-> {} (pretty-css/default-attributes image-props)
          (pretty-css/outdent-attributes image-props)))

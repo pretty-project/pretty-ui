@@ -43,26 +43,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn label-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:icon-color (keyword or string)
-  ;  :icon-family (keyword)
-  ;  :icon-size (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-icon-family (keyword)
-  ;  :data-icon-size (keyword)}
-  [_ {:keys [icon-color icon-family icon-size]}]
-  (-> {:data-icon-family icon-family
-       :data-icon-size   icon-size}
-      (pretty-css/apply-color :icon-color :data-icon-color icon-color)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn label-info-text-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -121,66 +101,9 @@
   ; @return (map)
   ; {:data-text-direction (keyword)
   ;  :data-text-overflow (keyword)}
-  [_ {:keys [target-id text-direction text-overflow]}]
-  {:data-text-direction text-direction
-   :data-text-overflow  text-overflow
-   :for                 target-id})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn label-style-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:color (keyword or string)
-  ;  :style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [color style]}]
-  (-> {:style style}
-      (pretty-css/apply-color :color :data-color color)))
-
-(defn label-font-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:font-size (keyword)
-  ;  :font-weight (keyword)
-  ;  :line-height (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-font-size (keyword)
-  ;  :data-font-weight (keyword)
-  ;  :data-line-height (keyword)}
-  [_ {:keys [font-size font-weight line-height]}]
-  {:data-font-size   font-size
-   :data-font-weight font-weight
-   :data-line-height line-height})
-
-(defn label-layout-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) label-id
-  ; @param (map) label-props
-  ; {:horizontal-align (keyword)
-  ;  :horizontal-position (keyword)(opt)
-  ;  :min-width (keyword)(opt)
-  ;  :vertical-position (keyword)(opt)}
-  ;
-  ; @return (map)
-  ; {:data-element-min-width (keyword)
-  ;  :data-horizontal-position (keyword)
-  ;  :data-horizontal-row-align (keyword)
-  ;  :data-vertical-position (keyword)}
-  [_ {:keys [horizontal-align horizontal-position min-width vertical-position]}]
-  {:data-horizontal-position  horizontal-position
-   :data-horizontal-row-align horizontal-align
-   :data-element-min-width    min-width
-   :data-vertical-position    vertical-position})
+  [_ {:keys [target-id] :as label-props}]
+  (-> {:for target-id}
+      (pretty-css/text-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -190,17 +113,21 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:selectable? (boolean)(opt)}
+  ; {}
   ;
   ; @return (map)
-  ; {:data-selectable (boolean)}
-  [label-id {:keys [selectable?] :as label-props}]
-  (merge (pretty-css/indent-attributes     label-props)
-         (pretty-css/marker-attributes     label-props)
-         (label-style-attributes  label-id label-props)
-         (label-font-attributes   label-id label-props)
-         (label-layout-attributes label-id label-props)
-         {:data-selectable selectable?}))
+  ; {}
+  [_ {:keys [horizontal-align horizontal-position min-width selectable? style vertical-position] :as label-props}]
+  (-> {:data-horizontal-position  horizontal-position
+       :data-horizontal-row-align horizontal-align
+       :data-element-min-width    min-width
+       :data-selectable           selectable?
+       :data-vertical-position    vertical-position
+       :style                     style}
+      (pretty-css/color-attributes  label-props)
+      (pretty-css/font-attributes   label-props)
+      (pretty-css/indent-attributes label-props)
+      (pretty-css/marker-attributes label-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -213,5 +140,5 @@
   ;
   ; @return (map)
   [_ label-props]
-  (merge (pretty-css/default-attributes label-props)
+  (-> {} (pretty-css/default-attributes label-props)
          (pretty-css/outdent-attributes label-props)))

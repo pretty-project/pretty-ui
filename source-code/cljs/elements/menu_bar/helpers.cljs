@@ -32,15 +32,17 @@
   ; The height of the menu bar has to set on the menu items!
   ; This way the items' height is consistent and independent of the :orientation
   ; property of the menu bar.
-  (merge (pretty-css/badge-attributes item-props)
-         {:data-block-height height
-          :on-mouse-up #(x.environment/blur-element! bar-id)}
-         (if disabled? (cond-> {:data-disabled true}
-                               (some? active?) (assoc :data-active (boolean active?)))
-                       (cond-> {:data-click-effect :opacity}
-                               (some? href)     (assoc :href (str href))
-                               (some? on-click) (assoc :on-click #(r/dispatch on-click))
-                               (some? active?)  (assoc :data-active (boolean active?))))))
+  (-> (if disabled? (cond-> {:data-block-height height
+                             :data-disabled     true
+                             :on-mouse-up       #(x.environment/blur-element! bar-id)}
+                            (some? active?) (assoc :data-active (boolean active?)))
+                    (cond-> {:data-block-height height
+                             :data-click-effect :opacity
+                             :on-mouse-up #(x.environment/blur-element! bar-id)}
+                            (some? href)     (assoc :href (str href))
+                            (some? on-click) (assoc :on-click #(r/dispatch on-click))
+                            (some? active?)  (assoc :data-active (boolean active?))))
+      (pretty-css/badge-attributes item-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -58,10 +60,10 @@
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [_ {:keys [horizontal-align style] :as bar-props}]
-  (merge (pretty-css/indent-attributes bar-props)
-         {:data-horizontal-align horizontal-align
-          :data-selectable       false
-          :style                 style}))
+  (-> {:data-horizontal-align horizontal-align
+       :data-selectable       false
+       :style                 style}
+      (pretty-css/indent-attributes bar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -74,5 +76,5 @@
   ;
   ; @return (map)
   [_ bar-props]
-  (merge (pretty-css/default-attributes bar-props)
+  (-> {} (pretty-css/default-attributes bar-props)
          (pretty-css/outdent-attributes bar-props)))

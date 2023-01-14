@@ -31,20 +31,22 @@
 (defn component
   ; @param (keyword)(opt) row-id
   ; @param (map) row-props
-  ; {:border (keyword)(opt)
-  ;   :bottom, :top}
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :cells (metamorphic-contents in vector)
   ;  :disabled? (boolean)(opt)
   ;   Default: false
   ;  :drag-attributes (map)(opt)
-  ;  :highlighted? (boolean)(opt)
-  ;   Default: false
+  ;  :fill-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;    Default: :tr
-  ;    W/ {:marker-color ...}
   ;  :template (string)}
   ;
   ; @usage

@@ -30,26 +30,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn expandable-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) expandable-id
-  ; @param (map) expandable-props
-  ; {:icon-color (keyword or string)
-  ;  :icon-family (keyword)
-  ;  :font-size (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-icon-family (keyword)
-  ;  :data-icon-size (keyword)}
-  [_ {:keys [icon-color icon-family icon-size]}]
-  (-> {:data-icon-family icon-family
-       :data-icon-size   icon-size}
-      (pretty-css/apply-color :icon-color :data-icon-color icon-color)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn expandable-header-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -77,8 +57,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as expandable-props}]
-  (merge (pretty-css/indent-attributes expandable-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes expandable-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -91,5 +71,5 @@
   ;
   ; @return (map)
   [_ expandable-props]
-  (merge (pretty-css/default-attributes expandable-props)
+  (-> {} (pretty-css/default-attributes expandable-props)
          (pretty-css/outdent-attributes expandable-props)))

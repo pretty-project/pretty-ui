@@ -10,19 +10,17 @@
   ;
   ; @param (keyword) ghost-id
   ; @param (map) ghost-props
-  ; {:border-radius (keyword)(opt)
-  ;  :height (keyword)
+  ; {:height (keyword)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-block-height (keyword)
+  ; {:data-block-height (keyword)
   ;  :style (map)}
-  [_ {:keys [border-radius height style] :as ghost-props}]
-  (merge (pretty-css/indent-attributes ghost-props)
-         {:data-border-radius border-radius
-          :data-block-height  height
-          :style              style}))
+  [_ {:keys [height style] :as ghost-props}]
+  (-> {:data-block-height height
+       :style             style}
+      (pretty-css/border-attributes ghost-props)
+      (pretty-css/indent-attributes ghost-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -35,5 +33,5 @@
   ;
   ; @return (map)
   [_ ghost-props]
-  (merge (pretty-css/default-attributes ghost-props)
+  (-> {} (pretty-css/default-attributes ghost-props)
          (pretty-css/outdent-attributes ghost-props)))

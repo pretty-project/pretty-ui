@@ -15,9 +15,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as diagram-props}]
-  (merge (pretty-css/indent-attributes diagram-props)
-         ; TEMP
-         {:style (merge style {:width "500px" :height "300px"})}))
+  (-> {:style (merge style {:width "500px" :height "300px"})} ; TEMP
+      (pretty-css/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -30,5 +29,5 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (merge (pretty-css/default-attributes diagram-props)
+  (-> {} (pretty-css/default-attributes diagram-props)
          (pretty-css/outdent-attributes diagram-props)))

@@ -16,4 +16,6 @@
                                  [:x.environment/add-css! {:uri "/icons/material-design-icons.css"}]
                                  [:x.environment/add-css! {:uri "https://fonts.googleapis.com/icon?family=Material+Icons"}]
                                  [:x.environment/add-css! {:uri "https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"}]
-                                 [:x.environment/add-css! {:uri "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"}]]}})
+                                 [:x.environment/add-css! {:uri "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"}]
+                                 ; Montserrat Initials
+                                 [:x.environment/add-css! {:uri "/icons/montserrat-initials.css"}]]}})

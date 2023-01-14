@@ -17,8 +17,9 @@
   (let [app-title @(r/subscribe [:x.core/get-app-config-item :app-title])]
        [side-menu-button.views/component ::app-home-button
                                          {:font-weight :bold
-                                          :icon        :polymer
-                                          :icon-color "var(--soft-blue-xx-dark)"
+                                          :icon        :cloud
+                                          :icon-family :material-symbols-outlined
+                                          :icon-color  "#0aaaa0"
                                           :label (string/to-uppercase app-title)
                                           :on-click []}]))
 

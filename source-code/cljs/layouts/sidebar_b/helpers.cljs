@@ -14,7 +14,11 @@
   ;
   ; @return (map)
   [_ {:keys [fill-color]}]
-  (pretty-css/apply-color {} :fill-color :data-fill-color fill-color))
+  ; The sidebar sensor has the same fill color as the sidebar body.
+  ; The 'color-attributes' function only gets the fill-color property
+  ; because, the sidebar might get a border-color value which is unwanted on
+  ; the sensor!
+  (pretty-css/color-attributes {} {:fill-color fill-color}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -24,20 +28,17 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:border-radius (keyword)(opt)
-  ;  :fill-color (keyword or string)(opt)
-  ;  :min-width (keyword)(opt)
+  ; {:min-width (keyword)(opt)
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-element-min-width (keyword)
+  ; {:data-element-min-width (keyword)
   ;  :style (map)}
-  [_ {:keys [border-radius fill-color min-width style]}]
-  (-> {:data-border-radius     border-radius
-       :data-element-min-width min-width
+  [_ {:keys [min-width style] :as sidebar-props}]
+  (-> {:data-element-min-width min-width
        :style                  style}
-      (pretty-css/apply-color :fill-color :data-fill-color fill-color)))
+      (pretty-css/border-attributes sidebar-props)
+      (pretty-css/color-attributes  sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

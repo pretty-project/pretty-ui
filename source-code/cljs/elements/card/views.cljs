@@ -61,7 +61,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxs
   ;  :content (metamorphic-content)(opt)
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
@@ -86,8 +85,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;   Default: :tr
-  ;   W/ {:marker-color ...}
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-click (metamorphic-event)(opt)

@@ -55,7 +55,13 @@
   ; {:background-size (keyword)(opt)
   ;   :contain, :cover
   ;   Default: :contain
+  ;  :border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;   Default: :default
   ;  :border-radius (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :m
+  ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)

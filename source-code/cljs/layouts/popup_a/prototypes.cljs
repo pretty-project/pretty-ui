@@ -9,10 +9,12 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) popup-props
+  ; {}
   ;
   ; @return
   ; {}
-  [popup-props]
+  [{:keys [border-color] :as popup-props}]
   (merge {:close-by-cover? true
           :fill-color :default}
+         (if border-color {:border-width :xxs})
          (param popup-props)))

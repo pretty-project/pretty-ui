@@ -1,27 +1,27 @@
 
 /***** Anchor *****/
-/*** Anchor body ***/
+/*** Body ***/
 
 .e-anchor--body {
   cursor: pointer;
   display: block;
 }
 
-/*** Anchor body ***/
+/*** Body ***/
 /***** Anchor *****/
 
 
 
 /***** Breadcrumbs *****/
-/*** Breadcrumbs body ***/
+/*** Body ***/
 
 .e-breadcrumbs--body {
   display: flex;
 }
 
-/*** Breadcrumbs body ***/
+/*** Body ***/
 
-/*** Breadcrumbs crumb ***/
+/*** Crumb ***/
 
 .e-breadcrumbs--crumb {
   max-width: 160px;
@@ -42,13 +42,13 @@
   width:            6px;
 }
 
-/*** Breadcrumbs crumb ***/
+/*** Crumb ***/
 /***** Breadcrumbs *****/
 
 
 
 /***** Button *****/
-/*** Button body ***/
+/*** Body ***/
 
 .e-button--body {
   align-items: center;
@@ -60,13 +60,13 @@
   width: 100%;
 }
 
-/*** Button body ***/
+/*** Body ***/
 /***** Button *****/
 
 
 
 /***** Card *****/
-/*** Card body ***/
+/*** Body ***/
 
 .e-card--body {
   display: flex;
@@ -74,22 +74,22 @@
   width: 100%;
 }
 
-/*** Card body ***/
+/*** Body ***/
 /***** Card *****/
 
 
 
 /***** Checkbox *****/
-/*** Checkbox options ***/
+/*** Options ***/
 
 .e-checkbox--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
 
-/*** Checkbox options ***/
+/*** Options ***/
 
-/*** Checkbox option ***/
+/*** Option ***/
 
 .e-checkbox--option {
   display:        flex;
@@ -115,9 +115,9 @@
   text-align: left;
 }
 
-/*** Checkbox option ***/
+/*** Option ***/
 
-/*** Checkbox marker ***/
+/*** Marker ***/
 
 .e-checkbox--option-button::after {
   content: '';
@@ -131,13 +131,13 @@
   content: 'done';
 }
 
-/*** Checkbox marker ***/
+/*** Marker ***/
 /***** Checkbox *****/
 
 
 
 /***** Chip *****/
-/*** Chip body ***/
+/*** Body ***/
 
 .e-chip--body {
   border-radius: 3px;
@@ -146,9 +146,9 @@
   padding-left:  12px;
 }
 
-/*** Chip body ***/
+/*** Body ***/
 
-/*** Chip primary button ***/
+/*** Button ***/
 
 .e-chip--primary-button {
   background-color: rgba(255, 255, 255, .65);
@@ -172,7 +172,7 @@
   width: 12px;
 }
 
-/*** Chip primary button ***/
+/*** Button ***/
 /***** Chip *****/
 
 
@@ -200,7 +200,7 @@
 
 
 /***** Circle diagram *****/
-/*** Circle diagram wrapper ***/
+/*** Wrapper ***/
 
 .e-circle-diagram {
   align-items:     center;
@@ -209,9 +209,9 @@
   justify-content: center;
 }
 
-/*** Circle diagram wrapper ***/
+/*** Wrapper ***/
 
-/*** Circle diagram section ***/
+/*** Section ***/
 
 .e-circle-diagram--section {
   /* By using the transition property the animations lagged :(
@@ -221,13 +221,55 @@
   transform-origin: center;
 }
 
-/*** Circle diagram section ***/
+/*** Section ***/
 /***** Circle diagram *****/
 
 
 
+/***** Color-selector *****/
+/*** Color-selector options ***/
+
+.e-color-selector--body {
+  display: flex;
+  grid-column-gap: 12px;
+  padding: 12px;
+}
+
+/*** Color-selector options ***/
+
+/*** Color-selector option ***/
+
+.e-color-selector--option[data-collected="true"]::after {
+  align-items: center;
+  background-color: var( --fill-color-default );
+  border-radius: 12px;
+  color: var( --color-default );
+  content: 'check';
+  display: flex;
+  font-size: var( --icon-size-xs );
+  font-weight: 600;
+  height: 20px;
+  justify-content: center;
+  left: 14px;
+  line-height: 20px;
+  position: absolute;
+  top: 14px;
+  width: 20px;
+}
+
+.e-color-selector--option--color {
+  border-radius: var( --border-radius-m );
+  height: 48px;
+  width: 48px;
+}
+
+/*** Color-selector option ***/
+/***** Color-selector *****/
+
+
+
 /***** Column *****/
-/*** Column wrapper ***/
+/*** Body ***/
 
 .e-column--body {
   display: flex;
@@ -251,7 +293,7 @@
   flex-wrap: wrap;
 }
 
-/*** Column wrapper ***/
+/*** Body ***/
 /***** Column *****/
 
 
@@ -296,7 +338,7 @@
 
 
 /***** Counter *****/
-/*** Counter body ***/
+/*** Body ***/
 
 .e-counter--body {
   align-items: center;
@@ -305,9 +347,9 @@
   padding-top: 6px;
 }
 
-/*** Counter body ***/
+/*** Body ***/
 
-/*** Counter value ***/
+/*** Value ***/
 
 .e-counter--value {
   font-weight: 500;
@@ -316,9 +358,9 @@
   text-align: center;
 }
 
-/*** Counter value ***/
+/*** Value ***/
 
-/*** Counter button ***/
+/*** Button ***/
 
 .e-counter--decrease-button,
 .e-counter--increase-button,
@@ -364,7 +406,7 @@
   transform: rotateZ( -45deg );
 }
 
-/*** Counter button ***/
+/*** Button ***/
 /***** Counter *****/
 
 
@@ -421,7 +463,7 @@
 
 
 /***** Expandable *****/
-/*** Expandable header ***/
+/*** Header ***/
 
 .e-expandable--header {
   align-items:     center;
@@ -429,29 +471,29 @@
   justify-content: left;
 }
 
-/*** Expandable header ***/
+/*** Header ***/
 
-/*** Expandable icon ***/
+/*** Icon ***/
 
 .e-expandable--icon {
   margin-right: 6px;
 }
 
-/*** Expandable icon ***/
+/*** Icon ***/
 
-/*** Expandable label ***/
+/*** Label ***/
 
 .e-expandable--label {
   padding-right: 6px;
 }
 
-/*** Expandable header ***/
+/*** Label ***/
 /***** Expandable *****/
 
 
 
 /***** File drop area *****/
-/*** File drop area body ***/
+/*** Body ***/
 
 .e-file-drop-area--body {
   align-items: center;
@@ -470,7 +512,7 @@
   color: var( --color-muted );
 }
 
-/*** File drop area body ***/
+/*** Body ***/
 /***** File drop area *****/
 
 
@@ -489,7 +531,7 @@
 
 
 /***** Label *****/
-/*** Label wrapper ***/
+/*** Wrapper ***/
 
 .e-label {
   display: flex;
@@ -503,57 +545,57 @@
   max-width: 100%;
 }
 
-/*** Label wrapper ***/
+/*** Wrapper ***/
 
-/*** Label body ***/
+/*** Body ***/
 
 .e-label--body {
   align-items: center;
   display: flex;
 }
 
-/*** Label body ***/
+/*** Body ***/
 
-/*** Copyable label ***/
+/*** Copyable ***/
 
 .e-label--copyable {
   display: flex;
   max-width: 100%;
 }
 
-/*** Copyable label ***/
+/*** Copyable ***/
 
-/*** Label icon ***/
+/*** Icon ***/
 
 .e-label--icon {
   flex-shrink:  0;
   margin-right: 6px;
 }
 
-/*** Label icon ***/
+/*** Icon ***/
 
-/*** Label helper, info-text ***/
+/*** Helper, info-text ***/
 
 .e-label--helper,
 .e-label--info-text {
   color: var( --color-muted );
 }
 
-/*** Label helper, info-text ***/
+/*** Helper, info-text ***/
 
-/*** Label info-text button ***/
+/*** Info-text button ***/
 
 .e-label--info-text-button {
   color: var( --color-muted );
 }
 
-/*** Label info-text button ***/
+/*** Info-text button ***/
 /***** Label *****/
 
 
 
 /***** Line diagram *****/
-/*** Line diagram wrapper ***/
+/*** Wrapper ***/
 
 .e-line-diagram {
   display: flex;
@@ -561,24 +603,24 @@
   justify-content: center;
 }
 
-/*** Line diagram wrapper ***/
+/*** Wrapper ***/
 
-/*** Line diagram sections ***/
+/*** Sections ***/
 
 .e-line-diagram--sections {
   display: flex;
 }
 
-/*** Line diagram sections ***/
+/*** Sections ***/
 
-/*** Line diagram section ***/
+/*** Section ***/
 
 .e-line-diagram--section {
   transition: width .5s ease-out;
   height: 100%;
 }
 
-/*** Line diagram section ***/
+/*** Section ***/
 /***** Line diagram *****/
 
 
@@ -603,7 +645,7 @@
 
 /*** Icon-button progress *****/
 
-/*** Icon-button body ***/
+/*** Body ***/
 
 .e-icon-button--body {
   align-items: center;
@@ -646,7 +688,7 @@
 [data-hover-color="success"].e-icon-button--body:hover::before   { background-color: var( --hover-color-success   ); }
 [data-hover-color="warning"].e-icon-button--body:hover::before   { background-color: var( --hover-color-warning   ); }
 
-/*** Icon-button body ***/
+/*** Body ***/
 
 /*** Icon-button hover ***/
 
@@ -717,10 +759,7 @@
 
 
 /***** Menu bar *****/
-/*** Menu items ***/
-/*** Menu items ***/
-
-/*** Menu item ***/
+/*** Item ***/
 
 /* Az .e-menu-bar--menu-item elemben alkalmazott esztétikai távolságok (margin, padding),
  * meg kell feleljenek a felsorolt felhasználási módoknak:
@@ -763,12 +802,13 @@
   color: var( --color-default );
 }
 
-/*** Menu item ***/
+/*** Item ***/
 /***** Menu bar *****/
 
 
 
 /***** Multi field *****/
+/*** Wrapper ***/
 
 .e-multi-field {
   display: flex;
@@ -778,12 +818,26 @@
   row-gap: 8px;
 }
 
+/*** Wrapper ***/
 /***** Multi field *****/
 
 
 
+/***** Notification bubble *****/
+/*** Body ***/
+
+.e-notification-bubble--body {
+  align-items: center;
+  display:     flex;
+}
+
+/*** Body ***/
+/***** Notification bubble *****/
+
+
+
 /***** Radio button *****/
-/*** Radio button clear button ***/
+/*** Clear button ***/
 
 .e-radio-button--clear-button {
   background-color: var( --fill-color-default );
@@ -816,18 +870,18 @@
   width:  2px;
 }
 
-/*** Radio button clear button ***/
+/*** Clear button ***/
 
-/*** Radio button options ***/
+/*** Options ***/
 
 .e-radio-button[data-options-orientation="horizontal"] .e-radio-button--body {
   display:    flex;
   column-gap: 24px;
 }
 
-/*** Radio button options ***/
+/*** Options ***/
 
-/*** Radio button option ***/
+/*** Option ***/
 
 .e-radio-button--option {
   display:        flex;
@@ -849,9 +903,9 @@
   text-align: left;
 }
 
-/*** Radio button option ***/
+/*** Option ***/
 
-/*** Radio button option button ***/
+/*** Option button ***/
 
 .e-radio-button--option-button {
   background-color: var( --fill-color-default );
@@ -861,9 +915,9 @@
   padding:          8px;
 }
 
-/*** Radio button option button ***/
+/*** Option button ***/
 
-/*** Radio button option marker ***/
+/*** Option marker ***/
 
 .e-radio-button--option[data-selected="true"]
 .e-radio-button--option-button::before {
@@ -880,13 +934,13 @@
   width:              8px;
 }
 
-/*** Radio button option marker ***/
+/*** Option marker ***/
 /***** Radio button *****/
 
 
 
 /***** Row *****/
-/*** Row body ***/
+/*** Body ***/
 
 .e-row--body {
   display: flex;
@@ -906,7 +960,7 @@
   flex-wrap: wrap;
 }
 
-/*** Row body ***/
+/*** Body ***/
 /***** Row *****/
 
 
@@ -968,23 +1022,23 @@
 
 
 /***** Select *****/
-/*** Select button ***/
+/*** Button ***/
 
 .e-select-button .e-button--body {
   justify-content: space-between;
 }
 
 .e-select-button .e-button--label {
-  padding-left: 12px;
+  margin-left: 12px;
 }
 
 .e-select-button .e-button--icon {
-  padding-right: 12px;
+  margin-right: 12px;
 }
 
-/*** Select button ***/
+/*** Button ***/
 
-/*** Select options ***/
+/*** Options ***/
 
 .e-select--option-list {
   display: flex;
@@ -999,9 +1053,9 @@
   color: var( --color-highlight );
 }
 
-/*** Select options ***/
+/*** Options ***/
 
-/*** Select option ***/
+/*** Option ***/
 
 .e-select--option {
   display: flex;
@@ -1013,10 +1067,6 @@
 .e-select--option[data-selected="true"]:hover {
   background-color: var( --hover-color-highlight );
 }
-
-/*** Select option ***/
-
-/*** Select option label ***/
 
 .e-select--option[data-selected="true"] {
   background-color: var( --fill-color-highlight );
@@ -1033,9 +1083,9 @@
   width: 4px;
 }
 
-/*** Select option label ***/
+/*** Option ***/
 
-/*** Select options header ***/
+/*** Header ***/
 
 .e-select--options--label {
   display: flex;
@@ -1047,7 +1097,7 @@
   padding: 6px 12px;
 }
 
-/*** Select options header ***/
+/*** Header ***/
 /***** Select *****/
 
 
@@ -1065,15 +1115,15 @@
 
 
 /***** Slider *****/
-/*** Slider body ***/
+/*** Body ***/
 
 .e-slider--body {
   height: 20px;
 }
 
-/*** Slider body ***/
+/*** Body ***/
 
-/*** Slider track ***/
+/*** Track ***/
 
 .e-slider--track {
   background-color: var( --fill-color-highlight );
@@ -1085,9 +1135,9 @@
   width: 100%;
 }
 
-/*** Slider track ***/
+/*** Track ***/
 
-/*** Slider line ***/
+/*** Line ***/
 
 .e-slider--line {
   cursor: grab;
@@ -1107,9 +1157,9 @@
   width: 100%;
 }
 
-/*** Slider line ***/
+/*** Line ***/
 
-/*** Slider thumb ***/
+/*** Thumb ***/
 
 .e-slider--thumb {
   background-color: var( --border-color-primary );
@@ -1121,22 +1171,22 @@
   width: 12px;
 }
 
-/*** Slider thumb ***/
+/*** Thumb ***/
 /***** Slider *****/
 
 
 
 /***** Switch *****/
-/*** Switch options ***/
+/*** Options ***/
 
 .e-switch--body[data-options-orientation="horizontal"] {
   display:    flex;
   column-gap: 24px;
 }
 
-/*** Switch options ***/
+/*** Options ***/
 
-/*** Switch option ***/
+/*** Option ***/
 
 .e-switch--option {
   align-items:    center;
@@ -1163,9 +1213,9 @@
   text-align: left;
 }
 
-/*** Switch option ***/
+/*** Option ***/
 
-/*** Switch thumb ***/
+/*** Thumb ***/
 
 .e-switch--option-track::before {
   background-color: var( --color-default );
@@ -1184,13 +1234,13 @@
   transform: translateX( 20px );
 }
 
-/*** Switch thumb ***/
+/*** Thumb ***/
 /***** Switch *****/
 
 
 
 /***** Text *****/
-/*** Text body ***/
+/*** Body ***/
 
 .e-text--body {
   display: flex;
@@ -1216,30 +1266,30 @@
   width: 100%;
 }
 
-/*** Text body ***/
+/*** Body ***/
 
-/*** Copyable text ***/
+/*** Copyable ***/
 
 .e-text--copyable {
   display: flex;
   max-width: 100%;
 }
 
-/*** Copyable text ***/
+/*** Copyable ***/
 
-/*** Text placeholder ***/
+/*** Placeholder ***/
 
 .e-text--placeholder {
   color: var( --color-highlight );
 }
 
-/*** Text placeholder ***/
+/*** Placeholder ***/
 /***** Text *****/
 
 
 
 /***** Text field *****/
-/*** Field input-container ***/
+/*** Input container ***/
 
 /* The input container element contains the input and its accessories
  * (adornments, placeholder, etc.) */
@@ -1249,9 +1299,9 @@
   justify-content: space-between;
 }
 
-/*** Field input-container ***/
+/*** Input container ***/
 
-/*** Field input ***/
+/*** Input ***/
 
 .e-text-field--input-structure {
   flex-grow: 1;
@@ -1278,9 +1328,9 @@ textarea.e-text-field--input {
   resize:   none;
 }
 
-/*** Field input ***/
+/*** Input ***/
 
-/*** Field adornments ***/
+/*** Adornments ***/
 
 .e-text-field--adornments {
   align-items: center;
@@ -1310,9 +1360,9 @@ textarea.e-text-field--input {
   padding: 0 4px;
 }
 
-/*** Field adornments ***/
+/*** Adornments ***/
 
-/*** Field placeholder ***/
+/*** Placeholder ***/
 
 .e-text-field--placeholder {
   color: var( --color-muted);
@@ -1323,9 +1373,9 @@ textarea.e-text-field--input {
   top: 0;
 }
 
-/*** Field placeholder ***/
+/*** Placeholder ***/
 
-/*** Field surface ***/
+/*** Surface ***/
 
 .e-text-field--surface {
   background-color: var( --fill-color-default );
@@ -1343,7 +1393,7 @@ textarea.e-text-field--input {
   z-index: 996;
 }
 
-/*** Field surface ***/
+/*** Surface ***/
 /***** Text field *****/
 
 
@@ -1377,7 +1427,7 @@ textarea.e-text-field--input {
 
 
 /***** Toggle *****/
-/*** Toggle body ***/
+/*** Body ***/
 
 .e-toggle--body {
   cursor: pointer;
@@ -1389,5 +1439,5 @@ textarea.e-text-field--input {
   text-align: left;
 }
 
-/*** Toggle body ***/
+/*** Body ***/
 /***** Toggle *****/

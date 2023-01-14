@@ -167,24 +167,6 @@
   [field-id field-props]
   {:style {:height (field-auto-height field-id field-props)}})
 
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn field-font-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) field-id
-  ; @param (map) field-props
-  ; {:font-size (keyword)
-  ;  :line-height (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-font-size (keyword)
-  ;  :data-line-height (keyword)}
-  [_ {:keys [font-size line-height]}]
-  {:data-font-size   font-size
-   :data-line-height line-height})
-
 (defn input-container-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -194,14 +176,12 @@
   ;
   ; @return (map)
   ; {}
-  [field-id {:keys [border-color border-radius border-width style] :as field-props}]
-  (merge (pretty-css/indent-attributes   field-props)
-         (pretty-css/marker-attributes   field-props)
-         (field-font-attributes field-id field-props)
-         (-> {:data-border-radius border-radius
-              :data-border-width  border-width
-              :style              style}
-             (pretty-css/apply-color :border-color :data-border-color border-color))))
+  [_ {:keys [border-color border-radius border-width style] :as field-props}]
+  (-> {:style style}
+      (pretty-css/border-attributes field-props)
+      (pretty-css/font-attributes   field-props)
+      (pretty-css/indent-attributes field-props)
+      (pretty-css/marker-attributes field-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -252,7 +232,8 @@
   ; {:data-element-min-width (keyword)
   ;  :data-stretch-orientation (keyword)}
   [_ {:keys [min-width stretch-orientation] :as field-props}]
-  (merge (pretty-css/default-attributes field-props)
-         (pretty-css/outdent-attributes field-props)
-         {:data-element-min-width   min-width
-          :data-stretch-orientation stretch-orientation}))
+  (-> {:data-element-min-width   min-width
+       :data-stretch-orientation stretch-orientation}
+      (pretty-css/default-attributes field-props)
+      (pretty-css/outdent-attributes field-props)))
+         

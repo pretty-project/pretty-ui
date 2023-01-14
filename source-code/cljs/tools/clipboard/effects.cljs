@@ -12,5 +12,6 @@
   ; @usage
   ; [:clipboard/copy-text! "My text"]
   (fn [_ [_ text]]
-      {:dispatch [:x.ui/render-bubble! ::notification {:body [views/copied-to-clipboard-dialog-body text]}]
-       :fx       [:clipboard/copy-text! text]}))
+      {:fx       [:clipboard/copy-text! text]
+       :dispatch [:x.ui/render-bubble! :clipboard/copied-to-clipboard-dialog
+                                       {:content [views/copied-to-clipboard-dialog text]}]}))

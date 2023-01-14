@@ -7,26 +7,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-option-track-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; {:border-color (keyword)
-  ;  :border-radius (keyword)
-  ;  :border-width (keyword)}
-  ;
-  ; @return (map)
-  ; {:data-border-radius (keyword)
-  ;  :data-border-width (keyword)}
-  [_ {:keys [border-color border-radius border-width]}]
-  (-> {:data-border-radius border-radius
-       :data-border-width  border-width}
-      (pretty-css/apply-color :border-color :data-border-color border-color)))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn switch-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -52,36 +32,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn switch-style-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) switch-id
-  ; @param (map) switch-props
-  ; {:style (map)(opt)}
-  ;
-  ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style]}]
-  {:style style})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn switch-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:options-orientation (keyword)}
+  ; {:options-orientation (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
   ; {data-options-orientation (keyword)
-  ;  :data-selectable (boolean)}
-  [switch-id {:keys [options-orientation] :as switch-props}]
-  (merge (pretty-css/indent-attributes      switch-props)
-         (switch-style-attributes switch-id switch-props)
-         {:data-options-orientation options-orientation
-          :data-selectable          false}))
+  ;  :data-selectable (boolean)
+  ;  :style (map)}
+  [switch-id {:keys [options-orientation style] :as switch-props}]
+  (-> {:data-options-orientation options-orientation
+       :data-selectable          false
+       :style                    style}
+      (pretty-css/indent-attributes switch-props)))
 
 (defn switch-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -91,5 +58,5 @@
   ;
   ; @return (map)
   [_ switch-props]
-  (merge (pretty-css/default-attributes switch-props)
+  (-> {} (pretty-css/default-attributes switch-props)
          (pretty-css/outdent-attributes switch-props)))

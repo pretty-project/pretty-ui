@@ -15,6 +15,7 @@
   ;
   ; @return (map)
   ; {:add-option-f (function)
+  ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :option-field-placeholder (metamorphic-content)
   ;  :layout (keyword)
@@ -31,5 +32,6 @@
           :options-placeholder      :no-options
           :options-path             (input.helpers/default-options-path select-id)
           :value-path               (input.helpers/default-value-path   select-id)}
-         (if border-color {:border-width :xxs})
+         (if border-color {:border-position :all
+                           :border-width    :xxs})
          (param select-props)))

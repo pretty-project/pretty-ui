@@ -1,47 +1,4 @@
 
-
-/***** Color-selector *****/
-/*** Color-selector options ***/
-
-.c-color-selector--body {
-  display: flex;
-  grid-column-gap: 12px;
-  padding: 12px;
-}
-
-/*** Color-selector options ***/
-
-/*** Color-selector option ***/
-
-.c-color-selector--option[data-collected="true"]::after {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  border-radius: 12px;
-  color: var( --color-default );
-  content: 'check';
-  display: flex;
-  font-size: var( --icon-size-xs );
-  font-weight: 600;
-  height: 20px;
-  justify-content: center;
-  left: 14px;
-  line-height: 20px;
-  position: absolute;
-  top: 14px;
-  width: 20px;
-}
-
-.c-color-selector--option--color {
-  border-radius: var( --border-radius-m );
-  height: 48px;
-  width: 48px;
-}
-
-/*** Color-selector option ***/
-/***** Color-selector *****/
-
-
-
 /***** Ghost view *****/
 /*** Body ***/
 
@@ -51,6 +8,24 @@
 
 /*** Body ***/
 /***** Ghost view *****/
+
+
+
+/***** Illustration *****/
+/*** Body ***/
+
+.c-illustration--body {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.c-illustration[data-position-absolute="tl"] .c-illustration--body { background-position: top    left; }
+.c-illustration[data-position-absolute="tr"] .c-illustration--body { background-position: top    right; }
+.c-illustration[data-position-absolute="br"] .c-illustration--body { background-position: bottom right; }
+.c-illustration[data-position-absolute="bl"] .c-illustration--body { background-position: bottom left; }
+
+/*** Body ***/
+/***** Illustration *****/
 
 
 
@@ -181,19 +156,6 @@
   display: grid;
 }
 
-.c-item-list-row[data-border="both"] {
-  border-bottom: 1px solid var( --border-color-highlight );
-  border-top:    1px solid var( --border-color-highlight );
-}
-
-.c-item-list-row[data-border="bottom"] {
-  border-bottom: 1px solid var( --border-color-highlight );
-}
-
-.c-item-list-row[data-border="top"] {
-  border-top: 1px solid var( --border-color-highlight );
-}
-
 .c-item-list-row > div:not(:last-child):after {
   background-color: var( --border-color-highlight );
   content: '';
@@ -202,17 +164,6 @@
   width: 1px;
   top: 18px;
   height: calc( 100% - 36px );
-}
-
-.c-item-list-row[data-marked="true"]::after {
-  background-color: var( --border-color-primary );
-  border-radius: 4px;
-  content: '';
-  height: 10px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 10px;
 }
 
 /***** Item list row *****/

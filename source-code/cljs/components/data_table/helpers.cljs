@@ -13,8 +13,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as table-props}]
-  (merge (pretty-css/indent-attributes table-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes table-props)))
 
 (defn table-attributes
   ; @param (keyword) table-id
@@ -22,5 +22,5 @@
   ;
   ; @return (map)
   [_ table-props]
-  (merge (pretty-css/default-attributes table-props)
+  (-> {} (pretty-css/default-attributes table-props)
          (pretty-css/outdent-attributes table-props)))

@@ -34,8 +34,13 @@
 (defn layout
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:border-radius (keyword)(opt)
+  ; {:border-color (keyword)(opt)
+  ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  ;  :border-radius (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxs
   ;  :content (metamorphic-content)
   ;  :fill-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning

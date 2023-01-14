@@ -46,7 +46,7 @@
   ;   {:width (string)}}
   [_ diagram-props {:keys [color] :as section-props}]
   (let [value-ratio (section-props->value-ratio diagram-props section-props)]
-       {:data-background-color color
+       {:data-fill-color color
         :style {:width (css/percent value-ratio)}}))
 
 ;; ----------------------------------------------------------------------------
@@ -62,8 +62,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as diagram-props}]
-  (merge (pretty-css/indent-attributes diagram-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes diagram-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,5 +76,5 @@
   ;
   ; @return (map)
   [_ diagram-props]
-  (merge (pretty-css/default-attributes diagram-props)
+  (-> {} (pretty-css/default-attributes diagram-props)
          (pretty-css/outdent-attributes diagram-props)))

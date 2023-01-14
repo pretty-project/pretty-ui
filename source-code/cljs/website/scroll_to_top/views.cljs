@@ -19,9 +19,9 @@
                                                        :style {:left "0" :position "absolute" :bottom "15px"}}]
        [:div {:id :mt-scroll-to-top :style style :on-click #(r/dispatch {:fx [:x.environment/reset-scroll-y!]})}
              [elements/icon ::scroll-to-top
-                            {:color (or color "white")
-                             :icon :arrow_upward
-                             :size :xxl}]]])
+                            {:icon       :arrow_upward
+                             :icon-color (or color "white")
+                             :icon-size  :xxl}]]])
 
 (defn component
   ; @param (keyword)(opt) component-id

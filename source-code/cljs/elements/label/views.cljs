@@ -2,6 +2,7 @@
 (ns elements.label.views
     (:require [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
+              [pretty-css.api            :as pretty-css]
               [random.api                :as random]
               [x.components.api          :as x.components]))
 
@@ -46,10 +47,9 @@
   ;
   ; @param (keyword) label-id
   ; @param (map) label-props
-  ; {:icon (keyword)
-  ;  :icon-family (keyword)}
-  [label-id {:keys [icon] :as label-props}]
-  [:i.e-label--icon (label.helpers/label-icon-attributes label-id label-props)
+  ; {:icon (keyword)}
+  [_ {:keys [icon] :as label-props}]
+  [:i.e-label--icon (pretty-css/icon-attributes {} label-props)
                     icon])
 
 (defn- label-placeholder
@@ -93,16 +93,16 @@
   ;
   ; XXX#7030 Why the {:copyable? true} setting needs the .e-label--copyable element?
   ; 1. By using the 'label' element with {:copyable? true} setting, ...
-  ;    ... the content will be a clickable sensor and copies the content to clipboard
-  ;        when clicked.
-  ;    ... when the user moves the pointer over the sensor a bubble shown up with the
-  ;        label 'Copy' (as a pseudo-element).
-  ;    ... The bubble is implemented by the {:data-copyable true} CSS preset,
+  ;    ... the content will be a clickable sensor and by clicking on it, it copies
+  ;        the content to the clipboard.
+  ;    ... when the user moves the pointer over the sensor, a bubble shown up with
+  ;        the label 'Copy' (as a pseudo-element).
+  ;    ... The bubble is implemented by the {:data-bubble-content ...} CSS preset,
   ;        which has to be applied on the sensor element.
-  ; 2. The .e-label--content element has {overflow: hidden} setting, therefore it's
-  ;    not capable to be applied with the {:data-copyable true} preset.
+  ; 2. The .e-label--content element has the {overflow: hidden} setting, therefore it's
+  ;    not capable to be applied with the {:data-bubble-content ...} preset.
   ; 3. The .e-label--body element always fits with its environment in width, therefore
-  ;    it's too wide to be the sensor element.
+  ;    it's often too wide to be the sensor element.
   (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
                                         [:label.e-label--content (label.helpers/content-attributes label-id label-props)
                                                                  content]]
@@ -121,7 +121,7 @@
   [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
                       (if (empty? content)
                           [label-placeholder label-id label-props]
-                          [:<> (if icon    [label-icon label-id label-props])
+                          [:<> (if icon [label-icon label-id label-props])
                                [label-content          label-id label-props]
                                [label-info-text-button label-id label-props]])])
 
@@ -186,8 +186,6 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
-  ;   Default: :tr
-  ;   W/ {:marker-color ...}
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)

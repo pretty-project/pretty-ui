@@ -19,12 +19,14 @@
   ; {:badge-color (keyword)
   ;  :badge-content (string)
   ;  :badge-position (keyword)
+  ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :hover-color (keyword)
   ;  :marker-color (keyword)}
   [{:keys [badge-content border-color disabled? marker-color] :as card-props}]
   (merge (if badge-content {:badge-color :primary :badge-position :tr})
-         (if border-color  {:border-width :xxs})
+         (if border-color  {:border-position :all
+                            :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
          (param card-props)
          (if badge-content {:badge-content (x.components/content badge-content)})

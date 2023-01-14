@@ -71,10 +71,10 @@
   ;  :data-scroll-axis (boolean)
   ;  :style (map)}
   [_ {:keys [style] :as breadcrumbs-props}]
-  (merge (pretty-css/indent-attributes breadcrumbs-props)
-         {:data-column-gap  :xs
-          :data-scroll-axis :x
-          :style            style}))
+  (-> {:data-column-gap  :xs
+       :data-scroll-axis :x
+       :style            style}
+      (pretty-css/indent-attributes breadcrumbs-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -87,5 +87,5 @@
   ;
   ; @return (map)
   [_ breadcrumbs-props]
-  (merge (pretty-css/default-attributes breadcrumbs-props)
+  (-> {} (pretty-css/default-attributes breadcrumbs-props)
          (pretty-css/outdent-attributes breadcrumbs-props)))

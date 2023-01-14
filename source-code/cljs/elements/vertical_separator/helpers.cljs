@@ -17,6 +17,6 @@
   ; {:data-block-width (keyword)
   ;  :style (map)}
   [_ {:keys [style width] :as separator-props}]
-  (merge (pretty-css/default-attributes separator-props)
+  (-> {} (pretty-css/default-attributes separator-props)
          {:data-block-width width
           :style            style}))

@@ -25,13 +25,13 @@
   ;  :data-wrap-items (boolean)
   ;  :style (map)}
   [_ {:keys [gap horizontal-align stretch-orientation style vertical-align wrap-items?] :as row-props}]
-  (merge (pretty-css/indent-attributes row-props)
-         {:data-column-gap           gap
-          :data-horizontal-row-align horizontal-align
-          :data-stretch-orientation  stretch-orientation
-          :data-vertical-row-align   vertical-align
-          :data-wrap-items           wrap-items?
-          :style                     style}))
+  (-> {:data-column-gap           gap
+       :data-horizontal-row-align horizontal-align
+       :data-stretch-orientation  stretch-orientation
+       :data-vertical-row-align   vertical-align
+       :data-wrap-items           wrap-items?
+       :style                     style}
+      (pretty-css/indent-attributes row-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -44,5 +44,5 @@
   ;
   ; @return (map)
   [_ row-props]
-  (merge (pretty-css/default-attributes row-props)
+  (-> {} (pretty-css/default-attributes row-props)
          (pretty-css/outdent-attributes row-props)))

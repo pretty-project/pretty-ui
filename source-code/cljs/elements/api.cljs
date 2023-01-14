@@ -69,6 +69,7 @@
               [elements.multiline-field.views      :as multiline-field.views]
               [elements.multi-combo-box.views      :as multi-combo-box.views]
               [elements.multi-field.views          :as multi-field.views]
+              [elements.notification-bubble.views  :as notification-bubble.views]
               [elements.password-field.views       :as password-field.views]
               [elements.plain-field.views          :as plain-field.views]
               [elements.point-diagram.views        :as point-diagram.views]
@@ -119,6 +120,7 @@
 (def multi-combo-box      multi-combo-box.views/element)
 (def multi-field          multi-field.views/element)
 (def multiline-field      multiline-field.views/element)
+(def notification-bubble  notification-bubble.views/element)
 (def password-field       password-field.views/element)
 (def plain-field          plain-field.views/element)
 (def point-diagram        point-diagram.views/element)

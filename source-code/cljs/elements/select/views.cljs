@@ -127,7 +127,8 @@
   [layouts/popup-a :elements.select/options
                    {:body      [select-options-body   select-id select-props]
                     :header    [select-options-header select-id select-props]
-                    :min-width :xxs}])
+                    :border-radius :m
+                    :min-width     :xxs}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -152,9 +153,8 @@
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  (reagent/lifecycles {:component-did-mount    (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount    select-id select-props]))
-                       :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-button-will-unmount select-id select-props]))
-                       :reagent-render         (fn [_ select-props] [select-button select-id select-props])}))
+  (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.select/select-button-did-mount select-id select-props]))
+                       :reagent-render      (fn [_ select-props] [select-button select-id select-props])}))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -207,7 +207,6 @@
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  ;   Default: :xxs
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;   Default: false

@@ -171,8 +171,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as group-props}]
-  (merge (pretty-css/indent-attributes group-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes group-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -188,5 +188,5 @@
   ; The fields are separatelly reacts to the disabled state, therefore no need
   ; to the group reacts to it.
   (let [group-props (dissoc group-props :disabled?)]
-       (merge (pretty-css/default-attributes group-props)
+       (-> {} (pretty-css/default-attributes group-props)
               (pretty-css/outdent-attributes group-props))))

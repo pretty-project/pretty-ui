@@ -127,8 +127,8 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as slider-props}]
-  (merge (pretty-css/indent-attributes slider-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes slider-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -141,5 +141,5 @@
   ;
   ; @return (map)
   [_ slider-props]
-  (merge (pretty-css/default-attributes slider-props)
+  (-> {} (pretty-css/default-attributes slider-props)
          (pretty-css/outdent-attributes slider-props)))

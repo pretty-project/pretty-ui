@@ -21,11 +21,9 @@
   ; {:data-border-radius (keyword)
   ;  :data-border-width (keyword)
   ;  :data-icon-family (keyword)}
-  [_ {:keys [border-color border-radius border-width]} _]
-  (-> {:data-border-radius border-radius
-       :data-border-width  border-width
-       :data-icon-family   :material-icons-filled}
-      (pretty-css/apply-color :border-color :data-border-color border-color)))
+  [_ checkbox-props _]
+  (-> {} (pretty-css/border-attributes checkbox-props)
+         (pretty-css/icon-attributes   checkbox-props)))
 
 (defn checkbox-option-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -45,9 +43,9 @@
   (let [option-checked? @(r/subscribe [:elements.checkbox/option-checked? checkbox-id checkbox-props option])]
        (merge {:data-checked option-checked?
                :data-click-effect :targeted}
-              (if disabled? {:disabled     true}
-                            {:on-click     #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
-                             :on-mouse-up  #(x.environment/blur-element! checkbox-id)}))))
+              (if disabled? {:disabled    true}
+                            {:on-click    #(r/dispatch [:elements.checkbox/toggle-option! checkbox-id checkbox-props option])
+                             :on-mouse-up #(x.environment/blur-element! checkbox-id)}))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,8 +60,11 @@
   ; @return (map)
   ; {:style (map)}
   [_ {:keys [style] :as checkbox-props}]
-  (merge (pretty-css/indent-attributes checkbox-props)
-         {:style style}))
+  (-> {:style style}
+      (pretty-css/indent-attributes checkbox-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn checkbox-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -73,5 +74,5 @@
   ;
   ; @return (map)
   [_ checkbox-props]
-  (merge (pretty-css/default-attributes checkbox-props)
+  (-> {} (pretty-css/default-attributes checkbox-props)
          (pretty-css/outdent-attributes checkbox-props)))
