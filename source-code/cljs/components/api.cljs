@@ -4,6 +4,7 @@
               [components.context-menu.effects]
               [components.action-bar.views               :as action-bar.views]
               [components.color-picker.views             :as color-picker.views]
+              [components.compact-list-header.views      :as compact-list-header.views]
               [components.copyright-label.views          :as copyright-label.views]
               [components.data-element.views             :as data-element.views]
               [components.data-table.views               :as data-table.views]
@@ -11,6 +12,7 @@
               [components.error-label.views              :as error-label.views]
               [components.ghost-view.views               :as ghost-view.views]
               [components.illustration.views             :as illustration.views]
+              [components.input-block.views              :as input-block.views]
               [components.input-table.views              :as input-table.views]
               [components.item-list-header.views         :as item-list-header.views]
               [components.item-list-row.views            :as item-list-row.views]
@@ -46,6 +48,7 @@
 ; components.*.views
 (def action-bar               action-bar.views/component)
 (def color-picker             color-picker.views/component)
+(def compact-list-header      compact-list-header.views/component)
 (def copyright-label          copyright-label.views/component)
 (def data-element             data-element.views/component)
 (def data-table               data-table.views/component)
@@ -53,6 +56,7 @@
 (def error-label              error-label.views/component)
 (def ghost-view               ghost-view.views/component)
 (def illustration             illustration.views/component)
+(def input-block              input-block.views/component)
 (def input-table              input-table.views/component)
 (def item-list-header         item-list-header.views/component)
 (def item-list-row            item-list-row.views/component)

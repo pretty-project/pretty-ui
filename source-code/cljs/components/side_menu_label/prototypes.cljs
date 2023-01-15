@@ -12,14 +12,12 @@
   ; {:color (keyword)
   ;  :font-size (keyword)
   ;  :horizontal-align (keyword)
-  ;  :icon (keyword)
-  ;  :icon-family (keyword)
-  ;  :indent (map)}
+  ;  :indent (map)
+  ;  :style (map)}
   [label-props]
-  (merge {:icon-family :material-icons-filled
-          :style {:max-width "var(--element-size-m)"}}
-         (param label-props)
-         {:color            :muted
+  (merge {:color            :muted
           :font-size        :xs
           :horizontal-align :left
-          :indent           {:horizontal :xs :vertical :s}}))
+          :indent           {:horizontal :xs :vertical :s}
+          :style {:max-width "var(--element-size-m)"}}
+         (param label-props)))

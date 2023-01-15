@@ -16,22 +16,18 @@
   [:div.c-list-item-button [:div.c-list-item-button--body [elements/button button-id button-props]]])
 
 (defn component
+  ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
+  ; The list-menu-button component is based on the button element.
+  ; For more information check out the documentation of the button element.
+  ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:fill-color (keyword)(opt)
   ;   Default: :highlight
+  ;  :font-size (keyword)(opt)
+  ;   Default: :xs
   ;  :hover-color (keyword)(opt)
-  ;   Default: :highlight
-  ;  :icon (keyword)(opt)
-  ;  :icon-family (keyword)(opt)
-  ;   Default: :material-icons-filled
-  ;   W/ {:icon ...}
-  ;  :icon-position (keyword)(opt)
-  ;   :left, :right
-  ;   Default: :left
-  ;   W/ {:icon ...}
-  ;  :label (metamorphic-content)
-  ;  :on-click (metamorphic-event)}
+  ;   Default: :highlight}
   ;
   ; @usage
   ; [list-item-button {...}]

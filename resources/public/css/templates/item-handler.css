@@ -22,6 +22,8 @@
 }
 
 #t-item-handler--label-bar {
+  background-color: var( --fill-color-default );
+  -border-bottom: 1px solid var( --border-color-highlight );
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -30,25 +32,12 @@
 }
 
 #t-item-handler--control-bar {
-  align-items: center;
   background-color: var( --fill-color-default );
   border-bottom: 1px solid var( --border-color-highlight );
-  border-top:    1px solid var( --border-color-highlight );
   display: flex;
- -justify-content: flex-end;
-  margin-bottom: 12px;
+  margin-bottom: var(--block-size-5xl);
   position: sticky;
-
-  width: 480px;
-  border-right: 1px solid var( --border-color-highlight );
-  -border-radius: 0 18px 18px 0;
-
-  /* By using 47px top value instead of 48px, the control bar's top border slips
-   * under the application header, otherwise the control bar's top border and
-   * the application header's bottom border adds up to a 2px thick border instead
-   * of 1px. */
- -top: 48px;
-  top: 47px;
+  top: 48px;
 }
 
 /*** Header ***/

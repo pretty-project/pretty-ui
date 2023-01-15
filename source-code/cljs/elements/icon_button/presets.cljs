@@ -21,8 +21,7 @@
       :added-to-favorites {:color       :secondary
                            :icon        :favorite}
       :apps               {:icon        :apps}
-      :archive            {:icon        :inventory_2
-                           :icon-family :material-icons-outlined}
+      :archive            {:icon        :inventory_2}
       :archived           {:icon        :inventory_2}
       :back               {:icon        :arrow_back}
       :cancel             {:icon        :close}
@@ -35,8 +34,7 @@
       :edit               {:color       :primary
                            :icon        :edit}
       :filters-visible    {:icon        :filter_alt}
-      :filters-nonvisible {:icon        :filter_alt
-                           :icon-family :material-icons-outlined}
+      :filters-nonvisible {:icon        :filter_alt}
       :forward            {:icon        :arrow_forward}
       :fullscreen         {:icon        :fullscreen}
       :home               {:icon        :home}

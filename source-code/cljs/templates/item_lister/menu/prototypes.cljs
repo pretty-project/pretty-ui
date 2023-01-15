@@ -13,5 +13,5 @@
   ; @return (map)
   ; {:group-icon-family (keyword)}
   [_ {:keys [group-icon] :as menu-props}]
-  (merge (if group-icon {:group-icon-family :material-icons-filled})
+  (merge (if group-icon {:group-icon-family :material-symbols-outlined})
          (param menu-props)))

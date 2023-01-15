@@ -152,8 +152,8 @@
   ;     :href (string)(opt)
   ;     :icon (keyword)(opt)
   ;     :icon-family (keyword)(opt)
-  ;      :material-icons-filled, :material-icons-outlined
-  ;      Default: :material-icons-filled
+  ;      :material-symbols-filled, :material-symbols-outlined
+  ;      Default: :material-symbols-outlined
   ;     :label (metamorphic-content)(opt)
   ;     :marker-color (keyword)(opt)
   ;      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning

@@ -91,7 +91,7 @@
   :left, :right
   Default: :left
  :style (map)(opt)
- :viewport-min (px)(opt)
+ :threshold (px)(opt)
   Default: 720}
 ```
 

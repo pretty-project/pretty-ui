@@ -16,7 +16,7 @@
   ;
   ; @return (map)
   [_ checkbox-props _]
-  (-> {:data-icon-family :material-icons-filled}
+  (-> {:data-icon-family :material-symbols-outlined}
       (pretty-css/border-attributes checkbox-props)))
 
 (defn checkbox-option-attributes

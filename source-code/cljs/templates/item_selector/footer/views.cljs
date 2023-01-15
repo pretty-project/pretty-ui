@@ -14,9 +14,8 @@
   [elements/toggle ::all-item-selected-button
                    {:disabled? false
                     :outdent   {:horizontal :xxs :right :xs}
-                    :content   [elements/icon {:icon        :check_box
-                                               :icon-family :material-icons-outlined
-                                               :icon-size   :s}]}])
+                    :content   [elements/icon {:icon      :check_box
+                                               :icon-size :s}]}])
 
 (defn- no-item-selected-button
   ; @param (keyword) selector-id
@@ -26,9 +25,8 @@
   [elements/toggle ::no-item-selected-button
                    {:disabled? false
                     :outdent   {:horizontal :xxs :right :xs}
-                    :content   [elements/icon {:icon        :check_box_outline_blank
-                                               :icon-family :material-icons-outlined
-                                               :icon-size   :s}]}])
+                    :content   [elements/icon {:icon      :check_box_outline_blank
+                                               :icon-size :s}]}])
 
 (defn- some-item-selected-button
   ; @param (keyword) selector-id
@@ -38,9 +36,8 @@
   [elements/toggle ::some-item-selected-button
                    {:disabled? false
                     :outdent   {:horizontal :xxs :right :xs}
-                    :content   [elements/icon {:icon        :indeterminate_check_box
-                                               :icon-family :material-icons-outlined
-                                               :icon-size   :s}]}])
+                    :content   [elements/icon {:icon      :indeterminate_check_box
+                                               :icon-size :s}]}])
 
 (defn- handle-selection-button
   ; @param (keyword) selector-id

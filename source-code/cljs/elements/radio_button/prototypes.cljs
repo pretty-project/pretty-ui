@@ -17,6 +17,7 @@
   ;  :border-position (keyword)
   ;  :border-radius (keyword)
   ;  :border-width (keyword)
+  ;  :font-size (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
@@ -27,6 +28,7 @@
           :border-position     :all
           :border-radius       :m
           :border-width        :xs
+          :font-size           :s
           :options-orientation :vertical
           :options-path        (input.helpers/default-options-path button-id)
           :value-path          (input.helpers/default-value-path   button-id)

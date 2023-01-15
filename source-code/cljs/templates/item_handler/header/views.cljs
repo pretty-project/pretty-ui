@@ -66,27 +66,13 @@
                          :color         "#de2050"
                          :font-size     :xs
                          :hover-color   :highlight
+                         :icon          :delete_forever
+                         :icon-size     :m
                          :indent        {:horizontal :xxs :vertical :s}
-                         :label         :delete!
+                         :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
+                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :delete!)
                          :on-click      delete-event
                          :outdent       {:all :xxs}}]))
-
-(defn- delete-item-icon-button
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id bar-props]
-  (let [on-failure   [:item-handler/delete-item-failed handler-id bar-props]
-        on-success   [:item-handler/item-deleted       handler-id bar-props]
-        delete-event [:item-handler/delete-item!       handler-id {:on-failure on-failure :on-success on-success
-                                                                   :display-progress? true :progress-max 80
-                                                                   :progress-behaviour :keep-faked}]]
-       [elements/icon-button ::delete-item-icon-button
-                             {:color       "#de2050"
-                              :hover-color :highlight
-                              :icon        :delete_outline
-                              :on-click    delete-event
-                              :height      :3xl
-                              :width       :3xl}]))
 
 (defn- duplicate-item-button
   ; @param (keyword) handler-id
@@ -101,27 +87,12 @@
                         {:border-radius :xs
                          :font-size     :xs
                          :hover-color   :highlight
+                         :icon          :content_copy
+                         :icon-size     :m
                          :indent        {:horizontal :xxs :vertical :s}
-                         :label         :duplicate!
+                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :duplicate!)
                          :on-click      duplicate-event
                          :outdent       {:all :xxs}}]))
-
-(defn- duplicate-item-icon-button
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id bar-props]
-  (let [on-failure      [:item-handler/duplicate-item-failed handler-id bar-props]
-        on-success      [:item-handler/item-duplicated       handler-id bar-props]
-        duplicate-event [:item-handler/duplicate-item!       handler-id {:on-failure on-failure :on-success on-success
-                                                                         :display-progress? true :progress-max 80
-                                                                         :progress-behaviour :keep-faked}]]
-       [elements/icon-button ::duplicate-item-icon-button
-                             {:hover-color :highlight
-                              :icon        :file_copy
-                              :icon-family :material-icons-outlined
-                              :on-click    duplicate-event
-                              :height      :3xl
-                              :width       :3xl}]))
 
 (defn- revert-item-button
   ; @param (keyword) handler-id
@@ -130,26 +101,15 @@
   (let [item-changed? @(r/subscribe [:item-handler/current-item-changed? handler-id])]
        [elements/button ::revert-item-button
                         {:border-radius :xs
-                         :disabled?   (not item-changed?)
-                         :font-size   :xs
-                         :hover-color :highlight
-                         :indent      {:horizontal :xxs :vertical :s}
-                         :label       :revert!
-                         :on-click    [:item-handler/revert-current-item! handler-id]
-                         :outdent     {:all :xxs}}]))
-
-(defn- revert-item-icon-button
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id _]
-  (let [item-changed? @(r/subscribe [:item-handler/current-item-changed? handler-id])]
-       [elements/icon-button ::revert-item-icon-button
-                             {:disabled?   (not item-changed?)
-                              :hover-color :highlight
-                              :icon        :settings_backup_restore
-                              :on-click    [:item-handler/revert-current-item! handler-id]
-                              :height      :3xl
-                              :width       :3xl}]))
+                         :disabled?     (not item-changed?)
+                         :font-size     :xs
+                         :hover-color   :highlight
+                         :icon          :undo
+                         :icon-size     :m
+                         :indent        {:horizontal :xxs :vertical :s}
+                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :revert!)
+                         :on-click      [:item-handler/revert-current-item! handler-id]
+                         :outdent       {:all :xxs}}]))
 
 (defn- save-item-button
   ; @param (keyword) handler-id
@@ -166,47 +126,13 @@
                          :disabled?     (not item-changed?)
                          :font-size     :xs
                          :hover-color   :highlight
+                         :icon          :cloud_upload
+                         :icon-size     :m
                          :indent        {:horizontal :xxs :vertical :s}
-                         :label         :save!
+                         :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
+                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :save!)
                          :on-click      save-event
-                         :outdent       {:all :xxs}}]))
-
-(defn- save-item-icon-button
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id _]
-  (let [item-changed? @(r/subscribe [:item-handler/current-item-changed? handler-id])
-        on-failure [:item-handler/save-item-failed handler-id {}]
-        on-success [:item-handler/item-saved       handler-id {}]
-        save-event [:item-handler/save-item!       handler-id {:on-failure on-failure :on-success on-success
-                                                               :display-progress? true}]]
-       [elements/icon-button ::save-item-icon-button
-                             {:color       "#0080fa"
-                              :disabled?   (not item-changed?)
-                              :hover-color :highlight
-                              :icon        :save
-                              :icon-family :material-icons-outlined
-                              :on-click    save-event
-                              :height      :3xl
-                              :width       :3xl}]))
-
-(defn- compact-control-bar
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id bar-props]
-  [:div#t-item-handler--control-bar [duplicate-item-icon-button handler-id bar-props]
-                                    [delete-item-icon-button    handler-id bar-props]
-                                    [revert-item-icon-button    handler-id bar-props]
-                                    [save-item-icon-button      handler-id bar-props]])
-
-(defn- wide-control-bar
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  [handler-id bar-props]
-  [:div#t-item-handler--control-bar [duplicate-item-button handler-id bar-props]
-                                    [delete-item-button    handler-id bar-props]
-                                    [revert-item-button    handler-id bar-props]
-                                    [save-item-button      handler-id bar-props]])
+                         :outdent       {:left :s :all :xxs}}]))
 
 (defn control-bar
   ; @param (keyword) handler-id
@@ -217,9 +143,10 @@
   ; @usage
   ; [control-bar handler-id {...}]
   [handler-id bar-props]
-  (if @(r/subscribe [:x.environment/viewport-min? 480])
-       [wide-control-bar    handler-id bar-props]
-       [compact-control-bar handler-id bar-props]))
+  [:div#t-item-handler--control-bar [save-item-button      handler-id bar-props]
+                                    [revert-item-button    handler-id bar-props]
+                                    [duplicate-item-button handler-id bar-props]
+                                    [delete-item-button    handler-id bar-props]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

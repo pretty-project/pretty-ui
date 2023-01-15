@@ -25,7 +25,7 @@
           :height          :s
           :width           :s
           :icon            :image
-          :icon-family     :material-icons-filled}
+          :icon-family     :material-symbols-outlined}
          (if border-color {:border-color    :default
                            :border-position :all
                            :border-width    :xxs})

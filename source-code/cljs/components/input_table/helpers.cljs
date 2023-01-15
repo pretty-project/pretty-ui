@@ -6,28 +6,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn row-block-label-attributes
-  ; @param (keyword) table-id
-  ; @param (map) table-props
-  ; @param (vector) row-block
-  ; [(metamorphic-content) input-label
-  ;  (keyword) input-id
-  ;  (metamorphic-content) input]
-  ;
-  ; @return (map)
-  ; {}
-  [_ _ [_ input-id _]]
-  {:data-color       :muted
-   :data-font-size   :xs
-   :data-font-weight :medium
-   :data-indent-left :xs
-   :data-line-height :text-block
-   :data-selectable  false
-   :for (hiccup/value input-id "input")})
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
 (defn table-label-attributes
   ; @param (keyword) table-id
   ; @param (map) table-props

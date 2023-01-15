@@ -11,10 +11,9 @@
   ; @return (map)
   ; {}
   [button-props]
-  (merge {:icon-family :material-icons-filled}
-         (param button-props)
-         {:font-size        :xs
-          :hover-color      :highlight
+  (merge {:font-size        :xs
           :horizontal-align :left
-          :icon-size        :s
-          :indent           {:horizontal :xs :left :s :right :xl}}))
+          :hover-color      :highlight
+          :icon-size        :m
+          :indent           {:horizontal :xs :left :s :right :xl}}
+         (param button-props)))

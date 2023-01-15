@@ -20,5 +20,5 @@
   (merge {:color               :default
           :fill-color          :primary
           :primary-button-icon :close}
-         (if icon {:icon-family :material-icons-filled})
+         (if icon {:icon-family :material-symbols-outlined})
          (param chip-props)))

@@ -15,8 +15,8 @@
   ;  :indent (map)
   ;  :line-height (keyword)}
   [description-props]
-  (merge {:horizontal-align :center
+  (merge {:color            :muted
+          :font-size        :xxs
+          :horizontal-align :center
           :indent           {:horizontal :xs :vertical :xs}}
-         (param description-props)
-         {:color     :muted
-          :font-size :xxs}))
+         (param description-props)))

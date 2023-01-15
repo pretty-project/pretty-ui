@@ -27,8 +27,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :default
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :icon-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :m

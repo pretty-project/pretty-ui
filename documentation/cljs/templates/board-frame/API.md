@@ -1,7 +1,7 @@
 
-# templates.module-frame.api ClojureScript namespace
+# templates.board-frame.api ClojureScript namespace
 
-##### [README](../../../../README.md) > [DOCUMENTATION](../../../COVER.md) > templates.module-frame.api
+##### [README](../../../../README.md) > [DOCUMENTATION](../../../COVER.md) > templates.board-frame.api
 
 ### Index
 
@@ -18,17 +18,17 @@
 ### get-layout
 
 ```
-@param (keyword) module-id
+@param (keyword) board-id
 ```
 
 ```
 @usage
-(get-layout :my-module)
+(get-layout :my-board)
 ```
 
 ```
 @example
-(get-layout :my-module)
+(get-layout :my-board)
 =>
 :my-layout
 ```
@@ -42,13 +42,13 @@
 ### layout-selected?
 
 ```
-@param (keyword) module-id
+@param (keyword) board-id
 @param (keyword) layout
 ```
 
 ```
 @usage
-(layout-selected? :my-module :my-layout)
+(layout-selected? :my-board :my-layout)
 ```
 
 ```
@@ -60,13 +60,13 @@
 ### set-layout!
 
 ```
-@param (keyword) module-id
+@param (keyword) board-id
 @param (keyword) layout
 ```
 
 ```
 @usage
-(set-layout! :my-module :my-layout)
+(set-layout! :my-board :my-layout)
 ```
 
 ---
@@ -74,8 +74,13 @@
 ### side-menu
 
 ```
-@param (keyword) module-id
+@param (keyword) board-id
 @param (map) menu-props
+```
+
+```
+@usage
+[side-menu :my-board {...}]
 ```
 
 ---
@@ -83,7 +88,7 @@
 ### wrapper
 
 ```
-@param (keyword) module-id
+@param (keyword) board-id
 @param (map) wrapper-props
 {:content (metamorphic content)
  :menu (metamorphic content)(opt)}

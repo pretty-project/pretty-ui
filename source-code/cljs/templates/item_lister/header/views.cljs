@@ -51,41 +51,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- hide-bar-icon-button
+(defn compact-list-header
   ; @param (keyword) lister-id
-  ; @param (map) bar-props
-  [lister-id bar-props]
-  [elements/icon-button ::hide-bar-icon-button
-                        {:border-radius :s
-                         :hover-color   :highlight
-                         :icon          :menu_open
-                         ;:on-click      [:item-lister/choose-order-by! lister-id bar-props]}])
-                         :tooltip :hide-sidebar!}])
-
-(defn- order-select
-  ; @param (keyword) lister-id
-  ; @param (map) bar-props
-  [lister-id bar-props]
-  [elements/icon-button ::order-select
-                        {:border-radius :s
-                         :hover-color   :highlight
-                         :icon          :sort
-                         :on-click      [:item-lister/choose-order-by! lister-id bar-props]
-                         :tooltip :item-order}])
-
-(defn compact-bar
-  ; @param (keyword) lister-id
-  ; @param (map) bar-props
-  ; {:on-search (metamorphic-event)
-  ;  :order-by-options (keywords or namespaced keywords in vector)
-  ;  :search-placeholder (metamorphic-content)}
+  ; @param (map) header-props
   ;
   ; @usage
-  ; [compact-bar :my-lister {...}]
-  [lister-id bar-props]
-  [:div#t-item-lister--compact-bar [order-select         lister-id bar-props]
-                                   [search-field         lister-id bar-props]
-                                   [hide-bar-icon-button lister-id bar-props]])
+  ; [compact-list-header :my-lister {...}]
+  [lister-id header-props]
+  [components/compact-list-header ::compact-list-header
+                                  (assoc header-props :border-color    :highlight
+                                                      :border-position :bottom
+                                                      :fill-color      :default
+                                                      :indent          {:horizontal :xxs})])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

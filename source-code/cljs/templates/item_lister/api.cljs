@@ -1,6 +1,7 @@
 
 (ns templates.item-lister.api
     (:require [engines.item-lister.api]
+              [templates.item-lister.core.effects]
               [templates.item-lister.core.subs]
               [templates.item-lister.update.effects]
               [templates.item-lister.body.views    :as body.views]
@@ -19,7 +20,8 @@
 (def footer footer.views/footer)
 
 ; templates.item-lister.header.views
-(def compact-bar header.views/compact-bar)
+(defn compact-bar [] [:div])
+(def compact-list-header header.views/compact-list-header)
 (def label-bar   header.views/label-bar)
 (def list-header header.views/list-header)
 (def search-bar  header.views/search-bar)

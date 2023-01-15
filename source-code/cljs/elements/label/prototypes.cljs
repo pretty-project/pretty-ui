@@ -46,7 +46,7 @@
                :selectable?      false
                :text-overflow   :ellipsis}
               (if marker-color {:marker-position :tr})
-              (if icon         {:icon-family :material-icons-filled
+              (if icon         {:icon-family :material-symbols-outlined
                                 :icon-color color :icon-size (or font-size :s)})
               (param label-props)
               {:content content}

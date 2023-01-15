@@ -17,6 +17,7 @@
   ;  :border-position (keyword)
   ;  :border-radius (keyword)
   ;  :border-width (keyword)
+  ;  :font-size (keyword)
   ;  :option-label-f (function)
   ;  :option-value-f (function)
   ;  :options-orientation (keyword)
@@ -27,6 +28,7 @@
           :border-position     :all
           :border-radius       :m
           :border-width        :xs
+          :font-size           :s
           :option-label-f      return
           :option-value-f      return
           :options-orientation :vertical

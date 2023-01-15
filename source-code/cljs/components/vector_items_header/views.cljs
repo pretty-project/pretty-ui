@@ -16,10 +16,10 @@
   ;  :value-path (vector)}
   [_ {:keys [initial-item value-path]}]
   [elements/icon-button {:border-radius :xl
-                         :hover-color   :primary
+                         :hover-color   "#e0d7ff"
                          :icon          :add_circle
-                         :icon-family   :material-symbols-outlined
-                         :on-click      [:x.db/apply-item! value-path vector/conj-item initial-item]}])
+                         :on-click      [:x.db/apply-item! value-path vector/conj-item initial-item]
+                         :tooltip       :add!}])
 
 (defn- vector-items-header-body
   ; @param (keyword) header-id

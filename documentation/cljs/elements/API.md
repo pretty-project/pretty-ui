@@ -262,8 +262,8 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :icon-position (keyword)(opt)
   :left, :right
   Default: :left
@@ -398,6 +398,9 @@
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
+ :font-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -458,8 +461,8 @@
   Default: :primary
  :icon (keyword)(opt)
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-filled
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -840,8 +843,8 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -983,8 +986,8 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :icon-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :m
@@ -1042,8 +1045,8 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-filled
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -1072,6 +1075,8 @@
   W/ {:progress ...}
  :style (map)(opt)
  :tooltip (metamorphic-content)(opt)
+ :tooltip-position (keyword)(opt)
+  :left, :right
  :width (keyword)(opt)
   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :3xl}
@@ -1164,8 +1169,8 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
  :icon-family (keyword)(opt)
-  :material-icons-filled, :material-icons-outlined
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :icon-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -1305,8 +1310,8 @@
     :href (string)(opt)
     :icon (keyword)(opt)
     :icon-family (keyword)(opt)
-     :material-icons-filled, :material-icons-outlined
-     Default: :material-icons-filled
+     :material-symbols-filled, :material-symbols-outlined
+     Default: :material-symbols-outlined
     :label (metamorphic-content)(opt)
     :marker-color (keyword)(opt)
      :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -1615,6 +1620,9 @@
  :default-value (*)(opt)
  :deselectable? (boolean)(opt)
  :disabled? (boolean)(opt)
+ :font-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -1897,6 +1905,9 @@
  :class (keyword or keywords in vector)(opt)
  :default-value (boolean)(opt)
  :disabled? (boolean)(opt)
+ :font-size (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  Default: :s
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -2027,8 +2038,8 @@
     :disabled? (boolean)(opt)
     :icon (keyword)
     :icon-family (keyword)(opt)
-     :material-icons-filled, :material-icons-outlined
-     Default: :material-icons-filled
+     :material-symbols-filled, :material-symbols-outlined
+     Default: :material-symbols-outlined
     :label (string)(opt)
     :on-click (metamorphic-event)(opt)
     :tab-indexed? (boolean)(opt)
@@ -2168,7 +2179,8 @@
  :icon (keyword)(opt)
   Default: :icon
  :icon-family (keyword)(opt)
-  Default: :material-icons-filled
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl

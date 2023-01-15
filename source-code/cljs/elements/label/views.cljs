@@ -137,6 +137,9 @@
                 [label-helper                   label-id label-props]])
 
 (defn element
+  ; XXX#0721
+  ; Some other items based on the label element and their documentations are linked to here.
+  ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
   ; {:class (keyword or keywords in vector)(opt)
@@ -163,8 +166,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :icon-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s

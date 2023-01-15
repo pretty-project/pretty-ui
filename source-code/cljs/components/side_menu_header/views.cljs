@@ -18,7 +18,6 @@
        [side-menu-button.views/component ::app-home-button
                                          {:font-weight :bold
                                           :icon        :cloud
-                                          :icon-family :material-symbols-outlined
                                           :icon-color  "#0aaaa0"
                                           :label (string/to-uppercase app-title)
                                           :on-click []}]))

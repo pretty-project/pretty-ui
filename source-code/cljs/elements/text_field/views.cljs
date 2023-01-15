@@ -184,6 +184,8 @@
 
 (defn element
   ; XXX#0711
+  ; Some other items based on the text-field element and their documentations are linked to here.
+  ;
   ; @param (keyword)(opt) field-id
   ; @param (map) field-props
   ; {:autoclear? (boolean)(opt)
@@ -205,8 +207,8 @@
   ;     :disabled? (boolean)(opt)
   ;     :icon (keyword)
   ;     :icon-family (keyword)(opt)
-  ;      :material-icons-filled, :material-icons-outlined
-  ;      Default: :material-icons-filled
+  ;      :material-symbols-filled, :material-symbols-outlined
+  ;      Default: :material-symbols-outlined
   ;     :label (string)(opt)
   ;     :on-click (metamorphic-event)(opt)
   ;     :tab-indexed? (boolean)(opt)

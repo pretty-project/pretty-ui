@@ -20,7 +20,7 @@
   ;  :icon-family (keyword)
   ;  :tab-indexed? (boolean)}
   [{:keys [icon] :as adornment-props}]
-  (merge (if icon {:icon-family :material-icons-filled})
+  (merge (if icon {:icon-family :material-symbols-outlined})
          {:color :default
           :tab-indexed? true}
          (param adornment-props)))

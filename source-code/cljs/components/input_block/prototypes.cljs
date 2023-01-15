@@ -1,9 +1,11 @@
 
-(ns templates.module-frame.core.state
-    (:require [reagent.api :refer [ratom]]))
+(ns components.input-block.prototypes)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @atom (map)
-(def LAYOUT (ratom {}))
+(defn block-props-prototype
+  ; @param (map) block-props
+  ;
+  ; @return (map)
+  [_])

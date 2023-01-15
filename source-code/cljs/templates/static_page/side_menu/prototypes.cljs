@@ -1,5 +1,5 @@
 
-(ns templates.module-frame.side-menu.prototypes
+(ns templates.static-page.side-menu.prototypes
     (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
@@ -15,5 +15,5 @@
           :border-position :right
           :indent          {:left :xs}
           :min-width       :m
-          :threshold       1280}
+          :threshold       640}
          (param menu-props)))

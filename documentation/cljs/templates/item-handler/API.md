@@ -111,7 +111,7 @@
 {:content (metamorphic-content)(opt)
  :group-icon (keyword)
  :group-icon-family (keyword)(opt)
-  Default: :material-icons-filled
+  Default: :material-symbols-outlined
  :group-label (metamorphic-content)}
 ```
 

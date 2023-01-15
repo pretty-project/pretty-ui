@@ -14,9 +14,9 @@
   ; @return (map)
   ; {:border-width (keyword)
   ;  :position (keyword)
-  ;  :viewport-min (px)}
+  ;  :threshold (px)}
   [{:keys [border-color] :as sidebar-props}]
-  (merge {:position     :left
-          :viewport-min 720}
+  (merge {:position  :left
+          :threshold 720}
          (if border-color {:border-width :xxs})
          (param sidebar-props)))

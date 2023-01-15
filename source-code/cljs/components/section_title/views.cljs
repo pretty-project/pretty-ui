@@ -22,17 +22,14 @@
 (defn component
   ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
   ; The section-title component is based on the label element.
-  ; Check out the documentation of the label element for more information.
+  ; For more information check out the documentation of the label element.
   ;
   ; @param (keyword)(opt) title-id
   ; @param (map) title-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :indent (map)(opt)
-  ;  :outdent (map)(opt)
-  ;  :placeholder (metamorphic-content)(opt)
-  ;  :style (map)(opt)}
+  ; {:font-size (keyword)(opt)
+  ;   Default: :5xl
+  ;  :font-weight (keyword)(opt)
+  ;   Default: :bold}
   ;
   ; @usage
   ; [section-title {...}]

@@ -12,20 +12,21 @@
 (defn component
   ; XXX#0714 (source-code/cljs/elements/button/views.cljs)
   ; The side-menu-button component is based on the button element.
-  ; Check out the documentation of the button element for more information.
+  ; For more information check out the documentation of the button element.
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :disabled? (boolean)(opt)
-  ;  :icon (keyword)
-  ;  :icon-color (string or keyword)
-  ;  :icon-family (keyword)(opt)
-  ;   Default: :material-icons-filled
-  ;  :label (metamorphic-content)
-  ;  :on-click (metamorphic-event)
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ; {:font-size (keyword)(opt)
+  ;   Default: :xs
+  ;  :horizontal-align (keyword)(opt)
+  ;   Default: :left
+  ;  :hover-color (keyword or string)(opt)
+  ;   Default: :highlight
+  ;  :icon-size (keyword)(opt)
+  ;   Default: :m
+  ;  :indent (map)(opt)
+  ;   Default: {:horizontal :xs :left :s :right :xl}
+  ;  :preset (keyword)(opt)}
   ;
   ; @usage
   ; [side-menu-button {...}]

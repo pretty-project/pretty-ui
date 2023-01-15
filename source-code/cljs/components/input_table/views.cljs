@@ -9,34 +9,12 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- input-table-content-block
-  ; @param (keyword) table-id
-  ; @param (map) table-props
-  ; @param (metamorphic-content) row-block
-  [table-id _ row-block]
-  [:label.c-input-table--content-block [x.components/content table-id row-block]])
-
-(defn- input-table-input-block
-  ; @param (keyword) table-id
-  ; @param (map) table-props
-  ; {:input-params (vector)(opt)}
-  ; @param (vector) row-block
-  ; [(metamorphic-content) label
-  ;  (keyword) input-id
-  ;  (metamorphic-content) input]
-  [table-id {:keys [input-params] :as table-props} [input-label input-id input :as row-block]]
-  [:<> [:label.c-input-table--input-label (input-table.helpers/row-block-label-attributes table-id table-props row-block)
-                                          [x.components/content input-id {:content input-label}]]
-       [:div.c-input-table--input-body    [x.components/content input-id {:content input :params input-params}]]])
-
 (defn- input-table-rows
   ; @param (keyword) table-id
   ; @param (map) table-props
   ; {:rows (vectors in vector)}
   [table-id {:keys [rows] :as table-props}]
-  (letfn [(f0 [row-blocks row-block] (conj row-blocks (if (vector? row-block)
-                                                          [input-table-input-block   table-id table-props row-block]
-                                                          [input-table-content-block table-id table-props row-block])))
+  (letfn [(f0 [row-blocks row-block] (conj row-blocks [x.components/content table-id row-block]))
           (f1 [rows [row-template & row-blocks]]
               (conj rows [:div.c-input-table--row {:style {:grid-template-columns row-template}}
                                                   (reduce f0 [:<>] row-blocks)]))]

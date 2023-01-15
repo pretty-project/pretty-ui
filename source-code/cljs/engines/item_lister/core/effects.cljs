@@ -13,11 +13,10 @@
 ;; ----------------------------------------------------------------------------
 
 (ns engines.item-lister.core.effects
-    (:require [engines.item-lister.core.events  :as core.events]
-              [engines.item-lister.core.helpers :as core.helpers]
-              [engines.item-lister.core.subs    :as core.subs]
-              [logic.api                        :refer [swap]]
-              [re-frame.api                     :as r :refer [r]]))
+    (:require [engines.item-lister.core.events :as core.events]
+              [engines.item-lister.core.subs   :as core.subs]
+              [logic.api                       :refer [swap]]
+              [re-frame.api                    :as r :refer [r]]))
 
 
 
@@ -93,23 +92,3 @@
             swap-order-by-direction    (swap current-order-by-direction "descending" "ascending")
             swap-order-by              (keyword current-order-by-key swap-order-by-direction)]
            [:item-lister/order-items! lister-id swap-order-by])))
-
-
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(r/reg-event-fx :item-lister/choose-order-by!
-  ; @param (keyword) lister-id
-  ; @param (map) order-by-props
-  ; {:order-by-options (keywords or namespaced keywords in vector)}
-  ;
-  ; @usage
-  ; [:item-lister/choose-order-by! :my-lister {...}]
-  (fn [{:keys [db]} [_ lister-id {:keys [order-by-options]}]]
-      [:elements.select/render-select! :item-lister/order-by-select
-                                       {:option-label-f  core.helpers/order-by-label-f
-                                        :initial-options order-by-options
-                                        :on-select       [:item-lister/order-items! lister-id]
-                                        :options-label   :order-by
-                                        :value-path      [:engines :engine-handler/meta-items lister-id :order-by]}]))

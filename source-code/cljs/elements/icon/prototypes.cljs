@@ -16,6 +16,6 @@
   ;  :icon-size (keyword)}
   [icon-props]
   (merge {:icon-color  :default
-          :icon-family :material-icons-filled
+          :icon-family :material-symbols-outlined
           :icon-size   :m}
          (param icon-props)))

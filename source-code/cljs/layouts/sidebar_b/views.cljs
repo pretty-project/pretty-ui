@@ -24,9 +24,9 @@
   ;
   ; @param (keyword) sidebar-id
   ; @param (map) sidebar-props
-  ; {:viewport-min (px)}
-  [sidebar-id {:keys [viewport-min] :as sidebar-props}]
-  (if @(r/subscribe [:x.environment/viewport-min? viewport-min])
+  ; {:threshold (px)}
+  [sidebar-id {:keys [threshold] :as sidebar-props}]
+  (if @(r/subscribe [:x.environment/viewport-min? threshold])
        [:div#l-sidebar-b (sidebar-b.helpers/sidebar-attributes sidebar-id sidebar-props)
                          [:div#l-sidebar-b--sensor (sidebar-b.helpers/sidebar-sensor-attributes sidebar-id sidebar-props)]
                          [sidebar-body sidebar-id sidebar-props]]))
@@ -52,7 +52,7 @@
   ;   :left, :right
   ;   Default: :left
   ;  :style (map)(opt)
-  ;  :viewport-min (px)(opt)
+  ;  :threshold (px)(opt)
   ;   Default: 720}
   ;
   ; @usage

@@ -23,8 +23,8 @@
   ; @param (keyword) browser-id
   ; @param (map) bar-props
   ; {:order-by-options (keywords or namespaced keywords in vector)}
-  [browser-id bar-props]
-  [header.views/compact-bar browser-id bar-props])
+  [browser-id bar-props])
+  ;[header.views/compact-bar browser-id bar-props])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

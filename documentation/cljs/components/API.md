@@ -9,6 +9,8 @@
 
 - [color-picker](#color-picker)
 
+- [compact-list-header](#compact-list-header)
+
 - [copyright-label](#copyright-label)
 
 - [data-element](#data-element)
@@ -22,6 +24,8 @@
 - [ghost-view](#ghost-view)
 
 - [illustration](#illustration)
+
+- [input-block](#input-block)
 
 - [input-table](#input-table)
 
@@ -128,6 +132,33 @@
 ```
 @usage
 [color-picker :my-color-picker {...}]
+```
+
+---
+
+### compact-list-header
+
+```
+@param (keyword)(opt) header-id
+@param (map) header-props
+{:class (keyword or keywords in vector)(opt)
+ :hide-button (map)
+ :indent (map)(opt)
+ :label (metamorphic-content)
+ :order-button (map)
+ :outdent (map)(opt)
+ :search-field (map)
+ :style (map)(opt)}
+```
+
+```
+@usage
+[compact-list-header {...}]
+```
+
+```
+@usage
+[compact-list-header :my-compact-list-header {...}]
 ```
 
 ---
@@ -255,11 +286,10 @@
 ```
 @param (keyword)(opt) label-id
 @param (map) label-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :indent (map)(opt)
- :outdent (map)(opt)
- :style (map)(opt)}
+{:color (keyword or string)(opt)
+  Default: :warning
+ :font-size (keyword)(opt)
+  Default: :xs}
 ```
 
 ```
@@ -328,6 +358,33 @@
 ```
 @usage
 [illustration :my-illustration {...}]
+```
+
+---
+
+### input-block
+
+```
+@description
+When displaying a 'text-field' element in an 'input-block' by using the
+same ID for both the field and the block, the label of the block can targets the field.
+```
+
+```
+@param (keyword)(opt) block-id
+@param (map) block-props
+{:input (metamorphic-content)
+ :label (metamorphic-content)}
+```
+
+```
+@usage
+[input-block {...}]
+```
+
+```
+@usage
+[input-block :my-input-block {...}]
 ```
 
 ---
@@ -463,11 +520,6 @@
 ```
 @param (keyword)(opt) avatar-id
 @param (map) avatar-props
-{:colors (strings in vector)(opt)
- :first-name (string)(opt)
- :last-name (string)(opt)
- :size (px)(opt)
-  Default: 60}
 ```
 
 ```
@@ -489,18 +541,10 @@
 @param (map) button-props
 {:fill-color (keyword)(opt)
   Default: :highlight
+ :font-size (keyword)(opt)
+  Default: :xs
  :hover-color (keyword)(opt)
-  Default: :highlight
- :icon (keyword)(opt)
- :icon-family (keyword)(opt)
-  Default: :material-icons-filled
-  W/ {:icon ...}
- :icon-position (keyword)(opt)
-  :left, :right
-  Default: :left
-  W/ {:icon ...}
- :label (metamorphic-content)
- :on-click (metamorphic-event)}
+  Default: :highlight}
 ```
 
 ```
@@ -666,43 +710,25 @@
 @param (keyword) bubble-id
 @param (map) bubble-props
 {:border-color (keyword)(opt)
-  :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
   Default: :secondary
  :border-radius (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :m
  :border-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xs
- :class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
  :fill-color (keyword or string)(opt)
-  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
  :indent (map)(opt)
   Default: {:horizontal :xs :vertical :xs}
  :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :m
  :outdent (map)(opt)
   Default: {:bottom :xs :vertical :xs}
  :primary-button (map)(opt)
-  {:layout (keyword)(opt)
-    :button, :icon-button
-    Default: :icon-button}
   Default: {:border-radius :s
             :icon          :close
             :hover-color   :highlight
             :layout        :icon-button
-            :on-click      [:x.ui/remove-bubble! :my-bubble]}
- :secondary-button (map)(opt)
-  {:layout (keyword)(opt)
-    :button, :icon-button
-    Default: :icon-button}
- :selectable? (boolean)(opt)
-  Default: false
- :style (map)(opt)}
+            :on-click      [:x.ui/remove-bubble! :my-bubble]}}
 ```
 
 ```
@@ -848,16 +874,14 @@
 ```
 @param (keyword)(opt) description-id
 @param (map) description-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
+{:color (keyword or string)(opt)
+  Default: :muted
+ :font-size (keyword)(opt)
+  Default: :xxs
  :horizontal-align (keyword)(opt)
-  :left, :center, :right
   Default: :center
  :indent (map)(opt)
-  Default: {:horizontal :xs :vertical :xs}
- :outdent (map)(opt)
- :style (map)(opt)}
+  Default: {:horizontal :xs :vertical :xs}}
 ```
 
 ```
@@ -877,13 +901,10 @@
 ```
 @param (keyword)(opt) title-id
 @param (map) title-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)(opt)
- :disabled? (boolean)(opt)
- :indent (map)(opt)
- :outdent (map)(opt)
- :placeholder (metamorphic-content)(opt)
- :style (map)(opt)}
+{:font-size (keyword)(opt)
+  Default: :5xl
+ :font-weight (keyword)(opt)
+  Default: :bold}
 ```
 
 ```
@@ -943,16 +964,17 @@
 ```
 @param (keyword)(opt) button-id
 @param (map) button-props
-{:class (keyword or keywords in vector)(opt)
- :disabled? (boolean)(opt)
- :icon (keyword)
- :icon-color (string or keyword)
- :icon-family (keyword)(opt)
-  Default: :material-icons-filled
- :label (metamorphic-content)
- :on-click (metamorphic-event)
- :preset (keyword)(opt)
- :style (map)(opt)}
+{:font-size (keyword)(opt)
+  Default: :xs
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :hover-color (keyword or string)(opt)
+  Default: :highlight
+ :icon-size (keyword)(opt)
+  Default: :m
+ :indent (map)(opt)
+  Default: {:horizontal :xs :left :s :right :xl}
+ :preset (keyword)(opt)}
 ```
 
 ```
@@ -1012,13 +1034,16 @@
 ```
 @param (keyword)(opt) label-id
 @param (map) label-props
-{:class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
- :icon (keyword)
- :icon-family (keyword)(opt)
-  Default: :material-icons-filled
- :style (map)(opt)}
+{:color (keyword or string)(opt)
+  Default: :muted
+ :font-size (keyword)(opt)
+  Default: :xs
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :indent (map)(opt)
+  Default: {:horizontal :xs :vertical :s}
+ :style (map)(opt)
+  Default: {:max-width "var(--element-size-m)"}}
 ```
 
 ```
@@ -1038,16 +1063,20 @@
 ```
 @param (keyword)(opt) button-id
 @param (map) button-props
-{:class (keyword or keywords in vector)(opt)
- :disabled? (boolean)(opt)
+{:color (keyword or string)(opt)
+  Default: :invert
+ :font-size (keyword)(opt)
+  Default: :xs
+ :font-weight (keyword)(opt)
+  Default: :medium
  :hover-color (keyword or string)(opt)
   Default: :invert
- :icon (keyword)(opt)
- :icon-color (string or keyword)(opt)
- :icon-family (keyword)(opt)
- :label (metamorphic-content)
- :on-click (metamorphic-event)
- :style (map)(opt)}
+ :icon-size (keyword)(opt)
+  Default: :m
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :hover-color (keyword)(opt)
+  Default: invert}
 ```
 
 ```

@@ -46,4 +46,5 @@
    [component (random/generate-keyword) thumbnail-props])
 
   ([thumbnail-id thumbnail-props]
-   [list-item-thumbnail thumbnail-id thumbnail-props]))
+   (let [] ; thumbnail-props (list-item-thumbnail.prototypes/thumbnail-props-prototype thumbnail-props)
+        [list-item-thumbnail thumbnail-id thumbnail-props])))

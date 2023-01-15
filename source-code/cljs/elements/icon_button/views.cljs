@@ -102,8 +102,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-filled
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -132,6 +132,8 @@
   ;   W/ {:progress ...}
   ;  :style (map)(opt)
   ;  :tooltip (metamorphic-content)(opt)
+  ;  :tooltip-position (keyword)(opt)
+  ;   :left, :right
   ;  :width (keyword)(opt)
   ;   :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :3xl}

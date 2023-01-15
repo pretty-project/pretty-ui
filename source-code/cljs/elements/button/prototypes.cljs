@@ -40,7 +40,7 @@
          (if border-color  {:border-position :all
                             :border-width    :xxs})
          (if marker-color  {:marker-position :tr})
-         (if icon          {:icon-family   :material-icons-filled
+         (if icon          {:icon-family   :material-symbols-outlined
                             :icon-position :left
                             :icon-size (or font-size :s)})
          (param button-props)

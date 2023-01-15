@@ -47,8 +47,8 @@
   ;  :disabled? (boolean)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :on-click (metamorphic-event)
   ;  :tab-indexed? (boolean)(opt)
   ;   Default: true
@@ -59,19 +59,20 @@
   [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-color         color
-          :data-click-effect  :opacity
-          :data-line-height   :text-block
-          :data-reveal-effect :delayed
-          :data-selectable    false
-          :title             (x.components/content tooltip)}
-         (if icon             {:data-icon-family icon-family
-                               :data-icon-size :s}
-                              {:data-font-size :xs})
-         (if disabled?        {:disabled   "1" :data-disabled true})
-         (if-not tab-indexed? {:tab-index "-1"})
-         (if-not disabled?    {:on-mouse-up #(do (r/dispatch on-click)
-                                                 (x.environment/blur-element!))})))
+         {:data-color           color
+          :data-click-effect    :opacity
+          :data-line-height     :text-block
+          :data-reveal-effect   :delayed
+          :data-selectable      false
+          :data-bubble-content  (x.components/content tooltip)
+          :data-bubble-position :left}
+         (if icon               {:data-icon-family icon-family
+                                 :data-icon-size :s}
+                                {:data-font-size :xs})
+         (if disabled?          {:disabled   "1" :data-disabled true})
+         (if-not tab-indexed?   {:tab-index "-1"})
+         (if-not disabled?      {:on-mouse-up #(do (r/dispatch on-click)
+                                                   (x.environment/blur-element!))})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

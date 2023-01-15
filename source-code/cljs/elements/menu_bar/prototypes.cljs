@@ -42,6 +42,6 @@
   [{:keys [badge-content icon marker-color] :as item-props}]
   (merge (if badge-content {:badge-color :primary :badge-position :tr})
          (if marker-color  {:marker-position :tr})
-         (if icon          {:icon-family :material-icons-filled})
+         (if icon          {:icon-family :material-symbols-outlined})
          (param item-props)
          (if badge-content {:badge-content (x.components/content badge-content)})))

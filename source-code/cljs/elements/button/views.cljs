@@ -70,8 +70,7 @@
 
 (defn element
   ; XXX#0714
-  ; Some other elements based on the button element and their documentations are
-  ; linked to here.
+  ; Some other items based on the button element and their documentations are linked to here.
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
@@ -113,8 +112,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :icon-position (keyword)(opt)
   ;   :left, :right
   ;   Default: :left

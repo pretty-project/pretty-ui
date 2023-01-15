@@ -25,5 +25,5 @@
   ;
   ; @return (map)
   [_ header-props]
-  (-> (pretty-css/default-attributes header-props)
-      (pretty-css/outdent-attributes header-props)))
+  (-> {} (pretty-css/default-attributes header-props)
+         (pretty-css/outdent-attributes header-props)))

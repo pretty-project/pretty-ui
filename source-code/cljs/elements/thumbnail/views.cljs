@@ -18,7 +18,7 @@
   ;  :uri (string)(opt)}
   [thumbnail-id {:keys [background-size uri] :as thumbnail-props}]
   [:button.e-thumbnail--body (thumbnail.helpers/toggle-thumbnail-body-attributes thumbnail-id thumbnail-props)
-                             [:div.e-thumbnail--icon  {:data-icon-family :material-icons-filled :data-icon-size :s} :image]
+                             [:div.e-thumbnail--icon  {:data-icon-family :material-symbols-outlined :data-icon-size :s} :image]
                              [:div.e-thumbnail--image {:style {:background-image (css/url uri)
                                                                :background-size background-size}}]])
 
@@ -72,7 +72,8 @@
   ;  :icon (keyword)(opt)
   ;   Default: :icon
   ;  :icon-family (keyword)(opt)
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl

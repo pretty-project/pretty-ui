@@ -1,4 +1,21 @@
 
+/***** Compact list header *****/
+/*** Body ***/
+
+.c-compact-list-header--body {
+  align-items: center;
+  display: flex;
+}
+
+.c-compact-list-header--body .e-text-field {
+  flex-grow: 1;
+}
+
+/*** Body ***/
+/***** Compact list header *****/
+
+
+
 /***** Ghost view *****/
 /*** Body ***/
 
@@ -29,6 +46,52 @@
 
 
 
+/***** Input block *****/
+/*** Label ***/
+
+.c-input-block--label {
+  align-items: center;
+  -background-color: var( --fill-color-default );
+  display: flex;
+  min-height: 48px;
+}
+
+.c-input-block--label:not(:first-child)::after {
+  background-color: var( --border-color-highlight );
+  content: '';
+  height: 100%;
+  left: -1px;
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+/*** Label ***/
+
+/*** Input ***/
+
+.c-input-block--input {
+  align-items: center;
+  -background-color: var( --fill-color-default );
+  display: grid;
+  height: 100%;
+}
+
+.c-input-block--input:not(:first-child)::after {
+  background-color: var( --border-color-highlight );
+  content: '';
+  height: calc(100% - 24px);
+  left: -1px;
+  position: absolute;
+  top: 12px;
+  width: 1px;
+}
+
+/*** Input ***/
+/***** Input block *****/
+
+
+
 /***** Input table *****/
 /*** Body ***/
 
@@ -47,49 +110,12 @@
   display: grid;
 }
 
+.c-input-table--row > div,
+.c-input-table--row > label {
+  background-color: var( --fill-color-default );
+}
+
 /*** Row ***/
-
-/*** Input label ***/
-
-.c-input-table--input-label {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  display: flex;
-  min-height: 48px;
-}
-
-.c-input-table--input-label:not(:first-child)::after {
-  background-color: var( --border-color-highlight );
-  content: '';
-  height: 100%;
-  left: -1px;
-  position: absolute;
-  top: 0;
-  width: 1px;
-}
-
-/*** Input label ***/
-
-/*** Input body ***/
-
-.c-input-table--input-body {
-  align-items: center;
-  background-color: var( --fill-color-default );
-  display: grid;
-  height: 100%;
-}
-
-.c-input-table--input-body:not(:first-child)::after {
-  background-color: var( --border-color-highlight );
-  content: '';
-  height: calc(100% - 24px);
-  left: -1px;
-  position: absolute;
-  top: 12px;
-  width: 1px;
-}
-
-/*** Input body ***/
 /***** Input table *****/
 
 

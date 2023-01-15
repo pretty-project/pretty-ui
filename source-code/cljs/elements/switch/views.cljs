@@ -31,11 +31,12 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:option-label-f (function)}
+  ; {:font-size (keyword)
+  ;  :option-label-f (function)}
   ; @param (*) option
-  [_ {:keys [option-label-f]} option]
+  [_ {:keys [font-size option-label-f]} option]
   (let [option-label (option-label-f option)]
-       [:div.e-switch--option-label {:data-font-size   :s
+       [:div.e-switch--option-label {:data-font-size   font-size
                                      :data-font-weight :medium
                                      :data-line-height :text-block}
                                     (x.components/content option-label)]))
@@ -115,6 +116,9 @@
   ;  :class (keyword or keywords in vector)(opt)
   ;  :default-value (boolean)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :font-size (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+  ;   Default: :s
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

@@ -73,10 +73,8 @@
 ### side-menu
 
 ```
-@param (keyword) page-id
+@param (keyword) module-id
 @param (map) menu-props
-{:content (metamorphic-content)
- :threshold (px)(opt)}
 ```
 
 ```

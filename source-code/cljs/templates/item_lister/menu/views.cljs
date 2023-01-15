@@ -23,15 +23,15 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- group-label
+(defn- group-label  ; <- már nem label
   ; @param (keyword) lister-id
   ; @param (map) menu-props
   ; {:group-icon (keyword)
   ;  :group-icon-family (keyword)
   ;  :group-label (metamorphic-content)}
   [_ {:keys [group-icon group-icon-family group-label]}]
-  [components/side-menu-label ::group-label
-                              {:content     group-label
+  [components/side-menu-button ::group-label
+                              {:label     group-label
                                :icon        group-icon
                                :icon-family group-icon-family}])
 
@@ -41,7 +41,7 @@
   ; {:content (metamorphic-content)(opt)
   ;  :group-icon (keyword)
   ;  :group-icon-family (keyword)(opt)
-  ;   Default: :material-icons-filled
+  ;   Default: :material-symbols-outlined
   ;  :group-label (metamorphic-content)}
   ;
   ; @usage
@@ -49,4 +49,13 @@
   [lister-id {:keys [content] :as menu-props}]
   (let [menu-props (menu.prototypes/menu-props-prototype lister-id menu-props)]
        [:<> [group-label          lister-id menu-props]
+
+            ; TEMP
+            [components/side-menu-button {:label "Board members"
+                                          :icon :groups
+                                          :icon-size :m}]
+
+
+
+
             [x.components/content lister-id content]]))

@@ -17,8 +17,8 @@
   ; {:expanded? (boolean)}
   [expandable-id {:keys [expanded?]}]
   (if (expandable.helpers/expanded? expandable-id)
-      [:i.e-expandable--expand-icon {:data-icon-family :material-icons-filled :data-icon-size :m} :expand_less]
-      [:i.e-expandable--expand-icon {:data-icon-family :material-icons-filled :data-icon-size :m} :expand_more]))
+      [:i.e-expandable--expand-icon {:data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_less]
+      [:i.e-expandable--expand-icon {:data-icon-family :material-symbols-outlined :data-icon-size :m} :expand_more]))
 
 (defn- expandable-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -87,8 +87,8 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl

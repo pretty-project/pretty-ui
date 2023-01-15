@@ -58,7 +58,7 @@
   [label-id _]
   {:data-click-effect :opacity
    :data-selectable   false
-   :data-icon-family  :material-icons-filled
+   :data-icon-family  :material-symbols-outlined
    :data-icon-size    :xs
    :on-click    #(toggle-info-text-visiblity! label-id)
    :on-mouse-up #(x.environment/blur-element! label-id)})
@@ -73,15 +73,13 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:data-bubble-color (keyword)
-  ;  :data-bubble-content (string)
+  ; {:data-bubble-content (string)
   ;  :data-bubble-position (keyword)
   ;  :data-click-effect (keyword)
   ;  :data-selectable (boolean)
   ;  :on-click (function)
   [label-id label-props]
-  {:data-bubble-color    :primary
-   :data-bubble-position :right
+  {:data-bubble-position :right
    :data-click-effect    :opacity
    :data-bubble-content  (x.components/content :copy!)
    :on-click             (on-copy-f label-id label-props)})

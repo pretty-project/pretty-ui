@@ -25,8 +25,8 @@
                                        :href "https://monogo.app"
                                        :data-click-effect :opacity
                                        :data-orientation :horizontal}
-                                      [:i.c-copyright-label--icon {:data-icon-family :material-icons-filled
-                                                                   :data-icon-size :xs}
+                                      [:i.c-copyright-label--icon {:data-icon-family :material-symbols-outlined
+                                                                   :data-icon-size   :xs}
                                                                   :copyright]
                                       copyright-label]]))
        ;[elements/label ::copyright-label

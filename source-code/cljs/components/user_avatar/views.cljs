@@ -35,7 +35,7 @@
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   [_ _]
-  [:div.c-user-avatar--icon {:data-icon-family :material-icons-outlined
+  [:div.c-user-avatar--icon {:data-icon-family :material-symbols-outlined
                              :data-icon-size   :m}
                             :person])
 
@@ -66,6 +66,8 @@
                       [user-avatar-body avatar-id avatar-props]])
 
 (defn component
+  ; XXX#0720
+  ;
   ; @param (keyword)(opt) avatar-id
   ; @param (map) avatar-props
   ; {:class (keyword or keywords in vector)(opt)

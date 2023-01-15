@@ -10,20 +10,18 @@
 (defn component
   ; XXX#0439 (source-code/cljs/elements/label/views.cljs)
   ; The section-description component is based on the label element.
-  ; Check out the documentation of the label element for more information.
+  ; For more information check out the documentation of the label element.
   ;
   ; @param (keyword)(opt) description-id
   ; @param (map) description-props
-  ; {:class (keyword or keywords in vector)(opt)
-  ;  :content (metamorphic-content)
-  ;  :disabled? (boolean)(opt)
+  ; {:color (keyword or string)(opt)
+  ;   Default: :muted
+  ;  :font-size (keyword)(opt)
+  ;   Default: :xxs
   ;  :horizontal-align (keyword)(opt)
-  ;   :left, :center, :right
   ;   Default: :center
   ;  :indent (map)(opt)
-  ;   Default: {:horizontal :xs :vertical :xs}
-  ;  :outdent (map)(opt)
-  ;  :style (map)(opt)}
+  ;   Default: {:horizontal :xs :vertical :xs}}
   ;
   ; @usage
   ; [section-description {...}]

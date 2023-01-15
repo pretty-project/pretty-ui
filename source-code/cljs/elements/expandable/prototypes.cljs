@@ -16,5 +16,5 @@
   ;  :icon-family (keyword)}
   [{:keys [icon] :as expandable-props}]
   (merge {:expanded? false}
-         (if icon {:icon-family :material-icons-filled})
+         (if icon {:icon-family :material-symbols-outlined})
          (param expandable-props)))

@@ -7,7 +7,7 @@
 
 - [body](#body)
 
-- [compact-bar](#compact-bar)
+- [compact-list-header](#compact-list-header)
 
 - [compact-wrapper](#compact-wrapper)
 
@@ -75,19 +75,16 @@
 
 ---
 
-### compact-bar
+### compact-list-header
 
 ```
 @param (keyword) lister-id
-@param (map) bar-props
-{:on-search (metamorphic-event)
- :order-by-options (keywords or namespaced keywords in vector)
- :search-placeholder (metamorphic-content)}
+@param (map) header-props
 ```
 
 ```
 @usage
-[compact-bar :my-lister {...}]
+[compact-list-header :my-lister {...}]
 ```
 
 ---
@@ -188,7 +185,7 @@
 {:content (metamorphic-content)(opt)
  :group-icon (keyword)
  :group-icon-family (keyword)(opt)
-  Default: :material-icons-filled
+  Default: :material-symbols-outlined
  :group-label (metamorphic-content)}
 ```
 

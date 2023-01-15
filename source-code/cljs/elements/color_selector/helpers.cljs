@@ -22,7 +22,7 @@
   (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
         selected-options @(r/subscribe [:x.db/get-item value-path])]
        {:data-click-effect :opacity
-        :data-icon-family  :material-icons-filled
+        :data-icon-family  :material-symbols-outlined
         :data-collected    (vector/contains-item? selected-options option)
         :on-click          #(r/dispatch on-click)
         :on-mouse-up       #(x.environment/blur-element! selector-id)}))

@@ -61,7 +61,8 @@
                               [notification-bubble-body                      bubble-id bubble-props]])
 
 (defn element
-  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ; XXX#0731
+  ; Some other items based on the notification-bubble element and their documentations are linked to here.
   ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props

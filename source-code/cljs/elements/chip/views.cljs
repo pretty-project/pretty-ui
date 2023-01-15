@@ -40,7 +40,7 @@
   ;  :primary-button-icon (keyword)}
   [chip-id {:keys [primary-button-event primary-button-icon] :as chip-props}]
   (if primary-button-event [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
-                                                           [:i.e-chip--primary-button-icon {:data-icon-family :material-icons-filled}
+                                                           [:i.e-chip--primary-button-icon {:data-icon-family :material-symbols-outlined}
                                                                                            primary-button-icon]]
                            [:div.e-chip--primary-button--placeholder]))
 
@@ -77,8 +77,8 @@
   ;   Default: :primary
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
-  ;   :material-icons-filled, :material-icons-outlined
-  ;   Default: :material-icons-filled
+  ;   :material-symbols-filled, :material-symbols-outlined
+  ;   Default: :material-symbols-filled
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
