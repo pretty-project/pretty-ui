@@ -9,9 +9,9 @@
   ; @param (map) illustration-props
   ;
   ; @return (map)
-  ; {:position (keyword)
-  ;  :size (keyword)}
+  ; {:height (keyword)
+  ;  :width (keyword)}
   [illustration-props]
-  (merge {:position :br
-          :size     :xxl}
+  (merge {:height   :xxl
+          :width    :xxl}
          (param illustration-props)))

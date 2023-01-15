@@ -52,6 +52,7 @@
        {:data-click-effect :opacity
         :data-font-size    :s
         :data-font-weight  (if option-selected? :bold :medium)
+        :data-line-height  :text-block
         :data-selected     option-selected?
         :on-click          #(r/dispatch on-click)
         :on-mouse-up       #(x.environment/blur-element! select-id)}))

@@ -29,17 +29,15 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
+  ; {}
   ;
   ; @return (map)
-  ; {:chip-label-f (function)
-  ;  :deletable? (boolean)
-  ;  :indent (map)}
-  [box-id box-props]
-  (let [group-props (dissoc box-props :class :helper :label :indent :outdent :placeholder :style)]
-       (merge {:chip-label-f return
-               :indent {:bottom :xxs}}
-              (param group-props)
-              {:deletable? true})))
+  ; {:deletable? (boolean)
+  ;  :value-path (vector)}
+  [_ {:keys [chip-group value-path]}]
+  (merge {:deletable? true
+          :value-path value-path}
+         (param chip-group)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

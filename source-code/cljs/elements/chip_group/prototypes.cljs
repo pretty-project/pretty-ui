@@ -18,9 +18,10 @@
   ; @return (map)
   ; {}
   [group-id {:keys [chip-label-f deletable?] :as group-props} chip-dex chip]
-  (if deletable? {:label                (chip-label-f chip)
-                  :primary-button-event [:elements.chip-group/delete-chip! group-id group-props chip-dex]}
-                 {:label                (chip-label-f chip)}))
+  (if deletable? {:primary-button {:icon     :close
+                                   :on-click [:elements.chip-group/delete-chip! group-id group-props chip-dex]}
+                  :label (chip-label-f chip)}
+                 {:label (chip-label-f chip)}))
 
 (defn group-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

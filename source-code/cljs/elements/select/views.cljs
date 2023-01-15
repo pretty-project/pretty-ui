@@ -92,7 +92,7 @@
   ; {}
   [_ {:keys [options-label]}]
   (if options-label [:div.e-select--options--label {:data-font-size   :s
-                                                    :data-font-weight :medium
+                                                    :data-font-weight :bold
                                                     :data-line-height :text-block}
                                                    (x.components/content options-label)]
                     [:div.e-select--options--label {:data-placeholder true}]))

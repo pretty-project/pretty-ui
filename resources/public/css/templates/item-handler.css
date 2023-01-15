@@ -51,4 +51,24 @@
 }
 
 /*** Body ***/
+
+/*** Footer ***/
+
+#t-item-handler--footer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+#t-item-handler--footer-content {
+  align-items:      center;
+  background-color: var( --fill-color-default );
+  border-top:       1px solid var( --border-color-highlight );
+  display:          flex;
+  justify-content:  center;
+  padding:          12px;
+}
+
+/*** Footer ***/
 /***** Item handler *****/

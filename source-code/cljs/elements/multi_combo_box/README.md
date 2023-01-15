@@ -1,10 +1,4 @@
 
-### chip-label-f
-
-The multi-combo-box element pass the 'chip-label-f' function to the implemented
-chip-group element.
-For more information check out the chip-group element's README!
-
 ### field-content-f
 
 The multi-combo-box element doesn't defines the 'field-content-f' function

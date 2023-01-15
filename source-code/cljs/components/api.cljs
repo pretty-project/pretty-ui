@@ -40,6 +40,7 @@
               [components.surface-box.views              :as surface-box.views]
               [components.user-avatar.views              :as user-avatar.views]
               [components.vector-item-controls.views     :as vector-item-controls.views]
+              [components.vector-item-list.views         :as vector-item-list.views]
               [components.vector-items-header.views      :as vector-items-header.views]))
 
 ;; ----------------------------------------------------------------------------
@@ -84,4 +85,5 @@
 (def surface-box              surface-box.views/component)
 (def user-avatar              user-avatar.views/component)
 (def vector-item-controls     vector-item-controls.views/component)
+(def vector-item-list         vector-item-list.views/component)
 (def vector-items-header      vector-items-header.views/component)

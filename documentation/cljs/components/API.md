@@ -81,6 +81,8 @@
 
 - [vector-item-controls](#vector-item-controls)
 
+- [vector-item-list](#vector-item-list)
+
 - [vector-items-header](#vector-items-header)
 
 ### action-bar
@@ -340,14 +342,14 @@
 @param (keyword)(opt) illustration-id
 @param (map) illustration-props
 {:class (keyword or keywords in vector)(opt)
- :illustration (keyword)
- :position (keyword)(opt)
-  :tl, :tr, :br, :bl
-  Default: :br
- :size (keyword)(opt)
+ :height (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   Default: :xxl
- :style (map)(opt)}
+ :illustration (keyword)
+ :style (map)(opt)
+ :width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  Default: :xxl}
 ```
 
 ```
@@ -1164,6 +1166,9 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) controls-props
 {:disabled? (boolean)(opt)
  :item-dex (integer)
+ :tooltip-position (keyword)(opt)
+  :left, :right
+  Default: :right
  :value-path (vector)}
 ```
 
@@ -1179,6 +1184,40 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
+### vector-item-list
+
+```
+@param (keyword)(opt) list-id
+@param (map) list-props
+{:class (keyword or keywords in vector)(opt)
+ :disabled? (boolean)(opt)
+ :indent (map)(opt)
+ :item-element (symbol)
+ :outdent (map)(opt)
+ :placeholder (metamorphic-content)(opt)
+ :style (map)(opt)
+ :value-path (vector)}
+```
+
+```
+@usage
+[vector-item-list {...}]
+```
+
+```
+@usage
+[vector-item-list :my-vector-item-list {...}]
+```
+
+```
+@usage
+(defn my-item-element [item-dex] ...)
+[vector-item-list :my-vector-item-list {:item-element #'my-item-element
+                                        :value-path   [:my-items]}]
+```
+
+---
+
 ### vector-items-header
 
 ```
@@ -1186,6 +1225,9 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) header-props
 {:class (keyword or keywords in vector)(opt)
  :disabled? (boolean)(opt)
+ :horizontal-align (keyword)(opt)
+  :center, :left, :right
+  Default: :left
  :indent (map)(opt)
  :initial-item (*)(opt)
   Default: {}

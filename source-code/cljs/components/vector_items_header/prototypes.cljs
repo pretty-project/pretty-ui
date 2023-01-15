@@ -9,7 +9,9 @@
   ; @param (map) header-props
   ;
   ; @return (map)
-  ; {:initial-item (*)}
+  ; {:horizontal-align (keyword)
+  ;  :initial-item (*)}
   [header-props]
-  (merge {:initial-item {}}
+  (merge {:horizontal-align :left
+          :initial-item     {}}
          (param header-props)))

@@ -36,13 +36,14 @@
   ;
   ; @param (keyword) chip-id
   ; @param (map) chip-props
-  ; {:primary-button-event (metamorphic-event)(opt)
-  ;  :primary-button-icon (keyword)}
-  [chip-id {:keys [primary-button-event primary-button-icon] :as chip-props}]
-  (if primary-button-event [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
-                                                           [:i.e-chip--primary-button-icon {:data-icon-family :material-symbols-outlined}
-                                                                                           primary-button-icon]]
-                           [:div.e-chip--primary-button--placeholder]))
+  ; {:primary-button (map)(opt)
+  ;   {:icon (keyword)
+  ;    :icon-family (keyword)}}
+  [chip-id {{:keys [icon icon-family]} :primary-button :keys [primary-button] :as chip-props}]
+  (if primary-button [:button.e-chip--primary-button (chip.helpers/primary-button-attributes chip-id chip-props)
+                                                     [:i.e-chip--primary-button-icon {:data-icon-family icon-family}
+                                                                                     icon]]
+                     [:div.e-chip--primary-button--placeholder]))
 
 (defn- chip-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -51,9 +52,9 @@
   ; @param (map) chip-props
   [chip-id chip-props]
   [:div.e-chip--body (chip.helpers/chip-body-attributes chip-id chip-props)
+                     [chip-primary-button               chip-id chip-props]
                      [chip-icon                         chip-id chip-props]
-                     [chip-label                        chip-id chip-props]
-                     [chip-primary-button               chip-id chip-props]])
+                     [chip-label                        chip-id chip-props]])
 
 (defn- chip
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -78,7 +79,7 @@
   ;  :icon (keyword)(opt)
   ;  :icon-family (keyword)(opt)
   ;   :material-symbols-filled, :material-symbols-outlined
-  ;   Default: :material-symbols-filled
+  ;   Default: :material-symbols-outlined
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -90,12 +91,15 @@
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
   ;  :label (metamorphic-content)
   ;  :on-click (metamorphic-event)(opt)
-  ;   TODO A chip elem egésze kattintható
+  ;   TODO Makes the chip element clickable
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :primary-button-icon (keyword)(opt)
-  ;   Default: :close
-  ;  :primary-button-event (metamorphic-event)(opt)
+  ;  :primary-button (map)(opt)
+  ;   {:icon (keyword)
+  ;    :icon-family (keyword)(opt)
+  ;     :material-symbols-filled, :material-symbols-outlined
+  ;     Default: :material-symbols-outlined
+  ;    :on-click (metamorphic-event)}
   ;  :style (map)(opt)}
   ;
   ; @usage

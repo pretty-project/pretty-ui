@@ -11,27 +11,26 @@
   ; @param (keyword) illustration-id
   ; @param (map) illustration-props
   ; {:illustration (keyword)
-  ;  :position (keyword)
-  ;  :size (keyword)}
-  [_ {:keys [illustration position size]}]
-  (let [illustration-url (str "/illustrations/" (name illustration) ".png")]
-       [:div.c-illustration {:data-position-absolute position}
-                            [:div.c-illustration--body {:style {:background-image (css/url illustration-url)}
-                                                        :data-element-height size
-                                                        :data-element-width  size}]]))
+  ;  :height (keyword)
+  ;  :width (keyword)}
+  [_ {:keys [illustration height width]}]
+  (let [illustration-url (str "/illustrations/" (name illustration) ".webp")]
+       [:div.c-illustration [:div.c-illustration--body {:style {:background-image (css/url illustration-url)}
+                                                        :data-element-height height
+                                                        :data-element-width  width}]]))
 
 (defn component
   ; @param (keyword)(opt) illustration-id
   ; @param (map) illustration-props
   ; {:class (keyword or keywords in vector)(opt)
-  ;  :illustration (keyword)
-  ;  :position (keyword)(opt)
-  ;   :tl, :tr, :br, :bl
-  ;   Default: :br
-  ;  :size (keyword)(opt)
+  ;  :height (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxl
-  ;  :style (map)(opt)}
+  ;  :illustration (keyword)
+  ;  :style (map)(opt)
+  ;  :width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   Default: :xxl}
   ;
   ; @usage
   ; [illustration {...}]

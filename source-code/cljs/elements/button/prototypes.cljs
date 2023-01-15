@@ -15,7 +15,8 @@
   ;  :disabled? (boolean)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
-  ;  :marker-color (keyword)(opt)}
+  ;  :marker-color (keyword)(opt)
+  ;  :tooltip (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {:badge-color (keyword)
@@ -30,8 +31,9 @@
   ;  :icon-family (keyword)
   ;  :icon-position (keyword)
   ;  :icon-size (keyword)
-  ;  :line-height (keyword)}
-  [{:keys [badge-content border-color disabled? font-size icon marker-color] :as button-props}]
+  ;  :line-height (keyword)
+  ;  :tooltip-position (keyword)}
+  [{:keys [badge-content border-color disabled? font-size icon marker-color tooltip] :as button-props}]
   (merge {:font-size        :s
           :font-weight      :medium
           :horizontal-align :center
@@ -43,6 +45,7 @@
          (if icon          {:icon-family   :material-symbols-outlined
                             :icon-position :left
                             :icon-size (or font-size :s)})
+         (if tooltip       {:tooltip-position :right})
          (param button-props)
          (if badge-content {:badge-content (x.components/content badge-content)})
          (if disabled?     {:hover-color :none})))

@@ -295,8 +295,10 @@
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :preset (keyword)(opt)
- :style (map)(opt)}
+ :style (map)(opt)
+ :tooltip (metamorphic-content)(opt)
+ :tooltip-position (keyword)(opt)
+  :left, :right}
 ```
 
 ```
@@ -462,7 +464,7 @@
  :icon (keyword)(opt)
  :icon-family (keyword)(opt)
   :material-symbols-filled, :material-symbols-outlined
-  Default: :material-symbols-filled
+  Default: :material-symbols-outlined
  :indent (map)(opt)
   {:bottom (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl
@@ -474,12 +476,15 @@
     :xxs, :xs, :s, :m, :l, :xl, :xxl}
  :label (metamorphic-content)
  :on-click (metamorphic-event)(opt)
-  TODO A chip elem egésze kattintható
+  TODO Makes the chip element clickable
  :outdent (map)(opt)
   Same as the :indent property.
- :primary-button-icon (keyword)(opt)
-  Default: :close
- :primary-button-event (metamorphic-event)(opt)
+ :primary-button (map)(opt)
+  {:icon (keyword)
+   :icon-family (keyword)(opt)
+    :material-symbols-filled, :material-symbols-outlined
+    Default: :material-symbols-outlined
+   :on-click (metamorphic-event)}
  :style (map)(opt)}
 ```
 
@@ -1069,7 +1074,6 @@
  :on-mouse-over (metamorphic handler)(opt)
  :outdent (map)(opt)
   Same as the :indent property.
- :preset (keyword)(opt)
  :progress (percent)(opt)
  :progress-duration (ms)(opt)
   W/ {:progress ...}
@@ -1345,8 +1349,10 @@
 ```
 @param (keyword)(opt) box-id
 @param (map) box-props
-{:chip-label-f (function)(opt)
-  Default: return
+{:chip-group (map)(opt)
+  For more information check out the documentation of the chip-group element.
+  {:deletable? (boolean)(opt)
+    Default: true}
  :field-value-f (function)(opt)
   Default: return
  :initial-options (vector)(opt)
@@ -2052,6 +2058,9 @@
  :font-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
+ :font-weight (keyword)(opt)
+  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  Default: :normal
  :helper (metamorphic-content)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)

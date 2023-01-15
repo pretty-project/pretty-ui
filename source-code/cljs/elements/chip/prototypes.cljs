@@ -9,16 +9,20 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) chip-props
-  ; {:icon (keyword)(opt)}
+  ; {:icon (keyword)(opt)
+  ;  :primary-button (map)(opt)}
   ;
   ; @return (map)
   ; {:color (keyword or string)
   ;  :fill-color (keyword or string)
   ;  :icon-family (keyword)
-  ;  :primary-button-icon (keyword)}
-  [{:keys [icon] :as chip-props}]
-  (merge {:color               :default
-          :fill-color          :primary
-          :primary-button-icon :close}
+  ;  :primary-button (map)
+  ;   {:icon-family (keyword)}}
+  [{:keys [icon primary-button] :as chip-props}]
+  (merge {:color      :default
+          :fill-color :primary}
          (if icon {:icon-family :material-symbols-outlined})
-         (param chip-props)))
+         (param chip-props)
+         (if primary-button {:dbg "x"
+                             :primary-button (merge {:icon-family :material-symbols-outlined}
+                                                    (param primary-button))})))

@@ -99,7 +99,19 @@
   ; [label-bar :my-lister {...}]
   [lister-id bar-props]
   [:div#t-item-lister--label-bar [:div.t-item-lister--label-bar--block [title       lister-id bar-props]
-                                                                       [breadcrumbs lister-id bar-props]]])
+                                                                       [breadcrumbs lister-id bar-props]]
+
+                                 ; Menu items:
+                                 ; - Rename board
+                                 ; - Invite members to board
+                                 ; - Share board with other workspaces
+                                 ; - Delete board
+                                 [:div [elements/icon-button ::xxx
+                                                             {:icon :menu
+                                                              :hover-color :highlight
+                                                              :border-radius :s
+                                                              :tooltip "Board menu"
+                                                              :tooltip-position :left}]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -14,17 +14,18 @@
   ; @param (keyword) chip-id
   ; @param (map) chip-props
   ; {:disabled? (boolean)(opt)
-  ;  :primary-button-event (metamorphic-event)}
+  ;  :primary-button (map)
+  ;   {:on-click (metamorphic-event)}}
   ;
   ; @return (map)
   ; {:data-click-effect (keyword)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
-  [chip-id {:keys [disabled? primary-button-event]}]
+  [chip-id {{:keys [on-click]} :primary-button :keys [disabled?]}]
   (if disabled? {:disabled          true}
                 {:data-click-effect :opacity
-                 :on-click          #(r/dispatch primary-button-event)
+                 :on-click          #(r/dispatch on-click)
                  :on-mouse-up       #(x.environment/blur-element! chip-id)}))
 
 ;; ----------------------------------------------------------------------------

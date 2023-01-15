@@ -60,6 +60,8 @@
   ;  :border-width (keyword)
   ;  :field-content-f (function)
   ;  :field-value-f (function)
+  ;  :font-size (keyword)
+  ;  :font-weight (keyword)
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :type (keyword)
@@ -81,6 +83,7 @@
           :field-content-f return
           :field-value-f   return
           :font-size       :s
+          :font-weight     :normal
           :line-height     :text-block
           :type            :text
           :value-path      (input.helpers/default-value-path field-id)}

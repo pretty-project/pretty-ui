@@ -221,6 +221,9 @@
   ;  :font-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
+  ;  :font-weight (keyword)(opt)
+  ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+  ;   Default: :normal
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

@@ -13,9 +13,9 @@
   [_ {:keys [on-close]}]
   [elements/icon-button ::close-icon-button
                         {:hover-color :highlight
+                         :icon        :close
                          :keypress    {:key-code 27}
-                         :on-click    on-close
-                         :preset      :close}])
+                         :on-click    on-close}])
 
 (defn header-label
   ; @param (keyword) header-id

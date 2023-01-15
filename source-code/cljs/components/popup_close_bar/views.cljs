@@ -14,9 +14,9 @@
   [_ {:keys [on-close]}]
   [elements/icon-button {:border-radius :s
                          :hover-color   :highlight
+                         :icon          :close
                          :keypress      {:key-code 27}
-                         :on-click      on-close
-                         :preset        :close}])
+                         :on-click      on-close}])
 
 (defn- popup-close-bar
   ; @param (keyword) bar-id

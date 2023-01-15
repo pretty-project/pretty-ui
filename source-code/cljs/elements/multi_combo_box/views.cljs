@@ -5,7 +5,9 @@
               [elements.element.views              :as element.views]
               [elements.multi-combo-box.helpers    :as multi-combo-box.helpers]
               [elements.multi-combo-box.prototypes :as multi-combo-box.prototypes]
-              [random.api                          :as random]))
+              [random.api                          :as random]
+              [re-frame.api                        :as r]
+              [vector.api                          :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -15,10 +17,13 @@
   ;
   ; @param (keyword) box-id
   ; @param (map) box-props
-  [box-id box-props]
-  (let [group-id    (multi-combo-box.helpers/box-id->group-id         box-id)
-        group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
-       [chip-group.views/element group-id group-props]))
+  ; {:value-path (vector)}
+  [box-id {:keys [value-path] :as box-props}]
+  (if-let [chips @(r/subscribe [:x.db/get-item value-path])]
+          (if (vector/nonempty? chips)
+              (let [group-id    (multi-combo-box.helpers/box-id->group-id         box-id)
+                    group-props (multi-combo-box.prototypes/group-props-prototype box-id box-props)]
+                   [chip-group.views/element group-id group-props]))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -63,8 +68,10 @@
   ;
   ; @param (keyword)(opt) box-id
   ; @param (map) box-props
-  ; {:chip-label-f (function)(opt)
-  ;   Default: return
+  ; {:chip-group (map)(opt)
+  ;   For more information check out the documentation of the chip-group element.
+  ;   {:deletable? (boolean)(opt)
+  ;     Default: true}
   ;  :field-value-f (function)(opt)
   ;   Default: return
   ;  :initial-options (vector)(opt)

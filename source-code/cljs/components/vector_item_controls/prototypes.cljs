@@ -1,5 +1,6 @@
 
-(ns components.vector-item-controls.prototypes)
+(ns components.vector-item-controls.prototypes
+    (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -8,4 +9,7 @@
   ; @param (map) controls-props
   ;
   ; @return (map)
-  [_])
+  ; {}
+  [controls-props]
+  (merge {:tooltip-position :right}
+         (param controls-props)))

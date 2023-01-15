@@ -1,7 +1,6 @@
 
 (ns elements.button.views
     (:require [elements.button.helpers    :as button.helpers]
-              [elements.button.presets    :as button.presets]
               [elements.button.prototypes :as button.prototypes]
               [pretty-css.api             :as pretty-css]
               [re-frame.api               :as r]
@@ -145,8 +144,10 @@
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
-  ;  :preset (keyword)(opt)
-  ;  :style (map)(opt)}
+  ;  :style (map)(opt)
+  ;  :tooltip (metamorphic-content)(opt)
+  ;  :tooltip-position (keyword)(opt)
+  ;   :left, :right}
   ;
   ; @usage
   ; [button {...}]
@@ -160,6 +161,5 @@
    [element (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (pretty-css/apply-preset button.presets/BUTTON-PROPS-PRESETS button-props)
-         button-props (button.prototypes/button-props-prototype button-props)]
+   (let [button-props (button.prototypes/button-props-prototype button-props)]
         [button button-id button-props])))

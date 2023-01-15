@@ -32,14 +32,10 @@
 /*** Body ***/
 
 .c-illustration--body {
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-position: bottom center;
+  background-repeat:   no-repeat;
+  background-size:     contain;
 }
-
-.c-illustration[data-position-absolute="tl"] .c-illustration--body { background-position: top    left; }
-.c-illustration[data-position-absolute="tr"] .c-illustration--body { background-position: top    right; }
-.c-illustration[data-position-absolute="br"] .c-illustration--body { background-position: bottom right; }
-.c-illustration[data-position-absolute="bl"] .c-illustration--body { background-position: bottom left; }
 
 /*** Body ***/
 /***** Illustration *****/
@@ -387,15 +383,3 @@
 
 /*** Body ***/
 /***** Vector item controls *****/
-
-
-
-/***** Vector items header *****/
-/*** Body ***/
-
-.c-vector-items-header--body {
-  display: flex;
-}
-
-/*** Body ***/
-/***** Vector items header *****/

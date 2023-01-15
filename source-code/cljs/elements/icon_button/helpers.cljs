@@ -55,6 +55,7 @@
   ; {:height (keyword)
   ;  :label (metamorphic-content)(opt)
   ;  :tooltip (metamorphic-content)(opt)
+  ;  :tooltip-position (keyword)(opt)
   ;  :width (keyword)}
   ;
   ; @return (map)

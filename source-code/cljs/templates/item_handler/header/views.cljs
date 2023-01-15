@@ -72,7 +72,8 @@
                          :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
                          :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :delete!)
                          :on-click      delete-event
-                         :outdent       {:all :xxs}}]))
+                         :outdent       {:all :xxs}
+                         :tooltip       :permanently-delete-this-item}]))
 
 (defn- duplicate-item-button
   ; @param (keyword) handler-id
@@ -92,7 +93,8 @@
                          :indent        {:horizontal :xxs :vertical :s}
                          :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :duplicate!)
                          :on-click      duplicate-event
-                         :outdent       {:all :xxs}}]))
+                         :outdent       {:all :xxs}
+                         :tooltip       :make-a-copy-of-this-item}]))
 
 (defn- revert-item-button
   ; @param (keyword) handler-id
@@ -109,7 +111,8 @@
                          :indent        {:horizontal :xxs :vertical :s}
                          :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :revert!)
                          :on-click      [:item-handler/revert-current-item! handler-id]
-                         :outdent       {:all :xxs}}]))
+                         :outdent       {:all :xxs}
+                         :tooltip       :discard-changes-of-this-item}]))
 
 (defn- save-item-button
   ; @param (keyword) handler-id
@@ -132,7 +135,8 @@
                          :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
                          :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :save!)
                          :on-click      save-event
-                         :outdent       {:left :s :all :xxs}}]))
+                         :outdent       {:left :s :all :xxs}
+                         :tooltip       :save-changes-of-this-item}]))
 
 (defn control-bar
   ; @param (keyword) handler-id
@@ -183,7 +187,22 @@
   ; [label-bar :my-handler {...}]
   [handler-id bar-props]
   [:div#t-item-handler--label-bar [:div.t-item-handler--label-bar-block [title       handler-id bar-props]
-                                                                        [breadcrumbs handler-id bar-props]]])
+                                                                        [breadcrumbs handler-id bar-props]]
+
+                                  ; Info items:
+                                  ; - Last modified by
+                                  ; - Last modified at
+                                  ; - Created by
+                                  ; - Created at
+                                  ;
+                                  ; Később:
+                                  ; Hol, kivel, hogyan van megosztva
+                                  [:div [elements/icon-button ::xxx
+                                                              {:icon :info
+                                                               :hover-color :highlight
+                                                               :border-radius :s
+                                                               :tooltip "Item info"
+                                                               :tooltip-position :left}]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

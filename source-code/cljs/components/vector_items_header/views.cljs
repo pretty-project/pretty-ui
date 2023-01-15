@@ -27,7 +27,7 @@
   ; {:label (metamorphic-contect)(opt)}
   [header-id {:keys [label] :as header-props}]
   [:div.c-vector-items-header--body (vector-items-header.helpers/header-body-attributes header-id header-props)
-                                    [elements/label {:content label}]
+                                    [elements/label {:content label :font-size :xl}]
                                     [vector-items-add-button header-id header-props]])
 
 (defn- vector-items-header
@@ -42,6 +42,9 @@
   ; @param (map) header-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
+  ;  :horizontal-align (keyword)(opt)
+  ;   :center, :left, :right
+  ;   Default: :left
   ;  :indent (map)(opt)
   ;  :initial-item (*)(opt)
   ;   Default: {}
