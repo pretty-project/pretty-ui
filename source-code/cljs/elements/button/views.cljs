@@ -1,37 +1,15 @@
 
 (ns elements.button.views
-    (:require [elements.button.helpers    :as button.helpers]
+    (:require [elements.button.attributes :as button.attributes]
               [elements.button.prototypes :as button.prototypes]
-              [pretty-css.api             :as pretty-css]
               [re-frame.api               :as r]
               [reagent.api                :as reagent]
-              [random.api                 :as random]
-              [x.components.api           :as x.components]))
+              [random.api                 :as random]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [:div.e-button--label {:data-text-overflow :no-wrap}
-                                  (x.components/content label)]))
-
-(defn- button-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon (keyword)(opt)}
-  [button-id {:keys [icon] :as button-props}]
-  [:i.e-button--icon (pretty-css/icon-attributes {} button-props)
-                     icon])
-
-(defn- button-body
+(defn- button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
@@ -40,21 +18,13 @@
   ;  :icon-position (keyword)(opt)
   ;  :label (string)(opt)}
   [button-id {:keys [icon icon-position label] :as button-props}]
-  [:button.e-button--body (button.helpers/button-body-attributes button-id button-props)
-                          (if icon (case icon-position :left  [:<> [button-icon  button-id button-props]
-                                                                   [button-label button-id button-props]]
-                                                       :right [:<> [button-label button-id button-props]
-                                                                   [button-icon  button-id button-props]])
-                                   [button-label button-id button-props])])
-
-(defn- button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  [:div.e-button (button.helpers/button-attributes button-id button-props)
-                 [button-body                      button-id button-props]])
+  [:div (button.attributes/button-attributes button-id button-props)
+        [:button (button.attributes/button-body-attributes button-id button-props)
+                 (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                                 (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
+                                     :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
+                                                 (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                            [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
 
 (defn- button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -101,6 +71,8 @@
   ;  :font-weight (keyword)(opt)
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default: :medium
+  ;  :gap (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :center
@@ -145,7 +117,7 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property.
   ;  :style (map)(opt)
-  ;  :tooltip (metamorphic-content)(opt)
+  ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right}
   ;

@@ -52,27 +52,27 @@
   ;  :on-click (metamorphic-event)
   ;  :tab-indexed? (boolean)(opt)
   ;   Default: true
-  ;  :tooltip (metamorphic-content)(opt)}
+  ;  :tooltip-content (metamorphic-content)(opt)}
   ;
   ; @return (map)
   ; {}
-  [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip]}]
+  [field-id field-props {:keys [color disabled? icon icon-family on-click tab-indexed? tooltip-content]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-color           color
-          :data-click-effect    :opacity
-          :data-line-height     :text-block
-          :data-reveal-effect   :delayed
-          :data-selectable      false
-          :data-bubble-content  (x.components/content tooltip)
-          :data-bubble-position :left}
-         (if icon               {:data-icon-family icon-family
-                                 :data-icon-size :s}
-                                {:data-font-size :xs})
-         (if disabled?          {:disabled   "1" :data-disabled true})
-         (if-not tab-indexed?   {:tab-index "-1"})
-         (if-not disabled?      {:on-mouse-up #(do (r/dispatch on-click)
-                                                   (x.environment/blur-element!))})))
+         {:data-color            color
+          :data-click-effect     :opacity
+          :data-line-height      :text-block
+          :data-reveal-effect    :delayed
+          :data-selectable       false
+          :data-tooltip-content  (x.components/content tooltip-content)
+          :data-tooltip-position :left}
+         (if icon                {:data-icon-family icon-family
+                                  :data-icon-size :s}
+                                 {:data-font-size :xs})
+         (if disabled?           {:disabled   "1" :data-disabled true})
+         (if-not tab-indexed?    {:tab-index "-1"})
+         (if-not disabled?       {:on-mouse-up #(do (r/dispatch on-click)
+                                                    (x.environment/blur-element!))})))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -107,10 +107,10 @@
   ;  :on-click (metamorphic-event)
   ;  :tooltip (metamorphic-content)}
   [field-id field-props]
-  {:disabled? (plain-field.helpers/field-empty? field-id)
-   :icon      :close
-   :on-click  [:elements.text-field/empty-field! field-id field-props]
-   :tooltip   :empty-field!})
+  {:disabled?       (plain-field.helpers/field-empty? field-id)
+   :icon            :close
+   :on-click        [:elements.text-field/empty-field! field-id field-props]
+   :tooltip-content :empty-field!})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

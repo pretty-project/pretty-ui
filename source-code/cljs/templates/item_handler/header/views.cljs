@@ -62,18 +62,19 @@
                                                                    :display-progress? true :progress-max 80
                                                                    :progress-behaviour :keep-faked}]]
        [elements/button ::delete-item-button
-                        {:border-radius :xs
-                         :color         "#de2050"
-                         :font-size     :xs
-                         :hover-color   :highlight
-                         :icon          :delete_forever
-                         :icon-size     :m
-                         :indent        {:horizontal :xxs :vertical :s}
-                         :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
-                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :delete!)
-                         :on-click      delete-event
-                         :outdent       {:all :xxs}
-                         :tooltip       :permanently-delete-this-item}]))
+                        {:border-radius   :xs
+                         :color           "#de2050"
+                         :font-size       :xs
+                         :gap             :xs
+                         :hover-color     :highlight
+                         :icon            :delete_forever
+                         :icon-size       :m
+                         :indent          {:horizontal :xxs :vertical :s}
+                         :icon-color      (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
+                         :label           (if @(r/subscribe [:x.environment/viewport-min? 480]) :delete!)
+                         :on-click        delete-event
+                         :outdent         {:all :xxs}
+                         :tooltip-content :permanently-delete-this-item}]))
 
 (defn- duplicate-item-button
   ; @param (keyword) handler-id
@@ -85,16 +86,17 @@
                                                                          :display-progress? true :progress-max 80
                                                                          :progress-behaviour :keep-faked}]]
        [elements/button ::duplicate-item-button
-                        {:border-radius :xs
-                         :font-size     :xs
-                         :hover-color   :highlight
-                         :icon          :content_copy
-                         :icon-size     :m
-                         :indent        {:horizontal :xxs :vertical :s}
-                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :duplicate!)
-                         :on-click      duplicate-event
-                         :outdent       {:all :xxs}
-                         :tooltip       :make-a-copy-of-this-item}]))
+                        {:border-radius   :xs
+                         :font-size       :xs
+                         :gap             :xs
+                         :hover-color     :highlight
+                         :icon            :content_copy
+                         :icon-size       :m
+                         :indent          {:horizontal :xxs :vertical :s}
+                         :label           (if @(r/subscribe [:x.environment/viewport-min? 480]) :duplicate!)
+                         :on-click        duplicate-event
+                         :outdent         {:all :xxs}
+                         :tooltip-content :make-a-copy-of-this-item}]))
 
 (defn- revert-item-button
   ; @param (keyword) handler-id
@@ -102,17 +104,18 @@
   [handler-id _]
   (let [item-changed? @(r/subscribe [:item-handler/current-item-changed? handler-id])]
        [elements/button ::revert-item-button
-                        {:border-radius :xs
-                         :disabled?     (not item-changed?)
-                         :font-size     :xs
-                         :hover-color   :highlight
-                         :icon          :undo
-                         :icon-size     :m
-                         :indent        {:horizontal :xxs :vertical :s}
-                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :revert!)
-                         :on-click      [:item-handler/revert-current-item! handler-id]
-                         :outdent       {:all :xxs}
-                         :tooltip       :discard-changes-of-this-item}]))
+                        {:border-radius   :xs
+                         :disabled?       (not item-changed?)
+                         :font-size       :xs
+                         :gap             :xs
+                         :hover-color     :highlight
+                         :icon            :undo
+                         :icon-size       :m
+                         :indent          {:horizontal :xxs :vertical :s}
+                         :label           (if @(r/subscribe [:x.environment/viewport-min? 480]) :revert!)
+                         :on-click        [:item-handler/revert-current-item! handler-id]
+                         :outdent         {:all :xxs}
+                         :tooltip-content :discard-changes-of-this-item}]))
 
 (defn- save-item-button
   ; @param (keyword) handler-id
@@ -124,19 +127,20 @@
         save-event [:item-handler/save-item!       handler-id {:on-failure on-failure :on-success on-success
                                                                :display-progress? true}]]
        [elements/button ::save-item-button
-                        {:border-radius :xs
-                         :color         "#0080fa"
-                         :disabled?     (not item-changed?)
-                         :font-size     :xs
-                         :hover-color   :highlight
-                         :icon          :cloud_upload
-                         :icon-size     :m
-                         :indent        {:horizontal :xxs :vertical :s}
-                         :icon-color    (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
-                         :label         (if @(r/subscribe [:x.environment/viewport-min? 480]) :save!)
-                         :on-click      save-event
-                         :outdent       {:left :s :all :xxs}
-                         :tooltip       :save-changes-of-this-item}]))
+                        {:border-radius   :xs
+                         :color           "#0080fa"
+                         :disabled?       (not item-changed?)
+                         :font-size       :xs
+                         :gap             :xs
+                         :hover-color     :highlight
+                         :icon            :cloud_upload
+                         :icon-size       :m
+                         :indent          {:horizontal :xxs :vertical :s}
+                         :icon-color      (if @(r/subscribe [:x.environment/viewport-min? 480]) :default)
+                         :label           (if @(r/subscribe [:x.environment/viewport-min? 480]) :save!)
+                         :on-click        save-event
+                         :outdent         {:left :s :all :xxs}
+                         :tooltip-content :save-changes-of-this-item}]))
 
 (defn control-bar
   ; @param (keyword) handler-id
@@ -155,24 +159,6 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- breadcrumbs
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  ; {:crumbs (maps in vector)}
-  [_ {:keys [crumbs]}]
-  [elements/breadcrumbs ::breadcrumbs
-                        {:crumbs crumbs}])
-
-(defn- title
-  ; @param (keyword) handler-id
-  ; @param (map) bar-props
-  ; {:placeholder (metamorphic-content)(opt)
-  ;  :title (metamorphic-content)(opt)}
-  [_ {:keys [placeholder title]}]
-  [components/section-title ::title
-                            {:content     title
-                             :placeholder placeholder}])
-
 (defn label-bar
   ; @param (keyword) handler-id
   ; @param (map) bar-props
@@ -185,9 +171,11 @@
   ;
   ; @usage
   ; [label-bar :my-handler {...}]
-  [handler-id bar-props]
-  [:div#t-item-handler--label-bar [:div.t-item-handler--label-bar-block [title       handler-id bar-props]
-                                                                        [breadcrumbs handler-id bar-props]]
+  [handler-id {:keys [crumbs placeholder title] :as bar-props}]
+  [:div {:id :t-item-handler--label-bar}
+        [:div {:class :t-item-handler--label-bar-block}
+              [components/section-title ::title {:content title :placeholder placeholder}]
+              [elements/breadcrumbs ::breadcrumbs {:crumbs crumbs}]]
 
                                   ; Info items:
                                   ; - Last modified by
@@ -197,12 +185,13 @@
                                   ;
                                   ; Később:
                                   ; Hol, kivel, hogyan van megosztva
-                                  [:div [elements/icon-button ::xxx
-                                                              {:icon :info
-                                                               :hover-color :highlight
-                                                               :border-radius :s
-                                                               :tooltip "Item info"
-                                                               :tooltip-position :left}]]])
+        [:div {:class :t-item-handler--label-bar-block}
+              [elements/icon-button ::xxx
+                                    {:icon :info
+                                     :hover-color :highlight
+                                     :border-radius :s
+                                     :tooltip-content  "Item info"
+                                     :tooltip-position :left}]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

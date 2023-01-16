@@ -1,6 +1,6 @@
 
 (ns elements.icon-button.views
-    (:require [elements.icon-button.helpers    :as icon-button.helpers]
+    (:require [elements.icon-button.attributes :as icon-button.attributes]
               [elements.icon-button.prototypes :as icon-button.prototypes]
               [random.api                      :as random]
               [re-frame.api                    :as r]
@@ -10,58 +10,22 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- icon-button-progress
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:progress (percent)(opt)}
-  [button-id {:keys [progress] :as button-props}]
-  (if progress (let [progress-attributes (icon-button.helpers/progress-attributes button-id button-props)]
-                    [:svg.e-icon-button--progress-svg {:view-box "0 0 24 24"}
-                                                      [:circle.e-icon-button--progress-circle progress-attributes]])))
-
-(defn- icon-button-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:label (metamorphic-content)(opt)}
-  [_ {:keys [label]}]
-  (if label [:div.e-icon-button--label {:data-color         :default
-                                        :data-font-weight   :bold
-                                        :data-text-overflow :ellipsis}
-                                       (x.components/content label)]))
-
-(defn- icon-button-icon
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  ; {:icon (keyword)
-  ;  :icon-color (keyword)
-  ;  :icon-family (keyword)}
-  [_ {:keys [icon icon-color icon-family]}]
-  [:i.e-icon-button--icon {:data-icon-color icon-color :data-icon-family icon-family :data-icon-size :m}
-                          icon])
-
-(defn- icon-button-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) button-id
-  ; @param (map) button-props
-  [button-id button-props]
-  [:button.e-icon-button--body (icon-button.helpers/button-body-attributes button-id button-props)
-                               [icon-button-progress                       button-id button-props]
-                               [icon-button-icon                           button-id button-props]
-                               [icon-button-label                          button-id button-props]])
-
 (defn- icon-button-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  [button-id button-props]
-  [:div.e-icon-button (icon-button.helpers/button-attributes button-id button-props)
-                      [icon-button-body                      button-id button-props]])
+  ; {:icon (keyword)
+  ;  :label (metamorphic-content)(opt)
+  ;  :progress (percent)(opt)}
+  [button-id {:keys [icon label progress] :as button-props}]
+  [:div (icon-button.attributes/button-attributes button-id button-props)
+        [:button (icon-button.attributes/button-body-attributes button-id button-props)
+                 (if progress [:svg {:class :e-icon-button--progress-svg :view-box "0 0 24 24"}
+                                    [:circle (icon-button.attributes/progress-attributes button-id button-props)]])
+                 (if icon     [:i   (icon-button.attributes/button-icon-attributes  button-id button-props) icon])
+                 (if label    [:div (icon-button.attributes/button-label-attributes button-id button-props)
+                                    (x.components/content label)])]])
 
 (defn- icon-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -128,7 +92,7 @@
   ;  :progress-duration (ms)(opt)
   ;   W/ {:progress ...}
   ;  :style (map)(opt)
-  ;  :tooltip (metamorphic-content)(opt)
+  ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right
   ;  :width (keyword)(opt)

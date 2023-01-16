@@ -1,6 +1,6 @@
 
 (ns elements.blank.views
-    (:require [elements.blank.helpers    :as blank.helpers]
+    (:require [elements.blank.attributes :as blank.attributes]
               [elements.blank.prototypes :as blank.prototypes]
               [random.api                :as random]
               [x.components.api          :as x.components]))
@@ -8,30 +8,23 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- blank-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) blank-id
-  ; @param (map) blank-props
-  ; {}
-  [blank-id {:keys [content] :as blank-props}]
-  [:div.e-blank--body (blank.helpers/blank-body-attributes blank-id blank-props)
-                      [x.components/content content]])
-
 (defn- blank
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) blank-id
   ; @param (map) blank-props
-  [blank-id blank-props]
-  [:div.e-blank (blank.helpers/blank-attributes blank-id blank-props)
-                [blank-body                     blank-id blank-props]])
+  ; {:content (metamorphic-content)}
+  [blank-id {:keys [content] :as blank-props}]
+  [:div (blank.attributes/blank-attributes blank-id blank-props)
+        [:div (blank.attributes/blank-body-attributes blank-id blank-props)
+              [x.components/content blank-id content]]])
 
 (defn element
   ; @param (keyword)(opt) blank-id
   ; @param (map) blank-props
   ; {:content (metamorphic-content)(opt)
   ;  :class (keyword or keywords in vector)(opt)
+  ;  :content (metamorphic-content)
   ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)

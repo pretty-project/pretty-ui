@@ -10,7 +10,8 @@
   ; @param (keyword) avatar-id
   ; @param (map) avatar-props
   [avatar-id avatar-props]
-  [:div.c-list-item-avatar [user-avatar.views/component avatar-id avatar-props]])
+  [:div {:class :c-list-item-avatar}
+        [user-avatar.views/component avatar-id avatar-props]])
 
 (defn component
   ; XXX#0720 (source-code/cljs/components/user_avatar/views.cljs)
@@ -24,7 +25,7 @@
   ; [list-item-avatar {...}]
   ;
   ; @usage
-  ; [list-item-avatar :my-avatar {...}]
+  ; [list-item-avatar :my-list-item-avatar {...}]
   ([avatar-props]
    [component (random/generate-keyword) avatar-props])
 

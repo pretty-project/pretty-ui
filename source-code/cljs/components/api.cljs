@@ -21,13 +21,15 @@
               [components.list-item-cell.views           :as list-item-cell.views]
               [components.list-item-drag-handle.views    :as list-item-drag-handle.views]
               [components.list-item-gap.views            :as list-item-gap.views]
+              [components.list-item-icon.views           :as list-item-icon.views]
               [components.list-item-thumbnail.views      :as list-item-thumbnail.views]
               [components.menu-table.views               :as menu-table.views]
               [components.notification-bubble.views      :as notification-bubble.views]
               [components.pdf-preview.views              :as pdf-preview.views]
-              [components.popup-close-bar.views          :as popup-close-bar.views]
               [components.popup-label-bar.views          :as popup-label-bar.views]
+              [components.popup-menu-button.views        :as popup-menu-button.views]
               [components.popup-menu-header.views        :as popup-menu-header.views]
+              [components.popup-menu-label.views         :as popup-menu-label.views]
               [components.popup-progress-indicator.views :as popup-progress-indicator.views]
               [components.side-menu-button.views         :as side-menu-button.views]
               [components.side-menu-footer.views         :as side-menu-footer.views]
@@ -42,7 +44,7 @@
               [components.vector-item-controls.views     :as vector-item-controls.views]
               [components.vector-item-list.views         :as vector-item-list.views]
               [components.vector-items-header.views      :as vector-items-header.views]))
-
+ 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -66,13 +68,15 @@
 (def list-item-cell           list-item-cell.views/component)
 (def list-item-drag-handle    list-item-drag-handle.views/component)
 (def list-item-gap            list-item-gap.views/component)
+(def list-item-icon           list-item-icon.views/component)
 (def list-item-thumbnail      list-item-thumbnail.views/component)
 (def menu-table               menu-table.views/component)
 (def notification-bubble      notification-bubble.views/component)
 (def pdf-preview              pdf-preview.views/component)
-(def popup-close-bar          popup-close-bar.views/component)
 (def popup-label-bar          popup-label-bar.views/component)
+(def popup-menu-button        popup-menu-button.views/component)
 (def popup-menu-header        popup-menu-header.views/component)
+(def popup-menu-label         popup-menu-label.views/component)
 (def popup-progress-indicator popup-progress-indicator.views/component)
 (def side-menu                side-menu.views/component)
 (def side-menu-button         side-menu-button.views/component)

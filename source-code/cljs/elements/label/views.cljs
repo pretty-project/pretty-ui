@@ -95,12 +95,12 @@
   ; 1. By using the 'label' element with {:copyable? true} setting, ...
   ;    ... the content will be a clickable sensor and by clicking on it, it copies
   ;        the content to the clipboard.
-  ;    ... when the user moves the pointer over the sensor, a bubble shown up with
+  ;    ... when the user moves the pointer over the sensor, a tooltip shown up with
   ;        the label 'Copy' (as a pseudo-element).
-  ;    ... The bubble is implemented by the {:data-bubble-content ...} CSS preset,
+  ;    ... The tooltip is implemented by the {:data-tooltip-content ...} CSS preset,
   ;        which has to be applied on the sensor element.
   ; 2. The .e-label--content element has the {overflow: hidden} setting, therefore it's
-  ;    not capable to be applied with the {:data-bubble-content ...} preset.
+  ;    not capable to be applied with the {:data-tooltip-content ...} preset.
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
   (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
@@ -156,6 +156,8 @@
   ;  :font-weight (keyword)(opt)
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default :medium
+  ;  :gap (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left

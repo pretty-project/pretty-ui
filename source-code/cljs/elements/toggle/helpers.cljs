@@ -1,10 +1,9 @@
 
 (ns elements.toggle.helpers
-    (:require [elements.button.helpers :as button.helpers]
-              [pretty-css.api          :as pretty-css]
-              [hiccup.api              :as hiccup]
-              [re-frame.api            :as r]
-              [x.environment.api       :as x.environment]))
+    (:require [pretty-css.api    :as pretty-css]
+              [hiccup.api        :as hiccup]
+              [re-frame.api      :as r]
+              [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

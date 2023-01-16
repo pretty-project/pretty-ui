@@ -1,5 +1,5 @@
 
-(ns components.side-menu-button.prototypes
+(ns components.popup-menu-button.prototypes
     (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
@@ -11,10 +11,11 @@
   ; @return (map)
   ; {}
   [button-props]
-  (merge {:font-size        :xs
+  (merge {:border-radius    :s
           :gap              :xs
           :horizontal-align :left
           :hover-color      :highlight
           :icon-size        :m
-          :indent           {:horizontal :xs :left :s :right :xl}}
+          :indent           {:horizontal :xxs :vertical :xxs}
+          :outdent          {:vertical :xs}}
          (param button-props)))

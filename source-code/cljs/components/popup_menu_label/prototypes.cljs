@@ -1,5 +1,5 @@
 
-(ns components.side-menu-label.prototypes
+(ns components.popup-menu-label.prototypes
     (:require [candy.api :refer [param]]))
 
 ;; ----------------------------------------------------------------------------
@@ -10,18 +10,14 @@
   ;
   ; @return (map)
   ; {:color (keyword)
-  ;  :font-size (keyword)
   ;  :gap (keyword)
   ;  :horizontal-align (keyword)
   ;  :icon-size (keyword)
-  ;  :indent (map)
-  ;  :style (map)}
+  ;  :outdent (map)}
   [label-props]
   (merge {:color            :muted
-          :font-size        :xs
           :gap              :xs
           :horizontal-align :left
           :icon-size        :m
-          :indent           {:horizontal :xs :vertical :s}
-          :style {:max-width "var(--element-size-m)"}}
+          :outdent          {:horizontal :xxs :vertical :s}}
          (param label-props)))

@@ -1,11 +1,12 @@
 
-(ns elements.anchor.helpers
+(ns elements.anchor.attributes
     (:require [pretty-css.api    :as pretty-css]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
+
 (defn anchor-body-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
@@ -16,10 +17,12 @@
   ; @return (map)
   ; {}
   [anchor-id {:keys [disabled? href on-click style] :as anchor-props}]
-  (-> (if disabled? {:data-text-overflow :no-wrap
+  (-> (if disabled? {:class              :e-anchor--body
+                     :data-text-overflow :no-wrap
                      :disabled           true
                      :style              style}
-                    {:data-click-effect  :opacity
+                    {:class              :e-anchor--body
+                     :data-click-effect  :opacity
                      :data-text-overflow :no-wrap
                      :href               href
                      :style              style
@@ -39,6 +42,8 @@
   ; @param (map) anchor-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ anchor-props]
-  (-> {} (pretty-css/default-attributes anchor-props)
-         (pretty-css/outdent-attributes anchor-props)))
+  (-> {:class :e-anchor}
+      (pretty-css/default-attributes anchor-props)
+      (pretty-css/outdent-attributes anchor-props)))

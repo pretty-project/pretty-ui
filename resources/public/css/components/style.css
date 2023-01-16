@@ -1,4 +1,41 @@
 
+/***** Color picker *****/
+/*** Wrapper ***/
+
+.c-color-picker {
+  display: flex;
+}
+
+/*** Wrapper ***/
+
+/*** Body ***/
+
+.c-color-picker--body {
+  display: flex;
+}
+
+/*** Body ***/
+
+/*** Placeholder ***/
+
+.c-color-picker--placeholder {
+  column-gap: 12px;
+  display: flex;
+}
+
+/*** Placeholder ***/
+
+/*** Color stamp ***/
+
+.c-color-picker--color-stamp {
+
+}
+
+/*** Color stamp ***/
+/***** Color picker *****/
+
+
+
 /***** Compact list header *****/
 /*** Body ***/
 
@@ -247,6 +284,18 @@
 }
 
 /***** List item drag handle *****/
+
+
+
+/***** List item icon *****/
+
+.c-list-item-icon {
+  align-items:     center;
+  display:         flex;
+  justify-content: center;
+}
+
+/***** List item icon *****/
 
 
 

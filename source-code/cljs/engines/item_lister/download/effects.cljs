@@ -101,8 +101,6 @@
       (if (r body.subs/body-did-mount? db lister-id)
           {:db (r download.events/receive-reloaded-items! db lister-id server-response)})))
 
-
-
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 

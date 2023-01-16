@@ -1,5 +1,5 @@
 
-(ns elements.blank.helpers
+(ns elements.blank.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -13,9 +13,11 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
   [_ {:keys [style] :as blank-props}]
-  (-> {:style style}
+  (-> {:class :e-blank--body
+       :style style}
       (pretty-css/indent-attributes blank-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -28,6 +30,8 @@
   ; @param (map) blank-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ blank-props]
-  (-> {} (pretty-css/default-attributes blank-props)
-         (pretty-css/outdent-attributes blank-props)))
+  (-> {:class :e-blank}
+      (pretty-css/default-attributes blank-props)
+      (pretty-css/outdent-attributes blank-props)))

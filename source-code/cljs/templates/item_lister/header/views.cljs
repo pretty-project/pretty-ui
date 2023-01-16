@@ -67,6 +67,18 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- add-item-icon-button
+  ; @param (keyword) lister-id
+  ; @param (map) bar-props
+  [_ _]
+  [elements/icon-button ::add-item-icon-button
+                        {:border-radius   :l
+                         :color           :secondary
+                         :hover-color     :highlight
+                         :icon            :add_circle
+                         :on-click        []
+                         :tooltip-content :add-item!}])
+
 (defn- breadcrumbs
   ; @param (keyword) lister-id
   ; @param (map) bar-props
@@ -98,20 +110,24 @@
   ; @usage
   ; [label-bar :my-lister {...}]
   [lister-id bar-props]
-  [:div#t-item-lister--label-bar [:div.t-item-lister--label-bar--block [title       lister-id bar-props]
-                                                                       [breadcrumbs lister-id bar-props]]
-
-                                 ; Menu items:
-                                 ; - Rename board
-                                 ; - Invite members to board
-                                 ; - Share board with other workspaces
-                                 ; - Delete board
-                                 [:div [elements/icon-button ::xxx
-                                                             {:icon :menu
-                                                              :hover-color :highlight
-                                                              :border-radius :s
-                                                              :tooltip "Board menu"
-                                                              :tooltip-position :left}]]])
+  [:div {:id :t-item-lister--label-bar}
+        [:div {:class :t-item-lister--label-bar--block}
+              [:div {:data-orientation :horizontal}
+                    [title                lister-id bar-props]
+                    [add-item-icon-button lister-id bar-props]]
+              [breadcrumbs lister-id bar-props]]
+        [:div {:class :t-item-lister--label-bar--block}
+              ; Menu items:
+              ; - Rename board
+              ; - Invite members to board
+              ; - Share board with other workspaces
+              ; - Delete board
+              [elements/icon-button ::xxx
+                                    {:icon :menu
+                                     :hover-color :highlight
+                                     :border-radius :s
+                                     :tooltip-content  "Board menu"
+                                     :tooltip-position :left}]]])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

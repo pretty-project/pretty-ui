@@ -130,7 +130,7 @@
   ;
   ; @return (boolean)
   [db [_ lister-id]]
-  ; Ha a keresőmezőbe írsz egy karaktert, akkor meg az on-type-ended esemény,
+  ; Ha a keresőmezőbe írsz egy karaktert, akkor megtörténik az on-type-ended esemény,
   ; és ha még a mező {:disabled? true} állapotba lépése előtt megnyomod az ESC billentyűt,
   ; akkor megtörténik az on-empty esemény is ezért a lekérés indítása kétszer történne meg!
   ; Ezért szükséges vizsgálni a lister-synchronizing? függvény kimenetét, hogy ha már elindult

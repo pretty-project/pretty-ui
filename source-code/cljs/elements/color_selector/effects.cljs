@@ -21,7 +21,7 @@
   [r/event-vector<-id]
   (fn [{:keys [db]} [_ selector-id selector-props]]
       (let [selector-props (r color-selector.prototypes/selector-props-prototype db selector-id selector-props)]
-           {:fx       [:elements.inpt/mark-input-as-visited!    selector-id]
+           {:fx       [:elements.input/mark-input-as-visited!   selector-id]
             :dispatch [:elements.color-selector/render-options! selector-id selector-props]})))
 
 (r/reg-event-fx :elements.color-selector/render-options!
@@ -34,7 +34,9 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(r/reg-event-fx :elements/toggle-color-selector-option!
+(r/reg-event-fx :elements.color-selector/toggle-option!
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
   ; @param (keyword) selector-id
   ; @param (map) selector-props
   ; {:on-select (metamorphic-event)(opt)}

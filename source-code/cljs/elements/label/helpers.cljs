@@ -73,16 +73,16 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:data-bubble-content (string)
-  ;  :data-bubble-position (keyword)
-  ;  :data-click-effect (keyword)
+  ; {:data-click-effect (keyword)
   ;  :data-selectable (boolean)
+  ;  :data-tooltip-content (string)
+  ;  :data-tooltip-position (keyword)
   ;  :on-click (function)
   [label-id label-props]
-  {:data-bubble-position :right
-   :data-click-effect    :opacity
-   :data-bubble-content  (x.components/content :copy!)
-   :on-click             (on-copy-f label-id label-props)})
+  {:data-click-effect     :opacity
+   :data-tooltip-position :right
+   :data-tooltip-content  (x.components/content :copy!)
+   :on-click              (on-copy-f label-id label-props)})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -115,8 +115,9 @@
   ;
   ; @return (map)
   ; {}
-  [_ {:keys [horizontal-align horizontal-position min-width selectable? style vertical-position] :as label-props}]
-  (-> {:data-horizontal-position  horizontal-position
+  [_ {:keys [gap horizontal-align horizontal-position min-width selectable? style vertical-position] :as label-props}]
+  (-> {:data-column-gap           gap
+       :data-horizontal-position  horizontal-position
        :data-horizontal-row-align horizontal-align
        :data-element-min-width    min-width
        :data-selectable           selectable?

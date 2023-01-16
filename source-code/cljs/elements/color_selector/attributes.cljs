@@ -1,5 +1,5 @@
 
-(ns elements.color-selector.helpers
+(ns elements.color-selector.attributes
     (:require [pretty-css.api    :as pretty-css]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]
@@ -19,9 +19,10 @@
   ; @return (map)
   ; {}
   [selector-id {:keys [value-path] :as selector-props} option]
-  (let [on-click [:elements/toggle-color-selector-option! selector-id selector-props option]
+  (let [on-click [:elements.color-selector/toggle-option! selector-id selector-props option]
         selected-options @(r/subscribe [:x.db/get-item value-path])]
-       {:data-click-effect :opacity
+       {:class             :e-color-selector--option
+        :data-click-effect :opacity
         :data-icon-family  :material-symbols-outlined
         :data-collected    (vector/contains-item? selected-options option)
         :on-click          #(r/dispatch on-click)
@@ -38,9 +39,11 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
   [_ {:keys [style] :as selector-props}]
-  (-> {:style style}
+  (-> {:class :e-color-selector--options-body
+       :style style}
       (pretty-css/indent-attributes selector-props)))
 
 ;; ----------------------------------------------------------------------------

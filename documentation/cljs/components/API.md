@@ -43,6 +43,8 @@
 
 - [list-item-gap](#list-item-gap)
 
+- [list-item-icon](#list-item-icon)
+
 - [list-item-thumbnail](#list-item-thumbnail)
 
 - [menu-table](#menu-table)
@@ -51,11 +53,13 @@
 
 - [pdf-preview](#pdf-preview)
 
-- [popup-close-bar](#popup-close-bar)
-
 - [popup-label-bar](#popup-label-bar)
 
+- [popup-menu-button](#popup-menu-button)
+
 - [popup-menu-header](#popup-menu-header)
+
+- [popup-menu-label](#popup-menu-label)
 
 - [popup-progress-indicator](#popup-progress-indicator)
 
@@ -118,11 +122,26 @@
 ```
 @param (keyword) picker-id
 @param (map) picker-props
-{:disabled? (boolean)(opt)
+{:class (keyword or keywords in vector)(opt)
+ :color-stamp (map)(opt)
+  {:border-radius (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+   :gap (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+   :height (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+    Default: :l
+   :width (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+    Default: :l}
+ :disabled? (boolean)(opt)
  :indent (map)(opt)
  :label (metamorphic-content)(opt)
  :on-select (metamorphic-event)(opt)
  :outdent (map)(opt)
+ :placeholder (metamorphic-content)(opt)
+  Default: :choose-color!
+ :style (map)(opt)
  :value-path (vector)}
 ```
 
@@ -531,7 +550,7 @@ same ID for both the field and the block, the label of the block can targets the
 
 ```
 @usage
-[list-item-avatar :my-avatar {...}]
+[list-item-avatar :my-list-item-avatar {...}]
 ```
 
 ---
@@ -630,6 +649,25 @@ same ID for both the field and the block, the label of the block can targets the
 ```
 @usage
 [list-item-gap :my-gap {...}]
+```
+
+---
+
+### list-item-icon
+
+```
+@param (keyword)(opt) icon-id
+@param (map) icon-props
+```
+
+```
+@usage
+[list-item-icon {...}]
+```
+
+```
+@usage
+[list-item-icon :my-list-item-icon {...}]
 ```
 
 ---
@@ -767,26 +805,6 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
-### popup-close-bar
-
-```
-@param (keyword)(opt) bar-id
-@param (map) bar-props
-{:on-close (metamorphic-event)}
-```
-
-```
-@usage
-[popup-close-bar {...}]
-```
-
-```
-@usage
-[popup-close-bar :my-popup-close-bar {...}]
-```
-
----
-
 ### popup-label-bar
 
 ```
@@ -813,14 +831,53 @@ same ID for both the field and the block, the label of the block can targets the
 
 ---
 
+### popup-menu-button
+
+```
+@param (keyword)(opt) button-id
+@param (map) button-props
+{:border-radius (keyword)(opt)
+  Default: :s
+ :gap (keyword)(opt)
+  Default: :xs
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :hover-color (keyword or string)(opt)
+  Default: :highlight
+ :icon-size (keyword)(opt)
+  Default: :m
+ :indent (map)(opt)
+  Default: {:horizontal :xxs :vertical :xxs}
+ :outdent (map)(opt)
+  Default: {:vertical :xs}}
+```
+
+```
+@usage
+[popup-menu-button {...}]
+```
+
+```
+@usage
+[popup-menu-button :my-popup-menu-button {...}]
+```
+
+---
+
 ### popup-menu-header
 
 ```
 @param (keyword) header-id
 @param (map) header-props
-{:label (metamorphic-content)(opt)
- :on-close (metamorphic-event)
- :placeholder (metamorphic-content)(opt)}
+{:close-button (map)(opt)
+  Default: {:border-radius :s
+            :hover-color   :highlight
+            :icon          :close
+            :keypress      {:key-code 27}}
+ :label (map)(opt)
+  Default: {:color     :muted
+            :font-size :xs
+            :indent    {:horizontal :xs :vertical :s}}}
 ```
 
 ```
@@ -831,6 +888,35 @@ same ID for both the field and the block, the label of the block can targets the
 ```
 @usage
 [popup-menu-header :my-popup-menu-header {...}]
+```
+
+---
+
+### popup-menu-label
+
+```
+@param (keyword)(opt) label-id
+@param (map) label-props
+{:color (keyword or string)(opt)
+  Default: :muted
+ :gap (keyword)(opt)
+  Default: :xs
+ :horizontal-align (keyword)(opt)
+  Default: :left
+ :icon-size (keyword)(opt)
+  Default: :m
+ :outdent (map)(opt)
+  Default: {:horizontal :xxs :vertical :s}}
+```
+
+```
+@usage
+[side-menu-label {...}]
+```
+
+```
+@usage
+[side-menu-label :my-side-menu-label {...}]
 ```
 
 ---
@@ -968,6 +1054,8 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) button-props
 {:font-size (keyword)(opt)
   Default: :xs
+ :gap (keyword)(opt)
+  Default: :xs
  :horizontal-align (keyword)(opt)
   Default: :left
  :hover-color (keyword or string)(opt)
@@ -1040,8 +1128,12 @@ same ID for both the field and the block, the label of the block can targets the
   Default: :muted
  :font-size (keyword)(opt)
   Default: :xs
+ :gap (keyword)(opt)
+  Default: :xs
  :horizontal-align (keyword)(opt)
   Default: :left
+ :icon-size (keyword)(opt)
+  Default: :m
  :indent (map)(opt)
   Default: {:horizontal :xs :vertical :s}
  :style (map)(opt)
@@ -1137,10 +1229,15 @@ same ID for both the field and the block, the label of the block can targets the
 {:class (keyword or keywords in vector)(opt)
  :colors (strings in vector)(opt)
  :disabled? (boolean)(opt)
- :first-name (string)(opt)
+ :icon (keyword)(opt)
+  Default: :person
+ :icon-family (keyword)(opt)
+  :material-symbols-filled, :material-symbols-outlined
+  Default: :material-symbols-outlined
  :indent (map)(opt)
+ :initials (string)(opt)
+  Displays initial letters instead of displaying an icon
  :outdent (map)(opt)
- :last-name (string)(opt)
  :size (px)(opt)
   Default: 60
  :style (map)(opt)

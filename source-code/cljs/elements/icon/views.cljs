@@ -19,6 +19,9 @@
                                 icon]])
 
 (defn element
+  ; XXX#0714
+  ; Some other items based on the button element and their documentations are linked to here.
+  ;
   ; @param (keyword)(opt) icon-id
   ; @param (map) icon-props
   ; {:class (keyword or keywords in vector)(opt)

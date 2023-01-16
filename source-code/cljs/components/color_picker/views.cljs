@@ -1,68 +1,71 @@
 
 (ns components.color-picker.views
-    (:require [elements.api :as elements]
-              [random.api   :as random]
-              [re-frame.api :as r]))
+    (:require [components.color-picker.attributes :as color-picker.attributes]
+              [components.color-picker.prototypes :as color-picker.prototypes]
+              [components.component.views         :as component.views]
+              [elements.api                       :as elements]
+              [random.api                         :as random]
+              [re-frame.api                       :as r]
+              [x.components.api                   :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn color-picker-label
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
-  ; {:disabled? (boolean)(opt)
-  ;  :label (metamorphic-content)(opt)}
-  [_ {:keys [disabled? label]}]
-  (if label [elements/label {:content   :color
-                             :disabled? disabled?}]))
-
-(defn color-picker-button
-  ; @param (keyword) picker-id
-  ; @param (map) picker-props
-  ; {:disabled? (boolean)(opt)
-  ;  :on-select (metamorphic-event)(opt)
-  ;  :value-path (vector)}
-  [picker-id {:keys [disabled? on-select value-path]}]
-  [elements/button {:color            :muted
-                    :disabled?        disabled?
-                    :font-size        :xs
-                    :horizontal-align :left
-                    :label            :choose-color!
-                    :on-click         [:elements.color-selector/render-selector! picker-id {:on-select on-select :value-path value-path}]}])
 
 (defn color-picker-value
   ; @param (keyword) picker-id
   ; @param (map) picker-props
   ; {:disabled? (boolean)(opt)
   ;  :value-path (vector)}
-  [_ {:keys [disabled? value-path]}]
-  (let [picked-colors @(r/subscribe [:x.db/get-item value-path])]))
-       ;[elements/color-stamp {:colors    picked-colors
-        ;                      :disabled? disabled?
-        ;                      :size      :xxl)]))
+  [picker-id {:keys [value-path] :as picker-props}]
+  (let [picked-colors @(r/subscribe [:x.db/get-item value-path])]
+       (letfn [(f [picked-colors color]
+                  (conj picked-colors [:div (color-picker.attributes/picked-color-attributes picker-id picker-props color)]))]
+              (reduce f [:<>] picked-colors))))
 
 (defn color-picker
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ; {:disabled? (boolean)(opt)
-  ;  :indent (map)(opt)
-  ;  :label (metamorphic-content)(opt)
+  ; {:placeholder (metamorphic-content)
   ;  :value-path (vector)}
-  [picker-id {:keys [indent] :as picker-props}]
-  [elements/blank {:indent  indent
-                   :content [:<> [color-picker-label picker-id picker-props]
-                                 [:div {:style {:display :flex}}
-                                       [color-picker-button picker-id picker-props]]
-                                 [color-picker-value picker-id picker-props]]}])
+  [picker-id {:keys [placeholder value-path] :as picker-props}]
+  [:div (color-picker.attributes/picker-attributes picker-id picker-props)
+        ; Color picker label
+        [component.views/component-label picker-id picker-props]
+        ; Color picker body
+        [:div (color-picker.attributes/picker-body-attributes picker-id picker-props)
+              ; Checks whether any color picked ...
+              (let [picked-colors @(r/subscribe [:x.db/get-item value-path])]
+                   (if (empty? picked-colors)
+                       ; If no color picked, displays a placeholder
+                       [:div (color-picker.attributes/placeholder-attributes picker-id picker-props)
+                             (x.components/content picker-id placeholder)
+                             [:i {:data-icon-family :material-symbols-outlined :data-icon-size :m} :palette]]
+                       ; If any color picked, displays the picked colors
+                       [color-picker-value picker-id picker-props]))]])
 
 (defn component
   ; @param (keyword) picker-id
   ; @param (map) picker-props
-  ; {:disabled? (boolean)(opt)
+  ; {:class (keyword or keywords in vector)(opt)
+  ;  :color-stamp (map)(opt)
+  ;   {:border-radius (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;    :gap (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;    :height (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     Default: :l
+  ;    :width (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;     Default: :l}
+  ;  :disabled? (boolean)(opt)
   ;  :indent (map)(opt)
   ;  :label (metamorphic-content)(opt)
   ;  :on-select (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
+  ;  :placeholder (metamorphic-content)(opt)
+  ;   Default: :choose-color!
+  ;  :style (map)(opt)
   ;  :value-path (vector)}
   ;
   ; @usage
@@ -74,5 +77,5 @@
    [component (random/generate-keyword) picker-props])
 
   ([picker-id picker-props]
-   (let [] ; picker-props (color-picker.prototypes/picker-props-prototype picker-props)
+   (let [picker-props (color-picker.prototypes/picker-props-prototype picker-props)]
         [color-picker picker-id picker-props])))

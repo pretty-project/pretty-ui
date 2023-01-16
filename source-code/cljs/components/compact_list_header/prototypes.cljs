@@ -18,13 +18,14 @@
          {:hide-button (merge {:border-radius    :s
                                :hover-color      :highlight
                                :icon             :menu_open
-                               :tooltip          :hide-sidebar!
+                               :tooltip-content  :hide-sidebar!
                                :tooltip-position :left}
                               (param hide-button))}
-         {:order-button (merge {:border-radius :s
-                                :hover-color   :highlight
-                                :icon          :sort
-                                :tooltip       :item-order}
+         {:order-button (merge {:border-radius    :s
+                                :hover-color      :highlight
+                                :icon             :sort
+                                :tooltip-content  :item-order
+                                :tooltip-position :right}
                                (param order-button))}
          {:search-field (merge {:border-color  :highlight
                                 :border-radius :l

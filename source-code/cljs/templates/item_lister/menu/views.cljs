@@ -33,7 +33,9 @@
   [components/side-menu-button ::group-label
                               {:label     group-label
                                :icon        group-icon
-                               :icon-family group-icon-family}])
+                               :icon-family group-icon-family
+
+                               :preset :active}])
 
 (defn menu
   ; @param (keyword) lister-id

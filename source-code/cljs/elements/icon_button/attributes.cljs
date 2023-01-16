@@ -1,10 +1,10 @@
 
-(ns elements.icon-button.helpers
-    (:require [css.api                 :as css]
-              [elements.button.helpers :as button.helpers]
-              [math.api                :as math]
-              [pretty-css.api          :as pretty-css]
-              [x.components.api        :as x.components]))
+(ns elements.icon-button.attributes
+    (:require [css.api                    :as css]
+              [elements.button.attributes :as button.attributes]
+              [math.api                   :as math]
+              [pretty-css.api             :as pretty-css]
+              [x.components.api           :as x.components]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -36,13 +36,48 @@
         stroke-dasharray    (str percent-result" "percent-rem)
         transition-duration (css/ms progress-duration)
         transition          (if (> progress 0) (str "stroke-dasharray " transition-duration " linear"))]
-       {:style {:cx               12
+       {:class :e-icon-button--progress-circle
+        :style {:cx               12
                 :cy               12
                 :r                11
                 :stroke-width     2
                 :stroke           "var( --border-color-primary )"
                 :stroke-dasharray stroke-dasharray
                 :transition       transition}}))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn button-icon-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ button-props]
+  (-> {:class :e-icon-button--icon}
+      (pretty-css/icon-attributes button-props)))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn button-label-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {}
+  ;
+  ; @return (map)
+  ; {}
+  [_ _]
+  {:class              :e-icon-button--label
+   :data-color         :default
+   :data-font-weight   :bold
+   :data-text-overflow :ellipsis})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -54,28 +89,25 @@
   ; @param (map) button-props
   ; {:height (keyword)
   ;  :label (metamorphic-content)(opt)
-  ;  :tooltip (metamorphic-content)(opt)
-  ;  :tooltip-position (keyword)(opt)
   ;  :width (keyword)}
   ;
   ; @return (map)
-  ; {:data-block-height (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-block-height (keyword)
   ;  :data-block-min-width (keyword)
-  ;  :data-bubble-content (string)
-  ;  :data-bubble-position (keyword)
   ;  :data-labeled (boolean)}
-  [button-id {:keys [height label tooltip tooltip-position width] :as button-props}]
+  [button-id {:keys [height label width] :as button-props}]
   ; XXX#0990
   ; By using the :data-block-min-width preset instead of using the :data-block-width
   ; preset, the icon-button element can expands horizontaly when its label doesn't
   ; fit into it.
-  (-> {:data-block-height    height
-       :data-block-min-width width
-       :data-bubble-content  (x.components/content tooltip)
-       :data-bubble-position tooltip-position
-       :data-labeled         (boolean label)}
-      (pretty-css/indent-attributes button-props)
-      (merge (button.helpers/button-body-attributes button-id button-props))))
+  (-> (button.attributes/button-body-attributes button-id button-props)
+      (merge {:class                 :e-icon-button--body
+              :data-block-height     height
+              :data-block-min-width  width
+              :data-labeled          (boolean label)})
+      (pretty-css/indent-attributes  button-props)
+      (pretty-css/tooltip-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -85,11 +117,10 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
-  ; {:tooltip (metamorphic-content)(opt)}
   ;
   ; @return (map)
-  ; {:data-tooltip (string)}
-  [_ {:keys [tooltip] :as button-props}]
-  (-> (if tooltip {:data-tooltip (x.components/content {:content tooltip})})
+  ; {:class (keyword or keywords in vector)}
+  [_ button-props]
+  (-> {:class :e-icon-button}
       (pretty-css/default-attributes button-props)
       (pretty-css/outdent-attributes button-props)))

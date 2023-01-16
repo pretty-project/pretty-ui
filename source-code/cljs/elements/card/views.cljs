@@ -1,6 +1,6 @@
 
 (ns elements.card.views
-    (:require [elements.card.helpers    :as card.helpers]
+    (:require [elements.card.attributes :as card.attributes]
               [elements.card.prototypes :as card.prototypes]
               [random.api               :as random]
               [x.components.api         :as x.components]))
@@ -8,36 +8,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- toggle-card
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ; {:content (metamorphic-content)}
-  [card-id {:keys [content] :as card-props}]
-  [:button.e-card--body (card.helpers/toggle-card-body-attributes card-id card-props)
-                        [x.components/content                     card-id content]])
-
-(defn- static-card
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) card-id
-  ; @param (map) card-props
-  ; {:content (metamorphic-content)}
-  [card-id {:keys [content] :as card-props}]
-  [:div.e-card--body (card.helpers/static-card-body-attributes card-id card-props)
-                     [x.components/content                     card-id content]])
-
 (defn- card
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:on-click (metamorphic-event)(opt)}
-  [card-id {:keys [on-click] :as card-props}]
-  [:div.e-card (card.helpers/card-attributes card-id card-props)
-               (cond (some? on-click) [toggle-card card-id card-props]
-                     (nil?  on-click) [static-card card-id card-props])])
+  [card-id {:keys [content on-click] :as card-props}]
+  [:div (card.attributes/card-attributes card-id card-props)
+        (cond (some? on-click) [:button (card.attributes/toggle-card-body-attributes card-id card-props) content]
+              (nil?  on-click) [:div    (card.attributes/static-card-body-attributes card-id card-props) content])])
 
 (defn element
   ; XXX#3240

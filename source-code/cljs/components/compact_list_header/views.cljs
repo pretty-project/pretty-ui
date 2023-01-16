@@ -1,6 +1,6 @@
 
 (ns components.compact-list-header.views
-    (:require [components.compact-list-header.helpers    :as compact-list-header.helpers]
+    (:require [components.compact-list-header.attributes :as compact-list-header.attributes]
               [components.compact-list-header.prototypes :as compact-list-header.prototypes]
               [elements.api                              :as elements]
               [random.api                                :as random]))
@@ -8,22 +8,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn compact-list-header-body
+(defn compact-list-header
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {}
   [header-id {:keys [hide-button order-button search-field] :as header-props}]
-  [:div.c-compact-list-header--body (compact-list-header.helpers/header-body-attributes header-id header-props)
-                                    [elements/icon-button order-button]
-                                    [elements/text-field  search-field]
-                                    [elements/icon-button hide-button]])
-
-(defn compact-list-header
-  ; @param (keyword) header-id
-  ; @param (map) header-props
-  [header-id header-props]
-  [:div.c-compact-list-header (compact-list-header.helpers/header-attributes header-id header-props)
-                              [compact-list-header-body                      header-id header-props]])
+  [:div (compact-list-header.attributes/header-attributes header-id header-props)
+        [:div (compact-list-header.attributes/header-body-attributes header-id header-props)
+              [elements/icon-button order-button]
+              [elements/text-field  search-field]
+              [elements/icon-button hide-button]]])
 
 (defn component
   ; @param (keyword)(opt) header-id

@@ -213,7 +213,7 @@
   ;     :on-click (metamorphic-event)(opt)
   ;     :tab-indexed? (boolean)(opt)
   ;      Default: true
-  ;     :tooltip (metamorphic-content)(opt)}]
+  ;     :tooltip-content (metamorphic-content)(opt)}]
   ;  :field-content-f (function)(opt)
   ;   Default: return
   ;  :field-value-f (function)(opt)

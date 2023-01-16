@@ -1,6 +1,6 @@
 
 (ns elements.anchor.views
-    (:require [elements.anchor.helpers    :as anchor.helpers]
+    (:require [elements.anchor.attributes :as anchor.attributes]
               [elements.anchor.prototypes :as anchor.prototypes]
               [random.api                 :as random]
               [x.components.api           :as x.components]))
@@ -8,24 +8,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- anchor-body
+(defn- anchor
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) anchor-id
   ; @param (map) anchor-props
   ; {:content (metamorphic-content)}
   [anchor-id {:keys [content] :as anchor-props}]
-  [:a.e-anchor--body (anchor.helpers/anchor-body-attributes anchor-id anchor-props)
-                     [x.components/content                  anchor-id content]])
-
-(defn- anchor
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) anchor-id
-  ; @param (map) anchor-props
-  [anchor-id anchor-props]
-  [:div.e-anchor (anchor.helpers/anchor-attributes anchor-id anchor-props)
-                 [anchor-body                      anchor-id anchor-props]])
+  [:div (anchor.attributes/anchor-attributes anchor-id anchor-props)
+        [:a (anchor.attributes/anchor-body-attributes anchor-id anchor-props)
+            [x.components/content anchor-id content]]])
 
 (defn element
   ; @param (keyword)(opt) anchor-id

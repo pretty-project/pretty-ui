@@ -1,5 +1,5 @@
 
-(ns components.compact-list-header.helpers
+(ns components.vector-items-header.attributes
     (:require [pretty-css.api :as pretty-css]))
 
 ;; ----------------------------------------------------------------------------
@@ -8,14 +8,19 @@
 (defn header-body-attributes
   ; @param (keyword) header-id
   ; @param (map) header-props
-  ; {:style (map)(opt)}
+  ; {:horizontal-align (keyword)
+  ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
-  [_ {:keys [style] :as header-props}]
-  (-> {:style style}
-      (pretty-css/border-attributes header-props)
-      (pretty-css/color-attributes  header-props)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-horizontal-row-align (keyword)
+  ;  :data-orientation (keyword)
+  ;  :style (map)}
+  [_ {:keys [horizontal-align style] :as header-props}]
+  (-> {:class                     :c-vector-items-header--body
+       :data-orientation          :horizontal
+       :data-horizontal-row-align horizontal-align
+       :style                     style}
       (pretty-css/indent-attributes header-props)))
 
 ;; ----------------------------------------------------------------------------
@@ -26,6 +31,8 @@
   ; @param (map) header-props
   ;
   ; @return (map)
+  ; {}
   [_ header-props]
-  (-> {} (pretty-css/default-attributes header-props)
-         (pretty-css/outdent-attributes header-props)))
+  (-> {:class :c-vector-items-header}
+      (pretty-css/default-attributes header-props)
+      (pretty-css/outdent-attributes header-props)))

@@ -204,6 +204,10 @@
                :select      [select-layout      select-id select-props]))
 
 (defn element
+  ; @description
+  ; To render the select popup without using its button element:
+  ; [:elements.select/render-options! :my-select {...}]
+  ;
   ; @param (keyword)(opt) select-id
   ; @param (map) select-props
   ; {:add-option-f (function)(opt)

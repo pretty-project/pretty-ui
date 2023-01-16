@@ -20,8 +20,7 @@
               [map.api                              :as map]
               [re-frame.api                         :refer [r]]
               [vector.api                           :as vector]
-              [x.activities.api                     :as x.activities]
-              [x.sync.api                           :as x.sync]))
+              [x.activities.api                     :as x.activities]))
 
 
 
@@ -90,7 +89,8 @@
   [db [_ engine-id request-key]]
   ; XXX#5476
   (let [request-id (r get-request-id db engine-id request-key)]
-       (r x.sync/listening-to-request? db request-id)))
+       ;(r x.sync/listening-to-request? db request-id)))
+       false))
 
 
 

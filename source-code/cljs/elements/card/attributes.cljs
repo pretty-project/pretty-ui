@@ -1,5 +1,5 @@
 
-(ns elements.card.helpers
+(ns elements.card.attributes
     (:require [pretty-css.api    :as pretty-css]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]))
@@ -16,17 +16,20 @@
   ;  :on-click (metamorphic-event)}
   ;
   ; @return (map)
-  ; {:data-click-effect (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (keyword)
   ;  :disabled (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)}
   [card-id {:keys [disabled? horizontal-align min-width on-click stretch-orientation style] :as card-props}]
-  (-> (if disabled? {:data-element-min-width       min-width
+  (-> (if disabled? {:class                        :e-card--body
+                     :data-element-min-width       min-width
                      :data-horizontal-column-align horizontal-align
                      :data-stretch-orientation     stretch-orientation
                      :disabled                     true
                      :style                        style}
-                    {:data-click-effect            :opacity
+                    {:class                        :e-card--body
+                     :data-click-effect            :opacity
                      :data-element-min-width       min-width
                      :data-horizontal-column-align horizontal-align
                      :data-stretch-orientation     stretch-orientation
@@ -48,7 +51,8 @@
   ; @return (map)
   ; {}
   [card-id {:keys [horizontal-align min-width stretch-orientation style] :as card-props}]
-  (-> {:data-element-min-width       min-width
+  (-> {:class                        :e-card--body
+       :data-element-min-width       min-width
        :data-horizontal-column-align horizontal-align
        :data-stretch-orientation     stretch-orientation
        :style                        style}
@@ -67,6 +71,8 @@
   ; @param (map) card-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ card-props]
-  (-> {} (pretty-css/default-attributes card-props)
-         (pretty-css/outdent-attributes card-props)))
+  (-> {:class :e-card}
+      (pretty-css/default-attributes card-props)
+      (pretty-css/outdent-attributes card-props)))

@@ -19,10 +19,10 @@
   ; {}
   [field-id _]
   (let [password-visible? (password-field.helpers/password-visible? field-id)]
-       {:icon-family :material-symbols-filled
-        :icon     (if password-visible? :visibility_off :visibility)
-        :tooltip  (if password-visible? :hide-password! :show-password!)
-        :on-click {:fx [:elements.password-field/toggle-password-visibility! field-id]}}))
+       {:icon-family     :material-symbols-filled
+        :icon            (if password-visible? :visibility_off :visibility)
+        :tooltip-content (if password-visible? :hide-password! :show-password!)
+        :on-click        {:fx [:elements.password-field/toggle-password-visibility! field-id]}}))
 
 (defn field-props-prototype
   ; WARNING! NON-PUBLIC! DO NOT USE!

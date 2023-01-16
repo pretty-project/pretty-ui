@@ -18,6 +18,8 @@
   ; @param (map) button-props
   ; {:font-size (keyword)(opt)
   ;   Default: :xs
+  ;  :gap (keyword)(opt)
+  ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)
   ;   Default: :left
   ;  :hover-color (keyword or string)(opt)

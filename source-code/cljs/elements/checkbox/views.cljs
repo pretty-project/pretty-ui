@@ -1,6 +1,6 @@
 
 (ns elements.checkbox.views
-    (:require [elements.checkbox.helpers    :as checkbox.helpers]
+    (:require [elements.checkbox.attributes :as checkbox.attributes]
               [elements.checkbox.prototypes :as checkbox.prototypes]
               [elements.element.views       :as element.views]
               [elements.input.helpers       :as input.helpers]
@@ -12,57 +12,24 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- checkbox-option-helper
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) checkbox-id
-  ; @param (map) checkbox-props
-  ; {:option-helper-f (function)}
-  ; @param (*) option
-  [_ {:keys [option-helper-f]} option]
-  (if option-helper-f (let [option-helper (option-helper-f option)]
-                           [:div.e-checkbox--option-helper {:data-font-size   :xs
-                                                            :data-line-height :native}
-                                                           (x.components/content option-helper)])))
-
-(defn- checkbox-option-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) checkbox-id
-  ; @param (map) checkbox-props
-  ; {:font-size (keyword)
-  ;  :option-label-f (function)}
-  ; @param (*) option
-  [_ {:keys [font-size option-label-f]} option]
-  (let [option-label (option-label-f option)]
-       [:div.e-checkbox--option-label {:data-font-size   font-size
-                                       :data-font-weight :medium
-                                       :data-line-height :text-block}
-                                      (x.components/content option-label)]))
-
-(defn- checkbox-option-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) checkbox-id
-  ; @param (map) checkbox-props
-  ; @param (*) option
-  [checkbox-id checkbox-props option]
-  [:div.e-checkbox--option-content {:data-click-target :opacity}
-                                   [checkbox-option-label  checkbox-id checkbox-props option]
-                                   [checkbox-option-helper checkbox-id checkbox-props option]])
-
 (defn- checkbox-option
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
+  ; {:option-helper-f (function)
+  ;  :option-label-f (function)}
   ; @param (*) option
-  [checkbox-id checkbox-props option]
-  [:button.e-checkbox--option (checkbox.helpers/checkbox-option-attributes checkbox-id checkbox-props option)
-                              [:div.e-checkbox--option-button (checkbox.helpers/checkbox-option-button-attributes checkbox-id checkbox-props option)]
-                              [checkbox-option-content checkbox-id checkbox-props option]])
+  [checkbox-id {:keys [option-helper-f option-label-f] :as checkbox-props} option]
+  [:button (checkbox.attributes/checkbox-option-attributes checkbox-id checkbox-props option)
+           [:div (checkbox.attributes/checkbox-option-button-attributes checkbox-id checkbox-props option)]
+           [:div {:class :e-checkbox--option-content :data-click-target :opacity}
+                 [:div (checkbox.attributes/checkbox-option-label-attributes checkbox-id checkbox-props option)
+                       (-> option option-label-f x.components/content)]
+                 (if option-helper-f [:div (checkbox.attributes/checkbox-option-helper-attributes checkbox-id checkbox-props option)
+                                           (-> option option-helper-f x.components/content)])]])
 
-(defn- checkbox-options
+(defn- checkbox-option-list
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
@@ -72,25 +39,16 @@
          (let [options (input.helpers/get-input-options checkbox-id checkbox-props)]
               (reduce f [:<>] options))))
 
-(defn- checkbox-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) checkbox-id
-  ; @param (map) checkbox-props
-  ; {}
-  [checkbox-id {:keys [style] :as checkbox-props}]
-  [:div.e-checkbox--body (checkbox.helpers/checkbox-body-attributes checkbox-id checkbox-props)
-                         [checkbox-options                          checkbox-id checkbox-props]])
-
 (defn- checkbox-structure
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
-  [:div.e-checkbox (checkbox.helpers/checkbox-attributes checkbox-id checkbox-props)
-                   [element.views/element-label          checkbox-id checkbox-props]
-                   [checkbox-body                        checkbox-id checkbox-props]])
+  [:div (checkbox.attributes/checkbox-attributes checkbox-id checkbox-props)
+        [element.views/element-label             checkbox-id checkbox-props]
+        [:div (checkbox.attributes/checkbox-body-attributes checkbox-id checkbox-props)
+              [checkbox-option-list                         checkbox-id checkbox-props]]])
 
 (defn- checkbox
   ; WARNING! NON-PUBLIC! DO NOT USE!

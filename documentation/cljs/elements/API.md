@@ -152,6 +152,7 @@
 @param (map) blank-props
 {:content (metamorphic-content)(opt)
  :class (keyword or keywords in vector)(opt)
+ :content (metamorphic-content)
  :disabled? (boolean)(opt)
  :indent (map)(opt)
   {:bottom (keyword)(opt)
@@ -252,6 +253,8 @@
  :font-weight (keyword)(opt)
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default: :medium
+ :gap (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
@@ -296,7 +299,7 @@
  :outdent (map)(opt)
   Same as the :indent property.
  :style (map)(opt)
- :tooltip (metamorphic-content)(opt)
+ :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right}
 ```
@@ -589,6 +592,12 @@
 ---
 
 ### color-selector
+
+```
+@description
+To render the color-selector popup without using its button element:
+[:elements.color-selector/render-selector! :my-color-selector {...}]
+```
 
 ```
 @param (keyword)(opt) selector-id
@@ -1078,7 +1087,7 @@
  :progress-duration (ms)(opt)
   W/ {:progress ...}
  :style (map)(opt)
- :tooltip (metamorphic-content)(opt)
+ :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right
  :width (keyword)(opt)
@@ -1163,6 +1172,8 @@
  :font-weight (keyword)(opt)
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default :medium
+ :gap (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :left
@@ -1757,6 +1768,12 @@
 ### select
 
 ```
+@description
+To render the select popup without using its button element:
+[:elements.select/render-options! :my-select {...}]
+```
+
+```
 @param (keyword)(opt) select-id
 @param (map) select-props
 {:add-option-f (function)(opt)
@@ -2050,7 +2067,7 @@
     :on-click (metamorphic-event)(opt)
     :tab-indexed? (boolean)(opt)
      Default: true
-    :tooltip (metamorphic-content)(opt)}]
+    :tooltip-content (metamorphic-content)(opt)}]
  :field-content-f (function)(opt)
   Default: return
  :field-value-f (function)(opt)

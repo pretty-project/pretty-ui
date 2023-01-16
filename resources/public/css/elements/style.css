@@ -54,7 +54,6 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  column-gap: 6px;
 
   /* */
   width: 100%;
@@ -229,10 +228,15 @@
 /***** Color-selector *****/
 /*** Color-selector options ***/
 
-.e-color-selector--body {
+.e-color-selector--options-header {
   display: flex;
-  grid-column-gap: 12px;
-  padding: 12px;
+  justify-content: flex-end;
+}
+
+.e-color-selector--options-body {
+  display:    flex;
+  column-gap: 12px;
+  padding:    12px;
 }
 
 /*** Color-selector options ***/
@@ -569,7 +573,6 @@
 
 .e-label--icon {
   flex-shrink:  0;
-  margin-right: 6px;
 }
 
 /*** Icon ***/

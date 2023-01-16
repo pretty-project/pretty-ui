@@ -85,14 +85,14 @@
   ;
   ; @return (maps in vector)
   [group-id group-props field-dex]
-  [{:icon      :add
-    :disabled? (group-props->max-field-count-reached?       group-id group-props field-dex)
-    :on-click  [:elements.multi-field/increase-field-count! group-id group-props field-dex]
-    :tooltip   :add-field!}
-   {:disabled? (group-props->min-field-count-reached?       group-id group-props field-dex)
-    :icon      :close
-    :on-click  [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
-    :tooltip   :remove-field!}])
+  [{:icon            :add
+    :disabled?       (group-props->max-field-count-reached?       group-id group-props field-dex)
+    :on-click        [:elements.multi-field/increase-field-count! group-id group-props field-dex]
+    :tooltip-content :add-field!}
+   {:disabled?       (group-props->min-field-count-reached?       group-id group-props field-dex)
+    :icon            :close
+    :on-click        [:elements.multi-field/decrease-field-count! group-id group-props field-dex]
+    :tooltip-content :remove-field!}])
 
 (defn field-dex->end-adornments
   ; WARNING! NON-PUBLIC! DO NOT USE!

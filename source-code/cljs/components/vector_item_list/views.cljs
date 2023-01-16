@@ -1,6 +1,6 @@
 
 (ns components.vector-item-list.views
-    (:require [components.vector-item-list.helpers    :as vector-item-list.helpers]
+    (:require [components.vector-item-list.attributes :as vector-item-list.attributes]
               [components.vector-item-list.prototypes :as vector-item-list.prototypes]
               [random.api                             :as random]
               [re-frame.api                           :as r]
@@ -26,9 +26,9 @@
   ; @param (keyword) list-id
   ; @param (map) list-props
   [list-id list-props]
-  [:div.c-vector-item-list (vector-item-list.helpers/list-attributes list-id list-props)
-                           [:div.c-vector-item-list--body (vector-item-list.helpers/list-body-attributes list-id list-props)
-                                                          [vector-item-list-items list-id list-props]]])
+  [:div (vector-item-list.attributes/list-attributes list-id list-props)
+        [:div (vector-item-list.attributes/list-body-attributes list-id list-props)
+              [vector-item-list-items list-id list-props]]])
 
 (defn component
   ; @param (keyword)(opt) list-id

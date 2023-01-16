@@ -1,5 +1,5 @@
 
-(ns elements.breadcrumbs.helpers
+(ns elements.breadcrumbs.attributes
     (:require [pretty-css.api    :as pretty-css]
               [re-frame.api      :as r]
               [x.environment.api :as x.environment]))
@@ -15,13 +15,15 @@
   ; @param (map) crumb
   ;
   ; @return (map)
-  ; {:data-color (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-color (keyword)
   ;  :data-font-size (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :data-text-overflow (keyword)}
   [_ _ _]
-  {:data-color         :muted
+  {:class              :e-breadcrumbs--crumb
+   :data-color         :muted
    :data-font-size     :xs
    :data-line-height   :text-block
    :data-selectable    false
@@ -36,7 +38,8 @@
   ; {:route (string)}
   ;
   ; @return (map)
-  ; {:data-click-effect (boolean)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-click-effect (boolean)
   ;  :data-color (keyword)
   ;  :data-font-size (keyword)
   ;  :data-font-weight (keyword)
@@ -46,7 +49,8 @@
   ;  :on-mouse-up (function)
   ;  :data-text-overflow (keyword)}
   [breadcrumbs-id _ {:keys [route]}]
-  {:data-click-effect  :opacity
+  {:class              :e-breadcrumbs--crumb
+   :data-click-effect  :opacity
    :data-color         :muted
    :data-font-size     :xs
    :data-font-weight   :bold
@@ -67,11 +71,13 @@
   ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-column-gap (keyword)
+  ; {:class (keyword or keywords in vector)
+  ;  :data-column-gap (keyword)
   ;  :data-scroll-axis (boolean)
   ;  :style (map)}
   [_ {:keys [style] :as breadcrumbs-props}]
-  (-> {:data-column-gap  :xs
+  (-> {:class            :e-breadcrumbs--body
+       :data-column-gap  :xs
        :data-scroll-axis :x
        :style            style}
       (pretty-css/indent-attributes breadcrumbs-props)))
@@ -86,6 +92,8 @@
   ; @param (map) breadcrumbs-props
   ;
   ; @return (map)
+  ; {:class (keyword or keywords in vector)}
   [_ breadcrumbs-props]
-  (-> {} (pretty-css/default-attributes breadcrumbs-props)
-         (pretty-css/outdent-attributes breadcrumbs-props)))
+  (-> {:class :e-breadcrumbs}
+      (pretty-css/default-attributes breadcrumbs-props)
+      (pretty-css/outdent-attributes breadcrumbs-props)))

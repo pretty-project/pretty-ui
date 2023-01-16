@@ -1,8 +1,8 @@
 
-(ns components.user-avatar.helpers
+(ns components.user-avatar.attributes
     (:require [pretty-css.api :as pretty-css]
-              [css.api                      :as css]
-              [math.api                     :as math]))
+              [css.api        :as css]
+              [math.api       :as math]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -33,7 +33,8 @@
         percent-rem      (math/percent-result circum (- 100 percent))
         stroke-dasharray (str percent-result" "percent-rem)
         rotation-angle   (+ 30 (* dex (/ 360 (count colors))))]
-       {:cx (/ size 2)
+       {:class :c-user-avatar--color
+        :cx (/ size 2)
         :cy (/ size 2)
         :style {:transform (css/rotate-z rotation-angle)}
         :r                radius-center
@@ -51,9 +52,11 @@
   ;  :style (map)(opt)}
   ;
   ; @return (map)
-  ; {:style (map)}
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
   [_ {:keys [size style] :as avatar-props}]
-  (-> {:style (merge style {:height (css/px size)
+  (-> {:class :c-user-avatar--body
+       :style (merge style {:height (css/px size)
                             :width  (css/px size)})}
       (pretty-css/indent-attributes avatar-props)))
 
@@ -65,6 +68,8 @@
   ; @param (map) avatar-props
   ;
   ; @return (map)
+  ; {}
   [_ avatar-props]
-  (-> {} (pretty-css/default-attributes avatar-props)
-         (pretty-css/outdent-attributes avatar-props)))
+  (-> {:class :c-user-avatar}
+      (pretty-css/default-attributes avatar-props)
+      (pretty-css/outdent-attributes avatar-props)))
