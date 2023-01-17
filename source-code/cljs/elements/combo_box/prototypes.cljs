@@ -37,7 +37,7 @@
   ;
   ; XXX#5068
   ; By using the '<-walk' function the :on-blur, :on-change and :on-focus
-  ; events takes the 'box-props' map AFTER it gets the default values and!
+  ; events takes the 'box-props' map AFTER it being merged with the default values!
   (<-walk {:field-content-f return
            :field-value-f   return
            :option-label-f  return

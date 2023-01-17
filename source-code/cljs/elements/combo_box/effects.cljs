@@ -62,7 +62,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      {:fx-n [[:elements.text-field/show-surface!         box-id]
+      {:fx-n [[:elements.plain-field/show-surface!        box-id]
               [:elements.combo-box/highlight-next-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/UP-pressed
@@ -71,7 +71,7 @@
   ; @param (keyword) box-id
   ; @param (map) box-props
   (fn [_ [_ box-id box-props]]
-      {:fx-n [[:elements.text-field/show-surface!         box-id]
+      {:fx-n [[:elements.plain-field/show-surface!        box-id]
               [:elements.combo-box/highlight-prev-option! box-id box-props]]}))
 
 (r/reg-event-fx :elements.combo-box/ESC-pressed
@@ -89,7 +89,7 @@
       ;
       ; HACK#1450 (source-code/cljs/elements/combo_box/helpers.cljs)
       (if (combo-box.helpers/any-option-rendered? box-id box-props)
-          {:fx-n [[:elements.text-field/hide-surface!              box-id]
+          {:fx-n [[:elements.plain-field/hide-surface!             box-id]
                   [:elements.combo-box/discard-option-highlighter! box-id]]}
           [:elements.text-field/ESC-pressed box-id box-props])))
 
@@ -117,8 +117,8 @@
       ;     - fires the original ENTER event of the text-field.
       (if (plain-field.helpers/surface-visible? box-id)
           (if-let [highlighted-option (combo-box.helpers/get-highlighted-option box-id box-props)]
-                  {:dispatch [:elements.combo-box/select-option! box-id box-props highlighted-option]}
-                  {:fx       [:elements.text-field/hide-surface! box-id]})
+                  {:dispatch [:elements.combo-box/select-option!  box-id box-props highlighted-option]}
+                  {:fx       [:elements.plain-field/hide-surface! box-id]})
           [:elements.text-field/ENTER-pressed box-id box-props])))
 
 ;; ----------------------------------------------------------------------------
@@ -137,13 +137,13 @@
       ; typed and the option is selected by the pointer or a button event!
       ;
       ; Selecting an option:
-      ; - hides the surface.
-      ; - discards the highlight on the highlighted option.
-      ; - stores the highlighted option into the application state.
-      ; - uses the highlighted option as the field content.
-      ; - dispatches the :on-type-ended event.
+      ; - hides the surface
+      ; - discards the highlight on the highlighted option
+      ; - stores the highlighted option into the application state
+      ; - uses the highlighted option as the field content
+      ; - dispatches the :on-type-ended event
       {:db   (r combo-box.events/select-option! db box-id box-props option)
-       :fx-n [[:elements.text-field/hide-surface!              box-id]
+       :fx-n [[:elements.plain-field/hide-surface!             box-id]
               [:elements.combo-box/discard-option-highlighter! box-id]
               [:elements.combo-box/use-selected-option!        box-id box-props option]]
        :dispatch (if on-type-ended (let [option-value (option-value-f option)]

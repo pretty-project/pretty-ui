@@ -59,8 +59,8 @@
                (if-let [highlighted-option (combo-box.helpers/get-highlighted-option field-id field-props)]
                        [:elements.multi-combo-box/use-option! box-id box-props highlighted-option]
                        (if (plain-field.helpers/field-empty? field-id)
-                           {:fx       [:elements.text-field/hide-surface! field-id]}
-                           {:fx       [:elements.text-field/hide-surface! field-id]
+                           {:fx       [:elements.plain-field/hide-surface! field-id]}
+                           {:fx       [:elements.plain-field/hide-surface! field-id]
                             :dispatch [:elements.multi-combo-box/use-field-content! box-id box-props]}))
                (if (plain-field.helpers/field-filled? field-id)
                    [:elements.multi-combo-box/use-field-content! box-id box-props])))))
@@ -100,7 +100,7 @@
       (let [field-id    (multi-combo-box.helpers/box-id->field-id         box-id)
             field-props (multi-combo-box.prototypes/field-props-prototype box-id box-props)]
            {:db   (r multi-combo-box.events/use-option! db box-id box-props option)
-            :fx-n [[:elements.text-field/hide-surface!              field-id]
+            :fx-n [[:elements.plain-field/hide-surface!             field-id]
                    [:elements.combo-box/discard-option-highlighter! field-id field-props]]})))
 
 ;; ----------------------------------------------------------------------------
