@@ -20,6 +20,8 @@
   ;   Default: :xs
   ;  :font-weight (keyword)(opt)
   ;   Default: :medium
+  ;  :gap (keyword)(opt)
+  ;   Default: :xs
   ;  :hover-color (keyword or string)(opt)
   ;   Default: :invert
   ;  :icon-size (keyword)(opt)

@@ -1124,9 +1124,7 @@ same ID for both the field and the block, the label of the block can targets the
 ```
 @param (keyword)(opt) label-id
 @param (map) label-props
-{:color (keyword or string)(opt)
-  Default: :muted
- :font-size (keyword)(opt)
+{:font-size (keyword)(opt)
   Default: :xs
  :gap (keyword)(opt)
   Default: :xs
@@ -1163,6 +1161,8 @@ same ID for both the field and the block, the label of the block can targets the
   Default: :xs
  :font-weight (keyword)(opt)
   Default: :medium
+ :gap (keyword)(opt)
+  Default: :xs
  :hover-color (keyword or string)(opt)
   Default: :invert
  :icon-size (keyword)(opt)
@@ -1263,6 +1263,7 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) controls-props
 {:disabled? (boolean)(opt)
  :item-dex (integer)
+ :on-change (metamorphic-event)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right
   Default: :right
@@ -1291,7 +1292,9 @@ same ID for both the field and the block, the label of the block can targets the
  :indent (map)(opt)
  :item-element (symbol)
  :outdent (map)(opt)
- :placeholder (metamorphic-content)(opt)
+ :placeholder (map)(opt)
+  {:illustration (string)(opt)
+   :label (metamorphic-content)(opt)}
  :style (map)(opt)
  :value-path (vector)}
 ```
@@ -1324,11 +1327,12 @@ same ID for both the field and the block, the label of the block can targets the
  :disabled? (boolean)(opt)
  :horizontal-align (keyword)(opt)
   :center, :left, :right
-  Default: :left
+  Default: :center
  :indent (map)(opt)
  :initial-item (*)(opt)
   Default: {}
  :label (metamorphic-content)
+ :on-change (metamorphic-event)(opt)
  :outdent (map)(opt)
  :style (map)(opt)
  :value-path (vector)}

@@ -111,6 +111,12 @@
 ; @param (keyword) handler-id
 ;
 ; @usage
+; [:item-handler/get-current-item-path :my-handler]
+(r/reg-sub :item-handler/get-current-item-path get-current-item-path)
+
+; @param (keyword) handler-id
+;
+; @usage
 ; [:item-handler/get-current-item :my-handler]
 (r/reg-sub :item-handler/get-current-item get-current-item)
 

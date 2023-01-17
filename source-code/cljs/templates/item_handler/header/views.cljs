@@ -177,15 +177,23 @@
               [components/section-title ::title {:content title :placeholder placeholder}]
               [elements/breadcrumbs ::breadcrumbs {:crumbs crumbs}]]
 
-                                  ; Info items:
-                                  ; - Last modified by
-                                  ; - Last modified at
-                                  ; - Created by
-                                  ; - Created at
-                                  ;
-                                  ; Később:
-                                  ; Hol, kivel, hogyan van megosztva
-        [:div {:class :t-item-handler--label-bar-block}
+
+        [:div {:class :t-item-handler--label-bar-block :data-orientation :horizontal}
+              ; Visszateszi a compact listert
+              [elements/icon-button ::sss
+                                    {:border-radius :s
+                                     :hover-color :highlight
+                                     :icon :list
+                                     :tooltip-content "Show sidebar"
+                                     :tooltip-position :left}]
+              ; Info items:
+              ; - Last modified by
+              ; - Last modified at
+              ; - Created by
+              ; - Created at
+              ;
+              ; Később:
+              ; Hol, kivel, hogyan van megosztva
               [elements/icon-button ::xxx
                                     {:icon :info
                                      :hover-color :highlight

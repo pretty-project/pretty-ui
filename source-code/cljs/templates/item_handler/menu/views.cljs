@@ -14,15 +14,22 @@
   ; {}
   [_ {:keys [group-icon group-icon-family group-label]}]
   [components/side-menu-label ::group-label
-                              {:content     group-label
-                               :icon        group-icon
-                               :icon-family group-icon-family}])
+                              {:content     group-label}])
+                               ;:icon        group-icon
+                               ;:icon-family group-icon-family}])
 
 (defn- side-menu
   ; @param (keyword) handler-id
   ; @param (map) menu-props
   [handler-id menu-props]
-  [:<> [group-label handler-id menu-props]])
+  [:<> [group-label handler-id menu-props]
+       [components/side-menu-button {:label "Edit"
+                                     :icon :edit
+                                     :preset :active}]
+       [components/side-menu-button {:label "Price quotes"
+                                     :icon :request_quote}]
+       [components/side-menu-button {:label "Jobs"
+                                     :icon :article}]])
 
 (defn menu
   ; @param (keyword) handler-id

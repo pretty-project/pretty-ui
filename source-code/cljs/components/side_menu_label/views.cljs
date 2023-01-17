@@ -14,9 +14,7 @@
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:color (keyword or string)(opt)
-  ;   Default: :muted
-  ;  :font-size (keyword)(opt)
+  ; {:font-size (keyword)(opt)
   ;   Default: :xs
   ;  :gap (keyword)(opt)
   ;   Default: :xs

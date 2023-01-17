@@ -116,7 +116,13 @@
                     [title                lister-id bar-props]
                     [add-item-icon-button lister-id bar-props]]
               [breadcrumbs lister-id bar-props]]
-        [:div {:class :t-item-lister--label-bar--block}
+        [:div {:class :t-item-lister--label-bar--block :data-orientation :horizontal}
+              [elements/icon-button ::sss
+                                    {:icon :person_add
+                                     :hover-color :highlight
+                                     :border-radius :s
+                                     :tooltip-content  "Invite members to board"
+                                     :tooltip-position :left}]
               ; Menu items:
               ; - Rename board
               ; - Invite members to board

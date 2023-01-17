@@ -12,6 +12,6 @@
   ; {:horizontal-align (keyword)
   ;  :initial-item (*)}
   [header-props]
-  (merge {:horizontal-align :left
+  (merge {:horizontal-align :center
           :initial-item     {}}
          (param header-props)))

@@ -11,7 +11,7 @@
   ; @param (map) spinner-props
   ; {}
   [_ {:keys [color size]}]
-  [:div.c-spinner {}])
+  [:div {:class :c-spinner}])
 
 (defn component
   ; @param (keyword)(opt) spinner-id

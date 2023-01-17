@@ -16,14 +16,15 @@
   ; [create-item-button :my-lister {...}]
   [_ {:keys [on-click]}]
   [components/side-menu-button ::create-item-button
-                               {:icon     :add
-                                :label    :add!
+                               {:icon     :add_circle
+                                :icon-color :secondary
+                                :label    "Add item"
                                 :on-click on-click}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- group-label  ; <- már nem label
+(defn- group-label                                ; <- már nem label
   ; @param (keyword) lister-id
   ; @param (map) menu-props
   ; {:group-icon (keyword)
@@ -34,6 +35,7 @@
                               {:label     group-label
                                :icon        group-icon
                                :icon-family group-icon-family
+                               ;:icon-color :primary
 
                                :preset :active}])
 
@@ -55,6 +57,9 @@
             ; TEMP
             [components/side-menu-button {:label "Board members"
                                           :icon :groups
+                                          ;:icon-color "red"
+                                          :badge-content "40"
+                                          ;:badge-position :tr
                                           :icon-size :m}]
 
 

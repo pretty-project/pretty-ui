@@ -9,20 +9,28 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn- add-icon-button
+  ; @param (keyword) header-id
+  ; @param (map) header-props
+  ; {}
+  [_ {:keys [initial-item on-change value-path] :as header-props}]
+  (let [add-event [:x.db/apply-item! value-path vector/conj-item initial-item]]
+       [elements/icon-button {:border-radius   :xl
+                              :color           :secondary
+                              :hover-color     :highlight
+                              :icon            :add_circle
+                              :on-click        {:dispatch-n [add-event on-change]}
+                              :tooltip-content :add!}]))
+
 (defn- vector-items-header
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {}
-  [header-id {:keys [initial-item label value-path] :as header-props}]
+  [header-id {:keys [label] :as header-props}]
   [:div (vector-items-header.attributes/header-attributes header-id header-props)
         [:div (vector-items-header.attributes/header-body-attributes header-id header-props)
-              [elements/label       {:content label :font-size :xl}]
-              [elements/icon-button {:border-radius   :xl
-                                     :color           :secondary
-                                     :hover-color     :highlight
-                                     :icon            :add_circle
-                                     :on-click        [:x.db/apply-item! value-path vector/conj-item initial-item]
-                                     :tooltip-content :add!}]]])
+              [elements/label {:content label :font-size :xl}]
+              [add-icon-button header-id header-props]]])
 
 (defn component
   ; @param (keyword)(opt) header-id
@@ -31,11 +39,12 @@
   ;  :disabled? (boolean)(opt)
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
-  ;   Default: :left
+  ;   Default: :center
   ;  :indent (map)(opt)
   ;  :initial-item (*)(opt)
   ;   Default: {}
   ;  :label (metamorphic-content)
+  ;  :on-change (metamorphic-event)(opt)
   ;  :outdent (map)(opt)
   ;  :style (map)(opt)
   ;  :value-path (vector)}

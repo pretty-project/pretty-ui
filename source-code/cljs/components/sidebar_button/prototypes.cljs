@@ -15,6 +15,7 @@
   (merge {:color            :invert
           :font-size        :xs
           :font-weight      :medium
+          :gap              :xs
           :horizontal-align :left
           :hover-color      :invert
           :indent {:left :s :right :xl :horizontal :xs}}

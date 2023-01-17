@@ -9,16 +9,14 @@
   ; @param (map) label-props
   ;
   ; @return (map)
-  ; {:color (keyword)
-  ;  :font-size (keyword)
+  ; {:font-size (keyword)
   ;  :gap (keyword)
   ;  :horizontal-align (keyword)
   ;  :icon-size (keyword)
   ;  :indent (map)
   ;  :style (map)}
   [label-props]
-  (merge {:color            :muted
-          :font-size        :xs
+  (merge {:font-size        :xs
           :gap              :xs
           :horizontal-align :left
           :icon-size        :m

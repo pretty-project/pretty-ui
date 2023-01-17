@@ -432,3 +432,17 @@
 
 /*** Body ***/
 /***** Vector item controls *****/
+
+
+
+/***** Vector item list *****/
+/*** Placeholder ***/
+
+.c-vector-item-list--placeholder {
+  align-items:    center;
+  display:        flex;
+  flex-direction: column;
+}
+
+/*** Placeholder ***/
+/***** Vector item list *****/

@@ -7,6 +7,8 @@
 
 - [body](#body)
 
+- [comments](#comments)
+
 - [control-bar](#control-bar)
 
 - [footer](#footer)
@@ -18,6 +20,8 @@
 - [menu](#menu)
 
 - [menu-bar](#menu-bar)
+
+- [warnings](#warnings)
 
 - [wrapper](#wrapper)
 
@@ -45,6 +49,21 @@
 @usage
 (defn my-item-element [] ...)
 [body :my-handler {:item-element #'my-item-element}]
+```
+
+---
+
+### comments
+
+```
+@param (keyword) handler-id
+@param (map) comments-props
+{}
+```
+
+```
+@usage
+[comments :my-handler {...}]
 ```
 
 ---
@@ -135,6 +154,21 @@
 ```
 @usage
 [menu-bar :my-handler {...}]
+```
+
+---
+
+### warnings
+
+```
+@param (keyword) handler-id
+@param (map) warnings-props
+{}
+```
+
+```
+@usage
+[warnings :my-handler {...}]
 ```
 
 ---
