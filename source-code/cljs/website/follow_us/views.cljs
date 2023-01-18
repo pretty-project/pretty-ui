@@ -1,4 +1,9 @@
 
+; WARNING
+; The fontawesome is no longer be part of the project-engine or the pretty-css
+; The website-kit has to be placed outside of the project-engine and has to
+; imports the fontawesome on its own!
+
 (ns website.follow-us.views
     (:require [random.api                  :as random]
               [website.follow-us.helpers   :as follow-us.helpers]
