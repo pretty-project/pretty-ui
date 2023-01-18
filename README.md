@@ -12,12 +12,11 @@ The <strong>ui-set</strong> functional documentation is [available here](documen
 
 #### What's in this kit?
 
--  A set of at least 50 UI input and display elements, which can connect to the
-   application state, react to core processes (e.g. AJAX requests), are controllable
-   by keypress events and implement the [metamorphic-content](https://monotech-hq.github.io/x5/#content-handling)
-   types.
+- 50+ UI elements
 
-- A set of UI layout templates such as surfaces, popups, sidebars and menus.
+- 50+ UI components
+
+- UI layout templates such as surfaces, popups, sidebars and menus
 
 - WYWSYG editor plugins (Jodit, CKEditor5)
 
