@@ -13,12 +13,13 @@
   ; @return (map)
   ; {}
   [_ _]
-  {:data-color         :default
-   :data-font-size     :x
-   :data-font-weight   :medium
-   :data-indent-bottom :xs
-   :data-indent-left   :xxs
-   :data-line-height   :text-block})
+  {:data-color          :default
+   :data-font-size      :x
+   :data-font-weight    :medium
+   :data-letter-spacing :auto
+   :data-indent-bottom  :xs
+   :data-indent-left    :xxs
+   :data-line-height    :text-block})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -22,7 +22,7 @@
   ; @param (keyword) header-id
   ; @param (map) header-props
   ; {:close-button (map)(opt)
-  ;   Default: {:border-radius :s
+  ;   Default: {:border-radius {:all :s}
   ;             :hover-color   :highlight
   ;             :icon          :close
   ;             :keypress      {:key-code 27}}

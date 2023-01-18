@@ -127,7 +127,7 @@
   [layouts/popup-a :elements.select/options
                    {:body      [select-options-body   select-id select-props]
                     :header    [select-options-header select-id select-props]
-                    :border-radius :m
+                    :border-radius {:all :m}
                     :min-width     :xxs}])
 
 ;; ----------------------------------------------------------------------------
@@ -215,8 +215,13 @@
   ;  :autoclear? (boolean)(opt)
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
-  ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
@@ -225,13 +230,12 @@
   ;  :helper (metamorphic-content)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :left (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :right (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :info-text (metamorphic-content)(opt)
   ;  :initial-options (vector)(opt)
   ;  :initial-value (*)(opt)
@@ -256,7 +260,7 @@
   ;  :options-placeholder (metamorphic-content)(opt)
   ;   Default: :no-options
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   Same as the :indent property
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

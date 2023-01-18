@@ -45,6 +45,7 @@
   ;
   ; @return (map)
   ; {:data-cropped (boolean)
+  ;  :data-letter-spacing (keyword)
   ;  :data-selectable (boolean)
   ;  :style (map)}
   [text-id {:keys [font-size horizontal-align max-lines selectable? style] :as text-props}]
@@ -54,12 +55,14 @@
                           :data-horizontal-column-align horizontal-align
                           :data-horizontal-text-align   horizontal-align
                           :data-selectable              selectable?
+                          :data-letter-spacing          :auto
                           :style (merge style {:max-height height-calc})})
                     (let []
                          {:data-selectable              selectable?
                           :data-horizontal-column-align horizontal-align
                           :data-horizontal-text-align   horizontal-align
-                          :style                        style}))
+                          :style                        style
+                          :data-letter-spacing          :auto}))
       (pretty-css/color-attributes  text-props)
       (pretty-css/font-attributes   text-props)
       (pretty-css/indent-attributes text-props)))

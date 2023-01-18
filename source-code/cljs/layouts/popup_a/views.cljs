@@ -115,8 +115,13 @@
   ; {:body (metamorphic-content)
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
-  ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;   Default: :xxs
@@ -127,6 +132,7 @@
   ;   Default: :default
   ;  :footer (metamorphic-content)(opt)
   ;  :header (metamorphic-content)(opt)
+  ;  :indent (map)(opt)
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-mount (metamorphic-event)(opt)

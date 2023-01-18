@@ -68,6 +68,7 @@
   ; DOM actions. (setting focus/blur, etc.)
   (-> (if disabled? {:class                     :e-button--body
                      :disabled                  true
+                     :data-letter-spacing       :auto
                      :data-column-gap           gap
                      :data-horizontal-row-align horizontal-align
                      :data-selectable           false
@@ -78,6 +79,7 @@
                      :on-mouse-over             #(r/dispatch  on-mouse-over)
                      :on-mouse-up               #(x.environment/blur-element! button-id)
                      :data-click-effect         :opacity
+                     :data-letter-spacing       :auto
                      :data-column-gap           gap
                      :data-horizontal-row-align horizontal-align
                      :data-selectable           false

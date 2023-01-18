@@ -15,7 +15,7 @@
   ; @return (map)
   ; {:border-color (keyword or string)
   ;  :border-position (keyword)
-  ;  :border-radius (keyword)
+  ;  :border-radius (map)
   ;  :border-width (keyword)
   ;  :font-size (keyword)
   ;  :option-label-f (function)
@@ -26,7 +26,7 @@
   [switch-id switch-props]
   (merge {:border-color        :default
           :border-position     :all
-          :border-radius       :m
+          :border-radius       {:all :m}
           :border-width        :xs
           :font-size           :s
           :option-label-f      return

@@ -15,19 +15,19 @@
   (merge (if border-color {:border-position :all
                            :border-width    :xxs})
          (param header-props)
-         {:hide-button (merge {:border-radius    :s
+         {:hide-button (merge {:border-radius    {:all :s}
                                :hover-color      :highlight
                                :icon             :menu_open
                                :tooltip-content  :hide-sidebar!
                                :tooltip-position :left}
                               (param hide-button))}
-         {:order-button (merge {:border-radius    :s
+         {:order-button (merge {:border-radius    {:all :s}
                                 :hover-color      :highlight
                                 :icon             :sort
                                 :tooltip-content  :item-order
                                 :tooltip-position :right}
                                (param order-button))}
          {:search-field (merge {:border-color  :highlight
-                                :border-radius :l
+                                :border-radius {:all :l}
                                 :font-size     :s}
                                (param search-field))}))

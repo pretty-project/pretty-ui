@@ -14,7 +14,7 @@
   ;
   ; @return (map)
   ; {:border-color (keyword or string)
-  ;  :border-radius (keyword)
+  ;  :border-radius (map)
   ;  :border-position (keyword)
   ;  :border-width (keyword)
   ;  :font-size (keyword)
@@ -23,7 +23,7 @@
   [counter-id counter-props]
   (merge {:border-color    :default
           :border-position :all
-          :border-radius   :m
+          :border-radius   {:all :m}
           :border-width    :xs
           :font-size       :s
           :initial-value   0

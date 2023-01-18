@@ -62,7 +62,7 @@
                                                                    :display-progress? true :progress-max 80
                                                                    :progress-behaviour :keep-faked}]]
        [elements/button ::delete-item-button
-                        {:border-radius   :xs
+                        {:border-radius   {:all :xs}
                          :color           "#de2050"
                          :font-size       :xs
                          :gap             :xs
@@ -86,7 +86,7 @@
                                                                          :display-progress? true :progress-max 80
                                                                          :progress-behaviour :keep-faked}]]
        [elements/button ::duplicate-item-button
-                        {:border-radius   :xs
+                        {:border-radius   {:all :xs}
                          :font-size       :xs
                          :gap             :xs
                          :hover-color     :highlight
@@ -104,7 +104,7 @@
   [handler-id _]
   (let [item-changed? @(r/subscribe [:item-handler/current-item-changed? handler-id])]
        [elements/button ::revert-item-button
-                        {:border-radius   :xs
+                        {:border-radius   {:all :xs}
                          :disabled?       (not item-changed?)
                          :font-size       :xs
                          :gap             :xs
@@ -127,7 +127,7 @@
         save-event [:item-handler/save-item!       handler-id {:on-failure on-failure :on-success on-success
                                                                :display-progress? true}]]
        [elements/button ::save-item-button
-                        {:border-radius   :xs
+                        {:border-radius   {:all :xs}
                          :color           "#0080fa"
                          :disabled?       (not item-changed?)
                          :font-size       :xs
@@ -181,7 +181,7 @@
         [:div {:class :t-item-handler--label-bar-block :data-orientation :horizontal}
               ; Visszateszi a compact listert
               [elements/icon-button ::sss
-                                    {:border-radius :s
+                                    {:border-radius {:all :s}
                                      :hover-color :highlight
                                      :icon :list
                                      :tooltip-content "Show sidebar"
@@ -197,7 +197,7 @@
               [elements/icon-button ::xxx
                                     {:icon :info
                                      :hover-color :highlight
-                                     :border-radius :s
+                                     :border-radius {:all :s}
                                      :tooltip-content  "Item info"
                                      :tooltip-position :left}]]])
 

@@ -60,4 +60,5 @@
   (-> {:data-content-min-width min-width
        :style                  style}
       (pretty-css/border-attributes popup-props)
-      (pretty-css/color-attributes  popup-props)))
+      (pretty-css/color-attributes  popup-props)
+      (pretty-css/indent-attributes popup-props)))

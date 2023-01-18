@@ -122,7 +122,8 @@
        :data-element-min-width    min-width
        :data-selectable           selectable?
        :data-vertical-position    vertical-position
-       :style                     style}
+       :style                     style
+       :data-letter-spacing       :auto}
       (pretty-css/color-attributes  label-props)
       (pretty-css/font-attributes   label-props)
       (pretty-css/indent-attributes label-props)

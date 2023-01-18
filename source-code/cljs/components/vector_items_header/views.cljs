@@ -15,7 +15,7 @@
   ; {}
   [_ {:keys [initial-item on-change value-path] :as header-props}]
   (let [add-event [:x.db/apply-item! value-path vector/conj-item initial-item]]
-       [elements/icon-button {:border-radius   :xl
+       [elements/icon-button {:border-radius   {:all :xl}
                               :color           :secondary
                               :hover-color     :highlight
                               :icon            :add_circle

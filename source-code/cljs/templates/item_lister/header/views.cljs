@@ -21,7 +21,7 @@
   [elements/search-field ::search-field
                          {;:autofocus?   true
                           :border-color  :highlight
-                          :border-radius :l
+                          :border-radius {:all :l}
                           :font-size     :s
                           :on-empty       on-search
                           :on-type-ended  on-search
@@ -72,7 +72,7 @@
   ; @param (map) bar-props
   [_ _]
   [elements/icon-button ::add-item-icon-button
-                        {:border-radius   :l
+                        {:border-radius   {:all :l}
                          :color           :secondary
                          :hover-color     :highlight
                          :icon            :add_circle
@@ -120,7 +120,7 @@
               [elements/icon-button ::sss
                                     {:icon :person_add
                                      :hover-color :highlight
-                                     :border-radius :s
+                                     :border-radius {:all :s}
                                      :tooltip-content  "Invite members to board"
                                      :tooltip-position :left}]
               ; Menu items:
@@ -131,7 +131,7 @@
               [elements/icon-button ::xxx
                                     {:icon :menu
                                      :hover-color :highlight
-                                     :border-radius :s
+                                     :border-radius {:all :s}
                                      :tooltip-content  "Board menu"
                                      :tooltip-position :left}]]])
 

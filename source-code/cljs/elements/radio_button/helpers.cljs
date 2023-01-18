@@ -34,10 +34,12 @@
   ;
   ; @param (keyword) button-id
   ; @param (map) button-props
+  ; {}
   ;
   ; @return (map)
-  [button-id {:keys [border-radius] :as button-props}]
-  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius border-radius 0.3)}}
+  ; {}
+  [_ {{:keys [all]} :border-radius :as button-props}]
+  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.3)}}
       (pretty-css/border-attributes button-props)))
 
 (defn radio-button-option-attributes

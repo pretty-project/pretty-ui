@@ -54,8 +54,7 @@
   ;   W/ {:badge-content ...}
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-radius (map)(opt)
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :class (keyword or keywords in vector)(opt)
@@ -93,13 +92,12 @@
   ;   Default: :s
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :left (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :right (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :keypress (map)(opt)
   ;   {:key-code (integer)
   ;    :required? (boolean)(opt)
@@ -115,7 +113,7 @@
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   Same as the :indent property
   ;  :style (map)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)

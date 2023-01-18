@@ -48,8 +48,7 @@
   ; @param (map) picker-props
   ; {:class (keyword or keywords in vector)(opt)
   ;  :color-stamp (map)(opt)
-  ;   {:border-radius (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   {:border-radius (map)(opt)
   ;    :gap (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;    :height (keyword)(opt)

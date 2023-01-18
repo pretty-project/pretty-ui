@@ -45,7 +45,7 @@
                                            [color-selector-option-list                               selector-id selector-props]]
                                :header [:div {:class :e-color-selector--options-header}
                                              [icon-button.views/element ::close-button close-button]]
-                               :border-radius :m}]]))
+                               :border-radius {:all :m}}]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -64,19 +64,18 @@
   ; {:class (keyword or keywords in vector)(opt)
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :left (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :right (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :on-select (metamorphic-event)(opt)
   ;  :options (strings in vector)(opt)
   ;  :options-label (metamorphic-content)(opt)
   ;  :options-path (vector)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   Same as the :indent property
   ;  :style (map)(opt)
   ;  :value-path (vector)(opt)}
   ;

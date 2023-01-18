@@ -50,8 +50,13 @@
   ;   :tl, :tr, :br, :bl
   ;   Default: :tr
   ;   W/ {:badge-content ...}
-  ;  :border-radius (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :class (keyword or keywords in vector)(opt)
   ;  :disabled? (boolean)(opt)
   ;  :height (keyword)(opt)
@@ -68,13 +73,12 @@
   ;   Default: :material-symbols-filled
   ;  :indent (map)(opt)
   ;   {:bottom (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :left (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :right (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl
   ;    :top (keyword)(opt)
-  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl}
+  ;    :horizontal (keyword)(opt)
+  ;    :vertical (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
   ;  :keypress (map)(constant)(opt)
   ;   {:key-code (integer)
   ;    :required? (boolean)(opt)
@@ -87,7 +91,7 @@
   ;  :on-click (metamorphic handler)(opt)
   ;  :on-mouse-over (metamorphic handler)(opt)
   ;  :outdent (map)(opt)
-  ;   Same as the :indent property.
+  ;   Same as the :indent property
   ;  :progress (percent)(opt)
   ;  :progress-duration (ms)(opt)
   ;   W/ {:progress ...}

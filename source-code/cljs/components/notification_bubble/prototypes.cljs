@@ -14,12 +14,12 @@
   ; @return (map)
   ; {}
   [{:keys [layout] :as button-props}]
-  (case layout :button (merge {:border-radius :s
+  (case layout :button (merge {:border-radius {:all :s}
                                :font-size     :xs
                                :hover-color   :highlight
                                :indent        {:horizontal :xxs :vertical :xs}}
                               (param button-props))
-                       (merge {:border-radius :s
+                       (merge {:border-radius {:all :s}
                                :hover-color   :highlight}
                               (param button-props))))
 
@@ -34,13 +34,13 @@
   ; {}
   [bubble-id {:keys [primary-button secondary-button] :as bubble-props}]
   (merge {:border-color  :secondary
-          :border-radius :m
+          :border-radius {:all :m}
           :border-width  :xs
           :fill-color    :default
           :min-width     :m
           :indent        {:horizontal :xs :vertical :xs}
           :outdent       {:bottom     :xs :vertical :xs}
-          :primary-button {:border-radius :s
+          :primary-button {:border-radius {:all :s}
                            :icon          :close
                            :hover-color   :highlight
                            :on-click      [:x.ui/remove-bubble! bubble-id]}}

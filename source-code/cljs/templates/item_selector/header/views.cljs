@@ -32,7 +32,7 @@
   ;  :order-by-options (namespaced keywords in vector)}
   [selector-id {:keys [disabled? order-by-options]}]
   [elements/icon-button ::order-by-icon-button
-                        {:border-radius :s
+                        {:border-radius {:all :s}
                          :disabled?     disabled?
                          :hover-color   :highlight
                          :on-click      [:item-lister/choose-order-by! selector-id {:order-by-options order-by-options}]

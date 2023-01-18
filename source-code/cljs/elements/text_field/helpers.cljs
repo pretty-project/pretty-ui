@@ -24,15 +24,17 @@
   ; @return (map)
   ; {:data-color (keyword)
   ;  :data-font-size (keyword)
+  ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :data-icon-family (keyword)}
   [field-id field-props {:keys [color icon icon-family]}]
   ; BUG#2105 (source-code/cljs/elements/plain_field/helpers.cljs)
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
-         {:data-line-height   :text-block
-          :data-reveal-effect :delayed
-          :data-selectable    false}
+         {:data-letter-spacing :auto
+          :data-line-height    :text-block
+          :data-reveal-effect  :delayed
+          :data-selectable     false}
          (if icon {:data-icon-family icon-family})
          (if icon {:data-icon-size :s}
                   {:data-font-size :xs})))
@@ -61,6 +63,7 @@
   (merge (plain-field.helpers/field-accessory-attributes field-id field-props)
          {:data-color            color
           :data-click-effect     :opacity
+          :data-letter-spacing   :auto
           :data-line-height      :text-block
           :data-reveal-effect    :delayed
           :data-selectable       false
@@ -86,11 +89,12 @@
   ; @return (map)
   [field-id field-props]
   ; HACK#9760 (source-code/cljs/elements/plain_field/helpers.cljs)
-  {:data-font-size     :xs
-   :data-line-height   :text-block
-   :data-reveal-effect :delayed
-   :data-selectable    false
-   :data-text-overflow :hidden})
+  {:data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-reveal-effect  :delayed
+   :data-selectable     false
+   :data-text-overflow  :hidden})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -197,7 +201,8 @@
   ; @return (map)
   ; {}
   [_ {:keys [border-color border-radius border-width style] :as field-props}]
-  (-> {:style style}
+  (-> {:data-letter-spacing :auto
+       :style               style}
       (pretty-css/border-attributes field-props)
       (pretty-css/font-attributes   field-props)
       (pretty-css/indent-attributes field-props)

@@ -15,12 +15,13 @@
   ; @return (map)
   ; {}
   [picker-id {:keys [disabled? on-select value-path]}]
-  {:class            :c-color-picker--placeholder
-   :data-color       :default
-   :data-font-size   :xs
-   :data-font-weight :medium
-   :data-line-height :text-block
-   :data-selectable  false})
+  {:class               :c-color-picker--placeholder
+   :data-color          :default
+   :data-font-size      :xs
+   :data-font-weight    :medium
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-selectable     false})
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

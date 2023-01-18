@@ -12,11 +12,13 @@
   ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
-  ; {:border-radius (keyword)}
+  ; {:border-radius (map)
+  ;   {:all (keyword)(opt)}}
   ;
   ; @return (map)
-  [_ {:keys [border-radius] :as switch-props}]
-  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius border-radius 0.75)}}
+  ; {}
+  [_ {{:keys [all]} :border-radius :as switch-props}]
+  (-> {:style {"--adaptive-border-radius" (pretty-css/adaptive-border-radius all 0.75)}}
       (pretty-css/border-attributes switch-props)))
 
 (defn switch-option-attributes

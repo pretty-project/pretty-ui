@@ -16,8 +16,8 @@
   ; @param (map) bubble-props
   ; {:border-color (keyword)(opt)
   ;   Default: :secondary
-  ;  :border-radius (keyword)(opt)
-  ;   Default: :m
+  ;  :border-radius (map)(opt)
+  ;   Default: {:all :m}
   ;  :border-width (keyword)(opt)
   ;   Default: :xs
   ;  :fill-color (keyword or string)(opt)
@@ -29,7 +29,7 @@
   ;  :outdent (map)(opt)
   ;   Default: {:bottom :xs :vertical :xs}
   ;  :primary-button (map)(opt)
-  ;   Default: {:border-radius :s
+  ;   Default: {:border-radius {:all :s}
   ;             :icon          :close
   ;             :hover-color   :highlight
   ;             :layout        :icon-button

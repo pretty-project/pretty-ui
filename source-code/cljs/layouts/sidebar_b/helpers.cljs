@@ -38,7 +38,8 @@
   (-> {:data-element-min-width min-width
        :style                  style}
       (pretty-css/border-attributes sidebar-props)
-      (pretty-css/color-attributes  sidebar-props)))
+      (pretty-css/color-attributes  sidebar-props)
+      (pretty-css/indent-attributes sidebar-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

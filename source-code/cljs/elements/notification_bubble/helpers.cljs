@@ -13,10 +13,12 @@
   ;
   ; @return (map)
   ; {:data-element-min-width (keyword)
+  ;  :data-letter-spacing (keyword)
   ;  :style (map)}
   [_ {:keys [min-width style] :as bubble-props}]
   (-> {:data-element-min-width min-width
-       :style                  style}
+       :style                  style
+       :data-letter-spacing    :auto}
       (pretty-css/font-attributes   bubble-props)
       (pretty-css/indent-attributes bubble-props)))
 

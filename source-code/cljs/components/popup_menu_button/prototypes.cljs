@@ -11,7 +11,7 @@
   ; @return (map)
   ; {}
   [button-props]
-  (merge {:border-radius    :s
+  (merge {:border-radius    {:all :s}
           :gap              :xs
           :horizontal-align :left
           :hover-color      :highlight

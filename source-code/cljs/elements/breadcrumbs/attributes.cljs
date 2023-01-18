@@ -18,16 +18,18 @@
   ; {:class (keyword or keywords in vector)
   ;  :data-color (keyword)
   ;  :data-font-size (keyword)
+  ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :data-text-overflow (keyword)}
   [_ _ _]
-  {:class              :e-breadcrumbs--crumb
-   :data-color         :muted
-   :data-font-size     :xs
-   :data-line-height   :text-block
-   :data-selectable    false
-   :data-text-overflow :ellipsis})
+  {:class               :e-breadcrumbs--crumb
+   :data-color          :muted
+   :data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-selectable     false
+   :data-text-overflow  :ellipsis})
 
 (defn button-crumb-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -43,20 +45,22 @@
   ;  :data-color (keyword)
   ;  :data-font-size (keyword)
   ;  :data-font-weight (keyword)
+  ;  :data-letter-spacing (keyword)
   ;  :data-line-height (keyword)
   ;  :data-selectable (boolean)
   ;  :on-click (function)
   ;  :on-mouse-up (function)
   ;  :data-text-overflow (keyword)}
   [breadcrumbs-id _ {:keys [route]}]
-  {:class              :e-breadcrumbs--crumb
-   :data-click-effect  :opacity
-   :data-color         :muted
-   :data-font-size     :xs
-   :data-font-weight   :bold
-   :data-line-height   :text-block
-   :data-selectable    false
-   :data-text-overflow :ellipsis
+  {:class               :e-breadcrumbs--crumb
+   :data-click-effect   :opacity
+   :data-color          :muted
+   :data-font-size      :xs
+   :data-font-weight    :bold
+   :data-letter-spacing :auto
+   :data-line-height    :text-block
+   :data-selectable     false
+   :data-text-overflow  :ellipsis
    :on-click    #(r/dispatch [:x.router/go-to! route])
    :on-mouse-up #(x.environment/blur-element! breadcrumbs-id)})
 

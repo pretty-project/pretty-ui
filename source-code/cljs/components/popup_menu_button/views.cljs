@@ -14,8 +14,8 @@
   ;
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
-  ; {:border-radius (keyword)(opt)
-  ;   Default: :s
+  ; {:border-radius (map)(opt)
+  ;   Default: {:all :s}
   ;  :gap (keyword)(opt)
   ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)

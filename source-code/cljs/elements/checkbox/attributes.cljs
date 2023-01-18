@@ -17,9 +17,10 @@
   ; @return (map)
   ; {}
   [_ _ _]
-  {:class            :e-checkbox--option-helper
-   :data-font-size   :xs
-   :data-line-height :native})
+  {:class               :e-checkbox--option-helper
+   :data-font-size      :xs
+   :data-letter-spacing :auto
+   :data-line-height    :native})
 
 (defn checkbox-option-label-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -32,10 +33,11 @@
   ; @return (map)
   ; {}
   [_ {:keys [font-size]} _]
-  (-> {:class            :e-checkbox--option-label
-       :data-font-size   font-size
-       :data-font-weight :medium
-       :data-line-height :text-block}))
+  (-> {:class               :e-checkbox--option-label
+       :data-font-size      font-size
+       :data-font-weight    :medium
+       :data-letter-spacing :auto
+       :data-line-height    :text-block}))
 
 (defn checkbox-option-button-attributes
   ; WARNING! NON-PUBLIC! DO NOT USE!

@@ -17,17 +17,19 @@
   ; @return (map)
   ; {}
   [anchor-id {:keys [disabled? href on-click style] :as anchor-props}]
-  (-> (if disabled? {:class              :e-anchor--body
-                     :data-text-overflow :no-wrap
-                     :disabled           true
-                     :style              style}
-                    {:class              :e-anchor--body
-                     :data-click-effect  :opacity
-                     :data-text-overflow :no-wrap
-                     :href               href
-                     :style              style
-                     :on-click           #(r/dispatch on-click)
-                     :on-mouse-up        #(x.environment/blur-element!)})
+  (-> (if disabled? {:class               :e-anchor--body
+                     :data-letter-spacing :auto
+                     :data-text-overflow  :no-wrap
+                     :disabled            true
+                     :style               style}
+                    {:class               :e-anchor--body
+                     :data-click-effect   :opacity
+                     :data-letter-spacing :auto
+                     :data-text-overflow  :no-wrap
+                     :href                href
+                     :style               style
+                     :on-click            #(r/dispatch on-click)
+                     :on-mouse-up         #(x.environment/blur-element!)})
       (pretty-css/color-attributes  anchor-props)
       (pretty-css/font-attributes   anchor-props)
       (pretty-css/indent-attributes anchor-props)))

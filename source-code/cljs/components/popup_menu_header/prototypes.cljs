@@ -16,7 +16,7 @@
   [{:keys [close-button label] :as header-props}]
   (merge {}
          (param header-props)
-         (if close-button {:close-button (merge {:border-radius :s
+         (if close-button {:close-button (merge {:border-radius {:all :s}
                                                  :hover-color   :highlight
                                                  :icon          :close
                                                  :keypress      {:key-code 27}}
