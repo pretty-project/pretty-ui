@@ -1,17 +1,8 @@
 
-{:paths ["dependencies/clj"
-         "plugins/clj" "plugins/cljs"
+{:paths ["plugins/clj" "plugins/cljs"
          "resources"
          "source-code/clj" "source-code/cljc" "source-code/cljs"]
- :deps  {com.draines/postal                           {:mvn/version "2.0.4"}
-         com.openhtmltopdf/openhtmltopdf-core         {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-pdfbox       {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-rtl-support  {:mvn/version "1.0.10"}
-         com.openhtmltopdf/openhtmltopdf-svg-support  {:mvn/version "1.0.10"}
-         commons-io/commons-io                        {:mvn/version "2.6"}
-         org.clojars.paul-simple-code/reagent-hickory {:mvn/version "0.3.7-no-escape-string"}
-         org.jsoup/jsoup                              {:mvn/version "1.14.3"}
-         bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
+ :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
                                   :sha     "41a4d205d88a70902b180748d33a1409fdaf7dc4"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
                                   :sha     "ad2158a3e2f9867a73fa7dbccc55722f8e173671"}}}

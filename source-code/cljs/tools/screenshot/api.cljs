@@ -1,2 +1,0 @@
-
-(ns tools.screenshot.api)
