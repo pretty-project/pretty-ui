@@ -28,7 +28,8 @@
   ;   Default: :m
   ;  :indent (map)(opt)
   ;   Default: {:horizontal :xs :left :s :right :xl}
-  ;  :preset (keyword)(opt)}
+  ;  :preset (keyword)(opt)
+  ;   :active}
   ;
   ; @usage
   ; [side-menu-button {...}]

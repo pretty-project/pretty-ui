@@ -12,6 +12,7 @@
   ; {}
   [button-props]
   (merge {:border-radius    {:all :s}
+          :font-size        :xs
           :gap              :xs
           :horizontal-align :left
           :hover-color      :highlight

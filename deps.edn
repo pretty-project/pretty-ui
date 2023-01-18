@@ -3,6 +3,6 @@
          "resources"
          "source-code/clj" "source-code/cljc" "source-code/cljs"]
  :deps  {bithandshake/pretty-css {:git/url "git@github.com:bithandshake/pretty-css"
-                                  :sha     "12fe0922f8705d355875996c74e9fc886d016804"}
+                                  :sha     "0bc1a2635d1cd7e00987bed8e25541299ebbf878"}
          monotech-hq/x5          {:git/url "git@github.com:monotech-hq/x5"
                                   :sha     "85537554eec76e0a6b1a08e2f92eff20e15475ee"}}}

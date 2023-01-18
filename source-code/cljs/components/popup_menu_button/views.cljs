@@ -1,7 +1,9 @@
 
 (ns components.popup-menu-button.views
-    (:require [components.popup-menu-button.prototypes :as popup-menu-button.prototypes]
+    (:require [components.popup-menu-button.presets    :as popup-menu-button.presets]
+              [components.popup-menu-button.prototypes :as popup-menu-button.prototypes]
               [elements.api                            :as elements]
+              [pretty-css.api                          :as pretty-css]
               [random.api                              :as random]))
 
 ;; ----------------------------------------------------------------------------
@@ -16,6 +18,8 @@
   ; @param (map) button-props
   ; {:border-radius (map)(opt)
   ;   Default: {:all :s}
+  ;  :font-size (keyword)(opt)
+  ;   Default: :xs
   ;  :gap (keyword)(opt)
   ;   Default: :xs
   ;  :horizontal-align (keyword)(opt)
@@ -27,7 +31,9 @@
   ;  :indent (map)(opt)
   ;   Default: {:horizontal :xxs :vertical :xxs}
   ;  :outdent (map)(opt)
-  ;   Default: {:vertical :xs}}
+  ;   Default: {:vertical :xs}
+  ;  :preset (keyword)(opt)
+  ;   :highlight}
   ;
   ; @usage
   ; [popup-menu-button {...}]
@@ -38,5 +44,6 @@
    [component (random/generate-keyword) button-props])
 
   ([button-id button-props]
-   (let [button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
+   (let [button-props (pretty-css/apply-preset popup-menu-button.presets/BUTTON-PROPS-PRESETS button-props)
+         button-props (popup-menu-button.prototypes/button-props-prototype button-props)]
         [elements/button button-id button-props])))

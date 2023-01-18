@@ -837,6 +837,8 @@ same ID for both the field and the block, the label of the block can targets the
 @param (map) button-props
 {:border-radius (map)(opt)
   Default: {:all :s}
+ :font-size (keyword)(opt)
+  Default: :xs
  :gap (keyword)(opt)
   Default: :xs
  :horizontal-align (keyword)(opt)
@@ -848,7 +850,9 @@ same ID for both the field and the block, the label of the block can targets the
  :indent (map)(opt)
   Default: {:horizontal :xxs :vertical :xxs}
  :outdent (map)(opt)
-  Default: {:vertical :xs}}
+  Default: {:vertical :xs}
+ :preset (keyword)(opt)
+  :highlight}
 ```
 
 ```
@@ -1062,7 +1066,8 @@ same ID for both the field and the block, the label of the block can targets the
   Default: :m
  :indent (map)(opt)
   Default: {:horizontal :xs :left :s :right :xl}
- :preset (keyword)(opt)}
+ :preset (keyword)(opt)
+  :active}
 ```
 
 ```
