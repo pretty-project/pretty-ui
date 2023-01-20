@@ -61,6 +61,8 @@
 
 - [popup-menu-label](#popup-menu-label)
 
+- [popup-menu-title](#popup-menu-title)
+
 - [popup-progress-indicator](#popup-progress-indicator)
 
 - [section-description](#section-description)
@@ -126,7 +128,7 @@
  :color-stamp (map)(opt)
   {:border-radius (map)(opt)
    :gap (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
    :height (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
     Default: :l
@@ -908,18 +910,57 @@ same ID for both the field and the block, the label of the block can targets the
   Default: :left
  :icon-size (keyword)(opt)
   Default: :m
- :outdent (map)(opt)
+ :indent (map)(opt)
   Default: {:horizontal :xxs :vertical :s}}
 ```
 
 ```
 @usage
-[side-menu-label {...}]
+[popup-menu-label {...}]
 ```
 
 ```
 @usage
-[side-menu-label :my-side-menu-label {...}]
+[popup-menu-label :my-popup-menu-label {...}]
+```
+
+---
+
+### popup-menu-title
+
+```
+@param (keyword)(opt) title-id
+@param (map) title-props
+{:border-color (keyword)
+  Default: :default
+ :border-position (keyword)
+  Default: :bottom
+ :border-width (keyword)
+  Default: :xs
+ :font-weight (keyword)
+  Default: :bold
+ :gap (keyword)
+  Default: :auto
+ :icon-position (keyword)
+  Default: :right
+ :icon-size (keyword)
+  Default: :xl
+ :indent (map)
+  Default: {:bottom :xxs}
+ :outdent (map)
+  Default: {:bottom :s}
+ :text-transform (keyword)(opt)
+  Default: :uppercase}
+```
+
+```
+@usage
+[popup-menu-title {...}]
+```
+
+```
+@usage
+[popup-menu-title :my-popup-menu-title {...}]
 ```
 
 ---

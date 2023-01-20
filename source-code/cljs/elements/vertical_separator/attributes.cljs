@@ -1,0 +1,22 @@
+
+(ns elements.vertical-separator.attributes
+    (:require [pretty-css.api :as pretty-css]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn separator-attributes
+  ; WARNING! NON-PUBLIC! DO NOT USE!
+  ;
+  ; @param (keyword) separator-id
+  ; @param (map) separator-props
+  ; {:style (map)(opt)}
+  ;
+  ; @return (map)
+  ; {:class (keyword or keywords in vector)
+  ;  :style (map)}
+  [_ {:keys [style] :as separator-props}]
+  (-> {:class :e-vertical-separator
+       :style style}
+      (pretty-css/default-attributes    separator-props)
+      (pretty-css/block-size-attributes separator-props)))

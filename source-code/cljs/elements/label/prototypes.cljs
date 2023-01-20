@@ -11,7 +11,8 @@
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (map) label-props
-  ; {:color (keyword)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;  :color (keyword)(opt)
   ;  :content (metamorphic-content)(opt)
   ;  :font-size (keyword)(opt)
   ;  :icon (keyword)(opt)
@@ -19,7 +20,9 @@
   ;  :target-id (keyword)(opt)}
   ;
   ; @return (map)
-  ; {:color (keyword or string)
+  ; {:border-position (keyword)
+  ;  :border-width (keyword)
+  ;  :color (keyword or string)
   ;  :content (string)
   ;  :copyable? (boolean)
   ;  :font-size (keyword)
@@ -27,13 +30,14 @@
   ;  :horizontal-align (keyword)
   ;  :icon-color (keyword)
   ;  :icon-family (keyword)
+  ;  :icon-position (keyword)
   ;  :icon-size (keyword)
   ;  :line-height (keyword)
   ;  :marker-position (keyword)
   ;  :selectable? (boolean)
   ;  :target-id (string)
   ;  :text-overflow (keyword)}
-  [{:keys [color content font-size icon marker-color target-id] :as label-props}]
+  [{:keys [border-color color content font-size icon marker-color target-id] :as label-props}]
   ; XXX#7009
   ; The 'label-props-prototype' function applies the 'x.components/content' function
   ; on the 'content' value. Therefore no need to apply the 'x.components/content'
@@ -45,9 +49,12 @@
                :line-height      :text-block
                :selectable?      false
                :text-overflow   :ellipsis}
+              (if border-color {:border-position :all
+                                :border-width    :xxs})
               (if marker-color {:marker-position :tr})
               (if icon         {:icon-family :material-symbols-outlined
-                                :icon-color color :icon-size (or font-size :s)})
+                                :icon-color color :icon-size (or font-size :s)
+                                :icon-position :left})
               (param label-props)
               {:content content}
               (if target-id        {:target-id (hiccup/value target-id "input")})

@@ -23,6 +23,8 @@
 
 - [navbar](#navbar)
 
+- [navbar-menu](#navbar-menu)
+
 - [scroll-icon](#scroll-icon)
 
 - [scroll-sensor](#scroll-sensor)
@@ -241,6 +243,26 @@
 ```
 @usage
 [navbar :my-navbar {...}]
+```
+
+---
+
+### navbar-menu
+
+```
+@param (keyword)(opt) menu-id
+@param (map) menu-props
+{}
+```
+
+```
+@usage
+[navbar-menu {...}]
+```
+
+```
+@usage
+[navbar-menu :my-navbar-menu {...}]
 ```
 
 ---

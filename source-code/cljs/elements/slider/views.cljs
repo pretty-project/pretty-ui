@@ -10,40 +10,30 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- slider-line
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.e-slider--line (slider.helpers/slider-line-attributes slider-id slider-props)])
 
 (defn- slider-secondary-thumb
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.e-slider--thumb (slider.helpers/slider-secondary-thumb-attributes slider-id slider-props)])
 
 (defn- slider-primary-thumb
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.e-slider--thumb (slider.helpers/slider-primary-thumb-attributes slider-id slider-props)])
 
 (defn- slider-track
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
   [:div.e-slider--track])
 
 (defn- slider-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
@@ -54,8 +44,6 @@
                        [slider-secondary-thumb                slider-id slider-props]])
 
 (defn- slider-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]
@@ -64,8 +52,6 @@
                  [slider-body                      slider-id slider-props]])
 
 (defn- slider
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) slider-id
   ; @param (map) slider-props
   [slider-id slider-props]

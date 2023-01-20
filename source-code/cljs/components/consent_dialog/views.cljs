@@ -54,10 +54,10 @@
   ; @param (keyword) dialog-id
   ; @param (map) dialog-props
   [dialog-id dialog-props]
-  [layouts/popup-a :components.consent-dialog/view
-                   {:body   [consent-dialog-body   dialog-id dialog-props]
-                    :header [consent-dialog-header dialog-id dialog-props]
-                    :min-width :xs}])
+  [layouts/struct-popup :components.consent-dialog/view
+                        {:body   [consent-dialog-body   dialog-id dialog-props]
+                         :header [consent-dialog-header dialog-id dialog-props]
+                         :min-width :xs}])
 
 (defn component
   ; @param (keyword)(opt) dialog-id

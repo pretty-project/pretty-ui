@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- counter-reset-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ; {:resetable? (boolean)(opt)}
@@ -20,8 +18,6 @@
   (if resetable? [:button.e-counter--reset-button (counter.helpers/reset-button-attributes counter-id counter-props)]))
 
 (defn- counter-increase-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ; {:disabled? (boolean)(opt)}
@@ -29,8 +25,6 @@
   [:button.e-counter--increase-button (counter.helpers/increase-button-attributes counter-id counter-props)])
 
 (defn- counter-decrease-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ; {:disabled? (boolean)(opt)}r/
@@ -38,8 +32,6 @@
   [:button.e-counter--decrease-button (counter.helpers/decrease-button-attributes counter-id counter-props)])
 
 (defn- counter-value
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   ; {:value-path (vector)}
@@ -48,8 +40,6 @@
        [:div.e-counter--value value]))
 
 (defn- counter-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
@@ -59,9 +49,7 @@
                         [counter-increase-button                 counter-id counter-props]
                         [counter-reset-button                    counter-id counter-props]])
 
-(defn- counter-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn- counter
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
@@ -69,14 +57,13 @@
                   [element.views/element-label        counter-id counter-props]
                   [counter-body                       counter-id counter-props]])
 
-(defn- counter
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn- counter-structure
   ; @param (keyword) counter-id
   ; @param (map) counter-props
   [counter-id counter-props]
   (reagent/lifecycles {:component-did-mount (fn [_ _] (r/dispatch [:elements.counter/counter-did-mount counter-id counter-props]))
                        :reagent-render      (fn [_ counter-props] [counter-structure counter-id counter-props])}))
+
 
 (defn element
   ; @param (keyword)(opt) counter-id

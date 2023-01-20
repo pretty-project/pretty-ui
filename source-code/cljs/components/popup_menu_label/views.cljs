@@ -22,14 +22,14 @@
   ;   Default: :left
   ;  :icon-size (keyword)(opt)
   ;   Default: :m
-  ;  :outdent (map)(opt)
+  ;  :indent (map)(opt)
   ;   Default: {:horizontal :xxs :vertical :s}}
   ;
   ; @usage
-  ; [side-menu-label {...}]
+  ; [popup-menu-label {...}]
   ;
   ; @usage
-  ; [side-menu-label :my-side-menu-label {...}]
+  ; [popup-menu-label :my-popup-menu-label {...}]
   ([label-props]
    [component (random/generate-keyword) label-props])
 

@@ -3,7 +3,6 @@
     (:require [elements.api            :as elements]
               [random.api              :as random]
               [re-frame.api            :as r]
-              [website.sidebar.helpers :as sidebar.helpers]
               [x.components.api        :as x.components]
               [x.environment.api       :as x.environment]))
 

@@ -7,8 +7,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-props-prototype
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (map) button-props
   ; {:badge-content (metamorphic-content)(opt)
   ;  :border-color (keyword)(opt)
@@ -34,13 +32,15 @@
   ;  :icon-size (keyword)
   ;  :label (string)
   ;  :line-height (keyword)
+  ;  :text-overflow (keyword)
   ;  :tooltip-content (string)
   ;  :tooltip-position (keyword)}
   [{:keys [badge-content border-color disabled? font-size icon label marker-color tooltip-content] :as button-props}]
   (merge {:font-size        :s
           :font-weight      :medium
           :horizontal-align :center
-          :line-height      :text-block}
+          :line-height      :text-block
+          :text-overflow    :no-wrap}
          (if badge-content   {:badge-color :primary :badge-position :tr})
          (if border-color    {:border-position :all
                               :border-width    :xxs})
@@ -50,7 +50,7 @@
                               :icon-size (or font-size :s)})
          (if tooltip-content {:tooltip-position :right})
          (param button-props)
-         (if badge-content   {:badge-content     (x.components/content badge-content)})
-         (if label           {:label             (x.components/content label)})
+         (if badge-content   {:badge-content   (x.components/content badge-content)})
+         (if label           {:label           (x.components/content label)})
          (if tooltip-content {:tooltip-content (x.components/content tooltip-content)})
          (if disabled?       {:hover-color :none})))

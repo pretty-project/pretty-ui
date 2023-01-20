@@ -17,6 +17,9 @@
           :horizontal-align :left
           :hover-color      :highlight
           :icon-size        :m
-          :indent           {:horizontal :xxs :vertical :xxs}
-          :outdent          {:vertical :xs}}
+          :indent           {:horizontal :xxs :vertical :xxs}}
+
+          ; A VERTICAL outdent már tulságosan megköti/szabályozza a komponens használatát!
+          ; Deprecated!
+          ;:outdent          {:vertical :xs}}
          (param button-props)))

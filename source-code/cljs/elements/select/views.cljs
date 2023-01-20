@@ -19,8 +19,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- option-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:extendable? (boolean)(opt)
@@ -37,8 +35,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- select-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:option-label-f (function)}
@@ -48,8 +44,6 @@
                             (-> option option-label-f x.components/content)])
 
 (defn- select-option-list-items
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -61,8 +55,6 @@
               (reduce f [:<>] options))))
 
 (defn- options-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:options-placeholder (metamorphic-content)}
@@ -73,8 +65,6 @@
                                       (x.components/content options-placeholder)])
 
 (defn- select-option-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -85,8 +75,6 @@
                                        [options-placeholder      select-id select-props])]))
 
 (defn- select-options-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
@@ -98,8 +86,6 @@
                     [:div.e-select--options--label {:data-placeholder true}]))
 
 (defn- select-options-header
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {}
@@ -109,8 +95,6 @@
                                   [option-field         select-id select-props]])
 
 (defn- select-options-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -119,23 +103,19 @@
                        :component-will-unmount (fn [_ _] (r/dispatch [:elements.select/select-options-will-unmount select-id select-props]))}))
 
 (defn- select-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
-  [layouts/popup-a :elements.select/options
-                   {:body      [select-options-body   select-id select-props]
-                    :header    [select-options-header select-id select-props]
-                    :border-radius {:all :m}
-                    :min-width     :xxs}])
+  [layouts/struct-popup :elements.select/options
+                        {:body   [select-options-body   select-id select-props]
+                         :header [select-options-header select-id select-props]
+                         :border-radius {:all :m}
+                         :min-width     :xxs}])
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn- select-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -148,8 +128,6 @@
                                                            :on-click      on-click)]))
 
 (defn- select-button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -157,8 +135,6 @@
                         [select-button select-id select-props]])
 
 (defn- select-layout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -181,8 +157,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- button-layout
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   [select-id select-props]
@@ -193,8 +167,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- select
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) select-id
   ; @param (map) select-props
   ; {:layout (keyword)}
@@ -215,6 +187,8 @@
   ;  :autoclear? (boolean)(opt)
   ;  :border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -245,8 +219,6 @@
   ;   Default: :select
   ;  :marker-color (keyword)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  ;  :min-width (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-select (metamorphic-event)(opt)
   ;  :option-field-placeholder (metamorphic-content)(opt)
   ;   Default: :add!

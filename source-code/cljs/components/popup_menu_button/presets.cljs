@@ -8,4 +8,4 @@
 (def BUTTON-PROPS-PRESETS
      {:highlight {:fill-color  :highlight
                   :hover-color :highlight
-                  :outdent {:horizontal :xxs :vertical :xs}}})
+                  :outdent {:horizontal :xxs}}}) ;:vertical :xs}}})

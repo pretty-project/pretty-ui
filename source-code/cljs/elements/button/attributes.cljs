@@ -32,10 +32,10 @@
   ; @param (map) button-props
   ;
   ; @return (map)
-  ; {:class (keyword or keywords in vector)
-  ;  :data-text-overflow (keyword)}
+  ; {:class (keyword or keywords in vector)}
   [_ button-props]
-  {:class :e-button--label :data-text-overflow :no-wrap})
+  (-> {:class :e-button--label}
+      (pretty-css/text-attributes button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -47,6 +47,8 @@
   ; @param (map) button-props
   ; {:disabled? (boolean)(opt)
   ;  :gap (keyword)(opt)
+  ;  :horizontal-align (keyword)
+  ;  :href (string)(opt)
   ;  :on-click (metamorphic-event)(opt)
   ;  :on-mouse-over (metamorphic-event)(opt)
   ;  :style (map)(opt)}
@@ -57,12 +59,13 @@
   ;  :data-column-gap (keyword)
   ;  :data-selectable (boolean)
   ;  :disabled (boolean)
+  ;  :href (string)
   ;  :id (string)
   ;  :on-click (function)
   ;  :on-mouse-over (function)
   ;  :on-mouse-up (function)
   ;  :style (map)}
-  [button-id {:keys [disabled? gap horizontal-align on-click on-mouse-over style] :as button-props}]
+  [button-id {:keys [disabled? gap horizontal-align href on-click on-mouse-over style] :as button-props}]
   ; XXX#4460
   ; By setting the :id attribute the body component becomes targetable for
   ; DOM actions. (setting focus/blur, etc.)
@@ -74,6 +77,7 @@
                      :data-selectable           false
                      :style                     style}
                     {:class                     :e-button--body
+                     :href                      href
                      :id                        (hiccup/value button-id "body")
                      :on-click                  #(r/dispatch  on-click)
                      :on-mouse-over             #(r/dispatch  on-mouse-over)

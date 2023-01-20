@@ -13,8 +13,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- checkbox-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   ; {:option-helper-f (function)
@@ -30,8 +28,6 @@
                                            (-> option option-helper-f x.components/content)])]])
 
 (defn- checkbox-option-list
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
@@ -40,8 +36,6 @@
               (reduce f [:<>] options))))
 
 (defn- checkbox-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]
@@ -51,8 +45,6 @@
               [checkbox-option-list                         checkbox-id checkbox-props]]])
 
 (defn- checkbox
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) checkbox-id
   ; @param (map) checkbox-props
   [checkbox-id checkbox-props]

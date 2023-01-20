@@ -14,8 +14,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- default-option-component
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:option-label-f (function)}
@@ -24,8 +22,6 @@
   [:div.e-combo-box--option-label (-> option option-label-f x.components/content)])
 
 (defn- combo-box-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   ; {:option-component (component)(opt)}
@@ -41,8 +37,6 @@
                                                     [default-option-component box-id box-props option])])
 
 (defn- combo-box-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
@@ -57,8 +51,6 @@
                                          (reduce-indexed f [:<>] options)])))
 
 (defn- combo-box-surface
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
@@ -67,8 +59,6 @@
                              [combo-box-options box-id box-props]])
 
 (defn- combo-box-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
@@ -76,8 +66,6 @@
        [text-field.views/element box-id box-props]))
 
 (defn- combo-box
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) box-id
   ; @param (map) box-props
   [box-id box-props]
@@ -115,5 +103,5 @@
    [element (random/generate-keyword) box-props])
 
   ([box-id box-props]
-   (let [box-props (combo-box.prototypes/box-props-prototype  box-id box-props)]
+   (let [box-props (combo-box.prototypes/box-props-prototype box-id box-props)]
         [combo-box box-id box-props])))

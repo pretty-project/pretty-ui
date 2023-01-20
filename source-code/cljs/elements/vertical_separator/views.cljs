@@ -1,6 +1,6 @@
 
 (ns elements.vertical-separator.views
-    (:require [elements.vertical-separator.helpers    :as vertical-separator.helpers]
+    (:require [elements.vertical-separator.attributes :as vertical-separator.attributes]
               [elements.vertical-separator.prototypes :as vertical-separator.prototypes]
               [random.api                             :as random]))
 
@@ -24,4 +24,4 @@
 
   ([separator-id separator-props]
    (let [separator-props (vertical-separator.prototypes/separator-props-prototype separator-props)]
-        [:div.e-vertical-separator (vertical-separator.helpers/separator-attributes separator-id separator-props)])))
+        [:div (vertical-separator.attributes/separator-attributes separator-id separator-props)])))

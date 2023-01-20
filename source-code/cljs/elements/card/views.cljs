@@ -9,8 +9,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- card
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) card-id
   ; @param (map) card-props
   ; {:on-click (metamorphic-event)(opt)}
@@ -28,14 +26,14 @@
   ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary
-  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
   ;   Default: :tr
-  ;   W/ {:badge-content ...}
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -61,6 +59,12 @@
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;  :marker-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
+  ;  :max-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :max-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :on-click (metamorphic-event)(opt)

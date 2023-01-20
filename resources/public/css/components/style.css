@@ -1,12 +1,12 @@
 
 /***** Color picker *****/
-/*** Wrapper ***/
+/*** Component ***/
 
 .c-color-picker {
   display: flex;
 }
 
-/*** Wrapper ***/
+/*** Component ***/
 
 /*** Body ***/
 
@@ -358,7 +358,7 @@
 
 
 /***** Side menu footer *****/
-/*** Wrapper ***/
+/*** Component ***/
 
 .c-side-menu-footer {
   align-items: flex-end;
@@ -367,7 +367,7 @@
   justify-content: center;
 }
 
-/*** Wrapper ***/
+/*** Component ***/
 /***** Side menu footer *****/
 
 

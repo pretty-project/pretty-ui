@@ -1,6 +1,7 @@
 
 (ns elements.label.views
-    (:require [elements.label.helpers    :as label.helpers]
+    (:require [elements.label.attributes :as label.attributes]
+              [elements.label.helpers    :as label.helpers]
               [elements.label.prototypes :as label.prototypes]
               [pretty-css.api            :as pretty-css]
               [random.api                :as random]
@@ -16,9 +17,10 @@
   ; @param (map) label-props
   ; {:helper (metamorphic-content)}
   [_ {:keys [helper]}]
-  (if helper [:div.e-label--helper {:data-font-size   :xs
-                                    :data-line-height :text-block}
-                                   (x.components/content helper)]))
+  (if helper [:div {:class            :e-label--helper
+                    :data-font-size   :xs
+                    :data-line-height :text-block}
+                   (x.components/content helper)]))
 
 (defn label-info-text
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -28,9 +30,10 @@
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text]}]
   (if info-text (if-let [info-text-visible? (label.helpers/info-text-visible? label-id)]
-                        [:div.e-label--info-text {:data-font-size   :xs
-                                                  :data-line-height :text-block}
-                                                 (x.components/content info-text)])))
+                        [:div {:class            :e-label--info-text
+                               :data-font-size   :xs
+                               :data-line-height :text-block}
+                              (x.components/content info-text)])))
 
 (defn label-info-text-button
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -39,8 +42,7 @@
   ; @param (map) label-props
   ; {:info-text (metamorphic-content)(opt)}
   [label-id {:keys [info-text] :as label-props}]
-  (if info-text [:button.e-label--info-text-button (label.helpers/label-info-text-button-attributes label-id label-props)
-                                                   :info_outline]))
+  (if info-text [:button (label.attributes/label-info-text-button-attributes label-id label-props) :info]))
 
 (defn- label-icon
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -49,8 +51,7 @@
   ; @param (map) label-props
   ; {:icon (keyword)}
   [_ {:keys [icon] :as label-props}]
-  [:i.e-label--icon (pretty-css/icon-attributes {} label-props)
-                    icon])
+  (if icon [:i (pretty-css/icon-attributes {:class :e-label--icon} label-props) icon]))
 
 (defn- label-placeholder
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -71,11 +72,12 @@
   ; In the case of the placeholder is an empty string too, the "\u00A0" white
   ; character provides the consistent height for the element until the content
   ; gets its value.
-  [:div.e-label--placeholder {:data-color         :highlight
-                              :data-selectable    false
-                              :data-text-overflow :ellipsis}
-                             (if placeholder (x.components/content placeholder)
-                                             "\u00A0")])
+  [:div {:class              :e-label--placeholder
+         :data-color         :highlight
+         :data-selectable    false
+         :data-text-overflow :ellipsis}
+        (if placeholder (x.components/content placeholder)
+                        "\u00A0")])
 
 (defn- label-content
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -103,11 +105,9 @@
   ;    not capable to be applied with the {:data-tooltip-content ...} preset.
   ; 3. The .e-label--body element always fits with its environment in width, therefore
   ;    it's often too wide to be the sensor element.
-  (if copyable? [:div.e-label--copyable (label.helpers/copyable-attributes label-id label-props)
-                                        [:label.e-label--content (label.helpers/content-attributes label-id label-props)
-                                                                 content]]
-                [:<>                    [:label.e-label--content (label.helpers/content-attributes label-id label-props)
-                                                                 content]]))
+  (if copyable? [:div (label.attributes/copyable-attributes label-id label-props)
+                      [:label (label.attributes/content-attributes label-id label-props) content]]
+                [:<>  [:label (label.attributes/content-attributes label-id label-props) content]]))
 
 (defn- label-body
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -115,15 +115,19 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   ; {:content (string)(opt)
-  ;  :icon (keyword)(opt)
-  ;  :selectable? (boolean)}
-  [label-id {:keys [content icon selectable?] :as label-props}]
-  [:div.e-label--body (label.helpers/label-body-attributes label-id label-props)
-                      (if (empty? content)
-                          [label-placeholder label-id label-props]
-                          [:<> (if icon [label-icon label-id label-props])
-                               [label-content          label-id label-props]
-                               [label-info-text-button label-id label-props]])])
+  ;  :icon-position (keyword)(opt)}
+  [label-id {:keys [content icon-position] :as label-props}]
+  [:div (label.attributes/label-body-attributes label-id label-props)
+        (if (empty? content)
+            [label-placeholder label-id label-props]
+            (case icon-position :left  [:<> [label-icon             label-id label-props]
+                                            [label-content          label-id label-props]
+                                            [label-info-text-button label-id label-props]]
+                                :right [:<> [label-info-text-button label-id label-props]
+                                            [label-content          label-id label-props]
+                                            [label-icon             label-id label-props]]
+                                       [:<> [label-content          label-id label-props]
+                                            [label-info-text-button label-id label-props]]))])
 
 (defn- label
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -131,10 +135,10 @@
   ; @param (keyword) label-id
   ; @param (map) label-props
   [label-id label-props]
-  [:div.e-label (label.helpers/label-attributes label-id label-props)
-                [label-body                     label-id label-props]
-                [label-info-text                label-id label-props]
-                [label-helper                   label-id label-props]])
+  [:div (label.attributes/label-attributes label-id label-props)
+        [label-body                        label-id label-props]
+        [label-info-text                   label-id label-props]
+        [label-helper                      label-id label-props]])
 
 (defn element
   ; XXX#0721
@@ -142,7 +146,20 @@
   ;
   ; @param (keyword)(opt) label-id
   ; @param (map) label-props
-  ; {:class (keyword or keywords in vector)(opt)
+  ; {:border-color (keyword or string)(opt)
+  ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
+  ;  :border-radius (map)(opt)
+  ;   {:tl (keyword)(opt)
+  ;    :tr (keyword)(opt)
+  ;    :br (keyword)(opt)
+  ;    :bl (keyword)(opt)
+  ;    :all (keyword)(opt)
+  ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :border-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :class (keyword or keywords in vector)(opt)
   ;  :color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :inherit
@@ -157,7 +174,7 @@
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default :medium
   ;  :gap (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :left
@@ -170,6 +187,9 @@
   ;  :icon-family (keyword)(opt)
   ;   :material-symbols-filled, :material-symbols-outlined
   ;   Default: :material-symbols-outlined
+  ;  :icon-position (keyword)(opt)
+  ;   :left, :right
+  ;   Default: :left
   ;  :icon-size (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   ;   Default: :s
@@ -205,8 +225,10 @@
   ;   :normal, :reversed
   ;   Default :normal
   ;  :text-overflow (keyword)(opt)
-  ;   :ellipsis, :wrap
-  ;   Default: :ellipsis}
+  ;   :ellipsis, :no-wrap, :wrap
+  ;   Default: :ellipsis
+  ;  :text-transform (keyword)(opt)
+  ;   :capitalize, :lowercase, :uppercase}
   ;
   ; @usage
   ; [label {...}]

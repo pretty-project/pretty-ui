@@ -253,14 +253,12 @@
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
-  ; {:min-width (keyword)
-  ;  :stretch-orientation (keyword)}
+  ; {:stretch-orientation (keyword)}
   ;
   ; @return (map)
-  ; {:data-element-min-width (keyword)
-  ;  :data-stretch-orientation (keyword)}
-  [_ {:keys [min-width stretch-orientation] :as field-props}]
-  (-> {:data-element-min-width   min-width
-       :data-stretch-orientation stretch-orientation}
-      (pretty-css/default-attributes field-props)
-      (pretty-css/outdent-attributes field-props)))
+  ; {:data-stretch-orientation (keyword)}
+  [_ {:keys [stretch-orientation] :as field-props}]
+  (-> {:data-stretch-orientation stretch-orientation}
+      (pretty-css/default-attributes          field-props)
+      (pretty-css/element-min-size-attributes field-props)
+      (pretty-css/outdent-attributes          field-props)))

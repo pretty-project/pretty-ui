@@ -75,10 +75,10 @@
   ; @param (keyword) menu-id
   ; @param (map) menu-props
   [menu-id menu-props]
-  [layouts/popup-a :components.context-menu/view
-                   {:body   [context-menu-body   menu-id menu-props]
-                    :header [context-menu-header menu-id menu-props]
-                    :min-width :xs}])
+  [layouts/struct-popup :components.context-menu/view
+                        {:body   [context-menu-body   menu-id menu-props]
+                         :header [context-menu-header menu-id menu-props]
+                         :min-width :xs}])
 
 (defn component
   ; @param (keyword)(opt) menu-id

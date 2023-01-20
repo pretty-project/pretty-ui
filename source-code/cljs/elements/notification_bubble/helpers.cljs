@@ -8,19 +8,18 @@
 (defn bubble-content-attributes
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
-  ; {:min-width (keyword)(opt)
-  ;  :style (map)(opt)}
+  ; {:style (map)(opt)}
   ;
   ; @return (map)
-  ; {:data-element-min-width (keyword)
-  ;  :data-letter-spacing (keyword)
+  ; {:data-letter-spacing (keyword)
   ;  :style (map)}
-  [_ {:keys [min-width style] :as bubble-props}]
-  (-> {:data-element-min-width min-width
-       :style                  style
-       :data-letter-spacing    :auto}
-      (pretty-css/font-attributes   bubble-props)
-      (pretty-css/indent-attributes bubble-props)))
+  [_ {:keys [style] :as bubble-props}]
+  (-> {:style               style
+       :data-letter-spacing :auto}
+      (pretty-css/font-attributes             bubble-props)
+      (pretty-css/element-max-size-attributes bubble-props)
+      (pretty-css/element-min-size-attributes bubble-props)
+      (pretty-css/indent-attributes           bubble-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

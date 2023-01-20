@@ -2,7 +2,7 @@
 (ns elements.text.views
     (:require [candy.api                :refer [return]]
               [elements.element.views   :as element.views]
-              [elements.text.helpers    :as text.helpers]
+              [elements.text.attributes :as text.attributes]
               [elements.text.prototypes :as text.prototypes]
               [random.api               :as random]
               [string.api               :as string]
@@ -19,9 +19,10 @@
   ; {:placeholder (metamorphic-content)(opt)}
   [_ {:keys [placeholder]}]
   ; BUG#9811 (source-code/cljs/elements/label/views.cljs)
-  [:div.e-text--placeholder {:data-selectable false}
-                            (if placeholder (x.components/content placeholder)
-                                            "\u00A0")])
+  [:div {:class           :e-text--placeholder
+         :data-selectable false}
+        (if placeholder (x.components/content placeholder)
+                        "\u00A0")])
 
 (defn- text-content-rows
   ; WARNING! NON-PUBLIC! DO NOT USE!
@@ -31,12 +32,14 @@
   ; {:content (metamorphic-content)}
   [_ {:keys [content]}]
   ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  ;
+  ; If the content is string (it might be hiccup), splits it into HTML rows by
+  ; replacing newline characters ("\n") with [:br] tags.
   (letfn [(f [%1 %2 %3] (if (= 0 %2) (conj %1       %3)
                                      (conj %1 [:br] %3)))]
          (if (string? content)
              (let [content-rows (string/split content "\n")]
                   (reduce-kv f [:<>] content-rows))
-             ; A content értéke nem kizárólag string típus lehet (pl. hiccup, ...)
              (return content))))
 
 (defn- text-content
@@ -46,35 +49,26 @@
   ; @param (map) text-props
   ; {:copyable? (boolean)(opt)}
   [text-id {:keys [copyable?] :as text-props}]
-  (if copyable? [:div.e-text--copyable (text.helpers/copyable-attributes text-id text-props)
-                                       [:div.e-text--content (text.helpers/content-attributes text-id text-props)
-                                                             (text-content-rows               text-id text-props)]]
-                [:<>                   [:div.e-text--content (text.helpers/content-attributes text-id text-props)
-                                                             (text-content-rows               text-id text-props)]]))
-
-(defn- text-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
-  ; @param (keyword) text-id
-  ; @param (map) text-props
-  ; {:content (string)
-  ;  :placeholder (metamorphic-content)(opt)}
-  [text-id {:keys [content] :as text-props}]
-  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
-  [:div.e-text--body (text.helpers/text-body-attributes text-id text-props)
-                     (if (empty? content)
-                         [text-placeholder text-id text-props]
-                         [text-content     text-id text-props])])
+  (if copyable? [:div (text.attributes/copyable-attributes text-id text-props)
+                      [:div (text.attributes/content-attributes text-id text-props)
+                            (text-content-rows                  text-id text-props)]]
+                [:<>  [:div (text.attributes/content-attributes text-id text-props)
+                            (text-content-rows                  text-id text-props)]]))
 
 (defn- text
   ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) text-id
   ; @param (map) text-props
-  [text-id text-props]
-  [:div.e-text (text.helpers/text-attributes text-id text-props)
-               [element.views/element-label  text-id text-props]
-               [text-body                    text-id text-props]])
+  ; {:content (string)}
+  [text-id {:keys [content] :as text-props}]
+  ; XXX#7009 (source-code/cljs/elements/label/prototypes.cljs)
+  [:div (text.attributes/text-attributes text-id text-props)
+        [element.views/element-label  text-id text-props]
+        [:div (text.attributes/text-body-attributes text-id text-props)
+              (if (empty? content)
+                  [text-placeholder text-id text-props]
+                  [text-content     text-id text-props])]])
 
 (defn element
   ; @param (keyword)(opt) text-id

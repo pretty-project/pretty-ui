@@ -13,11 +13,11 @@
   ;  :gap (keyword)
   ;  :horizontal-align (keyword)
   ;  :icon-size (keyword)
-  ;  :outdent (map)}
+  ;  :indent (map)}
   [label-props]
   (merge {:color            :muted
           :gap              :xs
           :horizontal-align :left
           :icon-size        :m
-          :outdent          {:horizontal :xxs :vertical :s}}
+          :indent           {:horizontal :xxs :vertical :s}}
          (param label-props)))

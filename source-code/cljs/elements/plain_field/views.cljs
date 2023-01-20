@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- plain-field-synchronizer-debug
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:field-content-f (function)
@@ -26,8 +24,6 @@
              [:br] "derived content: " (field-content-f stored-value)]))
 
 (defn- plain-field-synchronizer-sensor
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (*) stored-value
@@ -40,8 +36,6 @@
                        :reagent-render         (fn [_ _ _])}))
 
 (defn- plain-field-synchronizer
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:value-path (vector)}
@@ -54,8 +48,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- plain-field-surface
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:surface (metamorphic-content)(opt)}
@@ -65,16 +57,12 @@
                                                [x.components/content                         field-id surface]])))
 
 (defn- plain-field-input
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
   [:input.e-plain-field--input (plain-field.helpers/field-input-attributes field-id field-props)])
 
 (defn- plain-field-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -82,8 +70,6 @@
                             [plain-field-input                         field-id field-props]])
 
 (defn- plain-field-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -93,8 +79,6 @@
                       [plain-field-synchronizer             field-id field-props]])
 
 (defn- plain-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]

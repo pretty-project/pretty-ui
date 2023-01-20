@@ -16,16 +16,12 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- field-adornments-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
   [:div.e-text-field--adornments-placeholder (plain-field.helpers/field-accessory-attributes field-id field-props)])
 
 (defn button-adornment
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
@@ -37,8 +33,6 @@
              label [:button.e-text-field--button-adornment adornment-attributes label])))
 
 (defn static-adornment
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
@@ -50,8 +44,6 @@
              label [:div.e-text-field--static-adornment adornment-attributes (x.components/content label)])))
 
 (defn field-adornment
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; @param (map) adornment-props
@@ -62,8 +54,6 @@
                     [static-adornment field-id field-props adornment-props])))
 
 (defn field-end-adornments
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:end-adornments (maps in vector)(opt)}
@@ -75,8 +65,6 @@
            [field-adornments-placeholder field-id field-props])))
 
 (defn field-start-adornments
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:start-adornments (maps in vector)(opt)}
@@ -90,8 +78,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- text-field-surface
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:surface (metamorphic-content)(opt)}
@@ -104,8 +90,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- text-field-placeholder
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:placeholder (metamorphic-content)}
@@ -115,8 +99,6 @@
                                                           (x.components/content placeholder)])))
 
 (defn- text-field-input
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   ; {:multiline? (boolean)(opt)}
@@ -125,7 +107,6 @@
                  [:input.e-text-field--input    (text-field.helpers/field-input-attributes field-id field-props)]))
 
 (defn- text-field-input-emphasize
-  ; WARNING! NON-PUBLIC! DO NOT USE!
   ;
   ; @param (keyword) field-id
   ; @param (map) field-props
@@ -134,8 +115,6 @@
                                       [text-field-input                              field-id field-props]])
 
 (defn- text-field-input-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -147,8 +126,6 @@
                                       [text-field-input-emphasize field-id field-props]])
 
 (defn- text-field-input-container
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -162,8 +139,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- text-field-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -173,8 +148,6 @@
                      [plain-field.views/plain-field-synchronizer field-id field-props]])
 
 (defn- text-field
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) field-id
   ; @param (map) field-props
   [field-id field-props]
@@ -193,6 +166,8 @@
   ;  :autofocus? (boolean)(opt)
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)

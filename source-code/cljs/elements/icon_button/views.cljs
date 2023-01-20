@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- icon-button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)
@@ -28,8 +26,6 @@
                                     (x.components/content label)])]])
 
 (defn- icon-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -38,18 +34,17 @@
                        :component-did-update   (fn [%]   (r/dispatch [:elements.button/button-did-update   button-id %]))
                        :reagent-render         (fn [_ button-props] [icon-button-structure button-id button-props])}))
 
+
 (defn element
   ; @param (keyword)(opt) button-id
   ; @param (map) button-props
   ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary
-  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
   ;   Default: :tr
-  ;   W/ {:badge-content ...}
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -94,7 +89,6 @@
   ;   Same as the :indent property
   ;  :progress (percent)(opt)
   ;  :progress-duration (ms)(opt)
-  ;   W/ {:progress ...}
   ;  :style (map)(opt)
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)

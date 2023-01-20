@@ -14,8 +14,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- switch-option-helper
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; {:option-helper-f (function)}
@@ -27,8 +25,6 @@
                                                          (x.components/content option-helper)])))
 
 (defn- switch-option-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; {:font-size (keyword)
@@ -42,8 +38,6 @@
                                     (x.components/content option-label)]))
 
 (defn- switch-option-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; @param (*) option
@@ -53,8 +47,6 @@
                                  [switch-option-helper switch-id switch-props option]])
 
 (defn- switch-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   ; @param (*) option
@@ -64,8 +56,6 @@
                             [switch-option-content switch-id switch-props option]])
 
 (defn- switch-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
@@ -74,8 +64,6 @@
               (reduce f [:<>] options))))
 
 (defn- switch-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
@@ -83,8 +71,6 @@
                        [switch-options                        switch-id switch-props]])
 
 (defn- switch-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]
@@ -93,8 +79,6 @@
                  [switch-body                      switch-id switch-props]])
 
 (defn- switch
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) switch-id
   ; @param (map) switch-props
   [switch-id switch-props]

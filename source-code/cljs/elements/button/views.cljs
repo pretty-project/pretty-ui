@@ -9,26 +9,60 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn- button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn- static-button
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:icon (keyword)(opt)
   ;  :icon-position (keyword)(opt)
   ;  :label (string)(opt)}
   [button-id {:keys [icon icon-position label] :as button-props}]
-  [:div (button.attributes/button-attributes button-id button-props)
-        [:button (button.attributes/button-body-attributes button-id button-props)
-                 (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
-                                                 (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
-                                     :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
-                                                 (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
-                                            [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])]])
+  [:div (button.attributes/button-body-attributes button-id button-props)
+        (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                        (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
+                            :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
+                                        (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                   [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
 
-(defn- button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
+(defn- anchor-button
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:icon (keyword)(opt)
+  ;  :icon-position (keyword)(opt)
+  ;  :label (string)(opt)}
+  [button-id {:keys [icon icon-position label] :as button-props}]
+  [:a (button.attributes/button-body-attributes button-id button-props)
+      (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                      (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
+                          :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
+                                      (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                 [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
+
+(defn- toggle-button
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:icon (keyword)(opt)
+  ;  :icon-position (keyword)(opt)
+  ;  :label (string)(opt)}
+  [button-id {:keys [icon icon-position label] :as button-props}]
+  [:button (button.attributes/button-body-attributes button-id button-props)
+           (case icon-position :left  [:<> (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])
+                                           (if label [:div (button.attributes/button-label-attributes button-id button-props) label])]
+                               :right [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])
+                                           (if icon  [:i   (button.attributes/button-icon-attributes  button-id button-props) icon])]
+                                      [:<> (if label [:div (button.attributes/button-label-attributes button-id button-props) label])])])
+
+(defn- button-structure
+  ; @param (keyword) button-id
+  ; @param (map) button-props
+  ; {:href (string)(opt)
+  ;  :on-click (metamorphic-event)(opt)}
+  [button-id {:keys [href on-click] :as button-props}]
+  [:div (button.attributes/button-attributes button-id button-props)
+        (cond (some? href)     [anchor-button button-id button-props]
+              (some? on-click) [toggle-button button-id button-props]
+              :static-button   [static-button button-id button-props])])
+
+(defn button
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -46,14 +80,14 @@
   ; {:badge-color (keyword)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   ;   Default: :primary
-  ;   W/ {:badge-content ...}
   ;  :badge-content (metamorphic-content)(opt)
   ;  :badge-position (keyword)(opt)
   ;   :tl, :tr, :br, :bl
   ;   Default: :tr
-  ;   W/ {:badge-content ...}
   ;  :border-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;  :border-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -71,12 +105,13 @@
   ;   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   ;   Default: :medium
   ;  :gap (keyword)(opt)
-  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
   ;  :horizontal-align (keyword)(opt)
   ;   :center, :left, :right
   ;   Default: :center
   ;  :hover-color (keyword or string)(opt)
   ;   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+  ;  :href (string)(opt)
   ;  :icon (keyword)(opt)
   ;  :icon-color (keyword or string)(opt)
   ;   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -115,6 +150,11 @@
   ;  :outdent (map)(opt)
   ;   Same as the :indent property
   ;  :style (map)(opt)
+  ;  :text-overflow (keyword)(opt)
+  ;   :ellipsis, :no-wrap, :wrap
+  ;   Default: :no-wrap
+  ;  :text-transform (keyword)(opt)
+  ;   :capitalize, :lowercase, :uppercase
   ;  :tooltip-content (metamorphic-content)(opt)
   ;  :tooltip-position (keyword)(opt)
   ;   :left, :right}

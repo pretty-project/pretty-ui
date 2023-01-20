@@ -199,7 +199,7 @@
 
 
 /***** Circle diagram *****/
-/*** Wrapper ***/
+/*** Element ***/
 
 .e-circle-diagram {
   align-items:     center;
@@ -208,7 +208,7 @@
   justify-content: center;
 }
 
-/*** Wrapper ***/
+/*** Element ***/
 
 /*** Section ***/
 
@@ -416,15 +416,15 @@
 
 
 /***** Digit field *****/
-/***** Digit field wrapper *****/
+/***** Element *****/
 
 .e-digit-field {
   height: 48px;
 }
 
-/***** Digit field wrapper *****/
+/***** Element *****/
 
-/***** Digit field input *****/
+/***** Input *****/
 
 .e-digit-field--input {
   color: var( --fill-color-default );
@@ -432,9 +432,9 @@
   width: 100%;
 }
 
-/***** Digit field input *****/
+/***** Input *****/
 
-/***** Digit field cover *****/
+/***** Cover *****/
 
 .e-digit-field--cover {
   display: flex;
@@ -461,8 +461,23 @@
   width: 36px;
 }
 
-/***** Digit field cover *****/
+/***** Cover *****/
 /***** Digit field *****/
+
+
+
+/***** Dropdown menu *****/
+/*** Content ***/
+
+.e-dropdown-menu--content {
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  z-index: 9999;
+}
+
+/*** Content ***/
+/***** Dropdown menu *****/
 
 
 
@@ -535,7 +550,7 @@
 
 
 /***** Label *****/
-/*** Wrapper ***/
+/*** Element ***/
 
 .e-label {
   display: flex;
@@ -549,7 +564,7 @@
   max-width: 100%;
 }
 
-/*** Wrapper ***/
+/*** Element ***/
 
 /*** Body ***/
 
@@ -598,7 +613,7 @@
 
 
 /***** Line diagram *****/
-/*** Wrapper ***/
+/*** Element ***/
 
 .e-line-diagram {
   display: flex;
@@ -606,7 +621,7 @@
   justify-content: center;
 }
 
-/*** Wrapper ***/
+/*** Element ***/
 
 /*** Sections ***/
 
@@ -771,38 +786,13 @@
  * 3. A menü-elemek ikonokat és feliratokat jelenítenek meg */
 /* TODO
  * Az 1.-es és 3.-as (ikon-gomb és ikon-gomb felirattal) legyen egy külön elemtípus! */
-.e-menu-bar--menu-item {
+.e-menu-bar--menu-item-body {
   align-items: center;
-  color: var( --color-highlight );
+  display:     flex;
 
-  /* Ha az .e-menu-bar--menu-item elem egyszerre feliratot és ikont is megjelenít,
-   * akkor a felirat és az ikon közötti esztétikai távolságot a column-gap
-   * tulajdonság határozza meg */
+  /* If the item both displays label and icon, the column-gap property sets the distance
+   * between them */
   column-gap: 6px;
-  display: flex;
-
-  /* Ha az .e-menu-bar--menu-item elem feliratot NEM jelenít meg csak ikont,
-   * akkor az ikon-gombként jelenik meg (12px + 24px + 12px = 48px szélesség) */
-  padding: 0 12px;
-}
-
-.e-menu-bar--menu-item[data-active="true"]::after {
-  background-color: var( --border-color-primary );
- -border-radius: 1.5px;
-  bottom: 0;
-
-  /* Az indicator megjelenítése ki van kapcsolva ... */
-  content: '';
-  content: none;
-
-  height: 1px;
-  left: 30%;
-  position: absolute;
-  width: 40%;
-}
-
-.e-menu-bar--menu-item[data-active="true"] {
-  color: var( --color-default );
 }
 
 /*** Item ***/
@@ -811,7 +801,7 @@
 
 
 /***** Multi field *****/
-/*** Wrapper ***/
+/*** Element ***/
 
 .e-multi-field {
   display: flex;
@@ -821,7 +811,7 @@
   row-gap: 8px;
 }
 
-/*** Wrapper ***/
+/*** Element ***/
 /***** Multi field *****/
 
 

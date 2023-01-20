@@ -40,12 +40,12 @@
   (let [on-close     [:x.ui/remove-popup! :elements.color-selector/options]
         close-button {:icon :expand_more :on-click on-close}]
        [:div {:class :e-color-selector--options}
-             [layouts/popup-a :elements.color-selector/options
-                              {:body [:div (color-selector.attributes/color-selector-body-attributes selector-id selector-props)
-                                           [color-selector-option-list                               selector-id selector-props]]
-                               :header [:div {:class :e-color-selector--options-header}
-                                             [icon-button.views/element ::close-button close-button]]
-                               :border-radius {:all :m}}]]))
+             [layouts/struct-popup :elements.color-selector/options
+                                   {:body [:div (color-selector.attributes/color-selector-body-attributes selector-id selector-props)
+                                                [color-selector-option-list                               selector-id selector-props]]
+                                    :header [:div {:class :e-color-selector--options-header}
+                                                  [icon-button.views/element ::close-button close-button]]
+                                    :border-radius {:all :m}}]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

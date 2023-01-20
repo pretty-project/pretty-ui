@@ -5,8 +5,6 @@
 
 ### Index
 
-- [anchor](#anchor)
-
 - [blank](#blank)
 
 - [breadcrumbs](#breadcrumbs)
@@ -34,6 +32,8 @@
 - [date-field](#date-field)
 
 - [digit-field](#digit-field)
+
+- [dropdown-menu](#dropdown-menu)
 
 - [element-label](#element-label)
 
@@ -96,53 +96,6 @@
 - [vertical-polarity](#vertical-polarity)
 
 - [vertical-separator](#vertical-separator)
-
-### anchor
-
-```
-@param (keyword)(opt) anchor-id
-@param (map) anchor-props
-{:color (keyword or string)(opt)
-  :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-  Default: :inherit
- :class (keyword or keywords in vector)(opt)
- :content (metamorphic-content)
- :disabled? (boolean)(opt)
- :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
-  Default: :s
- :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
-  Default: :medium
- :href (string)(opt)
- :indent (map)(opt)
-  {:bottom (keyword)(opt)
-   :left (keyword)(opt)
-   :right (keyword)(opt)
-   :top (keyword)(opt)
-   :horizontal (keyword)(opt)
-   :vertical (keyword)(opt)
-    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
- :line-height (keyword)(opt)
-  :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :text-block
- :on-click (metamorphic-event)(opt)
- :outdent (map)(opt)
-  Same as the :indent property
- :style (map)(opt)}
-```
-
-```
-@usage
-[anchor {...}]
-```
-
-```
-@usage
-[anchor :my-anchor {...}]
-```
-
----
 
 ### blank
 
@@ -226,14 +179,14 @@
 {:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
-  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
   :tl, :tr, :br, :bl
   Default: :tr
-  W/ {:badge-content ...}
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -251,12 +204,13 @@
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default: :medium
  :gap (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
  :hover-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :href (string)(opt)
  :icon (keyword)(opt)
  :icon-color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
@@ -295,6 +249,11 @@
  :outdent (map)(opt)
   Same as the :indent property
  :style (map)(opt)
+ :text-overflow (keyword)(opt)
+  :ellipsis, :no-wrap, :wrap
+  Default: :no-wrap
+ :text-transform (keyword)(opt)
+  :capitalize, :lowercase, :uppercase
  :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
   :left, :right}
@@ -325,14 +284,14 @@
 {:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
-  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
   :tl, :tr, :br, :bl
   Default: :tr
-  W/ {:badge-content ...}
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
  :border-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
@@ -358,6 +317,12 @@
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
  :marker-position (keyword)(opt)
   :tl, :tr, :br, :bl
+ :max-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :max-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-click (metamorphic-event)(opt)
@@ -651,7 +616,7 @@ To render the color-selector popup without using its button element:
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :center
@@ -827,6 +792,27 @@ To render the color-selector popup without using its button element:
 ```
 @usage
 [digit-field :my-digit-field {...}]
+```
+
+---
+
+### dropdown-menu
+
+```
+@param (keyword)(opt) menu-id
+@param (map) menu-props
+{:menu-items (maps in vector)
+  [{:content (metamorphic-content)}]}
+```
+
+```
+@usage
+[dropdown-menu {...}]
+```
+
+```
+@usage
+[dropdown-menu :my-dropdown-menu {...}]
 ```
 
 ---
@@ -1042,12 +1028,10 @@ To render the color-selector popup without using its button element:
 {:badge-color (keyword)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :primary
-  W/ {:badge-content ...}
  :badge-content (metamorphic-content)(opt)
  :badge-position (keyword)(opt)
   :tl, :tr, :br, :bl
   Default: :tr
-  W/ {:badge-content ...}
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -1092,7 +1076,6 @@ To render the color-selector popup without using its button element:
   Same as the :indent property
  :progress (percent)(opt)
  :progress-duration (ms)(opt)
-  W/ {:progress ...}
  :style (map)(opt)
  :tooltip-content (metamorphic-content)(opt)
  :tooltip-position (keyword)(opt)
@@ -1164,7 +1147,20 @@ To render the color-selector popup without using its button element:
 ```
 @param (keyword)(opt) label-id
 @param (map) label-props
-{:class (keyword or keywords in vector)(opt)
+{:border-color (keyword or string)(opt)
+  :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
+ :border-radius (map)(opt)
+  {:tl (keyword)(opt)
+   :tr (keyword)(opt)
+   :br (keyword)(opt)
+   :bl (keyword)(opt)
+   :all (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :border-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :class (keyword or keywords in vector)(opt)
  :color (keyword or string)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :inherit
@@ -1179,7 +1175,7 @@ To render the color-selector popup without using its button element:
   :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
   Default :medium
  :gap (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right
   Default: :left
@@ -1192,6 +1188,9 @@ To render the color-selector popup without using its button element:
  :icon-family (keyword)(opt)
   :material-symbols-filled, :material-symbols-outlined
   Default: :material-symbols-outlined
+ :icon-position (keyword)(opt)
+  :left, :right
+  Default: :left
  :icon-size (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
   Default: :s
@@ -1227,8 +1226,10 @@ To render the color-selector popup without using its button element:
   :normal, :reversed
   Default :normal
  :text-overflow (keyword)(opt)
-  :ellipsis, :wrap
-  Default: :ellipsis}
+  :ellipsis, :no-wrap, :wrap
+  Default: :ellipsis
+ :text-transform (keyword)(opt)
+  :capitalize, :lowercase, :uppercase}
 ```
 
 ```
@@ -1288,6 +1289,12 @@ To render the color-selector popup without using its button element:
 ### menu-bar
 
 ```
+@description
+You can set the default item styles and settings by using the :item-default
+property or you can specify these values on each item separatelly.
+```
+
+```
 @param (keyword)(opt) bar-id
 @param (map) bar-props
 {:class (keyword or keywords in vector)(opt)
@@ -1295,15 +1302,6 @@ To render the color-selector popup without using its button element:
   :center, :left, :right
   Default: :left
   W/ {:orientation :horizontal}
- :font-size (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
-  Default: :s
- :font-weight (keyword)(opt)
-  :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
-  Default :medium
- :height (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
-  Default: :xxl
  :indent (map)(opt)
   {:bottom (keyword)(opt)
    :left (keyword)(opt)
@@ -1312,32 +1310,58 @@ To render the color-selector popup without using its button element:
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :item-default (map)(opt)
+  {:badge-position (keyword)(opt)
+    :tl, :tr, :br, :bl
+    Default: :tr
+   :border-color (keyword or string)(opt)
+    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+   :border-radius (map)(opt)
+   :border-width (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+   :color (keyword or string)(opt)
+    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+    Default: :inherit
+   :fill-color (keyword or string)(opt)
+    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+   :font-size (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+    Default: :s
+   :font-weight (keyword)(opt)
+    :inherit, :extra-light, :light, :normal, :medium, :bold, :extra-bold
+    Default :medium
+   :hover-color (keyword or string)(opt)
+    :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+   :icon-color (keyword or string)(opt)
+    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+    Default: :inherit
+   :icon-family (keyword)(opt)
+    :material-symbols-filled, :material-symbols-outlined
+    Default: :material-symbols-outlined
+   :icon-size (keyword)(opt)
+    :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :inherit
+    Default: :s
+   :indent (map)(opt)
+   :line-height (keyword)(opt)
+    :inherit, :native, :text-block, :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+    Default: :text-block
+   :marker-color (keyword)(opt)
+    :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
+   :marker-position (keyword)(opt)
+    :tl, :tr, :br, :bl
+    Default: :tr
+   :outdent (map)(opt)}
  :menu-items (maps in vector)
-  [{:active? (boolean)(opt)
-     Default: false
-    :badge-color (keyword)(opt)
+  [{:badge-color (keyword)(opt)
      :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
      Default: :primary
-     W/ {:badge-content ...}
     :badge-content (metamorphic-content)(opt)
-    :badge-position (keyword)(opt)
-     :tl, :tr, :br, :bl
-     Default: :tr
-     W/ {:badge-content ...}
     :disabled? (boolean)(opt)
     :href (string)(opt)
     :icon (keyword)(opt)
-    :icon-family (keyword)(opt)
-     :material-symbols-filled, :material-symbols-outlined
-     Default: :material-symbols-outlined
     :label (metamorphic-content)(opt)
-    :marker-color (keyword)(opt)
-     :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
-    :marker-position (keyword)(opt)
-     :tl, :tr, :br, :bl
-     Default: :tr
-     W/ {:marker-color ...}
     :on-click (metamorphic-event)(opt)}]
+    :on-mouse-over (metamorphic-event)(opt)}]
  :orientation (keyword)(opt)
   :horizontal, :vertical
   Default: :horizontal
@@ -1449,6 +1473,8 @@ To render the color-selector popup without using its button element:
 @param (map) bubble-props
 {:border-color (keyword)(opt)
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -1480,6 +1506,12 @@ To render the color-selector popup without using its button element:
    :horizontal (keyword)(opt)
    :vertical (keyword)(opt)
     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+ :max-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :max-width (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+ :min-height (keyword)(opt)
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :min-width (keyword)(opt)
   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :outdent (map)(opt)
@@ -1722,7 +1754,7 @@ To render the color-selector popup without using its button element:
  :fill-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
  :gap (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl
+  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl, :auto
  :horizontal-align (keyword)(opt)
   :center, :left, :right, :space-around, :space-between, :space-evenly
   Default: :left
@@ -1794,6 +1826,8 @@ To render the select popup without using its button element:
  :autoclear? (boolean)(opt)
  :border-color (keyword)(opt)
   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -1824,8 +1858,6 @@ To render the select popup without using its button element:
   Default: :select
  :marker-color (keyword)(opt)
   :default, :highlight, :inherit, :invert, :muted, :primary, :secondary, :success, :warning
- :min-width (keyword)(opt)
-  :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
  :on-select (metamorphic-event)(opt)
  :option-field-placeholder (metamorphic-content)(opt)
   Default: :add!
@@ -2066,6 +2098,8 @@ To render the select popup without using its button element:
  :autofocus? (boolean)(opt)
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -2214,6 +2248,8 @@ To render the select popup without using its button element:
  :border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
   Default: :default
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)
@@ -2274,6 +2310,8 @@ To render the select popup without using its button element:
 @param (map) toggle-props
 {:border-color (keyword or string)(opt)
   :default, :highlight, :invert, :muted, :primary, :secondary, :success, :warning
+ :border-position (keyword)(opt)
+  :all, :bottom, :top, :left, :right, :horizontal, :vertical
  :border-radius (map)(opt)
   {:tl (keyword)(opt)
    :tr (keyword)(opt)

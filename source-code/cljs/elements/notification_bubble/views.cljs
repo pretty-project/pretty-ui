@@ -11,8 +11,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- notification-bubble-secondary-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:secondary-button (map)(opt)}
@@ -21,8 +19,6 @@
                                             [icon-button.views/element secondary-button])))
 
 (defn- notification-bubble-primary-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:primary-button (map)(opt)}
@@ -31,8 +27,6 @@
                                           [icon-button.views/element primary-button])))
 
 (defn- notification-bubble-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   ; {:content (metamorphic-content)}
@@ -41,8 +35,6 @@
                                        [x.components/content                                  bubble-id content]])
 
 (defn- notification-bubble-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   [bubble-id bubble-props]
@@ -52,8 +44,6 @@
                                     [notification-bubble-primary-button                 bubble-id bubble-props]])
 
 (defn- notification-bubble
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) bubble-id
   ; @param (map) bubble-props
   [bubble-id bubble-props]
@@ -68,6 +58,8 @@
   ; @param (map) bubble-props
   ; {:border-color (keyword)(opt)
   ;   :default, :highlight, :invert, :primary, :secondary, :success, :transparent, :warning
+  ;  :border-position (keyword)(opt)
+  ;   :all, :bottom, :top, :left, :right, :horizontal, :vertical
   ;  :border-radius (map)(opt)
   ;   {:tl (keyword)(opt)
   ;    :tr (keyword)(opt)
@@ -99,6 +91,12 @@
   ;    :horizontal (keyword)(opt)
   ;    :vertical (keyword)(opt)
   ;     :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl}
+  ;  :max-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :max-width (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
+  ;  :min-height (keyword)(opt)
+  ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :min-width (keyword)(opt)
   ;   :xxs, :xs, :s, :m, :l, :xl, :xxl, :3xl, :4xl, :5xl
   ;  :outdent (map)(opt)

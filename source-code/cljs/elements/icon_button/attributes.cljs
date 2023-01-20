@@ -2,6 +2,7 @@
 (ns elements.icon-button.attributes
     (:require [css.api                    :as css]
               [elements.button.attributes :as button.attributes]
+              [map.api                    :as map]
               [math.api                   :as math]
               [pretty-css.api             :as pretty-css]
               [x.components.api           :as x.components]))
@@ -49,8 +50,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-icon-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
@@ -65,8 +64,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-label-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {}
@@ -83,8 +80,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn button-body-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:height (keyword)
@@ -102,19 +97,18 @@
   ; preset, the icon-button element can expands horizontaly when its label doesn't
   ; fit into it.
   (-> (button.attributes/button-body-attributes button-id button-props)
-      (merge {:class                 :e-icon-button--body
-              :data-block-height     height
-              :data-block-min-width  width
-              :data-labeled          (boolean label)})
-      (pretty-css/indent-attributes  button-props)
-      (pretty-css/tooltip-attributes button-props)))
+      (merge {:class        :e-icon-button--body
+              :data-labeled (boolean label)})
+      (map/rekey-item :width :min-width)
+      (pretty-css/block-min-size-attributes button-props)
+      (pretty-css/block-size-attributes     button-props)
+      (pretty-css/indent-attributes         button-props)
+      (pretty-css/tooltip-attributes        button-props)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
 (defn button-attributes
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ;

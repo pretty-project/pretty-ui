@@ -30,6 +30,7 @@
               [components.popup-menu-button.views        :as popup-menu-button.views]
               [components.popup-menu-header.views        :as popup-menu-header.views]
               [components.popup-menu-label.views         :as popup-menu-label.views]
+              [components.popup-menu-title.views         :as popup-menu-title.views]
               [components.popup-progress-indicator.views :as popup-progress-indicator.views]
               [components.side-menu-button.views         :as side-menu-button.views]
               [components.side-menu-footer.views         :as side-menu-footer.views]
@@ -44,7 +45,7 @@
               [components.vector-item-controls.views     :as vector-item-controls.views]
               [components.vector-item-list.views         :as vector-item-list.views]
               [components.vector-items-header.views      :as vector-items-header.views]))
- 
+
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
@@ -77,6 +78,7 @@
 (def popup-menu-button        popup-menu-button.views/component)
 (def popup-menu-header        popup-menu-header.views/component)
 (def popup-menu-label         popup-menu-label.views/component)
+(def popup-menu-title         popup-menu-title.views/component)
 (def popup-progress-indicator popup-progress-indicator.views/component)
 (def side-menu                side-menu.views/component)
 (def side-menu-button         side-menu-button.views/component)

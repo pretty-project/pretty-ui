@@ -40,7 +40,6 @@
               [elements.switch.subs]
               [elements.text-field.effects]
               [elements.text-field.subs]
-              [elements.anchor.views               :as anchor.views]
               [elements.breadcrumbs.views          :as breadcrumbs.views]
               [elements.blank.views                :as blank.views]
               [elements.button.views               :as button.views]
@@ -55,6 +54,7 @@
               [elements.counter.views              :as counter.views]
               [elements.date-field.views           :as date-field.views]
               [elements.digit-field.views          :as digit-field.views]
+              [elements.dropdown-menu.views        :as dropdown-menu.views]
               [elements.element.views              :as element.views]
               [elements.expandable.views           :as expandable.views]
               [elements.ghost.views                :as ghost.views]
@@ -91,7 +91,6 @@
 ;; ----------------------------------------------------------------------------
 
 ; elements.*.views
-(def anchor               anchor.views/element)
 (def breadcrumbs          breadcrumbs.views/element)
 (def blank                blank.views/element)
 (def button               button.views/element)
@@ -106,6 +105,7 @@
 (def counter              counter.views/element)
 (def date-field           date-field.views/element)
 (def digit-field          digit-field.views/element)
+(def dropdown-menu        dropdown-menu.views/element)
 (def element-label        element.views/element-label)
 (def expandable           expandable.views/element)
 (def ghost                ghost.views/element)

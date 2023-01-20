@@ -13,8 +13,6 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- radio-button-option-helper
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:option-helper-f (function)}
@@ -26,8 +24,6 @@
                                                                (x.components/content option-helper)])))
 
 (defn- radio-button-option-label
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:font-size (keyword)
@@ -41,8 +37,6 @@
                                           (x.components/content option-label)]))
 
 (defn- radio-button-option-content
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; @param (*) option
@@ -52,8 +46,6 @@
                                        [radio-button-option-helper button-id button-props option]])
 
 (defn- radio-button-option
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; @param (*) option
@@ -63,8 +55,6 @@
                                   [radio-button-option-content button-id button-props option]])
 
 (defn- radio-button-options
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -73,8 +63,6 @@
               (reduce f [:<>] options))))
 
 (defn- radio-button-body
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -82,8 +70,6 @@
                              [radio-button-options                              button-id button-props]])
 
 (defn- radio-button-deselect-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   ; {:deselectable? (boolean)(opt)}
@@ -92,8 +78,6 @@
                                                          ;[:div.e-radio-button--clear-button-label (x.components/content :delete!)]
 
 (defn- radio-button-structure
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
@@ -103,8 +87,6 @@
                        [radio-button-body                            button-id button-props]])
 
 (defn- radio-button
-  ; WARNING! NON-PUBLIC! DO NOT USE!
-  ;
   ; @param (keyword) button-id
   ; @param (map) button-props
   [button-id button-props]
